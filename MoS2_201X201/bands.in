@@ -1,0 +1,6 @@
+ &bands
+    prefix='MoS2',
+    outdir='./'
+    filband='MoS2.band'
+    lsym=.true.,
+ /
