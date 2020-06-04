@@ -37,6 +37,8 @@ c        VALID JUST FOR NORM-CONSERVING PSEUDOPOTENTIALS!!!!!!!!!!!!!!!!!!!!!!!!
      &   iGfast,ikmin,NelQE,lf,kG1,kG2,nord
          PARAMETER(nMPx=201,nMPy=201,nMPz=1,NkI=6835,Nband=60,NelQE=18,
      &   Nk=48*NkI,NGd=4000,NG=8000,no=2001,nq=2,Nlfd=50)
+         ! no je broj frekvencija,  nq je broj valnih vektora tu je 2 jer je rucno paralelizirano!
+         ! Nlf 
     
 
 c        skalars
@@ -59,13 +61,28 @@ c        arrays
          DOUBLE COMPLEX unit,epsilon,Chi
          COMPLEX*8 MnmK1K2,Chi0,WT,Gammap,Gammam 
          DIMENSION kI(3,NkI),E(NkI,Nband),R(48,3,3),RI(48,3,3),
-     &   k(3,Nk),ktot(3,Nk),V(Nlfd,Nlfd),G(3,NG),GlfV(3,Nlfd),
-     &   Glf(3,Nlfd),MnmK1K2(Nlfd),unit(Nlfd,Nlfd),Chi0(Nlfd,Nlfd),
-     &   epsilon(Nlfd,Nlfd),Chi(Nlfd,Nlfd),S0(no,Nlfd,Nlfd),
-     &   Gfast(Nlfd*NGd),KC(3,3),Gi(3),parG(NG),WT(no,Nlfd,Nlfd), 
-     &   Gammap(Nlfd,Nlfd),Gammam(Nlfd,Nlfd),kQ0(100)
+     &   k(3,Nk),ktot(3,Nk),
+     &   V(Nlfd,Nlfd),! matr. gole coulomb. int.
+     &   G(3,NG), ! polje valnih vektora G u recp. prost. za wfn.
+     &   GlfV(3,Nlfd), Glf(3,Nlfd) ! generiran G vekt. (0,0,z) za V odnosn za chi.
+     &   MnmK1K2(Nlfd), ! nabojni vrhovi
+     &   unit(Nlfd,Nlfd), ! jedinična matrica
+     &   Chi0(Nlfd,Nlfd), ! (eq. 2.89)
+     &   epsilon(Nlfd,Nlfd), ! Epsilon (GG')  = I - V(GG')Chi0
+     &   Chi(Nlfd,Nlfd),   ! (eq. 2.88 nakon invertiranja)
+     &   S0(no,Nlfd,Nlfd), ! korelacijska matrica
+     &   Gfast(Nlfd*NGd),
+     &   KC(3,3),Gi(3), ! pomocne funkcije
+     &   parG(NG), ! paritet svakog valnog vektora
+     &   WT(no,Nlfd,Nlfd), ! time ordered RPa screened coulomb int. (eq. 2.93)
+     &   Gammap(Nlfd,Nlfd),Gammam(Nlfd,Nlfd), ! za GW ne koristi se za ovaj dio
+     &   kQ0(100) 
  
-         CHARACTER*100 bandn,bandm,nis,pathK1,pathK2,dato,
+         CHARACTER*100 bandn,
+     &   bandm,
+     &   nis,
+     &   pathK1,pathK2, 
+     &   dato,
      &   root,path,fajl
          CHARACTER*35 tag,buffer
 
@@ -73,9 +90,9 @@ c        arrays
          complex(kind = 8),pointer, dimension(:) :: C1,C2
 
          
-          rone=dcmplx(1.0,0.0) 
-          czero=dcmplx(0.0,0.0)
-          ione=dcmplx(0.0,1.0)
+          rone=dcmplx(1.0,0.0)  ! real 1
+          czero=dcmplx(0.0,0.0) ! complex 0
+          ione=dcmplx(0.0,1.0) ! imag 1
 
 
 c BRAVAIS LATTICE PARAMETERS 
@@ -115,13 +132,12 @@ c             Crystal local field effects are included in z direction lf=1
 c             Crystal local field effects are included in x,y,z direction lf=3 
 
 
-              lf=1
-              loss=1
-              jump=1
-              three=3.0d0
-              omin=1.0d-5
+              lf=1 ! crystal local field effect included in z for lf=1
+              jump=1 ! za 1 preskace trazenje wfn. u IBZ za sve bands m i n
+              three=3.0d0 ! broj 3 haha
+              omin=1.0d-5 ! raspon frekvencija u Ha
               omax=2.0d0
-              domega=(omax-omin)/(no-1)
+              domega=(omax-omin)/(no-1) 
 
          
 
@@ -141,8 +157,8 @@ c           wave vectors are in Cartesian coordinate
             fajl='/MoS2.band'
             path=TRIM(root)//TRIM(fajl)
             open(1,FILE=path) 
-            do 11 ik=1,NkI 
-            if(ik.eq.1)READ(1,*)nis
+            do 11 ik=1,NkI ! k vektora u IBZ
+            if(ik.eq.1)READ(1,*)nis ! preskakanje
             READ (1,20)kI(1,ik),kI(2,ik),kI(3,ik)
             READ (1,10)(E(ik,i),i=1,Nband)
 11          continue 
@@ -154,7 +170,7 @@ c           wave vectors are in Cartesian coordinate
             do 333 ik=1,NkI 
             do 444 i=1,Nband 
             E(ik,i)=E(ik,i)/Hartree
-            if(i.ge.10)E(ik,i)=E(ik,i)+1.0/Hartree
+            if(i.ge.10)E(ik,i)=E(ik,i)+1.0/Hartree ! scissor op. ispravljanje DFT gapa na 1eV ( u ovom slucaju)
 444         continue
 333         continue
 
@@ -169,31 +185,31 @@ c            Ntot-Tot number of different points ''ktot'' inside 1.B.Z
 
        
 
-             jk=0
+             jk=0 ! k tocka u ...?
              Ntot=0
-             do 13 i=1,nsim
-             do 14 ik=1,NkI 
-             it=1 
+             do 13 i=1,nsim ! loop over No. symmetries
+             do 14 ik=1,NkI  ! loop over k points in IBZ
+             it=1 ! ?
              jk=jk+1
-             do 345 n=1,3
+             do 345 n=1,3  ! loop over kx,ky,kz 
              k(n,jk)=zero
-             do 346 m=1,3 
-             k(n,jk)=k(n,jk)+R(i,n,m)*kI(m,ik)
+             do 346 m=1,3 ! loop over x,y,z
+             k(n,jk)=k(n,jk)+R(i,n,m)*kI(m,ik) ! kreira nove k tocke u BZ pomocu simetrije
 346          continue                    
 345          continue           
              if(jk.gt.1)then   
              do 17 lk=1,jk-1
-             if(abs(k(1,jk)-k(1,lk)).le.eps)then 
+             if(abs(k(1,jk)-k(1,lk)).le.eps)then  ! je li razlicita tocka od neke prije vec kreirane
              if(abs(k(2,jk)-k(2,lk)).le.eps)then      
              if(abs(k(3,jk)-k(3,lk)).le.eps)then    
-             it=2           
+             it=2         ! preskakanje tocke  
              endif
              endif
              endif
 17           continue
              endif 
-             if(it.eq.1)then
-             Ntot=Ntot+1
+             if(it.eq.1)then ! ne postoji dodaj ju
+             Ntot=Ntot+1  
              ktot(1,Ntot)=k(1,jk)
              ktot(2,Ntot)=k(2,jk)
              ktot(3,Ntot)=k(3,jk)
@@ -203,24 +219,24 @@ c            Ntot-Tot number of different points ''ktot'' inside 1.B.Z
 
 
 c             Checking 1BZ integration
-              Nel=0
+              Nel=0 ! provjeri je li broj el. u FBZ odgovara stvarnom broju el. u jed. cel. NelQE
               do 883 ik=1,Ntot
               kx=ktot(1,iK)
               ky=ktot(2,iK)
               kz=ktot(3,iK)
-              do 442 n=1,Nband
+              do 442 n=1,Nband ! loop over bands
               if(n.eq.1)then
               it=1
               if(ik.le.nkI)then
               K1=ik
               it=2
               else
-              do 631 i=2,nsim 
+              do 631 i=2,nsim ! loop over no. symmetries
               K11=RI(i,1,1)*kx+RI(i,1,2)*ky+RI(i,1,3)*kz
               K22=RI(i,2,1)*kx+RI(i,2,2)*ky+RI(i,2,3)*kz
               K33=RI(i,3,1)*kx+RI(i,3,2)*ky+RI(i,3,3)*kz
-              do 642 j=1,nkI
-              if(dabs(K11-KI(1,j)).le.eps)then 
+              do 642 j=1,nkI ! loop over k u IBZ
+              if(dabs(K11-KI(1,j)).le.eps)then ! eps proizvoljno mali broj
               if(dabs(K22-KI(2,j)).le.eps)then 
               if(dabs(K33-KI(3,j)).le.eps)then 
               it=2
@@ -239,13 +255,13 @@ c             Checking 1BZ integration
               endif
 5022          continue         
               endif
-              if(E(k1,n).lt.Ef)Nel=Nel+1.0
+              if(E(k1,n).lt.Ef)Nel=Nel+1.0 ! zbroji za en. manje od fermijeve
 442           continue
 883           continue
               Nel=2.0*Nel/Ntot
 
               do 521 i=1,ntot
-521           write(887,*)ktot(1,i),ktot(2,i)
+521           write(887,*)ktot(1,i),ktot(2,i) ! output da vidimo kako izgleda FBZ
 
 
 
@@ -286,13 +302,13 @@ c           in Cartezi cordinates.
             endif
             endif
 c           transformation in cart.coord (also!, after this all G components are in 2pi/a0 units)
-            do 776  n=1,3
+            do 776  n=1,3 ! loop over dim
             G(n,iG)=zero
             do 777  m=1,3
             G(n,iG)=G(n,iG)+KC(n,m)*dble(Gi(m))
 777         continue
 776         continue 
-            parG(iG)=Gi(3)  
+            parG(iG)=Gi(3)  ! odreduje paritet za svaki Gi
 25          continue
 100         FORMAT(I10,I11,I11)
             CLOSE(1) 
@@ -300,12 +316,12 @@ c           transformation in cart.coord (also!, after this all G components are
 
            
 c            Reciprocal vectors for crystal local field effects calculations in array ''Glf(3,Nlf)'' 
-
-             Nlf=0
+! na temelju cutoffa eliminar G-vektore koji su izvan cut-offa
+             Nlf=0 ! broj novih local field G vektora
              if(lf.eq.1)then
-             do 813 iG=1,NG 
+             do 813 iG=1,NG ! loop over all G-vectors za 3D LFE
              if(G(1,iG).eq.0.0.and.G(2,iG).eq.0.0)then
-             Eref=Gcar*Gcar*G(3,iG)*G(3,iG)/2.0
+             Eref=Gcar*Gcar*G(3,iG)*G(3,iG)/2.0 ! energijski prag
              if(Eref.le.Ecut)then 
              Nlf=Nlf+1
              Glf(1,Nlf)=0.0
@@ -320,7 +336,7 @@ c            Reciprocal vectors for crystal local field effects calculations in 
              endif
 813          continue
              else
-             do 812 iG=1,NG 
+             do 812 iG=1,NG ! loop over all G-vectors za 1D LFE (samo u z-smjeru)
              Eref=Gcar*Gcar*(G(1,iG)*G(1,iG)+G(2,iG)*G(2,iG)+
      &       G(3,iG)*G(3,iG))/2.0
              if(Eref.le.Ecut)then 
@@ -346,7 +362,11 @@ c            Reciprocal vectors for crystal local field effects calculations in 
 
 c             IBZ q LOOP STARTS HERE!!! 
 
-              do 801 iq=42,61
+
+! iq=0 ne moze biti nula, opticki racun
+! iq=2 do iq=...cutoff transfer q vektor!
+! ikmin = min. valni vektor u BZ svi veci su visekratnici tog minimalnog
+              do 801 iq=42,61 
   
 c             searching min. q=(qx,qy,qz) in GM direction                
               kmin=1.0
@@ -405,7 +425,7 @@ c             Info file
            do 991 io=1,no
            do 661 iG=1,Nlf 
            do 662 jG=1,Nlf
-           S0(io,iG,jG)=czero
+           S0(io,iG,jG)=czero ! korelacijska funkcija (inicijalizacija)
 662        continue
 661        continue
 991        continue
@@ -413,7 +433,7 @@ c             Info file
 
 c              1.B.Z  LOOP STARTS HERE !!!!                   
 
-               do 803 ik=1,Ntot
+               do 803 ik=1,Ntot ! loop over k-points in FBZ
 
                open(122,file='status') 
                write(122,*)'iq=',iq
@@ -442,8 +462,8 @@ c              trazenje (kx,ky,kz) u ireducibilnoj zoni
                if(dabs(K22-KI(2,j)).le.eps)then 
                if(dabs(K33-KI(3,j)).le.eps)then 
                it=2
-               R1=i
-               K1=j  
+               R1=i ! pridruzena point group
+               K1=j  ! trazeni vektor u IBZ
                goto 5222
                endif
                endif
@@ -464,7 +484,7 @@ c              trazenje (kx,ky,kz) u ireducibilnoj zoni
                KQy=ky+qy
                KQz=kz+qz
 
-c              trazenje (KQx,KQy) prvo u 1.B.Z a onda u I.B.Z.
+c              trazenje (KQx,KQy) prvo u 1.B.Z a onda u I.B.Z. (jer novo genrirani k+q more bit negdje vani u FBZ)
 
                do 701 iG=1,NG
                   do 702 jK=1,Ntot
@@ -485,8 +505,8 @@ c              trazenje (KQx,KQy) prvo u 1.B.Z a onda u I.B.Z.
                      if(dabs(K22-KI(2,j)).le.eps)then 
                      if(dabs(K33-KI(3,j)).le.eps)then 
                      it=3
-                     R2=i
-                     K2=j  
+                     R2=i  ! pridruzena point gruop
+                     K2=j  ! pridruzen taj vektor pronadjen u IBZ
                      goto 2111 
                      endif
                      endif
@@ -520,27 +540,27 @@ c              K2-integer, redni broj valnog vektora K2 u transformaciji  ''K+Q=
 
 c              petlje po vrpcama n i m  
 
-               do 804 n=1,9 
-               do 805 m=10,nband  
+               do 804 n=1,9 ! loop over full bands , oprez kod metala mora ici malo iznad popunjene (n+1) 
+               do 805 m=10,nband !  loop over empty bands
             
 
 
 
 
-            call paths(root,K1,K2,n,m,pathK1,pathK2,bandn,bandm)
+            call paths(root,K1,K2,n,m,pathK1,pathK2,bandn,bandm) ! fajl za popunit wfn. za K1 i K2 i pripadajuce vrpce n i m
 
                
 c         u ovom dijelu programa se iscitava iz binarnih fileova ''gvectors.dat'',''evc.dat'' za 
 c         fiksni K1,K2,n i m 
 
 c               Otvaranje atribute za INFO
-                call iotk_open_read(10,pathK1)
-                call iotk_scan_empty(10,"INFO",attr=attr)
-                call iotk_scan_attr(attr,"igwx",NG1)
+                call iotk_open_read(10,pathK1) 
+                call iotk_scan_empty(10,"INFO",attr=attr) ! nalazi <info>
+                call iotk_scan_attr(attr,"igwx",NG1) ! koliko imamo G-vektora /
 c               Alociranje polja C1
-                allocate (C1(NG1))
+                allocate (C1(NG1)) ! u ovo trpamo fourierove koeficijent u razvoju wfn. 
 c               Ucitavanje podataka iza evc.n
-                call iotk_scan_dat(10,bandn,C1)
+                call iotk_scan_dat(10,bandn,C1) ! cita iz binranog oblika
                 call iotk_close_read(10) 
 C               Otvaranje atribute za INFO
                 call iotk_open_read(10,pathK2)
@@ -632,6 +652,7 @@ c                 omega loop
 
         	deallocate(C1)
 		deallocate(C2)
+
 
 222             continue
 
