@@ -43,7 +43,7 @@
 
 
 
-                  bandn='evc.n'
+                  bandn='evc.n' ! n-ta vrpca
                   nord=INDEX(bandn,'n', BACK = .false.)
 		  if(n.lt.10)then
                   write (bandn(nord:nord),'(i1)')n

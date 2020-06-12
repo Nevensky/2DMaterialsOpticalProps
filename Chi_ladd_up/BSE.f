@@ -34,9 +34,15 @@ c        VALID JUST FOR NORM-CONSERVING PSEUDOPOTENTIALS!!!!!!!!!!!!!!!!!!!!!!!!
 
          INTEGER NkI,Nband,ik,i,Nk,j,jk,it,lk,Ntot,nsim,iK1,iK2,
      &   NG,io,no,iq,nq,nMPx,nMPy,nMPz,n,m,iG,R1,K1,R2,K2,iG01,iG02,
-     &   Nlf,NG1,NG2,NGd,iG1,iG2,jG,Nlfd,kG,jo,jump,ni,mi,nj,mj,mod,
-     &   iGfast,ikmin,NelQE,lf,kG1,kG2,nord,io1,io2,NKBZ,ref,nKd,
-     &   pol,spin,nval,nvalLS,nmax,mmax 
+     &   Nlf,NG1,NG2,NGd,iG1,iG2,jG,Nlfd,kG,jo,jump,ni,mi,
+     &   mod,! mod = 1 -> racunaj 4-point polarizabilnost, mod = 2 izracunaj ladder struja-struja odzvinu funkciju i dodaj ju bubble
+     &   iGfast,ikmin,NelQE,lf,kG1,kG2,nord,io1,io2,
+     &   NKBZ, ! krug oko K i K' u BZ
+     &   nKd,! dimenzija Fockov kernela, koliko ima k-ova u FBZ
+     &   pol, ! polarizacija
+     &   spin, ! spin
+     &   nval, !broj valentnih vrpci bez LS vezanja 
+     &   nvalLS, ! broj valentnih vrpci sa LS vezanjem
          PARAMETER(nMPx=51,nMPy=51,nMPz=1,NkI=460,Nband=40,NelQE=26,
      &   Nk=48*NkI,NGd=4000,NG=8000,no=401,nq=121,Nlfd=50,nKd=2700)
     
@@ -45,24 +51,39 @@ c        skalars
          REAL*8 a0,c0,eps,kx,ky,kz,omin,omax,sgn,struja,
      &   qx,qy,qz,kmin,domega,o,Ef,K11,K22,K33,T,Lor,De,Gabs,kref,
      &   Eref,Ecut,Gxx1,Gyy1,Gzz1,Gxx2,Gyy2,Gzz2,fact,Vcell,oi,oj,
-     &   Q,Gcar,aBohr,zero,Nel,absq,error,o1,o2,Gama,Vbare,qmax,
-     &   Estar,KpointX,KpointY,KpointZ,qmin,vQ,GW,alpha,epsq,
-     &   valley
+     &   Q,Gcar,aBohr,zero,Nel,absq,error,o1,o2,Gama,
+     &   qmax,!maximum transfer wave vector around K point..  ne smiju se preklapati krugovi oko K i K' 
+     &   KpointX,KpointY,KpointZ,
+     &   qmin, ! minimum transfer wave vector in WT calculation, q po kojem je sampliran WT(q,omega)
+     &   vQ, ! 2*pi/Q
+     &   GW,alpha,epsq,
+     &   valley ! faktor 2x jer imamo K i K'
          DOUBLEPRECISION pi,three,Hartree,planck,eV,eta
          PARAMETER(Hartree=2.0d0*13.6056923d0,EF=1.5703/Hartree,
      &   a0=5.9715,c0=29.8575,pi=3.141592654d0,Gcar=2.0*pi/a0,
      &   eps=1.0d-4,T=0.01/Hartree,eta=0.05/Hartree,eV=1.602176487d-19,
      &   planck=6.626196d-34,Ecut=0.0,Vcell=922.0586,
      &   aBohr=0.5291772d0,zero=0.0)
-         DOUBLE COMPLEX a,ione,czero,rone,eM,G0,W,L0i,L0j,j1,j2
+         DOUBLE COMPLEX a,ione,czero,rone,eM,
+    &    G0,W, ! pomocni za G i WT
+    &    L0i,L0j, ! vezano uz propagator slobodnih el.-supljina para (no scattering)
+    &    j1,j2 ! strujni vrhovi po polarizaciji i valnom vekt.
 
 
 c        arrays
          INTEGER Gfast,Gi,parG
-         REAL*8 kI,E,R,RI,k,ktot,G,Glf,KC,V,KBZ,Delta
-         COMPLEX*8 MnmK1K2,WT,FockK,Xi0,Lladd,current,chi_ladd,
-     &   chi_para 
-         DOUBLE COMPLEX Fock,unit
+         REAL*8 kI,E,R,RI,k,ktot,G,Glf,KC,
+     &   KBZ, ! krugovi u FBZ,
+     &   Delta ! Delta(ik1)=E(K1,nvalLS-1)-E(K1,nvalLS+1)
+         COMPLEX*8 MnmK1K2,WT,
+     &   FockK, ! Fockov Kernel (tj. matr. el. od W)
+     &   Xi0, ! prepis jedn.
+     &   Lladd, !  4-point polarizabilnosti L^ladd
+     &   current, ! strujni vrhovi
+     &   chi_ladd, ! zatvaranje ladder dijagram a strujnim vrhovima
+     &   chi_para ! Paramagnetska struja-struja polarizabilost  = obicni RPA bubble  (bez W)
+         DOUBLE COMPLEX Fock, ! Fockov Kernel (tj. matr. el. od W)
+     &   unit
          DIMENSION kI(3,NkI),E(NkI,Nband),R(48,3,3),RI(48,3,3),
      &   k(3,Nk),ktot(3,Nk),G(3,NG),Glf(3,Nlfd),MnmK1K2(2,Nlfd),
      &   Gfast(Nlfd*NGd),KC(3,3),Gi(3),WT(nq,Nlfd,Nlfd),parG(NG),
@@ -140,7 +161,7 @@ c             For spin down put spin=2
               jump=1
               three=3.0d0
               omin=1.0d-5
-              omax=4.0/Hartree
+              omax=4.0/Hartree ! 0eV do 4eV jer iza ladder term nije dobar
               domega=(omax-omin)/(no-1)
             
 
@@ -156,7 +177,7 @@ c             broj valentnih vrpci bez LS vezanja
 c             broj valentnih vrpci sa LS vezanjem (full-rel. PP) 
               nvalLS=26
 c             band gap correction (in eV)
-              GW=1.0
+              GW=1.0 ! rucna korekcija, scissor operator
              
 
 
@@ -429,7 +450,7 @@ c            generiranje 'male' BZ
 104          continue  
 103          continue
 
-c            Pomak 'male BZ' u K tocku  
+c            Pomak 'male BZ' iz 0 0 0 u K tocku  
 
 
               do 709 i=1,NKBZ
@@ -650,8 +671,8 @@ c              trazenje K' prvo u 1.B.Z a onda u I.B.Z.
                 endif
       
 
-
-                Qx=KBZ(1,iK2)-KBZ(1,iK1)
+                ! transfer vektor q koji ulazi u W(q)
+                Qx=KBZ(1,iK2)-KBZ(1,iK1) 
                 Qy=KBZ(2,iK2)-KBZ(2,iK1)
                 Q=Gcar*sqrt(Qx*Qx+Qy*Qy) 
                 iq=Q/qmin+1 
@@ -670,8 +691,8 @@ c              iG01 i iG02 su integeri rec vec. G koji translatira K i K' u 1BZ
 c             vrpca n 
               do 804  n=nval,nval+1 
        
-                      if(n.eq.nval)ni=1          
-                      if(n.eq.nval+1)ni=2   
+                      if(n.eq.nval) ni=1          
+                      if(n.eq.nval+1) ni=2   
 c             vrpca m 
               do 8004 m=n,n
 
@@ -787,7 +808,7 @@ c               end of n loop
 554             continue
 513             continue
 
-c               komponenta Q=0 
+c               komponenta Q=0 korekcija
                 elseif(ik1.eq.ik2)then 
                 FockK(ik1,ik2)=-Vcell*Ntot*log(1.0+alpha*epsq)/alpha
                 endif 
@@ -1114,7 +1135,7 @@ c               Konstrukcija matrice Xi0=L^0*Xi^FL^0
 1002            continue
  
              
-                
+                ! inverzija Fock kernela
                 call gjel(Fock,NKBZ,nkd,unit,NKBZ,nkd)
                 
 
