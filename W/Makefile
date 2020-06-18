@@ -16,13 +16,13 @@ Loss: $(OBJECTS)
 	${FC} $(OBJECTS) ${LDFLAGS} -o Loss
 
 Sloss.o: Sloss.f
-	${FC} ${FFLAGS} -c  Sloss.f
+	${FC} ${FFLAGS} -c  Sloss.f90
 
 PointR.o: PointR.f
-	${FC} ${FFLAGS} -c PointR.f
+	${FC} ${FFLAGS} -c PointR.f90
 
 paths.o: paths.f
-	${FC} ${FFLAGS} -c paths.f
+	${FC} ${FFLAGS} -c paths.f90
 
 gjel.o: gjel.f
 	${FC} ${FFLAGS} -c gjel.f

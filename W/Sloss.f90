@@ -31,8 +31,8 @@ use ISO_Fortran_env ! precision kind, fortran 2008
 use iotk_module
 implicit none
 
-CHARACTER (LEN=1) :: iotk_attlenx) :: attr
-LOGICAL :: :: found
+CHARACTER (LEN=iotk_attlenx) :: attr
+LOGICAL :: found
 
 ! single / double precision
 INTEGER, PARAMETER :: sp = real32
@@ -64,7 +64,7 @@ INTEGER, PARAMETER :: Nlfd = 50
 
 
 ! scalars
-REAL(kind=sp) :: kx,ky,kz,
+REAL(kind=sp) :: kx,ky,kz
 REAL(kind=sp) :: KQx,KQy,KQz
 REAL(kind=sp) :: qgx,qgy,qgz
 REAL(kind=sp) :: omin,omax
@@ -125,7 +125,7 @@ COMPLEX(kind=dp), PARAMETER :: rone = CMPLX(0.0,1.0)
 COMPLEX(kind=sp) :: G0
 
 ! scalar arrays
-INTEGER, DIMENSION(Nlfd*NGd) :: Gfast, ! pomocna funkcija
+INTEGER, DIMENSION(Nlfd*NGd) :: Gfast ! pomocna funkcija
 INTEGER, DIMENSION(3) :: Gi ! pomocna funkcija
 INTEGER, DIMENSION(NG) :: parG ! paritet svakog valnog vektora
 
@@ -277,9 +277,9 @@ DO  i = 1,nsim
         !     END IF
         !   END IF
         ! END IF
-        IF( ABS(k(1,jk)-k(1,lk)) <= eps .AND. 
-          & ABS(k(2,jk)-k(2,lk)) <= eps .AND. 
-          & ABS(k(3,jk)-k(3,lk)) <= eps ) THEN
+        IF( ABS(k(1,jk)-k(1,lk)) <= eps .AND. &
+            ABS(k(2,jk)-k(2,lk)) <= eps .AND. &
+            ABS(k(3,jk)-k(3,lk)) <= eps ) THEN
           it=2
         END IF
       END DO
@@ -322,9 +322,9 @@ DO  ik = 1,Ntot
           ! IF(ABS(K11-kI(1,j)) <= eps) THEN
           !   IF(ABS(K22-kI(2,j)) <= eps) THEN
           !     IF(ABS(K33-kI(3,j)) <= eps) THEN
-          IF ( ABS(K11-kI(1,j)) <= eps .AND. 
-            &  ABS(K22-kI(2,j)) <= eps .AND.
-            &  ABS(K33-kI(3,j)) <= eps ) THEN
+          IF ( ABS(K11-kI(1,j)) <= eps .AND. &
+               ABS(K22-kI(2,j)) <= eps .AND. &
+               ABS(K33-kI(3,j)) <= eps ) THEN
             it = 2
             K1 = j
             ! GO TO 5022
@@ -559,9 +559,9 @@ DO  iq = 42,61
           !     END IF
           !   END IF
           ! END IF
-          IF(       ABS(K11-kI(1,j)) <= eps 
-            & .and. ABS(K22-kI(2,j)) <= eps
-            & .and. ABS(K33-kI(3,j)) <= eps ) THEN
+          IF(       ABS(K11-kI(1,j)) <= eps &
+              .and. ABS(K22-kI(2,j)) <= eps &
+              .and. ABS(K33-kI(3,j)) <= eps ) THEN
             it=2
             R1=i
             K1=j
@@ -586,9 +586,9 @@ DO  iq = 42,61
     iG_loop: DO  iG = 1,NG
       DO  jk = 1,Ntot
         ! vito smanjenje If if if loop
-        IF(ABS(KQx-G(1,iG)-ktot(1,jk)) <= eps .and.
-        &  ABS(KQy-G(2,iG)-ktot(2,jk)) <= eps .and.
-        &  ABS(KQz-G(3,iG)-ktot(3,jk)) <= eps ) THEN
+        IF(ABS(KQx-G(1,iG)-ktot(1,jk)) <= eps .and. &
+           ABS(KQy-G(2,iG)-ktot(2,jk)) <= eps .and. &
+           ABS(KQz-G(3,iG)-ktot(3,jk)) <= eps ) THEN
           it=2
           iG0 = iG
           DO  i = 1,nsim
@@ -599,9 +599,9 @@ DO  iq = 42,61
             K33 = RI(i,3,1)*ktot(1,jk)+RI(i,3,2)*ktot(2,jk)+  &
                 RI(i,3,3)*ktot(3,jk)
             DO  j = 1,NkI
-              IF(ABS(K11-kI(1,j)) <= eps .and.
-              &  ABS(K22-kI(2,j)) <= eps .and.
-              &  ABS(K33-kI(3,j)) <= eps ) THEN
+              IF(ABS(K11-kI(1,j)) <= eps .and. &
+                 ABS(K22-kI(2,j)) <= eps .and. &
+                 ABS(K33-kI(3,j)) <= eps ) THEN
                 it = 3
                 R2 = i
                 K2 = j
@@ -751,9 +751,9 @@ DO  iq = 42,61
                 !     END IF
                 !   END IF
                 ! END IF
-                IF( ABS(Gxx2-Gxx1) < eps .AND. 
-                  & ABS(Gyy2-Gyy1) < eps .AND. 
-                  & ABS(Gzz2-Gzz1) < eps) THEN
+                IF( ABS(Gxx2-Gxx1) < eps .AND. &
+                    ABS(Gyy2-Gyy1) < eps .AND. &
+                    ABS(Gzz2-Gzz1) < eps) THEN
                     Gfast(iGfast) = iG2
                     ! GO TO 1111
                     EXIT iG2_loop
@@ -842,14 +842,16 @@ DO  iq = 42,61
         ELSE IF(io == 2) THEN
           DO  jo = 1,no
             oj = (jo-1)*domega
-            IF(jo /= io)fact=domega/(oi-oj)
+            IF(jo /= io) THEN
+              fact=domega/(oi-oj)
             ELSE IF(jo == 1) THEN
               fact=1.0
             ELSE IF(jo == 2) THEN
               fact=0.0
             ELSE IF(jo == 3) THEN
               fact=-3.0/2.0
-            ELSE IF(jo == no)fact=0.5*domega/(oi-oj)
+            ELSE IF(jo == no) THEN
+              fact=0.5*domega/(oi-oj)
             ELSE
               PRINT *,* "WARNING jo loop condition not satisfied."
             END IF
@@ -923,8 +925,8 @@ DO  iq = 42,61
 !                MATRIX V(G,G')
     
     DO  iG = 1,Nlf
-      Gabs = SQRT( (qx+GlfV(1,iG))*(qx+GlfV(1,iG)) +  
-                 & (qy+GlfV(2,iG))*(qy+GlfV(2,iG)) )
+      Gabs = SQRT( (qx+GlfV(1,iG))*(qx+GlfV(1,iG)) +  &
+                   (qy+GlfV(2,iG))*(qy+GlfV(2,iG)) )
       IF(Gabs == 0.0) THEN 
         Gabs = eps
       END IF
