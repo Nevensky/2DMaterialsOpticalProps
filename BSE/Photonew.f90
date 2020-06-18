@@ -11,7 +11,10 @@ PROGRAM foton
 
 implicitnone
 
-INTEGER :: n,no,nq,noladd,nl,pol
+INTEGER :: n,no,nq,
+& noladd, ! broj frekvencijskih koraka u ladder odzivnoj funkciji (polarizabilnosti)
+& nl, ! broj slojeva (layera)
+& pol
 
 !       Nlfd je minimalno 2 zbog 2X2 blok matrice za p mod
 PARAMETER(no=5001,noladd=401,nq=401,nl=30)
@@ -183,7 +186,8 @@ q_loop: DO iq=1,nq
     eps=czero
     DO  i=1,nl
       DO  j=1,nl
-        eps(i,j)= -pixx(io)*d0*EXP(ione*h*beta*ABS(DBLE(i)-DBLE(j)))
+        ! za multilayere nalazi efektivni epsilon = relativna permitivnost
+        eps(i,j)= -pixx(io)*d0*EXP(ione*h*beta*ABS(REAL(i)-REAL(j)))
         UNIT(i,j)=czero
         pi0(i,j)=czero
       END DO
@@ -192,11 +196,12 @@ q_loop: DO iq=1,nq
       pi0(i,i)=pixx(io)
     END DO
     
-    CALL gjel(eps,nl,nl,UNIT,nl,nl)
+    CALL gjel(eps,nl,nl,UNIT,nl,nl) ! invertiranje (dio Dysonove jedn.)
     
     pip=czero
     DO  i=1,nl
-      pip=pip+eps(1,i)*pi0(i,1)
+      ! Dysonova jedn.
+      pip=pip+eps(1,i)*pi0(i,1)  
     END DO
     
     

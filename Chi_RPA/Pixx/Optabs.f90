@@ -24,8 +24,11 @@ LOGICAL :: :: found
 
 INTEGER :: nki,nband,ik,i,nk,j,jk,it,lk,ntot,ig0,nsim,  &
     ng,io,no,iq,nq,nmpx,nmpy,nmpz,n,m,ig,r1,k1,r2,k2,  &
-    nlf,ng1,ng2,ngd,ig1,ig2,jg,nlfd,kg,jo,MOD,jump,  &
-    igfast,ikmin,nelqe,pol,frac,lf,nocc
+    nlf,ng1,ng2,ngd,ig1,ig2,jg,nlfd,kg,jo,&
+    & MOD, ! mod=1 tenzor korelacijske funkcije, mod=2 struja-struja tenzor (Kramers-Krroning)
+    & jump,igfast,ikmin,nelqe,
+    & pol, ! polarizacija
+    & frac,lf,nocc
 PARAMETER(nmpx=51,nmpy=51,nmpz=1,nki=6835,nband=60,nocc=9,  &
     nelqe=18,nk=48*nki,ngd=4000,ng=8000,no=5001,nq=1,nlfd=20)
 
@@ -49,7 +52,9 @@ DOUBLE COMPLEX ione,czero,rone,em
 INTEGER :: gfast,gi
 REAL*8 ki,e,r,ri,k,ktot,g,glf,v,kc,f,kk
 DOUBLE COMPLEX UNIT,epsilon
-COMPLEX*8 mnmk1k21,pi_dia,pi_tot,mnmk1k22,qeff,s0
+COMPLEX*8 mnmk1k21,pi_dia,pi_tot,mnmk1k22,
+&qeff, ! efektivni naboj, matrica kad imam LFE
+& s0
 DIMENSION ki(3,nki),e(nki,nband),r(48,3,3),ri(48,3,3),  &
     k(3,nk),ktot(3,nk),v(nlfd,nlfd),g(3,ng),  &
     glf(3,nlfd),mnmk1k21(nlfd),UNIT(nlfd,nlfd),  &
@@ -117,9 +122,9 @@ root=trim(root1)//trim(root2)
 !             Crystal local field effects are included in z direction lf=1
 !             Crystal local field effects are included in x,y,z direction lf=3
 
-MOD=2
+MOD=2 ! racun struja-struja tenzora preko Kramers Kronings
 lf=1
-pol=1
+pol=1 ! polrizacija u x-smjeru
 
 !             CORRELATION FUNCTIONS, CURRENT-CURRENT RESPONSE FUNCTIONS and
 !             EFFECTIVE CHARGE CARRIERS MATRIX OUTPUTS
@@ -148,7 +153,7 @@ domega=(omax-omin)/(no-1)
 !      CALL FOR POINT GROUP TRANSFORMATIONS
 
 
-CALL pointr(root,nsim,r,ri,f)
+CALL pointR(root,nsim,r,ri,f)
 
 
 
@@ -351,9 +356,9 @@ END IF
 
 
 
-!             q LOOP STARTS HERE!!!
+!          IBZ   q LOOP STARTS HERE!!!
 
-DO  iq=nq,nq
+DO  iq=nq,nq ! nq=1 u optickom smo limesu, dakle ne treba na do loop po q
   
 !             searching for the smalest 'optical' q
   kmin=1.0
@@ -416,7 +421,7 @@ DO  iq=nq,nq
   
   
   
-  s0=czero
+  s0=czero 
   qeff=czero
   
   OPEN(74,FILE=dato1)
@@ -630,11 +635,12 @@ DO  iq=nq,nq
               1111              CONTINUE
               ig2=gfast(igfast)
               IF(ig2 <= ng2)THEN
+                ! ako je polarazcija je tipa xx, yy, zz 
                 IF(pol /= 4)THEN
                   mnmk1k21(ig)=mnmk1k21(ig)+  &
                       0.5D0*CONJG(c1(ig1))*struja*c2(ig2)
-                  mnmk1k22(ig)=mnmk1k21(ig)
-                ELSE
+                  mnmk1k22(ig)=mnmk1k21(ig) ! strujni vrhovi su isti
+                ELSE ! ako  su miksani xy, xz,... onda izvrsi ovo
                   mnmk1k21(ig)=mnmk1k21(ig)+  &
                       0.5D0*CONJG(c1(ig1))*strujay*c2(ig2)
                   mnmk1k22(ig)=mnmk1k22(ig)+  &
@@ -645,7 +651,7 @@ DO  iq=nq,nq
             END DO
 !                 kraj po C.L.F. iG
           END DO
-          jump=2
+          jump=2 ! za svaki valni vektor q i dani k zapamti Gfast i za svaku vrpcu preskaci taj postupak
           
           
           IF(n /= m)THEN
@@ -653,7 +659,9 @@ DO  iq=nq,nq
             DO  io=-no,no
               o=io*domega
               de=o+e(k1,n)-e(k2,m)
+              ! gama_inter je sirina interband prijelaza
               lor=gama_inter/(de*de+gama_inter*gama_inter)
+              ! reze repove lorentziana lijevo i desno, pazljivo, minimum 1.0d-3, preporuceno 1.0d-5
               IF(DABS(lor) >= 1.0D-5/gama_inter)THEN
                 DO  ig=1,nlf
                   DO  jg=1,nlf
@@ -671,6 +679,7 @@ DO  iq=nq,nq
             fact=-fact/t
             DO  ig=1,nlf
               DO  jg=1,nlf
+                ! izracun intraband korelacijske funkcije
                 qeff(ig,jg)=qeff(ig,jg)  &
                     +2.0*fact*mnmk1k21(ig)*CONJG(mnmk1k22(jg)) /(ntot*vcell)
               END DO
@@ -701,7 +710,7 @@ DO  iq=nq,nq
   
 !              WRITING CORFUN S0_\mu\nu
 !              WRITTING Q_eff_\mu\nu
-  DO  io=-no,no
+  DO  io=-no,no ! opskurni razlog za prosirenje raspona frekvencija na negativne da se korektno izracuna spektar kristala koji nemaju centar inverzije
     o=io*domega
     WRITE(74,*)'omega=',o,'Hartree'
     WRITE(74,44)((s0(io,ig,jg),jg=1,nlf),ig=1,nlf)
@@ -717,7 +726,7 @@ DO  iq=nq,nq
 !               SECOND PART OF THE PROGRAM mod=2
 !               Calculation of the matrix '''Pi_\mu\nu'' by using matrix ''S0_\mu\nu(G,G')'' and Kramers-Krroning relations
   
-  888             CONTINUE
+  888             CONTINUE 
   
   OPEN(74,FILE=dato1)
   DO  io=-no,no
@@ -863,10 +872,11 @@ DO  iq=nq,nq
             imchi0=imchi0+fact*imag(s0(-jo+1,ig,jg))
           END DO
         END IF
+        ! ovaj dio je razlicit od Sloss, s0 je kompleksno polje
         imchi0=imchi0-pi*REAL(s0(io-1,ig,jg))
         
-        IF(io == 1)pi_dia(ig,jg)=-CMPLX(rechi0,zero)
-        pi_tot(ig,jg)=CMPLX(rechi0,imchi0)
+        IF(io == 1)pi_dia(ig,jg)=-CMPLX(rechi0,zero) ! diamagnetski doprinos ??
+        pi_tot(ig,jg)=CMPLX(rechi0,imchi0) ! Pi_RPA = PiDIJAMAGNETSKI + PiPARAMAGNETSKI
         pi_tot(ig,jg)=pi_tot(ig,jg)+pi_dia(ig,jg)
         
 !                   dodavanje intraband clana

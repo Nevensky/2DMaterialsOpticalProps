@@ -181,7 +181,7 @@ END DO
 
 
 
-jk=0 ! k tocka u ...?
+jk=0 ! indeks k tocka u 1BZ
 ntot=0
 DO  i=1,nsim ! loop over No. symmetries
   DO  ik=1,nki  ! loop over k points in IBZ
@@ -624,10 +624,11 @@ DO  iq=42,61
         
         
 !                 omega loop
-        DO  io=1,no
+        DO  io=1,no ! opskurni razlog za prosirenje raspona frekvencija -no,no ali nije toliko bitno za staticki screening
           o=(io-1)*domega
           de=o+e(k1,n)-e(k2,m)
-          lor=-gama/(de*de+gama*gama)
+          lor=-gama/(de*de+gama*gama) ! lorentzian
+          ! reze repove lorentziana lijevo i desno, pazljivo, minimu 1.0d-3, preporuceno 1.0d-5
           IF(DABS(lor) >= 1.0D-3/gama)THEN
             DO  ig=1,nlf
               DO  jg=1,nlf
