@@ -751,7 +751,11 @@ DO  ik1=1,nkbz
             gyy1=ri(r2,2,1)*k11+ri(r2,2,2)*k22+ri(r2,2,3)*k33
             gzz1=ri(r2,3,1)*k11+ri(r2,3,2)*k22+ri(r2,3,3)*k33
             IF(jump == 1)THEN
+<<<<<<< HEAD
               ig2_loop: DO  ig2=1,ng2
+=======
+              DO  ig2=1,ng2
+>>>>>>> master
                 gfast(igfast)=ng2+1
                 gxx2=g(1,ig2)
                 gyy2=g(2,ig2)
@@ -760,14 +764,22 @@ DO  ik1=1,nkbz
                   IF(DABS(gyy2-gyy1) < eps)THEN
                     IF(DABS(gzz2-gzz1) < eps)THEN
                       gfast(igfast)=ig2
+<<<<<<< HEAD
                       ! GO TO 1111
                       exit ig2_loop
+=======
+                      GO TO 1111
+>>>>>>> master
                     END IF
                   END IF
                 END IF
               END DO
             END IF
+<<<<<<< HEAD
             ! 1111              CONTINUE
+=======
+            1111              CONTINUE
+>>>>>>> master
             ig2=gfast(igfast)
             IF(ig2 <= ng2)THEN
               mnmk1k2(ni,ig)=mnmk1k2(ni,ig)+ CONJG(c1(ig1))*c2(ig2)

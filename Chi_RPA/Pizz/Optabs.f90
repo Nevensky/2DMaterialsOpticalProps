@@ -119,7 +119,11 @@ root=trim(root1)//trim(root2)
 
 MOD=2
 lf=1
+<<<<<<< HEAD
 pol=3 ! definira polarizaciju u z smjeru
+=======
+pol=3
+>>>>>>> master
 
 !             CORRELATION FUNCTIONS, CURRENT-CURRENT RESPONSE FUNCTIONS and
 !             EFFECTIVE CHARGE CARRIERS MATRIX OUTPUTS
