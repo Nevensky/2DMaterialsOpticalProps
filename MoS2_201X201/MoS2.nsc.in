@@ -4,8 +4,8 @@
     prefix		= 'MoS2'
     tstress 		= .false.
     tprnfor 		= .true.
-    pseudo_dir 		= '/home/vito/PROJECTS/MoS2-BSE/MoS2_201X201/PSEUDO',
-    outdir		= './'
+    pseudo_dir 		= '../PSEUDO',
+    outdir		= '/home/nevensky/hdd2tb/tmp'
     wf_collect		= .true.
  /
  &system

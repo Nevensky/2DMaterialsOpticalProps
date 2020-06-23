@@ -78,7 +78,6 @@ REAL(kind=sp) :: De
 REAL(kind=sp) :: Gabs ! 
 REAL(kind=sp) :: kref
 REAL(kind=sp) :: Eref
-REAL(kind=sp) :: Ecut
 REAL(kind=sp) :: Gxx1,Gyy1,Gzz1
 REAL(kind=sp) :: Gxx2,Gyy2,Gzz2
 REAL(kind=sp) :: fact
@@ -98,7 +97,11 @@ REAL(kind=sp) :: SKK = 0.0
 REAL(kind=sp) :: WindKK
 REAL(kind=sp) :: krefM
 
-
+REAL(kind=dp), PARAMETER :: pi = 4.D0*ATAN(1.D0)
+REAL(kind=dp), PARAMETER :: eV = 1.602176487D-19
+REAL(kind=dp), PARAMETER :: Hartree = 2.0D0*13.6056923D0
+REAL(kind=dp), PARAMETER :: Planck = 6.626196D-34
+REAL(kind=dp), PARAMETER :: three = 3.0d0 
 
 REAL(kind=sp), PARAMETER :: Efermi = 0.5554/Hartree
 REAL(kind=sp), PARAMETER :: a0 = 5.9715
@@ -111,11 +114,7 @@ REAL(kind=sp), PARAMETER :: Ecut = 0.0
 REAL(kind=sp), PARAMETER :: Vcell = 922.0586
 REAL(kind=sp), PARAMETER :: aBohr = 0.5291772D0
 
-REAL(kind=dp), PARAMETER :: pi = 4.D0*ATAN(1.D0)
-REAL(kind=dp), PARAMETER :: eV = 1.602176487D-19
-REAL(kind=dp), PARAMETER :: Hartree = 2.0D0*13.6056923D0
-REAL(kind=dp), PARAMETER :: Planck = 6.626196D-34
-REAL(kind=dp), PARAMETER :: three = 3.0d0 
+
 
 COMPLEX(kind=dp), PARAMETER :: ione = CMPLX(1.0,0.0)
 COMPLEX(kind=dp), PARAMETER :: czero = CMPLX(0.0,0.0)
@@ -143,13 +142,17 @@ REAL(kind=sp), DIMENSION(3,3) :: KC ! pomocna funkcija
 REAL(kind=sp), DIMENSION(3,Nlfd) :: Glf ! local field effect polje valnih vekt. u rec. prost.
 REAL(kind=sp), DIMENSION(3,Nlfd) :: GlfV ! local field effect za nescreenanu (golu) int. V
 
+
+! Nldf dimenziju ne znamo a priori zapravo, trebalo bi staviti sve te matrice allocatable i 
+! naknadno ih alocirati
+
 COMPLEX(kind=dp), DIMENSION(Nlfd,Nlfd) :: Imat ! jedinicna matr.
 COMPLEX(kind=dp), DIMENSION(Nlfd,Nlfd) :: diel_epsilon ! Epsilon (GG')  = I - V(GG')Chi0
 COMPLEX(kind=sp), DIMENSION(Nlfd,Nlfd) :: Chi ! bio je dp
 
 COMPLEX(kind=sp), DIMENSION(Nlfd) :: MnmK1K2 ! nabojni vrhovi
 COMPLEX(kind=sp), DIMENSION(Nlfd,Nlfd) :: Chi0 ! (eq. 2.89)
-COMPLEX(kind=sp), DIMENSION(no,Nlfd,Nlf) :: WT ! time ordered RPA screened coulomb int. (eq. 2.93)
+COMPLEX(kind=sp), DIMENSION(no,Nlfd,Nlfd) :: WT ! time ordered RPA screened coulomb int. (eq. 2.93)
 COMPLEX(kind=sp), DIMENSION(Nlfd,Nlfd) :: Gammap ! za GW ne koristi se za ovaj dio ????
 COMPLEX(kind=sp), DIMENSION(Nlfd,Nlfd) :: Gammam
 
@@ -304,7 +307,7 @@ DO  ik = 1,Ntot
   band_loop : DO  n = 1,Nband
     IF(n == 1) THEN
       it = 1
-    END IF
+!    END IF
     IF(ik <= NkI) THEN
       K1 = ik
       it = 2
@@ -346,7 +349,7 @@ DO  ik = 1,Ntot
     ! vito - vjerojatno nepotrebno , te
     ! IF(E(K1,n) < Efermi) THEN 
     !   Nel = Nel + 1.0
-    END IF
+    ! END IF
   END DO band_loop
 END DO
 Nel = 2.0*Nel / Ntot
@@ -834,7 +837,7 @@ DO  iq = 42,61
             ELSE IF(jo == no) THEN
               fact = 0.5*domega/oj
             ELSE
-              PRINT *,* "WARNING jo loop condition not satisfied."
+              PRINT *,  "WARNING jo loop condition not satisfied."
             END IF
             ReChi0 = ReChi0 + fact*S0(jo,iG,jG)
           END DO
@@ -853,7 +856,7 @@ DO  iq = 42,61
             ELSE IF(jo == no) THEN
               fact=0.5*domega/(oi-oj)
             ELSE
-              PRINT *,* "WARNING jo loop condition not satisfied."
+              PRINT *,  "WARNING jo loop condition not satisfied."
             END IF
             ReChi0 = ReChi0 + fact*S0(jo,iG,jG)
             fact = domega/(oi+oj)
@@ -876,7 +879,7 @@ DO  iq = 42,61
             ELSE IF(jo == no) THEN
               fact = -1.0
             ELSE 
-              PRINT *,* "WARNING jo loop condition not satisfied."
+              PRINT *,  "WARNING jo loop condition not satisfied."
             END IF
             ReChi0 = ReChi0 + fact*S0(jo,iG,jG)
             fact = domega/(oi+oj)
@@ -901,12 +904,13 @@ DO  iq = 42,61
             ELSE IF(jo == no) THEN
               fact = 0.5*domega/(oi-oj)
             ELSE 
-              PRINT *,* "WARNING jo loop condition not satisfied."
+              PRINT *,  "WARNING jo loop condition not satisfied."
             END IF
             ReChi0 = ReChi0 + fact*S0(jo,iG,jG)
             fact = domega/(oi+oj)
             IF(jo == 1 .OR. jo == no) THEN
               fact = 0.5*domega/(oi+oj)
+            END IF
             ReChi0 = ReChi0 - fact*S0(jo,iG,jG)
           END DO
         END IF
@@ -1034,7 +1038,7 @@ DO  iq = 42,61
   
   
 ! new sum over omega
-  DO  io = 1,no-1
+  omega_loop: DO  io = 1,no-1
     ! print*,io
     oi = (io-1)*domega
     DO  iG = 1,Nlf
@@ -1053,7 +1057,7 @@ DO  iq = 42,61
             ELSE IF(jo == no) THEN
               fact = 0.5*domega/oj
             ELSE
-              PRINT *,* "WARNING jo loop condition not satisfied."
+              PRINT *,  "WARNING jo loop condition not satisfied."
             END IF
             W1 = W1 - fact*S0(jo,iG,jG)
           END DO
@@ -1075,7 +1079,7 @@ DO  iq = 42,61
             ELSE IF(jo == no) THEN
               fact = 0.5*domega/(oi-oj)
             ELSE
-              PRINT *,* "WARNING jo loop condition not satisfied."
+              PRINT *,  "WARNING jo loop condition not satisfied."
             END IF             
             W1 = W1 + fact*S0(jo,iG,jG)
             fact = domega/(oi+oj)
@@ -1101,7 +1105,7 @@ DO  iq = 42,61
             ELSE IF(jo == no) THEN
               fact = -1.0
             ELSE
-              PRINT *,* "WARNING jo loop condition not satisfied."
+              PRINT *,  "WARNING jo loop condition not satisfied."
             END IF
             W1 = W1 + fact*S0(jo,iG,jG)
             fact = domega / (oi+oj)
@@ -1131,7 +1135,7 @@ DO  iq = 42,61
             ELSE IF(jo == no) THEN
               fact = 0.5*domega/(oi-oj)
             ELSE
-              PRINT *,* "WARNING jo loop condition not satisfied."
+              PRINT *,  "WARNING jo loop condition not satisfied."
             END IF
             W1 = W1 + fact*S0(jo,iG,jG)
             fact = domega/(oi+oj)
@@ -1165,12 +1169,13 @@ DO  iq = 42,61
     fact = domega
     IF(io == 1 .OR. io == no-1) THEN
       fact = 0.5*domega
+    END IF
     KKS = KKS + fact*(WindKK-Wind)*(WindKK-Wind)
     SKK = SKK + fact*Wind*Wind
     
     
 !                kraj nove petlje po omega
-  END DO
+  END DO omega_loop
   CLOSE(74)
   
   
