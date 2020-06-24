@@ -126,8 +126,8 @@ c               b(3) = (  0.000000 -0.000000  0.200000 )
 
 
 c             QUANTUM ESSPRESSO IMPUTS:
-              root='/home/vito/PROJECTS/MoS2-BSE/MoS2_201X201'
-              
+c              root='/home/vito/PROJECTS/MoS2-BSE/MoS2_201X201'
+              root='/home/nevensky/Repositories/2d-quasiparticle-optical-properties/MoS2_201X201'
 c             Crystal local field effects are included in z direction lf=1 
 c             Crystal local field effects are included in x,y,z direction lf=3 
 

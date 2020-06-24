@@ -19,7 +19,7 @@ Sloss.o: Sloss.f
 	${FC} ${FFLAGS} -c  Sloss.f90
 
 PointR.o: PointR.f
-	${FC} ${FFLAGS} -c PointR.f90
+	${FC} ${FFLAGS} -c PointR.f
 
 paths.o: paths.f
 	${FC} ${FFLAGS} -c paths.f90

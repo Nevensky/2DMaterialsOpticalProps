@@ -62,6 +62,9 @@ INTEGER, PARAMETER :: no = 2001
 INTEGER, PARAMETER :: nq = 2
 INTEGER, PARAMETER :: Nlfd = 50
 
+! file i/o debug
+INTEGER :: ist,ist2,ist3,ist4
+INTEGER :: lno,lno2,lno3,lno4
 
 ! scalars
 REAL(kind=sp) :: kx,ky,kz
@@ -195,7 +198,7 @@ COMPLEX(kind=sp), POINTER, DIMENSION(:) :: C1,C2 ! Fourierovi koef. u razvoju wf
 
 
 !             QUANTUM ESSPRESSO IMPUTS:
-root='/home/vito/PROJECTS/MoS2-BSE/MoS2_201X201'
+root='/home/nevensky/Repositories/2d-quasiparticle-optical-properties/MoS2_201X201'
 
 !             Crystal local field effects are included in z direction lf=1
 !             Crystal local field effects are included in x,y,z direction lf=3
@@ -228,10 +231,10 @@ path=trim(root)//trim(fajl)
 OPEN(10,FILE=path)
 DO  ik = 1,NkI
   IF(ik == 1) THEN
-    READ(1,*) nis
+    READ(10,*) nis
   END IF
-  READ(1,'(10X,f10.3,f10.3,f10.3)') kI(1,ik),kI(2,ik),kI(3,ik)
-  READ(1,'(10F8.4)') (E(ik,i),i=1,Nband)
+  READ(10,'(10X,f10.3,f10.3,f10.3)') kI(1,ik),kI(2,ik),kI(3,ik)
+  READ(10,'(10F8.4)') (E(ik,i),i=1,Nband)
 END DO
 CLOSE(10)
 ! 10          FORMAT(10F8.4)
@@ -367,29 +370,32 @@ END DO
 fajl='/MoS2.sc.out'
 path=TRIM(root)//TRIM(fajl)
 tag='     reciprocal axes: (cart. coord.'
-OPEN(10,FILE=path)
+OPEN(30,FILE=path,status='old')
 DO  i = 1,100000
-  READ(1,'(a)')buffer
+  READ(10,'(a)') buffer
+  lno=lno+1
   IF(buffer == tag) THEN
     DO  j=1,3
-      READ(1,'(23X,3F10.3)') KC(1,j), KC(2,j), KC(3,j)
+      READ(10,'(23X,3F10.3)',err=10001,iostat=ist,end=20001) KC(1,j), KC(2,j), KC(3,j)
     END DO
     EXIT
   END IF
 END DO
 ! 70          FORMAT(23X,3F10.3)
-CLOSE(10)
+10001   write(*,*)'Error reading line ',lno+1,', iostat = ',ist
+20001   write(*,*)'Number of lines read = ',lno
+CLOSE(30)
 
 
 ! Reading the reciprocal vectors in crystal coordinates and transformation
 ! in Cartesian cordinates.
-OPEN(10,FILE='gvectors.dat')
+OPEN(20,FILE='gvectors.dat')
 DO  i=1,8
-  READ(1,*) nis
+  READ(10,*) nis
 END DO
 G = 0.0 ! vito - premjesteno iz n,m loopa
 DO  iG = 1,NG
-  READ(1,'(i10,i11,i11)') Gi(1),Gi(2),Gi(3)
+  READ(10,'(i10,i11,i11)') Gi(1),Gi(2),Gi(3)
   IF(iG == 1) THEN
     IF(Gi(1) /= 0 .OR. Gi(2) /= 0 .OR. Gi(3) /= 0) THEN
       PRINT*,'*********************************'
@@ -408,7 +414,7 @@ DO  iG = 1,NG
   parG(iG)=Gi(3)
 END DO
 ! 100         FORMAT(i10,i11,i11)
-CLOSE(10)
+CLOSE(20)
 
 
 
