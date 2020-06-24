@@ -216,7 +216,7 @@ domega=(omax-omin)/(no-1)
 !           CALL FOR POINT GROUP TRANSFORMATIONS
 !           Point group transformations are in Cartesian coordinate
 
-CALL PointR(outdir,nsim,R,RI)
+CALL PointR(root,nsim,R,RI)
 
 
 
@@ -686,7 +686,7 @@ DO  iq = 42,61
         
         ! otvara save/K.000x/evc.dat u atributu <evc band> ispod CnK(G) koef.
         
-        CALL paths(root,K1,K2,n,m,pathk1,pathk2,bandn,bandm) 
+        CALL paths(outdir,K1,K2,n,m,pathk1,pathk2,bandn,bandm) 
         
 !         u ovom dijelu programa se iscitava iz binarnih fileova ''gvectors.dat'',''evc.dat'' za
 !         fiksni K1,K2,n i m
