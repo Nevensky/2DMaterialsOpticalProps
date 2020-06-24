@@ -36,9 +36,9 @@ CHARACTER (LEN=iotk_attlenx) :: attr
 LOGICAL :: found
 
 ! single / double precision
-INTEGER, PARAMETER :: sp = real32
-INTEGER, PARAMETER :: dp = real64
-INTEGER, PARAMETER :: qp = real128
+!INTEGER, PARAMETER :: sp = real32
+!INTEGER, PARAMETER :: dp = real64
+!INTEGER, PARAMETER :: qp = real128
 
 ! INTEGER, PARAMETER :: sp = SELECTED_REAL_KIND(p=6)
 ! INTEGER, PARAMETER :: dp = SELECTED_REAL_KIND(p=15)

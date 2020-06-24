@@ -13,7 +13,7 @@ OBJECTS = Sloss.o PointR.o paths.o gjel.o
 all: Loss
 
 Loss: $(OBJECTS)
-	${FC} $(OBJECTS) ${LDFLAGS} -o Loss
+	${FC} -I. $(OBJECTS) ${LDFLAGS} -o Loss
 
 Sloss.o: Sloss.f
 	${FC} ${FFLAGS} -c Sloss.f90
