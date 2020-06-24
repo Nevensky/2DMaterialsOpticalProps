@@ -4,8 +4,7 @@
 !*--PATHS4
  
       INTEGER K1 , K2 , N , M , nord
-      CHARACTER*100 Root1 , root2 , folder , file , Pathk1 , Pathk2 ,   &
-                  & Bandn , Bandm
+      CHARACTER(len=100) Root1 , root2 , folder , file , Pathk1 , Pathk2 ,  Bandn , Bandm
  
  
  

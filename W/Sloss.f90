@@ -199,7 +199,7 @@ COMPLEX(kind=sp), POINTER, DIMENSION(:) :: C1,C2 ! Fourierovi koef. u razvoju wf
 
 !             QUANTUM ESSPRESSO IMPUTS:
 root='/home/nevensky/Repositories/2d-quasiparticle-optical-properties/MoS2_201X201'
-
+outdir='/home/nevensky/hdd2tb/tmp'
 !             Crystal local field effects are included in z direction lf=1
 !             Crystal local field effects are included in x,y,z direction lf=3
 
@@ -216,7 +216,7 @@ domega=(omax-omin)/(no-1)
 !           CALL FOR POINT GROUP TRANSFORMATIONS
 !           Point group transformations are in Cartesian coordinate
 
-CALL PointR(root,nsim,R,RI)
+CALL PointR(outdir,nsim,R,RI)
 
 
 
@@ -228,15 +228,15 @@ CALL PointR(root,nsim,R,RI)
 
 fajl='/MoS2.band'
 path=trim(root)//trim(fajl)
-OPEN(10,FILE=path)
+OPEN(40,FILE=path)
 DO  ik = 1,NkI
   IF(ik == 1) THEN
     READ(10,*) nis
   END IF
-  READ(10,'(10X,f10.3,f10.3,f10.3)') kI(1,ik),kI(2,ik),kI(3,ik)
-  READ(10,'(10F8.4)') (E(ik,i),i=1,Nband)
+  READ(40,'(10X,3F10.3)') kI(1,ik),kI(2,ik),kI(3,ik)
+  READ(40,'(10F8.4)') (E(ik,i),i=1,Nband)
 END DO
-CLOSE(10)
+CLOSE(40)
 ! 10          FORMAT(10F8.4)
 ! 20          FORMAT(10X,f10.3,f10.3,f10.3)
 
