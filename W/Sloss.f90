@@ -27,8 +27,9 @@ PROGRAM surface_loss
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
-use ISO_Fortran_env ! precision kind, fortran 2008
-use iotk_module
+USE ISO_Fortran_env ! precision kind, fortran 2008
+USE iotk_module
+USE ModPointR
 implicit none
 
 CHARACTER (LEN=iotk_attlenx) :: attr
