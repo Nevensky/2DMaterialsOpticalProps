@@ -1,12 +1,12 @@
 !*==POINTR.spg  processed by SPAG 6.72Dc at 09:08 on  2 Jun 2020
-      SUBROUTINE POINTR(Root,Nsim,R,Ri)
- 
- 
-        use ISO_Fortran_env
-        INTEGER, PARAMETER :: sp = real32
-        INTEGER, PARAMETER :: dp = real64
+MODULE POINTR
 
-        IMPLICIT NONE
+use ISO_Fortran_env
+INTEGER, PARAMETER :: sp = real32
+INTEGER, PARAMETER :: dp = real64
+
+IMPLICIT NONE
+      SUBROUTINE POINTR(Root,Nsim,R,Ri)
 
         INTEGER :: i, nsim, is, n, m
 
@@ -50,7 +50,7 @@
 !            GOTO 100
             EXIT nsim_loop
          ENDIF
-      ENDDO
+      END DO nsim_loop
  
       is = 0
       read_matrix_loop: DO i = 1 , 5000
@@ -76,8 +76,8 @@
                EXIT read_matrix_loop
                !GOTO 200
             END IF
-         ENDIF
-      ENDDO
+         END IF
+      END DO read_matrix_loop
 ! 200  CLOSE (1)
       CLOSE (1)
  
@@ -88,9 +88,9 @@
             DO m = 1 , 3
                unit(n,m) = DCMPLX(zero,zero)
                t(n,m) = DCMPLX(R(i,n,m),zero)
-            ENDDO
+            END DO
             unit(n,n) = DCMPLX(one,zero)
-         ENDDO
+         END DO
          CALL GJEL(t,3,3,unit,3,3)
          DO n = 1 , 3
             DO m = 1 , 3
