@@ -1,17 +1,29 @@
 !*==POINTR.spg  processed by SPAG 6.72Dc at 09:08 on  2 Jun 2020
       SUBROUTINE POINTR(Root,Nsim,R,Ri)
  
-      IMPLICIT NONE
-!*--POINTR5
  
-      INTEGER i , Nsim , is , n , m
-      REAL*8 R , Ri , ZERO , ONE , x , y , z
-      DOUBLE COMPLEX t , unit
-      PARAMETER (ZERO=0.0,ONE=1.0)
-      DIMENSION R(48,3,3) , t(3,3) , Ri(48,3,3) , unit(3,3)
-      CHARACTER*11 , BUFFER1 , TAG1*0 
-      CHARACTER*7 , BUFFER2 , TAG2*0 
-      CHARACTER*100 Root , fajl , path
+        use ISO_Fortran_env
+        INTEGER, PARAMETER :: sp = real32
+        INTEGER, PARAMETER :: dp = real64
+
+        IMPLICIT NONE
+
+        INTEGER :: i, nsim, is, n, m
+
+        REAL(kind=sp), DIMENSION(48,3,3) :: R
+        REAL(kind=sp), DIMENSION(48,3,3) :: RI
+
+        REAL(kind=dp), DIMENSION(3,3) :: T
+        REAL(kind=dp), DIMENSION(3,3) :: unit
+
+        REAL(kind=sp), PARAMETER :: zero = 0.0
+        REAL(kind=sp), PARAMETER :: one = 1.0
+
+        REAL(kind=sp) :: x,y,z
+
+        CHARACTER(len=11 ) :: buffer1,tag1
+        CHARACTER(len=7  ) :: buffer2,tag2
+        CHARACTER(len=100) :: root,fajl,path  
  
  
 !       point group transformations R readed from 'MoS2.sc.out'
@@ -28,50 +40,56 @@
  
       OPEN (1,FILE=path)
  
-      DO i = 1 , 5000
-         READ (1,'(a)') buffer1
+ ! how many symmetries we have
+      nsim_loop : DO i = 1 , 5000
+         READ (1,'(A)') buffer1
          IF ( buffer1==tag1 ) THEN
-            READ (1,99002)
-            READ (1,99002)
+            READ (1,'(X)')
+            READ (1,'(X)')
             READ (1,*) Nsim
-            GOTO 100
+!            GOTO 100
+            EXIT nsim_loop
          ENDIF
       ENDDO
  
- 100  is = 0
-      DO i = 1 , 5000
+      is = 0
+      read_matrix_loop: DO i = 1 , 5000
          READ (1,'(a)') buffer2
          IF ( buffer2==tag2 ) THEN
             is = is + 1
-            READ (1,99002)
-            READ (1,99002)
-            READ (1,99002)
-            READ (1,99001) x , y , z
+            READ (1,'(X)')
+            READ (1,'(X)')
+            READ (1,'(X)')
+            READ (1,'(19X,3F11.3)') x , y , z
             R(is,1,1) = x
             R(is,1,2) = y
             R(is,1,3) = z
-            READ (1,99001) x , y , z
+            READ (1,'(19X,3F11.3)') x , y , z
             R(is,2,1) = x
             R(is,2,2) = y
             R(is,2,3) = z
-            READ (1,99001) x , y , z
+            READ (1,'(19X,3F11.3)') x , y , z
             R(is,3,1) = x
             R(is,3,2) = y
             R(is,3,3) = z
-            IF ( is==Nsim ) GOTO 200
+            IF ( is==Nsim ) THEN
+               EXIT read_matrix_loop
+               !GOTO 200
+            END IF
          ENDIF
       ENDDO
- 200  CLOSE (1)
+! 200  CLOSE (1)
+      CLOSE (1)
  
  
-!       INVERTION
+!       INVERSION
       DO i = 1 , Nsim
          DO n = 1 , 3
             DO m = 1 , 3
-               unit(n,m) = DCMPLX(ZERO,ZERO)
-               t(n,m) = DCMPLX(R(i,n,m),ZERO)
+               unit(n,m) = DCMPLX(zero,zero)
+               t(n,m) = DCMPLX(R(i,n,m),zero)
             ENDDO
-            unit(n,n) = DCMPLX(ONE,ZERO)
+            unit(n,n) = DCMPLX(one,zero)
          ENDDO
          CALL GJEL(t,3,3,unit,3,3)
          DO n = 1 , 3
@@ -80,8 +98,8 @@
             ENDDO
          ENDDO
       ENDDO
-99001 FORMAT (19X,3F11.3)
-99002 FORMAT (X)
+!99001 FORMAT (19X,3F11.3)
+!99002 FORMAT (X)
  
  
  
