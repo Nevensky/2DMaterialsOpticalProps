@@ -38,7 +38,7 @@ CONTAINS
  
    fajl = '/MoS2.sc.out'
    path = TRIM(root)//TRIM(fajl)
-   tag1 = '      atomic'
+   tag1 = '     atomic'
    tag2 = ' cryst.'
  
  
@@ -50,6 +50,7 @@ CONTAINS
       READ (1,'(A)',err=1000,iostat=ist5,end=2000) buffer1
       lno4 = lno4+1
       IF ( buffer1==tag1 ) THEN
+         READ (1,'(X)')
          READ (1,'(X)')
          READ (1,'(X)')
          READ (1,*) Nsim
