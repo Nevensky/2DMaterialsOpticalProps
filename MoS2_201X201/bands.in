@@ -1,6 +1,6 @@
  &bands
     prefix='MoS2',
-    outdir='./'
+    outdir='/home/nevensky/hdd2tb/tmp'
     filband='MoS2.band'
     lsym=.true.,
  /
