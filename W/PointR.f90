@@ -52,16 +52,19 @@ CONTAINS
       READ (1,'(A)',err=1000,iostat=ist5,end=2000) buffer1
       lno4 = lno4+1
       IF ( buffer1==tag1 ) THEN
-         READ (1,'(X)',err=101,iostat=ist7,end=201)
-         READ (1,'(X)',err=101,iostat=ist7,end=202)
-         READ (1,'(X)',err=101,iostat=ist7,end=203)
+         DO lskip = 1,3
+            READ (1,*,err=101,iostat=ist7,end=201) 
+         END DO
+         ! READ (1,'(X)',err=101,iostat=ist7,end=201)
+         ! READ (1,'(X)',err=101,iostat=ist7,end=202)
+         ! READ (1,'(X)',err=101,iostat=ist7,end=203)
          READ (1,*) Nsim
-         PRINT *,Nsim
-!         GOTO 100
+         PRINT *,"Nsim = ",Nsim
          EXIT nsim_loop
       ENDIF
    END DO nsim_loop
- 
+   PRINT *, 'Exited nsim_loop'
+   
    is = 0
    read_matrix_loop: DO i = 1 , 5000
    lno3 = lno3+1
@@ -69,7 +72,7 @@ CONTAINS
       IF ( buffer2==tag2 ) THEN
         is = is + 1
         DO lskip = 1,3
-        READ (1,*) 
+         READ (1,*,err=1002,iostat=ist4,end=2002) 
         END DO
         ! READ (1,'(X)',err=1002,iostat=ist4,end=2002)
         ! READ (1,'(X)',err=1002,iostat=ist4,end=2002)
@@ -93,24 +96,24 @@ CONTAINS
    END DO read_matrix_loop
    CLOSE (1)
 
-101   write(*,*)'buffer1=tag1. Error reading line ',lno4+1,', iostat = ',ist7
-201   write(*,*)'buffer1=tag1. Number of lines read = ',lno4
-102   write(*,*)'buffer1=tag1. Error reading line ',lno4+1,', iostat = ',ist7
-202   write(*,*)'buffer1=tag1. Number of lines read = ',lno4
-103   write(*,*)'buffer1=tag1. Error reading line ',lno4+1,', iostat = ',ist7
-203   write(*,*)'buffer1=tag1. Number of lines read = ',lno4
-104   write(*,*)'buffer1=tag1. Error reading line ',lno4+1,', iostat = ',ist7
-204   write(*,*)'buffer1=tag1. Number of lines read = ',lno4
+101   write(*,*)'101 buffer1=tag1. Error reading line ',lno4+1,', iostat = ',ist7
+201   write(*,*)'201 buffer1=tag1. Number of lines read = ',lno4
+102   write(*,*)'102 buffer1=tag1. Error reading line ',lno4+1,', iostat = ',ist7
+202   write(*,*)'202 buffer1=tag1. Number of lines read = ',lno4
+103   write(*,*)'103 buffer1=tag1. Error reading line ',lno4+1,', iostat = ',ist7
+203   write(*,*)'203 buffer1=tag1. Number of lines read = ',lno4
+104   write(*,*)'104 buffer1=tag1. Error reading line ',lno4+1,', iostat = ',ist7
+204   write(*,*)'204 buffer1=tag1. Number of lines read = ',lno4
 
-100   write(*,*)'cannot open file. iostat = ',ist6
-1000   write(*,*)'buffer1 read. Error reading line ',lno4+1,', iostat = ',ist3
-2000   write(*,*)'buffer1 read. Number of lines read = ',lno4
-1001   write(*,*)'Error reading line ',lno3+1,', iostat = ',ist3
-2001   write(*,*)'Number of lines read = ',lno3
-1002   write(*,*)'buffer2=tag2. Error reading line ',lno3+1,', iostat = ',ist4
-2002   write(*,*)'buffer2=tag2. Number of lines read = ',lno3 
-1003   write(*,*)'buffer2=tag2. reding xyz Error reading line ',lno3+1,', iostat = ',ist4
-2003   write(*,*)'buffer2=tag2. reding xyz Number of lines read = ',lno3 
+100    write(*,*)'100 cannot open file. iostat = ',ist6
+1000   write(*,*)'1000 buffer1 read. Error reading line ',lno4+1,', iostat = ',ist3
+2000   write(*,*)'200 buffer1 read. Number of lines read = ',lno4
+1001   write(*,*)'1001 Error reading line ',lno3+1,', iostat = ',ist3
+2001   write(*,*)'2001 Number of lines read = ',lno3
+1002   write(*,*)'1002 buffer2=tag2. Error reading line ',lno3+1,', iostat = ',ist4
+2002   write(*,*)'2002 buffer2=tag2. Number of lines read = ',lno3 
+1003   write(*,*)'1003 buffer2=tag2. reding xyz Error reading line ',lno3+1,', iostat = ',ist4
+2003   write(*,*)'2003 buffer2=tag2. reding xyz Number of lines read = ',lno3 
 !    INVERSION
    DO i = 1 , Nsim
       DO n = 1 , 3
