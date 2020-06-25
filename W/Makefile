@@ -2,8 +2,8 @@
 CC= icc
 #FC= gfortran
 FC= mpiifort
-LDFLAGS= -lrt -lm -L. -liotk -g
-FFLAGS= -Ofast -g
+LDFLAGS= -lrt -lm -L. -liotk -g 
+FFLAGS= -Ofast -g -traceback -fpe0
 SRC = Sloss.f PointR.f paths.f gjel.f 
 OBJECTS = Sloss.o PointR.o paths.o gjel.o 
 

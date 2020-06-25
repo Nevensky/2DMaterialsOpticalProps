@@ -32,3 +32,7 @@
 # Executables
 *.exe
 *.app
+
+# additional
+nohup.out
+monitoring.log
