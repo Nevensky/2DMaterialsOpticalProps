@@ -12,6 +12,8 @@ CONTAINS
 
       INTEGER :: i, nsim, is, n, m
 
+      INTEGER :: lskip
+
       REAL(kind=sp), DIMENSION(48,3,3) :: R
       REAL(kind=sp), DIMENSION(48,3,3) :: RI
 
@@ -66,7 +68,7 @@ CONTAINS
       READ (1,'(a)',err=1001,iostat=ist3,end=2001) buffer2
       IF ( buffer2==tag2 ) THEN
         is = is + 1
-        DO line2skip = 1,3
+        DO lskip = 1,3
         READ (1,*) 
         END DO
         ! READ (1,'(X)',err=1002,iostat=ist4,end=2002)
