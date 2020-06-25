@@ -27,6 +27,9 @@ CONTAINS
       CHARACTER(len=7  ) :: buffer2,tag2
       CHARACTER(len=100) :: root,fajl,path  
  
+
+      INTEGER :: ist3,ist4,ist5,ist6
+      INTEGER :: lno3=0,lno4=0,lno5=0
  
 !    point group transformations R readed from 'MoS2.sc.out'
 !    matrices R are in cart. coordinate system  because k
@@ -40,15 +43,17 @@ CONTAINS
  
  
  
-   OPEN (1,FILE=path)
+   OPEN (1,FILE=path,status='old',err=100,iostat=ist6)
  
 !  how many symmetries we have
    nsim_loop : DO i = 1 , 5000
-      READ (1,'(A)') buffer1
+      READ (1,'(A)',err=1000,iostat=ist5,end=2000) buffer1
+      lno4 = lno4+1
       IF ( buffer1==tag1 ) THEN
          READ (1,'(X)')
          READ (1,'(X)')
          READ (1,*) Nsim
+         PRINT *,Nsim
 !         GOTO 100
          EXIT nsim_loop
       ENDIF
@@ -56,13 +61,14 @@ CONTAINS
  
    is = 0
    read_matrix_loop: DO i = 1 , 5000
-      READ (1,'(a)') buffer2
+   lno3 = lno3+1
+      READ (1,'(a)',err=1001,iostat=ist3,end=2001) buffer2
       IF ( buffer2==tag2 ) THEN
         is = is + 1
-        READ (1,'(X)')
-        READ (1,'(X)')
-        READ (1,'(X)')
-        READ (1,'(19X,3F11.3)') x , y , z
+        READ (1,'(X)',err=1002,iostat=ist4,end=2002)
+        READ (1,'(X)',err=1002,iostat=ist4,end=2002)
+        READ (1,'(X)',err=1002,iostat=ist4,end=2002)
+        READ (1,'(19X,3F11.3)',err=1003,iostat=ist4,end=2003) x , y , z
         R(is,1,1) = x
         R(is,1,2) = y
         R(is,1,3) = z
@@ -80,8 +86,16 @@ CONTAINS
       END IF
    END DO read_matrix_loop
    CLOSE (1)
- 
- 
+
+100   write(*,*)'cannot open file. iostat = ',ist6
+1000   write(*,*)'buffer1 read. Error reading line ',lno4+1,', iostat = ',ist3
+2000   write(*,*)'buffer1 read. Number of lines read = ',lno4
+1001   write(*,*)'Error reading line ',lno3+1,', iostat = ',ist3
+2001   write(*,*)'Number of lines read = ',lno3
+1002   write(*,*)'buffer2 is equal to tag2. Error reading line ',lno3+1,', iostat = ',ist4
+2002   write(*,*)'buffer2 is equal to tag2. Number of lines read = ',lno3 
+1003   write(*,*)'buffer2 is equal to tag2. reding xyz Error reading line ',lno3+1,', iostat = ',ist4
+2003   write(*,*)'buffer2 is equal to tag2. reding xyz Number of lines read = ',lno3 
 !    INVERSION
    DO i = 1 , Nsim
       DO n = 1 , 3
