@@ -38,7 +38,7 @@ CONTAINS
  
    fajl = '/MoS2.sc.out'
    path = TRIM(root)//TRIM(fajl)
-   tag1 = '      atomic'
+   tag1 = '     atomic'
    tag2 = ' cryst.'
  
  
