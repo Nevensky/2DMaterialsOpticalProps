@@ -28,7 +28,7 @@ CONTAINS
       CHARACTER(len=100) :: root,fajl,path  
  
 
-      INTEGER :: ist3,ist4,ist5,ist6
+      INTEGER :: ist3,ist4,ist5,ist6,ist7
       INTEGER :: lno3=0,lno4=0,lno5=0
  
 !    point group transformations R readed from 'MoS2.sc.out'
@@ -50,9 +50,9 @@ CONTAINS
       READ (1,'(A)',err=1000,iostat=ist5,end=2000) buffer1
       lno4 = lno4+1
       IF ( buffer1==tag1 ) THEN
-         READ (1,'(X)')
-         READ (1,'(X)')
-         READ (1,'(X)')
+         READ (1,'(X)',err=101,iostat=ist7,end=201)
+         READ (1,'(X)',err=101,iostat=ist7,end=202)
+         READ (1,'(X)',err=101,iostat=ist7,end=203)
          READ (1,*) Nsim
          PRINT *,Nsim
 !         GOTO 100
@@ -88,15 +88,24 @@ CONTAINS
    END DO read_matrix_loop
    CLOSE (1)
 
+101   write(*,*)'buffer1=tag2. Error reading line ',lno4+1,', iostat = ',ist7
+201   write(*,*)'buffer1=tag2. Number of lines read = ',lno4
+102   write(*,*)'buffer1=tag2. Error reading line ',lno4+1,', iostat = ',ist7
+202   write(*,*)'buffer1=tag2. Number of lines read = ',lno4
+103   write(*,*)'buffer1=tag2. Error reading line ',lno4+1,', iostat = ',ist7
+203   write(*,*)'buffer1=tag2. Number of lines read = ',lno4
+104   write(*,*)'buffer1=tag2. Error reading line ',lno4+1,', iostat = ',ist7
+204   write(*,*)'buffer1=tag2. Number of lines read = ',lno4
+
 100   write(*,*)'cannot open file. iostat = ',ist6
 1000   write(*,*)'buffer1 read. Error reading line ',lno4+1,', iostat = ',ist3
 2000   write(*,*)'buffer1 read. Number of lines read = ',lno4
 1001   write(*,*)'Error reading line ',lno3+1,', iostat = ',ist3
 2001   write(*,*)'Number of lines read = ',lno3
-1002   write(*,*)'buffer2 is equal to tag2. Error reading line ',lno3+1,', iostat = ',ist4
-2002   write(*,*)'buffer2 is equal to tag2. Number of lines read = ',lno3 
-1003   write(*,*)'buffer2 is equal to tag2. reding xyz Error reading line ',lno3+1,', iostat = ',ist4
-2003   write(*,*)'buffer2 is equal to tag2. reding xyz Number of lines read = ',lno3 
+1002   write(*,*)'buffer2=tag2. Error reading line ',lno3+1,', iostat = ',ist4
+2002   write(*,*)'buffer2=tag2. Number of lines read = ',lno3 
+1003   write(*,*)'buffer2=tag2. reding xyz Error reading line ',lno3+1,', iostat = ',ist4
+2003   write(*,*)'buffer2=tag2. reding xyz Number of lines read = ',lno3 
 !    INVERSION
    DO i = 1 , Nsim
       DO n = 1 , 3
