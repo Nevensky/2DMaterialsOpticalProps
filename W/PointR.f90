@@ -66,9 +66,12 @@ CONTAINS
       READ (1,'(a)',err=1001,iostat=ist3,end=2001) buffer2
       IF ( buffer2==tag2 ) THEN
         is = is + 1
-        READ (1,'(X)',err=1002,iostat=ist4,end=2002)
-        READ (1,'(X)',err=1002,iostat=ist4,end=2002)
-        READ (1,'(X)',err=1002,iostat=ist4,end=2002)
+        DO line2skip = 1,3
+        READ (1,*) 
+        END DO
+        ! READ (1,'(X)',err=1002,iostat=ist4,end=2002)
+        ! READ (1,'(X)',err=1002,iostat=ist4,end=2002)
+        ! READ (1,'(X)',err=1002,iostat=ist4,end=2002)
         READ (1,'(19X,3F11.3)',err=1003,iostat=ist4,end=2003) x , y , z
         R(is,1,1) = x
         R(is,1,2) = y
@@ -88,14 +91,14 @@ CONTAINS
    END DO read_matrix_loop
    CLOSE (1)
 
-101   write(*,*)'buffer1=tag2. Error reading line ',lno4+1,', iostat = ',ist7
-201   write(*,*)'buffer1=tag2. Number of lines read = ',lno4
-102   write(*,*)'buffer1=tag2. Error reading line ',lno4+1,', iostat = ',ist7
-202   write(*,*)'buffer1=tag2. Number of lines read = ',lno4
-103   write(*,*)'buffer1=tag2. Error reading line ',lno4+1,', iostat = ',ist7
-203   write(*,*)'buffer1=tag2. Number of lines read = ',lno4
-104   write(*,*)'buffer1=tag2. Error reading line ',lno4+1,', iostat = ',ist7
-204   write(*,*)'buffer1=tag2. Number of lines read = ',lno4
+101   write(*,*)'buffer1=tag1. Error reading line ',lno4+1,', iostat = ',ist7
+201   write(*,*)'buffer1=tag1. Number of lines read = ',lno4
+102   write(*,*)'buffer1=tag1. Error reading line ',lno4+1,', iostat = ',ist7
+202   write(*,*)'buffer1=tag1. Number of lines read = ',lno4
+103   write(*,*)'buffer1=tag1. Error reading line ',lno4+1,', iostat = ',ist7
+203   write(*,*)'buffer1=tag1. Number of lines read = ',lno4
+104   write(*,*)'buffer1=tag1. Error reading line ',lno4+1,', iostat = ',ist7
+204   write(*,*)'buffer1=tag1. Number of lines read = ',lno4
 
 100   write(*,*)'cannot open file. iostat = ',ist6
 1000   write(*,*)'buffer1 read. Error reading line ',lno4+1,', iostat = ',ist3
