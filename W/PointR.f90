@@ -90,6 +90,7 @@ CONTAINS
         R(is,3,2) = y
         R(is,3,3) = z
         IF ( is==Nsim ) THEN
+            PRINT *, R
             EXIT load_R_loop
         END IF
       END IF
@@ -120,14 +121,14 @@ CONTAINS
       DO n = 1 , 3
          DO m = 1 , 3
             unit(n,m) = DCMPLX(zero,zero)
-            t(n,m) = DCMPLX(R(i,n,m),zero)
+            T(n,m) = DCMPLX(R(i,n,m),zero)
          END DO
          unit(n,n) = DCMPLX(one,zero)
       END DO
-      CALL GJEL(t,3,3,unit,3,3)
+      CALL GJEL(T,3,3,unit,3,3)
       DO n = 1 , 3
          DO m = 1 , 3
-            Ri(i,n,m) = REAL(t(n,m))
+            Ri(i,n,m) = REAL(T(n,m))
          ENDDO
       ENDDO
    ENDDO
