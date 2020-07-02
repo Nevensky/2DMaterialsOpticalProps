@@ -64,8 +64,8 @@ INTEGER, PARAMETER :: nq = 2
 INTEGER, PARAMETER :: Nlfd = 50
 
 ! file i/o debug
-INTEGER :: ist,ist2,ist3,ist4
-INTEGER :: lno,lno2,lno3,lno4
+INTEGER :: ist,ist2,ist9,ist10,ist11,ist12
+INTEGER :: lno,lno2,lno9,lno10,lno11,lno12
 
 ! scalars
 REAL(kind=sp) :: kx,ky,kz
@@ -218,7 +218,7 @@ domega=(omax-omin)/(no-1)
 !           Point group transformations are in Cartesian coordinate
 
 CALL PointR(root,nsim,R,RI)
-
+PRINT *,"PointR done."
 
 
 !           Upis valnih vektora iz irreducibilne Brillouinove
@@ -229,18 +229,22 @@ CALL PointR(root,nsim,R,RI)
 
 fajl='/MoS2.band'
 path=trim(root)//trim(fajl)
-OPEN(40,FILE=path)
+OPEN(40,FILE=path,status='old',err=400,iostat=ist9)
+
 DO  ik = 1,NkI
   IF(ik == 1) THEN
-    READ(10,*) nis
+    READ(40,*) nis
   END IF
   READ(40,'(10X,3F10.3)') kI(1,ik),kI(2,ik),kI(3,ik)
   READ(40,'(10F8.4)') (E(ik,i),i=1,Nband)
 END DO
 CLOSE(40)
+
 ! 10          FORMAT(10F8.4)
 ! 20          FORMAT(10X,f10.3,f10.3,f10.3)
-
+GO TO 500
+400 write(*,*) '100 cannot open file. iostat = ',ist9
+500 CONTINUE
 
 DO  ik=1,NkI
   DO  i=1,Nband
@@ -373,11 +377,11 @@ path=TRIM(root)//TRIM(fajl)
 tag='     reciprocal axes: (cart. coord.'
 OPEN(30,FILE=path,status='old')
 DO  i = 1,100000
-  READ(10,'(a)') buffer
+  READ(30,'(a)') buffer
   lno=lno+1
   IF(buffer == tag) THEN
     DO  j=1,3
-      READ(10,'(23X,3F10.3)',err=10001,iostat=ist,end=20001) KC(1,j), KC(2,j), KC(3,j)
+      READ(30,'(23X,3F10.3)',err=10001,iostat=ist,end=20001) KC(1,j), KC(2,j), KC(3,j)
     END DO
     EXIT
   END IF
@@ -390,13 +394,13 @@ CLOSE(30)
 
 ! Reading the reciprocal vectors in crystal coordinates and transformation
 ! in Cartesian cordinates.
-OPEN(20,FILE='gvectors.dat')
+OPEN(20,FILE='gvectors.dat',status='old',err=200,iostat=ist10)
 DO  i=1,8
-  READ(10,*) nis
+  READ(20,*) nis
 END DO
 G = 0.0 ! vito - premjesteno iz n,m loopa
 DO  iG = 1,NG
-  READ(10,'(i10,i11,i11)') Gi(1),Gi(2),Gi(3)
+  READ(20,'(i10,i11,i11)') Gi(1),Gi(2),Gi(3)
   IF(iG == 1) THEN
     IF(Gi(1) /= 0 .OR. Gi(2) /= 0 .OR. Gi(3) /= 0) THEN
       PRINT*,'*********************************'
@@ -417,6 +421,9 @@ END DO
 ! 100         FORMAT(i10,i11,i11)
 CLOSE(20)
 
+GO TO 5000
+200 write(*,*) 'error cant read file id 20, ist=',ist10
+5000 CONTINUE
 
 
 ! Reciprocal vectors for crystal local field effects calculations in array ''Glf(3,Nlf)''

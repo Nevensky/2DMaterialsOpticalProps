@@ -8,17 +8,17 @@ INTEGER, PARAMETER :: sp = real32
 INTEGER, PARAMETER :: dp = real64
 
 CONTAINS
-   SUBROUTINE PointR(root,Nsim,R,Ri)
+   SUBROUTINE PointR(root,Nsymm,R,Ri)
 
-      INTEGER :: i, nsim, is, n, m
+      INTEGER :: i, Nsymm, is, n, m
 
       INTEGER :: lskip
 
       REAL(kind=sp), DIMENSION(48,3,3) :: R
       REAL(kind=sp), DIMENSION(48,3,3) :: RI
 
-      REAL(kind=dp), DIMENSION(3,3) :: T
-      REAL(kind=dp), DIMENSION(3,3) :: unit
+      COMPLEX(kind=dp), DIMENSION(3,3) :: T
+      COMPLEX(kind=dp), DIMENSION(3,3) :: unit
 
       REAL(kind=sp), PARAMETER :: zero = 0.0
       REAL(kind=sp), PARAMETER :: one = 1.0
@@ -48,7 +48,7 @@ CONTAINS
    OPEN (1,FILE=path,status='old',err=100,iostat=ist6)
  
 !  how many symmetries we have
-   nsim_loop : DO i = 1 , 5000
+   Nsymm_loop : DO i = 1 , 5000
       READ (1,'(A)',err=1000,iostat=ist5,end=2000) buffer1
       lno4 = lno4+1
       IF ( buffer1==tag1 ) THEN
@@ -58,16 +58,17 @@ CONTAINS
          ! READ (1,'(X)',err=101,iostat=ist7,end=201)
          ! READ (1,'(X)',err=101,iostat=ist7,end=202)
          ! READ (1,'(X)',err=101,iostat=ist7,end=203)
-         READ (1,*) Nsim
-         PRINT *,"Nsim = ",Nsim
-         EXIT nsim_loop
+         READ (1,*) Nsymm
+         PRINT *,"Nsymm = ",Nsymm
+         EXIT Nsymm_loop
       ENDIF
-   END DO nsim_loop
-   PRINT *, 'Exited nsim_loop'
+   END DO Nsymm_loop
+   PRINT *, 'Exited Nsymm_loop'
 
    is = 0
    load_R_loop: DO i = 1 , 5000
-   lno3 = lno3+1
+   ! lno3 = lno3+1
+   ! PRINT *,'line =',lno3
       READ (1,'(a)',err=1001,iostat=ist3,end=2001) buffer2
       IF ( buffer2==tag2 ) THEN
         is = is + 1
@@ -89,8 +90,9 @@ CONTAINS
         R(is,3,1) = x
         R(is,3,2) = y
         R(is,3,3) = z
-        IF ( is==Nsim ) THEN
-            PRINT *, R
+        ! PRINT *,'symm. op. number is=', is 
+        ! WRITE(*,'(3F11.3,/,3F11.3,/,3F11.3)') R(is,:,:)
+        IF ( is==Nsymm ) THEN
             EXIT load_R_loop
         END IF
       END IF
@@ -98,6 +100,7 @@ CONTAINS
    CLOSE (1)
    PRINT *, 'EXITED R matrix loading loop.'
 
+GOTO 2004
 101   write(*,*)'101 buffer1=tag1. Error reading line ',lno4+1,', iostat = ',ist7
 201   write(*,*)'201 buffer1=tag1. Number of lines read = ',lno4
 102   write(*,*)'102 buffer1=tag1. Error reading line ',lno4+1,', iostat = ',ist7
@@ -116,8 +119,9 @@ CONTAINS
 2002   write(*,*)'2002 buffer2=tag2. Number of lines read = ',lno3 
 1003   write(*,*)'1003 buffer2=tag2. reding xyz Error reading line ',lno3+1,', iostat = ',ist4
 2003   write(*,*)'2003 buffer2=tag2. reding xyz Number of lines read = ',lno3 
+2004 CONTINUE
 !    INVERSION
-   DO i = 1 , Nsim
+   DO i = 1 , Nsymm
       DO n = 1 , 3
          DO m = 1 , 3
             unit(n,m) = DCMPLX(zero,zero)
@@ -125,12 +129,19 @@ CONTAINS
          END DO
          unit(n,n) = DCMPLX(one,zero)
       END DO
+      PRINT *,'EXITED n loop'
+      PRINT *,'symmetry op. matrix R'
+      WRITE(*,'(A8,I3/3F11.4/3F11.4/3F11.4)'),'i_symm= ',i, R(i,:,:)
+      PRINT *,'preparing to invert helper matrix T'
+      WRITE(*,'(A8,I3/6F11.4/6F11.4/6F11.4)'),'i_symm= ',i, T
       CALL GJEL(T,3,3,unit,3,3)
+      PRINT *,'COMPLETED matrix inversion'
       DO n = 1 , 3
          DO m = 1 , 3
             Ri(i,n,m) = REAL(T(n,m))
          ENDDO
       ENDDO
+      WRITE(*,'(A8,I3/3F11.4/3F11.4/3F11.4)'),'i_symm= ',i, Ri(i,:,:)
    ENDDO
  
  
