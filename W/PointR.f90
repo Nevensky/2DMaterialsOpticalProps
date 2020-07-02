@@ -64,9 +64,9 @@ CONTAINS
       ENDIF
    END DO nsim_loop
    PRINT *, 'Exited nsim_loop'
-   
+
    is = 0
-   read_matrix_loop: DO i = 1 , 5000
+   load_R_loop: DO i = 1 , 5000
    lno3 = lno3+1
       READ (1,'(a)',err=1001,iostat=ist3,end=2001) buffer2
       IF ( buffer2==tag2 ) THEN
@@ -90,11 +90,12 @@ CONTAINS
         R(is,3,2) = y
         R(is,3,3) = z
         IF ( is==Nsim ) THEN
-            EXIT read_matrix_loop
+            EXIT load_R_loop
         END IF
       END IF
-   END DO read_matrix_loop
+   END DO load_R_loop
    CLOSE (1)
+   PRINT *, 'EXITED R matrix loading loop.'
 
 101   write(*,*)'101 buffer1=tag1. Error reading line ',lno4+1,', iostat = ',ist7
 201   write(*,*)'201 buffer1=tag1. Number of lines read = ',lno4
