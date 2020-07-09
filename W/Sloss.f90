@@ -11,7 +11,7 @@ PROGRAM surface_loss
 !        Ntot - total number of the mutually different wave vector-program generates this number
 !        Nband-number of the bands
 !        NG-total number of G vectors
-!        NGd-number of coefficients CG shulod me less than minimum number of coefficients all over all evc.n files
+!        NGd-number of coefficients CG should be less than minimum number of coefficients over all evc.n files
 !        nMPx*nMPy*nMPz-Monkhorest-Pack sampling
 !        Ef-Fermi energy
 !        T-temperature in eV
@@ -46,9 +46,9 @@ LOGICAL :: found
 
 ! NOT used, read directly from QE
 ! integer :: nMPx,nMPy,nMPz
-! paramter(nMPx=201,nmpy=201,nmpz=1)
+! parameter(nMPx=201,nMPy=201,nMPz=1)
 
-INTEGER :: ik,i,j,jk,it,lk,Ntot,iG0,nsim,iq, &
+INTEGER :: ik,i,j,jk,it,lk,Ntot,iG0,Nsymm,iq, &
            io,n,m,iG,R1,K1,R2,K2, Nlf,NG1,   &
            NG2,iG1,iG2,jG,kG,jo,jump,loss,   &
            iGfast,ikmin,lf,kG1,kG2,nord
@@ -58,7 +58,7 @@ INTEGER, PARAMETER :: Nband = 60
 INTEGER, PARAMETER :: NelQE = 18
 INTEGER, PARAMETER :: Nk = 48*NkI
 INTEGER, PARAMETER :: NGd = 4000
-INTEGER, PARAMETER :: NG = 8000
+INTEGER, PARAMETER :: NG = 44121! 8000
 INTEGER, PARAMETER :: no = 2001
 INTEGER, PARAMETER :: nq = 2
 INTEGER, PARAMETER :: Nlfd = 50
@@ -217,7 +217,7 @@ domega=(omax-omin)/(no-1)
 !           CALL FOR POINT GROUP TRANSFORMATIONS
 !           Point group transformations are in Cartesian coordinate
 
-CALL PointR(root,nsim,R,RI)
+CALL PointR(root,Nsymm,R,RI)
 PRINT *,"PointR done."
 
 
@@ -233,7 +233,7 @@ OPEN(40,FILE=path,status='old',err=400,iostat=ist9)
 
 DO  ik = 1,NkI
   IF(ik == 1) THEN
-    READ(40,*) nis
+    READ(40,*) 
   END IF
   READ(40,'(10X,3F10.3)') kI(1,ik),kI(2,ik),kI(3,ik)
   READ(40,'(10F8.4)') (E(ik,i),i=1,Nband)
@@ -268,7 +268,7 @@ END DO
 
 jk=0
 Ntot=0
-DO  i = 1,nsim
+DO  i = 1,Nsymm
   DO  ik = 1,NkI
     it = 1
     jk = jk+1
@@ -312,7 +312,7 @@ DO  ik = 1,Ntot
   kx = ktot(1,ik)
   ky = ktot(2,ik)
   kz = ktot(3,ik)
-  band_loop : DO  n = 1,Nband
+  band_loop: DO  n = 1,Nband
     IF(n == 1) THEN
       it = 1
 !    END IF
@@ -324,7 +324,7 @@ DO  ik = 1,Ntot
         Nel = Nel + 1.0
       END IF
     ELSE
-      DO  i = 2,nsim
+      DO  i = 2,Nsymm
         K11 = RI(i,1,1)*kx + RI(i,1,2)*ky+RI(i,1,3)*kz
         K22 = RI(i,2,1)*kx + RI(i,2,2)*ky+RI(i,2,3)*kz
         K33 = RI(i,3,1)*kx + RI(i,3,2)*ky+RI(i,3,3)*kz
@@ -394,13 +394,19 @@ CLOSE(30)
 
 ! Reading the reciprocal vectors in crystal coordinates and transformation
 ! in Cartesian cordinates.
-OPEN(20,FILE='gvectors.dat',status='old',err=200,iostat=ist10)
+OPEN(20,FILE='gvectors.xml',status='old',err=200,iostat=ist10)
+lno10 =0
+PRINT *, 'File gvectors.dat oppened successfully.'
 DO  i=1,8
-  READ(20,*) nis
+  READ(20,*,err=201,iostat=ist11,end=202) nis
+  PRINT *,nis
+  lno10 = lno10 +1
 END DO
 G = 0.0 ! vito - premjesteno iz n,m loopa
 DO  iG = 1,NG
-  READ(20,'(i10,i11,i11)') Gi(1),Gi(2),Gi(3)
+  READ(20,'(i10,i11,i11)',err=201,iostat=ist11,end=202) Gi(1),Gi(2),Gi(3)
+  lno10 = lno10 +1
+  PRINT *, lno10
   IF(iG == 1) THEN
     IF(Gi(1) /= 0 .OR. Gi(2) /= 0 .OR. Gi(3) /= 0) THEN
       PRINT*,'*********************************'
@@ -423,6 +429,8 @@ CLOSE(20)
 
 GO TO 5000
 200 write(*,*) 'error cant read file id 20, ist=',ist10
+201   write(*,*)'201 buffer1 read. Error reading line ',lno10+1,', iostat = ',ist11
+202   write(*,*)'202 buffer1 read. Number of lines read = ',lno10
 5000 CONTINUE
 
 
@@ -432,7 +440,7 @@ Nlf = 0
 IF(lf == 1) THEN
   DO iG = 1,NG
     IF(G(1,iG) == 0.0 .AND. G(2,iG) == 0.0) THEN
-      Eref = Gcar**2 *G(3,iG)**2 /2.0
+      Eref = Gcar**2 * G(3,iG)**2 / 2.0
       IF(Eref <= Ecut) THEN
         Nlf = Nlf+1
         Glf(1,Nlf) = 0.0
@@ -448,12 +456,13 @@ IF(lf == 1) THEN
   END DO
 ELSE
   DO  iG = 1,NG
-    Eref = Gcar**2 *( G(1,iG)*G(1,iG)+G(2,iG)*G(2,iG)+ G(3,iG)*G(3,iG))/2.0
+    Eref = Gcar**2 *( G(1,iG)**2 + G(2,iG)**2 + G(3,iG)**2 ) / 2.0
     IF(Eref <= Ecut) THEN
       Nlf = Nlf+1
-      Glf(1,Nlf) = G(1,iG)
-      Glf(2,Nlf) = G(2,iG)
-      Glf(3,Nlf) = G(3,iG)
+      Glf(:,Nlf) = G(:,iG)
+      ! Glf(1,Nlf) = G(1,iG)
+      ! Glf(2,Nlf) = G(2,iG)
+      ! Glf(3,Nlf) = G(3,iG)
       IF( (parG(iG)/2)*2 == parG(iG) ) THEN
         parG(Nlf) = 1
       ELSE
@@ -501,7 +510,7 @@ DO  iq = 42,61
   OPEN(55,FILE='Info')
   WRITE(55,*)'***************General***********************'
   WRITE(55,*)''
-  WRITE(55,*)'Number of point symmetry operation is',nsim
+  WRITE(55,*)'Number of point symmetry operation is',Nsymm
   WRITE(55,88)'Wave vector (qx,qy,qz)=(',qx*Gcar,qy*Gcar, qz*Gcar,') a.u.'
   WRITE(55,99)'|(qx,qy,qz)|=',absq*Gcar,'a.u.'
   IF(lf == 1)WRITE(55,*)'Local field effcts in z-dir'
@@ -559,7 +568,7 @@ DO  iq = 42,61
       K1=ik
       it=2
     ELSE
-      symmetry_loop: DO  i = 2,nsim
+      symmetry_loop: DO  i = 2,Nsymm
         K11 = RI(i,1,1)*kx + RI(i,1,2)*ky+RI(i,1,3)*kz
         K22 = RI(i,2,1)*kx + RI(i,2,2)*ky+RI(i,2,3)*kz
         K33 = RI(i,3,1)*kx + RI(i,3,2)*ky+RI(i,3,3)*kz
@@ -608,7 +617,7 @@ DO  iq = 42,61
            ABS(KQz-G(3,iG)-ktot(3,jk)) <= eps ) THEN
           it=2
           iG0 = iG
-          DO  i = 1,nsim
+          DO  i = 1,Nsymm
             K11 = RI(i,1,1)*ktot(1,jk)+RI(i,1,2)*ktot(2,jk)+  &
                 RI(i,1,3)*ktot(3,jk)
             K22 = RI(i,2,1)*ktot(1,jk)+RI(i,2,2)*ktot(2,jk)+  &
@@ -640,7 +649,7 @@ DO  iq = 42,61
     !         IF(ABS(KQz-G(3,iG)-ktot(3,jk)) <= eps) THEN
     !           it=2
     !           iG0 = iG
-    !           DO  i = 1,nsim
+    !           DO  i = 1,Nsymm
     !             K11=RI(i,1,1)*ktot(1,jk)+RI(i,1,2)*ktot(2,jk)+  &
     !                 RI(i,1,3)*ktot(3,jk)
     !             K22=RI(i,2,1)*ktot(1,jk)+RI(i,2,2)*ktot(2,jk)+  &
@@ -792,7 +801,7 @@ DO  iq = 42,61
         DO  io = 1,no
           o = (io-1)*domega
           De = o + E(K1,n) - E(K2,m) 
-          Lor = -eta/(De*De + eta*eta) ! ovo bi analticki bila delt afunkcija imag. dio od 1/De
+          Lor = -eta/(De**2 + eta**2) ! ovo bi analticki bila delta funkcija imag. dio od 1/De
           IF(ABS(Lor) >= 1.0D-3/eta) THEN
             DO  iG = 1,Nlf
               DO  jG = 1,Nlf
@@ -824,12 +833,14 @@ DO  iq = 42,61
   qy = Gcar*qy
   qz = Gcar*qz
   
-  DO  iG = 1,Nlf
-    GlfV(1,iG) = Gcar*Glf(1,iG)
-    GlfV(2,iG) = Gcar*Glf(2,iG)
-    GlfV(3,iG) = Gcar*Glf(3,iG)
-  END DO
-  
+  GlfV(:,iG) = Gcar*Glf(:,iG)
+  ! DO  iG = 1,Nlf
+  !   GlfV(1,iG) = Gcar*Glf(1,iG)
+  !   GlfV(2,iG) = Gcar*Glf(2,iG)
+  !   GlfV(3,iG) = Gcar*Glf(3,iG)
+  ! END DO
+ 
+
   
 ! Kramers-Kroning relacije
   
@@ -860,15 +871,15 @@ DO  iq = 42,61
           DO  jo = 1,no
             oj = (jo-1)*domega
             IF(jo /= io) THEN
-              fact=domega/(oi-oj)
+              fact = domega/(oi-oj)
             ELSE IF(jo == 1) THEN
-              fact=1.0
+              fact = 1.0
             ELSE IF(jo == 2) THEN
-              fact=0.0
+              fact = 0.0
             ELSE IF(jo == 3) THEN
-              fact=-3.0/2.0
+              fact = -3.0/2.0
             ELSE IF(jo == no) THEN
-              fact=0.5*domega/(oi-oj)
+              fact = 0.5*domega/(oi-oj)
             ELSE
               PRINT *,  "WARNING jo loop condition not satisfied."
             END IF
@@ -968,9 +979,6 @@ DO  iq = 42,61
     
     Imat = czero
     DO  iG = 1,Nlf
-      ! DO  jG = 1,Nlf
-      !   Imat(iG,jG) = czero
-      ! END DO
       Imat(iG,iG) = rone
     END DO
     

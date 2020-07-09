@@ -1,9 +1,9 @@
 # Makefile for Vito
 CC= icc
 #FC= gfortran
-FC= mpiifort
-LDFLAGS= -lrt -lm -L. -liotk -g 
-FFLAGS= -Ofast -g -traceback -fpe0
+FC= ifort
+LDFLAGS= -lm -L. -liotk -g -mkl
+FFLAGS= -Ofast -g -traceback -fpe0 
 SRC = Sloss.f PointR.f paths.f gjel.f 
 OBJECTS = Sloss.o PointR.o paths.o gjel.o 
 
@@ -19,7 +19,7 @@ Sloss.o: Sloss.f
 	${FC} ${FFLAGS} -c Sloss.f90
 
 PointR.o: PointR.f
-	${FC} ${FFLAGS} -c PointR.f90
+	${FC} ${FFLAGS} -c PointR_mkl.f90 -o PointR.o
 
 paths.o: paths.f
 	${FC} ${FFLAGS} -c paths.f90
