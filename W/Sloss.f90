@@ -90,7 +90,7 @@ REAL(kind=dp), PARAMETER :: Hartree = 2.0D0*13.6056923D0
 REAL(kind=dp), PARAMETER :: Planck = 6.626196D-34
 REAL(kind=dp), PARAMETER :: three = 3.0d0 
 
-REAL(kind=sp), PARAMETER :: Efermi = 0.5554/Hartree
+REAL(kind=sp), PARAMETER :: Efermi = 0.5554/Hartree ! Fermijeva en. u eV
 REAL(kind=sp), PARAMETER :: a0 = 5.9715 ! unit cell parameter in parallel direction in a.u.  
 REAL(kind=sp), PARAMETER :: c0 = 29.8575
 REAL(kind=sp), PARAMETER :: Gcar = 2.0*pi/a0 ! unit cell norm.
@@ -304,10 +304,10 @@ DO  ik = 1,Ntot
         Nel = Nel + 1.0
       END IF
     ELSE
-      DO  i = 2,Nsymm
-        K11 = RI(i,1,1)*kx + RI(i,1,2)*ky+RI(i,1,3)*kz
-        K22 = RI(i,2,1)*kx + RI(i,2,2)*ky+RI(i,2,3)*kz
-        K33 = RI(i,3,1)*kx + RI(i,3,2)*ky+RI(i,3,3)*kz
+      symm_loop: DO  i = 2,Nsymm
+        K11 = RI(i,1,1)*kx + RI(i,1,2)*ky + RI(i,1,3)*kz
+        K22 = RI(i,2,1)*kx + RI(i,2,2)*ky + RI(i,2,3)*kz
+        K33 = RI(i,3,1)*kx + RI(i,3,2)*ky + RI(i,3,3)*kz
         DO  j = 1,NkI
           ! vito - if if if loop
           ! IF(ABS(K11-kI(1,j)) <= eps) THEN
@@ -323,7 +323,7 @@ DO  ik = 1,Ntot
             IF(E(K1,n) < Efermi) THEN 
               Nel = Nel + 1.0
             END IF
-            EXIT band_loop
+            EXIT symm_loop
           END IF
         END DO
       END DO
