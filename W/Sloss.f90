@@ -344,7 +344,7 @@ k_loop_FBZ : DO  ik = 1,Ntot
 END DO k_loop_FBZ
 Nel = 2.0*Nel / Ntot ! zbroji za en. manje od fermijeve
 
-EXIT
+STOP
 
 OPEN(887,FILE='fbz_check.dat',status='new')
 DO  i = 1,Ntot
