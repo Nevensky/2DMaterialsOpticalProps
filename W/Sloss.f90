@@ -288,7 +288,7 @@ END DO
 !             Checking 1BZ integration
 ! NEVEN PROVJERI LOGIKU JOS JEDNOM
 Nel = 0 ! provjeri je li broj el. u FBZ odgovara stvarnom broju el. u jed. cel. NelQE
-DO  ik = 1,Ntot
+fbz_k_loop : DO  ik = 1,Ntot
   kx = ktot(1,ik)
   ky = ktot(2,ik)
   kz = ktot(3,ik)
@@ -308,7 +308,7 @@ DO  ik = 1,Ntot
         K11 = RI(i,1,1)*kx + RI(i,1,2)*ky + RI(i,1,3)*kz
         K22 = RI(i,2,1)*kx + RI(i,2,2)*ky + RI(i,2,3)*kz
         K33 = RI(i,3,1)*kx + RI(i,3,2)*ky + RI(i,3,3)*kz
-        DO  j = 1,NkI
+        k_loop_IBZ: DO  j = 1,NkI
           ! vito - if if if loop
           ! IF(ABS(K11-kI(1,j)) <= eps) THEN
           !   IF(ABS(K22-kI(2,j)) <= eps) THEN
@@ -325,8 +325,8 @@ DO  ik = 1,Ntot
             END IF
             EXIT symm_loop
           END IF
-        END DO
-      END DO
+        END DO k_loop_IBZ
+      END DO symm_loop
       END IF
       IF(it == 1) THEN
         PRINT*,'Can not find wave vector K=',ik, 'in I.B.Z.'
@@ -339,10 +339,10 @@ DO  ik = 1,Ntot
     !   Nel = Nel + 1.0
     ! END IF
   END DO band_loop
-END DO
+END DO k_loop_FBZ
 Nel = 2.0*Nel / Ntot ! zbroji za en. manje od fermijeve
 
-OPEN(887,FILE='fbz_check.dat')
+OPEN(887,FILE='fbz_check.dat',status='new')
 DO  i = 1,Ntot
   WRITE(887,*) ktot(1,i),ktot(2,i)  ! output da vidimo kako izgleda FBZ
 END DO
