@@ -288,7 +288,7 @@ END DO
 !             Checking 1BZ integration
 ! NEVEN PROVJERI LOGIKU JOS JEDNOM
 Nel = 0 ! provjeri je li broj el. u FBZ odgovara stvarnom broju el. u jed. cel. NelQE
-fbz_k_loop : DO  ik = 1,Ntot
+k_loop_FBZ : DO  ik = 1,Ntot
   kx = ktot(1,ik)
   ky = ktot(2,ik)
   kz = ktot(3,ik)
