@@ -1,7 +1,7 @@
 # Makefile for Vito
 CC= icc
 #FC= gfortran
-FC= ifort
+FC= mpiifort
 LDFLAGS= -lm -L. -liotk -g -mkl
 FFLAGS= -Ofast -g -traceback -fpe0 
 SRC = Sloss.f PointR.f paths.f gjel.f 
