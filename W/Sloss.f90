@@ -323,6 +323,7 @@ k_loop_FBZ : DO  ik = 1,Ntot
               ! dodano sa linije goto 5022
               IF(E(K1,n) < Efermi) THEN 
                 Nel = Nel + 1.0
+                PRINT *,Nel
               END IF
               CYCLE band_loop
             END IF
@@ -342,6 +343,8 @@ k_loop_FBZ : DO  ik = 1,Ntot
   END DO band_loop
 END DO k_loop_FBZ
 Nel = 2.0*Nel / Ntot ! zbroji za en. manje od fermijeve
+
+EXIT
 
 OPEN(887,FILE='fbz_check.dat',status='new')
 DO  i = 1,Ntot
