@@ -316,14 +316,14 @@ k_loop_FBZ : DO  ik = 1,Ntot
             IF ( ABS(K11-kI(1,j)) <= eps .AND. &
                  ABS(K22-kI(2,j)) <= eps .AND. &
                  ABS(K33-kI(3,j)) <= eps ) THEN
-              PRINT *,'FOUND IBZ k-vec:',j
+              ! PRINT *,'FOUND IBZ k-vec:',j
               it = 2
               K1 = j
               ! GO TO 5022
               ! dodano sa linije goto 5022
               IF(E(K1,n) < Efermi) THEN 
                 Nel = Nel + 1.0
-                PRINT *,Nel
+                PRINT *,'Nel',Nel,'band:',n
               END IF
               CYCLE band_loop
             END IF
