@@ -170,10 +170,10 @@ q_loop: DO iq=1,nq
     
     
     
-    dxx=2.0D0*pi*ione*c0*gama*gama/beta
-    dyy=2.0D0*pi*ione*c0*beta/(oi*oi)
-    dyz=-2.0*pi*ione*q*c0/(oi*oi)
-    dzz=2.0*pi*ione*q*q*c0/(beta*oi*oi)
+    dxx = 2.0D0*pi*ione*c0*gama*gama/beta
+    dyy = 2.0D0*pi*ione*c0*beta/(oi*oi)
+    dyz = -2.0*pi*ione*q*c0/(oi*oi)
+    dzz = 2.0*pi*ione*q*q*c0/(beta*oi*oi)
     
     
     

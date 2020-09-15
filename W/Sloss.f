@@ -75,7 +75,7 @@ c        arrays
      &   KC(3,3),Gi(3), ! pomocne funkcije
      &   parG(NG), ! paritet svakog valnog vektora
      &   WT(no,Nlfd,Nlfd), ! time ordered RPa screened coulomb int. (eq. 2.93)
-     &   Gammap(Nlfd,Nlfd),Gammam(Nlfd,Nlfd), ! za GW ne koristi se za ovaj dio
+     &   Gammap(Nlfd,Nlfd),Gammam(Nlfd,Nlfd), ! za GW se koristi se za ovaj dio
      &   kQ0(100) 
  
          CHARACTER*100 bandn,

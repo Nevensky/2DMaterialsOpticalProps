@@ -1,30 +1,13 @@
 PROGRAM surface_loss
  
-! Code converted using TO_F90 by Alan Miller
-! Date: 2020-06-03  Time: 10:47:38
-
+!---------------------------------------------------------------------------
 !        PROGRAM FOR ab initio-SURFACE LOSS CALCULATION FOR LAYERED SYSTEMS
 !        USING SUPERCELL METHOD
-
-
-!        NkI -number of wave vectors in irreducible B. zone
-!        Ntot - total number of the mutually different wave vector-program generates this number
-!        Nband-number of the bands
-!        NG-total number of G vectors
-!        NGd-number of coefficients CG should be less than minimum number of coefficients over all evc.n files
-!        nMPx*nMPy*nMPz-Monkhorest-Pack sampling
-!        Ef-Fermi energy
-!        T-temperature in eV
-!        Gama-Damping parameter in eV
-!        Ecut-cutoff energy for crystal local field calculations
-!        Vcell-unit-cell volume in a.u.^3
-!        a0-unit cell parameter in parallel direction in a.u.
-!        c0-unit cell parameter in perpendicular direction in a.u. (z-separation between supercells)
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!---------------------------------------------------------------------------
 !        Quantum Esspresso:
 !        verbosity           = 'high'
-!        VALID ONLY FOR NORM-CONSERVING PSEUDOPOTENTIALS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!       WARNING: VALID ONLY FOR NORM-CONSERVING PSEUDOPOTENTIALS
+!---------------------------------------------------------------------------
 
 
 !USE ISO_Fortran_env ! precision kind, fortran 2008
@@ -53,15 +36,15 @@ INTEGER :: ik,i,j,jk,it,lk,Ntot,iG0,Nsymm,iq, &
            NG2,iG1,iG2,jG,kG,jo,jump,loss,   &
            iGfast,ikmin,lf,kG1,kG2,nord
 
-INTEGER, PARAMETER :: NkI = 6835
-INTEGER, PARAMETER :: Nband = 60
-INTEGER, PARAMETER :: NelQE = 18
-INTEGER, PARAMETER :: Nk = 48*NkI
-INTEGER, PARAMETER :: NGd = 4000
-INTEGER, PARAMETER :: NG = 44121! 8000
-INTEGER, PARAMETER :: no = 2001
-INTEGER, PARAMETER :: nq = 2
-INTEGER, PARAMETER :: Nlfd = 50
+INTEGER, PARAMETER :: NkI = 6835 ! number of wave vectors in IBZ
+INTEGER, PARAMETER :: Nband = 60 ! number of bands
+INTEGER, PARAMETER :: NelQE = 18 ! Number of electrons(unit cell)
+INTEGER, PARAMETER :: Nk = 48*NkI ! number of wave vectors in FBZ with no symmetry 
+INTEGER, PARAMETER :: NGd = 4000 ! number of coefficients CG shulod be less than minimum number of coefficients all over all evc.n files ... moglo bi se dinamicki alocirati 
+INTEGER, PARAMETER :: NG = 44121! zasto 8000 ?? total number of G vectors  
+INTEGER, PARAMETER :: no = 2001 ! broj frekvencija
+INTEGER, PARAMETER :: nq = 2 ! broj valnih vektora tu je 2 jer je rucno paralelizirano!
+INTEGER, PARAMETER :: Nlfd = 50 ! dimenzija polja za local field zasto prozivoljno 50, ne moze se znati unaprijed
 
 ! file i/o debug
 INTEGER :: ist,ist2,ist9,ist10,ist11,ist12
@@ -80,8 +63,8 @@ REAL(kind=sp) :: K11,K22,K33
 REAL(kind=sp) :: Lor ! lorentzian
 REAL(kind=sp) :: De 
 REAL(kind=sp) :: Gabs ! 
-REAL(kind=sp) :: kref
-REAL(kind=sp) :: Eref
+REAL(kind=sp) :: kref ! trazi najmanju k-tocku sampliranu u MP meshu u kojem se moze izracunati ILS
+REAL(kind=sp) :: Eref 
 REAL(kind=sp) :: Gxx1,Gyy1,Gzz1
 REAL(kind=sp) :: Gxx2,Gyy2,Gzz2
 REAL(kind=sp) :: fact
@@ -89,7 +72,7 @@ REAL(kind=sp) :: oi,oj
 REAL(kind=sp) :: ImChi0, ReChi0
 ! REAL(kind=sp) :: q ! ne koristi se
 ! REAL(kind=sp) :: qmax ! ne koristi se
-REAL(kind=sp) :: Nel
+REAL(kind=sp) :: Nel ! Number of electrons(1BZ integration)
 REAL(kind=sp) :: absq
 REAL(kind=sp) :: error
 REAL(kind=sp) :: W1,W2
@@ -108,15 +91,15 @@ REAL(kind=dp), PARAMETER :: Planck = 6.626196D-34
 REAL(kind=dp), PARAMETER :: three = 3.0d0 
 
 REAL(kind=sp), PARAMETER :: Efermi = 0.5554/Hartree
-REAL(kind=sp), PARAMETER :: a0 = 5.9715
+REAL(kind=sp), PARAMETER :: a0 = 5.9715 ! unit cell parameter in parallel direction in a.u.  
 REAL(kind=sp), PARAMETER :: c0 = 29.8575
 REAL(kind=sp), PARAMETER :: Gcar = 2.0*pi/a0 ! unit cell norm.
 REAL(kind=sp), PARAMETER :: eps = 1.0D-4 ! threshold
-REAL(kind=sp), PARAMETER :: T = 0.01/Hartree ! temperature
+REAL(kind=sp), PARAMETER :: T = 0.01/Hartree ! temperature in eV
 REAL(kind=sp), PARAMETER :: eta = 0.05/Hartree ! damping i\eta
-REAL(kind=sp), PARAMETER :: Ecut = 0.0
-REAL(kind=sp), PARAMETER :: Vcell = 922.0586
-REAL(kind=sp), PARAMETER :: aBohr = 0.5291772D0
+REAL(kind=sp), PARAMETER :: Ecut = 0.0 ! cutoff energy for crystal local field calculations  
+REAL(kind=sp), PARAMETER :: Vcell = 922.0586 ! unit-cell volume in a.u.^3 
+REAL(kind=sp), PARAMETER :: aBohr = 0.5291772D0 ! unit cell parameter in perpendicular direction in a.u. (z-separation between supercells)   
 
 
 
@@ -138,7 +121,7 @@ REAL(kind=sp), DIMENSION(NkI,Nband) :: E ! vl. vr. danog k-i i band-i
 REAL(kind=sp), DIMENSION(48,3,3) :: R ! matr. simetrijskih op.
 REAL(kind=sp), DIMENSION(48,3,3) :: RI ! inverz od R
 REAL(kind=sp), DIMENSION(3,Nk) :: k
-REAL(kind=sp), DIMENSION(3,NK) :: ktot
+REAL(kind=sp), DIMENSION(3,NK) :: ktot ! ukupno jedinstvenih k-tocaka u FBZ
 REAL(kind=sp), DIMENSION(3,NG) :: G ! polje valnih vektora G u recp. prost. za wfn.
 REAL(kind=sp), DIMENSION(Nlfd,Nlfd) :: V ! matr. gole coulomb. int.
 REAL(kind=sp), DIMENSION(no,Nlfd,Nlfd) :: S0 ! korelacijska matrica
@@ -152,18 +135,18 @@ REAL(kind=sp), DIMENSION(3,Nlfd) :: GlfV ! local field effect za nescreenanu (go
 
 COMPLEX(kind=dp), DIMENSION(Nlfd,Nlfd) :: Imat ! jedinicna matr.
 COMPLEX(kind=dp), DIMENSION(Nlfd,Nlfd) :: diel_epsilon ! Epsilon (GG')  = I - V(GG')Chi0
-COMPLEX(kind=sp), DIMENSION(Nlfd,Nlfd) :: Chi ! bio je dp
+COMPLEX(kind=sp), DIMENSION(Nlfd,Nlfd) :: Chi ! (eq. 2.88 nakon invertiranja) ;oprez bio je double precision
 
 COMPLEX(kind=sp), DIMENSION(Nlfd) :: MnmK1K2 ! nabojni vrhovi
 COMPLEX(kind=sp), DIMENSION(Nlfd,Nlfd) :: Chi0 ! (eq. 2.89)
 COMPLEX(kind=sp), DIMENSION(no,Nlfd,Nlfd) :: WT ! time ordered RPA screened coulomb int. (eq. 2.93)
-COMPLEX(kind=sp), DIMENSION(Nlfd,Nlfd) :: Gammap ! za GW ne koristi se za ovaj dio ????
-COMPLEX(kind=sp), DIMENSION(Nlfd,Nlfd) :: Gammam
+COMPLEX(kind=sp), DIMENSION(Nlfd,Nlfd) :: Gammap ! omega>0 ,eq....(skripta 5) \sum_{q,m} \int \dd omega' S(\omega')/{(\omega-\omega'-e_{k+q,m} +i\eta}) za GW se koristi se za ovaj dio 
+COMPLEX(kind=sp), DIMENSION(Nlfd,Nlfd) :: Gammam ! omega<0
 
 CHARACTER (LEN=100) :: bandn,bandm,nis,pathk1,pathk2,dato,root,outdir,path,fajl
 CHARACTER (LEN=35) :: tag,buffer
 
-COMPLEX(kind=sp), POINTER, DIMENSION(:) :: C1,C2 ! Fourierovi koef. u razvoju wfn. iz QE ?
+COMPLEX(kind=sp), POINTER, DIMENSION(:) :: C1,C2 ! Fourierovi koef. u razvoju wfn. iz QE 
 
 
 
@@ -199,18 +182,15 @@ COMPLEX(kind=sp), POINTER, DIMENSION(:) :: C1,C2 ! Fourierovi koef. u razvoju wf
 
 
 !             QUANTUM ESSPRESSO IMPUTS:
-root='/home/nevensky/Repositories/2d-quasiparticle-optical-properties/MoS2_201X201'
-outdir='/home/nevensky/hdd2tb/tmp'
-!             Crystal local field effects are included in z direction lf=1
-!             Crystal local field effects are included in x,y,z direction lf=3
+root='../MoS2_201X201'
+outdir='../MoS2_201X201/tmp'
 
-
-lf=1
-loss=1
-jump=1
-omin=1.0D-5
-omax=2.0D0
-domega=(omax-omin)/(no-1)
+lf = 1 ! crystal local field effect included in z for lf=1 or in x,y,z direction lf=3
+loss = 1
+jump = 1 ! za 1 preskace trazenje wfn. u IBZ za sve bands m i n
+omin = 1.0D-5 ! raspon frekvencija u Hartreeima
+omax = 2.0D0
+domega = (omax-omin)/(no-1)
 
 
 
@@ -249,7 +229,7 @@ GO TO 500
 DO  ik=1,NkI
   DO  i=1,Nband
     E(ik,i) = E(ik,i)/Hartree
-    IF(i >= 10) THEN
+    IF(i >= 10) THEN ! scissor operator, ispravlja/shifta DFT gap (na 1eV u ovom slucaju)
       E(ik,i) = E(ik,i) + 1.0/Hartree
     END IF
   END DO
@@ -266,16 +246,16 @@ END DO
 
 
 
-jk=0
-Ntot=0
-DO  i = 1,Nsymm
-  DO  ik = 1,NkI
+jk = 0
+Ntot = 0
+DO  i = 1,Nsymm ! loop over No. symmetries
+  DO  ik = 1,NkI  ! loop over k points in IBZ
     it = 1
     jk = jk+1
-    DO  n=1,3
+    DO  n = 1,3 ! loop over kx,ky,kz 
       k(n,jk) = 0.0
-      DO  m=1,3
-        k(n,jk) = k(n,jk) + R(i,n,m)*kI(m,ik)
+      DO  m = 1,3 ! loop over x,y,z
+        k(n,jk) = k(n,jk) + R(i,n,m)*kI(m,ik) ! kreira nove k tocke u BZ pomocu simetrije
       END DO
     END DO
     IF(jk > 1) THEN
@@ -290,12 +270,12 @@ DO  i = 1,Nsymm
         ! END IF
         IF( ABS(k(1,jk)-k(1,lk)) <= eps .AND. &
             ABS(k(2,jk)-k(2,lk)) <= eps .AND. &
-            ABS(k(3,jk)-k(3,lk)) <= eps ) THEN
+            ABS(k(3,jk)-k(3,lk)) <= eps ) THEN ! je li razlicita tocka od neke prije vec kreirane
           it=2
         END IF
       END DO
     END IF
-    IF(it == 1) THEN
+    IF(it == 1) THEN ! ne postoji dodaj ju
       Ntot=Ntot+1
       ktot(1,Ntot)=k(1,jk)
       ktot(2,Ntot)=k(2,jk)
@@ -307,7 +287,7 @@ END DO
 
 !             Checking 1BZ integration
 ! NEVEN PROVJERI LOGIKU JOS JEDNOM
-Nel = 0
+Nel = 0 ! provjeri je li broj el. u FBZ odgovara stvarnom broju el. u jed. cel. NelQE
 DO  ik = 1,Ntot
   kx = ktot(1,ik)
   ky = ktot(2,ik)
@@ -360,11 +340,13 @@ DO  ik = 1,Ntot
     ! END IF
   END DO band_loop
 END DO
-Nel = 2.0*Nel / Ntot
+Nel = 2.0*Nel / Ntot ! zbroji za en. manje od fermijeve
 
+OPEN(887,FILE='fbz_check.dat')
 DO  i = 1,Ntot
-  WRITE(887,*) ktot(1,i),ktot(2,i)
+  WRITE(887,*) ktot(1,i),ktot(2,i)  ! output da vidimo kako izgleda FBZ
 END DO
+CLOSE(887)
 
 
 
@@ -439,6 +421,7 @@ GO TO 5000
 Nlf = 0
 IF(lf == 1) THEN
   DO iG = 1,NG
+    ! local field efekti samo u okomitom smjeru
     IF(G(1,iG) == 0.0 .AND. G(2,iG) == 0.0) THEN
       Eref = Gcar**2 * G(3,iG)**2 / 2.0
       IF(Eref <= Ecut) THEN
@@ -456,6 +439,7 @@ IF(lf == 1) THEN
   END DO
 ELSE
   DO  iG = 1,NG
+    ! local field efekti samo u svim smjerovima
     Eref = Gcar**2 *( G(1,iG)**2 + G(2,iG)**2 + G(3,iG)**2 ) / 2.0
     IF(Eref <= Ecut) THEN
       Nlf = Nlf+1
@@ -487,8 +471,8 @@ DO  iq = 42,61
   
 !             searching min. q=(qx,qy,qz) in GM direction
   kmin = 1.0
-  ntot_loop: DO  i = 1,Ntot
-    kref = SQRT(ktot(1,i)*ktot(1,i)+ ktot(2,i)*ktot(2,i)+ktot(3,i)*ktot(3,i))
+  ntot_loop: DO  i = 1,Ntot ! loop over different k-points in FBZ
+    kref = SQRT(ktot(1,i)*ktot(1,i) + ktot(2,i)*ktot(2,i) + ktot(3,i)*ktot(3,i))
     IF(kref == 0.0) THEN
       EXIT Ntot_loop
     ELSE IF(kref < kmin) THEN
@@ -503,7 +487,7 @@ DO  iq = 42,61
   qy = (iq-1)*ktot(2,ikmin)
   qz = (iq-1)*ktot(3,ikmin)
   
-  absq = SQRT(qx*qx+qy*qy+qz*qz)
+  absq = SQRT(qx*qx + qy*qy + qz*qz)
   
 !             Info file
   
@@ -511,30 +495,30 @@ DO  iq = 42,61
   WRITE(55,*)'***************General***********************'
   WRITE(55,*)''
   WRITE(55,*)'Number of point symmetry operation is',Nsymm
-  WRITE(55,88)'Wave vector (qx,qy,qz)=(',qx*Gcar,qy*Gcar, qz*Gcar,') a.u.'
-  WRITE(55,99)'|(qx,qy,qz)|=',absq*Gcar,'a.u.'
+  WRITE(55,'(a25,3f10.4,a5)')'Wave vector (qx,qy,qz)=(',qx*Gcar,qy*Gcar, qz*Gcar,') a.u.'
+  WRITE(55,'(a25,f8.4,a5)')'|(qx,qy,qz)|=',absq*Gcar,'a.u.'
   IF(lf == 1)WRITE(55,*)'Local field effcts in z-dir'
   IF(lf == 3)WRITE(55,*)'Local field in all xyz-dir'
   WRITE(55,*)'Number of local field vectors is',Nlf
   WRITE(55,*)'Number of different K vectors in 1.B.Z. is',Ntot
   WRITE(55,*)'Number of K vectors in I.B.Z. is',NkI
   WRITE(55,*)'Number of bands is               ',Nband
-  WRITE(55,99)'Eta damping is ',eta*Hartree*1000.0,'meV'
-  WRITE(55,99)'Temperature is  ',T*Hartree*1000.0,'meV'
+  WRITE(55,'(a25,f8.4,a5)')'Eta damping is ',eta*Hartree*1000.0,'meV'
+  WRITE(55,'(a25,f8.4,a5)')'Temperature is  ',T*Hartree*1000.0,'meV'
   WRITE(55,*)''
   WRITE(55,*)'************* Checking 1BZ integration*******'
   WRITE(55,*)''
-  WRITE(55,12)'Number of electrons(1BZ integration)=',Nel
+  WRITE(55,'(a40,f7.4)')'Number of electrons(1BZ integration)=',Nel
   WRITE(55,*)'Number of electrons(unit cell)=',NelQE
   error=ABS((NelQE-Nel)/NelQE)
-  WRITE(55,99)'Relative error=',error*100.0,'%'
+  WRITE(55,'(a25,f8.4,a5)')'Relative error=',error*100.0,'%'
   IF(error > 0.05) THEN
     WRITE(55,*)'WARRNING!!-1BZ INTEGRATION IS BAD!.'
   END IF
   CLOSE(55)
-  88         FORMAT(a25,3f10.4,a5)
-  99         FORMAT(a25,f8.4,a5)
-  12         FORMAT(a40,f7.4)
+  ! 88         FORMAT(a25,3f10.4,a5)
+  ! 99         FORMAT(a25,f8.4,a5)
+  ! 12         FORMAT(a40,f7.4)
   
   
   DO  io = 1,no
@@ -1212,8 +1196,8 @@ DO  iq = 42,61
   END IF
   
   OPEN(33,FILE=dato)
-  WRITE(33,88) 'Wave vector (qx,qy,qz)=(',qx*Gcar,qy*Gcar, qz*Gcar,') a.u.'
-  WRITE(33,99) '|(qx,qy,qz)|=',absq*Gcar,'a.u.'
+  WRITE(33,'(a25,3f10.4,a5)') 'Wave vector (qx,qy,qz)=(',qx*Gcar,qy*Gcar, qz*Gcar,') a.u.'
+  WRITE(33,'(a25,f8.4,a5)') '|(qx,qy,qz)|=',absq*Gcar,'a.u.'
   WRITE(33,*) 'int(WindKK-Wind)^2 =  ',KKS
   WRITE(33,*) 'int(Wind)^2 =  ',SKK
   WRITE(33,*) '****************************************'

@@ -55,9 +55,6 @@ CONTAINS
          DO lskip = 1,3
             READ (1,*,err=101,iostat=ist7,end=201) 
          END DO
-         ! READ (1,'(X)',err=101,iostat=ist7,end=201)
-         ! READ (1,'(X)',err=101,iostat=ist7,end=202)
-         ! READ (1,'(X)',err=101,iostat=ist7,end=203)
          READ (1,*) Nsymm
          PRINT *,"Nsymm = ",Nsymm
          EXIT Nsymm_loop
@@ -75,9 +72,6 @@ CONTAINS
         DO lskip = 1,3
          READ (1,*,err=1002,iostat=ist4,end=2002) 
         END DO
-        ! READ (1,'(X)',err=1002,iostat=ist4,end=2002)
-        ! READ (1,'(X)',err=1002,iostat=ist4,end=2002)
-        ! READ (1,'(X)',err=1002,iostat=ist4,end=2002)
         READ (1,'(19X,3F11.3)',err=1003,iostat=ist4,end=2003) x , y , z
         R(is,1,1) = x
         R(is,1,2) = y
@@ -98,7 +92,7 @@ CONTAINS
       END IF
    END DO load_R_loop
    CLOSE (1)
-   PRINT *, 'EXITED R matrix loading loop.'
+   ! PRINT *, 'EXITED R matrix loading loop.'
 
 GOTO 2004
 101   write(*,*)'101 buffer1=tag1. Error reading line ',lno4+1,', iostat = ',ist7
@@ -120,6 +114,7 @@ GOTO 2004
 1003   write(*,*)'1003 buffer2=tag2. reding xyz Error reading line ',lno3+1,', iostat = ',ist4
 2003   write(*,*)'2003 buffer2=tag2. reding xyz Number of lines read = ',lno3 
 2004 CONTINUE
+
 !    INVERSION
    DO i = 1 , Nsymm
       DO n = 1 , 3
@@ -129,11 +124,11 @@ GOTO 2004
          END DO
          unit(n,n) = DCMPLX(one,zero)
       END DO
-      PRINT *,'EXITED n loop'
+      ! PRINT *,'EXITED n loop'
       PRINT *,'symmetry op. matrix R'
       WRITE(*,'(A8,I3/3F11.4/3F11.4/3F11.4)'),'i_symm= ',i, R(i,:,:)
-      PRINT *,'preparing to invert helper matrix T'
-      WRITE(*,'(A8,I3/6F11.4/6F11.4/6F11.4)'),'i_symm= ',i, T
+      ! PRINT *,'preparing to invert helper matrix T'
+      ! WRITE(*,'(A8,I3/6F11.4/6F11.4/6F11.4)'),'i_symm= ',i, T
       CALL GJEL(T,3,3,unit,3,3)
       PRINT *,'COMPLETED matrix inversion'
       DO n = 1 , 3
