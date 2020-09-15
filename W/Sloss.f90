@@ -325,8 +325,9 @@ k_loop_FBZ : DO  ik = 1,Ntot
                 Nel = Nel + 1.0
                 PRINT *,'Nel',Nel,'band:',n
               END IF
-              CYCLE band_loop
-            END IF
+
+            END IF  
+          CYCLE band_loop
           END DO k_loop_IBZ
         END DO symm_loop
       END IF
