@@ -300,9 +300,9 @@ k_loop_FBZ : DO  ik = 1,Ntot
         K1 = ik
         it = 2
         ! dodano sa linije goto 5022
-        IF(E(K1,n) < Efermi) THEN 
-          Nel = Nel + 1.0
-        END IF
+        ! IF(E(K1,n) < Efermi) THEN 
+        !   Nel = Nel + 1.0
+        ! END IF
       ELSE
         symm_loop: DO  i = 2,Nsymm
           K11 = RI(i,1,1)*kx + RI(i,1,2)*ky + RI(i,1,3)*kz
@@ -316,6 +316,7 @@ k_loop_FBZ : DO  ik = 1,Ntot
             IF ( ABS(K11-kI(1,j)) <= eps .AND. &
                  ABS(K22-kI(2,j)) <= eps .AND. &
                  ABS(K33-kI(3,j)) <= eps ) THEN
+              PRINT *,'FOUND IBZ k-vec:',j
               it = 2
               K1 = j
               ! GO TO 5022
