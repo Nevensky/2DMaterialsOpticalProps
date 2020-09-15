@@ -325,7 +325,7 @@ fbz_k_loop : DO  ik = 1,Ntot
             END IF
             EXIT symm_loop
           END IF
-        END DO k_loop_IBZ
+        END DO k_loop
       END DO symm_loop
       END IF
       IF(it == 1) THEN
