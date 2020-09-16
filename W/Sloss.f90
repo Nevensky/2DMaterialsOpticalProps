@@ -286,7 +286,6 @@ END DO
 
 
 !             Checking 1BZ integration
-! NEVEN PROVJERI LOGIKU JOS JEDNOM
 Nel = 0 ! provjeri je li broj el. u FBZ odgovara stvarnom broju el. u jed. cel. NelQE
 k_loop_FBZ : DO  ik = 1,Ntot
   kx = ktot(1,ik)
@@ -295,52 +294,37 @@ k_loop_FBZ : DO  ik = 1,Ntot
   band_loop: DO  n = 1,Nband
     IF(n == 1) THEN
         it = 1
-!      END IF
       IF(ik <= NkI) THEN
         K1 = ik
         it = 2
-        ! dodano sa linije goto 5022
-        ! IF(E(K1,n) < Efermi) THEN 
-        !   Nel = Nel + 1.0
-        ! END IF
       ELSE
         symm_loop: DO  i = 2,Nsymm
           K11 = RI(i,1,1)*kx + RI(i,1,2)*ky + RI(i,1,3)*kz
           K22 = RI(i,2,1)*kx + RI(i,2,2)*ky + RI(i,2,3)*kz
           K33 = RI(i,3,1)*kx + RI(i,3,2)*ky + RI(i,3,3)*kz
           k_loop_IBZ: DO  j = 1,NkI
-            ! vito - if if if loop
-            ! IF(ABS(K11-kI(1,j)) <= eps) THEN
-            !   IF(ABS(K22-kI(2,j)) <= eps) THEN
-            !     IF(ABS(K33-kI(3,j)) <= eps) THEN
             IF ( ABS(K11-kI(1,j)) <= eps .AND. &
                  ABS(K22-kI(2,j)) <= eps .AND. &
                  ABS(K33-kI(3,j)) <= eps ) THEN
-              ! PRINT *,'FOUND IBZ k-vec:',j
               it = 2
               K1 = j
               ! GO TO 5022
-              ! dodano sa linije goto 5022
-              IF(E(K1,n) < Efermi) THEN 
-                Nel = Nel + 1.0
-                PRINT *,'Nel',Nel,'band:',n
-              END IF
-
-            END IF  
-          CYCLE band_loop
+              CYCLE band_loop
+            END IF
           END DO k_loop_IBZ
         END DO symm_loop
       END IF
-        IF(it == 1) THEN
-          PRINT*,'Can not find wave vector K=',ik, 'in I.B.Z.'
-          STOP
-        END IF
-        ! 5022          CONTINUE
+      IF(it == 1) THEN
+        PRINT*,'Can not find wave vector K=',ik, 'in I.B.Z.'
+        STOP
+      END IF
     END IF
-    ! vito - vjerojatno nepotrebno , te
-    ! IF(E(K1,n) < Efermi) THEN 
-    !   Nel = Nel + 1.0
-    ! END IF
+
+    IF(E(K1,n) < Efermi) THEN 
+      Nel = Nel + 1.0
+      PRINT *,'Nel',Nel,'band:',n
+    END IF  
+
   END DO band_loop
 END DO k_loop_FBZ
 Nel = 2.0*Nel / Ntot ! zbroji za en. manje od fermijeve
