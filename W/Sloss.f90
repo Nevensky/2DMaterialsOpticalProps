@@ -285,8 +285,9 @@ DO  i = 1,Nsymm ! loop over No. symmetries
 END DO
 
 
-!             Checking 1BZ integration
-Nel = 0 ! provjeri je li broj el. u FBZ odgovara stvarnom broju el. u jed. cel. NelQE
+! Checking 1BZ integration
+! provjeri je li broj el. u FBZ (Nel) odgovara stvarnom broju el. u jed. cel. (NelQE)
+Nel = 0 
 k_loop_FBZ : DO  ik = 1,Ntot
   kx = ktot(1,ik)
   ky = ktot(2,ik)
@@ -308,7 +309,6 @@ k_loop_FBZ : DO  ik = 1,Ntot
                  ABS(K33-kI(3,j)) <= eps ) THEN
               it = 2
               K1 = j
-              ! GO TO 5022
               CYCLE band_loop
             END IF
           END DO k_loop_IBZ
@@ -322,14 +322,13 @@ k_loop_FBZ : DO  ik = 1,Ntot
 
     IF(E(K1,n) < Efermi) THEN 
       Nel = Nel + 1.0
-      PRINT *,'Nel',Nel,'band:',n
+      ! PRINT *,'Nel',Nel,'band:',n
     END IF  
 
   END DO band_loop
 END DO k_loop_FBZ
 Nel = 2.0*Nel / Ntot ! zbroji za en. manje od fermijeve
 
-STOP
 
 OPEN(887,FILE='fbz_check.dat',status='new')
 DO  i = 1,Ntot
