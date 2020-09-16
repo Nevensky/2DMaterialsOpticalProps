@@ -309,6 +309,11 @@ k_loop_FBZ : DO  ik = 1,Ntot
                  ABS(K33-kI(3,j)) <= eps ) THEN
               it = 2
               K1 = j
+              ! zbroji broj el. u prvoj vrpci
+              IF(E(K1,n) < Efermi) THEN 
+                Nel = Nel + 1.0
+                ! PRINT *,'Nel',Nel,'band:',n
+              END IF  
               CYCLE band_loop
             END IF
           END DO k_loop_IBZ
@@ -319,7 +324,8 @@ k_loop_FBZ : DO  ik = 1,Ntot
         STOP
       END IF
     END IF
-
+    
+    ! zbroji broj el. u preostalim vrpcama
     IF(E(K1,n) < Efermi) THEN 
       Nel = Nel + 1.0
       ! PRINT *,'Nel',Nel,'band:',n
