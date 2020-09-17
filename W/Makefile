@@ -2,8 +2,9 @@
 CC= icc
 #FC= gfortran
 FC= mpiifort
+# FC= ifort
 LDFLAGS= -lm -L. -liotk -g -mkl
-FFLAGS= -Ofast -g -traceback -fpe0 
+FFLAGS= -Ofast -g -traceback -fpe0 -parallel #-opt-report-phase=par -opt-report:5
 SRC = Sloss.f PointR.f paths.f gjel.f 
 OBJECTS = Sloss.o PointR.o paths.o gjel.o 
 
@@ -28,4 +29,4 @@ gjel.o: gjel.f
 	${FC} ${FFLAGS} -c gjel.f
 
 clean:
-	rm  *.o Loss
+	rm  *.o Loss fbz_check.dat
