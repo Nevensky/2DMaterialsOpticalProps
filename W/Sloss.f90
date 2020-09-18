@@ -13,6 +13,7 @@ program surface_loss
 !USE ISO_Fortran_env ! precision kind, fortran 2008
 USE iotk_module
 USE ModPointR
+USE OMP_LIB
 implicit none
 
 character (len=iotk_attlenx) :: attr
@@ -97,15 +98,15 @@ real(kind=sp), parameter :: Gcar = 2.0*pi/a0 ! unit cell norm.
 real(kind=sp), parameter :: eps = 1.0D-4 ! threshold
 real(kind=sp), parameter :: T = 0.01/Hartree ! temperature in eV
 real(kind=sp), parameter :: eta = 0.05/Hartree ! damping i\eta
-real(kind=sp), parameter :: Ecut = 0.0 ! cutoff energy for crystal local field calculations  
+real(kind=sp), parameter :: Ecut = 0.0 ! cutoff energy for crystal local field calculations , for Ecut=0 S matrix is a scalar
 real(kind=sp), parameter :: Vcell = 922.0586 ! unit-cell volume in a.u.^3 
 real(kind=sp), parameter :: aBohr = 0.5291772D0 ! unit cell parameter in perpendicular direction in a.u. (z-separation between supercells)   
 
 
 
-complex(kind=dp), parameter :: ione = CMPLX(1.0,0.0)
-complex(kind=dp), parameter :: czero = CMPLX(0.0,0.0)
-complex(kind=dp), parameter :: rone = CMPLX(0.0,1.0)
+complex(kind=dp), parameter :: ione = cmplx(1.0,0.0)
+complex(kind=dp), parameter :: czero = cmplx(0.0,0.0)
+complex(kind=dp), parameter :: rone = cmplx(0.0,1.0)
 
 
 complex(kind=sp) :: G0
@@ -226,6 +227,7 @@ GO TO 500
 400 write(*,*) '100 cannot open file. iostat = ',ist9
 500 continue
 
+
 do  ik=1,NkI
   do  i=1,Nband
     E(ik,i) = E(ik,i)/Hartree
@@ -245,9 +247,19 @@ end do
 !            Ntot-Tot number of different points ''ktot'' inside 1.B.Z
 
 
+!$omp parallel
+!$omp do
+do i=1,Nsymm
+  print *,i
+end do
+!$omp end do
+!$omp end parallel
+
+! !$omp parallel shared(k,ktot,Ntot)
 
 jk = 0
 Ntot = 0
+! !$omp do  reduction(+:Ntot)
 do  i = 1,Nsymm ! loop over No. symmetries
   do  ik = 1,NkI  ! loop over k points in IBZ
     it = 1
@@ -269,8 +281,8 @@ do  i = 1,Nsymm ! loop over No. symmetries
         !   end if
         ! end if
         if ( abs(k(1,jk)-k(1,lk)) <= eps .and. &
-            abs(k(2,jk)-k(2,lk)) <= eps .and. &
-            abs(k(3,jk)-k(3,lk)) <= eps ) then ! je li razlicita tocka od neke prije vec kreirane
+             abs(k(2,jk)-k(2,lk)) <= eps .and. &
+             abs(k(3,jk)-k(3,lk)) <= eps ) then ! je li razlicita tocka od neke prije vec kreirane
           it=2
         end if
       end do
@@ -283,6 +295,8 @@ do  i = 1,Nsymm ! loop over No. symmetries
     end if
   end do
 end do
+! !$omp end do
+! !$omp end parallel
 
 
 ! Checking 1BZ integration
@@ -363,9 +377,12 @@ do  i = 1,100000
   end if
 end do
 ! 70          FORMAT(23X,3F10.3)
+close(30)
+
+goto 8000
 10001   write(*,*) 'Error reading line ',lno+1,', iostat = ',ist
 20001   write(*,*) 'Number of lines read = ',lno
-close(30)
+8000 continue
 
 
 ! Reading the reciprocal vectors in crystal coordinates and transformation
@@ -375,14 +392,14 @@ lno10 =0
 print *, 'File gvectors.dat oppened successfully.'
 do  i=1,8
   read(20,*,err=201,iostat=ist11,end=202) nis
-  print *,nis
+  ! print *,nis
   lno10 = lno10 +1
 end do
 G = 0.0 ! vito - premjesteno iz n,m loopa
 do  iG = 1,NG
   read(20,'(i10,i11,i11) ',err=201,iostat=ist11,end=202) Gi(1),Gi(2),Gi(3)
   lno10 = lno10 +1
-  print *, lno10
+  ! print *, lno10
   if (iG == 1) then
     if (Gi(1) /= 0 .or. Gi(2) /= 0 .or. Gi(3) /= 0) then
       print*,'*********************************'
@@ -510,25 +527,24 @@ do  iq = 42,61
     write(55,*) 'WARRNING!!-1BZ INTEGRATION IS BAD!.'
   end if
   close(55)
-  ! 88         FORMAT(a25,3f10.4,a5)
-  ! 99         FORMAT(a25,f8.4,a5)
-  ! 12         FORMAT(a40,f7.4)
   
 
-  do  io = 1,no
-    do  iG = 1,Nlf
-      do  jG=1,Nlf
-        S0(io,iG,jG) = czero
-      end do
-    end do
-  end do
+  ! vito stari format inicializacije matrice
+  ! do  io = 1,no
+    ! do  iG = 1,Nlf
+      ! do  jG=1,Nlf
+        ! S0(io,iG,jG) = czero
+      ! end do
+    ! end do
+  ! end do
+  S0(1:no,1:Nlf,1:Nlf) = czero
   
   
 !              1.B.Z  LOOP STARTS HERE !!!!
 
-  !mozda treba dudat u liniju ispod PRIVATE(NUM), SHARED (X,A,B,C)
-  !$omp parallel 
-  !$omp parallel do
+
+!  !$omp parallel shared(S0) default(private)
+!  !$omp do reduction(-:S0)
   k_loop_FBZ_2nd: do ik=1,Ntot
     
     open(122,FILE='status')
@@ -710,6 +726,14 @@ do  iq = 42,61
         
 !                Konstrukcija stupca matricnih elementa MnmK1K2(G)
         
+        ! vito maknut check        
+        ! if (NGd > NG1) then
+        !   write(*,*) 'NGd is bigger than NG1=',NG1
+        !   STOP
+        ! else if (NGd > NG2) then
+        !   write(*,*) 'NGd is bigger than NG2=',NG2
+        !   STOP
+        ! end if
         
         if (NGd > NG1) then
           write(*,*) 'NGd is bigger than NG1=',NG1
@@ -805,7 +829,8 @@ do  iq = 42,61
     jump=1
 
   end do k_loop_FBZ_2nd !  end of 1.B.Z do loop
-  !$omp end parallel
+!  !$omp end do
+!  !$omp end parallel
   
   
 ! Puting (qx,qy,qz) and Glf in cartesian coordinates
@@ -922,7 +947,7 @@ do  iq = 42,61
         end if
         
         ImChi0 = -pi*S0(io,iG,jG)
-        Chi0(iG,jG) = CMPLX(ReChi0,ImChi0)
+        Chi0(iG,jG) = cmplx(ReChi0,ImChi0)
 !                kraj po iG,jG
       end do
     end do
@@ -1025,14 +1050,16 @@ do  iq = 42,61
   end do
   close(74)
   ! 44              FORMAT(10F15.5)
-  
-  do  io = 1,no-1
-    do  iG = 1,Nlf
-      do  jG = 1,Nlf
-        S0(io,iG,jG) = -(1.0/pi)*AIMAG(WT(io,iG,jG))
-      end do
-    end do
-  end do
+
+  ! vito stari format  
+  ! do  io = 1,no-1
+  !   do  iG = 1,Nlf
+  !     do  jG = 1,Nlf
+  !       S0(io,iG,jG) = -(1.0/pi)*AIMAG(WT(io,iG,jG))
+  !     end do
+  !   end do
+  ! end do
+  S0(1:no-1,1:Nlf,1:Nlf) = -(1.0/pi)*AIMAG(WT(1:no-1,1:Nlf,1:Nlf))
   
   ! podatci za GW sve na dalje
 
@@ -1153,8 +1180,8 @@ do  iq = 42,61
         
         ImW = -pi*S0(io,iG,jG)
         ! stvari vezane u GW...
-        Gammap(iG,jG) = CMPLX(W1,ImW)
-        Gammam(iG,jG) = CMPLX(-W2,0.0)
+        Gammap(iG,jG) = cmplx(W1,ImW)
+        Gammam(iG,jG) = cmplx(-W2,0.0)
         if (iG == 1 .and. jG == 1) then
           W2KK = W2
           if (io == 1) then

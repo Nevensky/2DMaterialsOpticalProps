@@ -5,6 +5,7 @@ FC= mpiifort
 # FC= ifort
 LDFLAGS= -lm -L. -liotk -g -mkl
 FFLAGS= -Ofast -g -traceback -fpe0 -parallel #-opt-report-phase=par -opt-report:5
+OMPFLAGS = -qopenmp -debug extended -heap-array
 SRC = Sloss.f PointR.f paths.f gjel.f 
 OBJECTS = Sloss.o PointR.o paths.o gjel.o 
 
@@ -17,7 +18,7 @@ Loss: $(OBJECTS)
 	${FC} -I. $(OBJECTS) ${LDFLAGS} -o Loss
 
 Sloss.o: Sloss.f
-	${FC} ${FFLAGS} -c Sloss.f90
+	${FC} ${FFLAGS} ${OMPFLAGS} -c Sloss.f90
 
 PointR.o: PointR.f
 	${FC} ${FFLAGS} -c PointR_mkl.f90 -o PointR.o
