@@ -57,64 +57,64 @@ integer :: ist,ist2,ist9,ist10,ist11,ist12
 integer :: lno,lno2,lno9,lno10,lno11,lno12
 
 ! scalars
-real(kind=dp) :: kx,ky,kz
-real(kind=dp) :: KQx,KQy,KQz
-real(kind=dp) :: qgx,qgy,qgz
-real(kind=dp) :: omin,omax
-real(kind=dp) :: qx,qy,qz
-real(kind=dp) :: kmin
-real(kind=dp) :: domega
-real(kind=dp) :: o
-real(kind=dp) :: K11,K22,K33
-real(kind=dp) :: Lor ! lorentzian
-real(kind=dp) :: De 
-real(kind=dp) :: Gabs ! 
-real(kind=dp) :: kref ! trazi najmanju k-tocku sampliranu u MP meshu u kojem se moze izracunati ILS
-real(kind=dp) :: Eref 
-real(kind=dp) :: Gxx1,Gyy1,Gzz1
-real(kind=dp) :: Gxx2,Gyy2,Gzz2
-real(kind=dp) :: fact
-real(kind=dp) :: oi,oj
-real(kind=dp) :: ImChi0, ReChi0
-! real(kind=dp) :: q ! ne koristi se
-! real(kind=dp) :: qmax ! ne koristi se
-real(kind=dp) :: Nel ! Number of electrons(1BZ integration)
-real(kind=dp) :: absq
-real(kind=dp) :: error
-real(kind=dp) :: W1,W2
-real(kind=dp) :: ImW
-real(kind=dp) :: Wind
-real(kind=dp) :: W2KK
-real(kind=dp) :: KKS = 0.0
-real(kind=dp) :: SKK = 0.0
-real(kind=dp) :: WindKK
-real(kind=dp) :: krefM
+real(kind=sp) :: kx,ky,kz
+real(kind=sp) :: KQx,KQy,KQz
+real(kind=sp) :: qgx,qgy,qgz
+real(kind=sp) :: omin,omax
+real(kind=sp) :: qx,qy,qz
+real(kind=sp) :: kmin
+real(kind=sp) :: domega
+real(kind=sp) :: o
+real(kind=sp) :: K11,K22,K33
+real(kind=sp) :: Lor ! lorentzian
+real(kind=sp) :: De 
+real(kind=sp) :: Gabs ! 
+real(kind=sp) :: kref ! trazi najmanju k-tocku sampliranu u MP meshu u kojem se moze izracunati ILS
+real(kind=sp) :: Eref 
+real(kind=sp) :: Gxx1,Gyy1,Gzz1
+real(kind=sp) :: Gxx2,Gyy2,Gzz2
+real(kind=sp) :: fact
+real(kind=sp) :: oi,oj
+real(kind=sp) :: ImChi0, ReChi0
+! real(kind=sp) :: q ! ne koristi se
+! real(kind=sp) :: qmax ! ne koristi se
+real(kind=sp) :: Nel ! Number of electrons(1BZ integration)
+real(kind=sp) :: absq
+real(kind=sp) :: error
+real(kind=sp) :: W1,W2
+real(kind=sp) :: ImW
+real(kind=sp) :: Wind
+real(kind=sp) :: W2KK
+real(kind=sp) :: KKS = 0.0
+real(kind=sp) :: SKK = 0.0
+real(kind=sp) :: WindKK
+real(kind=sp) :: krefM
 
-real(kind=dp), parameter :: pi = 4.D0*ATAN(1.D0)
-real(kind=dp), parameter :: eV = 1.602176487D-19
-real(kind=dp), parameter :: Hartree = 2.0D0*13.6056923D0
-real(kind=dp), parameter :: Planck = 6.626196D-34
-real(kind=dp), parameter :: three = 3.0d0 
+real(kind=sp), parameter :: pi = 4.D0*ATAN(1.D0)
+real(kind=sp), parameter :: eV = 1.602176487D-19
+real(kind=sp), parameter :: Hartree = 2.0D0*13.6056923D0
+real(kind=sp), parameter :: Planck = 6.626196D-34
+real(kind=sp), parameter :: three = 3.0d0 
 
-real(kind=dp), parameter :: Efermi = 0.5554/Hartree ! Fermijeva en. u eV
-real(kind=dp), parameter :: a0 = 5.9715 ! unit cell parameter in parallel direction in a.u.  
-real(kind=dp), parameter :: c0 = 29.8575
-real(kind=dp), parameter :: Gcar = 2.0*pi/a0 ! unit cell norm.
-real(kind=dp), parameter :: eps = 1.0D-3 ! 1.0D-4 threshold
-real(kind=dp), parameter :: T = 0.01/Hartree ! temperature in eV
-real(kind=dp), parameter :: eta = 0.05/Hartree ! damping i\eta
-real(kind=dp), parameter :: Ecut = 0.0 ! cutoff energy for crystal local field calculations , for Ecut=0 S matrix is a scalar
-real(kind=dp), parameter :: Vcell = 922.0586 ! unit-cell volume in a.u.^3 
-real(kind=dp), parameter :: aBohr = 0.5291772D0 ! unit cell parameter in perpendicular direction in a.u. (z-separation between supercells)   
-
-
-
-complex(kind=dp), parameter :: rone = cmplx(1.0,0.0)
-complex(kind=dp), parameter :: czero = cmplx(0.0,0.0)
-complex(kind=dp), parameter :: ione = cmplx(0.0,1.0)
+real(kind=sp), parameter :: Efermi = 0.5554/Hartree ! Fermijeva en. u eV
+real(kind=sp), parameter :: a0 = 5.9715 ! unit cell parameter in parallel direction in a.u.  
+real(kind=sp), parameter :: c0 = 29.8575
+real(kind=sp), parameter :: Gcar = 2.0*pi/a0 ! unit cell norm.
+real(kind=sp), parameter :: eps = 1.0D-3 ! 1.0D-4 threshold
+real(kind=sp), parameter :: T = 0.01/Hartree ! temperature in eV
+real(kind=sp), parameter :: eta = 0.05/Hartree ! damping i\eta
+real(kind=sp), parameter :: Ecut = 0.0 ! cutoff energy in Hartree for crystal local field calculations , for Ecut=0 S matrix is a scalar
+real(kind=sp), parameter :: Vcell = 922.0586 ! unit-cell volume in a.u.^3 
+real(kind=sp), parameter :: aBohr = 0.5291772D0 ! unit cell parameter in perpendicular direction in a.u. (z-separation between supercells)   
 
 
-complex(kind=dp) :: G0
+
+complex(kind=sp), parameter :: rone = cmplx(1.0,0.0)
+complex(kind=sp), parameter :: czero = cmplx(0.0,0.0)
+complex(kind=sp), parameter :: ione = cmplx(0.0,1.0)
+
+
+complex(kind=sp) :: G0
 
 ! scalar arrays
 integer, dimension(Nlfd*NGd) :: Gfast ! pomocna funkcija
@@ -122,37 +122,37 @@ integer, dimension(3) :: Gi ! pomocna funkcija
 integer, dimension(NG) :: parG ! paritet svakog valnog vektora
 
 ! multidim arrays
-real(kind=dp), dimension(3,NkI) :: kI
-real(kind=dp), dimension(NkI,Nband) :: E ! vl. vr. danog k-i i band-i
+real(kind=sp), dimension(3,NkI) :: kI
+real(kind=sp), dimension(NkI,Nband) :: E ! vl. vr. danog k-i i band-i
 real(kind=sp), dimension(48,3,3) :: R ! matr. simetrijskih op.
 real(kind=sp), dimension(48,3,3) :: RI ! inverz od R
-real(kind=dp), dimension(3,Nk) :: k
-real(kind=dp), dimension(3,NK) :: ktot ! ukupno jedinstvenih k-tocaka u FBZ
-real(kind=dp), dimension(3,NG) :: G ! polje valnih vektora G u recp. prost. za wfn.
-real(kind=dp), dimension(Nlfd,Nlfd) :: V ! matr. gole coulomb. int.
-real(kind=dp), dimension(no,Nlfd,Nlfd) :: S0 ! korelacijska matrica
-real(kind=dp), dimension(3,3) :: KC ! pomocna funkcija
-real(kind=dp), dimension(3,Nlfd) :: Glf ! local field effect polje valnih vekt. u rec. prost.
-real(kind=dp), dimension(3,Nlfd) :: GlfV ! local field effect za nescreenanu (golu) int. V
+real(kind=sp), dimension(3,Nk) :: k
+real(kind=sp), dimension(3,NK) :: ktot ! ukupno jedinstvenih k-tocaka u FBZ
+real(kind=sp), dimension(3,NG) :: G ! polje valnih vektora G u recp. prost. za wfn.
+real(kind=sp), dimension(Nlfd,Nlfd) :: V ! matr. gole coulomb. int.
+real(kind=sp), dimension(no,Nlfd,Nlfd) :: S0 ! korelacijska matrica
+real(kind=sp), dimension(3,3) :: KC ! pomocna funkcija
+real(kind=sp), dimension(3,Nlfd) :: Glf ! local field effect polje valnih vekt. u rec. prost.
+real(kind=sp), dimension(3,Nlfd) :: GlfV ! local field effect za nescreenanu (golu) int. V
 
 
 ! Nldf dimenziju ne znamo a priori zapravo, trebalo bi staviti sve te matrice allocatable i 
 ! naknadno ih alocirati
 
-complex(kind=dp), dimension(Nlfd,Nlfd) :: Imat ! jedinicna matr.
-complex(kind=dp), dimension(Nlfd,Nlfd) :: diel_epsilon ! Epsilon (GG')  = I - V(GG')Chi0
-complex(kind=dp), dimension(Nlfd,Nlfd) :: Chi ! (eq. 2.88 nakon invertiranja) ;oprez bio je double precision
+complex(kind=sp), dimension(Nlfd,Nlfd) :: Imat ! jedinicna matr.
+complex(kind=sp), dimension(Nlfd,Nlfd) :: diel_epsilon ! Epsilon (GG')  = I - V(GG')Chi0
+complex(kind=sp), dimension(Nlfd,Nlfd) :: Chi ! (eq. 2.88 nakon invertiranja) ;oprez bio je double precision
 
-complex(kind=dp), dimension(Nlfd) :: MnmK1K2 ! nabojni vrhovi
-complex(kind=dp), dimension(Nlfd,Nlfd) :: Chi0 ! (eq. 2.89)
-complex(kind=dp), dimension(no,Nlfd,Nlfd) :: WT ! time ordered RPA screened coulomb int. (eq. 2.93)
-complex(kind=dp), dimension(Nlfd,Nlfd) :: Gammap ! omega>0 ,eq....(skripta 5) \sum_{q,m} \int \dd omega' S(\omega')/{(\omega-\omega'-e_{k+q,m} +i\eta}) za GW se koristi se za ovaj dio 
-complex(kind=dp), dimension(Nlfd,Nlfd) :: Gammam ! omega<0
+complex(kind=sp), dimension(Nlfd) :: MnmK1K2 ! nabojni vrhovi
+complex(kind=sp), dimension(Nlfd,Nlfd) :: Chi0 ! (eq. 2.89)
+complex(kind=sp), dimension(no,Nlfd,Nlfd) :: WT ! time ordered RPA screened coulomb int. (eq. 2.93)
+complex(kind=sp), dimension(Nlfd,Nlfd) :: Gammap ! omega>0 ,eq....(skripta 5) \sum_{q,m} \int \dd omega' S(\omega')/{(\omega-\omega'-e_{k+q,m} +i\eta}) za GW se koristi se za ovaj dio 
+complex(kind=sp), dimension(Nlfd,Nlfd) :: Gammam ! omega<0
 
 character (len=100) :: bandn,bandm,nis,pathk1,pathk2,dato,root,outdir,path,fajl
 character (len=35) :: tag,buffer
 
-complex(kind=dp), pointer, dimension(:) :: C1,C2 ! Fourierovi koef. u razvoju wfn. iz QE 
+complex(kind=sp), pointer, dimension(:) :: C1,C2 ! Fourierovi koef. u razvoju wfn. iz QE 
 
 
 ! OpenMP vars
@@ -1087,9 +1087,9 @@ print *, 'DEBUG: entering parallel region'
     
 !  invertiranje matrice ''diel_epsilon = 1-Chi_0*V''
     
-    call gjel(diel_epsilon,Nlf,Nlfd,Imat,Nlf,Nlfd)
-    ! call dgetrf( Nlf,Nlfd, diel_epsilon, Nlf, ipiv, info_trf)
-    ! call dgetri( Nlf, diel_epsilon, Nlf, ipiv, work, lwork, info_tri )
+    ! call gjel(diel_epsilon,Nlf,Nlfd,Imat,Nlf,Nlfd)
+    call sgetrf( Nlf,Nlfd, diel_epsilon, Nlf, ipiv, info_trf)
+    call sgetri( Nlf, diel_epsilon, Nlf, ipiv, work, lwork, info_tri )
     Chi = czero
     do  iG = 1,Nlf
       do  jG = 1,Nlf
@@ -1283,12 +1283,14 @@ print *, 'DEBUG: entering parallel region'
         Gammam(iG,jG) = cmplx(-W2,0.0)
         if (iG == 1 .and. jG == 1) then
           W2KK = W2
-          print *, 'W2KK<--- W2:',W2
+          ! neven debug
+          ! print *, 'W2KK<--- W2:',W2
         end if
         if (io == 1) then
-          print *,'ImW(io=1,iG,jG):',ImW
           G0 = Gammap(1,1)
-          print *, 'G0<--- Gammap(1,1):',Gammap(1,1)
+          ! neven debug
+          ! print *,'ImW(io=1,iG,jG):',ImW
+          ! print *, 'G0<--- Gammap(1,1):',Gammap(1,1)
         end if
         
 

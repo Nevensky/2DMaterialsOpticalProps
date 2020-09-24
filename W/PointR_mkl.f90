@@ -13,11 +13,11 @@ CONTAINS
       INTEGER :: i, Nsymm, is, n, m
 
 
-      REAL(kind=dp), DIMENSION(48,3,3) :: R
-      REAL(kind=dp), DIMENSION(48,3,3) :: Ri
+      REAL(kind=sp), DIMENSION(48,3,3) :: R
+      REAL(kind=sp), DIMENSION(48,3,3) :: Ri
 
 
-      REAL(kind=dp) :: x,y,z
+      REAL(kind=sp) :: x,y,z
 
       CHARACTER(len=11 ) :: buffer1,tag1
       CHARACTER(len=7  ) :: buffer2,tag2
@@ -122,8 +122,8 @@ GOTO 2004
    DO is = 1 , Nsymm
       ! PRINT *,'symmetry op. matrix R'
       ! WRITE(*,'(A8,I3/3F11.4/3F11.4/3F11.4)'),'i_symm= ',is, R(is,:,:)
-      call dgetrf( 3, 3, Ri(is,:,:), 3, ipiv, info_trf)
-      call dgetri( 3, Ri(is,:,:), 3, ipiv, work, lwork, info_tri )
+      call sgetrf( 3, 3, Ri(is,:,:), 3, ipiv, info_trf)
+      call sgetri( 3, Ri(is,:,:), 3, ipiv, work, lwork, info_tri )
       ! PRINT *,'inverted symmetry op. matri Ri'
       ! WRITE(*,'(A8,I3/3F11.4/3F11.4/3F11.4)'),'i_symm= ',is, Ri(is,:,:)
    ENDDO
