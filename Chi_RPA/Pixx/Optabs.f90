@@ -724,10 +724,10 @@ DO  iq=nq,nq ! nq=1 u optickom smo limesu, dakle ne treba na do loop po q
 
     o = io*domega
     WRITE(74,*)'omega=',o,'Hartree'
-    WRITE(74,44)((s0(io,ig,jg),jg=1,nlf),ig=1,nlf)
+    WRITE(74,'(10F15.10)')((S0(io,iG,jG),jG=1,Nlf),iG=1,Nlf)
   END DO
-  WRITE(75,44)((qeff(ig,jg),jg=1,nlf),ig=1,nlf)
-  44             FORMAT(10F15.10)
+  WRITE(75,'(10F15.10)')((Qeff(ig,jg),jG=1,Nlf),iG=1,Nlf)
+  ! 44             FORMAT(10F15.10)
   CLOSE(74)
   CLOSE(75)
   

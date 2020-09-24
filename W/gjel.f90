@@ -9,6 +9,7 @@
 !-----------------------------------------------------------------------
 !
       IMPLICIT NONE
+
 !*--GJEL12
 !
       INTEGER N , Np , M , Mp , NMAX
@@ -21,13 +22,8 @@
 !       parameter(czero=cmplx(0.0,0.0))
       DIMENSION indxc(NMAX) , indxr(NMAX) , ipiv(NMAX)
  
- 
- 
- 
       czero = CMPLX(0.0,0.0)
-      DO j = 1 , N
-         ipiv(j) = 0
-      ENDDO
+      ipiv = 0
 !
       DO i = 1 , N
          big = 0.0
