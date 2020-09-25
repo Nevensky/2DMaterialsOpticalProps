@@ -34,11 +34,11 @@ logical :: found
 ! parameter(nMPx=201,nMPy=201,nMPz=1)
 
 
+character (len=100) :: root, tmpdir, savedir, band_file, scf_file
+namelist /directories/ root, tmpdir, savedir, scf_file, band_file
+
 integer :: debugCount= 0.0
 
-character (len=100) :: root, tmpdir, savedir, band_file, scf_file
-integer :: NGd ! number of coefficients CG shulod be less than minimum number of coefficients all over all evc.n files ... moglo bi se dinamicki alocirati 
-NAMELIST /config/ NGd, root, tmpdir, savedir, scf_file, band_file
 
 
 integer :: ik,i,j,jk,it,lk,Ntot,iG0,Nsymm,iq, &
@@ -46,19 +46,32 @@ integer :: ik,i,j,jk,it,lk,Ntot,iG0,Nsymm,iq, &
            NG2,iG1,iG2,jG,kG,jo,jump,loss,   &
            iGfast,ikmin,lf,kG1,kG2,nord
 
-integer, parameter :: NkI = 6835 ! number of wave vectors in IBZ
-integer, parameter :: Nband = 60 ! number of bands
-integer, parameter :: NelQE = 18 ! Number of electrons(unit cell)
-integer, parameter :: Nk = 48*NkI ! number of wave vectors in FBZ with no symmetry 
-integer, parameter :: NGd = 4000 ! number of coefficients CG shulod be less than minimum number of coefficients all over all evc.n files ... moglo bi se dinamicki alocirati 
-integer, parameter :: NG = 44121! zasto 8000 ?? total number of G vectors  
-integer, parameter :: no = 2001 ! broj frekvencija
-integer, parameter :: nq = 2 ! broj valnih vektora tu je 2 jer je rucno paralelizirano!
-integer, parameter :: Nlfd = 50 ! dimenzija polja za local field zasto prozivoljno 50, ne moze se znati unaprijed
+
+integer :: Nk ! = 48*NkI ! number of wave vectors in FBZ with no symmetry 
+integer :: NkI    ! number of wave vectors in IBZ
+integer :: Nband  ! number of bands
+integer :: NelQE  ! Number of electrons(unit cell)
+integer :: NGd    ! number of coefficients CG shulod be less than minimum number of coefficients all over all evc.n files ... moglo bi se dinamicki alocirati 
+integer :: NG     ! zasto 8000 ?? total number of G vectors  
+integer :: no     ! broj frekvencija
+integer :: nq     ! broj valnih vektora tu je 2 jer je rucno paralelizirano!
+integer :: Nlfd   ! dimenzija polja za local field zasto prozivoljno 50, ne moze se znati unaprijed
+namelist /config/ NkI, Nband, NelQE, NGd, NG, no, nq, Nlfd
+
 
 ! file i/o debug
-integer :: ist,ist2,ist9,ist5,ist10,ist11,ist12
+integer :: ist,ist2,ist9,ist5,ist6,ist7,ist10,ist11,ist12
 integer :: lno,lno2,lno9,lno10,lno11,lno12
+
+! constants
+real(kind=sp),    parameter :: pi = 4.D0*ATAN(1.D0)
+real(kind=sp),    parameter :: eV = 1.602176487D-19
+real(kind=sp),    parameter :: Hartree = 2.0D0*13.6056923D0
+real(kind=sp),    parameter :: Planck = 6.626196D-34
+real(kind=sp),    parameter :: three = 3.0d0 
+complex(kind=sp), parameter :: rone  = cmplx(1.0,0.0)
+complex(kind=sp), parameter :: czero = cmplx(0.0,0.0)
+complex(kind=sp), parameter :: ione  = cmplx(0.0,1.0)
 
 ! scalars
 real(kind=sp) :: kx,ky,kz
@@ -93,72 +106,62 @@ real(kind=sp) :: KKS = 0.0
 real(kind=sp) :: SKK = 0.0
 real(kind=sp) :: WindKK
 real(kind=sp) :: krefM
-
-real(kind=sp), parameter :: pi = 4.D0*ATAN(1.D0)
-real(kind=sp), parameter :: eV = 1.602176487D-19
-real(kind=sp), parameter :: Hartree = 2.0D0*13.6056923D0
-real(kind=sp), parameter :: Planck = 6.626196D-34
-real(kind=sp), parameter :: three = 3.0d0 
-
-real(kind=sp), parameter :: Efermi = 0.5554/Hartree ! Fermijeva en. u eV
-real(kind=sp), parameter :: a0 = 5.9715 ! unit cell parameter in parallel direction in a.u.  
-real(kind=sp), parameter :: c0 = 29.8575
-real(kind=sp), parameter :: Gcar = 2.0*pi/a0 ! unit cell norm.
-real(kind=sp), parameter :: eps = 1.0D-3 ! 1.0D-4 threshold
-real(kind=sp), parameter :: T = 0.01/Hartree ! temperature in eV
-real(kind=sp), parameter :: eta = 0.05/Hartree ! damping i\eta
-real(kind=sp), parameter :: Ecut = 0.0 ! cutoff energy in Hartree for crystal local field calculations , for Ecut=0 S matrix is a scalar
-real(kind=sp), parameter :: Vcell = 922.0586 ! unit-cell volume in a.u.^3 
-real(kind=sp), parameter :: aBohr = 0.5291772D0 ! unit cell parameter in perpendicular direction in a.u. (z-separation between supercells)   
-
-
-
-complex(kind=sp), parameter :: rone = cmplx(1.0,0.0)
-complex(kind=sp), parameter :: czero = cmplx(0.0,0.0)
-complex(kind=sp), parameter :: ione = cmplx(0.0,1.0)
-
-
 complex(kind=sp) :: G0
 
+
+! parameters
+real(kind=sp) :: Gcar   ! unit cell norm.
+real(kind=sp) :: Efermi ! [eV] Fermi en. 
+real(kind=sp) :: a0     ! [a.u.]  unit cell parameter in parallel direction 
+real(kind=sp) :: c0     ! [a.u.]  unit cell parameter in perependicular direction 
+real(kind=sp) :: eps    ! 1.0D-4 threshold
+real(kind=sp) :: T      ! [eV] temperature 
+real(kind=sp) :: eta    ! damping i\eta
+real(kind=sp) :: Ecut   ! [Hartree] cutoff energy for crystal local field calculations , for Ecut=0 S matrix is a scalar
+real(kind=sp) :: Vcell  ! [a.u.^3] unit-cell volume 
+real(kind=sp) :: aBohr  ! [a.u.] unit cell parameter in perpendicular direction (z-separation between supercells)   
+namelist /parameters/ Efermi, a0, c0, eps, T, eta, Ecut, Vcell, aBohr
+
+
 ! scalar arrays
-integer, dimension(:),allocatable :: Gfast ! pomocna funkcija
-integer, dimension(3) :: Gi ! pomocna funkcija
-integer, dimension(NG) :: parG ! paritet svakog valnog vektora
-real(kind=sp),dimension(no) :: factMatrix
+integer,       dimension(3) :: Gi                           ! pomocna funkcija
+integer,       dimension(:),      allocatable :: Gfast      ! pomocna funkcija
+integer,       dimension(:),      allocatable :: parG       ! paritet svakog valnog vektora
+real(kind=sp), dimension(:),      allocatable :: factMatrix
 
 ! multidim arrays
-real(kind=sp), dimension(3,NkI) :: kI
-real(kind=sp), dimension(NkI,Nband) :: E ! vl. vr. danog k-i i band-i
-real(kind=sp), dimension(48,3,3) :: R ! matr. simetrijskih op.
-real(kind=sp), dimension(48,3,3) :: RI ! inverz od R
-real(kind=sp), dimension(3,Nk) :: k
-real(kind=sp), dimension(3,NK) :: ktot ! ukupno jedinstvenih k-tocaka u FBZ
-real(kind=sp), dimension(3,NG) :: G ! polje valnih vektora G u recp. prost. za wfn.
-real(kind=sp), dimension(Nlfd,Nlfd) :: V ! matr. gole coulomb. int.
-real(kind=sp), dimension(no,Nlfd,Nlfd) :: S0 ! korelacijska matrica
-real(kind=sp), dimension(3,3) :: KC ! pomocna funkcija
-real(kind=sp), dimension(3,Nlfd) :: Glf ! local field effect polje valnih vekt. u rec. prost.
-real(kind=sp), dimension(3,Nlfd) :: GlfV ! local field effect za nescreenanu (golu) int. V
+real(kind=sp), dimension(48,3,3)  :: R                      ! matr. simetrijskih op.
+real(kind=sp), dimension(48,3,3)  :: RI                     ! inverz od R
+real(kind=sp), dimension(3,3)     :: KC                     ! pomocna funkcija
+real(kind=sp), dimension(:,:),    allocatable    :: kI
+real(kind=sp), dimension(:,:),    allocatable    :: E       ! vl. vr. danog k-i i band-i
+real(kind=sp), dimension(:,:),    allocatable    :: k
+real(kind=sp), dimension(:,:),    allocatable    :: ktot    ! ukupno jedinstvenih k-tocaka u FBZ
+real(kind=sp), dimension(:,:),    allocatable    :: G       ! polje valnih vektora G u recp. prost. za wfn.
+real(kind=sp), dimension(:,:),    allocatable    :: V       ! matr. gole coulomb. int.
+real(kind=sp), dimension(:,:,:),  allocatable    :: S0      ! korelacijska matrica
+real(kind=sp), dimension(:,:),    allocatable    :: Glf     ! local field effect polje valnih vekt. u rec. prost.
+real(kind=sp), dimension(:,:),    allocatable    :: GlfV    ! local field effect za nescreenanu (golu) int. V
 
 
-! Nldf dimenziju ne znamo a priori zapravo, trebalo bi staviti sve te matrice allocatable i 
+! Nlfd dimenziju ne znamo a priori zapravo, trebalo bi staviti sve te matrice allocatable i 
 ! naknadno ih alocirati
 
-complex(kind=sp), dimension(Nlfd,Nlfd) :: Imat ! jedinicna matr.
-complex(kind=sp), dimension(Nlfd,Nlfd) :: diel_epsilon ! Epsilon (GG')  = I - V(GG')Chi0
-complex(kind=sp), dimension(Nlfd,Nlfd) :: Chi ! (eq. 2.88 nakon invertiranja) ;oprez bio je double precision
+complex(kind=sp), dimension(:,:),   allocatable  :: Imat ! jedinicna matr.
+complex(kind=sp), dimension(:,:),   allocatable  :: diel_epsilon ! Epsilon (GG')  = I - V(GG')Chi0
+complex(kind=sp), dimension(:,:),   allocatable  :: Chi ! (eq. 2.88 nakon invertiranja) ;oprez bio je double precision
 
-complex(kind=sp), dimension(Nlfd) :: MnmK1K2 ! nabojni vrhovi
-complex(kind=sp), dimension(Nlfd,Nlfd) :: Chi0 ! (eq. 2.89)
-complex(kind=sp), dimension(no,Nlfd,Nlfd) :: WT ! time ordered RPA screened coulomb int. (eq. 2.93)
-complex(kind=sp), dimension(Nlfd,Nlfd) :: Gammap ! omega>0 ,eq....(skripta 5) \sum_{q,m} \int \dd omega' S(\omega')/{(\omega-\omega'-e_{k+q,m} +i\eta}) za GW se koristi se za ovaj dio 
-complex(kind=sp), dimension(Nlfd,Nlfd) :: Gammam ! omega<0
+complex(kind=sp), dimension(:)    , allocatable  :: MnmK1K2 ! nabojni vrhovi
+complex(kind=sp), dimension(:,:)  , allocatable  :: Chi0 ! (eq. 2.89)
+complex(kind=sp), dimension(:,:,:), allocatable  :: WT ! time ordered RPA screened coulomb int. (eq. 2.93)
+complex(kind=sp), dimension(:,:)  , allocatable  :: Gammap ! omega>0 ,eq....(skripta 5) \sum_{q,m} \int \dd omega' S(\omega')/{(\omega-\omega'-e_{k+q,m} +i\eta}) za GW se koristi se za ovaj dio 
+complex(kind=sp), dimension(:,:)  , allocatable  :: Gammam ! omega<0, allocatable  
 
 character (len=100) :: bandn,bandm,nis,pathk1,pathk2,dato, path
 character (len=35) :: tag,buffer
 
 
-complex(kind=sp), pointer, dimension(:) :: C1,C2 ! Fourierovi koef. u razvoju wfn. iz QE 
+complex(kind=sp), dimension(:), pointer :: C1,C2 ! Fourierovi koef. u razvoju wfn. iz QE 
 
 
 ! OpenMP vars
@@ -174,11 +177,45 @@ integer,allocatable :: work(:)
 
 ! read namelist
 open(10,file='config.in')
-read(10,nml=config,iostat=ist5)
+read(10,nml=directories,iostat=ist5)
+read(10,nml=config,iostat=ist6)
+read(10,nml=parameters,iostat=ist7)
 close(10)
 
 
+Nk = 48*NkI             ! number of wave vectors in FBZ with no symmetry 
+T = T/Hartree           ! convert temperature from eV to Hartree
+Efermi = Efermi/Hartree ! convert Fermi en. from eV to Hartree
+eta = eta/Hartree
+Gcar = 2.0*pi/a0        ! unit cell norm.
+
+! scalar arrays
+allocate(parG(NG))                ! paritet svakog valnog vektora
 allocate(Gfast(Nlfd*NGd))
+allocate(factMatrix(no))
+allocate(MnmK1K2(Nlfd))            ! nabojni vrhovi
+
+! multidim arrays
+allocate(kI(3,NkI))
+allocate(E(NkI,Nband))       ! vl. vr. danog k-i i band-i
+allocate(k(3,Nk))
+allocate(ktot(3,NK))         ! ukupno jedinstvenih k-tocaka u FBZ
+allocate(G(3,NG))            ! polje valnih vektora G u recp. prost. za wfn.
+allocate(V(Nlfd,Nlfd))       ! matr. gole coulomb. int.
+allocate(S0(no,Nlfd,Nlfd))   ! korelacijska matrica
+allocate(Glf(3,Nlfd))        ! local field effect polje valnih vekt. u rec. prost.
+allocate(GlfV(3,Nlfd))       ! local field effect za nescreenanu (golu) int. V
+
+allocate(Imat(Nlfd,Nlfd))          ! jedinicna matr.
+allocate(diel_epsilon(Nlfd,Nlfd) ) ! Epsilon (GG')  = I - V(GG')Chi0
+allocate(Chi(Nlfd,Nlfd))           ! (eq. 2.88 nakon invertiranja) ;oprez bio je double precision
+
+allocate(Chi0(Nlfd,Nlfd))          ! (eq. 2.89)
+allocate(WT(no,Nlfd,Nlfd))         ! time ordered RPA screened coulomb int. (eq. 2.93)
+allocate(Gammap(Nlfd,Nlfd))        ! omega>0 ,eq....(skripta 5) \sum_{q,m} \int \dd omega' S(\omega')/{(\omega-\omega'-e_{k+q,m} +i\eta}) za GW se koristi se za ovaj dio 
+allocate(Gammam(Nlfd,Nlfd))        ! omega<0
+
+
 
 ! print *,'NGd: ',NGd
 
