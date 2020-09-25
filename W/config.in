@@ -1,0 +1,8 @@
+&config
+root='../../../MoS2_201X201',
+tmpdir = '/Users/nevensky/tmp',
+savedir = '/Users/nevensky/tmp/MoS2.save'
+scf_file = '/MoS2.sc.out',
+band_file='/MoS2.band',
+NGd = 2541
+/

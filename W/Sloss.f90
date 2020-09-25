@@ -36,6 +36,10 @@ logical :: found
 
 integer :: debugCount= 0.0
 
+character (len=100) :: root, tmpdir, savedir, band_file, scf_file
+integer :: NGd ! number of coefficients CG shulod be less than minimum number of coefficients all over all evc.n files ... moglo bi se dinamicki alocirati 
+NAMELIST /config/ NGd, root, tmpdir, savedir, scf_file, band_file
+
 
 integer :: ik,i,j,jk,it,lk,Ntot,iG0,Nsymm,iq, &
            io,n,m,iG,R1,K1,R2,K2, Nlf,NG1,   &
@@ -53,7 +57,7 @@ integer, parameter :: nq = 2 ! broj valnih vektora tu je 2 jer je rucno paraleli
 integer, parameter :: Nlfd = 50 ! dimenzija polja za local field zasto prozivoljno 50, ne moze se znati unaprijed
 
 ! file i/o debug
-integer :: ist,ist2,ist9,ist10,ist11,ist12
+integer :: ist,ist2,ist9,ist5,ist10,ist11,ist12
 integer :: lno,lno2,lno9,lno10,lno11,lno12
 
 ! scalars
@@ -117,9 +121,10 @@ complex(kind=sp), parameter :: ione = cmplx(0.0,1.0)
 complex(kind=sp) :: G0
 
 ! scalar arrays
-integer, dimension(Nlfd*NGd) :: Gfast ! pomocna funkcija
+integer, dimension(:),allocatable :: Gfast ! pomocna funkcija
 integer, dimension(3) :: Gi ! pomocna funkcija
 integer, dimension(NG) :: parG ! paritet svakog valnog vektora
+real(kind=sp),dimension(no) :: factMatrix
 
 ! multidim arrays
 real(kind=sp), dimension(3,NkI) :: kI
@@ -149,8 +154,9 @@ complex(kind=sp), dimension(no,Nlfd,Nlfd) :: WT ! time ordered RPA screened coul
 complex(kind=sp), dimension(Nlfd,Nlfd) :: Gammap ! omega>0 ,eq....(skripta 5) \sum_{q,m} \int \dd omega' S(\omega')/{(\omega-\omega'-e_{k+q,m} +i\eta}) za GW se koristi se za ovaj dio 
 complex(kind=sp), dimension(Nlfd,Nlfd) :: Gammam ! omega<0
 
-character (len=100) :: bandn,bandm,nis,pathk1,pathk2,dato,root,outdir,path,fajl
+character (len=100) :: bandn,bandm,nis,pathk1,pathk2,dato, path
 character (len=35) :: tag,buffer
+
 
 complex(kind=sp), pointer, dimension(:) :: C1,C2 ! Fourierovi koef. u razvoju wfn. iz QE 
 
@@ -166,6 +172,15 @@ integer,allocatable :: ipiv(:)
 integer :: lwork
 integer,allocatable :: work(:)
 
+! read namelist
+open(10,file='config.in')
+read(10,nml=config,iostat=ist5)
+close(10)
+
+
+allocate(Gfast(Nlfd*NGd))
+
+! print *,'NGd: ',NGd
 
 ! real :: TES
 ! integer :: zora
@@ -213,8 +228,8 @@ integer,allocatable :: work(:)
 
 
 !             QUANTUM ESSPRESSO IMPUTS:
-root='../MoS2_201X201'
-outdir='../MoS2_201X201/tmp'
+! root='../../../MoS2_201X201'
+! tmpdir='../../../tmp'
 
 lf = 1 ! crystal local field effect included in z for lf=1 or in x,y,z direction lf=3
 loss = 1
@@ -238,8 +253,8 @@ print *,"PointR done."
 
 
 
-fajl='/MoS2.band'
-path=trim(root)//trim(fajl)
+! band_file='/MoS2.band'
+path=trim(root)//trim(band_file)
 open(40,FILE=path,status='old',err=400,iostat=ist9)
 
 do  ik = 1,NkI
@@ -394,8 +409,8 @@ close(887)
 ! If G' is vector in rec.cryst. axes then a=KC*a' is vector in cart. axes
 
 
-fajl='/MoS2.sc.out'
-path=TRIM(root)//TRIM(fajl)
+! scf_file='/MoS2.sc.out'
+path=TRIM(root)//TRIM(scf_file)
 tag='     reciprocal axes: (cart. coord.'
 open(30,FILE=path,status='old')
 do  i = 1,100000
@@ -763,7 +778,7 @@ print *, 'DEBUG: entering parallel region'
         
         ! otvara save/K.000x/evc.dat u atributu <evc band> ispod CnK(G) koef.
         
-        call paths(outdir,K1,K2,n,m,pathk1,pathk2,bandn,bandm) 
+        call paths(tmpdir,K1,K2,n,m,pathk1,pathk2,bandn,bandm) 
         
 !         u ovom dijelu programa se iscitava iz binarnih fileova ''gvectors.dat'',''evc.dat'' za
 !         fiksni K1,K2,n i m
@@ -795,13 +810,13 @@ print *, 'DEBUG: entering parallel region'
 !                Konstrukcija stupca matricnih elementa MnmK1K2(G)
         
         ! vito maknut check        
-        ! if (NGd > NG1) then
-        !   write(*,*) 'NGd is bigger than NG1=',NG1
-        !   STOP
-        ! else if (NGd > NG2) then
-        !   write(*,*) 'NGd is bigger than NG2=',NG2
-        !   STOP
-        ! end if
+        if (NGd > NG1) then
+          write(*,*) 'NGd is bigger than NG1=',NG1
+          STOP
+        else if (NGd > NG2) then
+          write(*,*) 'NGd is bigger than NG2=',NG2
+          STOP
+        end if
         
         
 !       matrix elements
@@ -810,7 +825,7 @@ print *, 'DEBUG: entering parallel region'
         MnmK1K2 = czero ! nabojni vrhovi
         do  iG = 1,Nlf ! suma po lokalnim fieldovima kojih ima Nlf
           ! MnmK1K2(iG) = czero
-          do  iG1 = 1,NG1 ! vito zamjenjeno NGd sa NG1
+          do  iG1 = 1,NGd ! vito zamjenjeno NGd sa NG1
             iGfast = iGfast + 1
             Gxx1 = G(1,iG1)
             Gyy1 = G(2,iG1)
@@ -935,8 +950,6 @@ print *, 'DEBUG: entering parallel region'
               fact = 3.0/2.0
             else if (jo == no) then
               fact = 0.5*domega/oj
-            ! else
-              ! print *,  "WARNING jo loop condition not satisfied."
             end if
             ReChi0 = ReChi0 + fact*S0(jo,iG,jG)
           end do
@@ -954,8 +967,6 @@ print *, 'DEBUG: entering parallel region'
               fact = -3.0/2.0
             else if (jo == no) then
               fact = 0.5*domega/(oi-oj)
-            ! else
-              ! print *,  "WARNING jo loop condition not satisfied."
             end if
             ReChi0 = ReChi0 + fact*S0(jo,iG,jG)
             fact = domega/(oi+oj)
@@ -977,8 +988,6 @@ print *, 'DEBUG: entering parallel region'
               fact = 0.0
             else if (jo == no) then
               fact = -1.0
-            ! else 
-              ! print *,  "WARNING jo loop condition not satisfied."
             end if
             ReChi0 = ReChi0 + fact*S0(jo,iG,jG)
             fact = domega/(oi+oj)
@@ -1002,8 +1011,6 @@ print *, 'DEBUG: entering parallel region'
               fact=-3.0/2.0
             else if (jo == no) then
               fact = 0.5*domega/(oi-oj)
-            ! else 
-              ! print *,  "WARNING jo loop condition not satisfied."
             end if
             ReChi0 = ReChi0 + fact*S0(jo,iG,jG)
             fact = domega/(oi+oj)
@@ -1184,8 +1191,6 @@ print *, 'DEBUG: entering parallel region'
               fact = 3.0/2.0
             else if (jo == no) then
               fact = 0.5*domega/oj
-            ! else
-              ! print *,  "WARNING jo loop condition not satisfied."
             end if
             W1 = W1 - fact*S0(jo,iG,jG)
           end do
@@ -1206,8 +1211,6 @@ print *, 'DEBUG: entering parallel region'
               fact = -3.0/2.0
             else if (jo == no) then
               fact = 0.5*domega/(oi-oj)
-            ! else
-              ! print *,  "WARNING jo loop condition not satisfied."
             end if             
             W1 = W1 + fact*S0(jo,iG,jG)
             fact = domega/(oi+oj)
@@ -1233,8 +1236,6 @@ print *, 'DEBUG: entering parallel region'
               fact = 0.0
             else if (jo == no) then
               fact = -1.0
-            ! else
-              ! print *,  "WARNING jo loop condition not satisfied."
             end if
             W1 = W1 + fact*S0(jo,iG,jG)
             fact = domega / (oi+oj)
@@ -1263,8 +1264,6 @@ print *, 'DEBUG: entering parallel region'
               fact = -3.0/2.0
             else if (jo == no) then
               fact = 0.5*domega/(oi-oj)
-            ! else
-              ! print *,  "WARNING jo loop condition not satisfied."
             end if
             W1 = W1 + fact*S0(jo,iG,jG)
             fact = domega/(oi+oj)
@@ -1360,5 +1359,8 @@ end do
 ! MKL matrix inversion vars
 deallocate(ipiv)
 deallocate(work)
+
+! deallocate NGd related vars
+deallocate(Gfast)
 
 end program surface_loss

@@ -11,7 +11,7 @@ PARA = -qopenmp
 FFLAGS = -Ofast -g -traceback -fp-model precise -fp-stack-check -heap-arrays #-debug all -debug-parameters all -DD -C -warn all -check all
 #OMPFLAGS = -qopenmp -debug extended -heap-array
 SRC = Sloss.f PointR.f paths.f gjel.f 
-OBJECTS = Sloss.o PointR.o paths.o gjel.o 
+OBJECTS = Sloss.o PointR_mkl.o paths.o gjel.o 
 OBJECTS_LEGACY = Sloss_legacy.o PointR_legacy.o paths.o gjel.o 
 OBJECTS_PARA = Sloss_para.o PointR.o paths.o gjel.o 
 
@@ -44,6 +44,9 @@ Sloss_legacy.o: Sloss.f
 
 PointR.o: PointR.f
 	${FC} ${FFLAGS} -c PointR.f90 -o PointR.o
+
+PointR_mkl.o: PointR.f
+	${FC} ${FFLAGS} -c PointR_mkl.f90 -o PointR_mkl.o
 
 PointR_legacy.o: PointR.f
 	${FC} ${FFLAGS} -c PointR.f -o PointR_legacy.o
