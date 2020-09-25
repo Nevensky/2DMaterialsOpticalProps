@@ -3,8 +3,11 @@ import os
 import subprocess
 from sys import argv
 
-# config_file = sys.argv[1]
-configFile = '/Users/nevensky/Repositories/2d-quasiparticle-optical-properties/W/config.in'
+try:
+	configFile = argv[1]
+except IndexError:
+	configFile = './config.in'
+
 rundir ='/'.join(configFile.split('/')[:-1])
 print('rundir: ',rundir)
 
@@ -35,6 +38,8 @@ def findMin_NGd(savedir):
 #  """.format(NGd=NGd)
 # print(confs)
 
+NGd_comment ='       ! number of wave vectors in IBZ'
+
 lns_new = []
 savedir = ''
 with open(configFile,'r') as fl:
@@ -47,7 +52,7 @@ with open(configFile,'r') as fl:
 		elif 'NGd' in ln:
 			NGd = 0
 			NGd = findMin_NGd(savedir)
-			ln2 = 'NGd = {}\n'.format(NGd)
+			ln2 = ' NGd      = {} {}\n'.format(NGd,NGd_comment)
 			lns_new.append(ln2)
 		else:
 			lns_new.append(ln)

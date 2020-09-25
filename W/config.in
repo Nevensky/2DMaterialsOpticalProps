@@ -7,22 +7,25 @@ band_file = '/MoS2.band'
 /
 &config
  NGd      = 2541        ! number of wave vectors in IBZ
- NkI      = 19         ! number of bands
- Nband    = 60         ! Number of electrons(unit cell)
- NelQE    = 18         ! number of coefficients CG shulod be less than minimum number of coefficients all over all evc.n 
- NG       = 20517      ! zasto 8000 ?? total number of G vectors  
- no       = 2001       ! broj frekvencija
- nq       = 2          ! broj valnih vektora tu je 2 jer je rucno paralelizirano!
- Nlfd     = 100        ! dimenzija polja za local field zasto prozivoljno 50, ne moze se znati unaprijed
+ NkI      = 19          ! number of bands
+ Nband    = 60          ! Number of electrons(unit cell)
+ NelQE    = 18          ! number of coefficients CG shulod be less than minimum number of coefficients all over all evc.n 
+ NG       = 20517       ! zasto 8000 ?? total number of G vectors  
+ no       = 2001        ! broj frekvencija
+ nq       = 2           ! broj valnih vektora tu je 2 jer je rucno paralelizirano!
+ Nlfd     = 100         ! dimenzija polja za local field zasto prozivoljno 50, ne moze se znati unaprijed
 /
 &parameters
-Efermi   = 0.5554      ! [eV] Fermi en. 
-a0       = 5.9715      ! [a.u.]  unit cell parameter in parallel direction 
-c0       = 29.8575     ! [a.u.]  unit cell parameter in perependicular direction 
-eps      = 1.0D-3      ! 1.0D-4 threshold
-T        = 0.01        ! [eV] temperature 
-eta      = 0.05        ! damping i\eta
-Ecut     = 0.0         ! [Hartree] cutoff energy for crystal local field calculations , for Ecut=0 S matrix is a scalar
-Vcell    = 922.0586    ! [a.u.^3] unit-cell volume 
-aBohr    = 0.5291772D0 ! [a.u.] unit cell parameter in perpendicular direction (z-separation between supercells)   
+Efermi   = 0.5554       ! [eV] Fermi en. 
+a0       = 5.9715       ! [a.u.]  unit cell parameter in parallel direction 
+c0       = 29.8575      ! [a.u.]  unit cell parameter in perependicular direction 
+eps      = 1.0D-3       ! 1.0D-4 threshold
+T        = 0.01         ! [eV] temperature 
+eta      = 0.05         ! damping i\eta
+Ecut     = 0.0          ! [Hartree] cutoff energy for crystal local field calculations , for Ecut=0 S matrix is a scalar ?
+Vcell    = 922.0586     ! [a.u.^3] unit-cell volume 
+aBohr    = 0.5291772D0  ! [a.u.] unit cell parameter in perpendicular direction (z-separation between supercells)   
+/
+&parallel
+Nthreads = 8            ! number of OpenMP threads
 /

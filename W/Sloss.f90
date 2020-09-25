@@ -60,7 +60,7 @@ namelist /config/ NkI, Nband, NelQE, NGd, NG, no, nq, Nlfd
 
 
 ! file i/o debug
-integer :: ist,ist2,ist9,ist5,ist6,ist7,ist10,ist11,ist12
+integer :: ist,ist2,ist9,ist5,ist6,ist7,ist8,ist10,ist11,ist12
 integer :: lno,lno2,lno9,lno10,lno11,lno12
 
 ! constants
@@ -117,7 +117,7 @@ real(kind=sp) :: c0     ! [a.u.]  unit cell parameter in perependicular directio
 real(kind=sp) :: eps    ! 1.0D-4 threshold
 real(kind=sp) :: T      ! [eV] temperature 
 real(kind=sp) :: eta    ! damping i\eta
-real(kind=sp) :: Ecut   ! [Hartree] cutoff energy for crystal local field calculations , for Ecut=0 S matrix is a scalar
+real(kind=sp) :: Ecut   ! [Hartree] cutoff energy for crystal local field calculations , for Ecut=0 S matrix is a scalar ?
 real(kind=sp) :: Vcell  ! [a.u.^3] unit-cell volume 
 real(kind=sp) :: aBohr  ! [a.u.] unit cell parameter in perpendicular direction (z-separation between supercells)   
 namelist /parameters/ Efermi, a0, c0, eps, T, eta, Ecut, Vcell, aBohr
@@ -140,6 +140,7 @@ real(kind=sp), dimension(:,:),    allocatable    :: ktot    ! ukupno jedinstveni
 real(kind=sp), dimension(:,:),    allocatable    :: G       ! polje valnih vektora G u recp. prost. za wfn.
 real(kind=sp), dimension(:,:),    allocatable    :: V       ! matr. gole coulomb. int.
 real(kind=sp), dimension(:,:,:),  allocatable    :: S0      ! korelacijska matrica
+real(kind=sp), dimension(:,:,:),  allocatable    :: S0_partial ! pomocna var. za S0 redukciju
 real(kind=sp), dimension(:,:),    allocatable    :: Glf     ! local field effect polje valnih vekt. u rec. prost.
 real(kind=sp), dimension(:,:),    allocatable    :: GlfV    ! local field effect za nescreenanu (golu) int. V
 
@@ -165,8 +166,9 @@ complex(kind=sp), dimension(:), pointer :: C1,C2 ! Fourierovi koef. u razvoju wf
 
 
 ! OpenMP vars
-integer,parameter :: Nthreads = 4
+integer :: Nthreads
 integer :: thread_id
+namelist  /parallel/ Nthreads
 
 
 ! MKL matrix inversion vars
@@ -180,6 +182,7 @@ open(10,file='config.in')
 read(10,nml=directories,iostat=ist5)
 read(10,nml=config,iostat=ist6)
 read(10,nml=parameters,iostat=ist7)
+read(10,nml=parallel,iostat=ist8)
 close(10)
 
 
@@ -199,12 +202,13 @@ allocate(MnmK1K2(Nlfd))            ! nabojni vrhovi
 allocate(kI(3,NkI))
 allocate(E(NkI,Nband))       ! vl. vr. danog k-i i band-i
 allocate(k(3,Nk))
-allocate(ktot(3,NK))         ! ukupno jedinstvenih k-tocaka u FBZ
-allocate(G(3,NG))            ! polje valnih vektora G u recp. prost. za wfn.
-allocate(V(Nlfd,Nlfd))       ! matr. gole coulomb. int.
-allocate(S0(no,Nlfd,Nlfd))   ! korelacijska matrica
-allocate(Glf(3,Nlfd))        ! local field effect polje valnih vekt. u rec. prost.
-allocate(GlfV(3,Nlfd))       ! local field effect za nescreenanu (golu) int. V
+allocate(ktot(3,NK))               ! ukupno jedinstvenih k-tocaka u FBZ
+allocate(G(3,NG))                  ! polje valnih vektora G u recp. prost. za wfn.
+allocate(V(Nlfd,Nlfd))             ! matr. gole coulomb. int.
+allocate(S0(no,Nlfd,Nlfd))         ! korelacijska matrica
+! allocate(S0_partial(no,Nlfd,Nlfd))         ! korelacijska matrica
+allocate(Glf(3,Nlfd))              ! local field effect polje valnih vekt. u rec. prost.
+allocate(GlfV(3,Nlfd))             ! local field effect za nescreenanu (golu) int. V
 
 allocate(Imat(Nlfd,Nlfd))          ! jedinicna matr.
 allocate(diel_epsilon(Nlfd,Nlfd) ) ! Epsilon (GG')  = I - V(GG')Chi0
@@ -643,12 +647,14 @@ do  iq = 42,42 ! 42,61
 !              1.B.Z  LOOP STARTS HERE !!!!
 
 print *, 'DEBUG: entering parallel region'
-!$omp parallel shared(S0,Gfast) ! default(private) num_threads(Nthreads)
+!$omp parallel shared(iq,kI,ktot,RI,S0,Gfast,tmpdir,eps,jump,E) private(S0_partial,MnmK1K2,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,attr,K1,K2,n,m,pathk1,pathk2,bandn,bandm,C1,C2,NG1,NG2,io,De,o,domega,Lor,Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,iGfast,iG1,iG2) num_threads(Nthreads) !default(private) 
 ! neven debug
 ! thread_id =  omp_get_thread_num()
 ! print *, 'thread id:',thread_id
+! S0 = czero
 !$omp do ! reduction(-:S0)
   do ik=1,Ntot   
+  
 ! k_loop_FBZ_2nd:  
 
     ! neven maknuto zbog openmp
@@ -671,9 +677,9 @@ print *, 'DEBUG: entering parallel region'
       it=2
     else
       symmetry_loop: do  i = 2,Nsymm
-        K11 = RI(i,1,1)*kx + RI(i,1,2)*ky+RI(i,1,3)*kz
-        K22 = RI(i,2,1)*kx + RI(i,2,2)*ky+RI(i,2,3)*kz
-        K33 = RI(i,3,1)*kx + RI(i,3,2)*ky+RI(i,3,3)*kz
+        K11 = RI(i,1,1)*kx + RI(i,1,2)*ky + RI(i,1,3)*kz
+        K22 = RI(i,2,1)*kx + RI(i,2,2)*ky + RI(i,2,3)*kz
+        K33 = RI(i,3,1)*kx + RI(i,3,2)*ky + RI(i,3,3)*kz
         do  j = 1,NkI
           ! vito - smnanjenje if uvjeta
           ! if (abs(K11-kI(1,j)) <= eps) then
@@ -690,9 +696,9 @@ print *, 'DEBUG: entering parallel region'
           if (      abs(K11-kI(1,j)) <= eps &
               .and. abs(K22-kI(2,j)) <= eps &
               .and. abs(K33-kI(3,j)) <= eps ) then
-            it=2
-            R1=i
-            K1=j
+            it = 2
+            R1 = i
+            K1 = j
             EXIT symmetry_loop
           end if
         end do
@@ -811,7 +817,7 @@ print *, 'DEBUG: entering parallel region'
       bands_m_loop: do  m = 10,Nband ! empty bands loop
         
         
-        
+        !$omp critical(pathk1_read)
         
         ! otvara save/K.000x/evc.dat u atributu <evc band> ispod CnK(G) koef.
         
@@ -820,8 +826,9 @@ print *, 'DEBUG: entering parallel region'
 !         u ovom dijelu programa se iscitava iz binarnih fileova ''gvectors.dat'',''evc.dat'' za
 !         fiksni K1,K2,n i m
         
-        !$omp critical(pathk1_read)
+        
 !               Otvaranje atribute za INFO
+        ! print *,'pathk1',pathk1
         call iotk_open_read(10+ik,pathk1)
         call iotk_scan_empty(10+ik,"INFO",attr=attr)
         call iotk_scan_attr(attr,"igwx",NG1)
@@ -830,10 +837,11 @@ print *, 'DEBUG: entering parallel region'
 !               Ucitavanje podataka iza evc.n
         call iotk_scan_dat(10+ik,bandn,C1)
         call iotk_close_read(10+ik)
-        !$omp end critical(pathk1_read)
+        ! !$omp end critical(pathk1_read)
 
-        !$omp critical(pathk2_read)
+        ! !$omp critical(pathk2_read)
 !               Otvaranje atribute za INFO
+        ! print *,'pathk2',pathk2
         call iotk_open_read(10+ik,pathk2)
         call iotk_scan_empty(10+ik,"INFO",attr=attr)
         call iotk_scan_attr(attr,"igwx",NG2)
@@ -842,7 +850,8 @@ print *, 'DEBUG: entering parallel region'
 !               Ucitavanje podataka iza evc.m
         call iotk_scan_dat(10+ik,bandm,C2)
         call iotk_close_read(10+ik)
-        !$omp end critical(pathk2_read)
+        ! !$omp end critical(pathk2_read)
+        !$omp end critical(pathk1_read)
         
 !                Konstrukcija stupca matricnih elementa MnmK1K2(G)
         
@@ -881,6 +890,7 @@ print *, 'DEBUG: entering parallel region'
             Gzz1 = RI(R2,3,1)*K11 + RI(R2,3,2)*K22 + RI(R2,3,3)*K33
             !$omp critical(jump_operation)
             if (jump == 1) then
+              ! !$omp single
               iG2_loop: do  iG2 = 1,NG2
                 Gfast(iGfast) = NG2+1
                 Gxx2 = G(1,iG2)
@@ -904,6 +914,7 @@ print *, 'DEBUG: entering parallel region'
                     EXIT iG2_loop
                 end if
               end do iG2_loop
+              ! !$omp end single
             end if
             !$omp end critical(jump_operation)
             ! 1111              continue
@@ -916,8 +927,13 @@ print *, 'DEBUG: entering parallel region'
         end do
         jump = 2
         
+        ! deallocate(C1)
+        ! deallocate(C2)
+
         ! print *,'GOT HERE 2'
 !       omega loop
+        allocate(S0_partial(no,Nlf,Nlf))   ! pomocna var. za redukciju S0
+        S0_partial = czero
         do  io = 1,no
           o = (io-1)*domega
           De = o + E(K1,n) - E(K2,m) 
@@ -925,8 +941,10 @@ print *, 'DEBUG: entering parallel region'
           if (abs(Lor) >= 1.0D-3/eta) then
             do  iG = 1,Nlf
               do  jG = 1,Nlf
-                S0(io,iG,jG) = S0(io,iG,jG) -  &
-                    2.0*Lor*MnmK1K2(iG)*conjg(MnmK1K2(jG)) / (pi*Ntot*Vcell)
+                ! !$omp atomic
+                S0_partial(io,iG,jG) = - 2.0*Lor*MnmK1K2(iG)*conjg(MnmK1K2(jG)) / (pi*Ntot*Vcell)
+                ! print *,'S0_partial(io,iG,jG)',S0_partial(io,iG,jG)
+                ! S0(io,iG,jG) = S0(io,iG,jG) - 2.0*Lor*MnmK1K2(iG)*conjg(MnmK1K2(jG)) / (pi*Ntot*Vcell)
               end do
             end do
           end if
@@ -936,7 +954,12 @@ print *, 'DEBUG: entering parallel region'
         ! write(118,*) io*Hartree,S0(io,1,1)
         ! end if 
         end do
-
+        !$omp atomic
+        S0(1:no,1:Nlf,1:Nlf) = S0(1:no,1:Nlf,1:Nlf) - S0_partial(1:no,1:Nlf,1:Nlf)
+        ! print *,'S0(io,iG,jG)',S0(io,iG,jG)
+        deallocate(S0_partial)
+        
+        ! neve debug staro mjesto
         deallocate(C1)
         deallocate(C2)  
                 
@@ -1158,8 +1181,8 @@ print *, 'DEBUG: entering parallel region'
       end do
     end do
 
-    write(20008,*) oi*Hartree,aimag(WT(io,1,1))
-    write(10008,*) oi*Hartree,real(WT(io,1,1))
+    ! write(20008,*) oi*Hartree,aimag(WT(io,1,1))
+    ! write(10008,*) oi*Hartree,real(WT(io,1,1))
 ! kraj nove petlje po omega
   end do omega_loop_A
   

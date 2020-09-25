@@ -13,7 +13,7 @@ FFLAGS = -Ofast -g -traceback -fp-model precise -fp-stack-check -heap-arrays #-d
 SRC = Sloss.f PointR.f paths.f gjel.f 
 OBJECTS = Sloss.o PointR_mkl.o paths.o gjel.o 
 OBJECTS_LEGACY = Sloss_legacy.o PointR_legacy.o paths.o gjel.o 
-OBJECTS_PARA = Sloss_para.o PointR.o paths.o gjel.o 
+OBJECTS_PARA = Sloss_para.o PointR_mkl.o paths.o 
 
 
 .PHONY: clean
@@ -24,8 +24,8 @@ serial: Loss_serial
 
 legacy: Loss_legacy
 
-Loss: $(OBJECTS)
-	${FC} -I. $(OBJECTS) ${LDFLAGS_PARA} -o Loss
+Loss: $(OBJECTS_PARA)
+	${FC} -I. $(OBJECTS_PARA) ${LDFLAGS_PARA} -o Loss
 
 Loss_serial: $(OBJECTS)
 	${FC} -I. $(OBJECTS) ${LDFLAGS} -o Loss
@@ -37,7 +37,7 @@ Sloss.o: Sloss.f
 	${FC} ${FFLAGS} -c Sloss.f90
 
 Sloss_para.o: Sloss.f
-	${FC} ${FFLAGS} ${PARA} -c Sloss.f90
+	${FC} ${FFLAGS} ${PARA} -c Sloss.f90 -o Sloss_para.o
 
 Sloss_legacy.o: Sloss.f
 	${FC} ${FFLAGS} -c Sloss.f -o Sloss_legacy.o
