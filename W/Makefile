@@ -34,7 +34,7 @@ Loss_legacy: $(OBJECTS_LEGACY)
 	${FC} -I. $(OBJECTS_LEGACY) ${LDFLAGS} -o Loss
 
 Sloss.o: Sloss.f
-	${FC} ${FFLAGS} -c Sloss.f90
+	${FC} ${FFLAGS}  -c Sloss.f90
 
 Sloss_para.o: Sloss.f
 	${FC} ${FFLAGS} ${PARA} -c Sloss.f90 -o Sloss_para.o
