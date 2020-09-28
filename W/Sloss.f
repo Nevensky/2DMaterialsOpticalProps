@@ -53,7 +53,7 @@ c        skalars
          PARAMETER(Hartree=2.0d0*13.6056923d0,EF=0.5554/Hartree,
      &   a0=5.9715,c0=29.8575,pi=3.141592654d0,Gcar=2.0*pi/a0,
      &   eps=1.0d-4,T=0.01/Hartree,Gama=0.05/Hartree,
-     &   eV=1.602176487d-19,planck=6.626196d-34,Ecut=0.5,
+     &   eV=1.602176487d-19,planck=6.626196d-34,Ecut=0.0,
      &   Vcell=922.0586,aBohr=0.5291772d0,zero=0.0)
          DOUBLE COMPLEX a,ione,czero,rone,eM,G0
     
@@ -854,8 +854,8 @@ c                SCREENED COULOMB INTERACTION W^T_GG'(Q,\omega)
 C                  write(*,*) WT(io,1,1),WT(io,1,2),WT(io,2,2)
 
                 ! neven debug
-                 write(20009,*) oi*Hartree,aimag(WT(io,2,3))
-                 write(10009,*) oi*Hartree,real(WT(io,2,3))
+                 write(20009,*) oi*Hartree,aimag(WT(io,1,1))
+                 write(10009,*) oi*Hartree,real(WT(io,1,1))
 C                  write(40009,*) oi*Hartree,aimag(WT(io,3,3))
 C                  write(30009,*) oi*Hartree,real(WT(io,3,3))
 c                kraj nove petlje po omega
