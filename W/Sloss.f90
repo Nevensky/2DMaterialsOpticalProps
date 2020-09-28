@@ -647,7 +647,7 @@ do  iq = 42,42 ! 42,61
 !              1.B.Z  LOOP STARTS HERE !!!!
 
 print *, 'DEBUG: entering parallel region'
-!$omp parallel shared(iq,kI,ktot,RI,S0,Gfast,tmpdir,eps,jump,E) private(S0_partial,MnmK1K2,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,attr,K1,K2,n,m,pathk1,pathk2,bandn,bandm,C1,C2,NG1,NG2,io,De,o,domega,Lor,Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,iGfast,iG1,iG2) num_threads(Nthreads) !default(private) 
+!$omp parallel shared(iq,kI,ktot,RI,S0,tmpdir,eps,E) private(S0_partial,jump,MnmK1K2,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,attr,K1,K2,n,m,pathk1,pathk2,bandn,bandm,C1,C2,NG1,NG2,io,De,o,domega,Lor,Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast,iG1,iG2) num_threads(Nthreads) !default(private) 
 ! neven debug
 ! thread_id =  omp_get_thread_num()
 ! print *, 'thread id:',thread_id
@@ -888,7 +888,7 @@ print *, 'DEBUG: entering parallel region'
             Gxx1 = RI(R2,1,1)*K11 + RI(R2,1,2)*K22 + RI(R2,1,3)*K33
             Gyy1 = RI(R2,2,1)*K11 + RI(R2,2,2)*K22 + RI(R2,2,3)*K33
             Gzz1 = RI(R2,3,1)*K11 + RI(R2,3,2)*K22 + RI(R2,3,3)*K33
-            !$omp critical(jump_operation)
+            ! !$omp critical(jump_operation)
             if (jump == 1) then
               ! !$omp single
               iG2_loop: do  iG2 = 1,NG2
@@ -916,7 +916,7 @@ print *, 'DEBUG: entering parallel region'
               end do iG2_loop
               ! !$omp end single
             end if
-            !$omp end critical(jump_operation)
+            ! !$omp end critical(jump_operation)
             ! 1111              continue
             iG2 = Gfast(iGfast)
             ! ovo bi trebalo prouciti zasto ovako radi
@@ -954,8 +954,19 @@ print *, 'DEBUG: entering parallel region'
         ! write(118,*) io*Hartree,S0(io,1,1)
         ! end if 
         end do
-        !$omp atomic
-        S0(1:no,1:Nlf,1:Nlf) = S0(1:no,1:Nlf,1:Nlf) - S0_partial(1:no,1:Nlf,1:Nlf)
+        !$omp critical(sumS0)
+        ! S0(1:no,1:Nlf,1:Nlf) = S0(1:no,1:Nlf,1:Nlf) - S0_partial(1:no,1:Nlf,1:Nlf)
+        do io = 1, no
+          do iG = 1, Nlf
+            do jG = 1, Nlf
+              S0(io,iG,jG) = S0(io,iG,jG) - S0_partial(io,iG,jG)
+              if (real(S0(io,iG,jG)+S0_partial(io,iG,jG)) /= 0.0) then
+                ! print *,'S0(io,iG,jG)',S0(io,iG,jG),'S0_partial(io,iG,jG)', S0_partial(io,iG,jG)
+              end if
+            end do
+          end do
+        end do
+        !$omp end critical(sumS0)
         ! print *,'S0(io,iG,jG)',S0(io,iG,jG)
         deallocate(S0_partial)
         
@@ -964,10 +975,9 @@ print *, 'DEBUG: entering parallel region'
         deallocate(C2)  
                 
       end do bands_m_loop ! end of m do loop
-      
-
     end do bands_n_loop ! end of n do loop
-    jump=1
+    
+    jump = 1
 
   end do !k_loop_FBZ_2nd !  end of 1.B.Z do loop
  !$omp end do
