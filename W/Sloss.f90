@@ -44,7 +44,7 @@ integer :: debugCount= 0.0
 integer :: ik,i,j,jk,it,lk,Ntot,iG0,Nsymm,iq, &
            io,n,m,iG,R1,K1,R2,K2, Nlf,NG1,   &
            NG2,iG1,iG2,jG,kG,jo,jump,loss,   &
-           iGfast,ikmin,lf,kG1,kG2,nord
+           iGfast,ikmin,kG1,kG2,nord, lf
 
 
 integer :: Nk ! = 48*NkI ! number of wave vectors in FBZ with no symmetry 
@@ -60,7 +60,7 @@ namelist /config/ NkI, Nband, NelQE, NGd, NG, no, nq, Nlfd
 
 
 ! file i/o debug
-integer :: ist,ist2,ist9,ist5,ist6,ist7,ist8,ist10,ist11,ist12
+integer :: ist,ist2,ist4,ist5,ist6,ist7,ist8,ist9,ist10,ist11,ist12
 integer :: lno,lno2,lno9,lno10,lno11,lno12
 
 ! constants
@@ -121,7 +121,7 @@ real(kind=sp) :: Ecut   ! [Hartree] cutoff energy for crystal local field calcul
 real(kind=sp) :: Vcell  ! [a.u.^3] unit-cell volume 
 real(kind=sp) :: aBohr  ! [a.u.] unit cell parameter in perpendicular direction (z-separation between supercells)   
 namelist /parameters/ Efermi, a0, c0, eps, T, eta, Ecut, Vcell, aBohr
-
+namelist /system/ lf, loss, jump, omin, omax
 
 ! scalar arrays
 integer,       dimension(3) :: Gi                           ! pomocna funkcija
@@ -179,7 +179,8 @@ integer,allocatable :: work(:)
 
 ! read namelist
 open(10,file='config.in')
-read(10,nml=directories,iostat=ist5)
+read(10,nml=directories,iostat=ist4)
+read(10,nml=system,iostat=ist5)
 read(10,nml=config,iostat=ist6)
 read(10,nml=parameters,iostat=ist7)
 read(10,nml=parallel,iostat=ist8)
@@ -219,9 +220,6 @@ allocate(WT(no,Nlfd,Nlfd))         ! time ordered RPA screened coulomb int. (eq.
 allocate(Gammap(Nlfd,Nlfd))        ! omega>0 ,eq....(skripta 5) \sum_{q,m} \int \dd omega' S(\omega')/{(\omega-\omega'-e_{k+q,m} +i\eta}) za GW se koristi se za ovaj dio 
 allocate(Gammam(Nlfd,Nlfd))        ! omega<0
 
-
-
-! print *,'NGd: ',NGd
 
 ! real :: TES
 ! integer :: zora
@@ -272,11 +270,7 @@ allocate(Gammam(Nlfd,Nlfd))        ! omega<0
 ! root='../../../MoS2_201X201'
 ! tmpdir='../../../tmp'
 
-lf = 1 ! crystal local field effect included in z for lf=1 or in x,y,z direction lf=3
-loss = 1
-jump = 1 ! za 1 preskace trazenje wfn. u IBZ za sve bands m i n
-omin = 1.0D-5 ! raspon frekvencija u Hartreeima
-omax = 2.0D0
+
 domega = (omax-omin)/(no-1)
 
 
@@ -1005,12 +999,13 @@ print *, 'DEBUG: entering parallel region'
   
 ! new sum over omega
   omega_loop_A: do  io = 1,no-1
-  ! print*,io
+    ! call omegaIntegration_A(io,no,Nlf,S0,Chi0)
+    ! print*,io
     oi = (io-1)*domega
     do  iG = 1,Nlf
       do  jG = 1,Nlf
         ReChi0 = 0.0
-!       static limit
+        ! static limit
         if (io == 1) then
           do  jo = 2,no
             oj = (jo-1)*domega
@@ -1090,20 +1085,24 @@ print *, 'DEBUG: entering parallel region'
             ReChi0 = ReChi0 - fact*S0(jo,iG,jG)
           end do
         end if
-        
+
         ImChi0 = -pi*S0(io,iG,jG)
         Chi0(iG,jG) = cmplx(ReChi0,ImChi0)
+        ! 
         ! neven debug 
         ! print *,"Chi(",iG,jG,')=',Chi0(iG,jG)
+        ! 
         ! neven debug
         ! if (io==1) then
           ! write(18,*,action='write',position='append') ReChi0
           ! write(28,*,action='write',position='append') ImChi0
         ! end if
 
-!                kraj po iG,jG
+      ! kraj po iG,jG
       end do
     end do
+
+
     ! neven debug 
     ! write(18,*) io*Hartree, ReChi0(1,1)
     
@@ -1191,16 +1190,16 @@ print *, 'DEBUG: entering parallel region'
       end do
     end do
 
-    ! write(20008,*) oi*Hartree,aimag(WT(io,1,1))
-    ! write(10008,*) oi*Hartree,real(WT(io,1,1))
+    write(20008,*) oi*Hartree,aimag(WT(io,1,1))
+    write(10008,*) oi*Hartree,real(WT(io,1,1))
 ! kraj nove petlje po omega
   end do omega_loop_A
   
   ! neven debug
-  check_WT : do io=1,no-1 
-    write(88,*) real(WT(io,1,1))
-    write(98,*) aimag(WT(io,1,1))
-  end do check_WT
+  ! check_WT : do io=1,no-1 
+  !   write(88,*) real(WT(io,1,1))
+  !   write(98,*) aimag(WT(io,1,1))
+  ! end do check_WT
 
 ! neve debug openmp maknuto 
       ! ispis time ordered zasjenjene kulonske interakcije W_GG'^T(Q,\omega)
@@ -1432,5 +1431,119 @@ deallocate(work)
 
 ! deallocate NGd related vars
 deallocate(Gfast)
+
+
+contains
+  subroutine omegaIntegration_A(io,no,Nlf,S0,Chi0)
+    implicit none
+    integer,          intent(in)    :: io
+    integer,          intent(in)    :: no 
+    integer,          intent(in)    :: Nlf
+    real(kind=sp),    intent(in)    :: S0(:,:,:)
+    complex(kind=sp), intent(inout) :: Chi0(:,:)
+    
+    integer       :: jo, iG, jG
+    real(kind=sp) :: fact, domega, oi, oj
+    real(kind=sp) :: ReChi0, ImChi0
+   
+    oi = (io-1)*domega
+    do  iG = 1,Nlf
+      do  jG = 1,Nlf
+        ReChi0 = 0.0
+        ! static limit
+        if (io == 1) then
+          do  jo = 2,no
+            oj = (jo-1)*domega
+            fact = domega/oj
+            ! analticki trikovi za integriranje 
+            if (jo == 2) then 
+              fact = 3.0/2.0
+            else if (jo == no) then
+              fact = 0.5*domega/oj
+            end if
+            ReChi0 = ReChi0 + fact*S0(jo,iG,jG)
+          end do
+          ReChi0 = -2.0 * ReChi0
+        else if (io == 2) then
+          do  jo = 1,no
+            oj = (jo-1)*domega
+            if (jo /= io) then
+              fact = domega/(oi-oj)
+            else if (jo == 1) then
+              fact = 1.0
+            else if (jo == 2) then
+              fact = 0.0
+            else if (jo == 3) then
+              fact = -3.0/2.0
+            else if (jo == no) then
+              fact = 0.5*domega/(oi-oj)
+            end if
+            ReChi0 = ReChi0 + fact*S0(jo,iG,jG)
+            fact = domega/(oi+oj)
+            if (jo == 1 .or. jo == no) then
+              fact=0.5*domega/(oi+oj)
+            end if
+            ReChi0 = ReChi0 - fact*S0(jo,iG,jG)
+          end do
+        else if (io == (no-1)) then
+          do  jo = 1,no
+            oj = (jo-1)*domega
+            if (jo /= io) then
+              fact = domega/(oi-oj)
+            else if (jo == 1) then
+              fact = 0.5*domega/(oi-oj)
+            else if (jo == (no-2)) then
+              fact = 3.0/2.0
+            else if (jo == (no-1)) then
+              fact = 0.0
+            else if (jo == no) then
+              fact = -1.0
+            end if
+            ReChi0 = ReChi0 + fact*S0(jo,iG,jG)
+            fact = domega/(oi+oj)
+            if (jo == 1 .or. jo == no) then
+              fact = 0.5*domega/(oi+oj)
+            end if
+            ReChi0 = ReChi0 - fact*S0(jo,iG,jG)
+          end do
+        else
+          do  jo = 1,no
+            oj = (jo-1)*domega
+            if (jo /= io) then
+              fact = domega/(oi-oj)
+            else if (jo == 1) then
+              fact=0.5*domega/(oi-oj)
+            else if (jo == (io-1)) then
+              fact=3.0/2.0
+            else if (jo == io) then
+              fact=0.0
+            else if (jo == (io+1)) then
+              fact=-3.0/2.0
+            else if (jo == no) then
+              fact = 0.5*domega/(oi-oj)
+            end if
+            ReChi0 = ReChi0 + fact*S0(jo,iG,jG)
+            fact = domega/(oi+oj)
+            if (jo == 1 .or. jo == no) then
+              fact = 0.5*domega/(oi+oj)
+            end if
+            ReChi0 = ReChi0 - fact*S0(jo,iG,jG)
+          end do
+        end if
+        ImChi0 = -pi*S0(io,iG,jG)
+        Chi0(iG,jG) = cmplx(ReChi0,ImChi0)
+        
+        ! neven debug 
+        ! print *,"Chi(",iG,jG,')=',Chi0(iG,jG)
+        
+        ! neven debug
+        ! if (io==1) then
+          ! write(18,*,action='write',position='append') ReChi0
+          ! write(28,*,action='write',position='append') ImChi0
+        ! end if
+        !         kraj po iG,jG
+      end do
+    end do
+  end subroutine omegaIntegration_A
 
 end program surface_loss
