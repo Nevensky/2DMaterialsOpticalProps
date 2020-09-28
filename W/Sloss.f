@@ -27,16 +27,18 @@ c        VALID JUST FOR NORM-CONSERVING PSEUDOPOTENTIALS!!!!!!!!!!!!!!!!!!!!!!!!
 
         
          use iotk_module
-         implicitnone      
+         implicit none      
          character(iotk_attlenx) :: attr
          logical :: found
+
+         integer :: debugCount = 0.0
 
          INTEGER NkI,Nband,ik,i,Nk,j,jk,it,lk,Ntot,iG0,nsim,iq,
      &   NG,io,no,nq,nMPx,nMPy,nMPz,n,m,iG,R1,K1,R2,K2,
      &   Nlf,NG1,NG2,NGd,iG1,iG2,jG,Nlfd,kG,jo,jump,loss,
      &   iGfast,ikmin,NelQE,lf,kG1,kG2,nord
-         PARAMETER(nMPx=201,nMPy=201,nMPz=1,NkI=6835,Nband=60,NelQE=18,
-     &   Nk=48*NkI,NGd=4000,NG=8000,no=2001,nq=2,Nlfd=50)
+         PARAMETER(nMPx=201,nMPy=201,nMPz=1,NkI=19,Nband=60,NelQE=18,
+     &   Nk=48*NkI,NGd=4000,NG=20517,no=2001,nq=2,Nlfd=100)
          ! no je broj frekvencija,  nq je broj valnih vektora tu je 2 jer je rucno paralelizirano!
          ! Nlf 
     
@@ -51,7 +53,7 @@ c        skalars
          PARAMETER(Hartree=2.0d0*13.6056923d0,EF=0.5554/Hartree,
      &   a0=5.9715,c0=29.8575,pi=3.141592654d0,Gcar=2.0*pi/a0,
      &   eps=1.0d-4,T=0.01/Hartree,Gama=0.05/Hartree,
-     &   eV=1.602176487d-19,planck=6.626196d-34,Ecut=0.0,
+     &   eV=1.602176487d-19,planck=6.626196d-34,Ecut=0.5,
      &   Vcell=922.0586,aBohr=0.5291772d0,zero=0.0)
          DOUBLE COMPLEX a,ione,czero,rone,eM,G0
     
@@ -64,7 +66,7 @@ c        arrays
      &   k(3,Nk),ktot(3,Nk),
      &   V(Nlfd,Nlfd),! matr. gole coulomb. int.
      &   G(3,NG), ! polje valnih vektora G u recp. prost. za wfn.
-     &   GlfV(3,Nlfd), Glf(3,Nlfd) ! generiran G vekt. (0,0,z) za V odnosn za chi.
+     &   GlfV(3,Nlfd), Glf(3,Nlfd), ! generiran G vekt. (0,0,z) za V odnosn za chi.
      &   MnmK1K2(Nlfd), ! nabojni vrhovi
      &   unit(Nlfd,Nlfd), ! jedinična matrica
      &   Chi0(Nlfd,Nlfd), ! (eq. 2.89)
@@ -83,7 +85,7 @@ c        arrays
      &   nis,
      &   pathK1,pathK2, 
      &   dato,
-     &   root,path,fajl
+     &   root,outdir,path,fajl
          CHARACTER*35 tag,buffer
 
          integer :: ngw, igwx, nbnd, nk1
@@ -127,7 +129,9 @@ c               b(3) = (  0.000000 -0.000000  0.200000 )
 
 c             QUANTUM ESSPRESSO IMPUTS:
 c              root='/home/vito/PROJECTS/MoS2-BSE/MoS2_201X201'
-              root='/home/nevensky/Repositories/2d-quasiparticle-optical-properties/MoS2_201X201'
+C               root='/home/nevensky/Repositories/2d-quasiparticle-optical-properties/MoS2_201X201'
+              root='../../../MoS2_201X201'
+              outdir='../../../tmp'
 c             Crystal local field effects are included in z direction lf=1 
 c             Crystal local field effects are included in x,y,z direction lf=3 
 
@@ -288,7 +292,7 @@ c           If g' is vector in rec.cryst. axes then a=KC*a' is vector in cart. a
                    
 c           Reading the reciprocal vectors in crystal coordinates and transformation 
 c           in Cartezi cordinates.             
-            OPEN (1,FILE='gvectors.dat')
+            OPEN (1,FILE='gvectors.xml')
             do 24 i=1,8
 24          READ(1,*)nis
             do 25 iG=1,NG
@@ -312,7 +316,6 @@ c           transformation in cart.coord (also!, after this all G components are
 25          continue
 100         FORMAT(I10,I11,I11)
             CLOSE(1) 
-
 
            
 c            Reciprocal vectors for crystal local field effects calculations in array ''Glf(3,Nlf)'' 
@@ -352,12 +355,14 @@ c            Reciprocal vectors for crystal local field effects calculations in 
              endif
 812          continue
              endif              
-             if(Nlf.gt.Nlfd)then
-             print*,'Nlf is bigger than Nlfd'
-             stop
-             endif
+C              if(Nlf.gt.Nlfd)then
+C              print*,'Nlf is bigger than Nlfd'
+C              stop
+C              endif
 
-
+c            neven debug
+             write(*,*)'Eref',Eref
+             write(*,*),'Glf(1:3,1:5)',Glf(1:3,1:5)
 
 
 c             IBZ q LOOP STARTS HERE!!! 
@@ -366,13 +371,15 @@ c             IBZ q LOOP STARTS HERE!!!
 ! iq=0 ne moze biti nula, opticki racun
 ! iq=2 do iq=...cutoff transfer q vektor!
 ! ikmin = min. valni vektor u BZ svi veci su visekratnici tog minimalnog
-              do 801 iq=42,61 
+              do 801 iq=42,42
   
 c             searching min. q=(qx,qy,qz) in GM direction                
               kmin=1.0
               do 913 i=1,Ntot
               kref=sqrt(ktot(1,i)*ktot(1,i)+
      &        ktot(2,i)*ktot(2,i)+ktot(3,i)*ktot(3,i)) 
+              !  neven debug
+              write(*,*) 'i=',i,' kref: ',kref
               if(kref.eq.zero)goto 970
               if(kref.lt.kmin)then
               kmin=kref      
@@ -381,7 +388,8 @@ c             searching min. q=(qx,qy,qz) in GM direction
               endif
 970           continue
 913           continue
- 
+              ! neve debug
+C               write(*,*) 'ikmin=',ikmin,'kmin=',kmin,'ktot(1:3,ikmin)',ktot(1:3,ikmin)
 
               qx=(iq-1)*ktot(1,ikmin)
               qy=(iq-1)*ktot(2,ikmin)
@@ -483,6 +491,8 @@ c              trazenje (kx,ky,kz) u ireducibilnoj zoni
                KQx=kx+qx
                KQy=ky+qy
                KQz=kz+qz
+               ! neven debug
+               write(*,*) 'KQx,KQy,KQz:',KQx,KQy,KQz
 
 c              trazenje (KQx,KQy) prvo u 1.B.Z a onda u I.B.Z. (jer novo genrirani k+q more bit negdje vani u FBZ)
 
@@ -547,7 +557,7 @@ c              petlje po vrpcama n i m
 
 
 
-            call paths(root,K1,K2,n,m,pathK1,pathK2,bandn,bandm) ! fajl za popunit wfn. za K1 i K2 i pripadajuce vrpce n i m
+            call paths(outdir,K1,K2,n,m,pathK1,pathK2,bandn,bandm) ! fajl za popunit wfn. za K1 i K2 i pripadajuce vrpce n i m
 
                
 c         u ovom dijelu programa se iscitava iz binarnih fileova ''gvectors.dat'',''evc.dat'' za 
@@ -575,20 +585,20 @@ c               Ucitavanje podataka iza evc.m
 c                Konstrukcija stupca matricnih elementa MnmK1K2(G)  
           
 
-                  if(NGd.gt.NG1)then
-                  write(*,*)'NGd is bigger than NG1=',NG1
-                  stop
-                  elseif(NGd.gt.NG2)then
-                  write(*,*)'NGd is bigger than NG2=',NG2
-                  stop
-                  endif              
+C                   if(NGd.gt.NG1)then
+C                   write(*,*)'NGd is bigger than NG1=',NG1
+C                   stop
+C                   elseif(NGd.gt.NG2)then
+C                   write(*,*)'NGd is bigger than NG2=',NG2
+C                   stop
+C                   endif              
                    
 
 c                 matrix elements
                   iGfast=0                 
                   do 551 iG=1,Nlf
                   MnmK1K2(iG)=czero
-                  do 552 iG1=1,NGd 
+                  do 552 iG1=1,NG1 
                   iGfast=iGfast+1
                   Gxx1=G(1,iG1)
                   Gyy1=G(2,iG1)
@@ -647,11 +657,15 @@ c                 omega loop
 513                    continue
                      endif   
 
-                   
+                  ! neven debug  
+C                   debugCount = debugCount +1
+C                   if (debugCount>9000000 .and. debugCount<10000000) then
+C                   write(119,*) io*Hartree,S0(io,1,1)
+C                   end if 
 802               continue
 
-        	deallocate(C1)
-		deallocate(C2)
+          deallocate(C1)
+          deallocate(C2)
 
 
 222             continue
@@ -748,10 +762,13 @@ c                  static limit
                       Chi0(iG,jG)=cmplx(ReChi0,ImChi0) 
 
 
+
 c                kraj po iG,jG              
 433              continue    
 432              continue 
-
+                    
+                 ! neven debug 
+C                  write(19,*) io*Hartree, real(Chi0(5,5))
                       
 
 c                Calculation of the ''Chi''  by matrix invertion 
@@ -781,6 +798,8 @@ c                MATRIX V(G,G')
 568              continue 
 567              continue
 
+
+                
                             
 
                  do 828 iG=1,Nlf
@@ -798,7 +817,8 @@ c                MATRIX V(G,G')
 706              continue
 705              continue
 704              continue
-
+                 ! neven debug
+C                  write(39,*) real(epsilon(1,1)),aimag(epsilon(1,1))
 
 c                invertiranje matrice ''epsilon = 1-Chi_0*V''
 
@@ -830,7 +850,14 @@ c                SCREENED COULOMB INTERACTION W^T_GG'(Q,\omega)
                  WT(io,iG,jG)=V(iG,jG)+WT(io,iG,jG)
 635              continue
 634              continue
+                ! neven debug
+C                  write(*,*) WT(io,1,1),WT(io,1,2),WT(io,2,2)
 
+                ! neven debug
+                 write(20009,*) oi*Hartree,aimag(WT(io,2,3))
+                 write(10009,*) oi*Hartree,real(WT(io,2,3))
+C                  write(40009,*) oi*Hartree,aimag(WT(io,3,3))
+C                  write(30009,*) oi*Hartree,real(WT(io,3,3))
 c                kraj nove petlje po omega
 872              continue
  
@@ -940,6 +967,10 @@ c                kraj po iG,jG
 c                Provjera KK relacija 
                  Wind=real(WT(io,1,1)-V(1,1))
                  WindKK=real(Gammap(1,1))-W2KK
+C                  print *, 'WT: ',WT(io,1,1),' V(11): ',V(1,1) 
+C                  print *, 'Wind: ',Wind
+C                  print *, 'Gammap(1,1): ',Gammap(1,1),'W2KK: ',W2KK
+C                  print *,'WindKK: ',WindKK
                  fact=domega
                  if(io.eq.1.or.io.eq.no-1)fact=0.5*domega
                  KKS=KKS+fact*(WindKK-Wind)*(WindKK-Wind)
@@ -948,7 +979,8 @@ c                Provjera KK relacija
 
 c                kraj nove petlje po omega
 172              continue
-                 CLOSE(74)
+c vito greska?? ovaj fajl je vec zatvoren
+c                 CLOSE(74)
 
 
                  dato='Kramers-Kron_Qi'
