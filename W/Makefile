@@ -10,8 +10,8 @@ PARA = -qopenmp
 # FFLAGS= -Ofast -traceback -fpe0 #-parallel -opt-report-phase=par -opt-report:5
 FFLAGS = -Ofast -g -traceback -fp-model precise -fp-stack-check -heap-arrays #-debug all -debug-parameters all -DD -C -warn all -check all
 #OMPFLAGS = -qopenmp -debug extended -heap-array
-SRC = Sloss.f PointR.f paths.f gjel.f 
-OBJECTS = Sloss.o PointR_mkl.o paths.o gjel.o 
+SRC = PointR.f Sloss.f paths.f gjel.f 
+OBJECTS = PointR_mkl.o Sloss.o paths.o gjel.o 
 OBJECTS_LEGACY = Sloss_legacy.o PointR_legacy.o paths.o gjel.o 
 OBJECTS_PARA = Sloss_para.o PointR_mkl.o paths.o 
 
@@ -44,9 +44,11 @@ Sloss_legacy.o: Sloss.f
 
 PointR.o: PointR.f
 	${FC} ${FFLAGS} -c PointR.f90 -o PointR.o
+	${FC} ${FFLAGS} -c PointR.f90
 
 PointR_mkl.o: PointR.f
 	${FC} ${FFLAGS} -c PointR_mkl.f90 -o PointR_mkl.o
+	${FC} ${FFLAGS} -c PointR_mkl.f90
 
 PointR_legacy.o: PointR.f
 	${FC} ${FFLAGS} -c PointR.f -o PointR_legacy.o
@@ -58,4 +60,4 @@ gjel.o: gjel.f
 	${FC} ${FFLAGS} -c gjel.f
 
 clean:
-	rm  *.o Loss fbz_check.dat
+	rm  *.o Loss fbz_check.dat modpointr.mod

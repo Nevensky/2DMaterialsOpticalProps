@@ -8,7 +8,7 @@ INTEGER, PARAMETER :: sp = real32
 INTEGER, PARAMETER :: dp = real64
 
 CONTAINS
-   SUBROUTINE PointR(root,Nsymm,R,Ri)
+   SUBROUTINE PointR(path,Nsymm,R,Ri)
 
       INTEGER :: i, Nsymm, is, n, m
 
@@ -27,7 +27,7 @@ CONTAINS
 
       CHARACTER(len=11 ) :: buffer1,tag1
       CHARACTER(len=7  ) :: buffer2,tag2
-      CHARACTER(len=100) :: root,fajl,path  
+      CHARACTER(len=100) :: path  
  
 
       INTEGER :: ist3,ist4,ist5,ist6,ist7
@@ -38,8 +38,6 @@ CONTAINS
 !    from IBZ are printed  in cart.coord.
  
  
-   fajl = '/MoS2.sc.out'
-   path = TRIM(root)//TRIM(fajl)
    tag1 = '     atomic'
    tag2 = ' cryst.'
  

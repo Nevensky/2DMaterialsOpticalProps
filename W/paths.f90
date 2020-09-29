@@ -1,14 +1,13 @@
 !*==PATHS.spg  processed by SPAG 6.72Dc at 09:06 on  2 Jun 2020
-      SUBROUTINE PATHS(Root1,K1,K2,N,M,Pathk1,Pathk2,Bandn,Bandm)
+      SUBROUTINE PATHS(savedir,K1,K2,N,M,Pathk1,Pathk2,Bandn,Bandm)
       IMPLICIT NONE
 !*--PATHS4
  
       INTEGER K1 , K2 , N , M , nord
-      CHARACTER(len=100) Root1 , root2 , folder , file , Pathk1 , Pathk2 ,  Bandn , Bandm
+      CHARACTER(len=100) savedir , folder , file , Pathk1 , Pathk2 ,  Bandn , Bandm
  
  
  
-      root2 = '/MoS2.save'
       file = '/evc.dat'
  
       folder = '/K0000i'
@@ -24,7 +23,7 @@
       ELSE
          WRITE (folder(nord-4:nord),'(i5)') K1
       ENDIF
-      Pathk1 = TRIM(Root1)//TRIM(root2)//TRIM(folder)//TRIM(file)
+      Pathk1 = TRIM(savedir)//TRIM(folder)//TRIM(file)
  
       folder = '/K0000i'
       nord = INDEX(folder,'i',BACK=.FALSE.)
@@ -39,7 +38,7 @@
       ELSE
          WRITE (folder(nord-4:nord),'(i5)') K2
       ENDIF
-      Pathk2 = TRIM(Root1)//TRIM(root2)//TRIM(folder)//TRIM(file)
+      Pathk2 = TRIM(savedir)//TRIM(folder)//TRIM(file)
  
  
  
