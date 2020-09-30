@@ -221,20 +221,6 @@ allocate(Gammap(Nlfd,Nlfd))        ! omega>0 ,eq....(skripta 5) \sum_{q,m} \int 
 allocate(Gammam(Nlfd,Nlfd))        ! omega<0
 
 
-! real :: TES
-! integer :: zora
-! integer :: niba=100
-! !$omp parallel shared(TES) private(zora)
-! !$omp do reduction(+:TES)
-! do zora=1,Niba
-!    TES = TES+zora
-! end do
-! !$omp end do 
-! !$omp master
-! print *, 'TES:',TES
-! !$omp end master
-! !$omp end parallel 
-
 
 ! BRAVAIS LATTICE PARAMETERS
 
@@ -271,20 +257,19 @@ domega = (omax-omin)/(no-1)
 
 
 
-!           call FOR POINT GROUP TRANSFORMATIONS
-!           Point group transformations are in Cartesian coordinate
+! call FOR POINT GROUP TRANSFORMATIONS
+! Point group transformations are in Cartesian coordinate
 path = trim(rundir)//trim(scf_file)
 call PointR(path,Nsymm,R,RI)
 print *,"PointR done."
 
 
-!           Upis valnih vektora iz irreducibilne Brillouinove
-!           zone i pripadnih energijskih nivoa iz filea '****.band'.
-!           wave vectors are in Cartesian coordinate
+! Upis valnih vektora iz irreducibilne Brillouinove
+! zone i pripadnih energijskih nivoa iz filea '****.band'.
+! wave vectors are in Cartesian coordinate
 
 
 
-! band_file='/MoS2.band'
 path=trim(rundir)//trim(band_file)
 open(40,FILE=path,status='old',err=400,iostat=ist9)
 
@@ -297,9 +282,8 @@ do  ik = 1,NkI
 end do
 close(40)
 
-! 10          FORMAT(10F8.4)
-! 20          FORMAT(10X,f10.3,f10.3,f10.3)
-GO TO 500
+
+goto 500
 400 write(*,*) '100 cannot open file. iostat = ',ist9
 500 continue
 
@@ -317,19 +301,12 @@ end do
 
 
 
-!            generator 1.B.Z.
-!            Dio programa koji pomocu operacija tockaste grupe i vektora iz
-!            I.B.Z. generira sve (MEDJUSOBNO RAZLICITE!!!) V. vektore u 1.B.Z.
-!            Ntot-Tot number of different points ''ktot'' inside 1.B.Z
+! generator 1.B.Z.
+! Dio programa koji pomocu operacija tockaste grupe i vektora iz
+! I.B.Z. generira sve (MEDJUSOBNO RAZLICITE!!!) valne vektore u 1.B.Z.
+! Ntot-Tot number of different points ''ktot'' inside 1.B.Z
 
 
-! !$omp parallel
-! !$omp do
-! do i=1,Nsymm
-!   print *,i
-! end do
-! !$omp end do
-! !$omp end parallel
 
 ! print *, 'DEBUG: entering parallel region'
 ! !$omp parallel shared(k,ktot,Ntot)
@@ -337,7 +314,7 @@ end do
 jk = 0
 Ntot = 0
 ! !$omp do  reduction(+:Ntot)
-do  i = 1,Nsymm ! loop over No. symmetries
+do  i = 1,Nsymm ! loop over all symmetries
   do  ik = 1,NkI  ! loop over k points in IBZ
     it = 1
     jk = jk+1
@@ -349,14 +326,6 @@ do  i = 1,Nsymm ! loop over No. symmetries
     end do
     if (jk > 1) then
       do  lk=1,jk-1
-        ! vito - maknut nest if if if
-        ! if (abs(k(1,jk)-k(1,lk)) <= eps) then
-        !   if (abs(k(2,jk)-k(2,lk)) <= eps) then
-        !     if (abs(k(3,jk)-k(3,lk)) <= eps) then
-        !       it=2
-        !     end if
-        !   end if
-        ! end if
         if ( abs(k(1,jk)-k(1,lk)) <= eps .and. &
              abs(k(2,jk)-k(2,lk)) <= eps .and. &
              abs(k(3,jk)-k(3,lk)) <= eps ) then ! je li razlicita tocka od neke prije vec kreirane
@@ -367,9 +336,6 @@ do  i = 1,Nsymm ! loop over No. symmetries
     if (it == 1) then ! ne postoji dodaj ju
       Ntot=Ntot+1
       ktot(1:3,Ntot)=k(1:3,jk)
-      ! ktot(1,Ntot)=k(1,jk)
-      ! ktot(2,Ntot)=k(2,jk)
-      ! ktot(3,Ntot)=k(3,jk)
     end if
   end do
 end do
@@ -440,8 +406,7 @@ close(887)
 ! If G' is vector in rec.cryst. axes then a=KC*a' is vector in cart. axes
 
 
-! scf_file='/MoS2.sc.out'
-path=TRIM(rundir)//TRIM(scf_file)
+path = TRIM(rundir)//TRIM(scf_file)
 tag='     reciprocal axes: (cart. coord.'
 open(30,FILE=path,status='old')
 do  i = 1,100000
@@ -454,7 +419,6 @@ do  i = 1,100000
     EXIT
   end if
 end do
-! 70          FORMAT(23X,3F10.3)
 close(30)
 
 
@@ -466,45 +430,40 @@ goto 8000
 
 ! Reading the reciprocal vectors in crystal coordinates and transformation
 ! in Cartesian cordinates.
-open(20,FILE='gvectors.xml',status='old',err=200,iostat=ist10)
-lno10 =0
-print *, 'File gvectors.dat oppened successfully.'
-do  i=1,8
-  read(20,*,err=201,iostat=ist11,end=202) nis
-  ! print *,nis
-  lno10 = lno10 +1
-end do
-G = 0.0 ! vito - premjesteno iz n,m loopa
-do  iG = 1,NG
-  read(20,'(i10,i11,i11) ',err=201,iostat=ist11,end=202) Gi(1),Gi(2),Gi(3)
-  lno10 = lno10 +1
-  ! print *, lno10
-  if (iG == 1) then
-    if (Gi(1) /= 0 .or. Gi(2) /= 0 .or. Gi(3) /= 0) then
-      print*,'*********************************'
-      print*,'WARRNING!, G vectors input is wrong!!'
-      print*,'G(1) is not (0,0,0)!!'
-      STOP
-    end if
-  end if
-! transformation in cart.coord (also!, after this all G components are in 2pi/a0 units)
-  do n = 1,3
-    ! G(n,iG) = 0.0
-    do m = 1,3
-      G(n,iG) = G(n,iG)+KC(n,m)*real(Gi(m)) ! DBLE converted to real
-    end do
-  end do
-  parG(iG)=Gi(3)
-end do
-! 100         FORMAT(i10,i11,i11)
-close(20)
+call loadG(KC,parG,G)
 
+! open(20,FILE='gvectors.xml',status='old',err=200,iostat=ist10)
+! lno10 =0
+! print *, 'File gvectors.dat oppened successfully.'
+! do  i=1,8
+!   read(20,*,err=201,iostat=ist11,end=202) nis
+!   ! print *,nis
+!   lno10 = lno10 +1
+! end do
+! G = 0.0 ! vito - premjesteno iz n,m loopa
+! do  iG = 1,NG
+!   read(20,'(i10,i11,i11) ',err=201,iostat=ist11,end=202) Gi(1),Gi(2),Gi(3)
+!   lno10 = lno10 +1
+!   ! print *, lno10
+!   if (iG == 1) then
+!     if (Gi(1) /= 0 .or. Gi(2) /= 0 .or. Gi(3) /= 0) then
+!       print*,'*********************************'
+!       print*,'WARRNING!, G vectors input is wrong!!'
+!       print*,'G(1) is not (0,0,0)!!'
+!       STOP
+!     end if
+!   end if
+! ! transformation in cart.coord (also!, after this all G components are in 2pi/a0 units)
+!   do n = 1,3
+!     ! G(n,iG) = 0.0
+!     do m = 1,3
+!       G(n,iG) = G(n,iG)+KC(n,m)*real(Gi(m)) ! DBLE converted to real
+!     end do
+!   end do
+!   parG(iG)=Gi(3)
+! end do
+! close(20)
 
-GO TO 5000
-200 write(*,*) 'error cant read file id 20, ist=',ist10
-201   write(*,*) '201 buffer1 read. Error reading line ',lno10+1,', iostat = ',ist11
-202   write(*,*) '202 buffer1 read. Number of lines read = ',lno10
-5000 continue
 
 
 ! Reciprocal vectors for crystal local field effects calculations in array ''Glf(3,Nlf) ''
@@ -518,8 +477,6 @@ if (lf == 1) then
       if (Eref <= Ecut) then
         Nlf = Nlf + 1
         Glf(1:2,Nlf) = 0.0
-        ! Glf(1,Nlf) = 0.0
-        ! Glf(2,Nlf) = 0.0
         Glf(3,Nlf) = G(3,iG)
         if ( (parG(iG)/2)*2 == parG(iG) ) then
           parG(Nlf) = 1
@@ -535,10 +492,7 @@ else
     Eref = Gcar**2 *( G(1,iG)**2 + G(2,iG)**2 + G(3,iG)**2 ) / 2.0
     if (Eref <= Ecut) then
       Nlf = Nlf+1
-      Glf(:,Nlf) = G(:,iG)
-      ! Glf(1,Nlf) = G(1,iG)
-      ! Glf(2,Nlf) = G(2,iG)
-      ! Glf(3,Nlf) = G(3,iG)
+      Glf(:,Nlf) = G(1:3,iG)
       if ( (parG(iG)/2)*2 == parG(iG) ) then
         parG(Nlf) = 1
       else
@@ -563,13 +517,13 @@ print *,'Eref',Eref
 print *,'Glf(1:3,1:5)',Glf(1:3,1:5)
 
 
-!             IBZ q LOOP STARTS HERE!!!
+! IBZ q LOOP STARTS HERE!!!
 ! iq=0 ne moze biti nula, opticki racun
 ! iq=2 do iq=...cutoff transfer q vektor!
 ! ikmin = min. valni vektor u BZ svi veci su visekratnici tog minimalnog
 do  iq = 42,42 ! 42,61
   
-!             searching min. q=(qx,qy,qz) in Gamma - M direction
+! searching min. q=(qx,qy,qz) in Gamma - M direction
   kmin = 1.0
   Ntot_loop: do  i = 1,Ntot ! loop over different k-points in FBZ
     ! kref = sqrt(sum(ktot(1:3,i)**2))
@@ -588,9 +542,9 @@ do  iq = 42,42 ! 42,61
   ! neve debug
   ! print *,'ikmin=',ikmin,'kmin=',kmin,'ktot(1:3,ikmin)',ktot
 
-  qx = (iq-1)*ktot(1,ikmin)
-  qy = (iq-1)*ktot(2,ikmin)
-  qz = (iq-1)*ktot(3,ikmin)
+  qx = (iq-1) * ktot(1,ikmin)
+  qy = (iq-1) * ktot(2,ikmin)
+  qz = (iq-1) * ktot(3,ikmin)
   absq = sqrt(qx**2 + qy**2 + qz**2)
   
 !             Info file
@@ -622,15 +576,7 @@ do  iq = 42,42 ! 42,61
   close(55)
   
 
-  ! vito stari format inicializacije matrice
-  ! do  io = 1,no
-    ! do  iG = 1,Nlf
-      ! do  jG=1,Nlf
-        ! S0(io,iG,jG) = czero
-      ! end do
-    ! end do
-  ! end do
-  S0(1:no,1:Nlf,1:Nlf) = czero
+  S0(1:no,1:Nlf,1:Nlf) = cmplx(0.0,0.0)
   
   
   
@@ -644,7 +590,7 @@ print *, 'DEBUG: entering parallel region'
 ! S0(1:no,1:Nlf,1:Nlf) = czero
 !$omp do ! reduction(-:S0)
 do ik=1,Ntot   ! k_loop_FBZ_2nd:  
-  ! allocate(S0_partial(no,Nlf,Nlf))
+
   ! open(122,FILE='status')
   ! write(122,*) 'iq=',iq
   ! write(122,*) 'ik=',ik
@@ -668,18 +614,6 @@ do ik=1,Ntot   ! k_loop_FBZ_2nd:
       K22 = RI(i,2,1)*kx + RI(i,2,2)*ky + RI(i,2,3)*kz
       K33 = RI(i,3,1)*kx + RI(i,3,2)*ky + RI(i,3,3)*kz
       do  j = 1,NkI
-        ! vito - smnanjenje if uvjeta
-        ! if (abs(K11-kI(1,j)) <= eps) then
-        !   if (abs(K22-kI(2,j)) <= eps) then
-        !     if (abs(K33-kI(3,j)) <= eps) then
-        !       it=2
-        !       R1=i
-        !       K1=j
-        !       ! GO TO 5222
-        !       EXIT symmetry_loop
-        !     end if
-        !   end if
-        ! end if
         if (      abs(K11-kI(1,j)) <= eps &
             .and. abs(K22-kI(2,j)) <= eps &
             .and. abs(K33-kI(3,j)) <= eps ) then
@@ -696,7 +630,6 @@ do ik=1,Ntot   ! k_loop_FBZ_2nd:
     STOP
   end if
   ! print *, 'R1:',R1,'K1:', K1
-  ! 5222           continue
   
   
   it = 1
@@ -708,22 +641,16 @@ do ik=1,Ntot   ! k_loop_FBZ_2nd:
   print *,'thread id:',thread_id,'ik: ',ik
   print *, 'KQx,KQy,KQz:',KQx,KQy,KQz
   !$omp end critical(printWaveVector)
+
   ! trazenje (KQx,KQy) prvo u 1.B.Z a onda u I.B.Z.
   iG_loop: do  iG = 1,NG
     do  jk = 1,Ntot
-      ! vito smanjenje If if if loop
       if ( abs(KQx-G(1,iG)-ktot(1,jk)) <= eps .and. &
            abs(KQy-G(2,iG)-ktot(2,jk)) <= eps .and. &
            abs(KQz-G(3,iG)-ktot(3,jk)) <= eps ) then
         it=2
         iG0 = iG
         do  i = 1,Nsymm
-          ! K11 = RI(i,1,1)*ktot(1,jk) + RI(i,1,2)*ktot(2,jk) +  &
-          !     RI(i,1,3)*ktot(3,jk)
-          ! K22 = RI(i,2,1)*ktot(1,jk) + RI(i,2,2)*ktot(2,jk) +  &
-          !     RI(i,2,3)*ktot(3,jk)
-          ! K33 = RI(i,3,1)*ktot(1,jk) + RI(i,3,2)*ktot(2,jk) +  &
-          !     RI(i,3,3)*ktot(3,jk)
           K11 = sum(RI(i,1,1:3) * ktot(1:3,jk) )
           K22 = sum(RI(i,2,1:3) * ktot(1:3,jk) )
           K33 = sum(RI(i,3,1:3) * ktot(1:3,jk) )
@@ -735,50 +662,13 @@ do ik=1,Ntot   ! k_loop_FBZ_2nd:
               R2 = i
               K2 = j
               EXIT iG_loop
-              ! GO TO 2111
+              ! goto 2111
             end if
           end do
         end do
       end if
     end do
   end do iG_loop  
-  ! vito prepravljeno maknuti ifovi
-  ! ig_loop: do  iG = 1,NG
-  !   do  jk = 1,Ntot
-  !     ! vito smanjenje If if if loop
-  !     if (abs(KQx-G(1,iG)-ktot(1,jk)) <= eps) then
-  !       if (abs(KQy-G(2,iG)-ktot(2,jk)) <= eps) then
-  !         if (abs(KQz-G(3,iG)-ktot(3,jk)) <= eps) then
-  !           it=2
-  !           iG0 = iG
-  !           do  i = 1,Nsymm
-  !             K11=RI(i,1,1)*ktot(1,jk)+RI(i,1,2)*ktot(2,jk)+  &
-  !                 RI(i,1,3)*ktot(3,jk)
-  !             K22=RI(i,2,1)*ktot(1,jk)+RI(i,2,2)*ktot(2,jk)+  &
-  !                 RI(i,2,3)*ktot(3,jk)
-  !             K33=RI(i,3,1)*ktot(1,jk)+RI(i,3,2)*ktot(2,jk)+  &
-  !                 RI(i,3,3)*ktot(3,jk)
-  !             do  j=1,NkI
-  !               if (abs(K11-kI(1,j)) <= eps) then
-  !                 if (abs(K22-kI(2,j)) <= eps) then
-  !                   if (abs(K33-kI(3,j)) <= eps) then
-  !                     it = 3
-  !                     R2 = i
-  !                     K2 = j
-  !                     EXIT ig_loop
-  !                     ! GO TO 2111
-  !                   end if
-  !                 end if
-  !               end if
-  !             end do
-  !           end do
-  !         end if
-  !       end if
-  !     end if
-  !   end do
-  ! end do ig_loop
-  ! 2111                 continue
-  
   
   if (it == 1) then
     print*,'Can not find wave vector K+Q=',ik,'+',iq, 'in 1.B.Z.'
@@ -801,7 +691,7 @@ do ik=1,Ntot   ! k_loop_FBZ_2nd:
     bands_m_loop: do  m = 10,Nband ! empty bands loop
       
       
-      !$omp critical(pathk1_read)
+      !$omp critical(pathk_read)
       
       ! otvara save/K.000x/evc.dat u atributu <evc band> ispod CnK(G) koef.
       
@@ -821,8 +711,6 @@ do ik=1,Ntot   ! k_loop_FBZ_2nd:
       ! Ucitavanje podataka iza evc.n
       call iotk_scan_dat(10+ik,bandn,C1)
       call iotk_close_read(10+ik)
-      ! !$omp end critical(pathk1_read)
-      ! !$omp critical(pathk2_read)
       
       !  Otvaranje atribute za INFO
       ! print *,'pathk2',pathk2
@@ -834,12 +722,11 @@ do ik=1,Ntot   ! k_loop_FBZ_2nd:
       ! Ucitavanje podataka iza evc.m
       call iotk_scan_dat(10+ik,bandm,C2)
       call iotk_close_read(10+ik)
-      ! !$omp end critical(pathk2_read)
-      !$omp end critical(pathk1_read)
+
+      !$omp end critical(pathk_read)
       
-      ! Konstrukcija stupca matricnih elementa MnmK1K2(G)
-      
-      ! vito maknut check        
+
+            
       if (NGd > NG1) then
         write(*,*) 'NGd is bigger than NG1=',NG1
         STOP
@@ -848,8 +735,8 @@ do ik=1,Ntot   ! k_loop_FBZ_2nd:
         STOP
       end if
       
-      
-      ! matrix elements
+      ! Konstrukcija stupca matricnih elementa MnmK1K2(G)      
+
       ! print *,'GOT HERE 1'
       iGfast = 0
       MnmK1K2(1:Nlf) = czero ! nabojni vrhovi
@@ -885,7 +772,7 @@ do ik=1,Ntot   ! k_loop_FBZ_2nd:
               !   if (abs(Gyy2-Gyy1) < eps) then
               !     if (abs(Gzz2-Gzz1) < eps) then
               !       Gfast(iGfast) = iG2
-              !       ! GO TO 1111
+              !       ! goto 1111
               !       EXIT ig2_loop
               !     end if
               !   end if
@@ -894,7 +781,7 @@ do ik=1,Ntot   ! k_loop_FBZ_2nd:
                    abs(Gyy2-Gyy1) < eps .and. &
                    abs(Gzz2-Gzz1) < eps) then
                   Gfast(iGfast) = iG2
-                  ! GO TO 1111
+                  ! goto 1111
                   EXIT iG2_loop
               end if
             end do iG2_loop
@@ -903,7 +790,6 @@ do ik=1,Ntot   ! k_loop_FBZ_2nd:
           ! !$omp end critical(jump_operation)
           ! 1111              continue
           iG2 = Gfast(iGfast)
-          ! ovo bi trebalo prouciti zasto ovako radi
           if (iG2 <= NG2) then
             MnmK1K2(iG) = MnmK1K2(iG) + conjg(C1(iG1))*C2(iG2)
           end if
@@ -979,186 +865,30 @@ end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
   qy = Gcar*qy
   qz = Gcar*qz
   
-  do  iG = 1,Nlf
-    GlfV(:,iG) = Gcar*Glf(:,iG)
-  !   GlfV(1,iG) = Gcar*Glf(1,iG)
-  !   GlfV(2,iG) = Gcar*Glf(2,iG)
-  !   GlfV(3,iG) = Gcar*Glf(3,iG)
-  end do
+
+
+  
+  ! do  iG = 1,Nlf
+  !   GlfV(1:3,iG) = Gcar*Glf(1:3,iG)
+  ! end do
+  GlfV(1:3,1:Nlf) = Gcar*Glf(1:3,1:Nlf)
 
    ! Kramers-Kroning relacije
   
-  ! new sum over omega
   omega_loop_A: do  io = 1,no-1
     call genChi0(io,no,Nlf,domega,S0,Chi0)
 
     oi = (io-1)*domega ! koristi se u ispisu WT(io,1,1)
-
-    ! do  iG = 1,Nlf
-    !   do  jG = 1,Nlf
-    !     ReChi0 = 0.0
-    !     ! static limit
-    !     if (io == 1) then
-    !       do  jo = 2,no
-    !         oj = (jo-1)*domega
-    !         fact = domega/oj
-    !         ! analticki trikovi za integriranje 
-    !         if (jo == 2) then 
-    !           fact = 3.0/2.0
-    !         else if (jo == no) then
-    !           fact = 0.5*domega/oj
-    !         end if
-    !         ReChi0 = ReChi0 + fact*S0(jo,iG,jG)
-    !       end do
-    !       ReChi0 = -2.0 * ReChi0
-    !     else if (io == 2) then
-    !       do  jo = 1,no
-    !         oj = (jo-1)*domega
-    !         if (jo /= io) then
-    !           fact = domega/(oi-oj)
-    !         else if (jo == 1) then
-    !           fact = 1.0
-    !         else if (jo == 2) then
-    !           fact = 0.0
-    !         else if (jo == 3) then
-    !           fact = -3.0/2.0
-    !         else if (jo == no) then
-    !           fact = 0.5*domega/(oi-oj)
-    !         end if
-    !         ReChi0 = ReChi0 + fact*S0(jo,iG,jG)
-    !         fact = domega/(oi+oj)
-    !         if (jo == 1 .or. jo == no) then
-    !           fact=0.5*domega/(oi+oj)
-    !         end if
-    !         ReChi0 = ReChi0 - fact*S0(jo,iG,jG)
-    !       end do
-    !     else if (io == (no-1)) then
-    !       do  jo = 1,no
-    !         oj = (jo-1)*domega
-    !         if (jo /= io) then
-    !           fact = domega/(oi-oj)
-    !         else if (jo == 1) then
-    !           fact = 0.5*domega/(oi-oj)
-    !         else if (jo == (no-2)) then
-    !           fact = 3.0/2.0
-    !         else if (jo == (no-1)) then
-    !           fact = 0.0
-    !         else if (jo == no) then
-    !           fact = -1.0
-    !         end if
-    !         ReChi0 = ReChi0 + fact*S0(jo,iG,jG)
-    !         fact = domega/(oi+oj)
-    !         if (jo == 1 .or. jo == no) then
-    !           fact = 0.5*domega/(oi+oj)
-    !         end if
-    !         ReChi0 = ReChi0 - fact*S0(jo,iG,jG)
-    !       end do
-    !     else
-    !       do  jo = 1,no
-    !         oj = (jo-1)*domega
-    !         if (jo /= io) then
-    !           fact = domega/(oi-oj)
-    !         else if (jo == 1) then
-    !           fact=0.5*domega/(oi-oj)
-    !         else if (jo == (io-1)) then
-    !           fact=3.0/2.0
-    !         else if (jo == io) then
-    !           fact=0.0
-    !         else if (jo == (io+1)) then
-    !           fact=-3.0/2.0
-    !         else if (jo == no) then
-    !           fact = 0.5*domega/(oi-oj)
-    !         end if
-    !         ReChi0 = ReChi0 + fact*S0(jo,iG,jG)
-    !         fact = domega/(oi+oj)
-    !         if (jo == 1 .or. jo == no) then
-    !           fact = 0.5*domega/(oi+oj)
-    !         end if
-    !         ReChi0 = ReChi0 - fact*S0(jo,iG,jG)
-    !       end do
-    !     end if
-
-    !     ImChi0 = -pi*S0(io,iG,jG)
-    !     Chi0(iG,jG) = cmplx(ReChi0,ImChi0)
-    !     ! 
-    !     ! neven debug 
-    !     ! print *,"Chi(",iG,jG,')=',Chi0(iG,jG)
-    !     ! 
-    !     ! neven debug
-    !     ! if (io==1) then
-    !       ! write(18,*,action='write',position='append') ReChi0
-    !       ! write(28,*,action='write',position='append') ImChi0
-    !     ! end if
-
-    !   ! kraj po iG,jG
-    !   end do
-    ! end do
-
-
-    ! neven debug 
-    ! write(18,*) io*Hartree, ReChi0(1,1)
-    
-    
-    !  Calculation of the ''Chi''  by matrix invertion
     
     
     ! MATRIX V(G,G')
     call genV(eps,qx,qy,Nlf,parG,Glf,GlfV,V)
-
-    ! do  iG = 1,Nlf
-    !   Gabs = sqrt( (qx+GlfV(1,iG))**2 + (qy+GlfV(2,iG))**2 )
-    !   if (Gabs == 0.0) then 
-    !     Gabs = eps
-    !   end if
-    !   do  jG = 1,Nlf
-    !     V(iG,jG) = 0.0
-    !     if (Glf(1,jG) == Glf(1,iG) ) then
-    !       if (Glf(2,jG) == Glf(2,iG) ) then
-    !         V(iG,jG) = 4.0*pi*(1.0-exp(-Gabs*c0)) / (Gabs*c0)
-    !         V(iG,jG) = V(iG,jG)*( Gabs**2 - GlfV(3,iG)*GlfV(3,jG) )
-    !         V(iG,jG) = V(iG,jG)/( Gabs**2 + GlfV(3,iG)**2 )
-    !         V(iG,jG) = V(iG,jG)/( Gabs**2 + GlfV(3,jG)**2 )
-    !         V(iG,jG) = -real(parG(iG)) * real(parG(jG)) * V(iG,jG) ! dble converted to real
-    !         if (Glf(3,jG) == Glf(3,iG)) then
-    !           V(iG,jG) = 4.0*pi / ( Gabs**2 + GlfV(3,iG)**2 ) + V(iG,jG)
-    !         end if
-    !       end if
-    !     end if
-    !   end do
-    ! end do
-
-    
-
-    ! do  iG = 1,Nlf
-    !   do jG = 1,Nlf
-    !     Imat(iG,iG) = czero
-    !   enddo
-    !   Imat(iG,iG) = rone
-    ! end do
     
     call genDielectricEpsilon(Nlf,Chi0,V,diel_epsilon)
     
-    ! Imat(1:Nlf,1:Nlf) = czero
-    ! do  iG = 1,Nlf
-    !   Imat(iG,iG) = rone
-    ! end do
-
-    ! do  iG = 1,Nlf
-    !   do  jG = 1,Nlf
-    !     diel_epsilon(iG,jG) = Imat(iG,jG)
-    !     do  kG = 1,Nlf
-    !       diel_epsilon(iG,jG) = diel_epsilon(iG,jG) - Chi0(iG,kG)*V(kG,jG)
-    !     end do
-    !   end do
-    ! end do
-    
-    ! neven debug
-    ! write(38,*) real(diel_epsilon(1,1)),aimag(diel_epsilon(1,1))
     
     !  invertiranje matrice ''diel_epsilon = 1-Chi_0*V''
     
-
-
     call gjel(diel_epsilon,Nlf,Nlfd,Imat,Nlf,Nlfd)
     ! ! call sgetrf( Nlf,Nlfd, diel_epsilon, Nlf, ipiv, info_trf)
     ! ! call sgetri( Nlf, diel_epsilon, Nlf, ipiv, work, lwork, info_tri )
@@ -1166,45 +896,20 @@ end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
 
     call genChi(Nlf,diel_epsilon,Chi0,Chi)
 
-    ! Chi(1:Nlf,1:Nlf) = czero
-    ! do  iG = 1,Nlf
-    !   do  jG = 1,Nlf
-    !     do  kG = 1,Nlf
-    !       Chi(iG,jG) = Chi(iG,jG) + diel_epsilon(iG,kG)*Chi0(kG,jG)
-    !     end do
-    !   end do
-    ! end do
-    
+    !  SCREENED COULOMB INTERACTION W^T_GG'(Q,\omega)
     call genWT(io,Nlf,V,Chi,WT)
-    ! !  SCREENED COULOMB INTERACTION W^T_GG'(Q,\omega)
-    ! WT(io,1:Nlf,1:Nlf) = czero
-    ! do  iG = 1,Nlf
-    !   do  jG = 1,Nlf
-    !     ! WT(io,iG,jG) = czero
-    !     do  kG1 = 1,Nlf
-    !       do  kG2 = 1,Nlf
-    !         WT(io,iG,jG) = WT(io,iG,jG) + V(iG,kG1)*Chi(kG1,kG2)*V(kG2,jG)
-    !       end do
-    !     end do
-    !     WT(io,iG,jG) = V(iG,jG) + WT(io,iG,jG)
-    !   end do
-    ! end do
 
+
+    ! neven debug WT
     write(20008,*) oi*Hartree,aimag(WT(io,1,1))
     write(10008,*) oi*Hartree,real(WT(io,1,1))
 
     write(22308,*) oi*Hartree,aimag(WT(io,2,2))
     write(12308,*) oi*Hartree,real(WT(io,2,3))
-  ! kraj nove petlje po omega
+
   end do omega_loop_A
   
-  ! neven debug
-  ! check_WT : do io=1,no-1 
-  !   write(88,*) real(WT(io,1,1))
-  !   write(98,*) aimag(WT(io,1,1))
-  ! end do check_WT
 
-  ! neve debug openmp maknuto 
   
   ! ispis time ordered zasjenjene kulonske interakcije W_GG'^T(Q,\omega)
   dato = 'W_Qi'
@@ -1225,17 +930,15 @@ end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
     write(74,'(10F15.5) ')((WT(io,iG,jG),jG=1,Nlf),iG=1,Nlf)
   end do 
   close(74)
-  ! 44              FORMAT(10F15.5)
 
-  ! vito stari format  
-  do  io = 1,no-1
-    do  iG = 1,Nlf
-      do  jG = 1,Nlf
-        S0(io,iG,jG) = -(1.0/pi)*aimag(WT(io,iG,jG))
-      end do
-    end do
-  end do
-  ! S0(1:no-1,1:Nlf,1:Nlf) = -(1.0/pi)*aimag(WT(1:no-1,1:Nlf,1:Nlf))
+  ! do  io = 1,no-1
+  !   do  iG = 1,Nlf
+  !     do  jG = 1,Nlf
+  !       S0(io,iG,jG) = -(1.0/pi)*aimag(WT(io,iG,jG))
+  !     end do
+  !   end do
+  ! end do
+  S0(1:no-1,1:Nlf,1:Nlf) = -(1.0/pi)*aimag(WT(1:no-1,1:Nlf,1:Nlf))
   
 
 
@@ -1245,109 +948,13 @@ end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
   SKK = 0.0
   
   
-  ! new sum over omega
   omega_loop_B: do  io = 1,no-1
     ! print*,io
     oi = (io-1)*domega
+
     do  iG = 1,Nlf
       do  jG = 1,Nlf
-        W1 = 0.0
-        W2 = 0.0
-        ! static limit
-        if (io == 1) then
-
-          do  jo = 2,no
-            oj = (jo-1)*domega
-            fact = domega/oj
-            ! vito - promjena if if if u else if
-            if (jo == 2) then 
-              fact = 3.0/2.0
-            else if (jo == no) then
-              fact = 0.5*domega/oj
-            end if
-            W1 = W1 - fact*S0(jo,iG,jG)
-          end do
-          W2 = -W1
-
-        else if (io == 2) then
-
-          do  jo = 1,no
-            oj= (jo-1)*domega
-            !vito - promjena if if if u else if
-            if (jo /= io) then
-              fact = domega/(oi-oj)
-            else if (jo == 1) then
-              fact = 1.0
-            else if (jo == 2) then
-              fact = 0.0
-            else if (jo == 3) then
-              fact = -3.0/2.0
-            else if (jo == no) then
-              fact = 0.5*domega/(oi-oj)
-            end if             
-            W1 = W1 + fact*S0(jo,iG,jG)
-            fact = domega/(oi+oj)
-            
-            if (jo == 1 .or. jo == no) then
-              fact = 0.5*domega/(oi+oj)
-            end if
-            W2 = W2 + fact*S0(jo,iG,jG)
-          end do
-
-        else if (io == (no-1)) then
-
-          do  jo=1,no
-            oj= (jo-1)*domega
-            !vito - promjena if if if u else if
-            if (jo /= io) then 
-              fact = domega/(oi-oj)
-            else if (jo == 1) then
-              fact = 0.5*domega / (oi-oj)
-            else if (jo == (no-2)) then
-              fact = 3.0/2.0
-            else if (jo == (no-1)) then
-              fact = 0.0
-            else if (jo == no) then
-              fact = -1.0
-            end if
-            W1 = W1 + fact*S0(jo,iG,jG)
-            fact = domega / (oi+oj)
-            
-            if (jo == 1 .or. jo == no) then
-              fact = 0.5*domega / (oi+oj)
-            end if
-            W2 = W2 + fact*S0(jo,iG,jG)
-          
-          end do
-
-        else
-          
-          do  jo = 1,no
-            oj= (jo-1)*domega
-            !vito - promjena if if if u else if
-            if (jo /= io) then 
-              fact=domega/(oi-oj)
-            else if (jo == 1) then
-              fact = 0.5*domega/(oi-oj)
-            else if (jo == (io-1)) then
-              fact = 3.0/2.0
-            else if (jo == io) then
-              fact = 0.0
-            else if (jo == (io+1)) then
-              fact = -3.0/2.0
-            else if (jo == no) then
-              fact = 0.5*domega/(oi-oj)
-            end if
-            W1 = W1 + fact*S0(jo,iG,jG)
-            fact = domega/(oi+oj)
-            
-            if (jo == 1 .or. jo == no) then
-              fact = 0.5*domega/(oi+oj)
-            end if
-            W2 = W2 + fact*S0(jo,iG,jG)
-          
-          end do
-        end if
+        call genW1W2(io,no,domega,S0,W1,W2)
         
         ImW = -pi * S0(io,iG,jG)
         ! stvari vezane uz GW...
@@ -1416,9 +1023,6 @@ end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
   write(33+ik,*) '****************************************'
   write(33+ik,*) 'Kramers–Kronig relation relative error'
   write(33+ik,'(5X,f7.2,a2) ') 100.0*abs(KKS/SKK), '%'
-  ! 78               FORMAT(a23,f10.5)
-  ! 79               FORMAT(a16,f10.5)
-  ! 80               FORMAT(5X,f7.2,a2)
   write(33+ik,*) 'Usporedba Gamma i WT'
   write(33+ik,*) 'real[Gamma(o=0,1,1)]=',real(G0)
   write(33+ik,*) 'real[WT(o=0,1,1)]/2=', real(WT(1,1,1)-V(1,1))/2.0
@@ -1559,26 +1163,126 @@ contains
             ReChi0 = ReChi0 - fact*S0(jo,iG,jG)
           end do
         end if
-        ! print *, 'isnan (after loops):',isnan(ReChi0)
-        if (isnan(ReChi0)==.true.) then
-          print *, 'FATAL ERROR: ReChi0 is nan, exiting.'
-          STOP
-        end if
+
         ImChi0 = -pi*S0(io,iG,jG)
         Chi0(iG,jG) = cmplx(ReChi0,ImChi0)
 
-        ! neven debug 
-        ! print *,"Chi(",iG,jG,')=',Chi0(iG,jG)
-        
-        ! neven debug
-        ! if (io==1) then
-          ! write(18,*,action='write',position='append') ReChi0
-          ! write(28,*,action='write',position='append') ImChi0
-        ! end if
-        !         kraj po iG,jG
+        ! kraj po iG,jG
       end do
     end do
   end subroutine genChi0
+
+
+  subroutine genW1W2(io,no,domega,S0,W1,W2)
+    implicit none
+    integer,          intent(in)    :: io
+    integer,          intent(in)    :: no 
+    real(kind=dp),    intent(in)    :: domega
+    real(kind=dp),    intent(in)    :: S0(:,:,:)
+    real(kind=dp),    intent(inout) :: W1, W2   
+
+    integer        :: jo  
+    real(kind=dp)  :: fact 
+
+    W1 = 0.0
+    W2 = 0.0
+    ! static limit
+    if (io == 1) then
+      do  jo = 2,no
+        oj = (jo-1)*domega
+        fact = domega/oj
+        
+        if (jo == 2) then 
+          fact = 3.0/2.0
+        else if (jo == no) then
+          fact = 0.5*domega/oj
+        end if
+
+        W1 = W1 - fact*S0(jo,iG,jG)
+      end do
+
+      W2 = -W1
+
+    else if (io == 2) then
+      do  jo = 1,no
+        oj= (jo-1)*domega
+        
+        if (jo /= io) then
+          fact = domega/(oi-oj)
+        else if (jo == 1) then
+          fact = 1.0
+        else if (jo == 2) then
+          fact = 0.0
+        else if (jo == 3) then
+          fact = -3.0/2.0
+        else if (jo == no) then
+          fact = 0.5*domega/(oi-oj)
+        end if             
+        
+        W1 = W1 + fact*S0(jo,iG,jG)
+        fact = domega/(oi+oj)
+        
+        if (jo == 1 .or. jo == no) then
+          fact = 0.5*domega/(oi+oj)
+        end if
+
+        W2 = W2 + fact*S0(jo,iG,jG)
+      end do
+
+    else if (io == (no-1)) then
+      do  jo = 1,no
+        oj = (jo-1)*domega
+
+        if (jo /= io) then 
+          fact = domega/(oi-oj)
+        else if (jo == 1) then
+          fact = 0.5*domega / (oi-oj)
+        else if (jo == (no-2)) then
+          fact = 3.0/2.0
+        else if (jo == (no-1)) then
+          fact = 0.0
+        else if (jo == no) then
+          fact = -1.0
+        end if
+
+        W1 = W1 + fact*S0(jo,iG,jG)
+        fact = domega / (oi+oj)
+        
+        if (jo == 1 .or. jo == no) then
+          fact = 0.5*domega / (oi+oj)
+        end if
+
+        W2 = W2 + fact*S0(jo,iG,jG)
+      end do
+
+    else
+      do  jo = 1,no
+        oj = (jo-1)*domega
+        !vito - promjena if if if u else if
+        if (jo /= io) then 
+          fact = domega/(oi-oj)
+        else if (jo == 1) then
+          fact = 0.5*domega/(oi-oj)
+        else if (jo == (io-1)) then
+          fact = 3.0/2.0
+        else if (jo == io) then
+          fact = 0.0
+        else if (jo == (io+1)) then
+          fact = -3.0/2.0
+        else if (jo == no) then
+          fact = 0.5*domega/(oi-oj)
+        end if
+        W1 = W1 + fact*S0(jo,iG,jG)
+        fact = domega/(oi+oj)
+        
+        if (jo == 1 .or. jo == no) then
+          fact = 0.5*domega/(oi+oj)
+        end if
+
+        W2 = W2 + fact*S0(jo,iG,jG)
+      end do
+    end if
+  end subroutine genW1W2
 
   subroutine genV(eps,qx,qy,Nlf,parG,Glf,GlfV,V)
     implicit none
@@ -1686,5 +1390,56 @@ contains
       end do
     end do
   end subroutine genWT
+
+  subroutine loadG(KC,parG,G)
+    ! Reading the reciprocal vectors in crystal coordinates and transformation
+    ! in Cartesian cordinates.
+
+    real(kind=dp),  intent(in)    :: KC(3,3)
+    integer,        intent(inout) :: parG(:) ! paritet svakog valnog vektora G
+    real(kind=dp),  intent(inout) :: G(:,:)  ! polje valnih vektora G u recp. prost. za wfn.
+
+    integer :: ios1, ios2, lno
+    integer :: n, m
+    integer :: Gi(3)
+
+    open(20,FILE='gvectors.xml',status='old',err=200,iostat=ios1)
+    print *, 'File gvectors.xml oppened successfully.'
+    lno = 0
+
+    do  i=1,8
+      read(20,*,err=201,iostat=ios2,end=202) nis
+      lno = lno +1
+    end do
+
+    G(1:3,1:NG) = 0.0
+    do  iG = 1,NG
+      read(20,'(i10,i11,i11) ',err=201,iostat=ios2,end=202) Gi(1),Gi(2),Gi(3)
+      lno = lno +1
+      if (iG == 1) then
+        if (Gi(1) /= 0 .or. Gi(2) /= 0 .or. Gi(3) /= 0) then
+          print*,'*********************************'
+          print*,'WARRNING!, G vectors input is wrong!!'
+          print*,'G(1) is not (0,0,0)!!'
+          STOP
+        end if
+      end if
+    ! transformation in cart.coord (also!, after this all G components are in 2pi/a0 units)
+      do n = 1,3
+        do m = 1,3
+          G(n,iG) = G(n,iG)+KC(n,m)*real(Gi(m)) ! DBLE converted to real
+        end do
+      end do
+      parG(iG)=Gi(3)
+    end do
+  close(20)
+  
+  goto 5000
+  200 write(*,*) 'error cant read file id 20, ist=',ist10
+  201   write(*,*) '201 buffer1 read. Error reading line ',lno10+1,', iostat = ',ist11
+  202   write(*,*) '202 buffer1 read. Number of lines read = ',lno10
+  5000 continue 
+
+  end subroutine loadG
 
 end program surface_loss
