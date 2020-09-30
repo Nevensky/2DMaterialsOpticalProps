@@ -64,62 +64,62 @@ integer :: ist,ist2,ist4,ist5,ist6,ist7,ist8,ist9,ist10,ist11,ist12
 integer :: lno,lno2,lno9,lno10,lno11,lno12
 
 ! constants
-real(kind=sp),    parameter :: pi = 4.D0*ATAN(1.D0)
-real(kind=sp),    parameter :: eV = 1.602176487D-19
-real(kind=sp),    parameter :: Hartree = 2.0D0*13.6056923D0
-real(kind=sp),    parameter :: Planck = 6.626196D-34
-real(kind=sp),    parameter :: three = 3.0d0 
-complex(kind=sp), parameter :: rone  = cmplx(1.0,0.0)
-complex(kind=sp), parameter :: czero = cmplx(0.0,0.0)
-complex(kind=sp), parameter :: ione  = cmplx(0.0,1.0)
+real(kind=dp),    parameter :: pi = 4.D0*ATAN(1.D0)
+real(kind=dp),    parameter :: eV = 1.602176487D-19
+real(kind=dp),    parameter :: Hartree = 2.0D0*13.6056923D0
+real(kind=dp),    parameter :: Planck = 6.626196D-34
+real(kind=dp),    parameter :: three = 3.0d0 
+complex(kind=dp), parameter :: rone  = cmplx(1.0,0.0)
+complex(kind=dp), parameter :: czero = cmplx(0.0,0.0)
+complex(kind=dp), parameter :: ione  = cmplx(0.0,1.0)
 
 ! scalars
-real(kind=sp) :: kx,ky,kz
-real(kind=sp) :: KQx,KQy,KQz
-real(kind=sp) :: qgx,qgy,qgz
-real(kind=sp) :: omin,omax
-real(kind=sp) :: qx,qy,qz
-real(kind=sp) :: kmin
-real(kind=sp) :: domega
-real(kind=sp) :: o
-real(kind=sp) :: K11,K22,K33
-real(kind=sp) :: Lor ! lorentzian
-real(kind=sp) :: De 
-real(kind=sp) :: Gabs ! 
-real(kind=sp) :: kref ! trazi najmanju k-tocku sampliranu u MP meshu u kojem se moze izracunati ILS
-real(kind=sp) :: Eref 
-real(kind=sp) :: Gxx1,Gyy1,Gzz1
-real(kind=sp) :: Gxx2,Gyy2,Gzz2
-real(kind=sp) :: fact
-real(kind=sp) :: oi,oj
-real(kind=sp) :: ImChi0, ReChi0
-! real(kind=sp) :: q ! ne koristi se
-! real(kind=sp) :: qmax ! ne koristi se
-real(kind=sp) :: Nel ! Number of electrons(1BZ integration)
-real(kind=sp) :: absq
-real(kind=sp) :: error
-real(kind=sp) :: W1,W2
-real(kind=sp) :: ImW
-real(kind=sp) :: Wind
-real(kind=sp) :: W2KK
-real(kind=sp) :: KKS = 0.0
-real(kind=sp) :: SKK = 0.0
-real(kind=sp) :: WindKK
-real(kind=sp) :: krefM
-complex(kind=sp) :: G0
+real(kind=dp) :: kx,ky,kz
+real(kind=dp) :: KQx,KQy,KQz
+real(kind=dp) :: qgx,qgy,qgz
+real(kind=dp) :: omin,omax
+real(kind=dp) :: qx,qy,qz
+real(kind=dp) :: kmin
+real(kind=dp) :: domega
+real(kind=dp) :: o
+real(kind=dp) :: K11,K22,K33
+real(kind=dp) :: Lor ! lorentzian
+real(kind=dp) :: De 
+real(kind=dp) :: Gabs ! 
+real(kind=dp) :: kref ! trazi najmanju k-tocku sampliranu u MP meshu u kojem se moze izracunati ILS
+real(kind=dp) :: Eref 
+real(kind=dp) :: Gxx1,Gyy1,Gzz1
+real(kind=dp) :: Gxx2,Gyy2,Gzz2
+real(kind=dp) :: fact
+real(kind=dp) :: oi,oj
+real(kind=dp) :: ImChi0, ReChi0
+! real(kind=dp) :: q ! ne koristi se
+! real(kind=dp) :: qmax ! ne koristi se
+real(kind=dp) :: Nel ! Number of electrons(1BZ integration)
+real(kind=dp) :: absq
+real(kind=dp) :: error
+real(kind=dp) :: W1,W2
+real(kind=dp) :: ImW
+real(kind=dp) :: Wind
+real(kind=dp) :: W2KK
+real(kind=dp) :: KKS = 0.0
+real(kind=dp) :: SKK = 0.0
+real(kind=dp) :: WindKK
+real(kind=dp) :: krefM
+complex(kind=dp) :: G0
 
 
 ! parameters
-real(kind=sp) :: Gcar   ! unit cell norm.
-real(kind=sp) :: Efermi ! [eV] Fermi en. 
-real(kind=sp) :: a0     ! [a.u.]  unit cell parameter in parallel direction 
-real(kind=sp) :: c0     ! [a.u.]  unit cell parameter in perependicular direction 
-real(kind=sp) :: eps    ! 1.0D-4 threshold
-real(kind=sp) :: T      ! [eV] temperature 
-real(kind=sp) :: eta    ! damping i\eta
-real(kind=sp) :: Ecut   ! [Hartree] cutoff energy for crystal local field calculations , for Ecut=0 S matrix is a scalar ?
-real(kind=sp) :: Vcell  ! [a.u.^3] unit-cell volume 
-real(kind=sp) :: aBohr  ! [a.u.] unit cell parameter in perpendicular direction (z-separation between supercells)   
+real(kind=dp) :: Gcar   ! unit cell norm.
+real(kind=dp) :: Efermi ! [eV] Fermi en. 
+real(kind=dp) :: a0     ! [a.u.]  unit cell parameter in parallel direction 
+real(kind=dp) :: c0     ! [a.u.]  unit cell parameter in perependicular direction 
+real(kind=dp) :: eps    ! 1.0D-4 threshold
+real(kind=dp) :: T      ! [eV] temperature 
+real(kind=dp) :: eta    ! damping i\eta
+real(kind=dp) :: Ecut   ! [Hartree] cutoff energy for crystal local field calculations , for Ecut=0 S matrix is a scalar ?
+real(kind=dp) :: Vcell  ! [a.u.^3] unit-cell volume 
+real(kind=dp) :: aBohr  ! [a.u.] unit cell parameter in perpendicular direction (z-separation between supercells)   
 namelist /parameters/ Efermi, a0, c0, eps, T, eta, Ecut, Vcell, aBohr
 namelist /system/ lf, loss, jump, omin, omax
 
@@ -127,42 +127,42 @@ namelist /system/ lf, loss, jump, omin, omax
 integer,       dimension(3) :: Gi                           ! pomocna funkcija
 integer,       dimension(:),      allocatable :: Gfast      ! pomocna funkcija
 integer,       dimension(:),      allocatable :: parG       ! paritet svakog valnog vektora
-real(kind=sp), dimension(:),      allocatable :: factMatrix
+real(kind=dp), dimension(:),      allocatable :: factMatrix
 
 ! multidim arrays
-real(kind=sp), dimension(48,3,3)  :: R                      ! matr. simetrijskih op.
-real(kind=sp), dimension(48,3,3)  :: RI                     ! inverz od R
-real(kind=sp), dimension(3,3)     :: KC                     ! pomocna funkcija
-real(kind=sp), dimension(:,:),    allocatable    :: kI
-real(kind=sp), dimension(:,:),    allocatable    :: E       ! vl. vr. danog k-i i band-i
-real(kind=sp), dimension(:,:),    allocatable    :: k
-real(kind=sp), dimension(:,:),    allocatable    :: ktot    ! ukupno jedinstvenih k-tocaka u FBZ
-real(kind=sp), dimension(:,:),    allocatable    :: G       ! polje valnih vektora G u recp. prost. za wfn.
-real(kind=sp), dimension(:,:),    allocatable    :: V       ! matr. gole coulomb. int.
-real(kind=sp), dimension(:,:,:),  allocatable    :: S0      ! korelacijska matrica
-real(kind=sp), dimension(:,:,:),  allocatable    :: S0_partial ! pomocna var. za S0 redukciju
-real(kind=sp), dimension(:,:),    allocatable    :: Glf     ! local field effect polje valnih vekt. u rec. prost.
-real(kind=sp), dimension(:,:),    allocatable    :: GlfV    ! local field effect za nescreenanu (golu) int. V
+real(kind=dp), dimension(48,3,3)  :: R                      ! matr. simetrijskih op.
+real(kind=dp), dimension(48,3,3)  :: RI                     ! inverz od R
+real(kind=dp), dimension(3,3)     :: KC                     ! pomocna funkcija
+real(kind=dp), dimension(:,:),    allocatable    :: kI
+real(kind=dp), dimension(:,:),    allocatable    :: E       ! vl. vr. danog k-i i band-i
+real(kind=dp), dimension(:,:),    allocatable    :: k
+real(kind=dp), dimension(:,:),    allocatable    :: ktot    ! ukupno jedinstvenih k-tocaka u FBZ
+real(kind=dp), dimension(:,:),    allocatable    :: G       ! polje valnih vektora G u recp. prost. za wfn.
+real(kind=dp), dimension(:,:),    allocatable    :: V       ! matr. gole coulomb. int.
+real(kind=dp), dimension(:,:,:),  allocatable    :: S0      ! korelacijska matrica
+real(kind=dp), dimension(:,:,:),  allocatable    :: S0_partial ! pomocna var. za S0 redukciju
+real(kind=dp), dimension(:,:),    allocatable    :: Glf     ! local field effect polje valnih vekt. u rec. prost.
+real(kind=dp), dimension(:,:),    allocatable    :: GlfV    ! local field effect za nezasjenjenu (golu) interakciju V
 
 
 ! Nlfd dimenziju ne znamo a priori zapravo, trebalo bi staviti sve te matrice allocatable i 
 ! naknadno ih alocirati
 
-complex(kind=sp), dimension(:,:),   allocatable  :: Imat ! jedinicna matr.
-complex(kind=sp), dimension(:,:),   allocatable  :: diel_epsilon ! Epsilon (GG')  = I - V(GG')Chi0
-complex(kind=sp), dimension(:,:),   allocatable  :: Chi ! (eq. 2.88 nakon invertiranja) ;oprez bio je double precision
+complex(kind=dp), dimension(:,:),   allocatable  :: Imat ! jedinicna matr.
+complex(kind=dp), dimension(:,:),   allocatable  :: diel_epsilon ! Epsilon (GG')  = I - V(GG')Chi0
+complex(kind=dp), dimension(:,:),   allocatable  :: Chi ! (eq. 2.88 nakon invertiranja) ;oprez bio je double precision
 
-complex(kind=sp), dimension(:)    , allocatable  :: MnmK1K2 ! nabojni vrhovi
-complex(kind=sp), dimension(:,:)  , allocatable  :: Chi0 ! (eq. 2.89)
-complex(kind=sp), dimension(:,:,:), allocatable  :: WT ! time ordered RPA screened coulomb int. (eq. 2.93)
-complex(kind=sp), dimension(:,:)  , allocatable  :: Gammap ! omega>0 ,eq....(skripta 5) \sum_{q,m} \int \dd omega' S(\omega')/{(\omega-\omega'-e_{k+q,m} +i\eta}) za GW se koristi se za ovaj dio 
-complex(kind=sp), dimension(:,:)  , allocatable  :: Gammam ! omega<0, allocatable  
+complex(kind=dp), dimension(:)    , allocatable  :: MnmK1K2 ! nabojni vrhovi
+complex(kind=dp), dimension(:,:)  , allocatable  :: Chi0 ! (eq. 2.89)
+complex(kind=dp), dimension(:,:,:), allocatable  :: WT ! time ordered RPA screened coulomb int. (eq. 2.93)
+complex(kind=dp), dimension(:,:)  , allocatable  :: Gammap ! omega>0 ,eq....(skripta 5) \sum_{q,m} \int \dd omega' S(\omega')/{(\omega-\omega'-e_{k+q,m} +i\eta}) za GW se koristi se za ovaj dio 
+complex(kind=dp), dimension(:,:)  , allocatable  :: Gammam ! omega<0, allocatable  
 
 character (len=100) :: bandn,bandm,nis,pathk1,pathk2,dato, path
 character (len=35) :: tag,buffer
 
 
-complex(kind=sp), dimension(:), pointer :: C1,C2 ! Fourierovi koef. u razvoju wfn. iz QE 
+complex(kind=dp), dimension(:), pointer :: C1,C2 ! Fourierovi koef. u razvoju wfn. iz QE 
 
 
 ! OpenMP vars
@@ -209,7 +209,7 @@ allocate(V(Nlfd,Nlfd))             ! matr. gole coulomb. int.
 allocate(S0(no,Nlfd,Nlfd))         ! korelacijska matrica
 ! allocate(S0_partial(no,Nlfd,Nlfd))         ! korelacijska matrica
 allocate(Glf(3,Nlfd))              ! local field effect polje valnih vekt. u rec. prost.
-allocate(GlfV(3,Nlfd))             ! local field effect za nescreenanu (golu) int. V
+allocate(GlfV(3,Nlfd))             ! local field effect za nezasjenjenu (golu) interakciju V
 
 allocate(Imat(Nlfd,Nlfd))          ! jedinicna matr.
 allocate(diel_epsilon(Nlfd,Nlfd) ) ! Epsilon (GG')  = I - V(GG')Chi0
@@ -644,7 +644,6 @@ print *, 'DEBUG: entering parallel region'
 ! S0(1:no,1:Nlf,1:Nlf) = czero
 !$omp do ! reduction(-:S0)
 do ik=1,Ntot   ! k_loop_FBZ_2nd:  
-  print *,'ik:',ik,'S0:',S0(1:10,1,1)
   ! allocate(S0_partial(no,Nlf,Nlf))
   ! open(122,FILE='status')
   ! write(122,*) 'iq=',iq
@@ -856,7 +855,7 @@ do ik=1,Ntot   ! k_loop_FBZ_2nd:
       MnmK1K2(1:Nlf) = czero ! nabojni vrhovi
       do  iG = 1,Nlf ! suma po lokalnim fieldovima kojih ima Nlf
         ! MnmK1K2(iG) = czero
-        do  iG1 = 1,NGd ! vito zamjenjeno NGd sa NG1
+        do  iG1 = 1,NG1 ! vito zamjenjeno NGd sa NG1
           iGfast = iGfast + 1
           Gxx1 = G(1,iG1)
           Gyy1 = G(2,iG1)
@@ -991,108 +990,109 @@ end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
   
   ! new sum over omega
   omega_loop_A: do  io = 1,no-1
-    ! call genChi0(io,no,Nlf,S0,Chi0)
-    ! print*,io
-    oi = (io-1)*domega
-    do  iG = 1,Nlf
-      do  jG = 1,Nlf
-        ReChi0 = 0.0
-        ! static limit
-        if (io == 1) then
-          do  jo = 2,no
-            oj = (jo-1)*domega
-            fact = domega/oj
-            ! analticki trikovi za integriranje 
-            if (jo == 2) then 
-              fact = 3.0/2.0
-            else if (jo == no) then
-              fact = 0.5*domega/oj
-            end if
-            ReChi0 = ReChi0 + fact*S0(jo,iG,jG)
-          end do
-          ReChi0 = -2.0 * ReChi0
-        else if (io == 2) then
-          do  jo = 1,no
-            oj = (jo-1)*domega
-            if (jo /= io) then
-              fact = domega/(oi-oj)
-            else if (jo == 1) then
-              fact = 1.0
-            else if (jo == 2) then
-              fact = 0.0
-            else if (jo == 3) then
-              fact = -3.0/2.0
-            else if (jo == no) then
-              fact = 0.5*domega/(oi-oj)
-            end if
-            ReChi0 = ReChi0 + fact*S0(jo,iG,jG)
-            fact = domega/(oi+oj)
-            if (jo == 1 .or. jo == no) then
-              fact=0.5*domega/(oi+oj)
-            end if
-            ReChi0 = ReChi0 - fact*S0(jo,iG,jG)
-          end do
-        else if (io == (no-1)) then
-          do  jo = 1,no
-            oj = (jo-1)*domega
-            if (jo /= io) then
-              fact = domega/(oi-oj)
-            else if (jo == 1) then
-              fact = 0.5*domega/(oi-oj)
-            else if (jo == (no-2)) then
-              fact = 3.0/2.0
-            else if (jo == (no-1)) then
-              fact = 0.0
-            else if (jo == no) then
-              fact = -1.0
-            end if
-            ReChi0 = ReChi0 + fact*S0(jo,iG,jG)
-            fact = domega/(oi+oj)
-            if (jo == 1 .or. jo == no) then
-              fact = 0.5*domega/(oi+oj)
-            end if
-            ReChi0 = ReChi0 - fact*S0(jo,iG,jG)
-          end do
-        else
-          do  jo = 1,no
-            oj = (jo-1)*domega
-            if (jo /= io) then
-              fact = domega/(oi-oj)
-            else if (jo == 1) then
-              fact=0.5*domega/(oi-oj)
-            else if (jo == (io-1)) then
-              fact=3.0/2.0
-            else if (jo == io) then
-              fact=0.0
-            else if (jo == (io+1)) then
-              fact=-3.0/2.0
-            else if (jo == no) then
-              fact = 0.5*domega/(oi-oj)
-            end if
-            ReChi0 = ReChi0 + fact*S0(jo,iG,jG)
-            fact = domega/(oi+oj)
-            if (jo == 1 .or. jo == no) then
-              fact = 0.5*domega/(oi+oj)
-            end if
-            ReChi0 = ReChi0 - fact*S0(jo,iG,jG)
-          end do
-        end if
+    call genChi0(io,no,Nlf,domega,S0,Chi0)
 
-        ImChi0 = -pi*S0(io,iG,jG)
-        Chi0(iG,jG) = cmplx(ReChi0,ImChi0)
-        ! 
-        ! neven debug 
-        ! print *,"Chi(",iG,jG,')=',Chi0(iG,jG)
-        ! 
-        ! neven debug
-        ! if (io==1) then
-          ! write(18,*,action='write',position='append') ReChi0
-          ! write(28,*,action='write',position='append') ImChi0
-        ! end if
+    oi = (io-1)*domega ! koristi se u ispisu WT(io,1,1)
 
-      ! kraj po iG,jG
-      end do
-    end do
+    ! do  iG = 1,Nlf
+    !   do  jG = 1,Nlf
+    !     ReChi0 = 0.0
+    !     ! static limit
+    !     if (io == 1) then
+    !       do  jo = 2,no
+    !         oj = (jo-1)*domega
+    !         fact = domega/oj
+    !         ! analticki trikovi za integriranje 
+    !         if (jo == 2) then 
+    !           fact = 3.0/2.0
+    !         else if (jo == no) then
+    !           fact = 0.5*domega/oj
+    !         end if
+    !         ReChi0 = ReChi0 + fact*S0(jo,iG,jG)
+    !       end do
+    !       ReChi0 = -2.0 * ReChi0
+    !     else if (io == 2) then
+    !       do  jo = 1,no
+    !         oj = (jo-1)*domega
+    !         if (jo /= io) then
+    !           fact = domega/(oi-oj)
+    !         else if (jo == 1) then
+    !           fact = 1.0
+    !         else if (jo == 2) then
+    !           fact = 0.0
+    !         else if (jo == 3) then
+    !           fact = -3.0/2.0
+    !         else if (jo == no) then
+    !           fact = 0.5*domega/(oi-oj)
+    !         end if
+    !         ReChi0 = ReChi0 + fact*S0(jo,iG,jG)
+    !         fact = domega/(oi+oj)
+    !         if (jo == 1 .or. jo == no) then
+    !           fact=0.5*domega/(oi+oj)
+    !         end if
+    !         ReChi0 = ReChi0 - fact*S0(jo,iG,jG)
+    !       end do
+    !     else if (io == (no-1)) then
+    !       do  jo = 1,no
+    !         oj = (jo-1)*domega
+    !         if (jo /= io) then
+    !           fact = domega/(oi-oj)
+    !         else if (jo == 1) then
+    !           fact = 0.5*domega/(oi-oj)
+    !         else if (jo == (no-2)) then
+    !           fact = 3.0/2.0
+    !         else if (jo == (no-1)) then
+    !           fact = 0.0
+    !         else if (jo == no) then
+    !           fact = -1.0
+    !         end if
+    !         ReChi0 = ReChi0 + fact*S0(jo,iG,jG)
+    !         fact = domega/(oi+oj)
+    !         if (jo == 1 .or. jo == no) then
+    !           fact = 0.5*domega/(oi+oj)
+    !         end if
+    !         ReChi0 = ReChi0 - fact*S0(jo,iG,jG)
+    !       end do
+    !     else
+    !       do  jo = 1,no
+    !         oj = (jo-1)*domega
+    !         if (jo /= io) then
+    !           fact = domega/(oi-oj)
+    !         else if (jo == 1) then
+    !           fact=0.5*domega/(oi-oj)
+    !         else if (jo == (io-1)) then
+    !           fact=3.0/2.0
+    !         else if (jo == io) then
+    !           fact=0.0
+    !         else if (jo == (io+1)) then
+    !           fact=-3.0/2.0
+    !         else if (jo == no) then
+    !           fact = 0.5*domega/(oi-oj)
+    !         end if
+    !         ReChi0 = ReChi0 + fact*S0(jo,iG,jG)
+    !         fact = domega/(oi+oj)
+    !         if (jo == 1 .or. jo == no) then
+    !           fact = 0.5*domega/(oi+oj)
+    !         end if
+    !         ReChi0 = ReChi0 - fact*S0(jo,iG,jG)
+    !       end do
+    !     end if
+
+    !     ImChi0 = -pi*S0(io,iG,jG)
+    !     Chi0(iG,jG) = cmplx(ReChi0,ImChi0)
+    !     ! 
+    !     ! neven debug 
+    !     ! print *,"Chi(",iG,jG,')=',Chi0(iG,jG)
+    !     ! 
+    !     ! neven debug
+    !     ! if (io==1) then
+    !       ! write(18,*,action='write',position='append') ReChi0
+    !       ! write(28,*,action='write',position='append') ImChi0
+    !     ! end if
+
+    !   ! kraj po iG,jG
+    !   end do
+    ! end do
 
 
     ! neven debug 
@@ -1103,28 +1103,29 @@ end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
     
     
     ! MATRIX V(G,G')
-    
-    do  iG = 1,Nlf
-      Gabs = sqrt( (qx+GlfV(1,iG))**2 + (qy+GlfV(2,iG))**2 )
-      if (Gabs == 0.0) then 
-        Gabs = eps
-      end if
-      do  jG = 1,Nlf
-        V(iG,jG) = 0.0
-        if (Glf(1,jG) == Glf(1,iG) ) then
-          if (Glf(2,jG) == Glf(2,iG) ) then
-            V(iG,jG) = 4.0*pi*(1.0-exp(-Gabs*c0)) / (Gabs*c0)
-            V(iG,jG) = V(iG,jG)*( Gabs**2 - GlfV(3,iG)*GlfV(3,jG) )
-            V(iG,jG) = V(iG,jG)/( Gabs**2 + GlfV(3,iG)**2 )
-            V(iG,jG) = V(iG,jG)/( Gabs**2 + GlfV(3,jG)**2 )
-            V(iG,jG) = -real(parG(iG)) * real(parG(jG)) * V(iG,jG) ! dble converted to real
-            if (Glf(3,jG) == Glf(3,iG)) then
-              V(iG,jG) = 4.0*pi / ( Gabs**2 + GlfV(3,iG)**2 ) + V(iG,jG)
-            end if
-          end if
-        end if
-      end do
-    end do
+    call genV(eps,qx,qy,Nlf,parG,Glf,GlfV,V)
+
+    ! do  iG = 1,Nlf
+    !   Gabs = sqrt( (qx+GlfV(1,iG))**2 + (qy+GlfV(2,iG))**2 )
+    !   if (Gabs == 0.0) then 
+    !     Gabs = eps
+    !   end if
+    !   do  jG = 1,Nlf
+    !     V(iG,jG) = 0.0
+    !     if (Glf(1,jG) == Glf(1,iG) ) then
+    !       if (Glf(2,jG) == Glf(2,iG) ) then
+    !         V(iG,jG) = 4.0*pi*(1.0-exp(-Gabs*c0)) / (Gabs*c0)
+    !         V(iG,jG) = V(iG,jG)*( Gabs**2 - GlfV(3,iG)*GlfV(3,jG) )
+    !         V(iG,jG) = V(iG,jG)/( Gabs**2 + GlfV(3,iG)**2 )
+    !         V(iG,jG) = V(iG,jG)/( Gabs**2 + GlfV(3,jG)**2 )
+    !         V(iG,jG) = -real(parG(iG)) * real(parG(jG)) * V(iG,jG) ! dble converted to real
+    !         if (Glf(3,jG) == Glf(3,iG)) then
+    !           V(iG,jG) = 4.0*pi / ( Gabs**2 + GlfV(3,iG)**2 ) + V(iG,jG)
+    !         end if
+    !       end if
+    !     end if
+    !   end do
+    ! end do
 
     
 
@@ -1135,55 +1136,65 @@ end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
     !   Imat(iG,iG) = rone
     ! end do
     
+    call genDielectricEpsilon(Nlf,Chi0,V,diel_epsilon)
     
-    Imat(1:Nlf,1:Nlf) = czero
-    do  iG = 1,Nlf
-      Imat(iG,iG) = rone
-    end do
+    ! Imat(1:Nlf,1:Nlf) = czero
+    ! do  iG = 1,Nlf
+    !   Imat(iG,iG) = rone
+    ! end do
 
-    do  iG = 1,Nlf
-      do  jG = 1,Nlf
-        diel_epsilon(iG,jG) = Imat(iG,jG)
-        do  kG = 1,Nlf
-          diel_epsilon(iG,jG) = diel_epsilon(iG,jG) - Chi0(iG,kG)*V(kG,jG)
-        end do
-      end do
-    end do
+    ! do  iG = 1,Nlf
+    !   do  jG = 1,Nlf
+    !     diel_epsilon(iG,jG) = Imat(iG,jG)
+    !     do  kG = 1,Nlf
+    !       diel_epsilon(iG,jG) = diel_epsilon(iG,jG) - Chi0(iG,kG)*V(kG,jG)
+    !     end do
+    !   end do
+    ! end do
     
     ! neven debug
     ! write(38,*) real(diel_epsilon(1,1)),aimag(diel_epsilon(1,1))
     
     !  invertiranje matrice ''diel_epsilon = 1-Chi_0*V''
     
-    ! call gjel(diel_epsilon,Nlf,Nlfd,Imat,Nlf,Nlfd)
-    call sgetrf( Nlf,Nlfd, diel_epsilon, Nlf, ipiv, info_trf)
-    call sgetri( Nlf, diel_epsilon, Nlf, ipiv, work, lwork, info_tri )
-    Chi(1:Nlf,1:Nlf) = czero
-    do  iG = 1,Nlf
-      do  jG = 1,Nlf
-        do  kG = 1,Nlf
-          Chi(iG,jG) = Chi(iG,jG) + diel_epsilon(iG,kG)*Chi0(kG,jG)
-        end do
-      end do
-    end do
+
+
+    call gjel(diel_epsilon,Nlf,Nlfd,Imat,Nlf,Nlfd)
+    ! ! call sgetrf( Nlf,Nlfd, diel_epsilon, Nlf, ipiv, info_trf)
+    ! ! call sgetri( Nlf, diel_epsilon, Nlf, ipiv, work, lwork, info_tri )
+
+
+    call genChi(Nlf,diel_epsilon,Chi0,Chi)
+
+    ! Chi(1:Nlf,1:Nlf) = czero
+    ! do  iG = 1,Nlf
+    !   do  jG = 1,Nlf
+    !     do  kG = 1,Nlf
+    !       Chi(iG,jG) = Chi(iG,jG) + diel_epsilon(iG,kG)*Chi0(kG,jG)
+    !     end do
+    !   end do
+    ! end do
     
-    
-    !  SCREENED COULOMB INTERACTION W^T_GG'(Q,\omega)
-    WT(io,1:Nlf,1:Nlf) = czero
-    do  iG = 1,Nlf
-      do  jG = 1,Nlf
-        ! WT(io,iG,jG) = czero
-        do  kG1 = 1,Nlf
-          do  kG2 = 1,Nlf
-            WT(io,iG,jG) = WT(io,iG,jG) + V(iG,kG1)*Chi(kG1,kG2)*V(kG2,jG)
-          end do
-        end do
-        WT(io,iG,jG) = V(iG,jG) + WT(io,iG,jG)
-      end do
-    end do
+    call genWT(io,Nlf,V,Chi,WT)
+    ! !  SCREENED COULOMB INTERACTION W^T_GG'(Q,\omega)
+    ! WT(io,1:Nlf,1:Nlf) = czero
+    ! do  iG = 1,Nlf
+    !   do  jG = 1,Nlf
+    !     ! WT(io,iG,jG) = czero
+    !     do  kG1 = 1,Nlf
+    !       do  kG2 = 1,Nlf
+    !         WT(io,iG,jG) = WT(io,iG,jG) + V(iG,kG1)*Chi(kG1,kG2)*V(kG2,jG)
+    !       end do
+    !     end do
+    !     WT(io,iG,jG) = V(iG,jG) + WT(io,iG,jG)
+    !   end do
+    ! end do
 
     write(20008,*) oi*Hartree,aimag(WT(io,1,1))
     write(10008,*) oi*Hartree,real(WT(io,1,1))
+
+    write(22308,*) oi*Hartree,aimag(WT(io,2,2))
+    write(12308,*) oi*Hartree,real(WT(io,2,3))
   ! kraj nove petlje po omega
   end do omega_loop_A
   
@@ -1450,19 +1461,21 @@ deallocate(Gammam)
 
 
 contains
-  subroutine genChi0(io,no,Nlf,S0,Chi0)
+  subroutine genChi0(io,no,Nlf,domega,S0,Chi0)
     implicit none
     integer,          intent(in)    :: io
     integer,          intent(in)    :: no 
     integer,          intent(in)    :: Nlf
-    real(kind=sp),    intent(in)    :: S0(:,:,:)
-    complex(kind=sp), intent(inout) :: Chi0(:,:)
+    real(kind=dp),    intent(in)    :: domega
+    real(kind=dp),    intent(in)    :: S0(:,:,:)
+    complex(kind=dp), intent(out)   :: Chi0(:,:)
     
     integer       :: jo, iG, jG
-    real(kind=sp) :: fact, domega, oi, oj
-    real(kind=sp) :: ReChi0, ImChi0
+    real(kind=dp) :: oi, oj, fact
+    real(kind=dp) :: ReChi0, ImChi0
    
     oi = (io-1)*domega
+    Chi0(1:Nlf,1:Nlf) = cmplx(0.0,0.0)
     do  iG = 1,Nlf
       do  jG = 1,Nlf
         ReChi0 = 0.0
@@ -1546,9 +1559,14 @@ contains
             ReChi0 = ReChi0 - fact*S0(jo,iG,jG)
           end do
         end if
+        ! print *, 'isnan (after loops):',isnan(ReChi0)
+        if (isnan(ReChi0)==.true.) then
+          print *, 'FATAL ERROR: ReChi0 is nan, exiting.'
+          STOP
+        end if
         ImChi0 = -pi*S0(io,iG,jG)
         Chi0(iG,jG) = cmplx(ReChi0,ImChi0)
-        
+
         ! neven debug 
         ! print *,"Chi(",iG,jG,')=',Chi0(iG,jG)
         
@@ -1561,5 +1579,112 @@ contains
       end do
     end do
   end subroutine genChi0
+
+  subroutine genV(eps,qx,qy,Nlf,parG,Glf,GlfV,V)
+    implicit none
+    integer,        intent(in)    :: Nlf
+    integer,        intent(in)    :: parG(:)
+    real(kind=dp),  intent(in)    :: eps
+    real(kind=dp),  intent(in)    :: qx,qy
+    real(kind=dp),  intent(in)    :: Glf(:,:)
+    real(kind=dp),  intent(in)    :: GlfV(:,:)
+    real(kind=dp),  intent(inout) :: V(:,:)
+
+
+    integer :: iG, jG
+    real(kind=dp) :: Gabs
+
+    do  iG = 1,Nlf
+      Gabs = sqrt( (qx+GlfV(1,iG))**2 + (qy+GlfV(2,iG))**2 )
+      if (Gabs == 0.0) then 
+        Gabs = eps
+      end if
+      do  jG = 1,Nlf
+        V(iG,jG) = 0.0
+        if (Glf(1,jG) == Glf(1,iG) ) then
+          if (Glf(2,jG) == Glf(2,iG) ) then
+            V(iG,jG) = 4.0*pi*(1.0-exp(-Gabs*c0)) / (Gabs*c0)
+            V(iG,jG) = V(iG,jG)*( Gabs**2 - GlfV(3,iG)*GlfV(3,jG) )
+            V(iG,jG) = V(iG,jG)/( Gabs**2 + GlfV(3,iG)**2 )
+            V(iG,jG) = V(iG,jG)/( Gabs**2 + GlfV(3,jG)**2 )
+            V(iG,jG) = -real(parG(iG)) * real(parG(jG)) * V(iG,jG) ! dble converted to real
+            if (Glf(3,jG) == Glf(3,iG)) then
+              V(iG,jG) = 4.0*pi / ( Gabs**2 + GlfV(3,iG)**2 ) + V(iG,jG)
+            end if
+          end if
+        end if
+      end do
+    end do
+  end subroutine genV
+
+  subroutine genDielectricEpsilon(Nlf,Chi0,V,diel_epsilon)
+    ! Epsilon (GG')  = I - V(GG')Chi0
+    implicit none
+    integer,          intent(in)    :: Nlf
+    real(kind=dp),    intent(in)    :: V(:,:)    
+    complex(kind=dp), intent(in)    :: Chi0(:,:)
+    complex(kind=dp), intent(inout) :: diel_epsilon(:,:)
+
+    integer :: iG, jG, kG
+    complex(kind=dp) :: Imat(Nlf,Nlf)
+
+    Imat(1:Nlf,1:Nlf) = cmplx(0.0,0.0)
+    do  iG = 1,Nlf
+      Imat(iG,iG) = cmplx(1.0,0.0)
+    end do
+
+    do  iG = 1,Nlf
+      do  jG = 1,Nlf
+        diel_epsilon(iG,jG) = Imat(iG,jG)
+        do  kG = 1,Nlf
+          diel_epsilon(iG,jG) = diel_epsilon(iG,jG) - Chi0(iG,kG)*V(kG,jG)
+        end do
+      end do
+    end do
+  end subroutine genDielectricEpsilon
+
+  subroutine genChi(Nlf,diel_epsilon,Chi0,Chi)
+    implicit none
+    integer,          intent(in)     :: Nlf
+    complex(kind=dp), intent(in)     :: diel_epsilon(:,:)
+    complex(kind=dp), intent(in)     :: Chi0(:,:)
+    complex(kind=dp), intent(inout)  :: Chi(:,:)
+
+    integer :: iG, jG, kG
+
+    Chi(1:Nlf,1:Nlf) = cmplx(0.0,0.0)
+    do  iG = 1,Nlf
+      do  jG = 1,Nlf
+        do  kG = 1,Nlf
+          Chi(iG,jG) = Chi(iG,jG) + diel_epsilon(iG,kG)*Chi0(kG,jG)
+        end do
+      end do
+    end do
+  end subroutine genChi
+
+  subroutine genWT(io,Nlf,V,Chi,WT)
+    !  SCREENED COULOMB INTERACTION W^T_GG'(Q,\omega)
+    implicit none
+    integer,          intent(in)    :: io
+    integer,          intent(in)    :: Nlf
+    real(kind=dp),    intent(in)    :: V(:,:)
+    complex(kind=dp), intent(in)    :: Chi(:,:)
+    complex(kind=dp), intent(inout) :: WT(:,:,:)
+
+    integer :: iG, jG, kG1, kG2
+
+    WT(io,1:Nlf,1:Nlf) = cmplx(0.0,0.0)
+    do  iG = 1,Nlf
+      do  jG = 1,Nlf
+        ! WT(io,iG,jG) = czero
+        do  kG1 = 1,Nlf
+          do  kG2 = 1,Nlf
+            WT(io,iG,jG) = WT(io,iG,jG) + V(iG,kG1)*Chi(kG1,kG2)*V(kG2,jG)
+          end do
+        end do
+        WT(io,iG,jG) = V(iG,jG) + WT(io,iG,jG)
+      end do
+    end do
+  end subroutine genWT
 
 end program surface_loss
