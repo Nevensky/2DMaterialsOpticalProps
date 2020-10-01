@@ -300,46 +300,8 @@ call loadG(KC,parG,G)
 print *,"status: G vectors loaded."
 
 
-! Reciprocal vectors for crystal local field effects calculations in array ''Glf(3,Nlf) ''
-
-Nlf = 0
-if (lf == 1) then
-  do iG = 1,NG
-    ! local field efekti samo u okomitom smjeru
-    if (G(1,iG) == 0.0 .and. G(2,iG) == 0.0) then
-      Eref = Gcar**2 * G(3,iG)**2 / 2.0
-      if (Eref <= Ecut) then
-        Nlf = Nlf + 1
-        Glf(1:2,Nlf) = 0.0
-        Glf(3,Nlf) = G(3,iG)
-        if ( (parG(iG)/2)*2 == parG(iG) ) then
-          parG(Nlf) = 1
-        else
-          parG(Nlf) = -1
-        end if
-      end if
-    end if
-  end do
-else
-  do  iG = 1,NG
-    ! local field efekti samo u svim smjerovima
-    Eref = Gcar**2 *( G(1,iG)**2 + G(2,iG)**2 + G(3,iG)**2 ) / 2.0
-    if (Eref <= Ecut) then
-      Nlf = Nlf+1
-      Glf(:,Nlf) = G(1:3,iG)
-      if ( (parG(iG)/2)*2 == parG(iG) ) then
-        parG(Nlf) = 1
-      else
-        parG(Nlf) = -1
-      end if
-    end if
-  end do
-end if
-if (Nlf > Nlfd) then
-  print*,'Nlf is bigger than Nlfd'
-  STOP
-end if
-
+! Generate Reciprocal vectors for crystal local field effects calculations in array Glf(3,Nlf)
+call genGlfandParity(lf,Ecut,NG,Gcar,G,Nlf,Nlfd,parG,Glf)
 
 ! MKL matrix inversion vars
 allocate(ipiv(MAX(1,MIN(Nlf, Nlf))))
@@ -360,8 +322,7 @@ do  iq = 42,42 ! 42,61
 ! searching min. q=(qx,qy,qz) in Gamma - M direction
   kmin = 1.0
   Ntot_loop: do  i = 1,Ntot ! loop over different k-points in FBZ
-    ! kref = sqrt(sum(ktot(1:3,i)**2))
-    kref=sqrt(ktot(1,i)*ktot(1,i)+ktot(2,i)*ktot(2,i)+ktot(3,i)*ktot(3,i)) 
+    kref = sqrt(sum(ktot(1:3,i)**2))
     ! neven debug
     print *,'i=',i,' kref: ',kref
     if (kref == 0.0) then
@@ -381,40 +342,15 @@ do  iq = 42,42 ! 42,61
   qz = (iq-1) * ktot(3,ikmin)
   absq = sqrt(qx**2 + qy**2 + qz**2)
   
-!             Info file
-  
-  open(55,FILE='Info')
-  write(55,*) '***************General***********************'
-  write(55,*) ''
-  write(55,*) 'Number of point symmetry operation is',Nsymm
-  write(55,'(a25,3f10.4,a5) ') 'Wave vector (qx,qy,qz)=(',qx*Gcar,qy*Gcar, qz*Gcar,') a.u.'
-  write(55,'(a25,f8.4,a5) ') '|(qx,qy,qz)|=',absq*Gcar,'a.u.'
-  if (lf == 1)write(55,*) 'Local field effcts in z-dir'
-  if (lf == 3)write(55,*) 'Local field in all xyz-dir'
-  write(55,*) 'Number of local field vectors is',Nlf
-  write(55,*) 'Number of different K vectors in 1.B.Z. is',Ntot
-  write(55,*) 'Number of K vectors in I.B.Z. is',NkI
-  write(55,*) 'Number of bands is               ',Nband
-  write(55,'(a25,f8.4,a5) ') 'Eta damping is ',eta*Hartree*1000.0,'meV'
-  write(55,'(a25,f8.4,a5) ') 'Temperature is  ',T*Hartree*1000.0,'meV'
-  write(55,*) ''
-  write(55,*) '************* Checking 1BZ integration*******'
-  write(55,*) ''
-  write(55,'(a40,f7.4) ') 'Number of electrons(1BZ integration)=',Nel
-  write(55,*) 'Number of electrons(unit cell)=',NelQE
-  error = abs((NelQE-Nel)/NelQE)
-  write(55,'(a25,f8.4,a5) ') 'Relative error=',error*100.0,'%'
-  if (error > 0.05) then
-    write(55,*) 'WARRNING!!-1BZ INTEGRATION IS BAD!.'
-  end if
-  close(55)
-  
+  ! Info file
+  call writeInfo(qx, qy, qz, Gcar,Nsymm,Nlf, Ntot, NkI, Nband, eta, T, Nel, NelQE )
 
+  ! intialize correlation matrix
   S0(1:no,1:Nlf,1:Nlf) = cmplx(0.0,0.0)
   
   
   
-!              1.B.Z  LOOP STARTS HERE !!!!
+! 1.B.Z  LOOP STARTS HERE !!!!
 
 print *, 'DEBUG: entering parallel region'
 !$omp parallel shared(S0,savedir,iq,kI,ktot,RI,eps,E,G,NkI,Nsymm,NG,Ntot,Nband,NGd,Nlf,Nlfd) private(S0_partial,jump,MnmK1K2,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,attr,K1,K2,n,m,pathk1,pathk2,bandn,bandm,C1,C2,NG1,NG2,io,De,o,domega,Lor,Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast,iG1,iG2 ) num_threads(Nthreads) !  default(private) 
@@ -1014,6 +950,60 @@ contains
     
   end subroutine checkFBZintegration
 
+subroutine genGlfandParity(lf,Ecut,NG,Gcar,G,Nlf,Nlfd,parG,Glf)
+  ! Generate Reciprocal vectors for crystal local field 
+  ! effects calculations in array Glf(3,Nlf)
+
+  integer,          intent(in)  :: lf, NG, Nlfd
+  real(kind=dp),    intent(in)  :: Ecut
+  real(kind=dp),    intent(in)  :: Gcar
+  real(kind=dp),    intent(in)  :: G(:,:)
+  integer,          intent(out) :: Nlf
+  integer,          intent(out) :: parG(:)
+  real(kind=dp),    intent(out) :: Glf(:,:)
+
+  integer       :: iG
+  real(kind=dp) :: Eref
+
+  Nlf = 0
+  if (lf == 1) then
+    do iG = 1, NG
+      ! local field efekti samo u okomitom smjeru
+      if (G(1,iG) == 0.0 .and. G(2,iG) == 0.0) then
+        Eref = Gcar**2 * G(3,iG)**2 / 2.0
+        if (Eref <= Ecut) then
+          Nlf = Nlf + 1
+          Glf(1:2,Nlf) = 0.0
+          Glf(3,Nlf) = G(3,iG)
+          if ( (parG(iG)/2)*2 == parG(iG) ) then
+            parG(Nlf) = 1
+          else
+            parG(Nlf) = -1
+          end if
+        end if
+      end if
+    end do
+  else
+    do  iG = 1, NG
+      ! local field efekti samo u svim smjerovima
+      Eref = Gcar**2*sum(G(1:3,iG)**2) / 2.0
+      if (Eref <= Ecut) then
+        Nlf = Nlf+1
+        Glf(:,Nlf) = G(1:3,iG)
+        if ( (parG(iG)/2)*2 == parG(iG) ) then
+          parG(Nlf) = 1
+        else
+          parG(Nlf) = -1
+        end if
+      end if
+    end do
+  end if
+  if (Nlf > Nlfd) then
+    print*,'Nlf is bigger than Nlfd'
+    STOP
+  end if
+end subroutine genGlfandParity
+
   subroutine genChi0(io,no,Nlf,domega,S0,Chi0)
     implicit none
     integer,          intent(in)    :: io
@@ -1128,7 +1118,7 @@ contains
     integer,          intent(in)    :: no 
     real(kind=dp),    intent(in)    :: domega
     real(kind=dp),    intent(in)    :: S0(:,:,:)
-    real(kind=dp),    intent(inout) :: W1, W2   
+    real(kind=dp),    intent(out) :: W1, W2   
 
     integer        :: jo  
     real(kind=dp)  :: fact 
@@ -1453,5 +1443,45 @@ contains
 
   end subroutine loadkIandE
 
+  subroutine writeInfo(qx, qy, qz, Gcar,Nsymm,Nlf, Ntot, NkI, Nband, eta, T, Nel, NelQE )
+
+    integer       , intent(in) :: NelQE, Nsymm, Nlf, Ntot, NkI, Nband
+    real(kind=dp) , intent(in) :: qx,qy,qz
+    real(kind=dp) , intent(in) :: eta, T, Gcar
+    real(kind=dp) , intent(in) :: Nel
+
+
+    real(kind=dp) :: absq, error
+    real(kind=dp),    parameter :: Hartree = 2.0D0*13.6056923D0
+
+    absq = sqrt(qx**2+qy**2+qz**2)
+
+    open(55,FILE='Info')
+    write(55,*) '***************General***********************'
+    write(55,*) ''
+    write(55,*) 'Number of point symmetry operation is',Nsymm
+    write(55,'(a25,3f10.4,a5) ') 'Wave vector (qx,qy,qz)=(',qx*Gcar,qy*Gcar, qz*Gcar,') a.u.'
+    write(55,'(a25,f8.4,a5) ') '|(qx,qy,qz)|=',absq*Gcar,'a.u.'
+    if (lf == 1)write(55,*) 'Local field effcts in z-dir'
+    if (lf == 3)write(55,*) 'Local field in all xyz-dir'
+    write(55,*) 'Number of local field vectors is',Nlf
+    write(55,*) 'Number of different K vectors in 1.B.Z. is',Ntot
+    write(55,*) 'Number of K vectors in I.B.Z. is',  NkI
+    write(55,*) 'Number of bands is               ', Nband
+    write(55,'(a25,f8.4,a5) ') 'Eta damping is ',    eta*Hartree*1000.0,'meV'
+    write(55,'(a25,f8.4,a5) ') 'Temperature is  ',   T*Hartree*1000.0,'meV'
+    write(55,*) ''
+    write(55,*) '************* Checking 1BZ integration*******'
+    write(55,*) ''
+    write(55,'(a40,f7.4) ') 'Number of electrons(1BZ integration)=',Nel
+    write(55,*) 'Number of electrons(unit cell)=',NelQE
+    error = abs((NelQE-Nel)/NelQE)
+    write(55,'(a25,f8.4,a5) ') 'Relative error=',error*100.0,'%'
+    if (error > 0.05) then
+      write(55,*) 'WARRNING!!-1BZ INTEGRATION IS BAD!.'
+      STOP
+    end if
+    close(55)
+  end subroutine writeInfo
 
 end program surface_loss
