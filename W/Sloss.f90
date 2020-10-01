@@ -136,8 +136,8 @@ real(kind=dp), dimension(48,3,3)  :: RI                     ! inverz od R
 real(kind=dp), dimension(3,3)     :: KC                     ! pomocna funkcija
 real(kind=dp), dimension(:,:),    allocatable    :: kI
 real(kind=dp), dimension(:,:),    allocatable    :: E       ! vl. vr. danog k-i i band-i
-real(kind=dp), dimension(:,:),    allocatable    :: k
-real(kind=dp), dimension(:,:),    allocatable    :: ktot    ! ukupno jedinstvenih k-tocaka u FBZ
+! real(kind=dp), dimension(:,:),    allocatable    :: k
+real(kind=dp), dimension(:,:),    allocatable    :: ktot    ! polje jedinstvenih k-tocaka u FBZ
 real(kind=dp), dimension(:,:),    allocatable    :: G       ! polje valnih vektora G u recp. prost. za wfn.
 real(kind=dp), dimension(:,:),    allocatable    :: V       ! matr. gole coulomb. int.
 real(kind=dp), dimension(:,:,:),  allocatable    :: S0      ! korelacijska matrica
@@ -203,8 +203,8 @@ allocate(MnmK1K2(Nlfd))            ! nabojni vrhovi
 ! multidim arrays
 allocate(kI(3,NkI))
 allocate(E(NkI,Nband))       ! vl. vr. danog k-i i band-i
-allocate(k(3,Nk))
-allocate(ktot(3,NK))               ! ukupno jedinstvenih k-tocaka u FBZ
+! allocate(k(3,Nk))
+allocate(ktot(3,Nk))               ! ukupno jedinstvenih k-tocaka u FBZ
 allocate(G(3,NG))                  ! polje valnih vektora G u recp. prost. za wfn.
 allocate(V(Nlfd,Nlfd))             ! matr. gole coulomb. int.
 allocate(S0(no,Nlfd,Nlfd))         ! korelacijska matrica
@@ -262,7 +262,7 @@ domega = (omax-omin)/(no-1)
 ! Point group transformations are in Cartesian coordinate
 path = trim(rundir)//trim(scf_file)
 call PointR(path,Nsymm,R,RI)
-print *,"PointR done."
+print *,"status: PointR done."
 
 
 ! Upis valnih vektora iz irreducibilne Brillouinove
@@ -270,8 +270,7 @@ print *,"PointR done."
 ! wave vectors are in Cartesian coordinate
 path=trim(rundir)//trim(band_file)
 call loadkIandE(path, NkI, Nband, Nocc, kI, E)
-
-
+print *,"status: kI and E loaded."
 
 
 ! generator 1.B.Z.
@@ -279,164 +278,26 @@ call loadkIandE(path, NkI, Nband, Nocc, kI, E)
 ! I.B.Z. generira sve (MEDJUSOBNO RAZLICITE!!!) valne vektore u 1.B.Z.
 ! Ntot-Tot number of different points ''ktot'' inside 1.B.Z
 
+call genFBZ(Nk,NkI,Nsymm,eps,kI,R,Ntot,ktot)
+print *,"status: FBZ generated."
 
-
-! print *, 'DEBUG: entering parallel region'
-! !$omp parallel shared(k,ktot,Ntot)
-
-jk = 0
-Ntot = 0
-! !$omp do  reduction(+:Ntot)
-do  i = 1,Nsymm ! loop over all symmetries
-  do  ik = 1,NkI  ! loop over k points in IBZ
-    it = 1
-    jk = jk+1
-    do  n = 1,3 ! loop over kx,ky,kz 
-      k(n,jk) = 0.0
-      do  m = 1,3 ! loop over x,y,z
-        k(n,jk) = k(n,jk) + R(i,n,m)*kI(m,ik) ! kreira nove k tocke u BZ pomocu simetrije
-      end do
-    end do
-    if (jk > 1) then
-      do  lk=1,jk-1
-        if ( abs(k(1,jk)-k(1,lk)) <= eps .and. &
-             abs(k(2,jk)-k(2,lk)) <= eps .and. &
-             abs(k(3,jk)-k(3,lk)) <= eps ) then ! je li razlicita tocka od neke prije vec kreirane
-          it=2
-        end if
-      end do
-    end if
-    if (it == 1) then ! ne postoji dodaj ju
-      Ntot=Ntot+1
-      ktot(1:3,Ntot)=k(1:3,jk)
-    end if
-  end do
-end do
-! !$omp end do
-! !$omp end parallel
-! print *, 'DEBUG: exiting parallel region'
-
-! Checking 1BZ integration
-! provjeri je li broj el. u FBZ (Nel) odgovara stvarnom broju el. u jed. cel. (NelQE)
-Nel = 0 
-k_loop_FBZ : do  ik = 1,Ntot
-  kx = ktot(1,ik)
-  ky = ktot(2,ik)
-  kz = ktot(3,ik)
-  band_loop: do  n = 1,Nband
-    if (n == 1) then
-        it = 1
-      if (ik <= NkI) then
-        K1 = ik
-        it = 2
-      else
-        symm_loop: do  i = 2,Nsymm
-          K11 = RI(i,1,1)*kx + RI(i,1,2)*ky + RI(i,1,3)*kz
-          K22 = RI(i,2,1)*kx + RI(i,2,2)*ky + RI(i,2,3)*kz
-          K33 = RI(i,3,1)*kx + RI(i,3,2)*ky + RI(i,3,3)*kz
-          k_loop_IBZ: do  j = 1,NkI
-            if ( abs(K11-kI(1,j)) <= eps .and. &
-                 abs(K22-kI(2,j)) <= eps .and. &
-                 abs(K33-kI(3,j)) <= eps ) then
-              it = 2
-              K1 = j
-              ! zbroji broj el. u prvoj vrpci
-              if (E(K1,n) < Efermi) then 
-                Nel = Nel + 1.0
-                ! print *,'Nel',Nel,'band:',n
-              end if  
-              cycle band_loop
-            end if
-          end do k_loop_IBZ
-        end do symm_loop
-      end if
-      if (it == 1) then
-        print*,'Can not find wave vector K=',ik, 'in I.B.Z.'
-        STOP
-      end if
-    end if
-    
-    ! zbroji broj el. u preostalim vrpcama
-    if (E(K1,n) < Efermi) then 
-      Nel = Nel + 1.0
-      ! print *,'Nel',Nel,'band:',n
-    end if  
-
-  end do band_loop
-end do k_loop_FBZ
-Nel = 2.0*Nel / Ntot ! zbroji za en. manje od fermijeve
-
-
-open(887,FILE='fbz_check.dat',status='new')
-do  i = 1,Ntot
-  write(887,*) ktot(1,i),ktot(2,i)  ! output da vidimo kako izgleda FBZ
-end do
-close(887)
-
+! ! Checking 1BZ integration
+! ! provjeri je li broj el. u FBZ (Nel) odgovara stvarnom broju el. u jed. cel. (NelQE)
+call checkFBZintegration(Nband,NkI,Nsymm,Ntot,eps,kI,RI,Efermi,E,NelQE,Nel)
+print *,"status: FBZ integration correct."
 
 
 ! KC transformation matrix from rec.cryst. axes to cart.koord.
 ! If G' is vector in rec.cryst. axes then a=KC*a' is vector in cart. axes
-
-
 path = TRIM(rundir)//TRIM(scf_file)
-tag='     reciprocal axes: (cart. coord.'
-open(30,FILE=path,status='old')
-do  i = 1,100000
-  read(30,'(a) ') buffer
-  lno=lno+1
-  if (buffer == tag) then
-    do  j=1,3
-      read(30,'(23X,3F10.3) ',err=10001,iostat=ist,end=20001) KC(1,j), KC(2,j), KC(3,j)
-    end do
-    EXIT
-  end if
-end do
-close(30)
-
-
-goto 8000
-10001   write(*,*) 'Error reading line ',lno+1,', iostat = ',ist
-20001   write(*,*) 'Number of lines read = ',lno
-8000 continue
+call loadKC(path,KC)
+print *,"status: KC transformation matrix (rec.cryst.->cart.) loaded."
 
 
 ! Reading the reciprocal vectors in crystal coordinates and transformation
 ! in Cartesian cordinates.
 call loadG(KC,parG,G)
-
-! open(20,FILE='gvectors.xml',status='old',err=200,iostat=ist10)
-! lno10 =0
-! print *, 'File gvectors.dat oppened successfully.'
-! do  i=1,8
-!   read(20,*,err=201,iostat=ist11,end=202) nis
-!   ! print *,nis
-!   lno10 = lno10 +1
-! end do
-! G = 0.0 ! vito - premjesteno iz n,m loopa
-! do  iG = 1,NG
-!   read(20,'(i10,i11,i11) ',err=201,iostat=ist11,end=202) Gi(1),Gi(2),Gi(3)
-!   lno10 = lno10 +1
-!   ! print *, lno10
-!   if (iG == 1) then
-!     if (Gi(1) /= 0 .or. Gi(2) /= 0 .or. Gi(3) /= 0) then
-!       print*,'*********************************'
-!       print*,'WARRNING!, G vectors input is wrong!!'
-!       print*,'G(1) is not (0,0,0)!!'
-!       STOP
-!     end if
-!   end if
-! ! transformation in cart.coord (also!, after this all G components are in 2pi/a0 units)
-!   do n = 1,3
-!     ! G(n,iG) = 0.0
-!     do m = 1,3
-!       G(n,iG) = G(n,iG)+KC(n,m)*real(Gi(m)) ! DBLE converted to real
-!     end do
-!   end do
-!   parG(iG)=Gi(3)
-! end do
-! close(20)
-
+print *,"status: G vectors loaded."
 
 
 ! Reciprocal vectors for crystal local field effects calculations in array ''Glf(3,Nlf) ''
@@ -660,8 +521,8 @@ do ik=1,Ntot   ! k_loop_FBZ_2nd:
   
   !  petlje po vrpcama n i m
   
-  bands_n_loop: do  n = 1,Nocc         ! filled bands loop
-    bands_m_loop: do  m = Nocc+1,Nband ! empty bands loop
+  bands_n_loop: do  n = 1, Nocc         ! filled bands loop
+    bands_m_loop: do  m = Nocc+1, Nband ! empty bands loop
       
       
       !$omp critical(pathk_read)
@@ -714,7 +575,6 @@ do ik=1,Ntot   ! k_loop_FBZ_2nd:
       iGfast = 0
       MnmK1K2(1:Nlf) = czero ! nabojni vrhovi
       do  iG = 1,Nlf ! suma po lokalnim fieldovima kojih ima Nlf
-        ! MnmK1K2(iG) = czero
         do  iG1 = 1,NG1 ! vito zamjenjeno NGd sa NG1
           iGfast = iGfast + 1
           Gxx1 = G(1,iG1)
@@ -740,16 +600,6 @@ do ik=1,Ntot   ! k_loop_FBZ_2nd:
               Gxx2 = G(1,iG2)
               Gyy2 = G(2,iG2)
               Gzz2 = G(3,iG2)
-              ! vito if if if loop smanjen
-              ! if (abs(Gxx2-Gxx1) < eps) then
-              !   if (abs(Gyy2-Gyy1) < eps) then
-              !     if (abs(Gzz2-Gzz1) < eps) then
-              !       Gfast(iGfast) = iG2
-              !       ! goto 1111
-              !       EXIT ig2_loop
-              !     end if
-              !   end if
-              ! end if
               if ( abs(Gxx2-Gxx1) < eps .and. &
                    abs(Gyy2-Gyy1) < eps .and. &
                    abs(Gzz2-Gzz1) < eps) then
@@ -861,7 +711,6 @@ end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
     
     
     !  invertiranje matrice ''diel_epsilon = 1-Chi_0*V''
-    
     call gjel(diel_epsilon,Nlf,Nlfd,Imat,Nlf,Nlfd)
     ! ! call sgetrf( Nlf,Nlfd, diel_epsilon, Nlf, ipiv, info_trf)
     ! ! call sgetri( Nlf, diel_epsilon, Nlf, ipiv, work, lwork, info_tri )
@@ -904,14 +753,8 @@ end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
   end do 
   close(74)
 
-  ! do  io = 1,no-1
-  !   do  iG = 1,Nlf
-  !     do  jG = 1,Nlf
-  !       S0(io,iG,jG) = -(1.0/pi)*aimag(WT(io,iG,jG))
-  !     end do
-  !   end do
-  ! end do
-  S0(1:no-1,1:Nlf,1:Nlf) = -(1.0/pi)*aimag(WT(1:no-1,1:Nlf,1:Nlf))
+
+  S0(1:no-1,1:Nlf,1:Nlf) = -(1.0/pi)*aimag( WT(1:no-1,1:Nlf,1:Nlf) )
   
 
 
@@ -970,15 +813,12 @@ end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
     ! neven debug
     ! print *,'KKS',KKS
     ! print *, 'SKK',SKK
-    
-  ! kraj nove petlje po omega
+
   end do omega_loop_B
   ! vito greska?? ovaj fajl je vec zatvoren
   ! close(74)
   
 
-  ! neven debug openmp maknutno
-  
   dato = 'Kramers-Kron_Qi'
   nord = INDEX(dato,'i', back =.false.)
   if (iq < 10) then
@@ -1023,7 +863,7 @@ deallocate(MnmK1K2)
 ! deallocaate multidim arrays
 deallocate(kI)
 deallocate(E)     
-deallocate(k)
+! deallocate(k)
 deallocate(ktot)       
 deallocate(G)          
 deallocate(V)     
@@ -1040,6 +880,140 @@ deallocate(Gammam)
 
 
 contains
+  subroutine genFBZ(Nk,NkI,Nsymm,eps,kI,R,Ntot,ktot)
+    ! Pomocu operacija tockaste grupe i vektora iz I.B.Z. 
+    ! generira sve (medjusobno razlicite!!!) valne vektore u 1.B.Z.
+    integer,       intent(in)  :: Nk, NkI, Nsymm
+    real(kind=dp), intent(in)  :: eps 
+    real(kind=dp), intent(in)  :: kI(:,:)
+    real(kind=dp), intent(in)  :: R(:,:,:)
+
+    integer,       intent(out) :: Ntot      ! ukupno jedinstvenih k-tocaka u FBZ
+    real(kind=dp), intent(out) :: ktot(:,:) ! jedinstvene k-tocake u FBZ
+
+
+    integer :: it, jk
+    integer :: i
+    integer :: ik, lk
+    integer :: n, m
+    real(kind=dp), allocatable :: k(:,:)
+
+    allocate(k(3,Nk))
+
+
+    ! print *, 'DEBUG: entering parallel region'
+    ! !$omp parallel shared(k,ktot,Ntot)
+
+    jk = 0
+    Ntot = 0 ! Total number of different points ''ktot'' inside 1.B.Z
+    ! !$omp do reduction(+:Ntot)
+    do  i = 1, Nsymm   ! loop over all symmetries
+      do  ik = 1, NkI  ! loop over k points in IBZ
+        it = 1
+        jk = jk + 1
+        do  n = 1, 3   ! loop over x,y,z 
+          k(n,jk) = 0.0
+          do  m = 1, 3 ! loop over x,y,z
+            k(n,jk) = k(n,jk) + R(i,n,m)*kI(m,ik) ! kreira nove k tocke u BZ pomocu simetrije
+          end do
+        end do
+
+        if (jk > 1) then
+          do  lk = 1, jk-1
+            ! provjera jeli tocka razlicita od neke vec prije kreirane
+            if ( abs(k(1,jk)-k(1,lk)) <= eps .and. &
+                 abs(k(2,jk)-k(2,lk)) <= eps .and. &
+                 abs(k(3,jk)-k(3,lk)) <= eps ) then 
+              it = 2
+            end if
+          end do
+        end if
+
+        if (it == 1) then ! ne postoji dodaj ju
+          ! !$omp atomic
+          Ntot = Ntot+1
+          ktot(1:3,Ntot) = k(1:3,jk)
+        end if
+
+      end do
+    end do
+    ! !$omp end do
+    ! !$omp end parallel
+    ! print *, 'DEBUG: exiting parallel region'
+
+    deallocate(k)
+
+    ! output da vidimo kako izgleda FBZ
+    open(887,FILE='fbz_check.dat',status='new')
+    do  i = 1,Ntot
+      write(887,*) ktot(1,i), ktot(2,i)  
+    end do
+    close(887)
+  end subroutine genFBZ
+
+  subroutine checkFBZintegration(Nband,NkI,Nsymm,Ntot,eps,kI,RI,Efermi,E,NelQE,Nel)
+    ! Provjeri je li broj el. u FBZ (Nel) odgovara stvarnom broju el. u jed. cel. (NelQE)
+    integer,       intent(in)  :: NelQE
+    integer,       intent(in)  :: NkI, Nsymm, Nband, Ntot
+    real(kind=dp), intent(in)  :: eps, Efermi
+    real(kind=dp), intent(in)  :: kI(:,:)
+    real(kind=dp), intent(in)  :: RI(:,:,:)
+    real(kind=dp), intent(in)  :: E(:,:)
+    real(kind=dp), intent(out) :: Nel
+
+    integer       :: it, ik, n, i, j, K1
+    real(kind=dp) :: kx,ky,kz
+
+    Nel = 0 
+    k_loop_FBZ : do  ik = 1,Ntot
+      kx = ktot(1,ik)
+      ky = ktot(2,ik)
+      kz = ktot(3,ik)
+      band_loop: do  n = 1, Nband
+        if (n == 1) then
+            it = 1
+          if (ik <= NkI) then
+            K1 = ik
+            it = 2
+          else
+            symm_loop: do  i = 2, Nsymm
+              K11 = RI(i,1,1)*kx + RI(i,1,2)*ky + RI(i,1,3)*kz
+              K22 = RI(i,2,1)*kx + RI(i,2,2)*ky + RI(i,2,3)*kz
+              K33 = RI(i,3,1)*kx + RI(i,3,2)*ky + RI(i,3,3)*kz
+              k_loop_IBZ: do  j = 1, NkI
+                if ( abs(K11-kI(1,j)) <= eps .and. &
+                     abs(K22-kI(2,j)) <= eps .and. &
+                     abs(K33-kI(3,j)) <= eps ) then
+                  it = 2
+                  K1 = j
+                  ! zbroji broj el. u prvoj vrpci
+                  if (E(K1,n) < Efermi) then 
+                    Nel = Nel + 1.0
+                    ! print *,'Nel',Nel,'band:',n
+                  end if  
+                  cycle band_loop
+                end if
+              end do k_loop_IBZ
+            end do symm_loop
+          end if
+          if (it == 1) then
+            print*,'Can not find wave vector K=',ik, 'in I.B.Z.'
+            STOP
+          end if
+        end if
+        
+        ! zbroji broj el. u preostalim vrpcama
+        if (E(K1,n) < Efermi) then 
+          Nel = Nel + 1.0
+          ! print *,'Nel',Nel,'band:',n
+        end if  
+    
+      end do band_loop
+    end do k_loop_FBZ
+    Nel = 2.0*Nel / Ntot ! zbroji za en. manje od fermijeve
+    
+  end subroutine checkFBZintegration
+
   subroutine genChi0(io,no,Nlf,domega,S0,Chi0)
     implicit none
     integer,          intent(in)    :: io
@@ -1365,6 +1339,36 @@ contains
       end do
     end do
   end subroutine genWT
+
+  subroutine loadKC(path,KC)
+    character(len=100), intent(in)  :: path
+    real(kind=dp),      intent(out) :: KC(3,3)
+    
+    integer :: j
+    integer :: ios, lno
+    character (len=35) :: tag, buffer
+
+    tag='     reciprocal axes: (cart. coord.'
+
+    open(30,FILE=path,status='old')
+    do  i = 1,100000
+      read(30,'(a) ') buffer
+      lno = lno+1
+      if (buffer == tag) then
+        do  j = 1,3
+          read(30,'(23X,3F10.3) ',err=10001,iostat=ios,end=20001) KC(1,j), KC(2,j), KC(3,j)
+        end do
+        EXIT
+      end if
+    end do
+    close(30)
+ 
+    goto 8000
+    10001   write(*,*) 'Error reading line ',lno+1,', iostat = ',ios
+    20001   write(*,*) 'Number of lines read = ',lno
+    8000 continue
+  
+  end subroutine loadKC
 
   subroutine loadG(KC,parG,G)
     ! Reading the reciprocal vectors in crystal coordinates and transformation
