@@ -47,16 +47,17 @@ integer :: ik,i,j,jk,it,lk,Ntot,iG0,Nsymm,iq, &
            iGfast,ikmin,kG1,kG2,nord, lf
 
 
-integer :: Nk ! = 48*NkI ! number of wave vectors in FBZ with no symmetry 
+integer :: Nk     ! = 48*NkI, number of wave vectors in FBZ with no symmetry 
 integer :: NkI    ! number of wave vectors in IBZ
 integer :: Nband  ! number of bands
+integer :: Nocc   ! Number of occupied bands (unit cell)
 integer :: NelQE  ! Number of electrons(unit cell)
 integer :: NGd    ! number of coefficients CG shulod be less than minimum number of coefficients all over all evc.n files ... moglo bi se dinamicki alocirati 
-integer :: NG     ! zasto 8000 ?? total number of G vectors  
-integer :: no     ! broj frekvencija
+integer :: NG     ! total number of G vectors  
+integer :: no     ! number of frequencies
 integer :: nq     ! broj valnih vektora tu je 2 jer je rucno paralelizirano!
 integer :: Nlfd   ! dimenzija polja za local field zasto prozivoljno 50, ne moze se znati unaprijed
-namelist /config/ NkI, Nband, NelQE, NGd, NG, no, nq, Nlfd
+namelist /config/ NkI, Nband, Nocc, NelQE, NGd, NG, no, nq, Nlfd
 
 
 ! file i/o debug
@@ -69,6 +70,7 @@ real(kind=dp),    parameter :: eV = 1.602176487D-19
 real(kind=dp),    parameter :: Hartree = 2.0D0*13.6056923D0
 real(kind=dp),    parameter :: Planck = 6.626196D-34
 real(kind=dp),    parameter :: three = 3.0d0 
+real(kind=dp),    parameter :: aBohr = 0.5291772d0
 complex(kind=dp), parameter :: rone  = cmplx(1.0,0.0)
 complex(kind=dp), parameter :: czero = cmplx(0.0,0.0)
 complex(kind=dp), parameter :: ione  = cmplx(0.0,1.0)
@@ -119,8 +121,7 @@ real(kind=dp) :: T      ! [eV] temperature
 real(kind=dp) :: eta    ! damping i\eta
 real(kind=dp) :: Ecut   ! [Hartree] cutoff energy for crystal local field calculations , for Ecut=0 S matrix is a scalar ?
 real(kind=dp) :: Vcell  ! [a.u.^3] unit-cell volume 
-real(kind=dp) :: aBohr  ! [a.u.] unit cell parameter in perpendicular direction (z-separation between supercells)   
-namelist /parameters/ Efermi, a0, c0, eps, T, eta, Ecut, Vcell, aBohr
+namelist /parameters/ Efermi, a0, c0, eps, T, eta, Ecut, Vcell
 namelist /system/ lf, loss, jump, omin, omax
 
 ! scalar arrays
@@ -187,11 +188,11 @@ read(10,nml=parallel,iostat=ist8)
 close(10)
 
 
-Nk = 48*NkI             ! number of wave vectors in FBZ with no symmetry 
-T = T/Hartree           ! convert temperature from eV to Hartree
-Efermi = Efermi/Hartree ! convert Fermi en. from eV to Hartree
-eta = eta/Hartree
-Gcar = 2.0*pi/a0        ! unit cell norm.
+Nk     = 48*NkI                   ! number of wave vectors in FBZ with no symmetry 
+T      = T/Hartree                ! convert temperature from eV to Hartree
+Efermi = Efermi/Hartree           ! convert Fermi en. from eV to Hartree
+eta    = eta/Hartree
+Gcar   = 2.0*pi/a0                ! unit cell norm.
 
 ! scalar arrays
 allocate(parG(NG))                ! paritet svakog valnog vektora
@@ -267,36 +268,8 @@ print *,"PointR done."
 ! Upis valnih vektora iz irreducibilne Brillouinove
 ! zone i pripadnih energijskih nivoa iz filea '****.band'.
 ! wave vectors are in Cartesian coordinate
-
-
-
 path=trim(rundir)//trim(band_file)
-open(40,FILE=path,status='old',err=400,iostat=ist9)
-
-do  ik = 1,NkI
-  if (ik == 1) then
-    read(40,*) 
-  end if
-  read(40,'(10X,3F10.3) ') kI(1,ik),kI(2,ik),kI(3,ik)
-  read(40,'(10F8.4) ') (E(ik,i),i=1,Nband)
-end do
-close(40)
-
-
-goto 500
-400 write(*,*) '100 cannot open file. iostat = ',ist9
-500 continue
-
-
-do  ik=1,NkI
-  do  i=1,Nband
-    E(ik,i) = E(ik,i)/Hartree
-    if (i >= 10) then ! scissor operator, ispravlja/shifta DFT gap (na 1eV u ovom slucaju)
-      E(ik,i) = E(ik,i) + 1.0/Hartree
-    end if
-  end do
-end do
-
+call loadkIandE(path, NkI, Nband, Nocc, kI, E)
 
 
 
@@ -687,8 +660,8 @@ do ik=1,Ntot   ! k_loop_FBZ_2nd:
   
   !  petlje po vrpcama n i m
   
-  bands_n_loop: do  n = 1,9 ! filled bands loop
-    bands_m_loop: do  m = 10,Nband ! empty bands loop
+  bands_n_loop: do  n = 1,Nocc         ! filled bands loop
+    bands_m_loop: do  m = Nocc+1,Nband ! empty bands loop
       
       
       !$omp critical(pathk_read)
@@ -972,19 +945,21 @@ end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
           ! print *, 'G0<--- Gammap(1,1):',Gammap(1,1)
         end if
         
-
       ! kraj po iG,jG
       end do
     end do
     
     !  Provjera Kramers-Kroning relacija
+
     Wind = real(WT(io,1,1)-V(1,1))
     WindKK = real(Gammap(1,1)) - W2KK
+
     ! neven debug
     ! print *, 'WT: ',WT(io,1,1),' V(11): ',V(1,1) 
     ! print *, 'Wind: ',Wind
     ! print *, 'Gammap(1,1): ',Gammap(1,1),'W2KK: ',W2KK
     ! print *,'WindKK: ',WindKK
+
     fact = domega
     if (io == 1 .or. io == no-1) then
       fact = 0.5*domega
@@ -1394,7 +1369,7 @@ contains
   subroutine loadG(KC,parG,G)
     ! Reading the reciprocal vectors in crystal coordinates and transformation
     ! in Cartesian cordinates.
-
+    implicit none
     real(kind=dp),  intent(in)    :: KC(3,3)
     integer,        intent(inout) :: parG(:) ! paritet svakog valnog vektora G
     real(kind=dp),  intent(inout) :: G(:,:)  ! polje valnih vektora G u recp. prost. za wfn.
@@ -1433,7 +1408,7 @@ contains
       parG(iG)=Gi(3)
     end do
   close(20)
-  
+
   goto 5000
   200 write(*,*) 'error cant read file id 20, ist=',ist10
   201   write(*,*) '201 buffer1 read. Error reading line ',lno10+1,', iostat = ',ist11
@@ -1441,5 +1416,38 @@ contains
   5000 continue 
 
   end subroutine loadG
+
+  subroutine loadkIandE(path, NkI, Nband, Nocc, kI, E)
+    implicit none
+    integer,            intent(in)    :: NkI
+    integer,            intent(in)    :: Nband, Nocc
+    character(len=100), intent(in)    :: path
+    real(kind=dp),      intent(inout) :: kI(:,:)
+    real(kind=dp),      intent(inout) :: E(:,:)
+
+    integer :: ios
+    real(kind=dp),    parameter :: Hartree = 2.0D0*13.6056923D0
+
+    open(40,FILE=path,status='old',err=400,iostat=ios) 
+    do  ik = 1,NkI
+      if (ik == 1) then
+        read(40,*) 
+      end if
+      read(40,'(10X,3F10.3) ') kI(1,ik),kI(2,ik),kI(3,ik)
+      read(40,'(10F8.4) ') (E(ik,i),i=1,Nband)
+    end do
+    close(40)
+      
+    goto 500
+    400 write(*,*) '100 cannot open file. iostat = ',ios
+    500 continue
+    
+    ! konverzija en. u Hartree
+    E(1:NkI,1:Nband) = E(1:NkI,1:Nband)/Hartree
+    ! scissor operator, ispravlja/shifta DFT gap (na 1eV u ovom slucaju)
+    E(1:NkI,Nocc+1:Nband) = E(1:NkI,Nocc+1:Nband) + 1.0/Hartree
+
+  end subroutine loadkIandE
+
 
 end program surface_loss

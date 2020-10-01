@@ -8,10 +8,12 @@ try:
 except IndexError:
 	configFile = './config.in'
 
-rundir ='/'.join(configFile.split('/')[:-1])
-print('rundir: ',rundir)
+execdir ='/'.join(configFile.split('/')[:-1])
+print('execdir: ',execdir)
 
 def findMin_NGd(savedir):
+	""" Finds the smallest number of G vectors for each k point
+	in QE nsc/bands calculation. """
 	paths = []
 	igwxs = []
 	for root, dirs, files in os.walk(savedir):
@@ -31,47 +33,155 @@ def findMin_NGd(savedir):
 
 	return NGd
 
+
+def findNelQE(rundir,scf_file):
+	""" Finds number of occupied bands in QE scf output. """
+	NelQE = 0
+	path = rundir+scf_file
+	with open(path,'r') as f:
+		lns = f.readlines()
+		for idx,ln in enumerate(lns):
+			if 'number of electrons' in ln:
+				NelQE = round(float(ln.split()[4]))
+				break
+	return NelQE
+
+def findNband(rundir,band_file):
+	""" Finds number of occupied bands in QE scf output. """
+	Nband = 0
+	path = rundir+band_file
+	with open(path,'r') as f:
+		lns = f.readlines()
+		for idx,ln in enumerate(lns):
+			if 'nbnd=' in ln:
+				Nband = round(float(ln.split()[2].rstrip(',')))
+				break
+	return Nband
+
+
+def findNG(rundir,scf_file):
+	""" Finds total number of G-vectors in QE scf. """
+	NG = 0
+	path = rundir+scf_file
+	with open(path,'r') as f:
+		lns = f.readlines()
+		for idx,ln in enumerate(lns):
+			if 'G-vecs:' in ln:
+				NG = round(float(lns[idx+1].split()[4]))
+				break
+	return NG
+	
+
+def findVcell(rundir,scf_file):
+	""" Finds number of occupied bands in QE scf output. """
+	Vcell = 0.0
+	path = rundir+scf_file
+	with open(path,'r') as f:
+		lns = f.readlines()
+		for idx,ln in enumerate(lns):
+			if 'unit-cell volume' in ln:
+				Vcell = round(float(ln.split()[3]),4)
+				break
+	return Vcell
+
+def findaBohr(rundir,scf_file):
+	""" Finds number of occupied bands in QE scf output. """
+	alat = 0.0
+	path = rundir+scf_file
+	with open(path,'r') as f:
+		lns = f.readlines()
+		for idx,ln in enumerate(lns):
+			if 'lattice parameter (alat)' in ln:
+				alat = round(float(ln.split()[4]),8)
+				break
+	return alat
+
+def findCelldm(rundir,scf_file):
+	""" Finds number of occupied bands in QE scf output. """
+	celldm = 6*[0.0]
+	path = rundir+scf_file
+	with open(path,'r') as f:
+		lns = f.readlines()
+		for idx,ln in enumerate(lns):
+			if 'celldm(1)' in ln:
+				celldm[0] = round(float(ln.split()[1]),6)
+				celldm[1] = round(float(ln.split()[3]),6)
+				celldm[2] = round(float(ln.split()[5]),6)
+			elif 'celldm(4)' in ln:
+				celldm[3] = round(float(ln.split()[1]),6)
+				celldm[4] = round(float(ln.split()[3]),6)
+				celldm[5] = round(float(ln.split()[5]),6)
+				break
+	print(celldm)
+	return celldm
+
+def findNocc(rundir,scf_file):
+	""" Finds number of occupied bands in QE scf output. """
+	Nocc = 0
+	path = rundir+scf_file
+	with open(path,'r') as f:
+		lns = f.readlines()
+		for idx,ln in enumerate(lns):
+			if 'occupation numbers' in ln:
+				j = idx + 1
+				while (True):
+					if lns[j] != '\n':
+						ln2 = lns[j]
+						Nocc += sum([round(float(i)) for i in ln2.split()])
+						j += 1
+					else:
+						break
+				break
+	return Nocc
+
 default_config = """&directories
-rundir    = ''
-savedir   = ''
-scf_file  = ''
-band_file = ''
+ rundir    = ''
+ savedir   = ''
+ scf_file  = ''
+ band_file = ''
 /
 &system
-lf        = 1           ! Crystal local field effect included in z for lf=1 or in x,y,z direction lf=3
-loss      = 1           ! ??
-jump      = 1           ! za 1 preskace trazenje wfn. u IBZ za sve bands m i n
-omin      = 1.0D-5      ! [Hartree] frequency range, lower bound
-omax      = 2.0D0       ! [Hartree] frequency range, upper bound
+ lf        = 1           ! Crystal local field effect included in z for lf=1 or in x,y,z direction lf=3
+ loss      = 1           ! ??
+ jump      = 1           ! jump = 1 skips reloading wfns in IBZ for all bands m (occ.) and n (virt.)
+ omin      = 1.0D-5      ! [Hartree] frequency range, lower bound
+ omax      = 2.0D0       ! [Hartree] frequency range, upper bound
 /
 &config
- NGd      = 0           ! number of wave vectors in IBZ
- NkI      = 0           ! number of bands
- Nband    = 0           ! Number of electrons(unit cell)
- NelQE    = 0           ! number of coefficients CG shulod be less than minimum number of coefficients all over all evc.n 
- NG       = 0           ! total number of G vectors  
- no       = 2001        ! broj frekvencija
- nq       = 1           ! broj valnih vektora tu je 2 jer je rucno paralelizirano!
+ NG       = 0           ! Total number of G vectors  
+ NGd      = 0           ! Number of coefficients CG shulod be less than minimum number of coefficients all over all evc.n 
+ NkI      = 0           ! Number of wave vectors in IBZ
+ Nband    = 0           ! Number of bands (unit cell)
+ Nocc     = 0           ! Number of occupied bands (unit cell)
+ NelQE    = 0           ! Number of electrons(unit cell)
+ no       = 2001        ! Number of frequencies
+ nq       = 2           ! broj valnih vektora tu je 2 jer je rucno paralelizirano!
  Nlfd     = 0           ! dimenzija polja za local field zasto prozivoljno 50, ne moze se znati unaprijed
 /
 &parameters
-Efermi   = 0.0          ! [eV] Fermi en. 
-a0       = 0.0          ! [a.u.]  unit cell parameter in parallel direction 
-c0       = 0.0          ! [a.u.]  unit cell parameter in perependicular direction 
-eps      = 1.0D-4       ! 1.0D-4 threshold
-T        = 0.01         ! [eV] temperature 
-eta      = 0.05         ! damping i\\eta
-Ecut     = 0.0          ! [Hartree] cutoff energy for crystal local field calculations , for Ecut=0 S matrix is a scalar ?
-Vcell    = 0.0          ! [a.u.^3] unit-cell volume 
-aBohr    = 0.0          ! [a.u.] unit cell parameter in perpendicular direction (z-separation between supercells)   
+ Efermi   = 0.0          ! [eV]      Fermi energy 
+ a0       = 0.0          ! [a.u.]    unit cell parameter in parallel direction 
+ c0       = 0.0          ! [a.u.]    unit cell parameter in perependicular direction 
+ eps      = 1.0D-4       ! 1.0D-4    threshold
+ T        = 0.01         ! [eV]      Temperature 
+ eta      = 0.05         !           Damping i\\eta
+ Ecut     = 0.0          ! [Hartree] Cutoff energy for crystal local field calculations , for Ecut=0 S matrix is a scalar ?
+ Vcell    = 0.0000       ! [a.u.^3]  Unit-cell volume 
 /
 &parallel
-Nthreads = 1            ! number of OpenMP threads
+ Nthreads = 1            ! Number of OpenMP threads
 /
 """
 
-
-NGd_comment ='       ! number of wave vectors in IBZ'
+NG_comment    = '      ! Total number of G vectors'
+NGd_comment   = '       ! Number of coefficients CG; should be less than minimum number of coefficients over all evc.n'
+NelQE_comment = '         ! Number of electrons(unit cell)'
+Nband_comment = '         ! Number of bands (unit cell)'
+Nocc_comment  = '          ! Number of occupied bands (unit cell)'
+Vcell_comment = '    ! [a.u.^3]  Unit-cell volume '
+Efermi_comment= '       ! [eV]      Fermi energy '
+a0_comment    = '      ! [a.u.]    unit cell parameter in parallel direction '
+c0_comment    = '     ! [a.u.]    unit cell parameter in perependicular direction '
 
 try:
 	lns_new = []
@@ -81,19 +191,74 @@ try:
 		for ln in lns:
 			if 'savedir' in ln:
 				savedir = ln.split("\'")[1]
-				# print(savedir)
+				if savedir == '':
+					print('WARNING QE savedir not defined.')
+					exit()
 				lns_new.append(ln)
-			elif 'NGd' in ln:
+			elif 'rundir' in ln:
+				rundir = ln.split("\'")[1]
+				if rundir == '':
+					print('WARNING QE rundir not defined.')
+					exit()
+				lns_new.append(ln)
+			elif 'scf_file' in ln:
+				scf_file = ln.split("\'")[1]
+				if scf_file=='':
+					print('WARNING scf_file not defined.')
+					exit()
+				lns_new.append(ln)
+			elif 'band_file' in ln:
+				band_file = ln.split("\'")[1]
+				if band_file =='':
+					print('WARNING band_file not defined.')
+					exit()
+				lns_new.append(ln)
+			elif 'NelQE' in ln:
+				NelQE = 0
+				NelQE = findNelQE(rundir,scf_file)
+				ln2 = ' NelQE    = {} {}\n'.format(NelQE,NelQE_comment)
+				lns_new.append(ln2)
+			elif 'Nband' in ln:
+				Nband = 0
+				Nband = findNband(rundir,band_file)
+				ln2 = ' Nband    = {} {}\n'.format(Nband,Nband_comment)
+				lns_new.append(ln2)
+			elif 'Nocc' in ln:
+				Nocc = 0
+				Nocc = findNocc(rundir,scf_file)
+				ln2 = ' Nocc     = {} {}\n'.format(Nocc,Nocc_comment)
+				lns_new.append(ln2)
+			elif 'NG ' in ln:
+				NG = 0
+				NG = findNG(rundir,scf_file)
+				ln2 = ' NG       = {} {}\n'.format(NG,NG_comment)
+				lns_new.append(ln2)
+			elif 'NGd ' in ln:
 				NGd = 0
 				NGd = findMin_NGd(savedir)
 				ln2 = ' NGd      = {} {}\n'.format(NGd,NGd_comment)
+				lns_new.append(ln2)
+			elif 'Vcell' in ln:
+				Vcell = 0.0
+				Vcell = findVcell(rundir,scf_file)
+				ln2 = ' Vcell    = {:.4f} {}\n'.format(Vcell,Vcell_comment)
+				lns_new.append(ln2)
+			elif 'a0' in ln:
+				a0 = 0.0
+				a0 = findCelldm(rundir,scf_file)[0]
+				ln2 = ' a0       = {:.4f} {}\n'.format(a0,a0_comment)
+				lns_new.append(ln2)
+			elif 'c0' in ln:
+				c0 = 0.0
+				c0 = findCelldm(rundir,scf_file)[2]*a0
+				ln2 = ' c0       = {:.4f} {}\n'.format(c0,c0_comment)
 				lns_new.append(ln2)
 			else:
 				lns_new.append(ln)
 	print('\n'+"".join(lns_new))
 	
 	if savedir != '':
-		os.system('iotk convert {} {}'.format(savedir+'/gvectors.dat',rundir+'/gvectors.xml'))
+		os.system('iotk convert {} {}'.format(savedir+'/gvectors.dat',execdir+'/gvectors.xml'))
 	
 	with open(configFile,'w') as fl:
 		fl.writelines(lns_new)
@@ -101,5 +266,5 @@ try:
 except FileNotFoundError:
 	with open(configFile,'w') as fl2:
 		fl2.writelines(default_config)
-	print('config.ini not found, generated default config.\n Edit the default values and rerun this script.')
+	print('config.in not found, generated default config.\n Edit the default values and rerun this script.')
 

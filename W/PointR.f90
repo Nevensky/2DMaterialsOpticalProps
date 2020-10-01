@@ -14,16 +14,16 @@ CONTAINS
 
       INTEGER :: lskip
 
-      REAL(kind=sp), DIMENSION(48,3,3) :: R
-      REAL(kind=sp), DIMENSION(48,3,3) :: RI
+      REAL(kind=dp), DIMENSION(48,3,3) :: R
+      REAL(kind=dp), DIMENSION(48,3,3) :: RI
 
       COMPLEX(kind=dp), DIMENSION(3,3) :: T
       COMPLEX(kind=dp), DIMENSION(3,3) :: unit
 
-      REAL(kind=sp), PARAMETER :: zero = 0.0
-      REAL(kind=sp), PARAMETER :: one = 1.0
+      REAL(kind=dp), PARAMETER :: zero = 0.0
+      REAL(kind=dp), PARAMETER :: one = 1.0
 
-      REAL(kind=sp) :: x,y,z
+      REAL(kind=dp) :: x,y,z
 
       CHARACTER(len=11 ) :: buffer1,tag1
       CHARACTER(len=7  ) :: buffer2,tag2
