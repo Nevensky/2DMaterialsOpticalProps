@@ -13,11 +13,11 @@ CONTAINS
       INTEGER :: i, Nsymm, is, n, m
 
 
-      REAL(kind=sp), DIMENSION(48,3,3) :: R
-      REAL(kind=sp), DIMENSION(48,3,3) :: Ri
+      REAL(kind=dp), DIMENSION(48,3,3) :: R
+      REAL(kind=dp), DIMENSION(48,3,3) :: Ri
 
 
-      REAL(kind=sp) :: x,y,z
+      REAL(kind=dp) :: x,y,z
 
       CHARACTER(len=11 ) :: buffer1,tag1
       CHARACTER(len=7  ) :: buffer2,tag2

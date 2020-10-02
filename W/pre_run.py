@@ -164,7 +164,7 @@ default_config = """&directories
  c0       = 0.0          ! [a.u.]    unit cell parameter in perependicular direction 
  eps      = 1.0D-4       ! 1.0D-4    threshold
  T        = 0.01         ! [eV]      Temperature 
- eta      = 0.05         !           Damping i\\eta
+ eta      = 0.05         ! [eV]      Damping i\\eta
  Ecut     = 0.0          ! [Hartree] Cutoff energy for crystal local field calculations , for Ecut=0 S matrix is a scalar ?
  Vcell    = 0.0000       ! [a.u.^3]  Unit-cell volume 
 /

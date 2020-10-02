@@ -178,7 +178,7 @@ integer,allocatable :: ipiv(:)
 integer :: lwork
 integer,allocatable :: work(:)
 
-! read namelist
+! load namelist
 open(10,file='config.in')
 read(10,nml=directories,iostat=ist4)
 read(10,nml=system,iostat=ist5)
@@ -187,7 +187,7 @@ read(10,nml=parameters,iostat=ist7)
 read(10,nml=parallel,iostat=ist8)
 close(10)
 
-
+! constants
 Nk     = 48*NkI                   ! number of wave vectors in FBZ with no symmetry 
 T      = T/Hartree                ! convert temperature from eV to Hartree
 Efermi = Efermi/Hartree           ! convert Fermi en. from eV to Hartree
@@ -220,37 +220,6 @@ allocate(Chi0(Nlfd,Nlfd))          ! (eq. 2.89)
 allocate(WT(no,Nlfd,Nlfd))         ! time ordered RPA screened coulomb int. (eq. 2.93)
 allocate(Gammap(Nlfd,Nlfd))        ! omega>0 ,eq....(skripta 5) \sum_{q,m} \int \dd omega' S(\omega')/{(\omega-\omega'-e_{k+q,m} +i\eta}) za GW se koristi se za ovaj dio 
 allocate(Gammam(Nlfd,Nlfd))        ! omega<0
-
-
-
-! BRAVAIS LATTICE PARAMETERS
-
-!     bravais-lattice index     =            4
-!     lattice parameter (alat)  =       5.9715  a.u.
-!     unit-cell volume          =     922.0586 (a.u.)^3
-!     number of atoms/cell      =            3
-!     number of atomic types    =            2
-!     number of electrons       =        18.00
-!     number of Kohn-Sham states=           13
-!     kinetic-energy cutoff     =      50.0000  Ry
-!     charge density cutoff     =     200.0000  Ry
-!     convergence threshold     =      1.0E-06
-!     mixing beta               =       0.7000
-!     number of iterations used =            8  plain     mixing
-!     Exchange-correlation      = SLA-PZ-NOGX-NOGC ( 1  1  0  0 0 0)
-
-!     celldm(1)=   5.971535  celldm(2)=   0.000000  celldm(3)=   5.000000
-!     celldm(4)=   0.000000  celldm(5)=   0.000000  celldm(6)=   0.000000
-
-!     crystal axes: (cart. coord. in units of alat)
-!               a(1) = (   1.000000   0.000000   0.000000 )
-!               a(2) = (  -0.500000   0.866025   0.000000 )
-!               a(3) = (   0.000000   0.000000   5.000000 )
-
-!     reciprocal axes: (cart. coord. in units 2 pi/alat)
-!               b(1) = (  1.000000  0.577350 -0.000000 )
-!               b(2) = (  0.000000  1.154701  0.000000 )
-!               b(3) = (  0.000000 -0.000000  0.200000 )
 
 
 
@@ -308,59 +277,41 @@ allocate(ipiv(MAX(1,MIN(Nlf, Nlf))))
 lwork = Nlf
 allocate(work(Nlf))
 
-! neven debug
-print *,'Eref',Eref
-print *,'Glf(1:3,1:5)',Glf(1:3,1:5)
 
 
 ! IBZ q LOOP STARTS HERE!!!
 ! iq=0 ne moze biti nula, opticki racun
 ! iq=2 do iq=...cutoff transfer q vektor!
 ! ikmin = min. valni vektor u BZ svi veci su visekratnici tog minimalnog
-do  iq = 42,42 ! 42,61
+q_loop: do  iq = 42,42 ! 42,61
   
-! searching min. q=(qx,qy,qz) in Gamma - M direction
-  kmin = 1.0
-  Ntot_loop: do  i = 1,Ntot ! loop over different k-points in FBZ
-    kref = sqrt(sum(ktot(1:3,i)**2))
-    ! neven debug
-    print *,'i=',i,' kref: ',kref
-    if (kref == 0.0) then
-      CYCLE Ntot_loop
-    else if (kref < kmin) then
-      kmin = kref
-      ikmin = i
-      krefM = kmin
-    end if
-  end do Ntot_loop
-  
-  ! neve debug
-  ! print *,'ikmin=',ikmin,'kmin=',kmin,'ktot(1:3,ikmin)',ktot
-
-  qx = (iq-1) * ktot(1,ikmin)
-  qy = (iq-1) * ktot(2,ikmin)
-  qz = (iq-1) * ktot(3,ikmin)
-  absq = sqrt(qx**2 + qy**2 + qz**2)
+  ! searching min. q=(qx,qy,qz) in Gamma - M direction
+  call findMinQ(Ntot, ktot, qx, qy, qz)
   
   ! Info file
-  call writeInfo(qx, qy, qz, Gcar,Nsymm,Nlf, Ntot, NkI, Nband, eta, T, Nel, NelQE )
+  call writeInfo(qx, qy, qz, Gcar, Nsymm, Nlf, Ntot, NkI, Nband, eta, T, Nel, NelQE )
 
   ! intialize correlation matrix
-  S0(1:no,1:Nlf,1:Nlf) = cmplx(0.0,0.0)
+  S0(1:no,1:Nlf,1:Nlf) = 0.0 !cmplx(0.0,0.0)
   
   
   
 ! 1.B.Z  LOOP STARTS HERE !!!!
 
 print *, 'DEBUG: entering parallel region'
-!$omp parallel shared(S0,savedir,iq,kI,ktot,RI,eps,E,G,NkI,Nsymm,NG,Ntot,Nband,NGd,Nlf,Nlfd) private(S0_partial,jump,MnmK1K2,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,attr,K1,K2,n,m,pathk1,pathk2,bandn,bandm,C1,C2,NG1,NG2,io,De,o,domega,Lor,Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast,iG1,iG2 ) num_threads(Nthreads) !  default(private) 
+!$omp parallel shared(S0,savedir,iq,kI,ktot,RI,eps,E,G,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,eta,Vcell) private(S0_partial,MnmK1K2,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,C1,C2,NG1,NG2,io,o,De,Lor,Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2) firstprivate(jump,domega,attr) num_threads(Nthreads) !  default(private) 
+
 ! neven debug
 ! thread_id =  omp_get_thread_num()
 ! print *, 'thread id:',thread_id
-! S0(1:no,1:Nlf,1:Nlf) = czero
-!$omp do ! reduction(-:S0)
-do ik=1,Ntot   ! k_loop_FBZ_2nd:  
 
+! S0(1:no,1:Nlf,1:Nlf) = cmplx(0.0,0.0)
+
+!$omp do ! reduction(-:S0)
+do ik = 1, Ntot   ! k_loop_FBZ_2nd: 
+  
+
+  ! debug vito (prepraviti za paralelnu izvedbu)
   ! open(122,FILE='status')
   ! write(122,*) 'iq=',iq
   ! write(122,*) 'ik=',ik
@@ -372,81 +323,22 @@ do ik=1,Ntot   ! k_loop_FBZ_2nd:
   kz = ktot(3,ik)
   
   ! trazenje (kx,ky,kz) u ireducibilnoj zoni
-  
-  it = 1
-  if (ik <= NkI) then
-    R1=1
-    K1=ik
-    it=2
-  else
-    symmetry_loop: do  i = 2,Nsymm
-      K11 = RI(i,1,1)*kx + RI(i,1,2)*ky + RI(i,1,3)*kz
-      K22 = RI(i,2,1)*kx + RI(i,2,2)*ky + RI(i,2,3)*kz
-      K33 = RI(i,3,1)*kx + RI(i,3,2)*ky + RI(i,3,3)*kz
-      do  j = 1,NkI
-        if (      abs(K11-kI(1,j)) <= eps &
-            .and. abs(K22-kI(2,j)) <= eps &
-            .and. abs(K33-kI(3,j)) <= eps ) then
-          it = 2
-          R1 = i
-          K1 = j
-          EXIT symmetry_loop
-        end if
-      end do
-    end do symmetry_loop
-  end if
-  if (it == 1) then
-    print*,'Can not find wave vector K=',ik, 'in I.B.Z.'
-    STOP
-  end if
-  ! print *, 'R1:',R1,'K1:', K1
-  
-  
-  it = 1
+  call findKinIBZ(ik, NkI, Nsymm, eps, kx, ky, kz, RI, kI, R1, K1)
+
+
   KQx = kx + qx
   KQy = ky + qy
   KQz = kz + qz
+
   !$omp critical(printWaveVector)
   thread_id =  omp_get_thread_num()
   print *,'thread id:',thread_id,'ik: ',ik
   print *, 'KQx,KQy,KQz:',KQx,KQy,KQz
+  print *, 'R1, K1:',R1, K1
   !$omp end critical(printWaveVector)
 
   ! trazenje (KQx,KQy) prvo u 1.B.Z a onda u I.B.Z.
-  iG_loop: do  iG = 1,NG
-    do  jk = 1,Ntot
-      if ( abs(KQx-G(1,iG)-ktot(1,jk)) <= eps .and. &
-           abs(KQy-G(2,iG)-ktot(2,jk)) <= eps .and. &
-           abs(KQz-G(3,iG)-ktot(3,jk)) <= eps ) then
-        it=2
-        iG0 = iG
-        do  i = 1,Nsymm
-          K11 = sum(RI(i,1,1:3) * ktot(1:3,jk) )
-          K22 = sum(RI(i,2,1:3) * ktot(1:3,jk) )
-          K33 = sum(RI(i,3,1:3) * ktot(1:3,jk) )
-          do  j = 1,NkI
-            if ( abs(K11-kI(1,j)) <= eps .and. &
-                 abs(K22-kI(2,j)) <= eps .and. &
-                 abs(K33-kI(3,j)) <= eps ) then
-              it = 3
-              R2 = i
-              K2 = j
-              EXIT iG_loop
-              ! goto 2111
-            end if
-          end do
-        end do
-      end if
-    end do
-  end do iG_loop  
-  
-  if (it == 1) then
-    print*,'Can not find wave vector K+Q=',ik,'+',iq, 'in 1.B.Z.'
-    STOP
-  else if (it == 2) then
-    print*,'Can not find wave vector K+Q=',ik,'+',iq, 'in I.B.Z.'
-    STOP
-  end if
+  call findKQinBZ(KQx, KQy, KQz, eps, Nsymm, NkI, Ntot, NG, ktot, kI, RI, G, iG0, R2, K2)
   
   
   ! R1-integer, redni broj point operacije R1 u transformaciji ''K=R1*K1''.
@@ -454,22 +346,22 @@ do ik=1,Ntot   ! k_loop_FBZ_2nd:
   ! iG0 i R2-integeri, redni broj vektora reciprocne restke G0 i point operacije R2 u transformaciji ''K+Q=G0+R2*K2''.
   ! K2-integer, redni broj valnog vektora K2 u transformaciji  ''K+Q=G0+R2*K2''.
   
-  
   !  petlje po vrpcama n i m
-  
+  ! allocate(S0_partial(no,Nlf,Nlf))   ! pomocna var. za redukciju S0
   bands_n_loop: do  n = 1, Nocc         ! filled bands loop
     bands_m_loop: do  m = Nocc+1, Nband ! empty bands loop
       
       
       !$omp critical(pathk_read)
-      
+        thread_id =  omp_get_thread_num()
+
+      ! !$omp critical(pathk_read1)
       ! otvara save/K.000x/evc.dat u atributu <evc band> ispod CnK(G) koef.
       
       call paths(savedir,K1,K2,n,m,pathk1,pathk2,bandn,bandm) 
       
-      ! u ovom dijelu programa se iscitava iz binarnih fileova ''gvectors.dat'',''evc.dat'' za
-      ! fiksni K1,K2,n i m
-      
+      ! u ovom dijelu programa se iscitava iz binarnih fileova evc.dat za
+      ! fiksni K1,K2, i vrpce n i m
       
       !Otvaranje atribute za INFO
       ! print *,'pathk1',pathk1
@@ -482,6 +374,9 @@ do ik=1,Ntot   ! k_loop_FBZ_2nd:
       call iotk_scan_dat(10+ik,bandn,C1)
       call iotk_close_read(10+ik)
       
+      ! !$omp end critical(pathk_read1)
+      ! !$omp critical(pathk_read2)
+
       !  Otvaranje atribute za INFO
       ! print *,'pathk2',pathk2
       call iotk_open_read(10+ik,pathk2)
@@ -493,9 +388,9 @@ do ik=1,Ntot   ! k_loop_FBZ_2nd:
       call iotk_scan_dat(10+ik,bandm,C2)
       call iotk_close_read(10+ik)
 
+      ! !$omp end critical(pathk_read2)
       !$omp end critical(pathk_read)
       
-
             
       if (NGd > NG1) then
         write(*,*) 'NGd is bigger than NG1=',NG1
@@ -505,63 +400,14 @@ do ik=1,Ntot   ! k_loop_FBZ_2nd:
         STOP
       end if
       
-      ! Konstrukcija stupca matricnih elementa MnmK1K2(G)      
+      ! Konstrukcija stupca matricnih elementa nabojnih vrhova MnmK1K2(G)      
+      call genMnmK1K2(jump, Nlf, iG0, NG1, NG2, eps, R, RI, G, Gfast, C1, C2, MnmK1K2)
+        
+      deallocate(C1)
+      deallocate(C2)
 
-      ! print *,'GOT HERE 1'
-      iGfast = 0
-      MnmK1K2(1:Nlf) = czero ! nabojni vrhovi
-      do  iG = 1,Nlf ! suma po lokalnim fieldovima kojih ima Nlf
-        do  iG1 = 1,NG1 ! vito zamjenjeno NGd sa NG1
-          iGfast = iGfast + 1
-          Gxx1 = G(1,iG1)
-          Gyy1 = G(2,iG1)
-          Gzz1 = G(3,iG1)
-          K11 = R(R1,1,1)*Gxx1 + R(R1,1,2)*Gyy1 + R(R1,1,3)*Gzz1
-          K22 = R(R1,2,1)*Gxx1 + R(R1,2,2)*Gyy1 + R(R1,2,3)*Gzz1
-          K33 = R(R1,3,1)*Gxx1 + R(R1,3,2)*Gyy1 + R(R1,3,3)*Gzz1
-          K11 = K11 + Glf(1,iG)
-          K22 = K22 + Glf(2,iG)
-          K33 = K33 + Glf(3,iG)
-          K11 = K11 + G(1,iG0)
-          K22 = K22 + G(2,iG0)
-          K33 = K33 + G(3,iG0)
-          Gxx1 = RI(R2,1,1)*K11 + RI(R2,1,2)*K22 + RI(R2,1,3)*K33
-          Gyy1 = RI(R2,2,1)*K11 + RI(R2,2,2)*K22 + RI(R2,2,3)*K33
-          Gzz1 = RI(R2,3,1)*K11 + RI(R2,3,2)*K22 + RI(R2,3,3)*K33
-          ! !$omp critical(jump_operation)
-          if (jump == 1) then
-            ! !$omp single
-            iG2_loop: do  iG2 = 1,NG2
-              Gfast(iGfast) = NG2+1
-              Gxx2 = G(1,iG2)
-              Gyy2 = G(2,iG2)
-              Gzz2 = G(3,iG2)
-              if ( abs(Gxx2-Gxx1) < eps .and. &
-                   abs(Gyy2-Gyy1) < eps .and. &
-                   abs(Gzz2-Gzz1) < eps) then
-                  Gfast(iGfast) = iG2
-                  ! goto 1111
-                  EXIT iG2_loop
-              end if
-            end do iG2_loop
-            ! !$omp end single
-          end if
-          ! !$omp end critical(jump_operation)
-          ! 1111              continue
-          iG2 = Gfast(iGfast)
-          if (iG2 <= NG2) then
-            MnmK1K2(iG) = MnmK1K2(iG) + conjg(C1(iG1))*C2(iG2)
-          end if
-        end do
-      end do
-      jump = 2
-      
-      ! deallocate(C1)
-      ! deallocate(C2)
-      ! print *,'GOT HERE 2'
-      !    omega loop
-      allocate(S0_partial(no,Nlf,Nlf))   ! pomocna var. za redukciju S0
-      S0_partial(1:no,1:Nlf,1:Nlf) = czero
+      allocate(S0_partial(no,Nlf,Nlf))   ! pomocna var. za redukciju S0, pomaknuta izvan
+      S0_partial(1:no,1:Nlf,1:Nlf) = cmplx(0.0)
       do  io = 1,no
         o = (io-1)*domega
         De = o + E(K1,n) - E(K2,m) 
@@ -572,43 +418,42 @@ do ik=1,Ntot   ! k_loop_FBZ_2nd:
               ! !$omp atomic
               S0_partial(io,iG,jG) = - 2.0*Lor*MnmK1K2(iG)*conjg(MnmK1K2(jG)) / (pi*Ntot*Vcell)
               ! print *,'S0_partial(io,iG,jG)',S0_partial(io,iG,jG)
-              S0(io,iG,jG) = S0(io,iG,jG) - 2.0*Lor*MnmK1K2(iG)*conjg(MnmK1K2(jG)) / (pi*Ntot*Vcell)
-              ! if (real(S0(io,iG,jG)+S0_partial(io,iG,jG)) /= 0.0) then
+              ! S0(io,iG,jG) = S0(io,iG,jG) - 2.0*Lor*MnmK1K2(iG)*conjg(MnmK1K2(jG)) / (pi*Ntot*Vcell)
+              ! if (S0(io,iG,jG)+S0_partial(io,iG,jG) /= 0.0) then
                 ! print *,'S0(io,iG,jG)',S0(io,iG,jG)
               ! end if
             end do
           end do
         end if
+
+
       ! neven debug  
       ! debugCount = debugCount +1
       ! if (debugCount>9000000 .and. debugCount<10000000) then
       ! write(118,*) io*Hartree,S0(io,1,1)
       ! end if 
+
       end do
       !$omp critical(sumS0)
-      ! S0(1:no,1:Nlf,1:Nlf) = S0(1:no,1:Nlf,1:Nlf) + S0_partial(1:no,1:Nlf,1:Nlf)
-      ! do io = 1, no
-      !   do iG = 1, Nlf
-      !     do jG = 1, Nlf
-      !       S0(io,iG,jG) = S0(io,iG,jG) + S0_partial(io,iG,jG)
-      !       ! if (real(S0(io,iG,jG)-S0_partial(io,iG,jG)) /= 0.0) then
-      !         ! print *,'S0(io,iG,jG)',S0(io,iG,jG),'S0_partial(io,iG,jG)', S0_partial(io,iG,jG)
-      !       ! end if
-      !     end do
-      !   end do
-      ! end do
+      !$omp flush(S0)
+      S0(1:no,1:Nlf,1:Nlf) = S0(1:no,1:Nlf,1:Nlf) + S0_partial(1:no,1:Nlf,1:Nlf)
       !$omp end critical(sumS0)
-      ! print *,'S0(io,iG,jG)',S0(io,iG,jG)
-      deallocate(S0_partial)
+
       
       ! neve debug staro mjesto
-      deallocate(C1)
-      deallocate(C2)  
+      deallocate(S0_partial)
+      ! deallocate(C1)
+      ! deallocate(C2)  
               
     end do bands_m_loop ! end of m do loop
   end do bands_n_loop ! end of n do loop
-  
+  ! !$omp critical(printSumS0)
+  ! print *, 'K1,K2: ',K1,K2,'R1,R2: ',R1, R2
+  ! print *, 'sum(S0): ', sum(S0(1:no,1:Nlf,1:Nlf))
+  ! !$omp end critical(printSumS0)
+
   jump = 1
+  ! deallocate(S0_partial)
 
 
 end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
@@ -619,32 +464,23 @@ end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
 
  ! STOP
 
-  ! Convert (qx,qy,qz) and Glf to cartesian coordinates
+  ! Convert (qx,qy,qz) and Glf from Cartesian coords. to atomic units
   qx = Gcar*qx ! convert qx *2p/a0
   qy = Gcar*qy
   qz = Gcar*qz
   
 
-
-  
-  ! do  iG = 1,Nlf
-  !   GlfV(1:3,iG) = Gcar*Glf(1:3,iG)
-  ! end do
   GlfV(1:3,1:Nlf) = Gcar*Glf(1:3,1:Nlf)
 
    ! Kramers-Kroning relacije
   
   omega_loop_A: do  io = 1,no-1
     call genChi0(io,no,Nlf,domega,S0,Chi0)
-
-    oi = (io-1)*domega ! koristi se u ispisu WT(io,1,1)
-    
     
     ! MATRIX V(G,G')
     call genV(eps,qx,qy,Nlf,parG,Glf,GlfV,V)
     
     call genDielectricEpsilon(Nlf,Chi0,V,diel_epsilon)
-    
     
     !  invertiranje matrice ''diel_epsilon = 1-Chi_0*V''
     call gjel(diel_epsilon,Nlf,Nlfd,Imat,Nlf,Nlfd)
@@ -659,6 +495,7 @@ end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
 
 
     ! neven debug WT
+    oi = (io-1)*domega ! koristi se u ispisu WT(io,1,1)
     write(20008,*) oi*Hartree,aimag(WT(io,1,1))
     write(10008,*) oi*Hartree,real(WT(io,1,1))
 
@@ -670,36 +507,15 @@ end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
 
   
   ! ispis time ordered zasjenjene kulonske interakcije W_GG'^T(Q,\omega)
-  dato = 'W_Qi'
-  nord = index(dato,'i', back =.false.)
-  if (iq < 10) then
-    write(dato(nord:nord),'(i1) ')iq
-  else if (iq >= 10 .and. iq < 100) then
-    write(dato(nord:nord+1),'(i2) ')iq
-  else
-    write(dato(nord:nord+2),'(i3) ')iq
-  end if
-  
-
-  open(74,FILE=dato)
-  do  io = 1,1
-    o = (io-1)*domega
-    write(74,*) 'omega=',o,'Hartree'
-    write(74,'(10F15.5) ')((WT(io,iG,jG),jG=1,Nlf),iG=1,Nlf)
-  end do 
-  close(74)
+  call writeWT_Qi(iq,Nlf,domega,WT)
 
 
   S0(1:no-1,1:Nlf,1:Nlf) = -(1.0/pi)*aimag( WT(1:no-1,1:Nlf,1:Nlf) )
   
-
-
   ! podatci za GW sve na dalje
 
   KKS = 0.0
-  SKK = 0.0
-  
-  
+  SKK = 0.0  
   omega_loop_B: do  io = 1,no-1
     ! print*,io
     oi = (io-1)*domega
@@ -753,36 +569,12 @@ end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
   end do omega_loop_B
   ! vito greska?? ovaj fajl je vec zatvoren
   ! close(74)
-  
 
-  dato = 'Kramers-Kron_Qi'
-  nord = INDEX(dato,'i', back =.false.)
-  if (iq < 10) then
-    write(dato(nord:nord),'(i1) ') iq
-  else if (iq >= 10 .and. iq < 100) then
-    write(dato(nord:nord+1),'(i2) ') iq
-  else
-    write(dato(nord:nord+2),'(i3) ') iq
-  end if
+  ! write Kramers-Kroning relations check
+  call writeKramKron_Qi(iq,qx, qy, qz, Gcar, KKS, SKK, G0, WT, V)
+
   
-  ! !$omp master
-  open(33+ik,FILE=dato)
-  write(33+ik,'(a25,3f10.4,a5) ') 'Wave vector (qx,qy,qz)=(',qx*Gcar,qy*Gcar, qz*Gcar,') a.u.'
-  write(33+ik,'(a25,f8.4,a5) ') '|(qx,qy,qz)|=',absq*Gcar,'a.u.'
-  write(33+ik,*) 'int(WindKK-Wind)^2 =  ',KKS
-  write(33+ik,*) 'int(Wind)^2 =  ',SKK
-  write(33+ik,*) '****************************************'
-  write(33+ik,*) 'Kramers–Kronig relation relative error'
-  write(33+ik,'(5X,f7.2,a2) ') 100.0*abs(KKS/SKK), '%'
-  write(33+ik,*) 'Usporedba Gamma i WT'
-  write(33+ik,*) 'real[Gamma(o=0,1,1)]=',real(G0)
-  write(33+ik,*) 'real[WT(o=0,1,1)]/2=', real(WT(1,1,1)-V(1,1))/2.0
-  close(33+ik)
-  ! !$omp end master
-  
-  
-! kraj po q
-end do
+end do q_loop
 
 ! MKL matrix inversion vars
 deallocate(ipiv)
@@ -816,6 +608,132 @@ deallocate(Gammam)
 
 
 contains
+  subroutine findMinQ(Ntot, ktot, qx, qy, qz)
+    ! searching min. q=(qx,qy,qz) in Gamma -> M direction
+    integer,       intent(in)  :: Ntot
+    real(kind=dp), intent(in)  :: ktot(:,:)
+    real(kind=dp), intent(out) :: qx, qy, qz
+
+    integer       :: i, ikmin
+    real(kind=dp) :: kmin, kref, krefM ! , absq
+
+    kmin = 1.0
+    Ntot_loop: do  i = 1, Ntot ! loop over different k-points in FBZ
+      kref = sqrt(sum(ktot(1:3,i)**2))
+      ! neven debug
+      print *,'i=',i,' kref: ',kref
+      if (kref == 0.0) then
+        CYCLE Ntot_loop
+      else if (kref < kmin) then
+        kmin = kref
+        ikmin = i
+        krefM = kmin
+      end if
+    end do Ntot_loop
+    ! neve debug
+    ! print *,'ikmin=',ikmin,'kmin=',kmin,'ktot(1:3,ikmin)',ktot
+    qx = (iq-1) * ktot(1,ikmin)
+    qy = (iq-1) * ktot(2,ikmin)
+    qz = (iq-1) * ktot(3,ikmin)
+    ! absq = sqrt(qx**2 + qy**2 + qz**2)
+  end subroutine findMinQ
+
+
+  subroutine findKinIBZ(ik, NkI, Nsymm, eps, kx, ky, kz, RI, kI, R1, K1)
+    ! trazenje (kx,ky,kz) u ireducibilnoj zoni
+    integer,       intent(in) :: ik
+    integer,       intent(in) :: NkI, Nsymm
+    real(kind=dp), intent(in) :: eps
+    real(kind=dp), intent(in) :: kx, ky, kz
+    real(kind=dp), intent(in) :: kI(:,:)
+    real(kind=dp), intent(in) :: RI(:,:,:)
+    integer      , intent(out):: R1, K1
+
+    integer       :: i, j
+    integer       :: it
+    real(kind=dp) :: K11, K22, K33
+
+    it = 1
+    if (ik <= NkI) then
+      R1 = 1
+      K1 = ik
+      it = 2
+    else
+      symmetry_loop: do  i = 2, Nsymm
+        K11 = RI(i,1,1)*kx + RI(i,1,2)*ky + RI(i,1,3)*kz
+        K22 = RI(i,2,1)*kx + RI(i,2,2)*ky + RI(i,2,3)*kz
+        K33 = RI(i,3,1)*kx + RI(i,3,2)*ky + RI(i,3,3)*kz
+        do  j = 1,NkI
+          if (      abs(K11-kI(1,j)) <= eps &
+              .and. abs(K22-kI(2,j)) <= eps &
+              .and. abs(K33-kI(3,j)) <= eps ) then
+            it = 2
+            R1 = i
+            K1 = j
+            EXIT symmetry_loop
+          end if
+        end do
+      end do symmetry_loop
+    end if
+    if (it == 1) then
+      print*,'Can not find wave vector K=',ik, 'in I.B.Z.'
+      STOP
+    end if
+    ! print *, 'R1:',R1,'K1:', K1
+end subroutine findKinIBZ
+
+
+subroutine findKQinBZ(KQx, KQy, KQz, eps, Nsymm, NkI, Ntot, NG, ktot, kI, RI, G, iG0, R2, K2)
+  ! trazenje (KQx,KQy) prvo u FBZ a onda u IBZ
+  integer,       intent(in)  :: Nsymm, NkI, Ntot, NG
+  real(kind=dp), intent(in)  :: eps
+  real(kind=dp), intent(in)  :: KQx, KQy, KQz
+  real(kind=dp), intent(in)  :: ktot(:,:)
+  real(kind=dp), intent(in)  :: kI(:,:)
+  real(kind=dp), intent(in)  :: G(:,:)
+  real(kind=dp), intent(in)  :: RI(:,:,:)
+  integer,       intent(out) :: iG0, R2, K2
+
+  integer :: it
+  integer :: iG, jk, i, j
+
+  it = 1
+  iG_loop: do  iG = 1,NG
+    k_loop_FBZ : do  jk = 1, Ntot
+      if ( abs(KQx-G(1,iG)-ktot(1,jk)) <= eps .and. &
+           abs(KQy-G(2,iG)-ktot(2,jk)) <= eps .and. &
+           abs(KQz-G(3,iG)-ktot(3,jk)) <= eps ) then
+        it = 2
+        iG0 = iG
+        symm_loop: do  i = 1, Nsymm
+          K11 = sum(RI(i,1,1:3) * ktot(1:3,jk) )
+          K22 = sum(RI(i,2,1:3) * ktot(1:3,jk) )
+          K33 = sum(RI(i,3,1:3) * ktot(1:3,jk) )
+          k_loop_IBZ: do  j = 1, NkI
+            if ( abs(K11-kI(1,j)) <= eps .and. &
+                 abs(K22-kI(2,j)) <= eps .and. &
+                 abs(K33-kI(3,j)) <= eps ) then
+              it = 3
+              R2 = i
+              K2 = j
+              EXIT iG_loop
+            end if
+          end do k_loop_IBZ
+        end do symm_loop
+      end if
+    end do k_loop_FBZ
+  end do iG_loop  
+
+  if (it == 1) then
+    print*,'Can not find wave vector K+Q=',ik,'+',iq, 'in FBZ.'
+    STOP
+  else if (it == 2) then
+    print*,'Can not find wave vector K+Q=',ik,'+',iq, 'in IBZ.'
+    STOP
+  end if
+
+end subroutine findKQinBZ
+
   subroutine genFBZ(Nk,NkI,Nsymm,eps,kI,R,Ntot,ktot)
     ! Pomocu operacija tockaste grupe i vektora iz I.B.Z. 
     ! generira sve (medjusobno razlicite!!!) valne vektore u 1.B.Z.
@@ -828,23 +746,18 @@ contains
     real(kind=dp), intent(out) :: ktot(:,:) ! jedinstvene k-tocake u FBZ
 
 
-    integer :: it, jk
-    integer :: i
-    integer :: ik, lk
-    integer :: n, m
-    real(kind=dp), allocatable :: k(:,:)
+    integer       :: it, jk
+    integer       :: i
+    integer       :: ik, lk
+    integer       :: n, m
+    real(kind=dp) :: k(3,Nk)
 
-    allocate(k(3,Nk))
-
-
-    ! print *, 'DEBUG: entering parallel region'
-    ! !$omp parallel shared(k,ktot,Ntot)
 
     jk = 0
     Ntot = 0 ! Total number of different points ''ktot'' inside 1.B.Z
-    ! !$omp do reduction(+:Ntot)
-    do  i = 1, Nsymm   ! loop over all symmetries
-      do  ik = 1, NkI  ! loop over k points in IBZ
+
+    symm_loop: do  i = 1, Nsymm    ! loop over all symmetries
+      k_loop_IBZ: do  ik = 1, NkI  ! loop over k points in IBZ
         it = 1
         jk = jk + 1
         do  n = 1, 3   ! loop over x,y,z 
@@ -852,7 +765,7 @@ contains
           do  m = 1, 3 ! loop over x,y,z
             k(n,jk) = k(n,jk) + R(i,n,m)*kI(m,ik) ! kreira nove k tocke u BZ pomocu simetrije
           end do
-        end do
+        end do 
 
         if (jk > 1) then
           do  lk = 1, jk-1
@@ -871,13 +784,10 @@ contains
           ktot(1:3,Ntot) = k(1:3,jk)
         end if
 
-      end do
-    end do
-    ! !$omp end do
-    ! !$omp end parallel
-    ! print *, 'DEBUG: exiting parallel region'
+      end do k_loop_IBZ
+    end do symm_loop
 
-    deallocate(k)
+    ! deallocate(k)
 
     ! output da vidimo kako izgleda FBZ
     open(887,FILE='fbz_check.dat',status='new')
@@ -885,6 +795,7 @@ contains
       write(887,*) ktot(1,i), ktot(2,i)  
     end do
     close(887)
+
   end subroutine genFBZ
 
   subroutine checkFBZintegration(Nband,NkI,Nsymm,Ntot,eps,kI,RI,Efermi,E,NelQE,Nel)
@@ -1002,7 +913,79 @@ subroutine genGlfandParity(lf,Ecut,NG,Gcar,G,Nlf,Nlfd,parG,Glf)
     print*,'Nlf is bigger than Nlfd'
     STOP
   end if
+
+  ! neven debug
+  ! print *,'Eref',Eref
+  ! print *,'Glf(1:3,1:5)',Glf(1:3,1:5)
 end subroutine genGlfandParity
+
+subroutine genMnmK1K2(jump, Nlf, iG0, NG1, NG2, eps, R, RI, G, Gfast, C1, C2, MnmK1K2)
+  ! Konstrukcija stupca matricnih elementa nabojnih vrhova MnmK1K2(G) 
+  integer,          intent(in)    :: iG0, Nlf, NG1, NG2
+  real(kind=dp),    intent(in)    :: eps
+  real(kind=dp),    intent(in)    :: R(:,:,:)
+  real(kind=dp),    intent(in)    :: RI(:,:,:)
+  real(kind=dp),    intent(in)    :: G(:,:)     ! polje valnih vektora G u recp. prost. za wfn.
+  complex(kind=dp), intent(in)    :: C1(:)
+  complex(kind=dp), intent(in)    :: C2(:)
+  integer,          intent(inout) :: jump
+  integer,          intent(inout) :: Gfast(:)
+  complex(kind=dp), intent(inout) :: MnmK1K2(:)
+
+  integer       :: iG, iG1, iG2
+  integer       :: iGfast
+  real(kind=dp) :: K11, K22, K33
+  real(kind=dp) :: Gxx1,Gyy1,Gzz1
+  real(kind=dp) :: Gxx2,Gyy2,Gzz2
+
+  iGfast = 0
+  MnmK1K2(1:Nlf) = cmplx(0.0) ! nabojni vrhovi
+  do  iG = 1,Nlf ! suma po lokalnim fieldovima kojih ima Nlf
+    do  iG1 = 1,NG1 ! vito zamjenjeno NGd sa NG1
+      iGfast = iGfast + 1
+      Gxx1 = G(1,iG1)
+      Gyy1 = G(2,iG1)
+      Gzz1 = G(3,iG1)
+      K11 = R(R1,1,1)*Gxx1 + R(R1,1,2)*Gyy1 + R(R1,1,3)*Gzz1
+      K22 = R(R1,2,1)*Gxx1 + R(R1,2,2)*Gyy1 + R(R1,2,3)*Gzz1
+      K33 = R(R1,3,1)*Gxx1 + R(R1,3,2)*Gyy1 + R(R1,3,3)*Gzz1
+      K11 = K11 + Glf(1,iG)
+      K22 = K22 + Glf(2,iG)
+      K33 = K33 + Glf(3,iG)
+      K11 = K11 + G(1,iG0)
+      K22 = K22 + G(2,iG0)
+      K33 = K33 + G(3,iG0)
+      Gxx1 = RI(R2,1,1)*K11 + RI(R2,1,2)*K22 + RI(R2,1,3)*K33
+      Gyy1 = RI(R2,2,1)*K11 + RI(R2,2,2)*K22 + RI(R2,2,3)*K33
+      Gzz1 = RI(R2,3,1)*K11 + RI(R2,3,2)*K22 + RI(R2,3,3)*K33
+      ! !$omp critical(jump_operation)
+      if (jump == 1) then
+        ! !$omp single
+        iG2_loop: do  iG2 = 1,NG2
+          Gfast(iGfast) = NG2+1
+          Gxx2 = G(1,iG2)
+          Gyy2 = G(2,iG2)
+          Gzz2 = G(3,iG2)
+          if ( abs(Gxx2-Gxx1) < eps .and. &
+               abs(Gyy2-Gyy1) < eps .and. &
+               abs(Gzz2-Gzz1) < eps) then
+              Gfast(iGfast) = iG2
+              ! goto 1111
+              EXIT iG2_loop
+          end if
+        end do iG2_loop
+        ! !$omp end single
+      end if
+      ! !$omp end critical(jump_operation)
+      ! 1111              continue
+      iG2 = Gfast(iGfast)
+      if (iG2 <= NG2) then
+        MnmK1K2(iG) = MnmK1K2(iG) + conjg(C1(iG1))*C2(iG2)
+      end if
+    end do
+  end do
+  jump = 2
+end subroutine genMnmK1K2
 
   subroutine genChi0(io,no,Nlf,domega,S0,Chi0)
     implicit none
@@ -1118,7 +1101,7 @@ end subroutine genGlfandParity
     integer,          intent(in)    :: no 
     real(kind=dp),    intent(in)    :: domega
     real(kind=dp),    intent(in)    :: S0(:,:,:)
-    real(kind=dp),    intent(out) :: W1, W2   
+    real(kind=dp),    intent(out)   :: W1, W2   
 
     integer        :: jo  
     real(kind=dp)  :: fact 
@@ -1234,7 +1217,7 @@ end subroutine genGlfandParity
     real(kind=dp),  intent(inout) :: V(:,:)
 
 
-    integer :: iG, jG
+    integer       :: iG, jG
     real(kind=dp) :: Gabs
 
     do  iG = 1,Nlf
@@ -1319,7 +1302,6 @@ end subroutine genGlfandParity
     WT(io,1:Nlf,1:Nlf) = cmplx(0.0,0.0)
     do  iG = 1,Nlf
       do  jG = 1,Nlf
-        ! WT(io,iG,jG) = czero
         do  kG1 = 1,Nlf
           do  kG2 = 1,Nlf
             WT(io,iG,jG) = WT(io,iG,jG) + V(iG,kG1)*Chi(kG1,kG2)*V(kG2,jG)
@@ -1340,18 +1322,18 @@ end subroutine genGlfandParity
 
     tag='     reciprocal axes: (cart. coord.'
 
-    open(30,FILE=path,status='old')
+    open(300,FILE=path,status='old')
     do  i = 1,100000
-      read(30,'(a) ') buffer
+      read(300,'(a) ') buffer
       lno = lno+1
       if (buffer == tag) then
         do  j = 1,3
-          read(30,'(23X,3F10.3) ',err=10001,iostat=ios,end=20001) KC(1,j), KC(2,j), KC(3,j)
+          read(300,'(23X,3F10.3) ',err=10001,iostat=ios,end=20001) KC(1,j), KC(2,j), KC(3,j)
         end do
         EXIT
       end if
     end do
-    close(30)
+    close(300)
  
     goto 8000
     10001   write(*,*) 'Error reading line ',lno+1,', iostat = ',ios
@@ -1372,18 +1354,18 @@ end subroutine genGlfandParity
     integer :: n, m
     integer :: Gi(3)
 
-    open(20,FILE='gvectors.xml',status='old',err=200,iostat=ios1)
+    open(200,FILE='gvectors.xml',status='old',err=200,iostat=ios1)
     print *, 'File gvectors.xml oppened successfully.'
     lno = 0
 
     do  i=1,8
-      read(20,*,err=201,iostat=ios2,end=202) nis
+      read(200,*,err=201,iostat=ios2,end=202) nis
       lno = lno +1
     end do
 
     G(1:3,1:NG) = 0.0
     do  iG = 1,NG
-      read(20,'(i10,i11,i11) ',err=201,iostat=ios2,end=202) Gi(1),Gi(2),Gi(3)
+      read(200,'(i10,i11,i11) ',err=201,iostat=ios2,end=202) Gi(1),Gi(2),Gi(3)
       lno = lno +1
       if (iG == 1) then
         if (Gi(1) /= 0 .or. Gi(2) /= 0 .or. Gi(3) /= 0) then
@@ -1401,7 +1383,7 @@ end subroutine genGlfandParity
       end do
       parG(iG)=Gi(3)
     end do
-  close(20)
+  close(200)
 
   goto 5000
   200 write(*,*) 'error cant read file id 20, ist=',ist10
@@ -1422,15 +1404,15 @@ end subroutine genGlfandParity
     integer :: ios
     real(kind=dp),    parameter :: Hartree = 2.0D0*13.6056923D0
 
-    open(40,FILE=path,status='old',err=400,iostat=ios) 
+    open(400,FILE=path,status='old',err=400,iostat=ios) 
     do  ik = 1,NkI
       if (ik == 1) then
-        read(40,*) 
+        read(400,*) 
       end if
-      read(40,'(10X,3F10.3) ') kI(1,ik),kI(2,ik),kI(3,ik)
-      read(40,'(10F8.4) ') (E(ik,i),i=1,Nband)
+      read(400,'(10X,3F10.3) ') kI(1,ik),kI(2,ik),kI(3,ik)
+      read(400,'(10F8.4) ') (E(ik,i),i=1,Nband)
     end do
-    close(40)
+    close(400)
       
     goto 500
     400 write(*,*) '100 cannot open file. iostat = ',ios
@@ -1444,19 +1426,19 @@ end subroutine genGlfandParity
   end subroutine loadkIandE
 
   subroutine writeInfo(qx, qy, qz, Gcar,Nsymm,Nlf, Ntot, NkI, Nband, eta, T, Nel, NelQE )
-
+    implicit none
     integer       , intent(in) :: NelQE, Nsymm, Nlf, Ntot, NkI, Nband
     real(kind=dp) , intent(in) :: qx,qy,qz
     real(kind=dp) , intent(in) :: eta, T, Gcar
     real(kind=dp) , intent(in) :: Nel
 
-
+    integer       :: ios
     real(kind=dp) :: absq, error
-    real(kind=dp),    parameter :: Hartree = 2.0D0*13.6056923D0
+    real(kind=dp), parameter :: Hartree = 2.0D0*13.6056923D0
 
     absq = sqrt(qx**2+qy**2+qz**2)
 
-    open(55,FILE='Info')
+    open(55,FILE='Info', err=400, iostat=ios)
     write(55,*) '***************General***********************'
     write(55,*) ''
     write(55,*) 'Number of point symmetry operation is',Nsymm
@@ -1482,6 +1464,87 @@ end subroutine genGlfandParity
       STOP
     end if
     close(55)
+    
+    goto 500
+    400 write(*,*) '100 cannot open file. iostat = ',ios
+    500 continue
+
   end subroutine writeInfo
+
+  subroutine writeWT_Qi(iq,Nlf,domega,WT)
+    ! ispis time ordered zasjenjene 
+    ! kulonske interakcije W_GG'^T(Q,\omega)
+    implicit none
+    integer,          intent(in) :: iq, Nlf
+    real(kind=dp),    intent(in) :: domega
+    complex(kind=dp), intent(in) :: WT(:,:,:)
+
+    integer :: nord, iG, jG, io
+    real(kind=dp) :: o
+    character(len=100) :: dato 
+
+    dato = 'W_Qi'
+    nord = index(dato,'i', back =.false.)
+    if (iq < 10) then
+      write(dato(nord:nord),'(i1) ')iq
+    else if (iq >= 10 .and. iq < 100) then
+      write(dato(nord:nord+1),'(i2) ')iq
+    else
+      write(dato(nord:nord+2),'(i3) ')iq
+    end if
+    
+    open(74,FILE=dato)
+    do  io = 1,1
+      o = (io-1)*domega
+      write(74,*) 'omega=',o,'Hartree'
+      write(74,'(10F15.5) ')((WT(io,iG,jG),jG=1,Nlf),iG=1,Nlf)
+    end do 
+    close(74)
+  end subroutine writeWT_Qi
+
+subroutine writeKramKron_Qi(iq,qx, qy, qz, Gcar, KKS, SKK, G0, WT, V)
+  ! ispisuje info file za provjeru Kramers–Kronig relacija
+  integer,          intent(in) :: iq
+  real(kind=dp),    intent(in) :: qx, qy, qz
+  real(kind=dp),    intent(in) :: KKS, SKK
+  real(kind=dp),    intent(in) :: Gcar
+  real(kind=dp),    intent(in) :: V(:,:)
+  complex(kind=dp), intent(in) :: G0
+  complex(kind=dp), intent(in) :: WT(:,:,:) 
+
+  integer            :: nord, ios
+  real(kind=dp)      :: absq
+  character(len=100) :: dato
+
+  absq = sqrt(qx**2+qy**2+qz**2)
+
+  dato = 'Kramers-Kron_Qi'
+  nord = INDEX(dato,'i', back =.false.)
+  if (iq < 10) then
+    write(dato(nord:nord),'(i1) ') iq
+  else if (iq >= 10 .and. iq < 100) then
+    write(dato(nord:nord+1),'(i2) ') iq
+  else
+    write(dato(nord:nord+2),'(i3) ') iq
+  end if
+  
+
+  open(33,FILE=dato, err=400, iostat=ios)
+  write(33,'(a25,3f10.4,a5) ') 'Wave vector (qx,qy,qz)=(',qx*Gcar,qy*Gcar, qz*Gcar,') a.u.'
+  write(33,'(a25,f8.4,a5) ') '|(qx,qy,qz)|=',absq*Gcar,'a.u.'
+  write(33,*) 'int(WindKK-Wind)^2 =  ',KKS
+  write(33,*) 'int(Wind)^2 =  ',SKK
+  write(33,*) '****************************************'
+  write(33,*) 'Kramers–Kronig relation relative error'
+  write(33,'(5X,f7.2,a2) ') 100.0*abs(KKS/SKK), '%'
+  write(33,*) 'Usporedba Gamma i WT'
+  write(33,*) 'real[Gamma(o=0,1,1)]=',real(G0)
+  write(33,*) 'real[WT(o=0,1,1)]/2=', real(WT(1,1,1)-V(1,1))/2.0
+  close(33)
+
+  goto 500
+  400 write(*,*) '100 cannot open file. iostat = ',ios
+  500 continue
+end subroutine writeKramKron_Qi
 
 end program surface_loss

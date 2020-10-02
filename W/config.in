@@ -26,12 +26,12 @@
  Efermi   = 0.5554       ! [eV]      Fermi energy 
  eps      = 1.0D-4       ! 1.0D-4    threshold
  T        = 0.01         ! [eV]      Temperature 
- eta      = 0.05         !           Damping i\eta
+ eta      = 0.05         ! [eV]      Damping i\eta
  Ecut     = 1.0          ! [Hartree] Cutoff energy for crystal local field calculations , for Ecut=0 S matrix is a scalar ?
  a0       = 5.9715       ! [a.u.]    unit cell parameter in parallel direction 
  c0       = 29.8577      ! [a.u.]    unit cell parameter in perependicular direction 
  Vcell    = 922.0586     ! [a.u.^3]  Unit-cell volume 
 /
 &parallel
- Nthreads = 4            ! Number of OpenMP threads
+ Nthreads = 14            ! Number of OpenMP threads
 /
