@@ -160,15 +160,16 @@ complex(kind=dp), dimension(:,:)  , allocatable  :: Gammap ! omega>0 ,eq....(skr
 complex(kind=dp), dimension(:,:)  , allocatable  :: Gammam ! omega<0, allocatable  
 
 character (len=100) :: bandn,bandm,nis,pathk1,pathk2,dato, path
-character (len=35) :: tag,buffer
+character (len=35)  :: tag,buffer
 
 
-complex(kind=dp), dimension(:), pointer :: C1,C2 ! Fourierovi koef. u razvoju wfn. iz QE 
-
+complex(kind=dp), dimension(:), pointer,save :: C1,C2 ! Fourierovi koef. u razvoju wfn. iz QE 
+!$omp threadprivate(C1,C2)
 
 ! OpenMP vars
-integer :: Nthreads
-integer :: thread_id
+integer      :: Nthreads
+integer,save :: thread_id
+!$omp threadprivate(thread_id)
 namelist  /parallel/ Nthreads
 
 
@@ -299,17 +300,14 @@ q_loop: do  iq = 42,42 ! 42,61
 ! 1.B.Z  LOOP STARTS HERE !!!!
 
 print *, 'DEBUG: entering parallel region'
-!$omp parallel shared(S0,savedir,iq,kI,ktot,RI,eps,E,G,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,eta,Vcell) private(S0_partial,MnmK1K2,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,C1,C2,NG1,NG2,io,o,De,Lor,Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2) firstprivate(jump,domega,attr) num_threads(Nthreads) !  default(private) 
+!$omp parallel shared(S0,iq,kI,ktot,RI,eps,E,G,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,eta,Vcell) private(ik, S0_partial,MnmK1K2,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,De,Lor,Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2) firstprivate(savedir,jump,domega,attr) num_threads(Nthreads) !  default(private) 
 
-! neven debug
-! thread_id =  omp_get_thread_num()
-! print *, 'thread id:',thread_id
-
-! S0(1:no,1:Nlf,1:Nlf) = cmplx(0.0,0.0)
 
 !$omp do ! reduction(-:S0)
 do ik = 1, Ntot   ! k_loop_FBZ_2nd: 
-  
+  ! neven debug
+  thread_id =  omp_get_thread_num()
+  print *, 'thread id:',thread_id
 
   ! debug vito (prepraviti za paralelnu izvedbu)
   ! open(122,FILE='status')
@@ -331,7 +329,7 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
   KQz = kz + qz
 
   !$omp critical(printWaveVector)
-  thread_id =  omp_get_thread_num()
+  ! thread_id =  omp_get_thread_num()
   print *,'thread id:',thread_id,'ik: ',ik
   print *, 'KQx,KQy,KQz:',KQx,KQy,KQz
   print *, 'R1, K1:',R1, K1
@@ -347,13 +345,15 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
   ! K2-integer, redni broj valnog vektora K2 u transformaciji  ''K+Q=G0+R2*K2''.
   
   !  petlje po vrpcama n i m
-  ! allocate(S0_partial(no,Nlf,Nlf))   ! pomocna var. za redukciju S0
+  allocate(S0_partial(no,Nlf,Nlf))   ! pomocna var. za redukciju S0
+  S0_partial(1:no,1:Nlf,1:Nlf) = cmplx(0.0)
   bands_n_loop: do  n = 1, Nocc         ! filled bands loop
     bands_m_loop: do  m = Nocc+1, Nband ! empty bands loop
       
       
       !$omp critical(pathk_read)
-        thread_id =  omp_get_thread_num()
+        ! thread_id =  omp_get_thread_num()
+        ! thread_id = 0
 
       ! !$omp critical(pathk_read1)
       ! otvara save/K.000x/evc.dat u atributu <evc band> ispod CnK(G) koef.
@@ -365,28 +365,28 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
       
       !Otvaranje atribute za INFO
       ! print *,'pathk1',pathk1
-      call iotk_open_read(10+ik,pathk1)
-      call iotk_scan_empty(10+ik,"INFO",attr=attr)
+      call iotk_open_read(10+thread_id,pathk1)
+      call iotk_scan_empty(10+thread_id,"INFO",attr=attr)
       call iotk_scan_attr(attr,"igwx",NG1)
       ! Alociranje polja C1
       allocate (C1(NG1))
       ! Ucitavanje podataka iza evc.n
-      call iotk_scan_dat(10+ik,bandn,C1)
-      call iotk_close_read(10+ik)
+      call iotk_scan_dat(10+thread_id,bandn,C1)
+      call iotk_close_read(10+thread_id)
       
       ! !$omp end critical(pathk_read1)
       ! !$omp critical(pathk_read2)
 
       !  Otvaranje atribute za INFO
       ! print *,'pathk2',pathk2
-      call iotk_open_read(10+ik,pathk2)
-      call iotk_scan_empty(10+ik,"INFO",attr=attr)
+      call iotk_open_read(10+thread_id,pathk2)
+      call iotk_scan_empty(10+thread_id,"INFO",attr=attr)
       call iotk_scan_attr(attr,"igwx",NG2)
       ! Alociranje polja C2
       allocate (C2(NG2))
       ! Ucitavanje podataka iza evc.m
-      call iotk_scan_dat(10+ik,bandm,C2)
-      call iotk_close_read(10+ik)
+      call iotk_scan_dat(10+thread_id,bandm,C2)
+      call iotk_close_read(10+thread_id)
 
       ! !$omp end critical(pathk_read2)
       !$omp end critical(pathk_read)
@@ -406,8 +406,8 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
       deallocate(C1)
       deallocate(C2)
 
-      allocate(S0_partial(no,Nlf,Nlf))   ! pomocna var. za redukciju S0, pomaknuta izvan
-      S0_partial(1:no,1:Nlf,1:Nlf) = cmplx(0.0)
+      ! allocate(S0_partial(no,Nlf,Nlf))   ! pomocna var. za redukciju S0, pomaknuta izvan
+      ! S0_partial(1:no,1:Nlf,1:Nlf) = cmplx(0.0)
       do  io = 1,no
         o = (io-1)*domega
         De = o + E(K1,n) - E(K2,m) 
@@ -416,7 +416,7 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
           do  iG = 1,Nlf
             do  jG = 1,Nlf
               ! !$omp atomic
-              S0_partial(io,iG,jG) = - 2.0*Lor*MnmK1K2(iG)*conjg(MnmK1K2(jG)) / (pi*Ntot*Vcell)
+              S0_partial(io,iG,jG) = S0_partial(io,iG,jG) - 2.0*Lor*MnmK1K2(iG)*conjg(MnmK1K2(jG)) / (pi*Ntot*Vcell)
               ! print *,'S0_partial(io,iG,jG)',S0_partial(io,iG,jG)
               ! S0(io,iG,jG) = S0(io,iG,jG) - 2.0*Lor*MnmK1K2(iG)*conjg(MnmK1K2(jG)) / (pi*Ntot*Vcell)
               ! if (S0(io,iG,jG)+S0_partial(io,iG,jG) /= 0.0) then
@@ -434,26 +434,27 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
       ! end if 
 
       end do
-      !$omp critical(sumS0)
-      !$omp flush(S0)
-      S0(1:no,1:Nlf,1:Nlf) = S0(1:no,1:Nlf,1:Nlf) + S0_partial(1:no,1:Nlf,1:Nlf)
-      !$omp end critical(sumS0)
+
 
       
       ! neve debug staro mjesto
-      deallocate(S0_partial)
+      ! deallocate(S0_partial)
       ! deallocate(C1)
       ! deallocate(C2)  
               
     end do bands_m_loop ! end of m do loop
   end do bands_n_loop ! end of n do loop
-  ! !$omp critical(printSumS0)
-  ! print *, 'K1,K2: ',K1,K2,'R1,R2: ',R1, R2
-  ! print *, 'sum(S0): ', sum(S0(1:no,1:Nlf,1:Nlf))
-  ! !$omp end critical(printSumS0)
+  !$omp critical(printSumS0)
+  print *, 'K1,K2: ',K1,K2,'R1,R2: ',R1, R2
+  print *, 'sum(S0): ', sum(S0(1:no,1:Nlf,1:Nlf))
+  !$omp end critical(printSumS0)
 
+  !$omp critical(sumS0)      
+  S0(1:no,1:Nlf,1:Nlf) = S0(1:no,1:Nlf,1:Nlf) + S0_partial(1:no,1:Nlf,1:Nlf)
+  !$omp end critical(sumS0)
+
+  deallocate(S0_partial)
   jump = 1
-  ! deallocate(S0_partial)
 
 
 end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
@@ -926,8 +927,8 @@ subroutine genMnmK1K2(jump, Nlf, iG0, NG1, NG2, eps, R, RI, G, Gfast, C1, C2, Mn
   real(kind=dp),    intent(in)    :: R(:,:,:)
   real(kind=dp),    intent(in)    :: RI(:,:,:)
   real(kind=dp),    intent(in)    :: G(:,:)     ! polje valnih vektora G u recp. prost. za wfn.
-  complex(kind=dp), intent(in)    :: C1(:)
-  complex(kind=dp), intent(in)    :: C2(:)
+  complex(kind=dp), intent(in), pointer    :: C1(:)
+  complex(kind=dp), intent(in), pointer    :: C2(:)
   integer,          intent(inout) :: jump
   integer,          intent(inout) :: Gfast(:)
   complex(kind=dp), intent(inout) :: MnmK1K2(:)
