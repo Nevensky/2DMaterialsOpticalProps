@@ -37,7 +37,7 @@ logical :: found
 character (len=100) :: rundir, savedir, band_file, scf_file
 namelist /directories/ rundir, savedir, scf_file, band_file
 
-integer :: debugCount= 0.0
+integer :: debugCount = 0
 
 
 
@@ -163,8 +163,8 @@ character (len=100) :: bandn,bandm,nis,pathk1,pathk2,dato, path
 character (len=35)  :: tag,buffer
 
 
-complex(kind=dp), dimension(:), pointer,save :: C1,C2 ! Fourierovi koef. u razvoju wfn. iz QE 
-!$omp threadprivate(C1,C2)
+! complex(kind=dp), dimension(:), pointer,save :: C1,C2 ! Fourierovi koef. u razvoju wfn. iz QE 
+complex(kind=dp), dimension(:), allocatable :: C1,C2
 
 ! OpenMP vars
 integer      :: Nthreads
@@ -300,14 +300,13 @@ q_loop: do  iq = 42,42 ! 42,61
 ! 1.B.Z  LOOP STARTS HERE !!!!
 
 print *, 'DEBUG: entering parallel region'
-!$omp parallel shared(S0,iq,kI,ktot,RI,eps,E,G,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,eta,Vcell) private(ik, S0_partial,MnmK1K2,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,De,Lor,Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2) firstprivate(savedir,jump,domega,attr) num_threads(Nthreads) !  default(private) 
+!$omp parallel shared(S0,iq,kI,ktot,RI,eps,E,G,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,eta,Vcell) private(ik, S0_partial,MnmK1K2,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,De,Lor,Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2,attr,C1,C2) firstprivate(savedir,jump,domega) num_threads(Nthreads) !  default(private) 
+thread_id =  omp_get_thread_num()
 
-
-!$omp do ! reduction(-:S0)
+!$omp do 
 do ik = 1, Ntot   ! k_loop_FBZ_2nd: 
   ! neven debug
-  thread_id =  omp_get_thread_num()
-  print *, 'thread id:',thread_id
+  ! print *, 'thread id:',thread_id
 
   ! debug vito (prepraviti za paralelnu izvedbu)
   ! open(122,FILE='status')
@@ -332,66 +331,49 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
   ! thread_id =  omp_get_thread_num()
   print *,'thread id:',thread_id,'ik: ',ik
   print *, 'KQx,KQy,KQz:',KQx,KQy,KQz
-  print *, 'R1, K1:',R1, K1
   !$omp end critical(printWaveVector)
 
   ! trazenje (KQx,KQy) prvo u 1.B.Z a onda u I.B.Z.
   call findKQinBZ(KQx, KQy, KQz, eps, Nsymm, NkI, Ntot, NG, ktot, kI, RI, G, iG0, R2, K2)
   
   
-  ! R1-integer, redni broj point operacije R1 u transformaciji ''K=R1*K1''.
-  ! K1-integer, redni broj valnog vektora K1 u transformaciji ''K=R1*K1''.
-  ! iG0 i R2-integeri, redni broj vektora reciprocne restke G0 i point operacije R2 u transformaciji ''K+Q=G0+R2*K2''.
-  ! K2-integer, redni broj valnog vektora K2 u transformaciji  ''K+Q=G0+R2*K2''.
+  ! R1 - integer, redni broj point operacije R1 u transformaciji K=R1*K1.
+  ! K1 - integer, redni broj valnog vektora K1 u transformaciji K=R1*K1.
+  ! iG0 i R2-integeri, redni broj vektora reciprocne restke G0 i point operacije R2 u transformaciji K+Q=G0+R2*K2.
+  ! K2 - integer, redni broj valnog vektora K2 u transformaciji  K+Q=G0+R2*K2.
   
-  !  petlje po vrpcama n i m
+
   allocate(S0_partial(no,Nlf,Nlf))   ! pomocna var. za redukciju S0
   S0_partial(1:no,1:Nlf,1:Nlf) = cmplx(0.0)
+  
   bands_n_loop: do  n = 1, Nocc         ! filled bands loop
     bands_m_loop: do  m = Nocc+1, Nband ! empty bands loop
-      
+      ! ucitavanje evc.dat binarnih datoteka za fiksni K1,K2, i vrpce n i m
       
       !$omp critical(pathk_read)
-        ! thread_id =  omp_get_thread_num()
-        ! thread_id = 0
-
-      ! !$omp critical(pathk_read1)
+      
       ! otvara save/K.000x/evc.dat u atributu <evc band> ispod CnK(G) koef.
-      
       call paths(savedir,K1,K2,n,m,pathk1,pathk2,bandn,bandm) 
-      
-      ! u ovom dijelu programa se iscitava iz binarnih fileova evc.dat za
-      ! fiksni K1,K2, i vrpce n i m
-      
-      !Otvaranje atribute za INFO
+
       ! print *,'pathk1',pathk1
-      call iotk_open_read(10+thread_id,pathk1)
-      call iotk_scan_empty(10+thread_id,"INFO",attr=attr)
+      call iotk_open_read(10+ik,pathk1)
+      call iotk_scan_empty(10+ik,"INFO",attr=attr) ! Otvaranje atribute za INFO
       call iotk_scan_attr(attr,"igwx",NG1)
-      ! Alociranje polja C1
-      allocate (C1(NG1))
-      ! Ucitavanje podataka iza evc.n
-      call iotk_scan_dat(10+thread_id,bandn,C1)
-      call iotk_close_read(10+thread_id)
       
-      ! !$omp end critical(pathk_read1)
-      ! !$omp critical(pathk_read2)
+      allocate (C1(NG1))                           ! Alociranje polja C1
+      call iotk_scan_dat(10+ik,bandn,C1)           ! Ucitavanje podataka iza evc.n
+      call iotk_close_read(10+ik)
 
-      !  Otvaranje atribute za INFO
       ! print *,'pathk2',pathk2
-      call iotk_open_read(10+thread_id,pathk2)
-      call iotk_scan_empty(10+thread_id,"INFO",attr=attr)
+      call iotk_open_read(10+ik,pathk2)
+      call iotk_scan_empty(10+ik,"INFO",attr=attr)
       call iotk_scan_attr(attr,"igwx",NG2)
-      ! Alociranje polja C2
-      allocate (C2(NG2))
-      ! Ucitavanje podataka iza evc.m
-      call iotk_scan_dat(10+thread_id,bandm,C2)
-      call iotk_close_read(10+thread_id)
+      allocate (C2(NG2))                           ! Alociranje polja C1
+      call iotk_scan_dat(10+ik,bandm,C2)           ! Ucitavanje podataka iza evc.n
+      call iotk_close_read(10+ik)
 
-      ! !$omp end critical(pathk_read2)
       !$omp end critical(pathk_read)
-      
-            
+
       if (NGd > NG1) then
         write(*,*) 'NGd is bigger than NG1=',NG1
         STOP
@@ -399,57 +381,35 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
         write(*,*) 'NGd is bigger than NG2=',NG2
         STOP
       end if
-      
+
+
       ! Konstrukcija stupca matricnih elementa nabojnih vrhova MnmK1K2(G)      
-      call genMnmK1K2(jump, Nlf, iG0, NG1, NG2, eps, R, RI, G, Gfast, C1, C2, MnmK1K2)
-        
+      call genMnmK1K2(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2)
+
       deallocate(C1)
       deallocate(C2)
 
-      ! allocate(S0_partial(no,Nlf,Nlf))   ! pomocna var. za redukciju S0, pomaknuta izvan
-      ! S0_partial(1:no,1:Nlf,1:Nlf) = cmplx(0.0)
       do  io = 1,no
         o = (io-1)*domega
         De = o + E(K1,n) - E(K2,m) 
-        Lor = -eta/(De**2 + eta**2) ! ovo bi analticki bila delta funkcija imag. dio od 1/De
+        Lor = -eta/(De**2 + eta**2)     ! ovo bi analticki bila delta funkcija imag. dio od 1/De
         if (abs(Lor) >= 1.0D-3/eta) then
           do  iG = 1,Nlf
             do  jG = 1,Nlf
-              ! !$omp atomic
               S0_partial(io,iG,jG) = S0_partial(io,iG,jG) - 2.0*Lor*MnmK1K2(iG)*conjg(MnmK1K2(jG)) / (pi*Ntot*Vcell)
-              ! print *,'S0_partial(io,iG,jG)',S0_partial(io,iG,jG)
-              ! S0(io,iG,jG) = S0(io,iG,jG) - 2.0*Lor*MnmK1K2(iG)*conjg(MnmK1K2(jG)) / (pi*Ntot*Vcell)
-              ! if (S0(io,iG,jG)+S0_partial(io,iG,jG) /= 0.0) then
-                ! print *,'S0(io,iG,jG)',S0(io,iG,jG)
-              ! end if
             end do
           end do
         end if
-
-
-      ! neven debug  
-      ! debugCount = debugCount +1
-      ! if (debugCount>9000000 .and. debugCount<10000000) then
-      ! write(118,*) io*Hartree,S0(io,1,1)
-      ! end if 
-
       end do
-
-
-      
-      ! neve debug staro mjesto
-      ! deallocate(S0_partial)
-      ! deallocate(C1)
-      ! deallocate(C2)  
               
     end do bands_m_loop ! end of m do loop
   end do bands_n_loop ! end of n do loop
-  !$omp critical(printSumS0)
-  print *, 'K1,K2: ',K1,K2,'R1,R2: ',R1, R2
-  print *, 'sum(S0): ', sum(S0(1:no,1:Nlf,1:Nlf))
-  !$omp end critical(printSumS0)
+
 
   !$omp critical(sumS0)      
+  ! neven debug
+  ! print *, 'K1: ',K1,'K2: ',K2,'R1: ',R1, 'R2: ',R2
+  ! print *, 'sum(S0): ', sum(S0(1:no,1:Nlf,1:Nlf)
   S0(1:no,1:Nlf,1:Nlf) = S0(1:no,1:Nlf,1:Nlf) + S0_partial(1:no,1:Nlf,1:Nlf)
   !$omp end critical(sumS0)
 
@@ -531,17 +491,11 @@ end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
         Gammam(iG,jG) = cmplx(-W2,0.0)
         if (iG == 1 .and. jG == 1) then
           W2KK = W2
-          ! neven debug
-          ! print *, 'W2KK<--- W2:',W2
         end if
         if (io == 1) then
           G0 = Gammap(1,1)
-          ! neven debug
-          ! print *,'ImW(io=1,iG,jG):',ImW
-          ! print *, 'G0<--- Gammap(1,1):',Gammap(1,1)
         end if
         
-      ! kraj po iG,jG
       end do
     end do
     
@@ -920,24 +874,27 @@ subroutine genGlfandParity(lf,Ecut,NG,Gcar,G,Nlf,Nlfd,parG,Glf)
   ! print *,'Glf(1:3,1:5)',Glf(1:3,1:5)
 end subroutine genGlfandParity
 
-subroutine genMnmK1K2(jump, Nlf, iG0, NG1, NG2, eps, R, RI, G, Gfast, C1, C2, MnmK1K2)
+subroutine genMnmK1K2(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2)
   ! Konstrukcija stupca matricnih elementa nabojnih vrhova MnmK1K2(G) 
   integer,          intent(in)    :: iG0, Nlf, NG1, NG2
+  integer,          intent(in)    :: R1,R2
   real(kind=dp),    intent(in)    :: eps
   real(kind=dp),    intent(in)    :: R(:,:,:)
   real(kind=dp),    intent(in)    :: RI(:,:,:)
+  real(kind=dp),    intent(in)    :: Glf(:,:)
   real(kind=dp),    intent(in)    :: G(:,:)     ! polje valnih vektora G u recp. prost. za wfn.
-  complex(kind=dp), intent(in), pointer    :: C1(:)
-  complex(kind=dp), intent(in), pointer    :: C2(:)
+  complex(kind=dp), intent(in)    :: C1(:)
+  complex(kind=dp), intent(in)    :: C2(:)
   integer,          intent(inout) :: jump
   integer,          intent(inout) :: Gfast(:)
-  complex(kind=dp), intent(inout) :: MnmK1K2(:)
+  complex(kind=dp), intent(out)   :: MnmK1K2(:)
 
   integer       :: iG, iG1, iG2
   integer       :: iGfast
   real(kind=dp) :: K11, K22, K33
   real(kind=dp) :: Gxx1,Gyy1,Gzz1
   real(kind=dp) :: Gxx2,Gyy2,Gzz2
+
 
   iGfast = 0
   MnmK1K2(1:Nlf) = cmplx(0.0) ! nabojni vrhovi
@@ -982,6 +939,7 @@ subroutine genMnmK1K2(jump, Nlf, iG0, NG1, NG2, eps, R, RI, G, Gfast, C1, C2, Mn
       iG2 = Gfast(iGfast)
       if (iG2 <= NG2) then
         MnmK1K2(iG) = MnmK1K2(iG) + conjg(C1(iG1))*C2(iG2)
+        ! print *,'condition satisfied',MnmK1K2(iG)
       end if
     end do
   end do
@@ -1318,7 +1276,7 @@ end subroutine genMnmK1K2
     real(kind=dp),      intent(out) :: KC(3,3)
     
     integer :: j
-    integer :: ios, lno
+    integer :: ios, lno=0
     character (len=35) :: tag, buffer
 
     tag='     reciprocal axes: (cart. coord.'
@@ -1393,6 +1351,121 @@ end subroutine genMnmK1K2
   5000 continue 
 
   end subroutine loadG
+
+  subroutine loadCs(thread_id,ik,savedir,K1,K2,n,m,NGd,jump, Nlf, iG0, eps, R, RI, G, Gfast, MnmK1K2)
+    ! WARNING THIS SUBROUTINE IS BUGGY and therefore not used, MnmK1K2 gets assigned nonensensical values.
+
+    ! Load Fourier coefficients (C1 spin up and C2 spin down) in the wfn. expansion 
+    ! for a given (K1, K2, n, m) then generate MnmK1K2 for the loaded coefficients
+    implicit none
+    integer,            intent(in)    :: thread_id, ik
+    integer,            intent(in)    :: K1, K2, n, m
+    integer,            intent(in)    :: NGd
+    character(len=100), intent(in)    :: savedir
+
+    ! MnmK1K2 vars
+    integer,            intent(in)    :: iG0, Nlf
+    real(kind=dp),      intent(in)    :: eps
+    real(kind=dp),      intent(in)    :: R(:,:,:)
+    real(kind=dp),      intent(in)    :: RI(:,:,:)
+    real(kind=dp),      intent(in)    :: G(:,:)    
+    integer,            intent(inout) :: jump
+    integer,            intent(inout) :: Gfast(:)
+    complex(kind=dp),   intent(inout) :: MnmK1K2(:)
+    
+
+    integer                        :: NG1, NG2
+    character(len=iotk_attlenx)    :: attr
+    character(len=100)             :: pathk1, pathk2, bandn, bandm
+    complex(kind=dp), allocatable  :: C1(:) ! pointer changed to allocatable (less memory efficent)
+    complex(kind=dp), allocatable  :: C2(:)
+
+    !$omp critical(pathk_read)
+    ! otvara save/K.000x/evc.dat u atributu <evc band> ispod CnK(G) koef.
+    call paths(savedir,K1,K2,n,m,pathk1,pathk2,bandn,bandm) 
+    ! u ovom dijelu programa se iscitava iz binarnih fileova evc.dat za
+    ! fiksni K1,K2, i vrpce n i m
+    !Otvaranje atribute za INFO
+    ! print *,'pathk1',pathk1
+    call iotk_open_read(10+ik,pathk1)
+    call iotk_scan_empty(10+ik,"INFO",attr=attr)
+    call iotk_scan_attr(attr,"igwx",NG1)
+    ! Alociranje polja C1
+    allocate (C1(NG1))
+    ! Ucitavanje podataka iza evc.n
+    call iotk_scan_dat(10+ik,bandn,C1)
+    call iotk_close_read(10+ik)
+    !  Otvaranje atribute za INFO
+    ! print *,'pathk2',pathk2
+    call iotk_open_read(10+ik,pathk2)
+    call iotk_scan_empty(10+ik,"INFO",attr=attr)
+    call iotk_scan_attr(attr,"igwx",NG2)
+    ! Alociranje polja C2
+    allocate (C2(NG2))
+    ! Ucitavanje podataka iza evc.m
+    call iotk_scan_dat(10+ik,bandm,C2)
+    call iotk_close_read(10+ik)
+    !$omp end critical(pathk_read)
+
+    if (NGd > NG1) then
+      write(*,*) 'NGd is bigger than NG1=',NG1
+      STOP
+    else if (NGd > NG2) then
+      write(*,*) 'NGd is bigger than NG2=',NG2
+      STOP
+    end if
+    
+    ! Konstrukcija stupca matricnih elementa nabojnih vrhova MnmK1K2(G)      
+    call genMnmK1K2(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2)
+
+    ! neven debug
+    ! print *,MnmK1K2(1:5)
+    ! print *, jump, Nlf, iG0, NG1, NG2, eps, R(5,3,3), RI(5,3,3), G(3,3), Gfast(1:5),C1(4),C2(4)
+    deallocate(C1)
+    deallocate(C2)
+  end subroutine loadCS
+
+subroutine read_a_wfc(ibnd, filename, evc, ik, xk, nbnd, ispin, npol, gamma_only, ngw, igwx )
+    ! read QE 6.0 and greater, wfn coefficeints
+    ! use iso_fortran_env, ONLY: DP=> REAL64
+    implicit none 
+    character (len=*), intent(in)               :: filename 
+    integer,           intent(in)               :: ibnd
+    integer,           intent(out)              :: ik, nbnd, ispin, npol, ngw, igwx
+    real(dp),          intent(out)              :: xk(3) 
+    complex(DP),       intent(out), allocatable :: evc(:)
+
+    integer  :: dummy_int   
+    logical  :: gamma_only 
+    integer  :: i, iuni = 1111
+    real(dp) :: scalef
+    real(dp) :: b1(3), b2(3), b3(3), dummy_real 
+    
+    open(unit = iuni, file = trim(filename), form = 'unformatted', status = 'old') 
+    read( iuni) ik, xk, ispin, gamma_only, scalef
+    read ( iuni) ngw, igwx, npol, nbnd
+    read (iuni) b1, b2, b3 
+
+    ! avoid reading miller indices of G vectors below E_cut for this kpoint 
+    ! if needed allocate  an integer array of dims (1:3,1:igwx) 
+
+    read (iuni) dummy_int
+    allocate (evc(npol*igwx))
+    if ( ibnd > nbnd) then 
+       print '("looking for band nr. ",I7," but there are only ",I7," bands in the file")',ibnd, nbnd
+       stop
+    end if 
+    do i = 1, nbnd 
+       if ( i == ibnd) then 
+          read(iuni) evc (1:npol*igwx) 
+          exit 
+       else 
+          read(iuni) dummy_real
+       end if 
+    end do 
+    close(iuni) 
+    end subroutine read_a_wfc
+
 
   subroutine loadkIandE(path, NkI, Nband, Nocc, kI, E)
     implicit none
