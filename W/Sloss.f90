@@ -21,9 +21,9 @@ character (len=iotk_attlenx) :: attr
 logical :: found
 
 ! single / double precision
-!integer, parameter :: sp = real32
-!integer, parameter :: dp = real64
-!integer, parameter :: qp = real128
+! integer, parameter :: sp = real32
+! integer, parameter :: dp = real64
+! integer, parameter :: qp = real128
 
 ! integer, parameter :: sp = SELECTED_REAL_KIND(p=6)
 ! integer, parameter :: dp = SELECTED_REAL_KIND(p=15)
@@ -112,6 +112,7 @@ complex(kind=dp) :: G0
 
 
 ! parameters
+integer :: qmin,qmax
 real(kind=dp) :: Gcar   ! unit cell norm.
 real(kind=dp) :: Efermi ! [eV] Fermi en. 
 real(kind=dp) :: a0     ! [a.u.]  unit cell parameter in parallel direction 
@@ -122,7 +123,7 @@ real(kind=dp) :: eta    ! damping i\eta
 real(kind=dp) :: Ecut   ! [Hartree] cutoff energy for crystal local field calculations , for Ecut=0 S matrix is a scalar ?
 real(kind=dp) :: Vcell  ! [a.u.^3] unit-cell volume 
 namelist /parameters/ Efermi, a0, c0, eps, T, eta, Ecut, Vcell
-namelist /system/ lf, loss, jump, omin, omax
+namelist /system/ lf, loss, jump, omin, omax, qmin, qmax
 
 ! scalar arrays
 integer,       dimension(3) :: Gi                           ! pomocna funkcija
@@ -284,7 +285,7 @@ allocate(work(Nlf))
 ! iq=0 ne moze biti nula, opticki racun
 ! iq=2 do iq=...cutoff transfer q vektor!
 ! ikmin = min. valni vektor u BZ svi veci su visekratnici tog minimalnog
-q_loop: do  iq = 42,42 ! 42,61
+q_loop: do  iq = qmin,qmax ! 42,61
   
   ! searching min. q=(qx,qy,qz) in Gamma - M direction
   call findMinQ(Ntot, ktot, qx, qy, qz)
@@ -293,8 +294,7 @@ q_loop: do  iq = 42,42 ! 42,61
   call writeInfo(qx, qy, qz, Gcar, Nsymm, Nlf, Ntot, NkI, Nband, eta, T, Nel, NelQE )
 
   ! intialize correlation matrix
-  S0(1:no,1:Nlf,1:Nlf) = 0.0 !cmplx(0.0,0.0)
-  
+  S0(1:no,1:Nlf,1:Nlf) = cmplx(0.0,0.0)
   
   
 ! 1.B.Z  LOOP STARTS HERE !!!!
@@ -403,7 +403,7 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
       end do
               
     end do bands_m_loop ! end of m do loop
-  end do bands_n_loop ! end of n do loop
+  end do bands_n_loop   ! end of n do loop
 
 
   !$omp critical(sumS0)      
@@ -445,10 +445,10 @@ end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
     
     !  invertiranje matrice ''diel_epsilon = 1-Chi_0*V''
     call gjel(diel_epsilon,Nlf,Nlfd,Imat,Nlf,Nlfd)
-    ! ! call sgetrf( Nlf,Nlfd, diel_epsilon, Nlf, ipiv, info_trf)
-    ! ! call sgetri( Nlf, diel_epsilon, Nlf, ipiv, work, lwork, info_tri )
+    ! call dgetrf( Nlf,Nlfd, diel_epsilon, Nlf, ipiv, info_trf)
+    ! call dgetri( Nlf, diel_epsilon, Nlf, ipiv, work, lwork, info_tri )
 
-
+    ! nezasjenjeni Chi
     call genChi(Nlf,diel_epsilon,Chi0,Chi)
 
     !  SCREENED COULOMB INTERACTION W^T_GG'(Q,\omega)
@@ -504,12 +504,6 @@ end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
     Wind = real(WT(io,1,1)-V(1,1))
     WindKK = real(Gammap(1,1)) - W2KK
 
-    ! neven debug
-    ! print *, 'WT: ',WT(io,1,1),' V(11): ',V(1,1) 
-    ! print *, 'Wind: ',Wind
-    ! print *, 'Gammap(1,1): ',Gammap(1,1),'W2KK: ',W2KK
-    ! print *,'WindKK: ',WindKK
-
     fact = domega
     if (io == 1 .or. io == no-1) then
       fact = 0.5*domega
@@ -517,13 +511,9 @@ end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
     KKS = KKS + fact*(WindKK-Wind)*(WindKK-Wind)
     SKK = SKK + fact*Wind*Wind
     
-    ! neven debug
-    ! print *,'KKS',KKS
-    ! print *, 'SKK',SKK
+
 
   end do omega_loop_B
-  ! vito greska?? ovaj fajl je vec zatvoren
-  ! close(74)
 
   ! write Kramers-Kroning relations check
   call writeKramKron_Qi(iq,qx, qy, qz, Gcar, KKS, SKK, G0, WT, V)
