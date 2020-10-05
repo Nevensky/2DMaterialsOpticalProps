@@ -21,9 +21,11 @@ def findMin_NGd(savedir):
 			if (os.path.splitext(f)[1] == '.dat' and 'evc' in f):
 				fullpath = os.path.join(root, f)
 				paths.append(fullpath)
+				print(fullpath)
 				igwx = subprocess.check_output("grep --line-buffered --text \"igwx\" {}".format(fullpath), shell=True)
 				igwx = int(igwx.decode('ascii').split()[2].split("\"")[1])
 				igwxs.append(igwx)
+				print(igwx)
 
 	NGd = min(igwxs)
 
