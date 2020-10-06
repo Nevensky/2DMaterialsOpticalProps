@@ -49,17 +49,17 @@ def findNelQE(rundir,scf_file):
 				break
 	return NelQE
 
-def findNkI(rundir,nsc_file):
-	""" Finds number of k-points. """
-	NkI = 0
-	path = rundir+nsc_file
-	with open(path,'r') as f:
-		lns = f.readlines()
-		for idx,ln in enumerate(lns):
-			if 'number of k points=' in ln:
-				NkI = int(ln.split()[4])
-				break
-	return NkI
+# def findNkI(rundir,nsc_file):
+# 	""" Finds number of k-points. """
+# 	NkI = 0
+# 	path = rundir+nsc_file
+# 	with open(path,'r') as f:
+# 		lns = f.readlines()
+# 		for idx,ln in enumerate(lns):
+# 			if 'number of k points=' in ln:
+# 				NkI = int(ln.split()[4])
+# 				break
+# 	return NkI
 
 def findNband(rundir,band_file):
 	""" Finds number of occupied bands in QE scf output. """
@@ -73,6 +73,18 @@ def findNband(rundir,band_file):
 				break
 	return Nband
 
+def findNkI(rundir,band_file):
+	""" Finds number of k-points.  """
+	NkI = 0
+	path = rundir+band_file
+	with open(path,'r') as f:
+		lns = f.readlines()
+		for idx,ln in enumerate(lns):
+			if 'nks=' in ln:
+				print(ln)
+				NkI = int(ln.split()[4].rstrip(','))
+				break
+	return NkI
 
 def findNG(rundir,scf_file):
 	""" Finds total number of G-vectors in QE scf. """
@@ -153,7 +165,6 @@ default_config = """&directories
  rundir    = ''
  savedir   = ''
  scf_file  = ''
- nsc_file  = ''
  band_file = ''
 /
 &system
@@ -253,7 +264,7 @@ try:
 				lns_new.append(ln2)
 			elif 'NkI' in ln:
 				NkI = 0
-				NkI = findNkI(rundir,nsc_file)
+				NkI = findNkI(rundir,band_file)
 				ln2 = ' NkI      = {} {}\n'.format(NkI,NkI_comment)
 				lns_new.append(ln2)
 			elif 'NG ' in ln:

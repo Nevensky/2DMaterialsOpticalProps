@@ -1468,7 +1468,7 @@ subroutine read_a_wfc(ibnd, filename, evc, ik, xk, nbnd, ispin, npol, gamma_only
     integer :: ios
     real(kind=dp),    parameter :: Hartree = 2.0D0*13.6056923D0
 
-    open(400,FILE=path,status='old',err=400,iostat=ios) 
+    open(400,FILE=path,status='old',err=500,iostat=ios) 
     do  ik = 1,NkI
       if (ik == 1) then
         read(400,*) 
@@ -1478,9 +1478,10 @@ subroutine read_a_wfc(ibnd, filename, evc, ik, xk, nbnd, ispin, npol, gamma_only
     end do
     close(400)
       
-    goto 500
-    400 write(*,*) '100 cannot open file. iostat = ',ios
-    500 continue
+    goto 400
+    500 write(*,*) 'Cannot open BAND file. iostat = ',ios
+    stop
+    400 continue
     
     ! konverzija en. u Hartree
     E(1:NkI,1:Nband) = E(1:NkI,1:Nband)/Hartree
@@ -1502,7 +1503,7 @@ subroutine read_a_wfc(ibnd, filename, evc, ik, xk, nbnd, ispin, npol, gamma_only
 
     absq = sqrt(qx**2+qy**2+qz**2)
 
-    open(55,FILE='Info', err=400, iostat=ios)
+    open(55,FILE='Info', err=700, iostat=ios)
     write(55,*) '***************General***********************'
     write(55,*) ''
     write(55,*) 'Number of point symmetry operation is',Nsymm
@@ -1529,9 +1530,10 @@ subroutine read_a_wfc(ibnd, filename, evc, ik, xk, nbnd, ispin, npol, gamma_only
     end if
     close(55)
     
-    goto 500
-    400 write(*,*) '100 cannot open file. iostat = ',ios
-    500 continue
+    goto 600
+    700 write(*,*) 'Cannot open Info file. iostat = ',ios
+    stop
+    600 continue
 
   end subroutine writeInfo
 
@@ -1593,7 +1595,7 @@ subroutine writeKramKron_Qi(iq,qx, qy, qz, Gcar, KKS, SKK, G0, WT, V)
   end if
   
 
-  open(33,FILE=dato, err=400, iostat=ios)
+  open(33,FILE=dato, err=900, iostat=ios)
   write(33,'(a25,3f10.4,a5) ') 'Wave vector (qx,qy,qz)=(',qx*Gcar,qy*Gcar, qz*Gcar,') a.u.'
   write(33,'(a25,f8.4,a5) ') '|(qx,qy,qz)|=',absq*Gcar,'a.u.'
   write(33,*) 'int(WindKK-Wind)^2 =  ',KKS
@@ -1606,9 +1608,10 @@ subroutine writeKramKron_Qi(iq,qx, qy, qz, Gcar, KKS, SKK, G0, WT, V)
   write(33,*) 'real[WT(o=0,1,1)]/2=', real(WT(1,1,1)-V(1,1))/2.0
   close(33)
 
-  goto 500
-  400 write(*,*) '100 cannot open file. iostat = ',ios
-  500 continue
+  goto 800
+  900 write(*,*) 'Cannot open Kramers-Kron_Qi file. iostat = ',ios
+  stop
+  800 continue
 end subroutine writeKramKron_Qi
 
 end program surface_loss
