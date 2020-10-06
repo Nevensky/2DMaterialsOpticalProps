@@ -160,7 +160,7 @@ complex(kind=dp), dimension(:,:,:), allocatable  :: WT ! time ordered RPA screen
 complex(kind=dp), dimension(:,:)  , allocatable  :: Gammap ! omega>0 ,eq....(skripta 5) \sum_{q,m} \int \dd omega' S(\omega')/{(\omega-\omega'-e_{k+q,m} +i\eta}) za GW se koristi se za ovaj dio 
 complex(kind=dp), dimension(:,:)  , allocatable  :: Gammam ! omega<0, allocatable  
 
-character (len=100) :: bandn,bandm,nis,pathk1,pathk2,dato, path
+character (len=100) :: bandn,bandm,dummy,pathk1,pathk2,dato, path
 character (len=35)  :: tag,buffer
 
 
@@ -1308,8 +1308,8 @@ end subroutine genMnmK1K2
     lno = 0
 
     do  i=1,8
-      read(200,*,err=201,iostat=ios2,end=202) nis
-      lno = lno +1
+      read(200,*,err=201,iostat=ios2,end=202) ! dummy
+      lno = lno + 1
     end do
 
     G(1:3,1:NG) = 0.0
@@ -1431,7 +1431,7 @@ subroutine loadCsQE6( ik, ibnd, savedir, evc, igwx )
     real(dp) :: xk(3)
     ! integer  :: dummy_int   
     logical  :: gamma_only 
-    integer  :: ios
+    integer  :: ios,iuni
     real(dp) :: scalef
     real(dp) :: b1(3), b2(3), b3(3) !, dummy_real 
 

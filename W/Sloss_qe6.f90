@@ -1395,19 +1395,19 @@ end subroutine genMnmK1K2
     deallocate(C2)
   end subroutine loadCS
 
-subroutine loadCsQE6(ik, ibnd, savedir, ngw, igwx, evc)
+subroutine loadCsQE6(ik, ibnd, savedir, igwx, evc)
     ! read_a_wfc(ibnd, filename, evc, ik, xk, nbnd, ispin, npol, gamma_only, ngw, igwx )
     ! read QE 6.0 and greater, wfn coefficeints
     ! use iso_fortran_env, ONLY: DP=> REAL64
     implicit none 
     character (len=*), intent(in)               :: savedir
     integer,           intent(in)               :: ik, ibnd
-    integer,           intent(out)              :: igwx, ngw
-    complex(DP),       intent(out), allocatable :: evc(:)
+    integer,           intent(out)              :: igwx
+    complex(DP),       intent(inout), allocatable            :: evc(:)
 
     character (len=300) :: path 
 
-    integer  :: nbnd, ispin, npol,  i, ik2
+    integer  :: nbnd, ispin, npol,  i, ik2, ngw
     real(dp) :: xk(3)
     ! integer  :: dummy_int   
     logical  :: gamma_only 
