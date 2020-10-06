@@ -49,6 +49,18 @@ def findNelQE(rundir,scf_file):
 				break
 	return NelQE
 
+def findNkI(rundir,nsc_file):
+	""" Finds number of k-points. """
+	NkI = 0
+	path = rundir+nsc_file
+	with open(path,'r') as f:
+		lns = f.readlines()
+		for idx,ln in enumerate(lns):
+			if 'number of k points=' in ln:
+				NkI = int(ln.split()[4])
+				break
+	return NkI
+
 def findNband(rundir,band_file):
 	""" Finds number of occupied bands in QE scf output. """
 	Nband = 0
@@ -141,6 +153,7 @@ default_config = """&directories
  rundir    = ''
  savedir   = ''
  scf_file  = ''
+ nsc_file  = ''
  band_file = ''
 /
 &system
@@ -180,6 +193,7 @@ NG_comment    = '      ! Total number of G vectors'
 NGd_comment   = '       ! Number of coefficients CG; should be less than minimum number of coefficients over all evc.n'
 NelQE_comment = '         ! Number of electrons(unit cell)'
 Nband_comment = '         ! Number of bands (unit cell)'
+NkI_comment   = '           ! Number of wave vectors in IBZ'
 Nocc_comment  = '          ! Number of occupied bands (unit cell)'
 Vcell_comment = '    ! [a.u.^3]  Unit-cell volume '
 Efermi_comment= '       ! [eV]      Fermi energy '
@@ -210,6 +224,12 @@ try:
 					print('WARNING scf_file not defined.')
 					exit()
 				lns_new.append(ln)
+			elif 'nsc_file' in ln:
+				nsc_file = ln.split("\'")[1]
+				if nsc_file=='':
+					print('WARNING nsc_file not defined.')
+					exit()
+				lns_new.append(ln)
 			elif 'band_file' in ln:
 				band_file = ln.split("\'")[1]
 				if band_file =='':
@@ -230,6 +250,11 @@ try:
 				Nocc = 0
 				Nocc = findNocc(rundir,scf_file)
 				ln2 = ' Nocc     = {} {}\n'.format(Nocc,Nocc_comment)
+				lns_new.append(ln2)
+			elif 'NkI' in ln:
+				NkI = 0
+				NkI = findNkI(rundir,nsc_file)
+				ln2 = ' NkI      = {} {}\n'.format(NkI,NkI_comment)
 				lns_new.append(ln2)
 			elif 'NG ' in ln:
 				NG = 0

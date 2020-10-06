@@ -2,6 +2,7 @@
  rundir    = '/Users/nevensky/MoS2_201X201'
  savedir   = '/Users/nevensky/tmp/MoS2.save'
  scf_file  = '/MoS2.sc.out'
+ nsc_file  = '/MoS2.nsc.out'
  band_file = '/MoS2.band'
 /
 &system
