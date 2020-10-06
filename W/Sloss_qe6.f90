@@ -1465,7 +1465,7 @@ subroutine loadCsQE6(ik, ibnd, savedir, igwx, evc)
       if (ik == 1) then
         read(400,*) 
       end if
-      read(400,'(12X,3F10.3) ') kI(1,ik),kI(2,ik),kI(3,ik)
+      read(400,'(10X,3F10.3)') kI(1,ik),kI(2,ik),kI(3,ik)
       read(400,'(10F8.4) ') (E(ik,i),i=1,Nband)
     end do
     close(400)
