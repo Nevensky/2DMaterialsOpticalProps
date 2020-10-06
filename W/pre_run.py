@@ -23,6 +23,7 @@ def findMin_NGd(savedir):
 				paths.append(fullpath)
 				print(fullpath)
 				igwx = subprocess.check_output("grep --line-buffered --text \"igwx\" {}".format(fullpath), shell=True)
+				igwx = igwx.split('/>'.encode('ascii'))[0]#print(igwx)
 				igwx = int(igwx.decode('ascii').split()[2].split("\"")[1])
 				igwxs.append(igwx)
 				print(igwx)

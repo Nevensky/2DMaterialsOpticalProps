@@ -10,10 +10,12 @@
  jump      = 1           ! jump = 1 skips reloading wfns in IBZ for all bands m (occ.) and n (virt.)
  omin      = 1.0D-5      ! [Hartree] frequency range, lower bound
  omax      = 2.0D0       ! [Hartree] frequency range, upper bound
+ qmin      = 2
+ qmax      = 2
 /
 &config
- NG       = 20517       ! Total number of G vectors
- NGd      = 2541        ! Number of coefficients CG; should be less than minimum number of coefficients over all evc.n 
+ NG       = 11020       ! Total number of G vectors
+ NGd      = 5479        ! Number of coefficients CG; should be less than minimum number of coefficients over all evc.n
  NkI      = 19          ! Number of wave vectors in IBZ
  Nband    = 60          ! Number of bands (unit cell)
  Nocc     = 9           ! Number of occupied bands (unit cell)
