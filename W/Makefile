@@ -14,11 +14,14 @@ SRC = PointR.f Sloss.f paths.f gjel.f
 OBJECTS = PointR.o Sloss.o paths.o gjel.o 
 OBJECTS_LEGACY = Sloss_legacy.o PointR_legacy.o paths.o gjel.o 
 OBJECTS_PARA = PointR.o Sloss_para.o paths.o gjel.o  # PointR_mkl.o
+OBJECTS_QE6 = PointR.o Sloss_para_qe6.o paths.o gjel.o  # PointR_mkl.o
 
 
 .PHONY: clean
 
 all: Loss
+
+qe6: Loss_qe6
 
 serial: Loss_serial
 
@@ -30,6 +33,9 @@ Loss: $(OBJECTS_PARA)
 Loss_serial: $(OBJECTS)
 	${FC} -I. $(OBJECTS) ${LDFLAGS} -o Loss
 
+Loss_qe6: $(OBJECTS_QE6)
+	${FC} -I. $(OBJECTS_QE6) ${LDFLAGS_PARA} -o Loss
+
 Loss_legacy: $(OBJECTS_LEGACY)
 	${FC} -I. $(OBJECTS_LEGACY) ${LDFLAGS} -o Loss
 
@@ -38,6 +44,9 @@ Sloss.o: Sloss.f
 
 Sloss_para.o: Sloss.f
 	${FC} ${FFLAGS} ${PARA} -c Sloss.f90 -o Sloss_para.o
+
+Sloss_para_qe6.o: Sloss.f
+	${FC} ${FFLAGS} ${PARA} -c Sloss_qe6.f90 -o Sloss_para_qe6.o
 
 Sloss_legacy.o: Sloss.f
 	${FC} ${FFLAGS} -c Sloss.f -o Sloss_legacy.o

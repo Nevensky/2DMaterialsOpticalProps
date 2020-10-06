@@ -349,30 +349,10 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
   bands_n_loop: do  n = 1, Nocc         ! filled bands loop
     bands_m_loop: do  m = Nocc+1, Nband ! empty bands loop
       ! ucitavanje evc.dat binarnih datoteka za fiksni K1,K2, i vrpce n i m
-      
-      !$omp critical(pathk_read)
-      
-      ! otvara save/K.000x/evc.dat u atributu <evc band> ispod CnK(G) koef.
-      call paths(savedir,K1,K2,n,m,pathk1,pathk2,bandn,bandm) 
 
-      ! print *,'pathk1',pathk1
-      call iotk_open_read(10+ik,pathk1)
-      call iotk_scan_empty(10+ik,"INFO",attr=attr) ! Otvaranje atribute za INFO
-      call iotk_scan_attr(attr,"igwx",NG1)
-      
-      allocate (C1(NG1))                           ! Alociranje polja C1
-      call iotk_scan_dat(10+ik,bandn,C1)           ! Ucitavanje podataka iza evc.n
-      call iotk_close_read(10+ik)
+      call loadCsQE6(K1, n, savedir, NG1, C1)
+      call loadCsQE6(K2, m, savedir, NG2, C2)
 
-      ! print *,'pathk2',pathk2
-      call iotk_open_read(10+ik,pathk2)
-      call iotk_scan_empty(10+ik,"INFO",attr=attr)
-      call iotk_scan_attr(attr,"igwx",NG2)
-      allocate (C2(NG2))                           ! Alociranje polja C1
-      call iotk_scan_dat(10+ik,bandm,C2)           ! Ucitavanje podataka iza evc.n
-      call iotk_close_read(10+ik)
-
-      !$omp end critical(pathk_read)
 
       if (NGd > NG1) then
         write(*,*) 'NGd is bigger than NG1=',NG1
@@ -1415,23 +1395,23 @@ end subroutine genMnmK1K2
     deallocate(C2)
   end subroutine loadCS
 
-subroutine loadCsQE6( ik, ibnd, savedir, evc, igwx )
+subroutine loadCsQE6(ik, ibnd, savedir, ngw, igwx, evc)
     ! read_a_wfc(ibnd, filename, evc, ik, xk, nbnd, ispin, npol, gamma_only, ngw, igwx )
     ! read QE 6.0 and greater, wfn coefficeints
     ! use iso_fortran_env, ONLY: DP=> REAL64
     implicit none 
     character (len=*), intent(in)               :: savedir
     integer,           intent(in)               :: ik, ibnd
-    integer,           intent(out)              :: igwx 
+    integer,           intent(out)              :: igwx, ngw
     complex(DP),       intent(out), allocatable :: evc(:)
 
     character (len=300) :: path 
 
-    integer  :: nbnd, ispin, npol, ngw, i, ik2
+    integer  :: nbnd, ispin, npol,  i, ik2
     real(dp) :: xk(3)
     ! integer  :: dummy_int   
     logical  :: gamma_only 
-    integer  :: ios
+    integer  :: ios, iuni = 1111
     real(dp) :: scalef
     real(dp) :: b1(3), b2(3), b3(3) !, dummy_real 
 
@@ -1441,8 +1421,6 @@ subroutine loadCsQE6( ik, ibnd, savedir, evc, igwx )
     write(ik_str,'(I10)') ik
 
     path = trim(savedir)//str1//trim(adjustl(ik_str))//str3
-
-    iuni = 10 + ik
     
     open(unit = iuni, file = trim(adjustl(path)), form = 'unformatted', status = 'old', iostat=ios) 
     ! read(iuni) ik2, xk, ispin, gamma_only, scalef
