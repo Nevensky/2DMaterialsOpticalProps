@@ -1458,7 +1458,7 @@ subroutine loadCsQE6(ik, ibnd, savedir, igwx, evc)
     real(kind=dp),      intent(inout) :: kI(:,:)
     real(kind=dp),      intent(inout) :: E(:,:)
 
-    integer :: ios
+    integer :: ios, ik, i
     real(kind=dp),    parameter :: Hartree = 2.0D0*13.6056923D0
 
     open(400,FILE=path,status='old',err=500,iostat=ios) 
