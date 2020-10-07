@@ -17,7 +17,8 @@ use ModPointR
 
 implicit none
 
-character (len=iotk_attlenx) :: attr
+! character (len=iotk_attlenx) :: attr1, attr2
+character(len=65278) :: attr1, attr2
 logical :: found
 
 ! single / double precision
@@ -45,6 +46,8 @@ integer :: ik,i,j,jk,it,lk,Ntot,iG0,Nsymm,iq, &
            io,n,m,iG,R1,K1,R2,K2, Nlf,NG1,   &
            NG2,iG1,iG2,jG,kG,jo,jump,loss,   &
            iGfast,ikmin,kG1,kG2,nord, lf
+
+integer :: iuni1, iuni2
 
 
 integer :: Nk     ! = 48*NkI, number of wave vectors in FBZ with no symmetry 
@@ -300,7 +303,7 @@ q_loop: do  iq = qmin,qmax ! 42,61
 ! 1.B.Z  LOOP STARTS HERE !!!!
 
 print *, 'DEBUG: entering parallel region'
-!$omp parallel shared(S0,iq,kI,ktot,RI,eps,E,G,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,eta,Vcell) private(ik, S0_partial,MnmK1K2,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,De,Lor,Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2,attr,C1,C2) firstprivate(savedir,jump,domega) num_threads(Nthreads) !  default(private) 
+!$omp parallel shared(S0,iq,kI,ktot,RI,eps,E,G,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,eta,Vcell) private(ik, S0_partial,MnmK1K2,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,De,Lor,Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2,attr1,attr2, C1,C2, iuni1, iuni2) firstprivate(savedir,jump,domega) num_threads(Nthreads) !  default(private) 
 thread_id =  omp_get_thread_num()
 
 !$omp do 
@@ -347,37 +350,49 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
   S0_partial(1:no,1:Nlf,1:Nlf) = cmplx(0.0)
   
   bands_n_loop: do  n = 1, Nocc         ! filled bands loop
+
+    ! ucitavanje evc.dat binarnih datoteka za fiksni K1,K2, i vrpce n i m   
+    ! otvara save/K.000x/evc.dat u atributu <evc band> ispod CnK(G) koef.
+    ! call paths(savedir,K1,K2,n,m,pathk1,pathk2,bandn,bandm) 
+    
+    !$omp critical(pathk1_read)
+    iuni1 = 10+ik*1000+n*10
+    call paths(savedir,K1,n,pathk1,bandn)
+    ! print *,'pathk1',pathk1
+    call iotk_open_read(iuni1,pathk1)
+    call iotk_scan_empty(iuni1,"INFO",attr=attr1) ! Otvaranje atribute za INFO
+    call iotk_scan_attr(attr1,"igwx",NG1)
+    
+    allocate(C1(NG1))                           ! Alociranje polja C1
+    call iotk_scan_dat(iuni1,bandn,C1)           ! Ucitavanje podataka iza evc.n
+    call iotk_close_read(iuni1)
+    !$omp end critical(pathk1_read)
+
+    if (NGd > NG1) then
+      write(*,*) 'NGd is bigger than NG1=',NG1
+      STOP
+    end if
+
     bands_m_loop: do  m = Nocc+1, Nband ! empty bands loop
-      ! ucitavanje evc.dat binarnih datoteka za fiksni K1,K2, i vrpce n i m
-      
-      !$omp critical(pathk_read)
-      
-      ! otvara save/K.000x/evc.dat u atributu <evc band> ispod CnK(G) koef.
-      call paths(savedir,K1,K2,n,m,pathk1,pathk2,bandn,bandm) 
 
-      ! print *,'pathk1',pathk1
-      call iotk_open_read(10+ik,pathk1)
-      call iotk_scan_empty(10+ik,"INFO",attr=attr) ! Otvaranje atribute za INFO
-      call iotk_scan_attr(attr,"igwx",NG1)
       
-      allocate (C1(NG1))                           ! Alociranje polja C1
-      call iotk_scan_dat(10+ik,bandn,C1)           ! Ucitavanje podataka iza evc.n
-      call iotk_close_read(10+ik)
-
+      ! print *,'thread_id: ',thread_id,'tid*1000,m*100',thread_id*1000,m*100
+      ! print *,'n,m: ',n,m,'K1,K2: ',K1,K2,'iuni:',iuni1,iuni2
+      !$omp critical(pathk2_read)
+      iuni2 = 20000000+ik*10000+m*100
+      call pathsB(savedir,K2,m,pathk2,bandm)
       ! print *,'pathk2',pathk2
-      call iotk_open_read(10+ik,pathk2)
-      call iotk_scan_empty(10+ik,"INFO",attr=attr)
-      call iotk_scan_attr(attr,"igwx",NG2)
-      allocate (C2(NG2))                           ! Alociranje polja C1
-      call iotk_scan_dat(10+ik,bandm,C2)           ! Ucitavanje podataka iza evc.n
-      call iotk_close_read(10+ik)
+      call iotk_open_read(iuni2,pathk2)
+      call iotk_scan_empty(iuni2,"INFO",attr=attr2)
+      call iotk_scan_attr(attr2,"igwx",NG2)
+      ! print *,'attr:',attr1,attr2
+      allocate(C2(NG2))                           ! Alociranje polja C1
+      call iotk_scan_dat(iuni2,bandm,C2)           ! Ucitavanje podataka iza evc.n
+      call iotk_close_read(iuni2)
+      !$omp end critical(pathk2_read)
 
-      !$omp end critical(pathk_read)
 
-      if (NGd > NG1) then
-        write(*,*) 'NGd is bigger than NG1=',NG1
-        STOP
-      else if (NGd > NG2) then
+      if (NGd > NG2) then
         write(*,*) 'NGd is bigger than NG2=',NG2
         STOP
       end if
@@ -386,7 +401,7 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
       ! Konstrukcija stupca matricnih elementa nabojnih vrhova MnmK1K2(G)      
       call genMnmK1K2(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2)
 
-      deallocate(C1)
+      
       deallocate(C2)
 
       do  io = 1,no
@@ -403,6 +418,7 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
       end do
               
     end do bands_m_loop ! end of m do loop
+    deallocate(C1)
   end do bands_n_loop   ! end of n do loop
 
 
