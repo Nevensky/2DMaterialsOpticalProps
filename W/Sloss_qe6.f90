@@ -1411,17 +1411,18 @@ subroutine loadCsQE6(ik, ibnd, savedir, igwx, evc)
     real(dp) :: xk(3)
     ! integer  :: dummy_int   
     logical  :: gamma_only 
-    integer  :: ios, iuni = 1111
+    integer  :: ios,iuni 
     real(dp) :: scalef
     real(dp) :: b1(3), b2(3), b3(3) !, dummy_real 
 
-    character(len=3)   :: str1 = 'wfc'
+    character(len=4)   :: str1 = '/wfc'
     character(len=4)   :: str3 ='.dat'
     character(len=100) :: ik_str
     write(ik_str,'(I10)') ik
 
     path = trim(savedir)//str1//trim(adjustl(ik_str))//str3
-    
+    iuni = 10 + ik
+    print *,path
     open(unit = iuni, file = trim(adjustl(path)), form = 'unformatted', status = 'old', iostat=ios) 
     ! read(iuni) ik2, xk, ispin, gamma_only, scalef
     read(iuni) ! skip line
@@ -1466,7 +1467,7 @@ subroutine loadCsQE6(ik, ibnd, savedir, igwx, evc)
         read(400,*) 
       end if
       read(400,'(10X,3F10.3)') kI(1,ik),kI(2,ik),kI(3,ik)
-      read(400,'(10F10.3)') (E(ik,i),i=1,Nband)
+      read(400,'(10F9.4)') (E(ik,i),i=1,Nband)
     end do
     close(400)
       
