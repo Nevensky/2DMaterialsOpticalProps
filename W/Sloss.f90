@@ -1479,7 +1479,7 @@ subroutine loadCsQE6( ik, ibnd, savedir, evc, igwx )
     real(kind=dp),      intent(inout) :: kI(:,:)
     real(kind=dp),      intent(inout) :: E(:,:)
 
-    integer :: ios
+    integer :: ios, ik, i
     real(kind=dp),    parameter :: Hartree = 2.0D0*13.6056923D0
 
     open(400,FILE=path,status='old',err=500,iostat=ios) 
@@ -1487,8 +1487,8 @@ subroutine loadCsQE6( ik, ibnd, savedir, evc, igwx )
       if (ik == 1) then
         read(400,*) 
       end if
-      read(400,'(10X,3F10.3) ') kI(1,ik),kI(2,ik),kI(3,ik)
-      read(400,'(10F8.4) ') (E(ik,i),i=1,Nband)
+      read(400,'(10X,3F10.3)') kI(1,ik),kI(2,ik),kI(3,ik)
+      read(400,'(10F8.4)') (E(ik,i),i=1,Nband)
     end do
     close(400)
       
