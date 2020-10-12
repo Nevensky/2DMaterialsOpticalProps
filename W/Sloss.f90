@@ -201,30 +201,16 @@ Gcar   = 2.0*pi/a0                ! unit cell norm.
 
 ! scalar arrays
 allocate(parG(NG))                ! paritet svakog valnog vektora
-allocate(Gfast(Nlfd*NGd))
 allocate(factMatrix(no))
-allocate(MnmK1K2(Nlfd))            ! nabojni vrhovi
+allocate(Gfast(Nlfd*NGd))
 
 ! multidim arrays
 allocate(kI(3,NkI))
-allocate(E(NkI,Nband))       ! vl. vr. danog k-i i band-i
-! allocate(k(3,Nk))
+allocate(E(NkI,Nband))             ! vl. vr. danog k-i i band-i
 allocate(ktot(3,Nk))               ! ukupno jedinstvenih k-tocaka u FBZ
 allocate(G(3,NG))                  ! polje valnih vektora G u recp. prost. za wfn.
-allocate(V(Nlfd,Nlfd))             ! matr. gole coulomb. int.
-allocate(S0(no,Nlfd,Nlfd))         ! korelacijska matrica
-! allocate(S0_partial(no,Nlfd,Nlfd))         ! korelacijska matrica
 allocate(Glf(3,Nlfd))              ! local field effect polje valnih vekt. u rec. prost.
-allocate(GlfV(3,Nlfd))             ! local field effect za nezasjenjenu (golu) interakciju V
 
-allocate(Imat(Nlfd,Nlfd))          ! jedinicna matr.
-allocate(diel_epsilon(Nlfd,Nlfd) ) ! Epsilon (GG')  = I - V(GG')Chi0
-allocate(Chi(Nlfd,Nlfd))           ! (eq. 2.88 nakon invertiranja) ;oprez bio je double precision
-
-allocate(Chi0(Nlfd,Nlfd))          ! (eq. 2.89)
-allocate(WT(no,Nlfd,Nlfd))         ! time ordered RPA screened coulomb int. (eq. 2.93)
-allocate(Gammap(Nlfd,Nlfd))        ! omega>0 ,eq....(skripta 5) \sum_{q,m} \int \dd omega' S(\omega')/{(\omega-\omega'-e_{k+q,m} +i\eta}) za GW se koristi se za ovaj dio 
-allocate(Gammam(Nlfd,Nlfd))        ! omega<0
 
 
 
@@ -276,6 +262,25 @@ print *,"status: G vectors loaded."
 
 ! Generate Reciprocal vectors for crystal local field effects calculations in array Glf(3,Nlf)
 call genGlfandParity(lf,Ecut,NG,Gcar,G,Nlf,Nlfd,parG,Glf)
+print *, 'Nlf: ',Nlf,' Nlfd: ',Nlfd
+
+! scalar arrays
+allocate(MnmK1K2(Nlf))           ! nabojni vrhovi
+!multidim arrays
+allocate(V(Nlf,Nlf))             ! matr. gole coulomb. int.
+allocate(S0(no,Nlf,Nlf))         ! korelacijska matrica
+! allocate(Glf(3,Nlf))             ! local field effect polje valnih vekt. u rec. prost. ! neven debug OPREZ MORA SE ALOCIRATI UNAPRIJED
+allocate(GlfV(3,Nlf))            ! local field effect za nezasjenjenu (golu) interakciju V
+
+allocate(Imat(Nlf,Nlf))          ! jedinicna matr.
+allocate(diel_epsilon(Nlf,Nlf) ) ! Epsilon (GG')  = I - V(GG')Chi0
+allocate(Chi(Nlf,Nlf))           ! (eq. 2.88 nakon invertiranja) ;oprez bio je double precision
+
+allocate(Chi0(Nlf,Nlf))          ! (eq. 2.89)
+allocate(WT(no,Nlf,Nlf))         ! time ordered RPA screened coulomb int. (eq. 2.93)
+allocate(Gammap(Nlf,Nlf))        ! omega>0 ,eq....(skripta 5) \sum_{q,m} \int \dd omega' S(\omega')/{(\omega-\omega'-e_{k+q,m} +i\eta}) za GW se koristi se za ovaj dio 
+allocate(Gammam(Nlf,Nlf))        ! omega<0
+
 
 ! MKL matrix inversion vars
 allocate(ipiv(MAX(1,MIN(Nlf, Nlf))))
@@ -308,8 +313,7 @@ thread_id =  omp_get_thread_num()
 
 !$omp do 
 do ik = 1, Ntot   ! k_loop_FBZ_2nd: 
-  ! neven debug
-  ! print *, 'thread id:',thread_id
+
 
   ! debug vito (prepraviti za paralelnu izvedbu)
   ! open(122,FILE='status')
@@ -353,10 +357,9 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
 
     ! ucitavanje evc.dat binarnih datoteka za fiksni K1,K2, i vrpce n i m   
     ! otvara save/K.000x/evc.dat u atributu <evc band> ispod CnK(G) koef.
-    ! call paths(savedir,K1,K2,n,m,pathk1,pathk2,bandn,bandm) 
     
-    !$omp critical(pathk1_read)
-    iuni1 = 10+ik*1000+n*10
+    !$omp critical(loadCs_1)
+    iuni1 = 20 + 2*thread_id + ik*100000 + n*100
     call paths(savedir,K1,n,pathk1,bandn)
     ! print *,'pathk1',pathk1
     call iotk_open_read(iuni1,pathk1)
@@ -366,7 +369,7 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
     allocate(C1(NG1))                           ! Alociranje polja C1
     call iotk_scan_dat(iuni1,bandn,C1)           ! Ucitavanje podataka iza evc.n
     call iotk_close_read(iuni1)
-    !$omp end critical(pathk1_read)
+    !$omp end critical(loadCs_1)
 
     if (NGd > NG1) then
       write(*,*) 'NGd is bigger than NG1=',NG1
@@ -376,27 +379,25 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
     bands_m_loop: do  m = Nocc+1, Nband ! empty bands loop
 
       
-      ! print *,'thread_id: ',thread_id,'tid*1000,m*100',thread_id*1000,m*100
       ! print *,'n,m: ',n,m,'K1,K2: ',K1,K2,'iuni:',iuni1,iuni2
-      !$omp critical(pathk2_read)
-      iuni2 = 20000000+ik*10000+m*100
+      !$omp critical(loadCs_2)
+      iuni2 = 21 + (2*thread_id+1) + (2*ik+1)*100000 + (2*m+1)*100
       call pathsB(savedir,K2,m,pathk2,bandm)
       ! print *,'pathk2',pathk2
       call iotk_open_read(iuni2,pathk2)
       call iotk_scan_empty(iuni2,"INFO",attr=attr2)
       call iotk_scan_attr(attr2,"igwx",NG2)
-      ! print *,'attr:',attr1,attr2
+
       allocate(C2(NG2))                           ! Alociranje polja C1
       call iotk_scan_dat(iuni2,bandm,C2)           ! Ucitavanje podataka iza evc.n
       call iotk_close_read(iuni2)
-      !$omp end critical(pathk2_read)
+      !$omp end critical(loadCs_2)
 
 
       if (NGd > NG2) then
         write(*,*) 'NGd is bigger than NG2=',NG2
         STOP
       end if
-
 
       ! Konstrukcija stupca matricnih elementa nabojnih vrhova MnmK1K2(G)      
       call genMnmK1K2(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2)
@@ -460,8 +461,9 @@ end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
     call genDielectricEpsilon(Nlf,Chi0,V,diel_epsilon)
     
     !  invertiranje matrice ''diel_epsilon = 1-Chi_0*V''
-    call gjel(diel_epsilon,Nlf,Nlfd,Imat,Nlf,Nlfd)
-    ! call dgetrf( Nlf,Nlfd, diel_epsilon, Nlf, ipiv, info_trf)
+    ! call gjel(diel_epsilon,Nlf,Nlfd,Imat,Nlf,Nlfd)
+    call gjel(diel_epsilon,Nlf,Nlf,Imat,Nlf,Nlf)
+    ! call dgetrf( Nlf,Nlf, diel_epsilon, Nlf, ipiv, info_trf)
     ! call dgetri( Nlf, diel_epsilon, Nlf, ipiv, work, lwork, info_tri )
 
     ! nezasjenjeni Chi
@@ -589,7 +591,6 @@ contains
         kmin = kref
         ikmin = i
         krefM = kmin
-        EXIT Ntot_loop
       end if
     end do Ntot_loop
     ! neve debug
@@ -827,13 +828,13 @@ subroutine genGlfandParity(lf,Ecut,NG,Gcar,G,Nlf,Nlfd,parG,Glf)
   ! Generate Reciprocal vectors for crystal local field 
   ! effects calculations in array Glf(3,Nlf)
 
-  integer,          intent(in)  :: lf, NG, Nlfd
-  real(kind=dp),    intent(in)  :: Ecut
-  real(kind=dp),    intent(in)  :: Gcar
-  real(kind=dp),    intent(in)  :: G(:,:)
-  integer,          intent(out) :: Nlf
-  integer,          intent(out) :: parG(:)
-  real(kind=dp),    intent(out) :: Glf(:,:)
+  integer,          intent(in)    :: lf, NG, Nlfd
+  real(kind=dp),    intent(in)    :: Ecut
+  real(kind=dp),    intent(in)    :: Gcar
+  real(kind=dp),    intent(in)    :: G(:,:)
+  integer,          intent(out)   :: Nlf
+  integer,          intent(inout) :: parG(:)
+  real(kind=dp),    intent(inout) :: Glf(:,:)
 
   integer       :: iG
   real(kind=dp) :: Eref
@@ -862,7 +863,7 @@ subroutine genGlfandParity(lf,Ecut,NG,Gcar,G,Nlf,Nlfd,parG,Glf)
       Eref = Gcar**2*sum(G(1:3,iG)**2) / 2.0
       if (Eref <= Ecut) then
         Nlf = Nlf+1
-        Glf(:,Nlf) = G(1:3,iG)
+        Glf(1:3,Nlf) = G(1:3,iG)
         if ( (parG(iG)/2)*2 == parG(iG) ) then
           parG(Nlf) = 1
         else
@@ -902,11 +903,10 @@ subroutine genMnmK1K2(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G, Gfas
   real(kind=dp) :: Gxx1,Gyy1,Gzz1
   real(kind=dp) :: Gxx2,Gyy2,Gzz2
 
-
   iGfast = 0
   MnmK1K2(1:Nlf) = cmplx(0.0) ! nabojni vrhovi
   do  iG = 1,Nlf ! suma po lokalnim fieldovima kojih ima Nlf
-    do  iG1 = 1,NG1 ! vito zamjenjeno NGd sa NG1
+    do  iG1 = 1,NG1 ! vito zamjenjeno NGd sa NG1, neven debug, zamijeniti sa NGd?
       iGfast = iGfast + 1
       Gxx1 = G(1,iG1)
       Gyy1 = G(2,iG1)
@@ -926,7 +926,7 @@ subroutine genMnmK1K2(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G, Gfas
       ! !$omp critical(jump_operation)
       if (jump == 1) then
         ! !$omp single
-        iG2_loop: do  iG2 = 1,NG2
+        iG2_loop: do  iG2 = 1,NG2 ! neven debug, zamijeniti sa NGd?
           Gfast(iGfast) = NG2+1
           Gxx2 = G(1,iG2)
           Gyy2 = G(2,iG2)

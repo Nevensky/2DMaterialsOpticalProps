@@ -202,7 +202,7 @@ Gcar   = 2.0*pi/a0                ! unit cell norm.
 allocate(parG(NG))                ! paritet svakog valnog vektora
 allocate(Gfast(Nlfd*NGd))
 allocate(factMatrix(no))
-allocate(MnmK1K2(Nlfd))            ! nabojni vrhovi
+! allocate(MnmK1K2(Nlfd))            ! nabojni vrhovi
 
 ! multidim arrays
 allocate(kI(3,NkI))
@@ -210,20 +210,20 @@ allocate(E(NkI,Nband))       ! vl. vr. danog k-i i band-i
 ! allocate(k(3,Nk))
 allocate(ktot(3,Nk))               ! ukupno jedinstvenih k-tocaka u FBZ
 allocate(G(3,NG))                  ! polje valnih vektora G u recp. prost. za wfn.
-allocate(V(Nlfd,Nlfd))             ! matr. gole coulomb. int.
-allocate(S0(no,Nlfd,Nlfd))         ! korelacijska matrica
-! allocate(S0_partial(no,Nlfd,Nlfd))         ! korelacijska matrica
+! allocate(V(Nlfd,Nlfd))             ! matr. gole coulomb. int.
+! allocate(S0(no,Nlfd,Nlfd))         ! korelacijska matrica
+
 allocate(Glf(3,Nlfd))              ! local field effect polje valnih vekt. u rec. prost.
-allocate(GlfV(3,Nlfd))             ! local field effect za nezasjenjenu (golu) interakciju V
+! allocate(GlfV(3,Nlfd))             ! local field effect za nezasjenjenu (golu) interakciju V
 
-allocate(Imat(Nlfd,Nlfd))          ! jedinicna matr.
-allocate(diel_epsilon(Nlfd,Nlfd) ) ! Epsilon (GG')  = I - V(GG')Chi0
-allocate(Chi(Nlfd,Nlfd))           ! (eq. 2.88 nakon invertiranja) ;oprez bio je double precision
+! allocate(Imat(Nlfd,Nlfd))          ! jedinicna matr.
+! allocate(diel_epsilon(Nlfd,Nlfd) ) ! Epsilon (GG')  = I - V(GG')Chi0
+! allocate(Chi(Nlf,Nlf))           ! (eq. 2.88 nakon invertiranja) ;oprez bio je double precision
 
-allocate(Chi0(Nlfd,Nlfd))          ! (eq. 2.89)
-allocate(WT(no,Nlfd,Nlfd))         ! time ordered RPA screened coulomb int. (eq. 2.93)
-allocate(Gammap(Nlfd,Nlfd))        ! omega>0 ,eq....(skripta 5) \sum_{q,m} \int \dd omega' S(\omega')/{(\omega-\omega'-e_{k+q,m} +i\eta}) za GW se koristi se za ovaj dio 
-allocate(Gammam(Nlfd,Nlfd))        ! omega<0
+! allocate(Chi0(Nlfd,Nlfd))          ! (eq. 2.89)
+! allocate(WT(no,Nlfd,Nlfd))         ! time ordered RPA screened coulomb int. (eq. 2.93)
+! allocate(Gammap(Nlfd,Nlfd))        ! omega>0 ,eq....(skripta 5) \sum_{q,m} \int \dd omega' S(\omega')/{(\omega-\omega'-e_{k+q,m} +i\eta}) za GW se koristi se za ovaj dio 
+! allocate(Gammam(Nlfd,Nlfd))        ! omega<0
 
 
 
@@ -276,6 +276,24 @@ print *,"status: G vectors loaded."
 ! Generate Reciprocal vectors for crystal local field effects calculations in array Glf(3,Nlf)
 call genGlfandParity(lf,Ecut,NG,Gcar,G,Nlf,Nlfd,parG,Glf)
 
+
+! scalar arrays
+allocate(MnmK1K2(Nlf))            ! nabojni vrhovi
+!multidim arrays
+allocate(V(Nlf,Nlf))             ! matr. gole coulomb. int.
+allocate(S0(no,Nlf,Nlf))         ! korelacijska matrica
+! allocate(Glf(3,Nlf))              ! local field effect polje valnih vekt. u rec. prost.
+allocate(GlfV(3,Nlf))             ! local field effect za nezasjenjenu (golu) interakciju V
+
+allocate(Imat(Nlf,Nlf))          ! jedinicna matr.
+allocate(diel_epsilon(Nlf,Nlf) ) ! Epsilon (GG')  = I - V(GG')Chi0
+allocate(Chi(Nlf,Nlf))           ! (eq. 2.88 nakon invertiranja) ;oprez bio je double precision
+
+allocate(Chi0(Nlf,Nlf))          ! (eq. 2.89)
+allocate(WT(no,Nlf,Nlf))         ! time ordered RPA screened coulomb int. (eq. 2.93)
+allocate(Gammap(Nlf,Nlf))        ! omega>0 ,eq....(skripta 5) \sum_{q,m} \int \dd omega' S(\omega')/{(\omega-\omega'-e_{k+q,m} +i\eta}) za GW se koristi se za ovaj dio 
+allocate(Gammam(Nlf,Nlf))        ! omega<0
+
 ! MKL matrix inversion vars
 allocate(ipiv(MAX(1,MIN(Nlf, Nlf))))
 lwork = Nlf
@@ -304,8 +322,7 @@ q_loop: do  iq = qmin,qmax ! 42,61
 print *, 'DEBUG: entering parallel region'
 !$omp parallel shared(S0,iq,kI,ktot,RI,eps,E,G,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,eta,Vcell) private(ik,S0_partial,MnmK1K2,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,De,Lor,Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast,iG1, iG2,attr,C1,C2, iuni1, iuni2) firstprivate(savedir,jump,domega) num_threads(Nthreads) !  default(private) 
 thread_id =  omp_get_thread_num()
-iuni1 = 10
-iuni2 = iuni1+1
+
 !$omp do 
 do ik = 1, Ntot   ! k_loop_FBZ_2nd: 
   ! neven debug
@@ -352,7 +369,7 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
   bands_n_loop: do  n = 1, Nocc         ! filled bands loop
     ! !$omp critical(loadC1)
     !$omp critical(loadCs_)
-    iuni1 = 10 + 2*thread_id + ik*100000 + n*100
+    iuni1 = 20 + 2*thread_id + ik*100000 + n*100
     call loadCsQE6(K1, n, iuni1, savedir, NG1, C1)
     !$omp end critical(loadCs_)
     ! !$omp end critical(loadC1)
@@ -375,7 +392,7 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
       ! call loadCsQE6(K1, n, iuni1, savedir, NG1, C1)
 
 
-      iuni2 = 10 + (2*thread_id+1) + (2*ik+1)*100000 + (2*m+1)*100
+      iuni2 = 21 + (2*thread_id+1) + (2*ik+1)*100000 + (2*m+1)*100
       ! if (mod(iuni2,2)==0) then
       !   print *, 'inner loop EVEN instead of ODD'
       !   print *,thread_id,ik,n,m
@@ -456,8 +473,8 @@ end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
     call genDielectricEpsilon(Nlf,Chi0,V,diel_epsilon)
     
     !  invertiranje matrice ''diel_epsilon = 1-Chi_0*V''
-    call gjel(diel_epsilon,Nlf,Nlfd,Imat,Nlf,Nlfd)
-    ! call dgetrf( Nlf,Nlfd, diel_epsilon, Nlf, ipiv, info_trf)
+    call gjel(diel_epsilon,Nlf,Nlf,Imat,Nlf,Nlf)
+    ! call dgetrf( Nlf,Nlf, diel_epsilon, Nlf, ipiv, info_trf)
     ! call dgetri( Nlf, diel_epsilon, Nlf, ipiv, work, lwork, info_tri )
 
     ! nezasjenjeni Chi
@@ -585,7 +602,6 @@ contains
         kmin = kref
         ikmin = i
         krefM = kmin
-        EXIT Ntot_loop
       end if
     end do Ntot_loop
     ! neve debug
@@ -823,13 +839,13 @@ subroutine genGlfandParity(lf,Ecut,NG,Gcar,G,Nlf,Nlfd,parG,Glf)
   ! Generate Reciprocal vectors for crystal local field 
   ! effects calculations in array Glf(3,Nlf)
 
-  integer,          intent(in)  :: lf, NG, Nlfd
-  real(kind=dp),    intent(in)  :: Ecut
-  real(kind=dp),    intent(in)  :: Gcar
-  real(kind=dp),    intent(in)  :: G(:,:)
-  integer,          intent(out) :: Nlf
-  integer,          intent(out) :: parG(:)
-  real(kind=dp),    intent(out) :: Glf(:,:)
+  integer,          intent(in)    :: lf, NG, Nlfd
+  real(kind=dp),    intent(in)    :: Ecut
+  real(kind=dp),    intent(in)    :: Gcar
+  real(kind=dp),    intent(in)    :: G(:,:)
+  integer,          intent(out)   :: Nlf
+  integer,          intent(inout) :: parG(:)
+  real(kind=dp),    intent(inout) :: Glf(:,:)
 
   integer       :: iG
   real(kind=dp) :: Eref
@@ -858,7 +874,7 @@ subroutine genGlfandParity(lf,Ecut,NG,Gcar,G,Nlf,Nlfd,parG,Glf)
       Eref = Gcar**2*sum(G(1:3,iG)**2) / 2.0
       if (Eref <= Ecut) then
         Nlf = Nlf+1
-        Glf(:,Nlf) = G(1:3,iG)
+        Glf(1:3,Nlf) = G(1:3,iG)
         if ( (parG(iG)/2)*2 == parG(iG) ) then
           parG(Nlf) = 1
         else
