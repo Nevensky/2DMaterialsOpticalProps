@@ -173,7 +173,8 @@ integer      :: Nthreads
 integer,save :: thread_id
 !$omp threadprivate(thread_id)
 namelist  /parallel/ Nthreads
-
+integer, allocatable :: K1_list(:)
+integer, allocatable :: K2_list(:)
 
 ! MKL matrix inversion vars
 integer :: info_trf, info_tri
@@ -365,13 +366,13 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
       ! ucitavanje evc.dat binarnih datoteka za fiksni K1,K2, i vrpce n i m
       !$omp critical(loadCs_)
       
-      iuni1 = 10 + 2*thread_id + ik*100000 + n*100
+      ! iuni1 = 10 + 2*thread_id + ik*100000 + n*100
       ! if (mod(iuni1,2)>0) then
       !   print *, 'outer loop ODD instead of EVEN'
       !   print *, thread_id,ik,n,m
       !   stop
       ! end if
-      call loadCsQE6(K1, n, iuni1, savedir, NG1, C1)
+      ! call loadCsQE6(K1, n, iuni1, savedir, NG1, C1)
 
 
       iuni2 = 10 + (2*thread_id+1) + (2*ik+1)*100000 + (2*m+1)*100
