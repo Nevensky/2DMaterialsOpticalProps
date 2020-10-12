@@ -18,9 +18,9 @@ PROGRAM surface_current
 
 
 use iotk_module
-implicitnone
-CHARACTER (LEN=1) :: iotk_attlenx) :: attr
-LOGICAL :: :: found
+implicit none
+CHARACTER (len=iotk_attlenx) :: attr
+LOGICAL :: found
 
 INTEGER :: nki,nband,ik,i,nk,j,jk,it,lk,ntot,ig0,nsim,  &
     ng,io,no,iq,nq,nmpx,nmpy,nmpz,n,m,ig,r1,k1,r2,k2,  &
@@ -30,12 +30,12 @@ INTEGER :: nki,nband,ik,i,nk,j,jk,it,lk,ntot,ig0,nsim,  &
     pol,& ! polarizacija
     frac,lf,nocc 
 
-PARAMETER(nmpx=51,nmpy=51,nmpz=1,nki=6835,nband=60,nocc=9,  &
-    nelqe=18,nk=48*nki,ngd=4000,ng=8000,no=5001,nq=1,nlfd=20)
+PARAMETER(nmpx=9,nmpy=9,nmpz=1,nki=19,nband=60,nocc=9,  &
+    nelqe=18,nk=48*nki,ngd=2541,ng=20517,no=5001,nq=1,nlfd=20)
 
 
 !        skalars
-REAL*8 a0,eps,kx,ky,kz,kqx,kqy,kqz,qgx,qgy,qgz,omin,omax,qx,  &
+REAL*8 :: a0,eps,kx,ky,kz,kqx,kqy,kqz,qgx,qgy,qgz,omin,omax,qx,  &
     qy,qz,kmin,domega,o,ef,k11,k22,k33,t,f1,f2,lor,de,gabs,  &
     kref,eref,ecut,gxx1,gyy1,gzz1,gxx2,gyy2,gzz2,fact,vcell,  &
     oi,oj,q,gcar,abohr,zero,nel,error,lossf,struja,pabs,  &
@@ -47,16 +47,16 @@ PARAMETER(hartree=2.0D0*13.6056923D0,ef=0.5554/hartree,  &
     eps=1.0D-4,t=0.025/hartree,gama_intra=0.025/hartree,  &
     gama_inter=0.025/hartree,ev=1.602176487D-19,gama=1.0/137.0,  &
     planck=6.626196D-34,ecut=0.0,vcell=922.0586, abohr=0.5291772D0,zero=0.0)
-DOUBLE COMPLEX ione,czero,rone,em
+DOUBLE COMPLEX :: ione,czero,rone,em
 
 !        arrays
 INTEGER :: gfast,gi
-REAL*8 ki,e,r,ri,k,ktot,g,glf,v,kc,f,kk
-DOUBLE COMPLEX UNIT,epsilon
+REAL*8 :: ki,e,r,ri,k,ktot,g,glf,v,kc,f,kk
+DOUBLE COMPLEX :: UNIT,epsilon
 
-COMPLEX*8 mnmk1k21,pi_dia,pi_tot,mnmk1k22,
-&qeff, ! efektivni naboj, matrica kad imam LFE
-& s0
+COMPLEX*8 :: mnmk1k21,pi_dia,pi_tot,mnmk1k22, &
+             qeff, &! efektivni naboj, matrica kad imam LFE
+             s0
 
 DIMENSION ki(3,nki),e(nki,nband),r(48,3,3),ri(48,3,3),  &
     k(3,nk),ktot(3,nk),v(nlfd,nlfd),g(3,ng),  &
@@ -66,16 +66,16 @@ DIMENSION ki(3,nki),e(nki,nband),r(48,3,3),ri(48,3,3),  &
     qeff(nlfd,nlfd),pi_tot(nlfd,nlfd),kk(3,6)
 
 CHARACTER (LEN=100) :: bandn,bandm,nis,pathk1,pathk2,dato1,  &
-    root,path,fajl,dato2,dato3,root1,root2
+    root,path,fajl,dato2,dato3,root1,root2, outdir
 CHARACTER (LEN=35) :: tag,buffer
 
-INTEGER :: :: ngw, igwx, nbnd, nk1
-COMPLEX(:: kind = 8),pointer, DIMENSION(:) :: c1,c2
+INTEGER :: ngw, igwx, nbnd, nk1
+COMPLEX,pointer, DIMENSION(:) :: c1,c2
 
 
-rone=DCMPLX(1.0,0.0)
-czero=DCMPLX(0.0,0.0)
-ione=DCMPLX(0.0,1.0)
+rone=CMPLX(1.0,0.0)
+czero=CMPLX(0.0,0.0)
+ione=CMPLX(0.0,1.0)
 
 ! BRAVAIS LATTICE PARAMETERS
 
@@ -109,8 +109,9 @@ ione=DCMPLX(0.0,1.0)
 
 
 !        QUANTUM ESSPRESSO IMPUTS:
-root1='/home/vito/PROJECTS/MoS2-BSE'
-root2='/MoS2_201X201/'
+root1='/Users/nevensky/'
+root2='MoS2_201X201'
+outdir='/Users/Nevensky/tmp'
 root=trim(root1)//trim(root2)
 
 
@@ -125,7 +126,7 @@ root=trim(root1)//trim(root2)
 !             Crystal local field effects are included in z direction lf=1
 !             Crystal local field effects are included in x,y,z direction lf=3
 
-MOD=2 ! racun struja-struja tenzora preko Kramers Kronings
+MOD=1 ! racun struja-struja tenzora preko Kramers Kronings
 lf=1
 pol=1 ! polrizacija u x-smjeru
 
@@ -170,7 +171,7 @@ fajl='/MoS2.band'
 path=trim(root)//trim(fajl)
 OPEN(1,FILE=path)
 DO  ik=1,nki
-  IF(ik == 1)READ(1,*)nis
+  IF(ik == 1)READ(1,*) nis
   READ (1,20)ki(1,ik),ki(2,ik),ki(3,ik)
   READ (1,10)(e(ik,i),i=1,nband)
 END DO
@@ -301,7 +302,7 @@ CLOSE(1)
 
 !           Reading the reciprocal vectors in crystal coordinates and transformation
 !           in Cartezi cordinates.
-OPEN (1,FILE='gvectors.dat')
+OPEN (1,FILE='gvectors.xml')
 DO  i=1,8
   READ(1,*)nis
 END DO
@@ -552,7 +553,7 @@ DO  iq=nq,nq ! nq=1 u optickom smo limesu, dakle ne treba na do loop po q
         IF((DABS(f1) >= 1.0D-3).OR.(n == m))THEN
           
           
-          CALL paths(root,k1,k2,n,m,pathk1,pathk2,bandn,bandm)
+          CALL paths(outdir,k1,k2,n,m,pathk1,pathk2,bandn,bandm)
           
           
           
@@ -603,10 +604,13 @@ DO  iq=nq,nq ! nq=1 u optickom smo limesu, dakle ne treba na do loop po q
               k11=r(r1,1,1)*gxx1+r(r1,1,2)*gyy1+r(r1,1,3)*gzz1
               k22=r(r1,2,1)*gxx1+r(r1,2,2)*gyy1+r(r1,2,3)*gzz1
               k33=r(r1,3,1)*gxx1+r(r1,3,2)*gyy1+r(r1,3,3)*gzz1
-              IF(pol == 1)struja=(qx+2.0*kx+glf(1,ig)+2.0*k11)*gcar
-              IF(pol == 2)struja=(qy+2.0*ky+glf(2,ig)+2.0*k22)*gcar
-              IF(pol == 3)struja=(qz+2.0*kz+glf(3,ig)+2.0*k33)*gcar
-              IF(pol == 4)THEN
+              IF (pol == 1) then
+                struja=(qx+2.0*kx+glf(1,ig)+2.0*k11)*gcar
+              ELSEIF (pol == 2) then
+                struja=(qy+2.0*ky+glf(2,ig)+2.0*k22)*gcar
+              ELSEIF (pol == 3)
+                struja=(qz+2.0*kz+glf(3,ig)+2.0*k33)*gcar
+              ELSEIF(pol == 4) THEN
                 strujay=(qy+2.0*ky+glf(2,ig)+2.0*k22)*gcar
                 strujaz=(qz+2.0*kz+glf(3,ig)+2.0*k33)*gcar
               END IF
@@ -719,7 +723,7 @@ DO  iq=nq,nq ! nq=1 u optickom smo limesu, dakle ne treba na do loop po q
   
 !              WRITING CORFUN S0_\mu\nu
 !              WRITTING Q_eff_\mu\nu
-
+print *,'got here, line 722'
   DO  io = -no,no ! opskurni razlog za prosirenje raspona frekvencija na negativne da se korektno izracuna spektar kristala koji nemaju centar inverzije
 
     o = io*domega
@@ -727,7 +731,7 @@ DO  iq=nq,nq ! nq=1 u optickom smo limesu, dakle ne treba na do loop po q
     WRITE(74,'(10F15.10)')((S0(io,iG,jG),jG=1,Nlf),iG=1,Nlf)
   END DO
   WRITE(75,'(10F15.10)')((Qeff(ig,jg),jG=1,Nlf),iG=1,Nlf)
-  ! 44             FORMAT(10F15.10)
+  44             FORMAT(10F15.10)
   CLOSE(74)
   CLOSE(75)
   
@@ -830,7 +834,7 @@ DO  iq=nq,nq ! nq=1 u optickom smo limesu, dakle ne treba na do loop po q
             rechi0=rechi0+fact*REAL(s0(-jo+1,ig,jg))
           END DO
         END IF
-        rechi0=rechi0+pi*imag(s0(io-1,ig,jg))
+        rechi0=rechi0+pi*aimag(s0(io-1,ig,jg))
         
 !                Imaginary part of the response function Im(Chi)
         imchi0=0.0
@@ -841,7 +845,7 @@ DO  iq=nq,nq ! nq=1 u optickom smo limesu, dakle ne treba na do loop po q
             fact=domega/oj
             IF(jo == 2)fact=3.0/2.0
             IF(jo == no)fact=0.5*domega/oj
-            imchi0=imchi0+ fact*(imag(s0(-jo+1,ig,jg))-imag(s0(jo-1,ig,jg)))
+            imchi0=imchi0+ fact*(aimag(s0(-jo+1,ig,jg))-aimag(s0(jo-1,ig,jg)))
           END DO
         ELSE IF(io == 2)THEN
           DO  jo=1,no
@@ -851,10 +855,10 @@ DO  iq=nq,nq ! nq=1 u optickom smo limesu, dakle ne treba na do loop po q
             IF(jo == 2)fact=0.0
             IF(jo == 3)fact=-3.0/2.0
             IF(jo == no)fact=0.5*domega/(oi-oj)
-            imchi0=imchi0+fact*imag(s0(jo-1,ig,jg))
+            imchi0=imchi0+fact*aimag(s0(jo-1,ig,jg))
             fact=domega/(oi+oj)
             IF(jo == 1.OR.jo == no)fact=0.5*domega/(oi+oj)
-            imchi0=imchi0+fact*imag(s0(-jo+1,ig,jg))
+            imchi0=imchi0+fact*aimag(s0(-jo+1,ig,jg))
           END DO
         ELSE IF(io == (no-1))THEN
           DO  jo=1,no
@@ -864,10 +868,10 @@ DO  iq=nq,nq ! nq=1 u optickom smo limesu, dakle ne treba na do loop po q
             IF(jo == (no-2))fact=3.0/2.0
             IF(jo == (no-1))fact=0.0
             IF(jo == no)fact=-1.0
-            imchi0=imchi0+fact*imag(s0(jo-1,ig,jg))
+            imchi0=imchi0+fact*aimag(s0(jo-1,ig,jg))
             fact=domega/(oi+oj)
             IF(jo == 1.OR.jo == no)fact=0.5*domega/(oi+oj)
-            imchi0=imchi0+fact*imag(s0(-jo+1,ig,jg))
+            imchi0=imchi0+fact*aimag(s0(-jo+1,ig,jg))
           END DO
         ELSE
           DO  jo=1,no
@@ -878,10 +882,10 @@ DO  iq=nq,nq ! nq=1 u optickom smo limesu, dakle ne treba na do loop po q
             IF(jo == io)fact=0.0
             IF(jo == (io+1))fact=-3.0/2.0
             IF(jo == no)fact=0.5*domega/(oi-oj)
-            imchi0=imchi0+fact*imag(s0(jo-1,ig,jg))
+            imchi0=imchi0+fact*aimag(s0(jo-1,ig,jg))
             fact=domega/(oi+oj)
             IF(jo == 1.OR.jo == no)fact=0.5*domega/(oi+oj)
-            imchi0=imchi0+fact*imag(s0(-jo+1,ig,jg))
+            imchi0=imchi0+fact*aimag(s0(-jo+1,ig,jg))
           END DO
         END IF
 

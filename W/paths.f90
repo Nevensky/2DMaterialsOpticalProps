@@ -1,69 +1,134 @@
-!*==PATHS.spg  processed by SPAG 6.72Dc at 09:06 on  2 Jun 2020
-      SUBROUTINE PATHS(savedir,K1,K2,N,M,Pathk1,Pathk2,Bandn,Bandm)
-      IMPLICIT NONE
-!*--PATHS4
+      ! subroutine paths(savedir,k1,k2,n,m,pathk1,pathk2,bandn,bandm)
+      ! implicit none
  
-      INTEGER K1 , K2 , N , M , nord
-      CHARACTER(len=100) savedir , folder , file , Pathk1 , Pathk2 ,  Bandn , Bandm
+      ! integer k1 , k2 , n , m , nord
+      ! character(len=100) savedir , folder , file , pathk1 , pathk2 ,  bandn , bandm
  
  
  
-      file = '/evc.dat'
+      ! file = '/evc.dat'
  
-      folder = '/K0000i'
-      nord = INDEX(folder,'i',BACK=.FALSE.)
-      IF ( K1<10 ) THEN
-         WRITE (folder(nord:nord),'(i1)') K1
-      ELSEIF ( K1>=10 .AND. K1<100 ) THEN
-         WRITE (folder(nord-1:nord),'(i2)') K1
-      ELSEIF ( K1>=100 .AND. K1<1000 ) THEN
-         WRITE (folder(nord-2:nord),'(i3)') K1
-      ELSEIF ( K1>=1000 .AND. K1<10000 ) THEN
-         WRITE (folder(nord-3:nord),'(i4)') K1
-      ELSE
-         WRITE (folder(nord-4:nord),'(i5)') K1
-      ENDIF
-      Pathk1 = TRIM(savedir)//TRIM(folder)//TRIM(file)
+      ! folder = '/K0000i'
+      ! nord = index(folder,'i',back=.false.)
+      ! if ( k1<10 ) then
+      !    write (folder(nord:nord),'(i1)') k1
+      ! elseif ( k1>=10 .and. k1<100 ) then
+      !    write (folder(nord-1:nord),'(i2)') k1
+      ! elseif ( k1>=100 .and. k1<1000 ) then
+      !    write (folder(nord-2:nord),'(i3)') k1
+      ! elseif ( k1>=1000 .and. k1<10000 ) then
+      !    write (folder(nord-3:nord),'(i4)') k1
+      ! else
+      !    write (folder(nord-4:nord),'(i5)') k1
+      ! endif
+      ! pathk1 = trim(savedir)//trim(folder)//trim(file)
  
-      folder = '/K0000i'
-      nord = INDEX(folder,'i',BACK=.FALSE.)
-      IF ( K2<10 ) THEN
-         WRITE (folder(nord:nord),'(i1)') K2
-      ELSEIF ( K2>=10 .AND. K2<100 ) THEN
-         WRITE (folder(nord-1:nord),'(i2)') K2
-      ELSEIF ( K2>=100 .AND. K2<1000 ) THEN
-         WRITE (folder(nord-2:nord),'(i3)') K2
-      ELSEIF ( K2>=1000 .AND. K2<10000 ) THEN
-         WRITE (folder(nord-3:nord),'(i4)') K2
-      ELSE
-         WRITE (folder(nord-4:nord),'(i5)') K2
-      ENDIF
-      Pathk2 = TRIM(savedir)//TRIM(folder)//TRIM(file)
+      ! folder = '/K0000i'
+      ! nord = index(folder,'i',back=.false.)
+      ! if ( k2<10 ) then
+      !    write (folder(nord:nord),'(i1)') k2
+      ! elseif ( k2>=10 .and. k2<100 ) then
+      !    write (folder(nord-1:nord),'(i2)') k2
+      ! elseif ( k2>=100 .and. k2<1000 ) then
+      !    write (folder(nord-2:nord),'(i3)') k2
+      ! elseif ( k2>=1000 .and. k2<10000 ) then
+      !    write (folder(nord-3:nord),'(i4)') k2
+      ! else
+      !    write (folder(nord-4:nord),'(i5)') k2
+      ! endif
+      ! pathk2 = trim(savedir)//trim(folder)//trim(file)
  
  
  
-      Bandn = 'evc.n'
-      nord = INDEX(Bandn,'n',BACK=.FALSE.)
-      IF ( N<10 ) THEN
-         WRITE (Bandn(nord:nord),'(i1)') N
-      ELSEIF ( N>=10 .AND. N<100 ) THEN
-         WRITE (Bandn(nord:nord+1),'(i2)') N
-      ELSE
-         WRITE (Bandn(nord:nord+2),'(i3)') N
-      ENDIF
-      Bandm = 'evc.n'
-      nord = INDEX(Bandm,'n',BACK=.FALSE.)
-      IF ( M<10 ) THEN
-         WRITE (Bandm(nord:nord),'(i1)') M
-      ELSEIF ( M>=10 .AND. M<100 ) THEN
-         WRITE (Bandm(nord:nord+1),'(i2)') M
-      ELSE
-         WRITE (Bandm(nord:nord+2),'(i3)') M
-      ENDIF
+      ! bandn = 'evc.n'
+      ! nord = index(bandn,'n',back=.false.)
+      ! if ( n<10 ) then
+      !    write (bandn(nord:nord),'(i1)') n
+      ! elseif ( n>=10 .and. n<100 ) then
+      !    write (bandn(nord:nord+1),'(i2)') n
+      ! else
+      !    write (bandn(nord:nord+2),'(i3)') n
+      ! endif
+      ! bandm = 'evc.n'
+      ! nord = index(bandm,'n',back=.false.)
+      ! if ( m<10 ) then
+      !    write (bandm(nord:nord),'(i1)') m
+      ! elseif ( m>=10 .and. m<100 ) then
+      !    write (bandm(nord:nord+1),'(i2)') m
+      ! else
+      !    write (bandm(nord:nord+2),'(i3)') m
+      ! endif
  
  
  
  
-      END
+      ! end subroutine paths
  
  
+subroutine paths(savedir,k,n,pathk,bandn)
+   implicit none
+   
+   integer k , n, nord
+   character(len=100) savedir , folder , file , pathk ,  bandn
+   
+   file = '/evc.dat'
+   
+   folder = '/K0000i'
+   nord = index(folder,'i',back=.false.)
+   if ( k<10 ) then
+      write (folder(nord:nord),'(i1)') k
+   elseif ( k>=10 .and. k<100 ) then
+      write (folder(nord-1:nord),'(i2)') k
+   elseif ( k>=100 .and. k<1000 ) then
+      write (folder(nord-2:nord),'(i3)') k
+   elseif ( k>=1000 .and. k<10000 ) then
+      write (folder(nord-3:nord),'(i4)') k
+   else
+      write (folder(nord-4:nord),'(i5)') k
+   endif
+   pathk = trim(savedir)//trim(folder)//trim(file)
+   
+   bandn = 'evc.n'
+   nord = index(bandn,'n',back=.false.)
+   if ( n<10 ) then
+      write (bandn(nord:nord),'(i1)') n
+   elseif ( n>=10 .and. n<100 ) then
+      write (bandn(nord:nord+1),'(i2)') n
+   else
+      write (bandn(nord:nord+2),'(i3)') n
+   endif
+end subroutine paths
+
+subroutine pathsB(savedir,k,n,pathk,bandn)
+   implicit none
+   
+   integer k , n, nord
+   character(len=100) savedir , folder , file , pathk ,  bandn
+   
+   file = '/evc.dat'
+   
+   folder = '/K0000i'
+   nord = index(folder,'i',back=.false.)
+   if ( k<10 ) then
+      write (folder(nord:nord),'(i1)') k
+   elseif ( k>=10 .and. k<100 ) then
+      write (folder(nord-1:nord),'(i2)') k
+   elseif ( k>=100 .and. k<1000 ) then
+      write (folder(nord-2:nord),'(i3)') k
+   elseif ( k>=1000 .and. k<10000 ) then
+      write (folder(nord-3:nord),'(i4)') k
+   else
+      write (folder(nord-4:nord),'(i5)') k
+   endif
+   pathk = trim(savedir)//trim(folder)//trim(file)
+   
+   bandn = 'evc.n'
+   nord = index(bandn,'n',back=.false.)
+   if ( n<10 ) then
+      write (bandn(nord:nord),'(i1)') n
+   elseif ( n>=10 .and. n<100 ) then
+      write (bandn(nord:nord+1),'(i2)') n
+   else
+      write (bandn(nord:nord+2),'(i3)') n
+   endif
+end subroutine pathsB

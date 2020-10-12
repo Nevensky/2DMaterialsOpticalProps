@@ -46,6 +46,7 @@ integer :: ik,i,j,jk,it,lk,Ntot,iG0,Nsymm,iq, &
            NG2,iG1,iG2,jG,kG,jo,jump,loss,   &
            iGfast,ikmin,kG1,kG2,nord, lf
 
+integer :: iuni1, iuni2
 
 integer :: Nk     ! = 48*NkI, number of wave vectors in FBZ with no symmetry 
 integer :: NkI    ! number of wave vectors in IBZ
@@ -300,9 +301,10 @@ q_loop: do  iq = qmin,qmax ! 42,61
 ! 1.B.Z  LOOP STARTS HERE !!!!
 
 print *, 'DEBUG: entering parallel region'
-!$omp parallel shared(S0,iq,kI,ktot,RI,eps,E,G,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,eta,Vcell) private(ik, S0_partial,MnmK1K2,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,De,Lor,Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2,attr,C1,C2) firstprivate(savedir,jump,domega) num_threads(Nthreads) !  default(private) 
+!$omp parallel shared(S0,iq,kI,ktot,RI,eps,E,G,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,eta,Vcell) private(ik,S0_partial,MnmK1K2,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,De,Lor,Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast,iG1, iG2,attr,C1,C2, iuni1, iuni2) firstprivate(savedir,jump,domega) num_threads(Nthreads) !  default(private) 
 thread_id =  omp_get_thread_num()
-
+iuni1 = 10
+iuni2 = iuni1+1
 !$omp do 
 do ik = 1, Ntot   ! k_loop_FBZ_2nd: 
   ! neven debug
@@ -347,27 +349,55 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
   S0_partial(1:no,1:Nlf,1:Nlf) = cmplx(0.0)
   
   bands_n_loop: do  n = 1, Nocc         ! filled bands loop
-    bands_m_loop: do  m = Nocc+1, Nband ! empty bands loop
+    ! !$omp critical(loadC1)
+    ! iuni1 = 10 + 2*thread_id + ik*100000 + n*100
+    ! if (mod(iuni1,2)>0) then
+    !   print *, 'outer loop ODD instead of EVEN'
+    !   print *, thread_id,ik,n,m
+    !   stop
+    ! end if
+    ! call loadCsQE6(K1, n, iuni1, savedir, NG1, C1)
+    ! !$omp end critical(loadC1)
+    
+
+
+  bands_m_loop: do  m = Nocc+1, Nband ! empty bands loop
       ! ucitavanje evc.dat binarnih datoteka za fiksni K1,K2, i vrpce n i m
+      !$omp critical(loadC2)
+      
+      iuni1 = 10 + 2*thread_id + ik*100000 + n*100
+      ! if (mod(iuni1,2)>0) then
+      !   print *, 'outer loop ODD instead of EVEN'
+      !   print *, thread_id,ik,n,m
+      !   stop
+      ! end if
+      call loadCsQE6(K1, n, iuni1, savedir, NG1, C1)
 
-      call loadCsQE6(K1, n, savedir, NG1, C1)
-      call loadCsQE6(K2, m, savedir, NG2, C2)
 
+      iuni2 = 10 + (2*thread_id+1) + (2*ik+1)*100000 + (2*m+1)*100
+      ! if (mod(iuni2,2)==0) then
+      !   print *, 'inner loop EVEN instead of ODD'
+      !   print *,thread_id,ik,n,m
+      !   stop
+      ! end if
+      call loadCsQE6(K2, m, iuni2, savedir, NG2, C2)
+      !$omp end critical(loadC2)
 
       if (NGd > NG1) then
         write(*,*) 'NGd is bigger than NG1=',NG1
         STOP
-      else if (NGd > NG2) then
+      end if
+
+      if (NGd > NG2) then
         write(*,*) 'NGd is bigger than NG2=',NG2
         STOP
       end if
 
-
       ! Konstrukcija stupca matricnih elementa nabojnih vrhova MnmK1K2(G)      
       call genMnmK1K2(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2)
 
-      deallocate(C1)
       deallocate(C2)
+      deallocate(C1) 
 
       do  io = 1,no
         o = (io-1)*domega
@@ -383,6 +413,7 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
       end do
               
     end do bands_m_loop ! end of m do loop
+    
   end do bands_n_loop   ! end of n do loop
 
 
@@ -553,6 +584,7 @@ contains
         kmin = kref
         ikmin = i
         krefM = kmin
+        EXIT Ntot_loop
       end if
     end do Ntot_loop
     ! neve debug
@@ -1395,15 +1427,15 @@ end subroutine genMnmK1K2
     deallocate(C2)
   end subroutine loadCS
 
-subroutine loadCsQE6(ik, ibnd, savedir, igwx, evc)
+subroutine loadCsQE6(ik, ibnd, iuni, savedir, igwx, evc)
     ! read_a_wfc(ibnd, filename, evc, ik, xk, nbnd, ispin, npol, gamma_only, ngw, igwx )
     ! read QE 6.0 and greater, wfn coefficeints
     ! use iso_fortran_env, ONLY: DP=> REAL64
     implicit none 
-    character (len=*), intent(in)               :: savedir
-    integer,           intent(in)               :: ik, ibnd
-    integer,           intent(out)              :: igwx
-    complex(DP),       intent(inout), allocatable            :: evc(:)
+    character (len=*), intent(in)                  :: savedir
+    integer,           intent(in)                  :: ik, ibnd, iuni
+    integer,           intent(out)                 :: igwx
+    complex(DP),       intent(inout), allocatable  :: evc(:)
 
     character (len=300) :: path 
 
@@ -1411,7 +1443,7 @@ subroutine loadCsQE6(ik, ibnd, savedir, igwx, evc)
     real(dp) :: xk(3)
     ! integer  :: dummy_int   
     logical  :: gamma_only 
-    integer  :: ios,iuni 
+    integer  :: ios 
     real(dp) :: scalef
     real(dp) :: b1(3), b2(3), b3(3) !, dummy_real 
 
@@ -1421,11 +1453,10 @@ subroutine loadCsQE6(ik, ibnd, savedir, igwx, evc)
     write(ik_str,'(I10)') ik
 
     path = trim(savedir)//str1//trim(adjustl(ik_str))//str3
-    iuni = 10 + ik
-    print *,path
+    ! iuni = 10 + ik*100 + ibnd*20000
+    ! print *,path
     open(unit = iuni, file = trim(adjustl(path)), form = 'unformatted', status = 'old', iostat=ios) 
-    ! read(iuni) ik2, xk, ispin, gamma_only, scalef
-    read(iuni) ! skip line
+    read(iuni) ! ik2, xk, ispin, gamma_only, scalef
     read(iuni) ngw, igwx, npol, nbnd
     read(iuni) b1, b2, b3 
 
@@ -1448,7 +1479,6 @@ subroutine loadCsQE6(ik, ibnd, savedir, igwx, evc)
     end do 
     close(iuni) 
     end subroutine loadCsQE6
-
 
   subroutine loadkIandE(path, NkI, Nband, Nocc, kI, E)
     implicit none

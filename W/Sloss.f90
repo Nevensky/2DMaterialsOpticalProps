@@ -589,6 +589,7 @@ contains
         kmin = kref
         ikmin = i
         krefM = kmin
+        EXIT Ntot_loop
       end if
     end do Ntot_loop
     ! neve debug
@@ -1388,7 +1389,9 @@ end subroutine genMnmK1K2
 
     !$omp critical(pathk_read)
     ! otvara save/K.000x/evc.dat u atributu <evc band> ispod CnK(G) koef.
-    call paths(savedir,K1,K2,n,m,pathk1,pathk2,bandn,bandm) 
+    ! call paths(savedir,K1,K2,n,m,pathk1,pathk2,bandn,bandm) 
+    call paths(savedir,K1,n,pathK1,bandn)
+    call pathsB(savedir,K2,m,pathK2,bandm)
     ! u ovom dijelu programa se iscitava iz binarnih fileova evc.dat za
     ! fiksni K1,K2, i vrpce n i m
     !Otvaranje atribute za INFO
