@@ -367,13 +367,12 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
   S0_partial(1:no,1:Nlf,1:Nlf) = cmplx(0.0)
   
   bands_n_loop: do  n = 1, Nocc         ! filled bands loop
-    ! !$omp critical(loadC1)
+
     !$omp critical(loadCs_)
     iuni1 = 20 + 2*thread_id + ik*100000 + n*100
     call loadCsQE6(K1, n, iuni1, savedir, NG1, C1)
     !$omp end critical(loadCs_)
-    ! !$omp end critical(loadC1)
-    
+
     if (NGd > NG1) then
       write(*,*) 'NGd is bigger than NG1=',NG1
       STOP
@@ -382,29 +381,9 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
   bands_m_loop: do  m = Nocc+1, Nband ! empty bands loop
       ! ucitavanje evc.dat binarnih datoteka za fiksni K1,K2, i vrpce n i m
       !$omp critical(loadCs_)
-      
-      ! iuni1 = 10 + 2*thread_id + ik*100000 + n*100
-      ! if (mod(iuni1,2)>0) then
-      !   print *, 'outer loop ODD instead of EVEN'
-      !   print *, thread_id,ik,n,m
-      !   stop
-      ! end if
-      ! call loadCsQE6(K1, n, iuni1, savedir, NG1, C1)
-
-
       iuni2 = 21 + (2*thread_id+1) + (2*ik+1)*100000 + (2*m+1)*100
-      ! if (mod(iuni2,2)==0) then
-      !   print *, 'inner loop EVEN instead of ODD'
-      !   print *,thread_id,ik,n,m
-      !   stop
-      ! end if
       call loadCsQE6(K2, m, iuni2, savedir, NG2, C2)
       !$omp end critical(loadCs_)
-
-      ! if (NGd > NG1) then
-      !   write(*,*) 'NGd is bigger than NG1=',NG1
-      !   STOP
-      ! end if
 
       if (NGd > NG2) then
         write(*,*) 'NGd is bigger than NG2=',NG2
@@ -415,7 +394,6 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
       call genMnmK1K2(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2)
 
       deallocate(C2)
-      ! deallocate(C1) 
 
       do  io = 1,no
         o = (io-1)*domega
@@ -918,7 +896,7 @@ subroutine genMnmK1K2(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G, Gfas
   iGfast = 0
   MnmK1K2(1:Nlf) = cmplx(0.0) ! nabojni vrhovi
   do  iG = 1,Nlf ! suma po lokalnim fieldovima kojih ima Nlf
-    do  iG1 = 1,NG1 ! vito zamjenjeno NGd sa NG1
+    do  iG1 = 1,NGd ! vito zamjenjeno NGd sa NG1
       iGfast = iGfast + 1
       Gxx1 = G(1,iG1)
       Gyy1 = G(2,iG1)

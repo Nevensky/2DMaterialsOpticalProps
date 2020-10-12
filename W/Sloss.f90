@@ -906,7 +906,7 @@ subroutine genMnmK1K2(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G, Gfas
   iGfast = 0
   MnmK1K2(1:Nlf) = cmplx(0.0) ! nabojni vrhovi
   do  iG = 1,Nlf ! suma po lokalnim fieldovima kojih ima Nlf
-    do  iG1 = 1,NG1 ! vito zamjenjeno NGd sa NG1, neven debug, zamijeniti sa NGd?
+    do  iG1 = 1,NGd 
       iGfast = iGfast + 1
       Gxx1 = G(1,iG1)
       Gyy1 = G(2,iG1)
@@ -926,7 +926,7 @@ subroutine genMnmK1K2(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G, Gfas
       ! !$omp critical(jump_operation)
       if (jump == 1) then
         ! !$omp single
-        iG2_loop: do  iG2 = 1,NG2 ! neven debug, zamijeniti sa NGd?
+        iG2_loop: do  iG2 = 1,NG2 
           Gfast(iGfast) = NG2+1
           Gxx2 = G(1,iG2)
           Gyy2 = G(2,iG2)
