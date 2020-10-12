@@ -131,7 +131,7 @@ c             QUANTUM ESSPRESSO IMPUTS:
 c              root='/home/vito/PROJECTS/MoS2-BSE/MoS2_201X201'
 C               root='/home/nevensky/Repositories/2d-quasiparticle-optical-properties/MoS2_201X201'
               root='../../../MoS2_201X201'
-              outdir='../../../tmp'
+              outdir='../../../tmp/MoS2.save'
 c             Crystal local field effects are included in z direction lf=1 
 c             Crystal local field effects are included in x,y,z direction lf=3 
 
@@ -557,7 +557,9 @@ c              petlje po vrpcama n i m
 
 
 
-            call paths(outdir,K1,K2,n,m,pathK1,pathK2,bandn,bandm) ! fajl za popunit wfn. za K1 i K2 i pripadajuce vrpce n i m
+C             call paths(outdir,K1,K2,n,m,pathK1,pathK2,bandn,bandm) ! fajl za popunit wfn. za K1 i K2 i pripadajuce vrpce n i m
+            call paths(outdir,K1,n,pathK1,bandn)
+            call paths(outdir,K2,m,pathK2,bandm)
 
                
 c         u ovom dijelu programa se iscitava iz binarnih fileova ''gvectors.dat'',''evc.dat'' za 
@@ -856,8 +858,9 @@ C                  write(*,*) WT(io,1,1),WT(io,1,2),WT(io,2,2)
                 ! neven debug
                  write(20009,*) oi*Hartree,aimag(WT(io,1,1))
                  write(10009,*) oi*Hartree,real(WT(io,1,1))
-C                  write(40009,*) oi*Hartree,aimag(WT(io,3,3))
-C                  write(30009,*) oi*Hartree,real(WT(io,3,3))
+                 
+                 write(22309,*) oi*Hartree,aimag(WT(io,2,2))
+                 write(12309,*) oi*Hartree,real(WT(io,2,3))
 c                kraj nove petlje po omega
 872              continue
  
