@@ -841,7 +841,7 @@ subroutine genGlfandParity(lf,Ecut,NG,Gcar,G,Nlf,Nlfd,parG,Glf)
   Nlf = 0
   if (lf == 1) then
     do iG = 1, NG
-      ! local field efekti samo u okomitom smjeru
+      ! local field efekti samo u okomitom smjeru (z)
       if (G(1,iG) == 0.0 .and. G(2,iG) == 0.0) then
         Eref = Gcar**2 * G(3,iG)**2 / 2.0
         if (Eref <= Ecut) then
@@ -856,9 +856,9 @@ subroutine genGlfandParity(lf,Ecut,NG,Gcar,G,Nlf,Nlfd,parG,Glf)
         end if
       end if
     end do
-  else
+  elseif (lf == 3)
     do  iG = 1, NG
-      ! local field efekti samo u svim smjerovima
+      ! local field efekti samo u svim smjerovima (xyz)
       Eref = Gcar**2*sum(G(1:3,iG)**2) / 2.0
       if (Eref <= Ecut) then
         Nlf = Nlf+1
