@@ -350,10 +350,10 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
   
   bands_n_loop: do  n = 1, Nocc         ! filled bands loop
     ! !$omp critical(loadC1)
-    !$omp critical(loadCs)
+    !$omp critical(loadCs_)
     iuni1 = 10 + 2*thread_id + ik*100000 + n*100
     call loadCsQE6(K1, n, iuni1, savedir, NG1, C1)
-    !$omp end critical(loadCs)
+    !$omp end critical(loadCs_)
     ! !$omp end critical(loadC1)
     
     if (NGd > NG1) then
@@ -363,7 +363,7 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
 
   bands_m_loop: do  m = Nocc+1, Nband ! empty bands loop
       ! ucitavanje evc.dat binarnih datoteka za fiksni K1,K2, i vrpce n i m
-      !$omp critical(loadCs)
+      !$omp critical(loadCs_)
       
       iuni1 = 10 + 2*thread_id + ik*100000 + n*100
       ! if (mod(iuni1,2)>0) then
@@ -381,7 +381,7 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
       !   stop
       ! end if
       call loadCsQE6(K2, m, iuni2, savedir, NG2, C2)
-      !$omp end critical(loadCs)
+      !$omp end critical(loadCs_)
 
       ! if (NGd > NG1) then
       !   write(*,*) 'NGd is bigger than NG1=',NG1
@@ -1385,7 +1385,7 @@ end subroutine genMnmK1K2
     !$omp critical(pathk_read)
     ! otvara save/K.000x/evc.dat u atributu <evc band> ispod CnK(G) koef.
     ! call paths(savedir,K1,K2,n,m,pathk1,pathk2,bandn,bandm) 
-    call paths(savedir),K1,n,pathK1,bandn)
+    call paths(savedir,K1,n,pathK1,bandn)
     call paths(savedir,K2,m,pathK2,bandm)
     ! u ovom dijelu programa se iscitava iz binarnih fileova evc.dat za
     ! fiksni K1,K2, i vrpce n i m
