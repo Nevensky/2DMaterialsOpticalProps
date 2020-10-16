@@ -66,14 +66,14 @@ integer :: ist,ist2,ist4,ist5,ist6,ist7,ist8,ist9,ist10,ist11,ist12
 integer :: lno,lno2,lno9,lno10,lno11,lno12
 
 ! constants
-real(kind=dp),    parameter :: pi = 4.D0*ATAN(1.D0)
-real(kind=dp),    parameter :: eV = 1.602176487D-19
+real(kind=dp),    parameter :: pi      = 4.D0*atan(1.D0)
+real(kind=dp),    parameter :: eV      = 1.602176487D-19
 real(kind=dp),    parameter :: Hartree = 2.0D0*13.6056923D0
-real(kind=dp),    parameter :: Planck = 6.626196D-34
-real(kind=dp),    parameter :: aBohr = 0.5291772d0
-complex(kind=dp), parameter :: rone  = cmplx(1.0,0.0)
-complex(kind=dp), parameter :: czero = cmplx(0.0,0.0)
-complex(kind=dp), parameter :: ione  = cmplx(0.0,1.0)
+real(kind=dp),    parameter :: Planck  = 6.626196D-34
+real(kind=dp),    parameter :: aBohr   = 0.5291772d0
+complex(kind=dp), parameter :: rone    = cmplx(1.0,0.0)
+complex(kind=dp), parameter :: czero   = cmplx(0.0,0.0)
+complex(kind=dp), parameter :: ione    = cmplx(0.0,1.0)
 
 ! scalars
 real(kind=dp) :: kx,ky,kz
@@ -86,7 +86,7 @@ real(kind=dp) :: domega
 real(kind=dp) :: o
 real(kind=dp) :: K11,K22,K33
 real(kind=dp) :: Lor ! Lorentzian
-real(kind=dp) :: De 
+real(kind=dp) :: dE 
 real(kind=dp) :: Gabs ! 
 real(kind=dp) :: kref ! trazi najmanju k-tocku sampliranu u MP meshu u kojem se moze izracunati ILS
 real(kind=dp) :: Eref 
@@ -296,148 +296,148 @@ q_loop: do  iq = qmin,qmax ! 42,61
   call findMinQ(Ntot, ktot, qx, qy, qz)
   
   ! Info file
-  call writeInfo(qx, qy, qz, Gcar, Nsymm, Nlf, Ntot, NkI, Nband, eta, T, Nel, NelQE )
+  call writeInfo(lf, qx, qy, qz, Gcar, Nsymm, Nlf, Ntot, NkI, Nband, eta, T, Nel, NelQE )
 
   ! intialize correlation matrix
   S0(1:no,1:Nlf,1:Nlf) = cmplx(0.0,0.0)
   
   
-! 1.B.Z  LOOP STARTS HERE !!!!
+  ! 1.B.Z  LOOP STARTS HERE !!!!
 
-print *, 'DEBUG: entering parallel region'
-!$omp parallel shared(S0,iq,kI,ktot,RI,eps,E,G,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,eta,Vcell) private(ik, S0_partial,MnmK1K2,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,De,Lor,Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2,attr1,attr2, C1,C2, iuni1, iuni2) firstprivate(savedir,jump,domega) num_threads(Nthreads) !  default(private) 
-thread_id =  omp_get_thread_num()
+  print *, 'DEBUG: entering parallel region'
+  !$omp parallel shared(S0,iq,kI,ktot,RI,eps,E,G,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,eta,Vcell) private(ik, S0_partial,MnmK1K2,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2,attr1,attr2, C1,C2, iuni1, iuni2) firstprivate(savedir,jump,domega) num_threads(Nthreads) !  default(private) 
+  thread_id =  omp_get_thread_num()
 
-!$omp do 
-do ik = 1, Ntot   ! k_loop_FBZ_2nd: 
-
-
-  ! debug vito (prepraviti za paralelnu izvedbu)
-  ! open(122,FILE='status')
-  ! write(122,*) 'iq=',iq
-  ! write(122,*) 'ik=',ik
-  ! close(122)
+  !$omp do 
+  do ik = 1, Ntot   ! k_loop_FBZ_2nd: 
   
   
-  kx = ktot(1,ik)
-  ky = ktot(2,ik)
-  kz = ktot(3,ik)
-  
-  ! trazenje (kx,ky,kz) u ireducibilnoj zoni
-  call findKinIBZ(ik, NkI, Nsymm, eps, kx, ky, kz, RI, kI, R1, K1)
-
-
-  KQx = kx + qx
-  KQy = ky + qy
-  KQz = kz + qz
-
-  !$omp critical(printWaveVector)
-  ! thread_id =  omp_get_thread_num()
-  print *,'thread id:',thread_id,'ik: ',ik
-  print *, 'KQx,KQy,KQz:',KQx,KQy,KQz
-  !$omp end critical(printWaveVector)
-
-  ! trazenje (KQx,KQy) prvo u 1.B.Z a onda u I.B.Z.
-  call findKQinBZ(KQx, KQy, KQz, eps, Nsymm, NkI, Ntot, NG, ktot, kI, RI, G, iG0, R2, K2)
-  
-  
-  ! R1 - integer, redni broj point operacije R1 u transformaciji K=R1*K1.
-  ! K1 - integer, redni broj valnog vektora K1 u transformaciji K=R1*K1.
-  ! iG0 i R2-integeri, redni broj vektora reciprocne restke G0 i point operacije R2 u transformaciji K+Q=G0+R2*K2.
-  ! K2 - integer, redni broj valnog vektora K2 u transformaciji  K+Q=G0+R2*K2.
-  
-
-  allocate(S0_partial(no,Nlf,Nlf))   ! pomocna var. za redukciju S0
-  S0_partial(1:no,1:Nlf,1:Nlf) = cmplx(0.0)
-  
-  bands_n_loop: do  n = 1, Nocc         ! filled bands loop
-
-    ! ucitavanje evc.dat binarnih datoteka za fiksni K1,K2, i vrpce n i m   
-    ! otvara save/K.000x/evc.dat u atributu <evc band> ispod CnK(G) koef.
+    ! debug vito (prepraviti za paralelnu izvedbu)
+    ! open(122,FILE='status')
+    ! write(122,*) 'iq=',iq
+    ! write(122,*) 'ik=',ik
+    ! close(122)
     
-    !$omp critical(loadCs_1)
-    iuni1 = 20 + 2*thread_id + ik*100000 + n*100
-    call paths(savedir,K1,n,pathk1,bandn)
-    ! print *,'pathk1',pathk1
-    call iotk_open_read(iuni1,pathk1)
-    call iotk_scan_empty(iuni1,"INFO",attr=attr1) ! Otvaranje atribute za INFO
-    call iotk_scan_attr(attr1,"igwx",NG1)
     
-    allocate(C1(NG1))                           ! Alociranje polja C1
-    call iotk_scan_dat(iuni1,bandn,C1)           ! Ucitavanje podataka iza evc.n
-    call iotk_close_read(iuni1)
-    !$omp end critical(loadCs_1)
-
-    if (NGd > NG1) then
-      write(*,*) 'NGd is bigger than NG1=',NG1
-      STOP
-    end if
-
-    bands_m_loop: do  m = Nocc+1, Nband ! empty bands loop
-
+    kx = ktot(1,ik)
+    ky = ktot(2,ik)
+    kz = ktot(3,ik)
+    
+    ! trazenje (kx,ky,kz) u ireducibilnoj zoni
+    call findKinIBZ(ik, NkI, Nsymm, eps, kx, ky, kz, RI, kI, R1, K1)
+  
+  
+    KQx = kx + qx
+    KQy = ky + qy
+    KQz = kz + qz
+  
+    !$omp critical(printWaveVector)
+    ! thread_id =  omp_get_thread_num()
+    print *,'thread id:',thread_id,'ik: ',ik
+    print *, 'KQx,KQy,KQz:',KQx,KQy,KQz
+    !$omp end critical(printWaveVector)
+  
+    ! trazenje (KQx,KQy) prvo u 1.B.Z a onda u I.B.Z.
+    call findKQinBZ(KQx, KQy, KQz, eps, Nsymm, NkI, Ntot, NG, ktot, kI, RI, G, iG0, R2, K2)
+    
+    
+    ! R1 - integer, redni broj point operacije R1 u transformaciji K=R1*K1.
+    ! K1 - integer, redni broj valnog vektora K1 u transformaciji K=R1*K1.
+    ! iG0 i R2-integeri, redni broj vektora reciprocne restke G0 i point operacije R2 u transformaciji K+Q=G0+R2*K2.
+    ! K2 - integer, redni broj valnog vektora K2 u transformaciji  K+Q=G0+R2*K2.
+    
+  
+    allocate(S0_partial(no,Nlf,Nlf))   ! pomocna var. za redukciju S0
+    S0_partial(1:no,1:Nlf,1:Nlf) = cmplx(0.0)
+    
+    bands_n_loop: do  n = 1, Nocc         ! filled bands loop
+  
+      ! ucitavanje evc.dat binarnih datoteka za fiksni K1,K2, i vrpce n i m   
+      ! otvara save/K.000x/evc.dat u atributu <evc band> ispod CnK(G) koef.
       
-      ! print *,'n,m: ',n,m,'K1,K2: ',K1,K2,'iuni:',iuni1,iuni2
-      !$omp critical(loadCs_2)
-      iuni2 = 21 + (2*thread_id+1) + (2*ik+1)*100000 + (2*m+1)*100
-      call pathsB(savedir,K2,m,pathk2,bandm)
-      ! print *,'pathk2',pathk2
-      call iotk_open_read(iuni2,pathk2)
-      call iotk_scan_empty(iuni2,"INFO",attr=attr2)
-      call iotk_scan_attr(attr2,"igwx",NG2)
-
-      allocate(C2(NG2))                           ! Alociranje polja C1
-      call iotk_scan_dat(iuni2,bandm,C2)           ! Ucitavanje podataka iza evc.n
-      call iotk_close_read(iuni2)
-      !$omp end critical(loadCs_2)
-
-
-      if (NGd > NG2) then
-        write(*,*) 'NGd is bigger than NG2=',NG2
-        STOP
+      !$omp critical(loadCs_1)
+      iuni1 = 20 + 2*thread_id + ik*100000 + n*100
+      call paths(savedir,K1,n,pathk1,bandn)
+      ! print *,'pathk1',pathk1
+      call iotk_open_read(iuni1,pathk1)
+      call iotk_scan_empty(iuni1,"INFO",attr=attr1) ! Otvaranje atribute za INFO
+      call iotk_scan_attr(attr1,"igwx",NG1)
+      
+      allocate(C1(NG1))                           ! Alociranje polja C1
+      call iotk_scan_dat(iuni1,bandn,C1)           ! Ucitavanje podataka iza evc.n
+      call iotk_close_read(iuni1)
+      !$omp end critical(loadCs_1)
+  
+      if (NGd > NG1) then
+        write(*,*) 'NGd is bigger than NG1=',NG1
+        stop
       end if
-
-      ! Konstrukcija stupca matricnih elementa nabojnih vrhova MnmK1K2(G)      
-      call genMnmK1K2(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2)
-
-      
-      deallocate(C2)
-
-      do  io = 1,no
-        o = (io-1)*domega
-        De = o + E(K1,n) - E(K2,m) 
-        Lor = -eta/(De**2 + eta**2)     ! ovo bi analticki bila delta funkcija imag. dio od 1/De
-        if (abs(Lor) >= 1.0D-3/eta) then
-          do  iG = 1,Nlf
-            do  jG = 1,Nlf
-              S0_partial(io,iG,jG) = S0_partial(io,iG,jG) - 2.0*Lor*MnmK1K2(iG)*conjg(MnmK1K2(jG)) / (pi*Ntot*Vcell)
-            end do
-          end do
+  
+      bands_m_loop: do  m = Nocc+1, Nband ! empty bands loop
+  
+        
+        ! print *,'n,m: ',n,m,'K1,K2: ',K1,K2,'iuni:',iuni1,iuni2
+        !$omp critical(loadCs_2)
+        iuni2 = 21 + (2*thread_id+1) + (2*ik+1)*100000 + (2*m+1)*100
+        call pathsB(savedir,K2,m,pathk2,bandm)
+        ! print *,'pathk2',pathk2
+        call iotk_open_read(iuni2,pathk2)
+        call iotk_scan_empty(iuni2,"INFO",attr=attr2)
+        call iotk_scan_attr(attr2,"igwx",NG2)
+  
+        allocate(C2(NG2))                           ! Alociranje polja C1
+        call iotk_scan_dat(iuni2,bandm,C2)           ! Ucitavanje podataka iza evc.n
+        call iotk_close_read(iuni2)
+        !$omp end critical(loadCs_2)
+  
+  
+        if (NGd > NG2) then
+          write(*,*) 'NGd is bigger than NG2=',NG2
+          stop
         end if
-      end do
-              
-    end do bands_m_loop ! end of m do loop
-    deallocate(C1)
-  end do bands_n_loop   ! end of n do loop
-
-
-  !$omp critical(sumS0)      
-  ! neven debug
-  ! print *, 'K1: ',K1,'K2: ',K2,'R1: ',R1, 'R2: ',R2
-  ! print *, 'sum(S0): ', sum(S0(1:no,1:Nlf,1:Nlf)
-  S0(1:no,1:Nlf,1:Nlf) = S0(1:no,1:Nlf,1:Nlf) + S0_partial(1:no,1:Nlf,1:Nlf)
-  !$omp end critical(sumS0)
-
-  deallocate(S0_partial)
-  jump = 1
-
-
-end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
- !$omp end do
- !$omp end parallel
+  
+        ! Konstrukcija stupca matricnih elementa nabojnih vrhova MnmK1K2(G)      
+        call genMnmK1K2(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2)
+  
+        
+        deallocate(C2)
+  
+        do  io = 1,no
+          o = (io-1)*domega
+          dE = o + E(K1,n) - E(K2,m) 
+          Lor = -eta/(dE**2 + eta**2)     ! ovo bi analticki bila delta funkcija imag. dio od 1/dE
+          if (abs(Lor) >= 1.0D-3/eta) then
+            do  iG = 1,Nlf
+              do  jG = 1,Nlf
+                S0_partial(io,iG,jG) = S0_partial(io,iG,jG) - 2.0*Lor*MnmK1K2(iG)*conjg(MnmK1K2(jG)) / (pi*Ntot*Vcell)
+              end do
+            end do
+          end if
+        end do
+                
+      end do bands_m_loop ! end of m do loop
+      deallocate(C1)
+    end do bands_n_loop   ! end of n do loop
+  
+  
+    !$omp critical(sumS0)      
+    ! neven debug
+    ! print *, 'K1: ',K1,'K2: ',K2,'R1: ',R1, 'R2: ',R2
+    ! print *, 'sum(S0): ', sum(S0(1:no,1:Nlf,1:Nlf)
+    S0(1:no,1:Nlf,1:Nlf) = S0(1:no,1:Nlf,1:Nlf) + S0_partial(1:no,1:Nlf,1:Nlf)
+    !$omp end critical(sumS0)
+  
+    deallocate(S0_partial)
+    jump = 1
+  
+  
+   end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
+  !$omp end do
+  !$omp end parallel
  
- print *, 'DEBUG: exiting parallel region'
+  print *, 'DEBUG: exiting parallel region'
 
- ! STOP
+  ! stop
 
   ! Convert (qx,qy,qz) and Glf from Cartesian coords. to atomic units
   qx = Gcar*qx ! convert qx *2p/a0
@@ -637,7 +637,7 @@ contains
     end if
     if (it == 1) then
       print*,'Can not find wave vector K=',ik, 'in I.B.Z.'
-      STOP
+      stop
     end if
     ! print *, 'R1:',R1,'K1:', K1
 end subroutine findKinIBZ
@@ -686,10 +686,10 @@ subroutine findKQinBZ(KQx, KQy, KQz, eps, Nsymm, NkI, Ntot, NG, ktot, kI, RI, G,
 
   if (it == 1) then
     print*,'Can not find wave vector K+Q=',ik,'+',iq, 'in FBZ.'
-    STOP
+    stop
   else if (it == 2) then
     print*,'Can not find wave vector K+Q=',ik,'+',iq, 'in IBZ.'
-    STOP
+    stop
   end if
 
 end subroutine findKQinBZ
@@ -805,7 +805,7 @@ end subroutine findKQinBZ
           end if
           if (it == 1) then
             print*,'Can not find wave vector K=',ik, 'in I.B.Z.'
-            STOP
+            stop
           end if
         end if
         
@@ -872,7 +872,7 @@ subroutine genGlfandParity(lf,Ecut,NG,Gcar,G,Nlf,Nlfd,parG,Glf)
   end if
   if (Nlf > Nlfd) then
     print*,'Nlf is bigger than Nlfd'
-    STOP
+    stop
   end if
 
   ! neven debug
@@ -881,7 +881,8 @@ subroutine genGlfandParity(lf,Ecut,NG,Gcar,G,Nlf,Nlfd,parG,Glf)
 end subroutine genGlfandParity
 
 subroutine genMnmK1K2(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2)
-  ! Konstrukcija stupca matricnih elementa nabojnih vrhova MnmK1K2(G) 
+  ! Konstrukcija matricnih elementa nabojnih vrhova MnmK1K2(iG) 
+  implicit none
   integer,          intent(in)    :: iG0, Nlf, NG1, NG2
   integer,          intent(in)    :: R1,R2
   real(kind=dp),    intent(in)    :: eps
@@ -903,27 +904,28 @@ subroutine genMnmK1K2(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G, Gfas
 
   iGfast = 0
   MnmK1K2(1:Nlf) = cmplx(0.0) ! nabojni vrhovi
-  do  iG = 1,Nlf ! suma po lokalnim fieldovima kojih ima Nlf
-    do  iG1 = 1,NGd 
+  iG_loop: do  iG = 1,Nlf ! suma po lokalnim fieldovima kojih ima Nlf
+    iG1_loop: do  iG1 = 1,NGd 
       iGfast = iGfast + 1
       Gxx1 = G(1,iG1)
       Gyy1 = G(2,iG1)
       Gzz1 = G(3,iG1)
-      K11 = R(R1,1,1)*Gxx1 + R(R1,1,2)*Gyy1 + R(R1,1,3)*Gzz1
-      K22 = R(R1,2,1)*Gxx1 + R(R1,2,2)*Gyy1 + R(R1,2,3)*Gzz1
-      K33 = R(R1,3,1)*Gxx1 + R(R1,3,2)*Gyy1 + R(R1,3,3)*Gzz1
-      K11 = K11 + Glf(1,iG)
-      K22 = K22 + Glf(2,iG)
-      K33 = K33 + Glf(3,iG)
-      K11 = K11 + G(1,iG0)
-      K22 = K22 + G(2,iG0)
-      K33 = K33 + G(3,iG0)
+      ! neven debug -> provjeri tocnost
+      ! K11 = R(R1,1,1)*Gxx1 + R(R1,1,2)*Gyy1 + R(R1,1,3)*Gzz1
+      ! K22 = R(R1,2,1)*Gxx1 + R(R1,2,2)*Gyy1 + R(R1,2,3)*Gzz1
+      ! K33 = R(R1,3,1)*Gxx1 + R(R1,3,2)*Gyy1 + R(R1,3,3)*Gzz1
+      k11 = sum( R(R1,1,1:3)*G(1:3,iG1) )
+      k22 = sum( R(R1,2,1:3)*G(1:3,iG1) )
+      k33 = sum( R(R1,3,1:3)*G(1:3,iG1) )
+
+      K11 = K11 + Glf(1,iG) + G(1,iG0)
+      K22 = K22 + Glf(2,iG) + G(2,iG0)
+      K33 = K33 + Glf(3,iG) + G(3,iG0)
+
       Gxx1 = RI(R2,1,1)*K11 + RI(R2,1,2)*K22 + RI(R2,1,3)*K33
       Gyy1 = RI(R2,2,1)*K11 + RI(R2,2,2)*K22 + RI(R2,2,3)*K33
       Gzz1 = RI(R2,3,1)*K11 + RI(R2,3,2)*K22 + RI(R2,3,3)*K33
-      ! !$omp critical(jump_operation)
       if (jump == 1) then
-        ! !$omp single
         iG2_loop: do  iG2 = 1,NG2 
           Gfast(iGfast) = NG2+1
           Gxx2 = G(1,iG2)
@@ -937,18 +939,16 @@ subroutine genMnmK1K2(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G, Gfas
               EXIT iG2_loop
           end if
         end do iG2_loop
-        ! !$omp end single
       end if
-      ! !$omp end critical(jump_operation)
       ! 1111              continue
       iG2 = Gfast(iGfast)
       if (iG2 <= NG2) then
         MnmK1K2(iG) = MnmK1K2(iG) + conjg(C1(iG1))*C2(iG2)
         ! print *,'condition satisfied',MnmK1K2(iG)
       end if
-    end do
-  end do
-  jump = 2
+    end do iG1_loop
+  end do iG_loop
+  jump = 2 ! za svaki valni vektor q i dani k zapamti Gfast i za svaku vrpcu preskaci taj postupak  
 end subroutine genMnmK1K2
 
   subroutine genChi0(io,no,Nlf,domega,S0,Chi0)
@@ -1336,7 +1336,7 @@ end subroutine genMnmK1K2
           print*,'*********************************'
           print*,'WARRNING!, G vectors input is wrong!!'
           print*,'G(1) is not (0,0,0)!!'
-          STOP
+          stop
         end if
       end if
     ! transformation in cart.coord (also!, after this all G components are in 2pi/a0 units)
@@ -1416,10 +1416,10 @@ end subroutine genMnmK1K2
 
     if (NGd > NG1) then
       write(*,*) 'NGd is bigger than NG1=',NG1
-      STOP
+      stop
     else if (NGd > NG2) then
       write(*,*) 'NGd is bigger than NG2=',NG2
-      STOP
+      stop
     end if
     
     ! Konstrukcija stupca matricnih elementa nabojnih vrhova MnmK1K2(G)      
@@ -1521,12 +1521,13 @@ subroutine loadCsQE6( ik, ibnd, savedir, evc, igwx )
 
   end subroutine loadkIandE
 
-  subroutine writeInfo(qx, qy, qz, Gcar,Nsymm,Nlf, Ntot, NkI, Nband, eta, T, Nel, NelQE )
+  subroutine writeInfo(lf, qx, qy, qz, Gcar,Nsymm,Nlf, Ntot, NkI, Nband, eta, T, Nel, NelQE )
     implicit none
-    integer       , intent(in) :: NelQE, Nsymm, Nlf, Ntot, NkI, Nband
-    real(kind=dp) , intent(in) :: qx,qy,qz
-    real(kind=dp) , intent(in) :: eta, T, Gcar
-    real(kind=dp) , intent(in) :: Nel
+    integer      ,    intent(in) :: NelQE, Nsymm, Nlf, Ntot, NkI, Nband
+    real(kind=dp),    intent(in) :: qx,qy,qz
+    real(kind=dp),    intent(in) :: eta, T, Gcar
+    real(kind=dp),    intent(in) :: Nel
+    character(len=*), intent(in) :: lf
 
     integer       :: ios
     real(kind=dp) :: absq, error
@@ -1540,8 +1541,7 @@ subroutine loadCsQE6( ik, ibnd, savedir, evc, igwx )
     write(55,*) 'Number of point symmetry operation is',Nsymm
     write(55,'(a25,3f10.4,a5) ') 'Wave vector (qx,qy,qz)=(',qx*Gcar,qy*Gcar, qz*Gcar,') a.u.'
     write(55,'(a25,f8.4,a5) ') '|(qx,qy,qz)|=',absq*Gcar,'a.u.'
-    if (lf == 'z')write(55,*) 'Local field effcts in z-dir'
-    if (lf == 'xyz')write(55,*) 'Local field in all xyz-dir'
+    write(55,*) 'Local field effcts in '//lf//'-dir'
     write(55,*) 'Number of local field vectors is',Nlf
     write(55,*) 'Number of different K vectors in 1.B.Z. is',Ntot
     write(55,*) 'Number of K vectors in I.B.Z. is',  NkI
@@ -1557,7 +1557,7 @@ subroutine loadCsQE6( ik, ibnd, savedir, evc, igwx )
     write(55,'(a25,f8.4,a5) ') 'Relative error=',error*100.0,'%'
     if (error > 0.05) then
       write(55,*) 'WARRNING!!-1BZ INTEGRATION IS BAD!.'
-      STOP
+      stop
     end if
     close(55)
     
