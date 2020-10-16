@@ -17,9 +17,9 @@ use ModPointR
 
 implicit none
 
-! character (len=iotk_attlenx) :: attr1, attr2
-character(len=65278) :: attr1, attr2
-logical :: found
+character (len=iotk_attlenx) :: attr1, attr2
+! character(len=65278) :: attr1, attr2
+
 
 ! single / double precision
 ! integer, parameter :: sp = real32
@@ -40,16 +40,14 @@ namelist /directories/ rundir, savedir, scf_file, band_file
 
 integer :: debugCount = 0
 
-
-
 integer :: ik,i,j,jk,it,lk,Ntot,iG0,Nsymm,iq, &
-           io,n,m,iG,R1,K1,R2,K2, Nlf,NG1,   &
-           NG2,iG1,iG2,jG,kG,jo,jump,loss,   &
-           iGfast,ikmin,kG1,kG2,nord, lf
+           io,jo, n,m,iG,R1,K1,R2,K2, Nlf,NG1,   &
+           NG2,iG1,iG2,jG,kG, jump,   &
+           iGfast,ikmin,kG1,kG2,nord
 
 integer :: iuni1, iuni2
 
-
+character(len=3) :: lf
 integer :: Nk     ! = 48*NkI, number of wave vectors in FBZ with no symmetry 
 integer :: NkI    ! number of wave vectors in IBZ
 integer :: Nband  ! number of bands
@@ -72,7 +70,6 @@ real(kind=dp),    parameter :: pi = 4.D0*ATAN(1.D0)
 real(kind=dp),    parameter :: eV = 1.602176487D-19
 real(kind=dp),    parameter :: Hartree = 2.0D0*13.6056923D0
 real(kind=dp),    parameter :: Planck = 6.626196D-34
-real(kind=dp),    parameter :: three = 3.0d0 
 real(kind=dp),    parameter :: aBohr = 0.5291772d0
 complex(kind=dp), parameter :: rone  = cmplx(1.0,0.0)
 complex(kind=dp), parameter :: czero = cmplx(0.0,0.0)
@@ -88,7 +85,7 @@ real(kind=dp) :: kmin
 real(kind=dp) :: domega
 real(kind=dp) :: o
 real(kind=dp) :: K11,K22,K33
-real(kind=dp) :: Lor ! lorentzian
+real(kind=dp) :: Lor ! Lorentzian
 real(kind=dp) :: De 
 real(kind=dp) :: Gabs ! 
 real(kind=dp) :: kref ! trazi najmanju k-tocku sampliranu u MP meshu u kojem se moze izracunati ILS
@@ -126,7 +123,7 @@ real(kind=dp) :: eta    ! damping i\eta
 real(kind=dp) :: Ecut   ! [Hartree] cutoff energy for crystal local field calculations , for Ecut=0 S matrix is a scalar ?
 real(kind=dp) :: Vcell  ! [a.u.^3] unit-cell volume 
 namelist /parameters/ Efermi, a0, c0, eps, T, eta, Ecut, Vcell
-namelist /system/ lf, loss, jump, omin, omax, qmin, qmax
+namelist /system/ lf, jump, omin, omax, qmin, qmax
 
 ! scalar arrays
 integer,       dimension(3) :: Gi                           ! pomocna funkcija
@@ -828,7 +825,8 @@ subroutine genGlfandParity(lf,Ecut,NG,Gcar,G,Nlf,Nlfd,parG,Glf)
   ! Generate Reciprocal vectors for crystal local field 
   ! effects calculations in array Glf(3,Nlf)
 
-  integer,          intent(in)    :: lf, NG, Nlfd
+  character(len=*), intent(in)    :: lf
+  integer,          intent(in)    :: NG, Nlfd
   real(kind=dp),    intent(in)    :: Ecut
   real(kind=dp),    intent(in)    :: Gcar
   real(kind=dp),    intent(in)    :: G(:,:)
@@ -840,9 +838,9 @@ subroutine genGlfandParity(lf,Ecut,NG,Gcar,G,Nlf,Nlfd,parG,Glf)
   real(kind=dp) :: Eref
 
   Nlf = 0
-  if (lf == 1) then
+  if (lf == 'z') then
+    ! local field efekti samo u okomitom smjeru (z)
     do iG = 1, NG
-      ! local field efekti samo u okomitom smjeru (z)
       if (G(1,iG) == 0.0 .and. G(2,iG) == 0.0) then
         Eref = Gcar**2 * G(3,iG)**2 / 2.0
         if (Eref <= Ecut) then
@@ -857,9 +855,9 @@ subroutine genGlfandParity(lf,Ecut,NG,Gcar,G,Nlf,Nlfd,parG,Glf)
         end if
       end if
     end do
-  elseif (lf == 3) then
+  elseif (lf == 'xyz') then
+    ! local field efekti samo u svim smjerovima (xyz)
     do  iG = 1, NG
-      ! local field efekti samo u svim smjerovima (xyz)
       Eref = Gcar**2*sum(G(1:3,iG)**2) / 2.0
       if (Eref <= Ecut) then
         Nlf = Nlf+1
@@ -1344,7 +1342,7 @@ end subroutine genMnmK1K2
     ! transformation in cart.coord (also!, after this all G components are in 2pi/a0 units)
       do n = 1,3
         do m = 1,3
-          G(n,iG) = G(n,iG)+KC(n,m)*real(Gi(m)) ! DBLE converted to real
+          G(n,iG) = G(n,iG)+KC(n,m)*dble(Gi(m)) ! DBLE converted to real
         end do
       end do
       parG(iG)=Gi(3)
@@ -1542,8 +1540,8 @@ subroutine loadCsQE6( ik, ibnd, savedir, evc, igwx )
     write(55,*) 'Number of point symmetry operation is',Nsymm
     write(55,'(a25,3f10.4,a5) ') 'Wave vector (qx,qy,qz)=(',qx*Gcar,qy*Gcar, qz*Gcar,') a.u.'
     write(55,'(a25,f8.4,a5) ') '|(qx,qy,qz)|=',absq*Gcar,'a.u.'
-    if (lf == 1)write(55,*) 'Local field effcts in z-dir'
-    if (lf == 3)write(55,*) 'Local field in all xyz-dir'
+    if (lf == 'z')write(55,*) 'Local field effcts in z-dir'
+    if (lf == 'xyz')write(55,*) 'Local field in all xyz-dir'
     write(55,*) 'Number of local field vectors is',Nlf
     write(55,*) 'Number of different K vectors in 1.B.Z. is',Ntot
     write(55,*) 'Number of K vectors in I.B.Z. is',  NkI

@@ -23,8 +23,8 @@ c        a0-unit cell parameter in  a.u.^-1
      &   NG,io,no,iq,nq,nMPx,nMPy,nMPz,n,m,iG,R1,K1,R2,K2,
      &   Nlf,NG1,NG2,NGd,iG1,iG2,jG,Nlfd,kG,jo,mod,jump,
      &   iGfast,ikmin,NelQE,pol,frac,lf,nocc
-         PARAMETER(nMPx=51,nMPy=51,nMPz=1,NkI=6835,Nband=60,nocc=9,
-     &   NelQE=18,Nk=48*NkI,NGd=4000,NG=8000,no=5001,nq=1,Nlfd=20)
+         PARAMETER(nMPx=9,nMPy=9,nMPz=1,NkI=19,Nband=60,nocc=9,
+     &   NelQE=18,Nk=48*NkI,NGd=2541,NG=20517,no=5001,nq=1,Nlfd=20)
     
 
 c        skalars
@@ -99,8 +99,8 @@ c               b(3) = (  0.000000 -0.000000  0.200000 )
 
 
 c        QUANTUM ESSPRESSO IMPUTS:
-         root1='/home/vito/PROJECTS/MoS2-BSE'
-         root2='/MoS2_201X201/'
+         root1='/Users/Nevensky'
+         root2='/MoS2_201X201'
          root=TRIM(root1)//TRIM(root2)
 
 
@@ -290,7 +290,7 @@ c           If g' is vector in rec.cryst. axes then a=KC*a' is vector in cart. a
                    
 c           Reading the reciprocal vectors in crystal coordinates and transformation 
 c           in Cartezi cordinates.             
-            OPEN (1,FILE='gvectors.dat')
+            OPEN (1,FILE='gvectors.xml')
             do 24 i=1,8
 24          READ(1,*)nis
             do 25 iG=1,NG
@@ -552,7 +552,7 @@ c              petlje po vrpcama n i m
 
 
                
-c         u ovom dijelu programa se iscitava iz binarnih fileova ''gvectors.dat'',''evc.dat'' za 
+c         u ovom dijelu programa se iscitava iz binarnih fileova ''gvectors.xml'',''evc.dat'' za 
 c         fiksni K1,K2,n i m 
 
 c               Otvaranje atribute za INFO
