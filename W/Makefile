@@ -4,11 +4,12 @@ CC= icc
 # FC= mpiifort
 FC= ifort
 # LDFLAGS= -lm -L. -liotk -mkl
-LDFLAGS_PARA = -Wl,-stack_size,0x100000000 -qopenmp -L. -liotk -mkl 
+LDFLAGS_PARA = -qopenmp -L. -liotk -mkl # -Wl,-stack_size,0x100000000 
 LDFLAGS= -L. -liotk -mkl 
 PARA = -qopenmp
-# FFLAGS= -Ofast -traceback -fpe0 #-parallel -opt-report-phase=par -opt-report:5
-FFLAGS = -Ofast -g -traceback -fp-model precise -fp-stack-check -heap-arrays #-debug all -debug-parameters all -DD -C -warn all -check all
+DEBUG = -g -traceback -fpe0 -fp-model precise -fp-stack-check -heap-arrays #-debug all -debug-parameters all -DD -C -warn all -check all
+# PARA2= -parallel -opt-report-phase=par -opt-report:5
+FFLAGS = -Ofast ${DEBUG}
 #OMPFLAGS = -qopenmp -debug extended -heap-array
 SRC = PointR.f Sloss.f paths.f gjel.f 
 OBJECTS = PointR.o Sloss.o paths.o gjel.o 
