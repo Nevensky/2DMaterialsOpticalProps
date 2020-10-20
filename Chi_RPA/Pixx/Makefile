@@ -25,36 +25,36 @@ serial: Loss_serial
 
 legacy: Loss_legacy
 
-Loss: $(OBJECTS)
+Loss: $(OBJECTS_PARA)
 	${FC} $(OBJECTS_PARA) ${LDFLAGS_PARA} -o Loss
 
 Loss_serial: $(OBJECTS)
 	${FC} $(OBJECTS) ${LDFLAGS} -o Loss
 
-Loss_qe6: $(OBJECTS)
+Loss_qe6: $(OBJECTS_QE6))
 	${FC} $(OBJECTS_QE6) ${LDFLAGS_PARA} -o Loss
 
-Loss_legacy: $(OBJECTS)
+Loss_legacy: $(OBJECTS_LEGACY)
 	${FC} $(OBJECTS_LEGACY) ${LDFLAGS} -o Loss
 
 Optabs.o: Optabs.f
-	${FC} ${FFLAGS} -c  Optabs.f90
+	${FC} ${FFLAGS} -c Optabs.f90
 
 Optabs_para.o: Optabs.f
-	${FC} ${FFLAGS} ${PARA} -c  Optabs_para.f90 -o Optabs_para.o
+	${FC} ${FFLAGS} ${PARA} -c Optabs.f90 -o Optabs_para.o
 
 Optabs_para_qe6.o: Optabs.f
-	${FC} ${FFLAGS} ${PARA} -c  Optabs_qe6.f90	-o Optabs_para_qe6.f90
+	${FC} ${FFLAGS} ${PARA} -c Optabs_qe6.f90 -o Optabs_para_qe6.f90
 
 Optabs_legacy.o: Optabs.f
-	${FC} ${FFLAGS} -c  Optabs.f -o Optabs_legacy.o
+	${FC} ${FFLAGS} -c Optabs.f -o Optabs_legacy.o
 
 PointR.o: PointR.f
 	${FC} ${FFLAGS} -c PointR.f90 -o PointR.o
 	${FC} ${FFLAGS} -c PointR.f90
 
 PointR_legacy.o: PointR.f
-	${FC} ${FFLAGS} -c PointR.f -o PointR_legacy.o
+	${FC} ${FFLAGS} -c PointR_old.f90 -o PointR_legacy.o
 
 paths.o: paths.f
 	${FC} ${FFLAGS} -c paths.f90

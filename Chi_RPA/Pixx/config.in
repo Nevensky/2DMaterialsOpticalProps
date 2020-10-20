@@ -7,7 +7,7 @@
 &system
  lf        = 'z'         ! Crystal local field effect included in z for lf=1 or in x,y,z direction lf=3
  pol       = 'xx'        ! Polarization dirrection (xx, yy, zz, or yz)
- calc      = 1           ! (1) correlation func. tensor calc. (2) current-ccurent tensor calc using KK rel.
+ calc      = 1           ! (1) S0 correlation func. tensor calc. (2) PI_pol current-ccurent tensor calc using KK rel. (3) do both
  jump      = 1           ! jump = 1 skips reloading wfns in IBZ for all bands m (occ.) and n (virt.)
  omin      = 1.0D-5      ! [Hartree] frequency range, lower bound
  omax      = 2.0D0       ! [Hartree] frequency range, upper bound
@@ -31,8 +31,9 @@
 /
 &parameters
  Efermi   = 0.5554       ! [eV]      Fermi energy 
+ dGW      = 1.0          ! [eV]      band gap scissor correction
  eps      = 1.0D-4       ! 1.0D-4    threshold
- T        = 0.01         ! [eV]      Temperature 
+ T        = 0.025        ! [eV]      Temperature 
  eta      = 0.05         ! [eV]      Damping i\eta
  Ecut     = 1.0          ! [Hartree] Cutoff energy for crystal local field calculations , for Ecut=0 S matrix is a scalar ?
  a0       = 5.9715       ! [a.u.]    unit cell parameter in parallel direction 

@@ -11,7 +11,7 @@ PROGRAM surface_current
 !        nMPx*nMPy*nMPz-Monkhorest-Pack sampling
 !        Efermi-Fermi energy
 !        T-temperature in eV
-!        alpha-Damping parameter in eV
+!        eta-Damping parameter in eV
 !        Ecut-cutoff energy for crystal local field calculations
 !        Vcell-unit-cell volume in a.u.^-3
 !        a0-unit cell parameter in  a.u.^-1
@@ -27,25 +27,29 @@ character(len=iotk_attlenx) :: attr1, attr2
 
 ! calc = 1 tenzor korelacijske funkcije, calc = 2 struja-struja tenzor (Kramers-Krroning)
 
+character (len=100) :: rundir, savedir, band_file, scf_file
+namelist /directories/ rundir, savedir, scf_file, band_file
+
 integer :: ik,i,j,jk,it,lk,Ntot,iG0,Nsymm,iq, &
            io,jo, n,m,iG,R1,K1,R2,K2, Nlf,NG1,   &
            NG2,iG1,iG2,jG,kG, jump,   &
            iGfast,ikmin,kG1,kG2
 
-integer :: frac, calc
+integer :: iuni1, iuni2
 
-character(len=3) :: pol, lf
+! integer :: frac ! 
+
 integer :: Nk     ! = 48*NkI, number of wave vectors in FBZ with no symmetry 
 integer :: NkI    ! number of wave vectors in IBZ
 integer :: Nband  ! number of bands
 integer :: Nocc   ! Number of occupied bands (unit cell)
 integer :: NelQE  ! Number of electrons(unit cell)
-integer :: NGd    ! number of coefficients CG shulod be less than minimum number of coefficients all over all evc.n files ... moglo bi se dinamicki alocirati 
 integer :: NG     ! total number of G vectors  
+integer :: NGd    ! minimum number of coefficients CG over all evc.n files
 integer :: no     ! number of frequencies
 integer :: nq     ! broj valnih vektora tu je 2 jer je rucno paralelizirano!
 integer :: Nlfd   ! dimenzija polja za local field zasto prozivoljno 50, ne moze se znati unaprijed
-namelist /config/ NkI, Nband, Nocc, NelQE, NGd, NG, no, nq, Nlfd
+namelist /config/  NG, NGd, NkI, Nband, Nocc, NelQE,no, nq, Nlfd
 
 
 ! file i/o debug
@@ -63,68 +67,103 @@ complex(kind=dp), parameter :: rone    = cmplx(1.0,0.0)
 complex(kind=dp), parameter :: czero   = cmplx(0.0,0.0)
 complex(kind=dp), parameter :: ione    = cmplx(0.0,1.0)
 
+! scalars
+real(kind=dp) :: kx,ky,kz
+real(kind=dp) :: KQx,KQy,KQz
+real(kind=dp) :: qx,qy,qz
+! real(kind=dp) :: q ! ne koristi se
+real(kind=dp) :: kmin
+real(kind=dp) :: omin,omax
+real(kind=dp) :: domega
+real(kind=dp) :: o
+real(kind=dp) :: K11,K22,K33
+real(kind=dp) :: expo1, expo2
+real(kind=dp) :: f1, f2, df
+real(kind=dp) :: Lor ! Lorentzian
+real(kind=dp) :: dE
+real(kind=dp) :: Gabs
+real(kind=dp) :: kref ! trazi najmanju k-tocku sampliranu u MP meshu u kojem se moze izracunati ILS
+real(kind=dp) :: Eref 
+real(kind=dp) :: Gxx1,Gyy1,Gzz1
+real(kind=dp) :: Gxx2,Gyy2,Gzz2
+real(kind=dp) :: fact
+real(kind=dp) :: oi,oj
+real(kind=dp) :: ImChi0, ReChi0
+real(kind=dp) :: struja, struja_y, struja_z
+real(kind=dp) :: Nel ! Number of electrons(1BZ integration)
 
-!        skalars
-real*8 :: a0,eps,
-kx,ky,kz,KQx,KQy,KQz,qgx,qgy,qgz,
-omin,omax,
-qx, qy,qz, kmin,domega,o,
-Efermi,
-k11,k22,k33,
-T,
-f1,f2,df,Lor,dE,Gabs,  &
-    kref,eref,ecut,Gxx1,Gyy1,Gzz1,Gxx2,Gyy2,Gzz2,fact,Vcell,  &
-    oi,oj,q,Gcar,abohr,Nel,error,lossf,struja,pabs,  &
-    Gamma_intra,Gamma_inter,expo1,expo2,alpha,cond,c0,struja_y,  &
-    struja_z,ImChi0,ReChi0,dGW
-double precision pi,Hartree,planck,ev
-PARAMETER(Efermi = 0.5554/Hartree,  &
-    a0 = 5.9715,c0 = 29.8575,Gcar = 2.0*pi/a0,  &
-    eps = 1.0D-4,T = 0.025/Hartree,
-    Gamma_intra = 0.025/Hartree,  &
-    Gamma_inter = 0.025/Hartree,
-    ev = 1.602176487D-19,
-    ecut = 0.0,
-    Vcell = 922.0586)
+! parameters
+character(len=3) :: pol, lf
+integer          :: calc
+integer          :: qmin,qmax
+real(kind=dp)    :: Gcar   ! unit cell norm.
+real(kind=dp)    :: Efermi ! [eV] Fermi en. 
+real(kind=dp)    :: dGW    ! [eV] band gap scissor correction
+real(kind=dp)    :: a0     ! [a.u.]  unit cell parameter in parallel direction 
+real(kind=dp)    :: c0     ! [a.u.]  unit cell parameter in perependicular direction 
+real(kind=dp)    :: eps    ! 1.0D-4 threshold
+real(kind=dp)    :: T      ! [eV] temperature 
+real(kind=dp)    :: eta    ! damping i\eta
+real(kind=dp)    :: Ecut   ! [Hartree] cutoff energy for crystal local field calculations , for Ecut=0 S matrix is a scalar ?
+real(kind=dp)    :: Vcell  ! [a.u.^3] unit-cell volume 
+real(kind=dp)    :: Gamma_intra ! [Hartree] width of intraband transition
+real(kind=dp)    :: Gamma_inter ! [Hartree] width of interband transition
+real(kind=dp)    :: Lor_cut  ! Lorentzian cutoff to zero left and right
+real(kind=dp)    :: df_cut   ! 
 
-Gamma_intra = Gamma_intra/Hartree
-Gamma_inter = Gamma_inter/Hartree
+namelist /parameters/ Efermi, dGW, eps, T, eta, Ecut, a0, c0, Vcell
+namelist /system/ lf, pol, calc, jump, omin, omax, qmin, qmax, Gamma_intra, Gamma_inter, Lor_cut, df_cut
 
-DOUBLE COMPLEX :: ione,czero,rone
-
-!        arrays
-INTEGER :: Gfast,Gi
-real*8 :: ki,E,R,RI,k,ktot,G,Glf,v,KC,kk
-
-COMPLEX*8 :: MnmK1K2,Pi_dia,Pi_tot,MnmK1K22, &
-             Qeff, &! efektivni naboj, matrica kad imam LFE
-             S0
-
-DIMENSION ki(3,NkI),E(NkI,Nband),R(48,3,3),RI(48,3,3),  &
-    k(3,nk),ktot(3,nk),G(3,NG),  &
-    Glf(3,Nlfd),MnmK1K2(Nlfd), &
-    ,S0(-no:no,Nlfd,Nlfd),Gfast(Nlfd*NGd),  &
-    KC(3,3),Gi(3),f(48,3),MnmK1K22(Nlfd),Pi_dia(Nlfd,Nlfd),  &
-    Qeff(Nlfd,Nlfd),Pi_tot(Nlfd,Nlfd),kk(3,6)
-
-CHARACTER (LEN = 100) :: bandn,bandm,nis,pathk1,pathk2,dato1,  &
-    root,path,fajl,dato2,dato3,root1,root2, outdir
-CHARACTER (LEN = 35) :: tag,buffer
-
-COMPLEX,pointer, DIMENSION(:) :: C1,C2
+! scalar arrays
+! integer,       dimension(3)      :: Gi                      ! pomocna funkcija
+integer,       dimension(:),        allocatable  :: Gfast      ! pomocna funkcija
+! real(kind=dp), dimension(:),        allocatable  :: factMatrix
 
 
-rone = cmplx(1.0,0.0)
-czero = cmplx(0.0,0.0)
-ione = cmplx(0.0,1.0)
+! multidim arrays
+real(kind=dp), dimension(48,3,3)  :: R                         ! matr. simetrijskih op.
+real(kind=dp), dimension(48,3,3)  :: RI                        ! inverz od R
+real(kind=dp), dimension(3,3)     :: KC                        ! pomocna funkcija
+! real(kind=dp), dimension(3,3)     :: f(48,3)                   ! funkcija vezana uz translacijsku simetriju u QE za PointR, ne koristi se
+real(kind=dp), dimension(:,:),      allocatable  :: kI
+real(kind=dp), dimension(:,:),      allocatable  :: E 
+real(kind=dp), dimension(:,:),      allocatable  :: ktot       ! polje jedinstvenih k-tocaka u FBZ
+real(kind=dp), dimension(:,:),      allocatable  :: G  
+real(kind=dp), dimension(:,:),      allocatable  :: Glf 
+
+complex(kind=dp), dimension(:),     allocatable  :: MnmK1K2    ! strujni vrhovi
+complex(kind=dp), dimension(:),     allocatable  :: MnmK1K22   ! strujni vrhovi
+complex(kind=dp), dimension(:,:),   allocatable  :: Pi_tot
+complex(kind=dp), dimension(:,:),   allocatable  :: Pi_dia
+complex(kind=dp), dimension(:,:),   allocatable  :: Qeff      ! effective charge carriers matrix.
+complex(kind=dp), dimension(:,:,:), allocatable  :: S0         ! korelacijska matrica
+complex(kind=dp), dimension(:,:,:), allocatable  :: S0_partial ! pomocna var. za S0 redukciju
+
+
+! character(len=100) :: bandn,bandm,nis,pathk1,pathk2,dato1, root,path,dato2,dato3,root1,root2, outdir
+character (len=100) :: bandn,bandm,dummy,pathk1,pathk2, dato1, dato2, dato3, path
+character (len=35)  :: tag,buffer
+
+complex(kind=dp), dimension(:), allocatable :: C1,C2
+
+! OpenMP vars
+integer       :: Nthreads
+integer, save :: thread_id
+!$omp threadprivate(thread_id)
+namelist  /parallel/ Nthreads
+
+! MKL matrix inversion vars
+integer :: info_trf, info_tri
+integer,allocatable :: ipiv(:)
+integer :: lwork
+integer,allocatable :: work(:)
+
 
 !        QUANTUM ESSPRESSO IMPUTS:
-root1='/Users/nevensky/'
-root2='MoS2_201X201'
-outdir='/Users/Nevensky/tmp'
-root = trim(root1)//trim(root2)
-
-
+! root1='/Users/nevensky/'
+! root2='MoS2_201X201'
+! outdir='/Users/Nevensky/tmp'
+! root = trim(root1)//trim(root2)
 
 
 !  For free spectral function calculation put calc = 1
@@ -133,20 +172,46 @@ root = trim(root1)//trim(root2)
 !  Crystal local field effects are included in z direction lf = 1
 !  Crystal local field effects are included in x,y,z direction lf = 3
 
-calc = 1 
-lf = 1
-pol = 'xx' ! polrizacija u x-smjeru
-
 ! CORRELATION FUNCTIONS, CURRENT-CURRENT RESPONSE FUNCTIONS and
 ! EFFECTIVE CHARGE CARRIERS MATRIX OUTPUTS
-
-dato1 ='Corrfun'
-dato2 ='Qeff'
+! calc = 1 
+! lf = 1
+! pol = 'xx' ! polrizacija u x-smjeru
+dato1 = 'Corrfun_'//adjustl(trim(pol))
+dato2 = 'Qeff_'//adjustl(trim(pol))
 dato3 = 'Pi_RPA_'//adjustl(trim(pol))
 
+! load namelist
+open(10,file='config.in')
+read(10,nml=directories,iostat=ist4)
+read(10,nml=system,iostat=ist5)
+read(10,nml=config,iostat=ist6)
+read(10,nml=parameters,iostat=ist7)
+read(10,nml=parallel,iostat=ist8)
+close(10)
 
-! scissors shift
-dGW = dGW/Hartree
+! constants
+Nk     = 48*NkI                   ! number of wave vectors in FBZ with no symmetry 
+T      = T/Hartree                ! convert temperature from eV to Hartree
+Efermi = Efermi/Hartree           ! convert Fermi en. from eV to Hartree
+eta    = eta/Hartree
+Gcar   = 2.0*pi/a0                ! unit cell norm.
+dGW    = dGW/Hartree              ! scissors shift
+Gamma_intra = Gamma_intra/Hartree
+Gamma_inter = Gamma_inter/Hartree
+
+! scalar arrays
+! allocate(factMatrix(no))
+allocate(Gfast(Nlfd*NGd))
+
+! multidim arrays
+allocate(kI(3,NkI))
+allocate(E(NkI,Nband))             ! vl. vr. danog k-i i band-i
+allocate(ktot(3,Nk))               ! ukupno jedinstvenih k-tocaka u FBZ
+allocate(G(3,NG))                  ! polje valnih vektora G u recp. prost. za wfn.
+allocate(Glf(3,Nlfd))              ! local field effect polje valnih vekt. u rec. prost.
+
+
 
 
 ! nevne debug - prebaceno u config.in
@@ -161,7 +226,7 @@ domega = (omax-omin)/(no-1)
 
 ! POINT GROUP TRANSFORMATIONS
 path = trim(rundir)//trim(scf_file)
-call PointR(root,Nsymm,R,RI)
+call PointR(path,Nsymm,R,RI)
 print *,"status: PointR done."
 
 
@@ -171,7 +236,7 @@ print *,"status: PointR done."
 ! wave vectors are in cart.koord.
 
 path=trim(rundir)//trim(band_file)
-call loadkIandE(path, NkI, Nband, Nocc, kI, E)
+call loadkIandE(path, NkI, Nband, Nocc, kI, dGW,E)
 print *,"status: kI and E loaded."
 
 
@@ -180,25 +245,45 @@ print *,"status: kI and E loaded."
 ! I.B.Z. generira sve (MEDJUSOBNO RAZLICITE!!!) v. vektore u 1.B.Z.
 ! Ntot-Tot number of different points ''ktot'' inside 1.B.Z
 call genFBZ(Nk,NkI,Nsymm,eps,kI,R,Ntot,ktot)
+print *,"status: FBZ generated."
 
 ! Checking 1BZ integration
 call checkFBZintegration(Nband,NkI,Nsymm,Ntot,eps,kI,RI,Efermi,E,NelQE,Nel)
-
+print *,"status: FBZ integration correct."
 
 ! KC transformation matrix from rec.cryst. axes to cart.koord.
 ! if G' is vector in rec.cryst. axes then a = KC*a' is vector in cart. axes
+path = TRIM(rundir)//TRIM(scf_file)
 call loadKC(path,KC)
+print *,"status: KC transformation matrix (rec.cryst.->cart.) loaded."
 
 
 ! Reading the reciprocal vectors in crystal coordinates and transformation
 ! in Cartesian cordinates.
 call loadG(KC,G)
+print *,"status: G vectors loaded."
 
-
-! Reciprocal vectors for crystal local field effects calculations in array ''Glf(3,Nlf)''
+! Reciprocal vectors for crystal local field effects calculations in array Glf(3,Nlf)
 call genGlf(lf,Ecut,NG,Gcar,G,Nlf,Nlfd,Glf)
+print *, "Glf and parG matrices generated."
+print *, 'Nlf: ',Nlf,' Nlfd: ',Nlfd
 
 
+! scalar arrays
+allocate(MnmK1K2(Nlfd))
+allocate(MnmK1K22(Nlfd))
+
+! multidim arrays
+allocate(Pi_dia(Nlfd,Nlfd))
+allocate(Qeff(Nlfd,Nlfd))
+allocate(Pi_tot(Nlfd,Nlfd))
+allocate(S0(-no:no,Nlfd,Nlfd)) 
+
+
+! MKL matrix inversion vars
+allocate(ipiv(MAX(1,MIN(Nlfd, Nlfd))))
+lwork = Nlfd
+allocate(work(Nlfd))
 
 ! IBZ   q LOOP STARTS HERE!!!
 
@@ -206,9 +291,10 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   
   ! searching for the smalest 'optical' q
   call findMinQ(Ntot, ktot, qx, qy, qz)
+  print *, "Found minimal q."
 
   ! Info file
-  call writeInfo(lf, pol, qx, qy, qz, Gcar, Nsymm, Nlf, Ntot, NkI, Nband, T, Nel, NelQE,Gamma_intra, Gamma_inter)
+  call writeInfo(lf, pol, qx, qy, qz, Gcar, Nsymm, Nlf, Ntot, NkI, Nband, T, Nel, NelQE,Gamma_intra, Gamma_inter, eta, dato1, dato2, dato3)
   
   
   if (calc == 2 .and. calc /= 3 ) GO TO 888
@@ -220,7 +306,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   ! 1.B.Z  LOOP STARTS HERE !!!!
 
   print *, 'DEBUG: entering parallel region'
-  !$omp parallel shared(S0,iq,kI,ktot,RI,eps,E,G,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,eta,Vcell) private(ik, S0_partial,MnmK1K2,MnmK1K22,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2,attr1,attr2, C1,C2, iuni1, iuni2) firstprivate(savedir,jump,domega) num_threads(Nthreads) !  default(private) 
+  !$omp parallel shared(S0,Qeff, iq,kI,ktot,RI,eps,E,G,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,eta,Vcell, Gamma_inter, Gamma_intra, df_cut, Lor_cut) private(ik, S0_partial, Qeff_partial, MnmK1K2,MnmK1K22,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,df, f1, f2, expo1, expo2, fact, Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2,attr1,attr2, C1,C2, iuni1, iuni2) firstprivate(savedir,jump,domega) num_threads(Nthreads) !  default(private) 
   thread_id =  omp_get_thread_num()
 
   !$omp do
@@ -250,7 +336,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   ! K2-integer, redni broj valnog vektora K2 u transformaciji  ''K + Q = G0 + R2*K2''.
         
     
-    do  n = 1,Nband
+    bands_n_loop: do n = 1,Nband
       expo1 = exp((E(K1,n)-Efermi)/T)
       f1 = 1.0/(expo1 + 1.0)
 
@@ -274,11 +360,13 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
         stop
       end if
 
-      do  m = 1,Nband
-
-        expo2 = exp((E(K2,m)-Efermi)/T)        
+      bands_m_loop: do m = 1,Nband
+        print *,'Fermi/T: ', Efermi/T
+        print *,'(E(K2,m)-Efermi)/T: ', (E(K2,m)-Efermi)/T
+        expo2 = exp( (E(K2,m)-Efermi)/T )
+        print *, "expo2: ", expo2
         f2 = 1.0/(expo2 + 1.0)
-        df = f1-f2
+        df = f1 - f2
         
         occupation_if: if ( (abs(df) >= df_cut) .or. (n == m) ) then  
           ! call paths(outdir,K1,K2,n,m,pathk1,pathk2,bandn,bandm)
@@ -364,21 +452,21 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   
   if (calc == 1 .and. calc /= 3 ) GO TO 999
   
-!               SECOND PART OF THE PROGRAM calc = 2
-!               Calculation of the matrix '''Pi_\mu\nu'' by using matrix ''S0_\mu\nu(G,G')'' and Kramers-Krroning relations
+  ! SECOND PART OF THE PROGRAM calc = 2
+  ! Calculation of the matrix '''Pi_\mu\nu'' by using matrix ''S0_\mu\nu(G,G')'' and Kramers-Krroning relations
   
-  888             CONTINUE 
+  888 CONTINUE 
 
   
   open(74,FILE = dato1)
   do  io=-no,no
-    READ(74,*) ! nis
-    READ(74,'(10F15.10)')((S0(io,iG,jG),jG = 1,Nlf),iG = 1,Nlf)
+    read(74,*) ! dummy
+    read(74,'(10F15.10)')((S0(io,iG,jG), jG = 1,Nlf), iG = 1,Nlf)
   end do
   close(74)
   
   open(75,FILE = dato2)
-  READ(75,'(10F15.10)')((Qeff(iG,jG),jG = 1,Nlf),iG = 1,Nlf)
+  read(75,'(10F15.10)')((Qeff(iG,jG), jG = 1,Nlf), iG = 1,Nlf)
   close(75)
   
   
@@ -439,6 +527,7 @@ contains
     open(300,FILE=path,status='old')
     do  i = 1,100000
       read(300,'(a) ') buffer
+      print *, buffer
       lno = lno+1
       if (buffer == tag) then
         do  j = 1,3
@@ -456,7 +545,7 @@ contains
   
   end subroutine loadKC
 
-  subroutine writeInfo(lf, pol, qx, qy, qz, Gcar, Nsymm, Nlf, Ntot, NkI, Nband, T, Nel, NelQE,Gamma_intra, Gamma_inter)
+  subroutine writeInfo(lf, pol, qx, qy, qz, Gcar, Nsymm, Nlf, Ntot, NkI, Nband, T, Nel, NelQE,Gamma_intra, Gamma_inter, eta, dato1, dato2, dato3)
     implicit none
     integer      ,    intent(in) :: NelQE, Nsymm, Nlf, Ntot, NkI, Nband
     real(kind=dp),    intent(in) :: qx,qy,qz
@@ -464,6 +553,7 @@ contains
     real(kind=dp),    intent(in) :: Nel
     real(kind=dp),    intent(in) :: Gamma_inter, Gamma_intra
     character(len=*), intent(in) :: lf, pol
+    character(len=*), intent(in) :: dato1, dato2, dato3
 
     integer       :: ios
     real(kind=dp) :: absq, error
@@ -792,7 +882,6 @@ end subroutine findKQinBZ
             Nlf = Nlf + 1
             Glf(1:2,Nlf) = 0.0
             Glf(3,Nlf) = G(3,iG)
-            end if
           end if
         end if
       end do
@@ -803,7 +892,6 @@ end subroutine findKQinBZ
         if (Eref <= Ecut) then
           Nlf = Nlf+1
           Glf(1:3,Nlf) = G(1:3,iG)
-          end if
         end if
       end do
     end if
@@ -863,6 +951,7 @@ end subroutine findKQinBZ
   202   write(*,*) '202 buffer1 read. Number of lines read = ',lno10
   5000 continue 
 
+end subroutine loadG
 
   subroutine genReChi0(io,no,iG,jG,oi,domega,S0,ReChi0)
     implicit none
@@ -1073,7 +1162,7 @@ end subroutine findKQinBZ
     integer,            intent(in)    :: NkI
     integer,            intent(in)    :: Nband, Nocc
     character(len=100), intent(in)    :: path
-    real(kind=dp),      intent(in)    :: dGW(:,:)
+    real(kind=dp),      intent(in)    :: dGW
     real(kind=dp),      intent(inout) :: kI(:,:)
     real(kind=dp),      intent(inout) :: E(:,:)
 
@@ -1105,7 +1194,7 @@ end subroutine findKQinBZ
 subroutine genStrujniVhrovi(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2, MnmK1K22)
   ! Konstrukcijamatricnih elementa strujnih vrhova MnmK1K2(iG) i MnmK1K2(iG) 
   implicit none
-  integer,          intent(in)    :: iG0, Nlf, NG1,
+  integer,          intent(in)    :: iG0, Nlf, NG1, NG2
   integer,          intent(in)    :: R1,R2
   real(kind=dp),    intent(in)    :: eps
   real(kind=dp),    intent(in)    :: R(:,:,:)
@@ -1165,7 +1254,7 @@ subroutine genStrujniVhrovi(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G
           Gxx2 = G(1,iG2)
           Gyy2 = G(2,iG2)
           Gzz2 = G(3,iG2)
-          if (       abs(Gxx2-Gxx1) < eps &
+          if (      abs(Gxx2-Gxx1) < eps &
               .and. abs(Gyy2-Gyy1) < eps &
               .and. abs(Gzz2-Gzz1) < eps ) then
             Gfast(iGfast) = iG2

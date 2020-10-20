@@ -56,7 +56,7 @@ c        arrays
      &   Qeff(Nlfd,Nlfd),Pi_tot(Nlfd,Nlfd),Kk(3,6) 
  
          CHARACTER*100 bandn,bandm,nis,pathK1,pathK2,dato1,
-     &   root,path,fajl,dato2,dato3,root1,root2
+     &   root,path,fajl,dato2,dato3,root1,root2,outdir
          CHARACTER*35 tag,buffer
 
          integer :: ngw, igwx, nbnd, nk1
@@ -99,9 +99,9 @@ c               b(3) = (  0.000000 -0.000000  0.200000 )
 
 
 c        QUANTUM ESSPRESSO IMPUTS:
-         root1='/Users/Nevensky'
-         root2='/MoS2_201X201'
-         root=TRIM(root1)//TRIM(root2)
+         root1 ='/Users/nevensky'
+         root2 ='/MoS2_201X201'
+         root =TRIM(root1)//TRIM(root2)
 
 
         
@@ -115,8 +115,8 @@ c             For mixed component yz put pol=4
 c             Crystal local field effects are included in z direction lf=1 
 c             Crystal local field effects are included in x,y,z direction lf=3 
             
-              mod=2
-              lf=1
+              mod=1
+              lf =1
               pol=1
             
 c             CORRELATION FUNCTIONS, CURRENT-CURRENT RESPONSE FUNCTIONS and 
@@ -537,18 +537,20 @@ c              petlje po vrpcama n i m
                do 804 n=1,nband          
                do 805 m=1,nband      
  
-
+               print *,'Fermi/T: ', EF/T
+               print *,'(E(K2,m)-Efermi)/T: ', (E(K2,m)-EF)/T
+        
 
                   expo1=exp((E(K1,n)-EF)/T)
                   expo2=exp((E(K2,m)-EF)/T)
+                  print *, "expo2: ", expo2
                   f1=1.0/(expo1+1.0)
                   f2=1.0/(expo2+1.0)
                   f1=f1-f2 
 
                   if((dabs(f1).ge.1.0d-3).or.(n.eq.m))then 
-
-    
-            call paths(root,K1,K2,n,m,pathK1,pathK2,bandn,bandm)
+            outdir="/Users/nevensky/tmp/MoS2.save"
+            call pathsLegacy(outdir,k1,k2,n,m,pathk1,pathk2,bandn,bandm)
 
 
                
@@ -758,7 +760,7 @@ c               Puting (qx,qy,qz) and Glf in cartezi coordinate
                  open(77,file=dato3)     
 c               new sum over omega
                  do 872 io=1,no-1
-                print*,io            
+C                 print*,io            
                  oi=(io-1)*domega
                  do 432 iG=1,Nlf   
                  do 433 jG=1,Nlf 

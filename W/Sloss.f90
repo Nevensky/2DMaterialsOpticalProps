@@ -78,10 +78,11 @@ complex(kind=dp), parameter :: ione    = cmplx(0.0,1.0)
 ! scalars
 real(kind=dp) :: kx,ky,kz
 real(kind=dp) :: KQx,KQy,KQz
-real(kind=dp) :: qgx,qgy,qgz
-real(kind=dp) :: omin,omax
 real(kind=dp) :: qx,qy,qz
+! real(kind=dp) :: q ! ne koristi se
+! real(kind=dp) :: qmax ! ne koristi se
 real(kind=dp) :: kmin
+real(kind=dp) :: omin,omax
 real(kind=dp) :: domega
 real(kind=dp) :: o
 real(kind=dp) :: K11,K22,K33
@@ -95,11 +96,8 @@ real(kind=dp) :: Gxx2,Gyy2,Gzz2
 real(kind=dp) :: fact
 real(kind=dp) :: oi,oj
 real(kind=dp) :: ImChi0, ReChi0
-! real(kind=dp) :: q ! ne koristi se
-! real(kind=dp) :: qmax ! ne koristi se
 real(kind=dp) :: Nel ! Number of electrons(1BZ integration)
-real(kind=dp) :: absq
-real(kind=dp) :: error
+! real(kind=dp) :: error
 real(kind=dp) :: W1,W2
 real(kind=dp) :: ImW
 real(kind=dp) :: Wind
@@ -112,7 +110,7 @@ complex(kind=dp) :: G0
 
 
 ! parameters
-integer :: qmin,qmax
+integer       :: qmin,qmax
 real(kind=dp) :: Gcar   ! unit cell norm.
 real(kind=dp) :: Efermi ! [eV] Fermi en. 
 real(kind=dp) :: a0     ! [a.u.]  unit cell parameter in parallel direction 
@@ -126,7 +124,7 @@ namelist /parameters/ Efermi, a0, c0, eps, T, eta, Ecut, Vcell
 namelist /system/ lf, jump, omin, omax, qmin, qmax
 
 ! scalar arrays
-integer,       dimension(3) :: Gi                           ! pomocna funkcija
+! integer,       dimension(3) :: Gi                           ! pomocna funkcija
 integer,       dimension(:),      allocatable :: Gfast      ! pomocna funkcija
 integer,       dimension(:),      allocatable :: parG       ! paritet svakog valnog vektora
 real(kind=dp), dimension(:),      allocatable :: factMatrix
@@ -259,6 +257,7 @@ print *,"status: G vectors loaded."
 
 ! Generate Reciprocal vectors for crystal local field effects calculations in array Glf(3,Nlf)
 call genGlfandParity(lf,Ecut,NG,Gcar,G,Nlf,Nlfd,parG,Glf)
+print *, "Glf and parG matrices generated."
 print *, 'Nlf: ',Nlf,' Nlfd: ',Nlfd
 
 ! scalar arrays
@@ -294,6 +293,7 @@ q_loop: do  iq = qmin,qmax ! 42,61
   
   ! searching min. q=(qx,qy,qz) in Gamma - M direction
   call findMinQ(Ntot, ktot, qx, qy, qz)
+  print *, "Found minimal q."
   
   ! Info file
   call writeInfo(lf, qx, qy, qz, Gcar, Nsymm, Nlf, Ntot, NkI, Nband, eta, T, Nel, NelQE )
