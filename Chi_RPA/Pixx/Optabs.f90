@@ -1268,9 +1268,12 @@ subroutine genStrujniVhrovi(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G
         if (pol == 'xx' .or. pol== 'yy' .or. pol == 'zz') then
           MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * struja * C2(iG2)
           MnmK1K22(iG) = MnmK1K2(iG) ! strujni vrhovi su isti
-        else ! ako  su miksani xy, xz,...
+        elseif(pol =='yz' .or. pol =='zy') then ! ako  su miksani yz
           MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * struja_y * C2(iG2)
           MnmK1K22(iG) = MnmK1K22(iG) + 0.5D0*conjg(C1(iG1)) * struja_z * C2(iG2)
+        else
+          print *,'WARNING Specified mixed polarization component '//adjustl(trim(pol))//' not allowed.'
+          stop
         end if
       end if
     end do iG1_loop
