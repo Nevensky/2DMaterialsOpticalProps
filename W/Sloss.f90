@@ -498,7 +498,7 @@ q_loop: do  iq = qmin,qmax ! 42,61
 
     do  iG = 1,Nlf
       do  jG = 1,Nlf
-        call genW1W2(io,no,domega,S0,W1,W2)
+        call genW1W2(io,no,iG,jG,oi,domega,S0,W1,W2)
         
         ImW = -pi * S0(io,iG,jG)
         ! stvari vezane uz GW...
@@ -855,7 +855,7 @@ subroutine genGlfandParity(lf,Ecut,NG,Gcar,G,Nlf,Nlfd,parG,Glf)
         end if
       end if
     end do
-  elseif (lf == 'xyz') then
+  else if (lf == 'xyz') then
     ! local field efekti samo u svim smjerovima (xyz)
     do  iG = 1, NG
       Eref = Gcar**2*sum(G(1:3,iG)**2) / 2.0
@@ -1059,11 +1059,11 @@ end subroutine genMnmK1K2
   end subroutine genChi0
 
 
-  subroutine genW1W2(io,no,domega,S0,W1,W2)
+  subroutine genW1W2(io,no,iG,jG,oi,domega,S0,W1,W2)
     implicit none
-    integer,          intent(in)    :: io
-    integer,          intent(in)    :: no 
-    real(kind=dp),    intent(in)    :: domega
+    integer,          intent(in)    :: io, no
+    integer,          intent(in)    :: iG, jG 
+    real(kind=dp),    intent(in)    :: oi, domega
     real(kind=dp),    intent(in)    :: S0(:,:,:)
     real(kind=dp),    intent(out)   :: W1, W2   
 

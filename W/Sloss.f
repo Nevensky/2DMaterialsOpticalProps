@@ -600,7 +600,7 @@ c                 matrix elements
                   iGfast=0                 
                   do 551 iG=1,Nlf
                   MnmK1K2(iG)=czero
-                  do 552 iG1=1,NG1 
+                  do 552 iG1=1,NGd 
                   iGfast=iGfast+1
                   Gxx1=G(1,iG1)
                   Gyy1=G(2,iG1)

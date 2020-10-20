@@ -5,12 +5,18 @@
  band_file = '/MoS2.band'
 /
 &system
- lf        = 'z'           ! Crystal local field effect included in z for lf=1 or in x,y,z direction lf=3
+ lf        = 'z'         ! Crystal local field effect included in z for lf=1 or in x,y,z direction lf=3
+ pol       = 'xx'        ! Polarization dirrection (xx, yy, zz, or yz)
+ calc      = 1           ! (1) correlation func. tensor calc. (2) current-ccurent tensor calc using KK rel.
  jump      = 1           ! jump = 1 skips reloading wfns in IBZ for all bands m (occ.) and n (virt.)
  omin      = 1.0D-5      ! [Hartree] frequency range, lower bound
  omax      = 2.0D0       ! [Hartree] frequency range, upper bound
  qmin      = 2
  qmax      = 2
+ Gamma_intra = 0.025    ! [Hartree] width of intraband transition
+ Gamma_inter = 0.025    ! [Hartree] width of interband transition
+ Lor_cut   = 1.0D-5     ! cuts off Lorentzian from both sides, min. 1.0d-3
+ df_cut    = 1.0D-3
 /
 &config
  NG       = 20517       ! Total number of G vectors
@@ -21,7 +27,7 @@
  NelQE    = 18          ! Number of electrons(unit cell)
  no       = 2001        ! Number of frequencies
  nq       = 2           ! broj valnih vektora tu je 2 jer je rucno paralelizirano!
- Nlfd     = 100         ! dimenzija polja za local field zasto prozivoljno 50, ne moze se znati unaprijed
+ Nlfd     = 100         ! Number of loacal field vectors, mostly dynamically allocated (Nlf)
 /
 &parameters
  Efermi   = 0.5554       ! [eV]      Fermi energy 
