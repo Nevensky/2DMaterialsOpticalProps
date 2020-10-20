@@ -211,13 +211,18 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   call writeInfo(lf, pol, qx, qy, qz, Gcar, Nsymm, Nlf, Ntot, NkI, Nband, T, Nel, NelQE,Gamma_intra, Gamma_inter)
   
   
-  if (calc == 2) GO TO 888
+  if (calc == 2 .and. calc /= 3 ) GO TO 888
   
   S0(-no:no,1:Nlf,1:Nlf) = cmplx(0.0,0.0)
   Qeff(1:Nlf,1:Nlf) = cmplx(0.0,0.0)
   
   
   ! 1.B.Z  LOOP STARTS HERE !!!!
+
+  print *, 'DEBUG: entering parallel region'
+  !$omp parallel shared(S0,iq,kI,ktot,RI,eps,E,G,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,eta,Vcell) private(ik, S0_partial,MnmK1K2,MnmK1K22,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2,attr1,attr2, C1,C2, iuni1, iuni2) firstprivate(savedir,jump,domega) num_threads(Nthreads) !  default(private) 
+  thread_id =  omp_get_thread_num()
+
   !$omp do
   do  ik = 1,Ntot
     ! vito debug
@@ -334,12 +339,12 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
       deallocate(C1)
     end do bands_n_loop
     jump = 1
-    
-    834            CONTINUE
 
-  end do ! end of FBZ do loop
+  end do ! k_loop_FBZ_2nd ! end of FBZ do loop
   !$omp end do
   !$omp end parallel
+
+  print *, 'DEBUG: exiting parallel region'
   
   
   ! WRITING CORFUN S0_\mu\nu
@@ -357,7 +362,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   close(75)
   
   
-  if (calc == 1) GO TO 999
+  if (calc == 1 .and. calc /= 3 ) GO TO 999
   
 !               SECOND PART OF THE PROGRAM calc = 2
 !               Calculation of the matrix '''Pi_\mu\nu'' by using matrix ''S0_\mu\nu(G,G')'' and Kramers-Krroning relations
@@ -379,22 +384,16 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   
   
   
-  ! Convert (qx,qy,qz) and Glf to Cartesian coordinates
+  ! Convert (qx,qy,qz) and Glf from a.u. to Cartesian coordinates
   
   qx = Gcar*qx
   qy = Gcar*qy
   qz = Gcar*qz
-  
-  do  iG = 1,Nlf
-    Glf(1:3,iG)=Gcar*Glf(1:3,iG)
-  end do
-  
-  
-  
+  Glf(1:3,1:Nlf)=Gcar*Glf(1:3,1:Nlf)
   
   open(77,FILE = dato3)
   ! new sum over omega
-  omega_loop: do io = 1,no-1
+  omega_loop_B: do io = 1,no-1
     ! print *, io
     oi = (io-1)*domega
 
@@ -402,190 +401,9 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
       jG_loop: do jG = 1,Nlf
 
         call genReChi0(io,no,iG,jG,oi,domega,S0,Rechi0)
-        ! ReChi0 = 0.0 ! real part of the response function Re(Chi)
-        ! ! static limit
-        ! if (io == 1) then
-        !   do  jo = 2,no
-        !     oj=(jo-1)*domega
-        !     fact = domega/oj
-        !     if (jo == 2)fact = 3.0/2.0
-        !     if (jo == no)fact = 0.5*domega/oj
-        !     ReChi0 = ReChi0 + fact*(real(S0(-jo + 1,iG,jG)) -real(S0(jo-1,iG,jG)))
-        !   end do
-        ! else if (io == 2) then
-        !   do  jo = 1,no
-        !     oj=(jo-1)*domega
-        !     if (jo /= io) then
-        !       fact = domega/(oi-oj)
-        !     endif
-        !     if (jo == 1) then
-        !       fact = 1.0
-        !     else if (jo == 2) then
-        !       fact = 0.0
-        !     else if (jo == 3) then
-        !       fact=-3.0/2.0
-        !     else if (jo == no) then
-        !       fact = 0.5*domega/(oi-oj)
-        !     end if
-        !     ReChi0 = ReChi0 + fact*real(S0(jo-1,iG,jG))
-        !     fact = domega/(oi + oj)
-        !     if (jo == 1 .or. jo == no) then
-        !       fact = 0.5*domega/(oi + oj)
-        !     end if
-        !     ReChi0 = ReChi0 + fact*real(S0(-jo + 1,iG,jG))
-        !   end do
-        ! else if (io == (no-1)) then
-        !   do  jo = 1,no
-        !     oj=(jo-1)*domega
-        !     if (jo /= io) then
-        !       fact = domega/(oi-oj)
-        !     end if
-
-        !     if (jo == 1) then
-        !       fact = 0.5*domega/(oi-oj)
-        !     else if (jo == (no-2)) then
-        !       fact = 3.0/2.0
-        !     else if (jo == (no-1)) then
-        !       fact = 0.0
-        !     else if (jo == no) then
-        !       fact=-1.0
-        !     end if
-
-        !     ReChi0 = ReChi0 + fact*real(S0(jo-1,iG,jG))
-        !     fact = domega/(oi + oj)
-
-        !     if (jo == 1 .or. jo == no) then
-        !       fact = 0.5*domega/(oi + oj)
-        !     end if
-
-        !     ReChi0 = ReChi0 + fact*real(S0(-jo + 1,iG,jG))
-        !   end do
-        ! else
-        !   do  jo = 1,no
-        !     oj = (jo-1)*domega
-        !     if (jo /= io) then
-        !       fact = domega/(oi-oj)
-        !     end if
-
-        !     if (jo == 1) then
-        !       fact = 0.5*domega/(oi-oj)
-        !     else if (jo == (io-1)) then
-        !       fact = 3.0/2.0
-        !     else if (jo == io) then
-        !       fact = 0.0
-        !     else if (jo == (io + 1)) then
-        !       fact=-3.0/2.0
-        !     else if (jo == no) then
-        !       fact = 0.5*domega/(oi-oj)
-        !     end if
-
-        !     ReChi0 = ReChi0 + fact*real(S0(jo-1,iG,jG))
-        !     fact = domega/(oi + oj)
-
-        !     if (jo == 1 .or. jo == no) then
-        !       fact = 0.5*domega/(oi + oj)
-        !     end if
-
-        !     ReChi0 = ReChi0 + fact*real(S0(-jo + 1,iG,jG))
-        !   end do
-        ! end if
-        ! ReChi0 = ReChi0 + pi*aimag(S0(io-1,iG,jG))
         
         call genImChi0(io,no,iG,jG,oi,domega,S0,ImChi0)
-        ! ImChi0 = 0.0 ! Imaginary part of the response function Im(Chi)
-        ! ! static limit
-        ! if (io == 1) then
-        !   do  jo = 2,no
-        !     oj = (jo-1)*domega
-        !     fact = domega/oj
-        !     if (jo == 2) then
-        !       fact = 3.0/2.0
-        !     else if (jo == no) then
-        !       fact = 0.5*domega/oj
-        !     end if
-        !     ImChi0 = ImChi0 + fact*(aimag(S0(-jo + 1,iG,jG))-aimag(S0(jo-1,iG,jG)))
-        !   end do
-        ! else if (io == 2) then
-        !   do  jo = 1,no
-        !     oj = (jo-1)*domega
-        !     if (jo /= io) then
-        !       fact = domega/(oi-oj)
-        !     end if
-        !     if (jo == 1) then 
-        !       fact = 1.0
-        !     else if (jo == 2) then 
-        !       fact = 0.0
-        !     else if (jo == 3) then 
-        !       fact=-3.0/2.0
-        !     else if (jo == no) then
-        !       fact = 0.5*domega/(oi-oj)
-        !     end if
 
-        !     ImChi0 = ImChi0 + fact*aimag(S0(jo-1,iG,jG))
-        !     fact = domega/(oi + oj)
-
-        !     if (jo == 1 .or. jo == no) then
-        !       fact = 0.5*domega/(oi + oj)
-        !     end if
-        !     ImChi0 = ImChi0 + fact*aimag(S0(-jo + 1,iG,jG))
-        !   end do
-        ! else if (io == (no-1)) then
-        !   do  jo = 1,no
-        !     oj = (jo-1)*domega
-        !     if (jo /= io) then
-        !       fact = domega/(oi-oj) 
-        !     end if
-        !     if (jo == 1) then
-        !       fact = 0.5*domega/(oi-oj)
-        !     else if (jo == (no-2)) then
-        !       fact = 3.0/2.0
-        !     else if (jo == (no-1)) then
-        !       fact = 0.0
-        !     else if (jo == no) then
-        !       fact=-1.0
-        !     end if
-
-        !     ImChi0 = ImChi0 + fact*aimag(S0(jo-1,iG,jG))
-        !     fact = domega/(oi + oj)
-
-        !     if (jo == 1 .or. jo == no) then
-        !       fact = 0.5*domega/(oi + oj)
-        !     end if
-
-        !     ImChi0 = ImChi0 + fact*aimag(S0(-jo + 1,iG,jG))
-        !   end do
-        ! else
-        !   do  jo = 1,no
-        !     oj = (jo-1)*domega
-        !     if (jo /= io) then
-        !       fact = domega/(oi-oj)
-        !     end if
-
-        !     if (jo == 1) then
-        !       fact = 0.5*domega/(oi-oj)
-        !     else if (jo == (io-1)) then
-        !       fact = 3.0/2.0
-        !     else if (jo == io) then
-        !       fact = 0.0
-        !     else if (jo == (io + 1)) then
-        !       fact=-3.0/2.0
-        !     else if (jo == no) then
-        !       fact = 0.5*domega/(oi-oj)
-        !     end if
-
-        !     ImChi0 = ImChi0 + fact*aimag(S0(jo-1,iG,jG))
-        !     fact = domega/(oi + oj)
-
-        !     if (jo == 1 .or. jo == no) then
-        !       fact = 0.5*domega/(oi + oj)
-        !     end if
-
-        !     ImChi0 = ImChi0 + fact*aimag(S0(-jo + 1,iG,jG))
-        !   end do
-        ! end if
-        
-        ! ImChi0 = ImChi0 - pi*real(S0(io-1,iG,jG)) ! ovaj dio je razlicit od Sloss, S0 je kompleksno polje
-        
         if (io == 1) then 
           Pi_dia(iG,jG) = -cmplx(ReChi0,0.0) ! neven debug: diamagnetski doprinos ??
         end if
@@ -600,14 +418,10 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
     ! WRITTING TOTAL RESPONSE FUNCTION Pi for a given polarization 'pol' to file
     write(77,*) oi*Hartree,Pi_tot(1,1)
     
-    
-    
-!                end new sum over omega
-  end do omega_loop
+  end do omega_loop_B
   close(77)
   
   999              CONTINUE
-!                kraj po q
 end do q_loop
 
 
@@ -616,9 +430,9 @@ contains
     character(len=100), intent(in)  :: path
     real(kind=dp),      intent(out) :: KC(3,3)
     
-    integer :: j
-    integer :: ios, lno=0
-    character (len=35) :: tag, buffer
+    integer           :: j
+    integer           :: ios, lno=0
+    character(len=35) :: tag, buffer
 
     tag='     reciprocal axes: (cart. coord.'
 
@@ -733,13 +547,13 @@ contains
 
   subroutine findKinIBZ(ik, NkI, Nsymm, eps, kx, ky, kz, RI, kI, R1, K1)
     ! trazenje (kx,ky,kz) u ireducibilnoj zoni
-    integer,       intent(in) :: ik
-    integer,       intent(in) :: NkI, Nsymm
-    real(kind=dp), intent(in) :: eps
-    real(kind=dp), intent(in) :: kx, ky, kz
-    real(kind=dp), intent(in) :: kI(:,:)
-    real(kind=dp), intent(in) :: RI(:,:,:)
-    integer      , intent(out):: R1, K1
+    integer,       intent(in)  :: ik
+    integer,       intent(in)  :: NkI, Nsymm
+    real(kind=dp), intent(in)  :: eps
+    real(kind=dp), intent(in)  :: kx, ky, kz
+    real(kind=dp), intent(in)  :: kI(:,:)
+    real(kind=dp), intent(in)  :: RI(:,:,:)
+    integer      , intent(out) :: R1, K1
 
     integer       :: i, j
     integer       :: it
@@ -1033,7 +847,7 @@ end subroutine findKQinBZ
           stop
         end if
       end if
-    ! transformation in cart.coord (also!, after this all G components are in 2pi/a0 units)
+      ! transformation in cart.coord (also!, after this all G components are in 2pi/a0 units)
       do n = 1,3
         do m = 1,3
           G(n,iG) = G(n,iG)+KC(n,m)*real(Gi(m)) ! DBLE converted to real

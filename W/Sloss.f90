@@ -402,7 +402,7 @@ q_loop: do  iq = qmin,qmax ! 42,61
         
         deallocate(C2)
   
-        do  io = 1,no
+        omega_loop: do  io = 1,no
           o = (io-1)*domega
           dE = o + E(K1,n) - E(K2,m) 
           Lor = -eta/(dE**2 + eta**2)     ! ovo bi analticki bila delta funkcija imag. dio od 1/dE
@@ -413,7 +413,7 @@ q_loop: do  iq = qmin,qmax ! 42,61
               end do
             end do
           end if
-        end do
+        end do omega_loop
                 
       end do bands_m_loop ! end of m do loop
       deallocate(C1)
@@ -439,17 +439,15 @@ q_loop: do  iq = qmin,qmax ! 42,61
 
   ! stop
 
-  ! Convert (qx,qy,qz) and Glf from Cartesian coords. to atomic units
+  ! Convert (qx,qy,qz) and Glf from atomic units to Cartesian coords.
   qx = Gcar*qx ! convert qx *2p/a0
   qy = Gcar*qy
   qz = Gcar*qz
-  
-
   GlfV(1:3,1:Nlf) = Gcar*Glf(1:3,1:Nlf)
 
    ! Kramers-Kroning relacije
   
-  omega_loop_A: do  io = 1,no-1
+  omega_loop_B: do  io = 1,no-1
     call genChi0(io,no,Nlf,domega,S0,Chi0)
     
     ! MATRIX V(G,G')
@@ -478,7 +476,7 @@ q_loop: do  iq = qmin,qmax ! 42,61
     write(22308,*) oi*Hartree,aimag(WT(io,2,2))
     write(12308,*) oi*Hartree,real(WT(io,2,3))
 
-  end do omega_loop_A
+  end do omega_loop_B
   
 
   
@@ -492,7 +490,7 @@ q_loop: do  iq = qmin,qmax ! 42,61
 
   KKS = 0.0
   SKK = 0.0  
-  omega_loop_B: do  io = 1,no-1
+  omega_loop_C: do  io = 1,no-1
     ! print*,io
     oi = (io-1)*domega
 
@@ -528,7 +526,7 @@ q_loop: do  iq = qmin,qmax ! 42,61
     
 
 
-  end do omega_loop_B
+  end do omega_loop_C
 
   ! write Kramers-Kroning relations check
   call writeKramKron_Qi(iq,qx, qy, qz, Gcar, KKS, SKK, G0, WT, V)
