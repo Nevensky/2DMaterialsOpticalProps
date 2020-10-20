@@ -18,8 +18,8 @@ SUBROUTINE pointr(root,nsim,r,ri,f)
 implicit none
 
 
-CHARACTER (LEN=100), INTENT(IN OUT)      :: root
-INTEGER, INTENT(IN)                      :: nsim
+CHARACTER (LEN=100), INTENT(INOUT)      :: root
+INTEGER, INTENT(INOUT)                      :: nsim
 REAL*8, INTENT(OUT)                      :: r(48,3,3)
 REAL*8, INTENT(OUT)                      :: ri(48,3,3)
 REAL*8, INTENT(OUT)                      :: f(48,3)
@@ -29,8 +29,8 @@ DOUBLE COMPLEX t,UNIT
 REAL*8, PARAMETER :: zero=0.0
 REAL*8, PARAMETER :: one=1.0
 DIMENSION  t(3,3), UNIT(3,3), fi(48,3)
-CHARACTER (LEN=11,buffer1,tag1) ::
-CHARACTER (LEN=7,buffer2,tag2) ::
+CHARACTER (LEN=11) :: buffer1,tag1
+CHARACTER (LEN=7) :: buffer2,tag2
 CHARACTER (LEN=100) :: fajl,path
 
 

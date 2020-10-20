@@ -47,9 +47,8 @@ integer :: NelQE  ! Number of electrons(unit cell)
 integer :: NG     ! total number of G vectors  
 integer :: NGd    ! minimum number of coefficients CG over all evc.n files
 integer :: no     ! number of frequencies
-integer :: nq     ! broj valnih vektora tu je 2 jer je rucno paralelizirano!
 integer :: Nlfd   ! dimenzija polja za local field zasto prozivoljno 50, ne moze se znati unaprijed
-namelist /config/  NG, NGd, NkI, Nband, Nocc, NelQE,no, nq, Nlfd
+namelist /config/  NG, NGd, NkI, Nband, Nocc, NelQE,no, Nlfd
 
 
 ! file i/o debug
@@ -68,29 +67,30 @@ complex(kind=dp), parameter :: czero   = cmplx(0.0,0.0)
 complex(kind=dp), parameter :: ione    = cmplx(0.0,1.0)
 
 ! scalars
-real(kind=dp) :: kx,ky,kz
-real(kind=dp) :: KQx,KQy,KQz
-real(kind=dp) :: qx,qy,qz
+real(kind=dp)    :: kx,ky,kz
+real(kind=dp)    :: KQx,KQy,KQz
+real(kind=dp)    :: qx,qy,qz
 ! real(kind=dp) :: q ! ne koristi se
-real(kind=dp) :: kmin
-real(kind=dp) :: omin,omax
-real(kind=dp) :: domega
-real(kind=dp) :: o
-real(kind=dp) :: K11,K22,K33
-real(kind=dp) :: expo1, expo2
-real(kind=dp) :: f1, f2, df
-real(kind=dp) :: Lor ! Lorentzian
-real(kind=dp) :: dE
-real(kind=dp) :: Gabs
-real(kind=dp) :: kref ! trazi najmanju k-tocku sampliranu u MP meshu u kojem se moze izracunati ILS
-real(kind=dp) :: Eref 
-real(kind=dp) :: Gxx1,Gyy1,Gzz1
-real(kind=dp) :: Gxx2,Gyy2,Gzz2
-real(kind=dp) :: fact
-real(kind=dp) :: oi,oj
-real(kind=dp) :: ImChi0, ReChi0
-real(kind=dp) :: struja, struja_y, struja_z
-real(kind=dp) :: Nel ! Number of electrons(1BZ integration)
+real(kind=dp)    :: kmin
+real(kind=dp)    :: omin,omax
+real(kind=dp)    :: domega
+real(kind=dp)    :: o
+real(kind=dp)    :: K11,K22,K33
+real(kind=dp)    :: expo1, expo2
+real(kind=dp)    :: f1, f2, df
+real(kind=dp)    :: Lor ! Lorentzian
+real(kind=dp)    :: dE
+real(kind=dp)    :: Gabs
+real(kind=dp)    :: kref ! trazi najmanju k-tocku sampliranu u MP meshu u kojem se moze izracunati ILS
+real(kind=dp)    :: Eref 
+real(kind=dp)    :: Gxx1,Gyy1,Gzz1
+real(kind=dp)    :: Gxx2,Gyy2,Gzz2
+real(kind=dp)    :: fact
+real(kind=dp)    :: oi,oj
+real(kind=dp)    :: ImChi0, ReChi0
+real(kind=dp)    :: struja, struja_y, struja_z
+real(kind=dp)    :: Nel ! Number of electrons(1BZ integration)
+complex(kind=dp) :: Pi_inter, Pi_intra
 
 ! parameters
 character(len=3) :: pol, lf
@@ -136,6 +136,7 @@ complex(kind=dp), dimension(:),     allocatable  :: MnmK1K22   ! strujni vrhovi
 complex(kind=dp), dimension(:,:),   allocatable  :: Pi_tot
 complex(kind=dp), dimension(:,:),   allocatable  :: Pi_dia
 complex(kind=dp), dimension(:,:),   allocatable  :: Qeff      ! effective charge carriers matrix.
+complex(kind=dp), dimension(:,:),   allocatable  :: Qeff_partial
 complex(kind=dp), dimension(:,:,:), allocatable  :: S0         ! korelacijska matrica
 complex(kind=dp), dimension(:,:,:), allocatable  :: S0_partial ! pomocna var. za S0 redukciju
 
@@ -275,8 +276,8 @@ allocate(MnmK1K22(Nlfd))
 
 ! multidim arrays
 allocate(Pi_dia(Nlfd,Nlfd))
-allocate(Qeff(Nlfd,Nlfd))
 allocate(Pi_tot(Nlfd,Nlfd))
+allocate(Qeff(Nlfd,Nlfd))
 allocate(S0(-no:no,Nlfd,Nlfd)) 
 
 
@@ -291,7 +292,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   
   ! searching for the smalest 'optical' q
   call findMinQ(Ntot, ktot, qx, qy, qz)
-  print *, "Found minimal q."
+  print *, "Found minimal wave-vector q."
 
   ! Info file
   call writeInfo(lf, pol, qx, qy, qz, Gcar, Nsymm, Nlf, Ntot, NkI, Nband, T, Nel, NelQE,Gamma_intra, Gamma_inter, eta, dato1, dato2, dato3)
@@ -306,6 +307,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   ! 1.B.Z  LOOP STARTS HERE !!!!
 
   print *, 'DEBUG: entering parallel region'
+  print *, 'Configured theards: ',Nthreads, 'Available threads: ',OMP_GET_NUM_THREADS()
   !$omp parallel shared(S0,Qeff, iq,kI,ktot,RI,eps,E,G,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,eta,Vcell, Gamma_inter, Gamma_intra, df_cut, Lor_cut) private(ik, S0_partial, Qeff_partial, MnmK1K2,MnmK1K22,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,df, f1, f2, expo1, expo2, fact, Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2,attr1,attr2, C1,C2, iuni1, iuni2) firstprivate(savedir,jump,domega) num_threads(Nthreads) !  default(private) 
   thread_id =  omp_get_thread_num()
 
@@ -327,6 +329,12 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
     KQy = ky + qy
     KQz = kz + qz
     
+    !$omp critical(printWaveVector)
+    ! thread_id =  omp_get_thread_num()
+    print *,'thread id:',thread_id,'ik: ',ik
+    print *, 'KQx,KQy,KQz:',KQx,KQy,KQz
+    !$omp end critical(printWaveVector)
+
   !  trazenje (KQx,KQy) prvo u 1.B.Z a onda u I.B.Z.
   call findKQinBZ(KQx, KQy, KQz, eps, Nsymm, NkI, Ntot, NG, ktot, kI, RI, G, iG0, R2, K2)
       
@@ -334,16 +342,18 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   ! K1-integer, redni broj valnog vektora K1 u transformaciji ''K = R1*K1''.
   ! iG0 i R2-integeri, redni broj vektora reciprocne restke G0 i point operacije R2 u transformaciji ''K + Q = G0 + R2*K2''.
   ! K2-integer, redni broj valnog vektora K2 u transformaciji  ''K + Q = G0 + R2*K2''.
-        
     
+    allocate(Qeff_partial(Nlf,Nlf))
+    allocate(S0_partial(-no:no,Nlf,Nlf))
+    Qeff_partial(1:Nlf,1:Nlf)    = cmplx(0.0,0.0)
+    S0_partial(1:no,1:Nlf,1:Nlf) = cmplx(0.0)
+
     bands_n_loop: do n = 1,Nband
-      expo1 = exp((E(K1,n)-Efermi)/T)
-      f1 = 1.0/(expo1 + 1.0)
 
-      call paths(savedir,K1,n,pathk1,bandn)
+      call genOccupation(E(K1,n),Efermi,T,expo1,f1)
 
-      !$omp critical(loadCs_1)
-      iuni1 = 20 + 2*thread_id + ik*100000 + n*100
+      !$omp critical(loadCs_)
+      iuni1 = 20 + 2*thread_id + ik*1000000 + n*1000
       call paths(savedir,K1,n,pathk1,bandn)
       ! print *,'pathk1',pathk1
       call iotk_open_read(iuni1,pathk1)
@@ -353,7 +363,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
       allocate(C1(NG1))                            ! Alociranje polja C1
       call iotk_scan_dat(iuni1,bandn,C1)           ! Ucitavanje podataka iza evc.n
       call iotk_close_read(iuni1)
-      !$omp end critical(loadCs_1)
+      !$omp end critical(loadCs_)
       
       if (NGd > NG1) then
         write(*,*) 'NGd is bigger than NG1=',NG1
@@ -361,19 +371,17 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
       end if
 
       bands_m_loop: do m = 1,Nband
-        print *,'Fermi/T: ', Efermi/T
-        print *,'(E(K2,m)-Efermi)/T: ', (E(K2,m)-Efermi)/T
-        expo2 = exp( (E(K2,m)-Efermi)/T )
-        print *, "expo2: ", expo2
-        f2 = 1.0/(expo2 + 1.0)
+
+        call genOccupation(E(K2,m),Efermi,T,expo2,f2)
+
         df = f1 - f2
-        
+        ! print *, df ! neven debug
+
         occupation_if: if ( (abs(df) >= df_cut) .or. (n == m) ) then  
           ! call paths(outdir,K1,K2,n,m,pathk1,pathk2,bandn,bandm)
-          call paths(savedir,K2,m,pathk2,bandm)
-          
-          !$omp critical(loadCs_2)
-          iuni2 = 21 + (2*thread_id+1) + (2*ik+1)*100000 + (2*m+1)*100
+
+          !$omp critical(loadCs_)
+          iuni2 = 21 + (2*thread_id+1) + (2*ik+1)*1000000 + (2*m+1)*1000
           call pathsB(savedir,K2,m,pathk2,bandm)
           ! print *,'pathk2',pathk2
           call iotk_open_read(iuni2,pathk2)
@@ -383,7 +391,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
           allocate(C2(NG2))                            ! Alociranje polja C1
           call iotk_scan_dat(iuni2,bandm,C2)           ! Ucitavanje podataka iza evc.n
           call iotk_close_read(iuni2)
-          !$omp end critical(loadCs_2)
+          !$omp end critical(loadCs_)
           
           
           if (NGd > NG2) then
@@ -397,20 +405,20 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
           deallocate(C2)
 
           intraORinterband_if: if (n /= m) then
-          omega_loop: do io = -no,no
-            o = io*domega
-            dE = o + E(K1,n) - E(K2,m)
-            Lor = Gamma_inter/(dE**2 + Gamma_inter**2) ! Gamma_inter je sirina interband prijelaza
-            ! Reze repove Lorentziana lijevo i desno, pazljivo, minimum 1.0d-3, preporuceno 1.0d-5
-            if (abs(Lor) >= Lor_cut/Gamma_inter) then
-              do  iG = 1,Nlf
-                do  jG = 1,Nlf
-                  ! -1/pi*ImChi_munu -> for Kramers Kronig
-                  S0(io,iG,jG) = S0(io,iG,jG) - 2.0*df*Lor*MnmK1K2(iG)*conjg(MnmK1K22(jG)) / (pi*Ntot*Vcell)
+            omega_loop: do io = -no,no
+              o = io*domega
+              dE = o + E(K1,n) - E(K2,m)
+              Lor = Gamma_inter/(dE**2 + Gamma_inter**2) ! Gamma_inter je sirina interband prijelaza
+              ! Reze repove Lorentziana lijevo i desno, pazljivo, minimum 1.0d-3, preporuceno 1.0d-5
+              if (abs(Lor) >= Lor_cut/Gamma_inter) then
+                do  iG = 1,Nlf
+                  do  jG = 1,Nlf
+                    ! -1/pi*ImChi_munu -> for Kramers Kronig
+                    S0(io,iG,jG) = S0(io,iG,jG) - 2.0*df*Lor*MnmK1K2(iG)*conjg(MnmK1K22(jG)) / (pi*Ntot*Vcell)
+                  end do
                 end do
-              end do
-            end if
-          end do omega_loop
+              end if
+            end do omega_loop
           else if (n == m .and. abs(E(K1,n)-Efermi) <= 10.0*T) then
             ! Effective number of charge carriers (tensor)
             fact = expo1/( (expo1 + 1.0D0)*(expo1 + 1.0D0) )
@@ -418,14 +426,30 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
             do  iG = 1,Nlf
               do  jG = 1,Nlf
                 ! izracun intraband korelacijske funkcije
-                Qeff(iG,jG) = Qeff(iG,jG) + 2.0*fact*MnmK1K2(iG)*conjg(MnmK1K22(jG)) / (Ntot*Vcell)
+                Qeff_partial(iG,jG) = Qeff_partial(iG,jG) + 2.0*fact*MnmK1K2(iG)*conjg(MnmK1K22(jG)) / (Ntot*Vcell)
               end do
             end do
           end if intraORinterband_if
         end if occupation_if
       end do bands_m_loop
+
       deallocate(C1)
+
+      
+
     end do bands_n_loop
+
+    !$omp critical(sumS0)      
+    ! neven debug
+    ! print *, 'K1: ',K1,'K2: ',K2,'R1: ',R1, 'R2: ',R2
+    ! print *, 'sum(S0): ', sum(S0(-no:no,1:Nlf,1:Nlf)
+    S0(-no:no,1:Nlf,1:Nlf) = S0(-no:no,1:Nlf,1:Nlf) + S0_partial(-no:no,1:Nlf,1:Nlf)
+    Qeff(1:Nlf,1:Nlf) = Qeff(1:Nlf,1:Nlf) + Qeff_partial(1:Nlf,1:Nlf)
+    !$omp end critical(sumS0)
+
+
+    deallocate(S0_partial)
+    deallocate(Qeff_partial)
     jump = 1
 
   end do ! k_loop_FBZ_2nd ! end of FBZ do loop
@@ -497,6 +521,9 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
         end if
         Pi_tot(iG,jG) = cmplx(ReChi0,ImChi0) ! Pi_RPA = PiDIJAMAGNETSKI + PiPARAMAGNETSKI
         Pi_tot(iG,jG) = Pi_tot(iG,jG) + Pi_dia(iG,jG)
+
+        Pi_inter = Pi_tot(1,1)
+        Pi_intra = Qeff(1,1)*oi/(oi + cmplx(0.0,1.0)*Gamma_intra)
         
         Pi_tot(iG,jG) = Pi_tot(iG,jG) + Qeff(iG,jG)*oi/(oi + cmplx(0.0,1.0)*Gamma_intra) ! dodavanje intraband clana
         
@@ -506,6 +533,15 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
     ! WRITTING TOTAL RESPONSE FUNCTION Pi for a given polarization 'pol' to file
     write(77,*) oi*Hartree,Pi_tot(1,1)
     
+
+
+    ! vodljivost u jedinicama 2*pi*e^2/h   
+    if(io > 1) then
+      write(401,*) oi*Hartree, real(-ione*c0*Pi_inter/oi)
+      write(402,*) oi*Hartree, real(-ione*c0*Pi_intra/oi)
+    endif
+
+
   end do omega_loop_B
   close(77)
   
@@ -527,7 +563,6 @@ contains
     open(300,FILE=path,status='old')
     do  i = 1,100000
       read(300,'(a) ') buffer
-      print *, buffer
       lno = lno+1
       if (buffer == tag) then
         do  j = 1,3
@@ -558,10 +593,12 @@ contains
     integer       :: ios
     real(kind=dp) :: absq, error
     real(kind=dp), parameter :: Hartree = 2.0D0*13.6056923D0
+    character(len=8) :: fname 
 
     absq = sqrt(qx**2+qy**2+qz**2)
+    fname = 'Info_'//adjustl(trim(pol))
 
-    open(55,FILE='Info', err=700, iostat=ios)
+    open(55,FILE=fname, err=700, iostat=ios)
     write(55,*)'***************General***********************'
     write(55,*)' Currently we calculate         ---->',dato1
     write(55,*)' Currently we calculate         ---->',dato2
@@ -793,6 +830,24 @@ end subroutine findKQinBZ
     close(887)
 
   end subroutine genFBZ
+
+  subroutine genOccupation(Ei,Efermi,T,expo,f)
+      implicit none
+      real(kind=dp), intent(in)  :: Ei, Efermi, T
+      real(kind=dp), intent(out) :: expo, f
+
+      expo = (Ei-Efermi)/T
+      if (expo < -20) then
+        expo = 0.0d0
+        f = 1.0d0
+      elseif(expo > 20) then
+        f = 0.0d0
+      else
+        expo = exp(expo)
+        f = 1.0/(expo + 1.0)
+      endif
+      
+  end subroutine genOccupation
 
   subroutine checkFBZintegration(Nband,NkI,Nsymm,Ntot,eps,kI,RI,Efermi,E,NelQE,Nel)
     ! Provjeri je li broj el. u FBZ (Nel) odgovara stvarnom broju el. u jed. cel. (NelQE)

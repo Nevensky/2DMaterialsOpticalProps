@@ -355,7 +355,7 @@ q_loop: do  iq = qmin,qmax ! 42,61
       ! ucitavanje evc.dat binarnih datoteka za fiksni K1,K2, i vrpce n i m   
       ! otvara save/K.000x/evc.dat u atributu <evc band> ispod CnK(G) koef.
       
-      !$omp critical(loadCs_1)
+      !$omp critical(loadCs_)
       iuni1 = 20 + 2*thread_id + ik*100000 + n*100
       call paths(savedir,K1,n,pathk1,bandn)
       ! print *,'pathk1',pathk1
@@ -366,7 +366,7 @@ q_loop: do  iq = qmin,qmax ! 42,61
       allocate(C1(NG1))                           ! Alociranje polja C1
       call iotk_scan_dat(iuni1,bandn,C1)           ! Ucitavanje podataka iza evc.n
       call iotk_close_read(iuni1)
-      !$omp end critical(loadCs_1)
+      !$omp end critical(loadCs_)
   
       if (NGd > NG1) then
         write(*,*) 'NGd is bigger than NG1=',NG1
@@ -377,7 +377,7 @@ q_loop: do  iq = qmin,qmax ! 42,61
   
         
         ! print *,'n,m: ',n,m,'K1,K2: ',K1,K2,'iuni:',iuni1,iuni2
-        !$omp critical(loadCs_2)
+        !$omp critical(loadCs_)
         iuni2 = 21 + (2*thread_id+1) + (2*ik+1)*100000 + (2*m+1)*100
         call pathsB(savedir,K2,m,pathk2,bandm)
         ! print *,'pathk2',pathk2
@@ -388,7 +388,7 @@ q_loop: do  iq = qmin,qmax ! 42,61
         allocate(C2(NG2))                           ! Alociranje polja C1
         call iotk_scan_dat(iuni2,bandm,C2)           ! Ucitavanje podataka iza evc.n
         call iotk_close_read(iuni2)
-        !$omp end critical(loadCs_2)
+        !$omp end critical(loadCs_)
   
   
         if (NGd > NG2) then

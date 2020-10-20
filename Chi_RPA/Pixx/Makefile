@@ -41,7 +41,7 @@ Optabs.o: Optabs.f
 	${FC} ${FFLAGS} -c Optabs.f90
 
 Optabs_para.o: Optabs.f
-	${FC} ${FFLAGS} ${PARA} -c Optabs.f90 -o Optabs_para.o
+	${FC} ${FFLAGS} ${LDFLAGS_PARA} -c Optabs.f90 -o Optabs_para.o
 
 Optabs_para_qe6.o: Optabs.f
 	${FC} ${FFLAGS} ${PARA} -c Optabs_qe6.f90 -o Optabs_para_qe6.f90
