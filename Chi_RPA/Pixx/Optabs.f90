@@ -55,6 +55,8 @@ namelist /config/  NG, NGd, NkI, Nband, Nocc, NelQE,no, Nlfd
 integer :: ist,ist2,ist4,ist5,ist6,ist7,ist8,ist9,ist10,ist11,ist12
 integer :: lno,lno2,lno9,lno10,lno11,lno12
 
+integer :: debugCount = 0
+
 ! constants
 real(kind=dp),    parameter :: pi      = 4.D0*atan(1.D0)
 real(kind=dp),    parameter :: eV      = 1.602176487D-19
@@ -159,14 +161,6 @@ integer,allocatable :: ipiv(:)
 integer :: lwork
 integer,allocatable :: work(:)
 
-
-!        QUANTUM ESSPRESSO IMPUTS:
-! root1='/Users/nevensky/'
-! root2='MoS2_201X201'
-! outdir='/Users/Nevensky/tmp'
-! root = trim(root1)//trim(root2)
-
-
 !  For free spectral function calculation put calc = 1
 !  For current-current response function calculation put calc = 2
 !  For mixed component yz put pol = 4
@@ -175,12 +169,7 @@ integer,allocatable :: work(:)
 
 ! CORRELATION FUNCTIONS, CURRENT-CURRENT RESPONSE FUNCTIONS and
 ! EFFECTIVE CHARGE CARRIERS MATRIX OUTPUTS
-! calc = 1 
-! lf = 1
-! pol = 'xx' ! polrizacija u x-smjeru
-dato1 = 'Corrfun_'//adjustl(trim(pol))
-dato2 = 'Qeff_'//adjustl(trim(pol))
-dato3 = 'Pi_RPA_'//adjustl(trim(pol))
+
 
 ! load namelist
 open(10,file='config.in')
@@ -190,6 +179,11 @@ read(10,nml=config,iostat=ist6)
 read(10,nml=parameters,iostat=ist7)
 read(10,nml=parallel,iostat=ist8)
 close(10)
+
+dato1 = 'Corrfun_'//adjustl(trim(pol))
+dato2 = 'Qeff_'//adjustl(trim(pol))
+dato3 = 'Pi_RPA_'//adjustl(trim(pol))
+
 
 ! constants
 Nk     = 48*NkI                   ! number of wave vectors in FBZ with no symmetry 
@@ -307,8 +301,8 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   ! 1.B.Z  LOOP STARTS HERE !!!!
 
   print *, 'DEBUG: entering parallel region'
-  print *, 'Configured theards: ',Nthreads, 'Available threads: ',OMP_GET_NUM_THREADS()
-  !$omp parallel shared(S0,Qeff, iq,kI,ktot,RI,eps,E,G,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,eta,Vcell, Gamma_inter, Gamma_intra, df_cut, Lor_cut) private(ik, S0_partial, Qeff_partial, MnmK1K2,MnmK1K22,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,df, f1, f2, expo1, expo2, fact, Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2,attr1,attr2, C1,C2, iuni1, iuni2) firstprivate(savedir,jump,domega) num_threads(Nthreads) !  default(private) 
+  print *, 'Requested threads: ',Nthreads, 'Available threads: ',OMP_GET_NUM_THREADS()
+  !$omp parallel shared(S0,Qeff, iq,kI,ktot,RI,eps,E,G,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,eta,Vcell, Gamma_inter, Gamma_intra, df_cut, Lor_cut,debugCount) private(ik, S0_partial, Qeff_partial, MnmK1K2,MnmK1K22,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,df, f1, f2, expo1, expo2, fact, Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2,attr1,attr2, C1,C2, iuni1, iuni2) firstprivate(savedir,jump,domega) num_threads(Nthreads) default(private) 
   thread_id =  omp_get_thread_num()
 
   !$omp do
@@ -330,9 +324,11 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
     KQz = kz + qz
     
     !$omp critical(printWaveVector)
+    debugCount = debugCount +1
     ! thread_id =  omp_get_thread_num()
-    print *,'thread id:',thread_id,'ik: ',ik
-    print *, 'KQx,KQy,KQz:',KQx,KQy,KQz
+    write (*,'(A13,I4,A5,I4,A11,I4,A2,I4,A5,F5.1,A4)') 'thread id: ',thread_id,'ik: ',ik, 'progress: ',debugCount, ' /',Ntot,' (',(real(debugCount)/real(Ntot))*100.0,'% )'
+    write (*,'(A14,5F8.6)') 'KQx,KQy,KQz: ',KQx,KQy,KQz
+    print *,'-------------------------------'
     !$omp end critical(printWaveVector)
 
   !  trazenje (KQx,KQy) prvo u 1.B.Z a onda u I.B.Z.
@@ -343,114 +339,121 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   ! iG0 i R2-integeri, redni broj vektora reciprocne restke G0 i point operacije R2 u transformaciji ''K + Q = G0 + R2*K2''.
   ! K2-integer, redni broj valnog vektora K2 u transformaciji  ''K + Q = G0 + R2*K2''.
     
-    allocate(Qeff_partial(Nlf,Nlf))
-    allocate(S0_partial(-no:no,Nlf,Nlf))
-    Qeff_partial(1:Nlf,1:Nlf)    = cmplx(0.0,0.0)
-    S0_partial(1:no,1:Nlf,1:Nlf) = cmplx(0.0)
+  allocate(Qeff_partial(Nlf,Nlf))
+  allocate(S0_partial(-no:no,Nlf,Nlf))
+  Qeff_partial(1:Nlf,1:Nlf)    = cmplx(0.0,0.0)
+  S0_partial(-no:no,1:Nlf,1:Nlf) = cmplx(0.0,0.0)
 
-    bands_n_loop: do n = 1,Nband
+  bands_n_loop: do n = 1,Nband
 
-      call genOccupation(E(K1,n),Efermi,T,expo1,f1)
+    call genOccupation(E(K1,n),Efermi,T,expo1,f1)
 
-      !$omp critical(loadCs_)
-      iuni1 = 20 + 2*thread_id + ik*1000000 + n*1000
-      call paths(savedir,K1,n,pathk1,bandn)
-      ! print *,'pathk1',pathk1
-      call iotk_open_read(iuni1,pathk1)
-      call iotk_scan_empty(iuni1,"INFO",attr=attr1) ! Otvaranje atribute za INFO
-      call iotk_scan_attr(attr1,"igwx",NG1)
-      
-      allocate(C1(NG1))                            ! Alociranje polja C1
-      call iotk_scan_dat(iuni1,bandn,C1)           ! Ucitavanje podataka iza evc.n
-      call iotk_close_read(iuni1)
-      !$omp end critical(loadCs_)
-      
-      if (NGd > NG1) then
-        write(*,*) 'NGd is bigger than NG1=',NG1
-        stop
-      end if
+    !$omp critical(loadCs_)
+    iuni1 = 20 + 2*thread_id + ik*1000000 + n*1000
+    call paths(savedir,K1,n,pathk1,bandn)
+    ! print *,'pathk1',pathk1
+    call iotk_open_read(iuni1,pathk1)
+    call iotk_scan_empty(iuni1,"INFO",attr=attr1) ! Otvaranje atribute za INFO
+    call iotk_scan_attr(attr1,"igwx",NG1)
+    
+    allocate(C1(NG1))                            ! Alociranje polja C1
+    call iotk_scan_dat(iuni1,bandn,C1)           ! Ucitavanje podataka iza evc.n
+    call iotk_close_read(iuni1)
+    !$omp end critical(loadCs_)
+    
+    if (NGd > NG1) then
+      write(*,*) 'NGd is bigger than NG1=',NG1
+      stop
+    end if
 
-      bands_m_loop: do m = 1,Nband
+    bands_m_loop: do m = 1,Nband
 
-        call genOccupation(E(K2,m),Efermi,T,expo2,f2)
+      call genOccupation(E(K2,m),Efermi,T,expo2,f2)
 
-        df = f1 - f2
-        ! print *, df ! neven debug
+      df = f1 - f2
+      ! print *, df ! neven debug
 
-        occupation_if: if ( (abs(df) >= df_cut) .or. (n == m) ) then  
-          ! call paths(outdir,K1,K2,n,m,pathk1,pathk2,bandn,bandm)
+      occupation_if: if ( (abs(df) >= df_cut) .or. (n == m) ) then  
+        ! call paths(outdir,K1,K2,n,m,pathk1,pathk2,bandn,bandm)
 
-          !$omp critical(loadCs_)
-          iuni2 = 21 + (2*thread_id+1) + (2*ik+1)*1000000 + (2*m+1)*1000
-          call pathsB(savedir,K2,m,pathk2,bandm)
-          ! print *,'pathk2',pathk2
-          call iotk_open_read(iuni2,pathk2)
-          call iotk_scan_empty(iuni2,"INFO",attr=attr2)
-          call iotk_scan_attr(attr2,"igwx",NG2)
-          
-          allocate(C2(NG2))                            ! Alociranje polja C1
-          call iotk_scan_dat(iuni2,bandm,C2)           ! Ucitavanje podataka iza evc.n
-          call iotk_close_read(iuni2)
-          !$omp end critical(loadCs_)
-          
-          
-          if (NGd > NG2) then
-            write(*,*) 'NGd is bigger than NG2=',NG2
-            stop
-          end if
+        !$omp critical(loadCs_)
+        iuni2 = 21 + (2*thread_id+1) + (2*ik+1)*1000000 + (2*m+1)*1000
+        call pathsB(savedir,K2,m,pathk2,bandm)
+        ! print *,'pathk2',pathk2
+        call iotk_open_read(iuni2,pathk2)
+        call iotk_scan_empty(iuni2,"INFO",attr=attr2)
+        call iotk_scan_attr(attr2,"igwx",NG2)
+        
+        allocate(C2(NG2))                            ! Alociranje polja C1
+        call iotk_scan_dat(iuni2,bandm,C2)           ! Ucitavanje podataka iza evc.n
+        call iotk_close_read(iuni2)
+        !$omp end critical(loadCs_)
+        
+        
+        if (NGd > NG2) then
+          write(*,*) 'NGd is bigger than NG2=',NG2
+          stop
+        end if
 
-          ! Konstrukcija stupca matricnih elementa MnmK1K2(G)
-          call genStrujniVhrovi(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2, MnmK1K22)
-          
-          deallocate(C2)
+        ! Konstrukcija stupca matricnih elementa MnmK1K2(G)
+        call genStrujniVhrovi(jump, eps, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2, MnmK1K22)
+        
+        deallocate(C2)
 
-          intraORinterband_if: if (n /= m) then
-            omega_loop: do io = -no,no
-              o = io*domega
-              dE = o + E(K1,n) - E(K2,m)
-              Lor = Gamma_inter/(dE**2 + Gamma_inter**2) ! Gamma_inter je sirina interband prijelaza
-              ! Reze repove Lorentziana lijevo i desno, pazljivo, minimum 1.0d-3, preporuceno 1.0d-5
-              if (abs(Lor) >= Lor_cut/Gamma_inter) then
-                do  iG = 1,Nlf
-                  do  jG = 1,Nlf
-                    ! -1/pi*ImChi_munu -> for Kramers Kronig
-                    S0(io,iG,jG) = S0(io,iG,jG) - 2.0*df*Lor*MnmK1K2(iG)*conjg(MnmK1K22(jG)) / (pi*Ntot*Vcell)
-                  end do
+        intraORinterband_if: if (n /= m) then
+          omega_loop: do io = -no,no
+            o = io*domega
+            dE = o + E(K1,n) - E(K2,m)
+            Lor = Gamma_inter/(dE**2 + Gamma_inter**2) ! Gamma_inter je sirina interband prijelaza
+            ! Reze repove Lorentziana lijevo i desno, pazljivo, minimum 1.0d-3, preporuceno 1.0d-5
+            if (abs(Lor) >= Lor_cut/Gamma_inter) then
+              do  iG = 1,Nlf
+                do  jG = 1,Nlf
+                  ! -1/pi*ImChi_munu -> for Kramers Kronig
+                  ! print *,'df,Lor,MnmK1K2(iG),conjg(MnmK1K22(jG)),pi,Ntot,Vcell'
+                  ! print *,df,Lor,MnmK1K2(iG),conjg(MnmK1K22(jG)),pi,Ntot,Vcell
+                  S0_partial(io,iG,jG) = S0_partial(io,iG,jG) - 2.0*df*Lor*MnmK1K2(iG)*conjg(MnmK1K22(jG)) / (pi*Ntot*Vcell)
+                  ! print *,'S0part: ',S0_partial(1,1,1), S0_partial(1,1,2),S0_partial(1,2,2)
                 end do
-              end if
-            end do omega_loop
-          else if (n == m .and. abs(E(K1,n)-Efermi) <= 10.0*T) then
-            ! Effective number of charge carriers (tensor)
-            fact = expo1/( (expo1 + 1.0D0)*(expo1 + 1.0D0) )
-            fact = -fact/T
-            do  iG = 1,Nlf
-              do  jG = 1,Nlf
-                ! izracun intraband korelacijske funkcije
-                Qeff_partial(iG,jG) = Qeff_partial(iG,jG) + 2.0*fact*MnmK1K2(iG)*conjg(MnmK1K22(jG)) / (Ntot*Vcell)
               end do
+            end if
+          end do omega_loop
+        else if (n == m .and. abs(E(K1,n)-Efermi) <= 10.0*T) then
+          ! Effective number of charge carriers (tensor)
+          fact = expo1/( (expo1 + 1.0D0)*(expo1 + 1.0D0) )
+          fact = -fact/T
+          do  iG = 1,Nlf
+            do  jG = 1,Nlf
+              ! izracun intraband korelacijske funkcije
+              Qeff_partial(iG,jG) = Qeff_partial(iG,jG) + 2.0*fact*MnmK1K2(iG)*conjg(MnmK1K22(jG)) / (Ntot*Vcell)
+              ! print *,'Qeff: ',Qeff_partial(1,1),Qeff_partial(1,2),Qeff_partial(2,2)
             end do
-          end if intraORinterband_if
-        end if occupation_if
-      end do bands_m_loop
+          end do
+        end if intraORinterband_if
+      end if occupation_if
+    end do bands_m_loop
 
-      deallocate(C1)
+    deallocate(C1)
 
-      
+    
 
-    end do bands_n_loop
+  end do bands_n_loop
 
-    !$omp critical(sumS0)      
-    ! neven debug
-    ! print *, 'K1: ',K1,'K2: ',K2,'R1: ',R1, 'R2: ',R2
-    ! print *, 'sum(S0): ', sum(S0(-no:no,1:Nlf,1:Nlf)
-    S0(-no:no,1:Nlf,1:Nlf) = S0(-no:no,1:Nlf,1:Nlf) + S0_partial(-no:no,1:Nlf,1:Nlf)
-    Qeff(1:Nlf,1:Nlf) = Qeff(1:Nlf,1:Nlf) + Qeff_partial(1:Nlf,1:Nlf)
-    !$omp end critical(sumS0)
+  !$omp critical(sumS0)      
+  ! neven debug
+  ! print *, 'K1: ',K1,'K2: ',K2,'R1: ',R1, 'R2: ',R2
+  print *, 'sum(S0): ', sum(S0(-no:no,1:Nlf,1:Nlf))
+  print *, 'sum(Qeff): ', sum(Qeff(1:Nlf,1:Nlf))
+  print *, '-------------------------------'
+  S0(-no:no,1:Nlf,1:Nlf) = S0(-no:no,1:Nlf,1:Nlf) + S0_partial(-no:no,1:Nlf,1:Nlf)
+  ! print *,'S0(-3:3,1,1): ',S0(-3:3,1,1)
+  Qeff(1:Nlf,1:Nlf) = Qeff(1:Nlf,1:Nlf) + Qeff_partial(1:Nlf,1:Nlf)
+  !$omp end critical(sumS0)
 
 
-    deallocate(S0_partial)
-    deallocate(Qeff_partial)
-    jump = 1
+  deallocate(S0_partial)
+  deallocate(Qeff_partial)
+  jump = 1
 
   end do ! k_loop_FBZ_2nd ! end of FBZ do loop
   !$omp end do
@@ -467,7 +470,14 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   do  io = -no,no ! opskurni razlog za prosirenje raspona frekvencija na negativne da se korektno izracuna spektar kristala koji nemaju centar inverzije
     o = io*domega
     write(74,*)'omega=',o,'Hartree'
+    print *,S(io,1,1)
     write(74,'(10F15.10)')((S0(io,iG,jG),jG = 1,Nlf),iG = 1,Nlf)
+    ! do iG=1,Nlf
+      ! do jG=1,Nlf
+        ! write(*,'(2F15.10)') S0(io,iG,jG)
+        ! write(74,'(2F15.10)') S0(io,iG,jG)
+      ! enddo
+    ! enddo
   end do
   write(75,'(10F15.10)')((Qeff(iG,jG),jG = 1,Nlf),iG = 1,Nlf)
   close(74)
@@ -513,12 +523,14 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
       jG_loop: do jG = 1,Nlf
 
         call genReChi0(io,no,iG,jG,oi,domega,S0,Rechi0)
-        
+        print *,'ReChi0: ',ReChi0
         call genImChi0(io,no,iG,jG,oi,domega,S0,ImChi0)
-
+        print *,'ImChi0: ',ImChi0
+        
         if (io == 1) then 
           Pi_dia(iG,jG) = -cmplx(ReChi0,0.0) ! neven debug: diamagnetski doprinos ??
         end if
+
         Pi_tot(iG,jG) = cmplx(ReChi0,ImChi0) ! Pi_RPA = PiDIJAMAGNETSKI + PiPARAMAGNETSKI
         Pi_tot(iG,jG) = Pi_tot(iG,jG) + Pi_dia(iG,jG)
 
@@ -582,34 +594,34 @@ contains
 
   subroutine writeInfo(lf, pol, qx, qy, qz, Gcar, Nsymm, Nlf, Ntot, NkI, Nband, T, Nel, NelQE,Gamma_intra, Gamma_inter, eta, dato1, dato2, dato3)
     implicit none
-    integer      ,    intent(in) :: NelQE, Nsymm, Nlf, Ntot, NkI, Nband
-    real(kind=dp),    intent(in) :: qx,qy,qz
-    real(kind=dp),    intent(in) :: eta, T, Gcar
-    real(kind=dp),    intent(in) :: Nel
-    real(kind=dp),    intent(in) :: Gamma_inter, Gamma_intra
-    character(len=*), intent(in) :: lf, pol
-    character(len=*), intent(in) :: dato1, dato2, dato3
+    integer      ,      intent(in) :: NelQE, Nsymm, Nlf, Ntot, NkI, Nband
+    real(kind=dp),      intent(in) :: qx,qy,qz
+    real(kind=dp),      intent(in) :: eta, T, Gcar
+    real(kind=dp),      intent(in) :: Nel
+    real(kind=dp),      intent(in) :: Gamma_inter, Gamma_intra
+    character(len=3),   intent(in) :: lf, pol
+    character(len=100), intent(in) :: dato1, dato2, dato3
 
     integer       :: ios
     real(kind=dp) :: absq, error
     real(kind=dp), parameter :: Hartree = 2.0D0*13.6056923D0
-    character(len=8) :: fname 
+    character(len=11) :: fname 
 
     absq = sqrt(qx**2+qy**2+qz**2)
-    fname = 'Info_'//adjustl(trim(pol))
+    fname = 'Info_'//adjustl(trim(pol))//'.out'
 
     open(55,FILE=fname, err=700, iostat=ios)
     write(55,*)'***************General***********************'
-    write(55,*)' Currently we calculate         ---->',dato1
-    write(55,*)' Currently we calculate         ---->',dato2
+    write(55,*)' Currently we calculate         ---->',adjustl(trim(dato1))
+    write(55,*)' Currently we calculate         ---->',adjustl(trim(dato2))
     write(55,*)''
     write(55,*)'Number of point symmetry operation is',Nsymm
     ! if (frac == 0)write(55,*)'Fraction translation is not detected'
     ! if (frac == 1)write(55,*)'Fraction translation is detected'
     write(55,'(A25,3F10.4,A5)') 'Wave vector (qx,qy,qz)=(',qx*Gcar,qy*Gcar, qz*Gcar,') a.u.'
     write(55,'(A25,F7.3,A5)') '|(qx,qy,qz)|=',absq*Gcar,'a.u.'
-    write(55,*) 'Local field effcts in '//lf//'-dir'
-    write(55,*) 'Polarization in '//pol//'-dir'
+    write(55,*) 'Local field effcts in '//trim(lf)//'-dir'
+    write(55,*) 'Polarization in '//trim(pol)//'-dir'
     write(55,*)'Number of local field vectors is',Nlf
     write(55,*)'Number of different K vectors in 1.B.Z. is',Ntot
     write(55,*)'Number of K vectors in I.B.Z. is',NkI
@@ -618,9 +630,9 @@ contains
     write(55,'(A25,F7.3,A5)') 'Gamma_inter is  ',Gamma_inter*Hartree*1000.0,'meV'
     write(55,'(A25,F7.3,A5)') 'Temperature is      ',T*Hartree*1000.0,'meV'
     write(55,*)''
-    write(55,*)'-Im(Chi(io,G1,G2))/pi is in file---->',dato1
-    write(55,*)' Qeff complex matrix is in file ---->',dato2
-    write(55,*)' Pi_munu is in file             ---->',dato3
+    write(55,*)'-Im(Chi(io,G1,G2))/pi is in file---->',adjustl(trim(dato1))
+    write(55,*)' Qeff complex matrix is in file ---->',adjustl(trim(dato2))
+    write(55,*)' Pi_munu is in file             ---->',adjustl(trim(dato3))
     write(55,*)''
     write(55,*)'************* Checking 1BZ integration*******'
     write(55,*)''
@@ -654,13 +666,15 @@ contains
     Ntot_loop: do  i = 1, Ntot ! loop over different k-points in FBZ
       kref = sqrt(sum(ktot(1:3,i)**2))
       ! neven debug
-      print *,'i=',i,' kref: ',kref
+      ! print *,'i=',i,' kref: ',kref
       if (kref == 0.0) then
         CYCLE Ntot_loop
       else if (kref < kmin) then
         kmin = kref
         ikmin = i
         krefM = kmin
+        ! neven debug
+        print *,'i=',i,'kmin: ',kmin
       end if
     end do Ntot_loop
     ! neve debug
@@ -984,8 +998,7 @@ end subroutine findKQinBZ
       lno = lno +1
       if (iG == 1) then
         if (Gi(1) /= 0  .or.  Gi(2) /= 0  .or.  Gi(3) /= 0) then
-          print*,'*********************************'
-          print*,'WARRNING!, G vectors input is wrong!!'
+          print*,'WARNING G vectors input is wrong!!'
           print*,'G(1) is not (0,0,0)!!'
           stop
         end if
@@ -1019,6 +1032,9 @@ end subroutine loadG
     integer :: jo
     real(kind=dp) :: oj, fact
 
+    ! neven debug
+    print *,'S0(-5,1,1):', S0(-5,1,1)
+
     ReChi0 = 0.0 ! real part of the response function
     ! static limit
     if (io == 1) then
@@ -1030,7 +1046,7 @@ end subroutine loadG
         else if (jo == no) then
           fact = 0.5*domega/oj
         end if
-        ReChi0 = ReChi0 + fact*( real(S0(-jo+1, iG, jG)) - real(S0(jo-1, iG, jG)) )
+        ReChi0 = ReChi0 + fact*( real(S0(-jo+1,iG,jG)) - real(S0(jo-1,iG,jG)) )
       end do
     else if (io == 2) then
       do  jo = 1,no
@@ -1246,10 +1262,10 @@ end subroutine loadG
 
   end subroutine loadkIandE
 
-subroutine genStrujniVhrovi(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2, MnmK1K22)
+subroutine genStrujniVhrovi(jump, eps, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2, MnmK1K22)
   ! Konstrukcijamatricnih elementa strujnih vrhova MnmK1K2(iG) i MnmK1K2(iG) 
   implicit none
-  integer,          intent(in)    :: iG0, Nlf, NG1, NG2
+  integer,          intent(in)    :: iG0, Nlf, NG1, NG2, NGd
   integer,          intent(in)    :: R1,R2
   real(kind=dp),    intent(in)    :: eps
   real(kind=dp),    intent(in)    :: R(:,:,:)
@@ -1269,6 +1285,14 @@ subroutine genStrujniVhrovi(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G
   real(kind=dp)    :: Gxx1,Gyy1,Gzz1
   real(kind=dp)    :: Gxx2,Gyy2,Gzz2
   complex(kind=dp) :: struja, struja_y, struja_z
+
+  ! print *,'iG0, Nlf, NG1, NG2, NGd'
+  ! print *, iG0, Nlf, NG1, NG2, NGd
+  ! print *,'R1,R2: ',R1,R2
+  ! print *,'Glf(3,3),G(3,3)',Glf(3,3),G(3,3)
+  ! print *,'R, RI,',R(1,1,1:3), RI(1,1,1:3)
+  ! print *,'Gfast(3)',Gfast(5)
+  ! print *,'C1(2), C2(2):',C1(2), C2(2)
 
   iGfast = 0
   MnmK1K2(1:Nlf)  = cmplx(0.0,0.0)
@@ -1327,7 +1351,7 @@ subroutine genStrujniVhrovi(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G
           MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * struja_y * C2(iG2)
           MnmK1K22(iG) = MnmK1K22(iG) + 0.5D0*conjg(C1(iG1)) * struja_z * C2(iG2)
         else
-          print *,'WARNING Specified mixed polarization component '//adjustl(trim(pol))//' not allowed.'
+          print *,'WARNING Specified mixed polarization component not supported.'//adjustl(trim(pol))//' not allowed.'
           stop
         end if
       end if
