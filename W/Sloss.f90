@@ -38,8 +38,6 @@ character (len=iotk_attlenx) :: attr1, attr2
 character (len=100) :: rundir, savedir, band_file, scf_file
 namelist /directories/ rundir, savedir, scf_file, band_file
 
-integer :: debugCount = 0
-
 integer :: ik,i,j,jk,it,lk,Ntot,iG0,Nsymm,iq, &
            io,jo, n,m,iG,R1,K1,R2,K2, Nlf,NG1,   &
            NG2,iG1,iG2,jG,kG, jump,   &
@@ -64,6 +62,8 @@ namelist /config/ NkI, Nband, Nocc, NelQE, NGd, NG, no, nq, Nlfd
 ! file i/o debug
 integer :: ist,ist2,ist4,ist5,ist6,ist7,ist8,ist9,ist10,ist11,ist12
 integer :: lno,lno2,lno9,lno10,lno11,lno12
+
+integer :: debugCount = 0
 
 ! constants
 real(kind=dp),    parameter :: pi      = 4.D0*atan(1.D0)
@@ -305,7 +305,8 @@ q_loop: do  iq = qmin,qmax ! 42,61
   ! 1.B.Z  LOOP STARTS HERE !!!!
 
   print *, 'DEBUG: entering parallel region'
-  !$omp parallel shared(S0,iq,kI,ktot,RI,eps,E,G,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,eta,Vcell) private(ik, S0_partial,MnmK1K2,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2,attr1,attr2, C1,C2, iuni1, iuni2) firstprivate(savedir,jump,domega) num_threads(Nthreads) !  default(private) 
+  print *, 'Requested threads: ',Nthreads, 'Available threads: ',OMP_GET_NUM_THREADS()
+  !$omp parallel shared(S0,iq,qx,qy,qz,kI,ktot,R,RI,eps,E,G,Glf,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,eta,Vcell) private(ik, S0_partial,MnmK1K2,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2,attr1,attr2, C1,C2, iuni1, iuni2) firstprivate(savedir,jump,Gcar,domega) num_threads(Nthreads) !  default(private) 
   thread_id =  omp_get_thread_num()
 
   !$omp do 
@@ -332,9 +333,10 @@ q_loop: do  iq = qmin,qmax ! 42,61
     KQz = kz + qz
   
     !$omp critical(printWaveVector)
-    ! thread_id =  omp_get_thread_num()
-    print *,'thread id:',thread_id,'ik: ',ik
-    print *, 'KQx,KQy,KQz:',KQx,KQy,KQz
+    debugCount = debugCount + 1
+    write (*,'(A13,I4,A5,I4,A11,I4,A2,I4,A5,F5.1,A4)') 'thread id: ',thread_id,'ik: ',ik, 'progress: ',debugCount, ' /',Ntot,' (',(real(debugCount)/real(Ntot))*100.0,'% )'
+    write (*,'(A14,5F8.6)') 'KQx,KQy,KQz: ',KQx,KQy,KQz
+    print *,'-------------------------------'
     !$omp end critical(printWaveVector)
   
     ! trazenje (KQx,KQy) prvo u 1.B.Z a onda u I.B.Z.
@@ -1332,8 +1334,8 @@ end subroutine genMnmK1K2
       if (iG == 1) then
         if (Gi(1) /= 0 .or. Gi(2) /= 0 .or. Gi(3) /= 0) then
           print*,'*********************************'
-          print*,'WARRNING!, G vectors input is wrong!!'
-          print*,'G(1) is not (0,0,0)!!'
+          print*,'WARNING G vectors input is wrong.'
+          print*,'G(1) is not (0,0,0)!'
           stop
         end if
       end if

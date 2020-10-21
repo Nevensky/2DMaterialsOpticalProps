@@ -260,7 +260,7 @@ print *,"status: G vectors loaded."
 
 ! Reciprocal vectors for crystal local field effects calculations in array Glf(3,Nlf)
 call genGlf(lf,Ecut,NG,Gcar,G,Nlf,Nlfd,Glf)
-print *, "Glf and parG matrices generated."
+print *, "Glf matrix generated."
 print *, 'Nlf: ',Nlf,' Nlfd: ',Nlfd
 
 
@@ -302,7 +302,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
   print *, 'DEBUG: entering parallel region'
   print *, 'Requested threads: ',Nthreads, 'Available threads: ',OMP_GET_NUM_THREADS()
-  !$omp parallel shared(S0,Qeff, iq,kI,ktot,RI,eps,E,G,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,eta,Vcell, Gamma_inter, Gamma_intra, df_cut, Lor_cut,debugCount) private(ik, S0_partial, Qeff_partial, MnmK1K2,MnmK1K22,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,df, f1, f2, expo1, expo2, fact, Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2,attr1,attr2, C1,C2, iuni1, iuni2) firstprivate(savedir,jump,domega) num_threads(Nthreads) default(private) 
+  !$omp parallel shared(S0,Qeff, iq, qx,qy,qz, kI,ktot,R,RI,eps,E,G,Glf, NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,eta,Vcell, Gamma_inter, Gamma_intra, df_cut, Lor_cut,debugCount) private(ik, S0_partial, Qeff_partial, MnmK1K2,MnmK1K22,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,df, f1, f2, expo1, expo2, fact, Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2,attr1,attr2, C1,C2, iuni1, iuni2) firstprivate(savedir,jump,Gcar,domega) num_threads(Nthreads) !default(private) 
   thread_id =  omp_get_thread_num()
 
   !$omp do
@@ -324,10 +324,9 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
     KQz = kz + qz
     
     !$omp critical(printWaveVector)
-    debugCount = debugCount +1
-    ! thread_id =  omp_get_thread_num()
+    debugCount = debugCount + 1
     write (*,'(A13,I4,A5,I4,A11,I4,A2,I4,A5,F5.1,A4)') 'thread id: ',thread_id,'ik: ',ik, 'progress: ',debugCount, ' /',Ntot,' (',(real(debugCount)/real(Ntot))*100.0,'% )'
-    write (*,'(A14,5F8.6)') 'KQx,KQy,KQz: ',KQx,KQy,KQz
+    write (*,'(A14,3F10.6)') 'KQx,KQy,KQz: ',KQx,KQy,KQz
     print *,'-------------------------------'
     !$omp end critical(printWaveVector)
 
@@ -396,7 +395,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
         end if
 
         ! Konstrukcija stupca matricnih elementa MnmK1K2(G)
-        call genStrujniVhrovi(jump, eps, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2, MnmK1K22)
+        call genStrujniVrhovi(jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2, MnmK1K22)
         
         deallocate(C2)
 
@@ -464,21 +463,21 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   
   ! WRITING CORFUN S0_\mu\nu
   ! WRITTING Q_eff_\mu\nu
-  print *,'got here, line 467'
+
   open(74,FILE = dato1)
   open(75,FILE = dato2)
   do  io = -no,no ! opskurni razlog za prosirenje raspona frekvencija na negativne da se korektno izracuna spektar kristala koji nemaju centar inverzije
     o = io*domega
     write(74,*)'omega=',o,'Hartree'
     ! neve debug
-    print *,S0(io,1,1)
-    write(74,'(10F15.10)')((S0(io,iG,jG),jG = 1,Nlf),iG = 1,Nlf)
-    ! do iG=1,Nlf
-      ! do jG=1,Nlf
-        ! write(*,'(2F15.10)') S0(io,iG,jG)
-        ! write(74,'(2F15.10)') S0(io,iG,jG)
-      ! enddo
-    ! enddo
+    ! print *,S0(io,1,1)
+    ! write(74,'(10F15.10)')((S0(io,iG,jG),jG = 1,Nlf),iG = 1,Nlf)
+    do iG=1,Nlf
+      do jG=1,Nlf
+        write(*,'(2F5.2)') S0(io,iG,jG)
+        write(74,'(2F15.10)') S0(io,iG,jG)
+      enddo
+    enddo
   end do
   write(75,'(10F15.10)')((Qeff(iG,jG),jG = 1,Nlf),iG = 1,Nlf)
   close(74)
@@ -512,7 +511,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   qx = Gcar*qx
   qy = Gcar*qy
   qz = Gcar*qz
-  Glf(1:3,1:Nlf)=Gcar*Glf(1:3,1:Nlf)
+  Glf(1:3,1:Nlf) = Gcar*Glf(1:3,1:Nlf)
   
   open(77,FILE = dato3)
   ! new sum over omega
@@ -561,6 +560,30 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   999              CONTINUE
 end do q_loop
 
+
+! MKL matrix inversion vars
+deallocate(ipiv)
+deallocate(work)
+
+! deallocate NGd related vars
+deallocate(Gfast)
+
+
+! deallocaate scalar arrays      
+! deallocate(factMatrix)
+deallocate(MnmK1K2)
+deallocate(MnmK1K22)    
+! deallocaate multidim arrays
+deallocate(kI)
+deallocate(E)     
+! deallocate(k)
+deallocate(ktot)       
+deallocate(G)      
+deallocate(Glf)    
+deallocate(S0)
+deallocate(Qeff)
+deallocate(Pi_dia)
+deallocate(Pi_tot)
 
 contains
   subroutine loadKC(path,KC)
@@ -937,7 +960,7 @@ end subroutine findKQinBZ
     real(kind=dp),    intent(in)    :: Gcar
     real(kind=dp),    intent(in)    :: G(:,:)
     integer,          intent(out)   :: Nlf
-    real(kind=dp),    intent(inout) :: Glf(:,:)
+    real(kind=dp),    intent(out)   :: Glf(:,:)
   
     integer       :: iG
     real(kind=dp) :: Eref
@@ -958,7 +981,7 @@ end subroutine findKQinBZ
     else if (lf == 'xyz') then
       ! local field efekti samo u svim smjerovima (xyz)
       do  iG = 1, NG
-        Eref = Gcar**2*sum(G(1:3,iG)**2) / 2.0
+        Eref = Gcar**2 * sum(G(1:3,iG)**2) / 2.0
         if (Eref <= Ecut) then
           Nlf = Nlf+1
           Glf(1:3,Nlf) = G(1:3,iG)
@@ -999,8 +1022,8 @@ end subroutine findKQinBZ
       lno = lno +1
       if (iG == 1) then
         if (Gi(1) /= 0  .or.  Gi(2) /= 0  .or.  Gi(3) /= 0) then
-          print*,'WARNING G vectors input is wrong!!'
-          print*,'G(1) is not (0,0,0)!!'
+          print*,'WARNING G vectors input is wrong.'
+          print*,'G(1) is not (0,0,0)!'
           stop
         end if
       end if
@@ -1263,12 +1286,15 @@ end subroutine loadG
 
   end subroutine loadkIandE
 
-subroutine genStrujniVhrovi(jump, eps, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2, MnmK1K22)
+subroutine genStrujniVrhovi(jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2, MnmK1K22)
   ! Konstrukcijamatricnih elementa strujnih vrhova MnmK1K2(iG) i MnmK1K2(iG) 
   implicit none
   integer,          intent(in)    :: iG0, Nlf, NG1, NG2, NGd
   integer,          intent(in)    :: R1,R2
   real(kind=dp),    intent(in)    :: eps
+  real(kind=dp),    intent(in)    :: Gcar
+  real(kind=dp),    intent(in)    :: qx,qy,qz
+  real(kind=dp),    intent(in)    :: kx,ky,kz
   real(kind=dp),    intent(in)    :: R(:,:,:)
   real(kind=dp),    intent(in)    :: RI(:,:,:)
   real(kind=dp),    intent(in)    :: Glf(:,:)
@@ -1285,14 +1311,16 @@ subroutine genStrujniVhrovi(jump, eps, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, G
   real(kind=dp)    :: K11, K22, K33
   real(kind=dp)    :: Gxx1,Gyy1,Gzz1
   real(kind=dp)    :: Gxx2,Gyy2,Gzz2
-  complex(kind=dp) :: struja, struja_y, struja_z
-
+  real(kind=dp)    :: struja, struja_y, struja_z
+  
+  ! neven debug
   ! print *,'iG0, Nlf, NG1, NG2, NGd'
   ! print *, iG0, Nlf, NG1, NG2, NGd
   ! print *,'R1,R2: ',R1,R2
-  ! print *,'Glf(3,3),G(3,3)',Glf(3,3),G(3,3)
-  ! print *,'R, RI,',R(1,1,1:3), RI(1,1,1:3)
-  ! print *,'Gfast(3)',Gfast(5)
+  print *,'Glf(1:5,1:5)',Glf(1:5,1:5)
+  print *, 'G(1:3,1:5,',G(1:3,1:5)
+  print *,'R, RI,',R(1:2,1,1:3), RI(1:2,1,1:3)
+  print *,'Gfast(1:5)',Gfast(1:5)
   ! print *,'C1(2), C2(2):',C1(2), C2(2)
 
   iGfast = 0
@@ -1305,13 +1333,18 @@ subroutine genStrujniVhrovi(jump, eps, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, G
       Gyy1 = G(2,iG1)
       Gzz1 = G(3,iG1)
       ! neven debug -> provjeri tocnost
-      ! k11 = R(R1,1,1)*Gxx1 + R(R1,1,2)*Gyy1 + R(R1,1,3)*Gzz1
-      ! k22 = R(R1,2,1)*Gxx1 + R(R1,2,2)*Gyy1 + R(R1,2,3)*Gzz1
-      ! k33 = R(R1,3,1)*Gxx1 + R(R1,3,2)*Gyy1 + R(R1,3,3)*Gzz1
-      k11 = sum( R(R1,1,1:3)*G(1:3,iG1) )
-      k22 = sum( R(R1,2,1:3)*G(1:3,iG1) )
-      k33 = sum( R(R1,3,1:3)*G(1:3,iG1) )
+      k11 = R(R1,1,1)*Gxx1 + R(R1,1,2)*Gyy1 + R(R1,1,3)*Gzz1
+      k22 = R(R1,2,1)*Gxx1 + R(R1,2,2)*Gyy1 + R(R1,2,3)*Gzz1
+      k33 = R(R1,3,1)*Gxx1 + R(R1,3,2)*Gyy1 + R(R1,3,3)*Gzz1
+      ! k11 = sum( R(R1,1,1:3)*G(1:3,iG1) )
+      ! k22 = sum( R(R1,2,1:3)*G(1:3,iG1) )
+      ! k33 = sum( R(R1,3,1:3)*G(1:3,iG1) )
       if (pol == 'xx') then
+        ! neven debug
+        ! if (kx /= 0.0) then
+          ! print *,'qx,kx,Glf(1,iG),k11,Gcar'
+          ! print *,qx,kx,Glf(1,iG),k11,Gcar
+        ! end if
         struja = (qx + 2.0*kx + Glf(1,iG) + 2.0*k11)*Gcar
       else if (pol == 'yy') then
         struja = (qy + 2.0*ky + Glf(2,iG) + 2.0*k22)*Gcar
@@ -1338,7 +1371,7 @@ subroutine genStrujniVhrovi(jump, eps, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, G
               .and. abs(Gyy2-Gyy1) < eps &
               .and. abs(Gzz2-Gzz1) < eps ) then
             Gfast(iGfast) = iG2
-            exit iG2_loop
+            EXIT iG2_loop
           end if
         end do iG2_loop
       end if
@@ -1348,7 +1381,12 @@ subroutine genStrujniVhrovi(jump, eps, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, G
         if (pol == 'xx' .or. pol== 'yy' .or. pol == 'zz') then
           MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * struja * C2(iG2)
           MnmK1K22(iG) = MnmK1K2(iG) ! strujni vrhovi su isti
-        elseif(pol =='yz' .or. pol =='zy') then ! ako  su miksani yz
+          ! neven debug
+          ! print *,'MnmK1K2(iG)',MnmK1K2(iG)
+          ! print *, '0.5D0*conjg(C1(iG1))',0.5D0*conjg(C1(iG1))
+          ! print *,'struja',struja
+          ! print *,'C2',C2(iG2)
+        elseif (pol =='yz' .or. pol =='zy') then ! ako  su miksani yz
           MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * struja_y * C2(iG2)
           MnmK1K22(iG) = MnmK1K22(iG) + 0.5D0*conjg(C1(iG1)) * struja_z * C2(iG2)
         else
@@ -1360,7 +1398,7 @@ subroutine genStrujniVhrovi(jump, eps, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, G
   end do iG_loop
   jump = 2 ! za svaki valni vektor q i dani k zapamti Gfast i za svaku vrpcu preskaci taj postupak   
     
-end subroutine genStrujniVhrovi
+end subroutine genStrujniVrhovi
 
 end PROGRAM surface_current
 
