@@ -464,13 +464,14 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   
   ! WRITING CORFUN S0_\mu\nu
   ! WRITTING Q_eff_\mu\nu
-  print *,'got here, line 722'
+  print *,'got here, line 467'
   open(74,FILE = dato1)
   open(75,FILE = dato2)
   do  io = -no,no ! opskurni razlog za prosirenje raspona frekvencija na negativne da se korektno izracuna spektar kristala koji nemaju centar inverzije
     o = io*domega
     write(74,*)'omega=',o,'Hartree'
-    print *,S(io,1,1)
+    ! neve debug
+    print *,S0(io,1,1)
     write(74,'(10F15.10)')((S0(io,iG,jG),jG = 1,Nlf),iG = 1,Nlf)
     ! do iG=1,Nlf
       ! do jG=1,Nlf
