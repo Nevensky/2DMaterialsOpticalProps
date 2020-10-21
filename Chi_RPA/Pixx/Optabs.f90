@@ -32,8 +32,8 @@ namelist /directories/ rundir, savedir, scf_file, band_file
 
 integer :: ik,i,j,jk,it,lk,Ntot,iG0,Nsymm,iq, &
            io,jo, n,m,iG,R1,K1,R2,K2, Nlf,NG1,   &
-           NG2,iG1,iG2,jG,kG, jump,   &
-           iGfast,ikmin,kG1,kG2
+           NG2,iG1,iG2,jG,jump,   &
+           iGfast,ikmin
 
 integer :: iuni1, iuni2
 
@@ -156,10 +156,10 @@ integer, save :: thread_id
 namelist  /parallel/ Nthreads
 
 ! MKL matrix inversion vars
-integer :: info_trf, info_tri
-integer,allocatable :: ipiv(:)
-integer :: lwork
-integer,allocatable :: work(:)
+! integer :: info_trf, info_tri
+! integer,allocatable :: ipiv(:)
+! integer :: lwork
+! integer,allocatable :: work(:)
 
 !  For free spectral function calculation put calc = 1
 !  For current-current response function calculation put calc = 2
@@ -269,16 +269,14 @@ allocate(MnmK1K2(Nlfd))
 allocate(MnmK1K22(Nlfd))
 
 ! multidim arrays
-allocate(Pi_dia(Nlfd,Nlfd))
-allocate(Pi_tot(Nlfd,Nlfd))
 allocate(Qeff(Nlfd,Nlfd))
 allocate(S0(-no:no,Nlfd,Nlfd)) 
 
 
 ! MKL matrix inversion vars
-allocate(ipiv(MAX(1,MIN(Nlfd, Nlfd))))
-lwork = Nlfd
-allocate(work(Nlfd))
+! allocate(ipiv(MAX(1,MIN(Nlfd, Nlfd))))
+! lwork = Nlfd
+! allocate(work(Nlfd))
 
 ! IBZ   q LOOP STARTS HERE!!!
 
@@ -293,7 +291,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   
   
   if (calc == 2 .and. calc /= 3 ) GO TO 888
-  
+
   S0(-no:no,1:Nlf,1:Nlf) = cmplx(0.0,0.0)
   Qeff(1:Nlf,1:Nlf) = cmplx(0.0,0.0)
   
@@ -302,7 +300,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
   print *, 'DEBUG: entering parallel region'
   print *, 'Requested threads: ',Nthreads, 'Available threads: ',OMP_GET_NUM_THREADS()
-  !$omp parallel shared(S0,Qeff, iq, qx,qy,qz, kI,ktot,R,RI,eps,E,G,Glf, NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,eta,Vcell, Gamma_inter, Gamma_intra, df_cut, Lor_cut,debugCount) private(ik, S0_partial, Qeff_partial, MnmK1K2,MnmK1K22,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,df, f1, f2, expo1, expo2, fact, Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2,attr1,attr2, C1,C2, iuni1, iuni2) firstprivate(savedir,jump,Gcar,domega) num_threads(Nthreads) !default(private) 
+  !$omp parallel shared(S0,Qeff, iq, qx,qy,qz, kI,ktot,R,RI,eps,E, Efermi, T,Gcar, G,Glf,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,eta,Vcell, Gamma_inter, Gamma_intra, df_cut, Lor_cut,debugCount) private(ik, S0_partial, Qeff_partial, MnmK1K2,MnmK1K22,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,df, f1, f2, expo1, expo2, fact, Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2,attr1,attr2, C1,C2, iuni1, iuni2) firstprivate(savedir,jump,no,domega) num_threads(Nthreads) default(none) 
   thread_id =  omp_get_thread_num()
 
   !$omp do
@@ -370,7 +368,6 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
       call genOccupation(E(K2,m),Efermi,T,expo2,f2)
 
       df = f1 - f2
-      ! print *, df ! neven debug
 
       occupation_if: if ( (abs(df) >= df_cut) .or. (n == m) ) then  
         ! call paths(outdir,K1,K2,n,m,pathk1,pathk2,bandn,bandm)
@@ -394,33 +391,60 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
           stop
         end if
 
-        ! Konstrukcija stupca matricnih elementa MnmK1K2(G)
+        ! Konstrukcija stupca matricnih elementa MnmK1K2(iG) i MnmK1K22(jG)
         call genStrujniVrhovi(jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2, MnmK1K22)
-        
+
         deallocate(C2)
 
         intraORinterband_if: if (n /= m) then
           omega_loop: do io = -no,no
+            ! if (io >200) go to 909
+            ! print 'io',io
             o = io*domega
             dE = o + E(K1,n) - E(K2,m)
             Lor = Gamma_inter/(dE**2 + Gamma_inter**2) ! Gamma_inter je sirina interband prijelaza
-            ! Reze repove Lorentziana lijevo i desno, pazljivo, minimum 1.0d-3, preporuceno 1.0d-5
-            if (abs(Lor) >= Lor_cut/Gamma_inter) then
+            ! neven debug
+            ! print *, 'o,dE,E(K1,n),E(K2,m),Lor: ',o,dE,E(K1,n),E(K2,m),Lor
+            ! print *, 'df_cut,Lor_cut,Gamma_inter',df_cut,Lor_cut,Gamma_inter
+            ! if (io==200) then
+              ! print *,'ik,n,m,io',ik,n,m,io
+              ! print *,'Lor',Lor
+              ! print *,'Lor_cut/Gamma_inter',Lor_cut/Gamma_inter
+            ! end if
+            if (abs(Lor) >= Lor_cut/Gamma_inter) then ! Reze repove Lorentziana lijevo i desno, pazljivo, minimum 1.0d-3, preporuceno 1.0d-5
               do  iG = 1,Nlf
                 do  jG = 1,Nlf
                   ! -1/pi*ImChi_munu -> for Kramers Kronig
-                  ! print *,'df,Lor,MnmK1K2(iG),conjg(MnmK1K22(jG)),pi,Ntot,Vcell'
-                  ! print *,df,Lor,MnmK1K2(iG),conjg(MnmK1K22(jG)),pi,Ntot,Vcell
+                  ! neven debug
+                  ! print *,'df*Lor:'
+                  ! print *,df*Lor
+                  ! print *,'MnmK1K2(iG),conjg(MnmK1K22(jG)):', MnmK1K2(iG),conjg(MnmK1K22(jG))
+                  ! print *,'pi,Ntot,Vcell:',pi,Ntot,Vcell
                   S0_partial(io,iG,jG) = S0_partial(io,iG,jG) - 2.0*df*Lor*MnmK1K2(iG)*conjg(MnmK1K22(jG)) / (pi*Ntot*Vcell)
                   ! print *,'S0part: ',S0_partial(1,1,1), S0_partial(1,1,2),S0_partial(1,2,2)
+                  ! print *,'S0_partial(io,1,1):',io,S0_partial(io,1,1)
+                  ! if (io==200 .and. iG==1 .and. jG==1) then
+                    ! print *,'SKROZ UNUTRA: ik,n,m:',ik,n,m
+                    ! print *,'SKROZ UNUTRA: S0_partial(200,1,1):',S0_partial(io,iG,jG)
+                  ! end if
                 end do
               end do
             end if
           end do omega_loop
+          ! neven debug
+          ! print *,'io,iG,jG',io,iG,jG
+          ! print *,'UNUTRA: ik,n,m:',ik,n,m
+          ! print *,'UNUTRA: S0_partial(200,1,1):',S0_partial(200,1,1)
+! 909 continue
+          ! print *,'ik,n,m:',ik,n,m
+          ! print *,'S0_partial(200,1,1):',S0_partial(200,1,1)
+          ! stop
         else if (n == m .and. abs(E(K1,n)-Efermi) <= 10.0*T) then
           ! Effective number of charge carriers (tensor)
           fact = expo1/( (expo1 + 1.0D0)*(expo1 + 1.0D0) )
           fact = -fact/T
+          ! neven debug
+          ! print *,'fact:',fact,'T:',T,'expo1:',expo1
           do  iG = 1,Nlf
             do  jG = 1,Nlf
               ! izracun intraband korelacijske funkcije
@@ -429,29 +453,30 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
             end do
           end do
         end if intraORinterband_if
+        ! print *,'VANI: ik,n,m:',ik,n,m
+        ! print *,'VANI: S0_partial(200,1,1):',S0_partial(200,1,1)
+        ! print *, 'S0_partial(100,1,1):',S0_partial(100,1,1)
       end if occupation_if
     end do bands_m_loop
-
     deallocate(C1)
-
-    
-
   end do bands_n_loop
 
   !$omp critical(sumS0)      
   ! neven debug
   ! print *, 'K1: ',K1,'K2: ',K2,'R1: ',R1, 'R2: ',R2
-  print *, 'sum(S0): ', sum(S0(-no:no,1:Nlf,1:Nlf))
-  print *, 'sum(Qeff): ', sum(Qeff(1:Nlf,1:Nlf))
-  print *, '-------------------------------'
+  ! print *, 'sum(S0): ', sum(S0(-no:no,1:Nlf,1:Nlf))
+  ! print *, 'sum(Qeff): ', sum(Qeff(1:Nlf,1:Nlf))
+  ! print *, '-------------------------------'
   S0(-no:no,1:Nlf,1:Nlf) = S0(-no:no,1:Nlf,1:Nlf) + S0_partial(-no:no,1:Nlf,1:Nlf)
-  ! print *,'S0(-3:3,1,1): ',S0(-3:3,1,1)
+  ! print *,'S0(200,1,1): ',S0(200,1,1)
   Qeff(1:Nlf,1:Nlf) = Qeff(1:Nlf,1:Nlf) + Qeff_partial(1:Nlf,1:Nlf)
   !$omp end critical(sumS0)
 
 
   deallocate(S0_partial)
   deallocate(Qeff_partial)
+  ! deallocate(MnmK1K2)
+  ! deallocate(MnmK1K22)
   jump = 1
 
   end do ! k_loop_FBZ_2nd ! end of FBZ do loop
@@ -460,29 +485,33 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
   print *, 'DEBUG: exiting parallel region'
   
-  
+  print *,'S0(-50:50,1,1)'
+  print *, S0(-50:50,1,1)
+  print *, '----- PART 1 END -----'
   ! WRITING CORFUN S0_\mu\nu
   ! WRITTING Q_eff_\mu\nu
 
   open(74,FILE = dato1)
   open(75,FILE = dato2)
-  do  io = -no,no ! opskurni razlog za prosirenje raspona frekvencija na negativne da se korektno izracuna spektar kristala koji nemaju centar inverzije
+  omega_loop_C: do io = -no,no ! opskurni razlog za prosirenje raspona frekvencija na negativne da se korektno izracuna spektar kristala koji nemaju centar inverzije
     o = io*domega
     write(74,*)'omega=',o,'Hartree'
-    ! neve debug
+    ! neven debug
     ! print *,S0(io,1,1)
     ! write(74,'(10F15.10)')((S0(io,iG,jG),jG = 1,Nlf),iG = 1,Nlf)
     do iG=1,Nlf
       do jG=1,Nlf
-        write(*,'(2F5.2)') S0(io,iG,jG)
-        write(74,'(2F15.10)') S0(io,iG,jG)
+  !       ! write(*,'(2F7.4)') S0(io,iG,jG)
+        write(74,'(2F15.10)') real(S0(io,iG,jG)),aimag(S0(io,iG,jG))
       enddo
     enddo
-  end do
+  end do omega_loop_C
   write(75,'(10F15.10)')((Qeff(iG,jG),jG = 1,Nlf),iG = 1,Nlf)
   close(74)
   close(75)
   
+  deallocate(S0) 
+  deallocate(Qeff)
   
   if (calc == 1 .and. calc /= 3 ) GO TO 999
   
@@ -491,13 +520,27 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   
   888 CONTINUE 
 
-  
+  allocate(S0(-no:no,Nlfd,Nlfd)) 
+  allocate(Qeff(Nlfd,Nlfd)) 
+
+  allocate(Pi_dia(Nlfd,Nlfd))
+  allocate(Pi_tot(Nlfd,Nlfd))
+
   open(74,FILE = dato1)
-  do  io=-no,no
+  omega_loop_D: do io=-no,no
     read(74,*) ! dummy
-    read(74,'(10F15.10)')((S0(io,iG,jG), jG = 1,Nlf), iG = 1,Nlf)
-  end do
+    ! read(74,'(10F15.10)')((S0(io,iG,jG), jG = 1,Nlf), iG = 1,Nlf)
+    do iG=1,Nlf
+      do jG=1,Nlf
+        read(74,'(2F15.10)') S0(io,iG,jG)
+      enddo
+    enddo
+  end do omega_loop_D
   close(74)
+
+  print *,'S0(-50:50,1,1)'
+  print *, S0(-50:50,1,1)
+  print *,'successful read of S0'
   
   open(75,FILE = dato2)
   read(75,'(10F15.10)')((Qeff(iG,jG), jG = 1,Nlf), iG = 1,Nlf)
@@ -562,8 +605,8 @@ end do q_loop
 
 
 ! MKL matrix inversion vars
-deallocate(ipiv)
-deallocate(work)
+! deallocate(ipiv)
+! deallocate(work)
 
 ! deallocate NGd related vars
 deallocate(Gfast)
@@ -571,8 +614,10 @@ deallocate(Gfast)
 
 ! deallocaate scalar arrays      
 ! deallocate(factMatrix)
-deallocate(MnmK1K2)
-deallocate(MnmK1K22)    
+
+! deallocate(MnmK1K2)
+! deallocate(MnmK1K22)    
+
 ! deallocaate multidim arrays
 deallocate(kI)
 deallocate(E)     
@@ -580,6 +625,7 @@ deallocate(E)
 deallocate(ktot)       
 deallocate(G)      
 deallocate(Glf)    
+
 deallocate(S0)
 deallocate(Qeff)
 deallocate(Pi_dia)
@@ -1314,13 +1360,18 @@ subroutine genStrujniVrhovi(jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0, NG1, 
   real(kind=dp)    :: struja, struja_y, struja_z
   
   ! neven debug
+  ! print *, 'kx,ky,kz:', kx,ky,kz
+  ! print *, 'qx,qy,qz:', qx,qy,qz
+  ! print *, 'Glf:', Glf(1:3,1:Nlf)
+  ! print *, '-----'
+  ! print *, 'Gfast(1:Nlfd*NGd)',Gfast(1:Nlfd*NGd)
   ! print *,'iG0, Nlf, NG1, NG2, NGd'
   ! print *, iG0, Nlf, NG1, NG2, NGd
   ! print *,'R1,R2: ',R1,R2
-  print *,'Glf(1:5,1:5)',Glf(1:5,1:5)
-  print *, 'G(1:3,1:5,',G(1:3,1:5)
-  print *,'R, RI,',R(1:2,1,1:3), RI(1:2,1,1:3)
-  print *,'Gfast(1:5)',Gfast(1:5)
+  ! print *,'Glf(1:5,1:5)',Glf(1:5,1:5)
+  ! print *, 'G(1:3,1:5,',G(1:3,1:5)
+  ! print *,'R, RI,',R(1:2,1,1:3), RI(1:2,1,1:3)
+  ! print *,'Gfast(1:5)',Gfast(1:5)
   ! print *,'C1(2), C2(2):',C1(2), C2(2)
 
   iGfast = 0
@@ -1346,6 +1397,7 @@ subroutine genStrujniVrhovi(jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0, NG1, 
           ! print *,qx,kx,Glf(1,iG),k11,Gcar
         ! end if
         struja = (qx + 2.0*kx + Glf(1,iG) + 2.0*k11)*Gcar
+        ! print *,'struja:',struja
       else if (pol == 'yy') then
         struja = (qy + 2.0*ky + Glf(2,iG) + 2.0*k22)*Gcar
       else if (pol == 'zz') then
