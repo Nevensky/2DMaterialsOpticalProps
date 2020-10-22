@@ -40,3 +40,7 @@ Loss
 Info
 status
 fort.*
+config.in
+gvectors.xml
+Info*.out
+*.dat

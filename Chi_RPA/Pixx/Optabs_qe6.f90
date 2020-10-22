@@ -18,12 +18,9 @@ PROGRAM surface_current
 
 
 use OMP_lib
-use iotk_module
 use ModPointR
 
 implicit none
-
-character(len=iotk_attlenx) :: attr1, attr2
 
 ! calc = 1 tenzor korelacijske funkcije, calc = 2 struja-struja tenzor (Kramers-Krroning)
 
@@ -302,7 +299,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
   print *, 'DEBUG: entering parallel region'
   print *, 'Requested threads: ',Nthreads, 'Available threads: ',OMP_GET_NUM_THREADS()
-  !$omp parallel shared(S0,Qeff, iq, qx,qy,qz, kI,ktot,R,RI,eps,E, Efermi, T,Gcar, G,Glf,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,eta,Vcell, Gamma_inter, Gamma_intra, df_cut, Lor_cut,debugCount) private(ik, S0_partial, Qeff_partial, MnmK1K2,MnmK1K22,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,df, f1, f2, expo1, expo2, fact, Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2,attr1,attr2, C1,C2, iuni1, iuni2) firstprivate(savedir,jump,no,domega) num_threads(Nthreads) default(none) 
+  !$omp parallel shared(S0,Qeff, iq, qx,qy,qz, kI,ktot,R,RI,eps,E, Efermi, T,Gcar, G,Glf,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,eta,Vcell, Gamma_inter, Gamma_intra, df_cut, Lor_cut,debugCount) private(ik, S0_partial, Qeff_partial, MnmK1K2,MnmK1K22,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,df, f1, f2, expo1, expo2, fact, Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2, C1,C2, iuni1, iuni2) firstprivate(savedir,jump,no,domega) num_threads(Nthreads) default(none) 
   thread_id =  omp_get_thread_num()
 
   !$omp do
@@ -325,7 +322,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
     
     !$omp critical(printWaveVector)
     debugCount = debugCount + 1
-    write (*,'(A13,I4,A5,I4,A11,I4,A2,I4,A5,F5.1,A4)') 'thread id: ',thread_id,'ik: ',ik, 'progress: ',debugCount, ' /',Ntot,' (',(real(debugCount)/real(Ntot))*100.0,'% )'
+    write (*,'(A13,I4,A5,I4,A11,I6,A2,I6,A5,F5.1,A4)') 'thread id: ',thread_id,'ik: ',ik, 'progress: ',debugCount, ' /',Ntot,' (',(real(debugCount)/real(Ntot))*100.0,'% )'
     write (*,'(A14,3F10.6)') 'KQx,KQy,KQz: ',KQx,KQy,KQz
     print *,'-------------------------------'
     !$omp end critical(printWaveVector)
@@ -1372,7 +1369,7 @@ end subroutine findKQinBZ
         read(400,*) 
       end if
       read(400,'(10X,3F10.3)') kI(1,ik),kI(2,ik),kI(3,ik)
-      read(400,'(10F8.4)') (E(ik,i),i=1,Nband)
+      read(400,'(10F9.4)') (E(ik,i),i=1,Nband)
     end do
     close(400)
       
