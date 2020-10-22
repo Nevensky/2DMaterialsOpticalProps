@@ -6,8 +6,8 @@ FC=ifort
 # LDFLAGS= -lm -L. -liotk -g -traceback #-lrt 
 LDFLAGS = -L. -liotk -mkl 
 LDFLAGS_PARA = -qopenmp -L. -liotk -mkl
-DEBUG = -g -traceback -fpe0 -fp-model precise -fp-stack-check -heap-arrays # -debug all -debug-parameters all -DD -C -warn all -check all
-FFLAGS = -Ofast ${DEBUG}
+DEBUG = -g -traceback #-fpe0 -fp-model precise -fp-stack-check -heap-arrays # -debug all -debug-parameters all -DD -C -warn all -check all
+FFLAGS = -Ofast #${DEBUG}
 SRC = PointR.f Optabs.f paths.f gjel.f 
 OBJECTS = PointR.o Optabs.o paths.o gjel.o 
 OBJECTS_LEGACY = PointR_legacy.o Optabs_legacy.o paths.o gjel.o 
@@ -31,7 +31,7 @@ Loss: $(OBJECTS_PARA)
 Loss_serial: $(OBJECTS)
 	${FC} $(OBJECTS) ${LDFLAGS} -o Loss
 
-Loss_qe6: $(OBJECTS_QE6))
+Loss_qe6: $(OBJECTS_QE6)
 	${FC} $(OBJECTS_QE6) ${LDFLAGS_PARA} -o Loss
 
 Loss_legacy: $(OBJECTS_LEGACY)
@@ -44,7 +44,7 @@ Optabs_para.o: Optabs.f
 	${FC} ${FFLAGS} ${LDFLAGS_PARA} -c Optabs.f90 -o Optabs_para.o
 
 Optabs_para_qe6.o: Optabs.f
-	${FC} ${FFLAGS} ${PARA} -c Optabs_qe6.f90 -o Optabs_para_qe6.f90
+	${FC} ${FFLAGS} ${LDFLAGS_PARA} -c Optabs_qe6.f90 -o Optabs_para_qe6.o
 
 Optabs_legacy.o: Optabs.f
 	${FC} ${FFLAGS} -c Optabs.f -o Optabs_legacy.o
