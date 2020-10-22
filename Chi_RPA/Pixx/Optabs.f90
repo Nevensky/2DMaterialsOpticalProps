@@ -269,8 +269,8 @@ allocate(MnmK1K2(Nlfd))
 allocate(MnmK1K22(Nlfd))
 
 ! multidim arrays
-allocate(Qeff(Nlfd,Nlfd))
-allocate(S0(-no:no,Nlfd,Nlfd)) 
+! allocate(Qeff(Nlfd,Nlfd))
+! allocate(S0(-no:no,Nlfd,Nlfd)) 
 
 
 ! MKL matrix inversion vars
@@ -292,6 +292,8 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   
   if (calc == 2 .and. calc /= 3 ) GO TO 888
 
+  allocate(S0(-no:no,Nlf,Nlf))
+  allocate(Qeff(Nlf,Nlf))
   S0(-no:no,1:Nlf,1:Nlf) = cmplx(0.0,0.0)
   Qeff(1:Nlf,1:Nlf) = cmplx(0.0,0.0)
   
@@ -475,8 +477,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
   deallocate(S0_partial)
   deallocate(Qeff_partial)
-  ! deallocate(MnmK1K2)
-  ! deallocate(MnmK1K22)
+
   jump = 1
 
   end do ! k_loop_FBZ_2nd ! end of FBZ do loop
@@ -485,14 +486,14 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
   print *, 'DEBUG: exiting parallel region'
   
-  print *,'S0(-50:50,1,1)'
-  print *, S0(-50:50,1,1)
-  print *, '----- PART 1 END -----'
-  ! WRITING CORFUN S0_\mu\nu
-  ! WRITTING Q_eff_\mu\nu
+  ! neven debug
+  ! print *,'S0(-50:50,1,1)'
+  ! print *, S0(-50:50,1,1)
+  ! print *, '----- PART 1 END -----'
 
+  print *,'Writting correlation function S0_\mu\nu to file:'//adjustl(trim(dato1))
+  
   open(74,FILE = dato1)
-  open(75,FILE = dato2)
   omega_loop_C: do io = -no,no ! opskurni razlog za prosirenje raspona frekvencija na negativne da se korektno izracuna spektar kristala koji nemaju centar inverzije
     o = io*domega
     write(74,*)'omega=',o,'Hartree'
@@ -503,16 +504,29 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
       do jG=1,Nlf
   !       ! write(*,'(2F7.4)') S0(io,iG,jG)
         write(74,'(2F15.10)') real(S0(io,iG,jG)),aimag(S0(io,iG,jG))
-      enddo
-    enddo
+      end do
+    end do
   end do omega_loop_C
-  write(75,'(10F15.10)')((Qeff(iG,jG),jG = 1,Nlf),iG = 1,Nlf)
   close(74)
+
+  print *,'Writting charge carriers Q_eff_\mu\nu to file:'//adjustl(trim(dato2))
+  open(75,FILE = dato2)
+  ! write(75,'(10F15.10)')((Qeff(iG,jG),jG = 1,Nlf),iG = 1,Nlf)
+  do iG=1,Nlf
+    do jG=1,Nlf
+      write(75,'(2F15.10)') real(Qeff(iG,jG)),aimag(Qeff(iG,jG))
+    end do
+  end do
+
+  
   close(75)
   
-  deallocate(S0) 
-  deallocate(Qeff)
-  
+  ! neven debug
+  ! dealociranje tu i ponovono alociranje gore ne radi
+  ! deallocate(S0) 
+  ! deallocate(Qeff)
+  print *,'PROGRAM EXECUTION ENDED FOR CALC = 1'
+
   if (calc == 1 .and. calc /= 3 ) GO TO 999
   
   ! SECOND PART OF THE PROGRAM calc = 2
@@ -520,8 +534,8 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   
   888 CONTINUE 
 
-  allocate(S0(-no:no,Nlfd,Nlfd)) 
-  allocate(Qeff(Nlfd,Nlfd)) 
+  ! allocate(S0(-no:no,Nlfd,Nlfd)) 
+  ! allocate(Qeff(Nlfd,Nlfd)) 
 
   allocate(Pi_dia(Nlfd,Nlfd))
   allocate(Pi_tot(Nlfd,Nlfd))
@@ -538,12 +552,18 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   end do omega_loop_D
   close(74)
 
-  print *,'S0(-50:50,1,1)'
-  print *, S0(-50:50,1,1)
-  print *,'successful read of S0'
+  ! neven debug
+  ! print *,'S0(-50:50,1,1)'
+  ! print *, S0(-50:50,1,1)
+  ! print *,'successful read of S0'
   
   open(75,FILE = dato2)
-  read(75,'(10F15.10)')((Qeff(iG,jG), jG = 1,Nlf), iG = 1,Nlf)
+  do iG=1,Nlf
+    do jG=1,Nlf
+      read(75,'(2F15.10)') Qeff(iG,jG)
+    end do
+  end do
+  ! read(75,'(10F15.10)')((Qeff(iG,jG), jG = 1,Nlf), iG = 1,Nlf)
   close(75)
   
   
@@ -566,9 +586,9 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
       jG_loop: do jG = 1,Nlf
 
         call genReChi0(io,no,iG,jG,oi,domega,S0,Rechi0)
-        print *,'ReChi0: ',ReChi0
+        ! print *,'ReChi0: ',ReChi0
         call genImChi0(io,no,iG,jG,oi,domega,S0,ImChi0)
-        print *,'ImChi0: ',ImChi0
+        ! print *,'ImChi0: ',ImChi0
         
         if (io == 1) then 
           Pi_dia(iG,jG) = -cmplx(ReChi0,0.0) ! neven debug: diamagnetski doprinos ??
@@ -600,6 +620,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   end do omega_loop_B
   close(77)
   
+  print *,'PROGRAM EXECUTION ENDED FOR CALC = 2'
   999              CONTINUE
 end do q_loop
 
@@ -1103,7 +1124,7 @@ end subroutine loadG
     real(kind=dp) :: oj, fact
 
     ! neven debug
-    print *,'S0(-5,1,1):', S0(-5,1,1)
+    ! print *,'S0(-5,1,1):', S0(-5,1,1)
 
     ReChi0 = 0.0 ! real part of the response function
     ! static limit
