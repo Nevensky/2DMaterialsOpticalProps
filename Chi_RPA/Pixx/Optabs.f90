@@ -212,8 +212,9 @@ allocate(Glf(3,Nlfd))              ! local field effect polje valnih vekt. u rec
 ! nevne debug - prebaceno u config.in
 ! jump = 1
 ! omin = 1.0D-5
-! omax = (50.0/Hartree + omin)
 
+omin = omin/Hartree ! iz eV u Hartree
+omax = (omax/Hartree + omin) 
 
 domega = (omax-omin)/(no-1)
 
@@ -492,11 +493,13 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   ! print *, '----- PART 1 END -----'
 
   print *,'Writting correlation function S0_\mu\nu to file:'//adjustl(trim(dato1))
-  
+
   open(74,FILE = dato1)
+  open(200)
   omega_loop_C: do io = -no,no ! opskurni razlog za prosirenje raspona frekvencija na negativne da se korektno izracuna spektar kristala koji nemaju centar inverzije
     o = io*domega
-    write(74,*)'omega=',o,'Hartree'
+    write(74,*) 'omega=',o,'Hartree'
+    write(200,*), o*Hartree, real(S0(io,1,1)),aimag(S0(io,1,1))
     ! neven debug
     ! print *,S0(io,1,1)
     ! write(74,'(10F15.10)')((S0(io,iG,jG),jG = 1,Nlf),iG = 1,Nlf)
@@ -508,6 +511,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
     end do
   end do omega_loop_C
   close(74)
+  close(200)
 
   print *,'Writting charge carriers Q_eff_\mu\nu to file:'//adjustl(trim(dato2))
   open(75,FILE = dato2)
@@ -612,13 +616,16 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
     ! vodljivost u jedinicama 2*pi*e^2/h   
     if(io > 1) then
-      write(401,*) oi*Hartree, real(-ione*c0*Pi_inter/oi)
-      write(402,*) oi*Hartree, real(-ione*c0*Pi_intra/oi)
+      write(401,*) oi*Hartree, real(-cmplx(0.0,1.0)*c0*Pi_inter/oi)
+      write(402,*) oi*Hartree, real(-cmplx(0.0,1.0)*c0*Pi_intra/oi)
     endif
 
 
   end do omega_loop_B
   close(77)
+
+  deallocate(Pi_dia)
+  deallocate(Pi_tot)
   
   print *,'PROGRAM EXECUTION ENDED FOR CALC = 2'
   999              CONTINUE
@@ -649,8 +656,7 @@ deallocate(Glf)
 
 deallocate(S0)
 deallocate(Qeff)
-deallocate(Pi_dia)
-deallocate(Pi_tot)
+
 
 contains
   subroutine loadKC(path,KC)
@@ -1349,7 +1355,7 @@ end subroutine loadG
     ! konverzija en. u Hartree
     E(1:NkI,1:Nband) = E(1:NkI,1:Nband)/Hartree
     ! scissor operator, ispravlja/shifta DFT gap (na 1eV u ovom slucaju)
-    E(1:NkI,Nocc+1:Nband) = E(1:NkI,Nocc+1:Nband) + dGW/Hartree
+    E(1:NkI,Nocc+1:Nband) = E(1:NkI,Nocc+1:Nband) + dGW
 
   end subroutine loadkIandE
 

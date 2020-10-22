@@ -1424,7 +1424,7 @@ end subroutine genMnmK1K2
     deallocate(C2)
   end subroutine loadCS
 
-subroutine loadCsQE6(ik, ibnd, iuni, savedir, igwx, evc)
+  subroutine loadCsQE6(ik, ibnd, iuni, savedir, igwx, evc)
     ! read_a_wfc(ibnd, filename, evc, ik, xk, nbnd, ispin, npol, gamma_only, ngw, igwx )
     ! read QE 6.0 and greater, wfn coefficeints
     ! use iso_fortran_env, ONLY: DP=> REAL64
