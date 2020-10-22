@@ -1,8 +1,12 @@
 # Makefile for Vito
 CC= gcc
-FC= gfortran
-CFLAGS= -lrt -lm -O3
-FFLAGS=	${CFLAGS}
-OBJECTS = Photonew.f gjel.f
+# FC= gfortran
+FC = ifort
+DEBUG = -g -traceback -fpe0 -check bounds
+FFLAGS = -mkl -Ofast ${DEBUG}
+OBJECTS = Photonew.f90 gjel.f
+OBJECTS_LEGACY = Photonew.f gjel.f
+
+
 compile: $(OBJECTS)
-	${FC} ${FFLAGS} $(OBJECTS) -o Foton
+	${FC} ${FFLAGS} $(OBJECTS) -o Photon

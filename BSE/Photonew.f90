@@ -1,233 +1,207 @@
-PROGRAM foton
+program photon
  
-! Code converted using TO_F90 by Alan Miller
-! Date: 2020-06-17  Time: 13:15:04
+!  program for the calculation of the current-current 
+!  reponse  function in MoS2
+use ISO_Fortran_env
 
-!       program for the calculation of the current-current reponse  function in MoS2
-!       XY-plane unit cell parameter  a0
-!       Z-dir unit cell parameter c0
-!       gama=e^{2}/(\hbar c) --  fine-structure constant
+implicit none
 
+! single / double precision
+integer, parameter :: sp = real32
+integer, parameter :: dp = real64
+integer, parameter :: qp = real128
 
-implicitnone
+! file i/o debug
+integer :: ist,ist2,ist4,ist5,ist6,ist7,ist8,ist9,ist10,ist11,ist12
+integer :: lno,lno2,lno9,lno10,lno11,lno12
 
-INTEGER :: n,no,nq,
-& noladd, ! broj frekvencijskih koraka u ladder odzivnoj funkciji (polarizabilnosti)
-& nl, ! broj slojeva (layera)
-& pol
+integer :: Nthreads
 
-!       Nlfd je minimalno 2 zbog 2X2 blok matrice za p mod
-PARAMETER(no=5001,noladd=401,nq=401,nl=30)
+! Nlfd je minimalno 2 zbog 2X2 blok matrice za p mod
 
-DOUBLE PRECISION :: zero,one,two,three,four,six,pi,eta,ev,  &
-    hartree,abohr,planck,kb
-REAL*8 a0,c0,gama,domega,h
-
-PARAMETER(zero=0.0D0,one=1.0D0,two=2.0D0,three=3.0D0,  &
-    four=4.0D0,six=6.0D0,pi=3.141592654D0,a0=5.9715,c0=29.8575D0,  &
-    kb=1.3806503D-23,ev=1.602176487D-19,hartree=2.0D0*13.6056923D0,  &
-    abohr=0.5291772D0,planck=6.626196D-34, eta=0.00001/hartree,gama=1.0D0/137.0D0)
-
-
-!     ...scalars...
-INTEGER :: i,j,k,m,iq,io
-REAL*8 q,o,omax,dq,omin
-COMPLEX*8 pi_ladder_down,pi_ladder_up,pi_rpa,oi,d0,  &
-    beta,dxx,dyy,pis,pip,czero,ione,ieta,cone,dyz,dzz
-!     ...arrays...
-COMPLEX*8 pixx,pizz,pi0
-DOUBLE COMPLEX eps,UNIT
-DIMENSION pixx(no),pizz(no),pi0(nl,nl),eps(nl,nl), UNIT(nl,nl)
-CHARACTER (LEN=100) :: nis,dato,root,path,fajl,rootrpa,  &
-    rootladddown,rootladdup
+character(len=2) :: pol
+integer          :: no, no_ladd, nq
+integer          :: qmin, qmax
+integer          :: Nl
+real(kind=dp)    :: h         ! distance between layer
+real(kind=dp)    :: eta       ! analitcko produljenje
+real(kind=dp)    :: a0        ! [a.u.]  unit cell parameter in parallel direction 
+real(kind=dp)    :: c0        ! [a.u.]  unit cell parameter in perependicular direction 
 
 
-czero=CMPLX(zero,zero)
-cone=CMPLX(one,zero)
-ione=CMPLX(zero,one)
-ieta=CMPLX(zero,eta)
+! constants
+real(kind=dp),    parameter :: pi      = 4.D0*atan(1.D0)
+real(kind=dp),    parameter :: eV      = 1.602176487D-19
+real(kind=dp),    parameter :: Hartree = 2.0D0*13.6056923D0
+real(kind=dp),    parameter :: Planck  = 6.626196D-34
+real(kind=dp),    parameter :: kB      = 1.3806503D-23
+real(kind=dp),    parameter :: aBohr   = 0.5291772d0
+real(kind=dp),    parameter :: alpha =  1.0D0/137.0D0 ! fine structure constant e^2/(\hbar c)
+! complex(kind=dp), parameter :: rone    = cmplx(1.0,0.0)
+! complex(kind=dp), parameter :: czero   = cmplx(0.0,0.0)
+! complex(kind=dp), parameter :: ione    = cmplx(0.0,1.0)
 
-! BRAVAIS LATTICE PARAMETERS
+! scalars
+integer          :: i, j, k, m, iq, io
+real(kind=dp)    :: q, o, dq
+real(kind=dp)    :: omin, omax
+real(kind=dp)    :: domega
+complex(kind=dp) :: Pi_ladder_down,Pi_ladder_up,Pi_RPA
+complex(kind=dp) :: d0, dxx, dyy, dyz, dzz
+complex(kind=dp) :: oi
+complex(kind=dp) :: beta
+complex(kind=dp) :: Pip
+complex(kind=dp) :: ieta
 
-!     bravais-lattice index     =            4
-!     lattice parameter (alat)  =       5.9715  a.u.
-!     unit-cell volume          =     922.0586 (a.u.)^3
-!     number of atoms/cell      =            3
-!     number of atomic types    =            2
-!     number of electrons       =        18.00
-!     number of Kohn-Sham states=           13
-!     kinetic-energy cutoff     =      50.0000  Ry
-!     charge density cutoff     =     200.0000  Ry
-!     convergence threshold     =      1.0E-06
-!     mixing beta               =       0.7000
-!     number of iterations used =            8  plain     mixing
-!     Exchange-correlation      = SLA-PZ-NOGX-NOGC ( 1  1  0  0 0 0)
+! arrays..
+complex(kind=dp), dimension(:),   allocatable :: Pixx,Pizz
+complex(kind=dp), dimension(:,:), allocatable :: Pi0 
+complex(kind=dp), dimension(:,:), allocatable :: eps, Imat
 
-!     celldm(1)=   5.971535  celldm(2)=   0.000000  celldm(3)=   5.000000
-!     celldm(4)=   0.000000  celldm(5)=   0.000000  celldm(6)=   0.000000
+character (len=100) :: rundir, rpa_xx_file, rpa_zz_file, ladd_down_x_file, ladd_up_x_file, ladd_down_z_file, ladd_up_z_file
+namelist /directories/ rundir, rpa_xx_file, rpa_zz_file, ladd_down_x_file, ladd_up_x_file, ladd_down_z_file, ladd_up_z_file
+namelist /system/ omin, dq, qmin, qmax
+namelist /config/ no, no_ladd
+namelist /parameters/ Nl, h, eta, a0, c0
+namelist /parallel/ Nthreads
 
-!     crystal axes: (cart. coord. in units of alat)
-!               a(1) = (   1.000000   0.000000   0.000000 )
-!               a(2) = (  -0.500000   0.866025   0.000000 )
-!               a(3) = (   0.000000   0.000000   5.000000 )
+! load namelist
+open(10,file='config.in')
+read(10,nml=directories,iostat=ist4)
+read(10,nml=system,iostat=ist5)
+read(10,nml=config,iostat=ist6)
+read(10,nml=parameters,iostat=ist7)
+read(10,nml=parallel,iostat=ist8)
+close(10)
 
-!     reciprocal axes: (cart. coord. in units 2 pi/alat)
-!               b(1) = (  1.000000  0.577350 -0.000000 )
-!               b(2) = (  0.000000  1.154701  0.000000 )
-!               b(3) = (  0.000000 -0.000000  0.200000 )
+nq   = qmax-qmin
+omin = omin/Hartree ! iz eV u Hartree
+omax = (omax/Hartree + omin) 
 
-!             QUANTUM ESSPRESSO IMPUTS:
-root='/home/vito/PROJECTS/MoS2-BSE/MoS2_51x51'
-
-!             RPA IRREDUCIBLE POLARIZABILICI Chi_RPA FOLDER:
-rootrpa='/home/vito/PROJECTS/MoS2-BSE/Chi_RPA'
-
-!             LADDER IRREDUCIBLE POLARIZABILICI Chi_ladd_down FOLDER:
-rootladddown='/home/vito/PROJECTS/MoS2-BSE/Chi_ladd_down'
-
-!             LADDER IRREDUCIBLE POLARIZABILICI Chi_ladd_up FOLDER:
-rootladdup='/home/vito/PROJECTS/MoS2-BSE/Chi_ladd_up'
-
-
-!            udaljenost medju slojevima u Ang
-h=3.0/abohr
-
-
-!            for s-mode pol=1
-!            for p-mode pol=2
-
-pol=1
+h    = h/aBohr        ! distance between layers, converted from Angstrom to Bohr
+eta  = eta/Hartree
+ieta = cmplx(0.0,eta)
 
 
-dq=0.00001D0
-omin=1.0D-5
-omax=(50.0/hartree+omin)
-domega=(omax-omin)/(no-1)
+domega = (omax-omin)/(no-1)
 
-fajl='/Pixx/Pi_RPA_xx'
-path=trim(rootrpa)//trim(fajl)
-OPEN(31,FILE=path)
-fajl='/Pi_ladder_down_x'
-path=trim(rootladddown)//trim(fajl)
-OPEN(32,FILE=path)
-fajl='/Pi_ladder_up_x'
-path=trim(rootladdup)//trim(fajl)
-OPEN(33,FILE=path)
-DO  io=1,noladd
-  READ(31,*)o,pi_rpa
-  IF(io <= noladd)THEN
-    READ(32,*)o,pi_ladder_down
-    READ(33,*)o,pi_ladder_up
-  END IF
-  pixx(io)=pi_rpa+pi_ladder_down+pi_ladder_up
-END DO
-CLOSE(31)
-CLOSE(32)
-CLOSE(33)
+allocate(Pixx(no))
+allocate(Pizz(no))
+allocate(Pi0(Nl,Nl))
+allocate(eps(Nl,Nl))
+allocate(Imat(Nl,Nl))
 
+open(31,file = trim(rpa_xx_file) )
 
-fajl='/Pizz/Pi_RPA_zz'
-path=trim(rootrpa)//trim(fajl)
-OPEN(31,FILE=path)
-fajl='/Pi_ladder_down_z'
-path=trim(rootladddown)//trim(fajl)
-OPEN(32,FILE=path)
-fajl='/Pi_ladder_up_z'
-path=trim(rootladdup)//trim(fajl)
-OPEN(33,FILE=path)
-DO  io=1,noladd
-  READ(31,*)o,pi_rpa
-  IF(io <= noladd)THEN
-    READ(32,*)o,pi_ladder_down
-    READ(33,*)o,pi_ladder_up
-  END IF
-  pizz(io)=pi_rpa+pi_ladder_down+pi_ladder_up
-END DO
-CLOSE(31)
-CLOSE(32)
-CLOSE(33)
+open(32,file = trim(ladd_down_x_file) )
+
+open(33,file = trim(ladd_up_x_file) )
+
+do  io =  1,no_ladd
+  read(31,*) o, Pi_RPA
+  if (io <= no_ladd) then
+    read(32,*) o, Pi_ladder_down
+    read(33,*) o, Pi_ladder_up
+  end if
+  Pixx(io) = Pi_RPA + Pi_ladder_down + Pi_ladder_up
+end do
+close(31)
+close(32)
+close(33)
+
+open(34,file = trim(rpa_zz_file) )
+open(35,file = trim(ladd_down_z_file) )
+open(36,file = trim(ladd_up_z_file) )
+
+do  io =  1,no_ladd
+  read(31,*) o, Pi_RPA
+  if (io <= no_ladd) then
+    read(32,*) o, Pi_ladder_down
+    read(33,*) o, Pi_ladder_up
+  end if
+  Pizz(io)=Pi_RPA+Pi_ladder_down+Pi_ladder_up
+end do
+
+close(34)
+close(35)
+close(36)
 
 
+open(13,file='photon_plot.dat')
 
+q_loop: do iq =  qmin,qmax
+  print*, ' iq: ', iq
 
-!*******************************************************************
-!              POCETAK PETLJI PO Q I OMEGA
-!******************************************************************
-OPEN(3,FILE='plot')
+  q = (iq-1)*dq
 
-!              Q loop strts here
-q_loop: DO iq=1,nq
-  q=(iq-1)*dq
-  
-  PRINT*,iq
-  
-!              omega loop starts here
-  omega_loop: DO io=3,noladd
-    o=omin+(io-1)*domega
-    oi=CMPLX(o,eta)
-    beta=CMPLX(gama*gama*oi*oi-q*q)
-    beta=SQRT(beta)
+  omega_loop: do io = 3,no_ladd
+    o =  omin+(io-1)*domega
+    oi =  cmplx(o,eta)
+    beta =  cmplx(alpha**2  *oi**2 -q**2)
+    beta =  sqrt(beta)
+    
+    dxx =  2.0*pi * cmplx(0.0,1.0) * c0 * alpha**2/beta
+    dyy =  2.0*pi * cmplx(0.0,1.0) * c0 * beta/(oi**2)
+    dyz = -2.0*pi * cmplx(0.0,1.0) * q * c0/(oi**2)
+    dzz =  2.0*pi * cmplx(0.0,1.0) * q**2 * c0/(beta * oi**2)
     
     
+    if (pol == 'xx') then 
+      d0 = dxx ! S-MOD
+    else if (pol == 'zz') then
+      d0 = dyy ! P-MOD
+    else
+      print *, 'FATAL ERROR Specified polarization component not supported.'
+      stop
+    end if
     
-    dxx = 2.0D0*pi*ione*c0*gama*gama/beta
-    dyy = 2.0D0*pi*ione*c0*beta/(oi*oi)
-    dyz = -2.0*pi*ione*q*c0/(oi*oi)
-    dzz = 2.0*pi*ione*q*q*c0/(beta*oi*oi)
-    
-    
-    
-!             S-MOD
-    IF(pol == 1)d0=dxx
-!             P-MOD
-    IF(pol == 2)d0=dyy
-    
-    
-    eps=czero
-    DO  i=1,nl
-      DO  j=1,nl
+    eps =  cmplx(0.0,0.0)
+    Imat(1:Nl,1:Nl) = cmplx(0.0,0.0)
+    do  i =  1,Nl
+      do  j =  1,Nl
         ! za multilayere nalazi efektivni epsilon = relativna permitivnost
-        eps(i,j)= -pixx(io)*d0*EXP(ione*h*beta*ABS(REAL(i)-REAL(j)))
-        UNIT(i,j)=czero
-        pi0(i,j)=czero
-      END DO
-      eps(i,i)=cone+eps(i,i)
-      UNIT(i,i)=cone
-      pi0(i,i)=pixx(io)
-    END DO
+        eps(i,j)= -Pixx(io) * d0 * exp( cmplx(0.0,1.0) * h * beta*abs(real(i)-real(j)) )
+        Pi0(i,j)= cmplx(0.0,0.0)
+      end do
+      eps(i,i) = cmplx(1.0,0.0)+eps(i,i)
+      Imat(i,i)= cmplx(1.0,0.0)
+      Pi0(i,i) = Pixx(io)
+    end do
     
-    CALL gjel(eps,nl,nl,UNIT,nl,nl) ! invertiranje (dio Dysonove jedn.)
+    call gjel(eps,Nl,Nl,Imat,Nl,Nl) ! invertiranje (dio Dysonove jedn.)
     
-    pip=czero
-    DO  i=1,nl
-      ! Dysonova jedn.
-      pip=pip+eps(1,i)*pi0(i,1)  
-    END DO
-    
-    
-!           optical conductivity in units  pi*e^2/2h s-mode
-    IF(iq == 1)WRITE(100,*)o*hartree,REAL(-ione*4.0*c0*pip/oi)
-!            if(iq.eq.1)write(200,*)o*Hartree,real(-ione*4.0*c0*Pip/oi)
-    
-    
-    
-    
-    WRITE(3,*)10.0*q/abohr, o*hartree,REAL(-ione*4.0*c0*pip/oi)
-    
-    
-    
-!            kraj po omega
-  END DO omega_loop
-  
-  
-  
-!            end of q loop
-END DO q_loop
+    Pip =  cmplx(0.0,0.0)
+    Pip = sum( eps(1,1:Nl) * Pi0(1:Nl,1) ) ! Dysonova eqn.
+    ! do  i =  1,Nl
+      ! Pip =  Pip+eps(1,i)*Pi0(i,1)  ! Dysonova eqn.
+    ! end do 
 
-CLOSE(3)
+    
+    
+    ! optical conductivity in units  pi*e^2/2h s-mode
+    if(iq == 1) write(100,*) o*Hartree, real(-cmplx(0.0,1.0) * 4.0 * c0 * Pip/oi)
+    ! if(iq.eq.1)write(200,*)o*Hartree,real(-cmplx(0.0,1.0)*4.0*c0*Pip/oi)
+    
+    
+    
+    
+    write(3,*) 10.0 * q/aBohr, o*Hartree, real(-cmplx(0.0,1.0) * 4.0 * c0 * Pip/oi)
+    
+    
+    
+  end do omega_loop
+end do q_loop
+
+close(13)
+
+deallocate(Pixx)
+deallocate(Pizz)
+deallocate(Pi0)
+deallocate(eps)
+deallocate(Imat)
 
 
-END PROGRAM foton
+end program photon
 
 
 
