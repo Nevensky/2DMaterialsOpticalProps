@@ -210,7 +210,8 @@ allocate(Glf(3,Nlfd))              ! local field effect polje valnih vekt. u rec
 ! jump = 1
 ! omin = 1.0D-5
 ! omax = (50.0/Hartree + omin)
-
+omin = omin/Hartree ! iz eV u Hartree
+omax = (omax/Hartree + omin) 
 
 domega = (omax-omin)/(no-1)
 
@@ -1381,7 +1382,7 @@ end subroutine findKQinBZ
     ! konverzija en. u Hartree
     E(1:NkI,1:Nband) = E(1:NkI,1:Nband)/Hartree
     ! scissor operator, ispravlja/shifta DFT gap (na 1eV u ovom slucaju)
-    E(1:NkI,Nocc+1:Nband) = E(1:NkI,Nocc+1:Nband) + dGW/Hartree
+    E(1:NkI,Nocc+1:Nband) = E(1:NkI,Nocc+1:Nband) + dGW
 
   end subroutine loadkIandE
 
