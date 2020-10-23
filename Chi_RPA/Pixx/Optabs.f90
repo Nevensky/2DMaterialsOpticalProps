@@ -11,7 +11,6 @@ PROGRAM surface_current
 !        nMPx*nMPy*nMPz-Monkhorest-Pack sampling
 !        Efermi-Fermi energy
 !        T-temperature in eV
-!        eta-Damping parameter in eV
 !        Ecut-cutoff energy for crystal local field calculations
 !        Vcell-unit-cell volume in a.u.^-3
 !        a0-unit cell parameter in  a.u.^-1
@@ -104,8 +103,7 @@ real(kind=dp)    :: dGW    ! [eV] band gap scissor correction
 real(kind=dp)    :: a0     ! [a.u.]  unit cell parameter in parallel direction 
 real(kind=dp)    :: c0     ! [a.u.]  unit cell parameter in perependicular direction 
 real(kind=dp)    :: eps    ! 1.0D-4 threshold
-real(kind=dp)    :: T      ! [eV] temperature 
-real(kind=dp)    :: eta    ! damping i\eta
+real(kind=dp)    :: T      ! [eV] temperature
 real(kind=dp)    :: Ecut   ! [Hartree] cutoff energy for crystal local field calculations , for Ecut=0 S matrix is a scalar ?
 real(kind=dp)    :: Vcell  ! [a.u.^3] unit-cell volume 
 real(kind=dp)    :: Gamma_intra ! [Hartree] width of intraband transition
@@ -113,7 +111,7 @@ real(kind=dp)    :: Gamma_inter ! [Hartree] width of interband transition
 real(kind=dp)    :: Lor_cut  ! Lorentzian cutoff to zero left and right
 real(kind=dp)    :: df_cut   ! 
 
-namelist /parameters/ Efermi, dGW, eps, T, eta, Ecut, a0, c0, Vcell
+namelist /parameters/ Efermi, dGW, eps, T, Ecut, a0, c0, Vcell
 namelist /system/ lf, pol, calc, jump, omin, omax, qmin, qmax, Gamma_intra, Gamma_inter, Lor_cut, df_cut
 
 ! scalar arrays
@@ -189,7 +187,6 @@ dato3 = 'Pi_RPA_'//adjustl(trim(pol))
 Nk     = 48*NkI                   ! number of wave vectors in FBZ with no symmetry 
 T      = T/Hartree                ! convert temperature from eV to Hartree
 Efermi = Efermi/Hartree           ! convert Fermi en. from eV to Hartree
-eta    = eta/Hartree
 Gcar   = 2.0*pi/a0                ! unit cell norm.
 dGW    = dGW/Hartree              ! scissors shift
 Gamma_intra = Gamma_intra/Hartree
@@ -288,7 +285,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   print *, "Found minimal wave-vector q."
 
   ! Info file
-  call writeInfo(lf, pol, qx, qy, qz, Gcar, Nsymm, Nlf, Ntot, NkI, Nband, T, Nel, NelQE,Gamma_intra, Gamma_inter, eta, dato1, dato2, dato3)
+  call writeInfo(lf, pol, qx, qy, qz, Gcar, Nsymm, Nlf, Ntot, NkI, Nband, T, Nel, NelQE,Gamma_intra, Gamma_inter, dato1, dato2, dato3)
   
   
   if (calc == 2 .and. calc /= 3 ) GO TO 888
@@ -303,7 +300,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
   print *, 'DEBUG: entering parallel region'
   print *, 'Requested threads: ',Nthreads, 'Available threads: ',OMP_GET_NUM_THREADS()
-  !$omp parallel shared(S0,Qeff, iq, qx,qy,qz, kI,ktot,R,RI,eps,E, Efermi, T,Gcar, G,Glf,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,eta,Vcell, Gamma_inter, Gamma_intra, df_cut, Lor_cut,debugCount) private(ik, S0_partial, Qeff_partial, MnmK1K2,MnmK1K22,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,df, f1, f2, expo1, expo2, fact, Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2,attr1,attr2, C1,C2, iuni1, iuni2) firstprivate(savedir,jump,no,domega) num_threads(Nthreads) default(none) 
+  !$omp parallel shared(S0,Qeff, iq, qx,qy,qz, kI,ktot,R,RI,eps,E, Efermi, T,Gcar, G,Glf,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,Vcell, Gamma_inter, Gamma_intra, df_cut, Lor_cut,debugCount) private(ik, S0_partial, Qeff_partial, MnmK1K2,MnmK1K22,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,df, f1, f2, expo1, expo2, fact, Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2,attr1,attr2, C1,C2, iuni1, iuni2) firstprivate(savedir,jump,no,domega) num_threads(Nthreads) default(none) 
   thread_id =  omp_get_thread_num()
 
   !$omp do
@@ -689,11 +686,11 @@ contains
   
   end subroutine loadKC
 
-  subroutine writeInfo(lf, pol, qx, qy, qz, Gcar, Nsymm, Nlf, Ntot, NkI, Nband, T, Nel, NelQE,Gamma_intra, Gamma_inter, eta, dato1, dato2, dato3)
+  subroutine writeInfo(lf, pol, qx, qy, qz, Gcar, Nsymm, Nlf, Ntot, NkI, Nband, T, Nel, NelQE,Gamma_intra, Gamma_inter, dato1, dato2, dato3)
     implicit none
     integer      ,      intent(in) :: NelQE, Nsymm, Nlf, Ntot, NkI, Nband
     real(kind=dp),      intent(in) :: qx,qy,qz
-    real(kind=dp),      intent(in) :: eta, T, Gcar
+    real(kind=dp),      intent(in) :: T, Gcar
     real(kind=dp),      intent(in) :: Nel
     real(kind=dp),      intent(in) :: Gamma_inter, Gamma_intra
     character(len=3),   intent(in) :: lf, pol
