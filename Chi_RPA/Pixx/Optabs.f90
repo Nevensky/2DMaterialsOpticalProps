@@ -1,20 +1,4 @@
 PROGRAM surface_current
- 
-! Code converted using TO_F90 by Alan Miller
-! Date: 2020-06-17  Time: 13:00:14
-
-!        NkI -number of wave vectors in irreducible B. zone
-!        Ntot-total number of the mutually different wave vector-program generates this number
-!        Nband-number of the bands
-!        NG-total number of G vectors
-!        NGd-number of coefficients CG shulod me less than minimum number of coefficients all over all evc.n files
-!        nMPx*nMPy*nMPz-Monkhorest-Pack sampling
-!        Efermi-Fermi energy
-!        T-temperature in eV
-!        Ecut-cutoff energy for crystal local field calculations
-!        Vcell-unit-cell volume in a.u.^-3
-!        a0-unit cell parameter in  a.u.^-1
-
 
 use OMP_lib
 use iotk_module
@@ -299,7 +283,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   ! 1.B.Z  LOOP STARTS HERE !!!!
 
   print *, 'DEBUG: entering parallel region'
-  print *, 'Requested threads: ',Nthreads, 'Available threads: ',OMP_GET_NUM_THREADS()
+  print *, 'Requested threads: ',Nthreads, 'Available threads: ',omp_get_num_threads()
   !$omp parallel shared(S0,Qeff, iq, qx,qy,qz, kI,ktot,R,RI,eps,E, Efermi, T,Gcar, G,Glf,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,Vcell, Gamma_inter, Gamma_intra, df_cut, Lor_cut,debugCount) private(ik, S0_partial, Qeff_partial, MnmK1K2,MnmK1K22,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,df, f1, f2, expo1, expo2, fact, Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2,attr1,attr2, C1,C2, iuni1, iuni2) firstprivate(savedir,jump,no,domega) num_threads(Nthreads) default(none) 
   thread_id =  omp_get_thread_num()
 
