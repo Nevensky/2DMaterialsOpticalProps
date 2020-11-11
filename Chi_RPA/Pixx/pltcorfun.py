@@ -12,20 +12,26 @@ fl= './Corrfun_xx'
 
 lines = []
 freqs = []
-vals = []
+imvals,revals = [],[]
 with open(fl,'r') as f:
 	lines = f.readlines()
 	for i,ln in enumerate(lines):
 		if i%2==0:
 			freqs.append(float(ln.split()[1]))
 		else:
-			vals.append(float(ln.split()[0]))
+			revals.append(float(ln.split()[0]))
+			imvals.append(float(ln.split()[1]))
 
-data = np.array([freqs,vals])
+# data = np.array([freqs,revals])
 
 plt.xlabel('frequency [Ha]')
 plt.ylabel(r'$\frac{-\Im\left[ \chi (\omega,\vec{G_1},\vec{G_2}) \right]}{\pi}$')
-plt.plot(freqs,vals,color='goldenrod')
+plt.plot(freqs,revals,color='goldenrod',label='real part')
+plt.legend(loc='upper left')
+plt.twinx()
+plt.tick_params(axis='y', labelcolor='darkseagreen')
+plt.plot(freqs,imvals,color='darkseagreen',label='imaginary part')
+plt.legend(loc='upper right')
 plt.show()
 plt.close()
 

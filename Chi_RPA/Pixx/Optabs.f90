@@ -51,6 +51,10 @@ complex(kind=dp), parameter :: rone    = cmplx(1.0,0.0)
 complex(kind=dp), parameter :: czero   = cmplx(0.0,0.0)
 complex(kind=dp), parameter :: ione    = cmplx(0.0,1.0)
 
+
+! neven debug
+real(kind=dp)    :: temp_re, temp_im
+
 ! scalars
 real(kind=dp)    :: kx,ky,kz
 real(kind=dp)    :: KQx,KQy,KQz
@@ -476,40 +480,39 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   print *,'Writting correlation function S0_\mu\nu to file:'//adjustl(trim(dato1))
 
   open(74,FILE = dato1)
-  open(200)
+  ! open(200)
   omega_loop_C: do io = -no,no ! opskurni razlog za prosirenje raspona frekvencija na negativne da se korektno izracuna spektar kristala koji nemaju centar inverzije
     o = io*domega
     write(74,*) 'omega=',o,'Hartree'
-    write(200,*), o*Hartree, real(S0(io,1,1)),aimag(S0(io,1,1))
+    ! write(200,*), o*Hartree, real(S0(io,1,1)),aimag(S0(io,1,1))
     ! neven debug
     ! print *,S0(io,1,1)
     ! write(74,'(10F15.10)')((S0(io,iG,jG),jG = 1,Nlf),iG = 1,Nlf)
     do iG=1,Nlf
       do jG=1,Nlf
-  !       ! write(*,'(2F7.4)') S0(io,iG,jG)
         write(74,'(2F15.10)') real(S0(io,iG,jG)),aimag(S0(io,iG,jG))
       end do
     end do
   end do omega_loop_C
   close(74)
-  close(200)
+  ! close(200)
 
   print *,'Writting charge carriers Q_eff_\mu\nu to file:'//adjustl(trim(dato2))
   open(75,FILE = dato2)
-  ! write(75,'(10F15.10)')((Qeff(iG,jG),jG = 1,Nlf),iG = 1,Nlf)
-  do iG=1,Nlf
-    do jG=1,Nlf
-      write(75,'(2F15.10)') real(Qeff(iG,jG)),aimag(Qeff(iG,jG))
-    end do
-  end do
+  write(75,'(10F15.10)')((Qeff(iG,jG),jG = 1,Nlf),iG = 1,Nlf)
+  ! do iG=1,Nlf
+    ! do jG=1,Nlf
+      ! write(75,'(2F15.10)') real(Qeff(iG,jG)),aimag(Qeff(iG,jG))
+    ! end do
+  ! end do
 
   
   close(75)
   
   ! neven debug
   ! dealociranje tu i ponovono alociranje gore ne radi
-  ! deallocate(S0) 
-  ! deallocate(Qeff)
+  deallocate(S0) 
+  deallocate(Qeff)
   print *,'PROGRAM EXECUTION ENDED FOR CALC = 1'
 
   if (calc == 1 .and. calc /= 3 ) GO TO 999
@@ -519,23 +522,25 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   
   888 CONTINUE 
 
-  ! allocate(S0(-no:no,Nlfd,Nlfd)) 
-  ! allocate(Qeff(Nlfd,Nlfd)) 
+  allocate(S0(-no:no,Nlfd,Nlfd)) 
+  allocate(Qeff(Nlfd,Nlfd)) 
 
   allocate(Pi_dia(Nlfd,Nlfd))
   allocate(Pi_tot(Nlfd,Nlfd))
 
-  open(74,FILE = dato1)
+  open(744,FILE = dato1)
   omega_loop_D: do io=-no,no
-    read(74,*) ! dummy
+    read(744,*) ! dummy
     ! read(74,'(10F15.10)')((S0(io,iG,jG), jG = 1,Nlf), iG = 1,Nlf)
     do iG=1,Nlf
       do jG=1,Nlf
-        read(74,'(2F15.10)') S0(io,iG,jG)
+        read(744,'(2F15.10)') temp_re, temp_im
+        S0(io,iG,jG) = cmplx(temp_re,temp_im)
+        ! print *,S0(io,iG,jG)
       enddo
     enddo
   end do omega_loop_D
-  close(74)
+  close(744)
 
   ! neven debug
   ! print *,'S0(-50:50,1,1)'
@@ -545,13 +550,15 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   open(75,FILE = dato2)
   do iG=1,Nlf
     do jG=1,Nlf
-      read(75,'(2F15.10)') Qeff(iG,jG)
+      read(75,'(2F15.10)') temp_re, temp_im
+      Qeff(iG,jG) = cmplx(temp_re, temp_im)
     end do
   end do
   ! read(75,'(10F15.10)')((Qeff(iG,jG), jG = 1,Nlf), iG = 1,Nlf)
   close(75)
   
-  
+  print *,'domega:'
+  print *,domega
   
   
   ! Convert (qx,qy,qz) and Glf from a.u. to Cartesian coordinates
@@ -569,11 +576,14 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
     iG_loop: do iG = 1,Nlf
       jG_loop: do jG = 1,Nlf
+        print *,'before ReChi0: ',ReChi0
+        print *,'io,no,iG,jG,oi,domega',io,no,iG,jG,oi,domega
+        print *,'S0(-5,1,1)',S0(-5,1,1)
 
-        call genReChi0(io,no,iG,jG,oi,domega,S0,Rechi0)
-        ! print *,'ReChi0: ',ReChi0
-        call genImChi0(io,no,iG,jG,oi,domega,S0,ImChi0)
-        ! print *,'ImChi0: ',ImChi0
+        call genReChi0(io,no,Nlfd,iG,jG,oi,domega,S0,ReChi0)
+        print *,'ReChi0: ',ReChi0
+        call genImChi0(io,no,Nlfd,iG,jG,oi,domega,S0,ImChi0)
+        print *,'ImChi0: ',ImChi0
         
         if (io == 1) then 
           Pi_dia(iG,jG) = -cmplx(ReChi0,0.0) ! neven debug: diamagnetski doprinos ??
@@ -1099,20 +1109,21 @@ end subroutine findKQinBZ
 
 end subroutine loadG
 
-  subroutine genReChi0(io,no,iG,jG,oi,domega,S0,ReChi0)
+  subroutine genReChi0(io,no,Nlfd,iG,jG,oi,domega,S0,ReChi0)
     implicit none
-    integer,          intent(in)  :: io, no
+    integer,          intent(in)  :: io, no, Nlfd
     integer,          intent(in)  :: iG, jG
     real(kind=dp),    intent(in)  :: oi, domega
-    complex(kind=dp), intent(in)  :: S0(:,:,:)
+    complex(kind=dp), intent(in)  :: S0(-no:no,Nlfd,Nlfd)
     real(kind=dp),    intent(out) :: ReChi0
 
     integer :: jo
     real(kind=dp) :: oj, fact
 
     ! neven debug
-    ! print *,'S0(-5,1,1):', S0(-5,1,1)
-
+    print *,'S0(-5,1,1):', S0(-5,1,1)
+    print *, 'io, no, iG, jG', io, no, iG, jG
+    print *, 'oi, domega',oi, domega
     ReChi0 = 0.0 ! real part of the response function
     ! static limit
     if (io == 1) then
@@ -1199,12 +1210,12 @@ end subroutine loadG
     
   end subroutine genReChi0
 
-  subroutine genImChi0(io,no,iG,jG,oi,domega,S0,ImChi0)
+  subroutine genImChi0(io,no,Nlfd, iG,jG,oi,domega,S0,ImChi0)
     implicit none
-    integer,          intent(in)  :: io, no
+    integer,          intent(in)  :: io, no, Nlfd
     integer,          intent(in)  :: iG, jG
     real(kind=dp),    intent(in)  :: oi, domega
-    complex(kind=dp), intent(in)  :: S0(:,:,:)
+    complex(kind=dp), intent(in)  :: S0(-no:no,Nlfd,Nlfd)
     real(kind=dp),    intent(out) :: ImChi0
 
     integer :: jo

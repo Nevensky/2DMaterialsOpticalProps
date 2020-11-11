@@ -319,7 +319,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
     
   allocate(Qeff_partial(Nlf,Nlf))
   allocate(S0_partial(-no:no,Nlf,Nlf))
-  Qeff_partial(1:Nlf,1:Nlf)    = cmplx(0.0,0.0)
+  Qeff_partial(1:Nlf,1:Nlf)      = cmplx(0.0,0.0)
   S0_partial(-no:no,1:Nlf,1:Nlf) = cmplx(0.0,0.0)
 
   bands_n_loop: do n = 1,Nband
@@ -485,8 +485,8 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   
   ! neven debug
   ! dealociranje tu i ponovono alociranje gore ne radi
-  ! deallocate(S0) 
-  ! deallocate(Qeff)
+  deallocate(S0) 
+  deallocate(Qeff)
   print *,'PROGRAM EXECUTION ENDED FOR CALC = 1'
 
   if (calc == 1 .and. calc /= 3 ) GO TO 999
@@ -496,8 +496,8 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   
   888 CONTINUE 
 
-  ! allocate(S0(-no:no,Nlfd,Nlfd)) 
-  ! allocate(Qeff(Nlfd,Nlfd)) 
+  allocate(S0(-no:no,Nlfd,Nlfd)) 
+  allocate(Qeff(Nlfd,Nlfd)) 
 
   allocate(Pi_dia(Nlfd,Nlfd))
   allocate(Pi_tot(Nlfd,Nlfd))
@@ -547,17 +547,17 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
     iG_loop: do iG = 1,Nlf
       jG_loop: do jG = 1,Nlf
 
-        call genReChi0(io,no,iG,jG,oi,domega,S0,Rechi0)
+        call genReChi0(io,no,Nlfd,iG,jG,oi,domega,S0,Rechi0)
         ! print *,'ReChi0: ',ReChi0
-        call genImChi0(io,no,iG,jG,oi,domega,S0,ImChi0)
+        call genImChi0(io,no,Nlfd,iG,jG,oi,domega,S0,ImChi0)
         ! print *,'ImChi0: ',ImChi0
         
         if (io == 1) then 
           Pi_dia(iG,jG) = -cmplx(ReChi0,0.0) ! neven debug: diamagnetski doprinos ??
         end if
 
-        Pi_tot(iG,jG) = cmplx(ReChi0,ImChi0) ! Pi_RPA = PiDIJAMAGNETSKI + PiPARAMAGNETSKI
-        Pi_tot(iG,jG) = Pi_tot(iG,jG) + Pi_dia(iG,jG)
+        Pi_tot(iG,jG) = cmplx(ReChi0,ImChi0) 
+        Pi_tot(iG,jG) = Pi_tot(iG,jG) + Pi_dia(iG,jG) ! Pi_RPA = Pi_paramagnetski + Pi_diamagnetski
 
         Pi_inter = Pi_tot(1,1)
         Pi_intra = Qeff(1,1)*oi/(oi + cmplx(0.0,1.0)*Gamma_intra)
@@ -1126,12 +1126,12 @@ end subroutine findKQinBZ
     close(iuni) 
   end subroutine loadCsQE6
 
-  subroutine genReChi0(io,no,iG,jG,oi,domega,S0,ReChi0)
+  subroutine genReChi0(io,no,Nlfd,iG,jG,oi,domega,S0,ReChi0)
     implicit none
-    integer,          intent(in)  :: io, no
+    integer,          intent(in)  :: io, no, Nlfd
     integer,          intent(in)  :: iG, jG
     real(kind=dp),    intent(in)  :: oi, domega
-    complex(kind=dp), intent(in)  :: S0(:,:,:)
+    complex(kind=dp), intent(in)  :: S0(-no:no,Nlfd,Nlfd)
     real(kind=dp),    intent(out) :: ReChi0
 
     integer :: jo
@@ -1226,12 +1226,12 @@ end subroutine findKQinBZ
     
   end subroutine genReChi0
 
-  subroutine genImChi0(io,no,iG,jG,oi,domega,S0,ImChi0)
+  subroutine genImChi0(io,no,Nlfd,iG,jG,oi,domega,S0,ImChi0)
     implicit none
-    integer,          intent(in)  :: io, no
+    integer,          intent(in)  :: io, no, Nlfd
     integer,          intent(in)  :: iG, jG
     real(kind=dp),    intent(in)  :: oi, domega
-    complex(kind=dp), intent(in)  :: S0(:,:,:)
+    complex(kind=dp), intent(in)  :: S0(-no:no,Nlfd,Nlfd)
     real(kind=dp),    intent(out) :: ImChi0
 
     integer :: jo
