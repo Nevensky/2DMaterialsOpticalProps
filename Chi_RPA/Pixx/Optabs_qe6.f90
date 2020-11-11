@@ -496,6 +496,8 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   
   888 continue
 
+  print *, 'STARTING PI_pol current-ccurent tensor calc using KK rel.'
+
   allocate(S0(-no:no,Nlfd,Nlfd)) 
   allocate(Qeff(Nlfd,Nlfd)) 
 
