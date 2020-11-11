@@ -489,12 +489,12 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   deallocate(Qeff)
   print *,'PROGRAM EXECUTION ENDED FOR CALC = 1'
 
-  if (calc == 1 .and. calc /= 3 ) GO TO 999
+  if (calc == 1 .and. calc /= 3 ) goto 999
   
   ! SECOND PART OF THE PROGRAM calc = 2
   ! Calculation of the matrix '''Pi_\mu\nu'' by using matrix ''S0_\mu\nu(G,G')'' and Kramers-Krroning relations
   
-  888 CONTINUE 
+  888 continue
 
   allocate(S0(-no:no,Nlfd,Nlfd)) 
   allocate(Qeff(Nlfd,Nlfd)) 

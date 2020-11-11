@@ -499,14 +499,12 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
   print *,'Writting charge carriers Q_eff_\mu\nu to file:'//adjustl(trim(dato2))
   open(75,FILE = dato2)
-  write(75,'(10F15.10)')((Qeff(iG,jG),jG = 1,Nlf),iG = 1,Nlf)
-  ! do iG=1,Nlf
-    ! do jG=1,Nlf
-      ! write(75,'(2F15.10)') real(Qeff(iG,jG)),aimag(Qeff(iG,jG))
-    ! end do
-  ! end do
-
-  
+  ! write(75,'(10F15.10)')((Qeff(iG,jG),jG = 1,Nlf),iG = 1,Nlf)
+  do iG=1,Nlf
+    do jG=1,Nlf
+      write(75,'(2F15.10)') real(Qeff(iG,jG)),aimag(Qeff(iG,jG))
+    end do
+  end do
   close(75)
   
   ! neven debug
@@ -522,20 +520,23 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   
   888 CONTINUE 
 
+  print *, 'STARTING PI_pol current-ccurent tensor calc using KK rel.'
+
   allocate(S0(-no:no,Nlfd,Nlfd)) 
   allocate(Qeff(Nlfd,Nlfd)) 
 
   allocate(Pi_dia(Nlfd,Nlfd))
   allocate(Pi_tot(Nlfd,Nlfd))
 
-  open(744,FILE = dato1)
+  open(74,FILE = dato1)
   omega_loop_D: do io=-no,no
-    read(744,*) ! dummy
+    read(74,*) ! dummy
     ! read(74,'(10F15.10)')((S0(io,iG,jG), jG = 1,Nlf), iG = 1,Nlf)
     do iG=1,Nlf
       do jG=1,Nlf
-        read(744,'(2F15.10)') temp_re, temp_im
-        S0(io,iG,jG) = cmplx(temp_re,temp_im)
+        read(74,'(2F15.10)') S0(io,iG,jG)
+        ! read(74,'(2F15.10)') temp_re, temp_im
+        ! S0(io,iG,jG) = cmplx(temp_re,temp_im)
         ! print *,S0(io,iG,jG)
       enddo
     enddo
@@ -550,8 +551,9 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   open(75,FILE = dato2)
   do iG=1,Nlf
     do jG=1,Nlf
-      read(75,'(2F15.10)') temp_re, temp_im
-      Qeff(iG,jG) = cmplx(temp_re, temp_im)
+      read(75,'(2F15.10)') Qeff(iG,jG)
+      ! read(75,'(2F15.10)') temp_re, temp_im
+      ! Qeff(iG,jG) = cmplx(temp_re, temp_im)
     end do
   end do
   ! read(75,'(10F15.10)')((Qeff(iG,jG), jG = 1,Nlf), iG = 1,Nlf)
@@ -576,14 +578,11 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
     iG_loop: do iG = 1,Nlf
       jG_loop: do jG = 1,Nlf
-        print *,'before ReChi0: ',ReChi0
-        print *,'io,no,iG,jG,oi,domega',io,no,iG,jG,oi,domega
-        print *,'S0(-5,1,1)',S0(-5,1,1)
 
         call genReChi0(io,no,Nlfd,iG,jG,oi,domega,S0,ReChi0)
-        print *,'ReChi0: ',ReChi0
+        ! print *,'ReChi0: ',ReChi0
         call genImChi0(io,no,Nlfd,iG,jG,oi,domega,S0,ImChi0)
-        print *,'ImChi0: ',ImChi0
+        ! print *,'ImChi0: ',ImChi0
         
         if (io == 1) then 
           Pi_dia(iG,jG) = -cmplx(ReChi0,0.0) ! neven debug: diamagnetski doprinos ??
@@ -1117,7 +1116,7 @@ end subroutine loadG
     complex(kind=dp), intent(in)  :: S0(-no:no,Nlfd,Nlfd)
     real(kind=dp),    intent(out) :: ReChi0
 
-    integer :: jo
+    integer       :: jo
     real(kind=dp) :: oj, fact
 
     ! neven debug
@@ -1218,7 +1217,7 @@ end subroutine loadG
     complex(kind=dp), intent(in)  :: S0(-no:no,Nlfd,Nlfd)
     real(kind=dp),    intent(out) :: ImChi0
 
-    integer :: jo
+    integer       :: jo
     real(kind=dp) :: oj, fact
 
     ImChi0 = 0.0 ! Imaginary part of the response function Im(Chi)
