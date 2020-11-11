@@ -6,8 +6,8 @@ use ModPointR
 
 implicit none
 
-character(len=iotk_attlenx) :: attr1, attr2
-
+! character(len=iotk_attlenx) :: attr1, attr2
+character(len=65278) :: attr1, attr2
 ! calc = 1 tenzor korelacijske funkcije, calc = 2 struja-struja tenzor (Kramers-Krroning)
 
 character (len=100) :: rundir, savedir, band_file, scf_file
