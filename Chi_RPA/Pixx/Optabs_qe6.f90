@@ -541,6 +541,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   Glf(1:3,1:Nlf) = Gcar*Glf(1:3,1:Nlf)
   
   open(77,FILE = dato3)
+  open(99)
   ! new sum over omega
   omega_loop_B: do io = 1,no-1
     ! print *, io
@@ -572,7 +573,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
     ! WRITTING TOTAL RESPONSE FUNCTION Pi for a given polarization 'pol' to file
     write(77,*) oi*Hartree,Pi_tot(1,1)
     
-
+    write(99,*) oi*Hartree,Pi_tot(4,5)
 
     ! vodljivost u jedinicama 2*pi*e^2/h   
     if(io > 1) then
@@ -583,6 +584,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
   end do omega_loop_B
   close(77)
+  close(99)
   
   print *,'PROGRAM EXECUTION ENDED FOR CALC = 2'
   999              CONTINUE
