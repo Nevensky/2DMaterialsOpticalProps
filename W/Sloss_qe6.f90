@@ -269,7 +269,8 @@ print *,"status: KC transformation matrix (rec.cryst.->cart.) loaded."
 
 ! Reading the reciprocal vectors in crystal coordinates and transformation
 ! in Cartesian cordinates.
-call loadG(KC,parG,G)
+! call loadG(NG,KC,parG,G)
+call loadG_QE6(savedir,KC,NG,G)
 print *,"status: G vectors loaded."
 
 
@@ -1298,10 +1299,11 @@ end subroutine genMnmK1K2
   
   end subroutine loadKC
 
-  subroutine loadG(KC,parG,G)
+  subroutine loadG(NG,KC,parG,G)
     ! Reading the reciprocal vectors in crystal coordinates and transformation
     ! in Cartesian cordinates.
     implicit none
+    integer,        intent(in)    :: NG
     real(kind=dp),  intent(in)    :: KC(3,3)
     integer,        intent(inout) :: parG(:) ! paritet svakog valnog vektora G
     real(kind=dp),  intent(inout) :: G(:,:)  ! polje valnih vektora G u recp. prost. za wfn.
@@ -1348,6 +1350,69 @@ end subroutine genMnmK1K2
   5000 continue 
 
   end subroutine loadG
+
+  subroutine loadG_QE6(savedir,KC,NG,G)
+    ! Reading the reciprocal vectors in crystal coordinates and transformation
+    ! in Cartesian cordinates.
+    implicit none
+    character(len=*), intent(in)   :: savedir
+    real(kind=dp),    intent(in)   :: KC(3,3)
+    integer,          intent(out)  :: parG(:) ! paritet svakog valnog vektora G
+    integer,          intent(out)  :: NG
+    real(kind=dp), allocatable, intent(out)  :: G(:,:)  ! polje valnih vektora G u recp. prost. za wfn.
+
+    integer :: ios0, ios1, ios2
+    integer :: n, m
+    integer :: Nspin
+    logical :: gamma_only
+    integer, allocatable :: Gi(:,:)
+    character(len=218)   :: fname            
+
+    fname = trim(savedir)//'/charge-density.dat'
+    print *,'status: Reading Gvecs from file: ',adjustl(trim(fname))
+    
+    open(200,file=fname,form = 'unformatted',status='old',iostat=ios0,err=199)
+
+    read(200, iostat=ios1) gamma_only, NG, Nspin
+    ! print *, 'Number of Gvecs (NG):', NG
+
+    read(200, iostat=ios1) ! dummy for b1, b2, b3 rec.latt.vecs. 
+
+    allocate(Gi(3,NG))
+    read (200, iostat=ios2) Gi(1:3,1:NG)
+    close(200)
+
+    if (Gi(1,1) /= 0  .or.  Gi(2,1) /= 0  .or.  Gi(3,1) /= 0) then
+      print*,'WARNING G vectors input is wrong.'
+      print*,'G(1:3,1) is not (0,0,0)!'
+      stop
+    end if
+
+    ! transformation to cart.coord (now all G components are in 2pi/a0 units)
+    allocate(G(3,NG))
+    allocate(parG(NG))
+    G(1:3,1:NG) = 0.0
+    do iG=1,NG
+      do n = 1,3
+        do m = 1,3
+          G(n,iG) = G(n,iG) + KC(n,m)*dble( Gi(m,iG) )
+        end do
+      end do
+      parG(iG) = Gi(3,iG)
+    end do
+    close(200)
+
+    goto 5000
+    199 write(*,*) 'error cant open file id 199, ist=',ios0
+    stop
+    200 write(*,*) 'error cant read file id 200, ist=',ios1
+    stop
+    201   write(*,*) '201 buffer1 read. Error reading miller indices ',', iostat = ',ios2
+    stop
+    202   write(*,*) '202 buffer1 read.'
+    5000 continue 
+  end subroutine loadG_QE6
+
 
   subroutine loadCs(thread_id,ik,savedir,K1,K2,n,m,NGd,jump, Nlf, iG0, eps, R, RI, G, Gfast, MnmK1K2)
     ! WARNING THIS SUBROUTINE IS BUGGY and therefore not used, MnmK1K2 gets assigned nonensensical values.
