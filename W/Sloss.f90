@@ -251,7 +251,7 @@ print *,"status: KC transformation matrix (rec.cryst.->cart.) loaded."
 
 ! Reading the reciprocal vectors in crystal coordinates and transformation
 ! in Cartesian cordinates.
-call loadG(KC,parG,G)
+call loadG(NG,KC,parG,G)
 print *,"status: G vectors loaded."
 
 
@@ -1306,10 +1306,11 @@ end subroutine genMnmK1K2
   
   end subroutine loadKC
 
-  subroutine loadG(KC,parG,G)
+  subroutine loadG(NG,KC,parG,G)
     ! Reading the reciprocal vectors in crystal coordinates and transformation
     ! in Cartesian cordinates.
     implicit none
+    integer,        intent(in)    :: NG
     real(kind=dp),  intent(in)    :: KC(3,3)
     integer,        intent(inout) :: parG(:) ! paritet svakog valnog vektora G
     real(kind=dp),  intent(inout) :: G(:,:)  ! polje valnih vektora G u recp. prost. za wfn.
