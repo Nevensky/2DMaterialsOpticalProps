@@ -555,7 +555,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
         call genImChi0(io,no,Nlfd,iG,jG,oi,domega,S0,ImChi0)
         ! print *,'ImChi0: ',ImChi0
         
-        if (io == 1) then 
+        if (io == 1) then ! omega=0.0 Ha
           Pi_dia(iG,jG) = -cmplx(ReChi0,0.0) ! neven debug: diamagnetski doprinos ??
         end if
 
@@ -586,6 +586,10 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   close(77)
   close(99)
   
+  deallocate(S0)
+  deallocate(Qeff)
+  deallocate(Pi_dia)
+  deallocate(Pi_tot)
   print *,'PROGRAM EXECUTION ENDED FOR CALC = 2'
   999              CONTINUE
 end do q_loop
@@ -613,10 +617,10 @@ deallocate(ktot)
 deallocate(G)      
 deallocate(Glf)    
 
-deallocate(S0)
-deallocate(Qeff)
-deallocate(Pi_dia)
-deallocate(Pi_tot)
+! deallocate(S0)
+! deallocate(Qeff)
+! deallocate(Pi_dia)
+! deallocate(Pi_tot)
 
 contains
   subroutine loadKC(path,KC)
