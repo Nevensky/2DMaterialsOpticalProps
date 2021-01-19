@@ -7,6 +7,7 @@ from sys import argv
 # savedir ="/Users/Nevensky/Downloads"
 # fname = "/".join([savedir,"MoS2.xml"])
 # fname = "/".join(savedir,"data-file-schema.xml")
+Ha2eV = 27.211386246
 
 try:
 	configFile = argv[1]
@@ -65,7 +66,7 @@ def parseParameters(dat):
 	Nk_x = dat["qes:espresso"]["input"]["k_points_IBZ"]["monkhorst_pack"]["@nk1"]
 	Nk_y = dat["qes:espresso"]["input"]["k_points_IBZ"]["monkhorst_pack"]["@nk2"]
 	Nk_z = dat["qes:espresso"]["input"]["k_points_IBZ"]["monkhorst_pack"]["@nk3"]
-	EFermi = np.float(dat["qes:espresso"]["output"]["band_structure"]["fermi_energy"])
+	EFermi = Ha2eV*np.float(dat["qes:espresso"]["output"]["band_structure"]["fermi_energy"]) # converted from Ha to eV
 	Nbands = np.int(dat["qes:espresso"]["output"]["band_structure"]["nbnd"])
 	NelQE = np.int(np.float(dat["qes:espresso"]["output"]["band_structure"]["nelec"]))
 	NkI = np.int(dat["qes:espresso"]["output"]["band_structure"]["nks"])
