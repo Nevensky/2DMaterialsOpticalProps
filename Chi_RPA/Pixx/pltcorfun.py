@@ -8,7 +8,8 @@ plt.style.use('ggplot')
 
 plt.figure(num=None, figsize=(10, 6), dpi=100)
 
-fl= './Corrfun_xx'
+# fl= './Corrfun_xx'
+fl= '/Users/Nevensky/Downloads/Pixx/Corrfun_xx'
 
 
 Nlf,Nlf_counted = 0,0
@@ -24,7 +25,7 @@ with open(fl,'r') as f:
 			Nlf_counted += 1
 			if Nlf_counted==2:
 				Nlf = i-1
-				print('Nlf: ',Nlf) 
+				print('Nlf: ',int(np.sqrt(Nlf))) 
 		else:
 			revals.append(float(ln.split()[0]))
 			imvals.append(float(ln.split()[1]))
@@ -42,16 +43,18 @@ plt.plot(freqs,revals[1:revals[::].shape[0]:Nlf],color='goldenrod',label='real p
 plt.legend(loc='upper left')
 plt.twinx()
 plt.tick_params(axis='y', labelcolor='darkseagreen')
+plt.ylim([min(revals[1:revals[::].shape[0]:Nlf]),max(revals[1:revals[::].shape[0]:Nlf])])
 plt.plot(freqs,imvals[1:imvals[::].shape[0]:Nlf],color='darkseagreen',label='imaginary part')
 plt.legend(loc='upper right')
 plt.show()
 plt.close()
 
 print("Plotting Corrfun for first 12 local field vectors.")
-for j in range(1,12):
+for j in range(1,12+1):
 	plt.subplot(4,3,j)
 	plt.plot(freqs,revals[j:revals.shape[0]:Nlf],color='goldenrod',label='real part')
 	plt.twinx()
+	plt.ylim([min(revals[j:revals[::].shape[0]:Nlf]),max(revals[j:revals[::].shape[0]:Nlf])])
 	plt.tick_params(axis='y', labelcolor='darkseagreen')
 	plt.plot(freqs,imvals[j:imvals.shape[0]:Nlf],color='darkseagreen',label='imaginary part')
 			
@@ -75,7 +78,10 @@ plt.close()
 plt.show()
 plt.close()
 
-fl2= './Pi_RPA_xx'
+
+# fl2= '/Users/Nevensky/Downloads/Pixx/Pi_RPA_xx'
+fl2= '/Users/Nevensky/Downloads/Pixx/fort.99'
+# fl2= '/Users/Nevensky/Downloads/fort.99'
 freqsEV,valsRe,valsIm = [],[],[]
 with open(fl2,'r') as f:
 	lines = f.readlines()

@@ -440,9 +440,9 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   Qeff(1:Nlf,1:Nlf) = Qeff(1:Nlf,1:Nlf) + Qeff_partial(1:Nlf,1:Nlf)
   !$omp end critical(sumS0)
 
-  deallocate(MnmK1K2(Nlfd))
-  deallocate(MnmK1K22(Nlfd))
-  
+  deallocate(MnmK1K2)
+  deallocate(MnmK1K22)
+
   deallocate(S0_partial)
   deallocate(Qeff_partial)
 
