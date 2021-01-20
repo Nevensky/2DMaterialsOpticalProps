@@ -244,8 +244,9 @@ print *, 'Nlf: ',Nlf,' Nlfd: ',Nlfd
 
 
 ! scalar arrays
-allocate(MnmK1K2(Nlfd))
-allocate(MnmK1K22(Nlfd))
+! moved inside k_loop_FBZ in OpenMP
+! allocate(MnmK1K2(Nlfd))
+! allocate(MnmK1K22(Nlfd))
 
 ! multidim arrays
 ! allocate(Qeff(Nlfd,Nlfd))
@@ -319,6 +320,9 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
     
   allocate(Qeff_partial(Nlf,Nlf))
   allocate(S0_partial(-No:No,Nlf,Nlf))
+  allocate(MnmK1K2(Nlfd))
+  allocate(MnmK1K22(Nlfd))
+
   Qeff_partial(1:Nlf,1:Nlf)      = cmplx(0.0,0.0)
   S0_partial(-No:No,1:Nlf,1:Nlf) = cmplx(0.0,0.0)
 
@@ -436,7 +440,9 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   Qeff(1:Nlf,1:Nlf) = Qeff(1:Nlf,1:Nlf) + Qeff_partial(1:Nlf,1:Nlf)
   !$omp end critical(sumS0)
 
-
+  deallocate(MnmK1K2(Nlfd))
+  deallocate(MnmK1K22(Nlfd))
+  
   deallocate(S0_partial)
   deallocate(Qeff_partial)
 
@@ -1420,7 +1426,7 @@ end subroutine findKQinBZ
       if (ik == 1) then
         read(400,*) 
       end if
-      read(400,'(10X,3F10.3)') kI(1,ik),kI(2,ik),kI(3,ik)
+      read(400,'(10X,3F10.6)') kI(1,ik),kI(2,ik),kI(3,ik)
       read(400,'(10F9.4)') (E(ik,i),i=1,Nband)
     end do
     close(400)
