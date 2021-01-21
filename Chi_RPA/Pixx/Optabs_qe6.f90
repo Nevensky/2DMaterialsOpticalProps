@@ -246,7 +246,7 @@ print *, 'Nlf: ',Nlf,' Nlfd: ',Nlfd
 ! scalar arrays
 ! moved inside k_loop_FBZ in OpenMP
 ! allocate(MnmK1K2(Nlfd))
-! allocate(MnmK1K22(Nlfd))
+allocate(MnmK1K22(Nlf))
 
 ! multidim arrays
 ! allocate(Qeff(Nlfd,Nlfd))
@@ -320,8 +320,8 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
     
   allocate(Qeff_partial(Nlf,Nlf))
   allocate(S0_partial(-No:No,Nlf,Nlf))
-  allocate(MnmK1K2(Nlfd))
-  allocate(MnmK1K22(Nlfd))
+  ! allocate(MnmK1K2(Nlf))
+  ! allocate(MnmK1K22(Nlf))
 
   Qeff_partial(1:Nlf,1:Nlf)      = cmplx(0.0,0.0)
   S0_partial(-No:No,1:Nlf,1:Nlf) = cmplx(0.0,0.0)
@@ -440,8 +440,8 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   Qeff(1:Nlf,1:Nlf) = Qeff(1:Nlf,1:Nlf) + Qeff_partial(1:Nlf,1:Nlf)
   !$omp end critical(sumS0)
 
-  deallocate(MnmK1K2)
-  deallocate(MnmK1K22)
+  ! deallocate(MnmK1K2)
+  ! deallocate(MnmK1K22)
 
   deallocate(S0_partial)
   deallocate(Qeff_partial)
@@ -612,8 +612,8 @@ deallocate(Gfast)
 ! deallocaate scalar arrays      
 ! deallocate(factMatrix)
 
-! deallocate(MnmK1K2)
-! deallocate(MnmK1K22)    
+if (allocated(MnmK1K2)) deallocate(MnmK1K2)
+if (allocated(MnmK1K22)) deallocate(MnmK1K22)
 
 ! deallocaate multidim arrays
 deallocate(kI)
