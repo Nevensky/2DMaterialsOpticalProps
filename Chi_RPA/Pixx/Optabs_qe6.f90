@@ -245,7 +245,7 @@ print *, 'Nlf: ',Nlf,' Nlfd: ',Nlfd
 
 ! scalar arrays
 ! moved inside k_loop_FBZ in OpenMP
-! allocate(MnmK1K2(Nlfd))
+allocate(MnmK1K2(Nlf))
 allocate(MnmK1K22(Nlf))
 
 ! multidim arrays
