@@ -34,6 +34,7 @@ namelist /config/  NG, NGd, NkI, Nband, Nocc, NelQE,No, Nlfd
 ! file i/o debug
 integer :: ist,ist2,ist4,ist5,ist6,ist7,ist8,ist9,ist10,ist11,ist12
 integer :: lno,lno2,lno9,lno10,lno11,lno12
+integer :: osdependent_id
 
 integer :: debugCount = 0
 
@@ -149,6 +150,16 @@ namelist  /parallel/ Nthreads
 ! CORRELATION FUNCTIONS, CURRENT-CURRENT RESPONSE FUNCTIONS and
 ! EFFECTIVE CHARGE CARRIERS MATRIX OUTPUTS
 
+#ifdef __linux__
+  print *,'Running on: Linux'
+  osdependent_id = 1000
+#endif
+#ifdef __APPLE__
+  print *,'Running on: MacOS'
+  osdependent_id = 100000
+#endif
+
+
 
 ! load namelist
 open(10,file='config.in')
@@ -245,8 +256,8 @@ print *, 'Nlf: ',Nlf,' Nlfd: ',Nlfd
 
 ! scalar arrays
 ! moved inside k_loop_FBZ in OpenMP
-allocate(MnmK1K2(Nlf))
-allocate(MnmK1K22(Nlf))
+!allocate(MnmK1K2(Nlf))
+!allocate(MnmK1K22(Nlf))
 
 ! multidim arrays
 ! allocate(Qeff(Nlfd,Nlfd))
@@ -282,7 +293,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
   print *, 'DEBUG: entering parallel region'
   print *, 'Requested threads: ',Nthreads, 'Available threads: ',omp_get_num_threads()
-  !$omp parallel shared(S0,Qeff, iq, qx,qy,qz, kI,ktot,R,RI,eps,E, Efermi, T,Gcar, G,Glf,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,Vcell, Gamma_inter, Gamma_intra, df_cut, Lor_cut,debugCount) private(ik, S0_partial, Qeff_partial, MnmK1K2,MnmK1K22,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,df, f1, f2, expo1, expo2, fact, Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2, C1,C2, iuni1, iuni2) firstprivate(savedir,jump,No,domega) num_threads(Nthreads) default(none) 
+  !$omp parallel shared(S0,Qeff, iq, qx,qy,qz, kI,ktot,R,RI,eps,E, Efermi, T,Gcar, G,Glf,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Vcell, Gamma_inter, Gamma_intra, df_cut, Lor_cut,debugCount) private(ik, S0_partial, Qeff_partial, MnmK1K2,MnmK1K22,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,df, f1, f2, expo1, expo2, fact, Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2, C1,C2, iuni1, iuni2) firstprivate(savedir,jump,No,domega,osdependent_id) num_threads(Nthreads) default(none) 
   thread_id =  omp_get_thread_num()
 
   !$omp do
@@ -330,8 +341,10 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
     call genOccupation(E(K1,n),Efermi,T,expo1,f1)
 
+    allocate(C1(NG))
+
     !$omp critical(loadCs_)
-    iuni1 = 20 + 2*thread_id + ik*100000 + n*100
+    iuni1 = 20 + 2*thread_id + ik*osdependent_id + n*100
     call loadCsQE6(K1, n, iuni1, savedir, NG1, C1)
     !$omp end critical(loadCs_)
 
@@ -339,7 +352,9 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
       write(*,*) 'NGd is bigger than NG1=',NG1
       STOP
     end if
-
+    
+    allocate(MnmK1K2(Nlf))
+    allocate(MnmK1K22(Nlf))
     bands_m_loop: do m = 1,Nband
 
       call genOccupation(E(K2,m),Efermi,T,expo2,f2)
@@ -348,9 +363,10 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
       occupation_if: if ( (abs(df) >= df_cut) .or. (n == m) ) then  
         ! call paths(outdir,K1,K2,n,m,pathk1,pathk2,bandn,bandm)
+        allocate(C2(NG))
 
         !$omp critical(loadCs_)
-        iuni2 = 21 + (2*thread_id+1) + (2*ik+1)*100000 + (2*m+1)*100
+        iuni2 = 21 + (2*thread_id+1) + (2*ik+1)*osdependent_id + (2*m+1)*100
         call loadCsQE6(K2, m, iuni2, savedir, NG2, C2)
         !$omp end critical(loadCs_)
 
@@ -358,6 +374,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
           write(*,*) 'NGd is bigger than NG2=',NG2
           STOP
         end if
+
 
         ! Konstrukcija stupca matricnih elementa MnmK1K2(iG) i MnmK1K22(jG)
         call genStrujniVrhovi(jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2, MnmK1K22)
@@ -427,6 +444,8 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
       end if occupation_if
     end do bands_m_loop
     deallocate(C1)
+    deallocate(MnmK1K2)
+    deallocate(MnmK1K22)
   end do bands_n_loop
 
   !$omp critical(sumS0)      
@@ -504,11 +523,11 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
   print *, 'STARTING PI_pol current-ccurent tensor calc using KK rel.'
 
-  allocate(S0(-No:No,Nlfd,Nlfd)) 
-  allocate(Qeff(Nlfd,Nlfd)) 
+  allocate(S0(-No:No,Nlf,Nlf)) 
+  allocate(Qeff(Nlf,Nlf)) 
 
-  allocate(Pi_dia(Nlfd,Nlfd))
-  allocate(Pi_tot(Nlfd,Nlfd))
+  allocate(Pi_dia(Nlf,Nlf))
+  allocate(Pi_tot(Nlf,Nlf))
 
   open(74,FILE = dato1)
   omega_loop_D: do io=-No,No
@@ -540,7 +559,6 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   
   
   ! Convert (qx,qy,qz) and Glf from a.u. to Cartesian coordinates
-  
   qx = Gcar*qx
   qy = Gcar*qy
   qz = Gcar*qz
@@ -556,9 +574,9 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
     iG_loop: do iG = 1,Nlf
       jG_loop: do jG = 1,Nlf
 
-        call genReChi0(io,No,Nlfd,iG,jG,oi,domega,S0,Rechi0)
+        call genReChi0(io,No,Nlf,iG,jG,oi,domega,S0,Rechi0)
         ! print *,'ReChi0: ',ReChi0
-        call genImChi0(io,No,Nlfd,iG,jG,oi,domega,S0,ImChi0)
+        call genImChi0(io,No,Nlf,iG,jG,oi,domega,S0,ImChi0)
         ! print *,'ImChi0: ',ImChi0
         
         if (io == 1) then ! omega=0.0 Ha
@@ -606,7 +624,7 @@ end do q_loop
 ! deallocate(work)
 
 ! deallocate NGd related vars
-deallocate(Gfast)
+if (allocated(Gfast)) deallocate(Gfast)
 
 
 ! deallocaate scalar arrays      
@@ -998,10 +1016,11 @@ end subroutine findKQinBZ
     ! effects calculations in array Glf(3,Nlf)
   
     character(len=*), intent(in)    :: lf
-    integer,          intent(in)    :: NG, Nlfd
+    integer,          intent(in)    :: NG
     real(kind=dp),    intent(in)    :: Ecut
     real(kind=dp),    intent(in)    :: Gcar
     real(kind=dp),    intent(in)    :: G(:,:)
+    integer,          intent(inout) :: Nlfd
     integer,          intent(out)   :: Nlf
     real(kind=dp),    intent(out)   :: Glf(:,:)
   
@@ -1034,6 +1053,8 @@ end subroutine findKQinBZ
     if (Nlf > Nlfd) then
       print*,'Nlf is bigger than Nlfd'
       stop
+    else if(Nlf<Nlfd) then
+      Nlfd = Nlf
     end if
   
   end subroutine genGlf
@@ -1157,7 +1178,7 @@ end subroutine findKQinBZ
     character (len=*), intent(in)                  :: savedir
     integer,           intent(in)                  :: ik, ibnd, iuni
     integer,           intent(out)                 :: igwx
-    complex(DP),       intent(inout), allocatable  :: evc(:)
+    complex(dp),       intent(inout)               :: evc(*)
 
     character (len=300) :: path 
 
@@ -1186,7 +1207,7 @@ end subroutine findKQinBZ
     ! if needed allocate  an integer array of dims (1:3,1:igwx) 
 
     read(iuni) ! dummy_int
-    allocate (evc(npol*igwx))
+    ! allocate (evc(npol*igwx))
     if ( ibnd > nbnd) then 
        print '("looking for band nr. ",I7," but there are only ",I7," bands in the file")',ibnd, nbnd
        stop
@@ -1199,15 +1220,16 @@ end subroutine findKQinBZ
           read(iuni) ! dummy_real
        end if 
     end do 
-    close(iuni) 
+    close(iuni)
+!    deallocate(evc) 
   end subroutine loadCsQE6
 
-  subroutine genReChi0(io,No,Nlfd,iG,jG,oi,domega,S0,ReChi0)
+  subroutine genReChi0(io,No,Nlf,iG,jG,oi,domega,S0,ReChi0)
     implicit none
-    integer,          intent(in)  :: io, No, Nlfd
+    integer,          intent(in)  :: io, No, Nlf
     integer,          intent(in)  :: iG, jG
     real(kind=dp),    intent(in)  :: oi, domega
-    complex(kind=dp), intent(in)  :: S0(-No:No,Nlfd,Nlfd)
+    complex(kind=dp), intent(in)  :: S0(-No:No,Nlf,Nlf)
     real(kind=dp),    intent(out) :: ReChi0
 
     integer :: jo
@@ -1302,12 +1324,12 @@ end subroutine findKQinBZ
     
   end subroutine genReChi0
 
-  subroutine genImChi0(io,No,Nlfd,iG,jG,oi,domega,S0,ImChi0)
+  subroutine genImChi0(io,No,Nlf,iG,jG,oi,domega,S0,ImChi0)
     implicit none
-    integer,          intent(in)  :: io, No, Nlfd
+    integer,          intent(in)  :: io, No, Nlf
     integer,          intent(in)  :: iG, jG
     real(kind=dp),    intent(in)  :: oi, domega
-    complex(kind=dp), intent(in)  :: S0(-No:No,Nlfd,Nlfd)
+    complex(kind=dp), intent(in)  :: S0(-No:No,Nlf,Nlf)
     real(kind=dp),    intent(out) :: ImChi0
 
     integer :: jo
@@ -1427,7 +1449,12 @@ end subroutine findKQinBZ
         read(400,*) 
       end if
       read(400,'(10X,3F10.6)') kI(1,ik),kI(2,ik),kI(3,ik)
+#ifdef __linux__
       read(400,'(10F9.4)') (E(ik,i),i=1,Nband)
+#endif
+#ifdef __APPLE__
+      read(400,'(10F9.3)') (E(ik,i),i=1,Nband)
+#endif
     end do
     close(400)
       
@@ -1475,7 +1502,7 @@ subroutine genStrujniVrhovi(jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0, NG1, 
   ! print *, 'qx,qy,qz:', qx,qy,qz
   ! print *, 'Glf:', Glf(1:3,1:Nlf)
   ! print *, '-----'
-  ! print *, 'Gfast(1:Nlfd*NGd)',Gfast(1:Nlfd*NGd)
+  ! print *, 'Gfast(1:Nlf*NGd)',Gfast(1:Nlf*NGd)
   ! print *,'iG0, Nlf, NG1, NG2, NGd'
   ! print *, iG0, Nlf, NG1, NG2, NGd
   ! print *,'R1,R2: ',R1,R2
