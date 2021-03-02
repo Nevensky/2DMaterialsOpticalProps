@@ -5,7 +5,7 @@ use ModPointR
 
 implicit none
 
-! calc = 1 tenzor korelacijske funkcije, calc = 2 struja-struja tenzor (Kramers-Krroning)
+! calc = 1 tenzor korelacijske funkcije, calc = 2 current-current tenzor (Kramers-Krroning)
 
 character (len=200) :: rundir, savedir, band_file, scf_file
 namelist /directories/ rundir, savedir, scf_file, band_file
@@ -71,7 +71,7 @@ real(kind=dp)    :: Gxx2,Gyy2,Gzz2
 real(kind=dp)    :: fact
 real(kind=dp)    :: oi,oj
 real(kind=dp)    :: ImChi0, ReChi0
-real(kind=dp)    :: struja, struja_y, struja_z
+real(kind=dp)    :: current, current_y, current_z
 real(kind=dp)    :: Nel ! Number of electrons(1BZ integration)
 complex(kind=dp) :: Pi_inter, Pi_intra
 
@@ -256,8 +256,8 @@ print *, 'Nlf: ',Nlf,' Nlfd: ',Nlfd
 
 ! scalar arrays
 ! moved inside k_loop_FBZ in OpenMP
-!allocate(MnmK1K2(Nlf))
-!allocate(MnmK1K22(Nlf))
+! allocate(MnmK1K2(Nlf))
+! allocate(MnmK1K22(Nlf))
 
 ! multidim arrays
 ! allocate(Qeff(Nlfd,Nlfd))
@@ -288,13 +288,15 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   S0(-No:No,1:Nlf,1:Nlf) = cmplx(0.0,0.0)
   Qeff(1:Nlf,1:Nlf) = cmplx(0.0,0.0)
   
-  
   ! 1.B.Z  LOOP STARTS HERE !!!!
 
   print *, 'DEBUG: entering parallel region'
   print *, 'Requested threads: ',Nthreads, 'Available threads: ',omp_get_num_threads()
   !$omp parallel shared(S0,Qeff, iq, qx,qy,qz, kI,ktot,R,RI,eps,E, Efermi, T,Gcar, G,Glf,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Vcell, Gamma_inter, Gamma_intra, df_cut, Lor_cut,debugCount) private(ik, S0_partial, Qeff_partial, MnmK1K2,MnmK1K22,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,df, f1, f2, expo1, expo2, fact, Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2, C1,C2, iuni1, iuni2) firstprivate(savedir,jump,No,domega,osdependent_id) num_threads(Nthreads) default(none) 
   thread_id =  omp_get_thread_num()
+
+  allocate(MnmK1K2(Nlf))
+  allocate(MnmK1K22(Nlf))
 
   !$omp do
   do  ik = 1,Ntot
@@ -316,7 +318,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
     
     !$omp critical(printWaveVector)
     debugCount = debugCount + 1
-    write (*,'(A13,I4,A5,I4,A11,I6,A2,I6,A5,F5.1,A4)') 'thread id: ',thread_id,'ik: ',ik, 'progress: ',debugCount, ' /',Ntot,' (',(real(debugCount)/real(Ntot))*100.0,'% )'
+    write (*,'(A13,I4,A5,I8,A11,I6,A2,I6,A5,F5.1,A4)') 'thread id: ',thread_id,'ik: ',ik, 'progress: ',debugCount, ' /',Ntot,' (',(real(debugCount)/real(Ntot))*100.0,'% )'
     write (*,'(A14,3F10.6)') 'KQx,KQy,KQz: ',KQx,KQy,KQz
     print *,'-------------------------------'
     !$omp end critical(printWaveVector)
@@ -331,17 +333,18 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
     
   allocate(Qeff_partial(Nlf,Nlf))
   allocate(S0_partial(-No:No,Nlf,Nlf))
-  ! allocate(MnmK1K2(Nlf))
-  ! allocate(MnmK1K22(Nlf))
 
   Qeff_partial(1:Nlf,1:Nlf)      = cmplx(0.0,0.0)
   S0_partial(-No:No,1:Nlf,1:Nlf) = cmplx(0.0,0.0)
+
+  allocate(C1(NG))
+  allocate(C2(NG))
 
   bands_n_loop: do n = 1,Nband
 
     call genOccupation(E(K1,n),Efermi,T,expo1,f1)
 
-    allocate(C1(NG))
+    ! allocate(C1(NG))
 
     !$omp critical(loadCs_)
     iuni1 = 20 + 2*thread_id + ik*osdependent_id + n*100
@@ -353,8 +356,6 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
       STOP
     end if
     
-    allocate(MnmK1K2(Nlf))
-    allocate(MnmK1K22(Nlf))
     bands_m_loop: do m = 1,Nband
 
       call genOccupation(E(K2,m),Efermi,T,expo2,f2)
@@ -363,7 +364,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
       occupation_if: if ( (abs(df) >= df_cut) .or. (n == m) ) then  
         ! call paths(outdir,K1,K2,n,m,pathk1,pathk2,bandn,bandm)
-        allocate(C2(NG))
+        ! allocate(C2(NG))
 
         !$omp critical(loadCs_)
         iuni2 = 21 + (2*thread_id+1) + (2*ik+1)*osdependent_id + (2*m+1)*100
@@ -377,9 +378,8 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
 
         ! Konstrukcija stupca matricnih elementa MnmK1K2(iG) i MnmK1K22(jG)
-        call genStrujniVrhovi(jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2, MnmK1K22)
-
-        deallocate(C2)
+        call genCurrentVertices(jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2, MnmK1K22)
+        ! deallocate(C2)
 
         intraORinterband_if: if (n /= m) then
           omega_loop: do io = -No,No
@@ -441,12 +441,14 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
         ! print *,'VANI: ik,n,m:',ik,n,m
         ! print *,'VANI: S0_partial(200,1,1):',S0_partial(200,1,1)
         ! print *, 'S0_partial(100,1,1):',S0_partial(100,1,1)
+
       end if occupation_if
     end do bands_m_loop
-    deallocate(C1)
-    deallocate(MnmK1K2)
-    deallocate(MnmK1K22)
+    ! deallocate(C1)
   end do bands_n_loop
+  
+  deallocate(C1)
+  deallocate(C2)
 
   !$omp critical(sumS0)      
   ! neven debug
@@ -459,9 +461,6 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   Qeff(1:Nlf,1:Nlf) = Qeff(1:Nlf,1:Nlf) + Qeff_partial(1:Nlf,1:Nlf)
   !$omp end critical(sumS0)
 
-  ! deallocate(MnmK1K2)
-  ! deallocate(MnmK1K22)
-
   deallocate(S0_partial)
   deallocate(Qeff_partial)
 
@@ -469,7 +468,12 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
   end do ! k_loop_FBZ_2nd ! end of FBZ do loop
   !$omp end do
+  if (allocated(MnmK1K2)) deallocate(MnmK1K2)
+  if (allocated(MnmK1K22)) deallocate(MnmK1K22)
   !$omp end parallel
+
+
+
 
   print *, 'DEBUG: exiting parallel region'
   
@@ -629,9 +633,6 @@ if (allocated(Gfast)) deallocate(Gfast)
 
 ! deallocaate scalar arrays      
 ! deallocate(factMatrix)
-
-if (allocated(MnmK1K2)) deallocate(MnmK1K2)
-if (allocated(MnmK1K22)) deallocate(MnmK1K22)
 
 ! deallocaate multidim arrays
 deallocate(kI)
@@ -1470,7 +1471,7 @@ end subroutine findKQinBZ
 
   end subroutine loadkIandE
 
-subroutine genStrujniVrhovi(jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2, MnmK1K22)
+subroutine genCurrentVertices(jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2, MnmK1K22)
   ! Konstrukcijamatricnih elementa strujnih vrhova MnmK1K2(iG) i MnmK1K2(iG) 
   implicit none
   integer,          intent(in)    :: iG0, Nlf, NG1, NG2, NGd
@@ -1487,15 +1488,15 @@ subroutine genStrujniVrhovi(jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0, NG1, 
   complex(kind=dp), intent(in)    :: C2(:)
   integer,          intent(inout) :: jump
   integer,          intent(inout) :: Gfast(:)
-  complex(kind=dp), intent(out)   :: MnmK1K2(:)
-  complex(kind=dp), intent(out)   :: MnmK1K22(:)
+  complex(kind=dp), intent(out)   :: MnmK1K2(*)
+  complex(kind=dp), intent(out)   :: MnmK1K22(*)
 
   integer          :: iG, iG1, iG2
   integer          :: iGfast
   real(kind=dp)    :: K11, K22, K33
   real(kind=dp)    :: Gxx1,Gyy1,Gzz1
   real(kind=dp)    :: Gxx2,Gyy2,Gzz2
-  real(kind=dp)    :: struja, struja_y, struja_z
+  real(kind=dp)    :: current, current_y, current_z
   
   ! neven debug
   ! print *, 'kx,ky,kz:', kx,ky,kz
@@ -1534,15 +1535,15 @@ subroutine genStrujniVrhovi(jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0, NG1, 
           ! print *,'qx,kx,Glf(1,iG),k11,Gcar'
           ! print *,qx,kx,Glf(1,iG),k11,Gcar
         ! end if
-        struja = (qx + 2.0*kx + Glf(1,iG) + 2.0*k11)*Gcar
-        ! print *,'struja:',struja
+        current = (qx + 2.0*kx + Glf(1,iG) + 2.0*k11)*Gcar
+        ! print *,'current:',current
       else if (pol == 'yy') then
-        struja = (qy + 2.0*ky + Glf(2,iG) + 2.0*k22)*Gcar
+        current = (qy + 2.0*ky + Glf(2,iG) + 2.0*k22)*Gcar
       else if (pol == 'zz') then
-        struja = (qz + 2.0*kz + Glf(3,iG) + 2.0*k33)*Gcar
+        current = (qz + 2.0*kz + Glf(3,iG) + 2.0*k33)*Gcar
       else if (pol == 'yz') then
-        struja_y = (qy + 2.0*ky + Glf(2,iG) + 2.0*k22)*Gcar
-        struja_z = (qz + 2.0*kz + Glf(3,iG) + 2.0*k33)*Gcar
+        current_y = (qy + 2.0*ky + Glf(2,iG) + 2.0*k22)*Gcar
+        current_z = (qz + 2.0*kz + Glf(3,iG) + 2.0*k33)*Gcar
       end if
       k11 = k11 + Glf(1,iG) + G(1,iG0)
       k22 = k22 + Glf(2,iG) + G(2,iG0)
@@ -1569,16 +1570,16 @@ subroutine genStrujniVrhovi(jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0, NG1, 
       if (iG2 <= NG2) then
         ! ako je polarazcija je tipa xx, yy, zz 
         if (pol == 'xx' .or. pol== 'yy' .or. pol == 'zz') then
-          MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * struja * C2(iG2)
+          MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * current * C2(iG2)
           MnmK1K22(iG) = MnmK1K2(iG) ! strujni vrhovi su isti
           ! neven debug
           ! print *,'MnmK1K2(iG)',MnmK1K2(iG)
           ! print *, '0.5D0*conjg(C1(iG1))',0.5D0*conjg(C1(iG1))
-          ! print *,'struja',struja
+          ! print *,'current',current
           ! print *,'C2',C2(iG2)
         elseif (pol =='yz' .or. pol =='zy') then ! ako  su miksani yz
-          MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * struja_y * C2(iG2)
-          MnmK1K22(iG) = MnmK1K22(iG) + 0.5D0*conjg(C1(iG1)) * struja_z * C2(iG2)
+          MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * current_y * C2(iG2)
+          MnmK1K22(iG) = MnmK1K22(iG) + 0.5D0*conjg(C1(iG1)) * current_z * C2(iG2)
         else
           print *,'WARNING Specified mixed polarization component not supported.'//adjustl(trim(pol))//' not allowed.'
           stop
@@ -1588,7 +1589,7 @@ subroutine genStrujniVrhovi(jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0, NG1, 
   end do iG_loop
   jump = 2 ! za svaki valni vektor q i dani k zapamti Gfast i za svaku vrpcu preskaci taj postupak   
     
-end subroutine genStrujniVrhovi
+end subroutine genCurrentVertices
 
 end PROGRAM surface_current
 
