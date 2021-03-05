@@ -354,11 +354,14 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
     call loadCsQE6(K1, n, savedir, NG1, C1)
     ! !$omp end critical(loadCs_)
 
-    if (NGd > NG1) then
-      write(*,*) 'NGd is bigger than NG1=',NG1
-      STOP
-    end if
+    ! redundant, this check already exists in loadCsQE6
+    ! if (NGd > NG1) then
+    !   write(*,*) 'NGd is bigger than NG1=',NG1
+    !   STOP
+    ! end if
     
+    call loadCsQE6_full(K2, savedir, NG2, C2)
+
     bands_m_loop: do m = 1,Nband
 
       call genOccupation(E(K2,m),Efermi,T,expo2,f2)
@@ -371,13 +374,14 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
         ! !$omp critical(loadCs_)
         ! iuni2 = 21 + (2*thread_id+1) + (2*ik+1)*osdependent_id + (2*m+1)*100
-        call loadCsQE6_full(K2, savedir, NG2, C2)
+        ! call loadCsQE6(K2, m, savedir, NG2, C2)
         ! !$omp end critical(loadCs_)
 
-        if (NGd > NG2) then
-          write(*,*) 'NGd is bigger than NG2=',NG2
-          STOP
-        end if
+        ! redundant, this check already exists in loadCsQE6
+        ! if (NGd > NG2) then
+        !   write(*,*) 'NGd is bigger than NG2=',NG2
+        !   STOP
+        ! end if
 
 
         ! Konstrukcija stupca matricnih elementa MnmK1K2(iG) i MnmK1K22(jG)
@@ -1266,10 +1270,7 @@ end subroutine findKQinBZ
 
     read(iuni) ! dummy_int
     ! allocate (evc(npol*igwx))
-    if ( ibnd > nbnd) then 
-       print '("looking for band nr. ",I7," but there are only ",I7," bands in the file")',ibnd, nbnd
-       stop
-    end if 
+
     do i = 1, nbnd 
         read(iuni) evc(i,1:npol*igwx) 
     end do 
