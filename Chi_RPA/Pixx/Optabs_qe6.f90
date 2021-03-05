@@ -319,11 +319,11 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
     
     ! !$omp critical(printWaveVector)
     debugCount = debugCount + 1
-    write (*,'(A13,I4,A5,I8,A11,I6,A2,I6,A5,F5.1,A4,A14,3F10.6,A35)') 'thread id: ',thread_id, &
+    write (*,'(A13,I4,A5,I8,A11,I6,A2,I6,A5,F5.1,A4,/,A14,3F10.6,/,A31)') 'thread id: ',thread_id, &
                                                     & 'ik: ',ik, &
                                                     & 'progress: ',debugCount, ' /',Ntot,' (',(real(debugCount)/real(Ntot))*100.0,'% )', &
-                                                    & '\n KQx,KQy,KQz: ',KQx,KQy,KQz, &
-                                                    & '\n-------------------------------\n'
+                                                    & 'KQx,KQy,KQz: ',KQx,KQy,KQz, &
+                                                    & '-------------------------------'
     ! !$omp end critical(printWaveVector)
 
   !  trazenje (KQx,KQy) prvo u 1.B.Z a onda u I.B.Z.
