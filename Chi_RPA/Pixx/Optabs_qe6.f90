@@ -127,7 +127,8 @@ complex(kind=dp), dimension(:,:,:), allocatable  :: S0_partial ! pomocna var. za
 character (len=100) :: bandn,bandm,dummy,pathk1,pathk2, dato1, dato2, dato3, path
 character (len=35)  :: tag,buffer
 
-complex(kind=dp), dimension(:), allocatable :: C1,C2
+complex(kind=dp), dimension(:), allocatable :: C1
+complex(kind=dp), dimension(:,:), allocatable :: C2
 
 ! OpenMP vars
 integer       :: Nthreads
@@ -316,12 +317,14 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
     KQy = ky + qy
     KQz = kz + qz
     
-    !$omp critical(printWaveVector)
+    ! !$omp critical(printWaveVector)
     debugCount = debugCount + 1
-    write (*,'(A13,I4,A5,I8,A11,I6,A2,I6,A5,F5.1,A4)') 'thread id: ',thread_id,'ik: ',ik, 'progress: ',debugCount, ' /',Ntot,' (',(real(debugCount)/real(Ntot))*100.0,'% )'
-    write (*,'(A14,3F10.6)') 'KQx,KQy,KQz: ',KQx,KQy,KQz
-    print *,'-------------------------------'
-    !$omp end critical(printWaveVector)
+    write (*,'(A13,I4,A5,I8,A11,I6,A2,I6,A5,F5.1,A4,A14,3F10.6,A35)') 'thread id: ',thread_id, &
+                                                    & 'ik: ',ik, &
+                                                    & 'progress: ',debugCount, ' /',Ntot,' (',(real(debugCount)/real(Ntot))*100.0,'% )', &
+                                                    & '\n KQx,KQy,KQz: ',KQx,KQy,KQz, &
+                                                    & '\n-------------------------------\n'
+    ! !$omp end critical(printWaveVector)
 
   !  trazenje (KQx,KQy) prvo u 1.B.Z a onda u I.B.Z.
   call findKQinBZ(KQx, KQy, KQz, eps, Nsymm, NkI, Ntot, NG, ktot, kI, RI, G, iG0, R2, K2)
@@ -338,7 +341,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   S0_partial(-No:No,1:Nlf,1:Nlf) = cmplx(0.0,0.0)
 
   allocate(C1(NG))
-  allocate(C2(NG))
+  allocate(C2(Nband,NG))
 
   bands_n_loop: do n = 1,Nband
 
@@ -346,10 +349,10 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
     ! allocate(C1(NG))
 
-    !$omp critical(loadCs_)
-    iuni1 = 20 + 2*thread_id + ik*osdependent_id + n*100
-    call loadCsQE6(K1, n, iuni1, savedir, NG1, C1)
-    !$omp end critical(loadCs_)
+    ! !$omp critical(loadCs_)
+    ! iuni1 = 20 + 2*thread_id + ik*osdependent_id + n*100
+    call loadCsQE6(K1, n, savedir, NG1, C1)
+    ! !$omp end critical(loadCs_)
 
     if (NGd > NG1) then
       write(*,*) 'NGd is bigger than NG1=',NG1
@@ -366,10 +369,10 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
         ! call paths(outdir,K1,K2,n,m,pathk1,pathk2,bandn,bandm)
         ! allocate(C2(NG))
 
-        !$omp critical(loadCs_)
-        iuni2 = 21 + (2*thread_id+1) + (2*ik+1)*osdependent_id + (2*m+1)*100
-        call loadCsQE6(K2, m, iuni2, savedir, NG2, C2)
-        !$omp end critical(loadCs_)
+        ! !$omp critical(loadCs_)
+        ! iuni2 = 21 + (2*thread_id+1) + (2*ik+1)*osdependent_id + (2*m+1)*100
+        call loadCsQE6_full(K2, savedir, NG2, C2)
+        ! !$omp end critical(loadCs_)
 
         if (NGd > NG2) then
           write(*,*) 'NGd is bigger than NG2=',NG2
@@ -378,7 +381,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
 
         ! Konstrukcija stupca matricnih elementa MnmK1K2(iG) i MnmK1K22(jG)
-        call genCurrentVertices(jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2, MnmK1K22)
+        call genCurrentVertices(jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, Glf, G, Gfast, C1, C2(m,:), MnmK1K2, MnmK1K22)
         ! deallocate(C2)
 
         intraORinterband_if: if (n /= m) then
@@ -1171,13 +1174,13 @@ end subroutine findKQinBZ
     5000 continue 
   end subroutine loadG_QE6
 
-  subroutine loadCsQE6(ik, ibnd, iuni, savedir, igwx, evc)
+  subroutine loadCsQE6(ik, ibnd, savedir, igwx, evc)
     ! read_a_wfc(ibnd, filename, evc, ik, xk, nbnd, ispin, npol, gamma_only, ngw, igwx )
     ! read QE 6.0 and greater, wfn coefficeints
     ! use iso_fortran_env, ONLY: DP=> REAL64
     implicit none 
     character (len=*), intent(in)                  :: savedir
-    integer,           intent(in)                  :: ik, ibnd, iuni
+    integer,           intent(in)                  :: ik, ibnd
     integer,           intent(out)                 :: igwx
     complex(dp),       intent(inout)               :: evc(*)
 
@@ -1187,7 +1190,7 @@ end subroutine findKQinBZ
     real(dp) :: xk(3)
     ! integer  :: dummy_int   
     logical  :: gamma_only 
-    integer  :: ios 
+    integer  :: ios, iuni 
     real(dp) :: scalef
     real(dp) :: b1(3), b2(3), b3(3) !, dummy_real 
 
@@ -1199,7 +1202,7 @@ end subroutine findKQinBZ
     path = trim(savedir)//str1//trim(adjustl(ik_str))//str3
     ! iuni = 10 + ik*100 + ibnd*20000
     ! print *,path
-    open(unit = iuni, file = trim(adjustl(path)), form = 'unformatted', status = 'old', iostat=ios) 
+    open(newunit = iuni, file = trim(adjustl(path)),action='read', form = 'unformatted', status = 'old', iostat=ios) 
     read(iuni) ! ik2, xk, ispin, gamma_only, scalef
     read(iuni) ngw, igwx, npol, nbnd
     read(iuni) b1, b2, b3 
@@ -1224,6 +1227,56 @@ end subroutine findKQinBZ
     close(iuni)
 !    deallocate(evc) 
   end subroutine loadCsQE6
+
+  subroutine loadCsQE6_full(ik, savedir, igwx, evc)
+    ! read_a_wfc(ibnd, filename, evc, ik, xk, nbnd, ispin, npol, gamma_only, ngw, igwx )
+    ! read QE 6.0 and greater, wfn coefficeints
+    ! use iso_fortran_env, ONLY: DP=> REAL64
+    implicit none 
+    character (len=*), intent(in)                  :: savedir
+    integer,           intent(in)                  :: ik
+    integer,           intent(out)                 :: igwx
+    complex(dp),       intent(inout)               :: evc(:,:)
+
+    character (len=300) :: path 
+
+    integer  :: nbnd, ispin, npol,  i, ik2, ngw
+    real(dp) :: xk(3)
+    ! integer  :: dummy_int   
+    logical  :: gamma_only 
+    integer  :: ios, iuni 
+    real(dp) :: scalef
+    real(dp) :: b1(3), b2(3), b3(3) !, dummy_real 
+
+    character(len=4)   :: str1 ='/wfc'
+    character(len=4)   :: str3 ='.dat'
+    character(len=100) :: ik_str
+    write(ik_str,'(I10)') ik
+
+    path = trim(savedir)//str1//trim(adjustl(ik_str))//str3
+    ! iuni = 10 + ik*100 + ibnd*20000
+    ! print *,path
+    open(newunit = iuni, file = trim(adjustl(path)),action='read', form = 'unformatted', status = 'old', iostat=ios) 
+    read(iuni) ! ik2, xk, ispin, gamma_only, scalef
+    read(iuni) ngw, igwx, npol, nbnd
+    read(iuni) b1, b2, b3 
+
+    ! avoid reading miller indices of G vectors below E_cut for this kpoint 
+    ! if needed allocate  an integer array of dims (1:3,1:igwx) 
+
+    read(iuni) ! dummy_int
+    ! allocate (evc(npol*igwx))
+    if ( ibnd > nbnd) then 
+       print '("looking for band nr. ",I7," but there are only ",I7," bands in the file")',ibnd, nbnd
+       stop
+    end if 
+    do i = 1, nbnd 
+        read(iuni) evc(i,1:npol*igwx) 
+    end do 
+    close(iuni)
+!    deallocate(evc) 
+  end subroutine loadCsQE6_full
+
 
   subroutine genReChi0(io,No,Nlf,iG,jG,oi,domega,S0,ReChi0)
     implicit none
@@ -1483,13 +1536,13 @@ subroutine genCurrentVertices(jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0, NG1
   real(kind=dp),    intent(in)    :: R(:,:,:)
   real(kind=dp),    intent(in)    :: RI(:,:,:)
   real(kind=dp),    intent(in)    :: Glf(:,:)
-  real(kind=dp),    intent(in)    :: G(:,:)     ! polje valnih vektora G u recp. prost. za wfn.
-  complex(kind=dp), intent(in)    :: C1(:)
-  complex(kind=dp), intent(in)    :: C2(:)
+  real(kind=dp),    intent(in)    :: G(:,:)  ! polje valnih vektora G u recp. prost. za wfn.
+  complex(kind=dp), intent(in)    :: C1(:)   ! dim NG
+  complex(kind=dp), intent(in)    :: C2(:)   ! dim NG (bcs the input is dim iband x NG )
   integer,          intent(inout) :: jump
   integer,          intent(inout) :: Gfast(:)
-  complex(kind=dp), intent(out)   :: MnmK1K2(*)
-  complex(kind=dp), intent(out)   :: MnmK1K22(*)
+  complex(kind=dp), intent(out)   :: MnmK1K2(:)
+  complex(kind=dp), intent(out)   :: MnmK1K22(:)
 
   integer          :: iG, iG1, iG2
   integer          :: iGfast
