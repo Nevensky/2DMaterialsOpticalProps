@@ -280,7 +280,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   print *, "Found minimal wave-vector q."
 
   ! Info file
-  call writeInfo(lf, pol, qx, qy, qz, Gcar, Nsymm, Nlf, Ntot, NkI, Nband, T, Nel, NelQE,Gamma_intra, Gamma_inter, dato1, dato2, dato3)
+  call writeInfo(lf, pol, qx, qy, qz, Gcar, Nsymm, Nlf, Ntot, NkI, Nband, T, Nel, NelQE,Gamma_intra, Gamma_inter, dato1, dato2, dato3,config_file)
   
   
   if (calc == 2 .and. calc /= 3 ) GO TO 888
@@ -686,7 +686,7 @@ contains
   
   end subroutine loadKC
 
-  subroutine writeInfo(lf, pol, qx, qy, qz, Gcar, Nsymm, Nlf, Ntot, NkI, Nband, T, Nel, NelQE,Gamma_intra, Gamma_inter, dato1, dato2, dato3)
+  subroutine writeInfo(lf, pol, qx, qy, qz, Gcar, Nsymm, Nlf, Ntot, NkI, Nband, T, Nel, NelQE,Gamma_intra, Gamma_inter, dato1, dato2, dato3, config_file)
     implicit none
     integer      ,      intent(in) :: NelQE, Nsymm, Nlf, Ntot, NkI, Nband
     real(kind=dp),      intent(in) :: qx,qy,qz
@@ -695,6 +695,7 @@ contains
     real(kind=dp),      intent(in) :: Gamma_inter, Gamma_intra
     character(len=3),   intent(in) :: lf, pol
     character(len=100), intent(in) :: dato1, dato2, dato3
+    character(len=200), intent(in) :: config_file
 
     integer       :: ios
     real(kind=dp) :: absq, error
@@ -708,6 +709,7 @@ contains
     write(55,*)'***************General***********************'
     write(55,*)' Currently we calculate         ---->',adjustl(trim(dato1))
     write(55,*)' Currently we calculate         ---->',adjustl(trim(dato2))
+    write(55,*)' Input config file: ',adjustl(config_file)
     write(55,*)''
     write(55,*)'Number of point symmetry operation is',Nsymm
     ! if (frac == 0)write(55,*)'Fraction translation is not detected'
@@ -749,7 +751,7 @@ contains
 
   subroutine parseCommandLineArgs(config_file)
     implicit none
-    character(len=128), intent(out) :: config_file
+    character(len=200), intent(out) :: config_file
   
     if(command_argument_count() > 1) then
     print *, 'ERROR: Please provide a single argument corresponding to the config_file path.'
@@ -760,6 +762,7 @@ contains
       call get_command_argument(1,config_file) 
     endif
     config_file = trim(config_file)
+    print *, 'Config file: ',config_file
   end subroutine parseCommandLineArgs
 
   subroutine findMinQ(Ntot, ktot, qx, qy, qz)
