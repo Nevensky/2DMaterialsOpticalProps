@@ -7,7 +7,7 @@ implicit none
 
 ! calc = 1 tenzor korelacijske funkcije, calc = 2 current-current tenzor (Kramers-Krroning)
 
-character (len=200) :: rundir, savedir, band_file, scf_file
+character (len=200) :: rundir, savedir, band_file, scf_file,config_file
 namelist /directories/ rundir, savedir, scf_file, band_file
 
 integer :: ik,i,j,jk,it,lk,Ntot,iG0,Nsymm,iq, &
@@ -163,7 +163,8 @@ namelist  /parallel/ Nthreads
 
 
 ! load namelist
-open(10,file='config.in')
+call parseCommandLineArgs(config_file) ! config file is the first argument passed to ./Loss <arg1>
+open(10,file=config_file)
 read(10,nml=directories,iostat=ist4)
 read(10,nml=system,iostat=ist5)
 read(10,nml=config,iostat=ist6)
@@ -746,6 +747,21 @@ contains
 
   end subroutine writeInfo
 
+  subroutine parseCommandLineArgs(config_file)
+    implicit none
+    character(len=128), intent(out) :: config_file
+  
+    if(command_argument_count() > 1) then
+    print *, 'ERROR: Please provide a single argument corresponding to the config_file path.'
+      stop
+    else if (command_argument_count() ==0) then
+      config_file ='config.in'
+    else
+      call get_command_argument(1,config_file) 
+    endif
+    config_file = trim(config_file)
+  end subroutine parseCommandLineArgs
+
   subroutine findMinQ(Ntot, ktot, qx, qy, qz)
     ! searching min. q=(qx,qy,qz) in Gamma -> M direction
     integer,       intent(in)  :: Ntot
@@ -930,7 +946,7 @@ end subroutine findKQinBZ
     ! deallocate(k)
 
     ! output da vidimo kako izgleda FBZ
-    open(887,FILE='fbz_check.dat',status='new')
+    open(887,FILE='fbz_check.dat')
     do  i = 1,Ntot
       write(887,*) ktot(1,i), ktot(2,i)  
     end do
@@ -1166,6 +1182,8 @@ end subroutine findKQinBZ
       ! parG(iG) = Gi(3,iG)
     end do
     close(200)
+
+    deallocate(Gi)
 
     goto 5000
     199 write(*,*) 'error cant open file id 199, ist=',ios0
