@@ -15,14 +15,14 @@ program photon
   integer i, j, n, m, io, iq,itheta, iG, jG, kG, Nlf, Nlf2
   integer ist1,ist2,ist3,ist4,ist5,ist6
 
+  integer :: No     ! number of frequencies
   integer :: NG     ! total number of G vectors 
   integer :: NGd    ! minimum number of coefficients CG over all evc.n files
   integer :: NkI    ! number of wave vectors in IBZ
   integer :: Nk     ! = 48*NkI, number of wave vectors in FBZ with No symmetry 
-  integer :: No     ! number of frequencies
   integer :: Nlfd   ! dimenzija polja local field vektora, x2 zbog 2X2 blok matrice za p mod 
   integer :: Ntheta ! ? angle ... dq?
-  namelist /config/  NG, NGd, NkI, No, Nlfd, Ntheta
+  namelist /config/  No, NG, NGd, NkI, Nlfd, Ntheta
 
 
   ! ... constants ...
@@ -85,7 +85,7 @@ program photon
   call parseCommandLineArgs(config_file) ! config file is the first argument passed to ./Photon <arg1>
   open(10,file=config_file)
   read(10,nml=directories,iostat=ist1)
-  read(10,nml=system,iostat=ist2)
+  read(10,nml=config,iostat=ist2)
   read(10,nml=parameters,iostat=ist3)
   read(10,nml=parallel,iostat=ist4)
   close(10)
