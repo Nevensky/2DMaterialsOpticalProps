@@ -94,6 +94,8 @@ program photon
   Nk   = 48*NkI           ! number of wave vectors in FBZ with No symmetry ops.
   Gcar = 2.0*pi/a0   
   eta  = eta/Hartree
+  omin = omin/Hartree ! iz eV u Hartree
+  omax = (omax/Hartree + omin) 
 
   ! allocation of arrays
   allocate( G(3,NG) )
