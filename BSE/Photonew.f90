@@ -12,8 +12,8 @@ program photon
   integer, parameter :: qp = real128
 
 
-  integer i, j, n, m, io, iq, iG, jG, kG, Nlf, Nlf2
-
+  integer i, j, n, m, io, iq,itheta, iG, jG, kG, Nlf, Nlf2
+  integer ist1,ist2,ist3,ist4,ist5,ist6
 
   integer :: NG     ! total number of G vectors 
   integer :: NGd    ! minimum number of coefficients CG over all evc.n files
@@ -27,10 +27,10 @@ program photon
 
   ! ... constants ...
   real(kind=dp),  parameter :: pi      = 4.d0*atan(1.d0)
-  real(kind=dp),  parameter :: eV      = 1.602176487D-19
+  real(kind=dp),  parameter :: eV      = 1.602176487d-19
   real(kind=dp),  parameter :: kB      = 1.3806503d-23
-  real(kind=dp),  parameter :: Hartree = 2.0D0*13.6056923D0
-  real(kind=dp),  parameter :: Planck  = 6.626196D-34
+  real(kind=dp),  parameter :: Hartree = 2.0D0*13.6056923d0
+  real(kind=dp),  parameter :: Planck  = 6.626196d-34
   real(kind=dp),  parameter :: aBohr   = 0.5291772d0
   real(kind=dp),  parameter :: gamma   = 1.0/137.0
 
@@ -41,7 +41,7 @@ program photon
   real(kind=dp) :: theta, dtheta
   complex(kind = dp) :: oi, beta
   ! complex(kind = dp) :: Aii, Ajj, Aij, Bij, diagonal1, diagonal2
-  complex(kind = dp) :: Sigma_xx,Sigma_yy,Sigma_zz   
+   
 
   ! ...arrays...
   integer, allocatable       :: parG(:)
@@ -51,11 +51,11 @@ program photon
   real(kind=dp), allocatable :: Glf(:,:)
   real(kind=dp), allocatable :: KC(:,:)
 
-  complex(kind=dp), dimension(:,:) :: TS, TP, TScheck, TPcheck
-  complex(kind=dp), dimension(:,:) :: Imat, Imat2
-  complex(kind=dp), dimension(:,:) :: Dxx0, Dyy0, Dzz0 ,Dyz0, Dzy0
-  complex(kind=dp), dimension(:,:) :: Pixx0, Piyy0, Piyz0, Pizy0, Pizz0
-  complex(kind=dp), dimension(:,:) :: Pixx, Piyy, Piyz, Pizy, Pizz
+  complex(kind=dp), dimension(:,:), allocatable :: TS, TP, TScheck, TPcheck
+  ! complex(kind=dp), dimension(:,:), allocatable :: Imat, Imat2
+  complex(kind=dp), dimension(:,:), allocatable :: Dxx0, Dyy0, Dzz0 ,Dyz0, Dzy0
+  complex(kind=dp), dimension(:,:), allocatable :: Pixx0, Piyy0, Piyz0, Pizy0, Pizz0
+  complex(kind=dp), dimension(:,:), allocatable :: Pixx, Piyy, Piyz, Pizy, Pizz
 
   character(len=200) :: path
   character(len=35)  :: tag,buffer
@@ -84,10 +84,10 @@ program photon
   ! load namelist
   call parseCommandLineArgs(config_file) ! config file is the first argument passed to ./Photon <arg1>
   open(10,file=config_file)
-  read(10,nml=directories,iostat=ist4)
-  read(10,nml=system,iostat=ist5)
-  read(10,nml=parameters,iostat=ist7)
-  read(10,nml=parallel,iostat=ist8)
+  read(10,nml=directories,iostat=ist1)
+  read(10,nml=system,iostat=ist2)
+  read(10,nml=parameters,iostat=ist3)
+  read(10,nml=parallel,iostat=ist4)
   close(10)
 
   ! constants
@@ -97,13 +97,13 @@ program photon
 
   ! allocation of arrays
   allocate( G(3,NG) )
+  allocate( parG(NG) )
   allocate( Glf(3,Nlfd) )
   allocate( KC(3,3) )
-  allocate( parG(NG) )
   allocate( Gi(3) )
 
-  allocate( Imat(Nlfd,Nlfd)  )
-  allocate( Imat2(Nlfd,Nlfd) )
+  ! allocate( Imat(Nlfd,Nlfd)  )
+  ! allocate( Imat2(Nlfd,Nlfd) )
 
   allocate( Dxx0(Nlfd,Nlfd) )
   allocate( Dyy0(Nlfd,Nlfd) )
@@ -140,7 +140,7 @@ program photon
   ! Reading the reciprocal vectors in crystal coordinates and transformation
   ! in Cartesian cordinates.
   ! call loadG(NG,KC,G)
-  call loadG_QE6(savedir,KC,NG,G)
+  call loadG_QE6(savedir, KC, NG, parG, G)
   print *,"status: G vectors loaded. NG=",NG
 
   ! Reciprocal vectors for crystal local field effects calculations in array Glf(3,Nlf)
@@ -153,20 +153,18 @@ program photon
     Glf(:,iG) = Gcar*Glf(:,iG)
   enddo
 
-  Nlf2 = 2*Nlf 
-
-
+  ! Nlf2 = 2*Nlf
+  ! print *, 'Nlf2 (p-mode): ',Nlf2
 
   !*******************************************************************
-  !        POCETAK ITERIRANJA PO Q I OMEGA
+  !   START ITERATING OVER TRANSFER WAVEVECTORS AND FREQUNECIES
   !******************************************************************
-  
    
   angle_loop: do itheta = 1,Ntheta
     theta = (itheta-1)*dtheta
     print *, 'theta = ',180.0*theta/pi,'°'
 
-    q_loop: do iq =  qmin,qmax
+    q_loop: do iq =  qmin, qmax
       print*, ' iq: ', iq
     
       q = (iq-1)*dq
@@ -194,181 +192,64 @@ program photon
         call readPi0(io, No, Nlf, rpa_xx_file, rpa_yy_file, rpa_zz_file, Pixx0, Piyy0, Piyz0, Pizy0, Pizz0)
 
         ! KONSTRUKCIJA TS MATRICE S - MOD
-        Imat(:,:) = cmplx(0.0,0.0)
-        TS(:,:) = cmplx(0.0,0.0)
-        do iG = 1,Nlf
-          Imat(iG,iG) = cmplx(1.0,0.0)
-          do jG = 1,Nlf    
-            do kG = 1,Nlf   
-              TS(iG,jG) = TS(iG,jG) + Pixx0(iG,kG)*Dxx0(kG,jG)
-            enddo
-          enddo
-        enddo
-        TS = Imat - TS
+        call genTS(Nlf, Dxx0, Pixx0, TS)
 
         ! invertiranje matrice TS
-        call gjel(TS,Nlf,Nlfd,Imat,Nlf,Nlfd)
+        ! call gjel(TS,Nlf,Nlfd,Imat,Nlf,Nlfd)
+       call invert(TS)
 
 
         ! KONSTRUKCIJA TP MATRICE P - MOD
-
-        Imat2(1:Nlf2,1:Nlf2) = cmplx(0.0,0.0)
-        TP(1:Nlf2,1:Nlf2) = cmplx(0.0,0.0) 
-        do iG = 1,Nlf2
-          Imat2(iG,iG) = cmplx(1.0,0.0)
-        enddo
-        
-
-        do iG = 1,Nlf2
-          do jG = 1,Nlf2 
-            if(iG <= Nlf .and. jG <= Nlf) then 
-              do kG = 1,Nlf   
-                TP(iG,jG) = TP(iG,jG) + Piyy0(iG,kG)*Dyy0(kG,jG) & 
-                          & + Piyz0(iG,kG)*Dzy0(kG,jG)
-              enddo
-            elseif (iG <= Nlf.and.jG > Nlf) then
-              do kG = 1,Nlf
-                TP(iG,jG) = TP(iG,jG) + Piyy0(iG,kG)*Dyz0(kG,jG-Nlf) &
-                          & + Piyz0(iG,kG)*Dzz0(kG,jG-Nlf)
-              enddo
-            elseif (iG > Nlf .and. jG <= Nlf) then
-              do kG = 1,Nlf
-                TP(iG,jG) = TP(iG,jG) + Pizy0(iG-Nlf,kG)*Dyy0(kG,jG) &
-                          & + Pizz0(iG-Nlf,kG)*Dzy0(kG,jG)
-              enddo
-            else
-              do  kG = 1,Nlf
-                TP(iG,jG) = TP(iG,jG) + Pizy0(iG-Nlf,kG)*Dyz0(kG,jG-Nlf) &
-                          & + Pizz0(iG-Nlf,kG)*Dzz0(kG,jG-Nlf)
-              enddo
-            endif
-          enddo
-        enddo
-        TP = Imat2 - TP    
+        call genTP(Nlf, Dyy0, Dyz0, Dzy0, Dzz0, Piyy0, Piyz0, Pizy0, Pizz0, TP)
         
 
         ! invertiranje matrice TP
-        call gjel(TP,Nlf2,Nlfd,Imat2,Nlf2,Nlfd)
+        ! call gjel(TP,Nlf2,Nlfd,Imat2,Nlf2,Nlfd)
+        call invert(TP)
 
 
         ! SCREENED CURRENT - CURRENT MATRICES S-mod: 'Pixx'; P-mod:'Piyy, Piyz, Pizy, Pizz' 
-        call genScreenedPi(Nlf,TS, TP,Pixx0, Piyy0, Piyz0, Pizy0, Pizz0,Pixx, Piyy, Piyz, Pizy, Pizz)
+        call genScreenedPi(Nlf, TS, TP, Pixx0, Piyy0, Piyz0, Pizy0, Pizz0,Pixx, Piyy, Piyz, Pizy, Pizz)
         
 
-        ! vodljivost u jedinicama pi*e^2/2h   
+        ! DEBUG: mozda prepraviti?
+        ! unscreened conductivity [ pi*e^2/2h ]
         write(301,*)o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pixx0(1,1)/o)
         write(302,*)o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Piyy0(1,1)/o)
         write(303,*)o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pizz0(1,1)/o)
 
         !***********************************
         !       MACROSCOPIC CONDUCTIVITY 
-        !****************************************** 
+        !*********************************** 
 
 
         ! KONSTRUKCIJA TS MATRICE S - MOD
-        Imat(:,:) = cmplx(0.0,0.0)
-        TS(:,:) = cmplx(0.0,0.0)
-        do 1018 iG = 1,Nlf
-          Imat(iG,iG) = cmplx(1.0,0.0)
-          do 1028 jG = 1,Nlf  
-            do 3058 kG = 1,Nlf
-              TS(iG,jG) = TS(iG,jG) + Pixx(iG,kG)*Dxx0(kG,jG)
-            enddo
-          enddo
-        enddo
-        TS = Imat + TS
+
+        call genTS(Nlf, Dxx0, Pixx, TS)
 
         ! invertiranje matrice TS
-        call gjel(TS,Nlf,Nlfd,Imat,Nlf,Nlfd)
+        ! call gjel(TS,Nlf,Nlfd,Imat,Nlf,Nlfd)
+        call invert(TS)
 
 
         ! KONSTRUKCIJA TP MATRICE P - MOD
-
-        Imat2(:,:) = cmplx(1.0,0.0)
-        TP(:,:) = cmplx(1.0,0.0)
-        do iG = 1,Nlf2
-          Imat2(iG,iG) = cmplx(1.0,0.0)
-        enddo
-
-        do iG = 1,Nlf2
-          do jG = 1,Nlf2 
-            if (iG <= Nlf .and. jG <= Nlf) then
-              do kG = 1,Nlf   
-                TP(iG,jG) = TP(iG,jG) + Piyy(iG,kG)*Dyy0(kG,jG) &
-                          & + Piyz(iG,kG)*Dzy0(kG,jG)
-              enddo
-            elseif (iG <= Nlf .and. jG > Nlf) then
-              do kG = 1,Nlf   
-                TP(iG,jG) = TP(iG,jG) + Piyy(iG,kG)*Dyz0(kG,jG-Nlf) &
-                          & + Piyz(iG,kG)*Dzz0(kG,jG - Nlf)
-              enddo
-            elseif (iG > Nlf .and. jG <= Nlf) then
-              do kG = 1,Nlf
-                TP(iG,jG) = TP(iG,jG)+Pizy(iG-Nlf,kG)*Dyy0(kG,jG) + &
-                          & + Pizz(iG - Nlf,kG)*Dzy0(kG,jG)
-              enddo
-            else 
-              do kG = 1,Nlf
-                TP(iG,jG) = TP(iG,jG) + Pizy(iG-Nlf,kG)*Dyz0(kG,jG-Nlf) &
-                          & + Pizz(iG-Nlf,kG)*Dzz0(kG,jG - Nlf)
-              enddo
-            endif
-          enddo
-        enddo
-        TP = Imat2 + TP
+        call genTP(Nlf, Dyy0, Dyz0, Dzy0, Dzz0, Piyy, Piyz, Pizy, Pizz, TP)
 
 
         ! invertiranje matrice TP
-        call gjel(TP,Nlf2,Nlfd,Imat2,Nlf2,Nlfd)
+        ! call gjel(TP,Nlf2,Nlfd,Imat2,Nlf2,Nlfd)
+        call invert(TP)
 
 
+        ! MAKROSKOPSKI SIGMA
+        call writeSigma_macroscopic(o, c0, Nlf, Pixx, Piyy, Pizz, TS, TP)
 
-        !     MAKROSKOPSKI SIGMA
-        Sigma_xx = Pixx(1,1:Nlf) * TS(1:Nlf,1)                                        ! s-mod
-        Sigma_yy = Piyy(1,1:Nlf) * TP(1:Nlf,1)     + Piyz(1,1:Nlf)*TP(Nlf:Nlf2,1)     ! p-mod
-        Sigma_zz = Pizy(1,1:Nlf) * TP(1:Nlf,Nlf+1) + Pizz(1,1:nlf)*TP(Nlf:Nlf2,Nlf+1) ! p-mod
-
-        !     S - MOD stored in ''Sigma_xx''       
-
-        !     Sigma_xx = cmplx(0.0,0.0)         
-        !     Sigma_xx = Sigma_xx + Pixx(1,1:Nlf)*TS(1:Nlf,1)
-
-        !     P - MOD stored in ''Sigma_yy,Sigma_zz''    
-
-
-        ! DEBUG: je li ovo oK?
-        !     Sigma_yy = cmplx(0.0,0.0)       
-        !     do 3005 kG = 1,Nlf   
-        !       Sigma_yy = Sigma_yy + Piyy(1,kG)*TP(kG,1) + Piyz(1,kG)*TP(Nlf+kG,1)
-        !     enddo
-        !     Sigma_yy = Sigma_yy + Piyy(1,1:Nlf)*TP(1:Nlf,1) + Piyz(1,1:Nlf)*TP(Nlf:Nlf2,1) !oprez, je li dobro?
-
-
-        ! DEBUG: je li ovo oK?
-        !     Sigma_zz = cmplx(0.0,0.0)       
-        !     do kG = 1,Nlf   
-        !       Sigma_zz = Sigma_zz + Pizy(1,kG)*TP(1:Nlf,Nlf+1) + Pizz(1,kG)*TP(Nlf+kG,Nlf+1)
-        !     enddo
-        
-
-        !     vodljivost u jedinicama pi*e^2/2h   
-
-
-        write(501,*)o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Sigma_xx/o)
-        write(502,*)o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Sigma_yy/o)
-        write(503,*)o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Sigma_zz/o)
-
-        write(601,*)o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pixx(1,1)/o)
-        write(602,*)o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Piyy(1,1)/o)
-        write(603,*)o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pizz(1,1)/o)
 
       enddo omega_loop 
     enddo q_loop
   enddo angle_loop
 
   ! deallocate all arrays
-  if (allocated(Imat))  deallocate(Imat)
-  if (allocated(Imat2)) deallocate(Imat2)
   if (allocated(Dxx0))  deallocate(Dxx0)
   if (allocated(Dyy0))  deallocate(Dyy0)
   if (allocated(Dzz0))  deallocate(Dzz0)
@@ -409,48 +290,37 @@ contains
     print *, 'Config file: ',config_file
   end subroutine parseCommandLineArgs
 
-  subroutine invert_old(Nlf,Nlfd,Imat,A)
-      implicit none
-      integer,          intent(in)    :: Nlf
-      integer,          intent(in)    :: Nlfd
-      complex(kind=dp), intent(in)    :: Imat(:,:)
-      complex(kind=dp), intent(inout) :: A(:,:)
-
-      call gjel(A,Nlf,Nlfd,Imat,Nlf,Nlfd)
-
-  end subroutine invert_old
-
-  subroutine invert(m)
+  subroutine invert(A)
       implicit none
 
-      integer,          intent(in)    :: m
-
-      integer,          intent(in)    :: Nlf
-      integer,          intent(in)    :: Nlfd
-      complex(kind=dp), intent(in)    :: Imat(:,:)
+      ! integer,          intent(in)    :: Nlf
+      ! integer,          intent(in)    :: Nlfd
       complex(kind=dp), intent(inout) :: A(:,:)
 
-      complex(kind=dp) :: Acheck(:,:)
-      allocate(Acheck(size(A,1),size(A,2)))
-      Acheck = A
+      integer :: Nlf
+      complex(kind=dp), allocatable :: Acheck(:,:)
+
 
       ! MKL vars
       integer :: info_trf, info_tri
-      integer :: lwork = m
+      integer :: lwork
       integer, allocatable :: ipiv(:)
       integer, allocatable :: work(:)
 
       ! DEBUG: dgemm vars (inversion success check)
-      integer :: K = m
+      integer :: K
       real(kind=dp)    :: alpha = 1.0
       real(kind=dp)    :: beta = 0.0
       complex(kind=dp) :: checkIdentity
 
+      Nlf = size(A,1)
+      lwork = Nlf
+      K = Nlf      
+      allocate(Acheck(size(A,1),size(A,2)))
+      Acheck = A
 
-      call gjel(A,Nlf,Nlfd,Imat,Nlf,Nlfd)
-
-      allocate(ipiv(max(1,m)))
-      call zgetrf( m, n, A, m, ipiv, info_trf)
+      allocate(ipiv(max(1,Nlf)))
+      call zgetrf( Nlf, Nlf, A, Nlf, ipiv, info_trf)
       if (info_trf/=0) then
         print *, 'FATAL ERROR: LU decomposition failed.'
         print *, 'info_trf: ',info_trf
@@ -458,7 +328,7 @@ contains
       endif
 
       allocate(work(max(1,lwork)))
-      call zgetri( m, A, m, ipiv, work, lwork, info_tri )
+      call zgetri( Nlf, A, Nlf, ipiv, work, lwork, info_tri )
 
       if (info_tri/=0) then
         print *, 'FATAL ERROR: Matrix inversion failed.'
@@ -470,9 +340,9 @@ contains
       deallocate(work)
 
       ! DEBUG: provjera inverzije 
-      call zgemm('N','N',m,n,K,alpha,A,m,Acheck,K,beta,Acheck,m)
+      call zgemm('N','N', Nlf, Nlf, K, alpha, A, Nlf, Acheck, K, beta, Acheck, Nlf)
       checkIdentity = sum(abs(A)) - sum( (/ ( abs(a(i,i)), i=1, size(a, 1)) /) )
-      if (checkIdentity>10d-8) then
+      if (real(checkIdentity)>10d-8 .or. imag(checkIdentity)>10d-8) then
         print *, 'FATAL ERROR: Matrix inversion failed.'
         stop
       endif
@@ -481,18 +351,48 @@ contains
 
   end subroutine invert
 
-  subroutine loadG_QE6(savedir,KC,NG,G)
+  subroutine loadKC(path,KC)
+    character(len=100), intent(in)  :: path
+    real(kind=dp),      intent(out) :: KC(3,3)
+    
+    integer           :: j
+    integer           :: ios, lno=0
+    character(len=35) :: tag, buffer
+
+    tag='     reciprocal axes: (cart. coord.'
+
+    open(300,FILE=path,status='old')
+    do  i = 1,100000
+      read(300,'(a) ') buffer
+      lno = lno+1
+      if (buffer == tag) then
+        do  j = 1,3
+          read(300,'(23X,3F10.3) ',err=10001,iostat=ios,end=20001) KC(1,j), KC(2,j), KC(3,j)
+        end do
+        EXIT
+      end if
+    end do
+    close(300)
+ 
+    goto 8000
+    10001   write(*,*) 'Error reading line ',lno+1,', iostat = ',ios
+    20001   write(*,*) 'Number of lines read = ',lno
+    8000 continue
+  
+  end subroutine loadKC
+
+  subroutine loadG_QE6(savedir,KC,NG,parG,G)
     ! Reading the reciprocal vectors in crystal coordinates and transformation
     ! in Cartesian cordinates.
     implicit none
     character(len=*), intent(in)   :: savedir
-    real(kind=dp),  intent(in)   :: KC(3,3)
-    integer,      intent(out)  :: parG(:) ! paritet svakog valnog vektora G
-    integer,      intent(out)  :: NG
+    real(kind=dp),    intent(in)   :: KC(3,3)
+    integer,          intent(out)  :: parG(:) ! paritet svakog valnog vektora G
+    integer,          intent(out)  :: NG
     real(kind=dp), allocatable, intent(out)  :: G(:,:)  ! polje valnih vektora G u recp. prost. za wfn.
 
     integer :: ios0, ios1, ios2
-    integer :: unit
+    integer :: iuni
     integer :: n, m
     integer :: Nspin
     logical :: gamma_only
@@ -598,11 +498,12 @@ contains
     if (Nlf > Nlfd) then
       print*,'Nlf is bigger than Nlfd'
       stop
-    else if(Nlf<Nlfd) then
-      Nlfd = Nlf
+    else if(2*Nlf<Nlfd) then
+      ! DEBUG this line is different than in other programs where Nlfd=Nlf
+      Nlfd = 2*Nlf
     end if
   
-  end subroutine genGlf
+  end subroutine genGlfandParity
   
   subroutine genD0(q, oi, beta, c0, Nlf, parG, Glf, Dxx0, Dyy0, Dzz0 ,Dyz0, Dzy0)
     ! matrix elements of free photon propagator D^0_{\mu\nu}(G,G')
@@ -742,6 +643,137 @@ contains
       enddo
     enddo
   end subroutine genScreenedPi
+
+  subroutine genTS(Nlf, Dxx0, Pixx, TS)
+    implicit none
+
+    integer,          intent(in)  :: Nlf
+    complex(kind=dp), intent(in)  :: Dxx0(:,:)
+    complex(kind=dp), intent(in)  :: Pixx(:,:)
+    complex(kind=dp), intent(out) :: TS(:,:)
+
+    integer :: iG, jG !, kG
+    complex(kind=dp), allocatable :: Imat(:,:)
+
+    allocate(Imat(Nlf,Nlf))
+
+    Imat = cmplx(0.0,0.0)
+    TS = cmplx(0.0,0.0)
+    do iG = 1,Nlf
+      Imat(iG,iG) = cmplx(1.0,0.0)
+      do jG = 1,Nlf    
+        ! do kG = 1,Nlf   
+        TS(iG,jG) = sum( Pixx(iG,:)*Dxx0(:,jG) )
+        ! enddo
+      enddo
+    enddo
+    TS = Imat - TS
+
+    deallocate(Imat)
+
+  end subroutine genTS
+
+  subroutine genTP(Nlf, Dyy0, Dyz0, Dzy0, Dzz0, Piyy, Piyz, Pizy, Pizz, TP)
+    implicit none
+
+    integer,          intent(in)  :: Nlf
+    complex(kind=dp), intent(in),  dimension(:,:)  :: Dyy0, Dyz0, Dzy0, Dzz0
+    complex(kind=dp), intent(in),  dimension(:,:)  :: Piyy, Piyz, Pizy, Pizz
+    complex(kind=dp), intent(out), dimension(:,:)  :: TP
+
+
+    integer :: Nlf2  
+    integer :: iG, jG !, kG
+    complex(kind=dp), allocatable :: Imat(:,:)
+
+    Nlf2 = 2*Nlf ! TP matrix has a 2x2 block for z and y
+
+    allocate(Imat(Nlf2,Nlf2))
+
+    Imat(1:Nlf2,1:Nlf2) = cmplx(0.0,0.0)
+    TP(1:Nlf2,1:Nlf2) = cmplx(0.0,0.0) 
+    do iG = 1,Nlf2
+      Imat(iG,iG) = cmplx(1.0,0.0)
+    enddo
+    
+
+    do iG = 1,Nlf2
+      do jG = 1,Nlf2 
+        if(iG <= Nlf .and. jG <= Nlf) then 
+          ! do kG = 1,Nlf   
+          TP(iG,jG) = sum(Piyy(iG,:)*Dyy0(:,jG) + Piyz(iG,:)*Dzy0(:,jG) )
+          ! enddo
+        elseif (iG <= Nlf.and.jG > Nlf) then
+          ! do kG = 1,Nlf
+          TP(iG,jG) = sum( Piyy(iG,:)*Dyz0(:,jG-Nlf) + Piyz(iG,:)*Dzz0(:,jG-Nlf) )
+          ! enddo
+        elseif (iG > Nlf .and. jG <= Nlf) then
+          ! do kG = 1,Nlf
+          TP(iG,jG) = sum( Pizy(iG-Nlf,:)*Dyy0(:,jG) + Pizz(iG-Nlf,:)*Dzy0(:,jG) )
+          ! enddo
+        else
+          ! do  kG = 1,Nlf
+          TP(iG,jG) = sum( Pizy(iG-Nlf,:)*Dyz0(:,jG-Nlf) + Pizz(iG-Nlf,:)*Dzz0(:,jG-Nlf) )
+          ! enddo
+        endif
+      enddo
+    enddo
+    TP = Imat - TP    
+      
+  end subroutine genTP
+
+  subroutine writeSigma_macroscopic(o, c0, Nlf, Pixx, Piyy, Pizz, TS, TP)
+    ! Calculates macroscopic conducitivities from current-current response functions Pi_{\mu\nu}
+    ! Write the conducitivities and response functions to files.
+
+    implicit none
+    integer,          intent(in) :: Nlf
+    real(kind=dp),    intent(in) :: c0
+    real(kind=dp),    intent(in) :: o
+    complex(kind=dp), intent(in), dimension(:,:) ::  Pixx, Piyy, Pizz, TS, TP
+
+    
+    real(kind=dp),  parameter :: Hartree = 2.0d0*13.6056923D0
+
+
+    integer :: Nlf2
+    integer :: iuni1, iuni2, iuni3, iuni4, iuni5, iuni6
+    complex(kind = dp) :: Sigma_xx,Sigma_yy,Sigma_zz
+
+    Nlf2 = 2*Nlf
+
+    Sigma_xx = sum( Pixx(1,1:Nlf) * TS(1:Nlf,1) )                                        ! s-mod
+    Sigma_yy = sum( Piyy(1,1:Nlf) * TP(1:Nlf,1)     + Piyz(1,1:Nlf)*TP(Nlf:Nlf2,1) )     ! p-mod
+    Sigma_zz = sum( Pizy(1,1:Nlf) * TP(1:Nlf,Nlf+1) + Pizz(1,1:Nlf)*TP(Nlf:Nlf2,Nlf+1) ) ! p-mod
+
+    ! write sigma_{\mu\nu}^\text{macro} [ pi*e^2/2h ]
+    open(newunit=iuni1, file='sigma_macro_xx')
+    write(iuni1,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Sigma_xx/o)
+    close(iuni1)
+
+    open(newunit=iuni2, file='sigma_macro_yy')
+    write(iuni2,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Sigma_yy/o)
+    close(iuni2)
+
+    open(newunit=iuni3, file='sigma_macro_zz')
+    write(iuni3,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Sigma_zz/o)
+    close(iuni3)
+
+    ! write Pi_{\mu\nu}(1,1)
+    open(newunit=iuni4, file='Pi_11_xx')
+    write(iuni4,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pixx(1,1)/o)
+    close(iuni4)
+
+    open(newunit=iuni5, file='Pi_11_yy')
+    write(iuni5,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Piyy(1,1)/o)
+    close(iuni5)
+
+    open(newunit=iuni6, file='Pi_11_zz')
+    write(iuni6,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pizz(1,1)/o)
+    close(iuni6)
+
+      
+  end subroutine writeSigma_macroscopic
 
 end program photon
 

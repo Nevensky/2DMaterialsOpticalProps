@@ -1,0 +1,35 @@
+&directories
+ rundir       = '/scratch/FIZIKA/student/jjakovac/ngolenic/gr_hbn_gr/sigma_10e14'
+ savedir      = '/scratch/FIZIKA/student/jjakovac/ngolenic/gr_hbn_gr/sigma_10e14/tmp/gr_hbn_gr.save'
+ scf_file     = '/gr-hbn-gr.scf.out'
+ rpa_xx_file  = '/scratch/FIZIKA/student/jjakovac/ngolenic/gr_hbn_gr/sigma_10e14/5Ha/Pi_RPA_xx'
+ rpa_yy_file  = '/scratch/FIZIKA/student/jjakovac/ngolenic/gr_hbn_gr/sigma_10e14/5Ha/Pi_RPA_xx'
+ rpa_zz_file  = '/scratch/FIZIKA/student/jjakovac/ngolenic/gr_hbn_gr/sigma_10e14/5Ha/Pi_RPA_zz'
+/
+&system
+ lf        = 'z'         ! crystal local field effects included in 'xyz' or 'z' direction
+ qmin      = 1           ! minimal transfer wavevector is qmin*dq
+ qmax      = 1           ! maximal transfer wavevector is qmax*dq
+ dq        = 1.0d-6      ! distance between transfer wavevectors q
+ omin      = 1.0d-5      ! [eV] frequency range, lower bound
+ omax      = 50.0d0      ! [eV] frequency range, upper bound
+ eta       = 1.0d-5      ! [eV] Damping i\eta
+ Ecut      = 5.0        ! [Hartree] cutoff energy for crystal local field vectors
+/
+&config
+ No       = 2001         ! Number of frequencies
+ NG       = 48341        ! total number of G vectors 
+ NGd      = 5285         ! minimum number of coefficients CG over all evc.n files
+ NkI      = 6835         ! number of wave vectors in IBZ
+ No       = 2001         ! Number of frequencies
+ Nlfd     = 130          ! dimenzija polja local field vektora, x2 zbog 2X2 blok matrice za p mod 
+ Ntheta   = 1            ! number of incidence angles to scan from 0deg to Ntheta*dtheta
+/
+&parameters
+ a0       = 4.6487       ! [a.u.]    unit cell parameter in parallel direction 
+ c0       = 32.5411      ! [a.u.]    unit cell parameter in perependicular direction 
+ Vcell    = 609.0187     ! [a.u.^3]  Unit-cell volume 
+/
+&parallel
+ Nthreads = 8            ! Number of OpenMP threads
+/
