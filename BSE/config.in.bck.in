@@ -8,13 +8,13 @@
 /
 &system
  lf        = 'z'         ! crystal local field effects included in 'xyz' or 'z' direction
- qmin      = 1           ! minimal transfer wavevector is qmin*dq
- qmax      = 1           ! maximal transfer wavevector is qmax*dq
- dq        = 1.0d-6      ! distance between transfer wavevectors q
+ qmin      = 2           ! minimal transfer wavevector is qmin*dq
+ qmax      = 2           ! maximal transfer wavevector is qmax*dq
+ dq        = 1.0d-6      ! [a.u.] distance between transfer wavevectors q
  omin      = 1.0d-5      ! [eV] frequency range, lower bound
  omax      = 50.0d0      ! [eV] frequency range, upper bound
  eta       = 1.0d-5      ! [eV] Damping i\eta
- Ecut      = 5.0        ! [Hartree] cutoff energy for crystal local field vectors
+ Ecut      = 5.0         ! [Hartree] cutoff energy for crystal local field vectors
 /
 &config
  No       = 2001         ! Number of frequencies
