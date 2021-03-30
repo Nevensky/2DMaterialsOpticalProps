@@ -7,5 +7,9 @@ OBJECTS = Photonew.f90 gjel.f
 # OBJECTS_LEGACY = Photonew.f gjel.f
 
 
-compile: $(OBJECTS)
+all: $(OBJECTS)
 	${FC} ${FFLAGS} $(OBJECTS) -o Photon
+
+
+clean:
+	rm  *.o Photon

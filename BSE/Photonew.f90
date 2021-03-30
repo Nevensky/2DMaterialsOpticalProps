@@ -85,9 +85,10 @@ program photon
   call parseCommandLineArgs(config_file) ! config file is the first argument passed to ./Photon <arg1>
   open(10,file=config_file)
   read(10,nml=directories,iostat=ist1)
-  read(10,nml=config,iostat=ist2)
-  read(10,nml=parameters,iostat=ist3)
-  read(10,nml=parallel,iostat=ist4)
+  read(10,nml=system,iostat=ist2)
+  read(10,nml=config,iostat=ist3)
+  read(10,nml=parameters,iostat=ist4)
+  read(10,nml=parallel,iostat=ist5)
   close(10)
 
   ! constants
@@ -146,7 +147,7 @@ program photon
   print *,"status: G vectors loaded. NG=",NG
 
   ! Reciprocal vectors for crystal local field effects calculations in array Glf(3,Nlf)
-  call genGlfandParity(lf,Ecut,NG,Gcar,G, parG, Nlf,Nlfd,Glf)
+  call genGlfandParity(lf,Ecut,NG,Gcar, G, parG, Nlf, Nlfd, Glf)
   print *, "Glf matrix generated."
   print *, 'Nlf: ',Nlf,' Nlfd: ',Nlfd
 
