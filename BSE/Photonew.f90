@@ -345,7 +345,7 @@ contains
       ! DEBUG: provjera inverzije 
       call zgemm('N','N', Nlf, Nlf, K, alpha, A, Nlf, Acheck, K, beta, Acheck, Nlf)
       checkIdentity = sum(abs(A)) - sum( (/ ( abs(a(i,i)), i=1, size(a, 1)) /) )
-      if (real(checkIdentity)>10d-8 .or. imag(checkIdentity)>10d-8) then
+      if (real(checkIdentity)>10d-8 .or. aimag(checkIdentity)>10d-8) then
         print *, 'FATAL ERROR: Matrix inversion failed.'
         stop
       endif
@@ -555,54 +555,49 @@ contains
     enddo
   end subroutine genD0
   
-  subroutine readPi0(io, No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy0, Pizz0)
+  subroutine readPi0(io_in, No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy0, Pizz0)
     ! Reading unscreened  current current response tensor Pi^0_{\mu\nu}(G,G')
     ! DEBUG: mozda izbaciti iz omega_loopa i ucitati ih sve u RAM odjednom
     implicit none
 
-    integer,            intent(in) :: io, No, Nlf
+    integer,            intent(in) :: io_in, No, Nlf
     character(len=200), intent(in) :: file_xx, file_yy, file_zz
     complex(kind=dp),   intent(out),  dimension(:,:) :: Pixx0, Piyy0, Piyz0, Pizy0, Pizz0
 
 
-    integer :: io2, iG, jG
-    integer :: iuni1, iuni2, iuni3
+    integer       :: io2, iG, jG
+    integer       :: iuni1, iuni2, iuni3
+    real(kind=dp) :: o ! frequency tmp var, not used
 
     open(newunit=iuni1,file=adjustl(trim(file_xx)))
     open(newunit=iuni2,file=adjustl(trim(file_yy)))
     open(newunit=iuni3,file=adjustl(trim(file_zz)))
 
-    do io2 = 1,No - 1
-      if (io2==io) then
-        read(iuni1,*) ! skip line
-        read(iuni1,'(10F15.10)')((Pixx0(iG,jG),jG = 1,Nlf),iG = 1,Nlf)
-        read(iuni2,*) ! skip line
-        read(iuni2,'(10F15.10)')((Piyy0(iG,jG),jG = 1,Nlf),iG = 1,Nlf)
-        read(iuni3,*) ! skip line
-        read(iuni3,'(10F15.10)')((Pizz0(iG,jG),jG = 1,Nlf),iG = 1,Nlf)
-
-        ! approximation current current response tensor components Pi^0_{yz}=Pi^0_{zy} = 0 
-        Piyz0(:,:) = cmplx(0.0,0.0)        
-        Pizy0(:,:) = cmplx(0.0,0.0)
-        exit
+    do io = 1,No
+      if (io==io_in) then
+        do iG = 1,Nlf
+          do jG = 1,Nlf
+              read(iuni1,*) o, Pixx0(iG,jG)
+              read(iuni2,*) o, Piyy0(iG,jG)
+              read(iuni3,*) o, Pizz0(iG,jG)
+          enddo
+        enddo
       else
-        read(iuni1,*) ! skip line
-        read(iuni2,*)
-        read(iuni3,*)
         do iG=1,Nlf
           do jG=1,Nlf
-            read(iuni1,*) ! skip line
-            read(iuni2,*) ! skip line
-            read(iuni3,*) ! skip line
+              ! skip lines
+              read(iuni1,*) 
+              read(iuni2,*) 
+              read(iuni3,*) 
           enddo
         enddo
       endif
-
-    enddo  
+    enddo
+    Piyz0(:,:) = cmplx(0.0,0.0)
+    Pizy0(:,:) = cmplx(0.0,0.0)
     close(iuni1)
     close(iuni2)
     close(iuni3)
-      
   end subroutine readPi0
 
 

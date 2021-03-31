@@ -12,4 +12,4 @@ all: $(OBJECTS)
 
 
 clean:
-	rm  *.o Photon
+	rm  Photon
