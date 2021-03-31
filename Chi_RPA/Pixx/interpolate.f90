@@ -173,7 +173,7 @@ program Pi_pol
 
   ! WRITTING INTERPOLATED TOTAL RESPONSE FUNCTION Pi for a given polarization 'pol' to file for all G,G'
   open(80,file = dato6)
-  do io=1, counter:
+  do io=1, counter
     do iG=1,Nlf
       do jG=1,Nlf
         write(80,*) oi*Hartree, Pi_tot_interp(counter,iG,jG)
