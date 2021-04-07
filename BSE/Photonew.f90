@@ -191,14 +191,14 @@ program photon
     
       q = (iq-1)*dq
 
-      omega_loop: do io = 1,No - 1
+      omega_loop: do io = 1, No-1
         o = omin + (io-1)*domega  
         ! print*,'omega = ', o*Hartree,' [eV]'
-        if(itheta /= 1) then 
-          q = gamma*o*sin(theta)
-        elseif (Ntheta /=0 .and. Nq/=0) then
+        if (Ntheta /=0 .and. Nq/=0) then
           print *,'FATAL ERROR: Both Ntheta>1 and Nq>1. Choose one or the other.'
           stop
+        else if(itheta /= 1 .and. Nq==0) then 
+          q = gamma*o*sin(theta)
         else
           q = (iq-1)*dq
         endif
@@ -211,14 +211,14 @@ program photon
         call genD0(q, oi, beta, c0, Nlf, parG, Glf, Dxx0, Dyy0, Dzz0 ,Dyz0, Dzy0)
 
         ! Reading unscreened current current response tensor Pi^0_{\mu\nu}(G,G')
-        call readPi0(io, No, Nlf, rpa_xx_file, rpa_yy_file, rpa_zz_file, Pixx0, Piyy0, Piyz0, Pizy0, Pizz0)
+        call readPi0_omega(io, No, Nlf, rpa_xx_file, rpa_yy_file, rpa_zz_file, Pixx0, Piyy0, Piyz0, Pizy0, Pizz0)
 
         ! KONSTRUKCIJA TS MATRICE S - MOD
         call genTS(Nlf, Dxx0, Pixx0, TS)
 
         ! invertiranje matrice TS
         ! call gjel(TS,Nlf,Nlfd,Imat,Nlf,Nlfd)
-       call invert(TS)
+        call invert(TS)
 
 
         ! KONSTRUKCIJA TP MATRICE P - MOD
@@ -240,6 +240,10 @@ program photon
         write(302,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Piyy0(1,1)/o)
         write(303,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pizz0(1,1)/o)
 
+        ! calculation of reflected, transmited and absorbed coefficients  
+        call genSpectra(o, oi, beta, itheta, theta, Ntheta, Nq, c0, Nlf, parG, Glf, Dxx, Dyy, Dzz, Dyz, Dzy)
+
+
         !***********************************
         !       MACROSCOPIC CONDUCTIVITY 
         !*********************************** 
@@ -247,27 +251,24 @@ program photon
 
         ! KONSTRUKCIJA TS MATRICE S - MOD
 
-        call genTS(Nlf, Dxx0, Pixx, TS)
+        ! call genTS(Nlf, Dxx0, Pixx, TS)
 
         ! invertiranje matrice TS
         ! call gjel(TS,Nlf,Nlfd,Imat,Nlf,Nlfd)
-        call invert(TS)
+        ! call invert(TS)
 
 
         ! KONSTRUKCIJA TP MATRICE P - MOD
-        call genTP(Nlf, Dyy0, Dyz0, Dzy0, Dzz0, Piyy, Piyz, Pizy, Pizz, TP)
+        ! call genTP(Nlf, Dyy0, Dyz0, Dzy0, Dzz0, Piyy, Piyz, Pizy, Pizz, TP)
 
 
         ! invertiranje matrice TP
         ! call gjel(TP,Nlf2,Nlfd,Imat2,Nlf2,Nlfd)
-        call invert(TP)
+        ! call invert(TP)
 
 
         ! MAKROSKOPSKI SIGMA
-        call writeSigma_macroscopic(o, c0, Nlf, Pixx, Piyy, Pizz, TS, TP)
-
-        ! calculation of reflected, transmited and absorbed coefficients  
-        call genSpectra(o, oi, beta, itheta, theta, Ntheta, Nq, c0, Nlf, parG, Glf, Dxx, Dyy, Dzz, Dyz, Dzy)
+        ! call writeSigma_macroscopic(o, c0, Nlf, Pixx, Piyy, Pizz, TS, TP)
 
       enddo omega_loop 
     enddo q_loop
@@ -328,6 +329,7 @@ contains
 
       integer :: Nlf
       complex(kind=dp), allocatable :: Acheck(:,:)
+      complex(kind=dp), allocatable :: Icheck(:,:)
 
 
       ! MKL vars
@@ -343,16 +345,18 @@ contains
       complex(kind=dp) :: checkIdentity
 
       Nlf = size(A,1)
-      lwork = Nlf
+      lwork = 2*Nlf
       K = Nlf      
       allocate(Acheck(size(A,1),size(A,2)))
+      allocate(Icheck(size(A,1),size(A,2)))
       Acheck = A
 
       allocate(ipiv(max(1,Nlf)))
       call zgetrf( Nlf, Nlf, A, Nlf, ipiv, info_trf)
       if (info_trf/=0) then
         print *, 'FATAL ERROR: LU decomposition failed.'
-        print *, 'info_trf: ',info_trf
+        print *, 'info_trf: ', info_trf
+        print *, 'Nlf: ', Nlf
         stop
       endif
 
@@ -361,7 +365,8 @@ contains
 
       if (info_tri/=0) then
         print *, 'FATAL ERROR: Matrix inversion failed.'
-        print *, 'info_trf: ',info_tri
+        print *, 'info_trf: ', info_tri
+        print *, 'Nlf: ', Nlf
         stop
       endif
       
@@ -369,14 +374,19 @@ contains
       deallocate(work)
 
       ! DEBUG: provjera inverzije 
-      call zgemm('N','N', Nlf, Nlf, K, alpha, A, Nlf, Acheck, K, beta, Acheck, Nlf)
-      checkIdentity = sum(abs(A)) - sum( (/ ( abs(a(i,i)), i=1, size(a, 1)) /) )
-      if (real(checkIdentity)>10d-8 .or. aimag(checkIdentity)>10d-8) then
-        print *, 'FATAL ERROR: Matrix inversion failed.'
+      call zgemm('N','N', Nlf, Nlf, K, alpha, A, Nlf, Acheck, K, beta, Icheck, Nlf)
+      checkIdentity = sum(abs(Icheck)) - sum( (/ ( abs(Icheck(i,i)), i=1, size(Icheck, 1)) /) )
+      if (real(checkIdentity)>10d-4 .or. aimag(checkIdentity)>10d-4) then
+        print *, 'FATAL ERROR: Matrix inversion failed. (A⁻¹ · A ≠ 𝟙)'
+        print *, 'Nlf: ', Nlf
+        print *, 'size Ainv: ', size(A), 'size A:',size(Acheck)
+        print *, 'Re(check): ', real(checkIdentity)
+        print *, 'Im(check): ', aimag(checkIdentity)
         stop
       endif
 
       deallocate(Acheck)
+      deallocate(Icheck)
 
   end subroutine invert
 
@@ -398,7 +408,7 @@ contains
         do  j = 1,3
           read(300,'(23X,3F10.3) ',err=10001,iostat=ios,end=20001) KC(1,j), KC(2,j), KC(3,j)
         end do
-        EXIT
+        exit
       end if
     end do
     close(300)
@@ -581,7 +591,7 @@ contains
     enddo
   end subroutine genD0
   
-  subroutine readPi0(io_in, No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy0, Pizz0)
+  subroutine readPi0_omega(io_in, No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy0, Pizz0)
     ! Reading unscreened  current current response tensor Pi^0_{\mu\nu}(G,G')
     ! DEBUG: mozda izbaciti iz omega_loopa i ucitati ih sve u RAM odjednom
     implicit none
@@ -591,7 +601,7 @@ contains
     complex(kind=dp),   intent(out),  dimension(:,:) :: Pixx0, Piyy0, Piyz0, Pizy0, Pizz0
 
 
-    integer       :: io2, iG, jG
+    integer       :: io, iG, jG
     integer       :: iuni1, iuni2, iuni3
     real(kind=dp) :: o ! frequency tmp var, not used
 
@@ -624,7 +634,7 @@ contains
     close(iuni1)
     close(iuni2)
     close(iuni3)
-  end subroutine readPi0
+  end subroutine readPi0_omega
 
 
   subroutine genScreenedPi(Nlf,TS, TP,Pixx0, Piyy0, Piyz0, Pizy0, Pizz0,Pixx, Piyy, Piyz, Pizy, Pizz)
@@ -815,9 +825,7 @@ contains
     real(kind=dp),  parameter :: pi      = 4.d0*atan(1.d0)
     real(kind=dp),  parameter :: Hartree = 2.0d0*13.6056923d0
 
-    integer :: iG, jG
-
-
+    integer          :: iG, jG
     real(kind=dp)    :: Ff1, Ff2, Gf1, Gf2
     real(kind=dp)    :: A_s, Tr_s, R_s, A_p, Tr_p, R_p 
     complex(kind=dp) :: Dxx_r, Dyy_r, Dzz_r, Dyz_r
@@ -840,6 +848,7 @@ contains
     Dyy_a = cmplx(0.0,0.0)
     Dzz_a = cmplx(0.0,0.0)
     Dyz_a = cmplx(0.0,0.0)
+
     do iG = 1,Nlf 
       Ff1 = (2.0*parG(iG)/sqrt(c0))*sin(beta*c0/2.0)/(beta+Glf(3,iG)) 
       Gf1 = (2.0*parG(iG)/sqrt(c0))*sin(beta*c0/2.0)/(beta-Glf(3,iG)) 
