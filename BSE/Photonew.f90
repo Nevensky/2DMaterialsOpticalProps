@@ -145,8 +145,12 @@ program photon
   ! allocate( TScheck(Nlfd,Nlfd) )
   ! allocate( TPcheck(Nlfd,Nlfd) )
 
-  dtheta = pi/(2.0*dble(Ntheta))
   domega = (omax-omin) / (No-1)
+  if (Ntheta/=0) then
+    dtheta = pi/(2.0*dble(Ntheta))
+  else
+    dtheta = 1.0
+  endif
 
   ! KC transformation matrix from rec.cryst. axes to cart.koord.
   ! if G' is vector in rec.cryst. axes then a = KC*a' is vector in cart. axes
@@ -192,7 +196,7 @@ program photon
         ! print*,'omega = ', o*Hartree,' [eV]'
         if(itheta /= 1) then 
           q = gamma*o*sin(theta)
-        elseif (Ntheta /=1 .and. Nq/=0) then
+        elseif (Ntheta /=0 .and. Nq/=0) then
           print *,'FATAL ERROR: Both Ntheta>1 and Nq>1. Choose one or the other.'
           stop
         else
