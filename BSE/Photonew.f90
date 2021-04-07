@@ -4,7 +4,7 @@ program photon
   !  Z - dir Imat cell parameter c0=  32.33282 a.u.  
 
   use ISO_Fortran_env
-  use mkl_service
+  !use mkl_service
 
   implicit none
 
@@ -15,7 +15,7 @@ program photon
 
 
   integer :: i, j, n, m, io, iq,itheta, iG, jG, kG, Nlf, Nlf2
-  integer :: ist1,ist2,ist3,ist4,ist5,ist6
+  integer :: ist1, ist2, ist3, ist4, ist5, ist6
   integer :: Ntheta, Nq ! number of angles, number of transfer wavevectors
 
   integer :: No     ! number of frequencies
@@ -57,7 +57,7 @@ program photon
   ! complex(kind=dp), dimension(:,:), allocatable :: Imat, Imat2
   complex(kind=dp), dimension(:,:), allocatable :: Dxx0, Dyy0, Dzz0 ,Dyz0, Dzy0
   complex(kind=dp), dimension(:,:), allocatable :: Dxx, Dyy, Dzz ,Dyz, Dzy
-  complex(kind=dp), dimension(:,:), allocatable :: Pixx0, Piyy0, Piyz0, Pizy0, Pizz0
+  complex(kind=dp), dimension(:,:,:), allocatable :: Pixx0, Piyy0, Piyz0, Pizy0, Pizz0
   complex(kind=dp), dimension(:,:), allocatable :: Pixx, Piyy, Piyz, Pizy, Pizz
 
   character(len=200) :: path
@@ -129,11 +129,11 @@ program photon
   allocate( Dyz(Nlfd,Nlfd) )
   allocate( Dzy(Nlfd,Nlfd) )
 
-  allocate( Pixx0(Nlfd,Nlfd) )
-  allocate( Piyy0(Nlfd,Nlfd) )
-  allocate( Piyz0(Nlfd,Nlfd) )
-  allocate( Pizy0(Nlfd,Nlfd) )
-  allocate( Pizz0(Nlfd,Nlfd) )
+  allocate( Pixx0(No,Nlfd,Nlfd) )
+  allocate( Piyy0(No,Nlfd,Nlfd) )
+  allocate( Piyz0(No,Nlfd,Nlfd) )
+  allocate( Pizy0(No,Nlfd,Nlfd) )
+  allocate( Pizz0(No,Nlfd,Nlfd) )
   allocate( Pixx(Nlfd,Nlfd) )
   allocate( Piyy(Nlfd,Nlfd) )
   allocate( Piyz(Nlfd,Nlfd) )
@@ -178,10 +178,13 @@ program photon
   ! Nlf2 = 2*Nlf
   ! print *, 'Nlf2 (p-mode): ',Nlf2
 
+  ! Reading unscreened current current response tensor Pi^0_{\mu\nu}(G,G')
+  call readPi0(No, Nlf, rpa_xx_file, rpa_yy_file, rpa_zz_file, Pixx0, Piyy0, Piyz0, Pizy0, Pizz0)
+
   !*******************************************************************
   !   START ITERATING OVER TRANSFER WAVEVECTORS AND FREQUNECIES
   !******************************************************************
-  
+
   angle_loop: do itheta = theta_min, theta_max
     theta = (itheta-1)*dtheta
     print *, 'theta = ',180.0*theta/pi,'°'
@@ -211,10 +214,11 @@ program photon
         call genD0(q, oi, beta, c0, Nlf, parG, Glf, Dxx0, Dyy0, Dzz0 ,Dyz0, Dzy0)
 
         ! Reading unscreened current current response tensor Pi^0_{\mu\nu}(G,G')
-        call readPi0_omega(io, No, Nlf, rpa_xx_file, rpa_yy_file, rpa_zz_file, Pixx0, Piyy0, Piyz0, Pizy0, Pizz0)
+        ! DEBUG: moved outside the loop
+        ! call readPi0_omega(io, No, Nlf, rpa_xx_file, rpa_yy_file, rpa_zz_file, Pixx0, Piyy0, Piyz0, Pizy0, Pizz0)
 
         ! KONSTRUKCIJA TS MATRICE S - MOD
-        call genTS(Nlf, Dxx0, Pixx0, TS)
+        call genTS(Nlf, Dxx0, Pixx0(io,:,:), TS)
 
         ! invertiranje matrice TS
         ! call gjel(TS,Nlf,Nlfd,Imat,Nlf,Nlfd)
@@ -222,7 +226,7 @@ program photon
 
 
         ! KONSTRUKCIJA TP MATRICE P - MOD
-        call genTP(Nlf, Dyy0, Dyz0, Dzy0, Dzz0, Piyy0, Piyz0, Pizy0, Pizz0, TP)
+        call genTP(Nlf, Dyy0, Dyz0, Dzy0, Dzz0, Piyy0(io,:,:), Piyz0(io,:,:), Pizy0(io,:,:), Pizz0(io,:,:), TP)
         
 
         ! invertiranje matrice TP
@@ -231,14 +235,14 @@ program photon
 
 
         ! SCREENED CURRENT - CURRENT MATRICES S-mod: 'Pixx'; P-mod:'Piyy, Piyz, Pizy, Pizz' 
-        call genScreenedPi(Nlf, TS, TP, Pixx0, Piyy0, Piyz0, Pizy0, Pizz0,Pixx, Piyy, Piyz, Pizy, Pizz)
+        call genScreenedPi(Nlf, TS, TP, Pixx0(io,:,:), Piyy0(io,:,:), Piyz0(io,:,:), Pizy0(io,:,:), Pizz0(io,:,:), Pixx, Piyy, Piyz, Pizy, Pizz)
         
 
         ! DEBUG: mozda prepraviti?
         ! unscreened conductivity [ pi*e^2/2h ]
-        write(301,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pixx0(1,1)/o)
-        write(302,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Piyy0(1,1)/o)
-        write(303,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pizz0(1,1)/o)
+        write(301,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pixx0(io,1,1)/o)
+        write(302,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Piyy0(io,1,1)/o)
+        write(303,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pizz0(io,1,1)/o)
 
         ! calculation of reflected, transmited and absorbed coefficients  
         call genSpectra(o, oi, beta, itheta, theta, Ntheta, Nq, c0, Nlf, parG, Glf, Dxx, Dyy, Dzz, Dyz, Dzy)
@@ -590,15 +594,15 @@ contains
       Dzz0(iG,iG) = Dzz0(iG,iG)-4.0*pi/(oi**2)
     enddo
   end subroutine genD0
-  
-  subroutine readPi0_omega(io_in, No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy0, Pizz0)
+
+subroutine readPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy0, Pizz0)
     ! Reading unscreened  current current response tensor Pi^0_{\mu\nu}(G,G')
     ! DEBUG: mozda izbaciti iz omega_loopa i ucitati ih sve u RAM odjednom
     implicit none
 
-    integer,            intent(in) :: io_in, No, Nlf
+    integer,            intent(in) :: No, Nlf
     character(len=200), intent(in) :: file_xx, file_yy, file_zz
-    complex(kind=dp),   intent(out),  dimension(:,:) :: Pixx0, Piyy0, Piyz0, Pizy0, Pizz0
+    complex(kind=dp),   intent(out),  dimension(:,:,:) :: Pixx0, Piyy0, Piyz0, Pizy0, Pizz0
 
 
     integer       :: io, iG, jG
@@ -610,31 +614,65 @@ contains
     open(newunit=iuni3,file=adjustl(trim(file_zz)))
 
     do io = 1,No
-      if (io==io_in) then
-        do iG = 1,Nlf
-          do jG = 1,Nlf
-              read(iuni1,*) o, Pixx0(iG,jG)
-              read(iuni2,*) o, Piyy0(iG,jG)
-              read(iuni3,*) o, Pizz0(iG,jG)
-          enddo
+      do iG = 1,Nlf
+        do jG = 1,Nlf
+            read(iuni1,*) o, Pixx0(io, iG,jG)
+            read(iuni2,*) o, Piyy0(io, iG,jG)
+            read(iuni3,*) o, Pizz0(io, iG,jG)
         enddo
-      else
-        do iG=1,Nlf
-          do jG=1,Nlf
-              ! skip lines
-              read(iuni1,*) 
-              read(iuni2,*) 
-              read(iuni3,*) 
-          enddo
-        enddo
-      endif
+      enddo
     enddo
-    Piyz0(:,:) = cmplx(0.0,0.0)
-    Pizy0(:,:) = cmplx(0.0,0.0)
+    Piyz0(:,:,:) = cmplx(0.0,0.0)
+    Pizy0(:,:,:) = cmplx(0.0,0.0)
     close(iuni1)
     close(iuni2)
     close(iuni3)
-  end subroutine readPi0_omega
+  end subroutine readPi0
+  
+  ! subroutine readPi0_omega(io_in, No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy0, Pizz0)
+  !   ! Reading unscreened  current current response tensor Pi^0_{\mu\nu}(G,G')
+  !   ! DEBUG: mozda izbaciti iz omega_loopa i ucitati ih sve u RAM odjednom
+  !   implicit none
+
+  !   integer,            intent(in) :: io_in, No, Nlf
+  !   character(len=200), intent(in) :: file_xx, file_yy, file_zz
+  !   complex(kind=dp),   intent(out),  dimension(:,:) :: Pixx0, Piyy0, Piyz0, Pizy0, Pizz0
+
+
+  !   integer       :: io, iG, jG
+  !   integer       :: iuni1, iuni2, iuni3
+  !   real(kind=dp) :: o ! frequency tmp var, not used
+
+  !   open(newunit=iuni1,file=adjustl(trim(file_xx)))
+  !   open(newunit=iuni2,file=adjustl(trim(file_yy)))
+  !   open(newunit=iuni3,file=adjustl(trim(file_zz)))
+
+  !   do io = 1,No
+  !     if (io==io_in) then
+  !       do iG = 1,Nlf
+  !         do jG = 1,Nlf
+  !             read(iuni1,*) o, Pixx0(iG,jG)
+  !             read(iuni2,*) o, Piyy0(iG,jG)
+  !             read(iuni3,*) o, Pizz0(iG,jG)
+  !         enddo
+  !       enddo
+  !     else
+  !       do iG=1,Nlf
+  !         do jG=1,Nlf
+  !             ! skip lines
+  !             read(iuni1,*) 
+  !             read(iuni2,*) 
+  !             read(iuni3,*) 
+  !         enddo
+  !       enddo
+  !     endif
+  !   enddo
+  !   Piyz0(:,:) = cmplx(0.0,0.0)
+  !   Pizy0(:,:) = cmplx(0.0,0.0)
+  !   close(iuni1)
+  !   close(iuni2)
+  !   close(iuni3)
+  ! end subroutine readPi0_omega
 
 
   subroutine genScreenedPi(Nlf,TS, TP,Pixx0, Piyy0, Piyz0, Pizy0, Pizz0,Pixx, Piyy, Piyz, Pizy, Pizz)
