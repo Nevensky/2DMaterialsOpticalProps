@@ -4,6 +4,8 @@ program photon
   !  Z - dir Imat cell parameter c0=  32.33282 a.u.  
 
   use ISO_Fortran_env
+  use mkl_service
+
   implicit none
 
   ! single / double precision
@@ -12,8 +14,9 @@ program photon
   integer, parameter :: qp = real128
 
 
-  integer i, j, n, m, io, iq,itheta, iG, jG, kG, Nlf, Nlf2
-  integer ist1,ist2,ist3,ist4,ist5,ist6
+  integer :: i, j, n, m, io, iq,itheta, iG, jG, kG, Nlf, Nlf2
+  integer :: ist1,ist2,ist3,ist4,ist5,ist6
+  integer :: Ntheta, Nq ! number of angles, number of transfer wavevectors
 
   integer :: No     ! number of frequencies
   integer :: NG     ! total number of G vectors 
@@ -21,15 +24,14 @@ program photon
   integer :: NkI    ! number of wave vectors in IBZ
   integer :: Nk     ! = 48*NkI, number of wave vectors in FBZ with No symmetry 
   integer :: Nlfd   ! dimenzija polja local field vektora, x2 zbog 2X2 blok matrice za p mod 
-  integer :: Ntheta ! ? angle ... dq?
-  namelist /config/  No, NG, NGd, NkI, Nlfd, Ntheta
+  namelist /config/  No, NG, NGd, NkI, Nlfd
 
 
   ! ... constants ...
   real(kind=dp),  parameter :: pi      = 4.d0*atan(1.d0)
   real(kind=dp),  parameter :: eV      = 1.602176487d-19
   real(kind=dp),  parameter :: kB      = 1.3806503d-23
-  real(kind=dp),  parameter :: Hartree = 2.0D0*13.6056923d0
+  real(kind=dp),  parameter :: Hartree = 2.0d0*13.6056923d0
   real(kind=dp),  parameter :: Planck  = 6.626196d-34
   real(kind=dp),  parameter :: aBohr   = 0.5291772d0
   real(kind=dp),  parameter :: gamma   = 1.0/137.0
@@ -54,6 +56,7 @@ program photon
   complex(kind=dp), dimension(:,:), allocatable :: TS, TP, TScheck, TPcheck
   ! complex(kind=dp), dimension(:,:), allocatable :: Imat, Imat2
   complex(kind=dp), dimension(:,:), allocatable :: Dxx0, Dyy0, Dzz0 ,Dyz0, Dzy0
+  complex(kind=dp), dimension(:,:), allocatable :: Dxx, Dyy, Dzz ,Dyz, Dzy
   complex(kind=dp), dimension(:,:), allocatable :: Pixx0, Piyy0, Piyz0, Pizy0, Pizz0
   complex(kind=dp), dimension(:,:), allocatable :: Pixx, Piyy, Piyz, Pizy, Pizz
 
@@ -66,10 +69,11 @@ program photon
   namelist /directories/ rundir, savedir, scf_file, rpa_xx_file, rpa_yy_file, rpa_zz_file
 
   character(len=3)   :: lf     ! crystal local field effects included in 'xyz' or 'z' direction
-  integer            :: qmin, qmax 
+  integer            :: qmin, qmax
+  integer            :: theta_min, theta_max
   real(kind=dp)      :: dq, omin, omax, eta
   real(kind=dp)      :: Ecut   ! [Hartree] cutoff energy for crystal local field vectors
-  namelist /system/ lf, qmin, qmax, dq, omin, omax, eta, Ecut
+  namelist /system/ lf, qmin, qmax, theta_min, theta_max, dq, omin, omax, eta, Ecut
 
   real(kind=dp)      :: a0     ! [a.u.]  unit cell parameter in parallel direction 
   real(kind=dp)      :: c0     ! [a.u.]  unit cell parameter in perependicular direction 
@@ -77,8 +81,8 @@ program photon
 
   namelist /parameters/ a0, c0, Vcell
 
-  integer            :: Nthreads
-  namelist  /parallel/ Nthreads
+  integer            :: Nthreads, NthreadsMKL
+  namelist  /parallel/ Nthreads, NthreadsMKL
 
 
   ! load namelist
@@ -98,6 +102,12 @@ program photon
   omin = omin/Hartree ! iz eV u Hartree
   omax = (omax/Hartree + omin) 
 
+  Ntheta = theta_max-theta_min
+  Nq = qmax-qmin
+
+  ! MKL set number of threads
+  call mkl_set_num_threads(NthreadsMKL)
+
   ! allocation of arrays
   allocate( G(3,NG) )
   allocate( parG(NG) )
@@ -113,6 +123,11 @@ program photon
   allocate( Dzz0(Nlfd,Nlfd) )
   allocate( Dyz0(Nlfd,Nlfd) )
   allocate( Dzy0(Nlfd,Nlfd) )
+  allocate( Dxx(Nlfd,Nlfd) )
+  allocate( Dyy(Nlfd,Nlfd) )
+  allocate( Dzz(Nlfd,Nlfd) )
+  allocate( Dyz(Nlfd,Nlfd) )
+  allocate( Dzy(Nlfd,Nlfd) )
 
   allocate( Pixx0(Nlfd,Nlfd) )
   allocate( Piyy0(Nlfd,Nlfd) )
@@ -162,8 +177,8 @@ program photon
   !*******************************************************************
   !   START ITERATING OVER TRANSFER WAVEVECTORS AND FREQUNECIES
   !******************************************************************
-   
-  angle_loop: do itheta = 1,Ntheta
+  
+  angle_loop: do itheta = theta_min, theta_max
     theta = (itheta-1)*dtheta
     print *, 'theta = ',180.0*theta/pi,'°'
 
@@ -177,8 +192,8 @@ program photon
         ! print*,'omega = ', o*Hartree,' [eV]'
         if(itheta /= 1) then 
           q = gamma*o*sin(theta)
-        elseif (Ntheta /=1 .and. (qmax-qmin)/=0) then
-          print *,'FATAL ERROR: Ntheta is >1 while qmin!=qmax. Choose one or the other.'
+        elseif (Ntheta /=1 .and. Nq/=0) then
+          print *,'FATAL ERROR: Both Ntheta>1 and Nq>1. Choose one or the other.'
           stop
         else
           q = (iq-1)*dq
@@ -217,9 +232,9 @@ program photon
 
         ! DEBUG: mozda prepraviti?
         ! unscreened conductivity [ pi*e^2/2h ]
-        write(301,*)o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pixx0(1,1)/o)
-        write(302,*)o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Piyy0(1,1)/o)
-        write(303,*)o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pizz0(1,1)/o)
+        write(301,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pixx0(1,1)/o)
+        write(302,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Piyy0(1,1)/o)
+        write(303,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pizz0(1,1)/o)
 
         !***********************************
         !       MACROSCOPIC CONDUCTIVITY 
@@ -247,6 +262,8 @@ program photon
         ! MAKROSKOPSKI SIGMA
         call writeSigma_macroscopic(o, c0, Nlf, Pixx, Piyy, Pizz, TS, TP)
 
+        ! calculation of reflected, transmited and absorbed coefficients  
+        call genSpectra(o, oi, beta, itheta, theta, Ntheta, Nq, c0, Nlf, parG, Glf, Dxx, Dyy, Dzz, Dyz, Dzy)
 
       enddo omega_loop 
     enddo q_loop
@@ -258,6 +275,11 @@ program photon
   if (allocated(Dzz0))  deallocate(Dzz0)
   if (allocated(Dyz0))  deallocate(Dyz0)
   if (allocated(Dzy0))  deallocate(Dzy0)
+  if (allocated(Dxx))   deallocate(Dxx)
+  if (allocated(Dyy))   deallocate(Dyy)
+  if (allocated(Dzz))   deallocate(Dzz)
+  if (allocated(Dyz))   deallocate(Dyz)
+  if (allocated(Dzy))   deallocate(Dzy)
   if (allocated(Pixx0)) deallocate(Pixx0)
   if (allocated(Piyy0)) deallocate(Piyy0)
   if (allocated(Piyz0)) deallocate(Piyz0)
@@ -772,6 +794,175 @@ contains
 
       
   end subroutine writeSigma_macroscopic
+
+  subroutine  genSpectra(o, oi, beta, itheta, theta, Ntheta, Nq, c0, Nlf, parG, Glf, Dxx, Dyy, Dzz, Dyz, Dzy)
+    ! Calculation of reflected, transmited and absorbed coefficients
+
+    integer,          intent(in) :: itheta, Ntheta, Nq
+    integer,          intent(in) :: Nlf
+    real(kind=dp),    intent(in) :: o, theta
+    real(kind=dp),    intent(in) :: c0
+    complex(kind=dp), intent(in) :: oi, beta
+    integer,          intent(in) :: parG(:)
+    real(kind=dp),    intent(in) :: Glf(:,:)
+    complex(kind=dp), intent(in), dimension(:,:) :: Dxx, Dyy, Dzz, Dyz, Dzy
+
+    real(kind=dp),  parameter :: gamma   = 1.0/137.0
+    real(kind=dp),  parameter :: pi      = 4.d0*atan(1.d0)
+    real(kind=dp),  parameter :: Hartree = 2.0d0*13.6056923d0
+
+    integer :: iG, jG
+
+
+    real(kind=dp)    :: Ff1, Ff2, Gf1, Gf2
+    real(kind=dp)    :: A_s, Tr_s, R_s, A_p, Tr_p, R_p 
+    complex(kind=dp) :: Dxx_r, Dyy_r, Dzz_r, Dyz_r
+    complex(kind=dp) :: Dxx_t, Dyy_t, Dzz_t, Dyz_t
+    complex(kind=dp) :: Dxx_a, Dyy_a, Dzz_a, Dyz_a
+    complex(kind=dp) :: Tran_s, Tran_p,  Ref_s, Ref_p, Abso_s, Abso_p
+    complex(kind=dp) :: Dxx0, Dyy0
+  
+    Dxx0 = 2*pi * gamma**2 * cmplx(0.0,1.0) / beta 
+    Dyy0 = 2*pi * gamma * cmplx(0.0,1.0) / oi 
+    Dxx_r = cmplx(0.0,0.0)
+    Dyy_r = cmplx(0.0,0.0)
+    Dzz_r = cmplx(0.0,0.0)
+    Dyz_r = cmplx(0.0,0.0)
+    Dxx_t = cmplx(0.0,0.0)
+    Dyy_t = cmplx(0.0,0.0)
+    Dzz_t = cmplx(0.0,0.0)
+    Dyz_t = cmplx(0.0,0.0)
+    Dxx_a = cmplx(0.0,0.0)
+    Dyy_a = cmplx(0.0,0.0)
+    Dzz_a = cmplx(0.0,0.0)
+    Dyz_a = cmplx(0.0,0.0)
+    do iG = 1,Nlf 
+      Ff1 = (2.0*parG(iG)/sqrt(c0))*sin(beta*c0/2.0)/(beta+Glf(3,iG)) 
+      Gf1 = (2.0*parG(iG)/sqrt(c0))*sin(beta*c0/2.0)/(beta-Glf(3,iG)) 
+      do jG = 1,Nlf
+        Ff2 = (2.0*parG(jG)/sqrt(c0))*sin(beta*c0/2.0)/(beta+Glf(3,jG))
+        Gf2 = (2.0*parG(jG)/sqrt(c0))*sin(beta*c0/2.0)/(beta-Glf(3,jG))
+ 
+        ! reflection
+        Dxx_r = Dxx_r + Ff1 * Dxx(iG,jG) * Gf2
+        Dyy_r = Dyy_r + Ff1 * Dyy(iG,jG) * Gf2 
+        Dzz_r = Dzz_r + Ff1 * Dzz(iG,jG) * Gf2 
+        Dyz_r = Dyz_r + Ff1 * Dyz(iG,jG) * Gf2
+        ! transmission
+        Dxx_t = Dxx_t + Gf1 * Dxx(iG,jG) * Ff2
+        Dyy_t = Dyy_t + Gf1 * Dyy(iG,jG) * Ff2
+        Dzz_t = Dzz_t + Gf1 * Dzz(iG,jG) * Ff2
+        Dyz_t = Dyz_t + Gf1 * Dyz(iG,jG) * Ff2
+        ! absorption
+        Dxx_a = Dxx_a + Ff1 * Dxx(iG,jG) * Ff2
+        Dyy_a = Dyy_a + Ff1 * Dyy(iG,jG) * Ff2
+        Dzz_a = Dzz_a + Ff1 * Dzz(iG,jG) * Ff2
+        Dyz_a = Dyz_a + Ff1 * Dyz(iG,jG) * Ff2
+      enddo
+    enddo
+ 
+    ! s-mode 
+    Ref_s  = Dxx0 * Dxx_r
+    Tran_s = Dxx0 * Dxx_t
+    Abso_s = Dxx_a
+ 
+    ! p-mode
+    Ref_p = Dyy0 * ( Dyy_r * cos(theta) &
+          & - Dzz_r * sin(theta)**2 / cos(theta) )
+
+    Tran_p = Dyy0 * ( Dyy_t * cos(theta) - 2.0 * Dyz_t * sin(theta) &
+           & + Dzz_t * sin(theta)**2 / cos(theta) )
+ 
+    Abso_p = cos(theta) * Dyy_a * cos(theta) &
+           & + sin(theta) * Dzz_a * sin(theta) &
+           & - 2.0*cos(theta) * Dyz_a * sin(theta)
+ 
+ 
+    ! Absorbption
+    A_s = (4.0*pi*gamma/o) * aimag(Abso_s)
+    A_p = (4.0*pi*gamma/o) * aimag(Abso_p)
+    ! Reflection 
+    R_s = cos(theta) * real( Ref_s*conjg(Ref_s) ) 
+    R_p = real( Ref_p * conjg(Ref_p) )  
+    !  Tran_smission
+    Tr_s = 1.0 - cos(theta) * ( real(Tran_s*conjg(Tran_s) ) - 2.0 * real(Tran_s) ) 
+    Tr_p = 1.0 - real( Tran_p*conjg(Tran_p) ) - cos(theta) * 2.0 * real(Tran_p) 
+
+    ! write A,T,R spectra to file for each angle itheta
+    call writeSpectra(iq, itheta, Ntheta, Nq, o, A_p, R_p)
+
+  end subroutine genSpectra
+
+  subroutine writeSpectra(iq, itheta, Ntheta, Nq, o, A_p, R_p)
+    implicit none
+
+    integer,       intent(in) :: iq, itheta, Nq, Ntheta
+    real(kind=dp), intent(in) :: o, A_p, R_p
+
+    real(kind=dp),  parameter :: Hartree = 2.0d0*13.6056923d0
+
+    integer :: iuni1, iuni2, iuni3
+    logical :: exist_a, exist_t, exist_r
+    character(len=20) :: id
+
+    if (Ntheta/=1 .and. Nq==1) then
+      id = "_itheta=#"//int2str(itheta)
+    else if (Ntheta==1 .and. Nq/=1) then
+      id = "_iq=#"//int2str(iq)
+    else
+      id = ""
+    endif
+
+    inquire(file="absorption_"//id, exist=exist_a)
+    if (exist_a) then
+      open(newunit=iuni1, file="absorption"//id, status="old", position="append", action="write")
+      write(iuni1,*) o*Hartree, A_p
+      close(iuni1)
+    else
+      open(newunit=iuni1, file="absorption"//id, status="new", action="write")
+      write(iuni1,*) o*Hartree, A_p
+      close(iuni1)
+    end if
+
+    inquire(file="transmission_"//id, exist=exist_t)
+    if (exist_t) then
+      open(newunit=iuni2, file="transmission"//id, status="old", position="append", action="write")
+      write(iuni2,*) o*Hartree, 1 - A_p - R_p
+      close(iuni2)
+    else
+      open(newunit=iuni2, file="transmission"//id, status="new", action="write")
+      write(iuni2,*) o*Hartree, 1 - A_p - R_p
+      close(iuni2)
+    end if    
+
+    inquire(file="reflection_"//id, exist=exist_r)
+    if (exist_r) then
+      open(newunit=iuni3, file="reflection"//id, status="old", position="append", action="write")
+      write(iuni3,*) o*Hartree, R_p
+      close(iuni3)
+    else
+      open(newunit=iuni3, file="reflection"//id, status="new", action="write")
+      write(iuni3,*) o*Hartree, R_p
+      close(iuni3)
+    end if   
+
+ 
+    ! if(itheta.eq.1)then
+    ! ! conductivity [pi*e^2/2h]   
+    ! write(131,*) o *Hartree, real(-cmplx(0.0,1.0) * 4.0 * c0 * Pixx(1,1)/oi)
+    ! write(132,*) o *Hartree, aimag(-cmplx(0.0,1.0) * 4.0 * c0 * Pixx(1,1)/oi)
+    ! endif 
+      
+  end subroutine writeSpectra
+
+  function int2str(k) result(str)
+    ! Convert an integer to string.
+    integer,intent(in) :: k
+    character(len=20)  :: str
+
+    write (str, *) k
+    str = adjustl(trim(str))
+  end function int2str
 
 end program photon
 
