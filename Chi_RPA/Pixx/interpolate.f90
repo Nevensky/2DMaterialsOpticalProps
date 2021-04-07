@@ -35,12 +35,15 @@ program Pi_pol
   omin = 1.0d-5
   omax = 50.0
 
+  No_interp = 10  
+  No_tot = (No_interp-1)*(No-2)
   
   Gamma_intra = Gamma_intra/Hartree
   omin = omin/Hartree ! iz eV u Hartree
   omax = (omax/Hartree + omin) 
   
   domega = (omax-omin)/(No-1)
+  domega_tot = (omax-omin)/No_tot
 
   dato1 = 'Corrfun_'//adjustl(trim(pol))
   dato2 = 'Qeff_'//adjustl(trim(pol))
@@ -78,12 +81,15 @@ program Pi_pol
   end do
   ! read(75,'(10F15.10)')((Qeff(iG,jG), jG = 1,Nlf), iG = 1,Nlf)
   close(75)
+
+  print * "COMPLETED: Read S0 and Qeff matrices."
   
   
-  
+  print * "STARTED: current-current response calculation."
   ! open(77,FILE = dato3)
   ! open(99)
-  ! new sum over omega
+  ! calculate current-current response Pi(omegaxNlfxNlf) for all local field vectors
+  ! separately calculate interband and intraband contributions for (1,1) components
   omega_loop_B: do io = 1,No-1
     ! print *, io
     oi = (io-1)*domega
@@ -124,14 +130,17 @@ program Pi_pol
 
 
   end do omega_loop_B
+  print * "COMPLETED: current-current response calculation."
   ! close(77)
   ! close(99)
   
-  No_interp = 100
   ! No_tot = (No-2)*No_interp - (No_interp-1)
-  No_tot = (No_interp-1)*(No-2)
-  domega_tot = (omax-omin)/No_tot
-  ! linear interpolation on a dense frequency grid
+  ! No_tot = (No_interp-1)*(No-2)
+  ! domega_tot = (omax-omin)/No_tot
+
+  print * "STARTED: interpoaltion of frequencies, No_interp:",No_interp
+
+  ! linear interpolation of current-current response Pi(omegaxNlfxNlf) on a dense frequency grid
   allocate(tmp(Nlf,Nlf))
   allocate(Pi_tot_interp(No_tot,Nlf,Nlf))
   open(77,file = dato3)
@@ -170,12 +179,16 @@ program Pi_pol
   close(77)
   close(78)
   close(79)
+  print * "COMPLETED: Interpoaltion of frequencies."
 
+
+  print * "STARTED: Writting interpoalted current-current response to file. Polarization: ", pol
   ! WRITTING INTERPOLATED TOTAL RESPONSE FUNCTION Pi for a given polarization 'pol' to file for all G,G'
   open(80,file = dato6)
   do io=1, counter
     do iG=1,Nlf
       do jG=1,Nlf
+        oi = io*domega_tot
         write(80,*) oi*Hartree, Pi_tot_interp(counter,iG,jG)
       enddo
     enddo
@@ -188,6 +201,9 @@ program Pi_pol
   deallocate(Qeff)
   deallocate(Pi_dia)
   deallocate(Pi_tot)
+
+  print * "COMPLETED: Writting interpoalted current-current response to file. Polarization: ", pol
+
   print *,'PROGRAM EXECUTION ENDED FOR CALC = 2'
 
 contains
