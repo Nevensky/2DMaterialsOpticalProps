@@ -140,9 +140,9 @@ program photon
   allocate( Pizy(Nlfd,Nlfd) )
   allocate( Pizz(Nlfd,Nlfd) )
 
-  allocate( TS(Nlfd,Nlfd) )
-  allocate( TP(Nlfd,Nlfd) )
-  ! allocate( TScheck(Nlfd,Nlfd) )
+  allocate( TS(Nlfd/2,Nlfd/2) ) ! dim NlfxNlf
+  allocate( TP(Nlfd,Nlfd) )     ! dim Nlf*2 x Nlf*2
+  ! allocate( TScheck(Nlfd/2,Nlfd/2) )
   ! allocate( TPcheck(Nlfd,Nlfd) )
 
   domega = (omax-omin) / (No-1)
