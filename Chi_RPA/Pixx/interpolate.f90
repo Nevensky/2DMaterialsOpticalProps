@@ -82,10 +82,10 @@ program Pi_pol
   ! read(75,'(10F15.10)')((Qeff(iG,jG), jG = 1,Nlf), iG = 1,Nlf)
   close(75)
 
-  print * "COMPLETED: Read S0 and Qeff matrices."
+  print *, "COMPLETED: Read S0 and Qeff matrices."
   
   
-  print * "STARTED: current-current response calculation."
+  print *, "STARTED: current-current response calculation."
   ! open(77,FILE = dato3)
   ! open(99)
   ! calculate current-current response Pi(omegaxNlfxNlf) for all local field vectors
@@ -130,7 +130,7 @@ program Pi_pol
 
 
   end do omega_loop_B
-  print * "COMPLETED: current-current response calculation."
+  print *, "COMPLETED: current-current response calculation."
   ! close(77)
   ! close(99)
   
@@ -138,7 +138,7 @@ program Pi_pol
   ! No_tot = (No_interp-1)*(No-2)
   ! domega_tot = (omax-omin)/No_tot
 
-  print * "STARTED: interpoaltion of frequencies, No_interp:",No_interp
+  print *, "STARTED: interpoaltion of frequencies, No_interp:",No_interp
 
   ! linear interpolation of current-current response Pi(omegaxNlfxNlf) on a dense frequency grid
   allocate(tmp(Nlf,Nlf))
@@ -179,10 +179,10 @@ program Pi_pol
   close(77)
   close(78)
   close(79)
-  print * "COMPLETED: Interpoaltion of frequencies."
+  print *, "COMPLETED: Interpoaltion of frequencies."
 
 
-  print * "STARTED: Writting interpoalted current-current response to file. Polarization: ", pol
+  print *, "STARTED: Writting interpoalted current-current response to file. Polarization: ", pol
   ! WRITTING INTERPOLATED TOTAL RESPONSE FUNCTION Pi for a given polarization 'pol' to file for all G,G'
   open(80,file = dato6)
   do io=1, counter
@@ -202,7 +202,7 @@ program Pi_pol
   deallocate(Pi_dia)
   deallocate(Pi_tot)
 
-  print * "COMPLETED: Writting interpoalted current-current response to file. Polarization: ", pol
+  print *, "COMPLETED: Writting interpoalted current-current response to file. Polarization: ", pol
 
   print *,'PROGRAM EXECUTION ENDED FOR CALC = 2'
 
