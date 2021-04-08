@@ -258,7 +258,7 @@ program photon
         write(503,*) o*Hartree, real(Pizz(1,1))
         write(504,*) o*Hartree, aimag(Pixx(1,1))
         write(505,*) o*Hartree, aimag(Piyy(1,1))
-        write(506,*) o*Hartree, aimag(Pizz(1,1)
+        write(506,*) o*Hartree, aimag(Pizz(1,1))
         ! unscreened conductivity [ pi*e^2/2h ]
         write(601,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pixx0(io,1,1)/o)
         write(602,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Piyy0(io,1,1)/o)
