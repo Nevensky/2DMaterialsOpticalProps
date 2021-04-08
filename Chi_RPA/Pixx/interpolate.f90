@@ -18,7 +18,7 @@ program Pi_pol
   real(kind=dp)    :: domega, domega_tot
   real(kind=dp)    :: omin, omax, oi
   real(kind=dp)    :: Gamma_intra, ReChi0,ImChi0
-  real(kind=dp)    :: c0 = 28.3320
+  real(kind=dp)    :: c0
 
 
   real(kind=dp), parameter :: pi      = 4.D0*atan(1.D0)
@@ -30,6 +30,7 @@ program Pi_pol
   ! Nlf = 65  ! 20 Ha
   ! pol = 'zz'
   ! Nlf = 29
+  c0 = 32.5411 ! a.u.
   Gamma_intra = 0.025 ! eV
   No = 2001
   omin = 1.0d-5
@@ -185,11 +186,11 @@ program Pi_pol
   print *, "STARTED: Writting interpoalted current-current response to file. Polarization: ", pol
   ! WRITTING INTERPOLATED TOTAL RESPONSE FUNCTION Pi for a given polarization 'pol' to file for all G,G'
   open(80,file = dato6)
-  do io=1, counter
-    do iG=1,Nlf
-      do jG=1,Nlf
+  do io = 1, No_tot
+    do iG = 1, Nlf
+      do jG = 1, Nlf
         oi = io*domega_tot
-        write(80,*) oi*Hartree, Pi_tot_interp(counter,iG,jG)
+        write(80,*) oi*Hartree, Pi_tot_interp(io,iG,jG)
       enddo
     enddo
   enddo
