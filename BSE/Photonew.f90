@@ -167,7 +167,7 @@ program photon
 
   ! Reciprocal vectors for crystal local field effects calculations in array Glf(3,Nlf)
   call genGlfandParity(lf,Ecut,NG,Gcar, G, parG, Nlf, Nlfd, Glf)
-  print *, "Glf matrix generated."
+  print *, "status: Glf matrix generated."
   print *, 'Nlf: ',Nlf,' Nlfd: ',Nlfd
 
   ! convert Glf from crystal to Cartesian coords.
@@ -206,10 +206,10 @@ program photon
           stop
         else if(itheta /= 1 .and. Nq==0) then 
           q = gamma*o*sin(theta)
-          print *, 'q = γ·ω·sin(𝜗)'
+          ! print *, 'q = γ·ω·sin(𝜗)' ! DEBUG
         else
           q = (iq-1)*dq
-          print *, 'q = (qᵢ-1)·dq'
+          ! print *, 'q = (qᵢ-1)·dq' ! DEBUG
         endif
         
         oi = cmplx(o,eta) 
@@ -995,35 +995,35 @@ subroutine readPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
       id = ""
     endif
 
-    inquire(file="absorption_"//id, exist=exist_a)
+    inquire(file="absorption"//id, exist=exist_a)
     if (exist_a) then
-      open(newunit=iuni1, file="absorption"//id, position="append", action="write")
+      open(newunit=iuni1, file="absorption"//id, status="old", position="append", action="write")
       write(iuni1,*) o*Hartree, A_p
       close(iuni1)
     else
-      open(newunit=iuni1, file="absorption"//id, action="write")
+      open(newunit=iuni1, file="absorption"//id, status="new", action="write")
       write(iuni1,*) o*Hartree, A_p
       close(iuni1)
     end if
 
-    inquire(file="transmission_"//id, exist=exist_t)
+    inquire(file="transmission"//id, exist=exist_t)
     if (exist_t) then
-      open(newunit=iuni2, file="transmission"//id, position="append", action="write")
+      open(newunit=iuni2, file="transmission"//id, status="old", position="append", action="write")
       write(iuni2,*) o*Hartree, 1 - A_p - R_p
       close(iuni2)
     else
-      open(newunit=iuni2, file="transmission"//id, action="write")
+      open(newunit=iuni2, file="transmission"//id, status="new", action="write")
       write(iuni2,*) o*Hartree, 1 - A_p - R_p
       close(iuni2)
     end if    
 
-    inquire(file="reflection_"//id, exist=exist_r)
+    inquire(file="reflection"//id, exist=exist_r)
     if (exist_r) then
-      open(newunit=iuni3, file="reflection"//id, position="append", action="write")
+      open(newunit=iuni3, file="reflection"//id, status="old", position="append", action="write")
       write(iuni3,*) o*Hartree, R_p
       close(iuni3)
     else
-      open(newunit=iuni3, file="reflection"//id, action="write")
+      open(newunit=iuni3, file="reflection"//id, status="new", action="write")
       write(iuni3,*) o*Hartree, R_p
       close(iuni3)
     end if   
