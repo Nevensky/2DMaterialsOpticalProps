@@ -115,8 +115,8 @@ program photon
   allocate( KC(3,3) )
   allocate( Gi(3) )
 
-  ! allocate( Imat(Nlfd,Nlfd)  )
-  ! allocate( Imat2(Nlfd,Nlfd) )
+  ! allocate( Imat(Nlfd/2,Nlfd/2) ) ! dim NlfxNlf
+  ! allocate( Imat2(Nlfd,Nlfd) ) ! dim Nlf*2 x Nlf*2
 
   allocate( Dxx0(Nlfd,Nlfd) )
   allocate( Dyy0(Nlfd,Nlfd) )
@@ -174,13 +174,17 @@ program photon
   do iG = 1,Nlf 
     Glf(:,iG) = Gcar*Glf(:,iG)
   enddo
+  print *, "status: Glf matrix converted to Cartesian coords."
 
   ! Nlf2 = 2*Nlf
   ! print *, 'Nlf2 (p-mode): ',Nlf2
 
   ! Reading unscreened current current response tensor Pi^0_{\mu\nu}(G,G')
   call readPi0(No, Nlf, rpa_xx_file, rpa_yy_file, rpa_zz_file, Pixx0, Piyy0, Piyz0, Pizy0, Pizz0)
-
+  print *, "status: Current-current response tensor Pi0(omega,G,G\') loaded."
+  print *, "Pixx0 shape: ",shape(Pixx0)
+  print *, "Piyy0 shape: ",shape(Piyy0)
+  print *, "Pizz0 shape: ",shape(Pizz0)
   !*******************************************************************
   !   START ITERATING OVER TRANSFER WAVEVECTORS AND FREQUNECIES
   !******************************************************************
@@ -190,7 +194,7 @@ program photon
     print *, 'theta = ',180.0*theta/pi,'°'
 
     q_loop: do iq =  qmin, qmax
-      print*, ' iq: ', iq
+      print*, ' iq = ', iq
     
       q = (iq-1)*dq
 
@@ -202,8 +206,10 @@ program photon
           stop
         else if(itheta /= 1 .and. Nq==0) then 
           q = gamma*o*sin(theta)
+          print *, 'q = γ·ω·sin(𝜗)'
         else
           q = (iq-1)*dq
+          print *, 'q = (qᵢ-1)·dq'
         endif
         
         oi = cmplx(o,eta) 
@@ -221,7 +227,7 @@ program photon
         call genTS(Nlf, Dxx0, Pixx0(io,:,:), TS)
 
         ! invertiranje matrice TS
-        ! call gjel(TS,Nlf,Nlfd,Imat,Nlf,Nlfd)
+        ! call gjel(TS,Nlf,Nlfd/2,Imat,Nlf,Nlfd)
         call invert(TS)
 
 
@@ -239,11 +245,27 @@ program photon
         
 
         ! DEBUG: mozda prepraviti?
+
+        write(401,*) o*Hartree, real(Pixx0(io,1,1))
+        write(402,*) o*Hartree, real(Piyy0(io,1,1))
+        write(403,*) o*Hartree, real(Pizz0(io,1,1))
+        write(404,*) o*Hartree, aimag(Pixx0(io,1,1))
+        write(405,*) o*Hartree, aimag(Piyy0(io,1,1))
+        write(406,*) o*Hartree, aimag(Pizz0(io,1,1))
+
+        write(501,*) o*Hartree, real(Pixx(1,1))
+        write(502,*) o*Hartree, real(Piyy(1,1))
+        write(503,*) o*Hartree, real(Pizz(1,1))
+        write(504,*) o*Hartree, aimag(Pixx(1,1))
+        write(505,*) o*Hartree, aimag(Piyy(1,1))
+        write(506,*) o*Hartree, aimag(Pizz(1,1))
         ! unscreened conductivity [ pi*e^2/2h ]
         write(301,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pixx0(io,1,1)/o)
         write(302,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Piyy0(io,1,1)/o)
         write(303,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pizz0(io,1,1)/o)
-
+        write(304,*) o*Hartree, aimag(-cmplx(0.0,1.0)*4.0*c0*Pixx0(io,1,1)/o)
+        write(305,*) o*Hartree, aimag(-cmplx(0.0,1.0)*4.0*c0*Piyy0(io,1,1)/o)
+        write(306,*) o*Hartree, aimag(-cmplx(0.0,1.0)*4.0*c0*Pizz0(io,1,1)/o)
         ! calculation of reflected, transmited and absorbed coefficients  
         call genSpectra(o, oi, beta, itheta, theta, Ntheta, Nq, c0, Nlf, parG, Glf, Dxx, Dyy, Dzz, Dyz, Dzy)
 
@@ -258,7 +280,7 @@ program photon
         ! call genTS(Nlf, Dxx0, Pixx, TS)
 
         ! invertiranje matrice TS
-        ! call gjel(TS,Nlf,Nlfd,Imat,Nlf,Nlfd)
+        ! call gjel(TS,Nlf,Nlfd/2,Imat,Nlf,Nlfd)
         ! call invert(TS)
 
 
@@ -604,7 +626,6 @@ subroutine readPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
     character(len=200), intent(in) :: file_xx, file_yy, file_zz
     complex(kind=dp),   intent(out),  dimension(:,:,:) :: Pixx0, Piyy0, Piyz0, Pizy0, Pizz0
 
-
     integer       :: io, iG, jG
     integer       :: iuni1, iuni2, iuni3
     real(kind=dp) :: o ! frequency tmp var, not used
@@ -612,21 +633,21 @@ subroutine readPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
     open(newunit=iuni1,file=adjustl(trim(file_xx)))
     open(newunit=iuni2,file=adjustl(trim(file_yy)))
     open(newunit=iuni3,file=adjustl(trim(file_zz)))
-
     do io = 1,No
       do iG = 1,Nlf
         do jG = 1,Nlf
-            read(iuni1,*) o, Pixx0(io, iG,jG)
-            read(iuni2,*) o, Piyy0(io, iG,jG)
-            read(iuni3,*) o, Pizz0(io, iG,jG)
+            read(iuni1,*) o, Pixx0(io,iG,jG)
+            read(iuni2,*) o, Piyy0(io,iG,jG)
+            read(iuni3,*) o, Pizz0(io,iG,jG)
         enddo
       enddo
     enddo
-    Piyz0(:,:,:) = cmplx(0.0,0.0)
-    Pizy0(:,:,:) = cmplx(0.0,0.0)
     close(iuni1)
     close(iuni2)
     close(iuni3)
+
+    Piyz0(:,:,:) = cmplx(0.0,0.0)
+    Pizy0(:,:,:) = cmplx(0.0,0.0)
   end subroutine readPi0
   
   ! subroutine readPi0_omega(io_in, No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy0, Pizz0)
@@ -794,6 +815,15 @@ subroutine readPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
       
   end subroutine genTP
 
+
+  subroutine writeScreenedPi(Pixx, Piyy, Piyz, Pizy, Pizz)
+    implicit none
+
+    complex(kind=dp), intent(in), dimension(:,:) :: Pixx, Piyy, Piyz, Pizy, Pizz
+  
+        
+  end subroutine writeScreenedPi
+
   subroutine writeSigma_macroscopic(o, c0, Nlf, Pixx, Piyy, Pizz, TS, TP)
     ! Calculates macroscopic conducitivities from current-current response functions Pi_{\mu\nu}
     ! Write the conducitivities and response functions to files.
@@ -940,15 +970,16 @@ subroutine readPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
     Tr_p = 1.0 - real( Tran_p*conjg(Tran_p) ) - cos(theta) * 2.0 * real(Tran_p) 
 
     ! write A,T,R spectra to file for each angle itheta
-    call writeSpectra(iq, itheta, Ntheta, Nq, o, A_p, R_p)
+    call writeSpectra(iq, itheta, Ntheta, Nq, o, oi, A_p, R_p)
 
   end subroutine genSpectra
 
-  subroutine writeSpectra(iq, itheta, Ntheta, Nq, o, A_p, R_p)
+  subroutine writeSpectra(iq, itheta, Ntheta, Nq, o, oi, A_p, R_p)
     implicit none
 
-    integer,       intent(in) :: iq, itheta, Nq, Ntheta
-    real(kind=dp), intent(in) :: o, A_p, R_p
+    integer,          intent(in) :: iq, itheta, Nq, Ntheta
+    real(kind=dp),    intent(in) :: o, A_p, R_p
+    complex(kind=dp), intent(in) :: oi
 
     real(kind=dp),  parameter :: Hartree = 2.0d0*13.6056923d0
 
@@ -966,43 +997,49 @@ subroutine readPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
 
     inquire(file="absorption_"//id, exist=exist_a)
     if (exist_a) then
-      open(newunit=iuni1, file="absorption"//id, status="old", position="append", action="write")
+      open(newunit=iuni1, file="absorption"//id, position="append", action="write")
       write(iuni1,*) o*Hartree, A_p
       close(iuni1)
     else
-      open(newunit=iuni1, file="absorption"//id, status="new", action="write")
+      open(newunit=iuni1, file="absorption"//id, action="write")
       write(iuni1,*) o*Hartree, A_p
       close(iuni1)
     end if
 
     inquire(file="transmission_"//id, exist=exist_t)
     if (exist_t) then
-      open(newunit=iuni2, file="transmission"//id, status="old", position="append", action="write")
+      open(newunit=iuni2, file="transmission"//id, position="append", action="write")
       write(iuni2,*) o*Hartree, 1 - A_p - R_p
       close(iuni2)
     else
-      open(newunit=iuni2, file="transmission"//id, status="new", action="write")
+      open(newunit=iuni2, file="transmission"//id, action="write")
       write(iuni2,*) o*Hartree, 1 - A_p - R_p
       close(iuni2)
     end if    
 
     inquire(file="reflection_"//id, exist=exist_r)
     if (exist_r) then
-      open(newunit=iuni3, file="reflection"//id, status="old", position="append", action="write")
+      open(newunit=iuni3, file="reflection"//id, position="append", action="write")
       write(iuni3,*) o*Hartree, R_p
       close(iuni3)
     else
-      open(newunit=iuni3, file="reflection"//id, status="new", action="write")
+      open(newunit=iuni3, file="reflection"//id, action="write")
       write(iuni3,*) o*Hartree, R_p
       close(iuni3)
     end if   
 
  
-    ! if(itheta.eq.1)then
-    ! ! conductivity [pi*e^2/2h]   
-    ! write(131,*) o *Hartree, real(-cmplx(0.0,1.0) * 4.0 * c0 * Pixx(1,1)/oi)
-    ! write(132,*) o *Hartree, aimag(-cmplx(0.0,1.0) * 4.0 * c0 * Pixx(1,1)/oi)
-    ! endif 
+    if (itheta==1) then
+    ! conductivity [pi*e^2/2h]   
+      write(131,*) o*Hartree, real(-cmplx(0.0,1.0) * 4.0 * c0 * Pixx(1,1)/oi)
+      write(132,*) o*Hartree, aimag(-cmplx(0.0,1.0) * 4.0 * c0 * Pixx(1,1)/oi)
+      write(133,*) o*Hartree, real(-cmplx(0.0,1.0) * 4.0 * c0 * Piyy(1,1)/oi)
+      write(134,*) o*Hartree, aimag(-cmplx(0.0,1.0) * 4.0 * c0 * Piyy(1,1)/oi)
+      write(135,*) o*Hartree, real(-cmplx(0.0,1.0) * 4.0 * c0 * Pizz(1,1)/oi)
+      write(136,*) o*Hartree, aimag(-cmplx(0.0,1.0) * 4.0 * c0 * Pizz(1,1)/oi)
+      write(137,*) o*Hartree, real(-cmplx(0.0,1.0) * 4.0 * c0 * Piyz(1,1)/oi)
+      write(138,*) o*Hartree, aimag(-cmplx(0.0,1.0) * 4.0 * c0 * Piyz(1,1)/oi)
+    endif 
       
   end subroutine writeSpectra
 
