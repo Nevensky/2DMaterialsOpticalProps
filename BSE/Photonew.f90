@@ -245,27 +245,34 @@ program photon
         
 
         ! DEBUG: mozda prepraviti?
-
+        ! unscreened current-current response tensor
         write(401,*) o*Hartree, real(Pixx0(io,1,1))
         write(402,*) o*Hartree, real(Piyy0(io,1,1))
         write(403,*) o*Hartree, real(Pizz0(io,1,1))
         write(404,*) o*Hartree, aimag(Pixx0(io,1,1))
         write(405,*) o*Hartree, aimag(Piyy0(io,1,1))
         write(406,*) o*Hartree, aimag(Pizz0(io,1,1))
-
+        ! screened current-current response tensor
         write(501,*) o*Hartree, real(Pixx(1,1))
         write(502,*) o*Hartree, real(Piyy(1,1))
         write(503,*) o*Hartree, real(Pizz(1,1))
         write(504,*) o*Hartree, aimag(Pixx(1,1))
         write(505,*) o*Hartree, aimag(Piyy(1,1))
-        write(506,*) o*Hartree, aimag(Pizz(1,1))
+        write(506,*) o*Hartree, aimag(Pizz(1,1)
         ! unscreened conductivity [ pi*e^2/2h ]
-        write(301,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pixx0(io,1,1)/o)
-        write(302,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Piyy0(io,1,1)/o)
-        write(303,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pizz0(io,1,1)/o)
-        write(304,*) o*Hartree, aimag(-cmplx(0.0,1.0)*4.0*c0*Pixx0(io,1,1)/o)
-        write(305,*) o*Hartree, aimag(-cmplx(0.0,1.0)*4.0*c0*Piyy0(io,1,1)/o)
-        write(306,*) o*Hartree, aimag(-cmplx(0.0,1.0)*4.0*c0*Pizz0(io,1,1)/o)
+        write(601,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pixx0(io,1,1)/o)
+        write(602,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Piyy0(io,1,1)/o)
+        write(603,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pizz0(io,1,1)/o)
+        write(604,*) o*Hartree, aimag(-cmplx(0.0,1.0)*4.0*c0*Pixx0(io,1,1)/o)
+        write(605,*) o*Hartree, aimag(-cmplx(0.0,1.0)*4.0*c0*Piyy0(io,1,1)/o)
+        write(606,*) o*Hartree, aimag(-cmplx(0.0,1.0)*4.0*c0*Pizz0(io,1,1)/o)
+        ! screened conductivity [ pi*e^2/2h ]
+        write(701,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pixx(1,1)/o)
+        write(702,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Piyy(1,1)/o)
+        write(703,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pizz(1,1)/o)
+        write(704,*) o*Hartree, aimag(-cmplx(0.0,1.0)*4.0*c0*Pixx(1,1)/o)
+        write(705,*) o*Hartree, aimag(-cmplx(0.0,1.0)*4.0*c0*Piyy(1,1)/o)
+        write(706,*) o*Hartree, aimag(-cmplx(0.0,1.0)*4.0*c0*Pizz(1,1)/o)
         ! calculation of reflected, transmited and absorbed coefficients  
         call genSpectra(o, oi, beta, itheta, theta, Ntheta, Nq, c0, Nlf, parG, Glf, Dxx, Dyy, Dzz, Dyz, Dzy)
 
@@ -328,6 +335,8 @@ program photon
   if (allocated(Piyz))  deallocate(Piyz)
   if (allocated(Pizy))  deallocate(Pizy)
   if (allocated(Pizz))  deallocate(Pizz)
+
+  print *, "PROGRAM PHOTON RUN ENDED"
 
 contains
   subroutine parseCommandLineArgs(config_file)
