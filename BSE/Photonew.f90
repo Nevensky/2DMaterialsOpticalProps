@@ -14,7 +14,7 @@ program photon
   integer, parameter :: qp = real128
 
   integer :: parallelCount = 0
-  integer :: i, j, n, m, io, iq,itheta, iG, jG, kG, Nlf, Nlf2
+  integer :: i, io, iq,itheta, iG, jG, kG, Nlf, Nlf2
   integer :: ist1, ist2, ist3, ist4, ist5, ist6
   integer :: Ntheta, Nq ! number of angles, number of transfer wavevectors
 
@@ -38,7 +38,7 @@ program photon
 
   ! ...scalars...
 
-  real(kind=dp) :: Eref, Gcar
+  real(kind=dp) :: Gcar
   real(kind=dp) :: q, o, domega
   real(kind=dp) :: theta, dtheta
   complex(kind = dp) :: oi, beta
@@ -61,7 +61,6 @@ program photon
   complex(kind=dp), dimension(:,:), allocatable :: Pixx, Piyy, Piyz, Pizy, Pizz
 
   character(len=200) :: path
-  character(len=35)  :: tag,buffer
 
   character(len=200) :: config_file
 
@@ -714,7 +713,7 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
   ! end subroutine loadPi0_omega
 
 
-  subroutine genScreenedPi(Nlf,TS, TP,Pixx0, Piyy0, Piyz0, Pizy0, Pizz0,Pixx, Piyy, Piyz, Pizy, Pizz)
+  subroutine genScreenedPi(Nlf, TS, TP, Pixx0, Piyy0, Piyz0, Pizy0, Pizz0, Pixx, Piyy, Piyz, Pizy, Pizz)
     ! SCREENED CURRENT - CURRENT MATRICES S-mod: 'Pixx'; P-mod:'Piyy, Piyz, Pizy, Pizz' 
     implicit none
   
@@ -736,21 +735,25 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
     Pizz = cmplx(0.0,0.0)
     do iG = 1,Nlf
       do jG = 1,Nlf       
-        ! do kG = 1,Nlf
-        ! Pi_{xx} (s-mod)
-        Pixx(iG,jG) = sum( TS(iG,:)*Pixx0(:,jG) )
-        
-        ! Pi_{yy} (p-mod)
-        Piyy(iG,jG) = sum( TP(iG,:)*Piyy0(:,jG) + TP(iG,Nlf:Nlf2)*Pizy0(:,jG) )
+        do kG = 1,Nlf
+          ! Pi_{xx} (s-mod)
+          Pixx(iG,jG) = Pixx(iG,jG) + TS(iG,kG)*Pixx0(kG,jG)
+          
+          ! Pi_{yy} (p-mod)
+          Piyy(iG,jG) = Piyy(iG,jG) + TP(iG,kG)*Piyy0(kG,jG) &
+                      & + TP(iG,kG+Nlf)*Pizy0(kG,jG)
   
-        ! Pi_{yz} (p-mod)
-        Piyz(iG,jG) = sum( TP(iG,:)*Piyz0(:,jG) + TP(iG,Nlf:Nlf2)*Pizz0(:,jG) )
+          ! Pi_{yz} (p-mod)
+          Piyz(iG,jG) = Piyz(iG,jG) + TP(iG,kG)*Piyz0(kG,jG) &
+                      & + TP(iG,kG+Nlf)*Pizz0(kG,jG)
   
-        ! Pi_{zy} (p-mod)
-        Pizy(iG,jG) =sum( TP(iG+Nlf,:)*Piyy0(:,jG) + TP(iG+Nlf,Nlf:Nlf2)*Pizy0(:,jG) )
-        ! Pi_{zz} (p-mod)
-        Pizz(iG,jG) =sum ( TP(iG+Nlf,:)*Piyz0(:,jG) + TP(iG+Nlf,Nlf:Nlf2)*Pizz0(:,jG) )
-        ! enddo
+          ! Pi_{zy} (p-mod)
+          Pizy(iG,jG) = Pizy(iG,jG) + TP(iG+Nlf,kG)*Piyy0(kG,jG) &
+                      & + TP(iG+Nlf,kG+Nlf)*Pizy0(kG,jG)
+          ! Pi_{zz} (p-mod)
+          Pizz(iG,jG) = Pizz(iG,jG) + TP(iG+Nlf,kG)*Piyz0(kG,jG) &
+                      & + TP(iG+Nlf,kG+Nlf)*Pizz0(kG,jG)
+        enddo
       enddo
     enddo
   end subroutine genScreenedPi
@@ -930,7 +933,7 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
 
   end subroutine genSpectra
 
-  subroutine writeSpectra(iq, itheta, Ntheta, Nq, o, oi, A_p, R_p)
+  subroutine writeSpectra(iq, itheta, Ntheta, Nq, o, A_p, R_p)
     implicit none
 
     integer,          intent(in) :: iq, itheta, Nq, Ntheta
