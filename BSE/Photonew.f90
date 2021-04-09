@@ -84,6 +84,7 @@ program photon
   integer            :: Nthreads, NthreadsMKL
   namelist  /parallel/ Nthreads, NthreadsMKL
 
+  print *, "PROGRAM PHOTON RUN STARTED"
 
   ! load namelist
   call parseCommandLineArgs(config_file) ! config file is the first argument passed to ./Photon <arg1>
@@ -246,33 +247,23 @@ program photon
 
         ! DEBUG: mozda prepraviti?
         ! unscreened current-current response tensor
-        write(401,*) o*Hartree, real(Pixx0(io,1,1))
-        write(402,*) o*Hartree, real(Piyy0(io,1,1))
-        write(403,*) o*Hartree, real(Pizz0(io,1,1))
-        write(404,*) o*Hartree, aimag(Pixx0(io,1,1))
-        write(405,*) o*Hartree, aimag(Piyy0(io,1,1))
-        write(406,*) o*Hartree, aimag(Pizz0(io,1,1))
+        call writePi(o, Pixx0(io,1,1),"pixx0_q#"//int2str(iq)//"_theta#"//int2str(itheta))
+        call writePi(o, Piyy0(io,1,1),"piyy0_q#"//int2str(iq)//"_theta#"//int2str(itheta))
+        call writePi(o, Pizz0(io,1,1),"pizz0_q#"//int2str(iq)//"_theta#"//int2str(itheta))
         ! screened current-current response tensor
-        write(501,*) o*Hartree, real(Pixx(1,1))
-        write(502,*) o*Hartree, real(Piyy(1,1))
-        write(503,*) o*Hartree, real(Pizz(1,1))
-        write(504,*) o*Hartree, aimag(Pixx(1,1))
-        write(505,*) o*Hartree, aimag(Piyy(1,1))
-        write(506,*) o*Hartree, aimag(Pizz(1,1))
+        call writePi(o, Pixx(1,1),"pixx_q#"//int2str(iq)//"_theta#"//int2str(itheta))
+        call writePi(o, Piyy(1,1),"piyy_q#"//int2str(iq)//"_theta#"//int2str(itheta))
+        call writePi(o, Pizz(1,1),"pizz_q#"//int2str(iq)//"_theta#"//int2str(itheta))
+
         ! unscreened conductivity [ pi*e^2/2h ]
-        write(601,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pixx0(io,1,1)/o)
-        write(602,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Piyy0(io,1,1)/o)
-        write(603,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pizz0(io,1,1)/o)
-        write(604,*) o*Hartree, aimag(-cmplx(0.0,1.0)*4.0*c0*Pixx0(io,1,1)/o)
-        write(605,*) o*Hartree, aimag(-cmplx(0.0,1.0)*4.0*c0*Piyy0(io,1,1)/o)
-        write(606,*) o*Hartree, aimag(-cmplx(0.0,1.0)*4.0*c0*Pizz0(io,1,1)/o)
+        call writeSigma(o, c0, Pixx0(io,1,1),"sigma0_q#"//int2str(iq)//"_theta#"//int2str(itheta))
+        call writeSigma(o, c0, Piyy0(io,1,1),"sigma0_q#"//int2str(iq)//"_theta#"//int2str(itheta))
+        call writeSigma(o, c0, Pizz0(io,1,1),"sigma0_q#"//int2str(iq)//"_theta#"//int2str(itheta))
         ! screened conductivity [ pi*e^2/2h ]
-        write(701,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pixx(1,1)/o)
-        write(702,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Piyy(1,1)/o)
-        write(703,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pizz(1,1)/o)
-        write(704,*) o*Hartree, aimag(-cmplx(0.0,1.0)*4.0*c0*Pixx(1,1)/o)
-        write(705,*) o*Hartree, aimag(-cmplx(0.0,1.0)*4.0*c0*Piyy(1,1)/o)
-        write(706,*) o*Hartree, aimag(-cmplx(0.0,1.0)*4.0*c0*Pizz(1,1)/o)
+        call writeSigma(o, c0, Pixx(1,1),"sigmaSc_q#"//int2str(iq)//"_theta#"//int2str(itheta))
+        call writeSigma(o, c0, Piyy(1,1),"sigmaSc_q#"//int2str(iq)//"_theta#"//int2str(itheta))
+        call writeSigma(o, c0, Pizz(1,1),"sigmaSc_q#"//int2str(iq)//"_theta#"//int2str(itheta))
+
         ! calculation of reflected, transmited and absorbed coefficients  
         call genSpectra(o, oi, beta, itheta, theta, Ntheta, Nq, c0, Nlf, parG, Glf, Dxx, Dyy, Dzz, Dyz, Dzy)
 
@@ -1051,6 +1042,58 @@ subroutine readPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
     endif 
       
   end subroutine writeSpectra
+
+  subroutine writePi(o, Pi, filename)
+    implicit none
+    real(kind=dp),     intent(in) :: o
+    complex(kind=dp),  intent(in) :: Pi
+    character(len=50), intent(in) :: filename
+
+
+    real(kind=dp),  parameter :: Hartree = 2.0d0*13.6056923d0
+
+    integer :: iuni
+    logical :: exist
+
+    inquire(file=trim(adjustl(filename)), exist=exist)
+    if (exist) then
+      open(newunit=iuni, file=trim(adjustl(filename)), status="old", position="append", action="write")
+      write(iuni,*) o*Hartree, real(Pi), aimag(Pi)
+      close(iuni)
+    else
+      open(newunit=iuni, file=trim(adjustl(filename)), status="new", action="write")
+      write(iuni,*) o*Hartree, real(Pi), aimag(Pi)
+      close(iuni)
+    end if
+      
+  end subroutine writePi
+
+  subroutine writeSigma(o, c0, Pi, filename)
+    implicit none
+    real(kind=dp),     intent(in) :: o, c0
+    complex(kind=dp),  intent(in) :: Pi
+    character(len=50), intent(in) :: filename
+
+
+    real(kind=dp),  parameter :: Hartree = 2.0d0*13.6056923d0
+
+    integer :: iuni
+    logical :: exist
+
+    inquire(file=trim(adjustl(filename)), exist=exist)
+    if (exist) then
+      open(newunit=iuni, file=trim(adjustl(filename)), status="old", position="append", action="write")
+      write(iuni,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pi/o), &
+                             & aimag(-cmplx(0.0,1.0)*4.0*c0*Pi/o)
+      close(iuni)
+    else
+      open(newunit=iuni, file=trim(adjustl(filename)), status="new", action="write")
+      write(iuni,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pi/o), &
+                             & aimag(-cmplx(0.0,1.0)*4.0*c0*Pi/o)
+      close(iuni)
+    end if
+      
+  end subroutine writeSigma
 
   function int2str(k) result(str)
     ! Convert an integer to string.
