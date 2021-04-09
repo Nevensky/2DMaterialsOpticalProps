@@ -196,6 +196,7 @@ program photon
 
     q_loop: do iq =  qmin, qmax
       print*, ' iq = ', iq
+      print *, 'progress: ',iq-qmin, ' /',Nq,' (',(real(iq-qmin)/real(Nq))*100.0,'% )'
     
       q = (iq-1)*dq
 
@@ -247,22 +248,22 @@ program photon
 
         ! DEBUG: mozda prepraviti?
         ! unscreened current-current response tensor
-        call writePi(o, Pixx0(io,1,1),"pixx0_q#"//int2str(iq)//"_theta#"//int2str(itheta))
-        call writePi(o, Piyy0(io,1,1),"piyy0_q#"//int2str(iq)//"_theta#"//int2str(itheta))
-        call writePi(o, Pizz0(io,1,1),"pizz0_q#"//int2str(iq)//"_theta#"//int2str(itheta))
+        call writePi(o, Pixx0(io,1,1),trim("pixx0_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
+        call writePi(o, Piyy0(io,1,1),trim("piyy0_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
+        call writePi(o, Pizz0(io,1,1),trim("pizz0_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
         ! screened current-current response tensor
-        call writePi(o, Pixx(1,1),"pixx_q#"//int2str(iq)//"_theta#"//int2str(itheta))
-        call writePi(o, Piyy(1,1),"piyy_q#"//int2str(iq)//"_theta#"//int2str(itheta))
-        call writePi(o, Pizz(1,1),"pizz_q#"//int2str(iq)//"_theta#"//int2str(itheta))
-
+        call writePi(o, Pixx(1,1),trim("pixx_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
+        call writePi(o, Piyy(1,1),trim("piyy_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
+        call writePi(o, Pizz(1,1),trim("pizz_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
+)
         ! unscreened conductivity [ pi*e^2/2h ]
-        call writeSigma(o, c0, Pixx0(io,1,1),"sigma0_q#"//int2str(iq)//"_theta#"//int2str(itheta))
-        call writeSigma(o, c0, Piyy0(io,1,1),"sigma0_q#"//int2str(iq)//"_theta#"//int2str(itheta))
-        call writeSigma(o, c0, Pizz0(io,1,1),"sigma0_q#"//int2str(iq)//"_theta#"//int2str(itheta))
+        call writeSigma(o, c0, Pixx0(io,1,1),trim("sigma0_q#"//int2str(iq))//trim("_theta#"//int2str(itheta))
+        call writeSigma(o, c0, Piyy0(io,1,1),trim("sigma0_q#"//int2str(iq))//trim("_theta#"//int2str(itheta))
+        call writeSigma(o, c0, Pizz0(io,1,1),trim("sigma0_q#"//int2str(iq))//trim("_theta#"//int2str(itheta))
         ! screened conductivity [ pi*e^2/2h ]
-        call writeSigma(o, c0, Pixx(1,1),"sigmaSc_q#"//int2str(iq)//"_theta#"//int2str(itheta))
-        call writeSigma(o, c0, Piyy(1,1),"sigmaSc_q#"//int2str(iq)//"_theta#"//int2str(itheta))
-        call writeSigma(o, c0, Pizz(1,1),"sigmaSc_q#"//int2str(iq)//"_theta#"//int2str(itheta))
+        call writeSigma(o, c0, Pixx(1,1),trim("sigmaSc_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
+        call writeSigma(o, c0, Piyy(1,1),trim("sigmaSc_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
+        call writeSigma(o, c0, Pizz(1,1),trim("sigmaSc_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
 
         ! calculation of reflected, transmited and absorbed coefficients  
         call genSpectra(o, oi, beta, itheta, theta, Ntheta, Nq, c0, Nlf, parG, Glf, Dxx, Dyy, Dzz, Dyz, Dzy)
