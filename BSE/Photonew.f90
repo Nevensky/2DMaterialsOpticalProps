@@ -257,9 +257,9 @@ program photon
         call writePi(o, Pizz(1,1),trim("pizz_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
 )
         ! unscreened conductivity [ pi*e^2/2h ]
-        call writeSigma(o, c0, Pixx0(io,1,1),trim("sigma0_q#"//int2str(iq))//trim("_theta#"//int2str(itheta))
-        call writeSigma(o, c0, Piyy0(io,1,1),trim("sigma0_q#"//int2str(iq))//trim("_theta#"//int2str(itheta))
-        call writeSigma(o, c0, Pizz0(io,1,1),trim("sigma0_q#"//int2str(iq))//trim("_theta#"//int2str(itheta))
+        call writeSigma(o, c0, Pixx0(io,1,1),trim("sigma0_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
+        call writeSigma(o, c0, Piyy0(io,1,1),trim("sigma0_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
+        call writeSigma(o, c0, Pizz0(io,1,1),trim("sigma0_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
         ! screened conductivity [ pi*e^2/2h ]
         call writeSigma(o, c0, Pixx(1,1),trim("sigmaSc_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
         call writeSigma(o, c0, Piyy(1,1),trim("sigmaSc_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
