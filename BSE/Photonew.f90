@@ -2,7 +2,7 @@ program photon
   !  program for the calculation of the current - current corelation function in P
   !  XY - plane  Imat cell parameter  a0=  8.7521  a.u.  
   !  Z - dir Imat cell parameter c0=  32.33282 a.u.  
-
+  use OMP_lib
   use ISO_Fortran_env
   !use mkl_service
 
@@ -13,7 +13,7 @@ program photon
   integer, parameter :: dp = real64
   integer, parameter :: qp = real128
 
-
+  integer :: parallelCount = 0
   integer :: i, j, n, m, io, iq,itheta, iG, jG, kG, Nlf, Nlf2
   integer :: ist1, ist2, ist3, ist4, ist5, ist6
   integer :: Ntheta, Nq ! number of angles, number of transfer wavevectors
@@ -84,6 +84,9 @@ program photon
   integer            :: Nthreads, NthreadsMKL
   namelist  /parallel/ Nthreads, NthreadsMKL
 
+  integer, save :: thread_id
+  !$omp threadprivate(thread_id)
+
   print *, "PROGRAM PHOTON RUN STARTED"
 
   ! load namelist
@@ -106,6 +109,9 @@ program photon
   Ntheta = theta_max-theta_min
   Nq = qmax-qmin
 
+
+  ! OpenMP set number of threads
+  call omp_set_num_threads(Nthreads)
   ! MKL set number of threads
   call mkl_set_num_threads(NthreadsMKL)
 
@@ -181,7 +187,7 @@ program photon
   ! print *, 'Nlf2 (p-mode): ',Nlf2
 
   ! Reading unscreened current current response tensor Pi^0_{\mu\nu}(G,G')
-  call readPi0(No, Nlf, rpa_xx_file, rpa_yy_file, rpa_zz_file, Pixx0, Piyy0, Piyz0, Pizy0, Pizz0)
+  call loadPi0(No, Nlf, rpa_xx_file, rpa_yy_file, rpa_zz_file, Pixx0, Piyy0, Piyz0, Pizy0, Pizz0)
   print *, "status: Current-current response tensor Pi0(omega,G,G\') loaded."
   print *, "Pixx0 shape: ",shape(Pixx0)
   print *, "Piyy0 shape: ",shape(Piyy0)
@@ -194,9 +200,19 @@ program photon
     theta = (itheta-1)*dtheta
     print *, 'theta = ',180.0*theta/pi,'°'
 
-    q_loop: do iq =  qmin, qmax
-      print*, ' iq = ', iq
-      print *, 'progress: ',iq-qmin, ' /',Nq,' (',(real(iq-qmin)/real(Nq))*100.0,'% )'
+    print *, 'DEBUG: entering parallel region'
+    print *, 'Requested threads: ',Nthreads, 'Available threads: ',omp_get_num_threads()
+    !$omp parallel shared(No,Nq,Ntheta,domega,dq,dtheta,qmin,qmax,omin,omax,eta,c0,Nlf,parG,Glf,Pixx0, Piyy0, Piyz0, Pizy0, Pizz0, parallelCount) num_threads(Nthreads) default(private)
+    thread_id =  omp_get_thread_num()
+
+    !$omp do    
+    do iq =  qmin, qmax ! q_loop: 
+      !$omp atomic
+      parallelCount = parallelCount + 1
+      print*, 'thread id: ',thread_id, ' iq = ', iq
+      write (*,'(A11,I6,A2,I6,A5,F5.1,A4)') 'progress: ',parallelCount, ' /',Nq,' (',(real(parallelCount)/real(Nq))*100.0,'% )'
+    
+      ! write (*,'(A11,I6,A2,I6,A5,F5.1,A4)') 'progress: ',iq+1-qmin, ' /',Nq,' (',(real(iq+1-qmin)/real(Nq))*100.0,'% )'
     
       q = (iq-1)*dq
 
@@ -223,7 +239,7 @@ program photon
 
         ! Reading unscreened current current response tensor Pi^0_{\mu\nu}(G,G')
         ! DEBUG: moved outside the loop
-        ! call readPi0_omega(io, No, Nlf, rpa_xx_file, rpa_yy_file, rpa_zz_file, Pixx0, Piyy0, Piyz0, Pizy0, Pizz0)
+        ! call loadPi0_omega(io, No, Nlf, rpa_xx_file, rpa_yy_file, rpa_zz_file, Pixx0, Piyy0, Piyz0, Pizy0, Pizz0)
 
         ! KONSTRUKCIJA TS MATRICE S - MOD
         call genTS(Nlf, Dxx0, Pixx0(io,:,:), TS)
@@ -295,7 +311,9 @@ program photon
         ! call writeSigma_macroscopic(o, c0, Nlf, Pixx, Piyy, Pizz, TS, TP)
 
       enddo omega_loop 
-    enddo q_loop
+    enddo !q_loop
+    !$omp end do
+    !$omp end parallel
   enddo angle_loop
 
   ! deallocate all arrays
@@ -617,7 +635,7 @@ contains
     enddo
   end subroutine genD0
 
-subroutine readPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy0, Pizz0)
+subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy0, Pizz0)
     ! Reading unscreened  current current response tensor Pi^0_{\mu\nu}(G,G')
     ! DEBUG: mozda izbaciti iz omega_loopa i ucitati ih sve u RAM odjednom
     implicit none
@@ -648,9 +666,9 @@ subroutine readPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
 
     Piyz0(:,:,:) = cmplx(0.0,0.0)
     Pizy0(:,:,:) = cmplx(0.0,0.0)
-  end subroutine readPi0
+  end subroutine loadPi0
   
-  ! subroutine readPi0_omega(io_in, No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy0, Pizz0)
+  ! subroutine loadPi0_omega(io_in, No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy0, Pizz0)
   !   ! Reading unscreened  current current response tensor Pi^0_{\mu\nu}(G,G')
   !   ! DEBUG: mozda izbaciti iz omega_loopa i ucitati ih sve u RAM odjednom
   !   implicit none
@@ -693,7 +711,7 @@ subroutine readPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
   !   close(iuni1)
   !   close(iuni2)
   !   close(iuni3)
-  ! end subroutine readPi0_omega
+  ! end subroutine loadPi0_omega
 
 
   subroutine genScreenedPi(Nlf,TS, TP,Pixx0, Piyy0, Piyz0, Pizy0, Pizz0,Pixx, Piyy, Piyz, Pizy, Pizz)
@@ -705,7 +723,11 @@ subroutine readPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
     complex(kind=dp), intent(in),  dimension(:,:) :: Pixx0, Piyy0, Piyz0, Pizy0, Pizz0
     complex(kind=dp), intent(out), dimension(:,:) :: Pixx, Piyy, Piyz, Pizy, Pizz
   
+
     integer :: iG, jG, kG
+    integer :: Nlf2
+
+    Nlf2 = 2*Nlf ! TP matrix has a 2x2 block for z and y
   
     Pixx = cmplx(0.0,0.0) 
     Piyy = cmplx(0.0,0.0)
@@ -714,25 +736,21 @@ subroutine readPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
     Pizz = cmplx(0.0,0.0)
     do iG = 1,Nlf
       do jG = 1,Nlf       
-        do kG = 1,Nlf
-          ! Pi_{xx} (s-mod)
-          Pixx(iG,jG) = Pixx(iG,jG) + TS(iG,kG)*Pixx0(kG,jG)
-          
-          ! Pi_{yy} (p-mod)
-          Piyy(iG,jG) = Piyy(iG,jG) + TP(iG,kG)*Piyy0(kG,jG) &
-                      & + TP(iG,kG+Nlf)*Pizy0(kG,jG)
+        ! do kG = 1,Nlf
+        ! Pi_{xx} (s-mod)
+        Pixx(iG,jG) = sum( TS(iG,:)*Pixx0(:,jG) )
+        
+        ! Pi_{yy} (p-mod)
+        Piyy(iG,jG) = sum( TP(iG,:)*Piyy0(:,jG) + TP(iG,Nlf:Nlf2)*Pizy0(:,jG) )
   
-          ! Pi_{yz} (p-mod)
-          Piyz(iG,jG) = Piyz(iG,jG) + TP(iG,kG)*Piyz0(kG,jG) &
-                      & + TP(iG,kG+Nlf)*Pizz0(kG,jG)
+        ! Pi_{yz} (p-mod)
+        Piyz(iG,jG) = sum( TP(iG,:)*Piyz0(:,jG) + TP(iG,Nlf:Nlf2)*Pizz0(:,jG) )
   
-          ! Pi_{zy} (p-mod)
-          Pizy(iG,jG) = Pizy(iG,jG) + TP(iG+Nlf,kG)*Piyy0(kG,jG) &
-                      & + TP(iG+Nlf,kG+Nlf)*Pizy0(kG,jG)
-          ! Pi_{zz} (p-mod)
-          Pizz(iG,jG) = Pizz(iG,jG) + TP(iG+Nlf,kG)*Piyz0(kG,jG) &
-                      & + TP(iG+Nlf,kG+Nlf)*Pizz0(kG,jG)
-        enddo
+        ! Pi_{zy} (p-mod)
+        Pizy(iG,jG) =sum( TP(iG+Nlf,:)*Piyy0(:,jG) + TP(iG+Nlf,Nlf:Nlf2)*Pizy0(:,jG) )
+        ! Pi_{zz} (p-mod)
+        Pizz(iG,jG) =sum ( TP(iG+Nlf,:)*Piyz0(:,jG) + TP(iG+Nlf,Nlf:Nlf2)*Pizz0(:,jG) )
+        ! enddo
       enddo
     enddo
   end subroutine genScreenedPi
@@ -814,68 +832,6 @@ subroutine readPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
     TP = Imat - TP    
       
   end subroutine genTP
-
-
-  subroutine writeScreenedPi(Pixx, Piyy, Piyz, Pizy, Pizz)
-    implicit none
-
-    complex(kind=dp), intent(in), dimension(:,:) :: Pixx, Piyy, Piyz, Pizy, Pizz
-  
-        
-  end subroutine writeScreenedPi
-
-  subroutine writeSigma_macroscopic(o, c0, Nlf, Pixx, Piyy, Pizz, TS, TP)
-    ! Calculates macroscopic conducitivities from current-current response functions Pi_{\mu\nu}
-    ! Write the conducitivities and response functions to files.
-
-    implicit none
-    integer,          intent(in) :: Nlf
-    real(kind=dp),    intent(in) :: c0
-    real(kind=dp),    intent(in) :: o
-    complex(kind=dp), intent(in), dimension(:,:) ::  Pixx, Piyy, Pizz, TS, TP
-
-    
-    real(kind=dp),  parameter :: Hartree = 2.0d0*13.6056923D0
-
-
-    integer :: Nlf2
-    integer :: iuni1, iuni2, iuni3, iuni4, iuni5, iuni6
-    complex(kind = dp) :: Sigma_xx,Sigma_yy,Sigma_zz
-
-    Nlf2 = 2*Nlf
-
-    Sigma_xx = sum( Pixx(1,1:Nlf) * TS(1:Nlf,1) )                                        ! s-mod
-    Sigma_yy = sum( Piyy(1,1:Nlf) * TP(1:Nlf,1)     + Piyz(1,1:Nlf)*TP(Nlf:Nlf2,1) )     ! p-mod
-    Sigma_zz = sum( Pizy(1,1:Nlf) * TP(1:Nlf,Nlf+1) + Pizz(1,1:Nlf)*TP(Nlf:Nlf2,Nlf+1) ) ! p-mod
-
-    ! write sigma_{\mu\nu}^\text{macro} [ pi*e^2/2h ]
-    open(newunit=iuni1, file='sigma_macro_xx')
-    write(iuni1,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Sigma_xx/o)
-    close(iuni1)
-
-    open(newunit=iuni2, file='sigma_macro_yy')
-    write(iuni2,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Sigma_yy/o)
-    close(iuni2)
-
-    open(newunit=iuni3, file='sigma_macro_zz')
-    write(iuni3,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Sigma_zz/o)
-    close(iuni3)
-
-    ! write Pi_{\mu\nu}(1,1)
-    open(newunit=iuni4, file='Pi_11_xx')
-    write(iuni4,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pixx(1,1)/o)
-    close(iuni4)
-
-    open(newunit=iuni5, file='Pi_11_yy')
-    write(iuni5,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Piyy(1,1)/o)
-    close(iuni5)
-
-    open(newunit=iuni6, file='Pi_11_zz')
-    write(iuni6,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pizz(1,1)/o)
-    close(iuni6)
-
-      
-  end subroutine writeSigma_macroscopic
 
   subroutine  genSpectra(o, oi, beta, itheta, theta, Ntheta, Nq, c0, Nlf, parG, Glf, Dxx, Dyy, Dzz, Dyz, Dzy)
     ! Calculation of reflected, transmited and absorbed coefficients
@@ -988,9 +944,9 @@ subroutine readPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
     character(len=20) :: id
 
     if (Ntheta/=1 .and. Nq==1) then
-      id = "_itheta=#"//int2str(itheta)
+      id = "_theta=#"//int2str(itheta)
     else if (Ntheta==1 .and. Nq/=1) then
-      id = "_iq=#"//int2str(iq)
+      id = "_q#"//int2str(iq)
     else
       id = ""
     endif
@@ -1028,26 +984,13 @@ subroutine readPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
       close(iuni3)
     end if   
 
- 
-    if (itheta==1) then
-    ! conductivity [pi*e^2/2h]   
-      write(131,*) o*Hartree, real(-cmplx(0.0,1.0) * 4.0 * c0 * Pixx(1,1)/oi)
-      write(132,*) o*Hartree, aimag(-cmplx(0.0,1.0) * 4.0 * c0 * Pixx(1,1)/oi)
-      write(133,*) o*Hartree, real(-cmplx(0.0,1.0) * 4.0 * c0 * Piyy(1,1)/oi)
-      write(134,*) o*Hartree, aimag(-cmplx(0.0,1.0) * 4.0 * c0 * Piyy(1,1)/oi)
-      write(135,*) o*Hartree, real(-cmplx(0.0,1.0) * 4.0 * c0 * Pizz(1,1)/oi)
-      write(136,*) o*Hartree, aimag(-cmplx(0.0,1.0) * 4.0 * c0 * Pizz(1,1)/oi)
-      write(137,*) o*Hartree, real(-cmplx(0.0,1.0) * 4.0 * c0 * Piyz(1,1)/oi)
-      write(138,*) o*Hartree, aimag(-cmplx(0.0,1.0) * 4.0 * c0 * Piyz(1,1)/oi)
-    endif 
-      
   end subroutine writeSpectra
 
   subroutine writePi(o, Pi, filename)
     implicit none
     real(kind=dp),     intent(in) :: o
     complex(kind=dp),  intent(in) :: Pi
-    character(len=50), intent(in) :: filename
+    character(len=*), intent(in) :: filename
 
 
     real(kind=dp),  parameter :: Hartree = 2.0d0*13.6056923d0
@@ -1094,6 +1037,60 @@ subroutine readPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
     end if
       
   end subroutine writeSigma
+
+  subroutine writeSigma_macroscopic(o, c0, Nlf, Pixx, Piyy, Pizz, TS, TP)
+    ! Calculates macroscopic conducitivities from current-current response functions Pi_{\mu\nu}
+    ! Write the conducitivities and response functions to files.
+
+    implicit none
+    integer,          intent(in) :: Nlf
+    real(kind=dp),    intent(in) :: c0
+    real(kind=dp),    intent(in) :: o
+    complex(kind=dp), intent(in), dimension(:,:) ::  Pixx, Piyy, Pizz, TS, TP
+
+    
+    real(kind=dp),  parameter :: Hartree = 2.0d0*13.6056923D0
+
+
+    integer :: Nlf2
+    integer :: iuni1, iuni2, iuni3, iuni4, iuni5, iuni6
+    complex(kind = dp) :: Sigma_xx,Sigma_yy,Sigma_zz
+
+    Nlf2 = 2*Nlf
+
+    Sigma_xx = sum( Pixx(1,1:Nlf) * TS(1:Nlf,1) )                                        ! s-mod
+    Sigma_yy = sum( Piyy(1,1:Nlf) * TP(1:Nlf,1)     + Piyz(1,1:Nlf)*TP(Nlf:Nlf2,1) )     ! p-mod
+    Sigma_zz = sum( Pizy(1,1:Nlf) * TP(1:Nlf,Nlf+1) + Pizz(1,1:Nlf)*TP(Nlf:Nlf2,Nlf+1) ) ! p-mod
+
+    ! write sigma_{\mu\nu}^\text{macro} [ pi*e^2/2h ]
+    open(newunit=iuni1, file='sigma_macro_xx')
+    write(iuni1,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Sigma_xx/o)
+    close(iuni1)
+
+    open(newunit=iuni2, file='sigma_macro_yy')
+    write(iuni2,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Sigma_yy/o)
+    close(iuni2)
+
+    open(newunit=iuni3, file='sigma_macro_zz')
+    write(iuni3,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Sigma_zz/o)
+    close(iuni3)
+
+    ! write Pi_{\mu\nu}(1,1)
+    open(newunit=iuni4, file='Pi_11_xx')
+    write(iuni4,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pixx(1,1)/o)
+    close(iuni4)
+
+    open(newunit=iuni5, file='Pi_11_yy')
+    write(iuni5,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Piyy(1,1)/o)
+    close(iuni5)
+
+    open(newunit=iuni6, file='Pi_11_zz')
+    write(iuni6,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pizz(1,1)/o)
+    close(iuni6)
+
+      
+  end subroutine writeSigma_macroscopic
+
 
   function int2str(k) result(str)
     ! Convert an integer to string.
