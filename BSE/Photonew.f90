@@ -929,7 +929,7 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
     Tr_p = 1.0 - real( Tran_p*conjg(Tran_p) ) - cos(theta) * 2.0 * real(Tran_p) 
 
     ! write A,T,R spectra to file for each angle itheta
-    call writeSpectra(iq, itheta, Ntheta, Nq, o, oi, A_p, R_p)
+    call writeSpectra(iq, itheta, Ntheta, Nq, o, A_p, R_p)
 
   end subroutine genSpectra
 
