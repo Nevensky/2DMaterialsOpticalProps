@@ -938,7 +938,6 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
 
     integer,          intent(in) :: iq, itheta, Nq, Ntheta
     real(kind=dp),    intent(in) :: o, A_p, R_p
-    complex(kind=dp), intent(in) :: oi
 
     real(kind=dp),  parameter :: Hartree = 2.0d0*13.6056923d0
 
