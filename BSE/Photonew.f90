@@ -1017,7 +1017,7 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
     implicit none
     real(kind=dp),     intent(in) :: o, c0
     complex(kind=dp),  intent(in) :: Pi
-    character(len=50), intent(in) :: filename
+    character(len=*), intent(in) :: filename
 
 
     real(kind=dp),  parameter :: Hartree = 2.0d0*13.6056923d0
