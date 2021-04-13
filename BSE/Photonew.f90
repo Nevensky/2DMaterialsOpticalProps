@@ -202,7 +202,6 @@ program photon
     print *, 'DEBUG: entering parallel region'
     !$omp parallel shared(No,Nq,Ntheta,domega,dq,dtheta,qmin,qmax,omin,omax,eta,c0,Nlf,parG,Glf,Pixx0, Piyy0, Piyz0, Pizy0, Pizz0, parallelCount) firstprivate(itheta) num_threads(Nthreads) default(private)
     print *, 'Requested threads: ',Nthreads, 'Available threads: ',omp_get_num_threads()
-    !$omp parallel shared(No,Nq,Ntheta,domega,dq,dtheta,qmin,qmax,omin,omax,eta,c0,Nlf,parG,Glf,Pixx0, Piyy0, Piyz0, Pizy0, Pizz0, parallelCount) num_threads(Nthreads) default(private)
     thread_id =  omp_get_thread_num()
 
     !$omp do    
