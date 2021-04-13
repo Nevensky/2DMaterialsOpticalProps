@@ -200,16 +200,20 @@ program photon
     print *, 'theta = ',180.0*theta/pi,'°'
 
     print *, 'DEBUG: entering parallel region'
+    !$omp parallel shared(No,Nq,Ntheta,domega,dq,dtheta,qmin,qmax,omin,omax,eta,c0,Nlf,parG,Glf,Pixx0, Piyy0, Piyz0, Pizy0, Pizz0, parallelCount) firstprivate(itheta) num_threads(Nthreads) default(private)
     print *, 'Requested threads: ',Nthreads, 'Available threads: ',omp_get_num_threads()
     !$omp parallel shared(No,Nq,Ntheta,domega,dq,dtheta,qmin,qmax,omin,omax,eta,c0,Nlf,parG,Glf,Pixx0, Piyy0, Piyz0, Pizy0, Pizz0, parallelCount) num_threads(Nthreads) default(private)
     thread_id =  omp_get_thread_num()
 
     !$omp do    
     do iq =  qmin, qmax ! q_loop: 
-      !$omp atomic
+      !$omp critical(parallelInfo)
       parallelCount = parallelCount + 1
+      if (Nq/=0) then
       print*, 'thread id: ',thread_id, ' iq = ', iq
       write (*,'(A11,I6,A2,I6,A5,F5.1,A4)') 'progress: ',parallelCount, ' /',Nq,' (',(real(parallelCount)/real(Nq))*100.0,'% )'
+      endif
+      !$omp end critical(parallelInfo)
     
       ! write (*,'(A11,I6,A2,I6,A5,F5.1,A4)') 'progress: ',iq+1-qmin, ' /',Nq,' (',(real(iq+1-qmin)/real(Nq))*100.0,'% )'
     
@@ -262,6 +266,7 @@ program photon
         
 
         ! DEBUG: mozda prepraviti?
+        !$omp critical(writeOutputs)
         ! unscreened current-current response tensor
         call writePi(o, Pixx0(io,1,1),trim("pixx0_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
         call writePi(o, Piyy0(io,1,1),trim("piyy0_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
@@ -271,16 +276,18 @@ program photon
         call writePi(o, Piyy(1,1),trim("piyy_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
         call writePi(o, Pizz(1,1),trim("pizz_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
         ! unscreened conductivity [ pi*e^2/2h ]
-        call writeSigma(o, c0, Pixx0(io,1,1),trim("sigma0_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
-        call writeSigma(o, c0, Piyy0(io,1,1),trim("sigma0_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
-        call writeSigma(o, c0, Pizz0(io,1,1),trim("sigma0_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
+        call writeSigma(o, c0, Pixx0(io,1,1),trim("sigma0_xx_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
+        call writeSigma(o, c0, Piyy0(io,1,1),trim("sigma0_yy_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
+        call writeSigma(o, c0, Pizz0(io,1,1),trim("sigma0_zz_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
         ! screened conductivity [ pi*e^2/2h ]
-        call writeSigma(o, c0, Pixx(1,1),trim("sigmaSc_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
-        call writeSigma(o, c0, Piyy(1,1),trim("sigmaSc_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
-        call writeSigma(o, c0, Pizz(1,1),trim("sigmaSc_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
+        call writeSigma(o, c0, Pixx(1,1),trim("sigmaSc_xx_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
+        call writeSigma(o, c0, Piyy(1,1),trim("sigmaSc_yy_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
+        call writeSigma(o, c0, Pizz(1,1),trim("sigmaSc_zz_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
+        !$omp end critical(writeOutputs)
 
+        ! DEBUG doesn't work 
         ! calculation of reflected, transmited and absorbed coefficients  
-        call genSpectra(o, oi, beta, itheta, theta, Ntheta, Nq, c0, Nlf, parG, Glf, Dxx, Dyy, Dzz, Dyz, Dzy)
+        !call genSpectra(o, oi, beta, itheta, theta, Ntheta, Nq, c0, Nlf, parG, Glf, Dxx, Dyy, Dzz, Dyz, Dzy)
 
 
         !***********************************
