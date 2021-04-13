@@ -791,6 +791,12 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
 
     real(kind=dp) :: dist = 6.0654 ! distance between layers [bohr]
 
+    sPixx = cmplx(0.0,0.0)
+    sPiyy = cmplx(0.0,0.0)
+    sPizz = cmplx(0.0,0.0)
+    sPiyz = cmplx(0.0,0.0)
+    sPizy = cmplx(0.0,0.0)
+
     do iG = 1,Nlf
       do jG = 1,Nlf 
         sPixx = sPixx + Pixx(iG,jG) * exp( cmplx(0.0,Glf(3,iG)) * cmplx(dist,0.0) ) * exp( cmplx(0.0,-Glf(3,jG)) * cmplx(dist,0.0) )
