@@ -59,6 +59,7 @@ program photon
   complex(kind=dp), dimension(:,:), allocatable :: Dxx, Dyy, Dzz ,Dyz, Dzy
   complex(kind=dp), dimension(:,:,:), allocatable :: Pixx0, Piyy0, Piyz0, Pizy0, Pizz0
   complex(kind=dp), dimension(:,:), allocatable :: Pixx, Piyy, Piyz, Pizy, Pizz
+  complex(kind=dp) :: sPixx, sPiyy, sPiyz, sPizy, sPizz
 
   character(len=200) :: path
 
@@ -201,7 +202,9 @@ program photon
 
     print *, 'DEBUG: entering parallel region'
     !$omp parallel shared(No,Nq,Ntheta,domega,dq,dtheta,qmin,qmax,omin,omax,eta,c0,Nlf,parG,Glf,Pixx0, Piyy0, Piyz0, Pizy0, Pizz0, parallelCount) firstprivate(itheta) num_threads(Nthreads) default(private)
+    !$omp master
     print *, 'Requested threads: ',Nthreads, 'Available threads: ',omp_get_num_threads()
+    !$omp end master
     thread_id =  omp_get_thread_num()
 
     !$omp do    
@@ -209,11 +212,11 @@ program photon
       !$omp critical(parallelInfo)
       parallelCount = parallelCount + 1
       if (Nq/=0) then
-      print*, 'thread id: ',thread_id, ' iq = ', iq
-      write (*,'(A11,I6,A2,I6,A5,F5.1,A4)') 'progress: ',parallelCount, ' /',Nq,' (',(real(parallelCount)/real(Nq))*100.0,'% )'
+        print*, 'thread id: ',thread_id, ' iq = ', iq
+        write (*,'(A11,I6,A2,I6,A5,F5.1,A4)') 'progress: ',parallelCount, ' /',Nq,' (',(real(parallelCount)/real(Nq+1))*100.0,'% )'
       endif
       !$omp end critical(parallelInfo)
-    
+
       ! write (*,'(A11,I6,A2,I6,A5,F5.1,A4)') 'progress: ',iq+1-qmin, ' /',Nq,' (',(real(iq+1-qmin)/real(Nq))*100.0,'% )'
     
       q = (iq-1)*dq
@@ -250,7 +253,6 @@ program photon
         ! call gjel(TS,Nlf,Nlfd/2,Imat,Nlf,Nlfd)
         call invert(TS)
 
-
         ! KONSTRUKCIJA TP MATRICE P - MOD
         call genTP(Nlf, Dyy0, Dyz0, Dzy0, Dzz0, Piyy0(io,:,:), Piyz0(io,:,:), Pizy0(io,:,:), Pizz0(io,:,:), TP)
         
@@ -264,8 +266,10 @@ program photon
         call genScreenedPi(Nlf, TS, TP, Pixx0(io,:,:), Piyy0(io,:,:), Piyz0(io,:,:), Pizy0(io,:,:), Pizz0(io,:,:), Pixx, Piyy, Piyz, Pizy, Pizz)
         
 
+        call sumScreenedPi(c0, Glf, Pixx, Piyy, Piyz, Pizy, Pizz, sPixx, sPiyy, sPiyz, sPizy, sPizz)
+
         ! DEBUG: mozda prepraviti?
-        !$omp critical(writeOutputs)
+        ! !$omp critical(writeOutputs)
         ! unscreened current-current response tensor
         call writePi(o, Pixx0(io,1,1),trim("pixx0_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
         call writePi(o, Piyy0(io,1,1),trim("piyy0_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
@@ -274,18 +278,28 @@ program photon
         call writePi(o, Pixx(1,1),trim("pixx_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
         call writePi(o, Piyy(1,1),trim("piyy_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
         call writePi(o, Pizz(1,1),trim("pizz_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
-        ! unscreened conductivity [ pi*e^2/2h ]
+        ! unscreened conductivity (1st component) [ pi*e^2/2h ]
         call writeSigma(o, c0, Pixx0(io,1,1),trim("sigma0_xx_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
         call writeSigma(o, c0, Piyy0(io,1,1),trim("sigma0_yy_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
         call writeSigma(o, c0, Pizz0(io,1,1),trim("sigma0_zz_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
-        ! screened conductivity [ pi*e^2/2h ]
+        ! screened conductivity (1st component) [ pi*e^2/2h ]
         call writeSigma(o, c0, Pixx(1,1),trim("sigmaSc_xx_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
         call writeSigma(o, c0, Piyy(1,1),trim("sigmaSc_yy_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
         call writeSigma(o, c0, Pizz(1,1),trim("sigmaSc_zz_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
-        !$omp end critical(writeOutputs)
+
+        ! screened current-current response tensor summed over all Nlf for a symmetric trilayer
+        call writePi(o, sPixx,trim("pixx_sumGiGj_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
+        call writePi(o, sPiyy,trim("piyy_sumGiGj_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
+        call writePi(o, sPizz,trim("pizz_sumGiGj_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
+
+        ! screened conductivity [ pi*e^2/2h ] summed over all Nlf for a symmetric trilayer
+        call writeSigma(o, c0, sPixx,trim("sigmaSc_sumGiGj_xx_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
+        call writeSigma(o, c0, sPiyy,trim("sigmaSc_sumGiGj_yy_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
+        call writeSigma(o, c0, sPizz,trim("sigmaSc_sumGiGj_zz_q#"//int2str(iq))//trim("_theta#"//int2str(itheta)))
+        ! !$omp end critical(writeOutputs)
 
         ! DEBUG doesn't work 
-        ! calculation of reflected, transmited and absorbed coefficients  
+        ! calculation of reflected, transmited and absorbed coefficients 
         !call genSpectra(o, oi, beta, itheta, theta, Ntheta, Nq, c0, Nlf, parG, Glf, Dxx, Dyy, Dzz, Dyz, Dzy)
 
 
@@ -394,7 +408,7 @@ contains
       complex(kind=dp) :: checkIdentity
 
       Nlf = size(A,1)
-      lwork = 2*Nlf
+      lwork = 4*Nlf ! often results in segmentation fault due to lwork being too small
       K = Nlf      
       allocate(Acheck(size(A,1),size(A,2)))
       allocate(Icheck(size(A,1),size(A,2)))
@@ -763,6 +777,38 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
       enddo
     enddo
   end subroutine genScreenedPi
+
+  subroutine sumScreenedPi(c0, Glf, Pixx, Piyy, Piyz, Pizy, Pizz, sPixx, sPiyy, sPiyz, sPizy, sPizz)
+    ! non general function, works only for a symmetric trilayer
+    ! sums Pi over all local field vectors to observe sigma^sc in upper layer
+    ! z=d/2, z'=d/2
+    ! Pi = 1/L (ili d?) \sum_Gz \sum_Gz' Pi(Gz,Gz') * exp(i Gz * d/2) * exp(-i Gz * d/2) 
+    implicit none
+    real(kind=dp),    intent(in)  :: c0
+    real(kind=dp),    intent(in)  :: Glf(:,:)
+    complex(kind=dp), intent(in), dimension(:,:) :: Pixx, Piyy, Piyz, Pizy, Pizz
+    complex(kind=dp), intent(out) :: sPixx, sPiyy, sPiyz, sPizy, sPizz
+
+    real(kind=dp) :: dist = 6.0654 ! distance between layers [bohr]
+
+    do iG = 1,Nlf
+      do jG = 1,Nlf 
+        sPixx = sPixx + Pixx(iG,jG) * exp( cmplx(0.0,Glf(3,iG)) * cmplx(dist,0.0) ) * exp( cmplx(0.0,-Glf(3,jG)) * cmplx(dist,0.0) )
+        sPiyy = sPiyy + Piyy(iG,jG) * exp( cmplx(0.0,Glf(3,iG)) * cmplx(dist,0.0) ) * exp( cmplx(0.0,-Glf(3,jG)) * cmplx(dist,0.0) )
+        sPizz = sPizz + Pizz(iG,jG) * exp( cmplx(0.0,Glf(3,iG)) * cmplx(dist,0.0) ) * exp( cmplx(0.0,-Glf(3,jG)) * cmplx(dist,0.0) )
+        sPiyz = sPiyz + Piyz(iG,jG) * exp( cmplx(0.0,Glf(3,iG)) * cmplx(dist,0.0) ) * exp( cmplx(0.0,-Glf(3,jG)) * cmplx(dist,0.0) )
+        sPizy = sPizy + Pizy(iG,jG) * exp( cmplx(0.0,Glf(3,iG)) * cmplx(dist,0.0) ) * exp( cmplx(0.0,-Glf(3,jG)) * cmplx(dist,0.0) )
+      enddo
+    enddo 
+
+    sPixx = 1/c0 * sPixx
+    sPiyy = 1/c0 * sPiyy
+    sPizz = 1/c0 * sPizz
+    sPiyz = 1/c0 * sPiyz
+    sPizy = 1/c0 * sPizy
+
+  end subroutine sumScreenedPi
+
 
   subroutine genTS(Nlf, Dxx0, Pixx, TS)
     implicit none
