@@ -213,7 +213,7 @@ program photon
       parallelCount = parallelCount + 1
       if (Nq/=0) then
         print*, 'thread id: ',thread_id, ' iq = ', iq
-        write (*,'(A11,I6,A2,I6,A5,F5.1,A4)') 'progress: ',parallelCount, ' /',Nq,' (',(real(parallelCount)/real(Nq+1))*100.0,'% )'
+        write (*,'(A11,I6,A2,I6,A5,F5.1,A4)') 'progress: ',parallelCount, ' /',Nq+1,' (',(real(parallelCount)/real(Nq+1))*100.0,'% )'
       endif
       !$omp end critical(parallelInfo)
 
@@ -799,11 +799,11 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
 
     do iG = 1,Nlf
       do jG = 1,Nlf 
-        sPixx = sPixx + Pixx(iG,jG) * exp( cmplx(0.0,Glf(3,iG)) * cmplx(dist,0.0) ) * exp( cmplx(0.0,-Glf(3,jG)) * cmplx(dist,0.0) )
-        sPiyy = sPiyy + Piyy(iG,jG) * exp( cmplx(0.0,Glf(3,iG)) * cmplx(dist,0.0) ) * exp( cmplx(0.0,-Glf(3,jG)) * cmplx(dist,0.0) )
-        sPizz = sPizz + Pizz(iG,jG) * exp( cmplx(0.0,Glf(3,iG)) * cmplx(dist,0.0) ) * exp( cmplx(0.0,-Glf(3,jG)) * cmplx(dist,0.0) )
-        sPiyz = sPiyz + Piyz(iG,jG) * exp( cmplx(0.0,Glf(3,iG)) * cmplx(dist,0.0) ) * exp( cmplx(0.0,-Glf(3,jG)) * cmplx(dist,0.0) )
-        sPizy = sPizy + Pizy(iG,jG) * exp( cmplx(0.0,Glf(3,iG)) * cmplx(dist,0.0) ) * exp( cmplx(0.0,-Glf(3,jG)) * cmplx(dist,0.0) )
+        sPixx = sPixx + Pixx(iG,jG) * exp( -cmplx(0.0,Glf(3,iG) * dist) ) * exp( cmplx(0.0,Glf(3,jG) * dist) )
+        sPiyy = sPiyy + Piyy(iG,jG) * exp( -cmplx(0.0,Glf(3,iG) * dist) ) * exp( cmplx(0.0,Glf(3,jG) * dist) )
+        sPizz = sPizz + Pizz(iG,jG) * exp( -cmplx(0.0,Glf(3,iG) * dist) ) * exp( cmplx(0.0,Glf(3,jG) * dist) )
+        sPiyz = sPiyz + Piyz(iG,jG) * exp( -cmplx(0.0,Glf(3,iG) * dist) ) * exp( cmplx(0.0,Glf(3,jG) * dist) )
+        sPizy = sPizy + Pizy(iG,jG) * exp( -cmplx(0.0,Glf(3,iG) * dist) ) * exp( cmplx(0.0,Glf(3,jG) * dist) )
       enddo
     enddo 
 
@@ -1075,7 +1075,7 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
     implicit none
     real(kind=dp),     intent(in) :: o, c0
     complex(kind=dp),  intent(in) :: Pi
-    character(len=*), intent(in) :: filename
+    character(len=*), intent(in)  :: filename
 
 
     real(kind=dp),  parameter :: Hartree = 2.0d0*13.6056923d0
