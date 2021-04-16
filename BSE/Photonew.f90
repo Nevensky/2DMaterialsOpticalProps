@@ -799,11 +799,11 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
 
     do iG = 1,Nlf
       do jG = 1,Nlf 
-        sPixx = sPixx + Pixx(iG,jG) * exp( -cmplx(0.0,Glf(3,iG) * dist) ) * exp( cmplx(0.0,Glf(3,jG) * dist) )
-        sPiyy = sPiyy + Piyy(iG,jG) * exp( -cmplx(0.0,Glf(3,iG) * dist) ) * exp( cmplx(0.0,Glf(3,jG) * dist) )
-        sPizz = sPizz + Pizz(iG,jG) * exp( -cmplx(0.0,Glf(3,iG) * dist) ) * exp( cmplx(0.0,Glf(3,jG) * dist) )
-        sPiyz = sPiyz + Piyz(iG,jG) * exp( -cmplx(0.0,Glf(3,iG) * dist) ) * exp( cmplx(0.0,Glf(3,jG) * dist) )
-        sPizy = sPizy + Pizy(iG,jG) * exp( -cmplx(0.0,Glf(3,iG) * dist) ) * exp( cmplx(0.0,Glf(3,jG) * dist) )
+        sPixx = sPixx + Pixx(iG,jG) * exp( cmplx(0.0,Glf(3,iG) * dist) ) * exp( -cmplx(0.0,Glf(3,jG) * dist) )
+        sPiyy = sPiyy + Piyy(iG,jG) * exp( cmplx(0.0,Glf(3,iG) * dist) ) * exp( -cmplx(0.0,Glf(3,jG) * dist) )
+        sPizz = sPizz + Pizz(iG,jG) * exp( cmplx(0.0,Glf(3,iG) * dist) ) * exp( -cmplx(0.0,Glf(3,jG) * dist) )
+        sPiyz = sPiyz + Piyz(iG,jG) * exp( cmplx(0.0,Glf(3,iG) * dist) ) * exp( -cmplx(0.0,Glf(3,jG) * dist) )
+        sPizy = sPizy + Pizy(iG,jG) * exp( cmplx(0.0,Glf(3,iG) * dist) ) * exp( -cmplx(0.0,Glf(3,jG) * dist) )
       enddo
     enddo 
 
