@@ -398,8 +398,8 @@ contains
       ! MKL vars
       integer :: info_trf, info_tri
       integer :: lwork
-      integer, allocatable :: ipiv(:)
-      integer, allocatable :: work(:)
+      integer,          allocatable :: ipiv(:)
+      complex(kind=dp), allocatable :: work(:)
 
       ! DEBUG: dgemm vars (inversion success check)
       integer :: K
@@ -408,8 +408,8 @@ contains
       complex(kind=dp) :: checkIdentity
 
       Nlf = size(A,1)
-      lwork = 4*Nlf ! often results in segmentation fault due to lwork being too small
-      K = Nlf      
+      lwork = 16*Nlf ! often results in segmentation fault due to lwork being too small
+      K = Nlf   
       allocate(Acheck(size(A,1),size(A,2)))
       allocate(Icheck(size(A,1),size(A,2)))
       Acheck = A
