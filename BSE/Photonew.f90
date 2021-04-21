@@ -406,6 +406,7 @@ contains
       real(kind=dp)    :: alpha = 1.0
       real(kind=dp)    :: beta  = 0.0
       complex(kind=dp) :: checkIdentity, checkIdentity2
+      complex(kind=dp) :: traceIdentity
 
       Nlf = size(A,1)
       lwork = 16*Nlf ! often results in segmentation fault due to lwork being too small
@@ -436,10 +437,11 @@ contains
       deallocate(ipiv)
       deallocate(work)
 
-      ! DEBUG: provjera inverzije 
+      ! DEBUG: check correctness of matrix inversion
       call zgemm('N','N', Nlf, Nlf, K, alpha, A, Nlf, Acheck, K, beta, Icheck, Nlf)
-      checkIdentity = sum(abs(Icheck)) - sum( (/ ( abs(Icheck(i,i)), i=1, size(Icheck, 1)) /) )
-      checkIdentity2 = cmplx(Nlf,Nlf) - sum( (/ ( abs(Icheck(i,i)), i=1, size(Icheck, 1)) /) )
+      traceIdentity = sum( (/ ( abs(Icheck(i,i)), i=1, size(Icheck, 1)) /) )
+      checkIdentity = sum(abs(Icheck)) - traceIdentity
+      checkIdentity2 = cmplx(Nlf,0.0) - traceIdentity
       if ( real(checkIdentity)>10d-4 .or. aimag(checkIdentity)>10d-4 .or. &
          & real(checkIdentity2)>10d-4 .or. aimag(checkIdentity2)>10d-4 ) then
         print *, 'FATAL ERROR: Matrix inversion failed. (A⁻¹ · A ≠ 𝟙)'
