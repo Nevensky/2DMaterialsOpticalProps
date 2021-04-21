@@ -300,7 +300,7 @@ program photon
 
         ! DEBUG doesn't work 
         ! calculation of reflected, transmited and absorbed coefficients 
-        call genSpectra(o, oi, beta, itheta, theta, Ntheta, Nq, c0, Nlf, parG, Glf, Dxx, Dyy, Dzz, Dyz, Dzy)
+        call genSpectra(o, oi, beta, iq, Nq, itheta, theta, Ntheta, c0, Nlf, parG, Glf, Dxx0, Dyy0, Dzz0, Dyz0, Dzy0)
 
 
         !***********************************
@@ -894,10 +894,10 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
       
   end subroutine genTP
 
-  subroutine  genSpectra(o, oi, beta, itheta, theta, Ntheta, Nq, c0, Nlf, parG, Glf, Dxx, Dyy, Dzz, Dyz, Dzy)
+  subroutine  genSpectra(o, oi, beta, iq, Nq, itheta, theta, Ntheta, c0, Nlf, parG, Glf, Dxx, Dyy, Dzz, Dyz, Dzy)
     ! Calculation of reflected, transmited and absorbed coefficients
 
-    integer,          intent(in) :: itheta, Ntheta, Nq
+    integer,          intent(in) :: iq, itheta, Ntheta, Nq
     integer,          intent(in) :: Nlf
     real(kind=dp),    intent(in) :: o, theta
     real(kind=dp),    intent(in) :: c0
