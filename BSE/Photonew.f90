@@ -300,7 +300,7 @@ program photon
 
         ! DEBUG doesn't work 
         ! calculation of reflected, transmited and absorbed coefficients 
-        !call genSpectra(o, oi, beta, itheta, theta, Ntheta, Nq, c0, Nlf, parG, Glf, Dxx, Dyy, Dzz, Dyz, Dzy)
+        call genSpectra(o, oi, beta, itheta, theta, Ntheta, Nq, c0, Nlf, parG, Glf, Dxx, Dyy, Dzz, Dyz, Dzy)
 
 
         !***********************************
@@ -404,7 +404,7 @@ contains
       ! DEBUG: dgemm vars (inversion success check)
       integer :: K
       real(kind=dp)    :: alpha = 1.0
-      real(kind=dp)    :: beta = 0.0
+      real(kind=dp)    :: beta  = 0.0
       complex(kind=dp) :: checkIdentity
 
       Nlf = size(A,1)
@@ -1003,9 +1003,9 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
     logical :: exist_a, exist_t, exist_r
     character(len=20) :: id
 
-    if (Ntheta/=1 .and. Nq==1) then
+    if (Ntheta/=0 .and. Nq==0) then
       id = "_theta=#"//int2str(itheta)
-    else if (Ntheta==1 .and. Nq/=1) then
+    else if (Ntheta==0 .and. Nq/=0) then
       id = "_q#"//int2str(iq)
     else
       id = ""
