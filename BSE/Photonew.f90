@@ -405,7 +405,7 @@ contains
       integer :: K
       real(kind=dp)    :: alpha = 1.0
       real(kind=dp)    :: beta  = 0.0
-      complex(kind=dp) :: checkIdentity
+      complex(kind=dp) :: checkIdentity, checkIdentity2
 
       Nlf = size(A,1)
       lwork = 16*Nlf ! often results in segmentation fault due to lwork being too small
@@ -439,12 +439,16 @@ contains
       ! DEBUG: provjera inverzije 
       call zgemm('N','N', Nlf, Nlf, K, alpha, A, Nlf, Acheck, K, beta, Icheck, Nlf)
       checkIdentity = sum(abs(Icheck)) - sum( (/ ( abs(Icheck(i,i)), i=1, size(Icheck, 1)) /) )
-      if (real(checkIdentity)>10d-4 .or. aimag(checkIdentity)>10d-4) then
+      checkIdentity2 = cmplx(Nlf,Nlf) - sum( (/ ( abs(Icheck(i,i)), i=1, size(Icheck, 1)) /) )
+      if ( real(checkIdentity)>10d-4 .or. aimag(checkIdentity)>10d-4 .or. &
+         & real(checkIdentity2)>10d-4 .or. aimag(checkIdentity2)>10d-4 ) then
         print *, 'FATAL ERROR: Matrix inversion failed. (A⁻¹ · A ≠ 𝟙)'
         print *, 'Nlf: ', Nlf
         print *, 'size Ainv: ', size(A), 'size A:',size(Acheck)
         print *, 'Re(check): ', real(checkIdentity)
         print *, 'Im(check): ', aimag(checkIdentity)
+        print *, 'Re(check2): ', real(checkIdentity2)
+        print *, 'Im(check2): ', aimag(checkIdentity2)
         stop
       endif
 
@@ -799,11 +803,11 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
 
     do iG = 1,Nlf
       do jG = 1,Nlf 
-        sPixx = sPixx + Pixx(iG,jG) * exp( cmplx(0.0,Glf(3,iG) * dist) ) * exp( -cmplx(0.0,Glf(3,jG) * dist) )
-        sPiyy = sPiyy + Piyy(iG,jG) * exp( cmplx(0.0,Glf(3,iG) * dist) ) * exp( -cmplx(0.0,Glf(3,jG) * dist) )
-        sPizz = sPizz + Pizz(iG,jG) * exp( cmplx(0.0,Glf(3,iG) * dist) ) * exp( -cmplx(0.0,Glf(3,jG) * dist) )
-        sPiyz = sPiyz + Piyz(iG,jG) * exp( cmplx(0.0,Glf(3,iG) * dist) ) * exp( -cmplx(0.0,Glf(3,jG) * dist) )
-        sPizy = sPizy + Pizy(iG,jG) * exp( cmplx(0.0,Glf(3,iG) * dist) ) * exp( -cmplx(0.0,Glf(3,jG) * dist) )
+        sPixx = sPixx + Pixx(iG,jG) * exp( cmplx(0.0, (Glf(3,iG) - Glf(3,jG) ) * dist) )
+        sPiyy = sPiyy + Piyy(iG,jG) * exp( cmplx(0.0, (Glf(3,iG) - Glf(3,jG) ) * dist) )
+        sPizz = sPizz + Pizz(iG,jG) * exp( cmplx(0.0, (Glf(3,iG) - Glf(3,jG) ) * dist) )
+        sPiyz = sPiyz + Piyz(iG,jG) * exp( cmplx(0.0, (Glf(3,iG) - Glf(3,jG) ) * dist) )
+        sPizy = sPizy + Pizy(iG,jG) * exp( cmplx(0.0, (Glf(3,iG) - Glf(3,jG) ) * dist) )
       enddo
     enddo 
 
