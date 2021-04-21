@@ -300,7 +300,7 @@ program photon
 
         ! DEBUG doesn't work 
         ! calculation of reflected, transmited and absorbed coefficients 
-        call genSpectra(o, oi, beta, iq, Nq, itheta, theta, Ntheta, c0, Nlf, parG, Glf, Dxx0, Dyy0, Dzz0, Dyz0, Dzy0)
+        call genSpectra(o, oi, beta, iq, Nq, itheta, theta, Ntheta, c0, Nlf, parG, Glf, Pixx, Piyy, Pizz, Piyz, Pizy)
 
 
         !***********************************
@@ -896,6 +896,7 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
 
   subroutine  genSpectra(o, oi, beta, iq, Nq, itheta, theta, Ntheta, c0, Nlf, parG, Glf, Dxx, Dyy, Dzz, Dyz, Dzy)
     ! Calculation of reflected, transmited and absorbed coefficients
+    ! DEBUG: should rename D to Pi because this is the current-current respone tensor
 
     integer,          intent(in) :: iq, itheta, Ntheta, Nq
     integer,          intent(in) :: Nlf
