@@ -266,7 +266,8 @@ program photon
         call genScreenedPi(Nlf, TS, TP, Pixx0(io,:,:), Piyy0(io,:,:), Piyz0(io,:,:), Pizy0(io,:,:), Pizz0(io,:,:), Pixx, Piyy, Piyz, Pizy, Pizz)
         
 
-        call sumScreenedPi(c0, Glf, Pixx, Piyy, Piyz, Pizy, Pizz, sPixx, sPiyy, sPiyz, sPizy, sPizz)
+        ! call sumScreenedPi(c0, Glf, Pixx, Piyy, Piyz, Pizy, Pizz, sPixx, sPiyy, sPiyz, sPizy, sPizz)
+        call sumIntScreenedPi(c0, Glf, Pixx, Piyy, Piyz, Pizy, Pizz, sPixx, sPiyy, sPiyz, sPizy, sPizz)
 
         ! DEBUG: mozda prepraviti?
         ! !$omp critical(writeOutputs)
@@ -788,7 +789,7 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
     ! non general function, works only for a symmetric trilayer
     ! sums Pi over all local field vectors to observe sigma^sc in upper layer
     ! z=d/2, z'=d/2
-    ! Pi = 1/L (ili d?) \sum_Gz \sum_Gz' Pi(Gz,Gz') * exp(i Gz * d/2) * exp(-i Gz * d/2) 
+    ! Pi = 1/L \sum_Gz \sum_Gz' Pi(Gz,Gz') * exp(i Gz * d/2) * exp(-i Gz * d/2) 
     implicit none
     real(kind=dp),    intent(in)  :: c0
     real(kind=dp),    intent(in)  :: Glf(:,:)
@@ -821,6 +822,68 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
 
   end subroutine sumScreenedPi
 
+  subroutine sumIntScreenedPi(c0, Glf, Pixx, Piyy, Piyz, Pizy, Pizz, sPixx, sPiyy, sPiyz, sPizy, sPizz)
+    ! non general function, works only for a symmetric trilayer
+    ! sums Pi over all local field vectors to observe sigma^sc in upper layer
+    ! integrates each component over dz,dz' from 0 to L/2
+    ! Pi = 1/L \sum_Gz \sum_Gz' \int_0^{L/2}\int_0^{L/2} dz dz' Pi(Gz,Gz') * exp(i Gz * L/2) * exp(-i Gz * L/2) 
+    implicit none
+    real(kind=dp),    intent(in)  :: c0
+    real(kind=dp),    intent(in)  :: Glf(:,:)
+    complex(kind=dp), intent(in), dimension(:,:) :: Pixx, Piyy, Piyz, Pizy, Pizz
+    complex(kind=dp), intent(out) :: sPixx, sPiyy, sPiyz, sPizy, sPizz
+
+    ! real(kind=dp) :: dist = 6.0654 ! distance between layers [bohr]
+
+    sPixx = cmplx(0.0,0.0)
+    sPiyy = cmplx(0.0,0.0)
+    sPizz = cmplx(0.0,0.0)
+    sPiyz = cmplx(0.0,0.0)
+    sPizy = cmplx(0.0,0.0)
+
+    do iG = 1,Nlf
+      do jG = 1,Nlf
+        if (iG==1 .and. jG/=1) then
+          sPixx = sPixx + Pixx(iG,jG) * ( -cmplx(0.0,1.0) * ( 1 - exp(-cmplx(0.0,Glf(3,jG)*c0/2)) ) ) * c0/(2*Glf(3,jG))
+          sPiyy = sPiyy + Piyy(iG,jG) * ( -cmplx(0.0,1.0) * ( 1 - exp(-cmplx(0.0,Glf(3,jG)*c0/2)) ) ) * c0/(2*Glf(3,jG))
+          sPizz = sPizz + Pizz(iG,jG) * ( -cmplx(0.0,1.0) * ( 1 - exp(-cmplx(0.0,Glf(3,jG)*c0/2)) ) ) * c0/(2*Glf(3,jG))
+          sPiyz = sPiyz + Piyz(iG,jG) * ( -cmplx(0.0,1.0) * ( 1 - exp(-cmplx(0.0,Glf(3,jG)*c0/2)) ) ) * c0/(2*Glf(3,jG))
+          sPizy = sPizy + Pizy(iG,jG) * ( -cmplx(0.0,1.0) * ( 1 - exp(-cmplx(0.0,Glf(3,jG)*c0/2)) ) ) * c0/(2*Glf(3,jG))
+        else if (iG/=1 .and. jG==1) then
+          sPixx = sPixx + Pixx(iG,jG) * ( -cmplx(0.0,1.0) * ( 1 - exp(-cmplx(0.0,Glf(3,iG)*c0/2)) ) ) * c0/(2*Glf(3,iG))
+          sPiyy = sPiyy + Piyy(iG,jG) * ( -cmplx(0.0,1.0) * ( 1 - exp(-cmplx(0.0,Glf(3,iG)*c0/2)) ) ) * c0/(2*Glf(3,iG))
+          sPizz = sPizz + Pizz(iG,jG) * ( -cmplx(0.0,1.0) * ( 1 - exp(-cmplx(0.0,Glf(3,iG)*c0/2)) ) ) * c0/(2*Glf(3,iG))
+          sPiyz = sPiyz + Piyz(iG,jG) * ( -cmplx(0.0,1.0) * ( 1 - exp(-cmplx(0.0,Glf(3,iG)*c0/2)) ) ) * c0/(2*Glf(3,iG))
+          sPizy = sPizy + Pizy(iG,jG) * ( -cmplx(0.0,1.0) * ( 1 - exp(-cmplx(0.0,Glf(3,iG)*c0/2)) ) ) * c0/(2*Glf(3,iG))
+        else if (iG==1 .and. jG==1) then
+          sPixx = sPixx + Pixx(iG,jG) * c0**2/4
+          sPiyy = sPiyy + Piyy(iG,jG) * c0**2/4
+          sPizz = sPizz + Pizz(iG,jG) * c0**2/4
+          sPiyz = sPiyz + Piyz(iG,jG) * c0**2/4
+          sPizy = sPizy + Pizy(iG,jG) * c0**2/4
+        else
+          sPixx = sPixx - Pixx(iG,jG) * ( -1 + exp(cmplx(0.0,Glf(3,iG)*c0/2)) ) * ( -1 + exp(cmplx(0.0,Glf(3,jG)*c0/2)) ) &
+                & / ( Glf(3,iG) * Glf(3,jG) * exp(cmplx(0.0,Glf(3,iG)*c0/2)) )
+          sPiyy = sPiyy - Piyy(iG,jG) * ( -1 + exp(cmplx(0.0,Glf(3,iG)*c0/2)) ) * ( -1 + exp(cmplx(0.0,Glf(3,jG)*c0/2)) ) &
+                & / ( Glf(3,iG) * Glf(3,jG) * exp(cmplx(0.0,Glf(3,iG)*c0/2)) )
+          sPizz = sPizz - Pizz(iG,jG) * ( -1 + exp(cmplx(0.0,Glf(3,iG)*c0/2)) ) * ( -1 + exp(cmplx(0.0,Glf(3,jG)*c0/2)) ) & 
+                & / ( Glf(3,iG) * Glf(3,jG) * exp(cmplx(0.0,Glf(3,iG)*c0/2)) )
+          sPiyz = sPiyz - Piyz(iG,jG) * ( -1 + exp(cmplx(0.0,Glf(3,iG)*c0/2)) ) * ( -1 + exp(cmplx(0.0,Glf(3,jG)*c0/2)) ) & 
+                & / ( Glf(3,iG) * Glf(3,jG) * exp(cmplx(0.0,Glf(3,iG)*c0/2)) )
+          sPizy = sPizy - Pizy(iG,jG) * ( -1 + exp(cmplx(0.0,Glf(3,iG)*c0/2)) ) * ( -1 + exp(cmplx(0.0,Glf(3,jG)*c0/2)) ) & 
+                & / ( Glf(3,iG) * Glf(3,jG) * exp(cmplx(0.0,Glf(3,iG)*c0/2)) )
+        end if
+
+      enddo
+    enddo 
+
+    sPixx = 1/c0 * sPixx
+    sPiyy = 1/c0 * sPiyy
+    sPizz = 1/c0 * sPizz
+    sPiyz = 1/c0 * sPiyz
+    sPizy = 1/c0 * sPizy
+
+  end subroutine sumIntScreenedPi
 
   subroutine genTS(Nlf, Dxx0, Pixx, TS)
     implicit none
