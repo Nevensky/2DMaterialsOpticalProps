@@ -7,9 +7,11 @@ program Pi_pol
   INTEGER, PARAMETER :: dp = real64
 
   character (len=100) :: pol,dato1,dato2,dato3,dato4,dato5,dato6
+  character (len=200) :: config_file
   integer :: No, Nlf
   integer :: No_interp, No_tot, counter
   integer :: io, jo, iG, jG
+  integer :: ios_conf
   complex(kind=dp), dimension(:,:),   allocatable  :: Qeff      ! effective charge carriers matrix.
   complex(kind=dp), dimension(:,:,:), allocatable  :: S0         ! korelacijska matrica
   complex(kind=dp), dimension(:,:,:), allocatable  :: Pi_tot, Pi_tot_interp
@@ -24,19 +26,26 @@ program Pi_pol
   real(kind=dp), parameter :: pi      = 4.D0*atan(1.D0)
   real(kind=dp), parameter :: Hartree = 2.0D0*13.6056923D0
   
-  ! pol = 'xx'
-  call parseCommandLineArgs(pol)
-  Nlf = 33  ! 5 Ha
-  ! Nlf = 65  ! 20 Ha
-  ! pol = 'zz'
-  ! Nlf = 29
-  c0 = 32.5411 ! a.u.
-  Gamma_intra = 0.025 ! eV
-  No = 2001
-  omin = 1.0d-5
-  omax = 50.0
 
-  No_interp = 10  
+  namelist /config/ pol, Nlf, No_interp, No, omin, omax,Gamma_intra, c0
+  call parseCommandLineArgs(config_file) ! config file is the first argument passed to the command
+  open(10,file=config_file)
+  read(10,nml=config,iostat=ios_conf)
+  close(10)
+
+  ! pol = 'xx'
+  ! call parseCommandLineArgs(pol)
+  ! Nlf = 33  ! 5 Ha gr
+  ! Nlf = 65  ! 20 Ha gr
+  ! pol = 'zz'
+  ! Nlf = 29 ! 5 Ha hbn
+  ! c0 = 32.5411 ! a.u.
+  ! Gamma_intra = 0.025 ! eV
+  ! No = 2001
+  ! omin = 1.0d-5
+  ! omax = 50.0
+  ! No_interp = 10  
+  
   No_tot = (No_interp-1)*(No-2)
   
   Gamma_intra = Gamma_intra/Hartree
@@ -48,10 +57,10 @@ program Pi_pol
 
   dato1 = 'Corrfun_'//adjustl(trim(pol))
   dato2 = 'Qeff_'//adjustl(trim(pol))
-  dato3 = 'Pi_RPA_'//adjustl(trim(pol))//'_dense'
   dato6 = 'Pi_RPA_'//adjustl(trim(pol))//'_GiGj_dense'
-  dato4 = 'Pi_RPA_'//adjustl(trim(pol))//'_dense_inter'
-  dato5 = 'Pi_RPA_'//adjustl(trim(pol))//'_dense_intra'
+  dato3 = 'Pi_RPA_'//adjustl(trim(pol))//'_dense' ! G=G'=0
+  dato4 = 'Pi_RPA_'//adjustl(trim(pol))//'_dense_inter' ! G=G'=0
+  dato5 = 'Pi_RPA_'//adjustl(trim(pol))//'_dense_intra' ! G=G'=0
 
   print *, 'STARTING PI_pol current-ccurent tensor calc using KK rel.'
 
@@ -209,19 +218,35 @@ program Pi_pol
 
 contains
 
-  subroutine parseCommandLineArgs(pol)
+  subroutine parseCommandLineArgs(config_file)
     implicit none
-    character(len=100), intent(out) :: pol
-
-    if(command_argument_count() > 1 .or. command_argument_count()==0 ) then
-      print *, 'ERROR: Please provide a single argument corresponding to polarization component.'
+    character(len=200), intent(out) :: config_file
+  
+    if(command_argument_count() > 1) then
+    print *, 'ERROR: Please provide a single argument corresponding to the config_file path.'
       stop
+    else if (command_argument_count() ==0) then
+      config_file ='config.interp.in'
     else
-      call get_command_argument(1,pol) 
+      call get_command_argument(1,config_file) 
     endif
-    pol = trim(pol)
-    print *, 'Polarization: ',pol
+    config_file = trim(config_file)
+    print *, 'Config file: ',config_file
   end subroutine parseCommandLineArgs
+
+  ! subroutine parseCommandLineArgs(pol)
+  !   implicit none
+  !   character(len=100), intent(out) :: pol
+
+  !   if(command_argument_count() > 1 .or. command_argument_count()==0 ) then
+  !     print *, 'ERROR: Please provide a single argument corresponding to polarization component.'
+  !     stop
+  !   else
+  !     call get_command_argument(1,pol) 
+  !   endif
+  !   pol = trim(pol)
+  !   print *, 'Polarization: ',pol
+  ! end subroutine parseCommandLineArgs
 
   subroutine genReChi0(io,No,Nlf,iG,jG,oi,domega,S0,ReChi0)
     implicit none
