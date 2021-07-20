@@ -826,7 +826,7 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
     ! non general function, works only for a symmetric trilayer
     ! sums Pi over all local field vectors to observe sigma^sc in upper layer
     ! integrates each component over dz,dz' from 0 to L/2
-    ! Pi = 1/L \sum_Gz \sum_Gz' \int_0^{L/2}\int_0^{L/2} dz dz' Pi(Gz,Gz') * exp(i Gz * L/2) * exp(-i Gz * L/2) 
+    ! Pi = 1/L \sum_Gz \sum_Gz' \int_0^{L/2}\int_0^{L/2} dz dz' Pi(Gz,Gz') * exp(-i Gz * z) * exp(i Gz' * z') 
     implicit none
     real(kind=dp),    intent(in)  :: c0
     real(kind=dp),    intent(in)  :: Glf(:,:)
@@ -844,11 +844,11 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
     do iG = 1,Nlf
       do jG = 1,Nlf
         if (iG==1 .and. jG/=1) then
-          sPixx = sPixx + Pixx(iG,jG) * ( -cmplx(0.0,1.0) * ( 1 - exp(-cmplx(0.0,Glf(3,jG)*c0/2)) ) ) * c0/(2*Glf(3,jG))
-          sPiyy = sPiyy + Piyy(iG,jG) * ( -cmplx(0.0,1.0) * ( 1 - exp(-cmplx(0.0,Glf(3,jG)*c0/2)) ) ) * c0/(2*Glf(3,jG))
-          sPizz = sPizz + Pizz(iG,jG) * ( -cmplx(0.0,1.0) * ( 1 - exp(-cmplx(0.0,Glf(3,jG)*c0/2)) ) ) * c0/(2*Glf(3,jG))
-          sPiyz = sPiyz + Piyz(iG,jG) * ( -cmplx(0.0,1.0) * ( 1 - exp(-cmplx(0.0,Glf(3,jG)*c0/2)) ) ) * c0/(2*Glf(3,jG))
-          sPizy = sPizy + Pizy(iG,jG) * ( -cmplx(0.0,1.0) * ( 1 - exp(-cmplx(0.0,Glf(3,jG)*c0/2)) ) ) * c0/(2*Glf(3,jG))
+          sPixx = sPixx + Pixx(iG,jG) * ( -cmplx(0.0,1.0) * ( -1 + exp(cmplx(0.0,Glf(3,jG)*c0/2)) ) ) * c0/(2*Glf(3,jG))
+          sPiyy = sPiyy + Piyy(iG,jG) * ( -cmplx(0.0,1.0) * ( -1 + exp(cmplx(0.0,Glf(3,jG)*c0/2)) ) ) * c0/(2*Glf(3,jG))
+          sPizz = sPizz + Pizz(iG,jG) * ( -cmplx(0.0,1.0) * ( -1 + exp(cmplx(0.0,Glf(3,jG)*c0/2)) ) ) * c0/(2*Glf(3,jG))
+          sPiyz = sPiyz + Piyz(iG,jG) * ( -cmplx(0.0,1.0) * ( -1 + exp(cmplx(0.0,Glf(3,jG)*c0/2)) ) ) * c0/(2*Glf(3,jG))
+          sPizy = sPizy + Pizy(iG,jG) * ( -cmplx(0.0,1.0) * ( -1 + exp(cmplx(0.0,Glf(3,jG)*c0/2)) ) ) * c0/(2*Glf(3,jG))
         else if (iG/=1 .and. jG==1) then
           sPixx = sPixx + Pixx(iG,jG) * ( -cmplx(0.0,1.0) * ( 1 - exp(-cmplx(0.0,Glf(3,iG)*c0/2)) ) ) * c0/(2*Glf(3,iG))
           sPiyy = sPiyy + Piyy(iG,jG) * ( -cmplx(0.0,1.0) * ( 1 - exp(-cmplx(0.0,Glf(3,iG)*c0/2)) ) ) * c0/(2*Glf(3,iG))
