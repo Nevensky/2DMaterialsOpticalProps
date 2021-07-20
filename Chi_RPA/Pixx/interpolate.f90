@@ -33,6 +33,7 @@ program Pi_pol
   read(10,nml=config,iostat=ios_conf)
   close(10)
 
+  ! DEBUG
   ! pol = 'xx'
   ! call parseCommandLineArgs(pol)
   ! Nlf = 33  ! 5 Ha gr
@@ -63,6 +64,9 @@ program Pi_pol
   dato5 = 'Pi_RPA_'//adjustl(trim(pol))//'_dense_intra' ! G=G'=0
 
   print *, 'STARTING PI_pol current-ccurent tensor calc using KK rel.'
+
+  print *, 'No: ', No, ' No_interp:', No_interp,' No_tot: ', No_tot
+  print *, 'domega: ', domega, ' domega_tot: ', domega_tot
 
   allocate(S0(-No:No,Nlf,Nlf)) 
   allocate(Qeff(Nlf,Nlf)) 
