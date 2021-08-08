@@ -122,8 +122,8 @@ program photon
   allocate( KC(3,3) )
   allocate( Gi(3) )
 
-  ! allocate( Imat(Nlfd/2,Nlfd/2) ) ! dim NlfxNlf
-  ! allocate( Imat2(Nlfd,Nlfd) ) ! dim Nlf*2 x Nlf*2
+  ! allocate( Imat(Nlfd,Nlfd) ) ! dim NlfxNlf
+  ! allocate( Imat2(2*Nlfd,2*Nlfd) ) ! dim Nlf*2 x Nlf*2
 
   allocate( Dxx0(Nlfd,Nlfd) )
   allocate( Dyy0(Nlfd,Nlfd) )
@@ -147,10 +147,10 @@ program photon
   allocate( Pizy(Nlfd,Nlfd) )
   allocate( Pizz(Nlfd,Nlfd) )
 
-  allocate( TS(Nlfd/2,Nlfd/2) ) ! dim NlfxNlf
-  allocate( TP(Nlfd,Nlfd) )     ! dim Nlf*2 x Nlf*2
-  ! allocate( TScheck(Nlfd/2,Nlfd/2) )
-  ! allocate( TPcheck(Nlfd,Nlfd) )
+  allocate( TS(Nlfd,Nlfd) ) ! dim NlfxNlf
+  allocate( TP(2*Nlfd,2*Nlfd) )     ! dim Nlf*2 x Nlf*2
+  ! allocate( TScheck(Nlfd,Nlfd) )
+  ! allocate( TPcheck(2*Nlfd,2*Nlfd) )
 
   domega = (omax-omin) / (No-1)
   if (Ntheta/=0) then
@@ -250,7 +250,7 @@ program photon
         call genTS(Nlf, Dxx0, Pixx0(io,:,:), TS)
 
         ! invertiranje matrice TS
-        ! call gjel(TS,Nlf,Nlfd/2,Imat,Nlf,Nlfd)
+        ! call gjel(TS,Nlf,Nlfd,Imat,Nlf,Nlfd)
         call invert(TS)
 
         ! KONSTRUKCIJA TP MATRICE P - MOD
@@ -258,7 +258,7 @@ program photon
         
 
         ! invertiranje matrice TP
-        ! call gjel(TP,Nlf2,Nlfd,Imat2,Nlf2,Nlfd)
+        ! call gjel(TP,Nlf2,2*Nlfd,Imat2,Nlf2,Nlfd)
         call invert(TP)
 
 
@@ -314,7 +314,7 @@ program photon
         ! call genTS(Nlf, Dxx0, Pixx, TS)
 
         ! invertiranje matrice TS
-        ! call gjel(TS,Nlf,Nlfd/2,Imat,Nlf,Nlfd)
+        ! call gjel(TS,Nlf,Nlfd,Imat,Nlf,Nlfd)
         ! call invert(TS)
 
 
@@ -323,7 +323,7 @@ program photon
 
 
         ! invertiranje matrice TP
-        ! call gjel(TP,Nlf2,Nlfd,Imat2,Nlf2,Nlfd)
+        ! call gjel(TP,Nlf2,2*Nlfd,Imat2,Nlf2,Nlfd)
         ! call invert(TP)
 
 
@@ -834,6 +834,7 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
     complex(kind=dp), intent(out) :: sPixx, sPiyy, sPiyz, sPizy, sPizz
 
     ! real(kind=dp) :: dist = 6.0654 ! distance between layers [bohr]
+    ! instead of +/- L/2 we could integrate from +/- dist/2
 
     sPixx = cmplx(0.0,0.0)
     sPiyy = cmplx(0.0,0.0)
