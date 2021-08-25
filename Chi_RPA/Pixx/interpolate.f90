@@ -8,6 +8,7 @@ program Pi_pol
 
   character (len=100) :: pol,dato1,dato2,dato3,dato4,dato5,dato6
   character (len=200) :: config_file
+  logical :: write_GiGj ! true/false Output all local field components for Pi(Gi,Gj)
   integer :: No, Nlf
   integer :: No_interp, No_tot, counter
   integer :: io, jo, iG, jG
@@ -25,9 +26,10 @@ program Pi_pol
 
   real(kind=dp), parameter :: pi      = 4.D0*atan(1.D0)
   real(kind=dp), parameter :: Hartree = 2.0D0*13.6056923D0
+
   
 
-  namelist /config/ pol, Nlf, No_interp, No, omin, omax,Gamma_intra, c0
+  namelist /config/ pol, Nlf, No_interp, No, omin, omax,Gamma_intra, c0, write_GiGj
   call parseCommandLineArgs(config_file) ! config file is the first argument passed to the command
   open(10,file=config_file)
   read(10,nml=config,iostat=ios_conf)
@@ -198,16 +200,18 @@ program Pi_pol
 
   print *, "STARTED: Writting interpoalted current-current response to file. Polarization: ", pol
   ! WRITTING INTERPOLATED TOTAL RESPONSE FUNCTION Pi for a given polarization 'pol' to file for all G,G'
-  open(80,file = dato6)
-  do io = 1, No_tot
-    do iG = 1, Nlf
-      do jG = 1, Nlf
-        oi = io*domega_tot
-        write(80,*) oi*Hartree, Pi_tot_interp(io,iG,jG)
+  if (write_GiGj == .true.) then
+    open(80,file = dato6)
+    do io = 1, No_tot
+      do iG = 1, Nlf
+        do jG = 1, Nlf
+          oi = io*domega_tot
+          write(80,*) oi*Hartree, Pi_tot_interp(io,iG,jG)
+        enddo
       enddo
     enddo
-  enddo
-  close(80)
+    close(80)
+  end if
 
   deallocate(tmp)
   

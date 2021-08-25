@@ -2,9 +2,10 @@
  pol         = 'xx'        ! Polarization dirrection (xx, yy, zz, or yz)
  omin        = 1.0d-5      ! [Hartree] frequency range, lower bound
  omax        = 2.0D0       ! [Hartree] frequency range, upper bound
- Gamma_intra = 0.025    ! [eV] width of intraband transition
+ Gamma_intra = 0.025       ! [eV] width of intraband transition
  No_interp   = 2001        ! Number of interpolation steps for frequencies
  No          = 2001        ! Number of frequencies
- Nlf         = 100          ! Number of loacal field vectors 
- c0          = 29.8577      ! [a.u.]    unit cell parameter in perependicular direction 
+ Nlf         = 100         ! Number of loacal field vectors 
+ c0          = 29.8577     ! [a.u.]    unit cell parameter in perependicular direction 
+ write_GiGj  = .true.      ! Output all local field components for Pi(Gi,Gj)
 /
