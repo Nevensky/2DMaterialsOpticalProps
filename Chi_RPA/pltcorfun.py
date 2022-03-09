@@ -3,13 +3,13 @@
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
-matplotlib.use('Qt4Agg')
+# matplotlib.use('Qt4Agg')
 plt.style.use('ggplot')
 
 plt.figure(num=None, figsize=(10, 6), dpi=100)
 
-# fl= './Corrfun_xx'
-fl= '/Users/Nevensky/Downloads/Pixx/Corrfun_xx'
+fl= './Corrfun_xx'
+# fl= '/Users/Nevensky/Downloads/Pixx/Corrfun_xx'
 
 
 Nlf,Nlf_counted = 0,0
