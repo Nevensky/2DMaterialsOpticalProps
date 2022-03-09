@@ -38,7 +38,7 @@ contains
       do  jo = 2,No
         oj=(jo - 1)*domega
         fact = domega/oj
-        if(jo == 2) fact = 3/2
+        if(jo == 2) fact = 3.0_dp/2.0_dp
         if(jo == No)fact = 0.5_dp*domega/oj
         W1 = W1 - fact*S(jo)
       end do
@@ -49,7 +49,7 @@ contains
         if(jo /= io) fact = domega/(oi - oj)
         if(jo == 1) fact = 1
         if(jo == 2) fact = 0
-        if(jo == 3) fact=-3/2
+        if(jo == 3) fact= -3.0_dp/2.0_dp
         if(jo == No) fact = 0.5_dp*domega/(oi - oj)
         W1 = W1 + fact*S(jo)
         fact = domega/(oi + oj)
@@ -61,7 +61,7 @@ contains
         oj=(jo - 1)*domega
         if(jo /= io)fact = domega/(oi - oj)
         if(jo == 1)fact = 0.5*domega/(oi - oj)
-        if(jo == (No - 2)) fact = 3/2
+        if(jo == (No - 2)) fact = 3.0_dp/2.0_dp
         if(jo == (No - 1)) fact = 0
         if(jo == No) fact=-1
         W1 = W1 + fact*S(jo)
@@ -74,9 +74,9 @@ contains
         oj=(jo - 1)*domega
         if(jo /= io) fact = domega/(oi - oj)
         if(jo == 1) fact = 0.5_dp*domega/(oi - oj)
-        if(jo == (io - 1)) fact = 3/2
+        if(jo == (io - 1)) fact = 3.0_dp/2.0_dp
         if(jo == io) fact = 0
-        if(jo == (io + 1)) fact=-3/2
+        if(jo == (io + 1)) fact= -3.0_dp/2.0_dp
         if(jo == No) fact = 0.5_dp*domega/(oi - oj)
         W1 = W1 + fact*S(jo)
         fact = domega/(oi + oj)
