@@ -47,4 +47,5 @@ fort.*
 *.bck
 *.in
 *.xml
+*.gnu
 !Makefile

@@ -9,7 +9,7 @@ module brillouin_zone
 contains
 
   subroutine loadkIandE(path, NkI, Nband, Nocc, kI, dGW,E)
-    ! Loading of all wavevectors (in Cartesiand coords.) in the ireducible BZ and
+    ! Loads all wavevectors (in Cartesiand coords.) in the ireducible BZ and
     ! corresponding eigen-energies form the Quantum Espresso .band files
     integer,            intent(in)    :: NkI
     integer,            intent(in)    :: Nband, Nocc
@@ -21,7 +21,11 @@ contains
     integer :: iuni, ios, ik, i
     real(kind=dp),    parameter :: Hartree = 2.0D0*13.6056923D0
 
-    open(newunit=iuni,FILE=path,status='old',err=500,iostat=ios) 
+    open(newunit=iuni,FILE=path,status='old',iostat=ios) 
+    if (ios /=0) then
+      print *, 'ERROR: Cannot open BAND file: ',path
+      stop
+    end if
     do  ik = 1,NkI
       if (ik == 1) then
         read(iuni,*) 
@@ -35,15 +39,10 @@ contains
 #endif
     end do
     close(iuni)
-      
-    goto 400
-    500 write(*,*) 'Cannot open BAND file. iostat = ',ios
-    stop
-    400 continue
-    
-    ! konverzija en. u Hartree
+
+    ! convert energy to Hartree
     E(1:NkI,1:Nband) = E(1:NkI,1:Nband)/Hartree
-    ! scissor operator, ispravlja/shifta DFT gap (na 1eV u ovom slucaju)
+    ! scissor operator, shifts the DFT bandgap
     E(1:NkI,Nocc+1:Nband) = E(1:NkI,Nocc+1:Nband) + dGW
 
   end subroutine loadkIandE

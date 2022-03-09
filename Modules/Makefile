@@ -1,5 +1,5 @@
 # Makefile for Vito
-DEBUG=-warn all -check all -debug all -g
+DEBUG=-warn all -check all -debug all -g -traceback
 FC=ifort
 #FFLAGS=-Ofast
 FFLAGS=-qmkl -Ofast -fpp #${DEBUG}
