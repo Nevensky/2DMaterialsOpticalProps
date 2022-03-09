@@ -20,7 +20,7 @@ integer :: Nthreads
 ! Nlfd je minimalno 2 zbog 2X2 blok matrice za p mod
 
 character(len=2) :: pol
-integer          :: no, no_ladd, nq
+integer          :: No, No_ladd, Nq
 integer          :: qmin, qmax
 integer          :: Nl
 real(kind=dp)    :: h         ! distance between layer
@@ -47,7 +47,7 @@ real(kind=dp)    :: q, o, dq
 real(kind=dp)    :: omin, omax
 real(kind=dp)    :: domega
 complex(kind=dp) :: Pi_ladder_down,Pi_ladder_up,Pi_RPA
-complex(kind=dp) :: d0, dxx, dyy, dyz, dzz
+complex(kind=dp) :: D0, Dxx, Dyy, Dyz, Dzz
 complex(kind=dp) :: oi
 complex(kind=dp) :: beta
 complex(kind=dp) :: Pip
@@ -61,7 +61,7 @@ complex(kind=dp), dimension(:,:), allocatable :: eps, Imat
 character (len=100) :: rundir, rpa_xx_file, rpa_zz_file, ladd_down_x_file, ladd_up_x_file, ladd_down_z_file, ladd_up_z_file
 namelist /directories/ rundir, rpa_xx_file, rpa_zz_file, ladd_down_x_file, ladd_up_x_file, ladd_down_z_file, ladd_up_z_file
 namelist /system/ omin, dq, qmin, qmax
-namelist /config/ no, no_ladd
+namelist /config/ No, No_ladd
 namelist /parameters/ Nl, h, eta, a0, c0
 namelist /parallel/ Nthreads
 
@@ -74,7 +74,7 @@ read(10,nml=parameters,iostat=ist7)
 read(10,nml=parallel,iostat=ist8)
 close(10)
 
-nq   = qmax-qmin
+Nq   = qmax-qmin
 omin = omin/Hartree ! iz eV u Hartree
 omax = (omax/Hartree + omin) 
 
@@ -97,7 +97,7 @@ open(32,file = trim(ladd_down_x_file) )
 
 open(33,file = trim(ladd_up_x_file) )
 
-do  io =  1,no_ladd
+do  io =  1,no_ladd ! DEBUG: zar nebi tu trebalo ici No ?
   read(31,*) o, Pi_RPA
   if (io <= no_ladd) then
     read(32,*) o, Pi_ladder_down
@@ -113,13 +113,13 @@ open(34,file = trim(rpa_zz_file) )
 open(35,file = trim(ladd_down_z_file) )
 open(36,file = trim(ladd_up_z_file) )
 
-do  io =  1,no_ladd
+do  io =  1,no_ladd ! DEBUG: zar nebi tu trebalo ici No ?
   read(31,*) o, Pi_RPA
   if (io <= no_ladd) then
     read(32,*) o, Pi_ladder_down
     read(33,*) o, Pi_ladder_up
   end if
-  Pizz(io)=Pi_RPA+Pi_ladder_down+Pi_ladder_up
+  Pizz(io) = Pi_RPA + Pi_ladder_down + Pi_ladder_up
 end do
 
 close(34)
@@ -135,21 +135,21 @@ q_loop: do iq =  qmin,qmax
   q = (iq-1)*dq
 
   omega_loop: do io = 3,no_ladd
-    o =  omin+(io-1)*domega
+    o =  omin + (io-1)*domega
     oi =  cmplx(o,eta)
     beta =  cmplx(gamma**2  *oi**2 -q**2)
     beta =  sqrt(beta)
     
-    dxx =  2.0*pi * cmplx(0.0,1.0) * c0 * gamma**2/beta
-    dyy =  2.0*pi * cmplx(0.0,1.0) * c0 * beta/(oi**2)
-    dyz = -2.0*pi * cmplx(0.0,1.0) * q * c0/(oi**2)
-    dzz =  2.0*pi * cmplx(0.0,1.0) * q**2 * c0/(beta * oi**2)
+    Dxx =  2.0*pi * cmplx(0.0,1.0) * c0 * gamma**2/beta
+    Dyy =  2.0*pi * cmplx(0.0,1.0) * c0 * beta/(oi**2)
+    Dyz = -2.0*pi * cmplx(0.0,1.0) * q * c0/(oi**2)
+    Dzz =  2.0*pi * cmplx(0.0,1.0) * q**2 * c0/(beta * oi**2)
     
     
     if (pol == 'xx') then 
-      d0 = dxx ! S-MOD
+      D0 = Dxx ! S-MOD
     else if (pol == 'zz') then
-      d0 = dyy ! P-MOD
+      D0 = Dyy ! P-MOD
     else
       print *, 'FATAL ERROR Specified polarization component not supported.'
       stop
@@ -160,7 +160,7 @@ q_loop: do iq =  qmin,qmax
     do  i =  1,Nl
       do  j =  1,Nl
         ! za multilayere nalazi efektivni epsilon = relativna permitivnost
-        eps(i,j)= -Pixx(io) * d0 * exp( cmplx(0.0,1.0) * h * beta*abs(real(i)-real(j)) )
+        eps(i,j)= -Pixx(io) * D0 * exp( cmplx(0.0,1.0) * h * beta*abs(real(i)-real(j)) )
         Pi0(i,j)= cmplx(0.0,0.0)
       end do
       eps(i,i) = cmplx(1.0,0.0)+eps(i,i)
