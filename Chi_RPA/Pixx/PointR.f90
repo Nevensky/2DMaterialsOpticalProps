@@ -18,7 +18,7 @@ CONTAINS
       REAL(kind=dp), DIMENSION(48,3,3) :: RI
 
       COMPLEX(kind=dp), DIMENSION(3,3) :: T
-      COMPLEX(kind=dp), DIMENSION(3,3) :: unit
+      COMPLEX(kind=dp), DIMENSION(3,3) :: Imat
 
       REAL(kind=dp), PARAMETER :: zero = 0.0
       REAL(kind=dp), PARAMETER :: one = 1.0
@@ -117,17 +117,17 @@ GOTO 2004
    DO i = 1 , Nsymm
       DO n = 1 , 3
          DO m = 1 , 3
-            unit(n,m) = DCMPLX(zero,zero)
+            Imat(n,m) = DCMPLX(zero,zero)
             T(n,m) = DCMPLX(R(i,n,m),zero)
          END DO
-         unit(n,n) = DCMPLX(one,zero)
+         Imat(n,n) = DCMPLX(one,zero)
       END DO
       ! PRINT *,'EXITED n loop'
       PRINT *,'symmetry op. matrix R'
       WRITE(*,'(A8,I3/3F11.4/3F11.4/3F11.4)'),'i_symm= ',i, R(i,:,:)
       ! PRINT *,'preparing to invert helper matrix T'
       ! WRITE(*,'(A8,I3/6F11.4/6F11.4/6F11.4)'),'i_symm= ',i, T
-      CALL GJEL(T,3,3,unit,3,3)
+      CALL GJEL(T,3,3,Imat,3,3)
       PRINT *,'COMPLETED matrix inversion'
       DO n = 1 , 3
          DO m = 1 , 3

@@ -39,21 +39,18 @@ integer :: osdependent_id
 integer :: debugCount = 0
 
 ! constants
-real(kind=dp),    parameter :: pi      = 4.D0*atan(1.D0)
+real(kind=dp),    parameter :: pi      = 4.D0*atan(1.d0)
 real(kind=dp),    parameter :: eV      = 1.602176487D-19
+real(kind=dp),    parameter :: kB      = 1.3806503d-23
 real(kind=dp),    parameter :: Hartree = 2.0D0*13.6056923D0
 real(kind=dp),    parameter :: Planck  = 6.626196D-34
 real(kind=dp),    parameter :: aBohr   = 0.5291772d0
-real(kind=dp),    parameter :: alpha   = 1.0/137.0
-complex(kind=dp), parameter :: rone    = cmplx(1.0,0.0)
-complex(kind=dp), parameter :: czero   = cmplx(0.0,0.0)
-complex(kind=dp), parameter :: ione    = cmplx(0.0,1.0)
+real(kind=dp),    parameter :: gamma   = 1.0/137.0
 
 ! scalars
 real(kind=dp)    :: kx,ky,kz
 real(kind=dp)    :: KQx,KQy,KQz
 real(kind=dp)    :: qx,qy,qz
-! real(kind=dp) :: q ! ne koristi se
 real(kind=dp)    :: kmin
 real(kind=dp)    :: omin,omax
 real(kind=dp)    :: domega
@@ -122,12 +119,10 @@ complex(kind=dp), dimension(:,:),   allocatable  :: Qeff_partial
 complex(kind=dp), dimension(:,:,:), allocatable  :: S0         ! korelacijska matrica
 complex(kind=dp), dimension(:,:,:), allocatable  :: S0_partial ! pomocna var. za S0 redukciju
 
-
-! character(len=100) :: bandn,bandm,nis,pathk1,pathk2,dato1, root,path,dato2,dato3,root1,root2, outdir
 character (len=100) :: bandn,bandm,dummy,pathk1,pathk2, dato1, dato2, dato3, path
 character (len=35)  :: tag,buffer
 
-complex(kind=dp), dimension(:), allocatable :: C1
+complex(kind=dp), dimension(:), allocatable :: C1!,C2
 complex(kind=dp), dimension(:,:), allocatable :: C2
 
 ! OpenMP vars
@@ -210,31 +205,25 @@ domega = (omax-omin)/(No-1)
 
 
 
-! POINT GROUP TRANSFORMATIONS
+! Load Point Group Transformations
 path = trim(rundir)//"/"//trim(scf_file)
 call PointR(path,Nsymm,R,RI)
 print *,"status: PointR done."
 
 
 
-! Upis valnih vektora iz irreducibilne Brillouinove
-! zone i pripadnih enerGijskih nivoa iz filea '*****.band'.
-! wave vectors are in cart.koord.
-
+! Load wavevectors and eigenenergies
 path=trim(rundir)//trim(band_file)
 call loadkIandE(path, NkI, Nband, Nocc, kI, dGW,E)
 print *,"status: kI and E loaded."
 
 
-! generator 1.B.Z.
-! Dio programa koji pomocu operacija tockaste grupe i vektora iz
-! I.B.Z. generira sve (MEDJUSOBNO RAZLICITE!!!) v. vektore u 1.B.Z.
-! Ntot-Tot number of different points ''ktot'' inside 1.B.Z
+! Generate 1.B.Z. with point group symm. operations
 call genFBZ(Nk,NkI,Nsymm,eps,kI,R,Ntot,ktot)
 print *,"status: FBZ generated."
 
 ! Checking 1BZ integration
-call checkFBZintegration(Nband,NkI,Nsymm,Ntot,eps,kI,RI,Efermi,E,NelQE,Nel)
+call checkFBZintegration(Nband,NkI,Nsymm,Ntot,eps,kI,ktot,RI,Efermi,E,NelQE,Nel)
 print *,"status: FBZ integration correct."
 
 ! KC transformation matrix from rec.cryst. axes to cart.koord.
@@ -297,9 +286,6 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   !$omp parallel shared(S0,Qeff, iq, qx,qy,qz, kI,ktot,R,RI,eps,E, Efermi, T,Gcar, G,Glf,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Vcell, Gamma_inter, Gamma_intra, df_cut, Lor_cut,debugCount) private(ik, S0_partial, Qeff_partial, MnmK1K2,MnmK1K22,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,df, f1, f2, expo1, expo2, fact, Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2, C1,C2, iuni1, iuni2) firstprivate(savedir,jump,No,domega,osdependent_id) num_threads(Nthreads) default(none) 
   thread_id =  omp_get_thread_num()
 
-  allocate(MnmK1K2(Nlf))
-  allocate(MnmK1K22(Nlf))
-
   !$omp do
   do  ik = 1,Ntot
     ! vito debug
@@ -319,6 +305,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
     KQz = kz + qz
     
     ! !$omp critical(printWaveVector)
+    !$omp atomic
     debugCount = debugCount + 1
     write (*,'(A13,I4,A5,I8,A11,I6,A2,I6,A5,F5.1,A4,/,A14,3F10.6,/,A31)') 'thread id: ',thread_id, &
                                                     & 'ik: ',ik, &
@@ -328,13 +315,9 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
     ! !$omp end critical(printWaveVector)
 
   !  trazenje (KQx,KQy) prvo u 1.B.Z a onda u I.B.Z.
-  call findKQinBZ(KQx, KQy, KQz, eps, Nsymm, NkI, Ntot, NG, ktot, kI, RI, G, iG0, R2, K2)
+  call findKQinBZ(KQx, KQy, KQz, eps, Nsymm, NkI, Ntot, NG, kI, ktot, RI, G, iG0, R2, K2)
       
-  ! R1-integer, redni broj point operacije R1 u transformaciji ''K = R1*K1''.
-  ! K1-integer, redni broj valnog vektora K1 u transformaciji ''K = R1*K1''.
-  ! iG0 i R2-integeri, redni broj vektora reciprocne restke G0 i point operacije R2 u transformaciji ''K + Q = G0 + R2*K2''.
-  ! K2-integer, redni broj valnog vektora K2 u transformaciji  ''K + Q = G0 + R2*K2''.
-    
+
   allocate(Qeff_partial(Nlf,Nlf))
   allocate(S0_partial(-No:No,Nlf,Nlf))
 
@@ -342,7 +325,11 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   S0_partial(-No:No,1:Nlf,1:Nlf) = cmplx(0.0,0.0)
 
   allocate(C1(NG))
+  ! allocate(C2(NG))
   allocate(C2(Nband,NG))
+
+  allocate(MnmK1K2(Nlf))
+  allocate(MnmK1K22(Nlf))
 
   bands_n_loop: do n = 1,Nband
 
@@ -474,10 +461,11 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
   jump = 1
 
+  deallocate(MnmK1K2)
+  deallocate(MnmK1K22)  
+
   end do ! k_loop_FBZ_2nd ! end of FBZ do loop
   !$omp end do
-  if (allocated(MnmK1K2)) deallocate(MnmK1K2)
-  if (allocated(MnmK1K22)) deallocate(MnmK1K22)
   !$omp end parallel
 
 
@@ -613,8 +601,8 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
     ! vodljivost u jedinicama 2*pi*e^2/h   
     if(io > 1) then
-      write(401,*) oi*Hartree, real(-ione*c0*Pi_inter/oi)
-      write(402,*) oi*Hartree, real(-ione*c0*Pi_intra/oi)
+      write(401,*) oi*Hartree, real(-cmplx(0.0,1.0)*c0*Pi_inter/oi)
+      write(402,*) oi*Hartree, real(-cmplx(0.0,1.0)*c0*Pi_intra/oi)
     endif
 
 
@@ -661,29 +649,32 @@ contains
     real(kind=dp),      intent(out) :: KC(3,3)
     
     integer           :: j
-    integer           :: ios, lno=0
+    integer           :: iuni, ios1, ios2, lno=0
     character(len=35) :: tag, buffer
 
     tag='     reciprocal axes: (cart. coord.'
 
-    open(300,FILE=path,status='old')
+    open(newunit=iuni,FILE=path,iostat=ios1,status='old')
     do  i = 1,100000
-      read(300,'(a) ') buffer
+      read(iuni,'(a) ') buffer
       lno = lno+1
       if (buffer == tag) then
         do  j = 1,3
-          read(300,'(23X,3F10.3) ',err=10001,iostat=ios,end=20001) KC(1,j), KC(2,j), KC(3,j)
+          read(iuni,'(23X,3F10.3) ',iostat=ios2) KC(1,j), KC(2,j), KC(3,j)
         end do
-        EXIT
+        exit
       end if
     end do
-    close(300)
+    close(iuni)
  
-    goto 8000
-    10001   write(*,*) 'Error reading line ',lno+1,', iostat = ',ios
-    20001   write(*,*) 'Number of lines read = ',lno
-    8000 continue
-  
+    if (ios1 /=0) then
+      print *, 'ERROR: Failed to open file.', path
+      stop
+    else if (ios2 /= 0) then
+      print *, 'ERROR: Failed to read KC matrix at line ',lno+1
+      stop
+    end if
+
   end subroutine loadKC
 
   subroutine writeInfo(lf, pol, qx, qy, qz, Gcar, Nsymm, Nlf, Ntot, NkI, Nband, T, Nel, NelQE,Gamma_intra, Gamma_inter, dato1, dato2, dato3, config_file)
@@ -697,7 +688,7 @@ contains
     character(len=100), intent(in) :: dato1, dato2, dato3
     character(len=200), intent(in) :: config_file
 
-    integer       :: ios
+    integer       :: ios, iuni
     real(kind=dp) :: absq, error
     real(kind=dp), parameter :: Hartree = 2.0D0*13.6056923D0
     character(len=11) :: fname 
@@ -705,47 +696,46 @@ contains
     absq = sqrt(qx**2+qy**2+qz**2)
     fname = 'Info_'//adjustl(trim(pol))//'.out'
 
-    open(55,FILE=fname, err=700, iostat=ios)
-    write(55,*)'***************General***********************'
-    write(55,*)' Currently we calculate         ---->',adjustl(trim(dato1))
-    write(55,*)' Currently we calculate         ---->',adjustl(trim(dato2))
-    write(55,*)' Input config file: ',adjustl(config_file)
-    write(55,*)''
-    write(55,*)'Number of point symmetry operation is',Nsymm
-    ! if (frac == 0)write(55,*)'Fraction translation is not detected'
-    ! if (frac == 1)write(55,*)'Fraction translation is detected'
-    write(55,'(A25,3F10.4,A5)') 'Wave vector (qx,qy,qz)=(',qx*Gcar,qy*Gcar, qz*Gcar,') a.u.'
-    write(55,'(A25,F7.3,A5)') '|(qx,qy,qz)|=',absq*Gcar,'a.u.'
-    write(55,*) 'Local field effcts in '//trim(lf)//'-dir'
-    write(55,*) 'Polarization in '//trim(pol)//'-dir'
-    write(55,*)'Number of local field vectors is',Nlf
-    write(55,*)'Number of different K vectors in 1.B.Z. is',Ntot
-    write(55,*)'Number of K vectors in I.B.Z. is',NkI
-    write(55,*)'Number of bands is               ',Nband
-    write(55,'(A25,F7.3,A5)') 'Gamma_intra is  ',Gamma_intra*Hartree*1000.0,'meV'
-    write(55,'(A25,F7.3,A5)') 'Gamma_inter is  ',Gamma_inter*Hartree*1000.0,'meV'
-    write(55,'(A25,F7.3,A5)') 'Temperature is      ',T*Hartree*1000.0,'meV'
-    write(55,*)''
-    write(55,*)'-Im(Chi(io,G1,G2))/pi is in file---->',adjustl(trim(dato1))
-    write(55,*)' Qeff complex matrix is in file ---->',adjustl(trim(dato2))
-    write(55,*)' Pi_munu is in file             ---->',adjustl(trim(dato3))
-    write(55,*)''
-    write(55,*)'************* Checking 1BZ integration*******'
-    write(55,*)''
-    write(55,'(A40,F8.4)')'Number of electrons(1BZ integration)=',Nel
-    write(55,*)'Number of electrons(unit cell)=',NelQE
+    open(newunit=iuni,FILE=fname, iostat=ios)
+    if (ios /=0) then
+      stop 'Cannot open Info file.'
+    end if
+    write(iuni,*)'***************General***********************'
+    write(iuni,*)' Currently we calculate         ---->',adjustl(trim(dato1))
+    write(iuni,*)' Currently we calculate         ---->',adjustl(trim(dato2))
+    write(iuni,*)' Input config file: ',adjustl(config_file)
+    write(iuni,*)''
+    write(iuni,*)'Number of point symmetry operation is',Nsymm
+    ! if (frac == 0)write(iuni,*)'Fraction translation is not detected'
+    ! if (frac == 1)write(iuni,*)'Fraction translation is detected'
+    write(iuni,'(A25,3F10.4,A5)') 'Wave vector (qx,qy,qz)=(',qx*Gcar,qy*Gcar, qz*Gcar,') a.u.'
+    write(iuni,'(A25,F7.3,A5)') '|(qx,qy,qz)|=',absq*Gcar,'a.u.'
+    write(iuni,*) 'Local field effcts in '//trim(lf)//'-dir'
+    write(iuni,*) 'Polarization in '//trim(pol)//'-dir'
+    write(iuni,*)'Number of local field vectors is',Nlf
+    write(iuni,*)'Number of different K vectors in 1.B.Z. is',Ntot
+    write(iuni,*)'Number of K vectors in I.B.Z. is',NkI
+    write(iuni,*)'Number of bands is               ',Nband
+    write(iuni,'(A25,F7.3,A5)') 'Gamma_intra is  ',Gamma_intra*Hartree*1000.0,'meV'
+    write(iuni,'(A25,F7.3,A5)') 'Gamma_inter is  ',Gamma_inter*Hartree*1000.0,'meV'
+    write(iuni,'(A25,F7.3,A5)') 'Temperature is      ',T*Hartree*1000.0,'meV'
+    write(iuni,*)''
+    write(iuni,*)'-Im(Chi(io,G1,G2))/pi is in file---->',adjustl(trim(dato1))
+    write(iuni,*)' Qeff complex matrix is in file ---->',adjustl(trim(dato2))
+    write(iuni,*)' Pi_munu is in file             ---->',adjustl(trim(dato3))
+    write(iuni,*)''
+    write(iuni,*)'************* Checking 1BZ integration*******'
+    write(iuni,*)''
+    write(iuni,'(A40,F8.4)')'Number of electrons(1BZ integration)=',Nel
+    write(iuni,*)'Number of electrons(unit cell)=',NelQE
     error = abs((NelQE-Nel)/NelQE)
-    write(55,'(A25,F7.3,A5)') 'Relative error=',error*100.0,'%'
+    write(iuni,'(A25,F7.3,A5)') 'Relative error=',error*100.0,'%'
     if (error > 0.05) then
-      write(55,*)'WARRNING!!-1BZ INTEGRATION IS BAD!.'
+      write(iuni,*)'WARNING: FBZ integration is wrong. Check the number of electrons.!'
+      print *, 'WARNING: FBZ integration is wrong!'
       stop
     end if
-    close(55)    
-    
-    goto 600
-    700 write(*,*) 'Cannot open Info file. iostat = ',ios
-    stop
-    600 continue
+    close(iuni)    
 
   end subroutine writeInfo
 
@@ -842,13 +832,13 @@ contains
 end subroutine findKinIBZ
 
 
-subroutine findKQinBZ(KQx, KQy, KQz, eps, Nsymm, NkI, Ntot, NG, ktot, kI, RI, G, iG0, R2, K2)
+subroutine findKQinBZ(KQx, KQy, KQz, eps, Nsymm, NkI, Ntot, NG, kI, ktot, RI, G, iG0, R2, K2)
   ! trazenje (KQx,KQy) prvo u FBZ a onda u IBZ
   integer,       intent(in)  :: Nsymm, NkI, Ntot, NG
   real(kind=dp), intent(in)  :: eps
   real(kind=dp), intent(in)  :: KQx, KQy, KQz
-  real(kind=dp), intent(in)  :: ktot(:,:)
   real(kind=dp), intent(in)  :: kI(:,:)
+  real(kind=dp), intent(in)  :: ktot(:,:)
   real(kind=dp), intent(in)  :: G(:,:)
   real(kind=dp), intent(in)  :: RI(:,:,:)
   integer,       intent(out) :: iG0, R2, K2
@@ -894,41 +884,41 @@ subroutine findKQinBZ(KQx, KQy, KQz, eps, Nsymm, NkI, Ntot, NG, ktot, kI, RI, G,
 end subroutine findKQinBZ
 
   subroutine genFBZ(Nk,NkI,Nsymm,eps,kI,R,Ntot,ktot)
-    ! Pomocu operacija tockaste grupe i vektora iz I.B.Z. 
-    ! generira sve (medjusobno razlicite!!!) valne vektore u 1.B.Z.
-    integer,       intent(in)  :: Nk, NkI, Nsymm
-    real(kind=dp), intent(in)  :: eps 
-    real(kind=dp), intent(in)  :: kI(:,:)
-    real(kind=dp), intent(in)  :: R(:,:,:)
+    ! Generates all unique wavectors in the 1st BZ by applying 
+    ! point group transformations on the reducible BZ
 
-    integer,       intent(out) :: Ntot      ! ukupno jedinstvenih k-tocaka u FBZ
-    real(kind=dp), intent(out) :: ktot(:,:) ! jedinstvene k-tocake u FBZ
+    integer,       intent(in)  :: Nk, NkI, Nsymm ! No. of k-points, iredducible k-kpoints, symm. ops.
+    real(kind=dp), intent(in)  :: eps       ! threshold to distinguish whether k-points are the same
+    real(kind=dp), intent(in)  :: kI(:,:)   ! k-points in the irreducible BZ
+    real(kind=dp), intent(in)  :: R(:,:,:)  ! point group transformation matrices
 
+    integer,       intent(out) :: Ntot      ! total No. of unique k-point in the 1st BZ
+    real(kind=dp), intent(out) :: ktot(:,:) ! unique k-points in the 1st BZ
 
+    integer       :: iuni, ios
     integer       :: it, jk
     integer       :: i
     integer       :: ik, lk
     integer       :: n, m
-    real(kind=dp) :: k(3,Nk)
-
+    real(kind=dp) :: k(3,Nk) ! all non-unique k-points within the 1st BZ
 
     jk = 0
-    Ntot = 0 ! Total number of different points ''ktot'' inside 1.B.Z
+    Ntot = 0 
 
     symm_loop: do  i = 1, Nsymm    ! loop over all symmetries
       k_loop_IBZ: do  ik = 1, NkI  ! loop over k points in IBZ
         it = 1
         jk = jk + 1
-        do  n = 1, 3   ! loop over x,y,z 
+        do  n = 1, 3   ! loop over kx, ky, kz 
           k(n,jk) = 0.0
-          do  m = 1, 3 ! loop over x,y,z
+          do  m = 1, 3 ! loop over kx, ky, kz
             k(n,jk) = k(n,jk) + R(i,n,m)*kI(m,ik) ! kreira nove k tocke u BZ pomocu simetrije
           end do
         end do 
 
         if (jk > 1) then
           do  lk = 1, jk-1
-            ! provjera jeli tocka razlicita od neke vec prije kreirane
+            ! Check if the given k-point is unique (skips if it was already added)
             if ( abs(k(1,jk)-k(1,lk)) <= eps .and. &
                  abs(k(2,jk)-k(2,lk)) <= eps .and. &
                  abs(k(3,jk)-k(3,lk)) <= eps ) then 
@@ -937,8 +927,7 @@ end subroutine findKQinBZ
           end do
         end if
 
-        if (it == 1) then ! ne postoji dodaj ju
-          ! !$omp atomic
+        if (it == 1) then ! its unique, add it to ktot
           Ntot = Ntot+1
           ktot(1:3,Ntot) = k(1:3,jk)
         end if
@@ -946,14 +935,12 @@ end subroutine findKQinBZ
       end do k_loop_IBZ
     end do symm_loop
 
-    ! deallocate(k)
-
-    ! output da vidimo kako izgleda FBZ
-    open(887,FILE='fbz_check.dat')
+    ! write all 1st BZ k-points to file
+    open(newunit=iuni,iostat=ios,file='fbz_check.dat')
     do  i = 1,Ntot
-      write(887,*) ktot(1,i), ktot(2,i)  
+      write(ios,*) ktot(1,i), ktot(2,i)  
     end do
-    close(887)
+    close(ios)
 
   end subroutine genFBZ
 
@@ -975,18 +962,20 @@ end subroutine findKQinBZ
       
   end subroutine genOccupation
 
-  subroutine checkFBZintegration(Nband,NkI,Nsymm,Ntot,eps,kI,RI,Efermi,E,NelQE,Nel)
+  subroutine checkFBZintegration(Nband,NkI,Nsymm,Ntot,eps,kI,ktot,RI,Efermi,E,NelQE,Nel)
     ! Provjeri je li broj el. u FBZ (Nel) odgovara stvarnom broju el. u jed. cel. (NelQE)
     integer,       intent(in)  :: NelQE
     integer,       intent(in)  :: NkI, Nsymm, Nband, Ntot
     real(kind=dp), intent(in)  :: eps, Efermi
     real(kind=dp), intent(in)  :: kI(:,:)
+    real(kind=dp), intent(in)  :: ktot(:,:)
     real(kind=dp), intent(in)  :: RI(:,:,:)
     real(kind=dp), intent(in)  :: E(:,:)
     real(kind=dp), intent(out) :: Nel
 
     integer       :: it, ik, n, i, j, K1
     real(kind=dp) :: kx,ky,kz
+    real(kind=dp) :: K11, K22, K33
 
     Nel = 0 
     k_loop_FBZ : do  ik = 1,Ntot
@@ -1021,7 +1010,7 @@ end subroutine findKQinBZ
             end do symm_loop
           end if
           if (it == 1) then
-            print*,'Can not find wave vector K=',ik, 'in I.B.Z.'
+            print*,'Can not find wave vector ik=',ik, 'in I.B.Z.'
             stop
           end if
         end if
@@ -1041,7 +1030,7 @@ end subroutine findKQinBZ
   subroutine genGlf(lf,Ecut,NG,Gcar,G,Nlf,Nlfd,Glf)
     ! Generate Reciprocal vectors for crystal local field 
     ! effects calculations in array Glf(3,Nlf)
-  
+    implicit none
     character(len=*), intent(in)    :: lf
     integer,          intent(in)    :: NG
     real(kind=dp),    intent(in)    :: Ecut
@@ -1095,22 +1084,22 @@ end subroutine findKQinBZ
     ! integer,        intent(inout) :: parG(:) ! paritet svakog valnog vektora G
     real(kind=dp),  intent(inout) :: G(:,:)  ! polje valnih vektora G u recp. prost. za wfn.
 
-    integer :: ios1, ios2, lno
+    integer :: iuni, ios1, ios2, lno
     integer :: n, m
     integer :: Gi(3)
 
-    open(200,FILE='gvectors.xml',status='old',err=200,iostat=ios1)
+    open(newunit=iuni,FILE='gvectors.xml',status='old',err=200,iostat=ios1)
     print *, 'File gvectors.xml oppened successfully.'
     lno = 0
 
     do  i=1,8
-      read(200,*,err=201,iostat=ios2,end=202) ! dummy
+      read(iuni,*,err=201,iostat=ios2,end=202) ! dummy
       lno = lno + 1
     end do
 
     G(1:3,1:NG) = 0.0
     do  iG = 1,NG
-      read(200,'(i10,i11,i11) ',err=201,iostat=ios2,end=202) Gi(1),Gi(2),Gi(3)
+      read(iuni,'(i10,i11,i11) ',err=201,iostat=ios2,end=202) Gi(1),Gi(2),Gi(3)
       lno = lno +1
       if (iG == 1) then
         if (Gi(1) /= 0  .or.  Gi(2) /= 0  .or.  Gi(3) /= 0) then
@@ -1127,13 +1116,13 @@ end subroutine findKQinBZ
       end do
       ! parG(iG)=Gi(3)
     end do
-    close(200)
+    close(iuni)
 
     goto 5000
-    200 write(*,*) 'error cant read file id 20, ist=',ios1
-    201   write(*,*) '201 buffer1 read. Error reading line ',lno+1,', iostat = ',ios2
-    202   write(*,*) '202 buffer1 read. Number of lines read = ',lno
-    5000 continue 
+200 write(*,*) 'error cant read file id 20, ist=',ios1
+201   write(*,*) '201 buffer1 read. Error reading line ',lno+1,', iostat = ',ios2
+202   write(*,*) '202 buffer1 read. Number of lines read = ',lno
+5000 continue 
   end subroutine loadG
 
   subroutine loadG_QE6(savedir,KC,NG,G)
@@ -1146,7 +1135,7 @@ end subroutine findKQinBZ
     integer,          intent(out)  :: NG
     real(kind=dp), allocatable, intent(out)  :: G(:,:)  ! polje valnih vektora G u recp. prost. za wfn.
 
-    integer :: ios0, ios1, ios2
+    integer :: iuni, ios0, ios1, ios2
     integer :: n, m
     integer :: Nspin
     logical :: gamma_only
@@ -1156,16 +1145,16 @@ end subroutine findKQinBZ
     fname = trim(savedir)//'/charge-density.dat'
     print *,'status: Reading Gvecs from file: ',adjustl(trim(fname))
     
-    open(200,file=fname,form = 'unformatted',status='old',iostat=ios0,err=199)
+    open(newunit=iuni,file=fname,form = 'unformatted',status='old',iostat=ios0,err=199)
 
-    read(200, iostat=ios1) gamma_only, NG, Nspin
+    read(iuni, iostat=ios1) gamma_only, NG, Nspin
     ! print *, 'Number of Gvecs (NG):', NG
 
-    read(200, iostat=ios1) ! dummy for b1, b2, b3 rec.latt.vecs. 
+    read(iuni, iostat=ios1) ! dummy for b1, b2, b3 rec.latt.vecs. 
 
     allocate(Gi(3,NG))
-    read (200, iostat=ios2) Gi(1:3,1:NG)
-    close(200)
+    read (iuni, iostat=ios2) Gi(1:3,1:NG)
+    close(iuni)
 
     if (Gi(1,1) /= 0  .or.  Gi(2,1) /= 0  .or.  Gi(3,1) /= 0) then
       print*,'WARNING G vectors input is wrong.'
@@ -1184,19 +1173,19 @@ end subroutine findKQinBZ
       end do
       ! parG(iG) = Gi(3,iG)
     end do
-    close(200)
+    close(iuni)
 
     deallocate(Gi)
 
     goto 5000
-    199 write(*,*) 'error cant open file id 199, ist=',ios0
-    stop
-    200 write(*,*) 'error cant read file id 200, ist=',ios1
-    stop
-    201   write(*,*) '201 buffer1 read. Error reading miller indices ',', iostat = ',ios2
-    stop
-    202   write(*,*) '202 buffer1 read.'
-    5000 continue 
+199 write(*,*) 'error cant open file id 199, ist=',ios0
+stop
+200 write(*,*) 'error cant read file id 200, ist=',ios1
+stop
+201   write(*,*) '201 buffer1 read. Error reading miller indices ',', iostat = ',ios2
+stop
+202   write(*,*) '202 buffer1 read.'
+5000 continue 
   end subroutine loadG_QE6
 
   subroutine loadCsQE6(ik, ibnd, savedir, igwx, evc)
@@ -1508,6 +1497,9 @@ end subroutine findKQinBZ
   end subroutine genImChi0
 
   subroutine loadkIandE(path, NkI, Nband, Nocc, kI, dGW,E)
+    ! Loading of all wavevectors (in Cartesiand coords.) in the ireducible BZ and
+    ! corresponding eigen-energies form the Quantum Espresso .band files
+
     implicit none
     integer,            intent(in)    :: NkI
     integer,            intent(in)    :: Nband, Nocc
@@ -1516,28 +1508,28 @@ end subroutine findKQinBZ
     real(kind=dp),      intent(inout) :: kI(:,:)
     real(kind=dp),      intent(inout) :: E(:,:)
 
-    integer :: ios, ik, i
+    integer :: iuni, ios, ik, i
     real(kind=dp),    parameter :: Hartree = 2.0D0*13.6056923D0
 
-    open(400,FILE=path,status='old',err=500,iostat=ios) 
+    open(newunit=iuni,FILE=path,status='old',err=500,iostat=ios) 
     do  ik = 1,NkI
       if (ik == 1) then
-        read(400,*) 
+        read(iuni,*) 
       end if
-      read(400,'(10X,3F10.6)') kI(1,ik),kI(2,ik),kI(3,ik)
+      read(iuni,'(10X,3F10.6)') kI(1,ik),kI(2,ik),kI(3,ik)
 #ifdef __linux__
-      read(400,'(10F9.4)') (E(ik,i),i=1,Nband)
+      read(iuni,'(10F9.4)') (E(ik,i),i=1,Nband)
 #endif
 #ifdef __APPLE__
-      read(400,'(10F9.3)') (E(ik,i),i=1,Nband)
+      read(iuni,'(10F9.3)') (E(ik,i),i=1,Nband)
 #endif
     end do
-    close(400)
+    close(iuni)
       
     goto 400
-    500 write(*,*) 'Cannot open BAND file. iostat = ',ios
-    stop
-    400 continue
+500 write(*,*) 'Cannot open BAND file. iostat = ',ios
+stop
+400 continue
     
     ! konverzija en. u Hartree
     E(1:NkI,1:Nband) = E(1:NkI,1:Nband)/Hartree
