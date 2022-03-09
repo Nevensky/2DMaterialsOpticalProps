@@ -47,3 +47,4 @@ fort.*
 *.bck
 *.in
 *.xml
+!Makefile
