@@ -1,3 +1,7 @@
+# Ignore files without extension
+*
+!*/
+!*.*
 # Mac
 .DS_Store
 
@@ -34,15 +38,12 @@
 *.app
 
 # additional
-nohup.out
-monitoring.log
-Loss
-Photon
-Photon.dSYM
-Info
-status
+*.log
+*.dSYM
 fort.*
-config.in
-gvectors.xml
-Info*.out
 *.dat
+*__genmod.f90
+*.out
+*.bck
+*.in
+*.xml
