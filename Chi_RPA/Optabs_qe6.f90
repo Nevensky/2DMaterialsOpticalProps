@@ -265,7 +265,7 @@ print *, 'Nlf: ',Nlf,' Nlfd: ',Nlfd
 q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do loop po q
   
   ! searching for the smalest 'optical' q
-  call findMinQ(Ntot, ktot, qx, qy, qz)
+  call findMinQ(iq, Ntot, ktot, qx, qy, qz)
   print *, "Found minimal wave-vector q."
 
   ! Info file
@@ -283,7 +283,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
   print *, 'DEBUG: entering parallel region'
   print *, 'Requested threads: ',Nthreads, 'Available threads: ',omp_get_num_threads()
-  !$omp parallel shared(S0,Qeff, iq, qx,qy,qz, kI,ktot,R,RI,eps,E, Efermi, T,Gcar, G,Glf,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Vcell, Gamma_inter, Gamma_intra, df_cut, Lor_cut,debugCount) private(ik, S0_partial, Qeff_partial, MnmK1K2,MnmK1K22,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,df, f1, f2, expo1, expo2, fact, Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2, C1,C2, iuni1, iuni2) firstprivate(savedir,jump,No,domega,osdependent_id) num_threads(Nthreads) default(none) 
+  !$omp parallel shared(S0,Qeff, iq, qx,qy,qz, kI,ktot,R,RI,eps,E, Efermi, T,Gcar, G,Glf,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Vcell, Gamma_inter, Gamma_intra, df_cut, Lor_cut,debugCount) private(ik, S0_partial, Qeff_partial, MnmK1K2,MnmK1K22,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,df, f1, f2, expo1, expo2, fact, Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2, C1,C2, iuni1, iuni2) firstprivate(savedir,jump,No,domega,osdependent_id,pol) num_threads(Nthreads) default(none) 
   thread_id =  omp_get_thread_num()
 
   !$omp do
@@ -373,7 +373,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
 
         ! Konstrukcija stupca matricnih elementa MnmK1K2(iG) i MnmK1K22(jG)
-        call genCurrentVertices(jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, Glf, G, Gfast, C1, C2(m,:), MnmK1K2, MnmK1K22)
+        call genCurrentVertices(pol, jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, Glf, G, Gfast, C1, C2(m,:), MnmK1K2, MnmK1K22)
         ! deallocate(C2)
 
         intraORinterband_if: if (n /= m) then
@@ -519,7 +519,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   ! SECOND PART OF THE PROGRAM calc = 2
   ! Calculation of the matrix '''Pi_\mu\nu'' by using matrix ''S0_\mu\nu(G,G')'' and Kramers-Krroning relations
   
-  888 continue
+888 continue
 
   print *, 'STARTING PI_pol current-ccurent tensor calc using KK rel.'
 
@@ -755,9 +755,9 @@ contains
     print *, 'Config file: ',config_file
   end subroutine parseCommandLineArgs
 
-  subroutine findMinQ(Ntot, ktot, qx, qy, qz)
+  subroutine findMinQ(iq, Ntot, ktot, qx, qy, qz)
     ! searching min. q=(qx,qy,qz) in Gamma -> M direction
-    integer,       intent(in)  :: Ntot
+    integer,       intent(in)  :: iq, Ntot
     real(kind=dp), intent(in)  :: ktot(:,:)
     real(kind=dp), intent(out) :: qx, qy, qz
 
@@ -1538,9 +1538,10 @@ stop
 
   end subroutine loadkIandE
 
-subroutine genCurrentVertices(jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2, MnmK1K22)
+subroutine genCurrentVertices(pol, jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2, MnmK1K22)
   ! Konstrukcijamatricnih elementa strujnih vrhova MnmK1K2(iG) i MnmK1K2(iG) 
   implicit none
+  character(len=3), intent(in)    :: pol
   integer,          intent(in)    :: iG0, Nlf, NG1, NG2, NGd
   integer,          intent(in)    :: R1,R2
   real(kind=dp),    intent(in)    :: eps

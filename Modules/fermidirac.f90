@@ -16,17 +16,17 @@ contains
       real(kind=dp)              :: Ni, expo
 
       ! real(kind=dp), parameter :: kB = 1.3806503D-23
-      real(kind=dp), parameter :: kB = 1       ! Ei is in E/kB units
-      real(kind=dp), parameter :: cutoff = 6.0 ! 0.99->1. 
+      real(kind=dp), parameter :: kB = 1.0_dp       ! Ei is in E/kB units
+      real(kind=dp), parameter :: cutoff = 6.0_dp ! 0.99->1. 
 
       expo = (Ei-Ef)/(kB*T)
 
       if (expo < -cutoff) then
-        Ni = 1.0
+        Ni = 1.0_dp
       else if (expo > cutoff)
-        Ni = 0.0
+        Ni = 0.0_dp
       else
-        Ni = 1/(exp( expo ) + 1)
+        Ni = 1.0_dp/(exp( expo ) + 1.0_dp)
       endif
       
   end function FermiDirac

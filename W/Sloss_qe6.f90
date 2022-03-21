@@ -256,7 +256,7 @@ print *,"status: FBZ generated."
 
 ! ! Checking 1BZ integration
 ! ! provjeri je li broj el. u FBZ (Nel) odgovara stvarnom broju el. u jed. cel. (NelQE)
-call checkFBZintegration(Nband,NkI,Nsymm,Ntot,eps,kI,RI,Efermi,E,NelQE,Nel)
+call checkFBZintegration(Nband,NkI,Nsymm,Ntot,eps,kI,RI,Efermi,T,E,NelQE,Nel)
 print *,"status: FBZ integration correct."
 
 
@@ -516,8 +516,8 @@ end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
     if (io == 1 .or. io == no-1) then
       fact = 0.5*domega
     end if
-    KKS = KKS + fact*(WindKK-Wind)*(WindKK-Wind)
-    SKK = SKK + fact*Wind*Wind
+    KKS = KKS + fact*(WindKK-Wind)**2
+    SKK = SKK + fact*Wind**2
     
 
 
@@ -751,11 +751,11 @@ end subroutine findKQinBZ
 
   end subroutine genFBZ
 
-  subroutine checkFBZintegration(Nband,NkI,Nsymm,Ntot,eps,kI,RI,Efermi,E,NelQE,Nel)
+  subroutine checkFBZintegration(Nband,NkI,Nsymm,Ntot,eps,kI,RI,Efermi,T,E,NelQE,Nel)
     ! Provjeri je li broj el. u FBZ (Nel) odgovara stvarnom broju el. u jed. cel. (NelQE)
     integer,       intent(in)  :: NelQE
     integer,       intent(in)  :: NkI, Nsymm, Nband, Ntot
-    real(kind=dp), intent(in)  :: eps, Efermi
+    real(kind=dp), intent(in)  :: eps, Efermi, T
     real(kind=dp), intent(in)  :: kI(:,:)
     real(kind=dp), intent(in)  :: RI(:,:,:)
     real(kind=dp), intent(in)  :: E(:,:)
@@ -803,10 +803,11 @@ end subroutine findKQinBZ
         end if
         
         ! zbroji broj el. u preostalim vrpcama
-        if (E(K1,n) < Efermi) then 
-          Nel = Nel + 1.0
-          ! print *,'Nel',Nel,'band:',n
-        end if  
+        ! if (E(K1,n) < Efermi) then 
+        !   Nel = Nel + 1.0
+        !   ! print *,'Nel',Nel,'band:',n
+        ! end if  
+        Nel = Nel + 1/(exp( (E(K1,n)-Efermi)/T ) + 1.0)
     
       end do band_loop
     end do k_loop_FBZ
@@ -1653,7 +1654,7 @@ end subroutine genMnmK1K2
     close(74)
   end subroutine writeWT_Qi
 
-subroutine writeKramKron_Qi(iq,qx, qy, qz, Gcar, KKS, SKK, G0, WT, V)
+subroutine writeKramKron_Qi(iq, qx, qy, qz, Gcar, KKS, SKK, G0, WT, V)
   ! ispisuje info file za provjeru Kramers–Kronig relacija
   integer,          intent(in) :: iq
   real(kind=dp),    intent(in) :: qx, qy, qz

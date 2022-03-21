@@ -31,11 +31,11 @@ def find_NGd_and_Nocc(BS):
 		Npw_i = item["npw"]
 		if NGd > Npw_i:
 			NGd = Npw_i
-		# Nocc_i = np.asarray(item["occupations"]["#text"],dtype=np.float,delim="\n")
-		Nocc_i = np.fromstring(item["occupations"]["#text"], dtype=np.float, sep='\n' ).sum()
+		# Nocc_i = np.asarray(item["occupations"]["#text"],dtype=np.float64,delim="\n")
+		Nocc_i = np.fromstring(item["occupations"]["#text"], dtype=np.float64, sep='\n' ).sum()
 		if Nocc_i > Nocc:
 			Nocc = Nocc_i
-	return np.int(NGd), np.int(Nocc)	
+	return np.int32(NGd), np.int32(Nocc)	
 
 def initalChecks(dat):
 	calc_type = dat["qes:espresso"]["input"]["control_variables"]["calculation"]
@@ -66,19 +66,19 @@ def parseParameters(dat):
 	Nk_x = dat["qes:espresso"]["input"]["k_points_IBZ"]["monkhorst_pack"]["@nk1"]
 	Nk_y = dat["qes:espresso"]["input"]["k_points_IBZ"]["monkhorst_pack"]["@nk2"]
 	Nk_z = dat["qes:espresso"]["input"]["k_points_IBZ"]["monkhorst_pack"]["@nk3"]
-	EFermi = Ha2eV*np.float(dat["qes:espresso"]["output"]["band_structure"]["fermi_energy"]) # converted from Ha to eV
-	Nbands = np.int(dat["qes:espresso"]["output"]["band_structure"]["nbnd"])
-	NelQE = np.int(np.float(dat["qes:espresso"]["output"]["band_structure"]["nelec"]))
-	NkI = np.int(dat["qes:espresso"]["output"]["band_structure"]["nks"])
-	Nsymm = np.int(dat["qes:espresso"]["output"]["symmetries"]["nsym"])
-	NG = np.int(dat["qes:espresso"]["output"]["basis_set"]["ngm"])
+	EFermi = Ha2eV*np.float64(dat["qes:espresso"]["output"]["band_structure"]["fermi_energy"]) # converted from Ha to eV
+	Nbands = np.int32(dat["qes:espresso"]["output"]["band_structure"]["nbnd"])
+	NelQE = np.int32(np.float64(dat["qes:espresso"]["output"]["band_structure"]["nelec"]))
+	NkI = np.int32(dat["qes:espresso"]["output"]["band_structure"]["nks"])
+	Nsymm = np.int32(dat["qes:espresso"]["output"]["symmetries"]["nsym"])
+	NG = np.int32(dat["qes:espresso"]["output"]["basis_set"]["ngm"])
 	BS = dat["qes:espresso"]["output"]["band_structure"]["ks_energies"]
 	cell_info = dat["qes:espresso"]["output"]["atomic_structure"]
 
-	alat = np.float(cell_info["@alat"])
-	a1 = np.fromstring(cell_info["cell"]["a1"],dtype=np.float,sep=" ")
-	a2 = np.fromstring(cell_info["cell"]["a2"],dtype=np.float,sep=" ")
-	a3 = np.fromstring(cell_info["cell"]["a3"],dtype=np.float,sep=" ")
+	alat = np.float64(cell_info["@alat"])
+	a1 = np.fromstring(cell_info["cell"]["a1"],dtype=np.float64,sep=" ")
+	a2 = np.fromstring(cell_info["cell"]["a2"],dtype=np.float64,sep=" ")
+	a3 = np.fromstring(cell_info["cell"]["a3"],dtype=np.float64,sep=" ")
 	cell = np.array([a1,a2,a3]) # in units of [alat]
 
 	a,c,Vcell = find_cell(cell)

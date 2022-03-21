@@ -8,11 +8,11 @@ module brillouin_zone
 
 contains
 
-  subroutine loadkIandE(path, NkI, Nband, Nocc, kI, dGW,E)
+  subroutine loadkIandE(path, NkI, Nband, Nval, kI, dGW,E)
     ! Loads all wavevectors (in Cartesiand coords.) in the ireducible BZ and
     ! corresponding eigen-energies form the Quantum Espresso .band files
     integer,            intent(in)    :: NkI
-    integer,            intent(in)    :: Nband, Nocc
+    integer,            intent(in)    :: Nband, Nval
     character(len=100), intent(in)    :: path
     real(kind=dp),      intent(in)    :: dGW
     real(kind=dp),      intent(inout) :: kI(:,:)
@@ -43,7 +43,7 @@ contains
     ! convert energy to Hartree
     E(1:NkI,1:Nband) = E(1:NkI,1:Nband)/Hartree
     ! scissor operator, shifts the DFT bandgap
-    E(1:NkI,Nocc+1:Nband) = E(1:NkI,Nocc+1:Nband) + dGW
+    E(1:NkI,Nval+1:Nband) = E(1:NkI,Nval+1:Nband) + dGW
 
   end subroutine loadkIandE
 
@@ -59,9 +59,8 @@ contains
     real(kind=dp), intent(out) :: ktot(:,:) ! unique k-points in the 1st BZ
 
     integer       :: iuni, ios
-    integer       :: it, jk
-    integer       :: i
-    integer       :: ik, lk
+    logical       :: unique
+    integer       :: i, ik, jk, lk
     integer       :: n, m
     real(kind=dp) :: k(3,Nk) ! all non-unique k-points within the 1st BZ
 
@@ -70,10 +69,10 @@ contains
 
     symm_loop: do  i = 1, Nsymm    ! loop over all symmetries
       k_loop_IBZ: do  ik = 1, NkI  ! loop over k points in IBZ
-        it = 1
+        unique = .true.
         jk = jk + 1
         do  n = 1, 3   ! loop over kx, ky, kz 
-          k(n,jk) = 0.0
+          k(n,jk) = 0.0_dp
           do  m = 1, 3 ! loop over kx, ky, kz
             k(n,jk) = k(n,jk) + R(i,n,m)*kI(m,ik) ! kreira nove k tocke u BZ pomocu simetrije
           end do
@@ -81,16 +80,14 @@ contains
 
         if (jk > 1) then
           do  lk = 1, jk-1
-            ! Check if the given k-point is unique (skips if it was already added)
-            if ( abs(k(1,jk)-k(1,lk)) <= eps .and. &
-                 abs(k(2,jk)-k(2,lk)) <= eps .and. &
-                 abs(k(3,jk)-k(3,lk)) <= eps ) then 
-              it = 2
+            ! Check if the given k-point is unique (i.e. skips if it was already added)
+            if ( all ( abs(k(1:3,jk)-k(1:3,lk)) <= eps ) ) then 
+              unique = .false.
             end if
           end do
         end if
 
-        if (it == 1) then ! its unique, add it to ktot
+        if (unique) then ! if it is unique add it to ktot
           Ntot = Ntot+1
           ktot(1:3,Ntot) = k(1:3,jk)
         end if
@@ -98,7 +95,7 @@ contains
       end do k_loop_IBZ
     end do symm_loop
 
-    ! write all 1st BZ k-points to file
+    ! write all (kx,ky) 1st BZ k-points to file
     open(newunit=iuni,iostat=ios,file='fbz_check.dat')
     do  i = 1,Ntot
       write(ios,*) ktot(1,i), ktot(2,i)  
@@ -120,35 +117,36 @@ contains
     real(kind=dp), intent(in)  :: E(:,:)
     real(kind=dp), intent(out) :: Nel
 
-    integer       :: it, ik, n, i, j, K1
+    logical       :: found
+    integer       :: ik, n, i, j, l, K1
     real(kind=dp) :: kx,ky,kz
-    real(kind=dp) :: K11, K22, K33
+    ! real(kind=dp) :: K11, K22, K33
+    real(kind=dp) :: K(3)
 
     Nel = 0 
     k_loop_FBZ : do  ik = 1,Ntot
-      kx = ktot(1,ik)
-      ky = ktot(2,ik)
-      kz = ktot(3,ik)
+      ! kx = ktot(1,ik)
+      ! ky = ktot(2,ik)
+      ! kz = ktot(3,ik)
       band_loop: do  n = 1, Nband
         if (n == 1) then
-            it = 1
+            found = .false.
           if (ik <= NkI) then
             K1 = ik
-            it = 2
+            found = .true.
           else
             symm_loop: do  i = 2, Nsymm
-              K11 = RI(i,1,1)*kx + RI(i,1,2)*ky + RI(i,1,3)*kz
-              K22 = RI(i,2,1)*kx + RI(i,2,2)*ky + RI(i,2,3)*kz
-              K33 = RI(i,3,1)*kx + RI(i,3,2)*ky + RI(i,3,3)*kz
+              forall (l=1:3) K(l) = sum ( RI(i,l,1:3)*ktot(1:3,ik) )
+              ! K11 = RI(i,1,1)*kx + RI(i,1,2)*ky + RI(i,1,3)*kz
+              ! K22 = RI(i,2,1)*kx + RI(i,2,2)*ky + RI(i,2,3)*kz
+              ! K33 = RI(i,3,1)*kx + RI(i,3,2)*ky + RI(i,3,3)*kz
               k_loop_IBZ: do  j = 1, NkI
-                if ( abs(K11-kI(1,j)) <= eps .and. &
-                     abs(K22-kI(2,j)) <= eps .and. &
-                     abs(K33-kI(3,j)) <= eps ) then
-                  it = 2
+                if ( all ( abs(K(1:3)-kI(1:3,j)) <= eps ) ) then
+                  found = .true.
                   K1 = j
                   ! sums electrons in the first band
                   if (E(K1,n) < Efermi) then 
-                    Nel = Nel + 1.0
+                    Nel = Nel + 1.0_dp
                     ! print *,'Nel',Nel,'band:',n
                   end if  
                   cycle band_loop
@@ -156,7 +154,7 @@ contains
               end do k_loop_IBZ
             end do symm_loop
           end if
-          if (it == 1) then
+          if (.not. found) then
             print*,'Can not find wave vector K=',ik, 'in I.B.Z.'
             stop
           end if
@@ -185,25 +183,28 @@ contains
     real(kind=dp), intent(in)  :: RI(:,:,:)
     integer      , intent(out) :: iR1, iK1 ! K = R1*K1
 
-    integer       :: i, j
-    integer       :: it
-    real(kind=dp) :: K11, K22, K33
+    integer       :: i, j, l
+    logical       :: found
+    real(kind=dp) :: K(3), k_fbz(3)
 
-    it = 1
+    k_fbz = kx
+    k_fbz = ky
+    k_fbz = kz
+
+    found = .false.
     if (ik <= NkI) then
       iR1 = 1
       iK1 = ik
-      it = 2
+      found = .true.
     else
       symmetry_loop: do  i = 2, Nsymm
-        K11 = RI(i,1,1)*kx + RI(i,1,2)*ky + RI(i,1,3)*kz
-        K22 = RI(i,2,1)*kx + RI(i,2,2)*ky + RI(i,2,3)*kz
-        K33 = RI(i,3,1)*kx + RI(i,3,2)*ky + RI(i,3,3)*kz
+        forall (l=1:3) K(l) = sum ( RI(i,l,1:3)*k_fbz(1:3) )
+        ! K(1) = sum (RI(i,1,1:3)*k_fbz(1:3) )
+        ! K(2) = sum (RI(i,2,1:3)*k_fbz(1:3) )
+        ! K(3) = sum (RI(i,3,1:3)*k_fbz(1:3) )
         do  j = 1,NkI
-          if (      abs(K11-kI(1,j)) <= eps &
-              .and. abs(K22-kI(2,j)) <= eps &
-              .and. abs(K33-kI(3,j)) <= eps ) then
-            it = 2
+          if ( all ( abs( K(1:3)-kI(1:3,j) ) <= eps ) ) then
+            found = .true.
             iR1 = i
             iK1 = j
             EXIT symmetry_loop
@@ -211,7 +212,7 @@ contains
         end do
       end do symmetry_loop
     end if
-    if (it == 1) then
+    if (.not. found) then
       print *,'Can not find wave vector K=',ik, 'in I.B.Z.'
       stop
     end if
@@ -220,7 +221,7 @@ contains
 
 
   subroutine findKQinBZ(KQx, KQy, KQz, eps, Nsymm, NkI, Ntot, NG, kI, ktot, RI, G, iG0, iR2, iK2)
-    ! Finds the k-point (KQx,KQy,KQz) in the 1st. BZ a then in the ireducible BZ
+    ! Finds the k-point (KQx,KQy,KQz) in the 1st. BZ a then in then in the ireducible BZ
     integer,       intent(in)  :: Nsymm, NkI, Ntot, NG
     real(kind=dp), intent(in)  :: eps
     real(kind=dp), intent(in)  :: KQx, KQy, KQz
@@ -230,26 +231,28 @@ contains
     real(kind=dp), intent(in)  :: RI(:,:,:)
     integer,       intent(out) :: iG0, iR2, iK2 ! G0=rec.lattice; K + Q = G0 + R2*K2
   
-    integer :: it
-    integer :: iG, jk, i, j
+    integer       :: found
+    integer       :: iG, jk, i, j, l
+    real(kind=dp) :: K(3), KQ(3)
+
+    KQ(1) = KQx
+    KQ(2) = KQy
+    KQ(3) = KQy
   
-    it = 1
+    found = 1 ! false
     iG_loop: do  iG = 1,NG
       k_loop_FBZ : do  jk = 1, Ntot
-        if ( abs(KQx-G(1,iG)-ktot(1,jk)) <= eps .and. &
-             abs(KQy-G(2,iG)-ktot(2,jk)) <= eps .and. &
-             abs(KQz-G(3,iG)-ktot(3,jk)) <= eps ) then
-          it = 2
+        if ( all (abs(KQ(1:3)-G(1:3,iG)-ktot(1:3,jk)) <= eps) ) then
+          found = 2 ! true for FBZ
           iG0 = iG
           symm_loop: do  i = 1, Nsymm
-            K11 = sum(RI(i,1,1:3) * ktot(1:3,jk) )
-            K22 = sum(RI(i,2,1:3) * ktot(1:3,jk) )
-            K33 = sum(RI(i,3,1:3) * ktot(1:3,jk) )
+            forall (l=1:3) K(l) = sum( RI(i,l,1:3) * ktot(1:3,jk) )
+            ! K(1) = sum(RI(i,1,1:3) * ktot(1:3,jk) )
+            ! K(2) = sum(RI(i,2,1:3) * ktot(1:3,jk) )
+            ! K(3) = sum(RI(i,3,1:3) * ktot(1:3,jk) )
             k_loop_IBZ: do  j = 1, NkI
-              if ( abs(K11-kI(1,j)) <= eps .and. &
-                   abs(K22-kI(2,j)) <= eps .and. &
-                   abs(K33-kI(3,j)) <= eps ) then
-                it = 3
+              if ( all( abs(K(1:3)-kI(1:3,j)) <= eps) ) then
+                found = 3 ! true for IBZ (and also for FBZ)
                 iR2 = i
                 iK2 = j
                 EXIT iG_loop
@@ -260,24 +263,27 @@ contains
       end do k_loop_FBZ
     end do iG_loop  
   
-    if (it == 1) then
-      print*,'Can not find wave vector K+Q=',ik,'+',iq, 'in FBZ.'
+    if (found == 1) then
+      ! print*,'Can not find wave vector K+Q=',ik,'+',iq, 'in FBZ.'
+      print*,'Can not find wave vector K+Q in FBZ.'
       stop
-    else if (it == 2) then
-      print*,'Can not find wave vector K+Q=',ik,'+',iq, 'in IBZ.'
+    else if (found == 2) then
+      ! print*,'Can not find wave vector K+Q=',ik,'+',iq, 'in IBZ.'
+      print*,'Can not find wave vector K+Q=',iK2, 'in IBZ.'
       stop
     end if
   
   end subroutine findKQinBZ
 
-  subroutine findMinQ(Ntot, ktot, qx, qy, qz)
+  subroutine findMinQ(iq, Ntot, ktot, qx, qy, qz)
     ! searching min. q=(qx,qy,qz) in Gamma -> M direction
-    integer,       intent(in)  :: Ntot
+    integer,       intent(in)  :: iq, Ntot
     real(kind=dp), intent(in)  :: ktot(:,:)
     real(kind=dp), intent(out) :: qx, qy, qz
 
     integer       :: i, ikmin
     real(kind=dp) :: kmin, kref, krefM ! , absq
+    ! real(kind=dp) :: q(3) ! (qx,qy,qz)
 
     kmin = 1.0
     Ntot_loop: do  i = 1, Ntot ! loop over different k-points in FBZ
@@ -300,6 +306,9 @@ contains
     qy = (iq-1) * ktot(2,ikmin)
     qz = (iq-1) * ktot(3,ikmin)
     ! absq = sqrt(qx**2 + qy**2 + qz**2)
+
+    ! q(1:3) = (iq-1) * ktot(1:3,ikmin)
+    ! absq = sqrt( sum( q(1:3)**2 ) )
   end subroutine findMinQ
 
 end module brillouin_zone

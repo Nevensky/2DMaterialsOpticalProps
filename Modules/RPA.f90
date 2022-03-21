@@ -6,8 +6,9 @@ module RPA
   private
 
 contains 
-  subroutine genCurrentVertices(jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2, MnmK1K22)
+  subroutine genCurrentVertices(pol, jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2, MnmK1K22)
     ! Konstrukcija matricnih elementa strujnih vrhova MnmK1K2(iG) i MnmK1K2(iG) 
+    character(len=3), intent(in)    :: pol
     integer,          intent(in)    :: iG0, Nlf, NG1, NG2, NGd
     integer,          intent(in)    :: R1,R2
     real(kind=dp),    intent(in)    :: eps
