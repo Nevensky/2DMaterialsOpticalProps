@@ -103,7 +103,6 @@ default_config ="""&directories
 /
 &system
  lf        ='z'          ! Crystal local field effect included in z for lf=1 or in x,y,z direction lf=3
- jump      = 1           ! jump = 1 skips reloading wfns in IBZ for all bands m (occ.) and n (virt.)
  omin      = 1.0d-5      ! [Hartree] frequency range, lower bound
  omax      = 2.0D0       ! [Hartree] frequency range, upper bound
  qmin      = 2		     ! minimum transfer wave-vector

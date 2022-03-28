@@ -5,10 +5,11 @@ CC= gcc
 FC=ifort
 # LDFLAGS= -lm -L. -liotk -g -traceback #-lrt 
 LIBIOTK=-L. -liotk
-LDFLAGS = -mkl 
-LDFLAGS_PARA = -qopenmp -mkl
-DEBUG = -g -traceback #-fpe0 -fp-model precise -fp-stack-check -heap-arrays # -debug all -debug-parameters all -DD -C -warn all -check all
-FFLAGS = -Ofast -fpp  ${DEBUG}
+LDFLAGS = -qmkl 
+LDFLAGS_PARA = -qopenmp -qmkl
+OPTREPORT=-qopt-report-phase=vec
+DEBUG = -g -traceback # -warn all -check all -debug all#-fpe0 -fp-model precise -fp-stack-check -heap-arrays # -debug all -debug-parameters all -DD -C -warn all -check all
+FFLAGS = -Ofast -fpp  ${DEBUG} # ${OPTREPORT}
 SRC = PointR.f Optabs.f paths.f gjel.f 
 OBJECTS = PointR.o Optabs.o paths.o gjel.o 
 OBJECTS_LEGACY = PointR_legacy.o Optabs_legacy.o paths.o gjel.o 

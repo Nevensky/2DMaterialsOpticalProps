@@ -48,4 +48,5 @@ fort.*
 *.in
 *.xml
 *.gnu
+*.optrpt
 !Makefile

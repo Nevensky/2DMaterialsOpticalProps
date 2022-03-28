@@ -8,8 +8,12 @@ module matrix_inverse
    ! LU decomposition.  Depends on LAPACK, preferably Intel MKL.
    ! compilation commmand: ifort -qmkl -Ofast matrix_inverse.f90 -c
 
-   public :: invert_cmplx, invert_real
+   public :: invert, invert_cmplx, invert_real
    private
+
+   interface invert
+      procedure invert_cmplx, invert_real
+   end interface invert
 
 contains
    subroutine invert_cmplx(A)

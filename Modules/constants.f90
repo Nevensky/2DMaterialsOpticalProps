@@ -2,6 +2,8 @@ module constants
     use iso_fortran_env, only: dp => real64
     implicit none
 
+    public :: pi, eV, kB, Hartree, Rydberg, Planck, aBohr, alpha 
+    private 
     save
     real(kind=dp),    parameter :: pi      = 4.0_dp*atan(1.0_dp)
     real(kind=dp),    parameter :: eV      = 1.602176634e-19_dp            ! J

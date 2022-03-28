@@ -43,8 +43,9 @@ integer :: debugCount = 0
 
 integer :: ik,i,j,jk,it,lk,Ntot,iG0,Nsymm,iq, &
            io,n,m,iG,R1,K1,R2,K2, Nlf,NG1,   &
-           NG2,iG1,iG2,jG,kG,jo,jump,loss,   &
+           NG2,iG1,iG2,jG,kG,jo,loss,   &
            iGfast,ikmin,kG1,kG2,nord, lf
+logical :: jump
 
 integer :: iuni1, iuni2
 
@@ -124,7 +125,7 @@ real(kind=dp) :: eta    ! damping i\eta
 real(kind=dp) :: Ecut   ! [Hartree] cutoff energy for crystal local field calculations , for Ecut=0 S matrix is a scalar ?
 real(kind=dp) :: Vcell  ! [a.u.^3] unit-cell volume 
 namelist /parameters/ Efermi, a0, c0, eps, T, eta, Ecut, Vcell
-namelist /system/ lf, loss, jump, omin, omax, qmin, qmax
+namelist /system/ lf, loss, omin, omax, qmin, qmax
 
 ! scalar arrays
 integer,       dimension(3) :: Gi                           ! pomocna funkcija
@@ -319,6 +320,7 @@ q_loop: do  iq = qmin,qmax ! 42,61
   
   
 ! 1.B.Z  LOOP STARTS HERE !!!!
+jump = .false.
 
 print *, 'DEBUG: entering parallel region'
 !$omp parallel shared(S0,iq,kI,ktot,RI,eps,E,G,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,eta,Vcell) private(ik,S0_partial,MnmK1K2,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,De,Lor,Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast,iG1, iG2,attr,C1,C2, iuni1, iuni2) firstprivate(savedir,jump,domega) num_threads(Nthreads) !  default(private) 
@@ -392,7 +394,7 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
       end if
 
       ! Konstrukcija stupca matricnih elementa nabojnih vrhova MnmK1K2(G)      
-      call genMnmK1K2(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2)
+      call genChargeVertices(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2)
 
       deallocate(C2)
 
@@ -422,7 +424,7 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
   !$omp end critical(sumS0)
 
   deallocate(S0_partial)
-  jump = 1
+  jump = .false. ! probably redundant
 
 
 end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
@@ -873,7 +875,7 @@ subroutine genGlfandParity(lf,Ecut,NG,Gcar,G,Nlf,Nlfd,parG,Glf)
   ! print *,'Glf(1:3,1:5)',Glf(1:3,1:5)
 end subroutine genGlfandParity
 
-subroutine genMnmK1K2(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2)
+subroutine genChargeVertices(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2)
   ! Konstrukcija stupca matricnih elementa nabojnih vrhova MnmK1K2(G) 
   integer,          intent(in)    :: iG0, Nlf, NG1, NG2
   integer,          intent(in)    :: R1,R2
@@ -884,7 +886,7 @@ subroutine genMnmK1K2(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G, Gfas
   real(kind=dp),    intent(in)    :: G(:,:)     ! polje valnih vektora G u recp. prost. za wfn.
   complex(kind=dp), intent(in)    :: C1(:)
   complex(kind=dp), intent(in)    :: C2(:)
-  integer,          intent(inout) :: jump
+  logical,          intent(inout) :: jump
   integer,          intent(inout) :: Gfast(:)
   complex(kind=dp), intent(out)   :: MnmK1K2(:)
 
@@ -916,7 +918,7 @@ subroutine genMnmK1K2(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G, Gfas
       Gyy1 = RI(R2,2,1)*K11 + RI(R2,2,2)*K22 + RI(R2,2,3)*K33
       Gzz1 = RI(R2,3,1)*K11 + RI(R2,3,2)*K22 + RI(R2,3,3)*K33
       ! !$omp critical(jump_operation)
-      if (jump == 1) then
+      if (jump == .false.) then
         ! !$omp single
         iG2_loop: do  iG2 = 1,NG2
           Gfast(iGfast) = NG2+1
@@ -942,8 +944,8 @@ subroutine genMnmK1K2(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G, Gfas
       end if
     end do
   end do
-  jump = 2
-end subroutine genMnmK1K2
+  jump = .true.
+end subroutine genChargeVertices
 
   subroutine genChi0(io,no,Nlf,domega,S0,Chi0)
     implicit none
@@ -1432,7 +1434,7 @@ end subroutine genMnmK1K2
     real(kind=dp),      intent(in)    :: R(:,:,:)
     real(kind=dp),      intent(in)    :: RI(:,:,:)
     real(kind=dp),      intent(in)    :: G(:,:)    
-    integer,            intent(inout) :: jump
+    logical,            intent(inout) :: jump
     integer,            intent(inout) :: Gfast(:)
     complex(kind=dp),   intent(inout) :: MnmK1K2(:)
     
@@ -1481,7 +1483,7 @@ end subroutine genMnmK1K2
     end if
     
     ! Konstrukcija stupca matricnih elementa nabojnih vrhova MnmK1K2(G)      
-    call genMnmK1K2(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2)
+    call genChargeVertices(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2)
 
     ! neven debug
     ! print *,MnmK1K2(1:5)

@@ -169,7 +169,6 @@ default_config = """&directories
 /
 &system
  lf        = 'z'         ! Crystal local field effect dirrection, available: 'z' or 'xyz'
- jump      = 1           ! jump = 1 skips reloading wfns in IBZ for all bands m (occ.) and n (virt.)
  omin      = 1.0D-5      ! [Hartree] frequency range, lower bound
  omax      = 2.0D0       ! [Hartree] frequency range, upper bound
  qmin      = 1

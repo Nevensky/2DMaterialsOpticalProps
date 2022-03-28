@@ -4,7 +4,7 @@ FC=ifort
 #FFLAGS=-Ofast
 FFLAGS=-qmkl -Ofast -fpp #${DEBUG}
 SRC = constants.f90 io_qe.f90 PointR_mkl.f90 matrix_inverse.f90 brillouin_zone.f90 propagators.f90 RPA.f90 W.f90 Ladder.f90
-OBJECTS = constants io_qe PointR brillouin_zone propagators RPA W Ladder
+OBJECTS = constants matrix_inverse io_qe PointR brillouin_zone propagators RPA W Ladder
 
 
 .PHONY: clean
@@ -26,7 +26,7 @@ matrix_inverse : matrix_inverse.f90
 	${FC} ${FFLAGS} -c matrix_inverse.f90
 
 brillouin_zone : brillouin_zone.f90
-	${FC} ${FFLAGS} -c  brillouin_zone.f90
+	${FC} ${FFLAGS} -c brillouin_zone.f90
 
 propagators : propagators.f90
 	${FC} ${FFLAGS} -c propagators.f90
@@ -41,4 +41,4 @@ Ladder : Ladder.f90
 	${FC} ${FFLAGS} -c Ladder.f90
 
 clean:
-	rm  *.o *__genmod.f90 *__genmod.mod
+	rm  *.o *__genmod.f90 *__genmod.mod *.mod

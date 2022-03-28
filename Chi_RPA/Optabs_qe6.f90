@@ -12,7 +12,7 @@ namelist /directories/ rundir, savedir, scf_file, band_file
 
 integer :: ik,i,j,jk,it,lk,Ntot,iG0,Nsymm,iq, &
            io,jo, n,m,iG,R1,K1,R2,K2, Nlf,NG1,   &
-           NG2,iG1,iG2,jG,jump,   &
+           NG2,iG1,iG2,jG   &
            iGfast,ikmin
 
 integer :: iuni1, iuni2
@@ -195,9 +195,9 @@ allocate(Glf(3,Nlfd))              ! local field effect polje valnih vekt. u rec
 
 
 ! nevne debug - prebaceno u config.in
-! jump = 1
 ! omin = 1.0D-5
 ! omax = (50.0/Hartree + omin)
+
 omin = omin/Hartree ! iz eV u Hartree
 omax = (omax/Hartree + omin) 
 
@@ -283,7 +283,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
   print *, 'DEBUG: entering parallel region'
   print *, 'Requested threads: ',Nthreads, 'Available threads: ',omp_get_num_threads()
-  !$omp parallel shared(S0,Qeff, iq, qx,qy,qz, kI,ktot,R,RI,eps,E, Efermi, T,Gcar, G,Glf,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Vcell, Gamma_inter, Gamma_intra, df_cut, Lor_cut,debugCount) private(ik, S0_partial, Qeff_partial, MnmK1K2,MnmK1K22,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,df, f1, f2, expo1, expo2, fact, Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2, C1,C2, iuni1, iuni2) firstprivate(savedir,jump,No,domega,osdependent_id,pol) num_threads(Nthreads) default(none) 
+  !$omp parallel shared(S0,Qeff, iq, qx,qy,qz, kI,ktot,R,RI,eps,E, Efermi, T,Gcar, G,Glf,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Vcell, Gamma_inter, Gamma_intra, df_cut, Lor_cut,debugCount) private(ik, S0_partial, Qeff_partial, MnmK1K2,MnmK1K22,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,df, f1, f2, expo1, expo2, fact, Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2, C1,C2, iuni1, iuni2) firstprivate(savedir,No,domega,osdependent_id,pol) num_threads(Nthreads) default(none) 
   thread_id =  omp_get_thread_num()
 
   !$omp do
@@ -317,7 +317,6 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   !  trazenje (KQx,KQy) prvo u 1.B.Z a onda u I.B.Z.
   call findKQinBZ(KQx, KQy, KQz, eps, Nsymm, NkI, Ntot, NG, kI, ktot, RI, G, iG0, R2, K2)
       
-
   allocate(Qeff_partial(Nlf,Nlf))
   allocate(S0_partial(-No:No,Nlf,Nlf))
 
@@ -331,6 +330,8 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   allocate(MnmK1K2(Nlf))
   allocate(MnmK1K22(Nlf))
 
+  jump = .false. ! skips revaluating Gfast ?? and thus skips reloading wfns in IBZ for all bands m (occ.) and n (virt.)
+
   bands_n_loop: do n = 1,Nband
 
     call genOccupation(E(K1,n),Efermi,T,expo1,f1)
@@ -338,15 +339,8 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
     ! allocate(C1(NG))
 
     ! !$omp critical(loadCs_)
-    ! iuni1 = 20 + 2*thread_id + ik*osdependent_id + n*100
     call loadCsQE6(K1, n, savedir, NG1, C1)
     ! !$omp end critical(loadCs_)
-
-    ! redundant, this check already exists in loadCsQE6
-    ! if (NGd > NG1) then
-    !   write(*,*) 'NGd is bigger than NG1=',NG1
-    !   STOP
-    ! end if
     
     call loadCsQE6_full(K2, savedir, NG2, C2)
 
@@ -459,7 +453,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   deallocate(S0_partial)
   deallocate(Qeff_partial)
 
-  jump = 1
+  jump = .false. ! probably redundant ?
 
   deallocate(MnmK1K2)
   deallocate(MnmK1K22)  
@@ -1145,7 +1139,7 @@ end subroutine findKQinBZ
     fname = trim(savedir)//'/charge-density.dat'
     print *,'status: Reading Gvecs from file: ',adjustl(trim(fname))
     
-    open(newunit=iuni,file=fname,form = 'unformatted',status='old',iostat=ios0,err=199)
+    open(newunit=iuni,file=fname,form = 'unformatted',status='old',iostat=ios0,err=199,action='read')
 
     read(iuni, iostat=ios1) gamma_only, NG, Nspin
     ! print *, 'Number of Gvecs (NG):', NG
@@ -1554,7 +1548,7 @@ subroutine genCurrentVertices(pol, jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0
   real(kind=dp),    intent(in)    :: G(:,:)  ! polje valnih vektora G u recp. prost. za wfn.
   complex(kind=dp), intent(in)    :: C1(:)   ! dim NG
   complex(kind=dp), intent(in)    :: C2(:)   ! dim NG (bcs the input is dim iband x NG )
-  integer,          intent(inout) :: jump
+  logical,          intent(inout) :: jump
   integer,          intent(inout) :: Gfast(:)
   complex(kind=dp), intent(out)   :: MnmK1K2(:)
   complex(kind=dp), intent(out)   :: MnmK1K22(:)
@@ -1620,7 +1614,7 @@ subroutine genCurrentVertices(pol, jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0
       Gxx1 = RI(R2,1,1)*k11 + RI(R2,1,2)*k22 + RI(R2,1,3)*k33
       Gyy1 = RI(R2,2,1)*k11 + RI(R2,2,2)*k22 + RI(R2,2,3)*k33
       Gzz1 = RI(R2,3,1)*k11 + RI(R2,3,2)*k22 + RI(R2,3,3)*k33
-      if (jump == 1) then
+      if (jump == .false.) then
         iG2_loop: do iG2 = 1,NG2
           Gfast(iGfast) = NG2 + 1
           Gxx2 = G(1,iG2)
@@ -1655,7 +1649,7 @@ subroutine genCurrentVertices(pol, jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0
       end if
     end do iG1_loop
   end do iG_loop
-  jump = 2 ! za svaki valni vektor q i dani k zapamti Gfast i za svaku vrpcu preskaci taj postupak   
+  jump = .true. ! za svaki valni vektor q i dani k zapamti Gfast i za svaku vrpcu preskaci taj postupak   
     
 end subroutine genCurrentVertices
 
