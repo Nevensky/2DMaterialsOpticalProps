@@ -45,8 +45,8 @@ contains
     q(3) = qz
     
     iGfast = 0
-    MnmK1K2(1:Nlf)  = cmplx(0.0,0.0)
-    MnmK1K22(1:Nlf) = cmplx(0.0,0.0)
+    MnmK1K2(1:Nlf)  = cmplx(0.0_dp,0.0_dp)
+    MnmK1K22(1:Nlf) = cmplx(0.0_dp,0.0_dp)
 
     iG_loop: do  iG = 1,Nlf
       iG1_loop: do iG1 = 1,NGd

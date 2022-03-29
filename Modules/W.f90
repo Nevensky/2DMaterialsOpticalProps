@@ -29,7 +29,7 @@ subroutine genChargeVertices(jump, eps, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, 
   real(kind=dp) :: Gprime(3), K(3)
 
   iGfast = 0
-  MnmK1K2(1:Nlf) = cmplx(0.0_dp) ! nabojni vrhovi
+  MnmK1K2(1:Nlf) = cmplx(0.0_dp,0.0_dp) ! nabojni vrhovi
   do  iG = 1,Nlf     ! suma po lokalnim fieldovima kojih ima Nlf
     do  iG1 = 1,NGd  ! vito zamjenjeno NGd sa NG1
       iGfast = iGfast + 1
