@@ -47,10 +47,10 @@ contains
 
   end subroutine loadkIandE
 
-  subroutine genFBZ(Nk,NkI,Nsymm,eps,kI,R,Ntot,ktot)
+  subroutine genFBZ(Nk,NkI,Nsym,eps,kI,R,Ntot,ktot)
     ! Generates all unique wavectors in the 1st BZ by applying 
     ! point group transformations on the reducible BZ
-    integer,       intent(in)  :: Nk, NkI, Nsymm ! No. of k-points, iredducible k-kpoints, symm. ops.
+    integer,       intent(in)  :: Nk, NkI, Nsym ! No. of k-points, iredducible k-kpoints, symm. ops.
     real(kind=dp), intent(in)  :: eps       ! threshold to distinguish whether k-points are the same
     real(kind=dp), intent(in)  :: kI(:,:)   ! k-points in the irreducible BZ
     real(kind=dp), intent(in)  :: R(:,:,:)  ! point group transformation matrices
@@ -67,7 +67,7 @@ contains
     jk = 0
     Ntot = 0 
 
-    symm_loop: do  i = 1, Nsymm    ! loop over all symmetries
+    symm_loop: do  i = 1, Nsym    ! loop over all symmetries
       k_loop_IBZ: do  ik = 1, NkI  ! loop over k points in IBZ
         unique = .true.
         jk = jk + 1
@@ -104,11 +104,11 @@ contains
 
   end subroutine genFBZ
 
-    subroutine checkFBZintegration(Nband,NkI,Nsymm,Ntot,eps,kI,ktot, RI,Efermi,E,NelQE,Nel)
+    subroutine checkFBZintegration(Nband,NkI,Nsym,Ntot,eps,kI,ktot, RI,Efermi,E,NelQE,Nel)
     ! Checks if the No. of electrons in the 1st BZ (Nel) equals 
     ! the number of electrons in the unit cell as calculated by Quantum Espresso (NelQE)
     integer,       intent(in)  :: NelQE
-    integer,       intent(in)  :: NkI, Nsymm, Nband, Ntot
+    integer,       intent(in)  :: NkI, Nsym, Nband, Ntot
     real(kind=dp), intent(in)  :: eps, Efermi
     real(kind=dp), intent(in)  :: kI(:,:)
     real(kind=dp), intent(in)  :: ktot(:,:)  ! all unique k-points in the FBZ
@@ -135,7 +135,7 @@ contains
             K1 = ik
             found = .true.
           else
-            symm_loop: do  i = 2, Nsymm
+            symm_loop: do  i = 2, Nsym
               forall (l=1:3) K(l) = sum ( RI(i,l,1:3)*ktot(1:3,ik) )
               ! K11 = RI(i,1,1)*kx + RI(i,1,2)*ky + RI(i,1,3)*kz
               ! K22 = RI(i,2,1)*kx + RI(i,2,2)*ky + RI(i,2,3)*kz
@@ -173,10 +173,10 @@ contains
   end subroutine checkFBZintegration
 
 
-  subroutine findKinIBZ(ik, NkI, Nsymm, eps, kx, ky, kz, RI, kI, iR1, iK1)
+  subroutine findKinIBZ(ik, NkI, Nsym, eps, kx, ky, kz, RI, kI, iR1, iK1)
     ! Finds k-point (kx,ky,kz) in the ireducible BZ
     integer,       intent(in)  :: ik
-    integer,       intent(in)  :: NkI, Nsymm
+    integer,       intent(in)  :: NkI, Nsym
     real(kind=dp), intent(in)  :: eps
     real(kind=dp), intent(in)  :: kx, ky, kz
     real(kind=dp), intent(in)  :: kI(:,:)
@@ -197,7 +197,7 @@ contains
       iK1 = ik
       found = .true.
     else
-      symmetry_loop: do  i = 2, Nsymm
+      symmetry_loop: do  i = 2, Nsym
         forall (l=1:3) K(l) = sum ( RI(i,l,1:3)*k_fbz(1:3) )
         ! K(1) = sum (RI(i,1,1:3)*k_fbz(1:3) )
         ! K(2) = sum (RI(i,2,1:3)*k_fbz(1:3) )
@@ -220,9 +220,9 @@ contains
   end subroutine findKinIBZ
 
 
-  subroutine findKQinBZ(KQx, KQy, KQz, eps, Nsymm, NkI, Ntot, NG, kI, ktot, RI, G, iG0, iR2, iK2)
+  subroutine findKQinBZ(KQx, KQy, KQz, eps, Nsym, NkI, Ntot, NG, kI, ktot, RI, G, iG0, iR2, iK2)
     ! Finds the k-point (KQx,KQy,KQz) in the 1st. BZ a then in then in the ireducible BZ
-    integer,       intent(in)  :: Nsymm, NkI, Ntot, NG
+    integer,       intent(in)  :: Nsym, NkI, Ntot, NG
     real(kind=dp), intent(in)  :: eps
     real(kind=dp), intent(in)  :: KQx, KQy, KQz
     real(kind=dp), intent(in)  :: kI(:,:)
@@ -245,7 +245,7 @@ contains
         if ( all (abs(KQ(1:3)-G(1:3,iG)-ktot(1:3,jk)) <= eps) ) then
           found = 2 ! true for FBZ
           iG0 = iG
-          symm_loop: do  i = 1, Nsymm
+          symm_loop: do  i = 1, Nsym
             forall (l=1:3) K(l) = sum( RI(i,l,1:3) * ktot(1:3,jk) )
             ! K(1) = sum(RI(i,1,1:3) * ktot(1:3,jk) )
             ! K(2) = sum(RI(i,2,1:3) * ktot(1:3,jk) )

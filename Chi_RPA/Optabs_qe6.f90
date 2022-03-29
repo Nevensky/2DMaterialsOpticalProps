@@ -10,7 +10,7 @@ implicit none
 character (len=200) :: rundir, savedir, band_file, scf_file,config_file
 namelist /directories/ rundir, savedir, scf_file, band_file
 
-integer :: ik,i,j,jk,it,lk,Ntot,iG0,Nsymm,iq, &
+integer :: ik,i,j,jk,it,lk,Ntot,iG0,Nsym,iq, &
            io,jo, n,m,iG,R1,K1,R2,K2, Nlf,NG1,   &
            NG2,iG1,iG2,jG   &
            iGfast,ikmin
@@ -19,15 +19,15 @@ integer :: iuni1, iuni2
 
 ! integer :: frac ! 
 
-integer :: Nk     ! = 48*NkI, number of wave vectors in FBZ with No symmetry 
-integer :: NkI    ! number of wave vectors in IBZ
-integer :: Nband  ! number of bands
-integer :: Nocc   ! Number of occupied bands (unit cell)
-integer :: NelQE  ! Number of electrons(unit cell)
-integer :: NG     ! total number of G vectors  
-integer :: NGd    ! minimum number of coefficients CG over all evc.n files
-integer :: No     ! number of frequencies
-integer :: Nlfd   ! dimenzija polja za local field zasto prozivoljno 50, ne moze se znati unaprijed
+integer       :: Nk     ! = 48*NkI, number of wave vectors in FBZ with No symmetry 
+integer       :: NkI    ! number of wave vectors in IBZ
+integer       :: Nband  ! number of bands
+integer       :: Nocc   ! Number of occupied bands (unit cell)
+integer       :: NG     ! total number of G vectors  
+integer       :: NGd    ! minimum number of coefficients CG over all evc.n files
+integer       :: No     ! number of frequencies
+integer       :: Nlfd   ! dimenzija polja za local field zasto prozivoljno 50, ne moze se znati unaprijed
+real(kind=dp) :: NelQE  ! Number of electrons(unit cell)
 namelist /config/  NG, NGd, NkI, Nband, Nocc, NelQE,No, Nlfd
 
 
@@ -207,7 +207,7 @@ domega = (omax-omin)/(No-1)
 
 ! Load Point Group Transformations
 path = trim(rundir)//"/"//trim(scf_file)
-call PointR(path,Nsymm,R,RI)
+call PointR(path,Nsym,R,RI)
 print *,"status: PointR done."
 
 
@@ -219,11 +219,11 @@ print *,"status: kI and E loaded."
 
 
 ! Generate 1.B.Z. with point group symm. operations
-call genFBZ(Nk,NkI,Nsymm,eps,kI,R,Ntot,ktot)
+call genFBZ(Nk,NkI,Nsym,eps,kI,R,Ntot,ktot)
 print *,"status: FBZ generated."
 
 ! Checking 1BZ integration
-call checkFBZintegration(Nband,NkI,Nsymm,Ntot,eps,kI,ktot,RI,Efermi,E,NelQE,Nel)
+call checkFBZintegration(Nband,NkI,Nsym,Ntot,eps,kI,ktot,RI,Efermi,E,NelQE,Nel)
 print *,"status: FBZ integration correct."
 
 ! KC transformation matrix from rec.cryst. axes to cart.koord.
@@ -241,7 +241,7 @@ print *,"status: G vectors loaded. NG=",NG
 
 ! Reciprocal vectors for crystal local field effects calculations in array Glf(3,Nlf)
 call genGlf(lf,Ecut,NG,Gcar,G,Nlf,Nlfd,Glf)
-print *, "Glf matrix generated."
+print *, "status: Glf matrix generated."
 print *, 'Nlf: ',Nlf,' Nlfd: ',Nlfd
 
 
@@ -269,7 +269,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   print *, "Found minimal wave-vector q."
 
   ! Info file
-  call writeInfo(lf, pol, qx, qy, qz, Gcar, Nsymm, Nlf, Ntot, NkI, Nband, T, Nel, NelQE,Gamma_intra, Gamma_inter, dato1, dato2, dato3,config_file)
+  call writeInfo(lf, pol, qx, qy, qz, Gcar, Nsym, Nlf, Ntot, NkI, Nband, T, Nel, NelQE,Gamma_intra, Gamma_inter, dato1, dato2, dato3,config_file)
   
   
   if (calc == 2 .and. calc /= 3 ) GO TO 888
@@ -283,7 +283,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
   print *, 'DEBUG: entering parallel region'
   print *, 'Requested threads: ',Nthreads, 'Available threads: ',omp_get_num_threads()
-  !$omp parallel shared(S0,Qeff, iq, qx,qy,qz, kI,ktot,R,RI,eps,E, Efermi, T,Gcar, G,Glf,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Vcell, Gamma_inter, Gamma_intra, df_cut, Lor_cut,debugCount) private(ik, S0_partial, Qeff_partial, MnmK1K2,MnmK1K22,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,df, f1, f2, expo1, expo2, fact, Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2, C1,C2, iuni1, iuni2) firstprivate(savedir,No,domega,osdependent_id,pol) num_threads(Nthreads) default(none) 
+  !$omp parallel shared(S0,Qeff, iq, qx,qy,qz, kI,ktot,R,RI,eps,E, Efermi, T,Gcar, G,Glf,NkI,Nsym,NG,Ntot,Nocc,Nband,NGd,Nlf,Vcell, Gamma_inter, Gamma_intra, df_cut, Lor_cut,debugCount) private(ik, S0_partial, Qeff_partial, MnmK1K2,MnmK1K22,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,df, f1, f2, expo1, expo2, fact, Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2, C1,C2, iuni1, iuni2) firstprivate(savedir,No,domega,osdependent_id,pol) num_threads(Nthreads) default(none) 
   thread_id =  omp_get_thread_num()
 
   !$omp do
@@ -298,7 +298,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
     kz = ktot(3,ik)
     
   ! trazenje (kx,ky,kz) u ireducibilnoj zoni
-  call findKinIBZ(ik, NkI, Nsymm, eps, kx, ky, kz, RI, kI, R1, K1)
+  call findKinIBZ(ik, NkI, Nsym, eps, kx, ky, kz, RI, kI, R1, K1)
     
     KQx = kx + qx
     KQy = ky + qy
@@ -315,7 +315,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
     ! !$omp end critical(printWaveVector)
 
   !  trazenje (KQx,KQy) prvo u 1.B.Z a onda u I.B.Z.
-  call findKQinBZ(KQx, KQy, KQz, eps, Nsymm, NkI, Ntot, NG, kI, ktot, RI, G, iG0, R2, K2)
+  call findKQinBZ(KQx, KQy, KQz, eps, Nsym, NkI, Ntot, NG, kI, ktot, RI, G, iG0, R2, K2)
       
   allocate(Qeff_partial(Nlf,Nlf))
   allocate(S0_partial(-No:No,Nlf,Nlf))
@@ -671,12 +671,12 @@ contains
 
   end subroutine loadKC
 
-  subroutine writeInfo(lf, pol, qx, qy, qz, Gcar, Nsymm, Nlf, Ntot, NkI, Nband, T, Nel, NelQE,Gamma_intra, Gamma_inter, dato1, dato2, dato3, config_file)
+  subroutine writeInfo(lf, pol, qx, qy, qz, Gcar, Nsym, Nlf, Ntot, NkI, Nband, T, Nel, NelQE,Gamma_intra, Gamma_inter, dato1, dato2, dato3, config_file)
     implicit none
-    integer      ,      intent(in) :: NelQE, Nsymm, Nlf, Ntot, NkI, Nband
+    integer      ,      intent(in) :: Nsym, Nlf, Ntot, NkI, Nband
     real(kind=dp),      intent(in) :: qx,qy,qz
     real(kind=dp),      intent(in) :: T, Gcar
-    real(kind=dp),      intent(in) :: Nel
+    real(kind=dp),      intent(in) :: Nel, NelQE
     real(kind=dp),      intent(in) :: Gamma_inter, Gamma_intra
     character(len=3),   intent(in) :: lf, pol
     character(len=100), intent(in) :: dato1, dato2, dato3
@@ -699,7 +699,7 @@ contains
     write(iuni,*)' Currently we calculate         ---->',adjustl(trim(dato2))
     write(iuni,*)' Input config file: ',adjustl(config_file)
     write(iuni,*)''
-    write(iuni,*)'Number of point symmetry operation is',Nsymm
+    write(iuni,*)'Number of point symmetry operation is',Nsym
     ! if (frac == 0)write(iuni,*)'Fraction translation is not detected'
     ! if (frac == 1)write(iuni,*)'Fraction translation is detected'
     write(iuni,'(A25,3F10.4,A5)') 'Wave vector (qx,qy,qz)=(',qx*Gcar,qy*Gcar, qz*Gcar,') a.u.'
@@ -782,10 +782,10 @@ contains
   end subroutine findMinQ
 
 
-  subroutine findKinIBZ(ik, NkI, Nsymm, eps, kx, ky, kz, RI, kI, R1, K1)
+  subroutine findKinIBZ(ik, NkI, Nsym, eps, kx, ky, kz, RI, kI, R1, K1)
     ! trazenje (kx,ky,kz) u ireducibilnoj zoni
     integer,       intent(in)  :: ik
-    integer,       intent(in)  :: NkI, Nsymm
+    integer,       intent(in)  :: NkI, Nsym
     real(kind=dp), intent(in)  :: eps
     real(kind=dp), intent(in)  :: kx, ky, kz
     real(kind=dp), intent(in)  :: kI(:,:)
@@ -802,7 +802,7 @@ contains
       K1 = ik
       it = 2
     else
-      symmetry_loop: do  i = 2, Nsymm
+      symmetry_loop: do  i = 2, Nsym
         K11 = RI(i,1,1)*kx + RI(i,1,2)*ky + RI(i,1,3)*kz
         K22 = RI(i,2,1)*kx + RI(i,2,2)*ky + RI(i,2,3)*kz
         K33 = RI(i,3,1)*kx + RI(i,3,2)*ky + RI(i,3,3)*kz
@@ -826,9 +826,9 @@ contains
 end subroutine findKinIBZ
 
 
-subroutine findKQinBZ(KQx, KQy, KQz, eps, Nsymm, NkI, Ntot, NG, kI, ktot, RI, G, iG0, R2, K2)
+subroutine findKQinBZ(KQx, KQy, KQz, eps, Nsym, NkI, Ntot, NG, kI, ktot, RI, G, iG0, R2, K2)
   ! trazenje (KQx,KQy) prvo u FBZ a onda u IBZ
-  integer,       intent(in)  :: Nsymm, NkI, Ntot, NG
+  integer,       intent(in)  :: Nsym, NkI, Ntot, NG
   real(kind=dp), intent(in)  :: eps
   real(kind=dp), intent(in)  :: KQx, KQy, KQz
   real(kind=dp), intent(in)  :: kI(:,:)
@@ -848,7 +848,7 @@ subroutine findKQinBZ(KQx, KQy, KQz, eps, Nsymm, NkI, Ntot, NG, kI, ktot, RI, G,
            abs(KQz-G(3,iG)-ktot(3,jk)) <= eps ) then
         it = 2
         iG0 = iG
-        symm_loop: do  i = 1, Nsymm
+        symm_loop: do  i = 1, Nsym
           K11 = sum(RI(i,1,1:3) * ktot(1:3,jk) )
           K22 = sum(RI(i,2,1:3) * ktot(1:3,jk) )
           K33 = sum(RI(i,3,1:3) * ktot(1:3,jk) )
@@ -877,11 +877,11 @@ subroutine findKQinBZ(KQx, KQy, KQz, eps, Nsymm, NkI, Ntot, NG, kI, ktot, RI, G,
 
 end subroutine findKQinBZ
 
-  subroutine genFBZ(Nk,NkI,Nsymm,eps,kI,R,Ntot,ktot)
+  subroutine genFBZ(Nk,NkI,Nsym,eps,kI,R,Ntot,ktot)
     ! Generates all unique wavectors in the 1st BZ by applying 
     ! point group transformations on the reducible BZ
 
-    integer,       intent(in)  :: Nk, NkI, Nsymm ! No. of k-points, iredducible k-kpoints, symm. ops.
+    integer,       intent(in)  :: Nk, NkI, Nsym ! No. of k-points, iredducible k-kpoints, symm. ops.
     real(kind=dp), intent(in)  :: eps       ! threshold to distinguish whether k-points are the same
     real(kind=dp), intent(in)  :: kI(:,:)   ! k-points in the irreducible BZ
     real(kind=dp), intent(in)  :: R(:,:,:)  ! point group transformation matrices
@@ -899,7 +899,7 @@ end subroutine findKQinBZ
     jk = 0
     Ntot = 0 
 
-    symm_loop: do  i = 1, Nsymm    ! loop over all symmetries
+    symm_loop: do  i = 1, Nsym    ! loop over all symmetries
       k_loop_IBZ: do  ik = 1, NkI  ! loop over k points in IBZ
         it = 1
         jk = jk + 1
@@ -956,11 +956,10 @@ end subroutine findKQinBZ
       
   end subroutine genOccupation
 
-  subroutine checkFBZintegration(Nband,NkI,Nsymm,Ntot,eps,kI,ktot,RI,Efermi,E,NelQE,Nel)
+  subroutine checkFBZintegration(Nband,NkI,Nsym,Ntot,eps,kI,ktot,RI,Efermi,E,NelQE,Nel)
     ! Provjeri je li broj el. u FBZ (Nel) odgovara stvarnom broju el. u jed. cel. (NelQE)
-    integer,       intent(in)  :: NelQE
-    integer,       intent(in)  :: NkI, Nsymm, Nband, Ntot
-    real(kind=dp), intent(in)  :: eps, Efermi
+    integer,       intent(in)  :: NkI, Nsym, Nband, Ntot
+    real(kind=dp), intent(in)  :: NelQE, eps, Efermi
     real(kind=dp), intent(in)  :: kI(:,:)
     real(kind=dp), intent(in)  :: ktot(:,:)
     real(kind=dp), intent(in)  :: RI(:,:,:)
@@ -983,7 +982,7 @@ end subroutine findKQinBZ
             K1 = ik
             it = 2
           else
-            symm_loop: do  i = 2, Nsymm
+            symm_loop: do  i = 2, Nsym
               K11 = RI(i,1,1)*kx + RI(i,1,2)*ky + RI(i,1,3)*kz
               K22 = RI(i,2,1)*kx + RI(i,2,2)*ky + RI(i,2,3)*kz
               K33 = RI(i,3,1)*kx + RI(i,3,2)*ky + RI(i,3,3)*kz

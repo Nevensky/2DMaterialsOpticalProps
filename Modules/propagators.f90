@@ -31,9 +31,9 @@ contains
   SKK = 0
   omega_loop: do io = 1, No-1
     oi=(io - 1)*domega
-    W1 = 0
-    W2 = 0
-  !        static limit
+    W1 = 0.0_dp
+    W2 = 0.0_dp
+    ! static limit
     if(io == 1) then
       do  jo = 2,No
         oj=(jo - 1)*domega
@@ -47,8 +47,8 @@ contains
       do  jo = 1,No
         oj=(jo - 1)*domega
         if(jo /= io) fact = domega/(oi - oj)
-        if(jo == 1) fact = 1
-        if(jo == 2) fact = 0
+        if(jo == 1) fact = 1.0_dp
+        if(jo == 2) fact = 0.0_dp
         if(jo == 3) fact= -3.0_dp/2.0_dp
         if(jo == No) fact = 0.5_dp*domega/(oi - oj)
         W1 = W1 + fact*S(jo)

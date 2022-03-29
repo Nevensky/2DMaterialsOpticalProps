@@ -11,12 +11,12 @@ private
 ! compilation command: ifort -qmkl -Ofast PointR_mkl.f90 -c
 
 contains
-   subroutine PointR(path, Nsymm, R, Ri)
+   subroutine PointR(path, Nsym, R, Ri)
       !  Point group transformations R read from Quantum Espresso 
       !  SCF output file.
       !  Matrices R are in cartesian coordinates because k points
       !  from IBZ are printed in cart. coord.
-      integer :: i, Nsymm, is, n, m
+      integer :: i, Nsym, is, n, m
 
       real(dp) :: R(48,3,3)
       real(dp) :: Ri(48,3,3)
@@ -40,19 +40,19 @@ contains
       open(newunit=iuni, file=path, status='old', err=100, iostat=ist6)
 
       ! count how many symmetries we have
-      Nsymm_loop : do i = 1 , 5000
+      Nsym_loop : do i = 1 , 5000
          read (1,'(A)', err=1000, iostat=ist5, end=2000) buffer1
          lno4 = lno4+1
          if ( buffer1==tag1 ) THEN
             do lskip = 1,3
                read (1,*,err=101,iostat=ist7,end=201) 
             end do
-            read (1,*) Nsymm
-            print *,"Nsymm = ",Nsymm
-            EXIT Nsymm_loop
+            read (1,*) Nsym
+            print *,"Nsym = ",Nsym
+            EXIT Nsym_loop
          endif
-      end do Nsymm_loop
-      print *, 'Exited Nsymm_loop'
+      end do Nsym_loop
+      print *, 'Exited Nsym_loop'
 
       is = 0
       load_R_loop: do i = 1 , 5000
@@ -77,7 +77,7 @@ contains
            R(is,3,3) = z
            ! PRINT *,'symm. op. number is=', is 
            ! WRITE(*,'(3F11.3,/,3F11.3,/,3F11.3)') R(is,:,:)
-           if ( is==Nsymm ) THEN
+           if ( is==Nsym ) THEN
                EXIT load_R_loop
            end if
          end if
@@ -88,7 +88,7 @@ contains
       ! Matrix inversion
 
       Ri = R ! intialize inverse matrix with same content as R
-      do is = 1 , Nsymm
+      do is = 1 , Nsym
          print *,'symmetry op. matrix R'
          write(*,'(A8,I3/3F11.4/3F11.4/3F11.4)'),'i_symm= ',is, R(is,:,:)
          call invert_real(Ri(is,:,:))

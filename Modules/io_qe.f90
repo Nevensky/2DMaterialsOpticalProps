@@ -24,7 +24,7 @@ contains
     fname = trim(savedir)//'/charge-density.dat'
     print *,'status: Reading Gvecs from file: ',adjustl(trim(fname))
     
-    open(newunit=iuni,file=fname,form = 'unformatted',status='old',iostat=ios0)
+    open(newunit=iuni,file=fname,form ='unformatted',action='read',status='old',iostat=ios0)
     if (ios0 /= 0) then
       stop "ERROR: Can\'t open G-vector file."
     end if

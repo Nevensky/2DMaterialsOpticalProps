@@ -41,7 +41,7 @@ integer :: debugCount = 0
 
 
 
-integer :: ik,i,j,jk,it,lk,Ntot,iG0,Nsymm,iq, &
+integer :: ik,i,j,jk,it,lk,Ntot,iG0,Nsym,iq, &
            io,n,m,iG,R1,K1,R2,K2, Nlf,NG1,   &
            NG2,iG1,iG2,jG,kG,jo,loss,   &
            iGfast,ikmin,kG1,kG2,nord, lf
@@ -235,7 +235,7 @@ domega = (omax-omin)/(no-1)
 ! call FOR POINT GROUP TRANSFORMATIONS
 ! Point group transformations are in Cartesian coordinate
 path = trim(rundir)//trim(scf_file)
-call PointR(path,Nsymm,R,RI)
+call PointR(path,Nsym,R,RI)
 print *,"status: PointR done."
 
 
@@ -252,12 +252,12 @@ print *,"status: kI and E loaded."
 ! I.B.Z. generira sve (MEDJUSOBNO RAZLICITE!!!) valne vektore u 1.B.Z.
 ! Ntot-Tot number of different points ''ktot'' inside 1.B.Z
 
-call genFBZ(Nk,NkI,Nsymm,eps,kI,R,Ntot,ktot)
+call genFBZ(Nk,NkI,Nsym,eps,kI,R,Ntot,ktot)
 print *,"status: FBZ generated."
 
 ! ! Checking 1BZ integration
 ! ! provjeri je li broj el. u FBZ (Nel) odgovara stvarnom broju el. u jed. cel. (NelQE)
-call checkFBZintegration(Nband,NkI,Nsymm,Ntot,eps,kI,RI,Efermi,T,E,NelQE,Nel)
+call checkFBZintegration(Nband,NkI,Nsym,Ntot,eps,kI,RI,Efermi,T,E,NelQE,Nel)
 print *,"status: FBZ integration correct."
 
 
@@ -313,7 +313,7 @@ q_loop: do  iq = qmin,qmax ! 42,61
   call findMinQ(Ntot, ktot, qx, qy, qz)
   
   ! Info file
-  call writeInfo(qx, qy, qz, Gcar, Nsymm, Nlf, Ntot, NkI, Nband, eta, T, Nel, NelQE )
+  call writeInfo(qx, qy, qz, Gcar, Nsym, Nlf, Ntot, NkI, Nband, eta, T, Nel, NelQE )
 
   ! intialize correlation matrix
   S0(1:no,1:Nlf,1:Nlf) = cmplx(0.0,0.0)
@@ -323,7 +323,7 @@ q_loop: do  iq = qmin,qmax ! 42,61
 jump = .false.
 
 print *, 'DEBUG: entering parallel region'
-!$omp parallel shared(S0,iq,kI,ktot,RI,eps,E,G,NkI,Nsymm,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,eta,Vcell) private(ik,S0_partial,MnmK1K2,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,De,Lor,Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast,iG1, iG2,attr,C1,C2, iuni1, iuni2) firstprivate(savedir,jump,domega) num_threads(Nthreads) !  default(private) 
+!$omp parallel shared(S0,iq,kI,ktot,RI,eps,E,G,NkI,Nsym,NG,Ntot,Nocc,Nband,NGd,Nlf,Nlfd,eta,Vcell) private(ik,S0_partial,MnmK1K2,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,De,Lor,Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast,iG1, iG2,attr,C1,C2, iuni1, iuni2) firstprivate(savedir,jump,domega) num_threads(Nthreads) !  default(private) 
 thread_id =  omp_get_thread_num()
 
 !$omp do 
@@ -343,7 +343,7 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
   kz = ktot(3,ik)
   
   ! trazenje (kx,ky,kz) u ireducibilnoj zoni
-  call findKinIBZ(ik, NkI, Nsymm, eps, kx, ky, kz, RI, kI, R1, K1)
+  call findKinIBZ(ik, NkI, Nsym, eps, kx, ky, kz, RI, kI, R1, K1)
 
 
   KQx = kx + qx
@@ -357,7 +357,7 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
   !$omp end critical(printWaveVector)
 
   ! trazenje (KQx,KQy) prvo u 1.B.Z a onda u I.B.Z.
-  call findKQinBZ(KQx, KQy, KQz, eps, Nsymm, NkI, Ntot, NG, ktot, kI, RI, G, iG0, R2, K2)
+  call findKQinBZ(KQx, KQy, KQz, eps, Nsym, NkI, Ntot, NG, ktot, kI, RI, G, iG0, R2, K2)
   
   
   ! R1 - integer, redni broj point operacije R1 u transformaciji K=R1*K1.
@@ -594,10 +594,10 @@ contains
   end subroutine findMinQ
 
 
-  subroutine findKinIBZ(ik, NkI, Nsymm, eps, kx, ky, kz, RI, kI, R1, K1)
+  subroutine findKinIBZ(ik, NkI, Nsym, eps, kx, ky, kz, RI, kI, R1, K1)
     ! trazenje (kx,ky,kz) u ireducibilnoj zoni
     integer,       intent(in) :: ik
-    integer,       intent(in) :: NkI, Nsymm
+    integer,       intent(in) :: NkI, Nsym
     real(kind=dp), intent(in) :: eps
     real(kind=dp), intent(in) :: kx, ky, kz
     real(kind=dp), intent(in) :: kI(:,:)
@@ -614,7 +614,7 @@ contains
       K1 = ik
       it = 2
     else
-      symmetry_loop: do  i = 2, Nsymm
+      symmetry_loop: do  i = 2, Nsym
         K11 = RI(i,1,1)*kx + RI(i,1,2)*ky + RI(i,1,3)*kz
         K22 = RI(i,2,1)*kx + RI(i,2,2)*ky + RI(i,2,3)*kz
         K33 = RI(i,3,1)*kx + RI(i,3,2)*ky + RI(i,3,3)*kz
@@ -638,9 +638,9 @@ contains
 end subroutine findKinIBZ
 
 
-subroutine findKQinBZ(KQx, KQy, KQz, eps, Nsymm, NkI, Ntot, NG, ktot, kI, RI, G, iG0, R2, K2)
+subroutine findKQinBZ(KQx, KQy, KQz, eps, Nsym, NkI, Ntot, NG, ktot, kI, RI, G, iG0, R2, K2)
   ! trazenje (KQx,KQy) prvo u FBZ a onda u IBZ
-  integer,       intent(in)  :: Nsymm, NkI, Ntot, NG
+  integer,       intent(in)  :: Nsym, NkI, Ntot, NG
   real(kind=dp), intent(in)  :: eps
   real(kind=dp), intent(in)  :: KQx, KQy, KQz
   real(kind=dp), intent(in)  :: ktot(:,:)
@@ -660,7 +660,7 @@ subroutine findKQinBZ(KQx, KQy, KQz, eps, Nsymm, NkI, Ntot, NG, ktot, kI, RI, G,
            abs(KQz-G(3,iG)-ktot(3,jk)) <= eps ) then
         it = 2
         iG0 = iG
-        symm_loop: do  i = 1, Nsymm
+        symm_loop: do  i = 1, Nsym
           K11 = sum(RI(i,1,1:3) * ktot(1:3,jk) )
           K22 = sum(RI(i,2,1:3) * ktot(1:3,jk) )
           K33 = sum(RI(i,3,1:3) * ktot(1:3,jk) )
@@ -689,10 +689,10 @@ subroutine findKQinBZ(KQx, KQy, KQz, eps, Nsymm, NkI, Ntot, NG, ktot, kI, RI, G,
 
 end subroutine findKQinBZ
 
-  subroutine genFBZ(Nk,NkI,Nsymm,eps,kI,R,Ntot,ktot)
+  subroutine genFBZ(Nk,NkI,Nsym,eps,kI,R,Ntot,ktot)
     ! Pomocu operacija tockaste grupe i vektora iz I.B.Z. 
     ! generira sve (medjusobno razlicite!!!) valne vektore u 1.B.Z.
-    integer,       intent(in)  :: Nk, NkI, Nsymm
+    integer,       intent(in)  :: Nk, NkI, Nsym
     real(kind=dp), intent(in)  :: eps 
     real(kind=dp), intent(in)  :: kI(:,:)
     real(kind=dp), intent(in)  :: R(:,:,:)
@@ -711,7 +711,7 @@ end subroutine findKQinBZ
     jk = 0
     Ntot = 0 ! Total number of different points ''ktot'' inside 1.B.Z
 
-    symm_loop: do  i = 1, Nsymm    ! loop over all symmetries
+    symm_loop: do  i = 1, Nsym    ! loop over all symmetries
       k_loop_IBZ: do  ik = 1, NkI  ! loop over k points in IBZ
         it = 1
         jk = jk + 1
@@ -753,10 +753,10 @@ end subroutine findKQinBZ
 
   end subroutine genFBZ
 
-  subroutine checkFBZintegration(Nband,NkI,Nsymm,Ntot,eps,kI,RI,Efermi,T,E,NelQE,Nel)
+  subroutine checkFBZintegration(Nband,NkI,Nsym,Ntot,eps,kI,RI,Efermi,T,E,NelQE,Nel)
     ! Provjeri je li broj el. u FBZ (Nel) odgovara stvarnom broju el. u jed. cel. (NelQE)
     integer,       intent(in)  :: NelQE
-    integer,       intent(in)  :: NkI, Nsymm, Nband, Ntot
+    integer,       intent(in)  :: NkI, Nsym, Nband, Ntot
     real(kind=dp), intent(in)  :: eps, Efermi, T
     real(kind=dp), intent(in)  :: kI(:,:)
     real(kind=dp), intent(in)  :: RI(:,:,:)
@@ -778,7 +778,7 @@ end subroutine findKQinBZ
             K1 = ik
             it = 2
           else
-            symm_loop: do  i = 2, Nsymm
+            symm_loop: do  i = 2, Nsym
               K11 = RI(i,1,1)*kx + RI(i,1,2)*ky + RI(i,1,3)*kz
               K22 = RI(i,2,1)*kx + RI(i,2,2)*ky + RI(i,2,3)*kz
               K33 = RI(i,3,1)*kx + RI(i,3,2)*ky + RI(i,3,3)*kz
@@ -898,7 +898,7 @@ subroutine genChargeVertices(jump, eps, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, 
 
 
   iGfast = 0
-  MnmK1K2(1:Nlf) = cmplx(0.0) ! nabojni vrhovi
+  MnmK1K2(1:Nlf) = cmplx(0.0_dp,0.0_dp) ! nabojni vrhovi
   do  iG = 1,Nlf ! suma po lokalnim fieldovima kojih ima Nlf
     do  iG1 = 1,NGd ! vito zamjenjeno NGd sa NG1
       iGfast = iGfast + 1
@@ -936,7 +936,6 @@ subroutine genChargeVertices(jump, eps, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, 
         ! !$omp end single
       end if
       ! !$omp end critical(jump_operation)
-      ! 1111              continue
       iG2 = Gfast(iGfast)
       if (iG2 <= NG2) then
         MnmK1K2(iG) = MnmK1K2(iG) + conjg(C1(iG1))*C2(iG2)
@@ -1578,9 +1577,9 @@ end subroutine genChargeVertices
 
   end subroutine loadkIandE
 
-  subroutine writeInfo(qx, qy, qz, Gcar,Nsymm,Nlf, Ntot, NkI, Nband, eta, T, Nel, NelQE )
+  subroutine writeInfo(qx, qy, qz, Gcar,Nsym,Nlf, Ntot, NkI, Nband, eta, T, Nel, NelQE )
     implicit none
-    integer       , intent(in) :: NelQE, Nsymm, Nlf, Ntot, NkI, Nband
+    integer       , intent(in) :: NelQE, Nsym, Nlf, Ntot, NkI, Nband
     real(kind=dp) , intent(in) :: qx,qy,qz
     real(kind=dp) , intent(in) :: eta, T, Gcar
     real(kind=dp) , intent(in) :: Nel
@@ -1594,7 +1593,7 @@ end subroutine genChargeVertices
     open(55,FILE='Info', err=700, iostat=ios)
     write(55,*) '***************General***********************'
     write(55,*) ''
-    write(55,*) 'Number of point symmetry operation is',Nsymm
+    write(55,*) 'Number of point symmetry operation is',Nsym
     write(55,'(a25,3f10.4,a5) ') 'Wave vector (qx,qy,qz)=(',qx*Gcar,qy*Gcar, qz*Gcar,') a.u.'
     write(55,'(a25,f8.4,a5) ') '|(qx,qy,qz)|=',absq*Gcar,'a.u.'
     if (lf == 1)write(55,*) 'Local field effcts in z-dir'
