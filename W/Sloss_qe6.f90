@@ -394,7 +394,7 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
       end if
 
       ! Konstrukcija stupca matricnih elementa nabojnih vrhova MnmK1K2(G)      
-      call genChargeVertices(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2)
+      call genChargeVertices(jump, eps, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2)
 
       deallocate(C2)
 
@@ -875,9 +875,9 @@ subroutine genGlfandParity(lf,Ecut,NG,Gcar,G,Nlf,Nlfd,parG,Glf)
   ! print *,'Glf(1:3,1:5)',Glf(1:3,1:5)
 end subroutine genGlfandParity
 
-subroutine genChargeVertices(jump, eps, Nlf, iG0, NG1, NG2, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2)
+subroutine genChargeVertices(jump, eps, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2)
   ! Konstrukcija stupca matricnih elementa nabojnih vrhova MnmK1K2(G) 
-  integer,          intent(in)    :: iG0, Nlf, NG1, NG2
+  integer,          intent(in)    :: iG0, Nlf, NG1, NG2, NGd
   integer,          intent(in)    :: R1,R2
   real(kind=dp),    intent(in)    :: eps
   real(kind=dp),    intent(in)    :: R(:,:,:)

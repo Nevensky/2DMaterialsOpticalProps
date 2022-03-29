@@ -31,9 +31,9 @@ contains
     real(kind=dp)    :: K11, K22, K33
     real(kind=dp)    :: Gxx1,Gyy1,Gzz1
     real(kind=dp)    :: Gxx2,Gyy2,Gzz2
-    real(kind=dp)    :: Gprime
+    real(kind=dp)    :: Gprime(3)
     real(kind=dp)    :: current, current_y, current_z
-    real(kind=dp)    :: k(3), q(3)
+    real(kind=dp)    :: k(3), q(3), K_(3)
     real(kind=dp)    :: current_xyz(3)
 
     k(1) = kx
@@ -56,7 +56,7 @@ contains
           K_(i) = sum( R(R1,i,1:3)*G(1:3,iG1) )
         end do
 
-        current(1:3) = Gcar * ( q(1:3) + 2.0*k(1:3) + Glf(1:3,iG) + 2.0*K_(1:3) )
+        current_xyz(1:3) = Gcar * ( q(1:3) + 2.0*k(1:3) + Glf(1:3,iG) + 2.0*K_(1:3) )
         K_(1:3) = K_(1:3) + Glf(1:3,iG) + G(1:3,iG0)
         
         do i=1,3
@@ -66,7 +66,7 @@ contains
         if (jump == .false.) then
           iG2_loop: do iG2 = 1,NG2
             Gfast(iGfast) = NG2 + 1
-            if ( all( abs( G(1:3,iG2)-Gprime(1:3) ) < eps ) then
+            if ( all( abs(G(1:3,iG2)-Gprime(1:3)) < eps) ) then
               Gfast(iGfast) = iG2
               exit iG2_loop
             end if
@@ -77,13 +77,13 @@ contains
 
         if (iG2 <= NG2) then
           if (pol == 'xx') then
-            MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * current(1) * C2(iG2)
+            MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * current_xyz(1) * C2(iG2)
             MnmK1K22(iG) = MnmK1K2(iG) ! current vertices are the same
-         if (pol == 'yy') then
-            MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * current(2) * C2(iG2)
+          elseif (pol == 'yy') then
+            MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * current_xyz(2) * C2(iG2)
             MnmK1K22(iG) = MnmK1K2(iG) ! current vertices are the same
-         if (pol == 'zz') then
-            MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * current(3) * C2(iG2)
+          elseif (pol == 'zz') then
+            MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * current_xyz(3) * C2(iG2)
             MnmK1K22(iG) = MnmK1K2(iG) ! current vertices are the same
           elseif (pol =='yz') then
             MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * current_xyz(2) * C2(iG2)
