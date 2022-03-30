@@ -2,7 +2,8 @@ module constants
     use iso_fortran_env, only: dp => real64
     implicit none
 
-    public :: pi, eV, kB, Hartree, Rydberg, Planck, aBohr, alpha 
+    public :: pi, eV, kB, Hartree, Rydberg, Planck, aBohr, alpha, &
+            & rone, ione, czero
     private 
     save
     real(kind=dp),    parameter :: pi      = 4.0_dp*atan(1.0_dp)
@@ -14,5 +15,9 @@ module constants
     real(kind=dp),    parameter :: Planck  = 6.62607015e-34_DP             ! J s
     real(kind=dp),    parameter :: aBohr   = 0.529177210903e-10_dp         ! m
     real(kind=dp),    parameter :: alpha   = 0.0072973525693_dp            ! 1/137
+
+    real(kind=dp), parameter    :: rone  = cmplx(1.0_dp,0.0_dp)
+    real(kind=dp), parameter    :: czero = cmplx(0.0_dp,0.0_dp)
+    real(kind=dp), parameter    :: ione  = cmplx(0.0_dp,1.0_dp)
 
 end module constants

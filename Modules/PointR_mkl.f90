@@ -1,6 +1,5 @@
-! *==POINTR.spg  processed by SPAG 6.72Dc at 09:08 on  2 Jun 2020
 module ModPointR
-use iso_fortran_env, only: sp => real32, dp => real64
+use iso_fortran_env, only: dp => real64
 use matrix_inverse,  only: invert_real
 
 implicit none
@@ -8,12 +7,10 @@ implicit none
 public :: PointR
 private
 
-! compilation command: ifort -qmkl -Ofast PointR_mkl.f90 -c
-
 contains
    subroutine PointR(path, Nsym, R, Ri)
-      !  Point group transformations R read from Quantum Espresso 
-      !  SCF output file.
+      !  Point group transformations R read from 
+      !  Quantum Espresso SCF output file.
       !  Matrices R are in cartesian coordinates because k points
       !  from IBZ are printed in cart. coord.
       integer :: i, Nsym, is, n, m

@@ -157,10 +157,10 @@ complex(kind=dp), dimension(:,:),   allocatable  :: diel_epsilon ! Epsilon (GG')
 complex(kind=dp), dimension(:,:),   allocatable  :: Chi ! (eq. 2.88 nakon invertiranja) ;oprez bio je double precision
 
 complex(kind=dp), dimension(:)    , allocatable  :: MnmK1K2 ! nabojni vrhovi
-complex(kind=dp), dimension(:,:)  , allocatable  :: Chi0 ! (eq. 2.89)
-complex(kind=dp), dimension(:,:,:), allocatable  :: WT ! time ordered RPA screened coulomb int. (eq. 2.93)
 complex(kind=dp), dimension(:,:)  , allocatable  :: Gammap ! omega>0 ,eq....(skripta 5) \sum_{q,m} \int \dd omega' S(\omega')/{(\omega-\omega'-e_{k+q,m} +i\eta}) za GW se koristi se za ovaj dio 
 complex(kind=dp), dimension(:,:)  , allocatable  :: Gammam ! omega<0, allocatable  
+complex(kind=dp), dimension(:,:)  , allocatable  :: Chi0 ! (eq. 2.89)
+complex(kind=dp), dimension(:,:,:), allocatable  :: WT ! time ordered RPA screened coulomb int. (eq. 2.93)
 
 character (len=100) :: bandn,bandm,nis,pathk1,pathk2,dato, path
 character (len=35)  :: tag,buffer

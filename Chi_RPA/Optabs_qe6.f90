@@ -120,7 +120,7 @@ complex(kind=dp), dimension(:,:,:), allocatable  :: S0         ! korelacijska ma
 complex(kind=dp), dimension(:,:,:), allocatable  :: S0_partial ! pomocna var. za S0 redukciju
 
 character (len=100) :: bandn,bandm,dummy,pathk1,pathk2, dato1, dato2, dato3, path
-character (len=35)  :: tag,buffer
+! character (len=35)  :: tag,buffer
 
 complex(kind=dp), dimension(:), allocatable :: C1!,C2
 complex(kind=dp), dimension(:,:), allocatable :: C2
@@ -212,9 +212,9 @@ print *,"status: PointR done."
 
 
 
-! Load wavevectors and eigenenergies
-path=trim(rundir)//trim(band_file)
-call loadkIandE(path, NkI, Nband, Nocc, kI, dGW,E)
+! Load IBZ wavevectors and eigenenergies
+path=trim(rundir)//"/"//trim(band_file)
+call loadkIandE(path, NkI, Nband, Nocc, kI, E, dGW)
 print *,"status: kI and E loaded."
 
 
@@ -228,7 +228,7 @@ print *,"status: FBZ integration correct."
 
 ! KC transformation matrix from rec.cryst. axes to cart.koord.
 ! if G' is vector in rec.cryst. axes then a = KC*a' is vector in cart. axes
-path = TRIM(rundir)//"/"//TRIM(scf_file)
+path = trim(rundir)//"/"//trim(scf_file)
 call loadKC(path,KC)
 print *,"status: KC transformation matrix (rec.cryst.->cart.) loaded."
 
@@ -880,6 +880,7 @@ end subroutine findKQinBZ
   subroutine genFBZ(Nk,NkI,Nsym,eps,kI,R,Ntot,ktot)
     ! Generates all unique wavectors in the 1st BZ by applying 
     ! point group transformations on the reducible BZ
+    ! ktot contains all unique kpoints in the 1st BZ
 
     integer,       intent(in)  :: Nk, NkI, Nsym ! No. of k-points, iredducible k-kpoints, symm. ops.
     real(kind=dp), intent(in)  :: eps       ! threshold to distinguish whether k-points are the same
@@ -1489,20 +1490,22 @@ stop
     
   end subroutine genImChi0
 
-  subroutine loadkIandE(path, NkI, Nband, Nocc, kI, dGW,E)
+  subroutine loadkIandE(path, NkI, Nband, Nocc, kI, E, dGW)
     ! Loading of all wavevectors (in Cartesiand coords.) in the ireducible BZ and
     ! corresponding eigen-energies form the Quantum Espresso .band files
 
     implicit none
-    integer,            intent(in)    :: NkI
-    integer,            intent(in)    :: Nband, Nocc
-    character(len=100), intent(in)    :: path
-    real(kind=dp),      intent(in)    :: dGW
-    real(kind=dp),      intent(inout) :: kI(:,:)
-    real(kind=dp),      intent(inout) :: E(:,:)
+    integer,            intent(in)           :: NkI
+    integer,            intent(in)           :: Nband, Nocc
+    character(len=100), intent(in)           :: path
+    real(kind=dp),      intent(inout)        :: kI(:,:)
+    real(kind=dp),      intent(inout)        :: E(:,:)
+    real(kind=dp),      intent(in), optional :: dGW
 
     integer :: iuni, ios, ik, i
-    real(kind=dp),    parameter :: Hartree = 2.0D0*13.6056923D0
+    real(kind=dp),    parameter :: Hartree = 2.0D0*13.6056923_dp
+    real(kind=dp) :: dGW_ = 0.0_dp
+    if (present(dGW)) dGW_ = dGW
 
     open(newunit=iuni,FILE=path,status='old',err=500,iostat=ios) 
     do  ik = 1,NkI
@@ -1527,7 +1530,7 @@ stop
     ! konverzija en. u Hartree
     E(1:NkI,1:Nband) = E(1:NkI,1:Nband)/Hartree
     ! scissor operator, ispravlja/shifta DFT gap (na 1eV u ovom slucaju)
-    E(1:NkI,Nocc+1:Nband) = E(1:NkI,Nocc+1:Nband) + dGW
+    E(1:NkI,Nocc+1:Nband) = E(1:NkI,Nocc+1:Nband) + dGW_
 
   end subroutine loadkIandE
 
