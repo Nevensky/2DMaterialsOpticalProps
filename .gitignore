@@ -37,6 +37,9 @@
 *.exe
 *.app
 
+# Documentation
+/doc/build/*
+
 # additional
 *.log
 *.dSYM
