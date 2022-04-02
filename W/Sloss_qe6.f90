@@ -177,12 +177,6 @@ namelist  /parallel/ Nthreads
 integer, allocatable :: K1_list(:)
 integer, allocatable :: K2_list(:)
 
-! MKL matrix inversion vars
-integer :: info_trf, info_tri
-integer,allocatable :: ipiv(:)
-integer :: lwork
-integer,allocatable :: work(:)
-
 ! load namelist
 open(10,file='config.in')
 read(10,nml=directories,iostat=ist4)
@@ -296,12 +290,6 @@ allocate(WT(no,Nlf,Nlf))         ! time ordered RPA screened coulomb int. (eq. 2
 allocate(Gammap(Nlf,Nlf))        ! omega>0 ,eq....(skripta 5) \sum_{q,m} \int \dd omega' S(\omega')/{(\omega-\omega'-e_{k+q,m} +i\eta}) za GW se koristi se za ovaj dio 
 allocate(Gammam(Nlf,Nlf))        ! omega<0
 
-! MKL matrix inversion vars
-allocate(ipiv(MAX(1,MIN(Nlf, Nlf))))
-lwork = Nlf
-allocate(work(Nlf))
-
-
 
 ! IBZ q LOOP STARTS HERE!!!
 ! iq=0 ne moze biti nula, opticki racun
@@ -357,7 +345,7 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
   !$omp end critical(printWaveVector)
 
   ! trazenje (KQx,KQy) prvo u 1.B.Z a onda u I.B.Z.
-  call findKQinBZ(KQx, KQy, KQz, eps, Nsym, NkI, Ntot, NG, ktot, kI, RI, G, iG0, R2, K2)
+  call findKQinIBZ(KQx, KQy, KQz, eps, Nsym, NkI, Ntot, NG, ktot, kI, RI, G, iG0, R2, K2)
   
   
   ! R1 - integer, redni broj point operacije R1 u transformaciji K=R1*K1.
@@ -455,8 +443,6 @@ end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
     
     !  invertiranje matrice ''diel_epsilon = 1-Chi_0*V''
     call gjel(diel_epsilon,Nlf,Nlf,Imat,Nlf,Nlf)
-    ! call dgetrf( Nlf,Nlf, diel_epsilon, Nlf, ipiv, info_trf)
-    ! call dgetri( Nlf, diel_epsilon, Nlf, ipiv, work, lwork, info_tri )
 
     ! nezasjenjeni Chi
     call genChi(Nlf,diel_epsilon,Chi0,Chi)
@@ -530,10 +516,6 @@ end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
 
   
 end do q_loop
-
-! MKL matrix inversion vars
-deallocate(ipiv)
-deallocate(work)
 
 ! deallocate NGd related vars
 deallocate(Gfast)
@@ -638,7 +620,7 @@ contains
 end subroutine findKinIBZ
 
 
-subroutine findKQinBZ(KQx, KQy, KQz, eps, Nsym, NkI, Ntot, NG, ktot, kI, RI, G, iG0, R2, K2)
+subroutine findKQinIBZ(KQx, KQy, KQz, eps, Nsym, NkI, Ntot, NG, ktot, kI, RI, G, iG0, R2, K2)
   ! trazenje (KQx,KQy) prvo u FBZ a onda u IBZ
   integer,       intent(in)  :: Nsym, NkI, Ntot, NG
   real(kind=dp), intent(in)  :: eps
@@ -687,7 +669,7 @@ subroutine findKQinBZ(KQx, KQy, KQz, eps, Nsym, NkI, Ntot, NG, ktot, kI, RI, G, 
     STOP
   end if
 
-end subroutine findKQinBZ
+end subroutine findKQinIBZ
 
   subroutine genFBZ(Nk,NkI,Nsym,eps,kI,R,Ntot,ktot)
     ! Pomocu operacija tockaste grupe i vektora iz I.B.Z. 

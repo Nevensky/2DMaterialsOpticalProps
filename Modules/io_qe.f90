@@ -7,8 +7,8 @@ module io_quantum_espresso
 
 contains
   subroutine loadG(savedir, KC, NG, G, parG)
-    ! Reading the reciprocal vectors in crystal coordinates and transformation
-    ! in Cartesian cordinates.
+    !! Reads the reciprocal vectors in crystal coordinates and transformation
+    !! in Cartesian cordinates.
     character(len=*),  intent(in)   :: savedir
     real(kind=dp),     intent(in)   :: KC(3,3)
     integer, optional, intent(out)  :: parG(:) ! paritet svakog valnog vektora G

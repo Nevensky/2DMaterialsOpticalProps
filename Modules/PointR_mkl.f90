@@ -1,6 +1,6 @@
 module ModPointR
 use iso_fortran_env, only: dp => real64
-use matrix_inverse,  only: invert_real
+use matrix_inverse,  only: invert
 
 implicit none
 
@@ -9,10 +9,10 @@ private
 
 contains
    subroutine PointR(path, Nsym, R, Ri)
-      !  Point group transformations R read from 
-      !  Quantum Espresso SCF output file.
-      !  Matrices R are in cartesian coordinates because k points
-      !  from IBZ are printed in cart. coord.
+      !!  Point group transformations R read from 
+      !!  Quantum Espresso SCF output file.
+      !!  Matrices R are in cartesian coordinates because k points
+      !!  from IBZ are printed in cart. coord.
       integer :: i, Nsym, is, n, m
 
       real(dp) :: R(48,3,3)
@@ -88,7 +88,7 @@ contains
       do is = 1 , Nsym
          print *,'symmetry op. matrix R'
          write(*,'(A8,I3/3F11.4/3F11.4/3F11.4)'),'i_symm= ',is, R(is,:,:)
-         call invert_real(Ri(is,:,:))
+         call invert(Ri(is,:,:))
          print *,'inverted symmetry op. matrix Ri'
          write(*,'(A8,I3/3F11.4/3F11.4/3F11.4)'),'i_symm= ',is, Ri(is,:,:)
       enddo

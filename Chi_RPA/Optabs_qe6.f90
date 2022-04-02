@@ -315,7 +315,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
     ! !$omp end critical(printWaveVector)
 
   !  trazenje (KQx,KQy) prvo u 1.B.Z a onda u I.B.Z.
-  call findKQinBZ(KQx, KQy, KQz, eps, Nsym, NkI, Ntot, NG, kI, ktot, RI, G, iG0, R2, K2)
+  call findKQinIBZ(KQx, KQy, KQz, eps, Nsym, NkI, Ntot, NG, kI, ktot, RI, G, iG0, R2, K2)
       
   allocate(Qeff_partial(Nlf,Nlf))
   allocate(S0_partial(-No:No,Nlf,Nlf))
@@ -826,7 +826,7 @@ contains
 end subroutine findKinIBZ
 
 
-subroutine findKQinBZ(KQx, KQy, KQz, eps, Nsym, NkI, Ntot, NG, kI, ktot, RI, G, iG0, R2, K2)
+subroutine findKQinIBZ(KQx, KQy, KQz, eps, Nsym, NkI, Ntot, NG, kI, ktot, RI, G, iG0, R2, K2)
   ! trazenje (KQx,KQy) prvo u FBZ a onda u IBZ
   integer,       intent(in)  :: Nsym, NkI, Ntot, NG
   real(kind=dp), intent(in)  :: eps
@@ -875,7 +875,7 @@ subroutine findKQinBZ(KQx, KQy, KQz, eps, Nsym, NkI, Ntot, NG, kI, ktot, RI, G, 
     stop
   end if
 
-end subroutine findKQinBZ
+end subroutine findKQinIBZ
 
   subroutine genFBZ(Nk,NkI,Nsym,eps,kI,R,Ntot,ktot)
     ! Generates all unique wavectors in the 1st BZ by applying 

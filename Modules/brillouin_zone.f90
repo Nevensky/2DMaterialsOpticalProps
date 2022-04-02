@@ -3,14 +3,14 @@ module brillouin_zone
   implicit none
 
   public :: loadKiandE, genFBZ, checkFBZintegration, &
-            & findKinIBZ, findKQinBZ, findMinQ
+            & findKinIBZ, findKQinIBZ, findMinQ
   private
 
 contains
 
   subroutine loadkIandE(path, NkI, Nband, Nval, kI, E, dGW)
-    ! Loads all wavevectors (in Cartesiand coords.) in the ireducible BZ and
-    ! corresponding eigen-energies form the Quantum Espresso .band files
+    !! Loads all wavevectors (in Cartesiand coords.) in the ireducible BZ and
+    !! corresponding eigen-energies form the Quantum Espresso .band files
     use constants, only: Hartree
     integer,          intent(in)           :: NkI
     integer,          intent(in)           :: Nband, Nval
@@ -51,8 +51,8 @@ contains
   end subroutine loadkIandE
 
   subroutine genFBZ(Nk,NkI,Nsym,eps,kI,R,Ntot,ktot,writeOutput)
-    ! Generates all unique wavectors in the 1st BZ by applying 
-    ! point group transformations on the reducible BZ
+    !! Generates all unique wavectors in the 1st BZ by applying 
+    !! point group transformations on the reducible BZ
     integer,           intent(in)  :: Nk, NkI, Nsym ! No. of k-points, iredducible k-kpoints, symm. ops.
     real(kind=dp),     intent(in)  :: eps       ! threshold to distinguish whether k-points are the same
     real(kind=dp),     intent(in)  :: kI(:,:)   ! k-points in the irreducible BZ
@@ -115,8 +115,8 @@ contains
   end subroutine genFBZ
 
     subroutine checkFBZintegration(Nband,NkI,Nsym,Ntot,eps,kI,ktot,RI,Efermi,E,NelQE,Nel,T)
-    ! Checks if the No. of electrons in the 1st BZ (Nel) equals 
-    ! the number of electrons in the unit cell as calculated by Quantum Espresso (NelQE)   
+    !! Checks if the No. of electrons in the 1st BZ (Nel) equals 
+    !! the number of electrons in the unit cell as calculated by Quantum Espresso (NelQE)   
     use statistics, only: FermiDirac
     integer,       intent(in)  :: NelQE
     integer,       intent(in)  :: NkI, Nsym, Nband, Ntot
@@ -172,10 +172,13 @@ contains
           Nel = Nel + Ni
         else ! temperature not given, assuming its is an isolator
           if (E(K1,n) < Efermi) then 
-            Nel = Nel + 1.0
-            ! print *,'Nel',Nel,'band:',n
+            Ni = 1.0_dp
+          else
+            Ni = 0.0_dp
           end if  
         end if
+        Nel = Nel + Ni
+        ! print *,'Nel:', Nel,' Ni:',Ni,' band: ',n
     
       end do band_loop
     end do k_loop_FBZ
@@ -186,7 +189,7 @@ contains
 
 
   subroutine findKinIBZ(ik, NkI, Nsym, eps, kx, ky, kz, RI, kI, iR1, iK1)
-    ! Finds k-point (kx,ky,kz) in the ireducible BZ
+    !! Finds k-point (kx,ky,kz) in the ireducible Brillouin zone (IBZ)
     integer,       intent(in)  :: ik
     integer,       intent(in)  :: NkI, Nsym
     real(kind=dp), intent(in)  :: eps
@@ -211,9 +214,9 @@ contains
     else
       symmetry_loop: do  i = 2, Nsym
         forall (l=1:3) K(l) = sum ( RI(i,l,1:3)*k_fbz(1:3) )
-        ! K(1) = sum (RI(i,1,1:3)*k_fbz(1:3) )
-        ! K(2) = sum (RI(i,2,1:3)*k_fbz(1:3) )
-        ! K(3) = sum (RI(i,3,1:3)*k_fbz(1:3) )
+        ! K(1) = sum (RI(i,1,1:3)*k_fbz(1:3) ) ! Kx
+        ! K(2) = sum (RI(i,2,1:3)*k_fbz(1:3) ) ! Ky
+        ! K(3) = sum (RI(i,3,1:3)*k_fbz(1:3) ) ! Kz
         do  j = 1,NkI
           if ( all ( abs( K(1:3)-kI(1:3,j) ) <= eps ) ) then
             found = .true.
@@ -232,8 +235,8 @@ contains
   end subroutine findKinIBZ
 
 
-  subroutine findKQinBZ(KQx, KQy, KQz, eps, Nsym, NkI, Ntot, NG, kI, ktot, RI, G, iG0, iR2, iK2)
-    ! Finds the k-point (KQx,KQy,KQz) in the 1st. BZ a then in then in the ireducible BZ
+  subroutine findKQinIBZ(KQx, KQy, KQz, eps, Nsym, NkI, Ntot, NG, kI, ktot, RI, G, iG0, iR2, iK2)
+    !! Finds the k-point (KQx,KQy,KQz) in the 1st. Brillouin zone (FBZ) and then the ireducible Brillouin zone (IBZ)
     integer,       intent(in)  :: Nsym, NkI, Ntot, NG
     real(kind=dp), intent(in)  :: eps
     real(kind=dp), intent(in)  :: KQx, KQy, KQz
@@ -285,10 +288,10 @@ contains
       stop
     end if
   
-  end subroutine findKQinBZ
+  end subroutine findKQinIBZ
 
   subroutine findMinQ(iq, Ntot, ktot, qx, qy, qz)
-    ! searching min. q=(qx,qy,qz) in Gamma -> M direction
+    !! Searches for the mininimal wavevector \(\mathbf{q}=(qx,qy,qz)\) in the \(\Gamma \to M \) direction
     integer,       intent(in)  :: iq, Ntot
     real(kind=dp), intent(in)  :: ktot(:,:)
     real(kind=dp), intent(out) :: qx, qy, qz

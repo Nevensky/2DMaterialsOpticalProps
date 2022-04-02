@@ -8,8 +8,8 @@ module local_field
 contains
 
   subroutine genGlf(lf,Ecut,NG,Gcar,G,Nlf,Nlfd,Glf,parG)
-    ! Generate Reciprocal latt. vectors for crystal local field 
-    ! effects calculations in array Glf(1:3,1:Nlf)
+    !! Generate Reciprocal latt. vectors for crystal local field 
+    !! effects calculations in array Glf(1:3,1:Nlf)
     implicit none
     character(len=*), intent(in)    :: lf
     integer,          intent(in)    :: NG
