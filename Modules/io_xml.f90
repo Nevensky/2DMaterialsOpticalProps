@@ -21,9 +21,10 @@ module io_xml
   private 
 
 contains
-  subroutine loadXML_qe(path, Nbands , NkI, Nrot, Nsym, Nmp, a, b, R, Npw, kI, eigenvals, occupations, T, Efermi, NelQE, printOutput)
+  subroutine loadXML_qe(path, Nbands , NkI, Nrot, Nsym, Nmp, alat, a, b, R, Npw, kI, eigenvals, occupations, T, Efermi, NelQE, printOutput)
     character(len=*), intent(in) :: path
     integer,       intent(out), optional :: Nbands, NkI, Nrot, Nsym, Nmp(3)
+    real(kind=dp), intent(out), optional :: alat      !! lattice parameter
     real(kind=dp), intent(out), optional              :: a(3,3)           !! direct lattice
     real(kind=dp), intent(out), optional              :: b(3,3)           !! reciprocal lattice
     real(kind=dp), intent(out), optional, allocatable :: R(:,:,:)         !! array of rotational matrices
@@ -71,6 +72,8 @@ contains
 
       if (present(a))      call readXML_latt(a,'<cell>',buffer,c_latt)
       if (present(b))      call readXML_latt(b,'<reciprocal_lattice>',buffer,c_reclatt)
+      
+      if (present(alat) .and. present(a)) alat = a(1,1)
 
       if (present(Nmp)) then
         call readXML_inttag(Nmp(1),'<monkhorst_pack',buffer,'nk1')
