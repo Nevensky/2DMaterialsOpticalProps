@@ -22,13 +22,13 @@ integer :: iuni1, iuni2
 integer       :: Nk     ! = 48*NkI, number of wave vectors in FBZ with No symmetry 
 integer       :: NkI    ! number of wave vectors in IBZ
 integer       :: Nband  ! number of bands
-integer       :: Nocc   ! Number of occupied bands (unit cell)
+integer       :: Nval   ! Number of valence bands (unit cell)
 integer       :: NG     ! total number of G vectors  
 integer       :: NGd    ! minimum number of coefficients CG over all evc.n files
 integer       :: No     ! number of frequencies
 integer       :: Nlfd   ! dimenzija polja za local field zasto prozivoljno 50, ne moze se znati unaprijed
 real(kind=dp) :: NelQE  ! Number of electrons(unit cell)
-namelist /config/  NG, NGd, NkI, Nband, Nocc, NelQE,No, Nlfd
+namelist /config/  NG, NGd, NkI, Nband, Nval, NelQE,No, Nlfd
 
 
 ! file i/o debug
@@ -214,7 +214,7 @@ print *,"status: PointR done."
 
 ! Load IBZ wavevectors and eigenenergies
 path=trim(rundir)//"/"//trim(band_file)
-call loadkIandE(path, NkI, Nband, Nocc, kI, E, dGW)
+call loadkIandE(path, NkI, Nband, Nval, kI, E, dGW)
 print *,"status: kI and E loaded."
 
 
@@ -283,7 +283,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
   print *, 'DEBUG: entering parallel region'
   print *, 'Requested threads: ',Nthreads, 'Available threads: ',omp_get_num_threads()
-  !$omp parallel shared(S0,Qeff, iq, qx,qy,qz, kI,ktot,R,RI,eps,E, Efermi, T,Gcar, G,Glf,NkI,Nsym,NG,Ntot,Nocc,Nband,NGd,Nlf,Vcell, Gamma_inter, Gamma_intra, df_cut, Lor_cut,debugCount) private(ik, S0_partial, Qeff_partial, MnmK1K2,MnmK1K22,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,df, f1, f2, expo1, expo2, fact, Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2, C1,C2, iuni1, iuni2) firstprivate(savedir,No,domega,osdependent_id,pol) num_threads(Nthreads) default(none) 
+  !$omp parallel shared(S0,Qeff, iq, qx,qy,qz, kI,ktot,R,RI,eps,E, Efermi, T,Gcar, G,Glf,NkI,Nsym,NG,Ntot,Nval,Nband,NGd,Nlf,Vcell, Gamma_inter, Gamma_intra, df_cut, Lor_cut,debugCount) private(ik, S0_partial, Qeff_partial, MnmK1K2,MnmK1K22,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,df, f1, f2, expo1, expo2, fact, Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2, C1,C2, iuni1, iuni2) firstprivate(savedir,No,domega,osdependent_id,pol) num_threads(Nthreads) default(none) 
   thread_id =  omp_get_thread_num()
 
   !$omp do
@@ -1490,13 +1490,13 @@ stop
     
   end subroutine genImChi0
 
-  subroutine loadkIandE(path, NkI, Nband, Nocc, kI, E, dGW)
+  subroutine loadkIandE(path, NkI, Nband, Nval, kI, E, dGW)
     ! Loading of all wavevectors (in Cartesiand coords.) in the ireducible BZ and
     ! corresponding eigen-energies form the Quantum Espresso .band files
 
     implicit none
     integer,            intent(in)           :: NkI
-    integer,            intent(in)           :: Nband, Nocc
+    integer,            intent(in)           :: Nband, Nval
     character(len=100), intent(in)           :: path
     real(kind=dp),      intent(inout)        :: kI(:,:)
     real(kind=dp),      intent(inout)        :: E(:,:)
@@ -1530,7 +1530,7 @@ stop
     ! konverzija en. u Hartree
     E(1:NkI,1:Nband) = E(1:NkI,1:Nband)/Hartree
     ! scissor operator, ispravlja/shifta DFT gap (na 1eV u ovom slucaju)
-    E(1:NkI,Nocc+1:Nband) = E(1:NkI,Nocc+1:Nband) + dGW_
+    E(1:NkI,Nval+1:Nband) = E(1:NkI,Nval+1:Nband) + dGW_
 
   end subroutine loadkIandE
 

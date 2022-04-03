@@ -24,18 +24,18 @@ def find_cell(cell):
 	Vcell = a**2 * c * np.sin(np.deg2rad(60)) 
 	return a,c,Vcell
 
-def find_NGd_and_Nocc(BS):
+def find_NGd_and_Nval(BS):
 	NGd = BS[0]["npw"]
-	Nocc = 0.0
+	Nval = 0.0
 	for idx,item in enumerate(BS):
 		Npw_i = item["npw"]
 		if NGd > Npw_i:
 			NGd = Npw_i
-		# Nocc_i = np.asarray(item["occupations"]["#text"],dtype=np.float64,delim="\n")
-		Nocc_i = np.fromstring(item["occupations"]["#text"], dtype=np.float64, sep='\n' ).sum()
-		if Nocc_i > Nocc:
-			Nocc = Nocc_i
-	return np.int32(NGd), np.int32(Nocc)	
+		# Nval_i = np.asarray(item["occupations"]["#text"],dtype=np.float64,delim="\n")
+		Nval_i = np.fromstring(item["occupations"]["#text"], dtype=np.float64, sep='\n' ).sum()
+		if Nval_i > Nval:
+			Nval = Nval_i
+	return np.int32(NGd), np.int32(Nval)	
 
 def initalChecks(dat):
 	calc_type = dat["qes:espresso"]["input"]["control_variables"]["calculation"]
@@ -62,7 +62,7 @@ def initalChecks(dat):
 
 
 def parseParameters(dat):
-	global EFermi,Nbands,NelQE,NkI,Nsymm,NG,NGd,Nocc,a,c,Vcell
+	global EFermi,Nbands,NelQE,NkI,Nsymm,NG,NGd,Nval,a,c,Vcell
 	Nk_x = dat["qes:espresso"]["input"]["k_points_IBZ"]["monkhorst_pack"]["@nk1"]
 	Nk_y = dat["qes:espresso"]["input"]["k_points_IBZ"]["monkhorst_pack"]["@nk2"]
 	Nk_z = dat["qes:espresso"]["input"]["k_points_IBZ"]["monkhorst_pack"]["@nk3"]
@@ -82,14 +82,14 @@ def parseParameters(dat):
 	cell = np.array([a1,a2,a3]) # in units of [alat]
 
 	a,c,Vcell = find_cell(cell)
-	NGd, Nocc = find_NGd_and_Nocc(BS)
+	NGd, Nval = find_NGd_and_Nval(BS)
 	
 	print("kmesh: ",Nk_x," x ",Nk_y," x ",Nk_z)
 	print("alat:",alat)
 	print("a: ",a," [bohr] ","c: ",c," [bohr] ","\nVolume:",Vcell,"[bohr^3](hexagonal 2D)")
 	print("NG:",NG,"\nNGd: ",NGd)
 	print("Nsymm: ",Nsymm)
-	print("Nocc: ",Nocc)
+	print("Nval: ",Nval)
 	print("NelQE: ",NelQE,"\nNbands: ",Nbands,"\nNkI: ",NkI)
 	print("Fermi Energy: ",EFermi," [eV]")
 	
@@ -113,7 +113,7 @@ default_config ="""&directories
  NGd      = 0           ! Number of coefficients CG; should be less than minimum number of coefficients over all evc.n
  NkI      = 0           ! Number of wave vectors in IBZ
  Nband    = 0           ! Number of bands (unit cell)
- Nocc     = 0           ! Number of occupied bands (unit cell)
+ Nval     = 0           ! Number of occupied bands (unit cell)
  NelQE    = 0           ! Number of electrons(unit cell)
  No       = 2001        ! Number of frequencies
  Nlfd     = 100         ! Number of loacal field vectors (eventually should be fully dynamically allocated)
@@ -140,7 +140,7 @@ if __name__ == '__main__':
 	NelQE_comment = '         ! Number of electrons(unit cell)'
 	Nband_comment = '         ! Number of bands (unit cell)'
 	NkI_comment   = '           ! Number of wave vectors in IBZ'
-	Nocc_comment  = '          ! Number of occupied bands (unit cell)'
+	Nval_comment  = '          ! Number of occupied bands (unit cell)'
 	Vcell_comment = '    ! [a.u.^3]  Unit-cell volume '
 	EFermi_comment= '      ! [eV]      Fermi energy '
 	a0_comment    = '      ! [a.u.]    unit cell parameter in parallel direction '
@@ -198,8 +198,8 @@ if __name__ == '__main__':
 				elif 'Nband' in ln:
 					ln2 = ' Nband    = {} {}\n'.format(Nbands,Nband_comment)
 					lns_new.append(ln2)
-				elif 'Nocc' in ln:
-					ln2 = ' Nocc     = {} {}\n'.format(Nocc,Nocc_comment)
+				elif 'Nval' in ln:
+					ln2 = ' Nval     = {} {}\n'.format(Nval,Nval_comment)
 					lns_new.append(ln2)
 				elif 'NkI' in ln:
 					ln2 = ' NkI      = {} {}\n'.format(NkI,NkI_comment)
