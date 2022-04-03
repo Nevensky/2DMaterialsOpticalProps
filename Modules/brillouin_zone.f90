@@ -1,9 +1,11 @@
 module brillouin_zone
   use iso_fortran_env, only: dp => real64
+  use io_xml, only: loadXML_qe
+  use matrix_inverse, only: invert_real
   implicit none
 
-  public :: loadKiandE, genFBZ, checkFBZintegration, &
-            & findKinIBZ, findKQinIBZ, findMinQ
+  public :: loadKiandE, convertE, genFBZ, checkFBZintegration, &
+            & findKinIBZ, findKQinIBZ, findMinQ, invertRI
   private
 
 contains
@@ -50,42 +52,89 @@ contains
 
   end subroutine loadkIandE
 
-  subroutine genFBZ(Nk,NkI,Nsym,eps,kI,R,Ntot,ktot,writeOutput)
+  subroutine convertE(Nval, E, dGW)
+    !! Converts eigenenergies to Hartree units and shifts
+    !! the band gap by \( \Delta E_\text{GW} \) for each k point
+    use constants, only: Hartree
+    integer,          intent(in)           :: Nval   !! No. valence bands
+    real(kind=dp),    intent(inout)        :: E(:,:) !! eigenenergies (Nband x NkI)
+    real(kind=dp),    intent(in), optional :: dGW    !! scissor band gap correction 
+
+    integer :: iuni, ios, ik, i
+    integer :: Nband !! No. of bands
+    integer :: NkI   !! No. of k-points in FBZ
+    real(kind=dp) :: dGW_ = 0.0_dp
+    if (present(dGW)) dGW_ = dGW
+    Nband = size(E,1)
+    NkI   = size(E,2)
+
+    ! convert energy to Hartree
+    E(1:Nband,1:NkI) = E(1:Nband,1:NkI)/Hartree
+    ! scissor operator, shifts the DFT bandgap
+    E(Nval+1:Nband,1:NkI) = E(Nval+1:Nband,1:NkI) + dGW_
+  end subroutine convertE
+
+  subroutine invertRI(R,RI)
+    real(kind=dp), intent(in) :: R(:,:,:)
+    real(kind=dp), intent(out) :: RI(:,:,:)
+
+    integer :: i, Nsim
+    Nsim = size(R,3)
+    RI = R
+
+    do i=1,Nsim
+      call invert_real(RI)
+    enddo
+  end subroutine invertRI
+
+  subroutine genFBZ(kI, R, Ntot, ktot, eps, writeOutput)
     !! Generates all unique wavectors in the 1st BZ by applying 
     !! point group transformations on the reducible BZ
-    integer,           intent(in)  :: Nk, NkI, Nsym ! No. of k-points, iredducible k-kpoints, symm. ops.
-    real(kind=dp),     intent(in)  :: eps       ! threshold to distinguish whether k-points are the same
-    real(kind=dp),     intent(in)  :: kI(:,:)   ! k-points in the irreducible BZ
-    real(kind=dp),     intent(in)  :: R(:,:,:)  ! point group transformation matrices
-    
-    integer,           intent(out) :: Ntot      ! total No. of unique k-point in the 1st BZ
-    real(kind=dp),     intent(out) :: ktot(:,:) ! unique k-points in the 1st BZ
-    logical, optional, intent(in)  :: writeOutput ! write FBZ to file yes/no?
+    real(kind=dp),           intent(in)  :: kI(:,:)      !! k-points in the irreducible BZ
+    real(kind=dp),           intent(in)  :: R(:,:,:)     !! point group transformation matrices
+    integer,                 intent(out) :: Ntot         !! total No. of unique k-point in the 1st BZ
+    real(kind=dp),           intent(out) :: ktot(:,:)    !! unique k-points in the 1st BZ
+    real(kind=dp), optional, intent(in)  :: eps          !! threshold to distinguish whether two k-points are the same
+    logical,       optional, intent(in)  :: writeOutput  !! write FBZ to fbz_chek.dat file (yes/no)
 
-    logical       :: unique
-    integer       :: iuni, ios
+    logical       :: unique    !! .true. if k-point is unique
+    integer       :: iuni, ios !! file i/o vars
     integer       :: i, ik, jk, lk
-    integer       :: n, m
-    real(kind=dp) :: k(3,Nk) ! all non-unique k-points within the 1st BZ
+    integer       :: n, m 
+
+    integer :: NkI  !! No. k-points in the IBZ
+    integer :: Nsym !! No. symmetry opperations
+    integer :: Nk   !! No. of k-points in the FBZ
+    real(kind=dp), allocatable :: k(:,:) !! all non-unique k-points within the 1st BZ
+    real(kind=dp) :: eps_
+
+    NkI = size(kI,2) 
+    Nsym = size(R,1) 
+    Nk = 48*NkI      
+
+    eps_ = 1.0d-4 ! default thershold
+    if (present(eps)) eps_ = eps
+
+    allocate(k(3,Nk))
 
     jk = 0
     Ntot = 0 
 
-    symm_loop: do  i = 1, Nsym    ! loop over all symmetries
+    symm_loop: do  i = 1, Nsym     ! loop over all symmetries
       k_loop_IBZ: do  ik = 1, NkI  ! loop over k points in IBZ
         unique = .true.
         jk = jk + 1
         do  n = 1, 3   ! loop over kx, ky, kz 
           k(n,jk) = 0.0_dp
           do  m = 1, 3 ! loop over kx, ky, kz
-            k(n,jk) = k(n,jk) + R(i,n,m)*kI(m,ik) ! uses rotational symmetry to reconstrucrt FBZ from IBZ
+            k(n,jk) = k(n,jk) + R(m,n,i)*kI(m,ik) ! uses rotational symmetry to reconstrucrt FBZ from IBZ
           end do
         end do 
 
         if (jk > 1) then
           do  lk = 1, jk-1
             ! Check if the given k-point is unique (i.e. skips if it was already added)
-            if ( all ( abs(k(1:3,jk)-k(1:3,lk)) <= eps ) ) then 
+            if ( all ( abs(k(1:3,jk)-k(1:3,lk)) <= eps_ ) ) then 
               unique = .false.
             end if
           end do
@@ -98,8 +147,9 @@ contains
 
       end do k_loop_IBZ
     end do symm_loop
+    if (allocated(k)) deallocate(k)
 
-    ! write all (kx,ky) 1st BZ k-points to file
+    ! write all (kx,ky) surface FBZ k-points to file
     if (present(writeOutput)) then
       if (writeOutput) then
         open(newunit=iuni,iostat=ios,file='fbz_check.dat',action='write',status='new')
@@ -114,12 +164,75 @@ contains
     end if
   end subroutine genFBZ
 
-    subroutine checkFBZintegration(Nband,NkI,Nsym,Ntot,eps,kI,ktot,RI,Efermi,E,NelQE,Nel,T)
+  ! subroutine genFBZ(Nk,NkI,Nsym,eps,kI,R,Ntot,ktot,writeOutput)
+  !   !! Generates all unique wavectors in the 1st BZ by applying 
+  !   !! point group transformations on the reducible BZ
+  !   integer,           intent(in)  :: Nk, NkI, Nsym !! No. of k-points, iredducible k-kpoints, symm. ops.
+  !   real(kind=dp),     intent(in)  :: eps           !! threshold to distinguish whether k-points are the same
+  !   real(kind=dp),     intent(in)  :: kI(:,:)       !! k-points in the irreducible BZ
+  !   real(kind=dp),     intent(in)  :: R(:,:,:)      !! point group transformation matrices
+  !   integer,           intent(out) :: Ntot          !! total No. of unique k-point in the 1st BZ
+  !   real(kind=dp),     intent(out) :: ktot(:,:)     !! unique k-points in the 1st BZ
+  !   logical, optional, intent(in)  :: writeOutput   !! write FBZ to file yes/no?
+
+  !   logical       :: unique
+  !   integer       :: iuni, ios
+  !   integer       :: i, ik, jk, lk
+  !   integer       :: n, m
+  !   real(kind=dp) :: k(3,Nk) ! all non-unique k-points within the 1st BZ
+
+  !   jk = 0
+  !   Ntot = 0 
+
+  !   symm_loop: do  i = 1, Nsym    ! loop over all symmetries
+  !     k_loop_IBZ: do  ik = 1, NkI  ! loop over k points in IBZ
+  !       unique = .true.
+  !       jk = jk + 1
+  !       do  n = 1, 3   ! loop over kx, ky, kz 
+  !         k(n,jk) = 0.0_dp
+  !         do  m = 1, 3 ! loop over kx, ky, kz
+  !           k(n,jk) = k(n,jk) + R(i,n,m)*kI(m,ik) ! uses rotational symmetry to reconstrucrt FBZ from IBZ
+  !         end do
+  !       end do 
+
+  !       if (jk > 1) then
+  !         do  lk = 1, jk-1
+  !           ! Check if the given k-point is unique (i.e. skips if it was already added)
+  !           if ( all ( abs(k(1:3,jk)-k(1:3,lk)) <= eps ) ) then 
+  !             unique = .false.
+  !           end if
+  !         end do
+  !       end if
+
+  !       if (unique) then ! if it is unique add it to ktot
+  !         Ntot = Ntot+1
+  !         ktot(1:3,Ntot) = k(1:3,jk)
+  !       end if
+
+  !     end do k_loop_IBZ
+  !   end do symm_loop
+
+  !   ! write all (kx,ky) 1st BZ k-points to file
+  !   if (present(writeOutput)) then
+  !     if (writeOutput) then
+  !       open(newunit=iuni,iostat=ios,file='fbz_check.dat',action='write',status='new')
+  !       if (ios/=0) then
+  !         stop 'ERROR: Could not open fbz_check.dat file in genFBZ()'
+  !       end if
+  !       do  i = 1,Ntot
+  !         write(iuni,*) ktot(1,i), ktot(2,i)  
+  !       end do
+  !       close(iuni)
+  !     end if
+  !   end if
+  ! end subroutine genFBZ
+
+  subroutine checkFBZintegration(Nband,NkI,Nsym,Ntot,eps,kI,ktot,RI,Efermi,E,NelQE,Nel,T)
     !! Checks if the No. of electrons in the 1st BZ (Nel) equals 
     !! the number of electrons in the unit cell as calculated by Quantum Espresso (NelQE)   
     use statistics, only: FermiDirac
-    integer,       intent(in)  :: NelQE
     integer,       intent(in)  :: NkI, Nsym, Nband, Ntot
+    real(kind=dp), intent(in)  :: NelQE
     real(kind=dp), intent(in)  :: eps, Efermi
     real(kind=dp), intent(in)  :: kI(:,:)
     real(kind=dp), intent(in)  :: ktot(:,:)  ! all unique k-points in the FBZ
@@ -146,7 +259,7 @@ contains
               found = .true.
             else
               symm_loop: do  i = 2, Nsym
-                forall (l=1:3) K(l) = sum ( RI(i,l,1:3)*ktot(1:3,ik) )
+                forall (l=1:3) K(l) = sum ( RI(1:3,l,i)*ktot(1:3,ik) )
                 k_loop_IBZ: do  j = 1, NkI
                   if ( all ( abs(K(1:3)-kI(1:3,j)) <= eps ) ) then
                     found = .true.
@@ -187,42 +300,140 @@ contains
 
   end subroutine checkFBZintegration
 
+  subroutine checkFBZintegration_new(NelQE, Nel, kI, ktot, RI, E, Efermi, T, eps, spinorbit)
+    !! Checks if the No. of electrons in the FBZ (Nel) equals 
+    !! the number of electrons in the unit cell as calculated by Quantum Espresso (NelQE)   
+    use statistics, only: FermiDirac
+    real(kind=dp), intent(in)  :: NelQE        !! No. of electrons from QE calculation
+    real(kind=dp), intent(in)  :: Efermi       !! Fermi energy
+    real(kind=dp), intent(in)  :: kI(:,:)      !! k-points in the IBZ
+    real(kind=dp), intent(in)  :: ktot(:,:)    !! all unique k-points in the FBZ
+    real(kind=dp), intent(in)  :: RI(:,:,:)    !! inverted rotational symmetry matrices
+    real(kind=dp), intent(in)  :: E(:,:)       !! eigenenergies at each k-point
+    real(kind=dp), intent(out) :: Nel          !! No. of electrons
+    real(kind=dp), optional, intent(in) :: T   !! electron temperature
+    real(kind=dp), optional, intent(in) :: eps !! thershold for two k-points being the same
+    logical,       optional, intent(in) :: spinorbit !! does the Quantum Espresso calculation include LS coupling?
 
-  subroutine findKinIBZ(ik, NkI, Nsym, eps, kx, ky, kz, RI, kI, iR1, iK1)
-    !! Finds k-point (kx,ky,kz) in the ireducible Brillouin zone (IBZ)
-    integer,       intent(in)  :: ik
-    integer,       intent(in)  :: NkI, Nsym
-    real(kind=dp), intent(in)  :: eps
-    real(kind=dp), intent(in)  :: kx, ky, kz
-    real(kind=dp), intent(in)  :: kI(:,:)
-    real(kind=dp), intent(in)  :: RI(:,:,:)
-    integer      , intent(out) :: iR1, iK1 ! K = R1*K1
-
-    integer       :: i, j, l
     logical       :: found
+    integer       :: ik, n, i, j, l, K1
+    integer       :: NkI, Nsym, Nband, Ntot
+    real(kind=dp) :: kx,ky,kz
+    real(kind=dp) :: Ni ! Fermi-Dirac occupation
+    ! real(kind=dp) :: K11, K22, K33
+    real(kind=dp) :: K(3) ! => k_IBZ = R_inv x k_FBZ = R_inv x ktot
+    real(kind=dp) :: eps_
+
+    NkI = size(kI,2)
+    Nsym = size(RI,i)
+    Nband = size(E,1)
+    Ntot = size(ktot,2)
+
+    eps_ = 1.0d-4 ! default thershold
+    if (present(eps)) eps_ = eps
+
+    Nel = 0 
+    k_loop_FBZ : do  ik = 1,Ntot
+      band_loop: do  n = 1, Nband
+        if (n == 1) then
+            found = .false.
+            if (ik <= NkI) then
+              K1 = ik
+              found = .true.
+            else
+              symm_loop: do  i = 2, Nsym
+                forall (l=1:3) K(l) = sum ( RI(1:3,l,i)*ktot(1:3,ik) )
+                k_loop_IBZ: do  j = 1, NkI
+                  if ( all ( abs(K(1:3)-kI(1:3,j)) <= eps_ ) ) then
+                    found = .true.
+                    K1 = j
+                    cycle band_loop
+                  end if
+                end do k_loop_IBZ
+              end do symm_loop
+            end if
+
+            if (.not. found) then
+              print*,'Can not find wave vector K=',ik, 'in I.B.Z.'
+              stop
+            end if
+
+        end if
+
+        ! debug neven: the counting of electrons should be moved to a new subroutine
+
+        ! sums electrons in the remeaining bands
+        if (present(T)) then ! temperature is given use Fermi-Dirac statistics
+          Ni = FermiDirac(E(K1,n), Efermi, T)
+          Nel = Nel + Ni
+        else ! temperature not given, assuming the cyrstal is insulating
+          if (E(K1,n) < Efermi) then 
+            Ni = 1.0_dp
+          else
+            Ni = 0.0_dp
+          end if  
+        end if
+        Nel = Nel + Ni
+        ! print *,'Nel:', Nel,' Ni:',Ni,' band: ',n
+    
+      end do band_loop
+    end do k_loop_FBZ
+    
+    Nel = 2*Nel / Ntot ! divide by Ntot due to overcounting caused by the k_loop_FBZ
+    ! debug neven: remove 2xNel for a spin-orbit calculation?
+    if (present(spinorbit)) then 
+      if (spinorbit) Nel = Nel/2
+    end if
+
+    if (abs(NelQE-Nel)>eps) print *, 'WARNING: Incorrect No. of electrons in FBZ.'
+    print *, 'status: NelQE/Nel', 100.0*abs(NelQE-Nel/NelQE),'% missmatch'
+
+  end subroutine checkFBZintegration_new
+
+  subroutine findKinIBZ(ik, kx, ky, kz, kI, RI, iR1, iK1, eps)
+    !! Finds k-point (kx,ky,kz) in the ireducible Brillouin zone (IBZ)
+    integer,       intent(in)  :: ik            !! index of k-point in IBZ
+    real(kind=dp), intent(in)  :: kx, ky, kz
+    real(kind=dp), intent(in)  :: kI(:,:)       !! k-points in the IBZ
+    real(kind=dp), intent(in)  :: RI(:,:,:)     !! inverted rotational symmetry matrices
+    integer      , intent(out) :: iR1, iK1 ! K = R1*K1
+    real(kind=dp), intent(in), optional  :: eps !! thershold for two k-points being the same
+
+    logical       :: found
+    integer       :: i, j, l
+    integer       :: NkI, Nsym
     real(kind=dp) :: K(3), k_fbz(3)
+    real(kind=dp) :: eps_
+
+    NkI = size(kI,2)
+    Nsym = size(RI,3)
 
     k_fbz = kx
     k_fbz = ky
     k_fbz = kz
 
+    eps_ = 1.0d-4 ! default thershold
+    if (present(eps)) eps_ = eps
+
     found = .false.
     if (ik <= NkI) then
       iR1 = 1
       iK1 = ik
-      found = .true.
+      found = .true. ! k was already in the IBZ
     else
       symmetry_loop: do  i = 2, Nsym
-        forall (l=1:3) K(l) = sum ( RI(i,l,1:3)*k_fbz(1:3) )
-        ! K(1) = sum (RI(i,1,1:3)*k_fbz(1:3) ) ! Kx
-        ! K(2) = sum (RI(i,2,1:3)*k_fbz(1:3) ) ! Ky
-        ! K(3) = sum (RI(i,3,1:3)*k_fbz(1:3) ) ! Kz
+        do l=1,3
+          K(l) = sum ( RI(1:3,l,i)*k_fbz(1:3) )
+        end do
+        ! K(1) = sum (RI(1:3,1,i)*k_fbz(1:3) ) ! Kx
+        ! K(2) = sum (RI(1:3,2,i)*k_fbz(1:3) ) ! Ky
+        ! K(3) = sum (RI(1:3,3,i)*k_fbz(1:3) ) ! Kz
         do  j = 1,NkI
-          if ( all ( abs( K(1:3)-kI(1:3,j) ) <= eps ) ) then
+          if ( all ( abs( K(1:3)-kI(1:3,j) ) <= eps_ ) ) then
             found = .true.
             iR1 = i
             iK1 = j
-            EXIT symmetry_loop
+            exit symmetry_loop
           end if
         end do
       end do symmetry_loop
@@ -235,42 +446,53 @@ contains
   end subroutine findKinIBZ
 
 
-  subroutine findKQinIBZ(KQx, KQy, KQz, eps, Nsym, NkI, Ntot, NG, kI, ktot, RI, G, iG0, iR2, iK2)
+  subroutine findKQinIBZ(KQx, KQy, KQz, NG, kI, ktot, RI, G, iG0, iR2, iK2, eps)
     !! Finds the k-point (KQx,KQy,KQz) in the 1st. Brillouin zone (FBZ) and then the ireducible Brillouin zone (IBZ)
-    integer,       intent(in)  :: Nsym, NkI, Ntot, NG
-    real(kind=dp), intent(in)  :: eps
-    real(kind=dp), intent(in)  :: KQx, KQy, KQz
-    real(kind=dp), intent(in)  :: kI(:,:)
-    real(kind=dp), intent(in)  :: ktot(:,:)
+    integer,       intent(in)  :: NG
+    real(kind=dp), intent(in)  :: KQx, KQy, KQz !! K+Q wavevector possibly outside of FBZ
+    real(kind=dp), intent(in)  :: kI(:,:)       !! k-points in the IBZ
+    real(kind=dp), intent(in)  :: ktot(:,:)     !! k-points in the FBZ
     real(kind=dp), intent(in)  :: G(:,:)
-    real(kind=dp), intent(in)  :: RI(:,:,:)
+    real(kind=dp), intent(in)  :: RI(:,:,:)     !! inverted rotational symmetry matrices
     integer,       intent(out) :: iG0, iR2, iK2 ! G0=rec.lattice; K + Q = G0 + R2*K2
+    real(kind=dp), intent(in), optional  :: eps !! thershold for two k-points being the same
   
-    integer       :: found
+    integer       :: found_ibz, found_fbz
     integer       :: iG, jk, i, j, l
+    integer       :: Nsym, NkI, Ntot
     real(kind=dp) :: K(3), KQ(3)
+    real(kind=dp) :: eps_
+
+    Nsym = size(RI,3)
+    NkI  = size(kI,2)
+    Ntot = size(ktot,2)
 
     KQ(1) = KQx
     KQ(2) = KQy
     KQ(3) = KQy
+
+    eps_ = 1.0d-4 ! default thershold
+    if (present(eps)) eps_ = eps
   
-    found = 1 ! false
+    found_fbz = .false.
     iG_loop: do  iG = 1,NG
       k_loop_FBZ : do  jk = 1, Ntot
-        if ( all (abs(KQ(1:3)-G(1:3,iG)-ktot(1:3,jk)) <= eps) ) then
-          found = 2 ! true for FBZ
+        if ( all (abs(KQ(1:3)-G(1:3,iG)-ktot(1:3,jk)) <= eps_) ) then
+          found_fbz = .true.
           iG0 = iG
           symm_loop: do  i = 1, Nsym
-            forall (l=1:3) K(l) = sum( RI(i,l,1:3) * ktot(1:3,jk) )
-            ! K(1) = sum(RI(i,1,1:3) * ktot(1:3,jk) )
-            ! K(2) = sum(RI(i,2,1:3) * ktot(1:3,jk) )
-            ! K(3) = sum(RI(i,3,1:3) * ktot(1:3,jk) )
+            do l=1,3
+              K(l) = sum( RI(1:3,l,i) * ktot(1:3,jk) )
+            end do
+            ! K(1) = sum(RI(1:3,1,i) * ktot(1:3,jk) )
+            ! K(2) = sum(RI(1:3,2,i) * ktot(1:3,jk) )
+            ! K(3) = sum(RI(1:3,3,i) * ktot(1:3,jk) )
             k_loop_IBZ: do  j = 1, NkI
-              if ( all( abs(K(1:3)-kI(1:3,j)) <= eps) ) then
-                found = 3 ! true for IBZ (and also for FBZ)
+              if ( all( abs(K(1:3)-kI(1:3,j)) <= eps_) ) then
+                found_ibz = .true. ! true for IBZ (and also for FBZ)
                 iR2 = i
                 iK2 = j
-                EXIT iG_loop
+                exit iG_loop
               end if
             end do k_loop_IBZ
           end do symm_loop
@@ -278,11 +500,11 @@ contains
       end do k_loop_FBZ
     end do iG_loop  
   
-    if (found == 1) then
+    if (.not. found_fbz) then
       ! print*,'Can not find wave vector K+Q=',ik,'+',iq, 'in FBZ.'
       print*,'Can not find wave vector K+Q in FBZ.'
       stop
-    else if (found == 2) then
+    else if (.not. found_ibz) then
       ! print*,'Can not find wave vector K+Q=',ik,'+',iq, 'in IBZ.'
       print*,'Can not find wave vector K+Q=',iK2, 'in IBZ.'
       stop
@@ -290,15 +512,18 @@ contains
   
   end subroutine findKQinIBZ
 
-  subroutine findMinQ(iq, Ntot, ktot, qx, qy, qz)
+  subroutine findMinQ(iq, ktot, q, absq)
     !! Searches for the mininimal wavevector \(\mathbf{q}=(qx,qy,qz)\) in the \(\Gamma \to M \) direction
-    integer,       intent(in)  :: iq, Ntot
-    real(kind=dp), intent(in)  :: ktot(:,:)
-    real(kind=dp), intent(out) :: qx, qy, qz
+    integer,       intent(in)            :: iq !! q-vector index
+    real(kind=dp), intent(in)            :: ktot(:,:) !! k-points in the FBZ
+    real(kind=dp), intent(out)           :: q(3) !! q-vector at index iq
+    real(kind=dp), intent(out), optional :: absq !! norm of q-vector at index iq
 
     integer       :: i, ikmin
     real(kind=dp) :: kmin, kref, krefM ! , absq
-    ! real(kind=dp) :: q(3) ! (qx,qy,qz)
+    integer       :: Ntot
+    
+    Ntot = size(ktot,2)
 
     kmin = 1.0
     Ntot_loop: do  i = 1, Ntot ! loop over different k-points in FBZ
@@ -306,7 +531,7 @@ contains
       ! neven debug
       ! print *,'i=',i,' kref: ',kref
       if (kref == 0.0) then
-        CYCLE Ntot_loop
+        cycle Ntot_loop
       else if (kref < kmin) then
         kmin = kref
         ikmin = i
@@ -315,15 +540,15 @@ contains
         print *,'i=',i,'kmin: ',kmin
       end if
     end do Ntot_loop
-    ! neve debug
+    ! neven debug
     ! print *,'ikmin=',ikmin,'kmin=',kmin,'ktot(1:3,ikmin)',ktot
-    qx = (iq-1) * ktot(1,ikmin)
-    qy = (iq-1) * ktot(2,ikmin)
-    qz = (iq-1) * ktot(3,ikmin)
+    ! qx = (iq-1) * ktot(1,ikmin)
+    ! qy = (iq-1) * ktot(2,ikmin)
+    ! qz = (iq-1) * ktot(3,ikmin)
     ! absq = sqrt(qx**2 + qy**2 + qz**2)
 
-    ! q(1:3) = (iq-1) * ktot(1:3,ikmin)
-    ! absq = sqrt( sum( q(1:3)**2 ) )
+    q(1:3) = (iq-1) * ktot(1:3,ikmin)
+    if (present(absq)) absq = sqrt( sum( q(1:3)**2 ) )
   end subroutine findMinQ
 
 end module brillouin_zone

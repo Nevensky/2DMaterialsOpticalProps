@@ -4,7 +4,7 @@ program read_xml
   implicit none
 
 
-  integer                    :: Nbands, NkI, Nrot, Nsym, Nmp(3)
+  integer                    :: Nband, NkI, Nrot, Nsym, Nmp(3)
   real(kind=dp)              :: alat             !! lattice parameter
   real(kind=dp)              :: a(3,3)           !! direct lattice
   real(kind=dp)              :: b(3,3)           !! reciprocal lattice
@@ -23,7 +23,7 @@ program read_xml
   if (len(trim(path)) == 0) then
     stop 'Specify path to data_file_schema.xml as first argument.'
   else
-    call loadXML_qe(path, Nbands , NkI, Nrot, Nsym, Nmp, alat, a, b, R, Npw, kI, eigenvals, occupations, T, Efermi, NelQE, printOutput=.true.)
+    call loadXML_qe(path, Nband , NkI, Nrot, Nsym, Nmp, alat, a, b, R, Npw, kI, eigenvals, occupations, T, Efermi, NelQE, printOutput=.true.)
   end if
 
 end program read_xml

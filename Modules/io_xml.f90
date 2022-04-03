@@ -5,25 +5,25 @@
 !! Fermi energy: EFermi
 !! No. of electrons: NelQE
 !! No. of rotational symmetries: Nsym
-!! No. of bands: Nbands
+!! No. of bands: Nband
 !! No. k points in the IBZ: NkI
 !! Monkhorst-Pack mesh dimensions: Nmp(3)
 !! No. of planewaves at each k point: Npw(NkI)
 !! rotational symmetries: R
 !! k points in the IBZ: kI
-!! band eigenvalues at each k point: eigenvals (Nbands x NkI)
-!! band occupations at each k point: eigenvals (Nbands x NkI)
+!! band eigenvalues at each k point: eigenvals (Nband x NkI)
+!! band occupations at each k point: eigenvals (Nband x NkI)
 module io_xml
-  use iso_fortran_env, only : iostat_end, dp=> real64
+  use iso_fortran_env, only : iostat_end, dp => real64
   implicit none
 
   public :: loadXML_qe
   private 
 
 contains
-  subroutine loadXML_qe(path, Nbands , NkI, Nrot, Nsym, Nmp, alat, a, b, R, Npw, kI, eigenvals, occupations, T, Efermi, NelQE, printOutput)
+  subroutine loadXML_qe(path, Nband , NkI, Nrot, Nsym, Nmp, alat, a, b, R, Npw, kI, eigenvals, occupations, T, Efermi, NelQE, printOutput)
     character(len=*), intent(in) :: path
-    integer,       intent(out), optional :: Nbands, NkI, Nrot, Nsym, Nmp(3)
+    integer,       intent(out), optional :: Nband, NkI, Nrot, Nsym, Nmp(3)
     real(kind=dp), intent(out), optional :: alat      !! lattice parameter
     real(kind=dp), intent(out), optional              :: a(3,3)           !! direct lattice
     real(kind=dp), intent(out), optional              :: b(3,3)           !! reciprocal lattice
@@ -37,7 +37,7 @@ contains
     real(kind=dp), intent(out), optional :: NelQE       !! No. electrons
     logical,       intent(in),  optional :: printOutput !! print values/arrays read from the XML file to standard output
     
-    ! integer, save, intent(out), optional :: Nbands=0, NkI=0, Nrot=0, Nsym=0, Nmp(3) = 0
+    ! integer, save, intent(out), optional :: Nband=0, NkI=0, Nrot=0, Nsym=0, Nmp(3) = 0
 
     integer, save :: ik_eig=0, ik_occ=0, ik_Npw=1 ! k-point counters/indices
 
@@ -49,7 +49,7 @@ contains
     logical             :: noinv, force_symmorphic
 
     if (present(printOutput)) printOutput_ = printOutput
-    if (present(Nbands)) Nbands = 0
+    if (present(Nband)) Nband = 0
     if (present(NkI))    NkI    = 0
     if (present(Nrot))   Nrot   = 0
     if (present(Nsym))   Nsym   = 0
@@ -65,7 +65,7 @@ contains
       if (present(Nrot))   call readXML_intval(Nrot,'<nrot>',buffer)
       if (present(Nsym))   call readXML_intval(Nsym,'<nsym>',buffer)
       if (present(NkI))    call readXML_intval(NkI,'<nks>',buffer)
-      if (present(Nbands)) call readXML_intval(Nbands,'<nbnd>',buffer)
+      if (present(Nband))  call readXML_intval(Nband,'<nbnd>',buffer)
       if (present(NelQE))  call readXML_realval(NelQE,'<nelec>',buffer)
       if (present(Efermi)) call readXML_realval(Efermi,'<fermi_energy>',buffer)
       if (present(T))      call readXML_realtag(T,'<smearing',buffer)
@@ -109,15 +109,15 @@ contains
         end if
       end if
 
-      if (all([present(Nbands),present(NkI)])) then
+      if (all([present(Nband),present(NkI)])) then
         ! reads all band eigenvalues and their respective occupations
-        if (NkI/=0 .and. Nbands/=0) then
+        if (NkI/=0 .and. Nband/=0) then
           if (present(eigenvals)) then
-            if (.not. allocated(eigenvals)) allocate(eigenvals(Nbands,NkI))
+            if (.not. allocated(eigenvals)) allocate(eigenvals(Nband,NkI))
             call readXML_eigenvals(eigenvals,'<eigenvalues size=',buffer,c_eig,ik_eig)
           end if
           if (present(occupations)) then
-            if (.not. allocated(occupations)) allocate(occupations(Nbands,NkI))
+            if (.not. allocated(occupations)) allocate(occupations(Nband,NkI))
             call readXML_eigenvals(occupations,'<occupations size=',buffer,c_occ,ik_occ)
           end if
         end if
@@ -175,24 +175,24 @@ contains
         if (present(eigenvals)) then
           print *, '<eigenvalues>'
           ! write all elements before the last line
-          do ie=0,Nbands/5-1
+          do ie=0,Nband/5-1
             write(*,'(5f8.4)'), eigenvals(ie*5+1:ie*5+5,ik)
           enddo
           ! write elements in the last line
-          do ie=1,mod(Nbands,5)
-            write(*,'(f8.4)',advance='no') eigenvals(Nbands-mod(Nbands,5)+ie,ik)
+          do ie=1,mod(Nband,5)
+            write(*,'(f8.4)',advance='no') eigenvals(Nband-mod(Nband,5)+ie,ik)
           enddo
           write(*,*) ''
         end if
         if (present(occupations)) then
           print *, '<occupations>'
           ! write all elements before the last line
-          do ie=0,Nbands/5-1
+          do ie=0,Nband/5-1
               write(*,'(5f8.4)'), occupations(ie*5+1:ie*5+5,ik)
           enddo
           ! write elements in the last line
-          do ie=1,mod(Nbands,5)
-            write(*,'(f8.4)',advance='no') occupations(Nbands-mod(Nbands,5)+ie,ik)
+          do ie=1,mod(Nband,5)
+            write(*,'(f8.4)',advance='no') occupations(Nband-mod(Nband,5)+ie,ik)
           enddo
           write(*,*) ''
         end if
@@ -202,7 +202,7 @@ contains
 
     
     if (present(NkI)    .and. printOutput_) print *, 'NkI = ', NkI
-    if (present(Nbands) .and. printOutput_) print *, 'Nbands = ',Nbands
+    if (present(Nband)  .and. printOutput_) print *, 'Nband = ',Nband
     if (present(Nrot)   .and. printOutput_) print *, 'Nrot = ', Nrot
     if (present(Nsym)   .and. printOutput_) print *, 'Nsym = ', Nsym
     if (present(NelQE)  .and. printOutput_) print *, 'NelQE = ', NelQE
@@ -393,7 +393,7 @@ contains
   subroutine readXML_rot(a,tag,buffer,counter,counter2)
     real(kind=dp),       intent(inout) :: a(:,:,:)
     character(len=200),  intent(in)    :: buffer
-    character(len=*) ,   intent(in)    ::tag
+    character(len=*) ,   intent(in)    :: tag
     integer,             intent(inout) :: counter
     integer,             intent(in)    :: counter2
 
@@ -413,24 +413,24 @@ contains
 
 
   subroutine readXML_eigenvals(vals,tag,buffer,counter,ik)
-    real(kind=dp),    intent(inout) :: vals(:,:) ! Nbands x NkI
+    real(kind=dp),    intent(inout) :: vals(:,:) ! Nband x NkI
     character(len=*), intent(in)    :: buffer, tag
     integer,          intent(inout) :: counter, ik
     
     character(len=200)   :: dummy
-    integer              :: Nlines, Nbands
+    integer              :: Nlines, Nband
     integer              :: ie
     real(kind=dp)        :: a_tmp(5) ! dim 5 is the No. of columns
     integer, allocatable :: Nie(:)
 
-    Nbands = size(vals,1)
-    if (mod(Nbands,5)==0) then
-      Nlines = Nbands/5
+    Nband = size(vals,1)
+    if (mod(Nband,5)==0) then
+      Nlines = Nband/5
     else
-      Nlines = Nbands/5 + 1
+      Nlines = Nband/5 + 1
       allocate(Nie(Nlines))
       Nie(1:Nlines-1) = 5
-      Nie(Nlines) = mod(Nbands,5)
+      Nie(Nlines) = mod(Nband,5)
     endif
 
     if (index(buffer, tag) /= 0) then
@@ -450,7 +450,7 @@ contains
       counter = 0
     end if
 
-  deallocate(Nie)
+  if (allocated(Nie)) deallocate(Nie)
   end subroutine readXML_eigenvals
 
 end module io_xml
