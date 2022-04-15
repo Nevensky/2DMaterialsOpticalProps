@@ -41,7 +41,7 @@ contains
 
     integer, save :: ik_eig=0, ik_occ=0, ik_Npw=1 ! k-point counters/indices
 
-    logical             :: printOutput_                 
+    logical             :: printOutput_ = .false.               
     integer             :: iuni, ios_fopen, ios_fread=0 ! file i/o status vars
     integer             :: i, is, ie, ik                ! heleper vars
     integer,save        :: c_latt=0, c_reclatt=0, c_sym1=0, c_sym2=0, c_kpts=0, c_eig=0, c_occ=0 ! counters
@@ -81,10 +81,10 @@ contains
         call readXML_inttag(Nmp(3),'<monkhorst_pack',buffer,'nk3')
       end if
 
-      if (all([present(Nsym),present(R)])) then
+      if (all([present(Nrot),present(R)])) then
         ! reads all rotational symmetries
-        if (Nsym/=0) then
-          if (.not. allocated(R)) allocate(R(3,3,Nsym))
+        if (Nrot/=0) then
+          if (.not. allocated(R)) allocate(R(3,3,Nrot))
           call readXML_rot(R,'<rotation',buffer,c_sym1, c_sym2)
           if (c_sym1==4) then
             c_sym2 = c_sym2+1
