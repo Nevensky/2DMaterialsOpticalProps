@@ -11,6 +11,7 @@ module brillouin_zone
 contains
 
   subroutine loadkIandE(path, NkI, Nband, Nval, kI, E, dGW)
+    !! DEPRECATED: io_xml module stores E and kI differently
     !! Loads all wavevectors (in Cartesiand coords.) in the ireducible BZ and
     !! corresponding eigen-energies form the Quantum Espresso .band files
     use constants, only: Hartree
@@ -18,7 +19,7 @@ contains
     integer,          intent(in)           :: Nband, Nval
     character(len=*), intent(in)           :: path
     real(kind=dp),    intent(inout)        :: kI(:,:)
-    real(kind=dp),    intent(inout)        :: E(:,:)
+    real(kind=dp),    intent(inout)        :: E(:,:) !! DFT eigenenergies (NkI x Nband)
     real(kind=dp),    intent(in), optional :: dGW
 
     integer :: iuni, ios, ik, i
@@ -63,7 +64,7 @@ contains
     integer :: Nband !! No. of bands
     integer :: NkI   !! No. of k-points in FBZ
     real(kind=dp) :: dGW_ = 0.0_dp
-    
+
     if (present(dGW)) dGW_ = dGW
     Nband = size(E,1)
     NkI   = size(E,2)
@@ -74,8 +75,8 @@ contains
 
   subroutine invertR(R, RI)
     !! Computes inverse of each rotational symmetry matrix
-    real(kind=dp), intent(inout)          :: R(:,:,:)
-    real(kind=dp), intent(out),  optional :: RI(:,:,:)
+    real(kind=dp), intent(inout)          :: R(:,:,:)  !! point group rotational matrices (3 x 3 x Nrot)
+    real(kind=dp), intent(out),  optional :: RI(:,:,:) !! rotational matrices inverted
 
     integer :: i, Nrot
     real(kind=dp), allocatable :: RI_(:,:,:)
@@ -98,17 +99,17 @@ contains
   subroutine genFBZ(kI, R, Ntot, ktot, eps, writeOutput)
     !! Generates all unique wavectors in the 1st BZ by applying 
     !! point group transformations on the reducible BZ
-    real(kind=dp),           intent(in)  :: kI(:,:)      !! k-points in the irreducible BZ
-    real(kind=dp),           intent(in)  :: R(:,:,:)     !! point group transformation matrices
-    integer,                 intent(out) :: Ntot         !! total No. of unique k-point in the 1st BZ
-    real(kind=dp),           intent(out) :: ktot(:,:)    !! unique k-points in the 1st BZ
+    real(kind=dp),           intent(in)  :: kI(:,:)      !! k-points in the IBZ (3 x NkI)
+    real(kind=dp),           intent(in)  :: R(:,:,:)     !! point group transformation matrices (3 x 3 x Nrot)
+    integer,                 intent(out) :: Ntot         !! No. of unique k-point in the FBZ
+    real(kind=dp),           intent(out) :: ktot(:,:)    !! unique k-points in the FBZ
     real(kind=dp), optional, intent(in)  :: eps          !! threshold to distinguish whether two k-points are the same
     logical,       optional, intent(in)  :: writeOutput  !! write FBZ to fbz_chek.dat file (yes/no)
 
     logical       :: unique    !! .true. if k-point is unique
     integer       :: iuni, ios !! file i/o vars
     integer       :: i, ik, jk, lk
-    integer       :: n, m 
+    integer       :: n, m
 
     integer :: NkI  !! No. k-points in the IBZ
     integer :: Nsym !! No. symmetry opperations
@@ -117,7 +118,7 @@ contains
     real(kind=dp) :: eps_
 
     NkI = size(kI,2) 
-    Nsym = size(R,1) 
+    Nsym = size(R,3) 
     Nk = 48*NkI      
 
     eps_ = 1.0d-4 ! default thershold
@@ -240,22 +241,23 @@ contains
     !! the number of electrons in the unit cell as calculated by Quantum Espresso (NelQE)   
     use statistics, only: FermiDirac
     integer,       intent(in)  :: NkI, Nsym, Nband, Ntot
-    real(kind=dp), intent(in)  :: NelQE
-    real(kind=dp), intent(in)  :: eps, Efermi
-    real(kind=dp), intent(in)  :: kI(:,:)
-    real(kind=dp), intent(in)  :: ktot(:,:)  ! all unique k-points in the FBZ
+    real(kind=dp), intent(in)  :: NelQE      !! No. electrons computed in Quantum Espresso
+    real(kind=dp), intent(in)  :: Efermi     !! Fermi energy
+    real(kind=dp), intent(in)  :: eps        !! threshold for two k-points to be considered equal
+    real(kind=dp), intent(in)  :: kI(:,:)    !! k-points in the IBZ (3 x NkI)
+    real(kind=dp), intent(in)  :: ktot(:,:)  !! all unique k-points in the FBZ
 
-    real(kind=dp), intent(in)  :: RI(:,:,:)
-    real(kind=dp), intent(in)  :: E(:,:)
-    real(kind=dp), intent(out) :: Nel
-    real(kind=dp), optional, intent(in) :: T
+    real(kind=dp), intent(in)  :: RI(:,:,:)  !! inverse of point group rotantional matrices (3 x 3 x Nrot)
+    real(kind=dp), intent(in)  :: E(:,:)     !! DFT eigenenergies
+    real(kind=dp), intent(out) :: Nel        !! No. electrons computed in our code
+    real(kind=dp), optional, intent(in) :: T !! electron temperature
 
     logical       :: found
     integer       :: ik, n, i, j, l, K1
     real(kind=dp) :: kx,ky,kz
-    real(kind=dp) :: Ni ! Fermi-Dirac occupation
+    real(kind=dp) :: Ni !! Fermi-Dirac occupation
     ! real(kind=dp) :: K11, K22, K33
-    real(kind=dp) :: K(3) ! => k_IBZ = R_inv x k_FBZ = R_inv x ktot
+    real(kind=dp) :: K(3) !! => k_IBZ = R_inv x k_FBZ = R_inv x ktot
 
     Nel = 0 
     k_loop_FBZ : do  ik = 1,Ntot
@@ -316,15 +318,15 @@ contains
     real(kind=dp), intent(in)  :: Efermi       !! Fermi energy
     real(kind=dp), intent(in)  :: kI(:,:)      !! k-points in the IBZ
     real(kind=dp), intent(in)  :: ktot(:,:)    !! all unique k-points in the FBZ
-    real(kind=dp), intent(in)  :: RI(:,:,:)    !! inverted rotational symmetry matrices
-    real(kind=dp), intent(in)  :: E(:,:)       !! eigenenergies at each k-point
+    real(kind=dp), intent(in)  :: RI(:,:,:)    !! inverted rotational symmetry matrices (3 x 3 x Nrot)
+    real(kind=dp), intent(in)  :: E(:,:)       !! eigenenergies at each k-point (Nband x NkI)
     real(kind=dp), intent(out) :: Nel          !! No. of electrons
     real(kind=dp), optional, intent(in) :: T   !! electron temperature
     real(kind=dp), optional, intent(in) :: eps !! thershold for two k-points being the same
     logical,       optional, intent(in) :: spinorbit !! does the Quantum Espresso calculation include LS coupling?
 
     logical       :: found
-    integer       :: ik, n, i, j, l, K1
+    integer       :: ik, jk, n, i, l, K1
     integer       :: NkI, Nsym, Nband, Ntot
     real(kind=dp) :: kx,ky,kz
     real(kind=dp) :: Ni ! Fermi-Dirac occupation
@@ -333,7 +335,7 @@ contains
     real(kind=dp) :: eps_
 
     NkI = size(kI,2)
-    Nsym = size(RI,i)
+    Nsym = size(RI,3)
     Nband = size(E,1)
     Ntot = size(ktot,2)
 
@@ -351,10 +353,10 @@ contains
             else
               symm_loop: do  i = 2, Nsym
                 forall (l=1:3) K(l) = sum ( RI(1:3,l,i)*ktot(1:3,ik) )
-                k_loop_IBZ: do  j = 1, NkI
-                  if ( all ( abs(K(1:3)-kI(1:3,j)) <= eps_ ) ) then
+                k_loop_IBZ: do  jk = 1, NkI
+                  if ( all ( abs(K(1:3)-kI(1:3,jk)) <= eps_ ) ) then
                     found = .true.
-                    K1 = j
+                    K1 = jk
                     cycle band_loop
                   end if
                 end do k_loop_IBZ
@@ -362,7 +364,7 @@ contains
             end if
 
             if (.not. found) then
-              print*,'Can not find wave vector K=',ik, 'in I.B.Z.'
+              print*,'Can not find wave vector iK=',ik, 'in I.B.Z.'
               stop
             end if
 
@@ -372,10 +374,10 @@ contains
 
         ! sums electrons in the remeaining bands
         if (present(T)) then ! temperature is given use Fermi-Dirac statistics
-          Ni = FermiDirac(E(K1,n), Efermi, T)
+          Ni = FermiDirac(E(n,K1), Efermi, T)
           Nel = Nel + Ni
         else ! temperature not given, assuming the cyrstal is insulating
-          if (E(K1,n) < Efermi) then 
+          if (E(n,K1) < Efermi) then 
             Ni = 1.0_dp
           else
             Ni = 0.0_dp
@@ -461,7 +463,7 @@ contains
     real(kind=dp), intent(in)  :: kI(:,:)       !! k-points in the IBZ
     real(kind=dp), intent(in)  :: ktot(:,:)     !! k-points in the FBZ
     real(kind=dp), intent(in)  :: G(:,:)        !! G-vectors
-    real(kind=dp), intent(in)  :: RI(:,:,:)     !! inverted rotational symmetry tensor
+    real(kind=dp), intent(in)  :: RI(:,:,:)     !! inverted rotational symmetry tensor (3 x 3 x Nrot)
     integer,       intent(out) :: iG0           !! index of the rec.lattice vector;
     integer,       intent(out) :: iR2           !! index of rotational sym. op. in the RI tensor for K + Q = G0 + R2*K2
     integer,       intent(out) :: iK2           !! index of k-point K2 in K + Q = G0 + R2*K2
@@ -525,10 +527,10 @@ contains
 
   subroutine findMinQ(iq, ktot, q, absq)
     !! Searches for the mininimal wavevector \(\mathbf{q}=(qx,qy,qz)\) in the \(\Gamma \to M \) direction
-    integer,       intent(in)            :: iq !! q-vector index
-    real(kind=dp), intent(in)            :: ktot(:,:) !! k-points in the FBZ
-    real(kind=dp), intent(out)           :: q(3) !! q-vector at index iq
-    real(kind=dp), intent(out), optional :: absq !! norm of q-vector at index iq
+    integer,       intent(in)            :: iq        !! q-vector index
+    real(kind=dp), intent(in)            :: ktot(:,:) !! k-points in the FBZ (3 x Nk)
+    real(kind=dp), intent(out)           :: q(3)      !! q-vector at index iq
+    real(kind=dp), intent(out), optional :: absq      !! norm of q-vector at index iq
 
     integer       :: i, ikmin
     real(kind=dp) :: kmin, kref, krefM ! , absq
@@ -561,5 +563,67 @@ contains
     q(1:3) = (iq-1) * ktot(1:3,ikmin)
     if (present(absq)) absq = sqrt( sum( q(1:3)**2 ) )
   end subroutine findMinQ
+
+  subroutine genFBZpath(sympts, ktot, eps, kgmkg, writeOutput)
+    !! Generates high-symmetry path along G->M->K->G
+    character(len=*),  intent(in)  :: sympts      !! labels of high-symmetry points
+    real(kind=dp),     intent(in)  :: ktot(:,:)   !! k-points in the FBZ
+    real(kind=dp),     intent(in)  :: eps         !! threshold for two k-points being the same
+    real(kind=dp),     intent(out) :: kgmkg(:)    !! high-symmetry path in the FBZ
+    logical, optional, intent(in)  :: writeOutput !! write high-symmetry path to file yes/no
+
+    logical :: writeOutput_ = .false.
+    integer :: iuni
+    integer :: i, ik, Ntot, Ngmkg = 0
+
+    Ntot = size(ktot,2)
+
+    if (present(writeOutput)) writeOutput_ = writeOutput
+
+    if (sympts/='GMKG') then
+      stop 'ERROR: Requested high-symmetry path not implemented.'
+    end if
+
+    ! G -> M
+    do  i = 1,Ntot
+      if(ktot(1,i) == 0.0 .and. ktot(2,i) >= 0.0) then
+        Ngmkg = Ngmkg+1
+        kgmkg(Ngmkg)=i
+      end if
+    end do
+
+    ! M -> K
+    do i = 1,Ntot
+      if (ktot(1,i) > 0.0 .and. ktot(2,i) > 0.0)then
+        if (abs(ktot(2,i)-1.0/sqrt(3.0)) < eps)then
+          Ngmkg = Ngmkg+1
+          kgmkg(Ngmkg) = i
+        end if
+      end if
+    end do
+
+    ! K -> G
+    do i = Ntot,1,-1
+      if (ktot(1,i) > 0.0 .AND. ktot(2,i) > 0.0) then
+        if (abs(ktot(2,i)/ktot(1,i)-sqrt(3.0)) < eps) then
+          if (abs(ktot(2,i)-1.0/sqrt(3.0)) > eps) then
+            Ngmkg = Ngmkg + 1
+            kgmkg(Ngmkg) = i
+          end if
+        end if
+      end if
+    end do
+    
+    ! outputs 2D path in the FBZ
+    if (writeOutput_) then
+      open(newunit=iuni,file='highsymm_FBZ_path.dat',action='write',status='new')
+      do i = 1,Ngmkg
+        ik = kGMKG(i)
+        write(iuni,*) i, ktot(1,ik), ktot(2,ik)
+      enddo
+      close(iuni)
+    end if
+
+  end subroutine genFBZpath
 
 end module brillouin_zone

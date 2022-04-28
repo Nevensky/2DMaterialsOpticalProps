@@ -27,11 +27,11 @@ contains
     real(kind=dp), intent(out), optional :: alat      !! lattice parameter
     real(kind=dp), intent(out), optional              :: a(3,3)           !! direct lattice
     real(kind=dp), intent(out), optional              :: b(3,3)           !! reciprocal lattice
-    real(kind=dp), intent(out), optional, allocatable :: R(:,:,:)         !! array of rotational matrices
-    integer,       intent(out), optional, allocatable :: Npw(:)           !! array of G-vectors at each k-point
-    real(kind=dp), intent(out), optional, allocatable :: kI(:,:)          !! array of k-points in the ireducible Brillouin zone
-    real(kind=dp), intent(out), optional, allocatable :: eigenvals(:,:)   !! eigenvalues for each band and k-point [Hartree]
-    real(kind=dp), intent(out), optional, allocatable :: occupations(:,:) !! occupations for each band and k-point
+    real(kind=dp), intent(out), optional, allocatable :: R(:,:,:)         !! array of rotational matrices (3 x 3 x Nrot)
+    integer,       intent(out), optional, allocatable :: Npw(:)           !! array of G-vectors at each k-point (Nk)
+    real(kind=dp), intent(out), optional, allocatable :: kI(:,:)          !! array of k-points in the ireducible Brillouin zone (3 x NkI)
+    real(kind=dp), intent(out), optional, allocatable :: eigenvals(:,:)   !! eigenvalues for each band and k-point [Hartree] (Nband x Nk)
+    real(kind=dp), intent(out), optional, allocatable :: occupations(:,:) !! occupations for each band and k-point (Nband x Nk)
     real(kind=dp), intent(out), optional :: T           !! electron temperature
     real(kind=dp), intent(out), optional :: Efermi      !! Fermi energy
     real(kind=dp), intent(out), optional :: NelQE       !! No. electrons
