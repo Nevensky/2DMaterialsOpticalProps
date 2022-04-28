@@ -19,7 +19,7 @@ module io_xml
 
   public :: loadXML_qe
   private 
-
+  
 contains
   subroutine loadXML_qe(path, Nband , NkI, Nrot, Nsym, Nmp, alat, a, b, R, Npw, kI, eigenvals, occupations, T, Efermi, NelQE, printOutput)
     character(len=*), intent(in) :: path
@@ -30,7 +30,7 @@ contains
     real(kind=dp), intent(out), optional, allocatable :: R(:,:,:)         !! array of rotational matrices
     integer,       intent(out), optional, allocatable :: Npw(:)           !! array of G-vectors at each k-point
     real(kind=dp), intent(out), optional, allocatable :: kI(:,:)          !! array of k-points in the ireducible Brillouin zone
-    real(kind=dp), intent(out), optional, allocatable :: eigenvals(:,:)   !! eigenvalues for each band and k-point
+    real(kind=dp), intent(out), optional, allocatable :: eigenvals(:,:)   !! eigenvalues for each band and k-point [Hartree]
     real(kind=dp), intent(out), optional, allocatable :: occupations(:,:) !! occupations for each band and k-point
     real(kind=dp), intent(out), optional :: T           !! electron temperature
     real(kind=dp), intent(out), optional :: Efermi      !! Fermi energy

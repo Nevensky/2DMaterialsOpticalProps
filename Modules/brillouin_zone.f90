@@ -4,8 +4,8 @@ module brillouin_zone
   use matrix_inverse, only: invert_real
   implicit none
 
-  public :: loadKiandE, convertE, genFBZ, checkFBZintegration, &
-            & findKinIBZ, findKQinIBZ, findMinQ, invertRI
+  public :: loadKiandE, scissorE, genFBZ, checkFBZintegration, &
+            & findKinIBZ, findKQinIBZ, findMinQ, invertR
   private
 
 contains
@@ -52,9 +52,8 @@ contains
 
   end subroutine loadkIandE
 
-  subroutine convertE(Nval, E, dGW)
-    !! Converts eigenenergies to Hartree units and shifts
-    !! the band gap by \( \Delta E_\text{GW} \) for each k point
+  subroutine scissorE(Nval, E, dGW)
+    !! Shifts the band gap by \( \Delta E_\text{GW} \) for each k point
     use constants, only: Hartree
     integer,          intent(in)           :: Nval   !! No. valence bands
     real(kind=dp),    intent(inout)        :: E(:,:) !! eigenenergies (Nband x NkI)
@@ -64,28 +63,37 @@ contains
     integer :: Nband !! No. of bands
     integer :: NkI   !! No. of k-points in FBZ
     real(kind=dp) :: dGW_ = 0.0_dp
+    
     if (present(dGW)) dGW_ = dGW
     Nband = size(E,1)
     NkI   = size(E,2)
 
-    ! convert energy to Hartree
-    E(1:Nband,1:NkI) = E(1:Nband,1:NkI)/Hartree
     ! scissor operator, shifts the DFT bandgap
     E(Nval+1:Nband,1:NkI) = E(Nval+1:Nband,1:NkI) + dGW_
-  end subroutine convertE
+  end subroutine scissorE
 
-  subroutine invertRI(R,RI)
-    real(kind=dp), intent(in) :: R(:,:,:)
-    real(kind=dp), intent(out) :: RI(:,:,:)
+  subroutine invertR(R, RI)
+    !! Computes inverse of each rotational symmetry matrix
+    real(kind=dp), intent(inout)          :: R(:,:,:)
+    real(kind=dp), intent(out),  optional :: RI(:,:,:)
 
-    integer :: i, Nsim
-    Nsim = size(R,3)
-    RI = R
+    integer :: i, Nrot
+    real(kind=dp), allocatable :: RI_(:,:,:)
+    allocate(RI_(size(R,1),size(R,2),size(R,3)))
 
-    do i=1,Nsim
-      call invert_real(RI)
+    Nrot = size(R,3)
+    do i = 1,Nrot
+      call invert_real(RI_(:,:,i))
     enddo
-  end subroutine invertRI
+
+    if (present(RI)) then
+      RI = RI_ 
+    else
+      R = RI_
+    end if
+
+    deallocate(RI_)
+  end subroutine invertR
 
   subroutine genFBZ(kI, R, Ntot, ktot, eps, writeOutput)
     !! Generates all unique wavectors in the 1st BZ by applying 
@@ -396,7 +404,8 @@ contains
     real(kind=dp), intent(in)  :: kx, ky, kz
     real(kind=dp), intent(in)  :: kI(:,:)       !! k-points in the IBZ
     real(kind=dp), intent(in)  :: RI(:,:,:)     !! inverted rotational symmetry matrices
-    integer      , intent(out) :: iR1, iK1 ! K = R1*K1
+    integer      , intent(out) :: iR1           !! index of R1 in K = R1*K1
+    integer      , intent(out) :: iK1           !! index of K1 in K = R1*K1
     real(kind=dp), intent(in), optional  :: eps !! thershold for two k-points being the same
 
     logical       :: found
@@ -448,24 +457,26 @@ contains
 
   subroutine findKQinIBZ(KQx, KQy, KQz, NG, kI, ktot, RI, G, iG0, iR2, iK2, eps)
     !! Finds the k-point (KQx,KQy,KQz) in the 1st. Brillouin zone (FBZ) and then the ireducible Brillouin zone (IBZ)
-    integer,       intent(in)  :: NG
     real(kind=dp), intent(in)  :: KQx, KQy, KQz !! K+Q wavevector possibly outside of FBZ
     real(kind=dp), intent(in)  :: kI(:,:)       !! k-points in the IBZ
     real(kind=dp), intent(in)  :: ktot(:,:)     !! k-points in the FBZ
-    real(kind=dp), intent(in)  :: G(:,:)
-    real(kind=dp), intent(in)  :: RI(:,:,:)     !! inverted rotational symmetry matrices
-    integer,       intent(out) :: iG0, iR2, iK2 ! G0=rec.lattice; K + Q = G0 + R2*K2
+    real(kind=dp), intent(in)  :: G(:,:)        !! G-vectors
+    real(kind=dp), intent(in)  :: RI(:,:,:)     !! inverted rotational symmetry tensor
+    integer,       intent(out) :: iG0           !! index of the rec.lattice vector;
+    integer,       intent(out) :: iR2           !! index of rotational sym. op. in the RI tensor for K + Q = G0 + R2*K2
+    integer,       intent(out) :: iK2           !! index of k-point K2 in K + Q = G0 + R2*K2
     real(kind=dp), intent(in), optional  :: eps !! thershold for two k-points being the same
   
     integer       :: found_ibz, found_fbz
     integer       :: iG, jk, i, j, l
-    integer       :: Nsym, NkI, Ntot
+    integer       :: Nsym, NkI, Ntot, NG
     real(kind=dp) :: K(3), KQ(3)
     real(kind=dp) :: eps_
 
     Nsym = size(RI,3)
     NkI  = size(kI,2)
     Ntot = size(ktot,2)
+    NG   = size(G,2)
 
     KQ(1) = KQx
     KQ(2) = KQy
