@@ -5,7 +5,7 @@ module brillouin_zone
   implicit none
 
   public :: loadKiandE, scissorE, genFBZ, checkFBZintegration, &
-            & findKinIBZ, findKQinIBZ, findMinQ, invertR
+            & findKinIBZ, findKQinIBZ, findMinQ, invertR, genFBZpath
   private
 
 contains
@@ -457,7 +457,7 @@ contains
   end subroutine findKinIBZ
 
 
-  subroutine findKQinIBZ(KQx, KQy, KQz, NG, kI, ktot, RI, G, iG0, iR2, iK2, eps)
+  subroutine findKQinIBZ(KQx, KQy, KQz, kI, ktot, RI, G, iG0, iR2, iK2, eps)
     !! Finds the k-point (KQx,KQy,KQz) in the 1st. Brillouin zone (FBZ) and then the ireducible Brillouin zone (IBZ)
     real(kind=dp), intent(in)  :: KQx, KQy, KQz !! K+Q wavevector possibly outside of FBZ
     real(kind=dp), intent(in)  :: kI(:,:)       !! k-points in the IBZ
@@ -569,7 +569,7 @@ contains
     character(len=*),  intent(in)  :: sympts      !! labels of high-symmetry points
     real(kind=dp),     intent(in)  :: ktot(:,:)   !! k-points in the FBZ
     real(kind=dp),     intent(in)  :: eps         !! threshold for two k-points being the same
-    real(kind=dp),     intent(out) :: kgmkg(:)    !! high-symmetry path in the FBZ
+    integer,           intent(out) :: kgmkg(:)    !! k-point indices of high-symmetry path in the FBZ
     logical, optional, intent(in)  :: writeOutput !! write high-symmetry path to file yes/no
 
     logical :: writeOutput_ = .false.

@@ -1,4 +1,4 @@
-module io_quantum_espresso
+module io_qe
   use iso_fortran_env, only: dp => real64
   implicit none
 
@@ -11,9 +11,9 @@ contains
     !! in Cartesian cordinates.
     character(len=*),  intent(in)   :: savedir
     real(kind=dp),     intent(in)   :: KC(3,3)
-    integer, optional, intent(out)  :: parG(:) !! parity of each rec. latt. wavevector G
-    integer,           intent(out)  :: NG      !! No. of rec. latt. vectors
-    real(kind=dp), allocatable, intent(out)  :: G(:,:)  !! rec. latt. wavevector G (for the density)
+    integer,           intent(out)  :: NG                   !! No. of rec. latt. vectors
+    real(kind=dp),     intent(out), allocatable  :: G(:,:)  !! rec. latt. wavevector G (for the density)
+    integer, optional, intent(out), allocatable  :: parG(:) !! parity of each rec. latt. wavevector G
 
     integer :: iuni, ios0, ios1, ios2
     integer :: n, m, iG, Nspin
@@ -267,4 +267,4 @@ contains
    ! deallocate(evc) 
   end subroutine loadCs_spin_full
 
-end module io_quantum_espresso
+end module io_qe

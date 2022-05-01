@@ -11,18 +11,20 @@ contains
     !! Generate Reciprocal latt. vectors for crystal local field 
     !! effects calculations in array Glf(1:3,1:Nlf)
     implicit none
-    character(len=*), intent(in)    :: lf
-    real(kind=dp),    intent(in)    :: Ecut
-    real(kind=dp),    intent(in)    :: Gcar
-    real(kind=dp),    intent(in)    :: G(:,:)
-    integer,          intent(inout) :: Nlfd
-    integer,          intent(out)   :: Nlf
-    real(kind=dp),    intent(out)   :: Glf(:,:)
-    integer,optional, intent(inout) :: parG(:)
+    character(len=*),           intent(in)    :: lf
+    real(kind=dp),              intent(in)    :: Ecut
+    real(kind=dp),              intent(in)    :: Gcar
+    real(kind=dp),              intent(in)    :: G(:,:)
+    integer,                    intent(inout) :: Nlfd
+    integer,                    intent(out)   :: Nlf
+    real(kind=dp), allocatable, intent(out)   :: Glf(:,:)
+    integer,optional,           intent(inout) :: parG(:)
   
     integer       :: iG
     real(kind=dp) :: Eref
-    integer       :: NG = size(G,2)
+    integer       :: NG
+
+    NG = size(G,2)
   
     if (.not. allocated(Glf)) allocate(Glf(3,NG*Nlf))
     Nlf = 0

@@ -1,4 +1,4 @@
-module W
+module Wmod
   use iso_fortran_env, only: dp => real64
   implicit none
   
@@ -69,4 +69,4 @@ subroutine genChargeVertices(jump, eps, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, 
   jump = .true.
 end subroutine genChargeVertices
 
-end module W
+end module Wmod
