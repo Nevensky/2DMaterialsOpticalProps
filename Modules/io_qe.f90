@@ -11,9 +11,9 @@ contains
     !! in Cartesian cordinates.
     character(len=*),  intent(in)   :: savedir
     real(kind=dp),     intent(in)   :: KC(3,3)
-    integer, optional, intent(out)  :: parG(:) ! paritet svakog valnog vektora G
-    integer,           intent(out)  :: NG
-    real(kind=dp), allocatable, intent(out)  :: G(:,:)  ! polje valnih vektora G u recp. prost. za wfn.
+    integer, optional, intent(out)  :: parG(:) !! parity of each rec. latt. wavevector G
+    integer,           intent(out)  :: NG      !! No. of rec. latt. vectors
+    real(kind=dp), allocatable, intent(out)  :: G(:,:)  !! rec. latt. wavevector G (for the density)
 
     integer :: iuni, ios0, ios1, ios2
     integer :: n, m, iG, Nspin
@@ -34,7 +34,7 @@ contains
 
     read(iuni, iostat=ios1) ! skip reading b1, b2, b3 rec.latt.vecs. 
 
-    allocate(Gi(3,NG))
+    if (.not. allocated(Gi)) allocate(Gi(3,NG))
     read (iuni, iostat=ios2) Gi(1:3,1:NG)
     close(iuni)
 
@@ -49,7 +49,7 @@ contains
     end if
 
     ! transformation to cart.coord (now all G components are in 2pi/a0 units)
-    allocate(G(3,NG))
+    if (.not. allocated(G)) allocate(G(3,NG))
     G(1:3,1:NG) = 0.0
     do iG=1,NG
       do n = 1,3
@@ -57,7 +57,10 @@ contains
           G(n,iG) = G(n,iG) + KC(n,m)*dble( Gi(m,iG) )
         end do
       end do
-      if (present(parG)) parG(iG) = Gi(3,iG)
+      if (present(parG)) then 
+        if (.not. allocated(parG)) allocate(parG(NG))
+        parG(iG) = Gi(3,iG) 
+      end if
     end do
     close(iuni)
 

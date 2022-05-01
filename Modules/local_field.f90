@@ -24,6 +24,7 @@ contains
     real(kind=dp) :: Eref
     integer       :: NG = size(G,2)
   
+    if (.not. allocated(Glf)) allocate(Glf(3,NG*Nlf))
     Nlf = 0
     if (lf == 'z') then
       ! local field effects included only in the perpendicular dirrection (z)
