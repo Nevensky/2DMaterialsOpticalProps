@@ -37,7 +37,7 @@ contains
     call zgetrf(n, n, A, n, ipiv, info)
 
     if (info /= 0) then
-       stop 'Matrix is numerically singular!'
+       stop 'Matrix is numerically singular! (zgetrf)'
     end if
 
 
@@ -54,7 +54,8 @@ contains
     !if (sizeof(lwork)>lwork) lwork = memmax
     allocate(work(lwork),stat=ios)
     if (ios /= 0) then
-            stop 'ERROR: Failed allocation of work array. (zgetri)'
+      print *,'ERROR: Failed allocation of work array. (zgetri) ios=',ios
+      stop
     end if
     ! print *, " sizeof(A) = ",sizeof(A)/1024.0**3,"GB"
     ! print *, " sizeof(work) = ",sizeof(work)/1024.0**3,"GB"
@@ -63,7 +64,7 @@ contains
     call zgetri(n, A, n, ipiv, work, lwork, info)
 
     if (info /= 0) then
-       stop 'ERROR: Matrix inversion failed!'
+       stop 'ERROR: Matrix inversion failed! (zgetri)'
     end if
 
     deallocate(work)
@@ -73,10 +74,10 @@ contains
     !! Inverts real matrix (double precision)
     real(dp), dimension(:,:), intent(inout) :: A
 
-    real(dp), allocatable :: work(:)         ! work array for LAPACK
-    integer               :: ipiv(size(A,1)) ! pivot indices
-    integer               :: n, info, ios 
-    integer(idp)          :: lwork           ! work array size
+    real(dp), allocatable :: work(:)          ! work array for LAPACK
+    integer               :: ipiv(size(A,1))  ! pivot indices
+    integer               :: n, info, info2, info3, ios 
+    integer(idp)          :: lwork            ! work array size
     ! integer(idp), parameter :: memmax = 30*sizeof(dp) 
 
     ! External procedures defined in LAPACK for double real matrices
@@ -90,33 +91,39 @@ contains
     call dgetrf(n, n, A, n, ipiv, info)
 
     if (info /= 0) then
-       stop 'Matrix is numerically singular!'
+       print *, 'Matrix is numerically singular! (dgetrf) info=', info
+       stop
     end if
-
 
     ! DGETRI computes the inverse of a matrix using 
     ! the LU factorization computed by DGETRF.
 
     ! Query optimal work array for best performance
-    lwork = -1
     allocate(work(1))
+    call dgetri(n, A, n, ipiv, work, -1, info2) ! query optimal lwork value
+    if (info2 /= 0) then
+       print *, 'ERROR: Workspace query failed! (dgetri) info2=', info2
+       stop
+    end if
 
-    call dgetri(n, A, n, ipiv, work, lwork, info) ! query optimal lwork value
     lwork = work(1)
     deallocate(work)
-    !if (sizeof(lwork)>lwork) lwork = memmax
+    !if (sizeof(lwork)>lworkmax) lwork = max_available_memory
     allocate(work(lwork),stat=ios)
     if (ios /= 0) then
-            stop 'ERROR: Failed allocation of work array. (zgetri)'
+            print *,'ERROR: Failed allocation of work array. (dgetri) ios=',ios
+            stop
     end if
+
     ! print *, " sizeof(A) = ",sizeof(A)/1024.0**3,"GB"
     ! print *, " sizeof(work) = ",sizeof(work)/1024.0**3,"GB"
 
     ! Perform inverse with the optimal work array
-    call dgetri(n, A, n, ipiv, work, lwork, info)
+    call dgetri(n, A, n, ipiv, work, lwork, info3)
 
-    if (info /= 0) then
-       stop 'ERROR: Matrix inversion failed!'
+    if (info3 /= 0) then
+       print *, 'ERROR: Matrix inversion failed! (dgetri) info=', info3
+       stop
     end if
 
     deallocate(work)

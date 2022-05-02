@@ -28,11 +28,11 @@ contains
 
     integer          :: i, iG, iG1, iG2
     integer          :: iGfast
-    real(kind=dp)    :: K11, K22, K33
-    real(kind=dp)    :: Gxx1,Gyy1,Gzz1
-    real(kind=dp)    :: Gxx2,Gyy2,Gzz2
+    ! real(kind=dp)    :: K11, K22, K33
+    ! real(kind=dp)    :: Gxx1,Gyy1,Gzz1
+    ! real(kind=dp)    :: Gxx2,Gyy2,Gzz2
     real(kind=dp)    :: Gprime(3)
-    real(kind=dp)    :: current, current_y, current_z
+    ! real(kind=dp)    :: current, current_y, current_z
     real(kind=dp)    :: k(3), q(3), K_(3)
     real(kind=dp)    :: current_xyz(3)
 

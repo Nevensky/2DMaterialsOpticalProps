@@ -13,7 +13,7 @@ contains
       !!  Quantum Espresso SCF output file.
       !!  Matrices R are in cartesian coordinates because k points
       !!  from IBZ are printed in cart. coord.
-      integer :: i, Nsym, is, n, m
+      integer :: i, Nsym, is
 
       real(dp) :: R(48,3,3)
       real(dp) :: Ri(48,3,3)
