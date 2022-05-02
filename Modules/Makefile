@@ -3,8 +3,8 @@ DEBUG=-warn all -check all -debug all -g -traceback
 FC=ifort
 #FFLAGS=-Ofast
 FFLAGS=-qmkl -Ofast -fpp ${DEBUG}
-SRC = constants.f90 statistics.f90 matrix_inverse.f90 io_qe.f90 io_xml.f90 io_wannier90.f90 utility.f90 local_field.f90 PointR_mkl.f90 brillouin_zone.f90 propagators.f90 RPA.f90 W.f90 Ladder.f90
-OBJECTS = constants statistics matrix_inverse io_qe io_xml io_wannier90 utility local_field PointR brillouin_zone propagators RPA W Ladder
+SRC = constants.f90 statistics.f90 matrix_inverse.f90 io_qe.f90 io_xml.f90 io_wannier90.f90 utility.f90 local_field.f90 PointR_mkl.f90 brillouin_zone.f90 propagators.f90 vertices.f90 Ladder.f90
+OBJECTS = constants statistics matrix_inverse io_qe io_xml io_wannier90 utility local_field PointR brillouin_zone propagators vertices Ladder
 
 
 .PHONY: clean
@@ -46,11 +46,8 @@ brillouin_zone : brillouin_zone.f90
 propagators : propagators.f90
 	${FC} ${FFLAGS} -c propagators.f90
 
-RPA : RPA.f90
-	${FC} ${FFLAGS} -c RPA.f90
-
-W : W.f90
-	${FC} ${FFLAGS} -c W.f90
+vertices : vertices.f90
+	${FC} ${FFLAGS} -c vertices.f90
 
 Ladder : Ladder.f90
 	${FC} ${FFLAGS} -c Ladder.f90
