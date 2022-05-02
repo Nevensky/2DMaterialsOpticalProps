@@ -7,7 +7,8 @@ module RPA
 
 contains 
   subroutine genCurrentVertices(pol, jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2, MnmK1K22)
-    !! Construct matrix elements for current vertices MnmK1K2(iG) i MnmK1K22(iG) 
+    !! Construct matrix elements for current vertices \( j^\mu_{n\mathbf{K},m\mathbf{K'}}(\mathbf{G}) \)
+    !! stored in MnmK1K2(iG) i MnmK1K22(iG) matrices respectively
     character(len=3), intent(in)    :: pol
     integer,          intent(in)    :: iG0, Nlf, NG1, NG2, NGd
     integer,          intent(in)    :: R1,R2

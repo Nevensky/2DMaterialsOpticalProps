@@ -407,10 +407,11 @@ contains
 
   end subroutine checkFBZintegration_new
 
-  subroutine findKinIBZ(ik, kx, ky, kz, kI, RI, iR1, iK1, eps)
+  subroutine findKinIBZ(ik, kx, ky, kz, kI, Nsym, RI, iR1, iK1, eps)
     !! Finds k-point (kx,ky,kz) in the ireducible Brillouin zone (IBZ)
+    integer,       intent(in)  :: Nsym          !! No. of symmetry operations for the given crystal
     integer,       intent(in)  :: ik            !! index of k-point in IBZ
-    real(kind=dp), intent(in)  :: kx, ky, kz
+    real(kind=dp), intent(in)  :: kx, ky, kz    !! k-point in IBZ
     real(kind=dp), intent(in)  :: kI(:,:)       !! k-points in the IBZ
     real(kind=dp), intent(in)  :: RI(:,:,:)     !! inverted rotational symmetry matrices
     integer      , intent(out) :: iR1           !! index of R1 in K = R1*K1
@@ -419,12 +420,12 @@ contains
 
     logical       :: found
     integer       :: i, j, l
-    integer       :: NkI, Nsym
+    integer       :: NkI !, Nrot
     real(kind=dp) :: K(3), k_fbz(3)
     real(kind=dp) :: eps_
 
     NkI = size(kI,2)
-    Nsym = size(RI,3)
+    ! Nrot = size(RI,3)
 
     k_fbz = kx
     k_fbz = ky
@@ -464,8 +465,9 @@ contains
   end subroutine findKinIBZ
 
 
-  subroutine findKQinIBZ(KQx, KQy, KQz, kI, ktot, RI, G, iG0, iR2, iK2, eps)
+  subroutine findKQinIBZ(KQx, KQy, KQz, kI, ktot, Nsym, RI, G, iG0, iR2, iK2, eps)
     !! Finds the k-point (KQx,KQy,KQz) in the 1st. Brillouin zone (FBZ) and then the ireducible Brillouin zone (IBZ)
+    integer,       intent(in)  :: Nsym          !! No. of symmetry operations for the given crystal
     real(kind=dp), intent(in)  :: KQx, KQy, KQz !! K+Q wavevector possibly outside of FBZ
     real(kind=dp), intent(in)  :: kI(:,:)       !! k-points in the IBZ
     real(kind=dp), intent(in)  :: ktot(:,:)     !! k-points in the FBZ
@@ -478,11 +480,11 @@ contains
   
     integer       :: found_ibz, found_fbz
     integer       :: iG, jk, i, j, l
-    integer       :: Nsym, NkI, Ntot, NG
+    integer       :: NkI, Ntot, NG!, Nrot
     real(kind=dp) :: K(3), KQ(3)
     real(kind=dp) :: eps_
 
-    Nsym = size(RI,3)
+    ! Nrot = size(RI,3)
     NkI  = size(kI,2)
     Ntot = size(ktot,2)
     NG   = size(G,2)
@@ -581,9 +583,10 @@ contains
 
     logical :: writeOutput_ = .false.
     integer :: iuni
-    integer :: i, ik, Ntot, Ngmkg = 0
+    integer :: i, ik, Ntot, Ngmkg
 
     Ntot = size(ktot,2)
+    Ngmkg = 0
 
     if (present(writeOutput)) writeOutput_ = writeOutput
 
@@ -592,30 +595,36 @@ contains
     end if
 
     ! G -> M
+    print *,'G -> M'
     do  i = 1,Ntot
-      if(ktot(1,i) == 0.0 .and. ktot(2,i) >= 0.0) then
-        Ngmkg = Ngmkg+1
+      if(ktot(1,i) == 0.0_dp .and. ktot(2,i) >= 0.0_dp) then
+        Ngmkg = Ngmkg + 1
         kgmkg(Ngmkg)=i
+        print *,'Ngmkg=',Ngmkg,'i_kI=',i
       end if
     end do
 
     ! M -> K
+    print *,'M -> K'
     do i = 1,Ntot
-      if (ktot(1,i) > 0.0 .and. ktot(2,i) > 0.0)then
-        if (abs(ktot(2,i)-1.0/sqrt(3.0)) < eps)then
-          Ngmkg = Ngmkg+1
+      if (ktot(1,i) > 0.0_dp .and. ktot(2,i) > 0.0_dp) then
+        if (abs(ktot(2,i)-1.0_dp/sqrt(3.0_dp)) < eps) then
+          Ngmkg = Ngmkg + 1
           kgmkg(Ngmkg) = i
+          print *,'Ngmkg=',Ngmkg,'i_kI=',i
         end if
       end if
     end do
 
     ! K -> G
+    print *,'K->G'
     do i = Ntot,1,-1
-      if (ktot(1,i) > 0.0 .AND. ktot(2,i) > 0.0) then
-        if (abs(ktot(2,i)/ktot(1,i)-sqrt(3.0)) < eps) then
-          if (abs(ktot(2,i)-1.0/sqrt(3.0)) > eps) then
+      if (ktot(1,i) > 0.0_dp .AND. ktot(2,i) > 0.0_dp) then
+        if (abs(ktot(2,i)/ktot(1,i)-sqrt(3.0_dp)) < eps) then
+          if (abs(ktot(2,i)-1.0_dp/sqrt(3.0_dp)) > eps) then
             Ngmkg = Ngmkg + 1
             kgmkg(Ngmkg) = i
+            print *,'Ngmkg=',Ngmkg,'i_kI=',i
           end if
         end if
       end if
