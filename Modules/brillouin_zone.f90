@@ -250,15 +250,15 @@ contains
     !! the number of electrons in the unit cell as calculated by Quantum Espresso (NelQE)   
     use statistics, only: FermiDirac
     integer,       intent(in)  :: NkI, Nsym, Nband, Ntot
-    real(kind=dp), intent(in)  :: Efermi     !! Fermi energy
+    real(kind=dp), intent(in)  :: Efermi     !! Fermi energy [Hartree]
     real(kind=dp), intent(in)  :: eps        !! threshold for two k-points to be considered equal
     real(kind=dp), intent(in)  :: kI(:,:)    !! k-points in the IBZ (3 x NkI)
     real(kind=dp), intent(in)  :: ktot(:,:)  !! all unique k-points in the FBZ
 
     real(kind=dp), intent(in)  :: RI(:,:,:)  !! inverse of point group rotantional matrices (3 x 3 x Nrot)
-    real(kind=dp), intent(in)  :: E(:,:)     !! DFT eigenenergies
+    real(kind=dp), intent(in)  :: E(:,:)     !! DFT eigenenergies [Hartree]
     real(kind=dp), intent(out) :: Nel        !! No. electrons computed in our code
-    real(kind=dp), optional, intent(in) :: T !! electron temperature
+    real(kind=dp), optional, intent(in) :: T !! electron temperature [Hartree]
 
     logical       :: found
     integer       :: ik, n, i, j, l, K1
@@ -267,7 +267,7 @@ contains
     ! real(kind=dp) :: K11, K22, K33
     real(kind=dp) :: K(3) !! => k_IBZ = R_inv x k_FBZ = R_inv x ktot
 
-    Nel = 0 
+    Nel = 0.0_dp
     k_loop_FBZ : do  ik = 1,Ntot
       band_loop: do  n = 1, Nband
         if (n == 1) then
@@ -284,12 +284,13 @@ contains
                   if ( all ( abs(K(1:3)-kI(1:3,j)) <= eps ) ) then
                     found = .true.
                     K1 = j
-                    cycle band_loop
+                    ! cycle band_loop ! WRONG, misses counting Ni for first band
+                    goto 5022
                   end if
                 end do k_loop_IBZ
               end do symm_loop
             end if
-
+            5022 continue
             if (.not. found) then
               print*,'Can not find wave vector K=',ik, 'in I.B.Z.'
               stop
@@ -353,42 +354,67 @@ contains
     eps_ = 1.0d-4 ! default thershold
     if (present(eps)) eps_ = eps
 
-    Nel = 0 
+    Nel = 0.0_dp
     k_loop_FBZ : do  ik = 1,Ntot
-      band_loop: do  n = 1, Nband
-        if (n == 1) then
-            found = .false.
-            if (ik <= NkI) then
-              K1 = ik
+      ! debug neven: start of change
+      found = .false.
+      if (ik <= NkI) then
+        K1 = ik
+        found = .true.
+      else
+        symm_loop: do  i = 2, Nsym
+          do l=1,3
+            K(l) = sum ( RI(1:3,l,i)*ktot(1:3,ik) )
+          end do
+          k_loop_IBZ: do  jk = 1, NkI
+            if ( all ( abs(K(1:3)-kI(1:3,jk)) <= eps_ ) ) then
               found = .true.
-            else
-              symm_loop: do  i = 2, Nsym
-                do l=1,3
-                  K(l) = sum ( RI(1:3,l,i)*ktot(1:3,ik) )
-                end do
-                k_loop_IBZ: do  jk = 1, NkI
-                  if ( all ( abs(K(1:3)-kI(1:3,jk)) <= eps_ ) ) then
-                    found = .true.
-                    K1 = jk
-                    cycle band_loop
-                  end if
-                end do k_loop_IBZ
-              end do symm_loop
+              K1 = jk ! IBZ index of a FBZ k-point
+              ! cycle band_loop
+              ! goto 5022
             end if
-
-            if (.not. found) then
-              print*,'Can not find wave vector iK=',ik, 'in I.B.Z.'
-              stop
-            end if
-
-        end if
-
-        ! debug neven: the counting of electrons should be moved to a new subroutine
+          end do k_loop_IBZ
+        end do symm_loop
+      end if
+      if (.not. found) then
+        print*,'Can not find wave vector iK=',ik, 'in I.B.Z.'
+        stop
+      end if
+      ! debug neven: end of change
+      band_loop: do  n = 1, Nband
+        ! debug neven: start of change (remove code below)
+        ! if (n == 1) then
+          ! ! needs to be done only once per k-point
+          ! found = .false.
+          ! if (ik <= NkI) then
+          !   K1 = ik
+          !   found = .true.
+          ! else
+          !   symm_loop: do  i = 2, Nsym
+          !     do l=1,3
+          !       K(l) = sum ( RI(1:3,l,i)*ktot(1:3,ik) )
+          !     end do
+          !     k_loop_IBZ: do  jk = 1, NkI
+          !       if ( all ( abs(K(1:3)-kI(1:3,jk)) <= eps_ ) ) then
+          !         found = .true.
+          !         K1 = jk ! IBZ index of a FBZ k-point
+          !         ! cycle band_loop ! WRONG, MISSES COUNTING Ni for FIRST BAND!
+          !         goto 5022
+          !       end if
+          !     end do k_loop_IBZ
+          !   end do symm_loop
+          ! end if
+! 5022 continue
+          ! if (.not. found) then
+          !   print*,'Can not find wave vector iK=',ik, 'in I.B.Z.'
+          !   stop
+          ! end if
+        ! end if
+        ! debug neven: end of change (remove code below)
 
         ! sums electrons in the remeaining bands
         if (present(T)) then ! temperature is given use Fermi-Dirac statistics
           Ni = FermiDirac(E(n,K1), Efermi, T)
-          Nel = Nel + Ni
         else ! temperature not given, assuming the cyrstal is insulating
           if (E(n,K1) < Efermi) then 
             Ni = 1.0_dp
@@ -397,7 +423,7 @@ contains
           end if  
         end if
         Nel = Nel + Ni
-        ! print *,'Nel:', Nel,' Ni:',Ni,' band: ',n
+        ! print *,'DEBUG: Nel:', Nel,' Ni:',Ni,' band: ',n
     
       end do band_loop
     end do k_loop_FBZ
@@ -409,7 +435,7 @@ contains
     end if
 
     print *,'DEBUG: Nel: ',real(Nel),'NelQE: ',NelQE
-    print *, 'status: NelQE/Nel', 100.0*abs(NelQE-Nel/NelQE),'% missmatch'
+    write(*,'(A17,F6.2,A12)'), 'status: NelQE/Nel', 100.0*abs(NelQE-Nel)/NelQE,' % missmatch'
     if (abs(NelQE-real(Nel)) > eps_) then
       stop 'ERROR: Incorrect No. of electrons in FBZ.'
     end if
