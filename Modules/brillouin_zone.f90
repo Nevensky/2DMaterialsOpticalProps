@@ -356,7 +356,6 @@ contains
 
     Nel = 0.0_dp
     k_loop_FBZ : do  ik = 1,Ntot
-      ! debug neven: start of change
       found = .false.
       if (ik <= NkI) then
         K1 = ik
@@ -370,8 +369,6 @@ contains
             if ( all ( abs(K(1:3)-kI(1:3,jk)) <= eps_ ) ) then
               found = .true.
               K1 = jk ! IBZ index of a FBZ k-point
-              ! cycle band_loop
-              ! goto 5022
             end if
           end do k_loop_IBZ
         end do symm_loop
@@ -380,39 +377,8 @@ contains
         print*,'Can not find wave vector iK=',ik, 'in I.B.Z.'
         stop
       end if
-      ! debug neven: end of change
       band_loop: do  n = 1, Nband
-        ! debug neven: start of change (remove code below)
-        ! if (n == 1) then
-          ! ! needs to be done only once per k-point
-          ! found = .false.
-          ! if (ik <= NkI) then
-          !   K1 = ik
-          !   found = .true.
-          ! else
-          !   symm_loop: do  i = 2, Nsym
-          !     do l=1,3
-          !       K(l) = sum ( RI(1:3,l,i)*ktot(1:3,ik) )
-          !     end do
-          !     k_loop_IBZ: do  jk = 1, NkI
-          !       if ( all ( abs(K(1:3)-kI(1:3,jk)) <= eps_ ) ) then
-          !         found = .true.
-          !         K1 = jk ! IBZ index of a FBZ k-point
-          !         ! cycle band_loop ! WRONG, MISSES COUNTING Ni for FIRST BAND!
-          !         goto 5022
-          !       end if
-          !     end do k_loop_IBZ
-          !   end do symm_loop
-          ! end if
-! 5022 continue
-          ! if (.not. found) then
-          !   print*,'Can not find wave vector iK=',ik, 'in I.B.Z.'
-          !   stop
-          ! end if
-        ! end if
-        ! debug neven: end of change (remove code below)
-
-        ! sums electrons in the remeaining bands
+        ! calculate occupation of each band
         if (present(T)) then ! temperature is given use Fermi-Dirac statistics
           Ni = FermiDirac(E(n,K1), Efermi, T)
         else ! temperature not given, assuming the cyrstal is insulating
@@ -422,9 +388,8 @@ contains
             Ni = 0.0_dp
           end if  
         end if
-        Nel = Nel + Ni
+        Nel = Nel + Ni ! occupation to sum of electrons
         ! print *,'DEBUG: Nel:', Nel,' Ni:',Ni,' band: ',n
-    
       end do band_loop
     end do k_loop_FBZ
     

@@ -45,7 +45,6 @@ real(kind=dp),    parameter :: kB      = 1.3806503d-23
 real(kind=dp),    parameter :: Hartree = 2.0D0*13.6056923D0
 real(kind=dp),    parameter :: Planck  = 6.626196D-34
 real(kind=dp),    parameter :: aBohr   = 0.5291772d0
-real(kind=dp),    parameter :: gamma   = 1.0/137.0
 
 ! scalars
 real(kind=dp)    :: kx,ky,kz
@@ -287,7 +286,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   thread_id =  omp_get_thread_num()
 
   !$omp do
-  do  ik = 1,Ntot
+  do  ik = 1,Ntot ! FBZ
     ! vito debug
     ! open(33,FILE='status')
     ! write(33,*)ik
@@ -1009,6 +1008,7 @@ end subroutine findKQinIBZ
           end if
         end if
         
+        ! debug neven: mislim da se ovo nikad ne izvrsi, nema smisla...
         ! zbroji broj el. u preostalim vrpcama
         if (E(K1,n) < Efermi) then 
           Nel = Nel + 1.0
