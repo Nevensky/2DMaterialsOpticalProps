@@ -4,7 +4,7 @@ module brillouin_zone
   use matrix_inverse, only: invert_real
   implicit none
 
-  public :: loadKiandE, scissorE, genFBZ, checkFBZintegration, &
+  public :: loadKiandE, scissorE, genFBZ, checkFBZintegration, checkFBZintegration_new, &
             & findKinIBZ, findKQinIBZ, findMinQ, invertR, genFBZpath
   private
 
@@ -60,7 +60,6 @@ contains
     real(kind=dp),    intent(inout)        :: E(:,:) !! eigenenergies (Nband x NkI)
     real(kind=dp),    intent(in), optional :: dGW    !! scissor band gap correction 
 
-    integer :: iuni, ios, ik, i
     integer :: Nband !! No. of bands
     integer :: NkI   !! No. of k-points in FBZ
     real(kind=dp) :: dGW_ = 0.0_dp
@@ -75,19 +74,26 @@ contains
 
   subroutine invertR(R, RI)
     !! Computes inverse of each rotational symmetry matrix
-    real(kind=dp), intent(inout)          :: R(:,:,:)  !! point group rotational matrices (3 x 3 x Nrot)
-    real(kind=dp), intent(out),  optional :: RI(:,:,:) !! rotational matrices inverted
+    real(kind=dp), intent(inout) :: R(:,:,:)  !! point group rotational matrices (3 x 3 x Nrot)
+    real(kind=dp), intent(out), allocatable, optional :: RI(:,:,:) !! rotational matrices inverted
 
     integer :: i, Nrot
     real(kind=dp), allocatable :: RI_(:,:,:)
     allocate(RI_(size(R,1),size(R,2),size(R,3)))
+    RI_ = R
 
     Nrot = size(R,3)
     do i = 1,Nrot
+      ! print *, 'DEBUG: irot=',i
       call invert_real(RI_(:,:,i))
     enddo
 
+    ! do i=1,Nrot
+    !   RI_(:,:,i) = transpose(RI_(:,:,i))
+    ! end do
+
     if (present(RI)) then
+      if (.not. allocated(RI)) allocate(RI(size(R,1),size(R,2),size(R,3)))
       RI = RI_ 
     else
       R = RI_
@@ -96,9 +102,10 @@ contains
     deallocate(RI_)
   end subroutine invertR
 
-  subroutine genFBZ(kI, R, Ntot, ktot, eps, writeOutput)
+  subroutine genFBZ(Nsym, kI, R, Ntot, ktot, eps, writeOutput)
     !! Generates all unique wavectors in the 1st BZ by applying 
     !! point group transformations on the reducible BZ
+    integer,                 intent(in)  :: Nsym
     real(kind=dp),           intent(in)  :: kI(:,:)      !! k-points in the IBZ (3 x NkI)
     real(kind=dp),           intent(in)  :: R(:,:,:)     !! point group transformation matrices (3 x 3 x Nrot)
     integer,                 intent(out) :: Ntot         !! No. of unique k-point in the FBZ
@@ -112,13 +119,13 @@ contains
     integer       :: n, m
 
     integer :: NkI  !! No. k-points in the IBZ
-    integer :: Nsym !! No. symmetry opperations
+    ! integer :: Nsym !! No. symmetry opperations
     integer :: Nk   !! No. of k-points in the FBZ
     real(kind=dp), allocatable :: k(:,:) !! all non-unique k-points within the 1st BZ
     real(kind=dp) :: eps_
 
     NkI = size(kI,2) 
-    Nsym = size(R,3) 
+    ! Nsym = size(R,3) 
     Nk = 48*NkI      
 
     eps_ = 1.0d-4 ! default thershold
@@ -148,7 +155,6 @@ contains
             end if
           end do
         end if
-
         if (unique) then ! if it is unique add it to ktot
           Ntot = Ntot+1
           ktot(1:3,Ntot) = k(1:3,jk)
@@ -156,14 +162,15 @@ contains
 
       end do k_loop_IBZ
     end do symm_loop
-    if (allocated(k)) deallocate(k)
+
+    print *, 'Ntot: ',Ntot
 
     ! write all (kx,ky) surface FBZ k-points to file
     if (present(writeOutput)) then
       if (writeOutput) then
         open(newunit=iuni,iostat=ios,file='fbz_check.dat',action='write',status='new')
         if (ios/=0) then
-          stop 'ERROR: Could not open fbz_check.dat file in genFBZ()'
+          stop 'ERROR: Could not create new fbz_check.dat file in genFBZ()'
         end if
         do  i = 1,Ntot
           write(iuni,*) ktot(1,i), ktot(2,i)  
@@ -171,6 +178,8 @@ contains
         close(iuni)
       end if
     end if
+
+    if (allocated(k)) deallocate(k)
   end subroutine genFBZ
 
   ! subroutine genFBZ(Nk,NkI,Nsym,eps,kI,R,Ntot,ktot,writeOutput)
@@ -236,12 +245,11 @@ contains
   !   end if
   ! end subroutine genFBZ
 
-  subroutine checkFBZintegration(Nband,NkI,Nsym,Ntot,eps,kI,ktot,RI,Efermi,E,NelQE,Nel,T)
+  subroutine checkFBZintegration(Nband,NkI,Nsym,Ntot,eps,kI,ktot,RI,Efermi,E,Nel,T)
     !! Checks if the No. of electrons in the 1st BZ (Nel) equals 
     !! the number of electrons in the unit cell as calculated by Quantum Espresso (NelQE)   
     use statistics, only: FermiDirac
     integer,       intent(in)  :: NkI, Nsym, Nband, Ntot
-    real(kind=dp), intent(in)  :: NelQE      !! No. electrons computed in Quantum Espresso
     real(kind=dp), intent(in)  :: Efermi     !! Fermi energy
     real(kind=dp), intent(in)  :: eps        !! threshold for two k-points to be considered equal
     real(kind=dp), intent(in)  :: kI(:,:)    !! k-points in the IBZ (3 x NkI)
@@ -254,7 +262,7 @@ contains
 
     logical       :: found
     integer       :: ik, n, i, j, l, K1
-    real(kind=dp) :: kx,ky,kz
+    ! real(kind=dp) :: kx, ky, kz
     real(kind=dp) :: Ni !! Fermi-Dirac occupation
     ! real(kind=dp) :: K11, K22, K33
     real(kind=dp) :: K(3) !! => k_IBZ = R_inv x k_FBZ = R_inv x ktot
@@ -269,7 +277,9 @@ contains
               found = .true.
             else
               symm_loop: do  i = 2, Nsym
-                forall (l=1:3) K(l) = sum ( RI(1:3,l,i)*ktot(1:3,ik) )
+                do l=1,3 
+                  K(l) = sum ( RI(1:3,l,i)*ktot(1:3,ik) )
+                end do
                 k_loop_IBZ: do  j = 1, NkI
                   if ( all ( abs(K(1:3)-kI(1:3,j)) <= eps ) ) then
                     found = .true.
@@ -310,10 +320,11 @@ contains
 
   end subroutine checkFBZintegration
 
-  subroutine checkFBZintegration_new(NelQE, Nel, kI, ktot, RI, E, Efermi, T, eps, spinorbit)
+  subroutine checkFBZintegration_new(NelQE, Nel, Nsym, kI, ktot, RI, E, Efermi, T, eps, spinorbit)
     !! Checks if the No. of electrons in the FBZ (Nel) equals 
     !! the number of electrons in the unit cell as calculated by Quantum Espresso (NelQE)   
     use statistics, only: FermiDirac
+    integer,       intent(in)  :: Nsym
     real(kind=dp), intent(in)  :: NelQE        !! No. of electrons from QE calculation
     real(kind=dp), intent(in)  :: Efermi       !! Fermi energy
     real(kind=dp), intent(in)  :: kI(:,:)      !! k-points in the IBZ
@@ -327,15 +338,15 @@ contains
 
     logical       :: found
     integer       :: ik, jk, n, i, l, K1
-    integer       :: NkI, Nsym, Nband, Ntot
-    real(kind=dp) :: kx,ky,kz
+    integer       :: NkI, Nband, Ntot ! ,Nsym
+    ! real(kind=dp) :: kx,ky,kz
     real(kind=dp) :: Ni ! Fermi-Dirac occupation
     ! real(kind=dp) :: K11, K22, K33
     real(kind=dp) :: K(3) ! => k_IBZ = R_inv x k_FBZ = R_inv x ktot
     real(kind=dp) :: eps_
 
     NkI = size(kI,2)
-    Nsym = size(RI,3)
+    ! Nsym = size(RI,3)
     Nband = size(E,1)
     Ntot = size(ktot,2)
 
@@ -352,7 +363,9 @@ contains
               found = .true.
             else
               symm_loop: do  i = 2, Nsym
-                forall (l=1:3) K(l) = sum ( RI(1:3,l,i)*ktot(1:3,ik) )
+                do l=1,3
+                  K(l) = sum ( RI(1:3,l,i)*ktot(1:3,ik) )
+                end do
                 k_loop_IBZ: do  jk = 1, NkI
                   if ( all ( abs(K(1:3)-kI(1:3,jk)) <= eps_ ) ) then
                     found = .true.
@@ -395,8 +408,11 @@ contains
       if (spinorbit) Nel = Nel/2
     end if
 
-    if (abs(NelQE-Nel)>eps) print *, 'WARNING: Incorrect No. of electrons in FBZ.'
+    print *,'DEBUG: Nel: ',real(Nel),'NelQE: ',NelQE
     print *, 'status: NelQE/Nel', 100.0*abs(NelQE-Nel/NelQE),'% missmatch'
+    if (abs(NelQE-real(Nel)) > eps_) then
+      stop 'ERROR: Incorrect No. of electrons in FBZ.'
+    end if
 
   end subroutine checkFBZintegration_new
 

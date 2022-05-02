@@ -49,7 +49,7 @@ contains
     logical             :: noinv, force_symmorphic
 
     if (present(printOutput)) printOutput_ = printOutput
-    if (present(Nband)) Nband = 0
+    if (present(Nband))  Nband = 0
     if (present(NkI))    NkI    = 0
     if (present(Nrot))   Nrot   = 0
     if (present(Nsym))   Nsym   = 0
@@ -129,6 +129,9 @@ contains
     ! debug: prints all values read
     ! instead it should call a function where each 
     ! quantity is optional and if present(...) loadd it
+    if (present(a) .and. present(alat) .and. printOutput_) then
+      print *, 'alat: ',alat
+    end if
 
     if (present(a) .and. printOutput_) then
       print *, 'unit_cell'
@@ -140,9 +143,9 @@ contains
       print *, b
     end if
 
-    if (all([present(Nsym),present(R)]) .and. printOutput_) then
+    if (all([present(Nrot),present(R)]) .and. printOutput_) then
       print *, 'symmetries:'
-      do is=1,Nsym
+      do is=1,Nrot
         write (*,'(A8,I2,A18)') '----- R(',is,', 1:3, 1:3)-------'
         do i=1,3
           print *, R(:,i,is)
@@ -212,7 +215,7 @@ contains
 
     if (all([present(Nsym),present(Nrot)])) then
       if (Nsym/=Nrot) then
-        stop 'ERROR: Quantum Espresso calculation contains non-rotational symmetries. &
+        print *, 'WARNING: Quantum Espresso calculation must not use non-rotational symmetries. &
               & Use force_symmorphic=.true. and noinv=.true. in QE input.'
       end if
     end if
