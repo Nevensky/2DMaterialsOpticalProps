@@ -11,7 +11,7 @@ subroutine genChargeVertices(jump, eps, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, 
   integer,          intent(in)    :: iG0, Nlf, NG1, NG2, NGd
   integer,          intent(in)    :: R1, R2     !! indices of rotational symmetry needed to obtain \(\mathbf{k,k'}\)
   real(kind=dp),    intent(in)    :: eps        !! convergence cutoff between G-vectors
-  real(kind=dp),    intent(in)    :: R(:,:,:)   !! rotation matrices for all crystal symmetries
+  real(kind=dp),    intent(in)    :: R(:,:,:)   !! rotation matrices for all crystal symmetries (3x3xNrot)
   real(kind=dp),    intent(in)    :: RI(:,:,:)  !! inverted rotation matrices for all crystal symmetries
   real(kind=dp),    intent(in)    :: Glf(:,:)   !! local field vectors
   real(kind=dp),    intent(in)    :: G(:,:)     !! G-vectors of the reciprocal. lattice
@@ -36,13 +36,13 @@ subroutine genChargeVertices(jump, eps, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, 
 
       do i=1,3
         ! K11, K22, K33
-        K(i) = sum ( R(R1,i,1:3)*G(1:3,iG1) ) 
+        K(i) = sum ( R(i,1:3,R1)*G(1:3,iG1) ) 
         K(i) = K(i) + Glf(i,iG) + G(i,iG0)
       end do
 
       do i=1,3
         ! Gxx1, Gyy1, Gzz1
-        Gprime(i) = sum ( RI(R2,i,1:3)*K(1:3) ) 
+        Gprime(i) = sum ( RI(i,1:3,R2)*K(1:3) ) 
       end do
 
       if (jump == .false.) then
@@ -77,18 +77,18 @@ subroutine genCurrentVertices(pol, jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0
   integer,          intent(in)    :: R1,R2
   real(kind=dp),    intent(in)    :: eps
   real(kind=dp),    intent(in)    :: Gcar
-  real(kind=dp),    intent(in)    :: qx,qy,qz
-  real(kind=dp),    intent(in)    :: kx,ky,kz
-  real(kind=dp),    intent(in)    :: R(:,:,:)
-  real(kind=dp),    intent(in)    :: RI(:,:,:)
-  real(kind=dp),    intent(in)    :: Glf(:,:)
-  real(kind=dp),    intent(in)    :: G(:,:)  ! polje valnih vektora G u recp. prost. za wfn.
-  complex(kind=dp), intent(in)    :: C1(:)   ! dim NG
-  complex(kind=dp), intent(in)    :: C2(:)   ! dim NG (bcs the input is dim iband x NG )
+  real(kind=dp),    intent(in)    :: qx,qy,qz !! transfer wavevector
+  real(kind=dp),    intent(in)    :: kx,ky,kz !! initial wavevector 
+  real(kind=dp),    intent(in)    :: R(:,:,:) !! point group rotational transformation matrices (3x3xNrot)
+  real(kind=dp),    intent(in)    :: RI(:,:,:) !! inverse of point group rot. transform. mat. (3x3xNrot)
+  real(kind=dp),    intent(in)    :: Glf(:,:) 
+  real(kind=dp),    intent(in)    :: G(:,:)  !! reciprocal lattice vectors \( \mathbf{G}_i \) for the density
+  complex(kind=dp), intent(in)    :: C1(:)   !! Fourier coefficients of Bloch states for a given band,k-point pair (NG)
+  complex(kind=dp), intent(in)    :: C2(:)   !! Fourier coefficients of Bloch states for a given band,k-point pair (NG)
   logical,          intent(inout) :: jump
   integer,          intent(inout) :: Gfast(:)
-  complex(kind=dp), intent(out)   :: MnmK1K2(:) 
-  complex(kind=dp), intent(out)   :: MnmK1K22(:)
+  complex(kind=dp), intent(out)   :: MnmK1K2(:) !! charge vertices for 1st polarization component (NG)
+  complex(kind=dp), intent(out), optional :: MnmK1K22(:)  !! charge vertices for 2nd polarization component (NG)
 
   integer          :: i, iG, iG1, iG2
   integer          :: iGfast
@@ -110,21 +110,21 @@ subroutine genCurrentVertices(pol, jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0
   
   iGfast = 0
   MnmK1K2(1:Nlf)  = cmplx(0.0_dp,0.0_dp)
-  MnmK1K22(1:Nlf) = cmplx(0.0_dp,0.0_dp)
+  if (present(MnmK1K22)) MnmK1K22(1:Nlf) = cmplx(0.0_dp,0.0_dp)
 
   iG_loop: do  iG = 1,Nlf
     iG1_loop: do iG1 = 1,NGd
       iGfast = iGfast + 1
 
       do i=1,3
-        K_(i) = sum( R(R1,i,1:3)*G(1:3,iG1) )
+        K_(i) = sum( R(i,1:3,R1)*G(1:3,iG1) )
       end do
 
       current_xyz(1:3) = Gcar * ( q(1:3) + 2.0*k(1:3) + Glf(1:3,iG) + 2.0*K_(1:3) )
       K_(1:3) = K_(1:3) + Glf(1:3,iG) + G(1:3,iG0)
       
       do i=1,3
-        Gprime(i) = sum ( RI(R2,i,1:3)*K_(i) )
+        Gprime(i) = sum ( RI(i,1:3,R2)*K_(i) )
       end do
       
       if (jump == .false.) then
@@ -142,21 +142,21 @@ subroutine genCurrentVertices(pol, jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0
       if (iG2 <= NG2) then
         if (pol == 'xx') then
           MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * current_xyz(1) * C2(iG2)
-          MnmK1K22(iG) = MnmK1K2(iG) ! current vertices are the same
+          if (present(MnmK1K22)) MnmK1K22(iG) = MnmK1K2(iG) ! current vertices are the same
         elseif (pol == 'yy') then
           MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * current_xyz(2) * C2(iG2)
-          MnmK1K22(iG) = MnmK1K2(iG) ! current vertices are the same
+          if (present(MnmK1K22)) MnmK1K22(iG) = MnmK1K2(iG) ! current vertices are the same
         elseif (pol == 'zz') then
           MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * current_xyz(3) * C2(iG2)
-          MnmK1K22(iG) = MnmK1K2(iG) ! current vertices are the same
-        elseif (pol =='yz') then
+          if (present(MnmK1K22))  MnmK1K22(iG) = MnmK1K2(iG) ! current vertices are the same
+        elseif (pol =='yz' .and. present(MnmK1K22)) then
           MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * current_xyz(2) * C2(iG2)
           MnmK1K22(iG) = MnmK1K22(iG) + 0.5D0*conjg(C1(iG1)) * current_xyz(3) * C2(iG2)
-        elseif (pol =='zy') then
+        elseif (pol =='zy' .and. present(MnmK1K22)) then
           MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * current_xyz(3) * C2(iG2)
           MnmK1K22(iG) = MnmK1K22(iG) + 0.5D0*conjg(C1(iG1)) * current_xyz(2) * C2(iG2)
         else
-          print *,'WARNING Specified mixed polarization component not supported.'//adjustl(trim(pol))//' not allowed.'
+          print *,'ERROR: Specified mixed polarization component not supported.'//adjustl(trim(pol))//' not allowed.'
           stop
         end if
       else

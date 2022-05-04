@@ -5,7 +5,7 @@ module brillouin_zone
   implicit none
 
   public :: loadKiandE, scissorE, genFBZ, checkFBZintegration, checkFBZintegration_new, &
-            & findKinIBZ, findKQinIBZ, findMinQ, invertR, genFBZpath
+            & findKinIBZ, findKQinIBZ, findMinQ, invertR, transformR, genFBZpath
   private
 
 contains
@@ -101,6 +101,26 @@ contains
 
     deallocate(RI_)
   end subroutine invertR
+
+  subroutine transformR(alat, a, b, R)
+    real(kind=dp), intent(in) :: alat         !! lattice constant [Ry]
+    real(kind=dp), intent(in) :: a(:,:)       !! direct lattice [Ry]
+    real(kind=dp), intent(in) :: b(:,:)       !! reciprocal lattice [2pi/alat]
+    real(kind=dp), intent(inout) :: R(:,:,:)  !! point group transformation (rotation) matrix (3 x 3 x Nrot)
+    
+    integer :: ir, Nrot
+    Nrot = size(R,3)
+
+    do ir=1,Nrot
+      ! neven debug: lattice converted to units [alat]
+      R(:,:,ir) = matmul(R(:,:,ir),a/alat)
+      R(:,:,ir) = transpose(R(:,:,ir))
+      R(:,:,ir) = matmul(R(:,:,ir),b) 
+      R(:,:,ir) = transpose(R(:,:,ir)) ! last step to make printout equal to QE scf output
+      ! print *,'==R(:,:,',iq,')=='
+      ! print *,R(:,:,iq)
+    end do
+  end subroutine transformR
 
   subroutine genFBZ(Nsym, kI, R, Ntot, ktot, eps, writeOutput)
     !! Generates all unique wavectors in the 1st BZ by applying 

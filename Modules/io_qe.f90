@@ -126,7 +126,7 @@ contains
     character (len=*), intent(in)                  :: savedir
     integer,           intent(in)                  :: ik
     integer,           intent(out)                 :: igwx
-    complex(dp),       intent(inout)               :: evc(:,:)
+    complex(dp),       intent(inout)               :: evc(:,:) ! ngk x nbnd
 
     character (len=300) :: path 
 
@@ -157,8 +157,8 @@ contains
     read(iuni) ! dummy_int
     ! allocate (evc(npol*igwx))
 
-    do i = 1, nbnd 
-        read(iuni) evc(i,1:npol*igwx) 
+    do i = 1, Nbnd 
+        read(iuni) evc(1:npol*igwx,i) 
     end do 
     close(iuni)
 !    deallocate(evc) 
@@ -224,7 +224,7 @@ contains
     integer,           intent(in)                  :: ik
     integer,           intent(in)                  :: jspin
     integer,           intent(out)                 :: igwx
-    complex(dp),       intent(inout)               :: evc(:,:)
+    complex(dp),       intent(inout)               :: evc(:,:) ! ngk x nbnd
 
     character (len=300) :: path 
 
@@ -257,10 +257,10 @@ contains
 
     if (ispin==jspin) then
       do i = 1, nbnd 
-          read(iuni) evc(i,1:npol*igwx) 
+          read(iuni) evc(1:npol*igwx,i) 
       end do 
     else
-      evc(1:nbnd,1:npol*igwx) = cmplx(0.0,0.0)
+      evc(1:npol*igwx,1:nbnd) = cmplx(0.0_dp,0.0_dp)
     end if
 
     close(iuni)
