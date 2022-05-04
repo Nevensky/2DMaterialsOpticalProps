@@ -96,7 +96,7 @@ contains
       elseif (expo > cutoff_) then
         Ni = 0.0_dp
       else
-        Ni = 1.0_dp/(exp(expo) - 1.0_dp)
+        Ni = 1.0_dp/exp(expo)
       endif
       
   end function Boltzmann
