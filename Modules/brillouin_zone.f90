@@ -441,9 +441,9 @@ contains
       if (spinorbit) Nel = Nel/2
     end if
 
-    print *,'DEBUG: Nel: ',real(Nel),'NelQE: ',NelQE
+    print *,'DEBUG: Nel: ',dble(Nel),'NelQE: ',NelQE
     write(*,'(A17,F6.2,A12)'), 'status: NelQE/Nel', 100.0*abs(NelQE-Nel)/NelQE,' % missmatch'
-    if (abs(NelQE-real(Nel)) > eps_) then
+    if (abs(NelQE-dble(Nel)) > eps_) then
       stop 'ERROR: Incorrect No. of electrons in FBZ.'
     end if
 
@@ -520,7 +520,7 @@ contains
     integer,       intent(out) :: iK2           !! index of k-point K2 in K + Q = G0 + R2*K2
     real(kind=dp), intent(in), optional  :: eps !! thershold for two k-points being the same
   
-    integer       :: found_ibz, found_fbz
+    logical       :: found_ibz, found_fbz
     integer       :: iG, jk, i, j, l
     integer       :: NkI, Ntot, NG, Nsym
     real(kind=dp) :: K(3), KQ(3)
@@ -539,6 +539,7 @@ contains
     if (present(eps)) eps_ = eps
   
     found_fbz = .false.
+    found_ibz = .false.
     iG_loop: do  iG = 1,NG
       k_loop_FBZ : do  jk = 1, Ntot
         if ( all (abs(KQ(1:3)-G(1:3,iG)-ktot(1:3,jk)) <= eps_) ) then
@@ -589,12 +590,12 @@ contains
     
     Ntot = size(ktot,2)
 
-    kmin = 1.0
+    kmin = 1.0_dp
     Ntot_loop: do  i = 1, Ntot ! loop over different k-points in FBZ
       kref = sqrt(sum(ktot(1:3,i)**2))
       ! neven debug
       ! print *,'i=',i,' kref: ',kref
-      if (kref == 0.0) then
+      if (kref == 0.0_dp) then
         cycle Ntot_loop
       else if (kref < kmin) then
         kmin = kref

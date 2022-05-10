@@ -7,18 +7,18 @@ module local_field
 
 contains
 
-  subroutine genGlf(lf,Ecut,Gcar,G,Nlf,Nlfd,Glf,parG)
+  subroutine genGlf(lf,Ecut,Gcar,G,Nlf,Glf,parG, Nlfd)
     !! Generate Reciprocal latt. vectors for crystal local field 
     !! effects calculations in array Glf(1:3,1:Nlf)
     implicit none
-    character(len=*),           intent(in)    :: lf
-    real(kind=dp),              intent(in)    :: Ecut
-    real(kind=dp),              intent(in)    :: Gcar
-    real(kind=dp),              intent(in)    :: G(:,:)
-    integer,                    intent(inout) :: Nlfd
-    integer,                    intent(out)   :: Nlf
-    real(kind=dp), allocatable, intent(out)   :: Glf(:,:)
-    integer,optional,           intent(inout) :: parG(:)
+    character(len=*),             intent(in)    :: lf
+    real(kind=dp),                intent(in)    :: Ecut
+    real(kind=dp),                intent(in)    :: Gcar
+    real(kind=dp),                intent(in)    :: G(:,:)
+    integer,                      intent(out)   :: Nlf
+    real(kind=dp),   allocatable, intent(out)   :: Glf(:,:)
+    integer,optional,allocatable, intent(inout) :: parG(:)
+    integer,optional,             intent(inout) :: Nlfd ! redundant, should be removed
   
     integer       :: iG
     real(kind=dp) :: Eref
@@ -27,6 +27,10 @@ contains
     NG = size(G,2)
   
     if (.not. allocated(Glf)) allocate(Glf(3,NG*Nlf))
+    if (present(parG)) then
+      if (.not. allocated(parG)) allocate(parG(NG))
+    end if
+
     Nlf = 0
     if (lf == 'z') then
       ! local field effects included only in the perpendicular dirrection (z)
@@ -72,10 +76,12 @@ contains
     else
       stop 'ERROR: Unsupported local-field vector orientation in genGlf()'
     end if
-    if (Nlf > Nlfd) then
-      stop 'Nlf is bigger than Nlfd'
-    else if(Nlf<Nlfd) then
-      Nlfd = Nlf
+    if (present(Nlfd)) then
+      if (Nlf > Nlfd) then
+        stop 'Nlf is bigger than Nlfd'
+      else if(Nlf<Nlfd) then
+        Nlfd = Nlf
+      end if
     end if
   end subroutine genGlf
 

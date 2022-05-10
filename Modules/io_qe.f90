@@ -260,7 +260,7 @@ contains
           read(iuni) evc(1:npol*igwx,i) 
       end do 
     else
-      evc(1:npol*igwx,1:nbnd) = cmplx(0.0_dp,0.0_dp)
+      evc(1:npol*igwx,1:nbnd) = dcmplx(0.0_dp,0.0_dp)
     end if
 
     close(iuni)

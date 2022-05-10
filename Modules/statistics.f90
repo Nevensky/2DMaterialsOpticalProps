@@ -143,7 +143,7 @@ contains
       populated = .false.
       f1 = FermiDirac(E(n,K1),Efermi,T)
       f2 = FermiDirac(E(m,K2),Efermi,T)
-      df = f1 - f2
+      df_ = f1 - f2
       if ((abs(df_) >= df_cut) .or. (n == m)) populated = .true.
     else
       populated= .true.

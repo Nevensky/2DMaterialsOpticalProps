@@ -12,12 +12,12 @@ module constants
     ! real(kind=dp),    parameter :: Hartree = 2.0_dp*13.6056923_dp        ! eV
     real(kind=dp),    parameter :: Hartree = 4.3597447222071E-18_dp/eV     ! J -> eV
     real(kind=dp),    parameter :: Rydberg = 4.3597447222071E-18_dp/(2*eV) ! J -> Ry
-    real(kind=dp),    parameter :: Planck  = 6.62607015e-34_DP             ! J s
+    real(kind=dp),    parameter :: Planck  = 6.62607015e-34_dp             ! J s
     real(kind=dp),    parameter :: aBohr   = 0.529177210903e-10_dp         ! m
     real(kind=dp),    parameter :: alpha   = 0.0072973525693_dp            ! 1/137
 
-    real(kind=dp), parameter    :: rone  = cmplx(1.0_dp,0.0_dp)
-    real(kind=dp), parameter    :: czero = cmplx(0.0_dp,0.0_dp)
-    real(kind=dp), parameter    :: ione  = cmplx(0.0_dp,1.0_dp)
+    real(kind=dp), parameter    :: rone  = dcmplx(1.0_dp,0.0_dp)
+    real(kind=dp), parameter    :: czero = dcmplx(0.0_dp,0.0_dp)
+    real(kind=dp), parameter    :: ione  = dcmplx(0.0_dp,1.0_dp)
 
 end module constants

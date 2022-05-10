@@ -6,9 +6,9 @@ module vertices
   private
 
 contains
-subroutine genChargeVertices(jump, eps, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2)
+subroutine genChargeVertices(jump, eps, iG0, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2)
   !! Generates charge vertex matrix elements \( \rho_{nm,\mathbf{k,k'}}(\mathbf{G}) \)
-  integer,          intent(in)    :: iG0, Nlf, NG1, NG2, NGd
+  integer,          intent(in)    :: iG0
   integer,          intent(in)    :: R1, R2     !! indices of rotational symmetry needed to obtain \(\mathbf{k,k'}\)
   real(kind=dp),    intent(in)    :: eps        !! convergence cutoff between G-vectors
   real(kind=dp),    intent(in)    :: R(:,:,:)   !! rotation matrices for all crystal symmetries (3x3xNrot)
@@ -21,32 +21,39 @@ subroutine genChargeVertices(jump, eps, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, 
   integer,          intent(inout) :: Gfast(:)   !! arrary for storing indices of \(G'' \)
   complex(kind=dp), intent(out)   :: MnmK1K2(:) !! charge vertices \( \rho_{nm,\mathbf{k,k'}} \)
 
-  integer       :: i, iG, iG1, iG2
-  integer       :: iGfast
+  integer :: i, iG, iG1, iG2
+  integer :: iGfast
+  integer :: Nlf, NG1, NG2
   ! real(kind=dp) :: K11, K22, K33
   ! real(kind=dp) :: Gxx1,Gyy1,Gzz1
   ! real(kind=dp) :: Gxx2,Gyy2,Gzz2
   real(kind=dp) :: Gprime(3), K(3)
 
+  Nlf = size(MnmK1K2,1)
+  NG1 = size(C1,1)
+  NG2 = size(C2,1)
+
   iGfast = 0
-  MnmK1K2(1:Nlf) = cmplx(0.0_dp,0.0_dp) 
-  do  iG = 1,Nlf     ! suma po lokalnim fieldovima kojih ima Nlf
-    do  iG1 = 1,NGd  ! vito zamjenjeno NGd sa NG1
+  MnmK1K2(1:Nlf) = dcmplx(0.0_dp,0.0_dp) 
+  do iG = 1, Nlf      ! suma po lokalnim fieldovima kojih ima Nlf
+    do iG1 = 1, NG1  ! neven debug: zamjenjen vitin NGd sa NG1 (je li ok?)
       iGfast = iGfast + 1
 
+      K = 0
       do i=1,3
         ! K11, K22, K33
-        K(i) = sum ( R(i,1:3,R1)*G(1:3,iG1) ) 
+        K(i) = sum ( R(i,1:3,R1)*G(1:3,iG1) )
         K(i) = K(i) + Glf(i,iG) + G(i,iG0)
       end do
 
+      Gprime = 0
       do i=1,3
         ! Gxx1, Gyy1, Gzz1
         Gprime(i) = sum ( RI(i,1:3,R2)*K(1:3) ) 
       end do
 
       if (jump == .false.) then
-        iG2_loop: do  iG2 = 1,NG2
+        iG2_loop: do iG2 = 1,NG2
           Gfast(iGfast) = NG2+1
           if ( all( abs(G(1:3,iG2) - Gprime(1:3)) < eps) ) then
               Gfast(iGfast) = iG2
@@ -54,14 +61,10 @@ subroutine genChargeVertices(jump, eps, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, 
           end if
         end do iG2_loop
       end if
-
       iG2 = Gfast(iGfast)
 
-      if (iG2 <= NG2) then
+      if (iG2 <= NG2) then 
         MnmK1K2(iG) = MnmK1K2(iG) + conjg(C1(iG1))*C2(iG2)
-      else
-        print *, "iG = ",iG,"iG1 = ",iG1,"iG2 = ",iG2
-        stop 'ERROR: iG2 <= NG2 in genChargeVertices()'
       end if
 
     end do
@@ -69,11 +72,11 @@ subroutine genChargeVertices(jump, eps, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, 
   jump = .true.
 end subroutine genChargeVertices
 
-subroutine genCurrentVertices(pol, jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2, MnmK1K22)
+subroutine genCurrentVertices(pol, jump, eps, Gcar, qx,qy,qz, kx,ky,kz, iG0, R1, R2, R, RI, Glf, G, Gfast, C1, C2, MnmK1K2, MnmK1K22)
   !! Construct matrix elements for current vertices \( j^\mu_{n\mathbf{K},m\mathbf{K'}}(\mathbf{G}) \)
   !! stored in MnmK1K2(iG) i MnmK1K22(iG) matrices respectively
   character(len=3), intent(in)    :: pol
-  integer,          intent(in)    :: iG0, Nlf, NG1, NG2, NGd
+  integer,          intent(in)    :: iG0 !, Nlf, NG1, NG2, NGd
   integer,          intent(in)    :: R1,R2
   real(kind=dp),    intent(in)    :: eps
   real(kind=dp),    intent(in)    :: Gcar
@@ -92,6 +95,7 @@ subroutine genCurrentVertices(pol, jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0
 
   integer          :: i, iG, iG1, iG2
   integer          :: iGfast
+  integer          :: Nlf, NG1, NG2
   ! real(kind=dp)    :: K11, K22, K33
   ! real(kind=dp)    :: Gxx1,Gyy1,Gzz1
   ! real(kind=dp)    :: Gxx2,Gyy2,Gzz2
@@ -99,6 +103,10 @@ subroutine genCurrentVertices(pol, jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0
   ! real(kind=dp)    :: current, current_y, current_z
   real(kind=dp)    :: k(3), q(3), K_(3)
   real(kind=dp)    :: current_xyz(3)
+
+  Nlf = size(MnmK1K2,1)
+  NG1 = size(C1,1)
+  NG2 = size(C2,1)
 
   k(1) = kx
   k(2) = ky
@@ -109,11 +117,11 @@ subroutine genCurrentVertices(pol, jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0
   q(3) = qz
   
   iGfast = 0
-  MnmK1K2(1:Nlf)  = cmplx(0.0_dp,0.0_dp)
-  if (present(MnmK1K22)) MnmK1K22(1:Nlf) = cmplx(0.0_dp,0.0_dp)
+  MnmK1K2(1:Nlf)  = dcmplx(0.0_dp,0.0_dp)
+  if (present(MnmK1K22)) MnmK1K22(1:Nlf) = dcmplx(0.0_dp,0.0_dp)
 
-  iG_loop: do  iG = 1,Nlf
-    iG1_loop: do iG1 = 1,NGd
+  iG_loop: do  iG = 1, Nlf
+    iG1_loop: do iG1 = 1,NG1 ! debug neven: zamjeneno NGd sa NG1
       iGfast = iGfast + 1
 
       do i=1,3
@@ -159,9 +167,6 @@ subroutine genCurrentVertices(pol, jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0
           print *,'ERROR: Specified mixed polarization component not supported.'//adjustl(trim(pol))//' not allowed.'
           stop
         end if
-      else
-        print *, "iG = ",iG,"iG1 = ",iG1,"iG2 = ",iG2
-        stop "ERROR: iG2 <= NG2 in genCurrentVertices()"
       end if
     end do iG1_loop
   end do iG_loop

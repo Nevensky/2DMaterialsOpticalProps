@@ -87,8 +87,8 @@ contains
     
     
     ImW = -pi*S(io)
-    Gammap(io) = cmplx(W1,ImW)
-    Gammam(io) = cmplx(-W2,0.0_dp)
+    Gammap(io) = dcmplx(W1,ImW)
+    Gammam(io) = dcmplx(-W2,0.0_dp)
     
     if(io == 1) Gammap0 = Gammap(1)
     
