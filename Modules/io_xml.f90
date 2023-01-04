@@ -21,10 +21,12 @@ module io_xml
   private 
   
 contains
-  subroutine loadXML_qe(path, Nband , NkI, Nrot, Nsym, Nmp, alat, a, b, R, Npw, kI, eigenvals, occupations, T, Efermi, NelQE, printOutput)
+  subroutine loadXML_qe(path, Nband , NkI, Nrot, Nsym, Nmp, Ecutwfc, Ecutrho, alat, a, b, R, Npw, kI, eigenvals, occupations, T, Efermi, NelQE, printOutput)
     character(len=*), intent(in) :: path
     integer,       intent(out), optional :: Nband, NkI, Nrot, Nsym, Nmp(3)
     real(kind=dp), intent(out), optional :: alat      !! lattice parameter
+    real(kind=dp), intent(out), optional :: Ecutwfc   !! cut-off for the wavefunction
+    real(kind=dp), intent(out), optional :: Ecutrho   !! cut-off for the density
     real(kind=dp), intent(out), optional              :: a(3,3)           !! direct lattice
     real(kind=dp), intent(out), optional              :: b(3,3)           !! reciprocal lattice
     real(kind=dp), intent(out), optional, allocatable :: R(:,:,:)         !! array of rotational matrices (3 x 3 x Nrot)
@@ -54,6 +56,8 @@ contains
     if (present(Nrot))   Nrot   = 0
     if (present(Nsym))   Nsym   = 0
     if (present(Nmp))    Nmp(3) = 0
+    if (present(Ecutwfc)) Ecutwfc = 0.0_dp
+    if (present(Ecutrho)) Ecutrho = 0.0_dp
 
     open(newunit=iuni,file=path,iostat=ios_fopen,status='old')  
     file_loop: do while (ios_fread /= iostat_end)
@@ -62,16 +66,18 @@ contains
       call readXML_logicalval(noinv,'<noinv>',buffer)
       call readXML_logicalval(force_symmorphic,'<force_symmorphic>',buffer)
 
-      if (present(Nrot))   call readXML_intval(Nrot,'<nrot>',buffer)
-      if (present(Nsym))   call readXML_intval(Nsym,'<nsym>',buffer)
-      if (present(NkI))    call readXML_intval(NkI,'<nks>',buffer)
-      if (present(Nband))  call readXML_intval(Nband,'<nbnd>',buffer)
-      if (present(NelQE))  call readXML_realval(NelQE,'<nelec>',buffer)
-      if (present(Efermi)) call readXML_realval(Efermi,'<fermi_energy>',buffer)
-      if (present(T))      call readXML_realtag(T,'<smearing',buffer)
-
-      if (present(a))      call readXML_latt(a,'<cell>',buffer,c_latt)
-      if (present(b))      call readXML_latt(b,'<reciprocal_lattice>',buffer,c_reclatt)
+      if (present(Nrot))    call readXML_intval(Nrot,'<nrot>',buffer)
+      if (present(Nsym))    call readXML_intval(Nsym,'<nsym>',buffer)
+      if (present(NkI))     call readXML_intval(NkI,'<nks>',buffer)
+      if (present(Nband))   call readXML_intval(Nband,'<nbnd>',buffer)
+      if (present(NelQE))   call readXML_realval(NelQE,'<nelec>',buffer)
+      if (present(Efermi))  call readXML_realval(Efermi,'<fermi_energy>',buffer)
+      if (present(Ecutwfc)) call readXML_realval(Ecutwfc,'<ecutwfc>',buffer)
+      if (present(Ecutrho)) call readXML_realval(Ecutrho,'<ecutrho>',buffer)
+      if (present(T))       call readXML_realtag(T,'<smearing',buffer)
+ 
+      if (present(a))       call readXML_latt(a,'<cell>',buffer,c_latt)
+      if (present(b))       call readXML_latt(b,'<reciprocal_lattice>',buffer,c_reclatt)
       
       if (present(alat) .and. present(a)) alat = a(1,1)
 

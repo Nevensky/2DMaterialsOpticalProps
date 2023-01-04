@@ -216,7 +216,7 @@ contains
           stop 'ERROR: Could not create new fbz_check.dat file in genFBZ()'
         end if
         do  i = 1,Ntot_
-          write(iuni,*) ktot(1,i), ktot(2,i)  
+          write(iuni,*) ktot(1,i), ktot(2,i)
         end do
         close(iuni)
       end if
@@ -387,6 +387,7 @@ contains
     ! real(kind=dp) :: K11, K22, K33
     real(kind=dp) :: K(3) ! => k_IBZ = R_inv x k_FBZ = R_inv x ktot
     real(kind=dp) :: eps_
+    real(kind=dp) :: eps_occupation = 0.05
 
     NkI = size(kI,2)
     Nsym = size(RI,3) ! careful, this only works if R has been reshaped from 3x3xNrot to 3x3xNsym
@@ -443,7 +444,7 @@ contains
 
     print *,'DEBUG: Nel: ',dble(Nel),'NelQE: ',NelQE
     write(*,'(A17,F6.2,A12)'), 'status: NelQE/Nel', 100.0*abs(NelQE-Nel)/NelQE,' % missmatch'
-    if (abs(NelQE-dble(Nel)) > eps_) then
+    if (abs(NelQE-dble(Nel)) > eps_occupation) then
       stop 'ERROR: Incorrect No. of electrons in FBZ.'
     end if
 
@@ -533,14 +534,15 @@ contains
 
     KQ(1) = KQx
     KQ(2) = KQy
-    KQ(3) = KQy
+    KQ(3) = KQz
 
     eps_ = 1.0d-4 ! default thershold
     if (present(eps)) eps_ = eps
   
     found_fbz = .false.
     found_ibz = .false.
-    iG_loop: do  iG = 1,NG
+    iG_loop : do  iG = 1,NG
+    write(104,*) G(1:3,iG)
       k_loop_FBZ : do  jk = 1, Ntot
         if ( all (abs(KQ(1:3)-G(1:3,iG)-ktot(1:3,jk)) <= eps_) ) then
           found_fbz = .true.
@@ -549,9 +551,6 @@ contains
             do l=1,3
               K(l) = sum( RI(1:3,l,i) * ktot(1:3,jk) )
             end do
-            ! K(1) = sum(RI(1:3,1,i) * ktot(1:3,jk) )
-            ! K(2) = sum(RI(1:3,2,i) * ktot(1:3,jk) )
-            ! K(3) = sum(RI(1:3,3,i) * ktot(1:3,jk) )
             k_loop_IBZ: do  j = 1, NkI
               if ( all( abs(K(1:3)-kI(1:3,j)) <= eps_) ) then
                 found_ibz = .true. ! true for IBZ (and also for FBZ)
@@ -563,7 +562,7 @@ contains
           end do symm_loop
         end if
       end do k_loop_FBZ
-    end do iG_loop  
+    end do iG_loop
   
     if (.not. found_fbz) then
       ! print*,'Can not find wave vector K+Q=',ik,'+',iq, 'in FBZ.'
@@ -602,7 +601,7 @@ contains
         ikmin = i
         krefM = kmin
         ! neven debug
-        print *,'i=',i,'kmin: ',kmin
+        print *,'i=',i,'kmin: ',kmin,'ktot(ikmin):',ktot(1:3,ikmin)
       end if
     end do Ntot_loop
     ! neven debug

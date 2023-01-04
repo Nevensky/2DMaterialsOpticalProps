@@ -2,13 +2,13 @@ module qe_gksort
 use iso_fortran_env, only: dp=>real64
 implicit none
 
-public :: init_igk, gk_sort
-private ! :: hpsort_eps, gk_sort
+public  :: init_igk
+private :: hpsort_eps, gk_sort
 
 contains
 
 subroutine init_igk( nks, xk, npwx, ngm, g, gcutw, igk_k)
-!! Subroutine adapted from Quantum Espresso 6.5 distribution. (PW/src/pwcom.f90)
+  !! Subroutine adapted from Quantum Espresso 6.5 distribution. (PW/src/pwcom.f90)
   !! Initialize indices \(\text{igk_k}\) and number of plane waves
   !! per k-point:
   !
@@ -16,18 +16,17 @@ subroutine init_igk( nks, xk, npwx, ngm, g, gcutw, igk_k)
   !! * i = 1, \text{ngk}(\text{ik});
   !! * \text{igk} = \text{igk}_k(i,ik).
 
-  ! neven debug zasto je npwx samo integer a ne polje integera?
   integer,  intent(in)  :: nks, npwx, ngm
-  real(dp), intent(in)  :: gcutw, g(3,ngm), xk(:,:)
+  real(dp), intent(in)  :: gcutw !! wave function cut-off = ecutwfc/tpiba**2 where tpiba=2pi/alat
+  real(dp), intent(in)  :: g(3,ngm), xk(:,:)
   integer,  intent(out), allocatable :: igk_k(:,:) ! neven debug: ja dodao
 
   integer, allocatable  :: ngk(:)
   real(dp), allocatable :: gk(:)
-  integer :: ik
+  integer :: ik,ig
 
   if (.not. allocated(igk_k)) allocate( igk_k(npwx,nks) )
-  if (.not. allocated(ngk))   allocate( ngk(nks) )
-  allocate( gk(npwx) )
+  allocate(gk(npwx))
   allocate(ngk(nks))
   igk_k(:,:) = 0
   ! ... The following loop must NOT be called more than once in a run

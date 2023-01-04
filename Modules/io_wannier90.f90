@@ -38,7 +38,7 @@ contains
       do iwan=1,Nwan
         do n=1,Nband
           read(iuni,'(2F15.10)') ReU, ImU
-          U(ik,iwan,n) = cmplx(ReU, ImU)
+          U(ik,iwan,n) = dcmplx(ReU, ImU)
         end do
       end do
     end do

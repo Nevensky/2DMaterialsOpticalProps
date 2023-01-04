@@ -73,9 +73,9 @@ real(kind=dp),    parameter :: Hartree = 2.0D0*13.6056923D0
 real(kind=dp),    parameter :: Planck = 6.626196D-34
 real(kind=dp),    parameter :: three = 3.0d0 
 real(kind=dp),    parameter :: aBohr = 0.5291772d0
-complex(kind=dp), parameter :: rone  = cmplx(1.0,0.0)
-complex(kind=dp), parameter :: czero = cmplx(0.0,0.0)
-complex(kind=dp), parameter :: ione  = cmplx(0.0,1.0)
+complex(kind=dp), parameter :: rone  = dcmplx(1.0_dp,0.0_dp)
+complex(kind=dp), parameter :: czero = dcmplx(0.0_dp,0.0_dp)
+complex(kind=dp), parameter :: ione  = dcmplx(0.0_dp,1.0_dp)
 
 ! scalars
 real(kind=dp) :: kx,ky,kz
@@ -304,7 +304,7 @@ q_loop: do  iq = qmin,qmax ! 42,61
   call writeInfo(qx, qy, qz, Gcar, Nsym, Nlf, Ntot, NkI, Nband, eta, T, Nel, NelQE )
 
   ! intialize correlation matrix
-  S0(1:no,1:Nlf,1:Nlf) = cmplx(0.0,0.0)
+  S0(1:no,1:Nlf,1:Nlf) = dcmplx(0.0_dp,0.0_dp)
   
   
 ! 1.B.Z  LOOP STARTS HERE !!!!
@@ -355,7 +355,7 @@ do ik = 1, Ntot   ! k_loop_FBZ_2nd:
   
 
   allocate(S0_partial(no,Nlf,Nlf))   ! pomocna var. za redukciju S0
-  S0_partial(1:no,1:Nlf,1:Nlf) = cmplx(0.0)
+  S0_partial(1:no,1:Nlf,1:Nlf) = dcmplx(0.0_dp,0.0_dp)
   
   bands_n_loop: do  n = 1, Nocc         ! filled bands loop
 
@@ -454,10 +454,10 @@ end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
     ! neven debug WT
     oi = (io-1)*domega ! koristi se u ispisu WT(io,1,1)
     write(20008,*) oi*Hartree,aimag(WT(io,1,1))
-    write(10008,*) oi*Hartree,real(WT(io,1,1))
+    write(10008,*) oi*Hartree,dble(WT(io,1,1))
 
     write(22308,*) oi*Hartree,aimag(WT(io,2,2))
-    write(12308,*) oi*Hartree,real(WT(io,2,3))
+    write(12308,*) oi*Hartree,dble(WT(io,2,3))
 
   end do omega_loop_A
   
@@ -483,8 +483,8 @@ end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
         
         ImW = -pi * S0(io,iG,jG)
         ! stvari vezane uz GW...
-        Gammap(iG,jG) = cmplx(W1,ImW)
-        Gammam(iG,jG) = cmplx(-W2,0.0)
+        Gammap(iG,jG) = dcmplx(W1,ImW)
+        Gammam(iG,jG) = dcmplx(-W2,0.0_dp)
         if (iG == 1 .and. jG == 1) then
           W2KK = W2
         end if
@@ -497,8 +497,8 @@ end do ! k_loop_FBZ_2nd !  end of 1.B.Z do loop
     
     !  Provjera Kramers-Kroning relacija
 
-    Wind = real(WT(io,1,1)-V(1,1))
-    WindKK = real(Gammap(1,1)) - W2KK
+    Wind = dble(WT(io,1,1)-V(1,1))
+    WindKK = dble(Gammap(1,1)) - W2KK
 
     fact = domega
     if (io == 1 .or. io == no-1) then
@@ -880,7 +880,7 @@ subroutine genChargeVertices(jump, eps, Nlf, iG0, NG1, NG2, NGd, R1, R2, R, RI, 
 
 
   iGfast = 0
-  MnmK1K2(1:Nlf) = cmplx(0.0_dp,0.0_dp) ! nabojni vrhovi
+  MnmK1K2(1:Nlf) = dcmplx(0.0_dp,0.0_dp) ! nabojni vrhovi
   do  iG = 1,Nlf ! suma po lokalnim fieldovima kojih ima Nlf
     do  iG1 = 1,NGd ! vito zamjenjeno NGd sa NG1
       iGfast = iGfast + 1
@@ -942,7 +942,7 @@ end subroutine genChargeVertices
     real(kind=dp) :: ReChi0, ImChi0
    
     oi = (io-1)*domega
-    Chi0(1:Nlf,1:Nlf) = cmplx(0.0,0.0)
+    Chi0(1:Nlf,1:Nlf) = dcmplx(0.0_dp,0.0_dp)
     do  iG = 1,Nlf
       do  jG = 1,Nlf
         ReChi0 = 0.0
@@ -1028,7 +1028,7 @@ end subroutine genChargeVertices
         end if
 
         ImChi0 = -pi*S0(io,iG,jG)
-        Chi0(iG,jG) = cmplx(ReChi0,ImChi0)
+        Chi0(iG,jG) = dcmplx(ReChi0,ImChi0)
 
         ! kraj po iG,jG
       end do
@@ -1174,7 +1174,7 @@ end subroutine genChargeVertices
             V(iG,jG) = V(iG,jG)*( Gabs**2 - GlfV(3,iG)*GlfV(3,jG) )
             V(iG,jG) = V(iG,jG)/( Gabs**2 + GlfV(3,iG)**2 )
             V(iG,jG) = V(iG,jG)/( Gabs**2 + GlfV(3,jG)**2 )
-            V(iG,jG) = -real(parG(iG)) * real(parG(jG)) * V(iG,jG) ! dble converted to real
+            V(iG,jG) = -dble(parG(iG)) * dble(parG(jG)) * V(iG,jG)
             if (Glf(3,jG) == Glf(3,iG)) then
               V(iG,jG) = 4.0*pi / ( Gabs**2 + GlfV(3,iG)**2 ) + V(iG,jG)
             end if
@@ -1195,9 +1195,9 @@ end subroutine genChargeVertices
     integer :: iG, jG, kG
     complex(kind=dp) :: Imat(Nlf,Nlf)
 
-    Imat(1:Nlf,1:Nlf) = cmplx(0.0,0.0)
+    Imat(1:Nlf,1:Nlf) = dcmplx(0.0_dp,0.0_dp)
     do  iG = 1,Nlf
-      Imat(iG,iG) = cmplx(1.0,0.0)
+      Imat(iG,iG) = cmplx(1.0_dp,0.0_dp)
     end do
 
     do  iG = 1,Nlf
@@ -1219,7 +1219,7 @@ end subroutine genChargeVertices
 
     integer :: iG, jG, kG
 
-    Chi(1:Nlf,1:Nlf) = cmplx(0.0,0.0)
+    Chi(1:Nlf,1:Nlf) = dcmplx(0.0_dp,0.0_dp)
     do  iG = 1,Nlf
       do  jG = 1,Nlf
         do  kG = 1,Nlf
@@ -1240,7 +1240,7 @@ end subroutine genChargeVertices
 
     integer :: iG, jG, kG1, kG2
 
-    WT(io,1:Nlf,1:Nlf) = cmplx(0.0,0.0)
+    WT(io,1:Nlf,1:Nlf) = dcmplx(0.0_dp,0.0_dp)
     do  iG = 1,Nlf
       do  jG = 1,Nlf
         do  kG1 = 1,Nlf
@@ -1320,7 +1320,7 @@ end subroutine genChargeVertices
     ! transformation in cart.coord (also!, after this all G components are in 2pi/a0 units)
       do n = 1,3
         do m = 1,3
-          G(n,iG) = G(n,iG)+KC(n,m)*real(Gi(m)) ! DBLE converted to real
+          G(n,iG) = G(n,iG)+KC(n,m)*dble(Gi(m))
         end do
       end do
       parG(iG)=Gi(3)

@@ -119,16 +119,16 @@ program Pi_pol
         ! print *,'ImChi0: ',ImChi0
         
         if (io == 1) then ! omega=0.0 Ha
-          Pi_dia(iG,jG) = -cmplx(ReChi0,0.0) ! neven debug: diamagnetski doprinos ??
+          Pi_dia(iG,jG) = -dcmplx(ReChi0,0.0_dp) ! neven debug: diamagnetski doprinos ??
         end if
 
-        Pi_tot(io,iG,jG) = cmplx(ReChi0,ImChi0) 
+        Pi_tot(io,iG,jG) = dcmplx(ReChi0,ImChi0) 
         Pi_tot(io,iG,jG) = Pi_tot(io,iG,jG) + Pi_dia(iG,jG) ! Pi_RPA = Pi_paramagnetski + Pi_diamagnetski
 
         Pi_inter = Pi_tot(io,1,1)
-        Pi_intra = Qeff(1,1)*oi/(oi + cmplx(0.0,1.0)*Gamma_intra)
+        Pi_intra = Qeff(1,1)*oi/(oi + dcmplx(0.0_dp,1.0_dp)*Gamma_intra)
         
-        ! Pi_tot(io,iG,jG) = Pi_tot(io,iG,jG) + Qeff(iG,jG)*oi/(oi + cmplx(0.0,1.0)*Gamma_intra) ! dodavanje intraband clana
+        ! Pi_tot(io,iG,jG) = Pi_tot(io,iG,jG) + Qeff(iG,jG)*oi/(oi + dcmplx(0.0,1.0)*Gamma_intra) ! dodavanje intraband clana
         
       end do jG_loop
     end do iG_loop
@@ -140,8 +140,8 @@ program Pi_pol
 
     ! vodljivost u jedinicama 2*pi*e^2/h   
     ! if(io > 1) then
-    !   write(401,*) oi*Hartree, real(-cmplx(0.0,1)*c0*Pi_inter/oi)
-    !   write(402,*) oi*Hartree, real(-cmplx(0.0,1)*c0*Pi_intra/oi)
+    !   write(401,*) oi*Hartree, dble(-dcmplx(0.0_d[,1.0_dp)*c0*Pi_inter/oi)
+    !   write(402,*) oi*Hartree, dble(-dcmplx(0.0_d[,1.0_dp)*c0*Pi_intra/oi)
     ! endif
 
 
@@ -175,17 +175,17 @@ program Pi_pol
             Pi_tot_interp(counter,iG,jG) = Pi_tot(io,iG,jG) + tmp(iG,jG)*jo
             
             ! Pi_inter = Pi_tot(1,1)
-            ! Pi_intra = Qeff(1,1)*oi/(oi + cmplx(0.0,1.0)*Gamma_intra)
+            ! Pi_intra = Qeff(1,1)*oi/(oi + dcmplx(0.0,1.0)*Gamma_intra)
 
             Pi_tot_interp(counter,iG,jG) = Pi_tot_interp(counter,iG,jG) + Qeff(iG,jG)*oi/(oi + cmplx(0.0,1.0)*Gamma_intra)
           end do jG_loop2
         end do iG_loop2
         Pi_inter = Pi_tot_interp(counter,1,1)
-        Pi_intra = Qeff(1,1)*oi/(oi + cmplx(0.0,1.0)*Gamma_intra)
+        Pi_intra = Qeff(1,1)*oi/(oi + dcmplx(0.0,1.0)*Gamma_intra)
         ! WRITTING INTERPOLATED TOTAL RESPONSE FUNCTION Pi for a given polarization 'pol' to file for G=G'=0
-        write(77,*) oi*Hartree, real( Pi_tot_interp(counter,1,1) ), aimag( Pi_tot_interp(counter,1,1) )
-        write(78,*) oi*Hartree, real( Pi_inter ), aimag( Pi_inter )
-        write(79,*) oi*Hartree, real( Pi_intra ), aimag( Pi_intra )
+        write(77,*) oi*Hartree, dble( Pi_tot_interp(counter,1,1) ), aimag( Pi_tot_interp(counter,1,1) )
+        write(78,*) oi*Hartree, dble( Pi_inter ), aimag( Pi_inter )
+        write(79,*) oi*Hartree, dble( Pi_intra ), aimag( Pi_intra )
 
     end do omega_interp_loop
   end do omega_loop_E
@@ -270,7 +270,7 @@ contains
     ! neven debug
     ! print *,'S0(-5,1,1):', S0(-5,1,1)
 
-    ReChi0 = 0.0 ! real part of the response function
+    ReChi0 = 0.0_dp ! real part of the response function
     ! static limit
     if (io == 1) then
       do  jo = 2,No
@@ -281,7 +281,7 @@ contains
         else if (jo == No) then
           fact = 0.5*domega/oj
         end if
-        ReChi0 = ReChi0 + fact*( real(S0(-jo+1,iG,jG)) - real(S0(jo-1,iG,jG)) )
+        ReChi0 = ReChi0 + fact*( dble(S0(-jo+1,iG,jG)) - dble(S0(jo-1,iG,jG)) )
       end do
     else if (io == 2) then
       do  jo = 1,No
@@ -298,12 +298,12 @@ contains
         else if (jo == No) then
           fact = 0.5*domega/(oi-oj)
         end if
-        ReChi0 = ReChi0 + fact*real(S0(jo-1,iG,jG))
+        ReChi0 = ReChi0 + fact*dble(S0(jo-1,iG,jG))
         fact = domega/(oi + oj)
         if (jo == 1 .or. jo == No) then
           fact = 0.5*domega/(oi + oj)
         end if
-        ReChi0 = ReChi0 + fact*real(S0(-jo + 1,iG,jG))
+        ReChi0 = ReChi0 + fact*dble(S0(-jo + 1,iG,jG))
       end do
     else if (io == (No-1)) then
       do  jo = 1,No
@@ -320,12 +320,12 @@ contains
         else if (jo == No) then
           fact=-1.0
         end if
-        ReChi0 = ReChi0 + fact*real(S0(jo-1,iG,jG))
+        ReChi0 = ReChi0 + fact*dble(S0(jo-1,iG,jG))
         fact = domega/(oi + oj)
         if (jo == 1 .or. jo == No) then
           fact = 0.5*domega/(oi + oj)
         end if
-        ReChi0 = ReChi0 + fact*real(S0(-jo + 1,iG,jG))
+        ReChi0 = ReChi0 + fact*dble(S0(-jo + 1,iG,jG))
       end do
     else
       do  jo = 1,No
@@ -344,12 +344,12 @@ contains
         else if (jo == No) then
           fact = 0.5*domega/(oi-oj)
         end if
-        ReChi0 = ReChi0 + fact*real(S0(jo-1,iG,jG))
+        ReChi0 = ReChi0 + fact*dble(S0(jo-1,iG,jG))
         fact = domega/(oi + oj)
         if (jo == 1 .or. jo == No) then
           fact = 0.5*domega/(oi + oj)
         end if
-        ReChi0 = ReChi0 + fact*real(S0(-jo + 1,iG,jG))
+        ReChi0 = ReChi0 + fact*dble(S0(-jo + 1,iG,jG))
       end do
     end if
     ReChi0 = ReChi0 + pi*aimag(S0(io-1,iG,jG))
@@ -367,7 +367,7 @@ contains
     integer :: jo
     real(kind=dp) :: oj, fact
 
-    ImChi0 = 0.0 ! Imaginary part of the response function Im(Chi)
+    ImChi0 = 0.0_dp ! Imaginary part of the response function Im(Chi)
     ! static limit
     if (io == 1) then
       do  jo = 2,No
@@ -459,7 +459,7 @@ contains
       end do
     end if
     
-    ImChi0 = ImChi0 - pi*real(S0(io-1,iG,jG)) ! ovaj dio je razlicit od Sloss, S0 je kompleksno polje
+    ImChi0 = ImChi0 - pi*dble(S0(io-1,iG,jG)) ! ovaj dio je razlicit od Sloss, S0 je kompleksno polje
     
   end subroutine genImChi0
 end program Pi_pol

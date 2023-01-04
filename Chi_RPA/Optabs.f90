@@ -47,9 +47,9 @@ real(kind=dp),    parameter :: Hartree = 2.0D0*13.6056923D0
 real(kind=dp),    parameter :: Planck  = 6.626196D-34
 real(kind=dp),    parameter :: aBohr   = 0.5291772d0
 real(kind=dp),    parameter :: alpha   = 1.0/137.0
-complex(kind=dp), parameter :: rone    = cmplx(1.0,0.0)
-complex(kind=dp), parameter :: czero   = cmplx(0.0,0.0)
-complex(kind=dp), parameter :: ione    = cmplx(0.0,1.0)
+complex(kind=dp), parameter :: rone    = dcmplx(1.0_dp,0.0_dp)
+complex(kind=dp), parameter :: czero   = dcmplx(0.0_dp,0.0_dp)
+complex(kind=dp), parameter :: ione    = dcmplx(0.0_dp,1.0_dp)
 
 
 ! neven debug
@@ -280,8 +280,8 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
   allocate(S0(-no:no,Nlf,Nlf))
   allocate(Qeff(Nlf,Nlf))
-  S0(-no:no,1:Nlf,1:Nlf) = cmplx(0.0,0.0)
-  Qeff(1:Nlf,1:Nlf) = cmplx(0.0,0.0)
+  S0(-no:no,1:Nlf,1:Nlf) = dcmplx(0.0_dp,0.0_dp)
+  Qeff(1:Nlf,1:Nlf) = dcmplx(0.0_dp,0.0_dp)
   
   
   ! 1.B.Z  LOOP STARTS HERE !!!!
@@ -326,8 +326,8 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
     
   allocate(Qeff_partial(Nlf,Nlf))
   allocate(S0_partial(-no:no,Nlf,Nlf))
-  Qeff_partial(1:Nlf,1:Nlf)    = cmplx(0.0,0.0)
-  S0_partial(-no:no,1:Nlf,1:Nlf) = cmplx(0.0,0.0)
+  Qeff_partial(1:Nlf,1:Nlf)    = dcmplx(0.0_dp,0.0_dp)
+  S0_partial(-no:no,1:Nlf,1:Nlf) = dcmplx(0.0_dp,0.0_dp)
 
   bands_n_loop: do n = 1,Nband
 
@@ -484,13 +484,13 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   omega_loop_C: do io = -no,no ! opskurni razlog za prosirenje raspona frekvencija na negativne da se korektno izracuna spektar kristala koji nemaju centar inverzije
     o = io*domega
     write(74,*) 'omega=',o,'Hartree'
-    ! write(200,*), o*Hartree, real(S0(io,1,1)),aimag(S0(io,1,1))
+    ! write(200,*), o*Hartree, dble(S0(io,1,1)),aimag(S0(io,1,1))
     ! neven debug
     ! print *,S0(io,1,1)
     ! write(74,'(10F15.10)')((S0(io,iG,jG),jG = 1,Nlf),iG = 1,Nlf)
     do iG=1,Nlf
       do jG=1,Nlf
-        write(74,'(2F15.10)') real(S0(io,iG,jG)),aimag(S0(io,iG,jG))
+        write(74,'(2F15.10)') dble(S0(io,iG,jG)),aimag(S0(io,iG,jG))
       end do
     end do
   end do omega_loop_C
@@ -502,7 +502,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   ! write(75,'(10F15.10)')((Qeff(iG,jG),jG = 1,Nlf),iG = 1,Nlf)
   do iG=1,Nlf
     do jG=1,Nlf
-      write(75,'(2F15.10)') real(Qeff(iG,jG)),aimag(Qeff(iG,jG))
+      write(75,'(2F15.10)') dble(Qeff(iG,jG)),aimag(Qeff(iG,jG))
     end do
   end do
   close(75)
@@ -536,7 +536,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
       do jG=1,Nlf
         read(74,'(2F15.10)') S0(io,iG,jG)
         ! read(74,'(2F15.10)') temp_re, temp_im
-        ! S0(io,iG,jG) = cmplx(temp_re,temp_im)
+        ! S0(io,iG,jG) = dcmplx(temp_re,temp_im)
         ! print *,S0(io,iG,jG)
       enddo
     enddo
@@ -553,7 +553,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
     do jG=1,Nlf
       read(75,'(2F15.10)') Qeff(iG,jG)
       ! read(75,'(2F15.10)') temp_re, temp_im
-      ! Qeff(iG,jG) = cmplx(temp_re, temp_im)
+      ! Qeff(iG,jG) = dcmplx(temp_re, temp_im)
     end do
   end do
   ! read(75,'(10F15.10)')((Qeff(iG,jG), jG = 1,Nlf), iG = 1,Nlf)
@@ -585,16 +585,16 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
         ! print *,'ImChi0: ',ImChi0
         
         if (io == 1) then 
-          Pi_dia(iG,jG) = -cmplx(ReChi0,0.0) ! neven debug: diamagnetski doprinos ??
+          Pi_dia(iG,jG) = -dcmplx(ReChi0,0.0_dp) ! neven debug: diamagnetski doprinos ??
         end if
 
-        Pi_tot(iG,jG) = cmplx(ReChi0,ImChi0) ! Pi_RPA = PiDIJAMAGNETSKI + PiPARAMAGNETSKI
+        Pi_tot(iG,jG) = dcmplx(ReChi0,ImChi0) ! Pi_RPA = PiDIJAMAGNETSKI + PiPARAMAGNETSKI
         Pi_tot(iG,jG) = Pi_tot(iG,jG) + Pi_dia(iG,jG)
 
         Pi_inter = Pi_tot(1,1)
-        Pi_intra = Qeff(1,1)*oi/(oi + cmplx(0.0,1.0)*Gamma_intra)
+        Pi_intra = Qeff(1,1)*oi/(oi + dcmplx(0.0,1.0)*Gamma_intra)
         
-        Pi_tot(iG,jG) = Pi_tot(iG,jG) + Qeff(iG,jG)*oi/(oi + cmplx(0.0,1.0)*Gamma_intra) ! dodavanje intraband clana
+        Pi_tot(iG,jG) = Pi_tot(iG,jG) + Qeff(iG,jG)*oi/(oi + dcmplx(0.0,1.0)*Gamma_intra) ! dodavanje intraband clana
         
       end do jG_loop
     end do iG_loop
@@ -606,8 +606,8 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
     ! vodljivost u jedinicama 2*pi*e^2/h   
     if(io > 1) then
-      write(401,*) oi*Hartree, real(-cmplx(0.0,1.0)*c0*Pi_inter/oi)
-      write(402,*) oi*Hartree, real(-cmplx(0.0,1.0)*c0*Pi_intra/oi)
+      write(401,*) oi*Hartree, dble(-dcmplx(0.0_dp,1.0_dp)*c0*Pi_inter/oi)
+      write(402,*) oi*Hartree, dble(-dcmplx(0.0_dp,1.0_dp)*c0*Pi_intra/oi)
     endif
 
 
@@ -1135,7 +1135,7 @@ end subroutine loadG
         else if (jo == no) then
           fact = 0.5*domega/oj
         end if
-        ReChi0 = ReChi0 + fact*( real(S0(-jo+1,iG,jG)) - real(S0(jo-1,iG,jG)) )
+        ReChi0 = ReChi0 + fact*( dble(S0(-jo+1,iG,jG)) - dble(S0(jo-1,iG,jG)) )
       end do
     else if (io == 2) then
       do  jo = 1,no
@@ -1152,12 +1152,12 @@ end subroutine loadG
         else if (jo == no) then
           fact = 0.5*domega/(oi-oj)
         end if
-        ReChi0 = ReChi0 + fact*real(S0(jo-1,iG,jG))
+        ReChi0 = ReChi0 + fact*dble(S0(jo-1,iG,jG))
         fact = domega/(oi + oj)
         if (jo == 1 .or. jo == no) then
           fact = 0.5*domega/(oi + oj)
         end if
-        ReChi0 = ReChi0 + fact*real(S0(-jo + 1,iG,jG))
+        ReChi0 = ReChi0 + fact*dble(S0(-jo + 1,iG,jG))
       end do
     else if (io == (no-1)) then
       do  jo = 1,no
@@ -1174,12 +1174,12 @@ end subroutine loadG
         else if (jo == no) then
           fact=-1.0
         end if
-        ReChi0 = ReChi0 + fact*real(S0(jo-1,iG,jG))
+        ReChi0 = ReChi0 + fact*dble(S0(jo-1,iG,jG))
         fact = domega/(oi + oj)
         if (jo == 1 .or. jo == no) then
           fact = 0.5*domega/(oi + oj)
         end if
-        ReChi0 = ReChi0 + fact*real(S0(-jo + 1,iG,jG))
+        ReChi0 = ReChi0 + fact*dble(S0(-jo + 1,iG,jG))
       end do
     else
       do  jo = 1,no
@@ -1198,12 +1198,12 @@ end subroutine loadG
         else if (jo == no) then
           fact = 0.5*domega/(oi-oj)
         end if
-        ReChi0 = ReChi0 + fact*real(S0(jo-1,iG,jG))
+        ReChi0 = ReChi0 + fact*dble(S0(jo-1,iG,jG))
         fact = domega/(oi + oj)
         if (jo == 1 .or. jo == no) then
           fact = 0.5*domega/(oi + oj)
         end if
-        ReChi0 = ReChi0 + fact*real(S0(-jo + 1,iG,jG))
+        ReChi0 = ReChi0 + fact*dble(S0(-jo + 1,iG,jG))
       end do
     end if
     ReChi0 = ReChi0 + pi*aimag(S0(io-1,iG,jG))
@@ -1313,7 +1313,7 @@ end subroutine loadG
       end do
     end if
     
-    ImChi0 = ImChi0 - pi*real(S0(io-1,iG,jG)) ! ovaj dio je razlicit od Sloss, S0 je kompleksno polje
+    ImChi0 = ImChi0 - pi*dble(S0(io-1,iG,jG)) ! ovaj dio je razlicit od Sloss, S0 je kompleksno polje
     
   end subroutine genImChi0
 
@@ -1394,8 +1394,8 @@ subroutine genStrujniVrhovi(jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0, NG1, 
   ! print *,'C1(2), C2(2):',C1(2), C2(2)
 
   iGfast = 0
-  MnmK1K2(1:Nlf)  = cmplx(0.0,0.0)
-  MnmK1K22(1:Nlf) = cmplx(0.0,0.0)
+  MnmK1K2(1:Nlf)  = dcmplx(0.0_dp,0.0_dp)
+  MnmK1K22(1:Nlf) = dcmplx(0.0_dp,0.0_dp)
   iG_loop: do  iG = 1,Nlf
     iG1_loop: do iG1 = 1,NGd
       iGfast = iGfast + 1

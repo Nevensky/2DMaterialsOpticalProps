@@ -548,7 +548,7 @@ END DO
 
 
 
-!             valni vektor K
+!             valni vektor K ide do Nkbz (mala zona u K tocki) a ne Nktot 
 DO  ik1=1,nkbz
   
   PRINT*,ik1
@@ -729,7 +729,7 @@ DO  ik1=1,nkbz
         END IF
         
         
-!                 matrix elements
+!     charge vertices        matrix elements
         igfast=0
         DO  ig=1,nlf
           mnmk1k2(ni,ig)=czero

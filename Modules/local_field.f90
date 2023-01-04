@@ -23,10 +23,12 @@ contains
     integer       :: iG
     real(kind=dp) :: Eref
     integer       :: NG
+    real(kind=dp), allocatable :: Glf_tmp(:,:)
 
     NG = size(G,2)
   
-    if (.not. allocated(Glf)) allocate(Glf(3,NG*Nlf))
+    print *,'WARNING: Glf(3,NG) will be reallocated as Glf(3,Nlf) at the end of genGlf.'
+    if (.not. allocated(Glf)) allocate(Glf(3,NG))
     if (present(parG)) then
       if (.not. allocated(parG)) allocate(parG(NG))
     end if
@@ -83,6 +85,11 @@ contains
         Nlfd = Nlf
       end if
     end if
+
+    ! reduces Glf dimension from 3xNG to 3xNlf
+    allocate(Glf_tmp(3,Nlf), source = Glf(:,1:Nlf))
+    call move_alloc(Glf_tmp,Glf)
+
   end subroutine genGlf
 
 end module local_field

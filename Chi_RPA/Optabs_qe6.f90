@@ -12,7 +12,7 @@ namelist /directories/ rundir, savedir, scf_file, band_file
 
 integer :: ik,i,j,jk,it,lk,Ntot,iG0,Nsym,iq, &
            io,jo, n,m,iG,R1,K1,R2,K2, Nlf,NG1,   &
-           NG2,iG1,iG2,jG   &
+           NG2,iG1,iG2,jG,   &
            iGfast,ikmin
 
 integer :: iuni1, iuni2
@@ -313,7 +313,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
                                                     & '-------------------------------'
     ! !$omp end critical(printWaveVector)
 
-  !  trazenje (KQx,KQy) prvo u 1.B.Z a onda u I.B.Z.
+  ! trazenje (KQx,KQy) prvo u 1.B.Z a onda u I.B.Z.
   call findKQinIBZ(KQx, KQy, KQz, eps, Nsym, NkI, Ntot, NG, kI, ktot, RI, G, iG0, R2, K2)
       
   allocate(Qeff_partial(Nlf,Nlf))
@@ -421,7 +421,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
           do  iG = 1,Nlf
             do  jG = 1,Nlf
               ! izracun intraband korelacijske funkcije
-              Qeff_partial(iG,jG) = Qeff_partial(iG,jG) + 2.0*fact*MnmK1K2(iG)*conjg(MnmK1K22(jG)) / (Ntot*Vcell)
+              Qeff_partial(iG,jG) = Qeff_partial(iG,jG) + 2.0_dp*fact*MnmK1K2(iG)*conjg(MnmK1K22(jG)) / (Ntot*Vcell)
               ! print *,'Qeff: ',Qeff_partial(1,1),Qeff_partial(1,2),Qeff_partial(2,2)
             end do
           end do
