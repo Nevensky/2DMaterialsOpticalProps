@@ -76,11 +76,11 @@ contains
         end if
       end do
     else
-      stop 'ERROR: Unsupported local-field vector orientation in genGlf()'
+      error stop 'ERROR: Unsupported local-field vector orientation in genGlf()'
     end if
     if (present(Nlfd)) then
       if (Nlf > Nlfd) then
-        stop 'Nlf is bigger than Nlfd'
+        error stop 'Nlf is bigger than Nlfd'
       else if(Nlf<Nlfd) then
         Nlfd = Nlf
       end if

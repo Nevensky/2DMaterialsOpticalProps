@@ -1,7 +1,7 @@
 module utility
   implicit none
 
-  public :: parseCommandLineArgs
+  public :: parseCommandLineArgs, int2str
   private
 
 contains 
@@ -20,5 +20,12 @@ contains
     config_file = trim(config_file)
     print *, 'Config file: ',config_file
   end subroutine parseCommandLineArgs
+  
+  character(len=20) function int2str(k)
+    !! Converts an integer to string
+      integer, intent(in) :: k
+      write (int2str, *) k
+      int2str = adjustl(int2str)
+  end function int2str
 
 end module utility

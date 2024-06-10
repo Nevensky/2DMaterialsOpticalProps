@@ -1,5 +1,6 @@
 module propagators
   use iso_fortran_env, only: dp => real64, sp => real32
+  use utility, only: int2str 
   implicit none
 
   public :: genGammaPropagator
@@ -117,20 +118,11 @@ contains
     complex(kind=dp), intent(in)    :: D(:)
     complex(kind=dp), intent(in)    :: Gammap0
 
-    integer            :: iuni, nord, ios
+    integer            :: iuni, ios
     character(len=100) :: dato
 
-    dato='Kramers - Kron_Qi'
-    nord = index(dato,'i', back = .false.)
-    if(iq < 10) then
-      write(dato(nord:nord),'(i1)')iq
-    else if(iq >= 10 .and. iq < 100) then
-      write(dato(nord:nord + 1),'(i2)') iq
-    else
-      write(dato(nord:nord + 2),'(i3)') iq
-    end if
-    
-    
+    dato='Kramers - Kron_Q'
+    dato = adjustl(trim(dato)//int2str(iq))
     
     open(newunit = iuni, file = dato, iostat=ios)
     if (ios /=0) then

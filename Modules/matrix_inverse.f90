@@ -20,10 +20,10 @@ contains
     !! Inverts complex matrix (double precision)
     complex(dp), dimension(:,:), intent(inout) :: A
 
-    complex(dp), allocatable :: work(:)         ! work array for LAPACK
-    integer                  :: ipiv(size(A,1)) ! pivot indices
+    complex(dp), allocatable :: work(:)         !! work array for LAPACK
+    integer                  :: ipiv(size(A,1)) !! pivot indices
     integer                  :: n, info, ios 
-    integer(idp)             :: lwork           ! work array size
+    integer(idp)             :: lwork           !! work array size
     ! integer(idp), parameter :: memmax = 60*sizeof(dp) 
 
     ! External procedures defined in LAPACK for double complex matrices
@@ -37,7 +37,7 @@ contains
     call zgetrf(n, n, A, n, ipiv, info)
 
     if (info /= 0) then
-       stop 'Matrix is numerically singular! (zgetrf)'
+       error stop 'ERROR: Matrix is numerically singular! (zgetrf)'
     end if
 
 
@@ -64,7 +64,7 @@ contains
     call zgetri(n, A, n, ipiv, work, lwork, info)
 
     if (info /= 0) then
-       stop 'ERROR: Matrix inversion failed! (zgetri)'
+       error stop 'ERROR: Matrix inversion failed! (zgetri)'
     end if
 
     deallocate(work)
@@ -74,10 +74,10 @@ contains
     !! Inverts real matrix (double precision)
     real(dp), dimension(:,:), intent(inout) :: A
 
-    real(dp), allocatable :: work(:)          ! work array for LAPACK
-    integer               :: ipiv(size(A,1))  ! pivot indices
+    real(dp), allocatable :: work(:)          !! work array for LAPACK
+    integer               :: ipiv(size(A,1))  !! pivot indices
     integer               :: n, info, info2, info3, ios 
-    integer(idp)          :: lwork            ! work array size
+    integer(idp)          :: lwork            !! work array size
     ! integer(idp), parameter :: memmax = 30*sizeof(dp) 
 
     ! External procedures defined in LAPACK for double real matrices
@@ -91,8 +91,8 @@ contains
     call dgetrf(n, n, A, n, ipiv, info)
 
     if (info /= 0) then
-       print *, 'Matrix is numerically singular! (dgetrf) info=', info
-       stop
+       print *, 'info=',info
+       error stop 'Matrix is numerically singular! (dgetrf)'
     end if
 
     ! DGETRI computes the inverse of a matrix using 
@@ -102,8 +102,8 @@ contains
     allocate(work(1))
     call dgetri(n, A, n, ipiv, work, -1, info2) ! query optimal lwork value
     if (info2 /= 0) then
-       print *, 'ERROR: Workspace query failed! (dgetri) info2=', info2
-       stop
+      print *, 'info2=', info2
+      error stop 'ERROR: Workspace query failed! (dgetri)'
     end if
 
     lwork = work(1)
@@ -111,8 +111,8 @@ contains
     !if (sizeof(lwork)>lworkmax) lwork = max_available_memory
     allocate(work(lwork),stat=ios)
     if (ios /= 0) then
-            print *,'ERROR: Failed allocation of work array. (dgetri) ios=',ios
-            stop
+            print *,'ios=',ios
+            error stop 'ERROR: Failed allocation of work array. (dgetri)'
     end if
 
     ! print *, " sizeof(A) = ",sizeof(A)/1024.0**3,"GB"
@@ -122,8 +122,8 @@ contains
     call dgetri(n, A, n, ipiv, work, lwork, info3)
 
     if (info3 /= 0) then
-       print *, 'ERROR: Matrix inversion failed! (dgetri) info=', info3
-       stop
+       print *, 'info3=', info3
+       error stop 'ERROR: Matrix inversion failed! (dgetri)'
     end if
 
     deallocate(work)

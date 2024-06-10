@@ -26,7 +26,7 @@ contains
     
     open(newunit=iuni,file=fname,form ='unformatted',action='read',status='old',iostat=ios0)
     if (ios0 /= 0) then
-      stop "ERROR: Can\'t open G-vector file."
+      error stop "ERROR: Can\'t open G-vector file."
     end if
 
     read(iuni, iostat=ios1) gamma_only, NG, Nspin
@@ -39,9 +39,9 @@ contains
     close(iuni)
 
     if (ios1 /= 0) then
-      stop 'ERROR: Failed to read NG and Nspin from G-vector file.'
+      error stop 'ERROR: Failed to read NG and Nspin from G-vector file.'
     else if (ios2 /=0 ) then
-      stop 'ERROR: Failed to read Miller indices from G-vector file.'
+      error stop 'ERROR: Failed to read Miller indices from G-vector file.'
     end if
 
     if (Gi(1,1) /= 0  .or.  Gi(2,1) /= 0  .or.  Gi(3,1) /= 0) then
@@ -105,8 +105,8 @@ contains
     read(iuni) ! dummy_int
     ! allocate (evc(npol*igwx))
     if ( ibnd > nbnd) then 
-       print '("looking for band nr. ",I7," but there are only ",I7," bands in the file")',ibnd, nbnd
-       stop
+       print *, 'ERROR: ("looking for band nr. ",I7," but there are only ",I7," bands in the file")',ibnd, nbnd
+       error stop
     end if 
     do i = 1, nbnd 
        if ( i == ibnd ) then 
@@ -202,8 +202,8 @@ contains
     read(iuni) ! dummy_int
     ! allocate (evc(npol*igwx))
     if ( ibnd > nbnd) then 
-       print '("looking for band nr. ",I7," but there are only ",I7," bands in the file")',ibnd, nbnd
-       stop
+       print *, 'ERROR: ("looking for band nr. ",I7," but there are only ",I7," bands in the file")',ibnd, nbnd
+       error stop
     end if 
     do i = 1, nbnd 
        if ( i == ibnd .and. ispin == jspin) then 

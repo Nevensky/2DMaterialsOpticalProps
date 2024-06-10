@@ -29,8 +29,7 @@ contains
 
     open(newunit=iuni,FILE=path,status='old',iostat=ios) 
     if (ios /=0) then
-      print *, 'ERROR: Cannot open BAND file: ',path
-      stop
+      error stop 'ERROR: Cannot open BAND file: '//path
     end if
     do  ik = 1,NkI
       if (ik == 1) then
@@ -213,7 +212,7 @@ contains
       if (writeOutput) then
         open(newunit=iuni,iostat=ios,file='fbz_check.dat',action='write',status='new')
         if (ios/=0) then
-          stop 'ERROR: Could not create new fbz_check.dat file in genFBZ()'
+          error stop 'ERROR: Could not create new fbz_check.dat file in genFBZ()'
         end if
         do  i = 1,Ntot_
           write(iuni,*) ktot(1,i), ktot(2,i)
@@ -278,7 +277,7 @@ contains
   !     if (writeOutput) then
   !       open(newunit=iuni,iostat=ios,file='fbz_check.dat',action='write',status='new')
   !       if (ios/=0) then
-  !         stop 'ERROR: Could not open fbz_check.dat file in genFBZ()'
+  !         error stop 'ERROR: Could not open fbz_check.dat file in genFBZ()'
   !       end if
   !       do  i = 1,Ntot
   !         write(iuni,*) ktot(1,i), ktot(2,i)  
@@ -335,8 +334,8 @@ contains
             end if
             5022 continue
             if (.not. found) then
-              print*,'Can not find wave vector K=',ik, 'in I.B.Z.'
-              stop
+              print*,'Can not find wave vector K=',ik, 'in IBZ'
+              error stop 
             end if
 
         end if
@@ -417,7 +416,7 @@ contains
         end do symm_loop
       end if
       if (.not. found) then
-        print*,'Can not find wave vector iK=',ik, 'in I.B.Z.'
+        print*,'Can not find wave vector iK=',ik, 'in IBZ'
         stop
       end if
       band_loop: do  n = 1, Nband
@@ -445,7 +444,7 @@ contains
     print *,'DEBUG: Nel: ',dble(Nel),'NelQE: ',NelQE
     write(*,'(A17,F6.2,A12)'), 'status: NelQE/Nel', 100.0*abs(NelQE-Nel)/NelQE,' % missmatch'
     if (abs(NelQE-dble(Nel)) > eps_occupation) then
-      stop 'ERROR: Incorrect No. of electrons in FBZ.'
+      error stop 'ERROR: Incorrect No. of electrons in FBZ.'
     end if
 
   end subroutine checkFBZintegration_new
@@ -501,7 +500,7 @@ contains
       end do symmetry_loop
     end if
     if (.not. found) then
-      print *,'Can not find wave vector K=',ik, 'in I.B.Z.'
+      print *,'Can not find wave vector K=',ik, 'in IBZ'
       stop
     end if
     ! print *, 'iR1:',iR1,'iK1:', iK1
@@ -538,7 +537,6 @@ contains
 
     eps_ = 1.0d-4 ! default thershold
     if (present(eps)) eps_ = eps
-  
     found_fbz = .false.
     found_ibz = .false.
     iG_loop : do  iG = 1,NG
@@ -566,12 +564,11 @@ contains
   
     if (.not. found_fbz) then
       ! print*,'Can not find wave vector K+Q=',ik,'+',iq, 'in FBZ.'
-      print*,'Can not find wave vector K+Q in FBZ.'
-      stop
+      error stop 'ERROR: Can not find wave vector K+Q in FBZ.'
     else if (.not. found_ibz) then
       ! print*,'Can not find wave vector K+Q=',ik,'+',iq, 'in IBZ.'
-      print*,'Can not find wave vector K+Q=',iK2, 'in IBZ.'
-      stop
+      print*,'ERROR: Can not find wave vector K+Q=',iK2, 'in IBZ.'
+      error stop
     end if
   
   end subroutine findKQinIBZ
