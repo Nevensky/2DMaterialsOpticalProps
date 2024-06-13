@@ -88,7 +88,7 @@ contains
         if (isChiReal) then
             Chi0 = pi * aimag(S0(io - 1, iG, jG))
         else
-            Chi0 = - pi * real(S0(io - 1, iG, jG))
+            Chi0 = - pi * dble(S0(io - 1, iG, jG))
         endif
         if (io == 1) then
             do jo = 2, No
@@ -97,7 +97,7 @@ contains
                 if (jo == 2)    fact = 3.0_dp / 2.0_dp
                 if (jo == No)   fact = 0.5_dp * domega / oj
                 if (isChiReal) then
-                    S0_value = real(S0(-jo + 1, iG, jG)) - real(S0(jo - 1, iG, jG))
+                    S0_value = dble(S0(-jo + 1, iG, jG)) - dble(S0(jo - 1, iG, jG))
                 else
                     S0_value = aimag(S0(-jo + 1, iG, jG)) - aimag(S0(jo - 1, iG, jG))
                 end if
@@ -112,7 +112,7 @@ contains
                 if (jo == 3)   fact = -3.0_dp / 2.0_dp
                 if (jo == No)  fact = 0.5_dp * domega / (oi - oj)
                 if (isChiReal) then
-                    S0_value = real(S0(jo - 1, iG, jG))
+                    S0_value = dble(S0(jo - 1, iG, jG))
                 else
                     S0_value = aimag(S0(jo - 1, iG, jG))
                 end if
@@ -120,7 +120,7 @@ contains
                 fact = domega / (oi + oj)
                 if (jo == 1 .or. jo == No) fact = 0.5_dp * domega / (oi + oj)
                 if (isChiReal) then
-                    S0_value = real(S0(-jo + 1, iG, jG))
+                    S0_value = dble(S0(-jo + 1, iG, jG))
                 else
                     S0_value = aimag(S0(-jo + 1, iG, jG))
                 end if
@@ -135,7 +135,7 @@ contains
                 if (jo == (No - 1)) fact = 0.0_dp
                 if (jo == No)       fact = -1.0_dp
                 if (isChiReal) then
-                    S0_value = real(S0(jo - 1, iG, jG))
+                    S0_value = dble(S0(jo - 1, iG, jG))
                 else
                     S0_value = aimag(S0(jo - 1, iG, jG))
                 end if
@@ -143,7 +143,7 @@ contains
                 fact = domega / (oi + oj)
                 if (jo == 1 .or. jo == No) fact = 0.5_dp * domega / (oi + oj)
                 if (isChiReal) then
-                    S0_value = real(S0(-jo + 1, iG, jG))
+                    S0_value = dble(S0(-jo + 1, iG, jG))
                 else
                     S0_value = aimag(S0(-jo + 1, iG, jG))
                 end if
@@ -159,7 +159,7 @@ contains
                 if (jo == (io + 1)) fact = -3.0_dp / 2.0_dp
                 if (jo == No)       fact = 0.5_dp * domega / (oi - oj)
                 if (isChiReal) then
-                    S0_value = real(S0(jo - 1, iG, jG))
+                    S0_value = dble(S0(jo - 1, iG, jG))
                 else
                     S0_value = aimag(S0(jo - 1, iG, jG))
                 end if
@@ -167,7 +167,7 @@ contains
                 fact = domega / (oi + oj)
                 if (jo == 1 .or. jo == No) fact = 0.5_dp * domega / (oi + oj)
                 if (isChiReal) then
-                    S0_value = real(S0(-jo + 1, iG, jG))
+                    S0_value = dble(S0(-jo + 1, iG, jG))
                 else
                     S0_value = aimag(S0(-jo + 1, iG, jG))
                 end if

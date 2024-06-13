@@ -275,8 +275,8 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
   allocate(S0(-No:No,Nlf,Nlf))
   allocate(Qeff(Nlf,Nlf))
-  S0(-No:No,1:Nlf,1:Nlf) = cmplx(0.0,0.0)
-  Qeff(1:Nlf,1:Nlf) = cmplx(0.0,0.0)
+  S0(-No:No,1:Nlf,1:Nlf) = dcmplx(0.0,0.0)
+  Qeff(1:Nlf,1:Nlf) = dcmplx(0.0,0.0)
   
   ! 1.B.Z  LOOP STARTS HERE !!!!
 
@@ -308,7 +308,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
     debugCount = debugCount + 1
     write (*,'(A13,I4,A5,I8,A11,I6,A2,I6,A5,F5.1,A4,/,A14,3F10.6,/,A31)') 'thread id: ',thread_id, &
                                                     & 'ik: ',ik, &
-                                                    & 'progress: ',debugCount, ' /',Ntot,' (',(real(debugCount)/real(Ntot))*100.0,'% )', &
+                                                    & 'progress: ',debugCount, ' /',Ntot,' (',(dble(debugCount)/dble(Ntot))*100.0,'% )', &
                                                     & 'KQx,KQy,KQz: ',KQx,KQy,KQz, &
                                                     & '-------------------------------'
     ! !$omp end critical(printWaveVector)
@@ -319,8 +319,8 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   allocate(Qeff_partial(Nlf,Nlf))
   allocate(S0_partial(-No:No,Nlf,Nlf))
 
-  Qeff_partial(1:Nlf,1:Nlf)      = cmplx(0.0,0.0)
-  S0_partial(-No:No,1:Nlf,1:Nlf) = cmplx(0.0,0.0)
+  Qeff_partial(1:Nlf,1:Nlf)      = dcmplx(0.0,0.0)
+  S0_partial(-No:No,1:Nlf,1:Nlf) = dcmplx(0.0,0.0)
 
   allocate(C1(NG))
   ! allocate(C2(NG))
@@ -483,7 +483,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
     do iG=1,Nlf
       do jG=1,Nlf
   !       ! write(*,'(2F7.4)') S0(io,iG,jG)
-        write(74,'(2F15.10)') real(S0(io,iG,jG)),aimag(S0(io,iG,jG))
+        write(74,'(2F15.10)') dble(S0(io,iG,jG)),aimag(S0(io,iG,jG))
       end do
     end do
   end do omega_loop_C
@@ -494,7 +494,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   ! write(75,'(10F15.10)')((Qeff(iG,jG),jG = 1,Nlf),iG = 1,Nlf)
   do iG=1,Nlf
     do jG=1,Nlf
-      write(75,'(2F15.10)') real(Qeff(iG,jG)),aimag(Qeff(iG,jG))
+      write(75,'(2F15.10)') dble(Qeff(iG,jG)),aimag(Qeff(iG,jG))
     end do
   end do
 
@@ -573,16 +573,16 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
         ! print *,'ImChi0: ',ImChi0
         
         if (io == 1) then ! omega=0.0 Ha
-          Pi_dia(iG,jG) = -cmplx(ReChi0,0.0) ! neven debug: diamagnetski doprinos ??
+          Pi_dia(iG,jG) = -dcmplx(ReChi0,0.0) ! neven debug: diamagnetski doprinos ??
         end if
 
-        Pi_tot(iG,jG) = cmplx(ReChi0,ImChi0) 
+        Pi_tot(iG,jG) = dcmplx(ReChi0,ImChi0) 
         Pi_tot(iG,jG) = Pi_tot(iG,jG) + Pi_dia(iG,jG) ! Pi_RPA = Pi_paramagnetski + Pi_diamagnetski
 
         Pi_inter = Pi_tot(1,1)
-        Pi_intra = Qeff(1,1)*oi/(oi + cmplx(0.0,1.0)*eta_intra)
+        Pi_intra = Qeff(1,1)*oi/(oi + dcmplx(0.0,1.0)*eta_intra)
         
-        Pi_tot(iG,jG) = Pi_tot(iG,jG) + Qeff(iG,jG)*oi/(oi + cmplx(0.0,1.0)*eta_intra) ! dodavanje intraband clana
+        Pi_tot(iG,jG) = Pi_tot(iG,jG) + Qeff(iG,jG)*oi/(oi + dcmplx(0.0,1.0)*eta_intra) ! dodavanje intraband clana
         
       end do jG_loop
     end do iG_loop
@@ -594,8 +594,8 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
     ! vodljivost u jedinicama 2*pi*e^2/h   
     if(io > 1) then
-      write(401,*) oi*Hartree, real(-cmplx(0.0,1.0)*c0*Pi_inter/oi)
-      write(402,*) oi*Hartree, real(-cmplx(0.0,1.0)*c0*Pi_intra/oi)
+      write(401,*) oi*Hartree, dble(-dcmplx(0.0,1.0)*c0*Pi_inter/oi)
+      write(402,*) oi*Hartree, dble(-dcmplx(0.0,1.0)*c0*Pi_intra/oi)
     endif
 
 
@@ -1105,7 +1105,7 @@ end subroutine findKQinIBZ
       ! transformation in cart.coord (also!, after this all G components are in 2pi/a0 units)
       do n = 1,3
         do m = 1,3
-          G(n,iG) = G(n,iG)+KC(n,m)*real(Gi(m)) ! DBLE converted to real
+          G(n,iG) = G(n,iG)+KC(n,m)*dble(Gi(m)) ! DBLE converted to real
         end do
       end do
       ! parG(iG)=Gi(3)
@@ -1309,7 +1309,7 @@ stop
         else if (jo == No) then
           fact = 0.5_dp*domega/oj
         end if
-        ReChi0 = ReChi0 + fact*( real(S0(-jo+1,iG,jG)) - real(S0(jo-1,iG,jG)) )
+        ReChi0 = ReChi0 + fact*( dble(S0(-jo+1,iG,jG)) - dble(S0(jo-1,iG,jG)) )
       end do
     else if (io == 2) then
       do  jo = 1,No
@@ -1326,12 +1326,12 @@ stop
         else if (jo == No) then
           fact = 0.5_dp*domega/(oi-oj)
         end if
-        ReChi0 = ReChi0 + fact*real(S0(jo-1,iG,jG))
+        ReChi0 = ReChi0 + fact*dble(S0(jo-1,iG,jG))
         fact = domega/(oi + oj)
         if (jo == 1 .or. jo == No) then
           fact = 0.5_dp*domega/(oi + oj)
         end if
-        ReChi0 = ReChi0 + fact*real(S0(-jo + 1,iG,jG))
+        ReChi0 = ReChi0 + fact*dble(S0(-jo + 1,iG,jG))
       end do
     else if (io == (No-1)) then
       do  jo = 1,No
@@ -1348,12 +1348,12 @@ stop
         else if (jo == No) then
           fact=-1.0_dp
         end if
-        ReChi0 = ReChi0 + fact*real(S0(jo-1,iG,jG))
+        ReChi0 = ReChi0 + fact*dble(S0(jo-1,iG,jG))
         fact = domega/(oi + oj)
         if (jo == 1 .or. jo == No) then
           fact = 0.5_dp*domega/(oi + oj)
         end if
-        ReChi0 = ReChi0 + fact*real(S0(-jo + 1,iG,jG))
+        ReChi0 = ReChi0 + fact*dble(S0(-jo + 1,iG,jG))
       end do
     else
       do  jo = 1,No
@@ -1372,12 +1372,12 @@ stop
         else if (jo == No) then
           fact = 0.5_dp*domega/(oi-oj)
         end if
-        ReChi0 = ReChi0 + fact*real(S0(jo-1,iG,jG))
+        ReChi0 = ReChi0 + fact*dble(S0(jo-1,iG,jG))
         fact = domega/(oi + oj)
         if (jo == 1 .or. jo == No) then
           fact = 0.5_dp*domega/(oi + oj)
         end if
-        ReChi0 = ReChi0 + fact*real(S0(-jo + 1,iG,jG))
+        ReChi0 = ReChi0 + fact*dble(S0(-jo + 1,iG,jG))
       end do
     end if
     ReChi0 = ReChi0 + pi*aimag(S0(io-1,iG,jG))
@@ -1488,7 +1488,7 @@ stop
       end do
     end if
     
-    ImChi0 = ImChi0 - pi*real(S0(io-1,iG,jG)) ! ovaj dio je razlicit od Sloss, S0 je kompleksno polje
+    ImChi0 = ImChi0 - pi*dble(S0(io-1,iG,jG)) ! ovaj dio je razlicit od Sloss, S0 je kompleksno polje
     
   end subroutine genImChi0
 
@@ -1580,8 +1580,8 @@ subroutine genCurrentVertices(pol, jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0
   ! print *,'C1(2), C2(2):',C1(2), C2(2)
 
   iGfast = 0
-  MnmK1K2(1:Nlf)  = cmplx(0.0,0.0)
-  MnmK1K22(1:Nlf) = cmplx(0.0,0.0)
+  MnmK1K2(1:Nlf)  = dcmplx(0.0,0.0)
+  MnmK1K22(1:Nlf) = dcmplx(0.0,0.0)
   iG_loop: do  iG = 1,Nlf
     iG1_loop: do iG1 = 1,NGd
       iGfast = iGfast + 1

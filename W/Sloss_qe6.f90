@@ -1197,7 +1197,7 @@ end subroutine genChargeVertices
 
     Imat(1:Nlf,1:Nlf) = dcmplx(0.0_dp,0.0_dp)
     do  iG = 1,Nlf
-      Imat(iG,iG) = cmplx(1.0_dp,0.0_dp)
+      Imat(iG,iG) = dcmplx(1.0_dp,0.0_dp)
     end do
 
     do  iG = 1,Nlf
