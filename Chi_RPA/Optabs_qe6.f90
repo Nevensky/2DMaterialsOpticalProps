@@ -39,12 +39,12 @@ integer :: osdependent_id
 integer :: debugCount = 0
 
 ! constants
-real(kind=dp),    parameter :: pi      = 4.D0*atan(1.d0)
+real(kind=dp),    parameter :: pi      = 4._dp*atan(1._dp)
 real(kind=dp),    parameter :: eV      = 1.602176487D-19
 real(kind=dp),    parameter :: kB      = 1.3806503d-23
-real(kind=dp),    parameter :: Hartree = 2.0D0*13.6056923D0
+real(kind=dp),    parameter :: Hartree = 2.0_dp*13.6056923_dp
 real(kind=dp),    parameter :: Planck  = 6.626196D-34
-real(kind=dp),    parameter :: aBohr   = 0.5291772d0
+real(kind=dp),    parameter :: aBohr   = 0.5291772_dp
 
 ! scalars
 real(kind=dp)    :: kx,ky,kz
@@ -80,17 +80,17 @@ real(kind=dp)    :: Efermi ! [eV] Fermi en.
 real(kind=dp)    :: dGW    ! [eV] band gap scissor correction
 real(kind=dp)    :: a0     ! [a.u.]  unit cell parameter in parallel direction 
 real(kind=dp)    :: c0     ! [a.u.]  unit cell parameter in perependicular direction 
-real(kind=dp)    :: eps    ! 1.0D-4 threshold
+real(kind=dp)    :: eps    ! equal to zero threshold
 real(kind=dp)    :: T      ! [eV] temperature 
 real(kind=dp)    :: Ecut   ! [Hartree] cutoff energy for crystal local field calculations , for Ecut=0 S matrix is a scalar ?
 real(kind=dp)    :: Vcell  ! [a.u.^3] unit-cell volume 
-real(kind=dp)    :: Gamma_intra ! [Hartree] width of intraband transition
-real(kind=dp)    :: Gamma_inter ! [Hartree] width of interband transition
+real(kind=dp)    :: eta_intra ! [Hartree] width of intraband transition
+real(kind=dp)    :: eta_inter ! [Hartree] width of interband transition
 real(kind=dp)    :: Lor_cut  ! Lorentzian cutoff to zero left and right
 real(kind=dp)    :: df_cut   ! 
 
 namelist /parameters/ Efermi, dGW, eps, T, Ecut, a0, c0, Vcell
-namelist /system/ lf, pol, calc, jump, omin, omax, qmin, qmax, Gamma_intra, Gamma_inter, Lor_cut, df_cut
+namelist /system/ lf, pol, calc, jump, omin, omax, qmin, qmax, eta_intra, eta_inter, Lor_cut, df_cut
 
 ! scalar arrays
 ! integer,       dimension(3)      :: Gi                      ! pomocna funkcija
@@ -177,8 +177,8 @@ T      = T/Hartree                ! convert temperature from eV to Hartree
 Efermi = Efermi/Hartree           ! convert Fermi en. from eV to Hartree
 Gcar   = 2.0*pi/a0                ! unit cell norm.
 dGW    = dGW/Hartree              ! scissors shift
-Gamma_intra = Gamma_intra/Hartree
-Gamma_inter = Gamma_inter/Hartree
+eta_intra = eta_intra/Hartree
+eta_inter = eta_inter/Hartree
 
 ! scalar arrays
 ! allocate(factMatrix(No))
@@ -268,7 +268,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   print *, "Found minimal wave-vector q."
 
   ! Info file
-  call writeInfo(lf, pol, qx, qy, qz, Gcar, Nsym, Nlf, Ntot, NkI, Nband, T, Nel, NelQE,Gamma_intra, Gamma_inter, dato1, dato2, dato3,config_file)
+  call writeInfo(lf, pol, qx, qy, qz, Gcar, Nsym, Nlf, Ntot, NkI, Nband, T, Nel, NelQE,eta_intra, eta_inter, dato1, dato2, dato3,config_file)
   
   
   if (calc == 2 .and. calc /= 3 ) GO TO 888
@@ -282,7 +282,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
   print *, 'DEBUG: entering parallel region'
   print *, 'Requested threads: ',Nthreads, 'Available threads: ',omp_get_num_threads()
-  !$omp parallel shared(S0,Qeff, iq, qx,qy,qz, kI,ktot,R,RI,eps,E, Efermi, T,Gcar, G,Glf,NkI,Nsym,NG,Ntot,Nval,Nband,NGd,Nlf,Vcell, Gamma_inter, Gamma_intra, df_cut, Lor_cut,debugCount) private(ik, S0_partial, Qeff_partial, MnmK1K2,MnmK1K22,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,df, f1, f2, expo1, expo2, fact, Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2, C1,C2, iuni1, iuni2) firstprivate(savedir,No,domega,osdependent_id,pol) num_threads(Nthreads) default(none) 
+  !$omp parallel shared(S0,Qeff, iq, qx,qy,qz, kI,ktot,R,RI,eps,E, Efermi, T,Gcar, G,Glf,NkI,Nsym,NG,Ntot,Nval,Nband,NGd,Nlf,Vcell, eta_inter, eta_intra, df_cut, Lor_cut,debugCount) private(ik, S0_partial, Qeff_partial, MnmK1K2,MnmK1K22,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,df, f1, f2, expo1, expo2, fact, Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2, C1,C2, iuni1, iuni2) firstprivate(savedir,No,domega,osdependent_id,pol) num_threads(Nthreads) default(none) 
   thread_id =  omp_get_thread_num()
 
   !$omp do
@@ -375,16 +375,16 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
             ! print 'io',io
             o = io*domega
             dE = o + E(K1,n) - E(K2,m)
-            Lor = Gamma_inter/(dE**2 + Gamma_inter**2) ! Gamma_inter je sirina interband prijelaza
+            Lor = eta_inter/(dE**2 + eta_inter**2) ! eta_inter je sirina interband prijelaza
             ! neven debug
             ! print *, 'o,dE,E(K1,n),E(K2,m),Lor: ',o,dE,E(K1,n),E(K2,m),Lor
-            ! print *, 'df_cut,Lor_cut,Gamma_inter',df_cut,Lor_cut,Gamma_inter
+            ! print *, 'df_cut,Lor_cut,eta_inter',df_cut,Lor_cut,eta_inter
             ! if (io==200) then
               ! print *,'ik,n,m,io',ik,n,m,io
               ! print *,'Lor',Lor
-              ! print *,'Lor_cut/Gamma_inter',Lor_cut/Gamma_inter
+              ! print *,'Lor_cut/eta_inter',Lor_cut/eta_inter
             ! end if
-            if (abs(Lor) >= Lor_cut/Gamma_inter) then ! Reze repove Lorentziana lijevo i desno, pazljivo, minimum 1.0d-3, preporuceno 1.0d-5
+            if (abs(Lor) >= Lor_cut/eta_inter) then ! Reze repove Lorentziana lijevo i desno, pazljivo, minimum 1.0d-3, preporuceno 1.0d-5
               do  iG = 1,Nlf
                 do  jG = 1,Nlf
                   ! -1/pi*ImChi_munu -> for Kramers Kronig
@@ -414,7 +414,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
           ! stop
         else if (n == m .and. abs(E(K1,n)-Efermi) <= 10.0*T) then
           ! Effective number of charge carriers (tensor)
-          fact = expo1/( (expo1 + 1.0D0)*(expo1 + 1.0D0) )
+          fact = expo1/( (expo1 + 1.0_dp)*(expo1 + 1.0_dp) )
           fact = -fact/T
           ! neven debug
           ! print *,'fact:',fact,'T:',T,'expo1:',expo1
@@ -580,9 +580,9 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
         Pi_tot(iG,jG) = Pi_tot(iG,jG) + Pi_dia(iG,jG) ! Pi_RPA = Pi_paramagnetski + Pi_diamagnetski
 
         Pi_inter = Pi_tot(1,1)
-        Pi_intra = Qeff(1,1)*oi/(oi + cmplx(0.0,1.0)*Gamma_intra)
+        Pi_intra = Qeff(1,1)*oi/(oi + cmplx(0.0,1.0)*eta_intra)
         
-        Pi_tot(iG,jG) = Pi_tot(iG,jG) + Qeff(iG,jG)*oi/(oi + cmplx(0.0,1.0)*Gamma_intra) ! dodavanje intraband clana
+        Pi_tot(iG,jG) = Pi_tot(iG,jG) + Qeff(iG,jG)*oi/(oi + cmplx(0.0,1.0)*eta_intra) ! dodavanje intraband clana
         
       end do jG_loop
     end do iG_loop
@@ -670,20 +670,20 @@ contains
 
   end subroutine loadKC
 
-  subroutine writeInfo(lf, pol, qx, qy, qz, Gcar, Nsym, Nlf, Ntot, NkI, Nband, T, Nel, NelQE,Gamma_intra, Gamma_inter, dato1, dato2, dato3, config_file)
+  subroutine writeInfo(lf, pol, qx, qy, qz, Gcar, Nsym, Nlf, Ntot, NkI, Nband, T, Nel, NelQE,eta_intra, eta_inter, dato1, dato2, dato3, config_file)
     implicit none
     integer      ,      intent(in) :: Nsym, Nlf, Ntot, NkI, Nband
     real(kind=dp),      intent(in) :: qx,qy,qz
     real(kind=dp),      intent(in) :: T, Gcar
     real(kind=dp),      intent(in) :: Nel, NelQE
-    real(kind=dp),      intent(in) :: Gamma_inter, Gamma_intra
+    real(kind=dp),      intent(in) :: eta_inter, eta_intra
     character(len=3),   intent(in) :: lf, pol
     character(len=100), intent(in) :: dato1, dato2, dato3
     character(len=200), intent(in) :: config_file
 
     integer       :: ios, iuni
     real(kind=dp) :: absq, error
-    real(kind=dp), parameter :: Hartree = 2.0D0*13.6056923D0
+    real(kind=dp), parameter :: Hartree = 2.0_dp*13.6056923_dp
     character(len=11) :: fname 
 
     absq = sqrt(qx**2+qy**2+qz**2)
@@ -709,8 +709,8 @@ contains
     write(iuni,*)'Number of different K vectors in 1.B.Z. is',Ntot
     write(iuni,*)'Number of K vectors in I.B.Z. is',NkI
     write(iuni,*)'Number of bands is               ',Nband
-    write(iuni,'(A25,F7.3,A5)') 'Gamma_intra is  ',Gamma_intra*Hartree*1000.0,'meV'
-    write(iuni,'(A25,F7.3,A5)') 'Gamma_inter is  ',Gamma_inter*Hartree*1000.0,'meV'
+    write(iuni,'(A25,F7.3,A5)') 'eta_intra is  ',eta_intra*Hartree*1000.0,'meV'
+    write(iuni,'(A25,F7.3,A5)') 'eta_inter is  ',eta_inter*Hartree*1000.0,'meV'
     write(iuni,'(A25,F7.3,A5)') 'Temperature is      ',T*Hartree*1000.0,'meV'
     write(iuni,*)''
     write(iuni,*)'-Im(Chi(io,G1,G2))/pi is in file---->',adjustl(trim(dato1))
@@ -749,7 +749,7 @@ contains
   end subroutine parseCommandLineArgs
 
   subroutine findMinQ(iq, Ntot, ktot, qx, qy, qz)
-    ! searching min. q=(qx,qy,qz) in Gamma -> M direction
+    ! searching min. q=(qx,qy,qz) in eta -> M direction
     integer,       intent(in)  :: iq, Ntot
     real(kind=dp), intent(in)  :: ktot(:,:)
     real(kind=dp), intent(out) :: qx, qy, qz
@@ -945,13 +945,13 @@ end subroutine findKQinIBZ
 
       expo = (Ei-Efermi)/T
       if (expo < -20) then
-        expo = 0.0d0
-        f = 1.0d0
+        expo = 0.0_dp
+        f = 1.0_dp
       elseif(expo > 20) then
-        f = 0.0d0
+        f = 0.0_dp
       else
         expo = exp(expo)
-        f = 1.0/(expo + 1.0)
+        f = 1.0_dp/(expo + 1.0_dp)
       endif
       
   end subroutine genOccupation
@@ -994,7 +994,7 @@ end subroutine findKQinIBZ
                   K1 = j
                   ! zbroji broj el. u prvoj vrpci
                   if (E(K1,n) < Efermi) then 
-                    Nel = Nel + 1.0
+                    Nel = Nel + 1.0_dp
                     ! print *,'Nel',Nel,'band:',n
                   end if  
                   cycle band_loop
@@ -1011,7 +1011,7 @@ end subroutine findKQinIBZ
         ! debug neven: mislim da se ovo nikad ne izvrsi, nema smisla...
         ! zbroji broj el. u preostalim vrpcama
         if (E(K1,n) < Efermi) then 
-          Nel = Nel + 1.0
+          Nel = Nel + 1.0_dp
           ! print *,'Nel',Nel,'band:',n
         end if  
     
@@ -1132,7 +1132,7 @@ end subroutine findKQinIBZ
     integer :: iuni, ios0, ios1, ios2
     integer :: n, m
     integer :: Nspin
-    logical :: gamma_only
+    logical :: eta_only
     integer, allocatable :: Gi(:,:)
     character(len=218)   :: fname            
 
@@ -1141,7 +1141,7 @@ end subroutine findKQinIBZ
     
     open(newunit=iuni,file=fname,form = 'unformatted',status='old',iostat=ios0,err=199,action='read')
 
-    read(iuni, iostat=ios1) gamma_only, NG, Nspin
+    read(iuni, iostat=ios1) eta_only, NG, Nspin
     ! print *, 'Number of Gvecs (NG):', NG
 
     read(iuni, iostat=ios1) ! dummy for b1, b2, b3 rec.latt.vecs. 
@@ -1183,7 +1183,7 @@ stop
   end subroutine loadG_QE6
 
   subroutine loadCsQE6(ik, ibnd, savedir, igwx, evc)
-    ! read_a_wfc(ibnd, filename, evc, ik, xk, nbnd, ispin, npol, gamma_only, ngw, igwx )
+    ! read_a_wfc(ibnd, filename, evc, ik, xk, nbnd, ispin, npol, eta_only, ngw, igwx )
     ! read QE 6.0 and greater, wfn coefficeints
     ! use iso_fortran_env, ONLY: DP=> REAL64
     implicit none 
@@ -1197,7 +1197,7 @@ stop
     integer  :: nbnd, ispin, npol,  i, ik2, ngw
     real(dp) :: xk(3)
     ! integer  :: dummy_int   
-    logical  :: gamma_only 
+    logical  :: eta_only 
     integer  :: ios, iuni 
     real(dp) :: scalef
     real(dp) :: b1(3), b2(3), b3(3) !, dummy_real 
@@ -1211,7 +1211,7 @@ stop
     ! iuni = 10 + ik*100 + ibnd*20000
     ! print *,path
     open(newunit = iuni, file = trim(adjustl(path)),action='read', form = 'unformatted', status = 'old', iostat=ios) 
-    read(iuni) ! ik2, xk, ispin, gamma_only, scalef
+    read(iuni) ! ik2, xk, ispin, eta_only, scalef
     read(iuni) ngw, igwx, npol, nbnd
     read(iuni) b1, b2, b3 
 
@@ -1237,7 +1237,7 @@ stop
   end subroutine loadCsQE6
 
   subroutine loadCsQE6_full(ik, savedir, igwx, evc)
-    ! read_a_wfc(ibnd, filename, evc, ik, xk, nbnd, ispin, npol, gamma_only, ngw, igwx )
+    ! read_a_wfc(ibnd, filename, evc, ik, xk, nbnd, ispin, npol, eta_only, ngw, igwx )
     ! read QE 6.0 and greater, wfn coefficeints
     ! use iso_fortran_env, ONLY: DP=> REAL64
     implicit none 
@@ -1251,7 +1251,7 @@ stop
     integer  :: nbnd, ispin, npol,  i, ik2, ngw
     real(dp) :: xk(3)
     ! integer  :: dummy_int   
-    logical  :: gamma_only 
+    logical  :: eta_only 
     integer  :: ios, iuni 
     real(dp) :: scalef
     real(dp) :: b1(3), b2(3), b3(3) !, dummy_real 
@@ -1265,7 +1265,7 @@ stop
     ! iuni = 10 + ik*100 + ibnd*20000
     ! print *,path
     open(newunit = iuni, file = trim(adjustl(path)),action='read', form = 'unformatted', status = 'old', iostat=ios) 
-    read(iuni) ! ik2, xk, ispin, gamma_only, scalef
+    read(iuni) ! ik2, xk, ispin, eta_only, scalef
     read(iuni) ngw, igwx, npol, nbnd
     read(iuni) b1, b2, b3 
 
@@ -1284,6 +1284,7 @@ stop
 
 
   subroutine genReChi0(io,No,Nlf,iG,jG,oi,domega,S0,ReChi0)
+    use constants: only: pi
     implicit none
     integer,          intent(in)  :: io, No, Nlf
     integer,          intent(in)  :: iG, jG
@@ -1304,9 +1305,9 @@ stop
         oj = (jo-1)*domega
         fact = domega/oj
         if (jo == 2) then
-          fact = 3.0/2.0
+          fact = 3.0_dp/2.0_dp
         else if (jo == No) then
-          fact = 0.5*domega/oj
+          fact = 0.5_dp*domega/oj
         end if
         ReChi0 = ReChi0 + fact*( real(S0(-jo+1,iG,jG)) - real(S0(jo-1,iG,jG)) )
       end do
@@ -1317,18 +1318,18 @@ stop
           fact = domega/(oi-oj)
         endif
         if (jo == 1) then
-          fact = 1.0
+          fact = 1.0_dp
         else if (jo == 2) then
-          fact = 0.0
+          fact = 0.0_dp
         else if (jo == 3) then
-          fact=-3.0/2.0
+          fact=-3.0/2.0_dp
         else if (jo == No) then
-          fact = 0.5*domega/(oi-oj)
+          fact = 0.5_dp*domega/(oi-oj)
         end if
         ReChi0 = ReChi0 + fact*real(S0(jo-1,iG,jG))
         fact = domega/(oi + oj)
         if (jo == 1 .or. jo == No) then
-          fact = 0.5*domega/(oi + oj)
+          fact = 0.5_dp*domega/(oi + oj)
         end if
         ReChi0 = ReChi0 + fact*real(S0(-jo + 1,iG,jG))
       end do
@@ -1339,18 +1340,18 @@ stop
           fact = domega/(oi-oj)
         end if
         if (jo == 1) then
-          fact = 0.5*domega/(oi-oj)
+          fact = 0.5_dp*domega/(oi-oj)
         else if (jo == (No-2)) then
-          fact = 3.0/2.0
+          fact = 3.0_dp/2.0_dp
         else if (jo == (No-1)) then
-          fact = 0.0
+          fact = 0.0_dp
         else if (jo == No) then
-          fact=-1.0
+          fact=-1.0_dp
         end if
         ReChi0 = ReChi0 + fact*real(S0(jo-1,iG,jG))
         fact = domega/(oi + oj)
         if (jo == 1 .or. jo == No) then
-          fact = 0.5*domega/(oi + oj)
+          fact = 0.5_dp*domega/(oi + oj)
         end if
         ReChi0 = ReChi0 + fact*real(S0(-jo + 1,iG,jG))
       end do
@@ -1363,18 +1364,18 @@ stop
         if (jo == 1) then
           fact = 0.5*domega/(oi-oj)
         else if (jo == (io-1)) then
-          fact = 3.0/2.0
+          fact = 3.0_dp/2.0_dp
         else if (jo == io) then
           fact = 0.0
         else if (jo == (io + 1)) then
-          fact=-3.0/2.0
+          fact=-3.0_dp/2.0_dp
         else if (jo == No) then
-          fact = 0.5*domega/(oi-oj)
+          fact = 0.5_dp*domega/(oi-oj)
         end if
         ReChi0 = ReChi0 + fact*real(S0(jo-1,iG,jG))
         fact = domega/(oi + oj)
         if (jo == 1 .or. jo == No) then
-          fact = 0.5*domega/(oi + oj)
+          fact = 0.5_dp*domega/(oi + oj)
         end if
         ReChi0 = ReChi0 + fact*real(S0(-jo + 1,iG,jG))
       end do
@@ -1384,6 +1385,7 @@ stop
   end subroutine genReChi0
 
   subroutine genImChi0(io,No,Nlf,iG,jG,oi,domega,S0,ImChi0)
+    use constants: only: pi
     implicit none
     integer,          intent(in)  :: io, No, Nlf
     integer,          intent(in)  :: iG, jG
@@ -1503,7 +1505,7 @@ stop
     real(kind=dp),      intent(in), optional :: dGW
 
     integer :: iuni, ios, ik, i
-    real(kind=dp),    parameter :: Hartree = 2.0D0*13.6056923_dp
+    real(kind=dp),    parameter :: Hartree = 2.0_dp*13.6056923_dp
     real(kind=dp) :: dGW_ = 0.0_dp
     if (present(dGW)) dGW_ = dGW
 
@@ -1634,16 +1636,16 @@ subroutine genCurrentVertices(pol, jump, eps, Gcar, qx,qy,qz, kx,ky,kz, Nlf, iG0
       if (iG2 <= NG2) then
         ! ako je polarazcija je tipa xx, yy, zz 
         if (pol == 'xx' .or. pol== 'yy' .or. pol == 'zz') then
-          MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * current * C2(iG2)
+          MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5_dp*conjg(C1(iG1)) * current * C2(iG2)
           MnmK1K22(iG) = MnmK1K2(iG) ! strujni vrhovi su isti
           ! neven debug
           ! print *,'MnmK1K2(iG)',MnmK1K2(iG)
-          ! print *, '0.5D0*conjg(C1(iG1))',0.5D0*conjg(C1(iG1))
+          ! print *, '0.5_dp*conjg(C1(iG1))',0.5_dp*conjg(C1(iG1))
           ! print *,'current',current
           ! print *,'C2',C2(iG2)
         elseif (pol =='yz' .or. pol =='zy') then ! ako  su miksani yz
-          MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * current_y * C2(iG2)
-          MnmK1K22(iG) = MnmK1K22(iG) + 0.5D0*conjg(C1(iG1)) * current_z * C2(iG2)
+          MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5_dp*conjg(C1(iG1)) * current_y * C2(iG2)
+          MnmK1K22(iG) = MnmK1K22(iG) + 0.5_dp*conjg(C1(iG1)) * current_z * C2(iG2)
         else
           print *,'WARNING Specified mixed polarization component not supported.'//adjustl(trim(pol))//' not allowed.'
           stop

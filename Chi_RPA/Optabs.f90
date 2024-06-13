@@ -94,13 +94,13 @@ real(kind=dp)    :: eps    ! 1.0D-4 threshold
 real(kind=dp)    :: T      ! [eV] temperature
 real(kind=dp)    :: Ecut   ! [Hartree] cutoff energy for crystal local field calculations , for Ecut=0 S matrix is a scalar ?
 real(kind=dp)    :: Vcell  ! [a.u.^3] unit-cell volume 
-real(kind=dp)    :: Gamma_intra ! [Hartree] width of intraband transition
-real(kind=dp)    :: Gamma_inter ! [Hartree] width of interband transition
+real(kind=dp)    :: eta_intra ! [Hartree] width of intraband transition
+real(kind=dp)    :: eta_inter ! [Hartree] width of interband transition
 real(kind=dp)    :: Lor_cut  ! Lorentzian cutoff to zero left and right
 real(kind=dp)    :: df_cut   ! 
 
 namelist /parameters/ Efermi, dGW, eps, T, Ecut, a0, c0, Vcell
-namelist /system/ lf, pol, calc, jump, omin, omax, qmin, qmax, Gamma_intra, Gamma_inter, Lor_cut, df_cut
+namelist /system/ lf, pol, calc, jump, omin, omax, qmin, qmax, eta_intra, eta_inter, Lor_cut, df_cut
 
 ! scalar arrays
 ! integer,       dimension(3)      :: Gi                      ! pomocna funkcija
@@ -177,8 +177,8 @@ T      = T/Hartree                ! convert temperature from eV to Hartree
 Efermi = Efermi/Hartree           ! convert Fermi en. from eV to Hartree
 Gcar   = 2.0*pi/a0                ! unit cell norm.
 dGW    = dGW/Hartree              ! scissors shift
-Gamma_intra = Gamma_intra/Hartree
-Gamma_inter = Gamma_inter/Hartree
+eta_intra = eta_intra/Hartree
+eta_inter = eta_inter/Hartree
 
 ! scalar arrays
 ! allocate(factMatrix(no))
@@ -273,7 +273,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
   print *, "Found minimal wave-vector q."
 
   ! Info file
-  call writeInfo(lf, pol, qx, qy, qz, Gcar, Nsymm, Nlf, Ntot, NkI, Nband, T, Nel, NelQE,Gamma_intra, Gamma_inter, dato1, dato2, dato3)
+  call writeInfo(lf, pol, qx, qy, qz, Gcar, Nsymm, Nlf, Ntot, NkI, Nband, T, Nel, NelQE,eta_intra, eta_inter, dato1, dato2, dato3)
   
   
   if (calc == 2 .and. calc /= 3 ) GO TO 888
@@ -288,7 +288,7 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
 
   print *, 'DEBUG: entering parallel region'
   print *, 'Requested threads: ',Nthreads, 'Available threads: ',omp_get_num_threads()
-  !$omp parallel shared(S0,Qeff, iq, qx,qy,qz, kI,ktot,R,RI,eps,E, Efermi, T,Gcar, G,Glf,NkI,Nsymm,NG,Ntot,Nval,Nband,NGd,Nlf,Nlfd,Vcell, Gamma_inter, Gamma_intra, df_cut, Lor_cut,debugCount) private(ik, S0_partial, Qeff_partial, MnmK1K2,MnmK1K22,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,df, f1, f2, expo1, expo2, fact, Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2,attr1,attr2, C1,C2, iuni1, iuni2) firstprivate(savedir,jump,no,domega) num_threads(Nthreads) default(none) 
+  !$omp parallel shared(S0,Qeff, iq, qx,qy,qz, kI,ktot,R,RI,eps,E, Efermi, T,Gcar, G,Glf,NkI,Nsymm,NG,Ntot,Nval,Nband,NGd,Nlf,Nlfd,Vcell, eta_inter, eta_intra, df_cut, Lor_cut,debugCount) private(ik, S0_partial, Qeff_partial, MnmK1K2,MnmK1K22,K11,K22,K33,kx,ky,kz,i,j,it,R1,R2,iG0,KQx,KQy,KQz,iG,jG,jk,K1,K2,n,m,pathk1,pathk2,bandn,bandm,NG1,NG2,io,o,dE,Lor,df, f1, f2, expo1, expo2, fact, Gxx1,Gxx2,Gyy1,Gyy2,Gzz1,Gzz2,Gfast,iGfast, iG1, iG2,attr1,attr2, C1,C2, iuni1, iuni2) firstprivate(savedir,jump,no,domega) num_threads(Nthreads) default(none) 
   thread_id =  omp_get_thread_num()
 
   !$omp do
@@ -390,16 +390,16 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
             ! print 'io',io
             o = io*domega
             dE = o + E(K1,n) - E(K2,m)
-            Lor = Gamma_inter/(dE**2 + Gamma_inter**2) ! Gamma_inter je sirina interband prijelaza
+            Lor = eta_inter/(dE**2 + eta_inter**2) ! eta_inter je sirina interband prijelaza
             ! neven debug
             ! print *, 'o,dE,E(K1,n),E(K2,m),Lor: ',o,dE,E(K1,n),E(K2,m),Lor
-            ! print *, 'df_cut,Lor_cut,Gamma_inter',df_cut,Lor_cut,Gamma_inter
+            ! print *, 'df_cut,Lor_cut,eta_inter',df_cut,Lor_cut,eta_inter
             ! if (io==200) then
               ! print *,'ik,n,m,io',ik,n,m,io
               ! print *,'Lor',Lor
-              ! print *,'Lor_cut/Gamma_inter',Lor_cut/Gamma_inter
+              ! print *,'Lor_cut/eta_inter',Lor_cut/eta_inter
             ! end if
-            if (abs(Lor) >= Lor_cut/Gamma_inter) then ! Reze repove Lorentziana lijevo i desno, pazljivo, minimum 1.0d-3, preporuceno 1.0d-5
+            if (abs(Lor) >= Lor_cut/eta_inter) then ! Reze repove Lorentziana lijevo i desno, pazljivo, minimum 1.0d-3, preporuceno 1.0d-5
               do  iG = 1,Nlf
                 do  jG = 1,Nlf
                   ! -1/pi*ImChi_munu -> for Kramers Kronig
@@ -592,9 +592,9 @@ q_loop: do  iq = qmin,qmax ! nq = 1 u optickom smo limesu, dakle ne treba nam do
         Pi_tot(iG,jG) = Pi_tot(iG,jG) + Pi_dia(iG,jG)
 
         Pi_inter = Pi_tot(1,1)
-        Pi_intra = Qeff(1,1)*oi/(oi + dcmplx(0.0,1.0)*Gamma_intra)
+        Pi_intra = Qeff(1,1)*oi/(oi + dcmplx(0.0,1.0)*eta_intra)
         
-        Pi_tot(iG,jG) = Pi_tot(iG,jG) + Qeff(iG,jG)*oi/(oi + dcmplx(0.0,1.0)*Gamma_intra) ! dodavanje intraband clana
+        Pi_tot(iG,jG) = Pi_tot(iG,jG) + Qeff(iG,jG)*oi/(oi + dcmplx(0.0,1.0)*eta_intra) ! dodavanje intraband clana
         
       end do jG_loop
     end do iG_loop
@@ -679,13 +679,13 @@ contains
   
   end subroutine loadKC
 
-  subroutine writeInfo(lf, pol, qx, qy, qz, Gcar, Nsymm, Nlf, Ntot, NkI, Nband, T, Nel, NelQE,Gamma_intra, Gamma_inter, dato1, dato2, dato3)
+  subroutine writeInfo(lf, pol, qx, qy, qz, Gcar, Nsymm, Nlf, Ntot, NkI, Nband, T, Nel, NelQE,eta_intra, eta_inter, dato1, dato2, dato3)
     implicit none
     integer      ,      intent(in) :: NelQE, Nsymm, Nlf, Ntot, NkI, Nband
     real(kind=dp),      intent(in) :: qx,qy,qz
     real(kind=dp),      intent(in) :: T, Gcar
     real(kind=dp),      intent(in) :: Nel
-    real(kind=dp),      intent(in) :: Gamma_inter, Gamma_intra
+    real(kind=dp),      intent(in) :: eta_inter, eta_intra
     character(len=3),   intent(in) :: lf, pol
     character(len=100), intent(in) :: dato1, dato2, dato3
 
@@ -713,8 +713,8 @@ contains
     write(55,*)'Number of different K vectors in 1.B.Z. is',Ntot
     write(55,*)'Number of K vectors in I.B.Z. is',NkI
     write(55,*)'Number of bands is               ',Nband
-    write(55,'(A25,F7.3,A5)') 'Gamma_intra is  ',Gamma_intra*Hartree*1000.0,'meV'
-    write(55,'(A25,F7.3,A5)') 'Gamma_inter is  ',Gamma_inter*Hartree*1000.0,'meV'
+    write(55,'(A25,F7.3,A5)') 'eta_intra is  ',eta_intra*Hartree*1000.0,'meV'
+    write(55,'(A25,F7.3,A5)') 'eta_inter is  ',eta_inter*Hartree*1000.0,'meV'
     write(55,'(A25,F7.3,A5)') 'Temperature is      ',T*Hartree*1000.0,'meV'
     write(55,*)''
     write(55,*)'-Im(Chi(io,G1,G2))/pi is in file---->',adjustl(trim(dato1))
@@ -741,7 +741,7 @@ contains
   end subroutine writeInfo
 
   subroutine findMinQ(Ntot, ktot, qx, qy, qz)
-    ! searching min. q=(qx,qy,qz) in Gamma -> M direction
+    ! searching min. q=(qx,qy,qz) in eta -> M direction
     integer,       intent(in)  :: Ntot
     real(kind=dp), intent(in)  :: ktot(:,:)
     real(kind=dp), intent(out) :: qx, qy, qz

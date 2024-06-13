@@ -20,7 +20,7 @@ program Pi_pol
   complex(kind=dp) :: Pi_inter, Pi_intra
   real(kind=dp)    :: domega, domega_tot
   real(kind=dp)    :: omin, omax, oi
-  real(kind=dp)    :: Gamma_intra, ReChi0,ImChi0
+  real(kind=dp)    :: eta_intra, ReChi0,ImChi0
   real(kind=dp)    :: c0
 
 
@@ -29,7 +29,7 @@ program Pi_pol
 
   
 
-  namelist /config/ pol, Nlf, No_interp, No, omin, omax,Gamma_intra, c0, write_GiGj
+  namelist /config/ pol, Nlf, No_interp, No, omin, omax,eta_intra, c0, write_GiGj
   call parseCommandLineArgs(config_file) ! config file is the first argument passed to the command
   open(10,file=config_file)
   read(10,nml=config,iostat=ios_conf)
@@ -43,7 +43,7 @@ program Pi_pol
   ! pol = 'zz'
   ! Nlf = 29 ! 5 Ha hbn
   ! c0 = 32.5411 ! a.u.
-  ! Gamma_intra = 0.025 ! eV
+  ! eta_intra = 0.025 ! eV
   ! No = 2001
   ! omin = 1.0d-5
   ! omax = 50.0
@@ -51,7 +51,7 @@ program Pi_pol
   
   No_tot = (No_interp-1)*(No-2)
   
-  Gamma_intra = Gamma_intra/Hartree
+  eta_intra = eta_intra/Hartree
   omin = omin/Hartree ! iz eV u Hartree
   omax = (omax/Hartree + omin) 
   
@@ -126,9 +126,9 @@ program Pi_pol
         Pi_tot(io,iG,jG) = Pi_tot(io,iG,jG) + Pi_dia(iG,jG) ! Pi_RPA = Pi_paramagnetski + Pi_diamagnetski
 
         Pi_inter = Pi_tot(io,1,1)
-        Pi_intra = Qeff(1,1)*oi/(oi + dcmplx(0.0_dp,1.0_dp)*Gamma_intra)
+        Pi_intra = Qeff(1,1)*oi/(oi + dcmplx(0.0_dp,1.0_dp)*eta_intra)
         
-        ! Pi_tot(io,iG,jG) = Pi_tot(io,iG,jG) + Qeff(iG,jG)*oi/(oi + dcmplx(0.0,1.0)*Gamma_intra) ! dodavanje intraband clana
+        ! Pi_tot(io,iG,jG) = Pi_tot(io,iG,jG) + Qeff(iG,jG)*oi/(oi + dcmplx(0.0,1.0)*eta_intra) ! dodavanje intraband clana
         
       end do jG_loop
     end do iG_loop
@@ -175,13 +175,13 @@ program Pi_pol
             Pi_tot_interp(counter,iG,jG) = Pi_tot(io,iG,jG) + tmp(iG,jG)*jo
             
             ! Pi_inter = Pi_tot(1,1)
-            ! Pi_intra = Qeff(1,1)*oi/(oi + dcmplx(0.0,1.0)*Gamma_intra)
+            ! Pi_intra = Qeff(1,1)*oi/(oi + dcmplx(0.0,1.0)*eta_intra)
 
-            Pi_tot_interp(counter,iG,jG) = Pi_tot_interp(counter,iG,jG) + Qeff(iG,jG)*oi/(oi + cmplx(0.0,1.0)*Gamma_intra)
+            Pi_tot_interp(counter,iG,jG) = Pi_tot_interp(counter,iG,jG) + Qeff(iG,jG)*oi/(oi + cmplx(0.0,1.0)*eta_intra)
           end do jG_loop2
         end do iG_loop2
         Pi_inter = Pi_tot_interp(counter,1,1)
-        Pi_intra = Qeff(1,1)*oi/(oi + dcmplx(0.0,1.0)*Gamma_intra)
+        Pi_intra = Qeff(1,1)*oi/(oi + dcmplx(0.0,1.0)*eta_intra)
         ! WRITTING INTERPOLATED TOTAL RESPONSE FUNCTION Pi for a given polarization 'pol' to file for G=G'=0
         write(77,*) oi*Hartree, dble( Pi_tot_interp(counter,1,1) ), aimag( Pi_tot_interp(counter,1,1) )
         write(78,*) oi*Hartree, dble( Pi_inter ), aimag( Pi_inter )
