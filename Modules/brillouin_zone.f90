@@ -1,7 +1,5 @@
 module brillouin_zone
   use iso_fortran_env, only: dp => real64
-  use io_xml, only: loadXML_qe
-  use matrix_inverse, only: invert_real
   use notifications, only: error
   use utility, only: int2str
   implicit none
@@ -75,6 +73,7 @@ contains
 
   subroutine invertR(R, RI)
     !! Computes inverse of each rotational symmetry matrix
+    use matrix_inverse, only: invert
     real(kind=dp), intent(inout) :: R(:,:,:)  !! point group rotational matrices (3 x 3 x Nrot)
     real(kind=dp), intent(out), allocatable, optional :: RI(:,:,:) !! rotational matrices inverted
 
@@ -86,7 +85,7 @@ contains
     Nrot = size(R,3)
     do i = 1,Nrot
       ! print *, 'DEBUG: irot=',i
-      call invert_real(RI_(:,:,i))
+      call invert(RI_(:,:,i))
     enddo
 
     ! do i=1,Nrot

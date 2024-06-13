@@ -1,5 +1,6 @@
 module vertices
   use iso_fortran_env, only: dp => real64
+  use notifications, only: error
   implicit none
   
   public :: genChargeVertices, genCurrentVertices, genChargeVertices_v2,genCurrentVertices_v2
@@ -169,7 +170,7 @@ subroutine genChargeVertices_v2(n,m,Npw_k1,Npw_k2,jump, eps, iG0, K1, K2, R1, R2
 
       if (iG2==0) then
         print *, 'n,m,K1,K2,iG1,iG2=',n,m,K1,K2,iG1,iG2
-        error stop 'ERROR: iG2 is zero!'
+        call error('iG2 is zero!')
       end if
       if (iG2 <= NG2) then ! .and. iG2/=0 --> if igk_k has zero elements
         ! print *,'shape c2,c2=',shape(C1),shape(C2)
@@ -244,7 +245,7 @@ subroutine genCurrentVertices(pol, jump, eps, Gcar, qx,qy,qz, kx,ky,kz, iG0, R1,
         K_(i) = sum( R(i,1:3,R1)*G(1:3,iG1) )
       end do
 
-      current_xyz(1:3) = Gcar * ( q(1:3) + 2.0*k(1:3) + Glf(1:3,iG) + 2.0*K_(1:3) )
+      current_xyz(1:3) = Gcar * ( q(1:3) + 2.0_dp*k(1:3) + Glf(1:3,iG) + 2.0*K_(1:3) )
       K_(1:3) = K_(1:3) + Glf(1:3,iG) + G(1:3,iG0)
       
       do i=1,3
@@ -265,22 +266,22 @@ subroutine genCurrentVertices(pol, jump, eps, Gcar, qx,qy,qz, kx,ky,kz, iG0, R1,
 
       if (iG2 <= NG2) then
         if (pol == 'xx') then
-          MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * current_xyz(1) * C2(iG2)
+          MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5_dp*conjg(C1(iG1)) * current_xyz(1) * C2(iG2)
           if (present(MnmK1K22)) MnmK1K22(iG) = MnmK1K2(iG) ! current vertices are the same
         elseif (pol == 'yy') then
-          MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * current_xyz(2) * C2(iG2)
+          MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5_dp*conjg(C1(iG1)) * current_xyz(2) * C2(iG2)
           if (present(MnmK1K22)) MnmK1K22(iG) = MnmK1K2(iG) ! current vertices are the same
         elseif (pol == 'zz') then
-          MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * current_xyz(3) * C2(iG2)
+          MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5_dp*conjg(C1(iG1)) * current_xyz(3) * C2(iG2)
           if (present(MnmK1K22))  MnmK1K22(iG) = MnmK1K2(iG) ! current vertices are the same
         elseif (pol =='yz' .and. present(MnmK1K22)) then
-          MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * current_xyz(2) * C2(iG2)
-          MnmK1K22(iG) = MnmK1K22(iG) + 0.5D0*conjg(C1(iG1)) * current_xyz(3) * C2(iG2)
+          MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5_dp*conjg(C1(iG1)) * current_xyz(2) * C2(iG2)
+          MnmK1K22(iG) = MnmK1K22(iG) + 0.5_dp*conjg(C1(iG1)) * current_xyz(3) * C2(iG2)
         elseif (pol =='zy' .and. present(MnmK1K22)) then
-          MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * current_xyz(3) * C2(iG2)
-          MnmK1K22(iG) = MnmK1K22(iG) + 0.5D0*conjg(C1(iG1)) * current_xyz(2) * C2(iG2)
+          MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5_dp*conjg(C1(iG1)) * current_xyz(3) * C2(iG2)
+          MnmK1K22(iG) = MnmK1K22(iG) + 0.5_dp*conjg(C1(iG1)) * current_xyz(2) * C2(iG2)
         else
-          error stop 'ERROR: Specified mixed polarization component not supported.'//adjustl(trim(pol))//' not allowed.'
+          call error('Specified mixed polarization component not supported.'//adjustl(trim(pol))//' not allowed.')
         end if
       end if
     end do iG1_loop
@@ -368,22 +369,22 @@ subroutine genCurrentVertices_v2(pol, jump, eps, Gcar, qx, qy, qz, kx, ky, kz, i
 
       if (iG2 <= NG2) then
         if (pol == 'xx') then
-          MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * current_xyz(1) * C2(iG2)
+          MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5_dp*conjg(C1(iG1)) * current_xyz(1) * C2(iG2)
           if (present(MnmK1K22)) MnmK1K22(iG) = MnmK1K2(iG) ! current vertices are the same
         elseif (pol == 'yy') then
-          MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * current_xyz(2) * C2(iG2)
+          MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5_dp*conjg(C1(iG1)) * current_xyz(2) * C2(iG2)
           if (present(MnmK1K22)) MnmK1K22(iG) = MnmK1K2(iG) ! current vertices are the same
         elseif (pol == 'zz') then
-          MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * current_xyz(3) * C2(iG2)
+          MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5_dp*conjg(C1(iG1)) * current_xyz(3) * C2(iG2)
           if (present(MnmK1K22))  MnmK1K22(iG) = MnmK1K2(iG) ! current vertices are the same
         elseif (pol =='yz' .and. present(MnmK1K22)) then
-          MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * current_xyz(2) * C2(iG2)
-          MnmK1K22(iG) = MnmK1K22(iG) + 0.5D0*conjg(C1(iG1)) * current_xyz(3) * C2(iG2)
+          MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5_dp*conjg(C1(iG1)) * current_xyz(2) * C2(iG2)
+          MnmK1K22(iG) = MnmK1K22(iG) + 0.5_dp*conjg(C1(iG1)) * current_xyz(3) * C2(iG2)
         elseif (pol =='zy' .and. present(MnmK1K22)) then
-          MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5D0*conjg(C1(iG1)) * current_xyz(3) * C2(iG2)
-          MnmK1K22(iG) = MnmK1K22(iG) + 0.5D0*conjg(C1(iG1)) * current_xyz(2) * C2(iG2)
+          MnmK1K2(iG)  = MnmK1K2(iG)  + 0.5_dp*conjg(C1(iG1)) * current_xyz(3) * C2(iG2)
+          MnmK1K22(iG) = MnmK1K22(iG) + 0.5_dp*conjg(C1(iG1)) * current_xyz(2) * C2(iG2)
         else
-          error stop 'ERROR: Specified mixed polarization component not supported.'//adjustl(trim(pol))//' not allowed.'
+          call error('Specified mixed polarization component not supported.'//adjustl(trim(pol))//' not allowed.')
         end if
       end if
     end do iG1_loop

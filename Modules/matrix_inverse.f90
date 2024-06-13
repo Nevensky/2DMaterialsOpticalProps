@@ -136,14 +136,14 @@ contains
     deallocate(work)
   end subroutine invert_real
 
-subroutine check_identity_cmplx(A,A_inverted,threshold_)
+subroutine check_identity_cmplx(A,A_inverted,eps_)
    !! Checks if a complex matrix was correctly inverted i.e. if A⁻¹ · A = 𝟙
    !! WARNING: should be double checked see:
    !! https://www.intel.com/content/www/us/en/docs/onemkl/developer-reference-fortran/2023-0/gemm-001.html
    implicit none
    complex(kind=dp), intent(in)           :: A(:,:)
    complex(kind=dp), intent(in)           :: A_inverted(:,:)
-   real(kind=dp),    intent(in), optional :: threshold_
+   real(kind=dp),    intent(in), optional :: eps_
 
    complex(kind=dp), allocatable :: Icheck(:,:)
 
@@ -154,9 +154,9 @@ subroutine check_identity_cmplx(A,A_inverted,threshold_)
    real(kind=dp)    :: beta  = 0.0_dp
    complex(kind=dp) :: checkIdentity, checkIdentity2
    complex(kind=dp) :: traceIdentity
-   real(kind=dp)    :: threshold = dble(10d-4) ! default value arbitrarily chosen
+   real(kind=dp)    :: eps = dble(10d-4) ! default threshold value arbitrarily chosen
 
-   if (present(threshold_)) threshold = threshold_
+   if (present(eps_)) eps = eps_
 
    Nlf = size(A,1)
    K = Nlf   
@@ -166,10 +166,10 @@ subroutine check_identity_cmplx(A,A_inverted,threshold_)
    traceIdentity = sum( (/ ( abs(Icheck(i,i)), i=1, size(Icheck, 1)) /) )
    checkIdentity = sum(abs(Icheck)) - traceIdentity
    checkIdentity2 = dcmplx(Nlf,0.0_dp) - traceIdentity
-   if ( dble(checkIdentity)>threshold .or. &
-      & aimag(checkIdentity)>threshold .or. &
-      & dble(checkIdentity2)>threshold .or. &
-      & aimag(checkIdentity2)>threshold) then
+   if ( dble(checkIdentity)>eps .or. &
+      & aimag(checkIdentity)>eps .or. &
+      & dble(checkIdentity2)>eps .or. &
+      & aimag(checkIdentity2)>eps) then
      print *, 'Nlf: ', Nlf
      print *, 'size Ainv: ', size(A_inverted), 'size A:',size(A)
      print *, 'Re(check): ', dble(checkIdentity)
@@ -182,14 +182,14 @@ subroutine check_identity_cmplx(A,A_inverted,threshold_)
    deallocate(Icheck)
 end subroutine check_identity_cmplx
 
-subroutine check_identity_real(A,A_inverted,threshold_)
+subroutine check_identity_real(A,A_inverted,eps_)
    !! Checks if a real matrix was correctly inverted i.e. if A⁻¹ · A = 𝟙
    !! WARNING: should be double checked see:
    !! https://www.intel.com/content/www/us/en/docs/onemkl/developer-reference-fortran/2023-0/gemm-001.html
    implicit none
    real(kind=dp), intent(in)           :: A(:,:)
    real(kind=dp), intent(in)           :: A_inverted(:,:)
-   real(kind=dp), intent(in), optional :: threshold_
+   real(kind=dp), intent(in), optional :: eps_
 
    real(kind=dp), allocatable :: Icheck(:,:)
 
@@ -200,9 +200,9 @@ subroutine check_identity_real(A,A_inverted,threshold_)
    real(kind=dp)    :: beta  = 0.0_dp
    real(kind=dp)    :: checkIdentity, checkIdentity2
    real(kind=dp)    :: traceIdentity
-   real(kind=dp)    :: threshold = dble(10d-4) ! default value arbitrarily chosen
+   real(kind=dp)    :: eps = dble(10d-4) ! default threshold value arbitrarily chosen
 
-   if (present(threshold_)) threshold = threshold_
+   if (present(eps_)) eps = eps_
 
    Nlf = size(A,1)
    K = Nlf   
@@ -212,8 +212,8 @@ subroutine check_identity_real(A,A_inverted,threshold_)
    traceIdentity = sum( (/ ( abs(Icheck(i,i)), i=1, size(Icheck, 1)) /) )
    checkIdentity = sum(abs(Icheck)) - traceIdentity
    checkIdentity2 = Nlf - traceIdentity
-   if ( dble(checkIdentity)>threshold .or. &
-      & dble(checkIdentity2)>threshold) then
+   if ( dble(checkIdentity)>eps .or. &
+      & dble(checkIdentity2)>eps) then
      print *, 'Nlf: ', Nlf
      print *, 'size Ainv: ', size(A_inverted), 'size A:',size(A)
      print *, 'check: ', dble(checkIdentity)

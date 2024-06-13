@@ -29,13 +29,13 @@ program photon
 
 
   ! ... constants ...
-  real(kind=dp),  parameter :: pi      = 4.d0*atan(1.d0)
+  real(kind=dp),  parameter :: pi      = 4.0_dp*atan(1.0_dp)
   real(kind=dp),  parameter :: eV      = 1.602176487d-19
   real(kind=dp),  parameter :: kB      = 1.3806503d-23
-  real(kind=dp),  parameter :: Hartree = 2.0d0*13.6056923d0
+  real(kind=dp),  parameter :: Hartree = 2.0_dp*13.6056923_dp
   real(kind=dp),  parameter :: Planck  = 6.626196d-34
-  real(kind=dp),  parameter :: aBohr   = 0.5291772d0
-  real(kind=dp),  parameter :: gamma   = 1.0/137.0
+  real(kind=dp),  parameter :: aBohr   = 0.5291772_dp
+  real(kind=dp),  parameter :: gamma   = 1.0_dp/137.0_dp
 
   ! ...scalars...
 
@@ -102,7 +102,7 @@ program photon
 
   ! constants
   Nk   = 48*NkI           ! number of wave vectors in FBZ with No symmetry ops.
-  Gcar = 2.0*pi/a0   
+  Gcar = 2.0_dp*pi/a0   
   eta  = eta/Hartree
   omin = omin/Hartree ! iz eV u Hartree
   omax = (omax/Hartree + omin) 
@@ -155,9 +155,9 @@ program photon
 
   domega = (omax-omin) / (No-1)
   if (Ntheta/=0) then
-    dtheta = pi/(2.0*dble(Ntheta))
+    dtheta = pi/(2.0_dp*dble(Ntheta))
   else
-    dtheta = 1.0
+    dtheta = 1.0_dp
   endif
 
   ! KC transformation matrix from rec.cryst. axes to cart.koord.
@@ -236,8 +236,8 @@ program photon
           ! print *, 'q = (qᵢ-1)·dq' ! DEBUG
         endif
         
-        oi = cmplx(o,eta) 
-        beta = cmplx(gamma**2 * oi**2 - q**2)
+        oi = dcmplx(o,eta) 
+        beta = dcmplx(gamma**2 * oi**2 - q**2)
         beta = sqrt(beta)
 
         ! matrix elements of free photon propagator D^0_{\mu\nu}(G,G')
@@ -405,8 +405,8 @@ contains
 
       ! DEBUG: dgemm vars (inversion success check)
       integer :: K
-      real(kind=dp)    :: alpha = 1.0
-      real(kind=dp)    :: beta  = 0.0
+      real(kind=dp)    :: alpha = 1.0_dp
+      real(kind=dp)    :: beta  = 0.0_dp
       complex(kind=dp) :: checkIdentity, checkIdentity2
       complex(kind=dp) :: traceIdentity
 
@@ -443,15 +443,15 @@ contains
       call zgemm('N','N', Nlf, Nlf, K, alpha, A, Nlf, Acheck, K, beta, Icheck, Nlf)
       traceIdentity = sum( (/ ( abs(Icheck(i,i)), i=1, size(Icheck, 1)) /) )
       checkIdentity = sum(abs(Icheck)) - traceIdentity
-      checkIdentity2 = cmplx(Nlf,0.0) - traceIdentity
-      if ( real(checkIdentity)>10d-4 .or. aimag(checkIdentity)>10d-4 .or. &
-         & real(checkIdentity2)>10d-4 .or. aimag(checkIdentity2)>10d-4 ) then
+      checkIdentity2 = dcmplx(Nlf,0.0_dp) - traceIdentity
+      if ( dble(checkIdentity)>10d-4 .or. aimag(checkIdentity)>10d-4 .or. &
+         & dble(checkIdentity2)>10d-4 .or. aimag(checkIdentity2)>10d-4 ) then
         print *, 'FATAL ERROR: Matrix inversion failed. (A⁻¹ · A ≠ 𝟙)'
         print *, 'Nlf: ', Nlf
         print *, 'size Ainv: ', size(A), 'size A:',size(Acheck)
-        print *, 'Re(check): ', real(checkIdentity)
+        print *, 'Re(check): ', dble(checkIdentity)
         print *, 'Im(check): ', aimag(checkIdentity)
-        print *, 'Re(check2): ', real(checkIdentity2)
+        print *, 'Re(check2): ', dble(checkIdentity2)
         print *, 'Im(check2): ', aimag(checkIdentity2)
         stop
       endif
@@ -577,7 +577,7 @@ contains
       ! local field efekti samo u okomitom smjeru (z)
       do iG = 1, NG
         if (G(1,iG) == 0.0 .and. G(2,iG) == 0.0) then
-          Eref = Gcar**2 * G(3,iG)**2 / 2.0
+          Eref = Gcar**2 * G(3,iG)**2 / 2.0_dp
           if (Eref <= Ecut) then
             Nlf = Nlf + 1
             Glf(1:2,Nlf) = 0.0
@@ -593,7 +593,7 @@ contains
     else if (lf == 'xyz') then
       ! local field efekti samo u svim smjerovima (xyz)
       do  iG = 1, NG
-        Eref = Gcar**2 * sum(G(1:3,iG)**2) / 2.0
+        Eref = Gcar**2 * sum(G(1:3,iG)**2) / 2.0_dp
         if (Eref <= Ecut) then
           Nlf = Nlf+1
           Glf(1:3,Nlf) = G(1:3,iG)
@@ -631,34 +631,34 @@ contains
     
     
     integer :: iG,jG
-    real(kind=dp),  parameter :: pi    = 4.d0*atan(1.d0)
-    real(kind=dp),  parameter :: gamma = 1.0/137.0
+    real(kind=dp),  parameter :: pi    = 4.0_dp*atan(1.0_dp)
+    real(kind=dp),  parameter :: gamma = 1.0_dp/137.0_dp
     
     do iG = 1,Nlf 
-      Aii = parG(iG) * (cmplx(1.0,0.0) &
-          & - exp(cmplx(0.0,1.0)*beta*c0)) / (beta**2 - Glf(3,iG)**2)
+      Aii = parG(iG) * (dcmplx(1.0_dp,0.0_dp) &
+          & - exp(dcmplx(0.0_dp,1.0_dp)*beta*c0)) / (beta**2 - Glf(3,iG)**2)
       do jG = 1,Nlf
         Ajj = Aii*parG(jG) / ( beta**2 - Glf(3,jG)**2 )
-        Aij = 2.0 * ( beta**2 + Glf(3,iG)*Glf(3,jG) )* Ajj / c0
-        Bij = 2.0 * beta*( Glf(3,iG) + Glf(3,jG) ) * Ajj / c0
+        Aij = 2.0_dp * ( beta**2 + Glf(3,iG)*Glf(3,jG) )* Ajj / c0
+        Bij = 2.0_dp * beta*( Glf(3,iG) + Glf(3,jG) ) * Ajj / c0
         if(jG == iG) then
-          diagonal1 = 2.0*cmplx(0.0,1.0)*beta/(beta**2 - Glf(3,iG)**2)
-          diagonal2 = 2.0*cmplx(0.0,1.0)*Glf(3,iG) &
+          diagonal1 = 2.0_dp*dcmplx(0.0_dp,1.0_dp)*beta/(beta**2 - Glf(3,iG)**2)
+          diagonal2 = 2.0_dp*dcmplx(0.0_dp,1.0_dp)*Glf(3,iG) &
                     & / (beta**2 - Glf(3,iG)**2)       
         else 
-          diagonal1 = cmplx(0.0,0.0)
-          diagonal2 = cmplx(0.0,0.0) 
+          diagonal1 = dcmplx(0.0_dp,0.0_dp)
+          diagonal2 = dcmplx(0.0_dp,0.0_dp) 
         endif
         ! matricni element Dxx0 i Dyy0
-        Dxx0(iG,jG) = 2.0*pi*cmplx(0.0,1.0) * gamma**2 *(Aij + diagonal1)/beta 
-        Dyy0(iG,jG) = 2.0*pi*cmplx(0.0,1.0) * beta * (Aij + diagonal1)/(oi**2)
+        Dxx0(iG,jG) = 2.0_dp*pi*dcmplx(0.0_dp,1.0_dp) * gamma**2 *(Aij + diagonal1)/beta 
+        Dyy0(iG,jG) = 2.0_dp*pi*dcmplx(0.0_dp,1.0_dp) * beta * (Aij + diagonal1)/(oi**2)
         ! matricni elementi Dyz0 i Dzy0
-        Dyz0(iG,jG) = -2.0*pi*cmplx(0.0,1.0)*Q*(Bij + diagonal2) / (oi**2)
+        Dyz0(iG,jG) = -2.0_dp*pi*dcmplx(0.0_dp,1.0_dp)*Q*(Bij + diagonal2) / (oi**2)
         Dzy0(iG,jG) = Dyz0(iG,jG)      
         ! matricni element Dzz0
-        Dzz0(iG,jG) = 2.0*pi*cmplx(0.0,1.0)* Q**2 *(Aij + diagonal1) / (beta*oi**2)
+        Dzz0(iG,jG) = 2.0_dp*pi*dcmplx(0.0_dp,1.0_dp)* Q**2 *(Aij + diagonal1) / (beta*oi**2)
       enddo
-      Dzz0(iG,iG) = Dzz0(iG,iG)-4.0*pi/(oi**2)
+      Dzz0(iG,iG) = Dzz0(iG,iG)-4.0_dp*pi/(oi**2)
     enddo
   end subroutine genD0
 
@@ -691,8 +691,8 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
     close(iuni2)
     close(iuni3)
 
-    Piyz0(:,:,:) = cmplx(0.0,0.0)
-    Pizy0(:,:,:) = cmplx(0.0,0.0)
+    Piyz0(:,:,:) = dcmplx(0.0_dp,0.0_dp)
+    Pizy0(:,:,:) = dcmplx(0.0_dp,0.0_dp)
   end subroutine loadPi0
   
   ! subroutine loadPi0_omega(io_in, No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy0, Pizz0)
@@ -733,8 +733,8 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
   !       enddo
   !     endif
   !   enddo
-  !   Piyz0(:,:) = cmplx(0.0,0.0)
-  !   Pizy0(:,:) = cmplx(0.0,0.0)
+  !   Piyz0(:,:) = dcmplx(0.0_dp,0.0_dp)
+  !   Pizy0(:,:) = dcmplx(0.0_dp,0.0_dp)
   !   close(iuni1)
   !   close(iuni2)
   !   close(iuni3)
@@ -756,11 +756,11 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
 
     Nlf2 = 2*Nlf ! TP matrix has a 2x2 block for z and y
   
-    Pixx = cmplx(0.0,0.0) 
-    Piyy = cmplx(0.0,0.0)
-    Piyz = cmplx(0.0,0.0)
-    Pizy = cmplx(0.0,0.0)
-    Pizz = cmplx(0.0,0.0)
+    Pixx = dcmplx(0.0_dp,0.0_dp) 
+    Piyy = dcmplx(0.0_dp,0.0_dp)
+    Piyz = dcmplx(0.0_dp,0.0_dp)
+    Pizy = dcmplx(0.0_dp,0.0_dp)
+    Pizz = dcmplx(0.0_dp,0.0_dp)
     do iG = 1,Nlf
       do jG = 1,Nlf       
         do kG = 1,Nlf
@@ -799,19 +799,19 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
 
     real(kind=dp) :: dist = 6.0654 ! distance between layers [bohr]
 
-    sPixx = cmplx(0.0,0.0)
-    sPiyy = cmplx(0.0,0.0)
-    sPizz = cmplx(0.0,0.0)
-    sPiyz = cmplx(0.0,0.0)
-    sPizy = cmplx(0.0,0.0)
+    sPixx = dcmplx(0.0_dp,0.0_dp)
+    sPiyy = dcmplx(0.0_dp,0.0_dp)
+    sPizz = dcmplx(0.0_dp,0.0_dp)
+    sPiyz = dcmplx(0.0_dp,0.0_dp)
+    sPizy = dcmplx(0.0_dp,0.0_dp)
 
     do iG = 1,Nlf
       do jG = 1,Nlf 
-        sPixx = sPixx + Pixx(iG,jG) * exp( cmplx(0.0, (Glf(3,iG) - Glf(3,jG) ) * dist) )
-        sPiyy = sPiyy + Piyy(iG,jG) * exp( cmplx(0.0, (Glf(3,iG) - Glf(3,jG) ) * dist) )
-        sPizz = sPizz + Pizz(iG,jG) * exp( cmplx(0.0, (Glf(3,iG) - Glf(3,jG) ) * dist) )
-        sPiyz = sPiyz + Piyz(iG,jG) * exp( cmplx(0.0, (Glf(3,iG) - Glf(3,jG) ) * dist) )
-        sPizy = sPizy + Pizy(iG,jG) * exp( cmplx(0.0, (Glf(3,iG) - Glf(3,jG) ) * dist) )
+        sPixx = sPixx + Pixx(iG,jG) * exp( dcmplx(0.0, (Glf(3,iG) - Glf(3,jG) ) * dist) )
+        sPiyy = sPiyy + Piyy(iG,jG) * exp( dcmplx(0.0, (Glf(3,iG) - Glf(3,jG) ) * dist) )
+        sPizz = sPizz + Pizz(iG,jG) * exp( dcmplx(0.0, (Glf(3,iG) - Glf(3,jG) ) * dist) )
+        sPiyz = sPiyz + Piyz(iG,jG) * exp( dcmplx(0.0, (Glf(3,iG) - Glf(3,jG) ) * dist) )
+        sPizy = sPizy + Pizy(iG,jG) * exp( dcmplx(0.0, (Glf(3,iG) - Glf(3,jG) ) * dist) )
       enddo
     enddo 
 
@@ -837,26 +837,26 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
     ! real(kind=dp) :: dist = 6.0654 ! distance between layers [bohr]
     ! instead of +/- L/2 we could integrate from +/- dist/2
 
-    sPixx = cmplx(0.0,0.0)
-    sPiyy = cmplx(0.0,0.0)
-    sPizz = cmplx(0.0,0.0)
-    sPiyz = cmplx(0.0,0.0)
-    sPizy = cmplx(0.0,0.0)
+    sPixx = dcmplx(0.0_dp,0.0_dp)
+    sPiyy = dcmplx(0.0_dp,0.0_dp)
+    sPizz = dcmplx(0.0_dp,0.0_dp)
+    sPiyz = dcmplx(0.0_dp,0.0_dp)
+    sPizy = dcmplx(0.0_dp,0.0_dp)
 
     do iG = 1,Nlf
       do jG = 1,Nlf
         if (iG==1 .and. jG/=1) then
-          sPixx = sPixx + Pixx(iG,jG) * ( -cmplx(0.0,1.0) * ( -1 + exp(cmplx(0.0,Glf(3,jG)*c0/2)) ) ) * c0/(2*Glf(3,jG))
-          sPiyy = sPiyy + Piyy(iG,jG) * ( -cmplx(0.0,1.0) * ( -1 + exp(cmplx(0.0,Glf(3,jG)*c0/2)) ) ) * c0/(2*Glf(3,jG))
-          sPizz = sPizz + Pizz(iG,jG) * ( -cmplx(0.0,1.0) * ( -1 + exp(cmplx(0.0,Glf(3,jG)*c0/2)) ) ) * c0/(2*Glf(3,jG))
-          sPiyz = sPiyz + Piyz(iG,jG) * ( -cmplx(0.0,1.0) * ( -1 + exp(cmplx(0.0,Glf(3,jG)*c0/2)) ) ) * c0/(2*Glf(3,jG))
-          sPizy = sPizy + Pizy(iG,jG) * ( -cmplx(0.0,1.0) * ( -1 + exp(cmplx(0.0,Glf(3,jG)*c0/2)) ) ) * c0/(2*Glf(3,jG))
+          sPixx = sPixx + Pixx(iG,jG) * ( -dcmplx(0.0_dp,1.0_dp) * ( -1 + exp(dcmplx(0.0,Glf(3,jG)*c0/2)) ) ) * c0/(2*Glf(3,jG))
+          sPiyy = sPiyy + Piyy(iG,jG) * ( -dcmplx(0.0_dp,1.0_dp) * ( -1 + exp(dcmplx(0.0,Glf(3,jG)*c0/2)) ) ) * c0/(2*Glf(3,jG))
+          sPizz = sPizz + Pizz(iG,jG) * ( -dcmplx(0.0_dp,1.0_dp) * ( -1 + exp(dcmplx(0.0,Glf(3,jG)*c0/2)) ) ) * c0/(2*Glf(3,jG))
+          sPiyz = sPiyz + Piyz(iG,jG) * ( -dcmplx(0.0_dp,1.0_dp) * ( -1 + exp(dcmplx(0.0,Glf(3,jG)*c0/2)) ) ) * c0/(2*Glf(3,jG))
+          sPizy = sPizy + Pizy(iG,jG) * ( -dcmplx(0.0_dp,1.0_dp) * ( -1 + exp(dcmplx(0.0,Glf(3,jG)*c0/2)) ) ) * c0/(2*Glf(3,jG))
         else if (iG/=1 .and. jG==1) then
-          sPixx = sPixx + Pixx(iG,jG) * ( -cmplx(0.0,1.0) * ( 1 - exp(-cmplx(0.0,Glf(3,iG)*c0/2)) ) ) * c0/(2*Glf(3,iG))
-          sPiyy = sPiyy + Piyy(iG,jG) * ( -cmplx(0.0,1.0) * ( 1 - exp(-cmplx(0.0,Glf(3,iG)*c0/2)) ) ) * c0/(2*Glf(3,iG))
-          sPizz = sPizz + Pizz(iG,jG) * ( -cmplx(0.0,1.0) * ( 1 - exp(-cmplx(0.0,Glf(3,iG)*c0/2)) ) ) * c0/(2*Glf(3,iG))
-          sPiyz = sPiyz + Piyz(iG,jG) * ( -cmplx(0.0,1.0) * ( 1 - exp(-cmplx(0.0,Glf(3,iG)*c0/2)) ) ) * c0/(2*Glf(3,iG))
-          sPizy = sPizy + Pizy(iG,jG) * ( -cmplx(0.0,1.0) * ( 1 - exp(-cmplx(0.0,Glf(3,iG)*c0/2)) ) ) * c0/(2*Glf(3,iG))
+          sPixx = sPixx + Pixx(iG,jG) * ( -dcmplx(0.0_dp,1.0_dp) * ( 1 - exp(-dcmplx(0.0,Glf(3,iG)*c0/2)) ) ) * c0/(2*Glf(3,iG))
+          sPiyy = sPiyy + Piyy(iG,jG) * ( -dcmplx(0.0_dp,1.0_dp) * ( 1 - exp(-dcmplx(0.0,Glf(3,iG)*c0/2)) ) ) * c0/(2*Glf(3,iG))
+          sPizz = sPizz + Pizz(iG,jG) * ( -dcmplx(0.0_dp,1.0_dp) * ( 1 - exp(-dcmplx(0.0,Glf(3,iG)*c0/2)) ) ) * c0/(2*Glf(3,iG))
+          sPiyz = sPiyz + Piyz(iG,jG) * ( -dcmplx(0.0_dp,1.0_dp) * ( 1 - exp(-dcmplx(0.0,Glf(3,iG)*c0/2)) ) ) * c0/(2*Glf(3,iG))
+          sPizy = sPizy + Pizy(iG,jG) * ( -dcmplx(0.0_dp,1.0_dp) * ( 1 - exp(-dcmplx(0.0,Glf(3,iG)*c0/2)) ) ) * c0/(2*Glf(3,iG))
         else if (iG==1 .and. jG==1) then
           sPixx = sPixx + Pixx(iG,jG) * c0**2/4
           sPiyy = sPiyy + Piyy(iG,jG) * c0**2/4
@@ -864,16 +864,16 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
           sPiyz = sPiyz + Piyz(iG,jG) * c0**2/4
           sPizy = sPizy + Pizy(iG,jG) * c0**2/4
         else
-          sPixx = sPixx - Pixx(iG,jG) * ( -1 + exp(cmplx(0.0,Glf(3,iG)*c0/2)) ) * ( -1 + exp(cmplx(0.0,Glf(3,jG)*c0/2)) ) &
-                & / ( Glf(3,iG) * Glf(3,jG) * exp(cmplx(0.0,Glf(3,iG)*c0/2)) )
-          sPiyy = sPiyy - Piyy(iG,jG) * ( -1 + exp(cmplx(0.0,Glf(3,iG)*c0/2)) ) * ( -1 + exp(cmplx(0.0,Glf(3,jG)*c0/2)) ) &
-                & / ( Glf(3,iG) * Glf(3,jG) * exp(cmplx(0.0,Glf(3,iG)*c0/2)) )
-          sPizz = sPizz - Pizz(iG,jG) * ( -1 + exp(cmplx(0.0,Glf(3,iG)*c0/2)) ) * ( -1 + exp(cmplx(0.0,Glf(3,jG)*c0/2)) ) & 
-                & / ( Glf(3,iG) * Glf(3,jG) * exp(cmplx(0.0,Glf(3,iG)*c0/2)) )
-          sPiyz = sPiyz - Piyz(iG,jG) * ( -1 + exp(cmplx(0.0,Glf(3,iG)*c0/2)) ) * ( -1 + exp(cmplx(0.0,Glf(3,jG)*c0/2)) ) & 
-                & / ( Glf(3,iG) * Glf(3,jG) * exp(cmplx(0.0,Glf(3,iG)*c0/2)) )
-          sPizy = sPizy - Pizy(iG,jG) * ( -1 + exp(cmplx(0.0,Glf(3,iG)*c0/2)) ) * ( -1 + exp(cmplx(0.0,Glf(3,jG)*c0/2)) ) & 
-                & / ( Glf(3,iG) * Glf(3,jG) * exp(cmplx(0.0,Glf(3,iG)*c0/2)) )
+          sPixx = sPixx - Pixx(iG,jG) * ( -1 + exp(dcmplx(0.0,Glf(3,iG)*c0/2)) ) * ( -1 + exp(dcmplx(0.0,Glf(3,jG)*c0/2)) ) &
+                & / ( Glf(3,iG) * Glf(3,jG) * exp(dcmplx(0.0,Glf(3,iG)*c0/2)) )
+          sPiyy = sPiyy - Piyy(iG,jG) * ( -1 + exp(dcmplx(0.0,Glf(3,iG)*c0/2)) ) * ( -1 + exp(dcmplx(0.0,Glf(3,jG)*c0/2)) ) &
+                & / ( Glf(3,iG) * Glf(3,jG) * exp(dcmplx(0.0,Glf(3,iG)*c0/2)) )
+          sPizz = sPizz - Pizz(iG,jG) * ( -1 + exp(dcmplx(0.0,Glf(3,iG)*c0/2)) ) * ( -1 + exp(dcmplx(0.0,Glf(3,jG)*c0/2)) ) & 
+                & / ( Glf(3,iG) * Glf(3,jG) * exp(dcmplx(0.0,Glf(3,iG)*c0/2)) )
+          sPiyz = sPiyz - Piyz(iG,jG) * ( -1 + exp(dcmplx(0.0,Glf(3,iG)*c0/2)) ) * ( -1 + exp(dcmplx(0.0,Glf(3,jG)*c0/2)) ) & 
+                & / ( Glf(3,iG) * Glf(3,jG) * exp(dcmplx(0.0,Glf(3,iG)*c0/2)) )
+          sPizy = sPizy - Pizy(iG,jG) * ( -1 + exp(dcmplx(0.0,Glf(3,iG)*c0/2)) ) * ( -1 + exp(dcmplx(0.0,Glf(3,jG)*c0/2)) ) & 
+                & / ( Glf(3,iG) * Glf(3,jG) * exp(dcmplx(0.0,Glf(3,iG)*c0/2)) )
         end if
 
       enddo
@@ -900,10 +900,10 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
 
     allocate(Imat(Nlf,Nlf))
 
-    Imat = cmplx(0.0,0.0)
-    TS = cmplx(0.0,0.0)
+    Imat = dcmplx(0.0_dp,0.0_dp)
+    TS = dcmplx(0.0_dp,0.0_dp)
     do iG = 1,Nlf
-      Imat(iG,iG) = cmplx(1.0,0.0)
+      Imat(iG,iG) = dcmplx(1.0,0.0)
       do jG = 1,Nlf    
         ! do kG = 1,Nlf   
         TS(iG,jG) = sum( Pixx(iG,:)*Dxx0(:,jG) )
@@ -933,10 +933,10 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
 
     allocate(Imat(Nlf2,Nlf2))
 
-    Imat(1:Nlf2,1:Nlf2) = cmplx(0.0,0.0)
-    TP(1:Nlf2,1:Nlf2) = cmplx(0.0,0.0) 
+    Imat(1:Nlf2,1:Nlf2) = dcmplx(0.0_dp,0.0_dp)
+    TP(1:Nlf2,1:Nlf2) = dcmplx(0.0_dp,0.0_dp) 
     do iG = 1,Nlf2
-      Imat(iG,iG) = cmplx(1.0,0.0)
+      Imat(iG,iG) = dcmplx(1.0,0.0)
     enddo
     
 
@@ -978,9 +978,9 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
     real(kind=dp),    intent(in) :: Glf(:,:)
     complex(kind=dp), intent(in), dimension(:,:) :: Dxx, Dyy, Dzz, Dyz, Dzy
 
-    real(kind=dp),  parameter :: gamma   = 1.0/137.0
-    real(kind=dp),  parameter :: pi      = 4.d0*atan(1.d0)
-    real(kind=dp),  parameter :: Hartree = 2.0d0*13.6056923d0
+    real(kind=dp),  parameter :: gamma   = 1.0_dp/137.0_dp
+    real(kind=dp),  parameter :: pi      = 4.0_dp*atan(1.0_dp)
+    real(kind=dp),  parameter :: Hartree = 2.0_dp*13.6056923_dp
 
     integer          :: iG, jG
     real(kind=dp)    :: Ff1, Ff2, Gf1, Gf2
@@ -991,27 +991,27 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
     complex(kind=dp) :: Tran_s, Tran_p,  Ref_s, Ref_p, Abso_s, Abso_p
     complex(kind=dp) :: Dxx0, Dyy0
   
-    Dxx0 = 2*pi * gamma**2 * cmplx(0.0,1.0) / beta 
-    Dyy0 = 2*pi * gamma * cmplx(0.0,1.0) / oi 
-    Dxx_r = cmplx(0.0,0.0)
-    Dyy_r = cmplx(0.0,0.0)
-    Dzz_r = cmplx(0.0,0.0)
-    Dyz_r = cmplx(0.0,0.0)
-    Dxx_t = cmplx(0.0,0.0)
-    Dyy_t = cmplx(0.0,0.0)
-    Dzz_t = cmplx(0.0,0.0)
-    Dyz_t = cmplx(0.0,0.0)
-    Dxx_a = cmplx(0.0,0.0)
-    Dyy_a = cmplx(0.0,0.0)
-    Dzz_a = cmplx(0.0,0.0)
-    Dyz_a = cmplx(0.0,0.0)
+    Dxx0 = 2*pi * gamma**2 * dcmplx(0.0_dp,1.0_dp) / beta 
+    Dyy0 = 2*pi * gamma * dcmplx(0.0_dp,1.0_dp) / oi 
+    Dxx_r = dcmplx(0.0_dp,0.0_dp)
+    Dyy_r = dcmplx(0.0_dp,0.0_dp)
+    Dzz_r = dcmplx(0.0_dp,0.0_dp)
+    Dyz_r = dcmplx(0.0_dp,0.0_dp)
+    Dxx_t = dcmplx(0.0_dp,0.0_dp)
+    Dyy_t = dcmplx(0.0_dp,0.0_dp)
+    Dzz_t = dcmplx(0.0_dp,0.0_dp)
+    Dyz_t = dcmplx(0.0_dp,0.0_dp)
+    Dxx_a = dcmplx(0.0_dp,0.0_dp)
+    Dyy_a = dcmplx(0.0_dp,0.0_dp)
+    Dzz_a = dcmplx(0.0_dp,0.0_dp)
+    Dyz_a = dcmplx(0.0_dp,0.0_dp)
 
     do iG = 1,Nlf 
-      Ff1 = (2.0*parG(iG)/sqrt(c0))*sin(beta*c0/2.0)/(beta+Glf(3,iG)) 
-      Gf1 = (2.0*parG(iG)/sqrt(c0))*sin(beta*c0/2.0)/(beta-Glf(3,iG)) 
+      Ff1 = (2.0_dp*parG(iG)/sqrt(c0))*sin(beta*c0/2.0_dp)/(beta+Glf(3,iG)) 
+      Gf1 = (2.0_dp*parG(iG)/sqrt(c0))*sin(beta*c0/2.0_dp)/(beta-Glf(3,iG)) 
       do jG = 1,Nlf
-        Ff2 = (2.0*parG(jG)/sqrt(c0))*sin(beta*c0/2.0)/(beta+Glf(3,jG))
-        Gf2 = (2.0*parG(jG)/sqrt(c0))*sin(beta*c0/2.0)/(beta-Glf(3,jG))
+        Ff2 = (2.0_dp*parG(jG)/sqrt(c0))*sin(beta*c0/2.0_dp)/(beta+Glf(3,jG))
+        Gf2 = (2.0_dp*parG(jG)/sqrt(c0))*sin(beta*c0/2.0_dp)/(beta-Glf(3,jG))
  
         ! reflection
         Dxx_r = Dxx_r + Ff1 * Dxx(iG,jG) * Gf2
@@ -1040,23 +1040,23 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
     Ref_p = Dyy0 * ( Dyy_r * cos(theta) &
           & - Dzz_r * sin(theta)**2 / cos(theta) )
 
-    Tran_p = Dyy0 * ( Dyy_t * cos(theta) - 2.0 * Dyz_t * sin(theta) &
+    Tran_p = Dyy0 * ( Dyy_t * cos(theta) - 2.0_dp * Dyz_t * sin(theta) &
            & + Dzz_t * sin(theta)**2 / cos(theta) )
  
     Abso_p = cos(theta) * Dyy_a * cos(theta) &
            & + sin(theta) * Dzz_a * sin(theta) &
-           & - 2.0*cos(theta) * Dyz_a * sin(theta)
+           & - 2.0_dp*cos(theta) * Dyz_a * sin(theta)
  
  
     ! Absorbption
-    A_s = (4.0*pi*gamma/o) * aimag(Abso_s)
-    A_p = (4.0*pi*gamma/o) * aimag(Abso_p)
+    A_s = (4.0_dp*pi*gamma/o) * aimag(Abso_s)
+    A_p = (4.0_dp*pi*gamma/o) * aimag(Abso_p)
     ! Reflection 
     R_s = cos(theta) * real( Ref_s*conjg(Ref_s) ) 
     R_p = real( Ref_p * conjg(Ref_p) )  
     !  Tran_smission
-    Tr_s = 1.0 - cos(theta) * ( real(Tran_s*conjg(Tran_s) ) - 2.0 * real(Tran_s) ) 
-    Tr_p = 1.0 - real( Tran_p*conjg(Tran_p) ) - cos(theta) * 2.0 * real(Tran_p) 
+    Tr_s = 1.0_dp - cos(theta) * ( real(Tran_s*conjg(Tran_s) ) - 2.0_dp * real(Tran_s) ) 
+    Tr_p = 1.0_dp - real( Tran_p*conjg(Tran_p) ) - cos(theta) * 2.0_dp * real(Tran_p) 
 
     ! write A,T,R spectra to file for each angle itheta
     call writeSpectra(iq, itheta, Ntheta, Nq, o, A_p, R_p)
@@ -1069,7 +1069,7 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
     integer,          intent(in) :: iq, itheta, Nq, Ntheta
     real(kind=dp),    intent(in) :: o, A_p, R_p
 
-    real(kind=dp),  parameter :: Hartree = 2.0d0*13.6056923d0
+    real(kind=dp),  parameter :: Hartree = 2.0_dp*13.6056923_dp
 
     integer :: iuni1, iuni2, iuni3
     logical :: exist_a, exist_t, exist_r
@@ -1125,7 +1125,7 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
     character(len=*), intent(in) :: filename
 
 
-    real(kind=dp),  parameter :: Hartree = 2.0d0*13.6056923d0
+    real(kind=dp),  parameter :: Hartree = 2.0_dp*13.6056923_dp
 
     integer :: iuni
     logical :: exist
@@ -1150,7 +1150,7 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
     character(len=*), intent(in)  :: filename
 
 
-    real(kind=dp),  parameter :: Hartree = 2.0d0*13.6056923d0
+    real(kind=dp),  parameter :: Hartree = 2.0_dp*13.6056923_dp
 
     integer :: iuni
     logical :: exist
@@ -1158,13 +1158,13 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
     inquire(file=trim(adjustl(filename)), exist=exist)
     if (exist) then
       open(newunit=iuni, file=trim(adjustl(filename)), status="old", position="append", action="write")
-      write(iuni,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pi/o), &
-                             & aimag(-cmplx(0.0,1.0)*4.0*c0*Pi/o)
+      write(iuni,*) o*Hartree, real(-dcmplx(0.0_dp,1.0_dp)*4.0_dp*c0*Pi/o), &
+                             & aimag(-dcmplx(0.0_dp,1.0_dp)*4.0_dp*c0*Pi/o)
       close(iuni)
     else
       open(newunit=iuni, file=trim(adjustl(filename)), status="new", action="write")
-      write(iuni,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pi/o), &
-                             & aimag(-cmplx(0.0,1.0)*4.0*c0*Pi/o)
+      write(iuni,*) o*Hartree, real(-dcmplx(0.0_dp,1.0_dp)*4.0_dp*c0*Pi/o), &
+                             & aimag(-dcmplx(0.0_dp,1.0_dp)*4.0_dp*c0*Pi/o)
       close(iuni)
     end if
       
@@ -1181,7 +1181,7 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
     complex(kind=dp), intent(in), dimension(:,:) ::  Pixx, Piyy, Pizz, TS, TP
 
     
-    real(kind=dp),  parameter :: Hartree = 2.0d0*13.6056923D0
+    real(kind=dp),  parameter :: Hartree = 2.0_dp*13.6056923_dp
 
 
     integer :: Nlf2
@@ -1196,28 +1196,28 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
 
     ! write sigma_{\mu\nu}^\text{macro} [ pi*e^2/2h ]
     open(newunit=iuni1, file='sigma_macro_xx')
-    write(iuni1,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Sigma_xx/o)
+    write(iuni1,*) o*Hartree, real(-dcmplx(0.0_dp,1.0_dp)*4.0_dp*c0*Sigma_xx/o)
     close(iuni1)
 
     open(newunit=iuni2, file='sigma_macro_yy')
-    write(iuni2,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Sigma_yy/o)
+    write(iuni2,*) o*Hartree, real(-dcmplx(0.0_dp,1.0_dp)*4.0_dp*c0*Sigma_yy/o)
     close(iuni2)
 
     open(newunit=iuni3, file='sigma_macro_zz')
-    write(iuni3,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Sigma_zz/o)
+    write(iuni3,*) o*Hartree, real(-dcmplx(0.0_dp,1.0_dp)*4.0_dp*c0*Sigma_zz/o)
     close(iuni3)
 
     ! write Pi_{\mu\nu}(1,1)
     open(newunit=iuni4, file='Pi_11_xx')
-    write(iuni4,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pixx(1,1)/o)
+    write(iuni4,*) o*Hartree, real(-dcmplx(0.0_dp,1.0_dp)*4.0_dp*c0*Pixx(1,1)/o)
     close(iuni4)
 
     open(newunit=iuni5, file='Pi_11_yy')
-    write(iuni5,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Piyy(1,1)/o)
+    write(iuni5,*) o*Hartree, real(-dcmplx(0.0_dp,1.0_dp)*4.0_dp*c0*Piyy(1,1)/o)
     close(iuni5)
 
     open(newunit=iuni6, file='Pi_11_zz')
-    write(iuni6,*) o*Hartree, real(-cmplx(0.0,1.0)*4.0*c0*Pizz(1,1)/o)
+    write(iuni6,*) o*Hartree, real(-dcmplx(0.0_dp,1.0_dp)*4.0_dp*c0*Pizz(1,1)/o)
     close(iuni6)
 
       
