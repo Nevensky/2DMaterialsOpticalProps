@@ -2,6 +2,8 @@ module brillouin_zone
   use iso_fortran_env, only: dp => real64
   use io_xml, only: loadXML_qe
   use matrix_inverse, only: invert_real
+  use notifications, only: error
+  use utility, only: int2str
   implicit none
 
   public :: loadKiandE, scissorE, genFBZ, checkFBZintegration, checkFBZintegration_new, &
@@ -29,7 +31,7 @@ contains
 
     open(newunit=iuni,FILE=path,status='old',iostat=ios) 
     if (ios /=0) then
-      error stop 'ERROR: Cannot open BAND file: '//path
+      call error('Cannot open BAND file: '//path)
     end if
     do  ik = 1,NkI
       if (ik == 1) then
@@ -212,7 +214,7 @@ contains
       if (writeOutput) then
         open(newunit=iuni,iostat=ios,file='fbz_check.dat',action='write',status='new')
         if (ios/=0) then
-          error stop 'ERROR: Could not create new fbz_check.dat file in genFBZ()'
+          call error('Could not create new fbz_check.dat file in genFBZ()')
         end if
         do  i = 1,Ntot_
           write(iuni,*) ktot(1,i), ktot(2,i)
@@ -277,7 +279,7 @@ contains
   !     if (writeOutput) then
   !       open(newunit=iuni,iostat=ios,file='fbz_check.dat',action='write',status='new')
   !       if (ios/=0) then
-  !         error stop 'ERROR: Could not open fbz_check.dat file in genFBZ()'
+  !         call error('Could not open fbz_check.dat file in genFBZ()')
   !       end if
   !       do  i = 1,Ntot
   !         write(iuni,*) ktot(1,i), ktot(2,i)  
@@ -327,15 +329,14 @@ contains
                     found = .true.
                     K1 = j
                     ! cycle band_loop ! WRONG, misses counting Ni for first band
-                    goto 5022
+                    goto 5022  ! why not exit sym_loop ?
                   end if
                 end do k_loop_IBZ
               end do symm_loop
             end if
             5022 continue
             if (.not. found) then
-              print*,'Can not find wave vector K=',ik, 'in IBZ'
-              error stop 
+              call error('Can not find wave vector K='//int2str(ik)//'in IBZ')
             end if
 
         end if
@@ -411,13 +412,13 @@ contains
             if ( all ( abs(K(1:3)-kI(1:3,jk)) <= eps_ ) ) then
               found = .true.
               K1 = jk ! IBZ index of a FBZ k-point
+              exit symm_loop ! debug neven: is this ok?
             end if
           end do k_loop_IBZ
         end do symm_loop
       end if
       if (.not. found) then
-        print*,'Can not find wave vector iK=',ik, 'in IBZ'
-        stop
+        call error('Can not find wave vector iK='//int2str(ik)//'in IBZ')
       end if
       band_loop: do  n = 1, Nband
         ! calculate occupation of each band
@@ -444,7 +445,7 @@ contains
     print *,'DEBUG: Nel: ',dble(Nel),'NelQE: ',NelQE
     write(*,'(A17,F6.2,A12)'), 'status: NelQE/Nel', 100.0*abs(NelQE-Nel)/NelQE,' % missmatch'
     if (abs(NelQE-dble(Nel)) > eps_occupation) then
-      error stop 'ERROR: Incorrect No. of electrons in FBZ.'
+      call error('Incorrect No. of electrons in FBZ.')
     end if
 
   end subroutine checkFBZintegration_new
@@ -500,8 +501,7 @@ contains
       end do symmetry_loop
     end if
     if (.not. found) then
-      print *,'Can not find wave vector K=',ik, 'in IBZ'
-      stop
+      call error('Can not find wave vector K='//int2str(ik)//'in IBZ')
     end if
     ! print *, 'iR1:',iR1,'iK1:', iK1
   end subroutine findKinIBZ
@@ -564,11 +564,10 @@ contains
   
     if (.not. found_fbz) then
       ! print*,'Can not find wave vector K+Q=',ik,'+',iq, 'in FBZ.'
-      error stop 'ERROR: Can not find wave vector K+Q in FBZ.'
+      call error('Can not find wave vector K+Q in FBZ.')
     else if (.not. found_ibz) then
       ! print*,'Can not find wave vector K+Q=',ik,'+',iq, 'in IBZ.'
-      print*,'ERROR: Can not find wave vector K+Q=',iK2, 'in IBZ.'
-      error stop
+      call error('Can not find wave vector K+Q='//int2str(iK2)//'in IBZ.')
     end if
   
   end subroutine findKQinIBZ
@@ -630,7 +629,7 @@ contains
     if (present(writeOutput)) writeOutput_ = writeOutput
 
     if (sympts/='GMKG') then
-      stop 'ERROR: Requested high-symmetry path not implemented.'
+      call error('Requested high-symmetry path not implemented.')
     end if
 
     ! G -> M
