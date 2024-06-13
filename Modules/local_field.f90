@@ -1,5 +1,6 @@
 module local_field
   use iso_fortran_env, only: dp => real64
+  use notifications, only: warn, error
   implicit none
 
   public :: genGlf
@@ -27,7 +28,7 @@ contains
 
     NG = size(G,2)
   
-    print *,'WARNING: Glf(3,NG) will be reallocated as Glf(3,Nlf) at the end of genGlf.'
+    call warn('Glf(3,NG) will be reallocated as Glf(3,Nlf) at the end of genGlf.')
     if (.not. allocated(Glf)) allocate(Glf(3,NG))
     if (present(parG)) then
       if (.not. allocated(parG)) allocate(parG(NG))
@@ -76,11 +77,11 @@ contains
         end if
       end do
     else
-      error stop 'ERROR: Unsupported local-field vector orientation in genGlf()'
+      call error('Unsupported local-field vector orientation in genGlf()')
     end if
     if (present(Nlfd)) then
       if (Nlf > Nlfd) then
-        error stop 'Nlf is bigger than Nlfd'
+        call error('Nlf is bigger than Nlfd.')
       else if(Nlf<Nlfd) then
         Nlfd = Nlf
       end if

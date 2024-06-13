@@ -1,6 +1,7 @@
 !! This modules reads the output of a completed Wannier90 calculation
 module io_wannier90
   use iso_fortran_env, only : iostat_end, dp => real64
+  use notifications, only: warn
   implicit none
   public :: loadE, loadU
   private 
@@ -34,7 +35,7 @@ contains
       read(iuni,('(3F15.10)')) k(1:3,ik)
       print *,'ik:',ik
       print *, k(:,ik)
-      print *, 'WARNING: loadU() possibly we have U(Nk x Nband x Nwan) column major order. DOUBLE CHECK!'
+      call warn('loadU() possibly we have U(Nk x Nband x Nwan) column major order. DOUBLE CHECK!')
       do iwan=1,Nwan
         do n=1,Nband
           read(iuni,'(2F15.10)') ReU, ImU

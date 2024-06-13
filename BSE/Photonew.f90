@@ -4,6 +4,7 @@ program photon
   !  Z - dir Imat cell parameter c0=  32.33282 a.u.  
   use OMP_lib
   use ISO_Fortran_env
+  use utility, only: int2str
   !use mkl_service
 
   implicit none
@@ -1221,16 +1222,6 @@ subroutine loadPi0(No, Nlf, file_xx, file_yy, file_zz, Pixx0, Piyy0, Piyz0, Pizy
 
       
   end subroutine writeSigma_macroscopic
-
-
-  function int2str(k) result(str)
-    ! Convert an integer to string.
-    integer,intent(in) :: k
-    character(len=20)  :: str
-
-    write (str, *) k
-    str = adjustl(trim(str))
-  end function int2str
 
 end program photon
 

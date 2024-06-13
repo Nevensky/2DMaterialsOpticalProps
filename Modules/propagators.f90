@@ -1,6 +1,7 @@
 module propagators
   use iso_fortran_env, only: dp => real64, sp => real32
   use utility, only: int2str 
+  use notifications, only: error
   implicit none
 
   public :: genGammaPropagator
@@ -126,7 +127,7 @@ contains
     
     open(newunit = iuni, file = dato, iostat=ios)
     if (ios /=0) then
-      stop 'ERROR: Failed to write Kramers Kronging output file. (propagators.f90)'
+      call error('Failed to write Kramers Kronging output file. (propagators.f90)')
     end if
     write(iuni,'(a25,f8.4,a5)') 'Q=', q, 'a.u.'
     write(iuni,*) 'int(DKK - D)^2 =  ', KKS

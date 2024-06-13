@@ -4,6 +4,7 @@ module matrix_inverse
 
    use lapack95, only: getrf, getri
    use iso_fortran_env, only: dp => real64, idp => int16
+   use notifications, only: error
 
    implicit none
 
@@ -37,7 +38,7 @@ contains
     call zgetrf(n, n, A, n, ipiv, info)
 
     if (info /= 0) then
-       error stop 'ERROR: Matrix is numerically singular! (zgetrf)'
+       call error('Matrix is numerically singular! (zgetrf)')
     end if
 
 
@@ -54,8 +55,8 @@ contains
     !if (sizeof(lwork)>lwork) lwork = memmax
     allocate(work(lwork),stat=ios)
     if (ios /= 0) then
-      print *,'ERROR: Failed allocation of work array. (zgetri) ios=',ios
-      stop
+      print *, 'ios=',ios
+      call error('Failed allocation of work array. (zgetri)')
     end if
     ! print *, " sizeof(A) = ",sizeof(A)/1024.0**3,"GB"
     ! print *, " sizeof(work) = ",sizeof(work)/1024.0**3,"GB"
@@ -64,7 +65,7 @@ contains
     call zgetri(n, A, n, ipiv, work, lwork, info)
 
     if (info /= 0) then
-       error stop 'ERROR: Matrix inversion failed! (zgetri)'
+       call error('Matrix inversion failed! (zgetri)')
     end if
 
     deallocate(work)
@@ -92,7 +93,7 @@ contains
 
     if (info /= 0) then
        print *, 'info=',info
-       error stop 'Matrix is numerically singular! (dgetrf)'
+       call error('Matrix is numerically singular! (dgetrf)')
     end if
 
     ! DGETRI computes the inverse of a matrix using 
@@ -103,7 +104,7 @@ contains
     call dgetri(n, A, n, ipiv, work, -1, info2) ! query optimal lwork value
     if (info2 /= 0) then
       print *, 'info2=', info2
-      error stop 'ERROR: Workspace query failed! (dgetri)'
+      call error('Workspace query failed! (dgetri)')
     end if
 
     lwork = work(1)
@@ -112,7 +113,7 @@ contains
     allocate(work(lwork),stat=ios)
     if (ios /= 0) then
             print *,'ios=',ios
-            error stop 'ERROR: Failed allocation of work array. (dgetri)'
+            call error('Failed allocation of work array. (dgetri)')
     end if
 
     ! print *, " sizeof(A) = ",sizeof(A)/1024.0**3,"GB"
@@ -123,7 +124,7 @@ contains
 
     if (info3 /= 0) then
        print *, 'info3=', info3
-       error stop 'ERROR: Matrix inversion failed! (dgetri)'
+       call error('Matrix inversion failed! (dgetri)')
     end if
 
     deallocate(work)

@@ -1,5 +1,6 @@
 module qe_gksort
 use iso_fortran_env, only: dp=>real64
+use notifications, only : error
 implicit none
 
 public  :: init_igk
@@ -73,7 +74,7 @@ subroutine gk_sort( k, npwx, ngm, g, ecut, ngk, igk, gk )
       ! ... here if |k+G|^2 <= Ecut
       if ( q <= ecut ) THEN
          ngk = ngk + 1
-         if ( ngk > npwx ) stop 'ERROR: Array gk out-of-bounds (gk_sort).'
+         if ( ngk > npwx ) call error('Array gk out-of-bounds (gk_sort).')
 
          gk(ngk) = q
          igk(ngk) = ng ! set the initial value of index array
@@ -83,7 +84,7 @@ subroutine gk_sort( k, npwx, ngm, g, ecut, ngk, igk, gk )
       end if
    end do
 
-   if ( ng > ngm ) stop 'ERROR: Unexpected exit from do-loop (gk_sort).'
+   if ( ng > ngm ) call error('Unexpected exit from do-loop (gk_sort).')
    ! ... order vector gk keeping initial position in index
    call hpsort_eps( ngk, gk, igk, eps8 )
    ! ... now order true |k+G|

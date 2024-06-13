@@ -1,5 +1,7 @@
 module io_qe
   use iso_fortran_env, only: dp => real64
+  use notifications, only: warn, error, info
+  use utility, only: int2str
   implicit none
 
   public :: loadG, loadCs, loadCs_full
@@ -22,11 +24,11 @@ contains
     character(len=218)   :: fname            
 
     fname = trim(savedir)//'/charge-density.dat'
-    print *,'status: Reading Gvecs from file: ',adjustl(trim(fname))
+    call info('Reading Gvecs from file: '//adjustl(trim(fname)))
     
     open(newunit=iuni,file=fname,form ='unformatted',action='read',status='old',iostat=ios0)
     if (ios0 /= 0) then
-      error stop "ERROR: Can\'t open G-vector file."
+      call error("Can\'t open G-vector file.")
     end if
 
     read(iuni, iostat=ios1) gamma_only, NG, Nspin
@@ -39,13 +41,13 @@ contains
     close(iuni)
 
     if (ios1 /= 0) then
-      error stop 'ERROR: Failed to read NG and Nspin from G-vector file.'
+      call error('Failed to read NG and Nspin from G-vector file.')
     else if (ios2 /=0 ) then
-      error stop 'ERROR: Failed to read Miller indices from G-vector file.'
+      call error('Failed to read Miller indices from G-vector file.')
     end if
 
     if (Gi(1,1) /= 0  .or.  Gi(2,1) /= 0  .or.  Gi(3,1) /= 0) then
-      print *, 'WARNING: G vectors input is wrong. G(1:3,1) is not (0,0,0)!'
+      call warn('G vectors input is wrong. G(1:3,1) is not (0,0,0)!')
     end if
 
     ! transformation to cart.coord (now all G components are in 2pi/a0 units)
@@ -105,8 +107,7 @@ contains
     read(iuni) ! dummy_int
     ! allocate (evc(npol*igwx))
     if ( ibnd > nbnd) then 
-       print *, 'ERROR: ("looking for band nr. ",I7," but there are only ",I7," bands in the file")',ibnd, nbnd
-       error stop
+      call error("Looking for band nr. "//int2str(ibnd)//" but there are only "//int2str(nbnd)//"bands in the file.")
     end if 
     do i = 1, nbnd 
        if ( i == ibnd ) then 
@@ -202,8 +203,7 @@ contains
     read(iuni) ! dummy_int
     ! allocate (evc(npol*igwx))
     if ( ibnd > nbnd) then 
-       print *, 'ERROR: ("looking for band nr. ",I7," but there are only ",I7," bands in the file")',ibnd, nbnd
-       error stop
+      call error("Looking for band nr. "//int2str(ibnd)//" but there are only "//int2str(nbnd)//"bands in the file.")
     end if 
     do i = 1, nbnd 
        if ( i == ibnd .and. ispin == jspin) then 

@@ -4,8 +4,8 @@ FC=ifort
 #FFLAGS=-Ofast
 OMP=-qopenmp
 FFLAGS=-qmkl -O2 -fpp -g -traceback -check bounds ${OMP} #${DEBUG}
-SRC = constants.f90 statistics.f90 utility.f90 matrix_inverse.f90 io_qe.f90 io_xml.f90 io_wannier90.f90  local_field.f90 PointR_mkl.f90 brillouin_zone.f90 qe_gksort.f90 propagators.f90 vertices.f90 Ladder.f90
-OBJECTS = constants statistics utility matrix_inverse io_qe io_xml io_wannier90 local_field PointR brillouin_zone qe_gksort propagators vertices Ladder
+SRC = notifications.f90 constants.f90 statistics.f90 utility.f90 matrix_inverse.f90 io_qe.f90 io_xml.f90 io_wannier90.f90  local_field.f90 PointR_mkl.f90 brillouin_zone.f90 qe_gksort.f90 propagators.f90 vertices.f90 Ladder.f90 response_function_KK.f90
+OBJECTS = notifications constants statistics utility matrix_inverse io_qe io_xml io_wannier90 local_field PointR brillouin_zone qe_gksort propagators vertices Ladder response_function_KK
 
 
 .PHONY: clean
@@ -13,6 +13,9 @@ OBJECTS = constants statistics utility matrix_inverse io_qe io_xml io_wannier90 
 all: Modules
 
 Modules: $(OBJECTS)
+
+notifications : notifications.f90
+	${FC} ${FFLAGS} -c notifications.f90
 
 constants : constants.f90
 	${FC} ${FFLAGS} -c constants.f90
@@ -55,6 +58,9 @@ vertices : vertices.f90
 
 Ladder : Ladder.f90
 	${FC} ${FFLAGS} -c Ladder.f90
+
+response_function_KK : response_function_KK.f90
+	${FC} ${FFLAGS} -c response_function_KK.f90
 
 clean:
 	rm  *.o *__genmod.f90 *__genmod.mod *.mod
