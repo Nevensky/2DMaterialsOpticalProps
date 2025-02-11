@@ -2,6 +2,7 @@ module brillouin_zone
   use iso_fortran_env, only: dp => real64
   use notifications, only: error
   use utility, only: int2str
+  use constants, only: EPS_DEFAULT
   implicit none
 
   public :: loadKiandE, scissorE, genFBZ, checkFBZintegration, checkFBZintegration_new, &
@@ -139,7 +140,7 @@ contains
     ! print *, 'shape(R)=', shape(R)
   end subroutine reshapeR
 
-  subroutine genFBZ(kI, R, ktot, Ntot, eps, writeOutput)
+  subroutine genFBZ(kI, R, ktot, Ntot, eps_, writeOutput)
     !! Generates all unique wavectors in the 1st BZ by applying 
     !! point group transformations on the reducible BZ
     ! integer,                    intent(in)  :: Nsym
@@ -147,7 +148,7 @@ contains
     real(kind=dp),              intent(in)  :: R(:,:,:)     !! point group transformation matrices (3 x 3 x Nrot)
     real(kind=dp), allocatable, intent(out) :: ktot(:,:)    !! unique k-points in the FBZ
     integer,       optional,    intent(out) :: Ntot         !! No. of unique k-point in the FBZ
-    real(kind=dp), optional,    intent(in)  :: eps          !! threshold to distinguish whether two k-points are the same
+    real(kind=dp), optional,    intent(in)  :: eps_         !! threshold to distinguish whether two k-points are the same
     logical,       optional,    intent(in)  :: writeOutput  !! write FBZ to fbz_chek.dat file (yes/no)
 
     logical       :: unique    !! .true. if k-point is unique
@@ -161,15 +162,14 @@ contains
     integer :: Ntot_ !! No. of unique k-points in the FBZ
     real(kind=dp), allocatable :: k(:,:) !! all non-unique k-points within the 1st BZ (3xNk)
     real(kind=dp), allocatable :: tmp(:,:) !! holds ktot temporarily (3xNtot)
-    real(kind=dp) :: eps_
+    real(kind=dp) :: eps = EPS_DEFAULT ! default thershold
 
     NkI = size(kI,2) 
     Nsym = size(R,3) ! careful, this is not true if R is not reshaped from 3x3xNrot to 3x3xNsym
     Nk = 48*NkI
     Ntot_ = 0
 
-    eps_ = 1.0d-4 ! default thershold
-    if (present(eps)) eps_ = eps
+    if (present(eps_)) eps = eps_
 
     allocate(k(3,Nk))
     if (.not. allocated(ktot)) allocate(ktot(3,Nk))
@@ -189,7 +189,7 @@ contains
         if (jk > 1) then
           do  lk = 1, jk-1
             ! Check if the given k-point is unique (i.e. skips if it was already added)
-            if ( all ( abs(k(1:3,jk)-k(1:3,lk)) <= eps_ ) ) then 
+            if ( all ( abs(k(1:3,jk)-k(1:3,lk)) <= eps ) ) then 
               unique = .false.
             end if
           end do
@@ -363,19 +363,19 @@ contains
 
   end subroutine checkFBZintegration
 
-  subroutine checkFBZintegration_new(NelQE, Nel, kI, ktot, RI, E, Efermi, T, eps, spinorbit)
+  subroutine checkFBZintegration_new(NelQE, Nel, kI, ktot, RI, E, Efermi, T, eps_, spinorbit)
     !! Checks if the No. of electrons in the FBZ (Nel) equals 
     !! the number of electrons in the unit cell as calculated by Quantum Espresso (NelQE)   
     use statistics, only: FermiDirac
-    real(kind=dp), intent(in)  :: NelQE        !! No. of electrons from QE calculation
-    real(kind=dp), intent(in)  :: Efermi       !! Fermi energy
-    real(kind=dp), intent(in)  :: kI(:,:)      !! k-points in the IBZ
-    real(kind=dp), intent(in)  :: ktot(:,:)    !! all unique k-points in the FBZ
-    real(kind=dp), intent(in)  :: RI(:,:,:)    !! inverted rotational symmetry matrices (3 x 3 x Nrot)
-    real(kind=dp), intent(in)  :: E(:,:)       !! eigenenergies at each k-point (Nband x NkI)
-    real(kind=dp), intent(out) :: Nel          !! No. of electrons
-    real(kind=dp), optional, intent(in) :: T   !! electron temperature
-    real(kind=dp), optional, intent(in) :: eps !! thershold for two k-points being the same
+    real(kind=dp), intent(in)  :: NelQE         !! No. of electrons from QE calculation
+    real(kind=dp), intent(in)  :: Efermi        !! Fermi energy
+    real(kind=dp), intent(in)  :: kI(:,:)       !! k-points in the IBZ
+    real(kind=dp), intent(in)  :: ktot(:,:)     !! all unique k-points in the FBZ
+    real(kind=dp), intent(in)  :: RI(:,:,:)     !! inverted rotational symmetry matrices (3 x 3 x Nrot)
+    real(kind=dp), intent(in)  :: E(:,:)        !! eigenenergies at each k-point (Nband x NkI)
+    real(kind=dp), intent(out) :: Nel           !! No. of electrons
+    real(kind=dp), optional, intent(in) :: T    !! electron temperature
+    real(kind=dp), optional, intent(in) :: eps_ !! thershold for two k-points being the same
     logical,       optional, intent(in) :: spinorbit !! does the Quantum Espresso calculation include LS coupling?
 
     logical       :: found
@@ -385,16 +385,15 @@ contains
     real(kind=dp) :: Ni ! Fermi-Dirac occupation
     ! real(kind=dp) :: K11, K22, K33
     real(kind=dp) :: K(3) ! => k_IBZ = R_inv x k_FBZ = R_inv x ktot
-    real(kind=dp) :: eps_
-    real(kind=dp) :: eps_occupation = 0.05
+    real(kind=dp) :: eps = EPS_DEFAULT ! default thershold
+    real(kind=dp) :: eps_occupation = 0.05_dp
 
     NkI = size(kI,2)
     Nsym = size(RI,3) ! careful, this only works if R has been reshaped from 3x3xNrot to 3x3xNsym
     Nband = size(E,1)
     Ntot = size(ktot,2)
 
-    eps_ = 1.0d-4 ! default thershold
-    if (present(eps)) eps_ = eps
+    if (present(eps_)) eps = eps_
 
     Nel = 0.0_dp
     k_loop_FBZ : do  ik = 1,Ntot
@@ -408,7 +407,7 @@ contains
             K(l) = sum ( RI(1:3,l,i)*ktot(1:3,ik) )
           end do
           k_loop_IBZ: do  jk = 1, NkI
-            if ( all ( abs(K(1:3)-kI(1:3,jk)) <= eps_ ) ) then
+            if ( all ( abs(K(1:3)-kI(1:3,jk)) <= eps ) ) then
               found = .true.
               K1 = jk ! IBZ index of a FBZ k-point
               exit symm_loop ! debug neven: is this ok?
@@ -442,29 +441,29 @@ contains
     end if
 
     print *,'DEBUG: Nel: ',dble(Nel),'NelQE: ',NelQE
-    write(*,'(A17,F6.2,A12)'), 'status: NelQE/Nel', 100.0*abs(NelQE-Nel)/NelQE,' % missmatch'
+    write(*,'(A17,F6.2,A12)'), 'status: NelQE/Nel', 100.0_dp*abs(NelQE-Nel)/NelQE,' % missmatch'
     if (abs(NelQE-dble(Nel)) > eps_occupation) then
       call error('Incorrect No. of electrons in FBZ.')
     end if
 
   end subroutine checkFBZintegration_new
 
-  subroutine findKinIBZ(ik, kx, ky, kz, kI, RI, iR1, iK1, eps)
+  subroutine findKinIBZ(ik, kx, ky, kz, kI, RI, iR1, iK1, eps_)
     !! Finds k-point (kx,ky,kz) in the ireducible Brillouin zone (IBZ)
     ! integer,       intent(in)  :: Nsym          !! No. of symmetry operations for the given crystal
-    integer,       intent(in)  :: ik            !! index of k-point in IBZ
-    real(kind=dp), intent(in)  :: kx, ky, kz    !! k-point in IBZ
-    real(kind=dp), intent(in)  :: kI(:,:)       !! k-points in the IBZ (3 x NkI)
-    real(kind=dp), intent(in)  :: RI(:,:,:)     !! inverted rotational symmetry matrices (3 x 3 x Nsym)
-    integer      , intent(out) :: iR1           !! index of R1 in K = R1*K1
-    integer      , intent(out) :: iK1           !! index of K1 in K = R1*K1
-    real(kind=dp), intent(in), optional  :: eps !! thershold for two k-points being the same
+    integer,       intent(in)  :: ik             !! index of k-point in IBZ
+    real(kind=dp), intent(in)  :: kx, ky, kz     !! k-point in IBZ
+    real(kind=dp), intent(in)  :: kI(:,:)        !! k-points in the IBZ (3 x NkI)
+    real(kind=dp), intent(in)  :: RI(:,:,:)      !! inverted rotational symmetry matrices (3 x 3 x Nsym)
+    integer      , intent(out) :: iR1            !! index of R1 in K = R1*K1
+    integer      , intent(out) :: iK1            !! index of K1 in K = R1*K1
+    real(kind=dp), intent(in), optional  :: eps_ !! thershold for two k-points being the same
 
     logical       :: found
     integer       :: i, j, l
     integer       :: NkI, Nsym
     real(kind=dp) :: K(3), k_fbz(3)
-    real(kind=dp) :: eps_
+    real(kind=dp) :: eps = EPS_DEFAULT ! default thershold
 
     NkI = size(kI,2)
     Nsym = size(RI,3) ! careful, this only works if R has been reshaped from 3x3xNrot to 3x3xNsym
@@ -473,8 +472,7 @@ contains
     k_fbz = ky
     k_fbz = kz
 
-    eps_ = 1.0d-4 ! default thershold
-    if (present(eps)) eps_ = eps
+    if (present(eps_)) eps = eps_
 
     found = .false.
     if (ik <= NkI) then
@@ -490,7 +488,7 @@ contains
         ! K(2) = sum (RI(1:3,2,i)*k_fbz(1:3) ) ! Ky
         ! K(3) = sum (RI(1:3,3,i)*k_fbz(1:3) ) ! Kz
         do  j = 1,NkI
-          if ( all ( abs( K(1:3)-kI(1:3,j) ) <= eps_ ) ) then
+          if ( all ( abs( K(1:3)-kI(1:3,j) ) <= eps ) ) then
             found = .true.
             iR1 = i
             iK1 = j
@@ -506,24 +504,24 @@ contains
   end subroutine findKinIBZ
 
 
-  subroutine findKQinIBZ(KQx, KQy, KQz, kI, ktot, RI, G, iG0, iR2, iK2, eps)
+  subroutine findKQinIBZ(KQx, KQy, KQz, kI, ktot, RI, G, iG0, iR2, iK2, eps_)
     !! Finds the k-point (KQx,KQy,KQz) in the 1st. Brillouin zone (FBZ) and then the ireducible Brillouin zone (IBZ)
     ! integer,       intent(in)  :: Nsym          !! No. of symmetry operations for the given crystal
-    real(kind=dp), intent(in)  :: KQx, KQy, KQz !! K+Q wavevector possibly outside of FBZ
-    real(kind=dp), intent(in)  :: kI(:,:)       !! k-points in the IBZ
-    real(kind=dp), intent(in)  :: ktot(:,:)     !! k-points in the FBZ
-    real(kind=dp), intent(in)  :: G(:,:)        !! G-vectors
-    real(kind=dp), intent(in)  :: RI(:,:,:)     !! inverted rotational symmetry tensor (3 x 3 x Nrot)
-    integer,       intent(out) :: iG0           !! index of the rec.lattice vector;
-    integer,       intent(out) :: iR2           !! index of rotational sym. op. in the RI tensor for K + Q = G0 + R2*K2
-    integer,       intent(out) :: iK2           !! index of k-point K2 in K + Q = G0 + R2*K2
-    real(kind=dp), intent(in), optional  :: eps !! thershold for two k-points being the same
+    real(kind=dp), intent(in)  :: KQx, KQy, KQz  !! K+Q wavevector possibly outside of FBZ
+    real(kind=dp), intent(in)  :: kI(:,:)        !! k-points in the IBZ
+    real(kind=dp), intent(in)  :: ktot(:,:)      !! k-points in the FBZ
+    real(kind=dp), intent(in)  :: G(:,:)         !! G-vectors
+    real(kind=dp), intent(in)  :: RI(:,:,:)      !! inverted rotational symmetry tensor (3 x 3 x Nrot)
+    integer,       intent(out) :: iG0            !! index of the rec.lattice vector;
+    integer,       intent(out) :: iR2            !! index of rotational sym. op. in the RI tensor for K + Q = G0 + R2*K2
+    integer,       intent(out) :: iK2            !! index of k-point K2 in K + Q = G0 + R2*K2
+    real(kind=dp), intent(in), optional  :: eps_ !! thershold for two k-points being the same
   
     logical       :: found_ibz, found_fbz
     integer       :: iG, jk, i, j, l
     integer       :: NkI, Ntot, NG, Nsym
     real(kind=dp) :: K(3), KQ(3)
-    real(kind=dp) :: eps_
+    real(kind=dp) :: eps = EPS_DEFAULT ! default thershold
 
     Nsym = size(RI,3) ! careful this only works if R has been reshaped from 3x3xNrot to 3x3xNsym
     NkI  = size(kI,2)
@@ -534,14 +532,14 @@ contains
     KQ(2) = KQy
     KQ(3) = KQz
 
-    eps_ = 1.0d-4 ! default thershold
-    if (present(eps)) eps_ = eps
+    if (present(eps_)) eps = eps_
+
     found_fbz = .false.
     found_ibz = .false.
     iG_loop : do  iG = 1,NG
     write(104,*) G(1:3,iG)
       k_loop_FBZ : do  jk = 1, Ntot
-        if ( all (abs(KQ(1:3)-G(1:3,iG)-ktot(1:3,jk)) <= eps_) ) then
+        if ( all (abs(KQ(1:3)-G(1:3,iG)-ktot(1:3,jk)) <= eps) ) then
           found_fbz = .true.
           iG0 = iG
           symm_loop: do  i = 1, Nsym
@@ -549,7 +547,7 @@ contains
               K(l) = sum( RI(1:3,l,i) * ktot(1:3,jk) )
             end do
             k_loop_IBZ: do  j = 1, NkI
-              if ( all( abs(K(1:3)-kI(1:3,j)) <= eps_) ) then
+              if ( all( abs(K(1:3)-kI(1:3,j)) <= eps) ) then
                 found_ibz = .true. ! true for IBZ (and also for FBZ)
                 iR2 = i
                 iK2 = j
@@ -656,7 +654,7 @@ contains
     ! K -> G
     print *,'K->G'
     do i = Ntot,1,-1
-      if (ktot(1,i) > 0.0_dp .AND. ktot(2,i) > 0.0_dp) then
+      if (ktot(1,i) > 0.0_dp .and. ktot(2,i) > 0.0_dp) then
         if (abs(ktot(2,i)/ktot(1,i)-sqrt(3.0_dp)) < eps) then
           if (abs(ktot(2,i)-1.0_dp/sqrt(3.0_dp)) > eps) then
             Ngmkg = Ngmkg + 1

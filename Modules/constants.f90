@@ -21,4 +21,6 @@ module constants
     real(kind=dp), parameter    :: czero = dcmplx(0.0_dp,0.0_dp)
     real(kind=dp), parameter    :: ione  = dcmplx(0.0_dp,1.0_dp)
 
+    real(kind=dp), parameter    :: EPS_DEFAULT = 1.0d-4 ! default thershold for value to be considered equal to zero
+
 end module constants

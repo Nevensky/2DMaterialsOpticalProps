@@ -5,6 +5,7 @@ module matrix_inverse
    use lapack95, only: getrf, getri
    use iso_fortran_env, only: dp => real64, idp => int16
    use notifications, only: error
+   use constants, only: EPS_DEFAULT
 
    implicit none
 
@@ -154,7 +155,7 @@ subroutine check_identity_cmplx(A,A_inverted,eps_)
    real(kind=dp)    :: beta  = 0.0_dp
    complex(kind=dp) :: checkIdentity, checkIdentity2
    complex(kind=dp) :: traceIdentity
-   real(kind=dp)    :: eps = dble(10d-4) ! default threshold value arbitrarily chosen
+   real(kind=dp)    :: eps = EPS_DEFAULT ! default threshold value arbitrarily chosen
 
    if (present(eps_)) eps = eps_
 
@@ -200,7 +201,7 @@ subroutine check_identity_real(A,A_inverted,eps_)
    real(kind=dp)    :: beta  = 0.0_dp
    real(kind=dp)    :: checkIdentity, checkIdentity2
    real(kind=dp)    :: traceIdentity
-   real(kind=dp)    :: eps = dble(10d-4) ! default threshold value arbitrarily chosen
+   real(kind=dp)    :: eps = EPS_DEFAULT ! default threshold value arbitrarily chosen
 
    if (present(eps_)) eps = eps_
 
