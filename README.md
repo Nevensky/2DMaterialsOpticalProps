@@ -1,4 +1,4 @@
-# 2DMaterialsOpticalProps
+![2DMaterialsOpricalProps](https://raw.githubusercontent.com/Nevensky/2DMaterialsOpticalProps/refs/heads/master/logo.png.png)
 
 *A fully ab‑initio toolkit for linear–response and spectroscopy of quasi two‑dimensional (2D) materials using Quantum‑Electrodynamic Many‑Body Theory.*
 
