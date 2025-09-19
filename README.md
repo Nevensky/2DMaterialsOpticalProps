@@ -2,6 +2,7 @@
 
 *A fully ab‑initio toolkit for linear–response and spectroscopy of quasi two‑dimensional (2D) materials using Quantum‑Electrodynamic Many‑Body Theory.*
 
+[![DOI](https://zenodo.org/badge/390714733.svg)](https://zenodo.org/badge/latestdoi/390714733)
 ---
 
 ## ✨ What this code does
