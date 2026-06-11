@@ -3,7 +3,7 @@ module constants
     implicit none
 
     public :: pi, eV, kB, Hartree, Rydberg, Planck, aBohr, alpha, &
-            & rone, ione, czero, zero
+            & rone, ione, czero, zero, EPS_DEFAULT
     private 
     save
     real(kind=dp),    parameter :: pi      = 4.0_dp*atan(1.0_dp)
