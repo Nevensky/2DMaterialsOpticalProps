@@ -13,10 +13,10 @@ Full derivation, checks and numbers behind `corrections/issue-efactor.tex`.
 
 | Where | What is printed | Kind of density |
 |---|---|---|
-| E.106 (p. 19) | `ρ⁰_{nk,mk+q}(G) = ⟨φ⁰_nk| e^{-i(q+G)r} |φ⁰_mk+q⟩` | number (dimensionless matrix element) |
+| E.106 (p. 19) | `ρ⁰_{nk,mk+q}(G) = ⟨φ⁰_nk\| e^{-i(q+G)r} \|φ⁰_mk+q⟩` | number (dimensionless matrix element) |
 | E.166, p. 38, E.179–E.180 | `j_e = e Σ v_e δ(r - r_e)`; continuity `∇j_e = -dρ_e/dt`; Gauss `∇D = 4πρ_e` | here `ρ_e` is a **charge** density (classical, never defined explicitly) |
 | E.234 (p. 47) | `∇E = 4π(ρ_e + ρ_ion)`, "where `ρ_e = Ψ⁺Ψ` is electronic charge density operator" | `Ψ⁺Ψ` is a number density, used as a charge |
-| E.235, E.237 last term, E.312 last term | `½∫∫ [ρ_e + ρ_ion][ρ_e' + ρ_ion'] / |r - r'|` | needs charge; `ρ_ion = -∇P` is a charge density (Z* has charge) |
+| E.235, E.237 last term, E.312 last term | `½∫∫ [ρ_e + ρ_ion][ρ_e' + ρ_ion'] / \|r - r'\|` | needs charge; `ρ_ion = -∇P` is a charge density (Z* has charge) |
 | E.237, E.270, E.273, E.312 (A² terms); E.279, E.321 (Π^{e,dia}) | `e²/(2m_e c²) ∫ ρ_e A²`; `Π^{e,dia} = -(e²/mc) ρ^e δ` | number (correct as printed) |
 | E.239, E.420 | `ρ_e = Ψ⁺Ψ = Σ φ*_nk φ_mk' c⁺_nk c_mk'` | number |
 | E.284, E.384, E.419 | `j^μ_{nk,mk+q} = (eħ/2im_e) ∫_Ω dr e^{-iqr} {φ*_nk ∂_μ φ_mk+q - (∂_μ φ*_nk) φ_mk+q}` | **charge** current (contains e) |
@@ -24,10 +24,10 @@ Full derivation, checks and numbers behind `corrections/issue-efactor.tex`.
 | E.426 | `∫_Ω dr e^{-iqr} φ*_nk φ_mk' = δ_{k',k+q} ρ_{nk,mk+q}` | number |
 | E.428 (p. 95, boxed) | `ρ_{nk,mk+q} = -Σ_μ ħ q_μ j^μ_{nk,mk+q} / (E_nk - E_mk+q)` | number = charge: **inconsistent** |
 | p. 95 (unnumbered) | `lim g^{dyn,0}_{nmσ} = (4πi/Ω_uc) Σ_a Σ_μν √(ħ/2Nm_aω_σ) q_μ Z*_{aμν} e_{aνσ}/q² [ρ_{nk,mk+q}]^*` | missing e |
-| p. 96 (display + blue note) | VG Eq. 4 as `(4πe²i/Ω_uc) Σ √(…) q_μ Z*_{aμν} e_{aνσ}/q² ⟨φ_mk+q|e^{iqr}|φ_nk⟩`; note: *"U odnosu na Giustino-a fali ti taj e². Vjerojatno je u interakciji D ili u Z*. Također njegova je oznaka tog matričnog elemeta g⁰_{mnσ}, a naša g⁰_{nmσ}, međutim to je nebitno."* ("Compared with Giustino you are missing that e². It is probably in the interaction D or in Z*. Also, his notation for this matrix element is g⁰_mnσ and ours g⁰_nmσ, but that is irrelevant.") | with the manuscript's Z* (charge) the display has e³ |
+| p. 96 (display + blue note) | VG Eq. 4 as `(4πe²i/Ω_uc) Σ √(…) q_μ Z*_{aμν} e_{aνσ}/q² ⟨φ_mk+q\|e^{iqr}\|φ_nk⟩`; note: *"U odnosu na Giustino-a fali ti taj e². Vjerojatno je u interakciji D ili u Z*. Također njegova je oznaka tog matričnog elemeta g⁰_{mnσ}, a naša g⁰_{nmσ}, međutim to je nebitno."* ("Compared with Giustino you are missing that e². It is probably in the interaction D or in Z*. Also, his notation for this matrix element is g⁰_mnσ and ours g⁰_nmσ, but that is irrelevant.") | with the manuscript's Z* (charge) the display has e³ |
 | p. 98 (boxed) | `lim g^{dyn}_{nmσ} = (4πi/Ω_uc) Σ √(…) q_μ Z*_{aμν} e*_{aνσ}/(q·ε^e(q,ω)·q) ρ_{nk,mk+q}` | missing e |
 | p. 99 | "almost identical to … Verdi and Giustino … the conjugated complex part of the electron-phonon vertex" | |
-| p. 101 (unnumbered) | `Π^{e,0}_ρρ(Q,ω) = (2/S) Σ_K Σ_nm (f_nK - f_mK+Q)/(ħω + E_nK - E_mK+Q + iη) |ρ_{nK,mK+Q}|²`, then `ε^e_2D = 1 - v_Q Π^{e,0}_ρρ` (E.470), `v_Q = 2π/Q` | missing e² |
+| p. 101 (unnumbered) | `Π^{e,0}_ρρ(Q,ω) = (2/S) Σ_K Σ_nm (f_nK - f_mK+Q)/(ħω + E_nK - E_mK+Q + iη) \|ρ_{nK,mK+Q}\|²`, then `ε^e_2D = 1 - v_Q Π^{e,0}_ρρ` (E.470), `v_Q = 2π/Q` | missing e² |
 | E.131 (p. 25, §3, SI) | `g^L_{nmα}(k,q) = (4πi/Ω_uc)(e/4πε0) Σ_G Σ_aμν √(ħ/2Nm_aω_α) (q_μ+G_μ) Z*_{aμν} e_{aνα}/((q+G)ε^∞(q+G)) ρ_{nk,mk-q}(-G)` | one explicit e, correct (the text says the second e "is hidden in Z*") |
 
 ## 2. Diagnosis
@@ -58,11 +58,11 @@ The script reproduces this (`free_electron_ratio = -3.794680 = e` in (eV Å)^½)
 | p.95 / p.98 printed `Z* q/(Ω_uc q²) √(ħ/mω) ρ` | g^½ cm^½ s^-1 = statvolt | erg | mismatch (a potential, not an energy) |
 | p.95′ / p.98′ with e | erg | erg | OK |
 | E.415 `J_el* D⁰ J_ion` | erg | erg | OK (charge is in j) |
-| E.409 `4π|j_ασ|²/Ω_uc` | s^-2 | s^-2 | OK |
+| E.409 `4π\|j_ασ\|²/Ω_uc` | s^-2 | s^-2 | OK |
 | p.101 printed `v_Q Π^{e,0}_ρρ` | esu^-2 | 1 | mismatch |
 | p.101′ `v_Q e² Π^{e,0}_ρρ` | 1 | 1 | OK |
-| E.312 Coulomb printed `ρ_e ρ_ion/|r-r'|` | statvolt | erg | mismatch |
-| E.312′ `eρ_e ρ_ion/|r-r'|` | erg | erg | OK |
+| E.312 Coulomb printed `ρ_e ρ_ion/\|r-r'\|` | statvolt | erg | mismatch |
+| E.312′ `eρ_e ρ_ion/\|r-r'\|` | erg | erg | OK |
 | E.237 A² term `e²/(mc²) ρ_e A²` (number density) | erg | erg | OK |
 
 ### 2.4 Where the charge is *not* lost (E.414–E.416, E.417–E.418, E.429–E.448)
@@ -77,7 +77,7 @@ The script reproduces this (`free_electron_ratio = -3.794680 = e` in (eV Å)^½)
 
 | | Fix A (adopted): ρ stays a number density, write eρ where charge is meant | Fix B: `ρ_e ≡ eΨ⁺Ψ` | Fix C: also redefine the vertex `ρ_{nk,mk+q}` as a charge vertex |
 |---|---|---|---|
-| E.106, E.426 | unchanged | unchanged | `e⟨φ|e^{-i(q+G)r}|φ⟩`; changes E.105–E.107, E.130–E.131 (where §3 uses −e with e > 0) |
+| E.106, E.426 | unchanged | unchanged | `e⟨φ\|e^{-i(q+G)r}\|φ⟩`; changes E.105–E.107, E.130–E.131 (where §3 uses −e with e > 0) |
 | E.239, E.420 | unchanged | `eΨ⁺Ψ`, factor e | factor e |
 | E.234 text, E.235, E.237/E.312 Coulomb | `eρ_e` (errata row 28) | unchanged (text: `ρ_e = eΨ⁺Ψ`) | unchanged |
 | A² terms of E.237, E.270, E.273, E.312; Π^{e,dia} of E.279, E.321 | unchanged | `e² → e` | `e² → e` |
@@ -86,7 +86,7 @@ The script reproduces this (`free_electron_ratio = -3.794680 = e` in (eV Å)^½)
 | display after E.427 (written with ρ_{nk,mk+q}) | e on the left | e on the left (E.426 is still the number vertex) | consistent (ρ is the redefined charge vertex) |
 | E.428 | `eρ` on the left | **still needs** `eρ` (E.426 is a pure wave-function integral) | unchanged |
 | p.95, p.98 | gain e | gain e | unchanged |
-| p.96 display | `e² → |e|` | `e² → |e|` | `ρ` contains e |
+| p.96 display | `e² → \|e\|` | `e² → \|e\|` | `ρ` contains e |
 | p.101 bubble | `2e²/S` | `2e²/S` | unchanged |
 | §6 (E.320–E.350) | one sentence: ρ^e there means eρ^e | consistent | consistent |
 
@@ -157,9 +157,9 @@ Dictionary to EPP (all items checked on the PDFs):
 | Giustino / VG | EPP | Note |
 |---|---|---|
 | `e²/4πε0` (SI) | `e²` (Gaussian) | p. 96 states this |
-| `Z*_κ` dimensionless | `Z*_{aμν} = |e| Z*_κ` | E.110 "dimension of charge" |
+| `Z*_κ` dimensionless | `Z*_{aμν} = \|e\| Z*_κ` | E.110 "dimension of charge" |
 | Ω = unit-cell volume | Ω_uc | |
-| N_p (BvK supercell), ψ normalized in the supercell (`⟨⟩_sc`) | N, φ normalized in `Ω = NΩ_uc` (E.426 `∫_Ω`, E.291) | `[ρ_{nk,mk+q}]^* = ⟨φ_mk+q|e^{iqr}|φ_nk⟩` is dimensionless and → δ_nm as q → 0 |
+| N_p (BvK supercell), ψ normalized in the supercell (`⟨⟩_sc`) | N, φ normalized in `Ω = NΩ_uc` (E.426 `∫_Ω`, E.291) | `[ρ_{nk,mk+q}]^* = ⟨φ_mk+q\|e^{iqr}\|φ_nk⟩` is dimensionless and → δ_nm as q → 0 |
 | N_p⁻½ inside the square root | N⁻½ inside the square root (E.417 "Ω = NΩ_uc") | both correspond to `H_ep = Σ g c⁺c(a + a⁺)` without a separate N⁻½ (EPP E.108; VG convention). In Giustino's own Eq. 1/38 convention N_p must be dropped from Eq. 180 (errata row 1) |
 | `M_κ`, `e_κν(q)` | `m_a`, `e_{aνσ}(q)` | |
 | `τ_κ` | 0 (dipoles at `R⁰_i`, E.314) | Giustino footnote 7: VG Eq. 4 also lacks the τ phase |
@@ -276,10 +276,10 @@ All replacement text is in `issue-efactor.tex`, items 1–6:
 
 1. **§B.8 `sections/B08-frohlich.html`**
    - "From currents to charges": state the corrected continuity `eρ̇_e = −∇·j_e` (E p94′ / E.422′) instead of quoting the printed `ρ̇_e = −∇·j_e (E.422)`, and tag the identity `E.428′` instead of `cf. E.428`.
-   - Replace the two displays "as printed" (p. 95 and p. 98) by the corrected `(E p.95′)` and `(E p.98′)` with the factor e, and add the two comparison lines `lim g^{dyn,0} = (e/|e|) g⁰_VG`, `lim g^{dyn} = −(e/|e|) q²/(q·ε^e·q) [g⁰_VG]^*` (E.428a, E.448a). The sentence "The bare vertex is Verdi–Giustino with ε∞ = 1 and G = 0 …" can then cite them, with "up to the sign e/|e| and a relabelling of indices". If the primer says the sign "can be absorbed in the polarization vector", replace that with: the sign is a convention of the factorization E.415–E.416; only `g^{dyn}χ⁰g^{dyn,0}` (E.413) is observable and it is fixed.
+   - Replace the two displays "as printed" (p. 95 and p. 98) by the corrected `(E p.95′)` and `(E p.98′)` with the factor e, and add the two comparison lines `lim g^{dyn,0} = (e/|e|) g⁰_VG`, `lim g^{dyn} = −(e/|e|) q²/(q·ε^e·q) [g⁰_VG]^*` (E.428a, E.448a). The sentence "The bare vertex is Verdi–Giustino with ε∞ = 1 and G = 0 …" can then cite them, adding "up to the overall sign e/|e| and the relabelling n ↔ m, k → k + q". Add one sentence saying that the sign is a convention of the factorization E.415–E.416 (the factor i). It cannot be absorbed in the polarization vector, and only `g^{dyn}χ⁰g^{dyn,0}` (E.413) is observable, which is fixed. (The primer does not currently claim that the sign is absorbable; it simply omits the sign.)
    - Source callout "the missing e²": say the correction restores e at its origin (continuity on p. 94), add the dimension argument (printed vertices have the dimension of a potential, erg/esu), note that the p. 96 transcription has e³ with charge-dimensioned Z*, that the p. 101 bubble needs e² (link §B.10), and that the margin note can be removed. The "three smaller slips" are now part of the correction.
    - Optional: one line of numbers, GaAs √N|g| = 304 meV at q = 0.1 Å⁻¹ from both (p98′) and G Eq. 180 (3314 meV unscreened), and "E.413 = Σ g χ⁰ g only with the e".
-2. **§B.10 `sections/B10-2d.html`**: the p. 101 display of `Π^{e,0}_ρρ(Q,ω)` must carry `2e²/S` (tag `E p.101′`), with a short source note: without e², E.470 is not dimensionless; with it a 2DEG gives Stern's `1 + 2m*e²/(ħ²Q)`. The figures use `r_0 Q` and are unaffected.
+2. **§B.10 `sections/B10-2d.html`**: the p. 101 display of `Π^{e,0}_ρρ(Q,ω)` must carry `2e²/S` (tag `E p.101′`), with a short source note: without e², E.470 is not dimensionless; with it a 2DEG gives Stern's `1 + 2m*e²/(ħ²Q)` (for Q ≤ 2k_F, T → 0, no background dielectric constant). The figures use `r_0 Q` and are unaffected.
 3. **§B.9 `sections/B09-electrostatic.html`**: where `ε_L = 1 − (4π/q²)Π^{e,0}_ρρ` is written (derivation of E.445), say that `Π^{e,0}_ρρ` is the charge–charge bubble, e² times the number bubble built from `ρ_{nk,mk+q}`, as E.350 guarantees. Optionally add the derivation `Ω⁰ + ΔΩ^e = E.452` with the corrected vertices (§6.3 above) as a `details` box: it shows the corrected vertices reproduce the screened Gonze–Lee term.
 4. **§B.4 `sections/B04-fields.html` and §B.6 `sections/B06-propagator.html`**: the displays tagged E.234, E.235, E.237, E.312 reproduce the printed number-density form while the page convention redefines `ρ_e = eΨ⁺Ψ` in Coulomb terms. For consistency with the authors' correction, show the primed forms with explicit `eρ_e` (tags E.234′, E.235′, E.237′, E.312′) and keep `Ψ⁺Ψ` in the A² term; add in §B.6 that `ρ^e` in E.320–E.350 means `eρ^e`.
 5. **§X.2 `sections/X02-dictionary.html`**: rows on E.428 and on the vertex should cite E.428′, E p.95′, E p.98′; the figure legend "EPP p. 98 as printed (bare ω_σ)" and the caption sentence "EPP's p. 98 vertex as printed" should read "p. 98′ (e restored)", because the code (`pref = 4π/Ω · E2 · Z/ε`) already includes the e.
