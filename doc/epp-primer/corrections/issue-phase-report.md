@@ -385,3 +385,34 @@ Two skeptics raised 20 objections; several overlap. Each was checked against the
 | 18 | Footnote 7 cited for the cell-phase reason, which it does not give | **Accepted.** Verified on G p. 35. | Citation moved to "Verdi and Giustino's Eq. (4) lacked it (Giustino's footnote 7, which notes that it is needed for the acoustic modes near $\mathbf q=0$)". |
 | 19 | Coordination with `issue-efactor.tex`: three places with $\boldsymbol\tau_\kappa=0$; merged displays for pp. 95, 96, 98 | **Accepted.** In the current file the three places are the (p96′) paragraph, the sentence after (448a) and check (iv) (line numbers shift; that file is being edited in parallel). | Merged (p95″), (p96″), (p98″) added; the three edits named in the `.tex` and in §3.8. That file was not edited here. |
 | 20 | Primer B04 pointer wrong: line 161 is the double-counting callout; the edits are at 34, 41, 43, 149–150 | **Accepted in part.** The missing edits (and line 18, E.167) are real and now listed. But line 161 does contain a clause on the dropped phase ("where the basis phase that (E.167) and (E.241) also drop is discussed"), so it needs an update, not deletion. The "drops the basis phase" sentence in B02 line 97 is covered by the B02 item. | B04 item rewritten: lines 18, 34, 41, 43, 149–150 to $\bR^0_{ia}$; line 161 keeps the double-counting content and only its closing clause is updated. |
+
+---
+
+## Note (25 Oct 2026): merged deliverable
+
+The paste-ready correction for the authors is now `corrections/EPP_corrections.tex`. It merges the three
+corrections (basis phase, E.410, factor e) into one standalone document and supersedes `issue-*.tex`, which
+carry a header saying so. This report stays as the supporting derivation. Changes relative to this report:
+
+- **One tag convention.** Every corrected or new display is `equation*`/`align*` with an explicit `\tag`, so
+  nothing steps the equation counter. (n′) replaces numbered equation n, (pN′) replaces an unnumbered display on
+  page N, (n a) is new. Pasting rule (stated once, merged §1): `\stepcounter{equation}` after each replaced
+  numbered equation.
+- **Merged checks.** `test/corr-merge/check_merge.py` (24 checks, all pass) tests the merged forms. The LaTeX was
+  validated without TeX by `test/corr-merge/validate_tex.py` (braces, environments, math delimiters, `\left/\right`,
+  tags, labels). Every math region was rendered with MathJax: `extract_math.py` builds `test/corr-merge-frag/`,
+  then `build/assemble.py` and `build/check.js --eager`, and `inspect_math.js` reads the MathML, because check.js
+  misses undefined macros and unclosed braces. Result: 889 regions, 63 tags, 0 problems.
+- **Specific to this correction.**
+  - Tags renamed: (417a), (417b) → (p93a′), (p93b′); (399′) → (399a), a new equation after E.399 on p. 89,
+    because E.399 itself keeps its form at **G** = **G′** = 0.
+  - (428b), (448b), (p95″), (p96″), (p98″) are retired. The final pp. 95/96/98 displays carry both the phase and
+    the factor e and are tagged (p95′), (p96′), (p98′) (merged §5.1). This resolves the overlap noted in §3.8 and §8
+    item 7. The three τ_κ edits to `issue-efactor.tex` listed in §3.8 are made in the merged file.
+  - Combined tags split for pasting: (167′); (241′, 314′); (271′, 315′); (272′). E.315 is the ionic density tensor,
+    the twin of E.271; E.272 is the ionic current.
+  - New merged display (237′): the rule A(**R**⁰_ia) plus eρ_e in the Coulomb term.
+  - New check M5: (410d) for cq ≫ √ε ω, written in the atom basis, equals the **G** = 0 term of (454a), with
+    deviation 14.7 (ω/cq)².
+  - Order after E.454 on p. 99: the E.410 paragraph first, then the paragraph with (454a) (merged §5.5).
+  - Added a sentence after E.380 (p. 85) saying that **G** = **G′** = 0 now also neglects ionic local fields (§8 item 6).

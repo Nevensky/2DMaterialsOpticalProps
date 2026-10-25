@@ -312,3 +312,32 @@ Two skeptics raised 14 objections (several are duplicates). Each was checked aga
 
 No objection was rejected.
 
+---
+
+## Note (25 Oct 2026): merged deliverable
+
+The paste-ready correction for the authors is now `corrections/EPP_corrections.tex`. It merges the three
+corrections (basis phase, E.410, factor e) into one standalone document and supersedes `issue-*.tex`, which
+carry a header saying so. This report stays as the supporting derivation. Changes relative to this report:
+
+- **One tag convention.** Every corrected or new display is `equation*`/`align*` with an explicit `\tag`, so
+  nothing steps the equation counter. (n′) replaces numbered equation n, (pN′) replaces an unnumbered display on
+  page N, (n a) is new. Pasting rule (stated once, merged §1): `\stepcounter{equation}` after each replaced
+  numbered equation.
+- **Merged checks.** `test/corr-merge/check_merge.py` (24 checks, all pass) tests the merged forms. The LaTeX was
+  validated without TeX by `test/corr-merge/validate_tex.py` (braces, environments, math delimiters, `\left/\right`,
+  tags, labels). Every math region was rendered with MathJax: `extract_math.py` builds `test/corr-merge-frag/`,
+  then `build/assemble.py` and `build/check.js --eager`, and `inspect_math.js` reads the MathML, because check.js
+  misses undefined macros and unclosed braces. Result: 889 regions, 63 tags, 0 problems.
+- **Specific to this correction.**
+  - The vertices (p95′), (p96′), (p98′) now also carry the basis phase. τ_κ = **r**⁰_a replaces τ_κ = 0 (dipoles at
+    **R**⁰_i, §5 table row "τ_κ") in the (p96′) paragraph, after (448a) and in check (iv). Both sides of (428a) and
+    (448a) carry the same phase, so the relations are unchanged (check_merge M1, M3).
+  - (448a) now shows both forms in one display. The second form, lim g^dyn = −[lim g^{dyn,0}]* q²/(**q**·ε·**q**),
+    is traced to the +i of both E.415 and E.416, with D⁰ (442) real. The overall sign e/|e| of (428a) compares the
+    diagrammatic vertex with the Hamiltonian coefficient, which is −(p95′) for either sign of e (merged §5.2;
+    check_merge M2 builds both from E.415/E.416 directly).
+  - Displayed in addition: (p93c′) (Heisenberg evolution with ħ), (237′) (with the basis phase) and (312′). The
+    remark before E.417 now refers to (131′).
+  - GaAs: 304.05 meV with q→0 LO eigenvectors on both sides. With finite-q eigenvectors and the phase (force-constant
+    model of the phase report) the common value at q = 0.1 Å⁻¹ is 303.0 meV along [111] and unchanged along [100].

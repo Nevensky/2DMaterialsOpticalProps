@@ -341,3 +341,31 @@ Two skeptics sent 20 objections (8 and 12). Several are duplicates (marked). Eac
 | R2-10 | Say which bare frequency enters E.410 | **Accepted.** Reproduced: with §4.2.1's bare $\omega_{\rm O}$, E.410 would be 61.3 meV. | Tex: "With $\omega_\sigma(0)=\omega_{\rm TO}$, since the $\mathbf G=0$ treatment has no Lorentz local-field term, …". The 61.3 meV figure is in report §4 and script §10. |
 | R2-11 | "Quantum Espresso (Gonze–Lee) term" misattributes | **Accepted.** | Tex now says "the standard non-analytic term that Quantum Espresso adds", citing Giannozzi et al. 1991, Baroni et al. 2001 and Gonze–Lee 1997 in item 2, and refers to them from item 5. "Gonze–Lee term" removed from (410f) and (iii). |
 | R2-12 | = R1-8 | Accepted | As R1-8. |
+
+---
+
+## Note (25 Oct 2026): merged deliverable
+
+The paste-ready correction for the authors is now `corrections/EPP_corrections.tex`. It merges the three
+corrections (basis phase, E.410, factor e) into one standalone document and supersedes `issue-*.tex`, which
+carry a header saying so. This report stays as the supporting derivation. Changes relative to this report:
+
+- **One tag convention.** Every corrected or new display is `equation*`/`align*` with an explicit `\tag`, so
+  nothing steps the equation counter. (n′) replaces numbered equation n, (pN′) replaces an unnumbered display on
+  page N, (n a) is new. Pasting rule (stated once, merged §1): `\stepcounter{equation}` after each replaced
+  numbered equation.
+- **Merged checks.** `test/corr-merge/check_merge.py` (24 checks, all pass) tests the merged forms. The LaTeX was
+  validated without TeX by `test/corr-merge/validate_tex.py` (braces, environments, math delimiters, `\left/\right`,
+  tags, labels). Every math region was rendered with MathJax: `extract_math.py` builds `test/corr-merge-frag/`,
+  then `build/assemble.py` and `build/check.js --eager`, and `inspect_math.js` reads the MathML, because check.js
+  misses undefined macros and unclosed braces. Result: 889 regions, 63 tags, 0 problems.
+- **Specific to this correction.**
+  - (410′) no longer has `\stepcounter{equation}` in the fragment. The merged file states the pasting rule once,
+    and every corrected display follows it.
+  - In (410b)–(410h), j_ασ(**q**) is stated to be the phase-corrected vertex (385′). The last paragraph of §7.1.1
+    refers to (385′) and (131b). Merged §5.3 writes out the two strengths with the phase and states the consequences:
+    at q → 0 nothing changes (55.6, 35.9, 33.3 meV); at finite q the strengths are cell-invariant, and a rigid
+    acoustic translation gets no dipolar shift (check_merge M4). It also adds that (410d) for cq ≫ √ε ω, in the atom
+    basis, is the **G** = 0 term of (454a) (check_merge M5).
+  - The §7.3 paragraph is the first of two insertions after E.454; the paragraph with (454a) follows (merged §5.5).
+  - The subscript slip Ω⁰_σ → Ω⁰_σσ in E.406 is fixed in place (no tag), per the merged convention.

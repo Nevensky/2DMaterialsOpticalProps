@@ -1,0 +1,1304 @@
+% Corrections to "Theory of the Electron-Phonon-Photon coupling" (draft v2).
+% Standalone document; packages amsmath, amssymb, bm only; no custom macros in any display.
+% This file supersedes corrections/issue-phase.tex, issue-e410.tex and issue-efactor.tex.
+% Supporting derivations: corrections/issue-*-report.md. Numerical checks (git-ignored):
+% test/corr-phase/check_phase.py, test/corr-e410/check_e410.py, test/corr-efactor/check_efactor.py,
+% test/corr-merge/check_merge.py (merged forms of Sec. 5).
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,bm}
+\setlength{\textwidth}{6.5in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\textheight}{8.9in}
+\setlength{\topmargin}{-0.4in}
+\allowdisplaybreaks
+
+\title{Corrections to `Theory of the Electron-Phonon-Photon coupling' (draft v2)}
+\author{}
+\date{25 October 2026}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}\label{sec:intro}
+
+\paragraph{What was checked, and how.}
+While an interactive primer on F.~Giustino, Rev.\ Mod.\ Phys.\ \textbf{89}, 015003 (2017) and on the
+present manuscript was being written, every displayed equation of draft v2 (102 pages) was checked
+against the page images of the PDF. Three issues go beyond typos. They change equations, or the reading
+of a displayed result:
+\begin{enumerate}
+\item The Born-charge dipoles are placed at the cell origin $\mathbf R^0_i$ instead of the atomic site
+$\mathbf R^0_{ia}=\mathbf R^0_i+\mathbf r^0_{\rm a}$ (Sec.~3 and everything built on it). The basis phase
+$e^{-i(\mathbf q+\mathbf G)\mathbf r^0_{\rm a}}$ is restored in Sec.~\ref{sec:phase}.
+\item Eq.~(410) is the $\mathbf q\to0$, finite-$c$, electron-free end point of the upper phonon
+polariton, not the LO--TO splitting (Sec.~7.1). It differs from the electrostatic result (454) in two
+independent ways, electronic screening and the order of limits (Sec.~\ref{sec:e410}).
+\item The charge $e$ is lost in the continuity equation on p.~94, so the electrostatic Fr\"ohlich
+vertices on pp.~95 and 98 lack a factor $e$ (Sec.~7.2); Sec.~\ref{sec:efactor}.
+\end{enumerate}
+Each correction was derived from the manuscript's own definitions, checked by two independent
+skeptical reviewers working from the page images, and revised until every objection was answered.
+Each was tested numerically: dimensional bookkeeping, limits, model calculations for GaAs and for
+random multi-atom cells, and comparison with Eq.~(180) of Giustino's review. Two corrections touch
+the same equations on pp.~95--99, and the phase also enters the general-$\mathbf q$ result of
+Sec.~\ref{sec:e410}. The merged forms were derived again and checked numerically; they are
+collected in Sec.~\ref{sec:interplay}, which also fixes the order of the new material on p.~99.
+Sec.~\ref{sec:minor} lists the smaller errata found during the check.
+
+\paragraph{Conventions.}
+Page numbers are those of the PDF. ``Eq.~($n$)'' is equation ($n$) of the draft. The manuscript's
+notation is used throughout: roman a, b label the atoms of a cell, $ia$ the atom a of cell $i$,
+$\Omega=N\Omega_{\rm uc}$, and $\sigma$ the phonon branches from Sec.~5 on ($\alpha$ in Sec.~3).
+\begin{itemize}
+\item \emph{Units.} Sec.~3 is in SI units, as stated on p.~23, and writes the electron charge as $-e$
+with $e>0$ [before (123)]. From Sec.~4 on the units are Gaussian ($e^2/4\pi\epsilon_0\to e^2$,
+$1/\epsilon_0\to4\pi$), and $e$ is the signed electron charge, $e=-|e|$, as in the Lagrangian (134). All
+corrected equations of Secs.~4--8 are Gaussian.
+\item \emph{Born charges} $Z^*_{{\rm a}\mu\nu}$ have the dimension of charge [Eq.~(110)]:
+$Z^*_{{\rm a}\mu\nu}=|e|\,Z^*_{\kappa,\mu\nu}$, with Giustino's dimensionless $Z^*_\kappa$. In Gaussian units
+$eZ^*$ has the dimension of energy$\times$length.
+\item \emph{Densities.} $\rho_{\rm e}=\Psi^+\Psi$ [Eqs.~(239), (420)] is the electron \emph{number}
+density and $\rho_{n\mathbf k,m\mathbf k+\mathbf q}$ [Eqs.~(106), (426)] its dimensionless matrix element.
+Wherever a charge density is meant, $e\rho_{\rm e}$ is written (Sec.~\ref{sec:efactor}).
+\item \emph{Phonon phase.} Eqs.~(7), (83) and (242) attach the Bloch phase to the cell,
+$Q_{ia\nu}\propto e_{{\rm a}\nu\sigma}(\mathbf q)\,e^{i\mathbf q\mathbf R^0_i}$, as Giustino does. The
+$e_{{\rm a}\nu\sigma}(\mathbf q)$ are the eigenvectors that solve the equations of motion for this pattern
+(see Sec.~\ref{sec:phase-problem} on the sign in Eq.~(15)).
+\end{itemize}
+
+\paragraph{Equation tags.} One convention is used for every corrected and every new equation.
+\begin{itemize}
+\item ($n'$) is the corrected form of the numbered equation ($n$) and replaces it. A combined tag such
+as (241$'$, 314$'$) means that one display replaces two printed equations with the same content; paste
+it at each place, with the single tag.
+\item (p$N'$), (p$N$a$'$), (p$N$b$'$), \ldots\ is the corrected form of the unnumbered display on page
+$N$ (the first, second, \ldots\ such display on that page, as stated in the text) and replaces it.
+\item ($n$a), ($n$b), \ldots\ is a new equation, inserted after Eq.~($n$) or after the passage that
+follows it, as stated.
+\item A slip of a single symbol inside a numbered equation is corrected in place, and the equation keeps
+its number (example: $\Omega^0_\sigma\to\Omega^0_{\sigma\sigma}$ in Eq.~(406)).
+\item Untagged displays are explanations and are not meant to be pasted.
+\end{itemize}
+\emph{LaTeX.} Every tagged display is an \verb|equation*| or \verb|align*| environment (with
+\verb|split|, \verb|aligned| or \verb|gathered| inside where needed) and carries an explicit
+\verb|\tag|. These environments never step the equation counter, and this document contains no
+\verb|\stepcounter|.
+
+\paragraph{How to paste.}
+The displays need only \texttt{amsmath}, \texttt{amssymb} and \texttt{bm}, and no macros of their own.
+\begin{itemize}
+\item \emph{A primed equation} replaces a numbered \verb|equation|. Delete the old environment, paste
+the \verb|equation*| block, and put \verb|\stepcounter{equation}| directly after it, so that all later
+equations keep their printed numbers. Do not add \verb|\tag| to an unstarred \verb|equation| instead:
+amsmath steps the counter there even when \verb|\tag| is given, and the two methods must not be mixed.
+\item \emph{A page-tagged display} replaces an unnumbered display, and \emph{a lettered equation} is new.
+Paste them as they are; no counter needs to be stepped.
+\item If the next version is renumbered from scratch, drop all \verb|\tag|s, use the unstarred
+environments, and keep the tags of this document only as a key to the changes.
+\item Replacement prose is set in \texttt{quote} environments. ``Replace `\ldots' by \ldots'' quotes the
+printed text. Where a correction is a rule applied to many displays, the affected displays are listed.
+\end{itemize}
+
+%======================================================================================
+\section{The basis phase: Born dipoles sit at $\mathbf R^0_i+\mathbf r^0_{\rm a}$ (Sec.~3 and downstream)}\label{sec:phase}
+
+\subsection{Location}
+Sec.~3, pp.~24--25: Eqs.~(121)--(124) and (131). The same placement recurs in Eqs.~(134),
+(141)--(143), (167), (183), (186) and the Hamiltonians between (184) and (186), (237), (241),
+(270)--(272), (274), (286)--(311) and the displays between them, (314)--(315), and (352)--(354) with
+the displays on pp.~76--77. Through the ionic vertex $j_{\alpha\sigma}(\mathbf q)$ [Eq.~(295) and the two
+displays after (385)] it reaches every equation of Secs.~6.1--8. The vertex is written out explicitly in
+the two displays after (417) on p.~93, in (418), (430), (447) and (448), and in the displays on pp.~95,
+96 and 98.
+
+\subsection{Problem}\label{sec:phase-problem}
+Eqs.~(121)--(123) place the dipole $\mathbf p_{ia}$ of atom a at the cell origin $\mathbf R^0_i$. The atom
+sits at $\mathbf R^0_{ia}=\mathbf R^0_i+\mathbf r^0_{\rm a}$, Eq.~(94). Sec.~2 keeps the corresponding factor,
+$V_{\rm a}(\mathbf q')=e^{-i\mathbf q'\mathbf r^0_{\rm a}}v_{\rm a}(\mathbf q')$ in Eq.~(101), but
+$V^{\mathcal L}_{\rm a}$ in Eq.~(124) does not. As a result Eq.~(131) lacks the factor
+$e^{-i(\mathbf q+\mathbf G)\mathbf r^0_{\rm a}}$ inside the atom sum. Eq.~(180) of Giustino's review carries
+it, and Giustino's footnote~7 notes that Eq.~(4) of C.~Verdi and F.~Giustino, Phys.\ Rev.\ Lett.\
+\textbf{115}, 176401 (2015) lacked it too.
+
+\emph{Why the phase is needed.} Eqs.~(7), (83) and (242) attach the Bloch phase to the cell:
+$Q_{ia\nu}\propto e_{{\rm a}\nu\alpha}(\mathbf q)\,e^{i\mathbf q\mathbf R^0_i}$. The dipole
+$Z^*_{{\rm a}\mu\nu}Q_{ia\nu}$ located at $\mathbf R^0_i+\mathbf r^0_{\rm a}$ therefore has, at wave vector
+$\mathbf q+\mathbf G$, the amplitude $\propto Z^*_{{\rm a}\mu\nu}e_{{\rm a}\nu\alpha}(\mathbf q)\,
+e^{-i(\mathbf q+\mathbf G)\mathbf r^0_{\rm a}}$, and the basis phase must appear explicitly in every vertex.
+The sign of the phase follows from (83) and the Fourier convention (117) alone. Only the product
+$e_{{\rm a}\nu\alpha}(\mathbf q)\,e^{-i(\mathbf q+\mathbf G)\mathbf r^0_{\rm a}}$ is independent of how the
+atoms are grouped into cells. Moving atom a to a neighbouring cell gives
+\begin{equation*}
+\mathbf r^0_{\rm a}\to\mathbf r^0_{\rm a}+\mathbf R_L,\qquad
+e_{{\rm a}\nu\alpha}(\mathbf q)\to e^{i\mathbf q\mathbf R_L}e_{{\rm a}\nu\alpha}(\mathbf q),\qquad
+e_{{\rm a}\nu\alpha}(\mathbf q)\,e^{-i(\mathbf q+\mathbf G)\mathbf r^0_{\rm a}}\ \text{unchanged}.
+\tag{131a}
+\end{equation*}
+With atom phases instead, $Q_{ia\nu}\propto\tilde e_{{\rm a}\nu\alpha}(\mathbf q)e^{i\mathbf q\mathbf R^0_{ia}}$, the
+factor reduces to $e^{-i\mathbf G\mathbf r^0_{\rm a}}$. Eq.~(131) as printed is therefore correct only in
+that convention and only at $\mathbf G=0$.
+
+\emph{A precondition: the sign in Eqs.~(15) and (35).} The transformation law (131a) and the
+cancellation (131b) below assume that the $e_{{\rm a}\nu\alpha}(\mathbf q)$ solve the equations of motion
+for the pattern $e^{i\mathbf q\mathbf R^0_i}$, as in Giustino's Eqs.~(14) and (20). They are then the
+eigenvectors of $(m_{\rm a}m_{\rm b})^{-1/2}\sum_{\bm{\delta}}e^{-i\mathbf q\bm{\delta}}
+k_{{\rm a}\mu{\rm b}\nu}(\bm{\delta})$. Eqs.~(15) and (35) as printed have $e^{+i\mathbf q\bm{\delta}}$, and the
+step after Eq.~(43) uses $\tilde\Omega^2_{{\rm b}\nu{\rm a}\mu}=\tilde\Omega^2_{{\rm a}\mu{\rm b}\nu}$, which
+holds only for real $\tilde\Omega^2$. The eigenvectors of the printed matrix are the complex conjugates.
+For a long acoustic wave they carry $e^{-i\mathbf q\mathbf r^0_{\rm a}}$, and the basis phase would then
+double the spurious acoustic term of (131b) instead of removing it. The sign in (15) and (35) must
+therefore be corrected together with the present issue (Sec.~\ref{sec:minor}, p.~4).
+
+\subsection{Corrected equations, Sec.~3 (SI units, as in the manuscript)}
+On p.~24, before (121), read: ``\ldots\ and recalling that the dipole of atom a in the $i$th cell sits at
+the atomic site $\mathbf R^0_{ia}=\mathbf R^0_i+\mathbf r^0_{\rm a}$ [Eq.~(94)], we conclude that the potential
+produced by the displacement $Q_{ia\nu}$ of atom a in the $\nu$ direction is''. The left-hand label of
+(121) becomes $\nu$, the direction of the displacement.
+\begin{align*}
+\phi_{ia\nu}(\mathbf r)&=-i\sum_\mu\frac{Z^*_{{\rm a}\mu\nu}Q_{ia\nu}}{\epsilon_0}\int\frac{d\mathbf q}{(2\pi)^3}\,
+e^{i\mathbf q(\mathbf r-\mathbf R^0_i-\mathbf r^0_{\rm a})}\,\frac{q_\mu}{\mathbf q\hat\epsilon^\infty\mathbf q},\tag{121$'$}\\
+\phi_i(\mathbf r)&=-i\sum_{{\rm a}\mu\nu}\frac{Z^*_{{\rm a}\mu\nu}Q_{ia\nu}}{\epsilon_0}\int\frac{d\mathbf q}{(2\pi)^3}\,
+e^{i\mathbf q(\mathbf r-\mathbf R^0_i-\mathbf r^0_{\rm a})}\,\frac{q_\mu}{\mathbf q\hat\epsilon^\infty\mathbf q},\tag{122$'$}\\
+\Delta V^{\mathcal L}_{\rm cr}(\mathbf r)&=i\sum_{ia\mu\nu}Z^*_{{\rm a}\mu\nu}Q_{ia\nu}\int\frac{d\mathbf q}{(2\pi)^3}\,
+\frac{e\,q_\mu}{\epsilon_0\,\mathbf q\hat\epsilon^\infty\mathbf q}\,e^{i\mathbf q(\mathbf r-\mathbf R^0_i-\mathbf r^0_{\rm a})},\tag{123$'$}\\
+V^{\mathcal L}_{\rm a}(\mathbf q)&=e^{-i\mathbf q\mathbf r^0_{\rm a}}\,\frac{e^2}{\epsilon_0\,\mathbf q\hat\epsilon^\infty\mathbf q}.\tag{124$'$}
+\end{align*}
+Eqs.~(125)--(130) keep their form. With (124$'$) the identity between (128) and (102) now includes the
+basis phase of (101), as it should. Inserting (124$'$) into (130) gives
+\begin{equation*}
+\begin{split}
+g^{\mathcal L}_{nm\alpha}(\mathbf k,\mathbf q)={}&\frac{4\pi i}{\Omega_{\rm uc}}\frac{e}{4\pi\epsilon_0}
+\sum_{\mathbf G}\sum_{{\rm a}\mu\nu}\sqrt{\frac{\hbar}{2Nm_{\rm a}\omega_\alpha(\mathbf q)}}\\
+&\times\frac{(q_\mu+G_\mu)Z^*_{{\rm a}\mu\nu}e_{{\rm a}\nu\alpha}(\mathbf q)\,e^{-i(\mathbf q+\mathbf G)\mathbf r^0_{\rm a}}}
+{(\mathbf q+\mathbf G)\hat\epsilon^\infty(\mathbf q+\mathbf G)}\,\rho_{n\mathbf k,m\mathbf k-\mathbf q}(-\mathbf G),
+\end{split}
+\tag{131$'$}
+\end{equation*}
+with $e/4\pi\epsilon_0\to e$ in Gaussian units. For an acoustic branch, with $M=\sum_{\rm a}m_{\rm a}$,
+$\mathbf u$ the common displacement and $\mathbf w_{\rm a}(\mathbf q)=O(q)$ the internal-strain relaxation
+(which does not depend on the choice of cell),
+\begin{equation*}
+e_{{\rm a}\nu\alpha}(\mathbf q)=e^{i\mathbf q\mathbf r^0_{\rm a}}\Big[\sqrt{m_{\rm a}/M}\,u_\nu+i\,w_{{\rm a}\nu}(\mathbf q)+O(q^2)\Big].
+\end{equation*}
+Then
+\begin{equation*}
+\begin{aligned}
+\sum_{\rm a}\frac{\hat Z^*_{\rm a}\mathbf e_{{\rm a}\alpha}(\mathbf q)}{\sqrt{m_{\rm a}}}
+-\sum_{\rm a}\frac{\hat Z^*_{\rm a}\mathbf e_{{\rm a}\alpha}(\mathbf q)}{\sqrt{m_{\rm a}}}\,e^{-i\mathbf q\mathbf r^0_{\rm a}}
+&=\frac{i}{\sqrt M}\sum_{\rm a}(\mathbf q\mathbf r^0_{\rm a})\,\hat Z^*_{\rm a}\mathbf u+O(q^2),\\
+\sum_{\rm a}\frac{\hat Z^*_{\rm a}\mathbf e_{{\rm a}\alpha}(\mathbf q)}{\sqrt{m_{\rm a}}}\,e^{-i\mathbf q\mathbf r^0_{\rm a}}
+&=\frac{1}{\sqrt M}\Big(\sum_{\rm a}\hat Z^*_{\rm a}\Big)\mathbf u
++i\sum_{\rm a}\frac{\hat Z^*_{\rm a}\mathbf w_{\rm a}(\mathbf q)}{\sqrt{m_{\rm a}}}+O(q^2)\\
+&=i\sum_{\rm a}\frac{\hat Z^*_{\rm a}\mathbf w_{\rm a}(\mathbf q)}{\sqrt{m_{\rm a}}}+O(q^2).
+\end{aligned}
+\tag{131b}
+\end{equation*}
+The printed (phase-less) vertex therefore equals the corrected one plus the spurious term
+$(i/\sqrt M)\sum_{\rm a}(\mathbf q\mathbf r^0_{\rm a})\hat Z^*_{\rm a}\mathbf u$. Because $\omega_\alpha\propto q$,
+this term gives $|g^{\mathcal L}|^2\propto1/q$ for acoustic phonons, the scaling of a piezoelectric
+coupling. It depends on the choice of cell, and it survives in centrosymmetric crystals, where the
+physical term $\sum_{\rm a}\hat Z^*_{\rm a}\mathbf w_{\rm a}$ vanishes. For GaAs the spurious term alone
+corresponds to a piezoelectric constant $|\sum_{\rm a}Z^*_{\rm a}(\hat{\mathbf q}\mathbf r^0_{\rm a})|/\Omega_{\rm uc}$
+of 0.6--1.8~C/m$^2$ along [111], depending on the cell, and of 1.04~C/m$^2$ along [100]. This is
+comparable to or larger than the internal-strain coupling of the corrected vertex: about 1.2~C/m$^2$
+along [111] in a central-force model of GaAs (nearest- and next-nearest-neighbour springs fitted to
+$\omega_{\rm TO}$ and to the [100] sound velocity), and zero along [100]. The printed total can be larger
+or smaller than the corrected one, depending on the cell (1.8 or 0.6~C/m$^2$ along [111] in that model).
+It is also nonzero along [100], where the true coupling vanishes by symmetry. With the phase [second
+line of (131b)] the leading term vanishes by the acoustic sum rule $\sum_{\rm a}\hat Z^*_{\rm a}=0$, and the
+remainder is the internal-strain dipole. The measured coupling, $(2/\sqrt3)|e_{14}|\approx0.19$~C/m$^2$
+for LA[111], is much smaller still: the clamped-ion (electronic) piezoelectric response largely cancels
+the internal-strain term [S.~de~Gironcoli, S.~Baroni and R.~Resta, Phys.\ Rev.\ Lett.\ \textbf{62}, 2853
+(1989)]. In the long-range vertex that response enters through the dynamical quadrupoles, so a
+consistent $O(q)$ theory needs them [G.~Brunin \textit{et al.}, Phys.\ Rev.\ Lett.\ \textbf{125}, 136601
+(2020); V.~A.~Jhalani \textit{et al.}, \textit{ibid.}\ 136602 (2020); J.~Park \textit{et al.}, Phys.\ Rev.\ B
+\textbf{102}, 125203 (2020)]. These references are quoted from memory and should be verified.
+
+\subsection{Corrected equations, Secs.~4--5 (Gaussian units)}
+\emph{Rule.} In Secs.~4--6, in every display, numbered or not, replace $A_\alpha(\mathbf R^0_i)$,
+$\dot A_\nu(\mathbf R^0_i)$ and $E_\nu(\mathbf R^0_i)$ by $A_\alpha(\mathbf R^0_{ia})$, $\dot A_\nu(\mathbf R^0_{ia})$ and
+$E_\nu(\mathbf R^0_{ia})$, and replace $\delta(\mathbf r-\mathbf R^0_i)$, $\delta(\mathbf r'-\mathbf R^0_j)$ by
+$\delta(\mathbf r-\mathbf R^0_{ia})$, $\delta(\mathbf r'-\mathbf R^0_{jb})$. Here a (b) is the atom index already
+summed in the same term. The rule covers (134), (141)--(143), (167), (183), the Hamiltonian after (184)
+on p.~38, the two Hamiltonians before (186) on p.~39, (186), (237), (241), (270)--(272), (286), the
+display after (288) on p.~61, (289), (290), (302), (314), (315) and the two displays on p.~76 after (353).
+In the Fourier substitutions (291), (303) and (354), and in the 2D substitutions on pp.~64 and 66, use
+$\delta(\mathbf r-\mathbf R^0_{ia})\to\int\frac{d\mathbf q_1}{(2\pi)^3}e^{i\mathbf q_1(\mathbf r-\mathbf R^0_i-\mathbf r^0_{\rm a})}$,
+or in 2D $\delta(z-z_{\rm a})\int\frac{d\mathbf Q_1}{(2\pi)^2}
+e^{i\mathbf Q_1(\bm{\rho}-\mathbf R^0_i-\bm{\rho}^0_{\rm a})}$. In (287)--(290) the factor
+$e^{i\mathbf q(\mathbf r-\mathbf r')}$ that comes from $\pi_{{\rm a}\mu}(\mathbf r)$ becomes
+$e^{i\mathbf q(\mathbf R^0_i-\mathbf R^0_j)}$ by (274$'$). The displayed results are
+\begin{align*}
+L&=\dots+\frac1c\sum_{ia}\dot{\mathbf p}_{ia}\mathbf A(\mathbf R^0_{ia}),\tag{134$'$}\\
+m_{\rm a}\ddot Q_{ia\mu}+\sum_{jb\nu}k_{ia\mu,jb\nu}Q_{jb\nu}&=\sum_\nu Z^*_{{\rm a}\nu\mu}E_\nu(\mathbf R^0_{ia}),\tag{143$'$}\\
+\mathbf P(\mathbf r)&=\sum_{ia}\mathbf p_{ia}\,\delta(\mathbf r-\mathbf R^0_{ia}),\tag{167$'$}\\
+\pi_{ia\mu}&=m_{\rm a}\dot Q_{ia\mu}+\frac1c\sum_\alpha Z^*_{{\rm a}\alpha\mu}A_\alpha(\mathbf R^0_{ia}),\tag{183$'$}
+\end{align*}
+\begin{equation*}
+\begin{split}
+V={}&-\frac{e}{2m_{\rm e}c}\sum_e\big[\mathbf p_e\mathbf A(\mathbf r_e)+\mathbf A(\mathbf r_e)\mathbf p_e\big]
++\frac{e^2}{2m_{\rm e}c^2}\sum_e\mathbf A^2(\mathbf r_e)\\
+&-\frac1c\sum_{ia\alpha\mu}\frac{1}{m_{\rm a}}Z^*_{{\rm a}\alpha\mu}\pi_{ia\mu}A_\alpha(\mathbf R^0_{ia})
++\frac{1}{c^2}\sum_{ia\mu\alpha\beta}\frac{1}{2m_{\rm a}}Z^*_{{\rm a}\alpha\mu}Z^*_{{\rm a}\beta\mu}
+A_\alpha(\mathbf R^0_{ia})A_\beta(\mathbf R^0_{ia}),
+\end{split}
+\tag{186$'$}
+\end{equation*}
+\begin{align*}
+P_\mu(\mathbf r)&=\sum_{ia\nu}Z^*_{{\rm a}\mu\nu}Q_{ia\nu}\,\delta(\mathbf r-\mathbf R^0_{ia}),\tag{241$'$, 314$'$}\\
+\rho^{\rm ion}_{\alpha\beta}(\mathbf r)&=\frac{m_0}{e^2}\sum_{ia\mu}\frac{1}{m_{\rm a}}Z^*_{{\rm a}\alpha\mu}
+Z^*_{{\rm a}\beta\mu}\,\delta(\mathbf r-\mathbf R^0_{ia}),\tag{271$'$, 315$'$}\\
+j^{\rm ion}_\alpha(\mathbf r)&=\sum_{ia\mu}\frac{1}{m_{\rm a}}Z^*_{{\rm a}\alpha\mu}\pi_{{\rm a}\mu}(\mathbf r)\,
+\delta(\mathbf r-\mathbf R^0_{ia}),\tag{272$'$}\\
+\pi_{{\rm a}\mu}(\mathbf r)&=-\frac{i}{\sqrt N}\sum_{\alpha=1}^{3s}\sum_{\mathbf q\in BZ}
+\sqrt{\frac{m_{\rm a}\hbar\omega_\alpha(\mathbf q)}{2}}\,e_{{\rm a}\mu\alpha}(\mathbf q)
+\big(a_{\mathbf q\alpha}-a^+_{-\mathbf q\alpha}\big)e^{i\mathbf q(\mathbf r-\mathbf r^0_{\rm a})}.\tag{274$'$}
+\end{align*}
+With (274$'$), $\pi_{{\rm a}\mu}(\mathbf R^0_{ia})$ equals $\pi_{ia\mu}$ of (243). Eqs.~(141), (142),
+(237) and (270) follow from the rule and are not displayed here; the final form of (237), which also
+carries the factor-$e$ convention of Sec.~\ref{sec:efactor}, is (237$'$) in Sec.~\ref{sec:int-hamiltonian}.
+The paramagnetic self-energy (290) becomes
+\begin{equation*}
+\begin{split}
+\Pi^{\rm ion,para}_{\alpha\beta}(\mathbf r,\mathbf r',\omega)={}&-\frac{1}{\hbar c}\frac1N\sum_{\sigma=1}^{3s}
+\sum_{\mathbf q\in BZ}\sum_{ia\mu}\sum_{jb\nu}\frac{Z^*_{{\rm a}\alpha\mu}Z^*_{{\rm b}\beta\nu}}{\sqrt{m_{\rm a}m_{\rm b}}}\,
+\frac{\hbar\omega^2_\sigma(\mathbf q)}{\omega^2-\omega^2_\sigma(\mathbf q)+i\eta}\\
+&\times e_{{\rm a}\mu\sigma}(\mathbf q)e^*_{{\rm b}\nu\sigma}(\mathbf q)\,e^{i\mathbf q(\mathbf R^0_i-\mathbf R^0_j)}\,
+\delta(\mathbf r-\mathbf R^0_{ia})\,\delta(\mathbf r'-\mathbf R^0_{jb}).
+\end{split}
+\tag{290$'$}
+\end{equation*}
+The lattice sums are now
+$\sum_ie^{i\mathbf q\mathbf R^0_i}\delta(\mathbf r-\mathbf R^0_{ia})=\Omega_{\rm uc}^{-1}\sum_{\mathbf G}
+e^{i(\mathbf q+\mathbf G)(\mathbf r-\mathbf r^0_{\rm a})}$ and
+$\sum_je^{-i\mathbf q\mathbf R^0_j}\delta(\mathbf r'-\mathbf R^0_{jb})=\Omega_{\rm uc}^{-1}\sum_{\mathbf G'}
+e^{-i(\mathbf q+\mathbf G')(\mathbf r'-\mathbf r^0_{\rm b})}$, so (293) becomes
+\begin{equation*}
+\begin{split}
+\Pi^{\rm ion,para}_{\alpha\beta}(\mathbf r,\mathbf r',\omega)={}&\sum_{\mathbf G\mathbf G'}\int_{BZ}
+\frac{d\mathbf q}{(2\pi)^3}\,e^{i(\mathbf q+\mathbf G)\mathbf r}e^{-i(\mathbf q+\mathbf G')\mathbf r'}
+\Big\{-\frac{1}{c\Omega_{\rm uc}}\sum_{\sigma=1}^{3s}\sum_{{\rm a}\mu}\sum_{{\rm b}\nu}\\
+&\times\frac{Z^*_{{\rm a}\alpha\mu}Z^*_{{\rm b}\beta\nu}}{\sqrt{m_{\rm a}m_{\rm b}}}\,
+\frac{\omega^2_\sigma(\mathbf q)}{\omega^2-\omega^2_\sigma(\mathbf q)+i\eta}\,
+e_{{\rm a}\mu\sigma}(\mathbf q)e^{-i(\mathbf q+\mathbf G)\mathbf r^0_{\rm a}}\,
+e^*_{{\rm b}\nu\sigma}(\mathbf q)e^{i(\mathbf q+\mathbf G')\mathbf r^0_{\rm b}}\Big\},
+\end{split}
+\tag{293$'$}
+\end{equation*}
+and the curly bracket is the $\mathbf G\mathbf G'$ matrix
+\begin{align*}
+j_{\alpha\sigma}(\mathbf q+\mathbf G)&=\sum_{{\rm a}\mu}\frac{Z^*_{{\rm a}\alpha\mu}}{\sqrt{m_{\rm a}}}\,
+e_{{\rm a}\mu\sigma}(\mathbf q)\,e^{-i(\mathbf q+\mathbf G)\mathbf r^0_{\rm a}}
+\equiv\sum_{\rm a}j^{\rm a}_{\alpha\sigma}(\mathbf q+\mathbf G),\tag{295$'$}\\
+j^*_{\beta\sigma}(\mathbf q+\mathbf G')&=\sum_{{\rm b}\nu}\frac{Z^*_{{\rm b}\beta\nu}}{\sqrt{m_{\rm b}}}\,
+e^*_{{\rm b}\nu\sigma}(\mathbf q)\,e^{i(\mathbf q+\mathbf G')\mathbf r^0_{\rm b}},\tag{296$'$}\\
+\Pi^{\rm ion,para}_{\alpha\beta,\mathbf G\mathbf G'}(\mathbf q,\omega)&=-\frac{1}{c\Omega_{\rm uc}}
+\sum_{\sigma=1}^{3s}\frac{\omega^2_\sigma(\mathbf q)}{\omega^2-\omega^2_\sigma(\mathbf q)+i\eta}\,
+j_{\alpha\sigma}(\mathbf q+\mathbf G)\,j^*_{\beta\sigma}(\mathbf q+\mathbf G'),\tag{297$'$}\\
+\Pi^{\rm ion,para}_{\alpha\beta,\mathbf G\mathbf G'}(\mathbf q,\omega)&=-\frac{\hbar}{c\Omega_{\rm uc}}
+\sum_{\sigma=1}^{3s}\frac{\omega_\sigma(\mathbf q)}{2}\,F_\sigma(\mathbf q,\omega)\,
+j_{\alpha\sigma}(\mathbf q+\mathbf G)\,j^*_{\beta\sigma}(\mathbf q+\mathbf G'),\tag{299$'$}\\
+\Pi^{\rm ion,dia}_{\alpha\beta}(\mathbf r,\mathbf r',\omega)&=-\frac1c\sum_{ia\mu}\frac{1}{m_{\rm a}}
+Z^*_{{\rm a}\alpha\mu}Z^*_{{\rm a}\beta\mu}\,\delta(\mathbf r-\mathbf R^0_{ia})\,\delta(\mathbf r-\mathbf r'),\tag{302$'$}\\
+\Pi^{\rm ion,dia}_{\alpha\beta,\mathbf G\mathbf G'}(\mathbf q,\omega)&=-\frac{1}{\Omega_{\rm uc}c}
+\sum_{{\rm a}\mu}\frac{1}{m_{\rm a}}Z^*_{{\rm a}\alpha\mu}Z^*_{{\rm a}\beta\mu}\,
+e^{-i(\mathbf G-\mathbf G')\mathbf r^0_{\rm a}}.\tag{304$'$}
+\end{align*}
+Eq.~(306) becomes (297$'$) at $\omega=0$, and then
+\begin{align*}
+\Pi^{\rm ion,para}_{\alpha\beta,\mathbf G\mathbf G'}(\mathbf q,\omega=0)&=\frac{1}{c\Omega_{\rm uc}}
+\sum_{\sigma=1}^{3s}j_{\alpha\sigma}(\mathbf q+\mathbf G)\,j^*_{\beta\sigma}(\mathbf q+\mathbf G'),\tag{307$'$}
+\end{align*}
+\begin{equation*}
+\begin{split}
+\Pi^{\rm ion,para}_{\alpha\beta,\mathbf G\mathbf G'}(\mathbf q,\omega=0)={}&\frac{1}{c\Omega_{\rm uc}}
+\sum_{{\rm a}\mu}\sum_{{\rm b}\nu}\frac{Z^*_{{\rm a}\alpha\mu}}{\sqrt{m_{\rm a}}}
+\frac{Z^*_{{\rm b}\beta\nu}}{\sqrt{m_{\rm b}}}\,e^{-i(\mathbf q+\mathbf G)\mathbf r^0_{\rm a}}\,
+e^{i(\mathbf q+\mathbf G')\mathbf r^0_{\rm b}}\\
+&\times\sum_{\sigma=1}^{3s}e_{{\rm a}\mu\sigma}(\mathbf q)
+e^*_{{\rm b}\nu\sigma}(\mathbf q),
+\end{split}
+\tag{308$'$}
+\end{equation*}
+\begin{equation*}
+\Pi^{\rm ion,para}_{\alpha\beta,\mathbf G\mathbf G'}(\mathbf q,\omega=0)=\frac{1}{c\Omega_{\rm uc}}
+\sum_{{\rm a}\mu}\frac{Z^*_{{\rm a}\alpha\mu}Z^*_{{\rm a}\beta\mu}}{m_{\rm a}}\,
+e^{-i(\mathbf G-\mathbf G')\mathbf r^0_{\rm a}}.\tag{309$'$}
+\end{equation*}
+In (309$'$), completeness (28) keeps only ${\rm a}={\rm b}$, so the $\mathbf q$-dependent phases cancel.
+Eqs.~(310) and (311) therefore hold as printed once the subscripts $\mathbf G\mathbf G'$ are added, as
+matrix identities. The diagonal $\mathbf G=\mathbf G'$ of (304$'$) is (304) as printed. For a
+two-dimensional crystal, (300) and (305) become, with in-plane $\mathbf G$, in-plane positions
+$\bm{\rho}^0_{\rm a}$ and heights $z_{\rm a}$,
+\begin{equation*}
+\begin{split}
+\Pi^{\rm ion,para}_{\alpha\beta,\mathbf G\mathbf G'}(\mathbf Q,\omega,z,z')={}&-\frac{\hbar}{cS_{\rm uc}}
+\sum_{\sigma=1}^{3s}\frac{\omega_\sigma(\mathbf Q)}{2}F_\sigma(\mathbf Q,\omega)\\
+&\times\sum_{\rm ab}j^{\rm a}_{\alpha\sigma}(\mathbf Q+\mathbf G)\,j^{{\rm b}*}_{\beta\sigma}(\mathbf Q+\mathbf G')\,
+\delta(z-z_{\rm a})\,\delta(z'-z_{\rm b}),
+\end{split}
+\tag{300$'$}
+\end{equation*}
+\begin{equation*}
+\begin{split}
+\Pi^{\rm ion,dia}_{\alpha\beta,\mathbf G\mathbf G'}(\mathbf Q,\omega,z,z')={}&-\frac{1}{S_{\rm uc}c}
+\sum_{{\rm a}\mu}\frac{1}{m_{\rm a}}Z^*_{{\rm a}\alpha\mu}Z^*_{{\rm a}\beta\mu}\\
+&\times e^{-i(\mathbf G-\mathbf G')\bm{\rho}^0_{\rm a}}\,\delta(z-z_{\rm a})\,\delta(z'-z_{\rm a}),
+\end{split}
+\tag{305$'$}
+\end{equation*}
+where $j^{\rm a}_{\alpha\sigma}(\mathbf Q+\mathbf G)=\sum_\mu Z^*_{{\rm a}\alpha\mu}e_{{\rm a}\mu\sigma}(\mathbf Q)
+e^{-i(\mathbf Q+\mathbf G)\bm{\rho}^0_{\rm a}}/\sqrt{m_{\rm a}}$. For a planar sheet ($z_{\rm a}=0$) the atom
+sums in (300$'$) collapse to $j_{\alpha\sigma}(\mathbf Q+\mathbf G)j^*_{\beta\sigma}(\mathbf Q+\mathbf G')
+\delta(z)\delta(z')$.
+
+\subsection{Corrected and new equations, Secs.~6--8}\label{sec:phase-678}
+\begin{align*}
+\Pi^{\rm ion}_{jj\mu\nu,\mathbf G\mathbf G'}(\mathbf q,\omega)&=-\frac{\omega^2}{c\Omega_{\rm uc}}
+\sum_{\sigma=1}^{3s}\frac{j_{\mu\sigma}(\mathbf q+\mathbf G)\,j^*_{\nu\sigma}(\mathbf q+\mathbf G')}
+{\omega^2-\omega^2_\sigma(\mathbf q)+i\eta},\tag{352$'$}\\
+\Pi^{\rm ion}_{\rho\rho,\mathbf G\mathbf G'}(\mathbf q,\omega)&=-\frac{c}{\omega^2}\sum_{\mu\nu}
+(q_\mu+G_\mu)(q_\nu+G'_\nu)\,\Pi^{\rm ion}_{jj\mu\nu,\mathbf G\mathbf G'}(\mathbf q,\omega).\tag{354a}
+\end{align*}
+(354a) is inserted after (354); it is the result of pp.~76--77 with the dipoles of (314$'$) and the
+substitution (354) modified by the rule above, so (351) still holds. From (380) on, $D$, $\Pi_{jj}$ and
+$\Pi^{\rm ion}_{jj}$ are $\mathbf G\mathbf G'$ matrices, as $\Pi^{\rm e}$ already is in (282). The manuscript
+keeps only $\mathbf G=\mathbf G'=0$ (p.~95). In that approximation the equations from (385) to (472)
+that contain $j_{\mu\sigma}$ only as a symbol keep their printed form, provided that the vertex (the two
+unnumbered displays after (385)) is
+\begin{equation*}
+j_{\mu\sigma}(\mathbf q)=\sum_{{\rm a}\alpha}\frac{Z^*_{{\rm a}\mu\alpha}}{\sqrt{m_{\rm a}}}\,
+e_{{\rm a}\alpha\sigma}(\mathbf q)\,e^{-i\mathbf q\mathbf r^0_{\rm a}},\qquad
+j^*_{\nu\sigma}(\mathbf q)=\sum_{{\rm b}\beta}\frac{Z^*_{{\rm b}\nu\beta}}{\sqrt{m_{\rm b}}}\,
+e^*_{{\rm b}\beta\sigma}(\mathbf q)\,e^{i\mathbf q\mathbf r^0_{\rm b}}.\tag{385$'$}
+\end{equation*}
+This applies to (389), (391)--(393), (399)--(417), (429), (449)--(454) and, with in-plane
+$\bm{\rho}^0_{\rm a}$, (455)--(472). It also applies to the new Eqs.~(410a)--(410h) of
+Sec.~\ref{sec:e410} (see Sec.~\ref{sec:int-e410}). With crystal local fields kept, the phonon
+self-energy (399) is the $\mathbf G=\mathbf G'=0$ element of the matrix expression (insert after (399),
+p.~89)
+\begin{equation*}
+\begin{aligned}
+\Omega^{\rm e}_{\sigma\sigma'}(\mathbf q,\omega)&=-\sum_{\alpha\beta}\sum_{\mathbf G\mathbf G'}
+J^*_{\alpha\sigma}(\mathbf q+\mathbf G,\omega)\,D^{\rm e}_{\alpha\beta,\mathbf G\mathbf G'}(\mathbf q,\omega)\,
+J_{\beta\sigma'}(\mathbf q+\mathbf G',\omega),\\
+J_{\mu\sigma}(\mathbf q+\mathbf G,\omega)&=\sqrt{\frac{\hbar}{2c\Omega_{\rm uc}\omega_\sigma(\mathbf q)}}\,
+\omega\,j_{\mu\sigma}(\mathbf q+\mathbf G).
+\end{aligned}
+\tag{399a}
+\end{equation*}
+Wherever the vertex is written out, $e^{-i\mathbf q\mathbf r^0_{\rm a}}$ is inserted next to
+$e_{{\rm a}\mu\sigma}(\mathbf q)$ and $e^{+i\mathbf q\mathbf r^0_{\rm a}}$ next to $e^*_{{\rm a}\mu\sigma}(\mathbf q)$.
+On p.~93 this gives, for the first unnumbered display after (417) [where (295) is inserted], the second
+one [where (375) is inserted] and (418),
+\begin{equation*}
+\begin{split}
+g^{\rm dyn,0}_{nm\sigma}(\mathbf k,\mathbf q,\omega)={}&\frac{i}{c\Omega_{\rm uc}}
+\frac{\hbar\omega^2}{E_{n\mathbf k}-E_{m\mathbf k+\mathbf q}}\sum_{\alpha\beta=xyz}\sum_{{\rm a}\mu}
+\sqrt{\frac{\hbar}{2Nm_{\rm a}\omega_\sigma(\mathbf q)}}\\
+&\times Z^*_{{\rm a}\beta\mu}e_{{\rm a}\mu\sigma}(\mathbf q)\,e^{-i\mathbf q\mathbf r^0_{\rm a}}\,
+\big[j^\alpha_{n\mathbf k,m\mathbf k+\mathbf q}\big]^*D^0_{\alpha\beta}(\mathbf q,\omega),
+\end{split}
+\tag{p93a$'$}
+\end{equation*}
+\begin{equation*}
+\begin{split}
+g^{\rm dyn,0}_{nm\sigma}(\mathbf k,\mathbf q,\omega)={}&\frac{4\pi i}{\Omega_{\rm uc}}
+\frac{\hbar}{E_{n\mathbf k}-E_{m\mathbf k+\mathbf q}}\sum_{\alpha\beta=xyz}\sum_{{\rm a}\mu}
+\sqrt{\frac{\hbar}{2Nm_{\rm a}\omega_\sigma(\mathbf q)}}\\
+&\times Z^*_{{\rm a}\beta\mu}e_{{\rm a}\mu\sigma}(\mathbf q)\,e^{-i\mathbf q\mathbf r^0_{\rm a}}\,
+\frac{-q_\alpha q_\beta+\frac{\omega^2}{c^2}\delta_{\alpha\beta}}{q^2-\frac{\omega^2}{c^2}-i\eta}
+\big[j^\alpha_{n\mathbf k,m\mathbf k+\mathbf q}\big]^*,
+\end{split}
+\tag{p93b$'$}
+\end{equation*}
+\begin{equation*}
+\begin{split}
+\lim_{c\to\infty}g^{\rm dyn,0}_{nm\sigma}(\mathbf k,\mathbf q,\omega)={}&\frac{4\pi i}{\Omega_{\rm uc}}
+\sum_{\beta=xyz}\sum_{{\rm a}\mu}\sqrt{\frac{\hbar}{2Nm_{\rm a}\omega_\sigma(\mathbf q)}}\,
+Z^*_{{\rm a}\beta\mu}e_{{\rm a}\mu\sigma}(\mathbf q)\,e^{-i\mathbf q\mathbf r^0_{\rm a}}\,\frac{q_\beta}{q^2}\\
+&\times\sum_{\alpha=xyz}\frac{-\hbar q_\alpha}{E_{n\mathbf k}-E_{m\mathbf k+\mathbf q}}
+\big[j^\alpha_{n\mathbf k,m\mathbf k+\mathbf q}\big]^*,
+\end{split}
+\tag{418$'$}
+\end{equation*}
+and on pp.~96 and 98
+\begin{equation*}
+\begin{split}
+g^{\rm dyn}_{nm\sigma}(\mathbf k,\mathbf q,\omega)={}&\frac{i}{c\Omega_{\rm uc}}
+\frac{\hbar\omega^2}{E_{n\mathbf k}-E_{m\mathbf k+\mathbf q}}\sum_{{\rm a}\mu}\sum_{\alpha\beta=xyz}
+\sqrt{\frac{\hbar}{2Nm_{\rm a}\omega_\sigma(\mathbf q)}}\\
+&\times Z^*_{{\rm a}\alpha\mu}e^*_{{\rm a}\mu\sigma}(\mathbf q)\,e^{i\mathbf q\mathbf r^0_{\rm a}}\,
+D^{\rm e}_{\alpha\beta}(\mathbf q,\omega)\,j^\beta_{n\mathbf k,m\mathbf k+\mathbf q},
+\end{split}
+\tag{430$'$}
+\end{equation*}
+\begin{equation*}
+\begin{split}
+\lim_{c\to\infty}g^{\rm dyn}_{nm\sigma}(\mathbf k,\mathbf q,\omega)={}&-\frac{4\pi i}{\Omega_{\rm uc}}
+\frac{\hbar}{E_{n\mathbf k}-E_{m\mathbf k+\mathbf q}}\sum_{{\rm a}\mu}\sum_{\alpha\beta=xyz}
+\sqrt{\frac{\hbar}{2Nm_{\rm a}\omega_\sigma(\mathbf q)}}\\
+&\times Z^*_{{\rm a}\alpha\mu}e^*_{{\rm a}\mu\sigma}(\mathbf q)\,e^{i\mathbf q\mathbf r^0_{\rm a}}\,
+\frac{q_\alpha q_\beta}{\mathbf q\cdot\hat\epsilon^{\rm e}(\mathbf q,\omega)\cdot\mathbf q}\,
+j^\beta_{n\mathbf k,m\mathbf k+\mathbf q},
+\end{split}
+\tag{447$'$}
+\end{equation*}
+\begin{equation*}
+\begin{split}
+\lim_{c\to\infty}g^{\rm dyn}_{nm\sigma}(\mathbf k,\mathbf q,\omega)={}&\frac{4\pi i}{\Omega_{\rm uc}}
+\sum_{{\rm a}\mu}\sum_\alpha\sqrt{\frac{\hbar}{2Nm_{\rm a}\omega_\sigma(\mathbf q)}}\,
+Z^*_{{\rm a}\alpha\mu}e^*_{{\rm a}\mu\sigma}(\mathbf q)\,e^{i\mathbf q\mathbf r^0_{\rm a}}\\
+&\times\frac{q_\alpha}{\mathbf q\cdot\hat\epsilon^{\rm e}(\mathbf q,\omega)\cdot\mathbf q}\sum_\beta\frac{-\hbar q_\beta j^\beta_{n\mathbf k,m\mathbf k+\mathbf q}}{E_{n\mathbf k}-E_{m\mathbf k+\mathbf q}}.
+\end{split}
+\tag{448$'$}
+\end{equation*}
+These displays contain the electronic current $j^\mu_{n\mathbf k,m\mathbf k+\mathbf q}$, which carries the
+charge, and are not affected by the factor-$e$ correction. The displays on pp.~95, 96 and 98, obtained
+from (418$'$) and (448$'$) with the charge--current relation, are affected by both corrections. Their
+final forms are (p95$'$), (p96$'$) and (p98$'$) in Sec.~\ref{sec:int-vertices}.
+
+Eq.~(454) keeps its form with (385$'$). For an insulator with
+$W^{\rm e}_{\mathbf G\mathbf G'}=4\pi\delta_{\mathbf G\mathbf G'}/[(\mathbf q+\mathbf G)\cdot\hat\epsilon^\infty\cdot
+(\mathbf q+\mathbf G)]$, (399a) gives the matrix, $\mathbf G$-resolved form of (454) (placement on p.~99:
+Sec.~\ref{sec:int-p99})
+\begin{equation*}
+\begin{split}
+\tilde\Omega^2_{{\rm a}\mu,{\rm b}\nu}(\mathbf q)={}&\tilde\Omega^2_{0,{\rm a}\mu,{\rm b}\nu}(\mathbf q)\\
+&+\frac{4\pi}{\Omega_{\rm uc}\sqrt{m_{\rm a}m_{\rm b}}}\sum_{\mathbf G}
+\frac{[(\mathbf q+\mathbf G)\hat Z^*_{\rm a}]_\mu\,[(\mathbf q+\mathbf G)\hat Z^*_{\rm b}]_\nu}
+{(\mathbf q+\mathbf G)\cdot\hat\epsilon^\infty\cdot(\mathbf q+\mathbf G)}\,
+e^{i(\mathbf q+\mathbf G)(\mathbf r^0_{\rm a}-\mathbf r^0_{\rm b})},
+\end{split}
+\tag{454a}
+\end{equation*}
+with $[(\mathbf q+\mathbf G)\hat Z^*_{\rm a}]_\mu=\sum_\alpha(q_\alpha+G_\alpha)Z^*_{{\rm a}\alpha\mu}$ and
+$\tilde\Omega^2_0(\mathbf q)$ the bare (short-range) dynamical matrix, whose eigenvectors are
+$e_{{\rm a}\mu\sigma}(\mathbf q)$ and eigenvalues $\omega^2_\sigma(\mathbf q)$. Projected on mode $\sigma$ and
+restricted to $\mathbf G=0$, (454a) gives (454). The full sum is the dipole--dipole matrix of X.~Gonze
+and C.~Lee, Phys.\ Rev.\ B \textbf{55}, 10355 (1997), once the on-site self term is removed by Ewald
+regularization. With every dipole at the cell origin, the ${\rm a}\neq{\rm b}$ terms would not converge
+either.
+
+\subsection{What is unchanged, and what changes}
+At $\mathbf G=0$ only the relative phases $e^{-i\mathbf q(\mathbf r^0_{\rm a}-\mathbf r^0_{\rm b})}
+=1+O(q|\mathbf r^0_{\rm a}-\mathbf r^0_{\rm b}|)$ are observable: a common factor $e^{-i\mathbf q\mathbf c}$ (a
+shift $\mathbf c$ of the origin) drops out of $|g|^2$ and of $j_{\alpha\sigma}j^*_{\beta\sigma}$. The following
+are therefore unchanged:
+\begin{itemize}
+\item the $\mathbf q\to0$, $\mathbf G=0$ limit of (131$'$) for optical modes, i.e.\ Fr\"ohlich's vertex
+(Giustino's Eq.~(7));
+\item Sec.~4.2.1, Eqs.~(144)--(165), where the field is uniform over a cell;
+\item (406)--(410) at $\mathbf q=0$, and (410$'$), (410e) of Sec.~\ref{sec:e410};
+\item the LO--TO splitting, i.e.\ the $\mathbf q\to0$ limit of (454);
+\item the polariton region, where $q\lesssim\omega_{\rm TO}\sqrt{\epsilon(0)}/c\approx6\times10^{-5}$~\AA$^{-1}$
+in GaAs [$\epsilon(0)$ the static dielectric constant, as in (165)], $q|\mathbf r^0_{\rm b}-\mathbf r^0_{\rm a}|
+\approx10^{-4}$, and the oscillator strength changes by $5\times10^{-9}$;
+\item the sum rule (309) and Eqs.~(310)--(311) on the diagonal $\mathbf G=\mathbf G'$;
+\item the form of (175)--(180) and of (235) [up to the factor $e$ of Sec.~\ref{sec:efactor}], and all
+electronic and photon-propagator equations.
+\end{itemize}
+The correction matters in three places:
+\begin{itemize}
+\item at finite $q$ in cells with $s\ge2$. In GaAs ($|\mathbf r^0_{\rm As}-\mathbf r^0_{\rm Ga}|=2.45$~\AA) the
+phase difference $\mathbf q(\mathbf r^0_{\rm As}-\mathbf r^0_{\rm Ga})$ is 0.24~rad at $q=0.1$~\AA$^{-1}$ and
+1.22~rad at 0.5~\AA$^{-1}$ along [111]. In the central-force model, with eigenvectors computed at finite
+$q$, $|g^{\mathcal L}_{\rm LO}|^2$ and the dipolar shift in (454) change by 0.5--0.8\% at
+$q=0.1$~\AA$^{-1}$ and by 12--22\% at $q=0.5$~\AA$^{-1}$, up or down depending on the direction and on
+the cell choice of the printed form;
+\item in every $\mathbf G\neq0$ element, where $e^{-i\mathbf G\mathbf r^0_{\rm a}}$ survives even at
+$\mathbf q=0$;
+\item for acoustic modes, see (131b), and at finite $q$ in (410c) of Sec.~\ref{sec:e410}.
+\end{itemize}
+
+\subsection{Replacement prose}
+\begin{itemize}
+\item p.~24, before (121): as given at the start of the corrected equations of Sec.~3 above.
+\item p.~25, after (131), replace ``which is exactly equal to Eq.4 \ldots\ dimension of charge.'' by:
+\begin{quote}
+This is Eq.~(180) of F.~Giustino, Rev.\ Mod.\ Phys.\ \textbf{89}, 015003 (2017), the corrected form of
+Eq.~(4) of C.~Verdi and F.~Giustino, Phys.\ Rev.\ Lett.\ \textbf{115}, 176401 (2015). The basis phase
+$e^{-i(\mathbf q+\mathbf G)\mathbf r^0_{\rm a}}$ is required because the phonon eigenvectors carry the cell
+phase $e^{i\mathbf q\mathbf R^0_i}$ of Eq.~(83). Verdi and Giustino's Eq.~(4) lacked it (Giustino's
+footnote~7, which notes that it is needed for the acoustic modes near $\mathbf q=0$). The remaining
+differences are the factor $e$ hidden in $\hat Z^*$, which has the dimension of charge, the band and
+momentum labels, and the exclusion of $\mathbf G=-\mathbf q$.
+\end{quote}
+\item p.~62, after (290), replace ``The above form \ldots\ avoided whenever possible.'' by:
+\begin{quote}
+The above form of the current propagator follows from the fact that each atomic site $\mathbf R^0_{ia}$
+carries a polarizable point dipole. The periodic arrangement of these dipoles produces Bragg components
+$\mathbf q+\mathbf G$, weighted by the structure factors $e^{-i(\mathbf q+\mathbf G)\mathbf r^0_{\rm a}}$ of the
+vertices (295$'$). They are reliable only for $|\mathbf q+\mathbf G|$ small compared with the inverse size of
+the charge induced around an atom, because an atom is not a point dipole: quadrupoles enter at the next
+order. In practice the $\mathbf G$ sum is cut off smoothly, e.g.\ with $e^{-a|\mathbf q+\mathbf G|^2}$ as in
+Verdi and Giustino.
+\end{quote}
+\item p.~63, replace ``We see that ionic self-energy is a constant in $\mathbf G\mathbf G'$ space \ldots\
+dipole grating.'' by:
+\begin{quote}
+The ionic self-energy depends on $\mathbf G$ and $\mathbf G'$ only through the basis phases of the ionic
+current vertices. It is the response of $s$ interpenetrating gratings of point dipoles, one per
+sublattice, each displaced by $\mathbf r^0_{\rm a}$ from the Bravais lattice. Its $\mathbf G=\mathbf G'=0$
+element is the macroscopic response used in Secs.~6.1--8.
+\end{quote}
+\item p.~64, after (299$'$): ``where the $\mathbf G\mathbf G'$ dependence sits in the vertices.'' After
+(300$'$): ``Within the point-dipole model this is the exact polarizability of a planar sheet.''
+\item p.~85, after (380), add: ``Here and below only the $\mathbf G=\mathbf G'=0$ element is kept. This
+neglects the crystal local fields of the electrons and, through the structure factors of (295$'$), those
+of the ions.''
+\item p.~86, after (385): the ionic current vertices are (385$'$). p.~89, after (399): ``With crystal local
+fields kept, (399) is the $\mathbf G=\mathbf G'=0$ element of'' (399a). p.~93, after (417): the two
+displays are (p93a$'$) and (p93b$'$), and (418) becomes (418$'$).
+\item pp.~95--99: Sec.~\ref{sec:int-vertices}; p.~99 after (454): Sec.~\ref{sec:int-p99}.
+\end{itemize}
+
+\subsection{Justification}
+The normal-mode expansion (7), (83) gives every atom of cell $i$ the Bloch phase $e^{i\mathbf q\mathbf R^0_i}$
+of its cell. The Fourier component at $\mathbf q+\mathbf G$ of the dipole density of mode $(\mathbf q,\alpha)$
+is then $\Omega_{\rm uc}^{-1}\sum_{\rm a}\hat Z^*_{\rm a}\mathbf e_{{\rm a}\alpha}(\mathbf q)
+e^{-i(\mathbf q+\mathbf G)\mathbf r^0_{\rm a}}/\sqrt{m_{\rm a}}$ times the phonon amplitude. Sec.~2 already
+obtains exactly this structure for the pseudopotential, Eq.~(101). Dropping the factor has three
+consequences:
+\begin{itemize}
+\item the vertex depends on the arbitrary assignment of atoms to cells, Eq.~(131a);
+\item it predicts a spurious, cell-dependent long-range coupling to acoustic phonons, $|g|^2\propto1/q$,
+even in centrosymmetric crystals;
+\item in the ionic self-energy and in the dipole--dipole dynamical matrix (454a), the $\mathbf G$ sums of
+the printed form describe coincident dipoles. The on-site terms ${\rm a}={\rm b}$ need regularization
+(removal of the Ewald self term) in both forms; with coincident dipoles the ${\rm a}\neq{\rm b}$ terms
+diverge as well. The vertex $g^{\mathcal L}$ itself stays finite, because coincident dipoles simply add
+into one dipole per cell.
+\end{itemize}
+With the factor, (131$'$) coincides with Giustino's Eq.~(180), and the ionic self-energy
+(297$'$)--(304$'$) reproduces the Ewald-summed dipole lattice of Gonze and Lee, Eq.~(454a). This was
+checked numerically: the $\mathbf G$ sum is independent of the Ewald parameter only with the sign
+$e^{-i(\mathbf q+\mathbf G)\mathbf r^0_{\rm a}}$. The cell-choice invariance (131a), the acoustic expansion
+(131b) (remainder of order $q^2$), the matrix sum rule (310) with (304$'$) and (309$'$), and the GaAs
+numbers above were also checked numerically. All $\mathbf q\to0$, $\mathbf G=0$ results of the manuscript for
+optical modes are untouched.
+
+%======================================================================================
+\section{E.410 is the $\mathbf q\to0$ upper phonon polariton, not the LO--TO splitting (Sec.~7.1)}\label{sec:e410}
+
+\subsection{Location}
+Sec.~7.1, pp.~90--91: the title, the first sentences, the text around Eqs.~(406)--(410), and Eq.~(410);
+the title of Sec.~7.3 and the text after Eq.~(454) on p.~99.
+
+\subsection{Problem}
+The title of Sec.~7.1 and its first sentence present Eq.~(410) as the LO--TO splitting, ``completely
+analogous to the non-analytic dynamical matrix correction done by Quantum Espresso''. The algebra of
+Eqs.~(406)--(410) is correct, but Eq.~(410) is a different limit. It is taken at $\mathbf q=0$ for finite
+$c$, where the vacuum propagator, Eq.~(408), is isotropic. Every polar mode, transverse and longitudinal,
+is therefore shifted by the same $\frac{4\pi}{\Omega_{\rm uc}}\sum_\alpha|j_{\alpha\sigma}|^2$, and there is no
+LO--TO splitting at this point. Eq.~(410) is the $\mathbf q\to0$ end point of the upper phonon polariton
+(Huang) of a crystal without electrons. The standard non-analytic term that Quantum Espresso adds to
+the dynamical matrix is $\propto|\hat{\mathbf q}\cdot\mathbf j_\sigma|^2/(\hat{\mathbf q}\cdot\hat\epsilon^\infty
+\cdot\hat{\mathbf q})$: it leaves the TO modes unshifted and carries $1/\epsilon_\infty$. Its counterpart in
+the manuscript is Eq.~(454), obtained with $c\to\infty$ taken first and the electrons resummed into
+$D^{\rm e}$. Eq.~(410) differs from (454) in two independent ways, which must be kept apart:
+\begin{itemize}
+\item[(a)] \emph{Order of limits.} For the longitudinal mode, Eq.~(410) is the unscreened LO frequency
+whichever limit is taken first, and coincides with Eq.~(454) for $\epsilon_\infty=1$. The order of limits
+changes only the transverse modes, which at $\mathbf q\to0$ and finite $c$ are degenerate with the
+longitudinal one. For GaAs only the TO modes move: 35.9~meV $\to$ 33.3~meV.
+\item[(b)] \emph{Electronic screening.} For GaAs, Eq.~(410) gives 55.6~meV, against the measured LO
+energy of 36.2~meV. This gap comes from the electron-free approximation, which Sec.~7.1 states
+(``Suppose that we neglect the interaction with electrons''), not from the order of limits. With
+electrons, the same $\mathbf q\to0$, finite-$c$ limit puts all three polar modes at 35.9~meV
+[Eq.~(410e) below]: 55.6~meV $\to$ 35.9~meV.
+\end{itemize}
+
+\subsection{What changes, what does not}
+No displayed equation is algebraically wrong, and no later equation uses Eq.~(410), so no downstream
+equation inherits a change. \emph{Changed:} the title of Sec.~7.1, its opening sentences, the sentences
+around Eqs.~(406)--(410) (including two photon/phonon slips and the subscript slip
+$\Omega^0_\sigma\to\Omega^0_{\sigma\sigma}$ in (406)), the left-hand side of Eq.~(410) [now (410$'$)], a new
+paragraph and a new Sec.~7.1.1 with Eqs.~(410a)--(410h) after Eq.~(410$'$), and the title of Sec.~7.3
+together with one paragraph after Eq.~(454). \emph{Unchanged:} Eqs.~(406)--(409); Eqs.~(411)--(454),
+apart from the basis phase of Sec.~\ref{sec:phase}; Eqs.~(455)--(459) and the $z$-dependent Dyson
+equation on p.~100, which are the general, finite-$c$ transcription to 2D; the electrostatic
+Eqs.~(460)--(472) of Sec.~8.1, which do not describe $Q\lesssim\omega/c$ but need no change; and the
+classical discussion of pp.~33--35, Eqs.~(159)--(165), which assumes $\nabla\times\mathbf E=0$ and is the
+electrostatic picture.
+
+\subsection{Corrected and new equations, replacement prose}
+\paragraph{1. Title of Sec.~7.1 (p.~90).}
+Replace ``Lowest self-energy correction and LO-TO splitting'' by ``Lowest self-energy correction and the
+phonon polariton at $\mathbf q=0$''.
+
+\paragraph{2. Opening of Sec.~7.1 (p.~90).}
+Replace ``This procedure is completely analogous to the non-analytic dynamical matrix correction done by
+Quantum Espresso. Let's continue with the diagonal approximation. Suppose that we neglect the interaction
+with electrons, then'' by:
+\begin{quote}
+The self-energy (399) describes how the long-range electromagnetic field of the Born-charge dipoles of a
+polar mode acts back on the bare, short-range phonons. In this respect it plays the role of the standard
+non-analytic correction that Quantum Espresso adds to the DFPT dynamical matrix [\textit{P.~Giannozzi,
+S.~de~Gironcoli, P.~Pavone and S.~Baroni, Phys.\ Rev.\ B} \textbf{43}, 7231 (1991); \textit{S.~Baroni,
+S.~de~Gironcoli, A.~Dal~Corso and P.~Giannozzi, Rev.\ Mod.\ Phys.} \textbf{73}, 515 (2001); \textit{X.~Gonze
+and C.~Lee, Phys.\ Rev.\ B} \textbf{55}, 10355 (1997)]. Here, however, the field is retarded, and the
+result depends on the order in which the limits $\mathbf q\to0$ and $c\to\infty$ are taken. We first
+evaluate the lowest, electron-free correction at $\mathbf q=0$ for finite $c$. General $\mathbf q$ and
+electronic screening follow in Sec.~7.1.1, and the electrostatic limit, which gives the non-analytic
+correction, in Sec.~7.3. We keep the diagonal approximation and neglect the interaction with electrons,
+so that
+\end{quote}
+In the next lines, ``the photon self-energy is'' (before (406)) should read ``the phonon self-energy is'',
+with $\Omega^0_{\sigma\sigma}$ instead of $\Omega^0_\sigma$ on the left of Eq.~(406); and ``the new corrected
+photon energy satisfy'' (before (407)) should read ``the new corrected phonon energy satisfies''.
+
+\paragraph{3. Around Eqs.~(408)--(410) (p.~91).}
+Replace ``After the photon propagator (375) in optical limit $\mathbf q=0$'' by ``After the photon
+propagator (375), evaluated at $\mathbf q=0$ for finite $c$, i.e.\ deep inside the light cone
+($cq\ll\omega$), where it is isotropic,''. Replace ``From this is then possible to explicitly derive the
+phonon energy correction in the optical limit'' by ``The pole condition (407) then gives, for
+$\mathbf q\to0$ at finite $c$ and without electrons,'' and write Eq.~(410) as
+\begin{equation*}
+\tilde\omega^2_\sigma(\mathbf q\to0)\Big|_{c\ \text{finite}}
+=\omega^2_\sigma(\mathbf q=0)+\frac{4\pi}{\Omega_{\rm uc}}\sum_\alpha\big|j_{\alpha\sigma}(\mathbf q=0)\big|^2 .
+\tag{410$'$}
+\end{equation*}
+
+\paragraph{4. Insert after Eq.~(410$'$) (p.~91).}
+\begin{quote}
+Equation (410$'$) is not the LO--TO splitting. Because $D^0(\mathbf q=0,\omega)$ is isotropic, transverse
+and longitudinal polar modes are shifted by the same amount, so there is no splitting at this point, and
+since electrons are absent the shift is unscreened ($\epsilon_\infty=1$). Equation (410$'$) is the common
+$\mathbf q\to0$ frequency of the longitudinal mode and of the upper transverse phonon polariton
+[\textit{K.~Huang, Proc.\ R.\ Soc.\ Lond.\ A} \textbf{208}, 352 (1951)] of a crystal without electrons; the
+lower polariton branch is photon-like and tends to $\omega=0$. The LO--TO splitting given by the standard
+non-analytic correction, a term $\propto|\hat{\mathbf q}\cdot\mathbf j_\sigma|^2/(\hat{\mathbf q}\cdot
+\hat\epsilon^\infty\cdot\hat{\mathbf q})$, leaves the TO modes unshifted and carries $1/\epsilon_\infty$. Its
+counterpart here is Eq.~(454), obtained with $c\to\infty$ taken first and the electrons resummed into
+$D^{\rm e}$. For the longitudinal mode alone the two agree when $\epsilon_\infty=1$: Eq.~(410$'$) is then
+the electron-free LO frequency, whichever limit is taken first. Both limits, and the separate role of
+electronic screening, follow from one formula, derived next.
+\end{quote}
+
+\noindent New Sec.~7.1.1, \emph{Finite $\mathbf q$, electronic screening and the order of limits}:
+\begin{quote}
+Keep $\mathbf q$ finite, write $\hat{\mathbf q}=\mathbf q/q$, and model the electrons of an insulator by the
+low-frequency, $\mathbf G=0$ form of the correlator (383),
+$\Pi^{\rm e,0}_{jj\mu\nu}(\mathbf q,\omega)\simeq\frac{(\epsilon_\infty-1)\,\omega^2}{4\pi c}\,\delta_{\mu\nu}$, so
+that $\hat{\mathbf q}\cdot\hat\epsilon^{\rm e}\cdot\hat{\mathbf q}=\epsilon_\infty$ in Eq.~(432). The longitudinal
+and transverse projections of Eq.~(375) are $-4\pi c/\omega^2$ and $-4\pi c/(\omega^2-c^2q^2)$, the two
+blocks decouple, and the Dyson equation (388) gives
+\begin{equation*}
+D^{\rm e}_{\mu\nu}(\mathbf q,\omega)=-4\pi c\left[\frac{\hat q_\mu\hat q_\nu}{\epsilon_\infty\,\omega^2}
++\frac{\delta_{\mu\nu}-\hat q_\mu\hat q_\nu}{\epsilon_\infty\,\omega^2-c^2q^2}\right].
+\tag{410a}
+\end{equation*}
+For $\epsilon_\infty=1$ this is Eq.~(375). For an anisotropic tensor $\hat\epsilon^\infty$,
+$D^{\rm e}_{\mu\nu}=-4\pi c\,(\Lambda^{-1})_{\mu\nu}$ with the Maxwell matrix
+$\Lambda_{\mu\nu}(\mathbf q,\omega)=\omega^2\epsilon^\infty_{\mu\nu}-c^2(q^2\delta_{\mu\nu}-q_\mu q_\nu)$.
+Inserting (410a) and the vertices (392), with $j_{\alpha\sigma}(\mathbf q)$ the ionic vertex (385$'$), which
+carries the basis phase $e^{-i\mathbf q\mathbf r^0_{\rm a}}$, in Eq.~(399) gives
+\begin{equation*}
+\Omega^{\rm e}_{\sigma\sigma}(\mathbf q,\omega)=\frac{2\pi\hbar}{\Omega_{\rm uc}\,\omega_\sigma(\mathbf q)}
+\left[\frac{|\hat{\mathbf q}\cdot\mathbf j_\sigma|^2}{\epsilon_\infty}
++\frac{\omega^2\,|(1-\hat{\mathbf q}\hat{\mathbf q})\cdot\mathbf j_\sigma|^2}{\epsilon_\infty\,\omega^2-c^2q^2}\right],
+\tag{410b}
+\end{equation*}
+with $|\hat{\mathbf q}\cdot\mathbf j_\sigma|^2=\big|\sum_\alpha\hat q_\alpha j_{\alpha\sigma}(\mathbf q)\big|^2$ and
+$|(1-\hat{\mathbf q}\hat{\mathbf q})\cdot\mathbf j_\sigma|^2=\sum_\alpha|j_{\alpha\sigma}(\mathbf q)|^2
+-|\hat{\mathbf q}\cdot\mathbf j_\sigma|^2$. For $\epsilon_\infty=1$, (410b) is $\Omega^0_{\sigma\sigma}$ of
+Eq.~(406); the difference is $\Delta\Omega^{\rm e}_{\sigma\sigma}$ of Eq.~(402), which at $\mathbf q=0$ equals
+$\frac{2\pi\hbar}{\Omega_{\rm uc}\omega_\sigma}(\epsilon_\infty^{-1}-1)\sum_\alpha|j_{\alpha\sigma}|^2<0$. The poles
+of Eq.~(405) satisfy
+\begin{equation*}
+\omega^2=\omega^2_\sigma(\mathbf q)+\frac{4\pi}{\Omega_{\rm uc}}
+\left[\frac{|\hat{\mathbf q}\cdot\mathbf j_\sigma|^2}{\epsilon_\infty}
++\frac{\omega^2\,|(1-\hat{\mathbf q}\hat{\mathbf q})\cdot\mathbf j_\sigma|^2}{\epsilon_\infty\,\omega^2-c^2q^2}\right].
+\tag{410c}
+\end{equation*}
+Without the diagonal approximation, the $3s\times3s$ Dyson equation (398) gives instead
+\begin{equation*}
+\det\left[(\omega^2-\omega^2_\sigma)\,\delta_{\sigma\sigma'}
+-\frac{4\pi\omega^2}{\Omega_{\rm uc}}\sum_{\alpha\beta}j^*_{\alpha\sigma}(\mathbf q)\,(\Lambda^{-1})_{\alpha\beta}\,
+j_{\beta\sigma'}(\mathbf q)\right]=0 .
+\tag{410d}
+\end{equation*}
+For a single polar mode, or for degenerate modes chosen with mutually orthogonal $\mathbf j_\sigma$ along
+or across $\hat{\mathbf q}$ (isotropic $\epsilon_\infty$), (410d) reduces to (410c). The longitudinal term
+of (410c) contains no $c$: the LO frequency is not retarded. The transverse term contains $c$ and $q$
+only through $cq$, so the limits $\mathbf q\to0$ and $c\to\infty$ do not commute. For $\mathbf q\to0$ at
+finite $c$,
+\begin{equation*}
+\tilde\omega^2_\sigma=\omega^2_\sigma+\frac{4\pi}{\Omega_{\rm uc}\,\epsilon_\infty}\sum_\alpha|j_{\alpha\sigma}|^2 ,
+\tag{410e}
+\end{equation*}
+while for $cq\gg\sqrt{\epsilon_\infty}\,\omega$
+\begin{equation*}
+\begin{aligned}
+\tilde\omega^2_\sigma(\mathbf q)&=\omega^2_\sigma(\mathbf q)+\frac{4\pi}{\Omega_{\rm uc}\,\epsilon_\infty}\,
+|\hat{\mathbf q}\cdot\mathbf j_\sigma|^2\\
+&=\omega^2_\sigma(\mathbf q)+\frac{W^{\rm e}(\mathbf q,0)}{\Omega_{\rm uc}}\Big|\sum_\alpha q_\alpha
+j_{\alpha\sigma}(\mathbf q)\Big|^2 .
+\end{aligned}
+\tag{410f}
+\end{equation*}
+Eq.~(410e) is isotropic and reduces to Eq.~(410$'$) for $\epsilon_\infty=1$. Eq.~(410f), with
+$W^{\rm e}(\mathbf q,0)=4\pi/(q^2\epsilon_\infty)$, is Eq.~(454); with a tensor $\hat\epsilon^\infty$ it becomes
+$4\pi|\hat{\mathbf q}\cdot\mathbf j_\sigma|^2/(\Omega_{\rm uc}\,\hat{\mathbf q}\cdot\hat\epsilon^\infty\cdot
+\hat{\mathbf q})$, the standard non-analytic term, and in that limit (410d) is the mode-basis form of the
+dynamical matrix plus the non-analytic correction. For a longitudinal mode the two limits give the same
+frequency; they differ only for the transverse modes. For a cubic diatomic crystal
+($Z^*_{\rm a}=-Z^*_{\rm b}=Z^*$, $\sum_\alpha|j_{\alpha\sigma}|^2=Z^{*2}/M$ for each optical mode, $M$ the
+reduced mass, $\omega_p^2=4\pi Z^{*2}/(\Omega_{\rm uc}M)$ the ionic plasma frequency defined after
+Eq.~(152), p.~33), (410c) gives one longitudinal mode and two transverse polariton branches,
+\begin{equation*}
+\begin{gathered}
+\omega^2_{\rm L}=\omega^2_\sigma+\frac{\omega_p^2}{\epsilon_\infty},\qquad
+c^2q^2=\omega^2\epsilon(\omega),\quad \epsilon(\omega)=\epsilon_\infty+\frac{\omega_p^2}{\omega^2_\sigma-\omega^2},\\
+\omega^2_\pm=\frac{B\pm\sqrt{B^2-4\epsilon_\infty c^2q^2\omega^2_\sigma}}{2\epsilon_\infty},\qquad
+B=\epsilon_\infty\omega^2_{\rm L}+c^2q^2 .
+\end{gathered}
+\tag{410g}
+\end{equation*}
+At $\mathbf q\to0$, $\omega_+\to\omega_{\rm L}$ and $\omega_-\to0$; for $cq\gg\sqrt{\epsilon_\infty}\,\omega_\sigma$,
+$\omega_-\to\omega_\sigma=\omega_{\rm TO}$ and $\omega_{\rm L}=\omega_{\rm LO}$. The crossover between the two
+regimes is at
+\begin{equation*}
+q_c=\frac{\sqrt{\epsilon_\infty}\,\omega}{c},\qquad \omega\simeq\omega_\sigma .
+\tag{410h}
+\end{equation*}
+For GaAs ($Z^*=2.07\,|e|$, $\Omega_{\rm uc}=45.2$~\AA$^3$, $M=36.1$~amu, $\epsilon_\infty=10.9$,
+$\hbar\omega_{\rm TO}=33.3$~meV, $\hbar\omega_{\rm LO}=36.2$~meV; literature values) one finds
+$\hbar\omega_p=44.6$~meV. With $\omega_\sigma(0)=\omega_{\rm TO}$, since the $\mathbf G=0$ treatment has no
+Lorentz local-field term, Eq.~(410$'$) gives 55.6~meV, (410e) gives 35.9~meV for all three polar modes,
+and (410f) gives LO at 35.9~meV and TO at 33.3~meV. The difference between 55.6 and 35.9~meV is
+electronic screening; the order of limits decides only whether the transverse modes share the shift
+(35.9~meV) or stay at 33.3~meV. The crossover is $q_c=5.6\times10^{-5}$~\AA$^{-1}$, about
+$5\times10^{-5}$ of $2\pi/a$. At $q=10\,q_c$ the TO mode lies only 0.03~meV below $\omega_{\rm TO}$. Except
+for $q\lesssim q_c$, retardation is therefore negligible, and the electrostatic result (454) applies within
+the manuscript's $\mathbf G=0$ treatment (in the diagonal approximation; for mixed polar modes, the
+$c\to\infty$ limit of (410d)). At finite $\mathbf q$, $j_{\alpha\sigma}(\mathbf q)$ is the vertex (385$'$) with
+the basis phase $e^{-i\mathbf q\mathbf r^0_{\rm a}}$; without it, (410c) would give the acoustic modes a
+spurious, cell-dependent dipolar shift [cf.\ (131b)]. Eq.~(410$'$) and its screened form (410e) describe
+the polariton region $q\lesssim q_c$ ($q\lesssim\omega/c$ without electrons), probed by infrared
+spectroscopy and near-forward (polariton) Raman scattering. Visible-light backscattering Raman probes
+$q\approx10^{-2}$~\AA$^{-1}$, more than $10^2\,q_c$, and sees the split TO and LO of (410f). In the
+polariton region the direction dependence of the electrostatic term at $\Gamma$ is lifted by
+retardation.
+\end{quote}
+
+\paragraph{5. Sec.~7.3 (p.~99).}
+Title: ``Phonon's self-energy in electrostatic limit and the LO--TO splitting''. After the sentence that
+follows Eq.~(454), i.e.\ after ``\ldots\ Nano Lett.\ \textbf{17}, 3758 (2017).'', insert (first of the two
+insertions after (454); order in Sec.~\ref{sec:int-p99}):
+\begin{quote}
+With $W^{\rm e}(\mathbf q,0)=4\pi/(\mathbf q\cdot\hat\epsilon^\infty\cdot\mathbf q)$, Eq.~(454) is the standard
+non-analytic term that Quantum Espresso adds to the DFPT dynamical matrix (references in Sec.~7.1). It
+shifts only modes with $\hat{\mathbf q}\cdot\mathbf j_\sigma\neq0$, and the shift is reduced by the factor
+$1/(\hat{\mathbf q}\cdot\hat\epsilon^\infty\cdot\hat{\mathbf q})$ relative to the unscreened one. It is the
+$cq\gg\sqrt{\epsilon_\infty}\,\omega$ limit (410f) of Eq.~(410c), whereas Eq.~(410$'$) is its electron-free
+$\mathbf q\to0$ limit at finite $c$.
+\end{quote}
+
+\subsection{Justification}
+Equations (410a)--(410d) use only the manuscript's definitions. (410a) solves Eq.~(388) with Eq.~(375).
+(410b) is Eq.~(399) with the vertices (392). (410c) is the pole condition of Eq.~(405), and (410d)
+follows from Eq.~(398). The checks are as follows.
+(i)~Dimensions: in Gaussian units $[Z^{*2}]$ is energy$\times$length, so
+$\frac{4\pi}{\Omega_{\rm uc}}|j_{\alpha\sigma}|^2$ is a squared frequency, $\Omega^{\rm e}$ an energy and $q_c$ an
+inverse length.
+(ii)~$\epsilon_\infty=1$, $\mathbf q\to0$ reproduces Eqs.~(408)--(410).
+(iii)~$c\to\infty$ reproduces Eqs.~(446), (452) and (454), and with a tensor $\hat\epsilon^\infty$ the
+standard non-analytic term.
+(iv)~The transverse roots obey Huang's $c^2q^2=\omega^2\epsilon(\omega)$ and the Lyddane--Sachs--Teller
+relation $\epsilon(0)/\epsilon_\infty=\omega_{\rm L}^2/\omega_\sigma^2$.
+(v)~The Verdi--Giustino vertex [Giustino's Eq.~(180); SI with dimensionless $Z^*$, so
+$Z^*_{\rm here}=|e|Z^*_{\rm Giustino}$ and $e^2/4\pi\varepsilon_0\to e^2$] equals the Fr\"ohlich coupling,
+$\propto[1/\epsilon_\infty-1/\epsilon(0)]$, if and only if $\omega_{\rm LO}^2-\omega_{\rm TO}^2=\omega_p^2/
+\epsilon_\infty$, whether $\epsilon(0)$ is taken from the Lyddane--Sachs--Teller relation or from
+$\epsilon(0)=\epsilon_\infty+\omega_p^2/\omega_{\rm TO}^2$. This is the screened, unretarded L-mode shift of
+(410c), which holds at every $\mathbf q$, i.e.\ for (410e) and (410f) alike. The unscreened shift of
+Eq.~(410) satisfies it only for $\epsilon_\infty=1$, i.e.\ within its own electron-free model. The check
+therefore tests the screening of the shift, not the order of limits.
+Each of these checks, and the GaAs numbers above, was also verified numerically.
+
+%======================================================================================
+\section{The missing factor $e$ in the electrostatic Fr\"ohlich vertices (Sec.~7.2)}\label{sec:efactor}
+
+\subsection{Location}
+Sec.~7.2, pp.~93--99: the continuity equation on p.~94, Eqs.~(422)--(428), the displays on pp.~95, 96
+and 98 and the sentence at the top of p.~99; also the 2D bubble on p.~101, and, for the same convention,
+Eqs.~(234), (235), (237), (312) (pp.~47--48, 68) and one sentence in Sec.~6.
+
+\subsection{Problem}
+The connection between charge and current vertices, Eq.~(428), equates the charge vertex
+$\rho_{n\mathbf k,m\mathbf k+\mathbf q}$ with $-\sum_\mu\hbar q_\mu j^\mu_{n\mathbf k,m\mathbf k+\mathbf q}/
+(E_{n\mathbf k}-E_{m\mathbf k+\mathbf q})$. The former is a matrix element of the electron \emph{number}
+density $\rho_{\rm e}=\Psi^+\Psi$ [Eqs.~(106), (239), (420), (426)]: $\rho_{\rm e}$ has the dimension of an
+inverse volume, and the matrix element $\rho_{n\mathbf k,m\mathbf k+\mathbf q}$ is dimensionless. The latter
+contains the charge $e$ through the current vertex (384). The factor is lost in the continuity equation
+on p.~94, $\dot\rho_{\rm e}=-\nabla\mathbf j_{\rm e}$, which sets the rate of a number density equal to the
+divergence of a charge current. For free electrons, $\phi_{\mathbf k}=e^{i\mathbf k\cdot\mathbf r}/\sqrt\Omega$
+gives $\rho_{\mathbf k,\mathbf k+\mathbf q}=1$, $\mathbf j_{\mathbf k,\mathbf k+\mathbf q}=\frac{e\hbar}{2m_{\rm e}}
+(2\mathbf k+\mathbf q)$ and $E_{\mathbf k}-E_{\mathbf k+\mathbf q}=-\frac{\hbar^2}{2m_{\rm e}}(2\mathbf k\cdot\mathbf q
++q^2)$, so $-\hbar\mathbf q\cdot\mathbf j/(E_{\mathbf k}-E_{\mathbf k+\mathbf q})=e$, not $1$. Both electrostatic
+vertices obtained from (428), the bare one on p.~95 and the screened (boxed) one on p.~98, therefore
+lack one factor $e$. As printed they have the dimension of $Z^*/(\Omega_{\rm uc}q)$ times a length, i.e.\
+of an electrostatic potential, not of an energy. This is the $e^2$ ``missing'' in the margin note on
+p.~96: one $e$ is inside $Z^*$, the other is the $e$ of (428). The propagator $D$ is not involved. The
+same slip affects the transcription of Verdi and Giustino's vertex on p.~96 (with the manuscript's $Z^*$
+it contains $e^3$) and the 2D electronic bubble on p.~101 (it needs $e^2$). The electrodynamic vertices
+(414)--(417), (429)--(430), (447)--(448) and Eqs.~(431)--(446) are correct in this respect: there the
+charge sits in $j^\mu$, $\Pi^{\rm e,0}_{jj}$ carries $e^2$, and so does $\Pi^{\rm e,0}_{\rho\rho}$ through
+(350).
+
+\subsection{Choice of fix}
+Keep $\rho_{\rm e}=\Psi^+\Psi$ and $\rho_{n\mathbf k,m\mathbf k+\mathbf q}(\mathbf G)=\langle\phi_{n\mathbf k}|
+e^{-i(\mathbf q+\mathbf G)\mathbf r}|\phi_{m\mathbf k+\mathbf q}\rangle$ as number densities, as they are defined
+in (106), (239), (420), (426) and as the diamagnetic terms require: the $\mathbf A^2$ terms
+$\frac{e^2}{2m_{\rm e}c^2}\int\rho_{\rm e}\mathbf A^2$ of (237), (270), (273), (312) and
+$\Pi^{\rm e,dia}=-\frac{e^2}{mc}\rho^{\rm e}\delta(\mathbf r-\mathbf r')\delta_{\alpha\beta}$ of (279), (321).
+Write $e\rho_{\rm e}$ wherever a charge density is meant. This leaves every definition, and every result
+written with $j^\mu$, $j_{\alpha\sigma}$ or $W^{\rm e}$, unchanged. The alternative,
+$\rho_{\rm e}\equiv e\Psi^+\Psi$ (the ``charge density operator'' of the text after (234)), would change
+(239), (420), the $\mathbf A^2$ terms of (237), (270), (273), (312) and the diamagnetic terms of (279),
+(321) ($e^2\to e$). Since (420) is substituted explicitly, it would also need the factor $e$ on the
+left-hand sides of (423)--(425), of the two displays between (424) and (425) and of the display after
+(427); only the continuity equation on p.~94 and (422) would stay as printed. And (428) would still need
+the $e$ unless the vertex (106)/(426) were also redefined as $e\langle\phi|e^{-i(\mathbf q+\mathbf G)\mathbf r}|
+\phi\rangle$, which would in turn change (105)--(107), (130)--(131) and the display on p.~96. Within
+Sec.~7.2 the alternative therefore edits every equation edited here except the continuity equation and
+(422); it adds eight edits elsewhere and saves only the Coulomb terms and the Sec.~6 sentence of
+item~4 below.
+
+\subsection{What changes, what does not}
+\emph{Changed:} the display after (420) on p.~93 [(p93c$'$), a missing $\hbar$], the continuity equation on
+p.~94 [(p94$'$)], Eq.~(422) [(422$'$)], the left-hand sides of (423)--(425), of the two displays between
+(424) and (425) and of the display after (427), Eq.~(428) [(428$'$)], the vertices on pp.~95 and 98
+[(p95$'$), (p98$'$)], the display and the margin note on p.~96 [(p96$'$) and new (428a)], one sentence on
+p.~99 [new (448a)], the bubble on p.~101 [(p101$'$)], and, for the same convention, (234), (235), (237),
+(312) [(234$'$), (235$'$), (237$'$), (312$'$)] and one sentence in Sec.~6. The displays on pp.~95--98 and
+(237$'$) also carry the basis phase of Sec.~\ref{sec:phase}; their final forms are in
+Sec.~\ref{sec:interplay}. \emph{Unchanged by the present correction} (several of them change by the basis
+phase, Sec.~\ref{sec:phase}): (105)--(131) [Eq.~(131) already carries one explicit $e$], (239)--(240),
+(321), (383)--(421), (426)--(427), (429)--(454), and (455)--(472) apart from the bubble on p.~101.
+
+\subsection{Corrected equations and replacement prose}
+\paragraph{1. Continuity and Eqs.~(422)--(428) (pp.~93--95).}
+On p.~93 the Heisenberg evolution after (420) reads
+\begin{equation*}
+c_{n\mathbf k}(t)=e^{iH^{\rm e}_0t/\hbar}\,c_{n\mathbf k}\,e^{-iH^{\rm e}_0t/\hbar}.
+\tag{p93c$'$}
+\end{equation*}
+On p.~94 replace ``So the equation for charge density is'' by ``So the equation for the electron (number)
+density is''. Replace ``If we now use the continuity equation \ldots\ then we have (422)'' by: ``Since
+$\rho_{\rm e}$ (420) is a number density and $\mathbf j_{\rm e}$ (419) a charge current density, the
+continuity equation reads
+\begin{equation*}
+e\,\dot\rho_{\rm e}(\mathbf r,t)=-\nabla\cdot\mathbf j_{\rm e}(\mathbf r,t)
+\tag{p94$'$}
+\end{equation*}
+and we have
+\begin{equation*}
+e\,[\rho_{\rm e}(\mathbf r,t),H^{\rm e}_0]_-=-i\hbar\,\nabla\cdot\mathbf j_{\rm e}(\mathbf r,t).\text{''}
+\tag{422$'$}
+\end{equation*}
+Multiply the left-hand sides of (423), (424), (425), of the two unnumbered displays between (424) and
+(425), and of the display after (427) by $e$. Eq.~(428) becomes
+\begin{equation*}
+e\,\rho_{n\mathbf k,m\mathbf k+\mathbf q}=-\sum_\mu\hbar q_\mu\,
+\frac{j^\mu_{n\mathbf k,m\mathbf k+\mathbf q}}{E_{n\mathbf k}-E_{m\mathbf k+\mathbf q}} .
+\tag{428$'$}
+\end{equation*}
+In the same passage: before (418), ``retarded limit $c\to\infty$'' should read ``non-retarded
+(instantaneous) limit $c\to\infty$''; and before (417), ``reduce to standard bare Fr\"ohlich vertex
+Eq.~(131)'' should read ``reduces, up to the overall sign $e/|e|$ [see (428a)] and the relabelling
+$n\leftrightarrow m$, $\mathbf k\to\mathbf k+\mathbf q$, to the unscreened ($\hat\epsilon^\infty=1$),
+$\mathbf G=0$ term of the polar vertex (131$'$), written in Gaussian units''. [Eq.~(131$'$) uses $e>0$,
+with the electron charge written $-e$ in (123); from Sec.~4 on $e$ is the signed electron charge.]
+
+\paragraph{2. The vertices on pp.~95, 96, 98 and the sentence on p.~99.}
+With (428$'$) inserted in (418$'$) and (448$'$), both electrostatic vertices gain the factor $e$. Since
+the basis phase of Sec.~\ref{sec:phase} changes the same displays, the final forms (p95$'$), (p96$'$),
+(p98$'$), the relations (428a), (448a) to Verdi and Giustino's vertex, and the replacement prose for
+pp.~95--99 are given once, in Sec.~\ref{sec:int-vertices}. The blue margin note on p.~96 can be deleted.
+
+\paragraph{3. 2D electronic bubble (p.~101).}
+The bubble that enters (435) and (461)--(470) is the charge--charge correlator [cf.\ (350)]:
+\begin{equation*}
+\Pi^{\rm e,0}_{\rho\rho}(\mathbf Q,\omega)=\frac{2e^2}{S}\sum_{\mathbf K\in{\rm SBZ}}\sum_{nm}
+\frac{f_{n\mathbf K}-f_{m\mathbf K+\mathbf Q}}{\hbar\omega+E_{n\mathbf K}-E_{m\mathbf K+\mathbf Q}+i\eta}\,
+\big|\rho_{n\mathbf K,m\mathbf K+\mathbf Q}\big|^2 .
+\tag{p101$'$}
+\end{equation*}
+With it, (470) is dimensionless (with $v_Q=2\pi/Q$) and, for a 2D electron gas, gives Stern's
+$\epsilon^{\rm e}_{\rm 2D}(Q,0)=1+2m^*e^2/(\hbar^2Q)$, valid for $Q\le2k_{\rm F}$ at $T\to0$ and without a
+background dielectric constant. Eqs.~(461)--(462) and (469)--(472) are unchanged.
+
+\paragraph{4. The same convention in the Hamiltonian (pp.~47--48, 68).}
+Replace (234) and the sentence after it by
+\begin{equation*}
+\nabla\cdot\mathbf E=4\pi\big(e\rho_{\rm e}+\rho_{\rm ion}\big),
+\tag{234$'$}
+\end{equation*}
+``where $\rho_{\rm e}=\Psi^+\Psi$ is the electron density operator (239), so that $e\rho_{\rm e}$ is the
+electronic charge density operator'' [in (179)--(180) $\rho_{\rm e}$ denotes this charge density], and
+(235) by
+\begin{equation*}
+H^0_{\rm Lph}=\frac12\int d\mathbf r\int d\mathbf r'\,
+\frac{[e\rho_{\rm e}(\mathbf r)+\rho_{\rm ion}(\mathbf r)][e\rho_{\rm e}(\mathbf r')+\rho_{\rm ion}(\mathbf r')]}
+{|\mathbf r-\mathbf r'|} .
+\tag{235$'$}
+\end{equation*}
+The last term of (237) changes in the same way; (237) also changes by the basis phase, and its final
+form (237$'$) is in Sec.~\ref{sec:int-hamiltonian}. Eq.~(312) becomes
+\begin{equation*}
+\begin{split}
+V'={}&-\frac1c\int d\mathbf r\,\mathbf j^{\rm e}(\mathbf r)\mathbf A(\mathbf r)
++\frac{e^2}{2m_{\rm e}c^2}\int d\mathbf r\,\rho^{\rm e}(\mathbf r)\mathbf A^2(\mathbf r)\\
+&-\frac1c\int d\mathbf r\,\mathbf j^{\rm ion}(\mathbf r)\mathbf A(\mathbf r)
++\frac{e^2}{2m_0c^2}\sum_{\alpha\beta}\int d\mathbf r\,A_\alpha(\mathbf r)\rho^{\rm ion}_{\alpha\beta}(\mathbf r)
+A_\beta(\mathbf r)\\
+&+\frac12\int d\mathbf r\int d\mathbf r'\,
+\frac{[e\rho^{\rm e}(\mathbf r)+\rho^{\rm ion}(\mathbf r)][e\rho^{\rm e}(\mathbf r')+\rho^{\rm ion}(\mathbf r')]}
+{|\mathbf r-\mathbf r'|};
+\end{split}
+\tag{312$'$}
+\end{equation*}
+its $\mathbf A^2$ terms stay as printed, and $\rho^{\rm ion}$, $\mathbf j^{\rm ion}$ and $\rho^{\rm ion}_{\alpha\beta}$ are
+built from (314$'$), (272$'$) and (315$'$). In Sec.~6 add after (315): ``The electronic charge vertex is
+therefore $e\rho^{\rm e}$, and $\Pi^{\rm e}_{\rho\rho}$, $\Pi^{\rm e}_{\rho j}$, $\Pi^{\rm e}_{j\rho}$ in
+(320)--(350) are correlators of $e\rho^{\rm e}$, as the continuity equation (335) requires.'' These edits
+change no displayed result.
+
+\subsection{Justification}
+Equation (428$'$) follows from the manuscript's own derivation once charge conservation is written for a
+number density, (p94$'$). With free electrons it is checked in one line (see above), and it holds for any
+local $H^{\rm e}_0$. Independently, the Coulomb term of (235$'$), $e\int d\mathbf r\,\rho_{\rm e}(\mathbf r)
+\phi_{\rm ion}(\mathbf r)$, with $\phi_{\rm ion}$ the potential of $\rho_{\rm ion}=-\nabla\cdot\mathbf P$ and
+$\mathbf P$ from (241$'$), gives as coefficient of $c^+_{m\mathbf k+\mathbf q}c_{n\mathbf k}
+(a_{\mathbf q\sigma}+a^+_{-\mathbf q\sigma})$
+\begin{equation*}
+-\frac{4\pi ie}{\Omega_{\rm uc}}\sum_{\rm a}\sum_{\mu\nu}\sqrt{\frac{\hbar}{2Nm_{\rm a}\omega_\sigma(\mathbf q)}}\,
+\frac{q_\mu Z^*_{{\rm a}\mu\nu}e_{{\rm a}\nu\sigma}(\mathbf q)}{q^2}\,
+\langle\phi_{m\mathbf k+\mathbf q}|e^{i\mathbf q(\mathbf r-\mathbf r^0_{\rm a})}|\phi_{n\mathbf k}\rangle ,
+\end{equation*}
+i.e.\ Eq.~(131$'$) at $\hat\epsilon^\infty=1$, $\mathbf G=0$ in Gaussian units (with $n\leftrightarrow m$,
+$\mathbf k\to\mathbf k+\mathbf q$). For electrons this is $g^0_{m n\sigma}$ of (p96$'$), and for either sign of
+$e$ it is $-$(p95$'$). Checks: (i)~dimensions: $[eZ^*]$ is energy$\times$length, so (p95$'$), (p98$'$) are
+energies, while the printed forms are energies divided by a charge; $v_Q\Pi^{\rm e,0}_{\rho\rho}$ of
+(p101$'$) is dimensionless. (ii)~The longitudinal projection of (375),
+$\hat{\mathbf q}\cdot D^0\cdot\hat{\mathbf q}=-4\pi c/\omega^2$, equals that of (374) $=$ (442) for every $c$,
+and its factor $c$ cancels the $c^{-1}$ in the prefactor of (417). The longitudinal part of (417)
+therefore does not depend on $c$, and (p95$'$) is that longitudinal part for every $c$. Likewise (p98$'$)
+is the longitudinal part of (430) for an isotropic $\hat\epsilon^{\rm e}$
+($\hat{\mathbf q}\cdot D^{\rm e}\cdot\hat{\mathbf q}=-4\pi c/(\omega^2\epsilon^{\rm e}_{\rm L})$). The transverse
+parts vanish as $(\omega/cq)^2$. (iii)~With (p95$'$) and (p98$'$), $\sum g^{\rm dyn}\chi^0g^{\rm dyn,0}$
+reproduces (413), and $\Omega^0_{\sigma\sigma}+\Delta\Omega^{\rm e}_{\sigma\sigma}$ reproduces (452), i.e.\ the
+screened Gonze--Lee term; with the printed vertices both fail by $e^2$. (iv)~(428a), (448a) agree with
+Giustino's Eq.~(180) (SI, dimensionless $Z^*$; $\mathbf G=0$, phase $e^{-i\mathbf q\bm{\tau}_\kappa}$
+included); the numbers are in Sec.~\ref{sec:int-signs}. All of this was verified numerically, including
+(428$'$) to $10^{-8}$ or better for Bloch states of a non-centrosymmetric local potential, the
+$c$-independence of the longitudinal part in (ii) to $10^{-14}$, and Stern's result for (p101$'$).
+
+%======================================================================================
+\section{Interplay of the corrections}\label{sec:interplay}
+
+Where two corrections touch the same equation, this section gives the single final form. The factor $e$
+(Sec.~\ref{sec:efactor}) multiplies the prefactor; the basis phase (Sec.~\ref{sec:phase}) multiplies the
+atom summand, with $e^{-i\mathbf q\mathbf r^0_{\rm a}}$ next to $e_{{\rm a}\nu\sigma}(\mathbf q)$ and
+$e^{+i\mathbf q\mathbf r^0_{\rm a}}$ next to $e^*_{{\rm a}\nu\sigma}(\mathbf q)$. The two operations commute.
+
+\subsection{The vertices on pp.~95--99 (factor $e$ and basis phase)}\label{sec:int-vertices}
+\paragraph{p.~95.} Replace ``After using (428) in (418) we get'' and the display by ``After using (428$'$)
+in (418$'$) we get''
+\begin{equation*}
+\lim_{c\to\infty}g^{\rm dyn,0}_{nm\sigma}(\mathbf k,\mathbf q,\omega)=
+\frac{4\pi i\,e}{\Omega_{\rm uc}}\sum_{\rm a}\sum_{\mu\nu=xyz}
+\sqrt{\frac{\hbar}{2Nm_{\rm a}\omega_\sigma(\mathbf q)}}\,
+\frac{q_\mu Z^*_{{\rm a}\mu\nu}e_{{\rm a}\nu\sigma}(\mathbf q)\,e^{-i\mathbf q\mathbf r^0_{\rm a}}}{q^2}\,
+\big[\rho_{n\mathbf k,m\mathbf k+\mathbf q}\big]^* .
+\tag{p95$'$}
+\end{equation*}
+
+\paragraph{p.~96.} Replace the paragraph after (p95$'$), its display and the blue margin note by:
+\begin{quote}
+Let us write the long-range vertex of \textit{C.~Verdi and F.~Giustino, Phys.\ Rev.\ Lett.}\ \textbf{115},
+176401 (2015), Eq.~4, with the basis phase restored as in Eq.~(180) of \textit{F.~Giustino, Rev.\ Mod.\
+Phys.}\ \textbf{89}, 015003 (2017), for the moment without electronic polarizability
+($\hat\epsilon^\infty=1$) and crystal local fields ($\mathbf G=0$), and in Gaussian units
+($e^2/4\pi\epsilon_0\equiv e^2$). Their Born charges are dimensionless, ours carry the charge,
+$Z^*_{{\rm a}\mu\nu}=|e|\,Z^{*\rm VG}_{{\rm a}\mu\nu}$, and their atomic positions $\bm{\tau}_\kappa$ are the
+positions $\mathbf r^0_{\rm a}$ of our dipoles (314$'$). Their wave functions are normalized in the
+Born--von K\'arm\'an supercell of $N_p=N$ cells, as ours are in $\Omega=N\Omega_{\rm uc}$, and their
+$N_p^{-1/2}$ under the square root corresponds, as in (108), to $H_{\rm ep}=\sum g\,c^+c\,(a+a^+)$ without a
+separate $N^{-1/2}$. In our notation their vertex reads
+\begin{equation*}
+\begin{split}
+g^0_{mn\sigma}(\mathbf k,\mathbf q)={}&\frac{4\pi i\,|e|}{\Omega_{\rm uc}}\sum_{\rm a}\sum_{\mu\nu}
+\sqrt{\frac{\hbar}{2Nm_{\rm a}\omega_\sigma(\mathbf q)}}\,
+\frac{q_\mu Z^*_{{\rm a}\mu\nu}e_{{\rm a}\nu\sigma}(\mathbf q)}{q^2}\\
+&\times\langle\phi_{m\mathbf k+\mathbf q}|e^{i\mathbf q(\mathbf r-\mathbf r^0_{\rm a})}|\phi_{n\mathbf k}\rangle .
+\end{split}
+\tag{p96$'$}
+\end{equation*}
+Since $\langle\phi_{m\mathbf k+\mathbf q}|e^{i\mathbf q(\mathbf r-\mathbf r^0_{\rm a})}|\phi_{n\mathbf k}\rangle
+=e^{-i\mathbf q\mathbf r^0_{\rm a}}\big[\rho_{n\mathbf k,m\mathbf k+\mathbf q}\big]^*$, Eq.~(p95$'$) is
+\begin{equation*}
+\lim_{c\to\infty}g^{\rm dyn,0}_{nm\sigma}(\mathbf k,\mathbf q,\omega)=\frac{e}{|e|}\,g^0_{mn\sigma}(\mathbf k,\mathbf q)
+=-g^0_{mn\sigma}(\mathbf k,\mathbf q).
+\tag{428a}
+\end{equation*}
+The two agree, basis phase included, up to the sign of the electron charge. This overall sign is a
+convention of the diagrammatic vertices (415)--(416), namely of the factor $i$ and of the order in which
+the two vertices are written. It cannot be absorbed in $e_{{\rm a}\nu\sigma}(\mathbf q)$, because (p95$'$)
+and (p96$'$) are linear in the same polarization vector. Only the product $g^{\rm dyn}\chi^0g^{\rm dyn,0}$
+enters (413), and it is fixed: it does not depend on this convention or on the phase of
+$e_{{\rm a}\nu\sigma}(\mathbf q)$, and together with $\Omega^0_{\sigma\sigma}$ it reproduces (452). The sign
+therefore cancels in $\Delta\Omega^{\rm e}$ and in $|g|^2$. Where (p95$'$) is combined with vertices defined
+as Hamiltonian matrix elements, e.g.\ a short-range part $g^{\rm S}$ as in Verdi and Giustino's
+$g=g^{\rm S}+g^{\rm L}$, the Hamiltonian sign $g^0_{mn\sigma}=-\lim_{c\to\infty}g^{\rm dyn,0}_{nm\sigma}$ must
+be used. Of Verdi and Giustino's $e^2$, one $e$ is contained in our $Z^*$ and the other is the $e$ of the
+charge--current relation (428$'$); nothing is missing in $D$. The order of the band indices ($g_{mn}$
+there, $g_{nm}$ here) is only a label.
+\end{quote}
+
+\paragraph{p.~98.} Replace ``and using (428) we get'' and the boxed display by ``and using (428$'$) we
+get'' and the boxed display
+\begin{equation*}
+\lim_{c\to\infty}g^{\rm dyn}_{nm\sigma}(\mathbf k,\mathbf q,\omega)=
+\frac{4\pi i\,e}{\Omega_{\rm uc}}\sum_{\rm a}\sum_{\mu\nu=x,y,z}
+\sqrt{\frac{\hbar}{2Nm_{\rm a}\omega_\sigma(\mathbf q)}}\,
+\frac{q_\mu Z^*_{{\rm a}\mu\nu}e^*_{{\rm a}\nu\sigma}(\mathbf q)\,e^{i\mathbf q\mathbf r^0_{\rm a}}}
+{\mathbf q\cdot\hat\epsilon^{\rm e}(\mathbf q,\omega)\cdot\mathbf q}\,
+\rho_{n\mathbf k,m\mathbf k+\mathbf q} .
+\tag{p98$'$}
+\end{equation*}
+
+\paragraph{p.~99.} Replace ``This is again almost identical to \ldots\ electron-phonon vertex.'' by:
+\begin{quote}
+Compared with (p96$'$) and (p95$'$),
+\begin{equation*}
+\begin{aligned}
+\lim_{c\to\infty}g^{\rm dyn}_{nm\sigma}(\mathbf k,\mathbf q,\omega)
+&=-\frac{e}{|e|}\,\frac{q^2}{\mathbf q\cdot\hat\epsilon^{\rm e}(\mathbf q,\omega)\cdot\mathbf q}\,
+\big[g^0_{mn\sigma}(\mathbf k,\mathbf q)\big]^*\\
+&=-\frac{q^2}{\mathbf q\cdot\hat\epsilon^{\rm e}(\mathbf q,\omega)\cdot\mathbf q}\,
+\Big[\lim_{c\to\infty}g^{\rm dyn,0}_{nm\sigma}(\mathbf k,\mathbf q,\omega)\Big]^* .
+\end{aligned}
+\tag{448a}
+\end{equation*}
+The second form follows from (415) and (416) alone: both vertices carry the factor $+i$ and the
+propagator (442) is real, so the screened vertex is \emph{minus} the complex conjugate of the bare one
+times $q^2/(\mathbf q\cdot\hat\epsilon^{\rm e}\cdot\mathbf q)$, whatever the sign convention for $e$. For real
+$\hat\epsilon^{\rm e}$ and electrons, (448a) is the complex conjugate of the Verdi--Giustino vertex
+($\mathbf G=0$), with $\hat\epsilon^\infty$ replaced by the dynamical electronic dielectric tensor
+$\hat\epsilon^{\rm e}(\mathbf q,\omega)$; the basis phase becomes $e^{+i\mathbf q\mathbf r^0_{\rm a}}$ with
+$e^*_{{\rm a}\nu\sigma}(\mathbf q)$. For $\hbar\omega$ well below the gap and $\mathbf q\to0$,
+$\hat\epsilon^{\rm e}(\mathbf q,\omega)$ tends to the clamped-ion $\hat\epsilon^\infty$ (here the head of the
+RPA dielectric matrix, without local fields and exchange--correlation), and the two vertices have the
+same magnitude; for GaAs, $\sqrt N|g|\approx304$~meV at $q=0.1$~\AA$^{-1}$ from both (LO mode, the same
+frequency $\omega_{\rm LO}$ under both square roots).
+\end{quote}
+
+\subsection{Why the signs are as stated}\label{sec:int-signs}
+This subsection justifies (428a) and (448a); it is not meant for pasting. Insert $\lim_{c\to\infty}D^0$
+(442) and $\lim_{c\to\infty}D^{\rm e}$ (446) into (415) and (416):
+\begin{equation*}
+\begin{aligned}
+\lim_{c\to\infty}g^{\rm dyn,0}&=-\frac{4\pi ic}{\omega^2q^2}\,
+(\mathbf q\cdot\mathbf J^{{\rm e}*})(\mathbf q\cdot\mathbf J_\sigma),\\
+\lim_{c\to\infty}g^{\rm dyn}&=-\frac{4\pi ic}{\omega^2\,\mathbf q\cdot\hat\epsilon^{\rm e}\cdot\mathbf q}\,
+(\mathbf q\cdot\mathbf J^*_\sigma)(\mathbf q\cdot\mathbf J^{\rm e}),
+\end{aligned}
+\end{equation*}
+with $\mathbf J^{\rm e}$ the electronic vertex (414) and $\mathbf J_\sigma$ the ionic vertex (392), (385$'$).
+Since $(-i)^*=+i$, $\lim g^{\rm dyn}=-[\lim g^{\rm dyn,0}]^*\,q^2/(\mathbf q\cdot\hat\epsilon^{\rm e}\cdot\mathbf q)$
+for any complex $\hat\epsilon^{\rm e}$. The minus sign comes from the factor $+i$ that both (415) and (416)
+carry; it does not involve $e$, and it holds with or without the basis phase, because the phase of the
+ionic vertex is conjugated together with $e_{{\rm a}\nu\sigma}(\mathbf q)$. The overall sign $e/|e|$ of
+(428a) is a different matter: it compares the diagrammatic vertex with a Hamiltonian matrix element. The
+Coulomb route of Sec.~\ref{sec:efactor} (Justification) shows that the coefficient of
+$c^+_{m\mathbf k+\mathbf q}c_{n\mathbf k}(a_{\mathbf q\sigma}+a^+_{-\mathbf q\sigma})$ in the Hamiltonian is
+$-$(p95$'$) for either sign of $e$, and equals (p96$'$) for electrons. This is the convention of the
+factorization (411)--(416). It cancels in (413), and it cannot be moved into the polarization vector.
+
+With the dipoles at $\mathbf R^0_i$, as printed, the comparison with Verdi and Giustino would have to be
+made at $\bm{\tau}_\kappa=0$. With the basis phase, $\bm{\tau}_\kappa=\mathbf r^0_{\rm a}$ in (p96$'$), in the
+statement after (448a), and in check (iv) of Sec.~\ref{sec:efactor}. Both sides of (428a) and (448a) carry
+the same phase, so the relations hold exactly as they would without it. The GaAs value 304.05~meV (LO mode, $\rho=1$,
+$\mathbf q\to0$ eigenvectors; $Z^*=2.07\,|e|$, $\Omega_{\rm uc}=45.2$~\AA$^3$, reduced mass $36.1$~amu,
+$\epsilon_\infty=10.9$, $\hbar\omega_{\rm LO}=36.2$~meV) is common to (p98$'$) with
+$\hat\epsilon^{\rm e}\to\epsilon_\infty$ and to Giustino's Eq.~(180) evaluated in SI units. With finite-$q$
+eigenvectors and the basis phase (force-constant model of Sec.~\ref{sec:phase}) the common value at
+$q=0.1$~\AA$^{-1}$ is 303.0~meV along [111] and unchanged along [100]. Fr\"ohlich's vertex with
+$1/\epsilon_\infty-1/\epsilon(0)$ from Lyddane--Sachs--Teller ($\hbar\omega_{\rm TO}=33.3$~meV) gives
+319.8~meV; the ratio is $Z^*/Z^*_{\rm LST}=2.07/2.18$, a property of the input data. Numerically
+verified: (428a), (448a) in both forms and their independence of the phase of $e_{{\rm a}\nu\sigma}$ for a
+random three-atom cell with a complex symmetric $\hat\epsilon^{\rm e}$; the longitudinal parts of (415) with
+(375) and of (416) with (410a) equal (p95$'$) and (p98$'$) at every $c$, with the full vertices converging
+as $(\omega/cq)^2$; the cell-choice invariance (131a) of (p95$'$), (p96$'$), (p98$'$).
+
+\subsection{E.410: (410c)--(410f) with the vertex (385$'$)}\label{sec:int-e410}
+In Sec.~\ref{sec:e410}, (410b)--(410h) are written with $j_{\alpha\sigma}(\mathbf q)$, and the text states
+that this is the phase-corrected vertex (385$'$). Written out, the two strengths in (410b), (410c) and
+(410f) are
+\begin{equation*}
+\begin{aligned}
+|\hat{\mathbf q}\cdot\mathbf j_\sigma|^2&=\Big|\sum_{{\rm a}\alpha\beta}\hat q_\alpha
+\frac{Z^*_{{\rm a}\alpha\beta}}{\sqrt{m_{\rm a}}}e_{{\rm a}\beta\sigma}(\mathbf q)\,e^{-i\mathbf q\mathbf r^0_{\rm a}}\Big|^2,\\
+|(1-\hat{\mathbf q}\hat{\mathbf q})\cdot\mathbf j_\sigma|^2&=\sum_\alpha\Big|\sum_{{\rm a}\beta}
+\frac{Z^*_{{\rm a}\alpha\beta}}{\sqrt{m_{\rm a}}}e_{{\rm a}\beta\sigma}(\mathbf q)\,e^{-i\mathbf q\mathbf r^0_{\rm a}}\Big|^2
+-|\hat{\mathbf q}\cdot\mathbf j_\sigma|^2,
+\end{aligned}
+\end{equation*}
+and (410d) contains $j^*_{\alpha\sigma}(\mathbf q)$ with $e^{+i\mathbf q\mathbf r^0_{\rm a}}$. The final forms of
+(410c)--(410f) are therefore those of Sec.~\ref{sec:e410}; no further display needs to be pasted. The
+consequences are:
+\begin{itemize}
+\item At $\mathbf q\to0$ the phase is 1: (410$'$), (410e) and the GaAs values 55.6, 35.9 and 33.3~meV are
+unchanged. So is the polariton region, where $q_c|\mathbf r^0_{\rm As}-\mathbf r^0_{\rm Ga}|\approx10^{-4}$.
+\item At finite $\mathbf q$ both strengths are independent of the assignment of atoms to cells, and a rigid
+acoustic translation, $e_{{\rm a}\beta\sigma}\propto\sqrt{m_{\rm a}/M}\,u_\beta e^{i\mathbf q\mathbf r^0_{\rm a}}$,
+has $\mathbf j_\sigma\propto\sum_{\rm a}\hat Z^*_{\rm a}\mathbf u=0$ by the acoustic sum rule: (410c) gives the
+acoustic branches no dipolar shift beyond the internal-strain term of (131b). With the phase-less vertex
+it would: for LA[111] in GaAs the longitudinal term of (410c) alone gives $\sqrt{\Delta\omega^2}/q=2.5$ or
+5.9~km/s depending on the cell, comparable to the sound velocity 5.4~km/s.
+\item For $cq\gg\sqrt{\epsilon_\infty}\,\omega$, (410f) with (385$'$) is (454) with (385$'$), and (410d),
+written in the atom basis, is the $\mathbf G=0$ term of (454a):
+\begin{equation*}
+\begin{split}
+&\sum_{\sigma\sigma'}e_{{\rm a}\mu\sigma}(\mathbf q)\Big[\omega^2_\sigma\delta_{\sigma\sigma'}
++\frac{4\pi}{\Omega_{\rm uc}}\frac{(\hat{\mathbf q}\cdot\mathbf j_\sigma)^*(\hat{\mathbf q}\cdot\mathbf j_{\sigma'})}
+{\hat{\mathbf q}\cdot\hat\epsilon^\infty\cdot\hat{\mathbf q}}\Big]e^*_{{\rm b}\nu\sigma'}(\mathbf q)\\
+&\qquad=\tilde\Omega^2_{0,{\rm a}\mu,{\rm b}\nu}(\mathbf q)
++\frac{4\pi}{\Omega_{\rm uc}\sqrt{m_{\rm a}m_{\rm b}}}\,
+\frac{(\mathbf q\hat Z^*_{\rm a})_\mu(\mathbf q\hat Z^*_{\rm b})_\nu}{\mathbf q\cdot\hat\epsilon^\infty\cdot\mathbf q}\,
+e^{i\mathbf q(\mathbf r^0_{\rm a}-\mathbf r^0_{\rm b})}.
+\end{split}
+\end{equation*}
+This was verified numerically for a random three-atom cell with an anisotropic $\hat\epsilon^\infty$; the
+deviation decreases as $(\omega/cq)^2$.
+\end{itemize}
+
+\subsection{The interaction Hamiltonian (237)}\label{sec:int-hamiltonian}
+Eq.~(237) is touched by both corrections: by the rule of Sec.~\ref{sec:phase} ($A_\alpha$ at
+$\mathbf R^0_{ia}$) and by the factor-$e$ convention of Sec.~\ref{sec:efactor} ($e\rho_{\rm e}$ in the
+Coulomb term). Its final form is
+\begin{equation*}
+\begin{split}
+V'={}&-\frac1c\int d\mathbf r\,\mathbf j_{\rm e}(\mathbf r)\mathbf A(\mathbf r)
++\frac{e^2}{2m_{\rm e}c^2}\int d\mathbf r\,\rho_{\rm e}(\mathbf r)\mathbf A^2(\mathbf r)
+-\frac1c\sum_{ia\alpha\mu}\frac{1}{m_{\rm a}}Z^*_{{\rm a}\alpha\mu}\pi_{ia\mu}A_\alpha(\mathbf R^0_{ia})\\
+&+\frac{1}{2c^2}\sum_{ia\mu\alpha\beta}\frac{1}{m_{\rm a}}Z^*_{{\rm a}\alpha\mu}Z^*_{{\rm a}\beta\mu}
+A_\alpha(\mathbf R^0_{ia})A_\beta(\mathbf R^0_{ia})\\
+&+\frac12\int d\mathbf r\int d\mathbf r'\,
+\frac{[e\rho_{\rm e}(\mathbf r)+\rho_{\rm ion}(\mathbf r)][e\rho_{\rm e}(\mathbf r')+\rho_{\rm ion}(\mathbf r')]}
+{|\mathbf r-\mathbf r'|},
+\end{split}
+\tag{237$'$}
+\end{equation*}
+with $\rho_{\rm ion}=-\nabla\cdot\mathbf P$ and $\mathbf P$ from (241$'$). The $\mathbf A^2$ term keeps
+$\rho_{\rm e}=\Psi^+\Psi$. (235$'$) and (312$'$) are touched by the factor-$e$ convention only; their
+$\rho_{\rm ion}$ and $\rho^{\rm ion}$ are built from the phase-corrected $\mathbf P$ of (241$'$), (314$'$), so
+no further change is needed. (186$'$) and (270) carry no Coulomb term and change by the basis phase only.
+
+\subsection{Order of the new material on p.~99}\label{sec:int-p99}
+Both the E.410 correction and the basis phase add text after Eq.~(454). Including the replacement at the
+top of p.~99, p.~99 then reads, in this order:
+\begin{enumerate}
+\item the replacement of ``This is again almost identical \ldots'' with (448a)
+(Sec.~\ref{sec:int-vertices});
+\item the title of Sec.~7.3, ``Phonon's self-energy in electrostatic limit and the LO--TO splitting''
+(Sec.~\ref{sec:e410}, item~5);
+\item Eqs.~(449)--(454), unchanged in form, with the vertex (385$'$);
+\item the sentence after (454) on Sohier \textit{et al.}\ (possibly reworded, Sec.~\ref{sec:minor}, p.~99);
+\item the E.410 paragraph ``With $W^{\rm e}(\mathbf q,0)=4\pi/(\mathbf q\cdot\hat\epsilon^\infty\cdot\mathbf q)$,
+Eq.~(454) is the standard non-analytic term \ldots'' (Sec.~\ref{sec:e410}, item~5);
+\item the paragraph with (454a): ``Eq.~(454) keeps its form with (385$'$). For an insulator with
+$W^{\rm e}_{\mathbf G\mathbf G'}=\ldots$, (399a) gives the matrix, $\mathbf G$-resolved form of (454)''
+followed by (454a) and the three sentences after it (Sec.~\ref{sec:phase-678}).
+\end{enumerate}
+The E.410 paragraph comes first because it interprets (454) itself, the macroscopic $\mathbf G=0$ term,
+and links it back to Sec.~7.1. The paragraph with (454a) generalizes (454) to $\mathbf G\neq0$; it ends
+Sec.~7.3 with the remark on regularization that leads to the open point on point-dipole self-energies
+(Sec.~\ref{sec:minor}, p.~48). Sec.~8 then starts on p.~100 as printed.
+
+\subsection{Index of corrected and new equations, in manuscript order}\label{sec:int-index}
+Primes: corrected (replace the printed equation or display). Letters: new. B, L, F mark the
+corrections of Secs.~\ref{sec:phase} (basis phase), \ref{sec:e410} (E.410) and \ref{sec:efactor} (factor
+$e$); B+F marks a merged form from Sec.~\ref{sec:interplay}.
+\begin{itemize}
+\item Sec.~3, pp.~24--25: (121$'$), (122$'$), (123$'$), (124$'$), (131$'$), (131a), (131b) [B].
+\item Sec.~4, pp.~26--49: (134$'$), (143$'$), (167$'$), (183$'$), (186$'$) [B]; (234$'$), (235$'$) [F];
+(237$'$) [B+F]; (241$'$, 314$'$) [B].
+\item Sec.~5, pp.~56--67: (271$'$, 315$'$), (272$'$), (274$'$), (290$'$), (293$'$), (295$'$), (296$'$),
+(297$'$), (299$'$), (300$'$), (302$'$), (304$'$), (305$'$), (307$'$), (308$'$), (309$'$) [B].
+\item Sec.~6, pp.~68--86: (312$'$) [F]; (352$'$), (354a), (385$'$) [B].
+\item Sec.~7, pp.~89--99: (399a) [B]; (410$'$), (410a)--(410h) [L, with (385$'$)]; (p93a$'$), (p93b$'$),
+(418$'$) [B]; (p93c$'$), (p94$'$), (422$'$), (428$'$) [F]; (p95$'$), (p96$'$), (428a) [B+F]; (430$'$),
+(447$'$), (448$'$) [B]; (p98$'$), (448a) [B+F]; (454a) [B].
+\item Sec.~8, p.~101: (p101$'$) [F].
+\end{itemize}
+Corrected by a stated rule and not displayed: (141), (142), (270), (286), (289), (291), (303), (306),
+(310), (311), (354) and the unnumbered displays on pp.~38, 39, 61, 65, 76--77 [B]; the left-hand sides of
+(423)--(425), of the two displays between (424) and (425) and of the display after (427) [F]. Symbol
+slips fixed in place: (406), (121) (label, included in (121$'$)).
+
+%======================================================================================
+\section{Minor errata}\label{sec:minor}
+The following were collected while the primer was checked against the PDF. Items already covered above
+are not repeated: the label of (121), the citation after (131), the Heisenberg evolution on p.~93,
+``retarded limit'' before (418), the comparison with (131) before (417), the photon/phonon slips before
+(406)--(407), and $\rho_{\rm e}$ in (234)--(237), (312).
+\begin{itemize}\setlength{\itemsep}{0pt}
+\item p.~1 (before E.3), p.~18: $|\mathbf Q_{\rm a}|\ll|\mathbf r^0_{\rm a}|$ depends on the origin; compare with the interatomic distance, write $\mathbf Q_{ia}$.
+\item p.~2, E.4: state the on-site block $k_{ia\mu,ia\nu}=-\sum_{jb\neq ia}k_{ia\mu,jb\nu}$ (acoustic sum rule).
+\item p.~4, E.15 (E.35, pp.~8--9): use $e^{-i\mathbf k\bm{\delta}}$ (Giustino's Eq.~14); required by Sec.~\ref{sec:phase}.
+\item p.~10, before E.51: ``(46)'' $\to$ ``(50)'' (the step uses $[a,a^+]=1$).
+\item p.~14, before E.76: $\omega^2_\alpha(-\mathbf k)=\omega^2_\alpha(\mathbf k)$ follows from time reversal, not from isotropy.
+\item p.~14, after E.78: exclude the three $\mathbf k=0$ translations ($3Ns-3$ oscillators); $1/\sqrt\omega$ diverges in E.72, E.83.
+\item p.~20, after E.108: $g^0$ is the bare linear coupling, not ``the first non-adiabatic correction''.
+\item p.~21: the bare phonon propagator $D^0$ should be $F^0$ ($D$ is the photon propagator from Sec.~4.5 on).
+\item p.~21: DFPT force constants of polar insulators have an $R^{-3}$ dipole tail; call the one-cell $k^{\mathcal S}$ a model.
+\item p.~22, E.110: define $Z^*$ at zero macroscopic field (transverse charge), as E.120 assumes.
+\item p.~23: announce at the start of Sec.~4 the switch from SI to Gaussian units.
+\item p.~24 (E.123), pp.~26--27: state at E.134 the change from $-e$ ($e>0$) to the signed charge $e$.
+\item p.~26, E.134: $k$ must be the short-range $k^{\mathcal S}$ of p.~21; the scheme covers the polar channel only.
+\item pp.~26, 56, 57, 59, 70, 83: steps deferred to ``Lecture~9''/``Chapter~9''; include them or cite a source.
+\item p.~27: $\mathbf a\times(\mathbf b\times\mathbf c)=\mathbf b(\mathbf a\cdot\mathbf c)-(\mathbf a\cdot\mathbf b)\mathbf c$, with $\nabla_e$ acting on $\mathbf A$ only.
+\item p.~30: $k^\mu_{\rm ba}\to k^\mu_{\rm bb}$; use the index order of E.144--E.145 throughout.
+\item pp.~30--31: $k_{\rm ab}=-k_{\rm aa}$ etc.\ hold for the lattice-summed constants (sum rule), not for each pair.
+\item p.~32, before E.150: $Z^*_{\rm a}=-Z^*_{\rm b}$ is exact for a diatomic crystal (charge neutrality).
+\item p.~32, after E.151: the Lorentz field $\mathbf E+\frac{4\pi}{3}\mathbf P$ holds for cubic sites only.
+\item pp.~33--34, E.158--E.160: the local-field model is illustrative; only $\tilde\omega^2_{\rm LO}-\tilde\omega^2_{\rm TO}=\omega_p^2/\epsilon_\infty$ is general.
+\item p.~34, before E.162: the zeros of $\epsilon$ give the LO modes only; the TO modes come from $\epsilon\to\infty$.
+\item p.~35 (E.166), p.~48 (E.237--E.238): kinetic and paramagnetic currents need two symbols.
+\item pp.~41--42, E.196--E.201: ``orthogonal'', not unitary; left-handed triad; $\mathbf e_3(\mathbf q)=\pm\hat{\mathbf q}$.
+\item pp.~43--44, 52--55: photon operators $b_{\mathbf q\sigma}$ throughout (not $a_{\mathbf q\alpha}$).
+\item p.~45, below E.219: phonons $a_{\mathbf q\alpha}$, photons $b_{\mathbf q\sigma}$ (labels swapped in the text).
+\item p.~48, E.235: normal-order the electron term, drop on-site dipole self-energies; (454a) needs this too.
+\item p.~50: Matsubara denominator $i\hbar\omega_n+\xi_{\mathbf k}-\xi_{\mathbf k+\mathbf q}$.
+\item p.~50: state the scope of ``set $n_{\mathbf q\sigma}=0$ in boson lines'' (fails inside electron self-energies).
+\item p.~53, E.260; p.~54: one factor $2\omega/(\omega^2-\omega^2_{\mathbf q}+i\eta)$, not two; $D^0\to D^{0t}$ in the middle step.
+\item p.~54 (E.263), pp.~80, 83: explain $D^{0l}=0$ (interaction picture) next to E.374 (instantaneous Coulomb).
+\item p.~57, E.276: start the series at $n=0$; write $V^t_I$ throughout.
+\item pp.~58--60, 69 (E.279, E.284, E.321): $m\to m_{\rm e}$; ground-state average of $\rho^{\rm e}$ in $\Pi^{\rm e,dia}$.
+\item p.~60, E.285; p.~86: a sheet needs the $z$-resolved Dyson equation; $l$ is the superlattice period.
+\item p.~60, E.286--E.287: $\alpha,\beta$ serve as Cartesian and branch indices; use $\sigma$ for branches.
+\item p.~64, before E.300: ``instead of (354)'' $\to$ ``instead of (291)''.
+\item p.~65, E.301: $\Pi^{\rm dia}=-\Pi^{\rm para}(0)$ follows from gauge invariance; ions carry the bound charge $-\nabla\cdot\mathbf P$.
+\item pp.~70, 75, 77: the connection formulas follow from charge conservation (Ward identities); state when.
+\item p.~74: $\Pi_{j\rho}\to\Pi_{\rho j}$; $\int d\mathbf r\,\rho\,\phi^{\rm ext}$ (stray $V$).
+\item pp.~78--79, 83: label the scalar slot 0, not 1; $V\to v$.
+\item p.~82, Fig.~10(c): $j^{\rm ie}\to j^{\rm e}$.
+\item p.~85, E.380: say it is the $\mathbf G=\mathbf G'=0$ element (see the p.~85 text of Sec.~\ref{sec:phase}).
+\item p.~87 (E.391), p.~100 (E.455): write $\Pi^{\rm ion,0}_{jj}$ for the bare correlator.
+\item p.~91, Fig.~14: draw $D^{\rm e}$ in the blue of Fig.~13.
+\item p.~92 (E.414): $\chi^0$ is not the Lindhard function; only $J\chi^0J^*$ is regular for degenerate states.
+\item p.~97, E.440: $D^{lt},D^{tl}\sim c^{-1}$, not $c^0$.
+\item p.~99, before E.454: static $W^{\rm e}$ only for gapped systems; keep E.453 dynamical in doped ones.
+\item p.~99, after E.454; p.~102: the comparison with Sohier \textit{et al.}\ is not carried out; state agreement in form.
+\item pp.~60, 100--102: define SBZ (surface Brillouin zone) and the thickness $l$; ``the the'' (p.~102).
+\item p.~101, before E.463: E.463--E.472 hold for in-plane modes; out-of-plane $Z^*_{zz}$ gives a $Q$-independent shift.
+\item Spelling: ``communication relations'' (p.~14) should be ``commutation relations''; other slips (e.g.\ ``equlibrium'', ``Moreower'', ``Faynman'', ``Poison's'') are harmless.
+\end{itemize}
+
+\end{document}
