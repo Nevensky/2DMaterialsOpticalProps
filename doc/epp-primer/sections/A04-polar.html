@@ -1,0 +1,385 @@
+<section class="chapter" id="a-polar" data-num="A.4" data-title="Polar coupling and LO–TO">
+  <header class="ch-head">
+    <p class="eyebrow"><span class="num">A.4</span><span>Giustino §II.A.3, §VI.A.3 · Eqs. 7, 175–180</span></p>
+    <h2>Polar materials: Fröhlich, Verdi–Giustino and the LO–TO splitting</h2>
+    <p class="lede">Why the electron–phonon vertex of a polar crystal diverges as $1/q$, how Born charges and $\epsilon^\infty$ fix its strength, why it must be removed before Wannier interpolation, and why the same electrostatic kernel splits LO from TO phonons.</p>
+  </header>
+
+  <p>In a polar crystal a displaced ion drags a net charge along. The dipole per cell created by displacing the sublattice of atom $\kappa$, at zero macroscopic electric field, defines the Born effective charge tensor $\bZ^*_\kappa$, dimensionless (in units of $e$) in Giustino's convention. A <span class="t-p">phonon</span> that moves atom $\kappa$ by $\Delta\boldsymbol\tau_\kappa$ therefore puts a dipole $e\bZ^*_\kappa\cdot\Delta\boldsymbol\tau_\kappa$ in every cell, with phase $e^{i\bq\cdot\bR_p}$. Giustino §II.A.3 states the consequence: in ionic crystals "the atomic displacements can generate long-ranged electric fields; these fields provide a new scattering channel for electrons and holes." Notation: $\varepsilon_0$ is the vacuum permittivity, $\epsilon^\infty$ and $\epsilon^0$ are the high-frequency (clamped-ion) and static relative permittivities, and units are SI as in Giustino.</p>
+
+  <h3>A wave of dipoles and its field</h3>
+  <p>In a longitudinal wave the dipoles point along $\bq$. Their heads converge on some planes and diverge from others, so sheets of bound charge $-\nabla\cdot\bP$ appear half a wavelength apart (figure below). Their macroscopic potential solves Poisson's equation in a medium whose electrons screen with $\epsilon^\infty$, so $\phi(\bq)\propto\bq\cdot\bP/(\bq\cdot\boldsymbol\epsilon^\infty\cdot\bq)$, which grows as $1/q$. A transverse wave has $\bq\cdot\bP=0$: no bound charge and no electrostatic potential. In real space one displaced ion is a dipole whose potential falls off as $1/r^2$. In a nonpolar insulator the screened potential of a displaced atom is at least quadrupolar, $R^{-3}$ (Giustino §VI.A.2, citing Pick, Cohen and Martin 1970), and that one power of $R$ decides everything below. In a metal the Fermi sea screens even the dipole field and the coupling stays finite (<a href="#a-coupling">§A.2</a>).</p>
+
+  <figure class="viz" id="viz-a-polar-dipoles">
+    <p class="viz-title">Born-charge dipoles of an LO wave <span class="tag">static</span></p>
+    <svg class="a-polar-svg" viewBox="0 0 440 326" role="img" aria-labelledby="a-polar-svg-t" style="display:block;width:100%;max-width:520px;height:auto;margin:0 auto">
+<title id="a-polar-svg-t">A lattice of Born-charge dipoles modulated by a longitudinal wave: dipole heads converge on sheets of positive bound charge and diverge from negative ones, producing a macroscopic potential proportional to sin(qx)/q. Below, a single displaced ion gives a dipole potential decaying as 1/r squared, compared with the 1/r cubed decay in nonpolar insulators.</title>
+<defs>
+<marker id="a-polar-ah-p" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--c-phonon)"/></marker>
+<marker id="a-polar-ah-m" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--muted)"/></marker>
+</defs>
+<text x="10.0" y="17.0" text-anchor="start" style="fill:var(--fg);font-family:var(--font-ui);font-size:15.5px">dipole of cell p:  &#948;p<tspan baseline-shift="sub" style="font-size:11.5px">p</tspan> = e Z*&#183;&#916;&#964; e<tspan baseline-shift="super" style="font-size:11.5px">iq&#183;R<tspan style="font-size:8.5px">p</tspan></tspan></text>
+<line x1="384" y1="12" x2="426" y2="12" style="stroke:var(--muted);stroke-width:1.4;stroke-linecap:round" marker-end="url(#a-polar-ah-m)"/>
+<text x="377.0" y="17.0" text-anchor="end" style="fill:var(--muted);font-family:var(--font-ui);font-size:16px;font-style:italic">q</text>
+<rect x="123.5" y="28" width="20" height="76" rx="3" style="fill:var(--c-photon);opacity:0.13"/>
+<text x="133.5" y="121.0" text-anchor="middle" style="fill:var(--t-photon);font-family:var(--font-ui);font-size:15px">+&#961;<tspan baseline-shift="sub" style="font-size:11.5px">b</tspan></text>
+<rect x="330.5" y="28" width="20" height="76" rx="3" style="fill:var(--c-photon);opacity:0.13"/>
+<text x="340.5" y="121.0" text-anchor="middle" style="fill:var(--t-photon);font-family:var(--font-ui);font-size:15px">&#8722;&#961;<tspan baseline-shift="sub" style="font-size:11.5px">b</tspan></text>
+<circle cx="30.0" cy="42" r="2.3" style="fill:var(--muted)"/>
+<line x1="18.0" y1="42" x2="42.0" y2="42" style="stroke:var(--c-phonon);stroke-width:2;stroke-linecap:round" marker-end="url(#a-polar-ah-p)"/>
+<circle cx="64.5" cy="42" r="2.3" style="fill:var(--muted)"/>
+<line x1="54.1" y1="42" x2="74.9" y2="42" style="stroke:var(--c-phonon);stroke-width:2;stroke-linecap:round" marker-end="url(#a-polar-ah-p)"/>
+<circle cx="99.0" cy="42" r="2.3" style="fill:var(--muted)"/>
+<line x1="93.0" y1="42" x2="105.0" y2="42" style="stroke:var(--c-phonon);stroke-width:2;stroke-linecap:round" marker-end="url(#a-polar-ah-p)"/>
+<circle cx="133.5" cy="42" r="2.3" style="fill:var(--muted)"/>
+<circle cx="168.0" cy="42" r="2.3" style="fill:var(--muted)"/>
+<line x1="174.0" y1="42" x2="162.0" y2="42" style="stroke:var(--c-phonon);stroke-width:2;stroke-linecap:round" marker-end="url(#a-polar-ah-p)"/>
+<circle cx="202.5" cy="42" r="2.3" style="fill:var(--muted)"/>
+<line x1="212.9" y1="42" x2="192.1" y2="42" style="stroke:var(--c-phonon);stroke-width:2;stroke-linecap:round" marker-end="url(#a-polar-ah-p)"/>
+<circle cx="237.0" cy="42" r="2.3" style="fill:var(--muted)"/>
+<line x1="249.0" y1="42" x2="225.0" y2="42" style="stroke:var(--c-phonon);stroke-width:2;stroke-linecap:round" marker-end="url(#a-polar-ah-p)"/>
+<circle cx="271.5" cy="42" r="2.3" style="fill:var(--muted)"/>
+<line x1="281.9" y1="42" x2="261.1" y2="42" style="stroke:var(--c-phonon);stroke-width:2;stroke-linecap:round" marker-end="url(#a-polar-ah-p)"/>
+<circle cx="306.0" cy="42" r="2.3" style="fill:var(--muted)"/>
+<line x1="312.0" y1="42" x2="300.0" y2="42" style="stroke:var(--c-phonon);stroke-width:2;stroke-linecap:round" marker-end="url(#a-polar-ah-p)"/>
+<circle cx="340.5" cy="42" r="2.3" style="fill:var(--muted)"/>
+<circle cx="375.0" cy="42" r="2.3" style="fill:var(--muted)"/>
+<line x1="369.0" y1="42" x2="381.0" y2="42" style="stroke:var(--c-phonon);stroke-width:2;stroke-linecap:round" marker-end="url(#a-polar-ah-p)"/>
+<circle cx="409.5" cy="42" r="2.3" style="fill:var(--muted)"/>
+<line x1="399.1" y1="42" x2="419.9" y2="42" style="stroke:var(--c-phonon);stroke-width:2;stroke-linecap:round" marker-end="url(#a-polar-ah-p)"/>
+<circle cx="30.0" cy="66" r="2.3" style="fill:var(--muted)"/>
+<line x1="18.0" y1="66" x2="42.0" y2="66" style="stroke:var(--c-phonon);stroke-width:2;stroke-linecap:round" marker-end="url(#a-polar-ah-p)"/>
+<circle cx="64.5" cy="66" r="2.3" style="fill:var(--muted)"/>
+<line x1="54.1" y1="66" x2="74.9" y2="66" style="stroke:var(--c-phonon);stroke-width:2;stroke-linecap:round" marker-end="url(#a-polar-ah-p)"/>
+<circle cx="99.0" cy="66" r="2.3" style="fill:var(--muted)"/>
+<line x1="93.0" y1="66" x2="105.0" y2="66" style="stroke:var(--c-phonon);stroke-width:2;stroke-linecap:round" marker-end="url(#a-polar-ah-p)"/>
+<circle cx="133.5" cy="66" r="2.3" style="fill:var(--muted)"/>
+<circle cx="168.0" cy="66" r="2.3" style="fill:var(--muted)"/>
+<line x1="174.0" y1="66" x2="162.0" y2="66" style="stroke:var(--c-phonon);stroke-width:2;stroke-linecap:round" marker-end="url(#a-polar-ah-p)"/>
+<circle cx="202.5" cy="66" r="2.3" style="fill:var(--muted)"/>
+<line x1="212.9" y1="66" x2="192.1" y2="66" style="stroke:var(--c-phonon);stroke-width:2;stroke-linecap:round" marker-end="url(#a-polar-ah-p)"/>
+<circle cx="237.0" cy="66" r="2.3" style="fill:var(--muted)"/>
+<line x1="249.0" y1="66" x2="225.0" y2="66" style="stroke:var(--c-phonon);stroke-width:2;stroke-linecap:round" marker-end="url(#a-polar-ah-p)"/>
+<circle cx="271.5" cy="66" r="2.3" style="fill:var(--muted)"/>
+<line x1="281.9" y1="66" x2="261.1" y2="66" style="stroke:var(--c-phonon);stroke-width:2;stroke-linecap:round" marker-end="url(#a-polar-ah-p)"/>
+<circle cx="306.0" cy="66" r="2.3" style="fill:var(--muted)"/>
+<line x1="312.0" y1="66" x2="300.0" y2="66" style="stroke:var(--c-phonon);stroke-width:2;stroke-linecap:round" marker-end="url(#a-polar-ah-p)"/>
+<circle cx="340.5" cy="66" r="2.3" style="fill:var(--muted)"/>
+<circle cx="375.0" cy="66" r="2.3" style="fill:var(--muted)"/>
+<line x1="369.0" y1="66" x2="381.0" y2="66" style="stroke:var(--c-phonon);stroke-width:2;stroke-linecap:round" marker-end="url(#a-polar-ah-p)"/>
+<circle cx="409.5" cy="66" r="2.3" style="fill:var(--muted)"/>
+<line x1="399.1" y1="66" x2="419.9" y2="66" style="stroke:var(--c-phonon);stroke-width:2;stroke-linecap:round" marker-end="url(#a-polar-ah-p)"/>
+<circle cx="30.0" cy="90" r="2.3" style="fill:var(--muted)"/>
+<line x1="18.0" y1="90" x2="42.0" y2="90" style="stroke:var(--c-phonon);stroke-width:2;stroke-linecap:round" marker-end="url(#a-polar-ah-p)"/>
+<circle cx="64.5" cy="90" r="2.3" style="fill:var(--muted)"/>
+<line x1="54.1" y1="90" x2="74.9" y2="90" style="stroke:var(--c-phonon);stroke-width:2;stroke-linecap:round" marker-end="url(#a-polar-ah-p)"/>
+<circle cx="99.0" cy="90" r="2.3" style="fill:var(--muted)"/>
+<line x1="93.0" y1="90" x2="105.0" y2="90" style="stroke:var(--c-phonon);stroke-width:2;stroke-linecap:round" marker-end="url(#a-polar-ah-p)"/>
+<circle cx="133.5" cy="90" r="2.3" style="fill:var(--muted)"/>
+<circle cx="168.0" cy="90" r="2.3" style="fill:var(--muted)"/>
+<line x1="174.0" y1="90" x2="162.0" y2="90" style="stroke:var(--c-phonon);stroke-width:2;stroke-linecap:round" marker-end="url(#a-polar-ah-p)"/>
+<circle cx="202.5" cy="90" r="2.3" style="fill:var(--muted)"/>
+<line x1="212.9" y1="90" x2="192.1" y2="90" style="stroke:var(--c-phonon);stroke-width:2;stroke-linecap:round" marker-end="url(#a-polar-ah-p)"/>
+<circle cx="237.0" cy="90" r="2.3" style="fill:var(--muted)"/>
+<line x1="249.0" y1="90" x2="225.0" y2="90" style="stroke:var(--c-phonon);stroke-width:2;stroke-linecap:round" marker-end="url(#a-polar-ah-p)"/>
+<circle cx="271.5" cy="90" r="2.3" style="fill:var(--muted)"/>
+<line x1="281.9" y1="90" x2="261.1" y2="90" style="stroke:var(--c-phonon);stroke-width:2;stroke-linecap:round" marker-end="url(#a-polar-ah-p)"/>
+<circle cx="306.0" cy="90" r="2.3" style="fill:var(--muted)"/>
+<line x1="312.0" y1="90" x2="300.0" y2="90" style="stroke:var(--c-phonon);stroke-width:2;stroke-linecap:round" marker-end="url(#a-polar-ah-p)"/>
+<circle cx="340.5" cy="90" r="2.3" style="fill:var(--muted)"/>
+<circle cx="375.0" cy="90" r="2.3" style="fill:var(--muted)"/>
+<line x1="369.0" y1="90" x2="381.0" y2="90" style="stroke:var(--c-phonon);stroke-width:2;stroke-linecap:round" marker-end="url(#a-polar-ah-p)"/>
+<circle cx="409.5" cy="90" r="2.3" style="fill:var(--muted)"/>
+<line x1="399.1" y1="90" x2="419.9" y2="90" style="stroke:var(--c-phonon);stroke-width:2;stroke-linecap:round" marker-end="url(#a-polar-ah-p)"/>
+<line x1="24" y1="164" x2="418" y2="164" style="stroke:var(--rule);stroke-width:1"/>
+<polyline points="24.0,165.8 25.6,165.3 27.3,164.8 28.9,164.3 30.6,163.8 32.2,163.3 33.9,162.8 35.5,162.3 37.1,161.8 38.8,161.3 40.4,160.9 42.1,160.4 43.7,159.9 45.3,159.4 47.0,158.9 48.6,158.4 50.3,157.9 51.9,157.5 53.5,157.0 55.2,156.5 56.8,156.1 58.5,155.6 60.1,155.2 61.8,154.7 63.4,154.3 65.0,153.9 66.7,153.4 68.3,153.0 70.0,152.6 71.6,152.2 73.2,151.8 74.9,151.4 76.5,151.0 78.2,150.6 79.8,150.3 81.5,149.9 83.1,149.6 84.7,149.2 86.4,148.9 88.0,148.6 89.7,148.3 91.3,148.0 93.0,147.7 94.6,147.4 96.2,147.1 97.9,146.9 99.5,146.6 101.2,146.4 102.8,146.1 104.4,145.9 106.1,145.7 107.7,145.5 109.4,145.3 111.0,145.2 112.7,145.0 114.3,144.8 115.9,144.7 117.6,144.6 119.2,144.5 120.9,144.4 122.5,144.3 124.1,144.2 125.8,144.1 127.4,144.1 129.1,144.0 130.7,144.0 132.3,144.0 134.0,144.0 135.6,144.0 137.3,144.0 138.9,144.1 140.6,144.1 142.2,144.2 143.8,144.2 145.5,144.3 147.1,144.4 148.8,144.5 150.4,144.7 152.1,144.8 153.7,144.9 155.3,145.1 157.0,145.3 158.6,145.4 160.3,145.6 161.9,145.8 163.5,146.0 165.2,146.3 166.8,146.5 168.5,146.8 170.1,147.0 171.8,147.3 173.4,147.6 175.0,147.8 176.7,148.1 178.3,148.5 180.0,148.8 181.6,149.1 183.2,149.4 184.9,149.8 186.5,150.1 188.2,150.5 189.8,150.9 191.4,151.2 193.1,151.6 194.7,152.0 196.4,152.4 198.0,152.8 199.7,153.3 201.3,153.7 202.9,154.1 204.6,154.6 206.2,155.0 207.9,155.4 209.5,155.9 211.2,156.4 212.8,156.8 214.4,157.3 216.1,157.8 217.7,158.2 219.4,158.7 221.0,159.2 222.6,159.7 224.3,160.2 225.9,160.7 227.6,161.1 229.2,161.6 230.8,162.1 232.5,162.6 234.1,163.1 235.8,163.6 237.4,164.1 239.1,164.6 240.7,165.1 242.3,165.6 244.0,166.1 245.6,166.6 247.3,167.1 248.9,167.6 250.6,168.1 252.2,168.6 253.8,169.1 255.5,169.5 257.1,170.0 258.8,170.5 260.4,171.0 262.0,171.4 263.7,171.9 265.3,172.3 267.0,172.8 268.6,173.2 270.2,173.7 271.9,174.1 273.5,174.5 275.2,174.9 276.8,175.4 278.5,175.8 280.1,176.2 281.7,176.6 283.4,176.9 285.0,177.3 286.7,177.7 288.3,178.0 289.9,178.4 291.6,178.7 293.2,179.1 294.9,179.4 296.5,179.7 298.2,180.0 299.8,180.3 301.4,180.6 303.1,180.9 304.7,181.1 306.4,181.4 308.0,181.6 309.6,181.8 311.3,182.1 312.9,182.3 314.6,182.5 316.2,182.7 317.9,182.8 319.5,183.0 321.1,183.1 322.8,183.3 324.4,183.4 326.1,183.5 327.7,183.6 329.4,183.7 331.0,183.8 332.6,183.9 334.3,183.9 335.9,184.0 337.6,184.0 339.2,184.0 340.8,184.0 342.5,184.0 344.1,184.0 345.8,183.9 347.4,183.9 349.1,183.8 350.7,183.8 352.3,183.7 354.0,183.6 355.6,183.5 357.3,183.4 358.9,183.2 360.5,183.1 362.2,182.9 363.8,182.8 365.5,182.6 367.1,182.4 368.8,182.2 370.4,182.0 372.0,181.8 373.7,181.5 375.3,181.3 377.0,181.0 378.6,180.7 380.2,180.5 381.9,180.2 383.5,179.9 385.2,179.6 386.8,179.3 388.4,178.9 390.1,178.6 391.7,178.3 393.4,177.9 395.0,177.5 396.7,177.2 398.3,176.8 399.9,176.4 401.6,176.0 403.2,175.6 404.9,175.2 406.5,174.8 408.1,174.4 409.8,173.9 411.4,173.5 413.1,173.0 414.7,172.6 416.4,172.1 418.0,171.7" style="fill:none;stroke:var(--c-photon);stroke-width:2;stroke-dasharray:6 4"/>
+<text x="10.0" y="142.0" text-anchor="start" style="fill:var(--t-photon);font-family:var(--font-ui);font-size:16px;font-style:italic">&#966;(x)</text>
+<circle cx="133.5" cy="144.0" r="4.8" style="fill:var(--c-electron)"/>
+<text x="133.5" y="184.0" text-anchor="middle" style="fill:var(--t-electron);font-family:var(--font-ui);font-size:15px">electron: U = &#8722;e&#966; lowest</text>
+<text x="418.0" y="207.0" text-anchor="end" style="fill:var(--t-photon);font-family:var(--font-ui);font-size:15px">&#966;(q) &#8733; q&#183;P / (q&#183;&#949;<tspan baseline-shift="super" style="font-size:11.5px">&#8734;</tspan>&#183;q) &#8733; 1/q</text>
+<line x1="10" y1="218" x2="430" y2="218" style="stroke:var(--rule);stroke-width:1"/>
+<text x="10.0" y="237.0" text-anchor="start" style="fill:var(--fg);font-family:var(--font-ui);font-size:15.5px;font-weight:600">one displaced ion</text>
+<circle cx="116.0" cy="272" r="12" style="fill:none;stroke:var(--muted);stroke-width:1;stroke-dasharray:3 3;opacity:0.9"/>
+<circle cx="92.0" cy="272" r="12" style="fill:none;stroke:var(--muted);stroke-width:1;stroke-dasharray:3 3;opacity:0.9"/>
+<circle cx="125.0" cy="272" r="21" style="fill:none;stroke:var(--muted);stroke-width:1;stroke-dasharray:3 3;opacity:0.55"/>
+<circle cx="83.0" cy="272" r="21" style="fill:none;stroke:var(--muted);stroke-width:1;stroke-dasharray:3 3;opacity:0.55"/>
+<line x1="95" y1="272" x2="113" y2="272" style="stroke:var(--c-phonon);stroke-width:2.2;stroke-linecap:round" marker-end="url(#a-polar-ah-p)"/>
+<text x="156.0" y="277.0" text-anchor="middle" style="fill:var(--fg-2);font-family:var(--font-ui);font-size:16px">+</text>
+<text x="52.0" y="277.0" text-anchor="middle" style="fill:var(--fg-2);font-family:var(--font-ui);font-size:16px">&#8722;</text>
+<text x="10.0" y="318.0" text-anchor="start" style="fill:var(--fg-2);font-family:var(--font-ui);font-size:15px">&#966;(r) &#8733; p&#183;r / (&#949;<tspan baseline-shift="super" style="font-size:11.5px">&#8734;</tspan>r<tspan baseline-shift="super" style="font-size:11.5px">3</tspan>) ~ 1/r<tspan baseline-shift="super" style="font-size:11.5px">2</tspan></text>
+<line x1="262" y1="300" x2="428" y2="300" style="stroke:var(--muted);stroke-width:1.2" marker-end="url(#a-polar-ah-m)"/>
+<line x1="262" y1="300" x2="262" y2="230" style="stroke:var(--muted);stroke-width:1.2" marker-end="url(#a-polar-ah-m)"/>
+<text x="428.0" y="317.0" text-anchor="end" style="fill:var(--muted);font-family:var(--font-ui);font-size:14px">log R</text>
+<text x="250.0" y="266.0" text-anchor="middle" style="fill:var(--muted);font-family:var(--font-ui);font-size:14px" transform="rotate(-90 250 266)">log |&#8706;V/&#8706;&#964;|</text>
+<line x1="268" y1="247" x2="326" y2="267" style="stroke:var(--c-phonon);stroke-width:2"/>
+<line x1="268" y1="247" x2="326" y2="277" style="stroke:var(--c-5);stroke-width:2;stroke-dasharray:2 3"/>
+<text x="331.0" y="271.0" text-anchor="start" style="fill:var(--t-phonon);font-family:var(--font-ui);font-size:15px">R<tspan baseline-shift="super" style="font-size:11.5px">&#8722;2</tspan>: polar</text>
+<text x="331.0" y="292.0" text-anchor="start" style="fill:var(--fg-2);font-family:var(--font-ui);font-size:15px">R<tspan baseline-shift="super" style="font-size:11.5px">&#8722;3</tspan>: nonpolar</text>
+<text x="268.0" y="240.0" text-anchor="start" style="fill:var(--muted);font-family:var(--font-ui);font-size:13.5px">displaced-atom potential</text>
+</svg>
+    <figcaption><strong>Top:</strong> an LO wave displaces the two sublattices in opposite directions, and each cell acquires a dipole $\delta\bp_p=e\bZ^*\cdot\Delta\boldsymbol\tau\,e^{i\bq\cdot\bR_p}$ (amber arrows). Heads converge on sheets of positive bound charge and diverge from negative ones. The macroscopic potential (rose dashed, the page's Coulomb-line style) is a quarter wavelength out of phase with $\bP$, and its amplitude scales as $P/(\epsilon^\infty q)$. An electron is pulled toward the positive sheets. <strong>Bottom:</strong> the potential of one displaced ion falls off as $1/r^2$. Giustino §VI.A.2–3 bounds the decay of the screened potential of a displaced atom: at least $R^{-3}$ in nonpolar insulators, $R^{-2}$ in polar ones. Only the second makes $g$ diverge at Γ.</figcaption>
+  </figure>
+
+  <h3>Why polar crystals break Wannier interpolation</h3>
+  <p>Converged Brillouin-zone integrals of electron–phonon quantities can need $10^6$ wave vectors, and every DFPT calculation is "roughly as expensive as one total energy minimization" (Giustino §VI). The way out is to rotate $g$ into maximally localized Wannier functions $\mathrm w_{mp}$ (G Eqs. 175–176) and represent it in real space:</p>
+  <div class="eq">$$ g_{mn\kappa\alpha}(\bR_p,\bR_{p'})=\Big\langle \mathrm w_{m0}(\br)\Big|\frac{\partial V^{\rm KS}}{\partial\tau_{\kappa\alpha}}(\br-\bR_{p'})\Big|\mathrm w_{n0}(\br-\bR_p)\Big\rangle_{\rm sc}, \tag{G.177}$$</div>
+  <p>the amplitude for an electron to hop from Wannier function $n$ in cell $p$ to $m$ in cell 0 when atom $\kappa$ of cell $p'$ moves along $\alpha$ ("sc" denotes an integral over the Born–von Kármán supercell). A generalized Fourier transform returns it to any $(\bk,\bq)$,</p>
+  <div class="eq">$$ g_{mn\nu}(\bk,\bq)=\sum_{pp'}e^{i(\bk\cdot\bR_p+\bq\cdot\bR_{p'})}\sum_{m'n'\kappa\alpha}U_{mm'\bk+\bq}\,g_{m'n'\kappa\alpha}(\bR_p,\bR_{p'})\,U^\dagger_{n'n\bk}\,\mathrm u_{\kappa\alpha,\bq\nu}, \tag{G.178}$$</div>
+  <p>with $U_{\bk}$ the unitary rotations that define the Wannier functions, $\mathrm u_{\kappa\alpha,\bq\nu}=(\hbar/2M_\kappa\omega_{\bq\nu})^{1/2}e_{\kappa\alpha,\nu}(\bq)$, and the inverse (G.179) evaluated on a coarse DFPT grid. This works if $g(\bR_p,\bR_{p'})$ has died off inside the Wigner–Seitz supercell of the coarse grid. In $\bR_p$ it decays like the Wannier functions, exponentially in insulators. In $\bR_{p'}$ it decays like the screened potential of the displaced atom, and in a polar material that is the dipole of the figure: $|g(0,\bR_{p'})|\sim|\bR_{p'}|^{-2}$. Then $g(\bk,\bq)\sim|\bq|^{-1}$ near Γ, and no finite real-space cutoff captures it. "Physically this singularity corresponds to the 'Fröhlich electron-phonon coupling'" (Giustino §VI.A.3).</p>
+
+  <h3>The Verdi–Giustino long-range vertex</h3>
+  <p>Verdi and Giustino (2015) and Sjakste <i>et al.</i> (2015) split $g=g^{\mathcal S}+g^{\mathcal L}$ and obtain the long-range part from electrostatics: the potential of all Born charges displaced according to mode $\nu$, screened by the electronic permittivity tensor,</p>
+  <div class="eq">$$ \begin{aligned} g^{\mathcal L}_{mn\nu}(\bk,\bq)=i\,\frac{4\pi}{\Omega}\frac{e^2}{4\pi\varepsilon_0}\sum_\kappa\Big(\frac{\hbar}{2N_pM_\kappa\omega_{\bq\nu}}\Big)^{1/2} &amp;\sum_{\bG\neq-\bq}\frac{(\bq+\bG)\cdot\bZ^*_\kappa\cdot\be_{\kappa\nu}(\bq)}{(\bq+\bG)\cdot\boldsymbol\epsilon^\infty\cdot(\bq+\bG)}\\ &amp;\times\big\langle\psi_{m\bk+\bq}\big|e^{i(\bq+\bG)\cdot(\br-\boldsymbol\tau_\kappa)}\big|\psi_{n\bk}\big\rangle_{\rm sc}. \end{aligned} \tag{G.180}$$</div>
+  <p>Here $\Omega$ is the unit-cell volume and $\boldsymbol\tau_\kappa$ the position of atom $\kappa$ in the cell. Each factor has a plain meaning:</p>
+  <ul>
+    <li>$\frac{4\pi}{\Omega}\frac{e^2}{4\pi\varepsilon_0}\big[(\bq+\bG)\cdot\boldsymbol\epsilon^\infty\cdot(\bq+\bG)\big]^{-1}$ is the instantaneous, longitudinal Coulomb interaction per cell, screened by clamped-ion electrons: the long-wavelength, static limit of $W_{\rm e}$.</li>
+    <li>$(\bq+\bG)\cdot\bZ^*_\kappa\cdot\be_{\kappa\nu}$ projects the mode's dipole on the wave vector; only its longitudinal part makes a potential. For acoustic modes the acoustic sum rule $\sum_\kappa\bZ^*_\kappa=0$ cancels the leading term, so the basis phase $e^{-i(\bq+\bG)\cdot\boldsymbol\tau_\kappa}$ inside the matrix element matters there (Giustino footnote 7).</li>
+    <li>For small $\bq+\bG$ the matrix element is interpolated as $[U_{\bk+\bq}U^\dagger_{\bk}]_{mn}$, which tends to $\delta_{mn}$: the long-range coupling is intraband and forward-scattering.</li>
+    <li>$\bZ^*_\kappa$ and $\boldsymbol\epsilon^\infty$ are DFPT outputs, responses to a uniform electric field (<a href="#a-dfpt">§A.3</a>). Eq. (G.180) has no free parameter.</li>
+  </ul>
+  <p>In practice one subtracts (G.180) from the coarse-grid DFPT $g$, Wannier-interpolates the smooth remainder $g^{\mathcal S}$, and adds (G.180) back on the fine grid. The $\bG$ sum is damped by $e^{-a|\bq+\bG|^2}$, and "the results are independent of the choice of the cutoff parameter $a$", because what the cutoff removes is short-ranged and ends up in $g^{\mathcal S}$. Giustino's Fig. 7 shows anatase TiO<sub>2</sub>: the remainder is smooth and stays below about 150 meV, while the total diverges on both sides of Γ. The laboratory below reproduces this logic in one dimension.</p>
+
+  <div class="callout source"><p class="callout-title">Note on the source · $N_p$ in (G.180)</p>
+    <p>As printed, (G.180) carries $N_p$ inside the square root, like (G.2). This page drops it, for the reason given in the note of <a href="#a-coupling">§A.2</a>; the magnitudes in Giustino's Fig. 7 (hundreds of meV near Γ) confirm that choice.</p>
+  </div>
+
+  <figure class="viz" id="viz-a-polar-wannier">
+    <p class="viz-title">One-dimensional Wannier interpolation lab <span class="tag">interactive · toy model</span></p>
+    <div class="viz-grid side"><div class="a-polar-wA"></div><div class="a-polar-wB"></div></div>
+    <div class="a-polar-wC"></div>
+    <div class="a-polar-wR"></div>
+    <figcaption><strong>Model</strong> (lattice constant $a=1$, arbitrary units). The "DFPT data" are $g(q)=A\sin^2(qa/2)+B\sin^2(qa)+C\sum_n(q+nb)^{-1}$ with $b=2\pi/a$, $A=1$, $B=0.35$: a smooth short-range part plus the full lattice sum of a 1D dipole kernel, $\tfrac C2\cot(qa/2)$. The $q+nb=0$ term is dropped ($\bG\neq-\bq$), so the sample at Γ is $g^{\mathcal S}(0)=0$, as in a periodic DFPT run without a macroscopic field. The coefficients $g(R_p)=N_c^{-1}\sum_je^{-iq_jR_p}g(q_j)$ are kept inside the Wigner–Seitz cell (half weights on its edge for even $N_c$) and summed back, the 1D analogue of (G.179) and (G.178). With subtraction on, $g-g^{\mathcal L}_\sigma$ is interpolated, with $g^{\mathcal L}_\sigma=C\sum_ne^{-\sigma(q+nb)^2}/(q+nb)$ (footnote 7's cutoff, called $a$ there), and $g^{\mathcal L}_\sigma$ is added back analytically. Right: $|g(R_p)|$, values below $10^{-9}$ drawn at the floor. <strong>What to notice.</strong> Without subtraction the interpolant rings and its error falls only about as $1/N_c$. The true coefficients never decay (in 1D a $1/q$ singularity is a step in $R$; in 3D it is the $1/R^2$ dipole tail). The coarse grid aliases them into a ramp, $\tfrac C2(1-2|p|/N_c)$, that reaches zero at the cell edge without any real decay. After subtraction the remainder decays like a Gaussian and $N_c=8$ is exact to about $10^{-5}$. A larger $\sigma$ leaves more of the dipole field in $g^{\mathcal S}$, so the result is independent of $\sigma$ only once the coarse grid resolves that remainder.</figcaption>
+  </figure>
+
+  <h3>From Born charges back to Fröhlich</h3>
+  <p>Giustino writes that the 1950 Fröhlich replacement (G.7), shown in <a href="#a-coupling">§A.2</a>, "is derived in Sec. VI.A.3". That section gives only (G.180) and refers to Verdi and Giustino, so the reduction is written out here. Take a cubic diatomic crystal with one polar LO mode, $\bZ^*_1=-\bZ^*_2=Z^*$, $\boldsymbol\epsilon^\infty=\epsilon^\infty$, keep $\bG=0$ and the intraband term, and set $N_p\to1$. The sum over the two atoms gives $Z^*q/\sqrt\mu$, with $\mu$ the reduced mass, and</p>
+  <div class="eq">$$ |g^{\mathcal L}(q)|=\frac{4\pi}{\Omega}\frac{e^2}{4\pi\varepsilon_0}\,\frac{Z^*}{\epsilon^\infty q}\Big(\frac{\hbar}{2\mu\omega_{\rm LO}}\Big)^{1/2}=\frac1q\Big[\frac{e^2}{4\pi\varepsilon_0}\frac{4\pi}{\Omega}\frac{\hbar\omega_{\rm LO}}{2}\Big(\frac1{\epsilon^\infty}-\frac1{\epsilon^0}\Big)\Big]^{1/2}.$$</div>
+  <p>The second form follows from two relations between the same ingredients, the Born-charge LO–TO splitting and the Lyddane–Sachs–Teller (LST) relation (derivation below). It is exactly (G.2) with $V_0$ from (G.7), including the overall factor $i$.</p>
+
+  <details class="derivation"><summary>Derivation: from (G.180) to the Fröhlich vertex</summary><div class="d-body">
+    <p>1. Keep $\bG=0$ and let $\bq\to0$ in the matrix element, which becomes $\delta_{mn}$. Insert the LO eigenvector of a cubic diatomic crystal, $\be_1=(M_2/M)^{1/2}\hat\bq$, $\be_2=-(M_1/M)^{1/2}\hat\bq$ with $M=M_1+M_2$:</p>
+    $$\sum_\kappa\frac{\bq\cdot\bZ^*_\kappa\cdot\be_{\kappa}}{\sqrt{M_\kappa}}=Z^*q\Big(\sqrt{\frac{M_2}{MM_1}}+\sqrt{\frac{M_1}{MM_2}}\Big)=\frac{Z^*q}{\sqrt\mu},\qquad \mu=\frac{M_1M_2}{M},$$
+    <p>so that, with $\frac{4\pi}{\Omega}\frac{e^2}{4\pi\varepsilon_0}=\frac{e^2}{\varepsilon_0\Omega}$,</p>
+    $$g^{\mathcal L}=\frac{i}{q}\,\frac{e^2}{\varepsilon_0\Omega}\,\frac{Z^*}{\epsilon^\infty}\Big(\frac{\hbar}{2\mu\omega_{\rm LO}}\Big)^{1/2}\delta_{mn}.$$
+    <p>2. The same eigenvector, projected on the nonanalytic force constants of the next subsection, gives $\omega_{\rm LO}^2-\omega_{\rm TO}^2=e^2Z^{*2}/(\varepsilon_0\Omega\mu\epsilon^\infty)$. Use it to eliminate $Z^{*2}/\mu$:</p>
+    $$|g^{\mathcal L}|^2=\frac{e^2}{\varepsilon_0\Omega q^2}\,\frac{\hbar}{2\omega_{\rm LO}}\,\frac{\omega_{\rm LO}^2-\omega_{\rm TO}^2}{\epsilon^\infty}.$$
+    <p>3. LST, $\omega_{\rm TO}^2/\omega_{\rm LO}^2=\epsilon^\infty/\epsilon^0$, turns the last factor into $\omega_{\rm LO}^2(1/\epsilon^\infty-1/\epsilon^0)$, which gives the Fröhlich form above.</p>
+    <p>4. Compare (G.2), $-i(\hbar/2M_\kappa\omega_{\bq\nu})^{1/2}\,\bq\cdot\be\,V_0$, with $V_0$ from (G.7): the mass cancels, $-i\times(-1)=+i$, and the magnitude is the same. With the GaAs inputs of the explorer below, the Fröhlich route gives $|g|q=0.0321$ eV Å$^{-1}$ and the Born-charge route 0.0305 eV Å$^{-1}$. The Born charge implied by LST is 2.19 (2.18 if the measured $\hbar\omega_{\rm TO}=33.3$ meV is used instead, the value quoted in <a href="#b-foundations">§B.1</a> and <a href="#b-phonon-se">§B.7</a>), against the literature value 2.07 (illustrative), so the two input sets are slightly inconsistent.</p>
+  </div></details>
+
+  <p>The strength is set by $1/\epsilon^\infty-1/\epsilon^0$, the part of the screening that comes from the ions. Fast perturbations are screened by electrons alone, slow ones by electrons and ions, and the difference is what an electron feels from the LO phonon. The dimensionless polaron constant $\alpha=(1/\epsilon^\infty-1/\epsilon^0)(\mathrm{Ry}\,m^*/m_e\hbar\omega_{\rm LO})^{1/2}$ (standard, not printed in Giustino) is 0.07 for the GaAs preset of the explorer and about 5 for its LiF and NaCl presets, which assume $m^*=m_e$ (illustrative). Giustino calls the $1/q$ coupling "the physical basis for the phenomenon of electron self-trapping in polarons" (§II.A.3), and self-trapping is strongest at large $\alpha$.</p>
+
+  <div class="callout intuition"><p class="callout-title">Physical picture · the Fröhlich vertex is the ionic part of $W$</p>
+    <p>Square the vertex and attach the LO phonon propagator of Giustino's Eq. (132), written in energy units. With $v(q)=e^2/(\varepsilon_0\Omega q^2)$ and LST one finds (derived here)</p>
+    $$\frac{v(q)}{\epsilon^\infty}+|g^{\mathcal L}(q)|^2\,\frac{2\hbar\omega_{\rm LO}}{(\hbar\omega)^2-(\hbar\omega_{\rm LO})^2}=\frac{v(q)}{\epsilon(\omega)},\qquad \epsilon(\omega)=\epsilon^\infty\,\frac{\omega_{\rm LO}^2-\omega^2}{\omega_{\rm TO}^2-\omega^2}.$$
+    <p>The electronically screened Coulomb line plus one-phonon exchange is the fully screened interaction, with $v/\epsilon^0$ at $\omega=0$ and $v/\epsilon^\infty$ at high frequency. This is the polar case of $W=W_{\rm e}+W_{\rm ph}$, which <a href="#a-hedin-baym">§A.5</a> derives in general.</p>
+  </div>
+
+  <h3>The same kernel splits LO from TO</h3>
+  <p>Giustino does not write the phonon-side partner of (G.180). Section VI.A.3 only notes that the long-range split "is analogous to that in use for calculating the splitting between longitudinal-optical (LO) and transverse-optical (TO) phonons in polar materials (Gonze and Lee, 1997)". Here is that term for orientation, from Gonze and Lee; the review does not print it. The interatomic force constants of a polar crystal have a nonanalytic part at Γ,</p>
+  <div class="eq">$$ \widetilde C^{\rm NA}_{\kappa\alpha,\kappa'\beta}(\bq\to0)=\frac{4\pi}{\Omega}\frac{e^2}{4\pi\varepsilon_0}\,\frac{(\bq\cdot\bZ^*_\kappa)_\alpha\,(\bq\cdot\bZ^*_{\kappa'})_\beta}{\bq\cdot\boldsymbol\epsilon^\infty\cdot\bq}, $$</div>
+  <p>with the same Born charges and the same screened Coulomb kernel as (G.180). It depends on the direction $\hat\bq$ but not on $|\bq|$, so the limit $\bq\to0$ depends on how Γ is approached. It is added to the analytic, short-range force constants before the dynamical matrix of <a href="#a-lattice">§A.1</a> is diagonalized. For the cubic diatomic crystal the LO mode is pushed up and the TO mode, with $\bq\cdot\bZ^*\cdot\be=0$, is untouched:</p>
+  <div class="eq">$$ \omega_{\rm LO}^2-\omega_{\rm TO}^2=\frac{4\pi}{\Omega}\frac{e^2}{4\pi\varepsilon_0}\,\frac{Z^{*2}}{\mu\,\epsilon^\infty},\qquad \frac{\omega_{\rm LO}^2}{\omega_{\rm TO}^2}=\frac{\epsilon^0}{\epsilon^\infty}\ \ (\text{LST}).$$</div>
+  <p>LST is the $\omega=0$ value of the $\epsilon(\omega)$ in the box above, whose pole is $\omega_{\rm TO}$ and whose zero is $\omega_{\rm LO}$, where a longitudinal polarization wave needs no external charge. Eliminating $Z^*$ gives a compact statement: $|g^{\mathcal L}|^2=\frac{v(q)}{\epsilon^\infty}\,\frac{\hbar(\omega_{\rm LO}^2-\omega_{\rm TO}^2)}{2\omega_{\rm LO}}$. The Fröhlich coupling and the LO–TO splitting are one number read off two objects, the vertex and the dynamical matrix. A crystal without LO–TO splitting has no Fröhlich coupling.</p>
+
+  <figure class="viz" id="viz-a-polar-frohlich">
+    <p class="viz-title">Fröhlich vertex explorer <span class="tag">interactive</span></p>
+    <div class="viz-grid side"><div class="a-polar-pA"></div><div class="a-polar-pB"></div></div>
+    <div class="a-polar-ctrl"></div>
+    <div class="a-polar-ro"></div>
+    <figcaption><strong>Model.</strong> Isotropic two-atom polar crystal, SI units, $N_p\to1$. Solid: Fröhlich vertex from the dielectric constants (formula above). Dashed: (G.180) reduced with Born charges, $|g|=\frac{e^2}{\varepsilon_0\Omega}\frac{Z^*}{\epsilon^\infty q}(\hbar/2\mu\omega^{Z}_{\rm LO})^{1/2}$, with $\omega^{Z}_{\rm LO}$ from the Born-charge splitting. Dotted: acoustic deformation potential, (G.2) with $V_0\to E_1$ (G.6) and $\omega=v_sq$, so $|g|=E_1q(\hbar/2Mv_sq)^{1/2}$ with $M$ the cell mass. Shaded: light cone, $q&lt;q_c=\sqrt{\epsilon^\infty}\,\omega_{\rm LO}/c$; $q_p=(2m^*\omega_{\rm LO}/\hbar)^{1/2}$ is the inverse polaron radius. Right: the LST bar takes $\omega_{\rm TO}=\omega_{\rm LO}(\epsilon^\infty/\epsilon^0)^{1/2}$; the Born bar keeps that TO and adds $e^2Z^{*2}/(\varepsilon_0\Omega\mu\epsilon^\infty)$ to $\omega^2$. Presets are literature values, illustrative. $\Omega$ is the volume of a two-atom cell (for wurtzite GaN, one formula unit); $\mu$, $m^*$, $M$ and $v_s$ are fixed per preset, and the $E_1$ presets are 7 eV (GaAs), 8 eV (GaN) and 5 eV (others). <strong>What to notice.</strong> The LO coupling grows as $1/q$ and beats the acoustic one ($\propto q^{1/2}$) at long wavelengths (GaAs: below about 0.4 Å$^{-1}$, a third of the way to the zone boundary); in 3D the divergence is integrable, because phase space brings $q^2\,dq$. For every preset the two LO curves almost coincide, and the Born charge implied by LST agrees with the input to 1% (6% for GaAs). Move $Z^*$ alone and only the Born route responds; at $Z^*=0$ its vertex and its splitting vanish together, and at $\epsilon^0=\epsilon^\infty$ the same happens to the dielectric route. The light cone sits two and a half to three and a half decades below $q_p$.</figcaption>
+  </figure>
+
+  <h3>Where electrostatics stops being exact</h3>
+  <p>Every factor in (G.180) is electrostatic. The kernel is the instantaneous Coulomb interaction and $\epsilon^\infty$ is a static electronic response, so neither meaning of "retardation" is present: not the frequency dependence of electronic screening (Giustino's sense, <a href="#a-coupling">§A.2</a>) and not the finite speed of light (EPP's sense). The second matters only inside the light cone, $q\lesssim q_c=\sqrt{\epsilon^\infty}\,\omega_{\rm LO}/c$. For GaAs $q_c\approx6\times10^{-5}$ Å$^{-1}$, four orders of magnitude below the zone boundary and well below the inverse polaron radius of 0.025 Å$^{-1}$. Inside the cone a TO phonon, dark for electrostatics, still carries a polarization current that radiates a transverse field. It mixes with light into a phonon-polariton, and whether LO and TO differ at $\bq=0$ depends on the order of the limits $\bq\to0$ and $c\to\infty$. <a href="#x-light-cone">§X.1</a> measures the light cone, and <a href="#b-phonon-se">§B.7</a> recovers the splitting as a photon-mediated phonon self-energy.</p>
+
+  <div class="callout connect"><p class="callout-title">Bridge to EPP · the static vertex (E.131)</p>
+    <p>EPP §3 derives the same vertex, (E.131), from the potential of Born-charge point dipoles in an anisotropic dielectric, and calls it "exactly equal" to Verdi and Giustino's. <a href="#b-foundations">§B.1</a> displays it in EPP's notation and lists the bookkeeping differences.</p>
+    <p>The real difference is the status of $\epsilon^\infty$. EPP puts it in "only ad hoc and later we will remove it to avoid double-counting". In the full theory the bare dipole couples to the photon field, the RPA photon self-energy regenerates electronic screening (<a href="#b-photon-se">§B.5</a>), and $\bq\cdot\epsilon^\infty\cdot\bq$ becomes $\bq\cdot\hat\epsilon^{\rm e}(\bq,\omega)\cdot\bq$, with a transverse channel added near the light cone (<a href="#b-frohlich">§B.8</a>). Eq. (G.180) is the $c\to\infty$, statically screened limit of that vertex.</p>
+  </div>
+
+  <div class="callout source"><p class="callout-title">Note on the sources · basis phase and citation</p>
+    <p>Like Eq. (4) of Verdi and Giustino (2015), EPP's (E.131) lacks the basis phase $e^{-i(\bq+\bG)\cdot\mathbf r^0_a}$ that (G.180) restores (Giustino's footnote 7). EPP also cites the 2015 PRL as by Giustino alone. See the source note in <a href="#b-foundations">§B.1</a>.</p>
+  </div>
+
+  <div class="callout caveat"><p class="callout-title">Subtlety · what the reduction assumes</p>
+    <p>The Fröhlich form needs one polar LO mode, isotropic $\bZ^*$ and $\epsilon^\infty$, the $\bG=0$ term and intraband scattering. Eq. (G.180) needs none of these and sums over all modes, which matters in TiO<sub>2</sub> with its several LO branches. The classic Fröhlich model adds parabolic bands and a dispersionless LO phonon. The multipole expansion behind (G.180) also has a next term: dynamical quadrupoles give a direction-dependent but finite long-range contribution, treated analytically in work after this review. In a two-dimensional crystal the dipole sheet gives a coupling that stays finite as $q\to0$ (<a href="#b-2d">§B.10</a>).</p>
+  </div>
+</section>
+<script>
+(() => {
+  if (!window.EPP) return;
+  const sup = (s) => `<sup>${s}</sup>`;
+  const sci = (v, d = 2) => {
+    if (!isFinite(v) || v <= 0) return '—';
+    const e = Math.floor(Math.log10(v));
+    if (e >= -2 && e < 4) return EPP.fmt(v, d + 1);
+    const m = v / Math.pow(10, e);
+    return `${m.toFixed(d - 1)}×10${sup(String(e).replace('-', '−'))}`;
+  };
+  const decTicks = (a, b, step = 1) => { const t = []; for (let e = a; e <= b; e += step) t.push({ v: Math.pow(10, e), label: e === 0 ? '1' : `10^{${e}}` }); return t; };
+
+  // ---------------- Figure: Fröhlich vertex explorer ----------------
+  (() => {
+    const fig = document.getElementById('viz-a-polar-frohlich');
+    if (!fig) return;
+    // constants (eV, Å, amu): e^2/eps0, hbar^2/amu, hbar c, Ry, hbar^2/2m_e, hbar
+    const E2 = 180.95, HB2 = 4.1803e-3, HC = 1973.27, RY = 13.6057, H2M = 3.80998, HBS = 6.582120e-16;
+    const PRE = {
+      GaAs: { einf: 10.9, e0: 12.9, wLO: 36.2, Om: 45.2, Z: 2.07, E1: 7, ms: 0.067, mu: 36.1, M: 144.64, vs: 5200 },
+      GaN: { einf: 5.35, e0: 9.5, wLO: 92, Om: 22.8, Z: 2.65, E1: 8, ms: 0.2, mu: 11.66, M: 83.73, vs: 8000 },
+      MgO: { einf: 2.96, e0: 9.8, wLO: 89, Om: 18.7, Z: 1.98, E1: 5, ms: 0.35, mu: 9.65, M: 40.30, vs: 9000 },
+      LiF: { einf: 1.93, e0: 9.0, wLO: 82, Om: 16.4, Z: 1.05, E1: 5, ms: 1.0, mu: 5.08, M: 25.94, vs: 6600 },
+      NaCl: { einf: 2.34, e0: 5.9, wLO: 32.7, Om: 44.9, Z: 1.12, E1: 5, ms: 1.0, mu: 13.9, M: 58.44, vs: 4500 },
+    };
+    const NQ = 241, qs = Array.from({ length: NQ }, (_, i) => Math.pow(10, -6 + 6 * i / (NQ - 1)));
+    const pA = new EPP.Plot(fig.querySelector('.a-polar-pA'), {
+      xlabel: 'q (Å^{-1})', ylabel: '|g| (meV)', logx: true, logy: true, xlim: [1e-6, 1], ylim: [1e-1, 1e9],
+      xticks: decTicks(-6, 0), yticks: decTicks(-1, 9), xname: 'q', aspect: 0.74,
+      hoverX: (v) => sci(v) + ' Å' + sup('−1'), hoverY: (v) => sci(v, 3) + ' meV',
+      ariaLabel: 'Log-log plot of the electron-phonon coupling magnitude versus wave vector for the polar LO mode and an acoustic deformation potential, with the light cone shaded.'
+    });
+    const pB = new EPP.Plot(fig.querySelector('.a-polar-pB'), {
+      ylabel: 'ħω (meV)', xlim: [0.35, 2.65], ylim: [0, 50], legend: false, hover: false, aspect: 0.74,
+      xticks: [{ v: 1, label: 'LST: ε^0/ε^∞' }, { v: 2, label: 'Born: Z^*, ε^∞' }],
+      ariaLabel: 'Bar chart of TO and LO phonon energies from the Lyddane-Sachs-Teller relation and from Born charges.'
+    });
+    const ro = EPP.readout(fig.querySelector('.a-polar-ro'));
+    let preset = null;
+    const ui = EPP.controls(fig.querySelector('.a-polar-ctrl'), [
+      { key: 'mat', type: 'select', label: 'material preset', options: Object.keys(PRE).map(k => [k, k]), value: 'GaAs' },
+      { key: 'einf', type: 'range', label: 'ε^∞', min: 1, max: 15, step: 0.01, value: 10.9, fmt: v => v.toFixed(2) },
+      { key: 'e0', type: 'range', label: 'ε^0 (≥ ε^∞)', min: 1, max: 20, step: 0.01, value: 12.9, fmt: v => v.toFixed(2) },
+      { key: 'wLO', type: 'range', label: 'ħω_{LO} (meV)', min: 10, max: 200, step: 0.1, value: 36.2, fmt: v => v.toFixed(1) },
+      { key: 'Om', type: 'range', label: 'cell volume Ω (Å^3)', min: 10, max: 100, step: 0.1, value: 45.2, fmt: v => v.toFixed(1) },
+      { key: 'Z', type: 'range', label: 'Born charge Z^* (e)', min: 0, max: 3, step: 0.01, value: 2.07, fmt: v => v.toFixed(2) },
+      { key: 'E1', type: 'range', label: 'deformation potential E_1 (eV)', min: 0, max: 20, step: 0.1, value: 7, fmt: v => v.toFixed(1) },
+    ], (s) => {
+      if (s.mat !== preset) { preset = s.mat; const p = PRE[preset]; ['einf', 'e0', 'wLO', 'Om', 'Z', 'E1'].forEach(k => ui.set(k, p[k], true)); }
+      if (s.e0 < s.einf) ui.set('e0', s.einf, true);
+      draw(s);
+    });
+    function draw(s) {
+      const p = PRE[s.mat] || PRE.GaAs;
+      const einf = s.einf, e0 = Math.max(s.e0, s.einf), w = s.wLO / 1000, Om = s.Om, Z = s.Z, E1 = s.E1;
+      const dlt = Math.max(0, 1 / einf - 1 / e0);
+      const gF = Math.sqrt(E2 * w / (2 * Om) * dlt);              // |g| q, eV/Å (G.7 route)
+      const wTO = w * Math.sqrt(einf / e0);                       // eV, LST
+      const split = E2 * HB2 * Z * Z / (einf * Om * p.mu);        // eV^2, Born-charge splitting
+      const wLOZ = Math.sqrt(wTO * wTO + split);                  // eV
+      const gZ = (E2 / Om) * (Z / einf) * Math.sqrt(HB2 / (2 * p.mu * wLOZ)); // eV/Å (G.180 route)
+      const ZL = Math.sqrt(Math.max(0, (w * w - wTO * wTO) * einf * Om * p.mu / (E2 * HB2)));
+      const alpha = dlt * Math.sqrt(RY * p.ms / w);
+      const qc = Math.sqrt(einf) * w / HC, qp = Math.sqrt(p.ms * w / H2M);
+      const acPref = Math.sqrt(HB2 / 2 / (p.M * HBS * 1e10 * p.vs)); // so that |g_ac| = E1 * acPref * sqrt(q), eV
+      const gac = (q) => E1 * acPref * Math.sqrt(q);
+      const L = [{ type: 'band', x0: 1e-6, x1: Math.min(1, qc), color: 'photon', alpha: 0.14, text: 'light cone' }];
+      const inY = (y) => y > 2e-1 && y < 5e8;
+      if (gF > 0) {
+        L.push({ type: 'line', x: qs, y: qs.map(q => 1e3 * gF / q), color: 'phonon', label: 'LO, Fröhlich (G.7): ε^0, ε^∞' });
+        const yt = 1e3 * gF / 2e-4; if (inY(yt)) L.push({ type: 'text', x: 2e-4, y: yt, dy: -12, text: '∝ q^{−1}', color: 'phonon', size: 11.5 });
+      }
+      if (gZ > 0) L.push({ type: 'line', x: qs, y: qs.map(q => 1e3 * gZ / q), color: 'c4', dash: [7, 5], label: 'LO, Verdi–Giustino (G.180): Z^*, ε^∞' });
+      if (E1 > 0) {
+        L.push({ type: 'line', x: qs, y: qs.map(q => 1e3 * gac(q)), color: 'c5', dash: [2, 3], label: 'acoustic, deformation potential (G.6)' });
+        const ya = 1e3 * gac(2e-4); if (inY(ya)) L.push({ type: 'text', x: 2e-4, y: ya, dy: 13, text: '∝ q^{1/2}', color: 'c5', size: 11.5 });
+      }
+      L.push({ type: 'vline', at: qp, color: 'muted', text: 'q_p', textDy: 18 });
+      pA.draw(L);
+      // LO-TO bars
+      const lo1 = 1e3 * w, to = 1e3 * wTO, lo2 = 1e3 * wLOZ;
+      const top = Math.max(20, Math.ceil(1.25 * Math.max(lo1, lo2) / 10) * 10);
+      const bar = (x, lo) => [
+        { type: 'fill', x: [x - 0.27, x + 0.27], y1: [lo, lo], y2: [to, to], color: 'phonon', alpha: 0.28 },
+        { type: 'segments', segs: [[x - 0.27, lo, x + 0.27, lo]], color: 'phonon', width: 2.5 },
+        { type: 'segments', segs: [[x - 0.27, to, x + 0.27, to]], color: 'muted', width: 2 },
+        { type: 'text', x, y: lo, dy: -10, text: `LO ${lo.toFixed(1)}`, color: 'phonon', align: 'center', size: 11.5 },
+        { type: 'text', x, y: to, dy: 11, text: `TO ${to.toFixed(1)}`, color: 'muted', align: 'center', size: 11.5 },
+      ];
+      pB.draw([...bar(1, lo1), ...bar(2, lo2)], { ylim: [0, top] });
+      const reg = alpha < 1 ? 'weak' : (alpha < 6 ? 'intermediate' : 'strong');
+      ro.set({
+        'ħω_{TO} (LST)': to.toFixed(1) + ' meV',
+        'ħω_{LO} from Z^*': lo2.toFixed(1) + ' meV',
+        'Z^* implied by LST': ZL.toFixed(2),
+        '|g|q, Fröhlich': EPP.fmt(gF, 3) + ' eV Å' + sup('−1'),
+        '|g|q, from Z^*': EPP.fmt(gZ, 3) + ' eV Å' + sup('−1'),
+        'α': (alpha < 1 ? alpha.toFixed(3) : alpha.toFixed(2)) + ' (' + reg + ')',
+        'q_c': sci(qc) + ' Å' + sup('−1'),
+        'q_p': sci(qp) + ' Å' + sup('−1'),
+      });
+    }
+  })();
+
+  // ---------------- Figure: 1D Wannier interpolation lab ----------------
+  (() => {
+    const fig = document.getElementById('viz-a-polar-wannier');
+    if (!fig) return;
+    const TAU = 2 * Math.PI, A = 1, B = 0.35, NF = 801;
+    const xf = EPP.linspace(-2, 2, NF), qf = xf.map(x => x * Math.PI);
+    const gS = (q) => A * Math.sin(q / 2) ** 2 + B * Math.sin(q) ** 2;
+    const atG = (q) => Math.abs(Math.sin(q / 2)) < 1e-9;
+    const cotL = (q) => atG(q) ? 0 : 0.5 * Math.cos(q / 2) / Math.sin(q / 2);  // sum_n 1/(q+2πn), G = -q term dropped at Γ
+    const gLa = (q, al) => { let s = 0; for (let n = -6; n <= 6; n++) { const x = q + n * TAU; if (Math.abs(x) < 1e-9) continue; s += Math.exp(-al * x * x) / x; } return s; };
+    function coeffs(f, N) {
+      const P = [], W = [];
+      if (N % 2 === 0) { for (let p = -N / 2; p <= N / 2; p++) { P.push(p); W.push(Math.abs(p) === N / 2 ? 0.5 : 1); } }
+      else { const h = (N - 1) / 2; for (let p = -h; p <= h; p++) { P.push(p); W.push(1); } }
+      const re = [], im = [];
+      for (const p of P) { let a = 0, b = 0; for (let j = 0; j < N; j++) { const ph = -TAU * j * p / N; a += f[j] * Math.cos(ph); b += f[j] * Math.sin(ph); } re.push(a / N); im.push(b / N); }
+      return { P, W, re, im };
+    }
+    const evalI = (c, q) => { let s = 0; for (let k = 0; k < c.P.length; k++) { const ph = q * c.P[k]; s += c.W[k] * (c.re[k] * Math.cos(ph) - c.im[k] * Math.sin(ph)); } return s; };
+    const pa = new EPP.Plot(fig.querySelector('.a-polar-wA'), {
+      xlabel: 'q (π/a)', ylabel: 'g(q) (arb. units)', xlim: [-2, 2], ylim: [-2.2, 2.8], aspect: 0.62, xname: 'q a/π',
+      xticks: [-2, -1, 0, 1, 2], hoverY: (v) => EPP.fix(v, 3),
+      ariaLabel: 'Model coupling over two Brillouin zones with coarse-grid samples and the Fourier-interpolated curve.'
+    });
+    const pb = new EPP.Plot(fig.querySelector('.a-polar-wB'), {
+      xlabel: 'R_p (cells)', ylabel: '|g(R_p)|', logy: true, xlim: [-0.4, 8.4], ylim: [1e-9, 3], aspect: 0.95, hover: false,
+      xticks: [0, 2, 4, 6, 8], yticks: decTicks(-9, 0, 3),
+      ariaLabel: 'Magnitude of the real-space coefficients on a log scale, with and without subtraction of the long-range part.'
+    });
+    const ro = EPP.readout(fig.querySelector('.a-polar-wR'));
+    EPP.controls(fig.querySelector('.a-polar-wC'), [
+      { key: 'C', type: 'range', label: 'polarity C (∝ Z^*/ε^∞)', min: 0, max: 0.5, step: 0.01, value: 0.3, fmt: v => v.toFixed(2) },
+      { key: 'N', type: 'range', label: 'coarse grid N_c', min: 4, max: 16, step: 1, value: 8, fmt: v => String(Math.round(v)) },
+      { key: 'al', type: 'range', label: 'cutoff σ (a^2)', min: 0.05, max: 2, step: 0.05, value: 0.5, fmt: v => v.toFixed(2) },
+      { key: 'sub', type: 'toggle', label: 'subtract g^L_σ before interpolating', value: false },
+    ], draw);
+    function draw(s) {
+      const C = s.C, N = Math.round(s.N), al = s.al, sub = s.sub;
+      const qj = Array.from({ length: N }, (_, j) => TAU * j / N);
+      const data = qj.map(q => gS(q) + C * cotL(q));
+      const ana = qj.map(q => C * gLa(q, al));
+      const cD = coeffs(data, N), cR = coeffs(data.map((v, j) => v - ana[j]), N);
+      const tru = qf.map(q => (C > 0 && atG(q)) ? NaN : gS(q) + C * cotL(q));
+      const iD = qf.map(q => evalI(cD, q));
+      const iS = qf.map(q => (C > 0 && atG(q)) ? NaN : evalI(cR, q) + C * gLa(q, al));
+      let eD = 0, eS = 0, n = 0;
+      for (let i = 0; i < NF; i++) { if (Math.abs(Math.sin(qf[i] / 2)) < Math.sin(0.15) || !isFinite(tru[i])) continue; eD += (iD[i] - tru[i]) ** 2; eS += (iS[i] - tru[i]) ** 2; n++; }
+      eD = Math.sqrt(eD / n); eS = Math.sqrt(eS / n);
+      const xs = [], ys = [];
+      for (let j = 0; j < N; j++) { xs.push(2 * j / N - 2, 2 * j / N); ys.push(data[j], data[j]); }
+      xs.push(2); ys.push(data[0]);
+      const L = [{ type: 'line', x: xf, y: tru, color: 'ink', width: 1.6, label: 'true g (dense grid)' }];
+      if (sub && C > 0) L.push({ type: 'line', x: xf, y: qf.map(q => atG(q) ? NaN : C * gLa(q, al)), color: 'c4', dash: [2, 3], width: 1.8, label: 'analytic g^L_σ' });
+      L.push({ type: 'line', x: xf, y: sub ? iS : iD, color: 'phonon', dash: [7, 4], label: sub ? 'interpolated g^S + g^L_σ' : 'interpolated g' });
+      L.push({ type: 'points', x: xs, y: ys, color: 'c5', r: 3.6, label: 'coarse grid' });
+      pa.draw(L);
+      // real-space coefficients
+      const floor = 1.5e-9, R = [], aD = [], aR = [];
+      for (let k = 0; k < cD.P.length; k++) { const p = cD.P[k]; if (p < 0) continue; R.push(p); aD.push(Math.max(floor, Math.hypot(cD.re[k], cD.im[k]))); aR.push(Math.max(floor, Math.hypot(cR.re[k], cR.im[k]))); }
+      const LB = [];
+      if (C > 0) LB.push({ type: 'hline', at: C / 2, color: 'muted', text: 'true tail C/2', textAt: 'right' });
+      LB.push({ type: 'vline', at: N / 2, color: 'muted' });
+      LB.push({ type: 'text', x: N / 2, y: 2e-8, dx: -5, text: 'WS edge', color: 'muted', align: 'right', size: 11 });
+      LB.push({ type: 'points', x: R, y: aD, color: 'phonon', r: 4, label: 'full data' });
+      LB.push({ type: 'points', x: R, y: aR, color: 'c4', r: 4, hollow: true, label: 'after subtracting g^L_σ' });
+      if (C > 0 && R.length > 3) LB.push({ type: 'text', x: R[3], y: aR[3], dx: 8, text: 'remainder', color: 'c4', size: 11 });
+      pb.draw(LB);
+      ro.set({ 'rms error away from Γ, direct': sci(eD, 2), 'with g^L_σ subtracted': sci(eS, 2), 'R_p kept': '|R<sub>p</sub>| ≤ ' + Math.floor(N / 2) });
+    }
+  })();
+})();
+</script>

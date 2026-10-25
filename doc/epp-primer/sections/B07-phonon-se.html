@@ -1,0 +1,350 @@
+<section class="chapter" id="b-phonon-se" data-num="B.7" data-title="Phonon self-energy and LO–TO">
+  <header class="ch-head">
+    <p class="eyebrow"><span class="num">B.7</span><span>EPP §7, §7.1 · Eqs. 386–410</span></p>
+    <h2>The electrodynamic phonon self-energy and the LO–TO splitting</h2>
+    <p class="lede">A polar phonon dresses itself by emitting and reabsorbing an electron-screened photon. By the end you can derive EPP's phonon Dyson equation, recognise it as Giustino's Eqs. (135) and (137) with photons, and explain why EPP's $\bq=0$ "LO–TO splitting" (E Eq. 410) is really the upper phonon polariton of a crystal without electrons.</p>
+  </header>
+
+  <p>In <a href="#b-propagator">§B.6</a> the whole crystal was folded into one field propagator, $D=D^0+D^0\Pi_{jj}D$ with $\Pi_{jj}=\Pi^{\rm e}_{jj}+\Pi^{\rm ion}_{jj}$. EPP §7 reads the same diagram series the other way round. Instead of asking how matter dresses light, it asks how light dresses the lattice. Units are Gaussian throughout, and the Born charges $Z^*$ carry the dimension of charge.</p>
+
+  <div class="callout intuition">
+    <p class="callout-title">Physical picture</p>
+    <p>A long-wavelength polar <span class="t-p">phonon</span> is a lattice of identical oscillating Born-charge dipoles. An oscillating dipole is a current, $\dot{\bp}$, and a current radiates: it creates a longitudinal (Coulomb) field and a transverse <span class="t-g">photon</span> field. That field crosses the polarizable <span class="t-e">electron</span> gas, which screens it, and acts back on the ions. The loop phonon → current → screened field → current → phonon contains everything long-range in polar lattice dynamics: the LO–TO splitting, phonon polaritons and, in doped crystals, LO-phonon–plasmon modes. The bare frequencies $\omega_\sigma(\bq)$ keep only the short-range forces (<a href="#b-foundations">§B.1</a>).</p>
+  </div>
+
+  <h3>Step 1: resum the electrons into the photon line</h3>
+  <p>Take every diagram of $D$ that starts and ends on a bare ionic bubble and remove the outer $D^0$ lines. What remains is the screened ionic current–current correlator. From here on a superscript 0 marks a bare (irreducible) bubble (EPP p. 87). With the arguments $(\bq,\omega)$ written only in the first line,</p>
+  <div class="eq">$$\begin{aligned}\Pi^{\rm ion}_{jj\mu\nu}(\bq,\omega)&=\Pi^{\rm ion,0}_{jj\mu\nu}(\bq,\omega)+\sum_{\alpha\beta}\Pi^{\rm ion,0}_{jj\mu\alpha}(\bq,\omega)D^0_{\alpha\beta}(\bq,\omega)\Pi^{\rm ion,0}_{jj\beta\nu}(\bq,\omega)\\&\quad+\sum_{\alpha\beta\gamma\delta}\Pi^{\rm ion,0}_{jj\mu\alpha}D^0_{\alpha\beta}\Pi^{\rm ion,0}_{jj\beta\gamma}D^0_{\gamma\delta}\Pi^{\rm ion,0}_{jj\delta\nu}+\sum_{\alpha\beta\gamma\delta}\Pi^{\rm ion,0}_{jj\mu\alpha}D^0_{\alpha\beta}\Pi^{\rm e,0}_{jj\beta\gamma}D^0_{\gamma\delta}\Pi^{\rm ion,0}_{jj\delta\nu}+\dots\end{aligned}\tag{E.386}$$</div>
+  <p>Between two ionic bubbles any chain of electronic bubbles may appear. Collecting those chains into an electron-dressed photon line $D^{\rm e}$ leaves only ionic bubbles:</p>
+  <div class="eq">$$\begin{aligned}\Pi^{\rm ion}_{jj\mu\nu}(\bq,\omega)&=\Pi^{\rm ion,0}_{jj\mu\nu}(\bq,\omega)+\sum_{\alpha\beta}\Pi^{\rm ion,0}_{jj\mu\alpha}(\bq,\omega)D^{\rm e}_{\alpha\beta}(\bq,\omega)\Pi^{\rm ion,0}_{jj\beta\nu}(\bq,\omega)\\&\quad+\sum_{\alpha\beta\gamma\delta}\Pi^{\rm ion,0}_{jj\mu\alpha}D^{\rm e}_{\alpha\beta}\Pi^{\rm ion,0}_{jj\beta\gamma}D^{\rm e}_{\gamma\delta}\Pi^{\rm ion,0}_{jj\delta\nu}+\dots\end{aligned}\tag{E.387}$$</div>
+  <div class="eq">$$D^{\rm e}_{\mu\nu}(\bq,\omega)=D^0_{\mu\nu}(\bq,\omega)+\sum_{\alpha\beta=xyz}D^0_{\mu\alpha}(\bq,\omega)\,\Pi^{\rm e,0}_{jj\alpha\beta}(\bq,\omega)\,D^{\rm e}_{\beta\nu}(\bq,\omega)\tag{E.388}$$</div>
+  <p>E Eq. 388 is the Dyson equation of §B.6 with the electronic self-energy only. The author's analogy is the response of a medium A embedded in a polarizable medium B: $\chi_A=\chi^0_A+\chi^0_AW_B\chi^0_A+\dots$ with $W_B=v+v\chi^0_BW_B$. If you have screened a 2D layer by its substrate, this is the same move. The ions are system A, the electrons are the environment B, and $D^{\rm e}$ plays the role of $W_B$, now with transverse photons included.</p>
+
+  <div class="fd" id="b-phonon-se-fd-ion" style="gap:12px 14px" aria-label="Expansion of the screened ionic bubble, E Eq. 387"></div>
+  <div class="fd" id="b-phonon-se-fd-de" aria-label="Dyson equation for the electron-dressed photon line, E Eq. 388"></div>
+
+  <h3>Step 2: open the ionic bubble</h3>
+  <p>The bare ionic bubble is a sum over the $3s$ bare phonon branches ($s$ atoms of mass $m_a$ per cell of volume $\Omega_{\rm uc}$, eigenvectors $e_{a\alpha\sigma}$). It is built from the ionic current vertex $j_{\mu\sigma}(\bq)=\sum_{a\alpha}Z^*_{a\mu\alpha}e_{a\alpha\sigma}(\bq)/\sqrt{m_a}$ (E Eq. 295). The bare phonon propagator is the second line:</p>
+  <div class="eq">$$\Pi^{\rm ion,0}_{jj\mu\nu}(\bq,\omega)=-\frac{\omega^2}{c\,\Omega_{\rm uc}}\sum_{\sigma=1}^{3s}\frac{j_{\mu\sigma}(\bq)\,j^*_{\nu\sigma}(\bq)}{\omega^2-\omega^2_\sigma(\bq)+i\eta}\tag{E.389}$$</div>
+  <div class="eq">$$F^0_\sigma(\bq,\omega)=2\,\frac{\omega_\sigma(\bq)}{\hbar}\,\frac{1}{\omega^2-\omega^2_\sigma(\bq)+i\eta}\tag{E.390}$$</div>
+  <p>The bubble becomes "vertex × phonon line × vertex" once one defines the <strong>dynamical ionic current vertex</strong>:</p>
+  <div class="eq">$$j_{\mu\sigma}(\bq)\;\to\;J_{\mu\sigma}(\bq,\omega)=\sqrt{\frac{\hbar}{2c\,\Omega_{\rm uc}\,\omega_\sigma(\bq)}}\;\omega\,j_{\mu\sigma}(\bq)\tag{E.392}$$</div>
+  <div class="eq">$$\Pi^{\rm ion,0}_{jj\mu\nu}(\bq,\omega)=-\sum_{\sigma=1}^{3s}J_{\mu\sigma}(\bq,\omega)\,F^0_\sigma(\bq,\omega)\,J^*_{\nu\sigma}(\bq,\omega)\tag{E.393}$$</div>
+  <p>The factor $\omega$ is physical. A Born-charge dipole oscillating as $e^{-i\omega t}$ carries the current $\dot{\bp}=-i\omega\bp$, and the field couples to currents through $-\frac1c\bj\cdot\bA$. A static displacement carries no current, so $J(\omega=0)=0$. The two vertices carry the overall $\omega^2$ of the gauge-invariant bubble, which came from subtracting the static paramagnetic term (<a href="#b-photon-se">§B.5</a>). The square root collects the zero-point amplitude $\sqrt{\hbar/2m_a\omega_\sigma}$ (the mass is already inside $j$) and the $1/\sqrt{c\,\Omega_{\rm uc}}$ normalization of the current coupling.</p>
+
+  <h3>Step 3: a Dyson equation for phonons</h3>
+  <p>Insert E Eq. 393 into E Eq. 387. Each bare ionic bubble becomes $-JF^0J^*$, and between two phonon lines sits the combination $J^*D^{\rm e}J$. Defining minus that combination as the phonon self-energy, the series reads (unnumbered, EPP p. 89)</p>
+  <div class="eq">$$\Pi^{\rm ion}_{jj\mu\nu}=-\sum_{\sigma\sigma'}J_{\mu\sigma}\left\{F^0+F^0\Omega^{\rm e}F^0+F^0\Omega^{\rm e}F^0\Omega^{\rm e}F^0+\dots\right\}J^*_{\nu\sigma'},$$</div>
+  <p>and the curly bracket is the perturbative expansion of the phonon Green's matrix:</p>
+  <div class="eq">$$F=F^0+F^0\Omega^{\rm e}F^0+F^0\Omega^{\rm e}F^0\Omega^{\rm e}F^0+\dots\tag{E.397}$$</div>
+  <div class="eq">$$F=F^0+F^0\,\Omega^{\rm e}\,F\tag{E.398}$$</div>
+  <div class="eq">$$\Omega^{\rm e}_{\sigma\sigma'}(\bq,\omega)=-\sum_{\alpha\beta}J^*_{\alpha\sigma}(\bq,\omega)\,D^{\rm e}_{\alpha\beta}(\bq,\omega)\,J_{\beta\sigma'}(\bq,\omega)\tag{E.399}$$</div>
+
+  <div class="fd" id="b-phonon-se-fd-f" aria-label="Phonon Dyson equation, E Eq. 398"></div>
+  <div class="fd" id="b-phonon-se-fd-om" aria-label="Phonon self-energy, E Eq. 399"><span>$\Omega^{\rm e}_{\sigma\sigma'}(\bq,\omega)=-\sum_{\alpha\beta}$</span></div>
+  <p style="font-size:0.92rem;color:var(--fg-2)">Diagrams after EPP Figs. 12–13. Amber zigzag: phonon ($F^0$ thin, $F$ heavy). Rose wavy: total photon line, longitudinal plus transverse ($D^0$ thin, $D^{\rm e}$ heavy). Blobs: bare ionic (amber) and electronic (blue) current–current bubbles. Teal dots: the dynamical ionic vertices $J$, $J^*$. In the phonon row, the piece $J^*$–$D^{\rm e}$–$J$ stands for $\Omega^{\rm e}$, including the minus sign of E Eq. 399.</p>
+
+  <details class="derivation"><summary>Derivation: E Eq. 393 reproduces E Eq. 389, and the signs of the Dyson series</summary><div class="d-body">
+    <p>Insert E Eqs. 390 and 392:</p>
+    <div class="eq">$$-J_{\mu\sigma}F^0_\sigma J^*_{\nu\sigma}=-\frac{\hbar\,\omega^2}{2c\,\Omega_{\rm uc}\,\omega_\sigma}\,j_{\mu\sigma}j^*_{\nu\sigma}\cdot\frac{2\omega_\sigma}{\hbar}\,\frac{1}{\omega^2-\omega_\sigma^2+i\eta}=-\frac{\omega^2}{c\,\Omega_{\rm uc}}\frac{j_{\mu\sigma}j^*_{\nu\sigma}}{\omega^2-\omega_\sigma^2+i\eta}.$$</div>
+    <p>The term of E Eq. 387 with $n$ lines $D^{\rm e}$ contains $n+1$ bare bubbles, so $(-1)^{n+1}$ from E Eq. 393, and $n$ factors $J^*D^{\rm e}J=-\Omega^{\rm e}$, so another $(-1)^n$. The product is always $-1$: the term equals $-J\,F^0(\Omega^{\rm e}F^0)^n J^*$, which is the bracket above. Summing the geometric series gives E Eq. 398.</p>
+  </div></details>
+
+  <p>$\Omega^{\rm e}$ is a $3s\times3s$ matrix. Off-diagonal elements mix branches, because one photon line can connect two different polar modes. EPP splits it as $\Omega^{\rm e}=\Omega^0+\Delta\Omega^{\rm e}$ (E Eq. 400), with an electron-free part</p>
+  <div class="eq">$$\Omega^0_{\sigma\sigma'}(\bq,\omega)=-\sum_{\alpha\beta}J^*_{\alpha\sigma}(\bq,\omega)\,D^0_{\alpha\beta}(\bq,\omega)\,J_{\beta\sigma'}(\bq,\omega)\tag{E.401}$$</div>
+  <p>and an electron-induced remainder $\Delta\Omega^{\rm e}$, where the electrodynamic Fröhlich vertices live (<a href="#b-frohlich">§B.8</a>). Neglecting phonon mixing, $F_{\sigma\sigma'}\approx F_\sigma\delta_{\sigma\sigma'}$, E Eq. 398 becomes algebra:</p>
+  <div class="eq">$$F_\sigma(\bq,\omega)=\frac{F^0_\sigma(\bq,\omega)}{1-F^0_\sigma(\bq,\omega)\,\Omega^{\rm e}_{\sigma\sigma}(\bq,\omega)}\tag{E.404}$$</div>
+  <div class="eq">$$F_\sigma(\bq,\omega)=\frac1\hbar\,\frac{2\omega_\sigma(\bq)}{\omega^2-\omega^2_\sigma(\bq)-2\omega_\sigma(\bq)\,\Omega^{\rm e}_{\sigma\sigma}(\bq,\omega)/\hbar}\tag{E.405}$$</div>
+  <p>The renormalized frequencies solve $\omega^2=\omega_\sigma^2+2\omega_\sigma\Omega^{\rm e}_{\sigma\sigma}(\bq,\omega)/\hbar$, a self-consistent condition because $\Omega^{\rm e}$ depends on $\omega$. For the optical modes of a cubic diatomic crystal near $\Gamma$, choosing the bare modes along and across $\hat\bq$ makes $\Omega^{\rm e}$ diagonal among the optical modes. The acoustic modes carry no current at $\Gamma$, so E Eq. 404 is exact at $\Gamma$ and accurate near it. The figure below uses this.</p>
+  <p><strong>Why the infinite sum matters.</strong> Each finite order of E Eq. 397 is a polynomial in $F^0$ and $\Omega^{\rm e}$. Its poles are those of $F^0$, at the bare $\omega_\sigma$ with growing multiplicity, plus any poles of $\Omega^{\rm e}$ itself, such as the bare photon. None of them is a renormalized mode. The geometric series converges only where $|F^0\Omega^{\rm e}|\lt 1$, and the renormalized pole sits exactly on the boundary, where $F^0\Omega^{\rm e}=1$. No truncation reaches it. The "Why resum?" tab of the figure shows this numerically.</p>
+
+  <div class="callout connect">
+    <p class="callout-title">Bridge to Giustino: the same Dyson equation</p>
+    <p>Here Giustino's phonon Green's function is written $\boldsymbol{\mathcal D}$ and his phonon self-energy $\Pi^{\rm ph}$ (in the PDF they are $\mathbf D$ and $\Pi$; see <a href="#a-phonon-se">§A.6</a>), with nonadiabatic part $\Pi^{\rm NA}=\Pi^{\rm ph}-\Pi^{\rm A}$. His adiabatic propagator $\mathcal D^{\rm A}_{\bq\nu\nu'}=2\omega_{\bq\nu}\delta_{\nu\nu'}/(\omega^2-\omega^2_{\bq\nu})$ (G Eq. 132) has the form of $\hbar F^0_\sigma$, with adiabatic frequencies in place of EPP's short-range ones. Giustino §V.A.2 writes</p>
+    <div class="eq">$$\boldsymbol{\mathcal D}(\omega)=\boldsymbol{\mathcal D}^{\rm A}(\omega)+\boldsymbol{\mathcal D}^{\rm A}(\omega)\,\Pi^{\rm NA}(\omega)\,\boldsymbol{\mathcal D}(\omega)\tag{G.135}$$</div>
+    <div class="eq">$$\tilde\Omega^2_{\bq\nu}=\omega^2_{\bq\nu}+2\omega_{\bq\nu}\,\Pi^{\rm NA}_{\bq\nu\nu}(\tilde\Omega_{\bq\nu})\tag{G.137}$$</div>
+    <p>These are E Eq. 398 and the pole condition of E Eq. 405, with $\Omega^{\rm e}/\hbar$ in the place of $\Pi^{\rm NA}$ (in general $\Omega^{\rm e}\leftrightarrow\hbar\,\Pi^{\rm ph}$): Giustino's self-energy is a frequency, EPP's an energy. Mind the letters: Giustino's $\tilde\Omega$ is a renormalized frequency, EPP's $\Omega^{\rm e}$ a self-energy and $\Omega_{\rm uc}$ a cell volume. Both papers drop the off-diagonal elements, Giustino's effect (iii) "coupling between the adiabatic vibrational eigenmodes", and both solve the pole condition self-consistently (E Eq. 407 below). The theories differ in what they call the unperturbed phonon:</p>
+    <div class="tbl"><table>
+      <thead><tr><th></th><th>Giustino (2017)</th><th>EPP §7</th></tr></thead>
+      <tbody>
+        <tr><td>Unperturbed phonons</td><td>adiabatic: DFPT force constants $\Pi^{\rm A}=\Pi^{\rm ph}(\omega=0)$, long-range dipolar part included</td><td>short-range force constants only; the dipolar part is removed</td></tr>
+        <tr><td>Self-energy</td><td>$\Pi^{\rm NA}$: dynamic minus static, $W_{\rm e}(\omega)-W_{\rm e}(0)$ (G Eq. 140)</td><td>$\Omega^{\rm e}=-J^*D^{\rm e}J$: the whole long-range part, static and dynamic</td></tr>
+        <tr><td>Field exchanged</td><td>instantaneous Coulomb, screened by $\epsilon_{\rm e}^{-1}$</td><td>longitudinal and transverse photons, screened by $D^{\rm e}$</td></tr>
+        <tr><td>Charges</td><td>bare nuclear $Z_\kappa$</td><td>Born charges $Z^*$, point dipoles at cell origins</td></tr>
+      </tbody>
+    </table></div>
+    <p>So $\Omega^{\rm e}(\bq,0)$, which is purely longitudinal (at $\omega=0$ the $\omega^2$ of $J^*J$ cancels the $1/\omega^2$ of the longitudinal $D^{\rm e}$ and removes the transverse part), is the long-range part of Giustino's $\Pi^{\rm A}$. $\Omega^{\rm e}(\bq,\omega)-\Omega^{\rm e}(\bq,0)$ is the dipolar part of his $\Pi^{\rm NA}$, plus the transverse-photon part that his theory does not have.</p>
+  </div>
+
+  <h3>§7.1: switch the electrons off and set q = 0</h3>
+  <p>With $D^{\rm e}\to D^0$ the self-energy is E Eq. 401 on the diagonal, and the pole condition must be solved self-consistently:</p>
+  <div class="eq">$$\Omega^0_\sigma(\bq,\omega)=-\sum_{\alpha\beta}J^*_{\alpha\sigma}(\bq,\omega)\,D^0_{\alpha\beta}(\bq,\omega)\,J_{\beta\sigma}(\bq,\omega)\tag{E.406}$$</div>
+  <div class="eq">$$\tilde\omega^2_\sigma(\bq)=\omega^2_\sigma(\bq)+2\omega_\sigma(\bq)\,\Omega^0_{\sigma\sigma}\big[\bq,\tilde\omega_\sigma(\bq)\big]/\hbar\tag{E.407}$$</div>
+  <p>The free propagator of §B.6,</p>
+  <div class="eq">$$D^0_{\mu\nu}(\bq,\omega)=\frac{4\pi c}{\omega^2}\,\frac{-q_\mu q_\nu+\frac{\omega^2}{c^2}\delta_{\mu\nu}}{q^2-\frac{\omega^2}{c^2}-i\eta},\tag{E.381}$$</div>
+  <p>loses its direction dependence in the optical limit $\bq=0$:</p>
+  <div class="eq">$$D^0_{\alpha\beta}(\bq=0,\omega)=-\frac{4\pi c}{\omega^2}\,\delta_{\alpha\beta}\tag{E.408}$$</div>
+  <p>The $\omega^2$ in $J^*J$ cancels the $1/\omega^2$ of $D^0$. The self-energy is frequency independent, and the self-consistency becomes trivial:</p>
+  <div class="eq">$$\Omega^0_{\sigma\sigma}(\bq=0)=\frac{2\pi\hbar}{\Omega_{\rm uc}\,\omega_\sigma(\bq=0)}\sum_\alpha\big|j_{\alpha\sigma}(\bq=0)\big|^2\tag{E.409}$$</div>
+  <div class="eq">$$\tilde\omega^2_\sigma(\bq=0)=\omega^2_\sigma(\bq=0)+\frac{4\pi}{\Omega_{\rm uc}}\sum_\alpha\big|j_{\alpha\sigma}(\bq=0)\big|^2\tag{E.410}$$</div>
+  <p>For a cubic diatomic crystal ($Z^*_a=-Z^*_b=Z^*$, reduced mass $\mu$) every polar optical mode has $\sum_\alpha|j_{\alpha\sigma}|^2=Z^{*2}/\mu$. The shift is then the ionic plasma frequency of <a href="#b-dielectric">§B.3</a>, $\omega_p^2=4\pi Z^{*2}/(\Omega_{\rm uc}\mu)$. Note the size of E Eq. 409: for GaAs ($Z^*=2.07$, $\hbar\omega_\sigma=33.3$ meV; literature values, illustrative) it is about 30 meV (33 meV in the figure, whose $\omega_p$ comes from the measured splitting), comparable to $\hbar\omega_\sigma$ itself. There is no small parameter, which is why the resummation matters.</p>
+
+  <details class="derivation"><summary>Derivation: from E Eq. 406 to E Eq. 410, and the same at finite q</summary><div class="d-body">
+    <p>With E Eq. 392, $\Omega^0_{\sigma\sigma}=-\frac{\hbar\omega^2}{2c\Omega_{\rm uc}\omega_\sigma}\sum_{\alpha\beta}j^*_{\alpha\sigma}D^0_{\alpha\beta}j_{\beta\sigma}$. At $\bq=0$, E Eq. 408 gives $\frac{\hbar\omega^2}{2c\Omega_{\rm uc}\omega_\sigma}\cdot\frac{4\pi c}{\omega^2}\sum_\alpha|j_{\alpha\sigma}|^2$, which is E Eq. 409. Then $2\omega_\sigma\Omega^0_{\sigma\sigma}/\hbar=\frac{4\pi}{\Omega_{\rm uc}}\sum_\alpha|j_{\alpha\sigma}|^2$, and E Eq. 407 becomes E Eq. 410.</p>
+    <p>At finite $\bq$, project E Eq. 381 on $\hat\bq$ and on a unit vector $\hat{\mathbf t}\perp\bq$. The mixed elements vanish and</p>
+    <div class="eq">$$\hat\bq\cdot D^0\cdot\hat\bq=-\frac{4\pi c}{\omega^2},\qquad \hat{\mathbf t}\cdot D^0\cdot\hat{\mathbf t}=-\frac{4\pi c}{\omega^2-c^2q^2}.$$</div>
+    <p>Split $\bj_\sigma=\bj_{\sigma\parallel}+\bj_{\sigma\perp}$ and write $\omega^2_{p\parallel,\perp}=\frac{4\pi}{\Omega_{\rm uc}}|\bj_{\sigma\parallel,\perp}|^2$. Then $2\omega_\sigma\Omega^0_{\sigma\sigma}/\hbar=\omega^2_{p\parallel}+\omega^2_{p\perp}\,\omega^2/(\omega^2-c^2q^2)$, which gives the finite-$q$ condition in the text.</p>
+    <p>Electrons below the gap of an insulator can be modelled by $\Pi^{\rm e,0}_{jj\mu\nu}=\frac{(\epsilon_\infty-1)\omega^2}{4\pi c}\delta_{\mu\nu}$, the small-$\omega$ form of the electronic bubble (<a href="#b-photon-se">§B.5</a>). E Eq. 388 then gives $\hat\bq\cdot D^{\rm e}\cdot\hat\bq=-\frac{4\pi c}{\epsilon_\infty\omega^2}$ and $\hat{\mathbf t}\cdot D^{\rm e}\cdot\hat{\mathbf t}=-\frac{4\pi c}{\epsilon_\infty\omega^2-c^2q^2}$. For the transverse modes of a cubic diatomic crystal, the poles of E Eq. 405 then satisfy $(\omega^2-\omega_\sigma^2)(\epsilon_\infty\omega^2-c^2q^2)=\omega_p^2\omega^2$, whose roots are</p>
+    <div class="eq">$$\omega_\pm^2=\frac{(\epsilon_\infty\omega_L^2+c^2q^2)\pm\sqrt{(\epsilon_\infty\omega_L^2+c^2q^2)^2-4\epsilon_\infty c^2q^2\omega_\sigma^2}}{2\epsilon_\infty},\qquad \omega_L^2=\omega_\sigma^2+\frac{\omega_p^2}{\epsilon_\infty}.$$</div>
+    <p>The residue of $F_\sigma$ at each pole in the variable $\omega^2$, relative to the bare residue $2\omega_\sigma/\hbar$, is the phonon weight $Z_\pm=\big[1+\omega_p^2c^2q^2/(\epsilon_\infty\omega_\pm^2-c^2q^2)^2\big]^{-1}$, and $Z_++Z_-=1$.</p>
+  </div></details>
+
+  <h3>What E Eq. 410 is, and what it is not</h3>
+  <p>EPP opens §7.1 with "This procedure is completely analogous to the non-analytic dynamical matrix correction done by Quantum Espresso." The analogy holds in form: both shifts are built from Born charges and the cell volume. But E Eq. 410 is a different limit, and it is not the LO–TO splitting that DFPT adds. Three features give it away.</p>
+  <ul>
+    <li><strong>It is isotropic.</strong> $\sum_\alpha|j_{\alpha\sigma}|^2$ counts all three components of the mode current. At $\bq=0$ the two transverse modes shift exactly as much as the longitudinal one. The DFPT non-analytic term depends on $|\hat\bq\cdot\bj_\sigma|^2$ and leaves TO modes where they are.</li>
+    <li><strong>It is unscreened.</strong> No electrons means $\epsilon_\infty=1$. For GaAs ($Z^*\approx2.07$, $\Omega_{\rm uc}=a^3/4=45.2$ Å$^3$, $\mu=36.1$ amu, $\hbar\omega_{\rm TO}=33.3$ meV, $\hbar\omega_{\rm LO}=36.2$ meV; literature values, illustrative) and Gaussian $e^2=14.40$ eV Å, $\hbar\omega_p\approx44.6$ meV. E Eq. 410 then puts the shifted mode at $\sqrt{33.3^2+44.6^2}\approx56$ meV, against the measured LO phonon at 36.2 meV. The electrons divide the shift by $\epsilon_\infty\approx10.9$, and that factor only arrives with $\Delta\Omega^{\rm e}$ (<a href="#b-frohlich">§B.8</a>).</li>
+    <li><strong>It is retarded</strong>, in EPP's sense of a finite speed of light (not Giustino's sense of frequency-dependent screening). E Eq. 408 is the regime $cq\ll\omega$, inside the light cone. There the shifted "phonon" is the $\bq=0$ end of the upper phonon polariton.</li>
+  </ul>
+  <p>Keeping $\bq$ finite shows all three at once. With $\bj_\sigma$ split along and across $\hat\bq$, E Eqs. 381, 392 and 406 give (derived here, not in the manuscript)</p>
+  <div class="eq">$$\omega^2=\omega_\sigma^2+\omega_{p\parallel}^2+\omega_{p\perp}^2\,\frac{\omega^2}{\omega^2-c^2q^2},\qquad \omega^2_{p\parallel,\perp}=\frac{4\pi}{\Omega_{\rm uc}}\,|\bj_{\sigma\parallel,\perp}|^2 .$$</div>
+  <p>The longitudinal part never sees $c$: $\hat\bq\cdot D^0\cdot\hat\bq=-4\pi c/\omega^2$ at every $q$, so the LO mode sits at $\sqrt{\omega_\sigma^2+\omega_{p\parallel}^2}$ for all $q$. The transverse part is the polariton condition $c^2q^2=\omega^2\epsilon(\omega)$ with $\epsilon(\omega)=1+\omega_p^2/(\omega_\sigma^2-\omega^2)$, the photon-side picture of §B.6 seen from the phonon. Its upper branch starts at $\sqrt{\omega_\sigma^2+\omega_p^2}$ at $q=0$, which is E Eq. 410, while the lower branch is photon-like there. Electrons, modelled by a constant $\epsilon_\infty$, divide $\omega_{p\parallel}^2$ by $\epsilon_\infty$ and turn $\omega^2-c^2q^2$ into $\epsilon_\infty\omega^2-c^2q^2$.</p>
+
+  <h3>The order of limits</h3>
+  <p>In this result $c$ and $q$ enter only through the product $cq$. The limits $q\to0$ and $c\to\infty$ therefore do not commute:</p>
+  <ul>
+    <li><strong>$q\to0$ at fixed $c$</strong> (E Eq. 410; with electrons, $\omega_p^2\to\omega_p^2/\epsilon_\infty$): all three polar modes sit at $\omega_L$, whatever the direction of approach. The transverse ones are the upper polariton.</li>
+    <li><strong>$c\to\infty$ at fixed $q$, then $q\to0$</strong> (E Eq. 454, <a href="#b-electrostatic">§B.9</a>): only the $ll$ sector of $D^{\rm e}$ survives, the TO modes stay at $\omega_\sigma$, and the LO shift carries $|\hat\bq\cdot\bj_\sigma|^2/(\hat\bq\cdot\epsilon_\infty\cdot\hat\bq)$. This is the non-analytic LO–TO splitting of DFPT.</li>
+  </ul>
+  <p>A real crystal has one value of $c$, and the crossover sits at the light-cone wave vector of <a href="#x-light-cone">§X.1</a>, $q_c=\sqrt{\epsilon_\infty}\,\omega/c$ evaluated at $\omega_\sigma$, about $5.6\times10^{-5}$ Å$^{-1}$ in GaAs, or $5\times10^{-5}$ of $2\pi/a$. Taking $c\to\infty$ first is the right description of essentially the whole Brillouin zone, which is why electrostatic DFPT works. The limit behind E Eq. 410 takes $q\to0$ at finite $c$ and describes the tiny region on the other side of $q_c$, the region that optics probes. <a href="#x-light-cone">§X.1</a> makes the same argument from the propagator side.</p>
+
+  <figure class="viz" id="viz-b-phonon-se-limits">
+    <p class="viz-title"><span class="b07-vt">Order of limits: phonon polaritons, LO and TO</span> <span class="tag">interactive</span></p>
+    <div class="b07-view-limits">
+      <div class="viz-grid side"><div class="b07-pa"></div><div class="b07-pb"></div></div>
+    </div>
+    <div class="b07-view-resum" hidden><div class="b07-pc"></div></div>
+    <div class="b07-ctrls"></div>
+    <div class="b07-ro"></div>
+    <figcaption>
+      <span class="b07-cap-limits"><strong>Model.</strong> Cubic diatomic crystal, transverse poles of E Eq. 405 with $\Omega^{\rm e}$ from E Eq. 399 and electrons as a constant $\epsilon_\infty$ in $\Pi^{\rm e,0}$. The unscreened ionic plasma frequency is fixed by the measured splitting, $\omega_p^2=\epsilon_\infty(\omega_L^2-\omega_\sigma^2)$, which corresponds to $Z^*\approx2.18$ for GaAs (the text above uses the literature 2.07) and gives 57.5 meV for E Eq. 410 (56 meV with $Z^*=2.07$). Bare $\omega_\sigma$ = measured TO (the Dyson route has no local field). Presets ($\hbar\omega_{TO}$/$\hbar\omega_{LO}$ in meV, $\epsilon_\infty$; literature, illustrative): GaAs 33.3/36.2/10.9, NaCl 20.3/32.7/2.34, hBN in-plane 169.9/199.6/4.87, treated as isotropic. First panel: mode energies on a log $q$ axis. Second panel: phonon weight $Z$, the residue of $F_\sigma$ in the variable $\omega^2$ at each pole relative to the bare one, so that $Z_++Z_-=1$ (the LO mode has $Z=1$ at every $q$). <strong>What to notice.</strong> At small $q$ the upper polariton meets the LO line and carries all the transverse phonon weight, while the lower branch is a photon. Switching the electrons off moves the $q\to0$ mode up to E Eq. 410. Raising $\lambda_c$ pushes $q_c$ off the left edge, and what remains is the electrostatic pair: flat TO at $\omega_\sigma$ and flat LO at $\omega_L$.</span>
+      <span class="b07-cap-resum" hidden><strong>Model.</strong> One phonon with the retarded propagator of E Eq. 390 written in energies, $F^0=2\hbar\omega_\sigma/[(\hbar\omega)^2-(\hbar\omega_\sigma)^2+i\hbar\gamma\,\hbar\omega]$ in $\text{meV}^{-1}$, and the static $q=0$ self-energy of the chosen preset (E Eq. 409, divided by $\epsilon_\infty$ when the electrons are on). Violet: truncated series $F_N=F^0\sum_{n=0}^{N}(F^0\Omega)^n$ of E Eq. 397. Amber: Dyson resummation, E Eq. 404. Shaded: where $|F^0\Omega|\gt1$ and the series diverges. Values beyond the frame are clipped. <strong>What to notice.</strong> No finite $N$ moves the peak away from the bare $\omega_\sigma$; higher orders only pile up sharper, sign-changing structure there. The Dyson pole sits on the edge of the shaded region, where $|F^0\Omega|=1$. With the electrons off, $\Omega$ is comparable to $\hbar\omega_\sigma$ and the series diverges almost everywhere below the true pole.</span>
+    </figcaption>
+  </figure>
+
+  <div class="callout caveat">
+    <p class="callout-title">What the model leaves out</p>
+    <p>The figure keeps the electrons static, a constant $\epsilon_\infty$. That is the adiabatic approximation for electronic screening and is fine in a gapped crystal. With free carriers, $\Pi^{\rm e,0}$ acquires a Drude term, $D^{\rm e}$ acquires a plasmon pole near phonon energies, and the dynamical $D^{\rm e}$ gives coupled LO-phonon–plasmon modes (<a href="#b-electrostatic">§B.9</a>). The Dyson route has no Lorentz local field, unlike the classical model of <a href="#b-dielectric">§B.3</a>, so TO equals the bare $\omega_\sigma$. hBN is uniaxial; using one $\epsilon_\infty$ is a simplification. Real polaritons also carry damping, which only the second tab includes.</p>
+  </div>
+
+  <div class="callout connect">
+    <p class="callout-title">Bridge to Giustino: where his LO–TO splitting lives</p>
+    <p>Giustino's theory has only the instantaneous Coulomb interaction, so it lives in the $\lambda_c\to\infty$ limit of the figure. His LO–TO splitting sits inside the adiabatic force constants $\Pi^{\rm A}$, as the Gonze–Lee non-analytic term with $Z^*$ and $\epsilon^\infty$ that he cites in §VI.A.3 (<a href="#a-polar">§A.4</a>). EPP derives that term as a self-energy (E Eq. 454) and adds what electrostatics cannot see: phonon polaritons for $q\lesssim q_c$, and an isotropic $\bq=0$ limit.</p>
+  </div>
+
+  <div class="callout source">
+    <p class="callout-title">Note on the source</p>
+    <p>Wording and index slips in EPP §7.1 (E Eq. 391 should carry the superscript 0; "photon" stands for "phonon" before E Eqs. 406–407) are listed in <a href="#z-errata">Z.2</a>. The Quantum Espresso comparison that opens §7.1 holds only for a mode polarized along $\hat\bq$ with $\epsilon_\infty=1$ (see above). EPP's propagators are time-ordered; the figure uses the retarded form with $i\eta\omega$ given on p. 88.</p>
+  </div>
+</section>
+<script>
+(() => {
+  const sec = document.getElementById('b-phonon-se');
+  if (!sec || !window.EPP) return;
+
+  // ---------- diagrams (after EPP Figs. 12-13) ----------
+  const op = (host, s) => { const e = document.createElement('span'); e.className = 'op'; e.textContent = s; host.appendChild(e); };
+  const ion = document.getElementById('b-phonon-se-fd-ion');
+  const R = 25;
+  EPP.fd.draw(ion, { w: 2 * R + 6, h: 64, label: 'screened ionic bubble', items: [{ t: 'blob', at: [R + 3, 36], r: R, label: 'Π^{ion}', color: 'ink' }] });
+  op(ion, '=');
+  EPP.fd.draw(ion, { w: 2 * R + 6, h: 64, label: 'bare ionic bubble', items: [{ t: 'blob', at: [R + 3, 36], r: R, label: 'Π^{ion,0}', color: 'phonon' }] });
+  op(ion, '+');
+  EPP.fd.draw(ion, { w: 186, h: 64, label: 'two ionic bubbles joined by a dressed photon line', items: [
+    { t: 'photon2', a: [2 * R + 3, 36], b: [186 - 2 * R - 3, 36], label: 'D^e' },
+    { t: 'blob', at: [R + 3, 36], r: R, label: 'Π^{ion,0}', color: 'phonon' },
+    { t: 'blob', at: [186 - R - 3, 36], r: R, label: 'Π^{ion,0}', color: 'phonon' }] });
+  op(ion, '+');
+  EPP.fd.draw(ion, { w: 318, h: 64, label: 'three ionic bubbles joined by two dressed photon lines, and so on', items: [
+    { t: 'photon2', a: [2 * R + 3, 36], b: [118, 36], label: 'D^e' },
+    { t: 'photon2', a: [168, 36], b: [233, 36], label: 'D^e' },
+    { t: 'blob', at: [R + 3, 36], r: R, label: 'Π^{ion,0}', color: 'phonon' },
+    { t: 'blob', at: [143, 36], r: R, label: 'Π^{ion,0}', color: 'phonon' },
+    { t: 'blob', at: [258, 36], r: R, label: 'Π^{ion,0}', color: 'phonon' },
+    { t: 'text', at: [302, 41], text: '+ …', color: 'muted', upright: true }] });
+
+  const de = document.getElementById('b-phonon-se-fd-de');
+  EPP.fd.draw(de, { w: 84, h: 44, label: 'dressed photon line', items: [{ t: 'photon2', a: [6, 28], b: [78, 28], label: 'D^e' }] });
+  op(de, '=');
+  EPP.fd.draw(de, { w: 84, h: 44, label: 'free photon line', items: [{ t: 'photon', a: [6, 28], b: [78, 28], label: 'D^0' }] });
+  op(de, '+');
+  EPP.fd.draw(de, { w: 196, h: 52, label: 'free line, electronic bubble, dressed line', items: [
+    { t: 'photon', a: [4, 30], b: [60, 30], label: 'D^0' },
+    { t: 'photon2', a: [104, 30], b: [192, 30], label: 'D^e' },
+    { t: 'blob', at: [82, 30], r: 21, label: 'Π^{e,0}', color: 'electron' }] });
+
+  const ff = document.getElementById('b-phonon-se-fd-f');
+  EPP.fd.draw(ff, { w: 84, h: 44, label: 'dressed phonon', items: [{ t: 'phonon2', a: [6, 28], b: [78, 28], label: 'F' }] });
+  op(ff, '=');
+  EPP.fd.draw(ff, { w: 84, h: 44, label: 'bare phonon', items: [{ t: 'phonon', a: [6, 28], b: [78, 28], label: 'F^0' }] });
+  op(ff, '+');
+  EPP.fd.draw(ff, { w: 236, h: 66, label: 'bare phonon, J star vertex, dressed photon, J vertex, dressed phonon', items: [
+    { t: 'phonon', a: [4, 28], b: [62, 28], label: 'F^0' },
+    { t: 'photon2', a: [62, 28], b: [174, 28], label: 'D^e' },
+    { t: 'phonon2', a: [174, 28], b: [232, 28], label: 'F' },
+    { t: 'vertex', at: [62, 28], r: 4.2, color: 'c4' }, { t: 'vertex', at: [174, 28], r: 4.2, color: 'c4' },
+    { t: 'text', at: [62, 56], text: 'J^*(ω)', color: 'c4-t', size: 13 },
+    { t: 'text', at: [174, 56], text: 'J(ω)', color: 'c4-t', size: 13 }] });
+
+  EPP.fd.draw(document.getElementById('b-phonon-se-fd-om'), { w: 170, h: 66, label: 'phonon self-energy: J star, dressed photon line, J', items: [
+    { t: 'photon2', a: [16, 28], b: [154, 28], label: 'D^e_{αβ}', ldist: 17 },
+    { t: 'vertex', at: [16, 28], r: 4.2, color: 'c4' }, { t: 'vertex', at: [154, 28], r: 4.2, color: 'c4' },
+    { t: 'text', at: [16, 56], text: 'J^*_{ασ}', color: 'c4-t', size: 13 },
+    { t: 'text', at: [154, 56], text: "J_{βσ'}", color: 'c4-t', size: 13 }] });
+
+  // ---------- figure ----------
+  const fig = document.getElementById('viz-b-phonon-se-limits');
+  const HC = 1973.27e3;            // ħc in meV·Å
+  const KZ = 180.95 * 4.1803e-3 * 1e6; // (ħω_p)^2 [meV^2] = KZ·Z*^2/(Ω_uc[Å^3]·μ[amu]), Gaussian e^2 = 14.3996 eV·Å
+  const PRE = {
+    GaAs: { T: 33.3, L: 36.2, ei: 10.9, Om: 45.16, mu: 36.12, a: 5.653 },
+    NaCl: { T: 20.3, L: 32.7, ei: 2.34, Om: 44.85, mu: 13.95, a: 5.64 },
+    hBN: { T: 169.9, L: 199.6, ei: 4.87, Om: 18.08, mu: 6.10, a: 2.504 }
+  };
+  const QMIN = 1e-7, QMAX = 1e-2, NQ = 361;
+  const qs = []; for (let i = 0; i < NQ; i++) qs.push(QMIN * Math.pow(QMAX / QMIN, i / (NQ - 1)));
+
+  const viewL = fig.querySelector('.b07-view-limits'), viewR = fig.querySelector('.b07-view-resum');
+  const capL = fig.querySelector('.b07-cap-limits'), capR = fig.querySelector('.b07-cap-resum');
+  const vt = fig.querySelector('.b07-vt');
+  const ro = EPP.readout(fig.querySelector('.b07-ro'));
+  // scientific notation as HTML for readouts: 5.6×10<sup>−5</sup>
+  const sci = (v, d) => { if (!isFinite(v) || v <= 0) return '—'; const k = Math.floor(Math.log10(v)); const mnt = v / Math.pow(10, k); return (k >= -2 && k <= 3) ? String(Number(v.toPrecision(d))) : mnt.toFixed(d - 1) + '×10<sup>' + String(k).replace('-', '−') + '</sup>'; };
+  const qfmt = (v) => EPP.fmt(v, 2).replace('×10^', 'e') + ' Å⁻¹';
+  const plotA = new EPP.Plot(fig.querySelector('.b07-pa'), { xlabel: 'q (Å^{-1})', ylabel: 'ħω (meV)', logx: true, xlim: [QMIN, QMAX], ylim: [0, 70], aspect: 0.62,
+    xname: 'q', hoverX: qfmt, hoverY: (v) => EPP.fix(v, 2) + ' meV', ariaLabel: 'Phonon polariton, LO and TO energies versus wave vector on a logarithmic axis' });
+  const plotB = new EPP.Plot(fig.querySelector('.b07-pb'), { xlabel: 'q (Å^{-1})', ylabel: 'phonon weight Z', logx: true, xlim: [QMIN, QMAX], ylim: [0, 1.06], aspect: 0.98, maxHeight: 300,
+    yticks: [0, 0.25, 0.5, 0.75, 1], xticks: [1e-7, 1e-5, 1e-3].map(v => ({ v, label: '10^{' + Math.round(Math.log10(v)) + '}' })),
+    xname: 'q', hoverX: qfmt, hoverY: (v) => EPP.fix(v, 3), ariaLabel: 'Phonon weight of the two transverse branches versus wave vector' });
+  let plotC = null;
+
+  function model(st) {
+    const P = PRE[st.mat] || PRE.GaAs;
+    const wp2 = P.ei * (P.L * P.L - P.T * P.T);  // unscreened (ħω_p)^2, meV^2
+    const e = st.el ? P.ei : 1;
+    const T2 = P.T * P.T, L2 = T2 + wp2 / e;
+    return { P, wp2, e, T2, L2, EL: Math.sqrt(L2), E410: Math.sqrt(T2 + wp2), lam: st.lam || 1 };
+  }
+  // transverse poles of E Eq. 405 with constant-ε∞ electrons; returns energies (meV) and phonon weights
+  function trans(m, q) {
+    const cq = m.lam * HC * q, cq2 = cq * cq;
+    const B = m.e * m.L2 + cq2;
+    const disc = Math.sqrt(Math.max(0, B * B - 4 * m.e * cq2 * m.T2));
+    const sp = (B + disc) / (2 * m.e);
+    const sm = cq2 * m.T2 / (m.e * sp);             // product of roots, stable for small q
+    const X = cq2 * Math.pow(sp - m.T2, 2) / (m.wp2 * sp * sp);
+    return { wp: Math.sqrt(sp), wm: Math.sqrt(sm), Zp: 1 / (1 + X), Zm: X / (1 + X), cq };
+  }
+
+  function drawLimits(st) {
+    const m = model(st);
+    const ymax = Math.ceil(1.16 * m.E410 / 5) * 5;
+    const wp = [], wm = [], Zp = [], Zm = [], light = [], LO = [];
+    for (const q of qs) { const r = trans(m, q); wp.push(r.wp); wm.push(r.wm); Zp.push(r.Zp); Zm.push(r.Zm); light.push(r.cq / Math.sqrt(m.e)); LO.push(m.EL); }
+    const qx = Math.sqrt(m.e) * m.P.T / (m.lam * HC);
+    const vis = qx > QMIN && qx < QMAX;
+    const xl = 2.2e-7, pol = trans(m, xl).Zp > 0.5;   // at the label position, is the upper branch the phonon-like one?
+    plotA.draw([
+      { type: 'line', x: qs, y: light, color: 'photon', dash: [2, 3], width: 1.5, label: 'light line cq/√ε_∞', hover: false },
+      { type: 'hline', at: m.P.T, color: 'muted' },
+      { type: 'hline', at: m.E410, color: 'ink', dash: [1.5, 3], text: 'E Eq. 410' },
+      vis ? { type: 'vline', at: qx, color: 'muted', text: 'q_c' } : null,
+      { type: 'line', x: qs, y: LO, color: 'phonon', label: 'LO (longitudinal)' },
+      { type: 'line', x: qs, y: wp, color: 'c5', label: 'upper polariton ω_+' },
+      { type: 'line', x: qs, y: wm, color: 'c4', dash: [7, 4], label: 'lower polariton ω_–' },
+      pol ? { type: 'text', x: xl, y: m.EL, dy: -10, text: 'ω_+ → ω_{LO}', color: 'c5' } : { type: 'text', x: xl, y: m.EL, dy: -10, text: 'LO', color: 'phonon' },
+      { type: 'text', x: 8e-3, y: m.P.T, dy: 11, text: 'ω_– → ω_σ = TO', color: 'c4', align: 'right' }
+    ], { ylim: [0, ymax] });
+    plotB.draw([
+      vis ? { type: 'vline', at: qx, color: 'muted', text: 'q_c' } : null,
+      { type: 'line', x: qs, y: Zp, color: 'c5', label: 'Z_+ (upper)' },
+      { type: 'line', x: qs, y: Zm, color: 'c4', dash: [7, 4], label: 'Z_– (lower)' },
+      { type: 'text', x: xl, y: 0.9, text: pol ? 'phonon at ω_{LO}' : 'TO phonon', color: pol ? 'c5' : 'c4' },
+      { type: 'text', x: xl, y: 0.1, text: 'photon-like', color: pol ? 'c4' : 'c5' }
+    ]);
+    const Z = Math.sqrt(m.wp2 * 1e-6 * m.P.Om * m.P.mu / (KZ * 1e-6));
+    ro.set({
+      'ħω_p (unscreened)': EPP.fix(Math.sqrt(m.wp2), 1) + ' meV',
+      'implied Z^*': EPP.fix(Z, 2),
+      'Ω^0 (E Eq. 409)': EPP.fix(m.wp2 / (2 * m.P.T), 1) + ' meV',
+      'E Eq. 410': EPP.fix(m.E410, 1) + ' meV',
+      'ħω_{LO}': EPP.fix(m.EL, 1) + ' meV',
+      'q_c': sci(qx, 2) + ' Å<sup>−1</sup> (' + sci(qx / (2 * Math.PI / m.P.a), 1) + ' of 2π/a)'
+    });
+  }
+
+  function drawResum(st) {
+    if (!plotC) plotC = new EPP.Plot(fig.querySelector('.b07-pc'), { xlabel: 'ħω (meV)', ylabel: 'A = −Im F/π (meV^{-1})', xlim: [0, 1], ylim: [-1, 1], aspect: 0.48,
+      xname: 'ħω', hoverX: (v) => EPP.fix(v, 2) + ' meV', hoverY: (v) => EPP.fmt(v, 3), ariaLabel: 'Truncated Dyson series versus the resummed phonon spectral function' });
+    const m = model(st), T = m.P.T, G = st.G, N = Math.round(st.N);
+    const Om = m.wp2 / (2 * T) / m.e;             // static q = 0 self-energy (meV)
+    const En = Math.sqrt(T * T + 2 * T * Om);     // Dyson pole, E Eq. 405
+    const x0 = Math.max(0.3, T - 1.6 * (En - T)), x1 = En + 0.8 * (En - T) + 4 * G;
+    const n = 801, Es = EPP.linspace(x0, x1, n), A0 = [], AN = [], AX = [], div = [];
+    for (const E of Es) {
+      const dr = E * E - T * T, di = G * E, d2 = dr * dr + di * di;
+      const fr = 2 * T * dr / d2, fi = -2 * T * di / d2;           // ħF⁰
+      const xr = fr * Om, xi = fi * Om;                              // F⁰Ω
+      let sr = 1, si = 0, pr = 1, pi = 0;                            // Σ (F⁰Ω)^n
+      for (let k = 1; k <= N; k++) { const t = pr * xr - pi * xi; pi = pr * xi + pi * xr; pr = t; sr += pr; si += pi; }
+      const nr = fr * sr - fi * si, ni = fr * si + fi * sr;
+      const ur = 1 - xr, ui = -xi, u2 = ur * ur + ui * ui;
+      const er = (fr * ur + fi * ui) / u2, ei = (fi * ur - fr * ui) / u2;
+      A0.push(-fi / Math.PI); AN.push(-ni / Math.PI); AX.push(-ei / Math.PI);
+      div.push(Math.hypot(xr, xi) > 1);
+    }
+    const peak = (2 * T) / (G * En) / Math.PI;
+    const bands = []; let s = -1;
+    for (let i = 0; i <= n; i++) { const on = i < n && div[i]; if (on && s < 0) s = i; if (!on && s >= 0) { bands.push({ type: 'band', x0: Es[s], x1: Es[i - 1], color: 'muted', alpha: 0.13, label: bands.length ? '' : 'series diverges, |F^0Ω| > 1' }); s = -1; } }
+    let imax = 0; for (let i = 1; i < n; i++) if (isFinite(AN[i]) && AN[i] > AN[imax]) imax = i;
+    plotC.draw([
+      ...bands,
+      { type: 'vline', at: T, color: 'muted' },
+      { type: 'vline', at: En, color: 'phonon' },
+      { type: 'line', x: Es, y: A0, color: 'muted', dash: [5, 4], width: 1.5, label: 'bare F^0' },
+      { type: 'line', x: Es, y: AX, color: 'phonon', label: 'Dyson, E Eq. 404' },
+      { type: 'line', x: Es, y: AN, color: 'c5', width: 1.8, label: 'truncated, order N = ' + N, breakJump: Infinity },
+      // labels last, so they sit on top of the truncated-series spikes
+      { type: 'text', x: T, y: -0.62 * peak, dx: -30, dy: 0, text: 'bare ω_σ', color: 'muted', align: 'right', size: 11 },
+      { type: 'text', x: En, y: 1.3 * peak, dx: 5, dy: 10, text: 'Dyson pole', color: 'phonon', size: 11 }
+    ], { xlim: [x0, x1], ylim: [-0.7 * peak, 1.3 * peak] });
+    const dP = Math.hypot(En * En - T * T, G * En);
+    ro.set({
+      'bare pole': EPP.fix(T, 1) + ' meV',
+      'Dyson pole (E Eq. 405)': EPP.fix(En, 1) + ' meV',
+      'Ω (static, q = 0)': EPP.fix(Om, 2) + ' meV',
+      'max of F_N at': EPP.fix(Es[imax], 1) + ' meV',
+      '|F^0Ω| at Dyson pole': EPP.fix(2 * T * Om / dP, 3)
+    });
+  }
+
+  const supD = (k) => String(k).split('').map(ch => '⁰¹²³⁴⁵⁶⁷⁸⁹'['0123456789'.indexOf(ch)] || ch).join('');
+  const lamFmt = (v) => { if (v < 100) return '×' + (v < 10 ? v.toFixed(1) : v.toFixed(0)); const k = Math.floor(Math.log10(v) + 1e-9); return '×' + (v / Math.pow(10, k)).toFixed(1) + '·10' + supD(k); };
+  const ui = EPP.controls(fig.querySelector('.b07-ctrls'), [
+    { key: 'view', type: 'seg', label: 'view', options: [['limits', 'Order of limits'], ['resum', 'Why resum?']], value: 'limits', wide: true },
+    { key: 'mat', type: 'seg', label: 'crystal (illustrative)', options: [['GaAs', 'GaAs'], ['NaCl', 'NaCl'], ['hBN', 'hBN ∥']], value: 'GaAs' },
+    { key: 'el', type: 'toggle', label: 'electrons on (ε_∞ in D^e)', value: true },
+    { key: 'lam', type: 'range', label: 'speed of light c → λ_c c', min: 1, max: 1e6, log: true, step: 0.01, value: 1, fmt: lamFmt },
+    { key: 'N', type: 'range', label: 'truncation order N', min: 0, max: 20, step: 1, value: 4, fmt: (v) => String(Math.round(v)) },
+    { key: 'G', type: 'range', label: 'broadening ħγ (meV)', min: 0.1, max: 2, step: 0.05, value: 0.5, fmt: (v) => v.toFixed(2) + ' meV' }
+  ], (st) => {
+    const lim = st.view !== 'resum';
+    const show = (el, on) => { if (el) { el.hidden = !on; el.style.display = on ? '' : 'none'; } };
+    show(viewL, lim); show(viewR, !lim); show(capL, lim); show(capR, !lim);
+    if (vt) vt.textContent = lim ? 'Order of limits: phonon polaritons, LO and TO' : 'Why resum: truncated series versus Dyson';
+    const box = (k) => { const el = document.getElementById(fig.id + '-' + k); return el ? el.closest('.ctrl') : null; };
+    [['lam', lim], ['N', !lim], ['G', !lim]].forEach(([k, on]) => show(box(k), on));
+    try { if (lim) drawLimits(st); else drawResum(st); } catch (err) { console.error(err); }
+  });
+})();
+</script>

@@ -1,0 +1,473 @@
+<div class="part-head" id="part-b" data-part-title="Part B · The EPP formalism">
+  <p class="part-label">Part B</p>
+  <h2>The electron–phonon–photon (EPP) formalism</h2>
+  <p>Part B follows the manuscript “Theory of the Electron-Phonon-Photon coupling”, a 102-page derivation cited below as EPP, with its equations tagged (E.n). Its programme is to put the electromagnetic field back into the electron–phonon problem of Part A: one Lagrangian for valence electrons, harmonic ions and the field, from which Coulomb's law, the Fröhlich vertex, $\epsilon^\infty$ and the LO–TO splitting all follow. The manuscript is a draft, so typos and inconsistencies are flagged where they occur, in grey “Note on the source” boxes, and collected in <a href="#z-errata">Z.2</a>. Corrected forms are shown only where the correction is unambiguous, and results marked [derived] are worked out on this page rather than printed in either paper.</p>
+  <p>Units change along the way. Sections 1–2 need none, §3 is in SI (stated by EPP), and from §4 on the manuscript uses Gaussian units without announcing the switch ($\bE=-\tfrac1c\partial_t\bA$, $1/8\pi$ in the field energy, $\tfrac ec\mathbf v\cdot\bA$ for the electron current). Convert with $e^2/4\pi\varepsilon_0\to e^2$ and $1/\varepsilon_0\to4\pi$. Part B follows the source and says which system each displayed equation uses. EPP's Born charges carry the dimension of charge, $Z^*_{\rm EPP}=|e|\,Z^*_{\rm G}$. The electron charge is $-e$ with $e>0$ in §3, but from §4 on $e$ is the signed charge ($e<0$ for electrons), again without notice. EPP's own symbols are kept: $D$ is the photon propagator, $\Pi_{jj}$ the photon self-energy, $F$ the phonon propagator and $\Omega^{\rm e}$ the phonon self-energy. Giustino's phonon Green function and self-energy appear as $\mathcal D$ and $\Pi^{\rm ph}$.</p>
+  <p>The ten sections form one derivation chain. The lattice and the bare vertex (<a href="#b-foundations">§B.1</a>) enter one Lagrangian for electrons, ions and field (<a href="#b-lagrangian">§B.2</a>), whose classical solution is the polar crystal as a dielectric (<a href="#b-dielectric">§B.3</a>). Quantizing the field gives transverse <span class="t-g">photons</span> and returns Coulomb's law as the longitudinal photon (<a href="#b-fields">§B.4</a>). Electrons and ions dress the photon through one RPA self-energy (<a href="#b-photon-se">§B.5</a>), and charge conservation assembles the total propagator and its polaritons (<a href="#b-propagator">§B.6</a>). <span class="t-p">Phonons</span> dressed by electron-screened photons acquire the LO–TO splitting (<a href="#b-phonon-se">§B.7</a>) and an electrodynamic Fröhlich vertex (<a href="#b-frohlich">§B.8</a>). Letting $c\to\infty$ recovers Giustino (<a href="#b-electrostatic">§B.9</a>), and a sheet geometry shows why 2D crystals have no LO–TO splitting at Γ (<a href="#b-2d">§B.10</a>).</p>
+</div>
+<section class="chapter" id="b-foundations" data-num="B.1" data-title="Lattice, bare vertex, polar coupling">
+  <header class="ch-head">
+    <p class="eyebrow"><span class="num">B.1</span><span>EPP §§1–3 · Eqs. 1–131</span></p>
+    <h2>Same lattice, bare vertex, electrostatic polar coupling</h2>
+    <p class="lede">EPP's first 25 pages rebuild three objects in its own notation: the quantized displacement of an atom, the bare electron–phonon vertex of a rigid-ion crystal, and Verdi and Giustino's long-range polar vertex. By the end you will know which of them survive into the electrodynamic theory, and why its bare phonons may contain only short-range force constants.</p>
+  </header>
+
+  <p>No physics in this section is new relative to Part A. What is new is the bookkeeping. EPP keeps every quantity bare, says explicitly what a DFT starting point already contains, and sets up the polar vertex as the electrostatic seed that the photon theory of <a href="#b-fields">§§B.4</a>–<a href="#b-electrostatic">B.9</a> must reproduce.</p>
+
+  <h3>The diagonalization machine (EPP §1)</h3>
+  <p>Section 1 turns the harmonic lattice Hamiltonian (E.5), with $3sN$ coupled Cartesian displacements $Q_{i{\rm a}\mu}$ (cell $i$ of $N$, atom ${\rm a}$ of $s$, direction $\mu$), into $3sN$ independent oscillators. The physics, the diatomic chain and the zero-point length are in <a href="#a-lattice">§A.1</a>. What matters here is the machinery, because EPP reuses it step for step to quantize the transverse photon field (<a href="#b-fields">§B.4</a>). EPP announces “the three steps” of diagonalizing (E.5): a Fourier transform, then mass scaling followed by a unitary rotation, then quantization. Each substitution is a linear canonical transformation that removes one kind of coupling:</p>
+  <div class="tbl"><table>
+    <thead><tr><th>EPP step</th><th>Substitution</th><th>Coupling removed</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td>1 · Fourier transform<br><span class="src">E.7–E.17</span></td><td>$Q_{i{\rm a}\mu}=N^{-1/2}\sum_{\bk}e^{i\bk\bR^0_i}Q_{\bk{\rm a}\mu}$</td><td>between cells</td><td>one $3s\times3s$ problem per $\bk$</td></tr>
+      <tr><td>2a · Mass scaling<br><span class="src">E.18–E.24</span></td><td>$Q_{\bk{\rm a}\mu}=\tilde Q_{\bk{\rm a}\mu}/\sqrt{m_{\rm a}}$</td><td>unequal masses in the kinetic term</td><td>kinetic energy is the unit matrix</td></tr>
+      <tr><td>2b · Unitary rotation<br><span class="src">E.25–E.45</span></td><td>$\tilde Q_{\bk{\rm a}\mu}=\sum_\alpha e_{{\rm a}\mu\alpha}(\bk)\,q_{\bk\alpha}$</td><td>between the $3s$ components</td><td>normal coordinates $q_{\bk\alpha}$</td></tr>
+      <tr><td>3 · Quantization, ladder operators<br><span class="src">E.46–E.78</span></td><td>$q_{\bk\alpha}=\sqrt{\hbar/2\omega_\alpha(\bk)}\,(a_{\bk\alpha}+a^+_{-\bk\alpha})$</td><td>between $\bk$ and $-\bk$</td><td>phonons</td></tr>
+    </tbody>
+  </table></div>
+  <p>After step 1 the Hamiltonian is a sum of independent $\bk$ blocks,</p>
+  <div class="eq">$$H=\sum_{\bk\in{\rm BZ}}\sum_{{\rm a}\mu}\frac{P_{\bk{\rm a}\mu}P_{-\bk{\rm a}\mu}}{2m_{\rm a}}+\frac12\sum_{\bk\in{\rm BZ}}\sum_{{\rm a}\mu,{\rm b}\nu}\Omega^2_{{\rm a}\mu{\rm b}\nu}(\bk)\,Q_{\bk{\rm a}\mu}Q_{-\bk{\rm b}\nu}, \tag{E.17}$$</div>
+  <p>with the dynamical matrix $\Omega^2(\bk)=\sum_{\boldsymbol\delta}e^{i\bk\boldsymbol\delta}k(\boldsymbol\delta)$ of (E.15), the lattice Fourier transform of the force constants (EPP's “elastic matrix” $k$). It has the units of a force constant. EPP also uses the letter $\Omega$ for the crystal volume, $\Omega=N\Omega_{\rm uc}$, and later for the phonon self-energy $\Omega^{\rm e}$: three unrelated objects. Step 2 first rescales by $\sqrt{m_{\rm a}}$ and defines $\tilde\Omega^2_{{\rm a}\mu{\rm b}\nu}=\Omega^2_{{\rm a}\mu{\rm b}\nu}/\sqrt{m_{\rm a}m_{\rm b}}$ (E.24):</p>
+  <div class="eq">$$H=\frac12\sum_{{\rm a}\mu}\sum_{\bk\in{\rm BZ}}\tilde P_{\bk{\rm a}\mu}\tilde P_{-\bk{\rm a}\mu}+\frac12\sum_{{\rm a}\mu,{\rm b}\nu}\sum_{\bk\in{\rm BZ}}\tilde\Omega^2_{{\rm a}\mu{\rm b}\nu}(\bk)\,\tilde Q_{\bk{\rm a}\mu}\tilde Q_{-\bk{\rm b}\nu}. \tag{E.23}$$</div>
+  <p>The kinetic energy is now the unit matrix in the $3s$-dimensional ${\rm a}\mu$ space, and, in EPP's words, “the unit matrix will remain immune to the unitary transformation.” Without this step the eigenproblem would be the generalized one, $\Omega^2\mathbf x=\omega^2M\mathbf x$, and rotating onto the eigenvectors of $\Omega^2$ would mix the masses back into the kinetic term. The second half of step 2 diagonalizes the Hermitian $\tilde\Omega^2(\bk)$ with the unitary matrix $U(\bk)=[\mathbf e_1(\bk),\dots,\mathbf e_{3s}(\bk)]$ of its orthonormal eigenvectors (E.25–E.28):</p>
+  <div class="eq">$$U^+\tilde\Omega^2U=\mathrm{diag}\left(\omega_1^2,\omega_2^2,\dots,\omega_{3s}^2\right). \tag{E.29}$$</div>
+  <p>EPP's worked example (E.30), $\tilde\Omega^2=\left[\begin{smallmatrix}3&2\\2&3\end{smallmatrix}\right]$ with $\omega^2=1$ and 5 and $U$ a 45° rotation, is the starting point of the figure below. It is the dimerized chain of <a href="#a-lattice">§A.1</a> at the zone edge. Inserting $\tilde Q_{\bk{\rm a}\mu}=\sum_\alpha e_{{\rm a}\mu\alpha}(\bk)q_{\bk\alpha}$ (E.39) leaves $H=\sum_{\bk\alpha}H_{\bk\alpha}$ with</p>
+  <div class="eq">$$H_{\bk\alpha}=\frac12p_{\bk\alpha}p_{-\bk\alpha}+\frac12\omega^2_\alpha(\bk)\,q_{\bk\alpha}q_{-\bk\alpha}. \tag{E.45}$$</div>
+  <p>That is one oscillator per $(\bk,\alpha)$, except that $q_{\bk\alpha}$ is complex with $q_{-\bk\alpha}=q^+_{\bk\alpha}$, so $\bk$ still talks to $-\bk$. Pairing $a_{\bk\alpha}$ with $a^+_{-\bk\alpha}$ in (E.72)–(E.73) removes this last coupling and gives (E.78). Retracing the substitutions gives the displacement operator, boxed in the source:</p>
+  <div class="eq">$$\boxed{Q_{i{\rm a}\mu}=\frac{1}{\sqrt N}\sum_{\alpha=1}^{3s}\sum_{\bk\in{\rm BZ}}\sqrt{\frac{\hbar}{2m_{\rm a}\omega_\alpha(\bk)}}\,e_{{\rm a}\mu\alpha}(\bk)\left(a_{\bk\alpha}+a^+_{-\bk\alpha}\right)e^{i\bk\bR^0_i}} \tag{E.83}$$</div>
+  <p>Here the superscript $+$ is EPP's Hermitian conjugate, and the phonon wavevector, called $\bk$ in §1, becomes $\bq$ from §2 on. (E.83) is Giustino's (G.20) with his reference mass $M_0$ cancelled. Together with its momentum partner (E.84), it is the only phonon object the rest of the manuscript needs. Inserted into the potential of a vibrating ion, (E.83) gives the bare vertex below; with $\mathbf e\to\mathbf e^{\mathcal L}$ it gives the polar vertex; and (E.84) gives the ionic current vertex of the photon self-energy (<a href="#b-photon-se">§B.5</a>).</p>
+
+  <div class="callout intuition"><p class="callout-title">Physical picture: principal axes, possibly complex</p>
+    <p>In the plane of two mass-scaled coordinates $(\tilde Q_1,\tilde Q_2)$, contours of kinetic energy are circles and contours of potential energy are ellipses. The normal coordinates are the principal axes of the ellipse, and a rotation can diagonalize both quadratic forms only because the kinetic contours are round. When $\tilde\Omega^2$ has a complex off-diagonal element, as it does at a generic $\bk$, the “axes” are complex vectors. In each mode the atoms then oscillate with a fixed relative phase, the intracell part of a running wave.</p>
+  </div>
+
+  <figure class="viz" id="viz-b-foundations-modes">
+    <p class="viz-title">Matrix to modes: diagonalizing a 2×2 dynamical matrix <span class="tag">interactive</span></p>
+    <div class="viz-grid two">
+      <div><div class="b-foundations-line"></div><div class="b-foundations-phasor"></div></div>
+      <div class="b-foundations-anim"></div>
+    </div>
+    <div class="b-foundations-mats"></div>
+    <div class="b-foundations-ctrls"></div>
+    <div class="b-foundations-ro"></div>
+    <figcaption><strong>Model.</strong> A Hermitian mass-scaled dynamical matrix $\tilde\Omega^2=\left[\begin{smallmatrix}\tilde\Omega^2_{11}&|\tilde\Omega^2_{12}|e^{i\varphi}\\ |\tilde\Omega^2_{12}|e^{-i\varphi}&\tilde\Omega^2_{22}\end{smallmatrix}\right]$ for two degrees of freedom, read as two atoms of one cell moving along the chain. Entries are in eV Å⁻² amu⁻¹, the units of a force constant divided by a mass, so $\hbar\omega=64.654\,\text{meV}\times\sqrt{\omega^2}$. <strong>Top left:</strong> eigenvalues $\omega^2_{1,2}$ (filled) and diagonal entries (hollow) on a number line; the eigenvalues are split by $2[(\tilde\Omega^2_{11}-\tilde\Omega^2_{22})^2/4+|\tilde\Omega^2_{12}|^2]^{1/2}$, more than the bare difference $|\tilde\Omega^2_{11}-\tilde\Omega^2_{22}|$ (level repulsion). <strong>Bottom left:</strong> each eigenvector as two phasors in the complex plane (atom 1, atom 2), in the gauge where the atom-1 component is real and positive (§A.1). <strong>Right:</strong> the two atoms moving as ${\rm Re}[e_{{\rm a}\alpha}e^{-i\omega_\alpha t}]$ in each mode (equal masses assumed, so displacements are proportional to $e_{{\rm a}\alpha}$), with the true frequency ratio. <strong>Matrices:</strong> $U$, the check $U^+\tilde\Omega^2U$ of (E.29), and the contraction $\sum_{ab}e_{a\alpha}\tilde\Omega^2_{ab}e^*_{b\beta}$ that EPP uses on p. 8. <strong>Presets:</strong> EPP's example (E.30), which is the §A.1 chain ($M_1=M_2=1$ amu, $K_1=0.5$, $K_2=2.5$ eV/Å²) at $qa=\pi$, and the same chain at $qa=\pi/2$ in Giustino's phase convention, $\tilde\Omega^2_{12}=-(K_1+K_2e^{-iqa})/M$. <strong>What to notice.</strong> EPP's matrix gives $\omega^2=1$ and 5 with $\mathbf e=(1,\mp1)/\sqrt2$, and $U$ is the 45° rotation printed in the source. Turn the phase away from 0° or 180°: the eigenvalues do not move, the eigenvectors acquire a relative phase that shows up as a lag between the atoms, and EPP's p. 8 contraction stops being diagonal. Pull the diagonal entries apart and the eigenvectors localize on single atoms.</figcaption>
+  </figure>
+
+  <div class="callout source"><p class="callout-title">Note on the source: symmetric or Hermitian? (E.15) and pp. 8–9</p>
+    <p>EPP diagonalizes the potential term of (E.43) by contracting $\sum e_{{\rm a}\mu\alpha}\tilde\Omega^2_{{\rm a}\mu{\rm b}\nu}e^*_{{\rm b}\nu\beta}$ (p. 8) and invoking a symmetry, $\tilde\Omega^2_{{\rm b}\nu{\rm a}\mu}=\tilde\Omega^2_{{\rm a}\mu{\rm b}\nu}$ (p. 9), that the Hermitian dynamical matrix has only where it is real (Γ, zone-boundary points, the (E.30) example). Elsewhere the step needs $e^{-i\bk\boldsymbol\delta}$ in (E.15), which is Giustino's convention (G.14) and the one this page uses; the printed (E.15) equals his $D^{\rm dm}(-\bk)$. Frequencies are unaffected. The last matrix of the figure shows the failure. The full note, with the on-site block and the “isotropy property”, is the source note of <a href="#a-lattice">§A.1</a>.</p>
+  </div>
+
+  <h3>The bare vertex (EPP §2)</h3>
+  <p>Section 2 lets valence <span class="t-e">electrons</span> feel the vibrations. Each ion, nucleus plus frozen core, carries a local, transferable pseudopotential $v_{\rm a}(\br)$ and drags it rigidly along:</p>
+  <div class="eq">$$V_{\rm cr}(\br)=\sum_{i{\rm a}}v_{\rm a}(\br-\bR_{i{\rm a}}). \tag{E.92}$$</div>
+  <p>To first order in the displacements $\bR_{i{\rm a}}=\bR^0_{i{\rm a}}+\bQ_{i{\rm a}}$ (E.98),</p>
+  <div class="eq">$$\Delta V_{\rm cr}(\br)=-\sum_{i{\rm a}\mu}\partial_\mu v_{\rm a}(\br-\bR^0_{i{\rm a}})\,Q_{i{\rm a}\mu}, \tag{E.100}$$</div>
+  <p>and in Fourier space</p>
+  <div class="eq">$$v_{\rm a}(\br-\bR^0_{i{\rm a}})=\int\frac{d\bq'}{(2\pi)^3}\,V_{\rm a}(\bq')\,e^{i\bq'(\br-\bR^0_i)}, \tag{E.101}$$</div>
+  <p>where $V_{\rm a}(\bq')=e^{-i\bq'\br^0_{\rm a}}v_{\rm a}(\bq')$ keeps the basis phase of atom ${\rm a}$. The gradient becomes $iq'_\mu$. Writing $\Delta V_{\rm cr}$ in second quantization over the frozen-lattice Bloch states $\phi^0_{n\bk}=\Omega^{-1/2}e^{i\bk\br}u^0_{n\bk}$ ($\Omega$ is the crystal volume), inserting (E.83) and doing the lattice sum gives $\Delta V^0_{\rm cr}=\sum g^0_{nm\alpha}(\bk,\bq)\,c^+_{n\bk}c_{m\bk-\bq}(a_{\bq\alpha}+a^+_{-\bq\alpha})$ (E.108) with the boxed bare matrix element</p>
+  <div class="eq">$$\boxed{\begin{aligned}g^0_{nm\alpha}(\bk,\bq)=-\frac{i}{\Omega_{\rm uc}}\sum_{\bG}\sum_{{\rm a}\mu}&\sqrt{\frac{\hbar}{2Nm_{\rm a}\omega^0_\alpha(\bq)}}\;e^0_{{\rm a}\mu\alpha}(\bq)\,(q_\mu+G_\mu)\\&\times V_{\rm a}(\bq+\bG)\,\rho^0_{n\bk,m\bk-\bq}(-\bG)\end{aligned}} \tag{E.107}$$</div>
+  <p>and the charge vertex</p>
+  <div class="eq">$$\rho^0_{n\bk,m\bk+\bq}(\bG)=\mel{\phi^0_{n\bk}}{e^{-i(\bq+\bG)\br}}{\phi^0_{m\bk+\bq}}. \tag{E.106}$$</div>
+
+  <details class="derivation"><summary>Derivation: from (E.100) to (E.107)</summary><div class="d-body">
+    <p>Insert (E.101) into (E.100). The derivative of $e^{i\bq'(\br-\bR^0_i)}$ brings down $iq'_\mu$, so $\Delta V_{\rm cr}(\br)=-i\sum_{i{\rm a}\mu}Q_{i{\rm a}\mu}\int\frac{d\bq'}{(2\pi)^3}q'_\mu V_{\rm a}(\bq')e^{i\bq'(\br-\bR^0_i)}$ (E.102). In second quantization over $\phi^0_{n\bk}$ (E.103–E.104) the $\br$ dependence sits in $\mel{\phi^0_{n\bk}}{e^{i\bq'\br}}{\phi^0_{m\bk'}}=\delta_{\bk',\bk-\bq'}\,\rho^0_{n\bk,m\bk-\bq'}(\bG=0)$ (E.105). The Kronecker delta holds modulo $\bG$, which is EPP's umklapp warning.</p>
+    <p>Now replace $Q_{i{\rm a}\mu}$ by (E.83), with phonon wavevector $\bq$, bare $\omega^0_\alpha$ and $e^0_{{\rm a}\mu\alpha}$. The cell sum $\sum_ie^{i(\bq-\bq')\bR^0_i}=N\sum_{\bG}\delta_{\bq',\bq+\bG}$, together with $\int d\bq'/(2\pi)^3\to\Omega^{-1}\sum_{\bq'}$, turns the integral into a sum over $\bq'=\bq+\bG$ with $\bq\in$ BZ. The prefactor $N/\Omega$ times the $N^{-1/2}$ of (E.83) equals $1/(\Omega_{\rm uc}\sqrt N)$ with $\Omega_{\rm uc}=\Omega/N$, which is how $N$ ends up inside the square root of (E.107). Finally, the periodic gauge $\phi_{m,\bk-\bq-\bG}=\phi_{m,\bk-\bq}$ and $c_{m\bk-\bq-\bG}=c_{m\bk-\bq}$ give $\rho^0_{n\bk,m\bk-\bq-\bG}(\bG=0)=\rho^0_{n\bk,m\bk-\bq}(-\bG)$ in the notation of (E.106). Collecting factors gives (E.107)–(E.108).</p>
+  </div></details>
+
+  <p>Read (E.107) factor by factor. The zero-point amplitude $\sqrt{\hbar/2Nm_{\rm a}\omega^0_\alpha}$ includes the $1/\sqrt N$ that Giustino keeps outside his $g$. The projection $(\bq+\bG)\cdot\mathbf e^0_{\rm a}$ means that at $\bG=0$ only displacements along $\bq$ couple; umklapp terms let transverse modes couple too. $V_{\rm a}(\bq+\bG)$ is the bare pseudopotential form factor, and $\rho^0$ is the pair density that RPA and BSE codes call the oscillator strength. With $s=1$, $\bG=0$ and plane waves ($\rho=\delta_{nm}$), (E.107) is Bloch's 1929 matrix element (G.2) with $V_0\to V_{\rm a}(\bq)/\Omega_{\rm uc}$ (<a href="#a-coupling">§A.2</a>).</p>
+  <p>“Bare” has teeth. A pseudo-ion of valence $Z_v$ has a Coulomb tail, $V_{\rm a}(\bq)\to-Z_ve^2/\epsilon_0q^2$ in SI, so the factor $(\bq\cdot\mathbf e^0_{\rm a})V_{\rm a}(\bq)$ diverges as $1/q$ at small $q$ for every mode. Acoustic modes are not spared; their zero-point factor $\omega^{-1/2}$ makes the divergence stronger still. Valence screening must remove this divergence in metals (Bardeen) and in nonpolar insulators, and reduce it to the dipolar Fröhlich form in polar insulators (below). Adding the bare bands, the bare phonons and the valence electron–electron Coulomb interaction gives EPP's bare model Hamiltonian:</p>
+  <div class="eq">$$\begin{aligned}H={}&\sum_{n\bk}E^0_{n\bk}c^+_{n\bk}c_{n\bk}+\sum_{\alpha=1}^{3s}\sum_{\bq\in{\rm BZ}}\hbar\omega^0_\alpha(\bq)\left(a^+_{\bq\alpha}a_{\bq\alpha}+1/2\right)\\&+\sum_{\alpha=1}^{3s}\sum_{\bk\bq\in{\rm BZ}}\sum_{nm}g^0_{nm\alpha}(\bk,\bq)\,c^+_{n\bk}c_{m\bk-\bq}\left(a_{\bq\alpha}+a^+_{-\bq\alpha}\right)\\&+\frac12\int d\br\int d\br'\,\Psi^+_0(x)\Psi^+_0(x')V(\br,\br')\Psi_0(x')\Psi_0(x).\end{aligned} \tag{E.109}$$</div>
+  <p>Here $V(\br,\br')$ is the bare Coulomb interaction and $\Psi_0(x)=\sum_{n\bk}\phi^0_{n\bk}(\br)c_{n\bk}(t)$. The stated approximations are harmonic ions and frozen cores. Three more are implicit: linear coupling only (no Debye–Waller term), local pseudopotentials, and rigid ions.</p>
+
+  <div class="callout connect"><p class="callout-title">Bridge to Giustino: Eq. (G.1) with the Coulomb term left in</p>
+    <p>The first three terms of (E.109) have the structure of the first two lines of (G.1). Four differences matter. (i) Every parameter is bare, while Giustino's $\varepsilon_{n\bk}$, $\omega_{\bq\nu}$ and $g$ are DFT/DFPT quantities; (E.107) is the plane-wave form of his bare vertex $g^{\rm b}$ (G.142), and the DFPT vertex is the screened $g=\epsilon_{\rm e}^{-1}g^{\rm b}$ (<a href="#a-dfpt">§A.3</a>). (ii) EPP keeps the electron–electron interaction explicit; (G.1) has none. (iii) There is no second-order (Debye–Waller) term. (iv) The labels differ: EPP writes $g_{nm}(\bk,\bq)\,c^+_{n\bk}c_{m\bk-\bq}$ where Giustino writes $g_{mn}(\bk,\bq)\,\hat c^\dagger_{m\bk+\bq}\hat c_{n\bk}$, so $g^{\rm EPP}_{nm}(\bk,\bq)=N^{-1/2}g^{\rm G}_{nm}(\bk-\bq,\bq)$, with Giustino's first band index the final state.</p>
+  </div>
+
+  <h3>Two starting points, and the double-counting rule</h3>
+  <p>Page 21 of EPP makes the argument that shapes the rest of the manuscript. Perturbation theory around (E.109) never double counts: “everyone can interact with everyone” through $v$ or the bare phonon propagator, and nothing is already included in $H_0$. But neither the electron–electron nor the electron–phonon interaction is small, and the bare $\{E^0_{n\bk},\phi^0_{n\bk}\}$ are a poor starting basis: a large part of the electron–electron interaction belongs inside them, and through them inside $\omega^0_\alpha(\bq)$. The practical starting point is DFT, $E^0_{n\bk}\to E_{n\bk}$, $\phi^0_{n\bk}\to\phi_{n\bk}$, $\omega^0_\alpha(\bq)\to\omega_\alpha(\bq)$, with (E.109) otherwise unchanged.</p>
+  <p>Then the bookkeeping matters. DFT ions already interact adiabatically through the valence electrons, so the static part of the electronic bubble in the phonon self-energy is already inside $\omega_\alpha(\bq)$. Only the dynamic (nonadiabatic) remainder may be added. DFT states inside the RPA bubble, and hence inside $W$, are not double counting. This is Giustino's split $\Pi^{\rm ph}=\Pi^{\rm A}+\Pi^{\rm NA}(\omega)$ (G.125), with $\chi^0(\omega)-\chi^0(0)$ in (G.145) (<a href="#a-phonon-se">§A.6</a>).</p>
+  <p>The second half of the argument concerns range. EPP models DFT force constants as strictly short-ranged,</p>
+  <div class="eq">$$k^{\mathcal S}_{i{\rm a}\mu,j{\rm b}\nu}=\left.\frac{\partial^2V}{\partial R_{i{\rm a}\mu}\,\partial R_{j{\rm b}\nu}}\right|_{\{\bR^0_{i{\rm a}}\}}=0\qquad\text{for }|\bR^0_{i{\rm a}}-\bR^0_{j{\rm b}}|&gt;a,$$</div>
+  <p>with $\mathcal S$ for short range and $a$ the cell size. It then notes that a displacement in a polar crystal induces a dipole $\bp_{i{\rm a}}=\hat Z^*\bQ_{i{\rm a}}$ whose field reaches far beyond a cell, and that adding it “poses no threat of double counting, in most cases.” The condition hidden in “in most cases” is the rule that governs Part B: <strong>only short-range (analytic) force constants may be combined with an explicitly mediated long-range coupling.</strong> If the bare phonons already contain the dipole–dipole interaction, photon exchange counts it a second time.</p>
+
+  <div class="callout caveat"><p class="callout-title">Subtlety: DFPT force constants are not short-ranged</p>
+    <p>EPP attributes the short range to DFT itself (“neglect of long-range electronic correlations”). That does not hold for density-functional perturbation theory. In polar insulators the DFPT force constants carry a dipole–dipole tail $\propto|\bR|^{-3}$ whose nonanalytic Fourier transform is the LO–TO splitting (Gonze and Lee 1997), and DFPT matrix elements carry the $1/q$ Fröhlich singularity (Giustino §VI.A.3, <a href="#a-polar">§A.4</a>). What is true is narrower: a periodic calculation at exactly $\bq=0$ lacks the macroscopic field, which codes add back through $Z^*$ and $\epsilon^\infty$. In practice EPP's bare $\omega_\alpha(\bq)$ should come from the analytic part of the DFPT dynamical matrix, with the dipole–dipole term subtracted; photon exchange then regenerates it (<a href="#b-phonon-se">§B.7</a>, <a href="#b-electrostatic">§B.9</a>). Van der Waals “long-range correlation” is a separate issue.</p>
+  </div>
+
+  <div class="tbl"><table>
+    <thead><tr><th>Ingredient</th><th>From DFT/DFPT?</th><th>Role in EPP</th></tr></thead>
+    <tbody>
+      <tr><td>Bands $E_{n\bk}$, states $\phi_{n\bk}$</td><td>yes</td><td>inside the RPA bubbles of the photon self-energy (<a href="#b-photon-se">§B.5</a>)</td></tr>
+      <tr><td>Short-range (analytic) force constants</td><td>yes</td><td>bare phonons $\omega_\alpha(\bq)$, $\mathbf e_\alpha(\bq)$</td></tr>
+      <tr><td>Long-range dipole–dipole force constants</td><td>no, subtract</td><td>regenerated by photon exchange: LO–TO splitting (<a href="#b-phonon-se">§B.7</a>)</td></tr>
+      <tr><td>Born charges $Z^*$</td><td>yes</td><td>ionic dipoles $\bp=\hat Z^*\bQ$ and the ionic current vertex</td></tr>
+      <tr><td>$\epsilon^\infty$</td><td>inserted by hand in §3</td><td>regenerated from the electronic photon self-energy (<a href="#b-photon-se">§B.5</a>, <a href="#b-frohlich">§B.8</a>)</td></tr>
+      <tr><td>Short-range vertex $g^{\mathcal S}$</td><td>available, as DFPT $g$ minus $g^{\mathcal L}$</td><td>not used: absent from the Lagrangian (E.134) (<a href="#b-lagrangian">§B.2</a>)</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Polar coupling from Born charges (EPP §3)</h3>
+  <p>In a polar crystal, displacing atom ${\rm a}$ along $\nu$ changes the dipole of its cell along $\mu$. EPP defines the Born effective charge tensor as that response,</p>
+  <div class="eq">$$Z^*_{{\rm a}\mu\nu}=\frac{\delta p_\mu}{\delta R_{{\rm a}\nu}}=\Omega_{\rm uc}\frac{\delta P_\mu}{\delta R_{{\rm a}\nu}}, \tag{E.110}$$</div>
+  <div class="eq">$$p_{i{\rm a}\mu}=Z^*_{{\rm a}\mu\nu}Q_{i{\rm a}\nu}. \tag{E.111}$$</div>
+  <p>$Z^*$ is the same in every cell and, in EPP, has the dimension of charge. EPP's Fig. 2 stresses the tensor character: a displacement along $\nu$ can produce a dipole along a different direction $\mu$. The potential of a point dipole $\bp=e\boldsymbol\delta$ (E.112) in a medium with the clamped-ion dielectric tensor $\hat\epsilon^\infty$ follows from Poisson's equation with the bound charge $-\nabla\cdot\bP$, $\bP=\epsilon_0(\hat\epsilon^\infty-\mathbb 1)\bE$ (E.113–E.114). In SI units:</p>
+  <div class="eq">$$\nabla\hat\epsilon^\infty\nabla\phi=-\frac{1}{\epsilon_0}\rho(\br), \tag{E.116}$$</div>
+  <div class="eq">$$\phi(\bq)=-\frac{i}{\epsilon_0}\,\frac{\bp\cdot\bq}{\bq\cdot\hat\epsilon^\infty\cdot\bq}. \tag{E.120}$$</div>
+
+  <details class="derivation"><summary>Derivation: from the point dipole (E.112) to (E.120), and the real-space potential</summary><div class="d-body">
+    <p>With the convention (E.117), $\phi(\br)=\int\frac{d\bq}{(2\pi)^3}e^{i\bq\br}\phi(\bq)$, the dipole density is $\rho(\br)=e\int\frac{d\bq}{(2\pi)^3}e^{i\bq\br}\big[e^{-i\bq\boldsymbol\delta/2}-e^{i\bq\boldsymbol\delta/2}\big]=-i\int\frac{d\bq}{(2\pi)^3}e^{i\bq\br}\,\bp\cdot\bq$ for $|\boldsymbol\delta|\to0$. On the left of (E.116), $\nabla\cdot\hat\epsilon^\infty\nabla$ acting on $e^{i\bq\br}$ gives $-\bq\cdot\hat\epsilon^\infty\cdot\bq$ (E.118–E.119). Equating Fourier components, $-\bq\cdot\hat\epsilon^\infty\cdot\bq\,\phi(\bq)=(i/\epsilon_0)\,\bp\cdot\bq$, which is (E.120).</p>
+    <p>Check: for $\hat\epsilon^\infty=\mathbb 1$ this is the transform of $\bp\cdot\br/(4\pi\epsilon_0r^3)$, since the transform of $1/(4\pi\epsilon_0r)$ is $1/(\epsilon_0q^2)$ and $-\bp\cdot\nabla$ brings down $-i\bp\cdot\bq$. In real space the anisotropic result is [derived]</p>
+    <div class="eq">$$\phi(\br)=\frac{\bp\cdot\hat\epsilon^{-1}\cdot\br}{4\pi\epsilon_0\sqrt{\det\hat\epsilon}\,\left(\br\cdot\hat\epsilon^{-1}\cdot\br\right)^{3/2}},$$</div>
+    <p>so equipotentials are squeezed into ellipsoids and field lines are no longer radial. Gaussian units follow from $\epsilon_0\to1/4\pi$, as EPP notes.</p>
+  </div></details>
+
+  <p>Two properties of (E.120) drive everything that follows. It scales as $1/q$, the Fourier image of a potential that decays as $1/r^2$, and its limit $q\to0$ depends on the direction $\hat\bq$: the expression is nonanalytic at the zone centre. And it vanishes for $\bp\perp\bq$, because only the longitudinal component of a dipole wave produces a scalar potential. EPP calls $\hat\epsilon^\infty$ “the electronic part of screening that we have already calculated so far”, inserts it ad hoc, and announces that it will be removed later to avoid double counting.</p>
+  <p>Summing the potentials of all displaced atoms and multiplying by the electron charge $-e$ gives $\Delta V^{\mathcal L}_{\rm cr}$ (E.121–E.123), with $\mathcal L$ for long range. EPP then notices that with the definitions</p>
+  <div class="eq">$$V^{\mathcal L}_{\rm a}(\bq)=\frac{e^2}{\epsilon_0\,\bq\cdot\hat\epsilon^\infty\cdot\bq}, \tag{E.124}$$</div>
+  <div class="eq">$$e^{\mathcal L}_{{\rm a}\mu\alpha}(\bk)=-\frac1e\sum_\nu Z^*_{{\rm a}\mu\nu}e_{{\rm a}\nu\alpha}(\bk), \tag{E.127}$$</div>
+  <p>the result has exactly the form of the rigid-ion potential (E.102):</p>
+  <div class="eq">$$\Delta V^{\mathcal L}_{\rm cr}(\br)=-i\sum_{i{\rm a}\mu}Q^{\mathcal L}_{i{\rm a}\mu}\int\frac{d\bq}{(2\pi)^3}\,q_\mu V^{\mathcal L}_{\rm a}(\bq)\,e^{i\bq(\br-\bR^0_i)}, \tag{E.128}$$</div>
+  <p>where $Q^{\mathcal L}_{i{\rm a}\mu}=-\frac1e\sum_\nu Z^*_{{\rm a}\mu\nu}Q_{i{\rm a}\nu}$ (E.125). Its phonon expansion (E.126) is (E.83) with $\mathbf e\to\mathbf e^{\mathcal L}$. The polar crystal acts as if every atom carried a point charge $-e$, displaced by $\bQ^{\mathcal L}$, that interacts with the electron through a Coulomb form factor screened by $\hat\epsilon^\infty$. All of §2 then applies unchanged, and the explicit polar vertex, boxed in the source, is</p>
+  <div class="eq">$$\boxed{\begin{aligned}g^{\mathcal L}_{nm\alpha}(\bk,\bq)=\frac{4\pi i}{\Omega_{\rm uc}}\frac{e}{4\pi\epsilon_0}\sum_{\bG}\sum_{{\rm a}\mu\nu}&\sqrt{\frac{\hbar}{2Nm_{\rm a}\omega_\alpha(\bq)}}\;\frac{(q_\mu+G_\mu)\,Z^*_{{\rm a}\mu\nu}\,e_{{\rm a}\nu\alpha}(\bq)}{(\bq+\bG)\cdot\hat\epsilon^\infty\cdot(\bq+\bG)}\\&\times\rho_{n\bk,m\bk-\bq}(-\bG)\end{aligned}} \tag{E.131}$$</div>
+
+  <div class="fd" id="b-foundations-fd">
+    <figure><div class="b-foundations-fd-a"></div><figcaption>bare vertex $g^0$ (E.107)</figcaption></figure>
+    <figure><div class="b-foundations-fd-b"></div><figcaption>polar vertex $g^{\mathcal L}$ (E.131)</figcaption></figure>
+  </div>
+  <p>The two diagrams summarize the difference. In $g^0$ the <span class="t-p">phonon</span> shakes the ionic pseudopotential directly. In $g^{\mathcal L}$ the phonon's dipole $\hat Z^*\bQ$ reaches the electron through the Coulomb interaction screened by $\hat\epsilon^\infty$, drawn here as the page's screened-Coulomb line; in <a href="#b-fields">§B.4</a> that line becomes the longitudinal photon. Equation (E.131) is in SI with a charge-dimensioned $Z^*$, so the prefactor $eZ^*_{\rm EPP}/4\pi\epsilon_0$ is Giustino's $e^2Z^*_{\rm G}/4\pi\epsilon_0$. In the Gaussian units of §4 on, $e/4\pi\epsilon_0\to e$. At $\bG=0$ the kernel is $(1/q)\,\hat\bq\cdot\hat Z^*\cdot\mathbf e/(\hat\bq\cdot\hat\epsilon^\infty\cdot\hat\bq)$, a function of the direction $\hat\bq$ alone divided by $q$. The figure plots that function for a uniaxial crystal.</p>
+
+  <figure class="viz" id="viz-b-foundations-kernel">
+    <p class="viz-title">Anisotropic long-range kernel of (E.131) <span class="tag">interactive</span></p>
+    <div class="viz-grid two"><div class="b-foundations-polar"></div><div class="b-foundations-ang"></div></div>
+    <div class="b-foundations-kctrls"></div>
+    <div class="b-foundations-kro"></div>
+    <figcaption><strong>Model.</strong> The $\bG=0$ kernel $K(\hat\bq)=|\hat\bq\cdot\hat Z^*\cdot\hat{\mathbf e}|/(\hat\bq\cdot\hat\epsilon^\infty\cdot\hat\bq)$ of (E.131) and (E.120) for a uniaxial crystal, $\hat\epsilon^\infty={\rm diag}(\epsilon^\infty_\perp,\epsilon^\infty_\perp,\epsilon^\infty_\parallel)$ and $\hat Z^*={\rm diag}(Z^*_\perp,Z^*_\perp,Z^*_\parallel)$, with $\hat\bq=(\sin\theta,0,\cos\theta)$ in the plane spanned by the $c$ axis and the polarization. Born charges in units of $|e|$, so $K$ is in $|e|$. Polar modes are a cation–anion pair moving against each other, with polarization $\hat{\mathbf e}$ in-plane ($\hat x$, like the $E_{1u}$ mode of hBN) or along $c$ ($A_{2u}$-like). <strong>Left:</strong> polar plot, radius $K$ along the direction of $\hat\bq$ (the $c$ axis is vertical); the selected mode is drawn bold. Click to set $\hat\bq$. <strong>Right:</strong> $K(\theta)$ for both modes. <strong>Readout:</strong> the last value is $q\,|g^{\mathcal L}|$ in Giustino's convention (no $N$), $=\frac{e^2}{\epsilon_0\Omega_{\rm uc}}K\sqrt{\hbar/2\mu\omega}$ from (E.131) with $\bG=0$ and $\rho=1$, for one B–N pair in $\Omega_{\rm uc}=18.1$ Å³ ($\mu=6.10$ amu). The frequency is held at the analytic (TO) value, $\hbar\omega=170$ meV in-plane or 97 meV out-of-plane, as for EPP's short-range bare phonons. Verdi and Giustino's (G.180) uses the full DFPT frequency, which for $\hat\bq$ along the polarization is $\omega_{\rm LO}\approx198$ meV in-plane (from these $Z^*$ and $\epsilon^\infty$; measured 199.6 meV) and lowers $q|g^{\mathcal L}|$ by about 7%. <strong>Preset:</strong> hBN-bulk-like $\epsilon^\infty_\perp=4.87$, $\epsilon^\infty_\parallel=2.95$, $Z^*_\perp=2.71$, $Z^*_\parallel=0.81$; these, the cell volume and the TO frequencies are literature values, illustrative, and neither paper gives them. <strong>What to notice.</strong> The kernel vanishes where $\hat\bq$ is perpendicular to the polarization: an in-plane mode with $\hat\bq\parallel c$ is purely transverse and invisible to electrostatics. Along any other direction the $q\to0$ limit of $q\,g^{\mathcal L}$ is finite but direction-dependent, which is the nonanalyticity. Set $\epsilon^\infty_\perp&gt;2\epsilon^\infty_\parallel$ (try 12 and 4) and the in-plane lobes tilt away from the plane, because the denominator grows faster than the numerator.</figcaption>
+  </figure>
+
+  <p>EPP states that (E.131) is “exactly equal to Eq. 4” of Verdi and Giustino (2015), which appears in Giustino's review, in corrected form and SI units, as (G.180), displayed in <a href="#a-polar">§A.4</a> (there $\Omega$ is EPP's $\Omega_{\rm uc}$ and $Z^*_\kappa$ is dimensionless). The structures agree, and the factor $e$ that EPP mentions is the charge inside its $Z^*$. “Exactly” needs qualifiers: the band and momentum labels differ as for $g^0$; Verdi and Giustino exclude $\bG=-\bq$ and in practice damp the $\bG$ sum with $e^{-a|\bq+\bG|^2}$ (Giustino's footnote 7); and (E.131) lacks the basis phase (note below). For a cubic diatomic crystal, keeping $\bG=0$ and intraband terms, both reduce to Fröhlich's vertex (G.7) once the LO–TO splitting is written through $Z^*$ and $\epsilon^\infty$; <a href="#a-polar">§A.4</a> shows how. With literature inputs the Born-charge and Fröhlich forms agree to 6% for GaAs and to better than 1% for MgO; the GaAs gap comes from inputs that are not mutually consistent (<a href="#a-polar">§A.4</a>).</p>
+
+  <div class="callout source"><p class="callout-title">Note on the source: basis phase, citation, Born charge</p>
+    <p>(1) In (E.121)–(E.123) every dipole of cell $i$ sits at the cell origin $\bR^0_i$ rather than at $\bR^0_i+\br^0_{\rm a}$, although §2 kept the phase in $V_{\rm a}(\bq')=e^{-i\bq'\br^0_{\rm a}}v_{\rm a}(\bq')$. The correct (E.131) carries $e^{-i(\bq+\bG)\cdot\br^0_{\rm a}}$ inside the atom sum. The same factor is missing from Eq. (4) of Verdi and Giustino; Giustino's footnote 7 restores it in (G.180), where it “needs to be retained in order to correctly describe the acoustic modes near $\bq=0$.” So EPP's “exactly equal” is true, but both formulas lack it. (2) EPP cites “F. Giustino, Phys. Rev. Lett. 115, 176401 (2015)”; the authors are C. Verdi and F. Giustino. (3) The Born charge must be the derivative at zero macroscopic field (the transverse charge). The text does not say so, but (E.120) adds the $\hat\epsilon^\infty$ screening separately, which only makes sense for that definition. Index and wording slips in EPP §§2–3 are listed in <a href="#z-errata">Z.2</a>.</p>
+  </div>
+
+  <div class="callout caveat"><p class="callout-title">Subtlety: this is electrostatics</p>
+    <p>(E.120) is the instantaneous Coulomb field of a dipole, valid when the finite speed of light can be ignored. That requires $q\gg q_c=\sqrt{\epsilon^\infty}\,\omega/c$, far outside the light cone; for optical phonons $q_c$ is of order $10^{-4}$ Å⁻¹ (about $2\times10^{-4}$ Å⁻¹ for the hBN-like in-plane mode, $6\times10^{-5}$ Å⁻¹ for GaAs; <a href="#x-light-cone">§X.1</a>). A transverse dipole wave, invisible to (E.120), still produces a transverse electric field, which is a photon field. It matters only near the light cone, where TO phonons and photons mix into polaritons (<a href="#b-propagator">§B.6</a>). <a href="#b-frohlich">§B.8</a> derives the electrodynamic vertex whose $c\to\infty$ limit is (E.131) with $\hat\epsilon^\infty\to\hat\epsilon^{\rm e}(\bq,\omega)$.</p>
+  </div>
+
+  <h3>What carries forward</h3>
+  <ul>
+    <li><strong>The displacement operator</strong> (E.83) and its momentum (E.84) are unchanged in §4 (p. 40). They become the ionic current vertex $j_{\alpha\sigma}=\sum_{{\rm a}\mu}Z^*_{{\rm a}\alpha\mu}e_{{\rm a}\mu\sigma}/\sqrt{m_{\rm a}}$ (E.295) of the ionic photon self-energy (<a href="#b-photon-se">§B.5</a>).</li>
+    <li><strong>The bare phonons</strong> $\omega_\alpha(\bq)$ come from short-range force constants only. Photon exchange dresses them into LO and TO modes and polaritons (<a href="#b-propagator">§B.6</a>, <a href="#b-phonon-se">§B.7</a>).</li>
+    <li><strong>The bare vertex</strong> $g^0$ does not appear in the Lagrangian (E.134), where electrons see only the frozen $V_{\rm cr}$. From §4 on, EPP's electron–phonon coupling is purely the polar channel; a complete theory would add a screened short-range $g^{\mathcal S}$. EPP also stops short of electron self-energies: it dresses photons and phonons only.</li>
+    <li><strong>The polar vertex</strong> $g^{\mathcal L}$ is the electrostatic seed. <a href="#b-frohlich">§B.8</a> rederives it from photon exchange without inserting $\epsilon^\infty$ by hand, and <a href="#b-electrostatic">§B.9</a> recovers (E.131) as $c\to\infty$.</li>
+  </ul>
+  <p>Next, <a href="#b-lagrangian">§B.2</a> writes the one Lagrangian in which electrons and ionic dipoles couple only through the vector potential.</p>
+</section>
+<script>
+(() => {
+  if (!window.EPP) return;
+  const sec = document.getElementById('b-foundations');
+  if (!sec) return;
+  const Cx = EPP.C;
+
+  // ---------- Feynman diagrams ----------
+  try {
+    const fa = sec.querySelector('.b-foundations-fd-a'), fb = sec.querySelector('.b-foundations-fd-b');
+    if (fa) EPP.fd.draw(fa, { w: 210, h: 130, label: 'Bare electron-phonon vertex', items: [
+      { t: 'fermion', a: [12, 40], b: [105, 40], label: 'm, k−q' },
+      { t: 'fermion', a: [105, 40], b: [198, 40], label: 'n, k' },
+      { t: 'phonon', a: [105, 112], b: [105, 40], label: 'q α', lpos: 'right', ldist: 18 },
+      { t: 'vertex', at: [105, 40], r: 3.6 },
+      { t: 'text', at: [105, 24], text: 'g^0', size: 14 }
+    ] });
+    if (fb) EPP.fd.draw(fb, { w: 210, h: 130, label: 'Polar vertex: dipole coupled to the electron by screened Coulomb', items: [
+      { t: 'fermion', a: [12, 30], b: [105, 30], label: 'm, k−q' },
+      { t: 'fermion', a: [105, 30], b: [198, 30], label: 'n, k' },
+      { t: 'screened', a: [105, 30], b: [105, 82], label: 'V^L', lpos: 'right', ldist: 20 },
+      { t: 'phonon', a: [105, 124], b: [105, 82], label: 'q α', lpos: 'right', ldist: 18 },
+      { t: 'vertex', at: [105, 30], r: 3 },
+      { t: 'vertex', at: [105, 82], r: 3.6 },
+      { t: 'text', at: [92, 87], text: 'Z^*', anchor: 'end', size: 13 }
+    ] });
+  } catch (e) { console.error(e); }
+
+  // ---------- Viz 1: matrix to modes ----------
+  (() => {
+    const fig = document.getElementById('viz-b-foundations-modes');
+    if (!fig) return;
+    const HW = 64.654; // hbar*omega [meV] = HW * sqrt(omega^2 [eV A^-2 amu^-1])
+    const XL = [-3.5, 9.5];
+    const line = new EPP.Plot(fig.querySelector('.b-foundations-line'), {
+      xlabel: 'ω^2 (eV Å^{-2} amu^{-1})', xlim: XL, ylim: [0, 1], height: 132, yticks: [], legend: false, hover: false,
+      margin: { l: 12, r: 12, t: 8, b: 40 }, ariaLabel: 'Eigenvalues and diagonal entries of the 2 by 2 dynamical matrix on a number line'
+    });
+    const ph = EPP.canvas(fig.querySelector('.b-foundations-phasor'), { height: 232 });
+    const an = EPP.canvas(fig.querySelector('.b-foundations-anim'), { aspect: 0.86, minHeight: 250, maxHeight: 340 });
+    ph.canvas.setAttribute('role', 'img'); ph.canvas.setAttribute('aria-label', 'Eigenvector components as phasors');
+    an.canvas.setAttribute('role', 'img'); an.canvas.setAttribute('aria-label', 'Animation of the two atoms in each eigenmode');
+    const matEl = fig.querySelector('.b-foundations-mats');
+    const ro = EPP.readout(fig.querySelector('.b-foundations-ro'));
+    let S = null;
+
+    function eig(A, Cc, B) {
+      const bb = B[0] * B[0] + B[1] * B[1], m = (A + Cc) / 2, d = (A - Cc) / 2, r = Math.sqrt(d * d + bb);
+      const vals = [m - r, m + r];
+      let vecs;
+      if (bb < 1e-12) {
+        vecs = A <= Cc ? [[[1, 0], [0, 0]], [[0, 0], [1, 0]]] : [[[0, 0], [1, 0]], [[1, 0], [0, 0]]];
+      } else {
+        vecs = vals.map(l => {
+          // row 1: (A-l) x + B y = 0 -> (B, l-A); row 2: B* x + (C-l) y = 0 -> (l-C, B*)
+          const n1 = bb + (l - A) * (l - A), n2 = bb + (l - Cc) * (l - Cc);
+          let x, y;
+          if (n1 >= n2) { x = [B[0], B[1]]; y = [l - A, 0]; } else { x = [l - Cc, 0]; y = [B[0], -B[1]]; }
+          const n = Math.sqrt(Cx.abs(x) ** 2 + Cx.abs(y) ** 2) || 1;
+          return [Cx.scale(x, 1 / n), Cx.scale(y, 1 / n)];
+        });
+      }
+      // gauge: atom-1 component real and positive (else atom-2 component)
+      vecs = vecs.map(v => {
+        const ref = Cx.abs(v[0]) > 1e-9 ? v[0] : v[1];
+        const ph0 = Cx.scale(Cx.conj(ref), 1 / (Cx.abs(ref) || 1));
+        return [Cx.mul(v[0], ph0), Cx.mul(v[1], ph0)];
+      });
+      return { vals, vecs };
+    }
+    function compute(st) {
+      const A = st.A, Cc = st.C, phi = st.phi * Math.PI / 180;
+      const B = [st.B * Math.cos(phi), st.B * Math.sin(phi)];
+      const M = [[[A, 0], B], [Cx.conj(B), [Cc, 0]]];
+      const { vals, vecs } = eig(A, Cc, B);
+      const U = [[vecs[0][0], vecs[1][0]], [vecs[0][1], vecs[1][1]]]; // U[a][alpha]
+      const D = [[0, 0], [0, 0]].map(r => r.map(() => [0, 0]));
+      const P = [[0, 0], [0, 0]].map(r => r.map(() => [0, 0]));
+      for (let al = 0; al < 2; al++) for (let be = 0; be < 2; be++) {
+        let d = [0, 0], p = [0, 0];
+        for (let a = 0; a < 2; a++) for (let b = 0; b < 2; b++) {
+          d = Cx.add(d, Cx.mul(Cx.mul(Cx.conj(U[a][al]), M[a][b]), U[b][be])); // (U^+ M U)
+          p = Cx.add(p, Cx.mul(Cx.mul(U[a][al], M[a][b]), Cx.conj(U[b][be]))); // EPP p. 8: sum e_a M_ab e_b^*
+        }
+        D[al][be] = d; P[al][be] = p;
+      }
+      return { A, Cc, B, M, vals, vecs, U, D, P, mag: st.B, phi: st.phi };
+    }
+    const fmtC = (z) => {
+      const r = Math.abs(z[0]) < 5e-3 ? 0 : z[0], i = Math.abs(z[1]) < 5e-3 ? 0 : z[1];
+      const f = (v) => (v < 0 ? '−' : '') + Math.abs(v).toFixed(2);
+      if (i === 0) return f(r);
+      if (r === 0) return f(i) + 'i';
+      return f(r) + (i < 0 ? ' − ' : ' + ') + Math.abs(i).toFixed(2) + 'i';
+    };
+    const matBlock = (title, M, hlOff) => {
+      const cell = (z, diag) => {
+        const hot = hlOff && !diag && Math.hypot(z[0], z[1]) > 5e-3;
+        return `<span style="padding:1px 6px;text-align:right;white-space:nowrap;${hot ? 'color:var(--t-photon);font-weight:600;' : ''}">${fmtC(z)}</span>`;
+      };
+      return `<div style="display:grid;gap:3px;justify-items:start;min-width:0"><span style="font-family:var(--font-ui);font-size:0.8rem;color:var(--muted)">${EPP.richHTML(title)}</span>` +
+        `<div style="display:grid;grid-template-columns:auto auto;gap:2px 2px;font-family:var(--font-mono);font-size:0.76rem;color:var(--fg);border-left:1.5px solid var(--muted);border-right:1.5px solid var(--muted);border-radius:4px;padding:3px 3px">` +
+        `${cell(M[0][0], 1)}${cell(M[0][1], 0)}${cell(M[1][0], 0)}${cell(M[1][1], 1)}</div></div>`;
+    };
+    function drawLine() {
+      if (!S) return;
+      const { A, Cc, vals } = S, [l1, l2] = vals, m = (A + Cc) / 2;
+      const L = [
+        { type: 'band', x0: XL[0], x1: 0, color: 'muted', alpha: 0.12, text: 'unstable' },
+        { type: 'segments', segs: [[XL[0], 0.5, XL[1], 0.5]], color: 'muted', width: 1 }
+      ];
+      if (Math.abs(l1 - m) > 0.18) { L.push({ type: 'arrow', x0: m, y0: 0.5, x1: l1, y1: 0.5, color: 'phonon', width: 1.4, head: 7 }); L.push({ type: 'arrow', x0: m, y0: 0.5, x1: l2, y1: 0.5, color: 'phonon', width: 1.4, head: 7 }); }
+      L.push({ type: 'points', x: [A, Cc], y: [0.5, 0.5], color: 'muted', r: 4.5, hollow: true });
+      L.push({ type: 'points', x: [l1, l2], y: [0.5, 0.5], color: 'phonon', r: 5 });
+      if (Math.abs(A - Cc) < 0.8) L.push({ type: 'text', x: m, y: 0.2, text: 'Ω̃^2_{11}, Ω̃^2_{22}', color: 'muted', align: 'center', size: 11 });
+      else { L.push({ type: 'text', x: A, y: 0.2, text: 'Ω̃^2_{11}', color: 'muted', align: 'center', size: 11 }); L.push({ type: 'text', x: Cc, y: 0.2, text: 'Ω̃^2_{22}', color: 'muted', align: 'center', size: 11 }); }
+      if (l2 - l1 < 0.8) L.push({ type: 'text', x: m, y: 0.8, text: 'ω_1^2 = ω_2^2', color: 'phonon', align: 'center' });
+      else { L.push({ type: 'text', x: l1, y: 0.8, text: 'ω_1^2', color: 'phonon', align: 'center' }); L.push({ type: 'text', x: l2, y: 0.8, text: 'ω_2^2', color: 'phonon', align: 'center' }); }
+      line.draw(L);
+    }
+    function arrow(ctx, x0, y0, x1, y1, col, w) {
+      const a = Math.atan2(y1 - y0, x1 - x0), L = Math.hypot(x1 - x0, y1 - y0), s = Math.min(8, 0.5 * L);
+      ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = w; ctx.setLineDash([]);
+      ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke();
+      if (L > 2) { ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x1 - s * Math.cos(a - 0.42), y1 - s * Math.sin(a - 0.42)); ctx.lineTo(x1 - s * Math.cos(a + 0.42), y1 - s * Math.sin(a + 0.42)); ctx.closePath(); ctx.fill(); }
+    }
+    function drawPhasor() {
+      ph.clear();
+      if (!S) return;
+      const ctx = ph.ctx, w = ph.w, h = ph.h, font = EPP.css('--font-ui');
+      const cMut = EPP.css('--muted'), cRule = EPP.css('--rule'), cFg = EPP.css('--fg-2');
+      const cols = [EPP.color('c4'), EPP.color('c5')], tcols = [EPP.color('c4-t'), EPP.color('c5')];
+      const R = Math.max(20, Math.min(w / 4 - 18, (h - 92) / 2));
+      const deg = (z) => Math.round(Cx.arg(z) * 180 / Math.PI);
+      for (let al = 0; al < 2; al++) {
+        const cx = w * (al ? 0.75 : 0.25), cy = 30 + R;
+        ctx.strokeStyle = cRule; ctx.lineWidth = 1; ctx.setLineDash([]);
+        ctx.beginPath(); ctx.moveTo(cx - R - 6, cy); ctx.lineTo(cx + R + 6, cy); ctx.moveTo(cx, cy - R - 6); ctx.lineTo(cx, cy + R + 6); ctx.stroke();
+        ctx.strokeStyle = cMut; ctx.setLineDash([2, 3]); ctx.beginPath(); ctx.arc(cx, cy, R, 0, 2 * Math.PI); ctx.stroke(); ctx.setLineDash([]);
+        ctx.fillStyle = cMut; ctx.textBaseline = 'middle';
+        EPP.drawRich(ctx, 'Re', cx + R - 2, cy + 9, { size: 10, font, align: 'right' }); EPP.drawRich(ctx, 'Im', cx + 4, cy - R + 6, { size: 10, font });
+        ctx.fillStyle = cFg; ctx.textBaseline = 'alphabetic';
+        EPP.drawRich(ctx, `mode ${al + 1}: e_{a${al + 1}}`, cx, 14, { size: 12, align: 'center', font });
+        const z0 = S.vecs[al][0], z1 = S.vecs[al][1];
+        const same = Cx.abs(Cx.sub(z0, z1)) < 0.06;
+        for (let a = 0; a < 2; a++) {
+          const z = S.vecs[al][a];
+          if (Cx.abs(z) < 0.02) { ctx.fillStyle = cols[a]; ctx.beginPath(); ctx.arc(cx, cy, 3, 0, 2 * Math.PI); ctx.fill(); continue; }
+          const ang = Math.atan2(-z[1], z[0]), nx = -Math.sin(ang), ny = Math.cos(ang);
+          const off = same ? (a ? 2.5 : -2.5) : 0, sideL = a ? 1 : -1; // label on opposite sides of the arrow
+          const x1 = cx + R * z[0] + off * nx, y1 = cy - R * z[1] + off * ny;
+          arrow(ctx, cx + off * nx, cy + off * ny, x1, y1, cols[a], 2);
+          ctx.fillStyle = tcols[a]; ctx.textBaseline = 'middle';
+          EPP.drawRich(ctx, String(a + 1), cx + 0.62 * R * z[0] + sideL * 10 * nx, cy - 0.62 * R * z[1] + sideL * 10 * ny, { size: 12, align: 'center', font });
+        }
+        ctx.textBaseline = 'alphabetic';
+        for (let a = 0; a < 2; a++) {
+          const z = S.vecs[al][a];
+          ctx.fillStyle = tcols[a];
+          EPP.drawRich(ctx, `atom ${a + 1}: ${Cx.abs(z).toFixed(2)} ∠ ${Cx.abs(z) < 0.02 ? '—' : deg(z) + '°'}`, cx, cy + R + 22 + 15 * a, { size: 11, align: 'center', font });
+        }
+      }
+    }
+    function drawAnim(t) {
+      an.clear();
+      if (!S) return;
+      const ctx = an.ctx, w = an.w, h = an.h, font = EPP.css('--font-ui');
+      const cMut = EPP.css('--muted'), cRule = EPP.css('--rule'), cFg = EPP.css('--fg-2'), cSurf = EPP.css('--surface');
+      const cols = [EPP.color('c4'), EPP.color('c5')];
+      const [l1, l2] = S.vals;
+      const lmax = Math.max(l1, l2);
+      const T2 = 1.8;
+      const period = (l) => (l > 1e-6 && lmax > 1e-6 ? Math.min(40, T2 * Math.sqrt(lmax / l)) : Infinity);
+      const amp = Math.min(w * 0.12, 46), x0 = [w * 0.36, w * 0.64], rad = Math.max(9, Math.min(13, w / 34));
+      for (let al = 0; al < 2; al++) {
+        const yTop = al * h / 2, cy = yTop + h / 4 + 10, l = S.vals[al], T = period(l);
+        const om = isFinite(T) ? 2 * Math.PI / T : 0;
+        ctx.fillStyle = cFg; ctx.textBaseline = 'alphabetic';
+        let lab = `mode ${al + 1}:  ω_${al + 1}^2 = ${EPP.fix(l, 2)}`;
+        if (l < -1e-6) lab += '  (unstable, frozen)'; else if (l <= 1e-6) lab += '  (ω = 0, no restoring force)';
+        EPP.drawRich(ctx, lab, 10, yTop + 18, { size: 12, font });
+        // baseline and equilibrium ticks
+        ctx.strokeStyle = cRule; ctx.lineWidth = 1; ctx.setLineDash([4, 4]);
+        ctx.beginPath(); ctx.moveTo(14, cy); ctx.lineTo(w - 14, cy); ctx.stroke(); ctx.setLineDash([]);
+        ctx.strokeStyle = cMut;
+        for (const xe of x0) { ctx.beginPath(); ctx.moveTo(xe, cy - rad - 8); ctx.lineTo(xe, cy - rad - 2); ctx.moveTo(xe, cy + rad + 2); ctx.lineTo(xe, cy + rad + 8); ctx.stroke(); }
+        const ct = Math.cos(om * t), stt = Math.sin(om * t);
+        const xs = [0, 1].map(a => { const z = S.vecs[al][a]; return x0[a] + amp * (z[0] * ct + z[1] * stt); });
+        // spring
+        const xa = xs[0] + rad, xb = xs[1] - rad, nz = 9;
+        ctx.strokeStyle = cMut; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(xa, cy);
+        for (let k = 1; k < nz; k++) ctx.lineTo(xa + (xb - xa) * k / nz, cy + (k % 2 ? -6 : 6));
+        ctx.lineTo(xb, cy); ctx.stroke();
+        for (let a = 0; a < 2; a++) {
+          ctx.fillStyle = cols[a]; ctx.beginPath(); ctx.arc(xs[a], cy, rad, 0, 2 * Math.PI); ctx.fill();
+          ctx.fillStyle = cSurf; ctx.textBaseline = 'middle';
+          EPP.drawRich(ctx, String(a + 1), xs[a], cy + 0.5, { size: 12, align: 'center', font });
+        }
+        const z1 = S.vecs[al][0], z2 = S.vecs[al][1];
+        ctx.fillStyle = cMut; ctx.textBaseline = 'alphabetic';
+        let pr = 'one atom at rest';
+        if (Cx.abs(z1) > 0.02 && Cx.abs(z2) > 0.02) {
+          // u_a = |e_a| cos(ωt − arg e_a): atom 2 leads atom 1 by arg e_1 − arg e_2
+          const lead = Math.round(((((Cx.arg(z1) - Cx.arg(z2)) * 180 / Math.PI) % 360) + 540) % 360 - 180);
+          pr = Math.abs(lead) <= 1 ? 'atoms in phase' : (Math.abs(lead) >= 179 ? 'atoms in antiphase' : (lead > 0 ? `atom 2 leads atom 1 by ${lead}°` : `atom 2 lags atom 1 by ${-lead}°`));
+        }
+        EPP.drawRich(ctx, pr + (isFinite(T) ? `,  period ∝ 1/ω_${al + 1}` : ''), 10, cy + rad + 26, { size: 11, font });
+        if (al === 0) { ctx.strokeStyle = cRule; ctx.beginPath(); ctx.moveTo(8, h / 2 + 0.5); ctx.lineTo(w - 8, h / 2 + 0.5); ctx.stroke(); }
+      }
+    }
+    function update(st) {
+      S = compute(st);
+      drawLine(); drawPhasor(); if (anim) anim.redraw();
+      matEl.innerHTML = `<div style="display:flex;flex-wrap:wrap;gap:10px 20px;margin-top:12px">` +
+        matBlock('Ω̃^2', S.M, false) + matBlock('U = [e_1, e_2]', S.U, false) + matBlock('U^+Ω̃^2U  (E.29)', S.D, true) + matBlock('EPP p. 8: Σ e_{aα}Ω̃^2_{ab}e^*_{bβ}', S.P, true) + `</div>`;
+      const hw = (l) => (l > 0 ? EPP.fix(HW * Math.sqrt(l), 1) + ' meV' : (l === 0 ? '0' : 'imaginary'));
+      const off = Math.hypot(S.P[0][1][0], S.P[0][1][1]);
+      ro.set({ 'ω_1^2': EPP.fix(S.vals[0], 3), 'ω_2^2': EPP.fix(S.vals[1], 3), 'ħω_1': hw(S.vals[0]), 'ħω_2': hw(S.vals[1]), '|off-diagonal| of EPP p. 8 form': EPP.fix(off, 3) });
+    }
+    const ctrlEl = fig.querySelector('.b-foundations-ctrls');
+    const ui = EPP.controls(ctrlEl, [
+      { key: 'A', type: 'range', label: 'Ω̃^2_{11}', min: 0, max: 6, step: 0.05, value: 3, fmt: v => v.toFixed(2) },
+      { key: 'C', type: 'range', label: 'Ω̃^2_{22}', min: 0, max: 6, step: 0.05, value: 3, fmt: v => v.toFixed(2) },
+      { key: 'B', type: 'range', label: '|Ω̃^2_{12}|', min: 0, max: 3, step: 0.001, value: 2, fmt: v => v.toFixed(2) },
+      { key: 'phi', type: 'range', label: 'phase φ of Ω̃^2_{12}', min: -180, max: 180, step: 0.1, value: 0, fmt: v => v.toFixed(0) + '°' },
+      { key: 'p1', type: 'button', label: 'EPP example (E.30)', onClick: () => { ui.set('A', 3, true); ui.set('C', 3, true); ui.set('B', 2, true); ui.set('phi', 0, true); } },
+      { key: 'p2', type: 'button', label: '§A.1 chain, qa = π/2', onClick: () => {
+        // Giustino convention: D12 = -(K1 + K2 e^{-iqa})/M with M = 1 amu, K1 = 0.5, K2 = 2.5 eV/A^2
+        const re = -(0.5 + 2.5 * Math.cos(Math.PI / 2)), im = 2.5 * Math.sin(Math.PI / 2);
+        ui.set('A', 3, true); ui.set('C', 3, true); ui.set('B', Math.round(Math.hypot(re, im) * 1000) / 1000, true); ui.set('phi', Math.round(Math.atan2(im, re) * 1800 / Math.PI) / 10, true);
+      } }
+    ], st => { try { update(st); } catch (e) { console.error(e); } });
+    const anim = EPP.anim(fig, (t) => drawAnim(t), { buttonHost: ctrlEl });
+    an.onResize(() => anim.redraw());
+    ph.onResize(drawPhasor);
+  })();
+
+  // ---------- Viz 2: anisotropic long-range kernel ----------
+  (() => {
+    const fig = document.getElementById('viz-b-foundations-kernel');
+    if (!fig) return;
+    const OM = 18.08, MU = 6.101, HWIN = 169.9, HWOUT = 96.7, E2EPS = 180.95, L2 = 2.0901;
+    const polar = new EPP.Plot(fig.querySelector('.b-foundations-polar'), {
+      xlabel: 'in-plane direction (|e|)', ylabel: 'c axis (|e|)', xlim: [-1, 1], ylim: [-1, 1], aspect: 0.94, hover: false,
+      margin: { l: 52, r: 12, t: 12, b: 42 }, ariaLabel: 'Polar plot of the long-range vertex kernel versus the direction of q'
+    });
+    const ang = new EPP.Plot(fig.querySelector('.b-foundations-ang'), {
+      xlabel: 'angle θ between q̂ and the c axis (deg)', ylabel: 'kernel K (|e|)', xlim: [0, 90], ylim: [0, 1],
+      xticks: [0, 15, 30, 45, 60, 75, 90], xname: 'θ', hoverX: v => v.toFixed(0) + '°', hoverY: v => v.toFixed(3) + ' |e|',
+      ariaLabel: 'Kernel versus angle for in-plane and out-of-plane polar modes'
+    });
+    const ro = EPP.readout(fig.querySelector('.b-foundations-kro'));
+    let st = null, thc = 50; // cursor angle in degrees, measured from +c toward +x, in [0, 360)
+    const den = (th, s) => s.ep * Math.sin(th) ** 2 + s.ez * Math.cos(th) ** 2;
+    const Kin = (th, s) => s.Zp * Math.abs(Math.sin(th)) / den(th, s);
+    const Kout = (th, s) => s.Zz * Math.abs(Math.cos(th)) / den(th, s);
+    const STEPS = [0.25, 0.5, 0.75, 1, 1.5, 2, 3, 4, 6, 8, 12, 16];
+    polar.onPointer = (x, y) => { if (Math.hypot(x, y) < 1e-9) return; let d = Math.atan2(x, y) * 180 / Math.PI; if (d < 0) d += 360; thc = d; draw(); };
+    ang.onPointer = (x) => { thc = EPP.clamp(x, 0, 90); draw(); };
+    function draw() {
+      if (!st) return;
+      const s = st, sel = s.mode;
+      const N = 361, th = EPP.linspace(0, 2 * Math.PI, N);
+      const kin = th.map(t => Kin(t, s)), kout = th.map(t => Kout(t, s));
+      const kmax = Math.max(1e-6, ...kin, ...kout) * 1.12;
+      const R = STEPS.find(v => v >= kmax) || STEPS[STEPS.length - 1];
+      const ring = (r) => ({ type: 'line', x: th.map(t => r * Math.sin(t)), y: th.map(t => r * Math.cos(t)), color: 'muted', width: 1, dash: [2, 3], hover: false });
+      const curve = (k, color, label, bold, dash) => ({ type: 'line', x: th.map((t, i) => k[i] * Math.sin(t)), y: th.map((t, i) => k[i] * Math.cos(t)), color, label, width: bold ? 2.6 : 1.3, opacity: bold ? 1 : 0.6, dash, hover: false });
+      const tr = thc * Math.PI / 180;
+      const kc = sel === 'in' ? Kin(tr, s) : Kout(tr, s);
+      polar.draw([
+        ring(R / 2), ring(R),
+        { type: 'text', x: 0, y: R / 2, text: EPP.fmt(R / 2, 2), color: 'muted', size: 10, dx: 4, dy: -7 },
+        { type: 'text', x: 0, y: R, text: EPP.fmt(R, 2), color: 'muted', size: 10, dx: 4, dy: 8 },
+        curve(kin, 'phonon', 'in-plane mode (ê ∥ x)', sel === 'in'),
+        curve(kout, 'c5', 'out-of-plane mode (ê ∥ c)', sel === 'out', [6, 4]),
+        { type: 'arrow', x0: 0, y0: 0, x1: 0.92 * R * Math.sin(tr), y1: 0.92 * R * Math.cos(tr), color: 'ink', width: 1.3, head: 7 },
+        { type: 'text', x: 0.92 * R * Math.sin(tr), y: 0.92 * R * Math.cos(tr), text: 'q̂', color: 'ink', size: 13, dx: Math.sin(tr) >= 0 ? 6 : -14, dy: Math.cos(tr) >= 0 ? -6 : 8 },
+        { type: 'points', x: [kc * Math.sin(tr)], y: [kc * Math.cos(tr)], color: sel === 'in' ? 'phonon' : 'c5', r: 4.5 }
+      ], { xlim: [-R, R], ylim: [-R, R] });
+      const ta = EPP.linspace(0, 90, 181), tar = ta.map(d => d * Math.PI / 180);
+      let tf = thc % 180; if (tf > 90) tf = 180 - tf;
+      ang.draw([
+        { type: 'line', x: ta, y: tar.map(t => Kin(t, s)), color: 'phonon', label: 'in-plane mode (ê ∥ x)', width: sel === 'in' ? 2.4 : 1.6 },
+        { type: 'line', x: ta, y: tar.map(t => Kout(t, s)), color: 'c5', label: 'out-of-plane mode (ê ∥ c)', dash: [6, 4], width: sel === 'out' ? 2.4 : 1.6 },
+        { type: 'vline', at: tf, color: 'muted', text: 'q̂' }
+      ], { ylim: [0, R] });
+      const tfr = tf * Math.PI / 180;
+      const num = sel === 'in' ? s.Zp * Math.sin(tfr) : s.Zz * Math.cos(tfr);
+      const K = num / den(tfr, s);
+      const hw = sel === 'in' ? HWIN : HWOUT;
+      const qg = E2EPS / OM * K * Math.sqrt(L2 / (MU * hw)); // eV/A
+      const along = sel === 'in' ? 0 : s.Zz / s.ez, inpl = sel === 'in' ? s.Zp / s.ep : 0;
+      ro.set({ 'θ': tf.toFixed(0) + '°', 'q̂·ε^∞·q̂': EPP.fix(den(tfr, s), 2), '|q̂·Z^*·ê|': EPP.fix(Math.abs(num), 2) + ' |e|', 'K': EPP.fix(K, 3) + ' |e|',
+        'K along c / in plane': EPP.fix(along, 2) + ' / ' + EPP.fix(inpl, 2), 'q|g^L| (hBN-like cell)': EPP.fix(qg, 3) + ' eV Å⁻¹' });
+    }
+    const ui = EPP.controls(fig.querySelector('.b-foundations-kctrls'), [
+      { key: 'ep', type: 'range', label: 'ε^∞_⊥ (in-plane)', min: 1, max: 16, step: 0.01, value: 4.87, fmt: v => v.toFixed(2) },
+      { key: 'ez', type: 'range', label: 'ε^∞_∥ (along c)', min: 1, max: 16, step: 0.01, value: 2.95, fmt: v => v.toFixed(2) },
+      { key: 'Zp', type: 'range', label: 'Z^*_⊥ (|e|)', min: 0, max: 4, step: 0.01, value: 2.71, fmt: v => v.toFixed(2) },
+      { key: 'Zz', type: 'range', label: 'Z^*_∥ (|e|)', min: 0, max: 4, step: 0.01, value: 0.81, fmt: v => v.toFixed(2) },
+      { key: 'mode', type: 'seg', label: 'mode polarization', options: [['in', 'in-plane (E_{1u}-like)'], ['out', 'out-of-plane (A_{2u}-like)']], value: 'in' },
+      { key: 'p1', type: 'button', label: 'hBN-bulk-like (illustrative)', onClick: () => { ui.set('ep', 4.87, true); ui.set('ez', 2.95, true); ui.set('Zp', 2.71, true); ui.set('Zz', 0.81, true); } },
+      { key: 'p2', type: 'button', label: 'isotropic (ε^∞ = 4.87, Z^* = 2.71)', onClick: () => { ui.set('ep', 4.87, true); ui.set('ez', 4.87, true); ui.set('Zp', 2.71, true); ui.set('Zz', 2.71, true); } }
+    ], s => { st = s; try { draw(); } catch (e) { console.error(e); } });
+  })();
+})();
+</script>

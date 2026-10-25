@@ -1,0 +1,534 @@
+<section class="chapter" id="b-fields" data-num="B.4" data-title="Quantized fields and Coulomb">
+  <header class="ch-head">
+    <p class="eyebrow"><span class="num">B.4</span><span>EPP §§4.3–4.4 · Eqs. 166–237</span></p>
+    <h2>Quantized fields: transverse photons, and Coulomb as the longitudinal photon</h2>
+    <p class="lede">The Lagrangian of §B.2 becomes a quantum Hamiltonian. Two of the three field polarizations turn into photons with energy $\hbar cq$. The third has no restoring force, and its energy is exactly the instantaneous Coulomb interaction of electrons and ionic bound charges.</p>
+  </header>
+
+  <p>In <a href="#b-lagrangian">§B.2</a> one Lagrangian (E.134) coupled band electrons, harmonic ions and the vector potential in the temporal gauge $\Phi=0$ and gave the ionic equation of motion; <a href="#b-dielectric">§B.3</a> turned that into the dielectric function of a polar crystal. Here the field itself becomes a quantum degree of freedom. The end product is the split $H=H_0+V'$ of (E.236)–(E.237), on which every diagram of Part B is built.</p>
+
+  <div class="callout intuition">
+    <p class="callout-title">Physical picture</p>
+    <p>Expand the field in plane waves. For each $\bq$ the amplitude is a 3-vector. The two components perpendicular to $\bq$ have a curl, hence a magnetic field, hence a restoring "spring": they oscillate at $\omega=cq$ and are the photons. The component along $\bq$ has no curl and no spring. Its electric field has a divergence instead, which Gauss's law ties to the charge density at the same instant. So the longitudinal field is not an independent degree of freedom, and its energy is the Coulomb energy of the charges. Giustino postulates that Coulomb interaction (<a href="#a-hedin-baym">§A.5</a>); EPP derives it.</p>
+  </div>
+
+  <p><strong>Conventions.</strong> Gaussian units, as in the rest of Part B, with $\bE=-\frac1c\partial_t\bA$ and $\bB=\nabla\times\bA$ in the temporal gauge (to convert to SI, $e^2\to e^2/4\pi\varepsilon_0$ and $4\pi\to1/\varepsilon_0$ in Poisson's equation). Here $\Omega$ is the normalization volume of the whole crystal, not the cell volume $\Omega_{\rm uc}$. We write photon ladder operators as $b_{\bq\alpha}$ and keep $a$ for phonons; the PDF also uses $a$ for photons in Eqs. (208)–(217) and in §4.7.</p>
+
+  <h3>Maxwell's equations from the field Lagrangian</h3>
+  <p>EPP §4.3 rewrites the point-particle couplings of (E.134) with densities: the electronic current $\bj_{\rm e}(\br)=e\sum_e\mathbf v_e\,\delta(\br-\br_e)$ (E.166) and the ionic polarization of point Born dipoles, $\bP(\br)=\sum_{ia}\mathbf p_{ia}\,\delta(\br-\bR^0_i)$ (E.167), with $\mathbf p_{ia}=\hat Z^*_a\bQ_{ia}$ (E.135). The field part of the Lagrangian is then a local density,</p>
+  <div class="eq">$$\mathcal L_A(\br)=\frac{1}{8\pi c^2}\dot{\bA}^2(\br)-\frac{1}{8\pi}\big[\nabla\times\bA(\br)\big]^2+\frac1c\,\bj_{\rm e}(\br)\cdot\bA(\br)+\frac1c\,\dot{\bP}(\br)\cdot\bA(\br). \tag{E.169}$$</div>
+  <p>The Euler–Lagrange equation for $A_\mu(\br)$ (E.172–E.173) collects $\partial\mathcal L_A/\partial A_\mu=(j_{{\rm e}\mu}+\dot P_\mu)/c$, $\partial\mathcal L_A/\partial\dot A_\mu=-E_\mu/4\pi c$ and a curl of $\bB$ from the magnetic term. The result is the Ampère–Maxwell law with two sources:</p>
+  <div class="eq">$$\nabla\times\bB=\frac1c\dot{\bE}+\frac{4\pi}{c}\dot{\bP}+\frac{4\pi}{c}\bj_{\rm e}. \tag{E.175}$$</div>
+  <p>With $\mathbf D=\bE+4\pi\bP$ (E.176) this is the textbook macroscopic law $\nabla\times\bB=\frac1c\dot{\mathbf D}+\frac{4\pi}{c}\bj_{\rm e}$ (E.177). Its divergence, combined with continuity $\nabla\cdot\bj_{\rm e}=-\dot\rho_{\rm e}$, gives $\frac{d}{dt}(\nabla\cdot\mathbf D-4\pi\rho_{\rm e})=0$ (E.179), which EPP integrates to Gauss's law:</p>
+  <div class="eq">$$\nabla\cdot\mathbf D=4\pi\rho_{\rm e}. \tag{E.180}$$</div>
+  <p>Faraday's law and $\nabla\cdot\bB=0$ are identities of the potentials. Note the division of labour: the ions are a polarizable background $\bP$ (ionic part only), while the valence electrons are free charges and currents whose polarization reappears as the photon self-energy $\Pi^{\rm e}$ in <a href="#b-photon-se">§B.5</a>.</p>
+
+  <div class="callout caveat">
+    <p class="callout-title">Gauss's law is a constraint, not an equation of motion</p>
+    <p>In the temporal gauge, varying $\bA$ yields only Ampère's law. Gauss's law is preserved by the dynamics (E.179) and must be imposed on the initial state (EPP silently sets the integration constant to zero). Quantum mechanically, $\nabla\cdot\mathbf D-4\pi\rho_{\rm e}=\nabla\cdot\bE-4\pi(\rho_{\rm e}+\rho_{\rm ion})$ generates the residual gauge transformations $\bA\to\bA+\nabla\chi(\br)$ and annihilates physical states, so using Gauss's law inside $H$, as in (E.234) below, is legitimate on that subspace. The Coulomb gauge reaches the same physics directly.</p>
+  </div>
+
+  <h3>Legendre transform: four minimal couplings</h3>
+  <p>The canonical momenta of electrons, ions and field are (EPP §4.4)</p>
+  <div class="eq">$$p_{e\mu}=\frac{\partial L}{\partial v_{e\mu}}=m_ev_{e\mu}+\frac ecA_\mu, \tag{E.182}$$</div>
+  <div class="eq">$$\pi_{ia\mu}=\frac{\partial L}{\partial\dot Q_{ia\mu}}=m_a\dot Q_{ia\mu}+\frac1c\sum_\alpha Z^*_{a\alpha\mu}A_\alpha(\bR^0_i), \tag{E.183}$$</div>
+  <div class="eq">$$p_{A_\mu}=\frac{\delta L}{\delta\dot A_\mu}=\frac{\partial\mathcal L_A}{\partial\dot A_\mu}=-\frac{1}{4\pi c}E_\mu. \tag{E.184}$$</div>
+  <p>Both matter momenta are minimally coupled: a displaced ion behaves as a particle of charge $Z^*$. The field momentum is minus the total electric field over $4\pi c$, transverse plus longitudinal. Inserting the momenta into the Legendre transform</p>
+  <div class="eq">$$H=\sum_e\bp_e\cdot\mathbf v_e+\sum_{ia}\pi_{ia}\cdot\dot\bQ_{ia}+\int d\br\,\bp_A\cdot\dot\bA-L, \tag{E.181}$$</div>
+  <p>all linear couplings cancel and only energies remain:</p>
+  <div class="eq">$$\begin{aligned}H={}&\sum_e\frac{m_e\mathbf v_e^2}{2}+\sum_eV_{\rm cr}(\br_e)+\sum_{ia\mu}\frac{m_a\dot Q_{ia\mu}^2}{2}\\&+\frac12\sum_{ia\mu,jb\nu}k_{ia\mu,jb\nu}Q_{ia\mu}Q_{jb\nu}+\frac{1}{8\pi}\int d\br\,\big[\bE^2+\bB^2\big].\end{aligned} \tag{E.185}$$</div>
+  <p>The interaction is hidden in the momenta, and the Coulomb interaction is hidden in $\int E^2$. In canonical variables (EPP p. 39, unnumbered),</p>
+  <div class="eq">$$\begin{aligned}H={}&\sum_e\frac{1}{2m_e}\Big[\bp_e-\frac ec\bA(\br_e)\Big]^2+\sum_eV_{\rm cr}(\br_e)+\sum_{ia\mu}\frac{1}{2m_a}\Big[\pi_{ia\mu}-\frac1c\sum_\alpha Z^*_{a\alpha\mu}A_\alpha(\bR^0_i)\Big]^2\\&+\frac12\sum_{ia\mu,jb\nu}k_{ia\mu,jb\nu}Q_{ia\mu}Q_{jb\nu}+\frac{1}{8\pi}\int d\br\,\big[\bE^2+\bB^2\big].\end{aligned}$$</div>
+  <p>Expanding the two squares gives $H=H_0'+V$. Here $H_0'$ contains the $\bA$-free kinetic and lattice terms plus the field energy, and the interaction is</p>
+  <div class="eq">$$\begin{aligned}V={}&-\frac{e}{2m_ec}\sum_e\big[\bp_e\cdot\bA(\br_e)+\bA(\br_e)\cdot\bp_e\big]+\frac{e^2}{2m_ec^2}\sum_e\bA^2(\br_e)\\&-\frac1c\sum_{ia\alpha\mu}\frac{1}{m_a}Z^*_{a\alpha\mu}\pi_{ia\mu}A_\alpha(\bR^0_i)+\frac{1}{c^2}\sum_{ia\mu\alpha\beta}\frac{1}{2m_a}Z^*_{a\alpha\mu}Z^*_{a\beta\mu}A_\alpha(\bR^0_i)A_\beta(\bR^0_i).\end{aligned} \tag{E.186}$$</div>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Coupling</th><th>Term of (E.186)</th><th>What it does</th><th>Becomes (§B.5)</th></tr></thead>
+      <tbody>
+        <tr><td><span class="t-e">Electron</span> paramagnetic</td><td>$-\frac{e}{2m_ec}\sum_e[\bp_e\cdot\bA+\bA\cdot\bp_e]$</td><td>an electron absorbs or emits one photon</td><td>$\Pi^{\rm e,para}$: current–current bubble</td></tr>
+        <tr><td><span class="t-e">Electron</span> diamagnetic</td><td>$\frac{e^2}{2m_ec^2}\sum_e\bA^2(\br_e)$</td><td>two photons at one point (contact)</td><td>$\Pi^{\rm e,dia}$: the $-ne^2/m_ec$ (f-sum) term</td></tr>
+        <tr><td><span class="t-p">Ion</span> paramagnetic</td><td>$-\frac1c\sum\frac{1}{m_a}Z^*_{a\alpha\mu}\pi_{ia\mu}A_\alpha$</td><td>a phonon turns into a photon, or the reverse ($\pi$ is linear in $a,a^\dagger$)</td><td>$\Pi^{\rm ion,para}$: one phonon line between Born-charge vertices</td></tr>
+        <tr><td><span class="t-p">Ion</span> diamagnetic</td><td>$\frac{1}{c^2}\sum\frac{1}{2m_a}Z^*_{a\alpha\mu}Z^*_{a\beta\mu}A_\alpha A_\beta$</td><td>two photons at an ion site; no phonon operator</td><td>$\Pi^{\rm ion,dia}$: the ionic f-sum term</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Every charged species couples twice, linearly through its current and quadratically through a contact term. For the ions the "charge" is the Born tensor and the current is the polarization current $Z^*\pi/m_a\approx\dot\bP$. The electronic product is symmetrized because $\bp_e$ does not commute with $\bA(\br_e)$ (here $\nabla\cdot\bA\neq0$); $\pi$ and $\bA$ commute.</p>
+  <div class="fd" id="b-fields-fd-couplings">
+    <figure><div class="g"></div><figcaption>electron paramagnetic</figcaption></figure>
+    <figure><div class="g"></div><figcaption>electron diamagnetic</figcaption></figure>
+    <figure><div class="g"></div><figcaption>ion paramagnetic</figcaption></figure>
+    <figure><div class="g"></div><figcaption>ion diamagnetic (ion site, no phonon line)</figcaption></figure>
+  </div>
+
+  <h3>Quantizing the field in the polarization triad</h3>
+  <p>The free-field part of $H_0'$, written with $\bp_A=-\bE/4\pi c$, and its canonical commutator are</p>
+  <div class="eq">$$H^{0\prime}_{\rm ph}=\int\frac{d\br}{8\pi}\big[\bE^2+\bB^2\big]=\int\frac{d\br}{8\pi}\big\{16\pi^2c^2\bp_A^2+[\nabla\times\bA]^2\big\}, \tag{E.188}$$</div>
+  <div class="eq">$$\big[A_\mu(\br),p_{A\nu}(\br')\big]=\ii\hbar\,\delta(\br-\br')\,\delta_{\mu\nu}. \tag{E.189}$$</div>
+  <p>The delta function is the ordinary one for all three Cartesian components, a feature of the temporal gauge (the Coulomb gauge would have the transverse delta). With plane waves, $\bA(\br)=\Omega^{-1/2}\sum_\bq\bA_\bq e^{\ii\bq\cdot\br}$ (E.190), each $\bq$ carries a three-component amplitude. This is step 1 of the phonon recipe of <a href="#b-foundations">§B.1</a>, and EPP repeats steps 2 and 3: a rotation that decouples the Cartesian components, then ladder operators. The rotation is the orthogonal triad of its Fig. 6: $\be_3(\bq)=\hat\bq$, $\be_2=-\hat\bq\times\be_1$ and $\be_1=\hat\bq\times\be_2$ (E.197–E.199). Writing $\bA_\bq=\sum_\alpha\be_\alpha\tilde A_{\alpha\bq}$ and $\bp_{A\bq}=\sum_\alpha\be_\alpha\tilde p_{A\alpha\bq}$ (E.202–E.203), and using $\bq\times\be_3=0$, gives</p>
+  <div class="eq">$$\boxed{H^{0\prime}_{\rm ph}=2\pi c^2\sum_{\bq,\alpha=1,2,3}\tilde p_{A\alpha\bq}\,\tilde p_{A\alpha-\bq}+\sum_{\bq,\alpha=1,2}\frac{q^2}{8\pi}\tilde A_{\alpha\bq}\tilde A_{\alpha-\bq}} \tag{E.204}$$</div>
+  <p>This is the structural result of the section. The electric ("kinetic") term contains all three polarizations. The magnetic ("spring") term contains only the two transverse ones, because $[\bq\times\be_\alpha]\cdot[\bq\times\be_\beta]=q^2(\delta_{\alpha\beta}-\delta_{\alpha3}\delta_{\beta3})$.</p>
+
+  <figure class="viz" id="viz-b-fields-helmholtz">
+    <p class="viz-title">Helmholtz splitter: one Fourier mode, three polarizations <span class="tag">interactive</span></p>
+    <div class="viz-grid two"><div class="hs-3d"></div><div class="hs-real"></div></div>
+    <div class="ctrls"></div>
+    <div class="ro"></div>
+    <figcaption><strong>Model.</strong> One Fourier mode $\bA(\br)=\tilde\bA\cos(\bq\cdot\br)$ with an arbitrary real amplitude $\tilde\bA=(A_x,A_y,A_z)$ (arbitrary units). Left: the triad (E.197)–(E.199), built as in EPP Fig. 6 from the reference axis $\hat x$: $\be_1\propto\hat x-(\hat x\cdot\hat\bq)\hat\bq$, $\be_2=-\hat\bq\times\be_1$, $\be_3=\hat\bq$ (drag to rotate the view). The shaded disc is the transverse plane; $\tilde A_\alpha=\be_\alpha\cdot\tilde\bA$ are the projections. Right: the field in real space over two wavelengths, in the plane that contains $\bq$ and $\tilde\bA$. The middle strip is coloured by the out-of-plane magnetic field $B_\perp=-q|\tilde\bA_t|\sin(\bq\cdot\br)$, the bottom strip by $\nabla\cdot\bA=-q\tilde A_3\sin(\bq\cdot\br)$, both in units of $q|\tilde\bA|$ (rose positive, blue negative). The readout checks the identity $|\hat\bq\times\tilde\bA|^2=\tilde A_1^2+\tilde A_2^2$ behind (E.204): the magnetic energy, $\propto q^2|\hat\bq\times\tilde\bA|^2$, sees only $\tilde\bA_t$. <strong>What to notice.</strong> Press "A ∥ q": the magnetic field vanishes everywhere, so the spring term of (E.204) is zero and nothing pulls this component back. All that remains is a divergence, which Gauss's law ties to charge. Press "A ⊥ q": a pure shear wave, with a curl and no divergence, which is the shape of a photon.</figcaption>
+  </figure>
+
+  <p>For $\alpha=1,2$, (E.204) describes harmonic oscillators of frequency $cq$ ("mass" $1/4\pi c^2$, spring $q^2/4\pi$). The ladder operators $\tilde A_{\alpha\bq}=\sqrt{2\pi c\hbar/q}\,(b_{\bq\alpha}+b^\dagger_{-\bq\alpha})$ and $\tilde p_{A\alpha\bq}=-\ii\sqrt{\hbar q/8\pi c}\,(b_{\bq\alpha}-b^\dagger_{-\bq\alpha})$ (E.208–E.209) diagonalize them, and the field energy splits as $H^{0\prime}_{\rm ph}=H^0_{\rm Tph}+H^0_{\rm Lph}$ with</p>
+  <div class="eq">$$H^0_{\rm Tph}=\sum_{\bq,\alpha=1,2}\hbar qc\,\Big\{b^\dagger_{\bq\alpha}b_{\bq\alpha}+\frac12\Big\}, \tag{E.214}$$</div>
+  <div class="eq">$$H^0_{\rm Lph}=2\pi c^2\sum_\bq\tilde p_{A3\bq}\,\tilde p_{A3-\bq}. \tag{E.215}$$</div>
+  <p>Each transverse mode is an oscillator whose energy changes in quanta $\hbar cq$: a <span class="t-g">photon</span>. The longitudinal term has no $\tilde A_3^2$ partner. Inserting (E.209) into it produces $b_{\bq3}b_{-\bq3}$ and $b^\dagger b^\dagger$ terms, so it is not diagonal, and EPP assigns it to the interaction. The field operator nevertheless keeps all three polarizations:</p>
+  <div class="eq">$$\bA(\br)=\sum_{\bq,\alpha=1,2,3}\sqrt{\frac{2\pi c\hbar}{q\Omega}}\;\be_\alpha(\bq)\,\big\{b_{\bq\alpha}+b^\dagger_{-\bq\alpha}\big\}\,e^{\ii\bq\cdot\br}. \tag{E.216}$$</div>
+  <p>The reason is the commutator (E.189), which closes only through the completeness relation $\sum_{\alpha=1}^{3}e_{\mu\alpha}e_{\nu\alpha}=\delta_{\mu\nu}$ (EPP p. 45). The transverse projector alone, $\delta_{\mu\nu}-q_\mu q_\nu/q^2$, is nonlocal in real space, with a dipolar $1/r^3$ tail. The longitudinal projector cancels that tail. The same $1/r^3$ tensor will reappear below as the dipole–dipole interaction between ions.</p>
+
+  <div class="callout source">
+    <p class="callout-title">Note on the source: triad conventions</p>
+    <p>(E.197)–(E.199) define a left-handed set, $\be_1\times\be_2=-\be_3$, as in Fig. 6; this is harmless. (E.200)–(E.201) give $\bq$ and $-\bq$ the same unit vector, so $\be_3(\bq)=\pm\hat\bq$ by half-space; only $e_{3\mu}(\bq)e_{3\nu}(-\bq)=q_\mu q_\nu/q^2$ enters later. "Unitary" in (E.196) means real orthogonal. The $\alpha=3$ ladder operators reuse the scale $cq$, which nothing in (E.215) fixes: they are bookkeeping, not normal modes (EPP §4.7 sets $\omega_{\bq3}=0^+$, E.262).</p>
+  </div>
+
+  <figure class="viz" id="viz-b-fields-drift">
+    <p class="viz-title">Oscillator vs drift: a transverse and a longitudinal mode in phase space <span class="tag">interactive</span></p>
+    <div class="viz-grid two"><div class="ph-t"></div><div class="ph-l"></div></div>
+    <div class="ph-e"></div>
+    <div class="ctrls"></div>
+    <div class="b-fields-play" style="margin-top:10px"></div>
+    <div class="ro"></div>
+    <figcaption><strong>Model.</strong> One real quadrature of a free-field mode, in the dimensionless variables $X=\tilde A_\alpha/\sqrt{2\pi c\hbar/q}$ and $P=\tilde p_{A\alpha}/\sqrt{\hbar q/8\pi c}$ implied by (E.208)–(E.209), with $[X,P]=2\ii$. Then (E.204) reads $H_{\rm T}=\frac{\hbar cq}{4}(X^2+P^2)$ for $\alpha=1,2$ and $H_{\rm L}=\frac{\hbar cq}{4}P^2$ for $\alpha=3$. Hamilton's equations give a rotation at $\omega=cq$ (transverse), and $\dot P=0$, $\dot X=cqP$ (longitudinal). $X$ measures the vector potential and $P$ minus the electric field ($\bp_A=-\bE/4\pi c$). Grey: Hamiltonian flow and constant-energy curves. "Show quantum states" adds the vacuum and a coherent state ($\langle\Delta X^2\rangle=\langle\Delta P^2\rangle=1$) of the transverse mode; for the longitudinal mode it shades the only states Gauss's law allows, with $P_3$ fixed by the charge, $\tilde p_{A3\bq}=\ii\rho_\bq/cq$, and $X_3$ undetermined (a gauge direction). Bottom: classical energies against time. The default $q=10^{-4}$&nbsp;Å<sup>−1</sup> is a mid-infrared photon ($\hbar cq\approx197$ meV). <strong>What to notice.</strong> The transverse point circles and its energy sloshes between electric and magnetic parts: an oscillator, quantized in steps of $\hbar cq$. The longitudinal point never turns back, and with $P_0=0$ (no charge) it does not move at all. Its energy is purely electric, constant and set by the charge: with Gauss's law, $H^0_{\rm Lph}=\sum_\bq2\pi|\rho_\bq|^2/q^2$, which is (E.235) in Fourier space.</figcaption>
+  </figure>
+
+  <h3>The longitudinal photon is the Coulomb interaction</h3>
+  <p>What, then, is $H^0_{\rm Lph}$? EPP §4.4.3 inverts the triad and the Fourier transform (E.221–E.226), then uses $\bp_A=-\bE/4\pi c$ and $e_{3\mu}(\bq)=q_\mu/q$:</p>
+  <div class="eq">$$H^0_{\rm Lph}=\frac{1}{8\pi}\sum_{\mu\nu=x,y,z}\int d\br\int d\br'\,E_\mu(\br)\left\{\int\frac{d\bq}{(2\pi)^3}\,\frac{q_\mu q_\nu}{q^2}\,e^{-\ii\bq\cdot(\br-\br')}\right\}E_\nu(\br'). \tag{E.227}$$</div>
+  <p>The kernel in braces is the longitudinal delta function, the projector onto curl-free fields. So (E.227) is simply $\frac{1}{8\pi}\int\bE_l^2$, the energy of the longitudinal electric field. Since $q_\mu q_\nu/q^2=\frac{1}{4\pi}q_\mu q_\nu\cdot\frac{4\pi}{q^2}$, the kernel is $\frac{1}{4\pi}\partial_\mu\partial'_\nu$ acting on the Coulomb propagator $V(\br-\br')=1/|\br-\br'|$ (E.229). Two integrations by parts move the derivatives onto the fields, and only $\nabla\cdot\bE$ survives. Gauss's law, including the ionic bound charge,</p>
+  <div class="eq">$$\nabla\cdot\bE=4\pi\big(\rho_{\rm e}+\rho_{\rm ion}\big),\qquad\rho_{\rm ion}=-\nabla\cdot\bP, \tag{E.234}$$</div>
+  <p>then gives the central result of EPP §4.4:</p>
+  <div class="eq">$$\boxed{H^0_{\rm Lph}=\frac12\int d\br\int d\br'\,\frac{\big[\rho_{\rm e}(\br)+\rho_{\rm ion}(\br)\big]\big[\rho_{\rm e}(\br')+\rho_{\rm ion}(\br')\big]}{|\br-\br'|}} \tag{E.235}$$</div>
+
+  <details class="derivation"><summary>Derivation: from (E.227) to (E.235)</summary><div class="d-body">
+    <p>Because $\partial_\mu\partial'_\nu e^{-\ii\bq\cdot(\br-\br')}=q_\mu q_\nu e^{-\ii\bq\cdot(\br-\br')}$, with $\partial'_\nu=\partial/\partial x'_\nu$, the kernel can be written with the Coulomb propagator:</p>
+    $$H^0_{\rm Lph}=\frac{1}{32\pi^2}\int d\br\int d\br'\sum_{\mu\nu}E_\mu(\br)\left\{\partial_\mu\partial'_\nu\int\frac{d\bq}{(2\pi)^3}\frac{4\pi}{q^2}e^{-\ii\bq\cdot(\br-\br')}\right\}E_\nu(\br'), \tag{E.228}$$
+    $$\int\frac{d\bq}{(2\pi)^3}\frac{4\pi}{q^2}e^{-\ii\bq\cdot(\br-\br')}=V(\br-\br')=\frac{1}{|\br-\br'|}. \tag{E.229}$$
+    <p>With the derivatives acting only on $V$,</p>
+    $$H^0_{\rm Lph}=\frac{1}{32\pi^2}\int d\br\,\bE(\br)\cdot\nabla_{\br}\int d\br'\,\big\{\nabla_{\br'}V(\br-\br')\big\}\cdot\bE(\br'). \tag{E.231}$$
+    <p>Integrating by parts in $\br'$ (the surface term vanishes) turns the inner integral into $-\int d\br'\,V(\br-\br')\,\nabla_{\br'}\cdot\bE(\br')$, which is (E.232). The same step in $\br$ gives</p>
+    $$H^0_{\rm Lph}=\frac{1}{32\pi^2}\int d\br\,\big[\nabla_{\br}\cdot\bE(\br)\big]\int d\br'\,V(\br-\br')\,\big[\nabla_{\br'}\cdot\bE(\br')\big]. \tag{E.233}$$
+    <p>The transverse part of $\bE$ has dropped out, as it must. Inserting (E.234) gives the prefactor $(4\pi)^2/32\pi^2=\frac12$ of (E.235).</p>
+    <p>The same identity is quick to check in Fourier space, with the normalization of (E.190). Gauss's law gives $\tilde E_{3\bq}=-4\pi\ii\rho_\bq/q$, so that, with $v(q)=4\pi/q^2$,</p>
+    $$\frac{1}{8\pi}\sum_\bq|\tilde E_{3\bq}|^2=\sum_\bq\frac{2\pi|\rho_\bq|^2}{q^2}=\frac12\sum_\bq v(q)\,|\rho_\bq|^2 .$$
+  </div></details>
+
+  <p>The energy of the longitudinal field is exactly the instantaneous Coulomb energy of all charges. No Coulomb term was put into the Lagrangian; it was hidden in $\frac{1}{8\pi}\int E^2$ all along. "Instantaneous" is literal: $\bE_l$ has no equation of motion of its own, so at each time it is fixed by the charges at that time. Expanding the square of (E.235) gives three interactions, each of which Part B will dress:</p>
+  <ul>
+    <li><strong>Electron–electron</strong>, $\frac12\iint\rho_{\rm e}\rho_{\rm e}'/|\br-\br'|$: the bare Coulomb interaction. RPA dressing turns it into $W^{\rm e}$.</li>
+    <li><strong>Electron–ion</strong>, $\iint\rho_{\rm e}\rho_{\rm ion}'/|\br-\br'|$: the energy of an electron in the field of the ionic dipoles. After phonon quantization this is the bare (unscreened, $\epsilon^\infty\to1$) Fröhlich vertex $\propto\ii\,\bq\cdot\hat Z^*_a\be_{a\sigma}/q^2$ ($\be_{a\sigma}$: phonon eigenvector). The factor that turns $q^2$ into $\bq\cdot\hat\epsilon^\infty\cdot\bq$ is not inserted by hand: it is generated by $\Pi^{\rm e}$ (<a href="#b-frohlich">§B.8</a>, <a href="#b-electrostatic">§B.9</a>).</li>
+    <li><strong>Ion–ion</strong>, $\frac12\iint\rho_{\rm ion}\rho_{\rm ion}'/|\br-\br'|$: the dipole–dipole interaction. At long wavelength $\bE_l=-4\pi\bP_\parallel$, which stiffens only the longitudinal optical mode by $\Delta\omega^2=\omega_p^2=4\pi Z^{*2}/(\Omega_{\rm uc}M)$, the unscreened LO shift of <a href="#b-dielectric">§B.3</a>. For GaAs this unscreened shift would put the LO phonon near 56 meV instead of the measured 36 meV; dividing $\omega_p^2$ by $\epsilon^\infty=10.9$ restores 36 meV (numbers in <a href="#b-phonon-se">§B.7</a>). TO modes carry no bound charge and couple only to transverse photons, which is where polaritons come from (<a href="#b-propagator">§B.6</a>).</li>
+  </ul>
+  <div class="fd" id="b-fields-fd-coulomb">
+    <figure><div class="g"></div><figcaption>electron–electron: bare $v$</figcaption></figure>
+    <figure><div class="g"></div><figcaption>electron–ion: bare Fröhlich vertex</figcaption></figure>
+    <figure><div class="g"></div><figcaption>ion–ion: dipole–dipole (LO shift)</figcaption></figure>
+  </div>
+
+  <div class="callout connect">
+    <p class="callout-title">Link to Giustino: the Coulomb Hamiltonian, derived</p>
+    <p>Giustino §IV.A starts from $\hat H=\hat T_{\rm e}+\hat T_{\rm n}+\hat U_{\rm ee}+\hat U_{\rm nn}+\hat U_{\rm en}$ (G Eqs. 62–67), every interaction being the postulated instantaneous $v(\br,\br')$, with no vector potential (<a href="#a-hedin-baym">§A.5</a>). (E.235) is that structure, obtained as the longitudinal sector of electrodynamics. Two differences matter. EPP's ions enter only through the induced dipole density $-\nabla\cdot\bP$ with Born charges; the linear term of Giustino's nuclear density expansion (G Eq. 107), $Z_\kappa\Delta\boldsymbol\tau_{\kappa p}\cdot\nabla\delta(\br-\boldsymbol\tau^0_{\kappa p})$, is the same point-dipole density with bare charges $Z_\kappa$, and the static lattice charge stays in $V_{\rm cr}$. And (E.235) keeps the self-interaction terms that G Eq. 64 removes with $-\delta(\br-\br')$ and G Eq. 65 excludes; normal ordering of the electron term and dropping on-site dipole terms, neither mentioned by EPP, must remove them. For the RPA/BSE practitioner: the bare $v$ in $W=v+v\chi v$ is the electron–electron part of $H^0_{\rm Lph}$, and the transverse photons of (E.214) are what a Coulomb-only theory leaves out.</p>
+  </div>
+
+  <div class="callout source">
+    <p class="callout-title">Note on the source: number density or charge density</p>
+    <p>EPP defines $\rho_{\rm e}=\Psi^\dagger\Psi$ (E.239), a number density, and calls it the "electronic charge density operator" before (E.235). Gauss's law (E.234), the Coulomb energy (E.235) and the last term of (E.237) need the charge density $e\Psi^\dagger\Psi$, which is also what $\rho_{\rm e}$ means in (E.179)–(E.180) by continuity with (E.166). On this page $\rho_{\rm e}=e\Psi^\dagger\Psi$ in all Coulomb terms. In the diamagnetic $A^2$ term of (E.237) the number density is correct, and we write it explicitly as $\Psi^\dagger\Psi$. The same slip recurs in the total interaction (E.312) of <a href="#b-propagator">§B.6</a>.</p>
+  </div>
+
+  <h3>The final split: $H_0$ and $V'$</h3>
+  <p>Moving the Coulomb term out of $H_0'$ and into the interaction, $H_0=H_0'-H^0_{\rm Lph}$ and $V'=V+H^0_{\rm Lph}$ (EPP §4.4.4), leaves a genuinely free Hamiltonian of Kohn–Sham <span class="t-e">electrons</span>, bare <span class="t-p">phonons</span> and transverse <span class="t-g">photons</span>,</p>
+  <div class="eq">$$\begin{aligned}H_0={}&\sum_n\sum_{\bk\in{\rm BZ}}E_{n\bk}\,c^\dagger_{n\bk}c_{n\bk}+\sum_{\alpha=1}^{3s}\sum_{\bq\in{\rm BZ}}\hbar\omega_\alpha(\bq)\Big(a^\dagger_{\bq\alpha}a_{\bq\alpha}+\frac12\Big)\\&+\sum_{\bq,\sigma=1,2}\hbar qc\,\Big\{b^\dagger_{\bq\sigma}b_{\bq\sigma}+\frac12\Big\},\end{aligned} \tag{E.236}$$</div>
+  <p>and an interaction that contains every coupling:</p>
+  <div class="eq">$$\begin{aligned}V'={}&-\frac1c\int d\br\,\bj_{\rm e}(\br)\cdot\bA(\br)+\frac{e^2}{2m_ec^2}\int d\br\,\Psi^\dagger(\br)\Psi(\br)\,\bA^2(\br)\\&-\frac1c\sum_{ia\alpha\mu}\frac{1}{m_a}Z^*_{a\alpha\mu}\pi_{ia\mu}A_\alpha(\bR^0_i)+\frac{1}{2c^2}\sum_{ia\mu\alpha\beta}\frac{1}{m_a}Z^*_{a\alpha\mu}Z^*_{a\beta\mu}A_\alpha(\bR^0_i)A_\beta(\bR^0_i)\\&+\frac12\int d\br\int d\br'\,\frac{\big[\rho_{\rm e}(\br)+\rho_{\rm ion}(\br)\big]\big[\rho_{\rm e}(\br')+\rho_{\rm ion}(\br')\big]}{|\br-\br'|}.\end{aligned} \tag{E.237}$$</div>
+  <p>Here $\Psi(\br)=\sum_{n\bk}c_{n\bk}\phi_{n\bk}(\br)$ (E.240), $\bj_{\rm e}$ is the paramagnetic current (E.238), $\rho_{\rm ion}=-\nabla\cdot\bP$ with $P_\mu(\br)=\sum_{ia\nu}Z^*_{a\mu\nu}Q_{ia\nu}\delta(\br-\bR^0_i)$ (E.241), and the $\bA$ in $V'$ is the full field (E.216), all three polarizations included. Note what is absent: no term is written as an electron–phonon vertex $g\,c^\dagger c\,(a+a^\dagger)$, and there is no Debye–Waller term (the ionic $A^2$ term is a two-photon, not a two-phonon, vertex). Electrons and phonons interact only through the field: electrostatically through the $\rho_{\rm e}\rho_{\rm ion}$ cross term, which becomes the bare long-range Fröhlich vertex once $\bQ$ is quantized, and electrodynamically by exchanging a photon between $-\frac1c\bj_{\rm e}\cdot\bA$ and $-\frac1c Z^*\pi\cdot\bA/m_a$. The transverse photons bring retardation in EPP's sense (finite $c$), not Giustino's (frequency-dependent electronic screening). The first two terms of (E.236) are the first line of Giustino's (G.1) (<a href="#a-coupling">§A.2</a>).</p>
+
+  <div class="callout source">
+    <p class="callout-title">Note on the source: two different $\bj_{\rm e}$</p>
+    <p>(E.166) defines the kinetic current $e\sum_e\mathbf v_e\delta(\br-\br_e)$, built from velocities and gauge invariant. The $\bj_{\rm e}$ in (E.237) must instead be the paramagnetic current</p>
+    $$\bj_{\rm e}(\br)=\frac{e\hbar}{2\ii m_e}\Big\{\Psi^\dagger(\br)\nabla\Psi(\br)-\big[\nabla\Psi^\dagger(\br)\big]\Psi(\br)\Big\}, \tag{E.238}$$
+    <p>which is what $-\frac{e}{2m_ec}\sum_e(\bp_e\cdot\bA+\bA\cdot\bp_e)$ in (E.186) becomes in second quantization. The two differ by the diamagnetic current: kinetic $=$ paramagnetic $-\frac{e^2}{m_ec}\Psi^\dagger\Psi\,\bA$. Using the kinetic current in (E.237) would triple the $A^2$ term.</p>
+  </div>
+
+  <div class="callout caveat">
+    <p class="callout-title">What $H_0$ already contains</p>
+    <p>EPP flags double counting on p. 40 but does not resolve it here. The Kohn–Sham $E_{n\bk}$ already contain the Hartree and xc mean field, to which (E.235) adds the bare electron–electron interaction. The force constants in $H_0$ must be short-range, since the dipole–dipole part is regenerated here by $\rho_{\rm ion}V\rho_{\rm ion}$; the rule is set out in <a href="#b-foundations">§B.1</a>, where the basis phase that (E.167) and (E.241) also drop is discussed.</p>
+  </div>
+</section>
+<script>
+(() => {
+  if (!window.EPP) return;
+  const D2R = Math.PI / 180;
+  const dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+  const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+  const add = (a, b) => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
+  const sub = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+  const scl = (a, s) => [a[0] * s, a[1] * s, a[2] * s];
+  const nrm = (a) => Math.hypot(a[0], a[1], a[2]);
+  const f2 = (v) => EPP.fix(Math.abs(v) < 5e-3 ? 0 : v, 2);
+
+  // canvas arrow with filled head; dash applies to the shaft only
+  function arrow(ctx, a, b, col, lw, dash, head) {
+    const L = Math.hypot(b[0] - a[0], b[1] - a[1]);
+    if (!(L > 1.5)) return;
+    const ang = Math.atan2(b[1] - a[1], b[0] - a[0]), hl = Math.min(head || 8, L * 0.5);
+    ctx.save(); ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = lw; ctx.lineCap = 'round';
+    ctx.setLineDash(dash || []);
+    ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0] - 0.75 * hl * Math.cos(ang), b[1] - 0.75 * hl * Math.sin(ang)); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(b[0], b[1]);
+    ctx.lineTo(b[0] - hl * Math.cos(ang - 0.4), b[1] - hl * Math.sin(ang - 0.4));
+    ctx.lineTo(b[0] - hl * Math.cos(ang + 0.4), b[1] - hl * Math.sin(ang + 0.4));
+    ctx.closePath(); ctx.fill(); ctx.restore();
+  }
+
+  // ===================== Viz A: Helmholtz splitter =====================
+  (() => {
+    const fig = document.getElementById('viz-b-fields-helmholtz');
+    if (!fig) return;
+    const cv3 = EPP.canvas(fig.querySelector('.hs-3d'), { aspect: 0.86, minHeight: 280, maxHeight: 400 });
+    const cvR = EPP.canvas(fig.querySelector('.hs-real'), { aspect: 0.86, minHeight: 280, maxHeight: 400 });
+    cv3.canvas.setAttribute('role', 'img'); cv3.canvas.setAttribute('aria-label', 'Polarization triad e1, e2, e3 along q and the projections of the vector amplitude A');
+    cvR.canvas.setAttribute('role', 'img'); cvR.canvas.setAttribute('aria-label', 'Real-space field of the mode: total, transverse part with its magnetic field, longitudinal part with its divergence');
+    cv3.canvas.style.cursor = 'grab';
+    const ro = EPP.readout(fig.querySelector('.ro'));
+    let st = null, g = null, yaw = 25 * D2R, pitch = 18 * D2R;
+
+    function compute() {
+      const th = st.th * D2R, ph = st.ph * D2R;
+      const qh = [Math.sin(th) * Math.cos(ph), Math.sin(th) * Math.sin(ph), Math.cos(th)];
+      let n = [1, 0, 0];
+      if (Math.abs(dot(n, qh)) > 0.98) n = [0, 0, 1];
+      let e1 = sub(n, scl(qh, dot(n, qh))); e1 = scl(e1, 1 / nrm(e1));
+      const e2 = scl(cross(qh, e1), -1); // E.198: e2 = -q0 x e1 ; then e1 = q0 x e2 (E.197)
+      const A = [st.Ax, st.Ay, st.Az];
+      const a1 = dot(e1, A), a2 = dot(e2, A), a3 = dot(qh, A);
+      const At = add(scl(e1, a1), scl(e2, a2)), Al = scl(qh, a3);
+      const qxA = cross(qh, A);
+      g = { qh, e1, e2, A, a1, a2, a3, At, Al, qxA2: dot(qxA, qxA), An: nrm(A), Atn: nrm(At) };
+    }
+
+    // label beyond an arrow tip, on a soft surface-coloured chip so it stays legible over lines
+    function chipText(ctx, txt, x, y, col, size) {
+      const sz = size || 12.5, tw = EPP.measureRich(ctx, txt, sz);
+      ctx.save(); ctx.globalAlpha = 0.82; ctx.fillStyle = EPP.css('--surface');
+      ctx.fillRect(x - tw / 2 - 2, y - sz * 0.62, tw + 4, sz * 1.24); ctx.restore();
+      ctx.fillStyle = col; ctx.textBaseline = 'middle';
+      EPP.drawRich(ctx, txt, x, y, { size: sz, align: 'center' });
+    }
+    function label(ctx, txt, O, tip, col, size) {
+      const dx = tip[0] - O[0], dy = tip[1] - O[1], L = Math.hypot(dx, dy);
+      if (L < 6) return;
+      chipText(ctx, txt, tip[0] + 13 * dx / L, tip[1] + 13 * dy / L, col, size);
+    }
+
+    function draw3d() {
+      const { ctx, w, h } = cv3; cv3.clear();
+      if (!g) return;
+      const R = [-Math.sin(yaw), Math.cos(yaw), 0];
+      const U = [-Math.sin(pitch) * Math.cos(yaw), -Math.sin(pitch) * Math.sin(yaw), Math.cos(pitch)];
+      const s = Math.min(w, h) * 0.29, cx = w * 0.5, cy = h * 0.53;
+      const P = (v) => [cx + s * dot(v, R), cy - s * dot(v, U)];
+      const O = P([0, 0, 0]);
+      // transverse plane (disc spanned by e1, e2)
+      ctx.beginPath();
+      for (let k = 0; k <= 72; k++) {
+        const t = 2 * Math.PI * k / 72, p = P(add(scl(g.e1, 1.2 * Math.cos(t)), scl(g.e2, 1.2 * Math.sin(t))));
+        if (k) ctx.lineTo(p[0], p[1]); else ctx.moveTo(p[0], p[1]);
+      }
+      ctx.closePath(); ctx.fillStyle = EPP.alpha('photon', 0.07); ctx.fill();
+      ctx.strokeStyle = EPP.alpha('photon', 0.35); ctx.lineWidth = 1; ctx.setLineDash([3, 3]); ctx.stroke(); ctx.setLineDash([]);
+      // Cartesian axes
+      const mut = EPP.color('muted');
+      [['x', [1, 0, 0]], ['y', [0, 1, 0]], ['z', [0, 0, 1]]].forEach(([l, v]) => {
+        const tip = P(scl(v, 1.45)); arrow(ctx, O, tip, mut, 1, null, 6); label(ctx, l, O, tip, mut, 11.5);
+      });
+      // wave vector q (teal, direct label)
+      const qtip = P(scl(g.qh, 1.6));
+      arrow(ctx, O, qtip, EPP.color('c4'), 2.2, null, 9); label(ctx, 'q', O, qtip, EPP.textColor('c4'), 13);
+      // triad
+      const f2c = EPP.color('fg2');
+      [['e_1', g.e1], ['e_2', g.e2], ['e_3', g.qh]].forEach(([l, v], k) => {
+        const tip = P(v); arrow(ctx, O, tip, f2c, 1.3, null, 7);
+        if (k < 2) label(ctx, l, O, tip, f2c, 12);
+        else { const pp = P(scl(v, 0.62)); const nx = -(tip[1] - O[1]), ny = tip[0] - O[0], L = Math.hypot(nx, ny) || 1; chipText(ctx, l, pp[0] + 14 * nx / L, pp[1] + 14 * ny / L, f2c, 12); }
+      });
+      if (g.An < 1e-6) return;
+      const At = P(g.At), Al = P(g.Al), Atip = P(g.A);
+      // construction lines of the parallelogram
+      ctx.save(); ctx.strokeStyle = EPP.alpha('muted', 0.8); ctx.lineWidth = 1; ctx.setLineDash([2, 3]);
+      ctx.beginPath(); ctx.moveTo(Atip[0], Atip[1]); ctx.lineTo(At[0], At[1]); ctx.moveTo(Atip[0], Atip[1]); ctx.lineTo(Al[0], Al[1]); ctx.stroke(); ctx.restore();
+      const rose = EPP.color('photon'), roseT = EPP.textColor('photon');
+      const near = (p) => Math.hypot(p[0] - Atip[0], p[1] - Atip[1]) < 16;
+      arrow(ctx, O, Al, rose, 2.6, [7, 4], 9); if (!near(Al)) label(ctx, 'A_l', O, Al, roseT, 12.5);
+      arrow(ctx, O, At, rose, 2.6, null, 9); if (!near(At)) label(ctx, 'A_t', O, At, roseT, 12.5);
+      arrow(ctx, O, Atip, EPP.color('ink'), 2.4, null, 10);
+      label(ctx, near(Al) ? 'A = A_l' : near(At) ? 'A = A_t' : 'A', O, Atip, EPP.color('ink'), 13.5);
+      ctx.fillStyle = mut; ctx.textBaseline = 'alphabetic';
+      EPP.drawRich(ctx, 'drag to rotate', 8, h - 8, { size: 10.5 });
+    }
+
+    function drawReal() {
+      const { ctx, w, h } = cvR; cvR.clear();
+      if (!g) return;
+      const ml = 6, mr = 6, mt = 2, mb = 36, gap = 9;
+      const W = w - ml - mr, H = (h - mt - mb - 2 * gap) / 3;
+      const ramp = EPP.ramp('photon', 'electron');
+      const An = g.An, ok = An > 1e-6;
+      const aT = ok ? g.Atn / An : 0, aL = ok ? g.a3 / An : 0;
+      const strips = [
+        { title: 'total:  A = A_t + A_l', v: [aL, aT], col: 'ink', bg: null, zero: ok ? '' : 'A = 0' },
+        { title: 'transverse A_t:  shear wave, colour = B_⊥', v: [0, aT], col: 'photon', bg: aT, zero: aT < 2e-3 ? 'A_t = 0:  B = 0 everywhere' : '' },
+        { title: 'longitudinal A_l:  compression wave, colour = ∇·A', v: [aL, 0], col: 'photon', dash: [4, 2.5], bg: aL, zero: Math.abs(aL) < 2e-3 ? 'A_l = 0:  ∇·A = 0 everywhere' : '' }
+      ];
+      const NA = 12, dxp = W / NA, ell = Math.min(0.95 * dxp, 0.56 * H);
+      const surf = EPP.css('--surface'), rule = EPP.css('--rule'), fg2 = EPP.css('--fg-2');
+      strips.forEach((S, k) => {
+        const y0 = mt + k * (H + gap);
+        if (S.bg !== null) {
+          for (let px = 0; px < W; px += 2) {
+            const xi = 2 * (px + 1) / W, val = -S.bg * Math.sin(2 * Math.PI * xi), c = ramp(0.5 + 0.5 * val);
+            ctx.fillStyle = `rgb(${c[0]},${c[1]},${c[2]})`; ctx.fillRect(ml + px, y0, 2.6, H);
+          }
+        } else { ctx.fillStyle = EPP.css('--surface-2'); ctx.fillRect(ml, y0, W, H); }
+        ctx.strokeStyle = rule; ctx.lineWidth = 1; ctx.strokeRect(ml + 0.5, y0 + 0.5, W - 1, H - 1);
+        const yc = y0 + H * 0.6, col = EPP.color(S.col);
+        for (let j = 0; j < NA; j++) {
+          const xi = 2 * (j + 0.5) / NA, c = Math.cos(2 * Math.PI * xi);
+          const vx = S.v[0] * c * ell, vy = -S.v[1] * c * ell, xc = ml + (j + 0.5) * dxp;
+          if (Math.hypot(vx, vy) < 3) { ctx.fillStyle = col; ctx.beginPath(); ctx.arc(xc, yc, 1.3, 0, 2 * Math.PI); ctx.fill(); }
+          else {
+            // surface-coloured halo keeps the rose arrows legible on the rose half of the colour ramp
+            const a0 = [xc - vx / 2, yc - vy / 2], a1 = [xc + vx / 2, yc + vy / 2];
+            if (S.bg !== null) arrow(ctx, a0, a1, surf, 4, S.dash, 7);
+            arrow(ctx, a0, a1, col, 1.6, S.dash, 6);
+          }
+        }
+        // title chip
+        ctx.font = `11px ${EPP.css('--font-ui')}`;
+        const tw = EPP.measureRich(ctx, S.title, 11);
+        ctx.fillStyle = surf; ctx.globalAlpha = 0.86; ctx.fillRect(ml + 3, y0 + 3, Math.min(tw + 8, W - 6), 16); ctx.globalAlpha = 1;
+        ctx.fillStyle = fg2; ctx.textBaseline = 'middle';
+        EPP.drawRich(ctx, S.title, ml + 7, y0 + 11.5, { size: 11 });
+        if (S.zero) {
+          const zw = EPP.measureRich(ctx, S.zero, 11.5);
+          ctx.fillStyle = surf; ctx.globalAlpha = 0.86; ctx.fillRect(ml + W / 2 - zw / 2 - 5, yc - 18, zw + 10, 16); ctx.globalAlpha = 1;
+          ctx.fillStyle = EPP.color('ink'); EPP.drawRich(ctx, S.zero, ml + W / 2, yc - 10, { size: 11.5, align: 'center' });
+        }
+      });
+      // horizontal axis: position along q
+      const yb = h - mb, mut = EPP.color('muted');
+      ctx.fillStyle = mut; ctx.strokeStyle = rule; ctx.textBaseline = 'top';
+      [['0', 0], ['λ/2', 0.5], ['λ', 1], ['3λ/2', 1.5], ['2λ', 2]].forEach(([l, v]) => {
+        const X = ml + W * v / 2; ctx.beginPath(); ctx.moveTo(X, yb); ctx.lineTo(X, yb + 4); ctx.stroke();
+        EPP.drawRich(ctx, l, EPP.clamp(X, ml + 8, ml + W - 12), yb + 5, { size: 10.5, align: 'center' });
+      });
+      ctx.fillStyle = EPP.css('--fg'); ctx.textBaseline = 'alphabetic';
+      EPP.drawRich(ctx, 'position along q̂  →   (arrows: vertical = along A_t)', ml + W / 2, h - 3, { size: 11, align: 'center' });
+    }
+
+    function drawAll() {
+      if (!st) return;
+      compute(); draw3d(); drawReal();
+      const sh = g.An > 1e-6 ? g.a3 * g.a3 / (g.An * g.An) : 0;
+      ro.set({
+        'Ã_1': f2(g.a1), 'Ã_2': f2(g.a2), 'Ã_3': f2(g.a3),
+        'B^2 ∝ |q̂×A|^2': EPP.fix(g.qxA2, 3), 'Ã_1^2+Ã_2^2': EPP.fix(g.a1 * g.a1 + g.a2 * g.a2, 3),
+        'longitudinal share Ã_3^2/|A|^2': (100 * sh).toFixed(0) + ' %',
+        'e_1': '(' + g.e1.map(f2).join(', ') + ')', 'e_2': '(' + g.e2.map(f2).join(', ') + ')', 'e_3 = q̂': '(' + g.qh.map(f2).join(', ') + ')'
+      });
+    }
+
+    const ui = EPP.controls(fig.querySelector('.ctrls'), [
+      { key: 'th', type: 'range', label: 'q polar angle θ_q', min: 0, max: 180, step: 1, value: 62, fmt: v => v.toFixed(0) + '°' },
+      { key: 'ph', type: 'range', label: 'q azimuth φ_q', min: 0, max: 360, step: 1, value: 90, fmt: v => v.toFixed(0) + '°' },
+      { key: 'Ax', type: 'range', label: 'amplitude A_x (arb. u.)', min: -1, max: 1, step: 0.01, value: 0.4, fmt: v => v.toFixed(2) },
+      { key: 'Ay', type: 'range', label: 'amplitude A_y (arb. u.)', min: -1, max: 1, step: 0.01, value: 0.3, fmt: v => v.toFixed(2) },
+      { key: 'Az', type: 'range', label: 'amplitude A_z (arb. u.)', min: -1, max: 1, step: 0.01, value: 0.8, fmt: v => v.toFixed(2) },
+      { key: 'par', type: 'button', label: 'A ∥ q', onClick: () => { if (g) preset(scl(g.qh, 0.9)); } },
+      { key: 'perp', type: 'button', label: 'A ⊥ q', onClick: () => { if (g) preset(add(scl(g.e1, 0.78), scl(g.e2, 0.45))); } }
+    ], s => { st = s; drawAll(); });
+    // move the sliders, then keep the exact (unrounded) components so the preset is exactly parallel or perpendicular
+    function preset(v) {
+      ['Ax', 'Ay', 'Az'].forEach((k, i) => { ui.set(k, v[i], true); ui.state[k] = v[i]; });
+    }
+
+    let drag = null;
+    cv3.canvas.addEventListener('pointerdown', (e) => { drag = [e.clientX, e.clientY, yaw, pitch]; cv3.canvas.style.cursor = 'grabbing'; try { cv3.canvas.setPointerCapture(e.pointerId); } catch (_) {} });
+    cv3.canvas.addEventListener('pointermove', (e) => {
+      if (!drag) return;
+      yaw = drag[2] - (e.clientX - drag[0]) * 0.01;
+      pitch = EPP.clamp(drag[3] + (e.clientY - drag[1]) * 0.01, -1.35, 1.35);
+      draw3d();
+    });
+    const end = () => { drag = null; cv3.canvas.style.cursor = 'grab'; };
+    cv3.canvas.addEventListener('pointerup', end); cv3.canvas.addEventListener('pointercancel', end);
+    cv3.onResize(() => { if (st) draw3d(); });
+    cvR.onResize(() => { if (st) drawReal(); });
+  })();
+
+  // ===================== Viz B: oscillator vs drift =====================
+  (() => {
+    const fig = document.getElementById('viz-b-fields-drift');
+    if (!fig) return;
+    const HBARC = 1973.27;        // eV Å
+    const HBAR = 0.6582119569;    // eV fs
+    const LIM = 4.5, TWIN = 60;   // phase-space half-width; time window (fs)
+    const TK = [-4, -2, 0, 2, 4];
+    const base = { xlim: [-LIM, LIM], ylim: [-LIM, LIM], xticks: TK, yticks: TK, aspect: 1, legend: false, hover: false, minHeight: 240, maxHeight: 420, margin: { l: 46, r: 12, t: 10, b: 44 } };
+    const pT = new EPP.Plot(fig.querySelector('.ph-t'), Object.assign({ xlabel: 'X_1 ∝ Ã_1 (vector potential)', ylabel: 'P_1 ∝ −E_1', ariaLabel: 'Phase space of a transverse photon mode: circular orbits' }, base));
+    const pL = new EPP.Plot(fig.querySelector('.ph-l'), Object.assign({ xlabel: 'X_3 ∝ Ã_3 (vector potential)', ylabel: 'P_3 ∝ −E_3', ariaLabel: 'Phase space of the longitudinal mode: horizontal drift' }, base));
+    const pE = new EPP.Plot(fig.querySelector('.ph-e'), { xlabel: 'time t (fs)', ylabel: 'energy / ħcq', xlim: [0, TWIN], ylim: [0, 2.3], aspect: 0.34, minHeight: 210, maxHeight: 300, xname: 't (fs)', hoverY: v => EPP.fix(v, 3), ariaLabel: 'Electric and magnetic energy of the two modes versus time' });
+    const ro = EPP.readout(fig.querySelector('.ro'));
+    let st = null, phi = 0, Edat = null;
+
+    const circle = (cx, cy, r, n = 160) => { const x = [], y = []; for (let k = 0; k <= n; k++) { const t = 2 * Math.PI * k / n; x.push(cx + r * Math.cos(t)); y.push(cy + r * Math.sin(t)); } return { x, y }; };
+    const disc = (cx, cy, r, n = 60) => { const x = [], y1 = [], y2 = []; for (let k = 0; k <= n; k++) { const xx = -r + 2 * r * k / n, d = Math.sqrt(Math.max(0, r * r - xx * xx)); x.push(cx + xx); y1.push(cy + d); y2.push(cy - d); } return { x, y1, y2 }; };
+    const GRID = [-3, -1.5, 0, 1.5, 3];
+    const ROWS = [-3, -2, -1.5, -1, 0, 1, 1.5, 2, 3]; // flow-arrow rows and constant-energy lines of the longitudinal panel
+    function staticT() {
+      const L = [];
+      [1, 2, 3].forEach(r => { const c = circle(0, 0, r); L.push({ type: 'line', x: c.x, y: c.y, color: 'muted', width: 0.8, opacity: 0.45 }); });
+      GRID.forEach(x => GRID.forEach(y => { if (x === 0 && y === 0) return; const vx = 0.17 * y, vy = -0.17 * x; L.push({ type: 'arrow', x0: x - vx / 2, y0: y - vy / 2, x1: x + vx / 2, y1: y + vy / 2, color: 'muted', width: 1, head: 5, opacity: 0.55 }); }));
+      return L;
+    }
+    function staticL() {
+      const L = [];
+      [-3, -2, -1, 1, 2, 3].forEach(p => L.push({ type: 'line', x: [-LIM, LIM], y: [p, p], color: 'muted', width: 0.8, opacity: 0.45 }));
+      GRID.forEach(x => GRID.forEach(y => { if (y === 0) return; const vx = 0.17 * y; L.push({ type: 'arrow', x0: x - vx / 2, y0: y, x1: x + vx / 2, y1: y, color: 'muted', width: 1, head: 5, opacity: 0.55 }); }));
+      return L;
+    }
+    const ST = staticT(), SL = staticL();
+
+    const qA = () => st.q4 * 1e-4;                 // photon wavevector (1/Å)
+    function omega() { return HBARC * qA() / HBAR; } // rad/fs
+
+    function computeE() {
+      const w = omega(), n = 1801, t = EPP.linspace(0, TWIN, n);
+      const X0 = st.X0, P0 = st.P0;
+      const eE = t.map(tt => { const p = w * tt, P = P0 * Math.cos(p) - X0 * Math.sin(p); return P * P / 4; });
+      const eB = t.map(tt => { const p = w * tt, X = X0 * Math.cos(p) + P0 * Math.sin(p); return X * X / 4; });
+      const tot = t.map(() => (X0 * X0 + P0 * P0) / 4);
+      const eL = t.map(() => P0 * P0 / 4);
+      Edat = { t, eE, eB, tot, eL };
+    }
+
+    function draw() {
+      if (!st || !Edat) return;
+      const X0 = st.X0, P0 = st.P0, c = Math.cos(phi), s = Math.sin(phi);
+      const XT = X0 * c + P0 * s, PT = P0 * c - X0 * s;
+      const XL = X0 + P0 * phi, PL = P0;
+      const r0 = Math.hypot(X0, P0);
+      // transverse panel
+      const LT = ST.slice();
+      if (st.qm) {
+        const v = circle(0, 0, 1); LT.push({ type: 'line', x: v.x, y: v.y, color: 'muted', width: 1.2, dash: [3, 3] });
+        LT.push({ type: 'text', x: 0, y: -1.35, text: 'vacuum', color: 'muted', size: 10.5, align: 'center' });
+      }
+      if (r0 > 1e-3) { const o = circle(0, 0, r0); LT.push({ type: 'line', x: o.x, y: o.y, color: 'photon', width: 2 }); }
+      if (st.qm) { const d = disc(XT, PT, 1); LT.push({ type: 'fill', x: d.x, y1: d.y1, y2: d.y2, color: 'photon', alpha: 0.2 }); }
+      LT.push({ type: 'points', x: [XT], y: [PT], color: 'photon', r: 5 });
+      LT.push({ type: 'text', x: -4.3, y: 4.05, text: 'transverse, α = 1, 2', color: 'fg2', size: 11.5 });
+      LT.push({ type: 'text', x: -4.3, y: 3.55, text: 'H = ħcq (X^2 + P^2)/4', color: 'fg2', size: 11 });
+      pT.draw(LT);
+      // longitudinal panel
+      let LL = SL;
+      if (st.qm) {
+        // place the label off the shaded band, as far as possible from the grey flow rows and level lines
+        const ty = [-0.5, 0.5, -0.65, 0.65, -0.8, 0.8].map(d => PL + d).filter(y => y > -4.2 && y < 3.1)
+          .reduce((b, y) => (ROWS.reduce((m, r) => Math.min(m, Math.abs(y - r)), 9) > ROWS.reduce((m, r) => Math.min(m, Math.abs(b - r)), 9) ? y : b));
+        LL = SL.filter(l => !(l.type === 'arrow' && Math.abs(l.y0 - ty) < 0.3 && l.x1 > -1));
+        LL.push({ type: 'hband', y0: PL - 0.22, y1: PL + 0.22, color: 'photon', alpha: 0.16 });
+        LL.push({ type: 'text', x: 4.3, y: ty, text: 'Gauss: P_3 sharp, X_3 = gauge', color: 'photon', size: 10.5, align: 'right' });
+      } else LL = SL.slice();
+      if (Math.abs(P0) > 0.02) {
+        const xe = P0 > 0 ? LIM : -LIM;
+        LL.push({ type: 'line', x: [X0, xe], y: [P0, P0], color: 'photon', width: 2, dash: [7, 4] });
+      } else {
+        LL.push({ type: 'text', x: 0, y: -3.95, text: 'P_3 = 0 (no charge): X_3 is pure gauge', color: 'fg2', size: 10.5, align: 'center' });
+      }
+      if (Math.abs(XL) <= LIM) LL.push({ type: 'points', x: [XL], y: [PL], color: 'photon', r: 5 });
+      else LL.push({ type: 'text', x: XL > 0 ? 4.3 : -4.3, y: PL + 0.42, text: XL > 0 ? 'runs off →' : '← runs off', color: 'photon', size: 10.5, align: XL > 0 ? 'right' : 'left' });
+      LL.push({ type: 'text', x: -4.3, y: 4.05, text: 'longitudinal, α = 3', color: 'fg2', size: 11.5 });
+      LL.push({ type: 'text', x: -4.3, y: 3.55, text: 'H = ħcq P^2/4  (no spring)', color: 'fg2', size: 11 });
+      pL.draw(LL);
+      // energies vs time
+      const tfs = phi / omega();
+      pE.draw([
+        { type: 'line', x: Edat.t, y: Edat.eE, color: 'photon', label: 'T: electric ħcqP^2/4' },
+        { type: 'line', x: Edat.t, y: Edat.eB, color: 'c5', label: 'T: magnetic ħcqX^2/4' },
+        { type: 'line', x: Edat.t, y: Edat.tot, color: 'ink', width: 1.3, label: 'T: total' },
+        { type: 'line', x: Edat.t, y: Edat.eL, color: 'photon', dash: [8, 4], label: 'L: electric only (= Coulomb)' },
+        tfs <= TWIN ? { type: 'vline', at: tfs, color: 'muted' } : null
+      ]);
+    }
+
+    function readout() {
+      const Eq = HBARC * qA();                 // eV
+      const lam = 2 * Math.PI / qA() * 1e-4;   // µm
+      const per = 2 * Math.PI / omega();       // fs
+      const nbar = (st.X0 * st.X0 + st.P0 * st.P0) / 4;
+      const fmtE = (eV) => (eV >= 1 ? EPP.fmt(eV, 3) + ' eV' : EPP.fmt(eV * 1e3, 3) + ' meV');
+      ro.set({
+        'ħcq': fmtE(Eq), 'λ = 2π/q': EPP.fmt(lam, 3) + ' µm', 'period 2π/cq': EPP.fmt(per, 3) + ' fs',
+        'n̄_T (coherent)': EPP.fix(nbar, 2), 'E_T = ħcq(n̄+½)': fmtE(Eq * (nbar + 0.5)),
+        'H_L = ħcqP_3^2/4': fmtE(Eq * st.P0 * st.P0 / 4)
+      });
+    }
+
+    const anim = EPP.anim(fig, (t, dt) => {
+      if (!st) return;
+      phi += dt * 2 * Math.PI / 3; // one transverse period every 3 s of real time
+      if (phi / omega() > TWIN || phi > 4 * Math.PI) phi = 0;
+      draw();
+    }, { buttonHost: fig.querySelector('.b-fields-play') });
+
+    EPP.controls(fig.querySelector('.ctrls'), [
+      { key: 'q4', type: 'range', label: 'photon wavevector q (10^{-4} Å^{-1})', min: Math.pow(10, -0.5), max: 10, value: 1, step: 0.01, log: true, fmt: v => EPP.fix(v, 2) },
+      { key: 'X0', type: 'range', label: 'initial X_0', min: -2, max: 2, step: 0.05, value: -1.5, fmt: v => EPP.fix(v, 2) },
+      { key: 'P0', type: 'range', label: 'initial P_0 (for α = 3: set by ρ_q)', min: -2, max: 2, step: 0.05, value: 1, fmt: v => EPP.fix(v, 2) },
+      { key: 'qm', type: 'toggle', label: 'show quantum states', value: true }
+    ], s => { st = s; computeE(); readout(); draw(); });
+    [pT, pL, pE].forEach(p => p.cv.onResize(() => { if (st) draw(); }));
+    void anim;
+  })();
+
+  // ===================== Vertex glyphs =====================
+  (() => {
+    const cpl = document.querySelectorAll('#b-fields-fd-couplings .g');
+    if (cpl.length === 4) {
+      EPP.fd.draw(cpl[0], { w: 130, h: 92, label: 'electron paramagnetic vertex', items: [
+        { t: 'fermion', a: [10, 74], b: [65, 74] }, { t: 'fermion', a: [65, 74], b: [120, 74] },
+        { t: 'photon', a: [65, 74], b: [65, 14], label: 'A', lpos: 'right' }, { t: 'vertex', at: [65, 74] } ] });
+      EPP.fd.draw(cpl[1], { w: 130, h: 92, label: 'electron diamagnetic vertex', items: [
+        { t: 'fermion', a: [10, 76], b: [65, 76] }, { t: 'fermion', a: [65, 76], b: [120, 76] },
+        { t: 'photon', a: [65, 76], b: [24, 16] }, { t: 'photon', a: [65, 76], b: [106, 16] }, { t: 'vertex', at: [65, 76] } ] });
+      EPP.fd.draw(cpl[2], { w: 130, h: 92, label: 'ion paramagnetic vertex', items: [
+        { t: 'phonon', a: [12, 56], b: [65, 56], label: 'π' }, { t: 'photon', a: [65, 56], b: [118, 56], label: 'A' }, { t: 'vertex', at: [65, 56] } ] });
+      EPP.fd.draw(cpl[3], { w: 130, h: 92, label: 'ion diamagnetic vertex', items: [
+        { t: 'photon', a: [61, 55], b: [22, 10] }, { t: 'photon', a: [69, 55], b: [108, 10] },
+        { t: 'blob', at: [65, 60], r: 6, color: 'phonon' }, { t: 'text', at: [65, 88], text: 'Z^*Z^*/m_a', size: 12, color: 'muted' } ] });
+    }
+    const cou = document.querySelectorAll('#b-fields-fd-coulomb .g');
+    if (cou.length === 3) {
+      EPP.fd.draw(cou[0], { w: 130, h: 96, label: 'electron-electron Coulomb vertex', items: [
+        { t: 'fermion', a: [10, 18], b: [65, 18] }, { t: 'fermion', a: [65, 18], b: [120, 18] },
+        { t: 'fermion', a: [10, 80], b: [65, 80] }, { t: 'fermion', a: [65, 80], b: [120, 80] },
+        { t: 'coulomb', a: [65, 18], b: [65, 80], label: 'v', lpos: 'right' }, { t: 'vertex', at: [65, 18] }, { t: 'vertex', at: [65, 80] } ] });
+      EPP.fd.draw(cou[1], { w: 130, h: 96, label: 'electron-ion Coulomb vertex', items: [
+        { t: 'fermion', a: [10, 18], b: [65, 18] }, { t: 'fermion', a: [65, 18], b: [120, 18] },
+        { t: 'coulomb', a: [65, 18], b: [65, 80], label: 'v', lpos: 'right' },
+        { t: 'phonon', a: [14, 80], b: [65, 80], label: 'Q', lpos: 'right' }, { t: 'vertex', at: [65, 18] }, { t: 'vertex', at: [65, 80] } ] });
+      EPP.fd.draw(cou[2], { w: 130, h: 96, label: 'ion-ion Coulomb vertex', items: [
+        { t: 'phonon', a: [14, 18], b: [65, 18] }, { t: 'coulomb', a: [65, 18], b: [65, 80], label: 'v', lpos: 'right' },
+        { t: 'phonon', a: [65, 80], b: [116, 80] }, { t: 'vertex', at: [65, 18] }, { t: 'vertex', at: [65, 80] } ] });
+    }
+  })();
+})();
+</script>

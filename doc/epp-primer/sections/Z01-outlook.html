@@ -1,0 +1,55 @@
+<section class="chapter" id="z-outlook" data-num="Z.1" data-title="What EPP adds, what is open">
+  <header class="ch-head">
+    <p class="eyebrow"><span class="num">Z.1</span><span>Summary · open questions</span></p>
+    <h2>What EPP adds, and what is still open</h2>
+    <p class="lede">The two formalisms side by side in eight statements, a table of where the electromagnetic extension changes the numbers, and the pieces the EPP manuscript has not yet worked out.</p>
+  </header>
+
+  <h3>Eight statements to take away</h3>
+  <ol>
+    <li><strong>Same lattice, same normal modes.</strong> Both start from harmonic force constants, the dynamical matrix and phonon ladder operators (<a href="#a-lattice">§A.1</a>, <a href="#b-foundations">§B.1</a>). The difference is which force constants are allowed. EPP must use only the short-range (analytic) part, because it regenerates the long-range dipole–dipole part itself.</li>
+    <li><strong>Giustino folds the Coulomb physics into numbers. EPP keeps it as a field.</strong> In Part A, $\varepsilon_{n\bk}$, $\omega_{\bq\nu}$ and the screened vertex $g_{mn\nu}(\bk,\bq)$ already contain all Coulomb effects (<a href="#a-coupling">§A.2</a>, <a href="#a-dfpt">§A.3</a>). In Part B the Lagrangian has no electron–phonon term at all. Electrons and ions talk only through the vector potential (<a href="#b-lagrangian">§B.2</a>).</li>
+    <li><strong>Coulomb is the longitudinal photon.</strong> In the temporal gauge, the energy of the longitudinal field becomes, via Gauss's law, the full instantaneous Coulomb interaction of electrons and ionic bound charges (<a href="#b-fields">§B.4</a>). Charge conservation then rewrites every density vertex as a current vertex. It also turns $v$ into $D^{0l}$, so the free propagator is the vacuum Maxwell propagator $D^0=D^{0l}+D^{0t}$ (<a href="#b-propagator">§B.6</a>).</li>
+    <li><strong>One self-energy for all matter.</strong> Giustino's polarization $P=\delta\langle\hat n\rangle/\delta V_{\rm tot}$ (G.89), the response of the total electron-plus-nuclear charge, becomes EPP's current–current self-energy $\Pi_{jj}=\Pi^{\rm e}+\Pi^{\rm ion}$. It is gauge invariant only when the diamagnetic terms are kept, $\Pi=\Pi^{\rm para}(\omega)-\Pi^{\rm para}(0)$ (<a href="#b-photon-se">§B.5</a>). The ionic part is exact in the harmonic approximation.</li>
+    <li><strong>$W$ is a projection of $D$.</strong> Giustino's $W=W_{\rm e}+W_{\rm e}\mathcal D W_{\rm e}$ (<a href="#a-hedin-baym">§A.5</a>) is the longitudinal–longitudinal sector of EPP's $D=D^0+D^0\Pi_{jj}D$, and $W^{\rm e}=D^{\rm e}_{11}$ (<a href="#b-electrostatic">§B.9</a>).</li>
+    <li><strong>The order of limits matters.</strong> At $q=0$ with finite $c$, the mode that shifts is the upper phonon polariton, with an unscreened oscillator strength (E.410). The familiar electrostatic LO–TO splitting appears only when $c\to\infty$ is taken first (E.454), and it then coincides with the Gonze–Lee nonanalytic term (<a href="#b-phonon-se">§B.7</a>, <a href="#b-electrostatic">§B.9</a>).</li>
+    <li><strong>The Fröhlich vertex becomes dynamical.</strong> Photon exchange between an electronic and an ionic current gives a frequency-dependent vertex. For $c\to\infty$ it reduces to the Verdi–Giustino vertex with $\epsilon^\infty\to\hat\epsilon^{\rm e}(\bq,\omega)$. The phonon self-energy keeps Giustino's structure of one bare and one screened vertex (<a href="#b-frohlich">§B.8</a>, <a href="#a-phonon-se">§A.6</a>).</li>
+    <li><strong>In 2D there is no LO–TO splitting at Γ.</strong> With the strictly two-dimensional $W^{\rm e,2D}=v_Q/\epsilon^{\rm e}_{2D}$ the LO shift grows linearly from zero. The screening length $r_0$ that sets its saturation is the same one that controls Rytova–Keldysh exciton screening (<a href="#b-2d">§B.10</a>).</li>
+  </ol>
+
+  <div class="callout connect">
+    <p class="callout-title">For RPA, GW and BSE practitioners</p>
+    <p>Most objects in Part B are already familiar from these methods, written in vector form. The electronic photon self-energy $\Pi^{\rm e}$ is the Adler–Wiser response with current vertices. Its longitudinal projection, $\Pi_{\rho\rho}=-\frac{c}{\omega^2}\,\bq\cdot\Pi_{jj}\cdot\bq$, is the familiar density response $\chi^0$. The screened interaction $W^{\rm e}$ that dresses the phonons in §B.9 and §B.10 is the RPA $W$ without local fields. What is new is the transverse sector. It matters only inside the light cone, $q\lesssim q_c=\sqrt{\epsilon_\infty}\,\omega/c$, which is $10^{-5}$–$10^{-4}$ Å$^{-1}$ for vibrational frequencies and about $10^{-3}$ Å$^{-1}$ for a 2 eV exciton (<a href="#x-light-cone">§X.1</a>).</p>
+  </div>
+
+  <h3>Where the electromagnetic extension changes the numbers</h3>
+  <p>The two kinds of retardation of <a href="#x-light-cone">§X.1</a> sort the observables. A finite speed of light acts only inside the light cone just quoted. Frequency-dependent electronic screening acts at any $q$ wherever $\hat\epsilon^{\rm e}(\bq,\omega)$ has structure near the phonon frequencies; Giustino's theory contains it, and EPP keeps it in the vertex instead of setting $g(\omega)\simeq g(0)$ (<a href="#b-frohlich">§B.8</a>). Outside these two windows Part A already gives the answer.</p>
+  <div class="tbl"><table style="min-width:640px">
+    <thead><tr><th style="width:20%">Observable</th><th style="width:30%">Part A (electrostatic)</th><th>What EPP changes</th><th style="width:11%">Where</th></tr></thead>
+    <tbody>
+      <tr><td>Mobility, carrier lifetimes</td><td>Sufficient: carriers scatter at $q\approx0.02$ Å$^{-1}$ (GaAs, 300 K), far outside the cone.</td><td>Nothing measurable: there the transverse field is $10^{-6}$–$10^{-4}$ of Coulomb.</td><td><a href="#a-applications">A.9</a>, <a href="#x-light-cone">X.1</a></td></tr>
+      <tr><td>Zero-point renormalization, Fröhlich divergence</td><td>Sufficient: the LO Fröhlich kernel is longitudinal.</td><td>Nothing from finite $c$. The adiabatic divergence is cured by keeping $\hbar\omega$ in the denominators. EPP has no electron self-energy yet.</td><td><a href="#a-temperature">A.8</a>, <a href="#x-light-cone">X.1</a></td></tr>
+      <tr><td>Bulk LO–TO splitting</td><td>Added by hand (Gonze–Lee term).</td><td>Derived as a phonon self-energy (E.454). At $q=0$ with finite $c$ the shifted mode is instead the upper polariton (E.410), far above the measured LO.</td><td><a href="#a-polar">A.4</a>, <a href="#b-phonon-se">B.7</a>, <a href="#b-electrostatic">B.9</a></td></tr>
+      <tr><td>Infrared dielectric function, Reststrahlen band</td><td>Absent: light couples to electrons only, and the refractive index is an input to (G.200).</td><td>$\Pi^{\rm ion}$ gives one Lorentz oscillator per polar mode, so $\epsilon(\omega)$ and one-phonon IR absorption become outputs.</td><td><a href="#a-applications">A.9</a>, <a href="#b-dielectric">B.3</a>, <a href="#b-photon-se">B.5</a></td></tr>
+      <tr><td>Phonon polaritons</td><td>Absent.</td><td>Poles of the transverse sector of $D$, confined to the light cone.</td><td><a href="#b-propagator">B.6</a>, <a href="#b-phonon-se">B.7</a></td></tr>
+      <tr><td>Doped polar semiconductors</td><td>Plasmon–phonon modes expected from the nonadiabatic $\Pi^{\rm NA}$ (G §V.A.2) but not evaluated.</td><td>Coupled LO-phonon–plasmon modes $L_\pm$ from the dynamical $W^{\rm e}(\bq,\omega)$ in E.453, already at $c\to\infty$.</td><td><a href="#a-phonon-se">A.6</a>, <a href="#b-electrostatic">B.9</a></td></tr>
+      <tr><td>Polar 2D crystals</td><td>Not treated.</td><td>No LO–TO splitting at Γ, and an LO dispersion set by the same $r_0$ as Rytova–Keldysh screening. Inside the cone the modes radiate, with widths of order 40 μeV for freestanding hBN (worked out on this page, not in the manuscript).</td><td><a href="#b-2d">B.10</a></td></tr>
+      <tr><td>Excitons, exciton–phonon coupling</td><td>Only cited (BSE combined with Allen–Heine theory, G p. 42); (G.200) is independent-particle.</td><td>Outside EPP too: $\Pi^{\rm e}$ is the RPA bubble, with no electron–hole ladder (list below).</td><td><a href="#b-photon-se">B.5</a></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>What the manuscript does not yet contain</h3>
+  <ul>
+    <li><strong>Short-range coupling.</strong> The EPP Lagrangian freezes the crystal potential at equilibrium, so deformation-potential coupling (acoustic phonons, non-polar optical phonons) is absent. Only the polar, long-range channel is extended.</li>
+    <li><strong>Electron self-energies.</strong> EPP dresses photons and phonons but derives no electron self-energy from combined photon and phonon exchange. Giustino's Fan–Migdal and Debye–Waller terms (<a href="#a-electron-se">§A.7</a>) have no EPP counterpart yet. Neither do the temperature-dependent gaps and lifetimes built on them (<a href="#a-temperature">§A.8</a>).</li>
+    <li><strong>Exchange–correlation, local fields and excitons.</strong> The electronic response is RPA without crystal local-field effects (no $\bG,\bG'$ dependence after E.380) and without $f^{xc}$; DFPT screening (<a href="#a-dfpt">§A.3</a>) is static but includes both. Nor is there an electron–hole ladder: $\Pi^{\rm e}$ is the independent-particle bubble, so the theory has no excitons. Replacing $\Pi^{\rm e}$ by the BSE current–current response, with its long-range ($\bG=0$) exchange term removed because that term is the longitudinal photon line of $D$ itself, would give exciton polaritons; exciton–phonon coupling would need phonon lines inside the BSE kernel. Neither is in the manuscript (<a href="#b-photon-se">§B.5</a>).</li>
+    <li><strong>Phonon-assisted optics.</strong> Light is now an internal field. The indirect absorption that Giustino treats with a classical field (<a href="#a-applications">§A.9</a>) has not been rederived inside EPP.</li>
+    <li><strong>Out-of-plane dipoles in 2D.</strong> The 2D results keep only in-plane modes and use a strictly 2D screening model. The ZO modes with $Z^*_{zz}$, and the full sheet propagator with retardation, are left for later.</li>
+    <li><strong>Polaritons beyond the zone centre.</strong> The transverse sector of E.380 with $\Pi^{\rm ion}$ contains the full phonon-polariton dispersion, but the manuscript works out only its $q=0$ end point (E.410); the isotropic branches are derived on this page (<a href="#b-propagator">§B.6</a>, <a href="#b-phonon-se">§B.7</a>). Anisotropic crystals, where $\Pi_{jj}$ mixes the L and T sectors off the principal axes, are not treated, so the hyperbolic phonon polaritons of hBN are outside the manuscript as written.</li>
+  </ul>
+
+  <div class="callout source">
+    <p class="callout-title">Note on the source</p>
+    <p>The EPP manuscript is a working draft. The typos and inconsistencies flagged in the grey boxes of each section are collected in <a href="#z-errata">§Z.2</a>; none of them changes the conclusions above.</p>
+  </div>
+</section>

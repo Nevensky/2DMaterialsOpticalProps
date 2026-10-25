@@ -1,0 +1,420 @@
+<section class="chapter" id="b-photon-se" data-num="B.5" data-title="Propagators and the photon self-energy">
+  <header class="ch-head">
+    <p class="eyebrow"><span class="num">B.5</span><span>EPP §§4.5–4.7, §5 · Eqs. 246–311</span></p>
+    <h2>Propagators and the RPA photon self-energy</h2>
+    <p class="lede">Free phonons and photons get their propagators, and matter enters the photon line through one current–current self-energy. By the end you can write the ionic part exactly, explain why gauge invariance fixes the diamagnetic term, and recognise the result as the Gonze–Lee infrared dielectric tensor.</p>
+  </header>
+
+  <p><a href="#b-fields">§B.4</a> ended with the free Hamiltonian $H_0$ (E.236) of Kohn–Sham <span class="t-e">electrons</span>, bare <span class="t-p">phonons</span> and transverse <span class="t-g">photons</span>, and an interaction $V'$ (E.237). Units are Gaussian, $Z^*$ carries the dimension of charge, and $f(\omega)=\int dt\,e^{i\omega t}f(t)$ (E.255). Names follow the page convention: EPP's photon propagator $D$, photon self-energy $\Pi$ (written $\Pi_{jj}$ from EPP §6 on) and phonon propagator $F$; Giustino's phonon Green's function is $\mathcal D$.</p>
+
+  <h3>Temperature: the "$n_B=0$" rule</h3>
+  <p>Everything below uses $T=0$ time-ordered propagators. EPP §4.5 argues that this costs nothing for bosons. After the continuation $i\omega_n\to\omega+i\eta$ (E.246), the Matsubara phonon propagator becomes the retarded one,</p>
+  <div class="eq">$$F^r_\sigma(\bq,\omega)=\frac1\hbar\,\frac{2\omega_\sigma(\bq)}{(\omega+i\eta)^2-\omega^2_\sigma(\bq)},\tag{E.247}$$</div>
+  <p>which contains no temperature: for a harmonic field the commutator $[Q(t),Q(0)]$ is a c-number. The real-time time-ordered function at finite $T$ does depend on $T$,</p>
+  <div class="eq">$$F^T_\sigma(\bq,\omega)=2\,\frac{\omega_\sigma(\bq)}{\hbar}\left[\frac{1+n_{\bq\sigma}}{\omega^2-\omega^2_\sigma(\bq)+i\eta}-\frac{n_{\bq\sigma}}{\omega^2-\omega^2_\sigma(\bq)-i\eta}\right],\tag{E.249}$$</div>
+  <p>but only through its imaginary part, $-i\pi(1+2n_{\bq\sigma})\,\delta(\omega^2-\omega_\sigma^2)$ times $2\omega_\sigma/\hbar$. EPP's rule follows: in time-ordered perturbation theory set $n_{\bq\sigma}=0$ in every boson line, keep the Fermi functions $f(T)$ in the electron bubbles, and make the $i\eta$ retarded at the end.</p>
+  <div class="callout caveat">
+    <p class="callout-title">Where the rule holds, and where it does not</p>
+    <p>It holds for what EPP §§5–7 compute. Free boson lines and the ionic photon self-energy below (one harmonic phonon line) have $T$-independent retarded forms. Self-energies built from electron bubbles carry their temperature dependence in $f(T)$, as in Giustino's G Eq. 145. It fails when a boson line runs inside a fermion self-energy: Giustino's Fan–Migdal self-energy (G Eq. 158) carries $n_{\bq\nu}$ in its numerators, and that produces the temperature shift of band gaps (<a href="#a-electron-se">§A.7</a>, <a href="#a-temperature">§A.8</a>). The figures below use retarded denominators $\omega^2-\omega_0^2+i\gamma\omega$; the time-ordered $+i\eta$ form has the wrong sign of ${\rm Im}$ at $\omega\lt 0$.</p>
+  </div>
+
+  <h3>The free phonon line</h3>
+  <p>With Mahan's definition and the dimensionless displacement $Q_{\bq\sigma}=a_{\bq\sigma}+a^\dagger_{-\bq\sigma}$,</p>
+  <div class="eq">$$F_\sigma(\bq;t-t')=-\frac{i}{\hbar}\left\langle\Phi^{\rm phon}_0\right|T\{Q_{\bq\sigma}(t)\,Q_{-\bq\sigma}(t')\}\left|\Phi^{\rm phon}_0\right\rangle,\tag{E.251}$$</div>
+  <p>the two time orderings give $e^{\mp i\omega_\sigma(t-t')}$ (E.254), and the Fourier transform adds them into</p>
+  <div class="eq">$$\boxed{F_\sigma(\bq,\omega)=\frac1\hbar\,\frac{2\omega_\sigma(\bq)}{\omega^2-\omega^2_\sigma(\bq)+i\eta}}\tag{E.256}$$</div>
+  <p>that is, $\frac1\hbar\big[\frac{1}{\omega-\omega_\sigma+i\eta}-\frac{1}{\omega+\omega_\sigma-i\eta}\big]$: the ordering $t>t'$ gives the pole at $+\omega_\sigma$, the ordering $t\lt t'$ the pole at $-\omega_\sigma$. Because $Q$ is dimensionless, $F$ has units of inverse energy.</p>
+  <div class="callout connect">
+    <p class="callout-title">Bridge to Giustino: the same phonon line</p>
+    <p>Giustino's adiabatic mode propagator is $\mathcal D^{\rm A}_{\bq\nu}(\omega)=\frac{1}{\omega-\omega_{\bq\nu}+i\eta}-\frac{1}{\omega+\omega_{\bq\nu}-i\eta}=\frac{2\omega_{\bq\nu}}{\omega^2-\omega^2_{\bq\nu}+i\eta}$ (G Eqs. 132, 134; <a href="#a-phonon-se">§A.6</a>), so $\mathcal D^{\rm A}_{\bq\nu}=\hbar F_\sigma$. One difference matters. EPP's $\omega_\sigma(\bq)$ are bare frequencies from short-range force constants, without LO–TO splitting; the photon line regenerates it in <a href="#b-phonon-se">§B.7</a>.</p>
+  </div>
+
+  <h3>The free transverse photon line</h3>
+  <p>The photon propagator is defined with the opposite sign and an extra $1/c$,</p>
+  <div class="eq">$$D^0_{\mu\nu}(\br,\br';t-t')=\frac{i}{\hbar c}\left\langle\Phi^{\rm phot}_0\right|T\{A_\mu(\br,t)\,A_\nu(\br',t')\}\left|\Phi^{\rm phot}_0\right\rangle,\tag{E.257}$$</div>
+  <p>a choice that makes $D$ the response of the vector potential to an external current, $\bA=D\,\bj^{\rm ext}$ (EPP p. 83). Split $\bA=\bA_t+\bA_l$ (E.258); the cross terms vanish (E.259). The transverse operators oscillate at $\omega_\bq=cq$, the time integral gives the same pole pair as for phonons, and the polarization sum is the transverse projector, $\sum_{\alpha=1,2}e_{\mu\alpha}(\bq)e_{\nu\alpha}(\bq)=\delta_{\mu\nu}-q_\mu q_\nu/q^2$:</p>
+  <div class="eq">$$\boxed{D^{0t}_{\mu\nu}(\bq,\omega)=-4\pi c\left[\delta_{\mu\nu}-\frac{q_\mu q_\nu}{q^2}\right]\frac{1}{\omega^2-\omega^2_\bq+i\eta},\qquad\omega_\bq=qc.}\tag{E.261}$$</div>
+  <p>It is the Green's function of $(\omega^2/c^2-q^2)\bA_t=-\frac{4\pi}{c}\bj_t$. Its static limit, $\frac{4\pi}{cq^2}(\delta_{\mu\nu}-\hat q_\mu\hat q_\nu)$, is Biot–Savart. Between currents $j\sim\rho v$ it is weaker than Coulomb's $4\pi/q^2$ between charges by $(v/c)^2$, unless $cq\lesssim\omega$: the light cone of <a href="#x-light-cone">§X.1</a>. (The printed intermediate step (E.260) duplicates a factor $2\omega_{\bq\alpha}$; (E.261) is correct. Clerical slips of this kind are collected in <a href="#z-errata">§Z.2</a>.)</p>
+
+  <h3>The longitudinal photon line vanishes; Coulomb does not</h3>
+  <p>The longitudinal operators do not appear in $H_0$: the longitudinal field energy was moved into $V'$ as the Coulomb term (E.235). In the interaction picture they are frozen, $\omega_{\bq3}=0^+$ (E.262), the same steps give a propagator proportional to $\omega_{\bq3}$, and</p>
+  <div class="eq">$$\boxed{D^{0l}_{\mu\nu}(\bq,\omega)=0.}\tag{E.263}$$</div>
+  <p>The retarded version vanishes too (E.267–E.268), because a static $\bA_l$ commutes with itself. Strictly, (E.263) holds for $\omega\neq0$: a time-independent $\bA_l$ inserted directly into (E.259) gives a term $\propto\delta(\omega)$.</p>
+  <p>This does not remove the longitudinal field. In the Heisenberg picture $\bA_l$ evolves, with $\bE^l=-\frac1c\dot\bA^l$ tied to the charges by Gauss's law (E.269), and that physics sits in the Coulomb term of $V'$. <a href="#b-propagator">§B.6</a> rewrites that Coulomb term, through continuity, as the temporal-gauge propagator $D^{0l}$ of (E.374) between currents, and explains why (E.263) and (E.374) do not contradict each other.</p>
+
+  <h3>Dressing the transverse photon</h3>
+  <p>EPP §5 first drops the Coulomb term of $V'$ (E.270), so that only $\bA_t$ propagates. The ionic terms then take the form of the electronic ones once an ionic density tensor and an ionic current are defined,</p>
+  <div class="eq">$$\rho^{\rm ion}_{\alpha\beta}(\br)=\frac{m_0}{e^2}\sum_{ia\mu}\frac{1}{m_a}Z^*_{a\alpha\mu}Z^*_{a\beta\mu}\,\delta(\br-\bR^0_i),\tag{E.271}$$</div>
+  <div class="eq">$$j^{\rm ion}_\alpha(\br)=\sum_{ia\mu}\frac{1}{m_a}Z^*_{a\alpha\mu}\,\pi_{a\mu}(\br)\,\delta(\br-\bR^0_i).\tag{E.272}$$</div>
+  <p>$m_0$ is an arbitrary reference mass that cancels. (E.272) is the polarization current $Z^*\dot Q$ of point dipoles at the lattice sites, with $\dot Q\to\pi/m_a$; the rest of $\dot\bP$, $-\frac1c Z^*Z^*\bA/m_a$, is the ionic diamagnetic current, as $\bp\to\bp-\frac ec\bA$ for electrons. The interaction becomes four look-alike terms (E.273). Expanding the exact propagator (E.275) in the interaction picture (E.276) and summing the RPA diagrams gives</p>
+  <div class="eq">$$\boxed{\begin{aligned}D^t_{\mu\nu}(\br,\br',\omega)={}&D^{0t}_{\mu\nu}(\br,\br',\omega)\\&+\sum_{\alpha\beta}\int d^3\br_1\!\int d^3\br_2\,D^{0t}_{\mu\alpha}(\br,\br_1,\omega)\,\Pi^{\rm RPA}_{\alpha\beta}(\br_1,\br_2,\omega)\,D^t_{\beta\nu}(\br_2,\br',\omega)\end{aligned}}\tag{E.277}$$</div>
+  <div class="fd" id="b-photon-se-fd-dyson" aria-label="Dyson equation for the transverse photon propagator, E Eq. 277">
+    <span class="g"></span><span class="op">=</span><span class="g"></span><span class="op">+</span><span class="g"></span>
+  </div>
+  <p>"RPA" means that the self-energy is the lowest-order irreducible insertion of each species: one bubble plus one contact term,</p>
+  <div class="eq">$$\Pi^{\rm RPA}_{\alpha\beta}(\br,\br',\omega)=\Pi^{\rm e}_{\alpha\beta}(\br,\br',\omega)+\Pi^{\rm ion}_{\alpha\beta}(\br,\br',\omega),\tag{E.278}$$</div>
+  <div class="eq">$$\begin{aligned}\Pi^{\rm e}_{\alpha\beta}(\br,\br',\omega)={}&\underbrace{-\frac{e^2}{mc}\,\rho^{\rm e}(\br)\,\delta(\br-\br')\,\delta_{\alpha\beta}}_{\Pi^{\rm e,dia}}\\&+\underbrace{\frac{i}{\hbar c}\int_{-\infty}^{\infty}dt\,e^{i\omega(t-t')}\left\langle\Phi^{\rm el}_0\right|T\{j^{\rm e}_\alpha(\br,t)\,j^{\rm e}_\beta(\br',t')\}\left|\Phi^{\rm el}_0\right\rangle}_{\Pi^{\rm e,para}},\end{aligned}\tag{E.279}$$</div>
+  <div class="eq">$$\begin{aligned}\Pi^{\rm ion}_{\alpha\beta}(\br,\br',\omega)={}&\underbrace{-\frac{e^2}{m_0c}\,\rho^{\rm ion}_{\alpha\beta}(\br)\,\delta(\br-\br')}_{\Pi^{\rm ion,dia}}\\&+\underbrace{\frac{i}{\hbar c}\int_{-\infty}^{\infty}dt\,e^{i\omega(t-t')}\left\langle\Phi^{\rm phon}_0\right|T\{j^{\rm ion}_\alpha(\br,t)\,j^{\rm ion}_\beta(\br',t')\}\left|\Phi^{\rm phon}_0\right\rangle}_{\Pi^{\rm ion,para}}.\end{aligned}\tag{E.280}$$</div>
+  <p>In (E.279) $\rho^{\rm e}$ means $\langle\rho^{\rm e}\rangle$; EPP says so only for the ions, whose contact term it derives from the two equivalent contractions of the $A\rho^{\rm ion}A$ vertex (factor 2, p. 59).</p>
+  <div class="fd" id="b-photon-se-fd-pi" style="gap:12px 10px" aria-label="The four RPA contributions to the photon self-energy">
+    <figure><div class="g"></div><figcaption>$\Pi^{\rm e,para}$: current–current bubble</figcaption></figure>
+    <span class="op">+</span>
+    <figure><div class="g"></div><figcaption>$\Pi^{\rm e,dia}$: contact with $\langle\rho^{\rm e}\rangle$</figcaption></figure>
+    <span class="op">+</span>
+    <figure><div class="g"></div><figcaption>$\Pi^{\rm ion,para}$: vertex, phonon $F_\sigma$, vertex</figcaption></figure>
+    <span class="op">+</span>
+    <figure><div class="g"></div><figcaption>$\Pi^{\rm ion,dia}$: contact at the ion sites</figcaption></figure>
+  </div>
+  <p style="font-size:0.92rem;color:var(--fg-2)">Diagrams after EPP Fig. 7 (blue squares: electronic current vertices $-\frac1c\bj^{\rm e}\cdot\bA$; teal squares: ionic current vertices; dot: the electronic $A^2$ contact vertex; amber ring: the ionic $A^2$ contact at an ion site, drawn as in <a href="#b-fields">§B.4</a>). Rose wavy stubs are transverse photons, the amber zigzag is the free phonon line (E.256). The ionic pair is exact for harmonic phonons. The resummation into (E.277) is deferred to EPP's "Lecture 9" notes, which are not part of the manuscript, and the printed series (E.276) should start at $n=0$ (<a href="#z-errata">§Z.2</a>).</p>
+  <div class="callout intuition">
+    <p class="callout-title">Physical picture: why two terms per species</p>
+    <p>Every charged species couples to $\bA$ twice: the paramagnetic vertex $-\frac1c\bj\cdot\bA$ absorbs or emits one photon, the $A^2$ vertex scatters two at one point. The contact term alone is the inertial response of free charges, as in a plasma. The bubble adds the restoring forces (springs for ions, gaps for electrons). In a slowly varying field bound charges only polarize, so in an insulator the two terms cancel exactly at $\omega=0$.</p>
+  </div>
+  <div class="callout connect">
+    <p class="callout-title">Bridge to Giustino: $W=v+vPW$ for photons</p>
+    <p>(E.277)–(E.278) have the algebra of Giustino's $W=v+vPW$ (G Eq. 90, <a href="#a-hedin-baym">§A.5</a>): $D^{0t}\leftrightarrow v$, $\Pi\leftrightarrow P$, $D^t\leftrightarrow W$. Resumming the electrons first gives $D^t=D^t_{\rm e}+D^t_{\rm e}\Pi^{\rm ion}D^t$ with $D^t_{\rm e}=D^{0t}+D^{0t}\Pi^{\rm e}D^t_{\rm e}$, the transverse counterpart of his $W_{\rm e}$ (G Eq. 94) and of $W=W_{\rm e}+W_{\rm e}\mathcal DW_{\rm e}$ (G Eqs. 104–105). The vertices are now currents instead of densities, and the ions enter through the pre-screened Born charge $Z^*$ instead of the nuclear charge $Z_\kappa$. The ionic part is exact for harmonic phonons, because $j^{\rm ion}$ is linear in phonon operators. The electronic bubble has no vertex corrections (no excitons); a BSE current–current response in its place would give exciton polaritons.</p>
+  </div>
+
+  <h3>Gauge invariance fixes the diamagnetic term</h3>
+  <p>In the temporal gauge $\bE=\frac{i\omega}{c}\bA$, so a static, uniform $\bA$ carries no field at all. It is a pure gauge, and in a normal (non-superconducting) system it must drive no current: $\Pi(\bq\to0,\omega=0)=0$. The diamagnetic term is frequency independent, so it must equal minus the static paramagnetic term. EPP uses this (proved in its Lecture 9 notes for quasi-2D crystals) to write the electronic self-energy of a crystal without any explicit diamagnetic term,</p>
+  <div class="eq">$$\boxed{\Pi^{\rm RPA,e}_{\alpha\beta\bG\bG'}(\bq,\omega)=\Pi^{\rm para,e}_{\alpha\beta\bG\bG'}(\bq,\omega)-\Pi^{\rm para,e}_{\alpha\beta\bG\bG'}(\bq,\omega=0)}\tag{E.281}$$</div>
+  <p>In optics language, $\bj=\Pi\bA$ and $\bE=\frac{i\omega}{c}\bA$ give $\sigma=-\frac{ic}{\omega}\Pi$ and $\epsilon(\omega)=1+\frac{4\pi c}{\omega^2}\Pi(\omega)$ (not written in EPP), so $-4\pi c\,\Pi$ has units of frequency squared. At $\bq=0$ a free electron gas has only the contact term, $\Pi=-ne^2/mc$, which gives the Drude $\epsilon=1-\omega_p^2/\omega^2$ with $\omega_p^2=4\pi ne^2/m$. The paramagnetic part in a crystal is</p>
+  <div class="eq">$$\Pi^{\rm para,e}_{\alpha\beta\bG\bG'}(\bq,\omega)=-\frac{2}{c\Omega}\sum_{\bk\in{\rm BZ}}\sum_{nm}\frac{f_{n\bk}-f_{m\bk+\bq}}{\hbar\omega+E_{n\bk}-E_{m\bk+\bq}+i\eta}\;j^\alpha_{n\bk,m\bk+\bq}(\bG)\left[j^\beta_{n\bk,m\bk+\bq}(\bG')\right]^*,\tag{E.282}$$</div>
+  <div class="eq">$$j^\alpha_{n\bk,m\bk+\bq}(\br)=\frac{e\hbar}{2im}\left\{\phi^*_{n\bk}(\br)\,\partial_\alpha\phi_{m\bk+\bq}(\br)-\left[\partial_\alpha\phi^*_{n\bk}(\br)\right]\phi_{m\bk+\bq}(\br)\right\},\tag{E.284}$$</div>
+  <p>with $j^\alpha(\bG)=\int d\br\,e^{-i(\bq+\bG)\cdot\br}j^\alpha(\br)$ over the crystal (E.283). The factor 2 is spin, $\Omega$ is the crystal volume, and $\phi_{n\bk}$ is normalized over the crystal. For a strictly 2D sheet in a supercell of period $l$, EPP takes $\Pi^{\rm RPA,e,2D}_{\alpha\beta}(\bQ,\omega)=l\,\Pi^{\rm RPA,e}_{\alpha\beta,\bG=\bG'=0}(\bQ,\omega)$ (after E.285; used in <a href="#b-2d">§B.10</a>).</p>
+  <div class="callout connect">
+    <p class="callout-title">Bridge to your RPA code: Adler–Wiser with currents</p>
+    <p>(E.282) is the Adler–Wiser $\chi^0_{\bG\bG'}(\bq,\omega)$ of RPA and GW codes, with the density vertices $\langle n\bk|e^{-i(\bq+\bG)\cdot\br}|m\bk+\bq\rangle$ replaced by current vertices and an overall factor $-1/c$. In the optical limit $j^\alpha_{n\bk,m\bk}(\bG=0)=\frac{e}{m}\langle n\bk|\hat p_\alpha|m\bk\rangle$, the momentum matrix elements of velocity-gauge optics. Giustino's $P_{\rm e}$ (G Eq. 92) is the density version; <a href="#b-propagator">§B.6</a> shows that continuity turns one into the other.</p>
+  </div>
+  <div class="callout caveat">
+    <p class="callout-title">What (E.281) buys in practice</p>
+    <p>Exactly, "dia + para" and (E.281) agree. In practice band sums are truncated, and with nonlocal pseudopotentials the velocity operator is $\frac{i}{\hbar}[H,\br]$ rather than $\bp/m$, so the computed $\Pi^{\rm para}(0)$ no longer cancels $ne^2/mc$ exactly. A naive "dia + para" then leaves $-(1-S)\,\omega_p^2/\omega^2$ in $\epsilon$, with $S$ the fraction of the f-sum that the bubble captures: for $S\lt 1$, a Drude term in an insulator. (E.281) enforces $\Pi(0)=0$ by construction. It also sets to zero the true static transverse response at finite $q$, the orbital magnetic susceptibility of order $q^2$, which is negligible for optics.</p>
+  </div>
+
+  <figure class="viz" id="viz-b-photon-se-electrons">
+    <p class="viz-title">Electrons: truncated band sums and the fake Drude metal <span class="tag">interactive</span></p>
+    <div class="viz-grid two"><div class="pa"></div><div class="pb"></div></div>
+    <div class="ctrls"></div>
+    <div class="ro"></div>
+    <figcaption><strong>Model (toy insulator on the scale of Si).</strong> Twenty interband transitions $\hbar\Delta_i=\hbar\Delta_1+(i-1)\times1.2$ eV with weights $f_i\propto e^{-(i-1)/3}$, normalized so that all twenty exhaust the Thomas–Reiche–Kuhn sum, and $\hbar\omega_p=16.6$ eV (Si valence electrons, illustrative). Each transition is the two-level form of (E.281)–(E.282), $4\pi c\,\Pi^{\rm para}(\omega)=-\sum_iW_i\Delta_i^2/(\omega^2-\Delta_i^2)$ with $W_i=f_i\omega_p^2$, so $4\pi c\,\Pi^{\rm para}(0)=\sum_iW_i$, while $4\pi c\,\Pi^{\rm dia}=-\omega_p^2$ always. Only the lowest $N_t$ transitions are kept, and damping enters as in a driven damped oscillator. Solid blue: gauge-invariant (E.281), $\epsilon=1+\sum_{i\le N_t}W_i/(\Delta_i^2-\omega^2-i\gamma\omega)$. Dashed violet: dia + truncated para, which adds $-(1-S)\omega_p^2/\omega^2$ with $S=\sum_{i\le N_t}f_i$. (b) Running f-sum $\frac{2}{\pi\omega_p^2}\int_0^\omega\omega'\,{\rm Im}\,\epsilon\,d\omega'$; for the naive form the missing weight $1-S$ sits in a $\delta(\omega)$ Drude peak at zero frequency. <strong>What to notice.</strong> With few bands the naive form turns the insulator into a metal ($\epsilon\to-\infty$ at low frequency) while still satisfying the f-sum: the contact term insists on the full $\omega_p^2$ and dumps what the bubble misses at $\omega=0$. The gauge-invariant form misses the same weight at high energy instead, and its $\epsilon(0)$ converges quickly because high transitions contribute $W_i/\Delta_i^2$.</figcaption>
+  </figure>
+
+  <h3>The ionic self-energy, exactly</h3>
+  <p>Inserting (E.272) into (E.280) leaves a momentum–momentum correlator of point ions (E.286). The momentum (E.274) is linear in $a,a^\dagger$, so only the $aa^\dagger$ and $a^\dagger a$ contractions survive, the occupation factors cancel in the principal part, and after the lattice sums the result is the same for every $\bG,\bG'$. It is compact in terms of the <strong>ionic current vertex</strong></p>
+  <div class="eq">$$\boxed{j_{\alpha\sigma}(\bq)=\sum_{a\mu}\frac{Z^*_{a\alpha\mu}}{\sqrt{m_a}}\,e_{a\mu\sigma}(\bq)}\tag{E.295}$$</div>
+  <p>the Born-charge dipole that mode $\sigma$ carries per unit mass-weighted amplitude, in units of charge per $\sqrt{\rm mass}$. It vanishes for nonpolar modes, and for acoustic modes at $\bq\to0$ because the Born charges obey $\sum_aZ^*_a=0$. With the conjugate vertex $j^*_{\beta\sigma}$ (E.296),</p>
+  <div class="eq">$$\boxed{\Pi^{\rm ion,para}_{\alpha\beta,\bG\bG'}(\bq,\omega)=-\frac{1}{c\Omega_{\rm uc}}\sum_{\sigma=1}^{3s}\frac{\omega^2_\sigma(\bq)}{\omega^2-\omega^2_\sigma(\bq)+i\eta}\,j_{\alpha\sigma}(\bq)\,j^*_{\beta\sigma}(\bq)}\tag{E.297}$$</div>
+  <div class="eq">$$\boxed{\Pi^{\rm ion,para}_{\alpha\beta}(\bq,\omega)=-\frac{\hbar}{c\Omega_{\rm uc}}\sum_{\sigma=1}^{3s}\frac{\omega_\sigma(\bq)}{2}\,F_\sigma(\bq,\omega)\,j_{\alpha\sigma}(\bq)\,j^*_{\beta\sigma}(\bq)}\tag{E.299}$$</div>
+  <p>(E.299) is "vertex, phonon line, vertex", the third diagram above. Here $\sigma$ labels the $3s$ branches and $\alpha,\beta,\mu,\nu$ are Cartesian ((E.287) still uses $\alpha,\beta$ for branches). The 2D sheet version has $S_{\rm uc}$ and $\delta(z)\delta(z')$ (E.300).</p>
+  <details class="derivation"><summary>Derivation: from (E.286) to (E.297)</summary><div class="d-body">
+    <p>With $a_{\bq\sigma}(t)=a_{\bq\sigma}e^{-i\omega_\sigma t}$, the surviving contractions force $\bq'=-\bq$ and equal branches. The time integrals $\int d\tau\,e^{i\omega\tau}\theta(\pm\tau)e^{\mp i\omega_\sigma\tau}$ produce the pole pair, and with $e_{a\mu\sigma}(-\bq)=e^*_{a\mu\sigma}(\bq)$ (E.288) the pairs recombine into (EPP p. 62)</p>
+    <div class="eq">$$\begin{aligned}\Pi^{\rm ion,para}_{\alpha\beta}(\br,\br',\omega)={}&-\frac{1}{\hbar c}\frac1N\sum_{\sigma=1}^{3s}\sum_{\bq\in{\rm BZ}}\sum_{ia\mu}\sum_{jb\nu}\frac{Z^*_{a\alpha\mu}Z^*_{b\beta\nu}}{\sqrt{m_am_b}}\,\hbar\omega^2_\sigma(\bq)\,e_{a\mu\sigma}(\bq)e^*_{b\nu\sigma}(\bq)\,e^{i\bq(\br-\br')}\\&\times\left\{\frac{1+n_{\bq\sigma}}{\omega^2-\omega^2_\sigma(\bq)+i\eta}-\frac{n_{\bq\sigma}}{\omega^2-\omega^2_\sigma(\bq)-i\eta}\right\}\delta(\br-\bR^0_i)\,\delta(\br'-\bR^0_j).\end{aligned}\tag{E.289}$$</div>
+    <p>The bracket is that of (E.249); $n_{\bq\sigma}=0$ gives (E.290). The lattice sums use $\sum_i\delta(\br-\bR^0_i)=\Omega_{\rm uc}^{-1}\sum_\bG e^{i\bG\cdot\br}$. Together with $\sum_\bq\to\frac{\Omega}{(2\pi)^3}\int d\bq$ (E.291) they give the prefactor $\frac{\Omega}{N}\frac{N^2}{\Omega^2}=\frac{1}{\Omega_{\rm uc}}$ and a bracket that does not depend on $\bG,\bG'$ (E.293). Comparing with the crystal form $f(\br,\br')=\sum_{\bG\bG'}\int_{\rm BZ}\frac{d\bq}{(2\pi)^3}f_{\bG\bG'}(\bq)e^{i(\bq+\bG)\cdot\br}e^{-i(\bq+\bG')\cdot\br'}$ (E.294) reads off (E.297). The diamagnetic term (E.302) goes through the same lattice sum, plus an implicit relabelling $\bG+\bG'\to\bG$, to (E.304).</p>
+    <p>The $\bG$-independence is an artefact of putting every atom of the cell at $\bR^0_i$. The response is that of a grating of point dipoles, and EPP warns that its Bragg components are unphysical; only $\bG=\bG'=0$ should be used.</p>
+  </div></details>
+  <p>The diamagnetic part follows from (E.271) and (E.280). It is local, $\propto\delta(\br-\bR^0_i)\delta(\br-\br')$ (E.302), and after the same lattice sum it is constant in $\bq$, $\omega$, $\bG$ and $\bG'$:</p>
+  <div class="eq">$$\boxed{\Pi^{\rm ion,dia}_{\alpha\beta}(\bq,\omega)=-\frac{1}{\Omega_{\rm uc}c}\sum_{a\mu}\frac{1}{m_a}Z^*_{a\alpha\mu}Z^*_{a\beta\mu}}\tag{E.304}$$</div>
+  <p>For isotropic Born charges $-4\pi c\,\Pi^{\rm ion,dia}=\frac{4\pi}{\Omega_{\rm uc}}\sum_aZ^{*2}_a/m_a\equiv\Omega_p^2$, the ionic plasma frequency of ions with the springs cut; for a diatomic crystal it is the $\omega_p^2$ defined with (E.152) in <a href="#b-dielectric">§B.3</a>.</p>
+
+  <h3>Completeness: the diamagnetic term is minus the static bubble</h3>
+  <p>Set $\omega=0$ in (E.297). There are no real excitations at zero frequency, so $\eta\to0$ and every mode contributes its full strength (E.306):</p>
+  <div class="eq">$$\Pi^{\rm ion,para}_{\alpha\beta}(\bq,\omega=0)=\frac{1}{c\Omega_{\rm uc}}\sum_{\sigma=1}^{3s}j_{\alpha\sigma}(\bq)\,j^*_{\beta\sigma}(\bq).\tag{E.307}$$</div>
+  <p>Insert the vertices (E.308) and use the completeness of the dynamical-matrix eigenvectors, $\sum_\sigma e_{a\mu\sigma}(\bq)e^*_{b\nu\sigma}(\bq)=\delta_{ab}\delta_{\mu\nu}$ (E.28):</p>
+  <div class="eq">$$\Pi^{\rm ion,para}_{\alpha\beta}(\bq,\omega=0)=\frac{1}{c\Omega_{\rm uc}}\sum_{a\mu}\frac{Z^*_{a\alpha\mu}Z^*_{a\beta\mu}}{m_a},\tag{E.309}$$</div>
+  <div class="eq">$$\boxed{\Pi^{\rm ion,dia}_{\alpha\beta}(\bq,\omega)=-\Pi^{\rm ion,para}_{\alpha\beta}(\bq,\omega=0)}\tag{E.310}$$</div>
+  <p>Neither the force constants nor $\bq$ survive. Read as a statement about modes, (E.309) is an oscillator-strength sum rule, $\sum_\sigma j_{\alpha\sigma}j^*_{\beta\sigma}=\sum_{a\mu}Z^*_{a\alpha\mu}Z^*_{a\beta\mu}/m_a$: springs move infrared strength between modes but cannot change its total. It is the ionic Thomas–Reiche–Kuhn rule.</p>
+  <div class="callout source">
+    <p class="callout-title">Note on the source: the argument in §5.2.2</p>
+    <p>EPP first motivates (E.310) with $\nabla\cdot\bj^{\rm ion}=0$ (E.301), because "there are no free charges". But the ions carry the bound charge $-\nabla\cdot\bP$, used in §6 (E.313), and (E.301) with (E.350) would force $\Pi^{\rm ion}_{\rho\rho}=0$. The right reason is gauge invariance; the result stands because §5.2.3 proves it through completeness. At exactly $\bq=0$ the acoustic terms of (E.306) are $0/0$: take $\omega\to0$ first.</p>
+  </div>
+
+  <figure class="viz" id="viz-b-photon-se-sumrule">
+    <p class="viz-title">Oscillator-strength sum rule: springs move weight, never the total <span class="tag">interactive</span></p>
+    <div class="viz-grid two"><div class="pa"></div><div class="pb"></div></div>
+    <div class="ctrls"></div>
+    <div class="ro"></div>
+    <figcaption><strong>Model (toy).</strong> A 1D chain with three ions per cell, motion along the chain only (3 branches), masses $m_1=30$, $m_2$ (slider), $m_3=60$ amu, nearest-neighbour springs $k_{12}=6$, $k_{23}=4$ eV/Å² and the inter-cell spring $k_{31}$ (slider). The dynamical matrix uses lattice-vector phases only, as in EPP's point-dipole model (one phase $e^{\pm iqa}$ on the inter-cell bond), and is diagonalized at every $q$. Born charges $Z_1,Z_2$ (sliders) and $Z_3=-Z_1-Z_2$, so the acoustic sum rule holds. (a) Branches $\hbar\omega_\sigma(q)$; the dot radius grows with $|j_\sigma|$ and shows the infrared strength along each branch; click to move $q$. (b) $|j_\sigma(q)|^2$ from (E.295) at the chosen $q$, in $e^2/$amu, their stacked sum, and the dashed target $\sum_aZ_a^{*2}/m_a=-c\,\Omega_{\rm uc}\Pi^{\rm ion,dia}$ (E.304). <strong>What to notice.</strong> Dragging $q$ or $k_{31}$ reshuffles strength between the three modes, but the stacked bar always ends on the dashed line: that is (E.309), and it is why the contact term can be computed without knowing any force constant. At $q=0$ the acoustic mode carries nothing. Masses and charges change the total, because they change the contact term itself.</figcaption>
+  </figure>
+
+  <h3>The infrared dielectric tensor</h3>
+  <p>Combining (E.297), (E.304) and (E.310),</p>
+  <div class="eq">$$\boxed{\Pi^{\rm ion,RPA}_{\alpha\beta}(\bq,\omega)=\Pi^{\rm ion,para}_{\alpha\beta}(\bq,\omega)-\Pi^{\rm ion,para}_{\alpha\beta}(\bq,\omega=0)}\tag{E.311}$$</div>
+  <p>has the same structure as (E.281). With $\frac{\omega_\sigma^2}{\omega^2-\omega_\sigma^2}+1=\frac{\omega^2}{\omega^2-\omega_\sigma^2}$ it reads, in the form EPP writes out in §6,</p>
+  <div class="eq">$$\Pi^{\rm ion}_{jj\mu\nu}(\bq,\omega)=-\frac{\omega^2}{c\Omega_{\rm uc}}\sum_{\sigma=1}^{3s}\frac{j_{\mu\sigma}(\bq)\,j^*_{\nu\sigma}(\bq)}{\omega^2-\omega^2_\sigma(\bq)+i\eta}.\tag{E.352}$$</div>
+  <p>It vanishes at $\omega=0$, and for $\omega\gg\omega_\sigma$ it tends to the contact term: far above the phonons the lattice responds as free ions. Now add the electrons far below the gap, where $4\pi c\,\Pi^{\rm e}\approx(\epsilon^\infty-1)\omega^2$, and use $\epsilon=1+4\pi c\,\Pi/\omega^2$. At $\bq\to0$ this gives (derived, not printed in EPP)</p>
+  <div class="eq">$$\epsilon_{\alpha\beta}(\omega)=\epsilon^\infty_{\alpha\beta}+\frac{4\pi}{\Omega_{\rm uc}}\sum_{\sigma}\frac{j_{\alpha\sigma}\,j^*_{\beta\sigma}}{\omega_\sigma^2-\omega^2-i\eta},$$</div>
+  <p>the infrared dielectric tensor of Gonze and Lee (1997), the DFPT reference Giustino cites for the LO–TO splitting (§VI.A.3), with $j_{\alpha\sigma}j^*_{\beta\sigma}$ their mode oscillator strength $S_{\sigma,\alpha\beta}$ (up to the $e^2$ inside EPP's $Z^*$). The ingredients are standard DFPT output, but in EPP the formula is derived: the poles are the bare short-range frequencies and $\epsilon^\infty$ comes from $\Pi^{\rm e}$. For one polar mode its zero is $\omega_{\rm LO}^2=\omega_{\rm TO}^2+\Omega_p^2/\epsilon^\infty$ (<a href="#b-dielectric">§B.3</a>, <a href="#b-phonon-se">§B.7</a>).</p>
+
+  <figure class="viz" id="viz-b-photon-se-gauge">
+    <p class="viz-title">Para + dia = gauge invariant: the ionic photon self-energy <span class="tag">interactive</span></p>
+    <div class="viz-grid two"><div class="pa"></div><div class="pb"></div></div>
+    <div class="ctrls"></div>
+    <div class="ro"></div>
+    <figcaption><strong>Model.</strong> One polar optical mode at $\bq\to0$ (cubic diatomic crystal; for hBN the in-plane mode of the uniaxial crystal), which carries the whole sum (E.309): $\Omega_p^2=4\pi Z^{*2}/(\Omega_{\rm uc}\mu)$, i.e. $(\hbar\Omega_p)^2=0.7564\,Z^{*2}/(\Omega_{\rm uc}[\text{Å}^3]\,\mu[\text{amu}])$ eV². Presets use literature values (illustrative) for $Z^*$, reduced mass $\mu$, $\Omega_{\rm uc}$, $\epsilon^\infty$ and $\hbar\omega_{\rm TO}$ (GaAs 2.07, 36.1 amu, 45.2 Å³, 10.9, 33.3 meV; NaCl 1.12, 13.9, 44.9, 2.34, 20.3 meV; MgO 1.98, 9.65, 18.7, 2.96, 49.1 meV; hBN in-plane 2.71, 6.10, 18.1, 4.87, 169.9 meV). Damping enters as in a driven damped oscillator, $4\pi c\,\Pi=\Omega_p^2\omega^2/(\omega_{\rm TO}^2-\omega^2-i\gamma\omega)$, and $\Pi^{\rm para}\equiv\Pi-\Pi^{\rm dia}$; for $\gamma\to0$ these are (E.352) and (E.297). (a) The three pieces in units of $\Omega_p^2/4\pi c$ (real parts; dotted: ${\rm Im}$ of the total). (b) $\epsilon=\epsilon^\infty+4\pi c\Pi/\omega^2$; dashed rose: the same with the contact term dropped, $\epsilon+\Omega_p^2/\omega^2$. The readout integrates ${\rm Im}\,\epsilon$ numerically. <strong>What to notice.</strong> The bubble at $\omega=0$ is exactly $+1$ and the contact term $-1$, so the total starts at zero. Dropping the contact term adds $+\Omega_p^2/\omega^2$, a wrong-sign Drude divergence. The predicted $\hbar\omega_{\rm LO}$ lands within 1% of the measured value for all four presets (literature, illustrative), and the f-sum returns $\Omega_p^2$ whatever $\gamma$ is.</figcaption>
+  </figure>
+
+  <div class="callout connect">
+    <p class="callout-title">Bridge to Giustino: the photon self-energy is the dual of the phonon self-energy</p>
+    <p>Giustino's phonon self-energy has the same structure, $\Pi^{\rm ph}\propto Z_\kappa Z_{\kappa'}\partial\partial'[W_{\rm e}(\omega)-W_{\rm e}(0)]$ (G Eq. 121, <a href="#a-hedin-baym">§A.5</a>), enforced by the acoustic sum rule (G Eq. 120): translation invariance kills the static response to a rigid shift of the lattice, as gauge invariance here kills the static response to a uniform $\bA$. The $\chi^0(\omega)-\chi^0(0)$ in Giustino's nonadiabatic $\Pi^{\rm NA}$ (G Eq. 145, <a href="#a-phonon-se">§A.6</a>) looks alike but serves another purpose, avoiding double counting of the adiabatic part. Through continuity (<a href="#b-propagator">§B.6</a>), (E.352) also fixes the ionic density response $\Pi^{\rm ion}_{\rho\rho}=-\frac{c}{\omega^2}\bq\cdot\Pi^{\rm ion}_{jj}\cdot\bq$ that drives the LO phonon and the Fröhlich coupling.</p>
+  </div>
+</section>
+<script>
+(() => {
+  const sec = document.getElementById('b-photon-se');
+  if (!sec || !window.EPP) return;
+
+  // ---------- Feynman diagrams ----------
+  const sq = (x, y, color) => ({ t: 'text', at: [x, y + 4.2], text: '■', size: 11, color, upright: true });
+  const dy = sec.querySelectorAll('#b-photon-se-fd-dyson .g');
+  if (dy.length === 3) {
+    EPP.fd.draw(dy[0], { w: 112, h: 56, label: 'dressed transverse photon', items: [
+      { t: 'photon2', a: [8, 34], b: [104, 34], label: 'D^t' } ] });
+    EPP.fd.draw(dy[1], { w: 112, h: 56, label: 'free transverse photon', items: [
+      { t: 'photon', a: [8, 34], b: [104, 34], label: 'D^{0t}' } ] });
+    EPP.fd.draw(dy[2], { w: 216, h: 56, label: 'free photon, RPA self-energy, dressed photon', items: [
+      { t: 'photon', a: [6, 34], b: [70, 34], label: 'D^{0t}' },
+      { t: 'blob', at: [92, 34], r: 20, label: 'Π', color: 'ink' },
+      { t: 'photon2', a: [114, 34], b: [210, 34], label: 'D^t' } ] });
+  }
+  const pi = sec.querySelectorAll('#b-photon-se-fd-pi .g');
+  if (pi.length === 4) {
+    EPP.fd.draw(pi[0], { w: 150, h: 92, label: 'electronic paramagnetic bubble', items: [
+      { t: 'photon', a: [4, 50], b: [42, 50] }, { t: 'photon', a: [108, 50], b: [146, 50] },
+      { t: 'fermion', a: [42, 50], b: [108, 50], bend: 0.42, label: 'mk+q' },
+      { t: 'fermion', a: [108, 50], b: [42, 50], bend: 0.42, label: 'nk' },
+      sq(42, 50, 'electron'), sq(108, 50, 'electron') ] });
+    EPP.fd.draw(pi[1], { w: 150, h: 92, label: 'electronic diamagnetic contact term', items: [
+      { t: 'photon', a: [6, 82], b: [75, 66] }, { t: 'photon', a: [75, 66], b: [144, 82] },
+      { t: 'fermion', a: [75, 66], b: [75, 20], bend: 0.5 }, { t: 'fermion', a: [75, 20], b: [75, 66], bend: 0.5 },
+      { t: 'vertex', at: [75, 66], r: 3.5 }, { t: 'text', at: [112, 34], text: '⟨ρ^e⟩', size: 13, color: 'electron' } ] });
+    EPP.fd.draw(pi[2], { w: 150, h: 92, label: 'ionic paramagnetic term: current vertex, phonon, current vertex', items: [
+      { t: 'photon', a: [4, 54], b: [38, 54] }, { t: 'photon', a: [112, 54], b: [146, 54] },
+      { t: 'phonon', a: [38, 54], b: [112, 54], label: 'F_σ', ldist: 16 },
+      sq(38, 54, 'c4'), sq(112, 54, 'c4'),
+      { t: 'text', at: [38, 82], text: 'j_{ασ}', size: 13, color: 'c4' }, { t: 'text', at: [112, 82], text: 'j_{βσ}^*', size: 13, color: 'c4' } ] });
+    EPP.fd.draw(pi[3], { w: 150, h: 92, label: 'ionic diamagnetic contact term', items: [
+      { t: 'photon', a: [8, 20], b: [70, 49] }, { t: 'photon', a: [80, 49], b: [142, 20] },
+      { t: 'blob', at: [75, 52], r: 6, color: 'phonon' },
+      { t: 'text', at: [75, 80], text: 'Z^*Z^*/m_a', size: 13, color: 'muted' } ] });
+  }
+
+  // ---------- Viz B: electrons, truncated band sums ----------
+  (() => {
+    const fig = document.getElementById('viz-b-photon-se-electrons');
+    if (!fig) return;
+    const WP = 16.6, DEL = 1.2, NTOT = 20, WP2 = WP * WP;
+    const w = Array.from({ length: NTOT }, (_, i) => Math.exp(-i / 3));
+    const ws = w.reduce((a, b) => a + b, 0), f = w.map(x => x / ws);
+    const pA = new EPP.Plot(fig.querySelector('.pa'), { xlabel: 'ħω (eV)', ylabel: 'ε(ω)', xlim: [0, 20], ylim: [-25, 55], xname: 'ħω', hoverX: v => EPP.fix(v, 2) + ' eV', hoverY: v => EPP.fix(v, 2), ariaLabel: 'Dielectric function of the model insulator: gauge-invariant form versus diamagnetic plus truncated paramagnetic form' });
+    const pB = new EPP.Plot(fig.querySelector('.pb'), { xlabel: 'ħω (eV)', ylabel: 'running f-sum / ω_p^2', xlim: [0, 32], ylim: [0, 1.15], xname: 'ħω', hoverX: v => EPP.fix(v, 2) + ' eV', hoverY: v => EPP.fix(v, 3), ariaLabel: 'Running f-sum integral for both forms' });
+    const ro = EPP.readout(fig.querySelector('.ro'));
+    const xa = EPP.linspace(0.02, 20, 1000), xb = EPP.linspace(0, 32, 1601);
+    function eps(x, N, d1, g) {
+      let re = 1, im = 0;
+      for (let i = 0; i < N; i++) { const D = d1 + i * DEL, W = f[i] * WP2, a = D * D - x * x, b = g * x, den = a * a + b * b; re += W * a / den; im += W * b / den; }
+      return [re, im];
+    }
+    function draw(s) {
+      const N = Math.round(s.N), d1 = s.d1, g = s.g;
+      let S = 0; for (let i = 0; i < N; i++) S += f[i];
+      const reGI = [], imGI = [], reNv = [];
+      for (const x of xa) { const e = eps(x, N, d1, g); reGI.push(e[0]); imGI.push(e[1]); reNv.push(e[0] - (1 - S) * WP2 / (x * x)); }
+      let e0all = 1; for (let i = 0; i < NTOT; i++) { const D = d1 + i * DEL; e0all += f[i] * WP2 / (D * D); }
+      const e0 = eps(0, N, d1, g)[0];
+      const layersA = [
+        { type: 'hline', at: 0, color: 'muted', dash: [2, 3], width: 1 },
+        { type: 'fill', x: xa, y1: imGI, color: 'electron', alpha: 0.14, label: 'Im ε (E.281)' },
+        { type: 'line', x: xa, y: reGI, color: 'electron', label: 'Re ε, gauge invariant (E.281)' },
+        s.naive ? { type: 'line', x: xa, y: reNv, color: 'c5', dash: [6, 4], label: 'Re ε, dia + truncated para' } : null,
+        { type: 'hline', at: e0all, color: 'muted', text: 'ε(0) with all 20 transitions', width: 1 },
+      ];
+      if (s.naive && S < 0.999) {
+        let k = 0; while (k < xa.length - 1 && reNv[k] < -19) k++; // where the fake Drude branch enters the frame
+        layersA.push({ type: 'arrow', x0: 8.8, y0: -13, x1: xa[k] + 0.15, y1: -19, color: 'c5', width: 1.4 }, { type: 'text', x: 9.1, y: -12.5, text: 'fake Drude −(1−S)ω_p^2/ω^2', color: 'c5', size: 11 });
+      }
+      pA.draw(layersA);
+      // running f-sum
+      const cum = [0];
+      let prev = 0, acc = 0;
+      for (let k = 1; k < xb.length; k++) { const x = xb[k], im = eps(x, N, d1, g)[1] * x; acc += 0.5 * (prev + im) * (x - xb[k - 1]); prev = im; cum.push(acc * 2 / Math.PI / WP2); }
+      const cumNv = cum.map((v, k) => (k === 0 ? 0 : v + (1 - S)));
+      const layersB = [
+        { type: 'hline', at: 1, color: 'ink', text: 'TRK: ω_p^2', textAt: 'left' },
+        { type: 'hline', at: S, color: 'muted', text: 'S = Σ_{i≤N_t} f_i', width: 1 },
+        { type: 'line', x: xb, y: cum, color: 'electron', label: 'gauge invariant (E.281)' },
+        s.naive ? { type: 'line', x: xb, y: cumNv, color: 'c5', dash: [6, 4], label: 'dia + truncated para', breakJump: 10 } : null,
+      ];
+      if (s.naive && S < 0.999) layersB.push({ type: 'arrow', x0: 4.5, y0: 0.5 * (1 - S) + 0.02, x1: 0.4, y1: 0.5 * (1 - S), color: 'c5', width: 1.4 }, { type: 'text', x: 4.8, y: 0.5 * (1 - S) + 0.02, text: 'δ(ω) weight 1−S', color: 'c5', size: 11 });
+      pB.draw(layersB);
+      ro.set({ 'N_t': String(N), 'S': EPP.fix(S, 3), 'ε(0), gauge invariant': EPP.fix(e0, 2), 'ε(0), all 20': EPP.fix(e0all, 2), 'fake ħω_p': (S > 0.9995 ? '0' : EPP.fix(WP * Math.sqrt(1 - S), 2)) + ' eV' });
+    }
+    EPP.controls(fig.querySelector('.ctrls'), [
+      { key: 'N', type: 'range', label: 'transitions kept N_t', min: 1, max: 20, step: 1, value: 3, fmt: v => String(Math.round(v)) },
+      { key: 'd1', type: 'range', label: 'first gap ħΔ_1', min: 2, max: 5, step: 0.05, value: 3.6, fmt: v => v.toFixed(2) + ' eV' },
+      { key: 'g', type: 'range', label: 'broadening ħγ', min: 0.1, max: 1, step: 0.01, value: 0.3, fmt: v => v.toFixed(2) + ' eV' },
+      { key: 'naive', type: 'toggle', label: 'show dia + truncated para', value: true },
+    ], draw);
+  })();
+
+  // ---------- Viz C: oscillator-strength sum rule ----------
+  (() => {
+    const fig = document.getElementById('viz-b-photon-se-sumrule');
+    if (!fig) return;
+    const M1 = 30, M3 = 60, K12 = 6, K23 = 4, CONV = 64.654; // ħω[meV] = 64.654 sqrt(k[eV/Å²]/m[amu])
+    const BR = ['muted', 'phonon', 'c5'];
+    const pA = new EPP.Plot(fig.querySelector('.pa'), { xlabel: 'q a / π', ylabel: 'ħω_σ (meV)', xlim: [0, 1], ylim: [0, 70], xname: 'qa/π', hoverX: v => EPP.fix(v, 2), hoverY: v => EPP.fix(v, 1) + ' meV', ariaLabel: 'Phonon branches of the three-atom chain with infrared strength as dot size' });
+    const pB = new EPP.Plot(fig.querySelector('.pb'), { xlabel: 'mode', ylabel: '|j_σ|^2 (e^2/amu)', xlim: [0.4, 5.1], ylim: [0, 0.3], hover: false, legend: false,
+      xticks: [{ v: 1, label: 'σ=1' }, { v: 2, label: 'σ=2' }, { v: 3, label: 'σ=3' }, { v: 4.4, label: 'Σ_σ' }], ariaLabel: 'Bar chart of the mode oscillator strengths and their sum against the diamagnetic total' });
+    const ro = EPP.readout(fig.querySelector('.ro'));
+    let st = null;
+    function modes(qa, m2, k31, Z) {
+      const m = [M1, m2, M3], k12 = K12, k23 = K23, c = Math.cos(qa), s = Math.sin(qa);
+      const Cre = [[k12 + k31, -k12, -k31 * c], [-k12, k12 + k23, -k23], [-k31 * c, -k23, k23 + k31]];
+      const Cim = [[0, 0, k31 * s], [0, 0, 0], [-k31 * s, 0, 0]];
+      const A = Array.from({ length: 6 }, () => new Array(6).fill(0));
+      for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) {
+        const n = Math.sqrt(m[i] * m[j]), re = Cre[i][j] / n, im = Cim[i][j] / n;
+        A[i][j] = re; A[i + 3][j + 3] = re; A[i][j + 3] = -im; A[i + 3][j] = im;
+      }
+      const r = EPP.jacobi(A);
+      const out = [];
+      for (let p = 0; p < 3; p++) {
+        const v = r.vecs[2 * p], lam = r.vals[2 * p];
+        let jr = 0, ji = 0, nrm = 0;
+        for (let a = 0; a < 3; a++) { nrm += v[a] * v[a] + v[a + 3] * v[a + 3]; }
+        nrm = Math.sqrt(nrm) || 1;
+        for (let a = 0; a < 3; a++) { jr += Z[a] * v[a] / nrm / Math.sqrt(m[a]); ji += Z[a] * v[a + 3] / nrm / Math.sqrt(m[a]); }
+        out.push({ w: CONV * Math.sqrt(Math.max(lam, 0)), S: jr * jr + ji * ji });
+      }
+      return out;
+    }
+    const niceUp = (v, step) => Math.max(step, Math.ceil(v / step) * step);
+    const sci = (v) => { if (!(v > 1e-300)) return '0'; const e = Math.floor(Math.log10(v)); return (v / Math.pow(10, e)).toFixed(1) + '×10<sup>' + String(e).replace('-', '−') + '</sup>'; };
+    function draw() {
+      const s = st; if (!s) return;
+      const Z = [s.Z1, s.Z2, -s.Z1 - s.Z2], m = [M1, s.m2, M3];
+      const target = Z[0] * Z[0] / m[0] + Z[1] * Z[1] / m[1] + Z[2] * Z[2] / m[2];
+      const qs = EPP.linspace(0, 1, 61), br = [[], [], []];
+      let wmax = 0;
+      const markers = [];
+      qs.forEach((q, iq) => {
+        const md = modes(Math.PI * q, s.m2, s.k31, Z);
+        md.forEach((x, b) => { br[b].push(x.w); wmax = Math.max(wmax, x.w); if (iq % 6 === 0 && target > 1e-9) markers.push({ type: 'points', x: [q], y: [x.w], color: BR[b], r: 1.2 + 4.5 * Math.sqrt(x.S / target) }); });
+      });
+      const ymax = niceUp(1.12 * wmax, 10);
+      const cur = modes(Math.PI * s.q, s.m2, s.k31, Z);
+      pA.draw([
+        { type: 'line', x: qs, y: br[0], color: BR[0], label: 'σ = 1 (acoustic)' },
+        { type: 'line', x: qs, y: br[1], color: BR[1], label: 'σ = 2' },
+        { type: 'line', x: qs, y: br[2], color: BR[2], label: 'σ = 3', dash: [7, 3] },
+        ...markers,
+        { type: 'vline', at: s.q, color: 'ink', text: 'q' },
+      ], { ylim: [0, ymax] });
+      const sum = cur.reduce((a, x) => a + x.S, 0);
+      const yb = niceUp(1.3 * Math.max(target, 1e-3), target > 0.5 ? 0.2 : 0.05);
+      const L = [];
+      const bar = (x, y0, y1, color, alpha) => ({ type: 'fill', x: [x - 0.32, x + 0.32], y1: [y1, y1], y2: [y0, y0], color, alpha: alpha ?? 0.8 });
+      cur.forEach((x, b) => {
+        L.push(bar(b + 1, 0, x.S, BR[b]));
+        L.push({ type: 'text', x: b + 1, y: x.S, dy: -9, text: EPP.fix(x.w, 1) + ' meV', color: 'muted', size: 10, align: 'center' });
+      });
+      let acc = 0;
+      cur.forEach((x, b) => { L.push(bar(4.4, acc, acc + x.S, BR[b])); acc += x.S; });
+      L.push({ type: 'hline', at: target, color: 'ink', dash: [6, 4], width: 1.4, text: 'Σ_a Z_a^{*2}/m_a (dia)' });
+      pB.draw(L, { ylim: [0, yb] });
+      ro.set({ 'ħω_σ': cur.map(x => EPP.fix(x.w, 1)).join(', ') + ' meV', 'Σ_σ|j_σ|^2': EPP.fix(sum, 4), 'Σ_a Z_a^2/m_a': EPP.fix(target, 4), 'Z_3': EPP.fix(Z[2], 2) + ' e', 'relative difference': sci(Math.abs(sum - target) / Math.max(target, 1e-12)) });
+    }
+    pA.onPointer = (x) => { if (!ui) return; ui.set('q', EPP.clamp(Math.round(x * 100) / 100, 0, 1)); };
+    const ui = EPP.controls(fig.querySelector('.ctrls'), [
+      { key: 'q', type: 'range', label: 'wave vector qa/π', min: 0, max: 1, step: 0.01, value: 0.35, fmt: v => v.toFixed(2) },
+      { key: 'k31', type: 'range', label: 'inter-cell spring k_{31}', min: 0.5, max: 15, step: 0.1, value: 3, fmt: v => v.toFixed(1) + ' eV/Å²' },
+      { key: 'm2', type: 'range', label: 'mass m_2', min: 4, max: 100, step: 1, value: 16, fmt: v => v.toFixed(0) + ' amu' },
+      { key: 'Z1', type: 'range', label: 'Born charge Z_1', min: -3, max: 3, step: 0.05, value: 2, fmt: v => v.toFixed(2) + ' e' },
+      { key: 'Z2', type: 'range', label: 'Born charge Z_2', min: -3, max: 3, step: 0.05, value: -1.2, fmt: v => v.toFixed(2) + ' e' },
+    ], s => { st = s; draw(); });
+  })();
+
+  // ---------- Viz A: para + dia = gauge invariant ----------
+  (() => {
+    const fig = document.getElementById('viz-b-photon-se-gauge');
+    if (!fig) return;
+    const KP = 0.75643; // (ħΩ_p)^2 [eV^2] = KP Z^2 / (Ω[Å^3] μ[amu])
+    const PRE = {
+      GaAs: { Z: 2.07, mu: 36.1, Om: 45.2, einf: 10.9, wto: 33.3, lo: 36.2 },
+      NaCl: { Z: 1.12, mu: 13.9, Om: 44.9, einf: 2.34, wto: 20.3, lo: 32.7 },
+      MgO: { Z: 1.98, mu: 9.65, Om: 18.7, einf: 2.96, wto: 49.1, lo: 89.0 },
+      hBN: { Z: 2.71, mu: 6.10, Om: 18.1, einf: 4.87, wto: 169.9, lo: 199.6 },
+    };
+    const OmP = (p, Z) => 1000 * Math.sqrt(KP * Z * Z / (p.Om * p.mu));
+    const pA = new EPP.Plot(fig.querySelector('.pa'), { xlabel: 'ħω (meV)', ylabel: '4πcΠ / Ω_p^2', xlim: [0, 80], ylim: [-3, 3], xname: 'ħω', hoverX: v => EPP.fix(v, 1) + ' meV', hoverY: v => EPP.fix(v, 3), ariaLabel: 'Diamagnetic, paramagnetic and total ionic photon self-energy versus frequency' });
+    const pB = new EPP.Plot(fig.querySelector('.pb'), { xlabel: 'ħω (meV)', ylabel: 'ε(ω)', xlim: [0, 80], ylim: [-25, 45], xname: 'ħω', hoverX: v => EPP.fix(v, 1) + ' meV', hoverY: v => EPP.fix(v, 2), ariaLabel: 'Dielectric function with and without the diamagnetic term' });
+    const ro = EPP.readout(fig.querySelector('.ro'));
+    let ui = null, lastPre = null;
+    function grid(xmax, wto, g) {
+      const pts = EPP.linspace(xmax / 1200, xmax, 1200);
+      for (let k = 0; k < 400; k++) { const th = -1.5 + 3 * k / 399, x = wto + 0.5 * g * Math.tan(th); if (x > 0 && x < xmax) pts.push(x); }
+      return pts.sort((a, b) => a - b);
+    }
+    function fsum(wto, g) { // (2/π) ∫_0^∞ ω Im[1/(ω_TO²−ω²−iγω)] dω = 1; x = ω_TO + (γ/2) tan θ, the θ-integrand stays finite as θ → π/2
+      const t0 = Math.atan(-2 * wto / g), t1 = Math.PI / 2 - 1e-9, n = 4000;
+      let acc = 0, prev = null;
+      for (let k = 0; k <= n; k++) {
+        const th = t0 + (t1 - t0) * k / n, x = wto + 0.5 * g * Math.tan(th), a = wto * wto - x * x;
+        const val = x * g * x / (a * a + g * g * x * x) * 0.5 * g / (Math.cos(th) ** 2);
+        if (prev !== null) acc += 0.5 * (prev + val) * (t1 - t0) / n;
+        prev = val;
+      }
+      return acc * 2 / Math.PI;
+    }
+    function draw(s) {
+      const p = PRE[s.pre];
+      if (s.pre !== lastPre) { lastPre = s.pre; if (Math.abs(s.Z - p.Z) > 1e-9) { ui && ui.set('Z', p.Z); return; } }
+      const Op = OmP(p, s.Z), Op2 = Op * Op, g = s.g, wto = p.wto;
+      // limits are fixed per preset and only grow when Z* is raised far enough to push ω_LO or ε(0) off scale
+      const wlo0 = Math.sqrt(wto * wto + OmP(p, p.Z) ** 2 / p.einf), wloZ = Math.sqrt(wto * wto + Op2 / p.einf);
+      const xmax = Math.max(Math.round(2.2 * wlo0), 10 * Math.ceil(1.3 * wloZ / 10));
+      const e0p = p.einf + OmP(p, p.Z) ** 2 / (wto * wto), e0Z = p.einf + Op2 / (wto * wto);
+      const yhi = Math.max(Math.round(3.5 * e0p), 5 * Math.ceil(1.3 * e0Z / 5)), ylo = -Math.round(yhi * 4 / 7);
+      const xs = grid(xmax, wto, g);
+      const dia = [], para = [], tot = [], totIm = [], eRe = [], eIm = [], eNo = [];
+      for (const x of xs) {
+        const a = wto * wto - x * x, b = g * x, den = a * a + b * b, Lr = a / den, Li = b / den; // L = 1/(ω_TO² − ω² − iγω)
+        const tr = x * x * Lr, ti = x * x * Li; // 4πcΠ/Ω_p² = ω² L
+        tot.push(tr); totIm.push(ti); dia.push(-1); para.push(tr + 1);
+        const er = p.einf + Op2 * Lr; eRe.push(er); eIm.push(Op2 * Li); eNo.push(er + Op2 / (x * x));
+      }
+      const wlo = Math.sqrt(wto * wto + Op2 / p.einf);
+      pA.draw([
+        { type: 'hline', at: 0, color: 'muted', dash: [2, 3], width: 1 },
+        { type: 'vline', at: wto, color: 'muted' },
+        { type: 'text', x: wto, y: -2.7, text: 'ω_{TO}', color: 'muted', size: 11, align: 'right', dx: -4 },
+        { type: 'line', x: xs, y: dia, color: 'c5', dash: [6, 4], label: 'dia (E.304)' },
+        { type: 'line', x: xs, y: para, color: 'phonon', label: 'para (E.297)' },
+        { type: 'line', x: xs, y: totIm, color: 'ink', dash: [1.5, 3], width: 1.5, label: 'Im total', hover: false },
+        { type: 'line', x: xs, y: tot, color: 'ink', width: 2.5, label: 'para + dia (E.311)' },
+        { type: 'points', x: [0, 0, 0], y: [1, -1, 0], color: 'ink', r: 3.5 },
+        { type: 'text', x: 0.015 * xmax, y: 0.62, text: 'para(0) = +1', color: 'phonon', size: 10 },
+        { type: 'text', x: 0.015 * xmax, y: -0.42, text: 'total(0) = 0', color: 'ink', size: 10 },
+        { type: 'text', x: 0.015 * xmax, y: -1.4, text: 'dia = −1', color: 'c5', size: 10 },
+      ], { xlim: [0, xmax] });
+      pB.draw([
+        { type: 'band', x0: wto, x1: wlo, color: 'muted', alpha: 0.1 },
+        { type: 'text', x: wlo + 0.015 * xmax, y: ylo + 0.3 * (yhi - ylo), text: '← Re ε < 0', color: 'muted', size: 11 },
+        { type: 'hline', at: 0, color: 'muted', dash: [2, 3], width: 1 },
+        { type: 'hline', at: p.einf, color: 'muted', text: 'ε^∞', width: 1 },
+        { type: 'fill', x: xs, y1: eIm, color: 'phonon', alpha: 0.2, label: 'Im ε' },
+        { type: 'line', x: xs, y: eRe, color: 'ink', label: 'Re ε (gauge invariant)' },
+        s.nodia ? { type: 'line', x: xs, y: eNo, color: 'photon', dash: [6, 4], label: 'Re ε, dia omitted' } : null,
+        { type: 'points', x: [0], y: [p.einf + Op2 / (wto * wto)], color: 'ink', r: 3.5 },
+      ], { xlim: [0, xmax], ylim: [ylo, yhi] });
+      ro.set({ 'ħΩ_p': EPP.fix(Op, 1) + ' meV', 'ħω_{TO}': EPP.fix(wto, 1) + ' meV', 'ħω_{LO}': EPP.fix(wlo, 1) + ' meV (exp. ' + EPP.fix(p.lo, 1) + ')', 'ε(0)': EPP.fix(p.einf + Op2 / (wto * wto), 2), 'f-sum (2/πΩ_p^2)∫ω Im ε dω': EPP.fix(fsum(wto, g), 3) });
+    }
+    ui = EPP.controls(fig.querySelector('.ctrls'), [
+      { key: 'pre', type: 'select', label: 'material (illustrative)', options: [['GaAs', 'GaAs'], ['NaCl', 'NaCl'], ['MgO', 'MgO'], ['hBN', 'hBN (in-plane)']], value: 'GaAs' },
+      { key: 'Z', type: 'range', label: 'Born charge Z^*', min: 0.2, max: 3.5, step: 0.01, value: 2.07, fmt: v => v.toFixed(2) + ' e' },
+      { key: 'g', type: 'range', label: 'damping ħγ', min: 0.1, max: 10, step: 0.01, value: 1, log: true, fmt: v => EPP.fmt(v, 2) + ' meV' },
+      { key: 'nodia', type: 'toggle', label: 'show ε with the dia term omitted', value: true },
+    ], draw);
+  })();
+})();
+</script>

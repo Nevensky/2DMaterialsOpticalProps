@@ -1,0 +1,341 @@
+<section class="chapter" id="b-frohlich" data-num="B.8" data-title="Electrodynamic Fröhlich vertex">
+  <header class="ch-head">
+    <p class="eyebrow"><span class="num">B.8</span><span>EPP §7.2 · Eqs. 411–432</span></p>
+    <h2>The electrodynamic Fröhlich vertex</h2>
+    <p class="lede">Open the electron loop inside the phonon self-energy and an electron–phonon vertex appears that nobody put in by hand: one photon exchanged between an ionic and an electronic current. It depends on frequency, it comes in a bare and a screened version, and for $c\to\infty$ the screened one becomes the Verdi–Giustino vertex with $\epsilon^\infty$ replaced by the dynamical RPA tensor $\hat\epsilon^{\rm e}(\bq,\omega)$.</p>
+  </header>
+
+  <h3>A vertex made of a photon</h3>
+  <p>In Giustino's Hamiltonian (G Eq. 1) the coupling $g_{mn\nu}(\bk,\bq)$ is an input: the matrix element of a screened potential change (G Eq. 38). The EPP Lagrangian has no such term (<a href="#b-lagrangian">§B.2</a>). Electrons couple to the vector potential through $\frac ec\mathbf v\cdot\bA$, ions through the polarization current of their Born-charge dipoles, $\frac1c\dot\bp\cdot\bA$. An <span class="t-e">electron</span> can feel a <span class="t-p">phonon</span> only by exchanging a <span class="t-g">photon</span> with it, so the electron–phonon vertex is a composite: ionic current vertex, photon propagator, electronic current vertex. Only the long-range polar channel arises this way; the short-range deformation-potential part of Giustino's $g$ has no counterpart in the EPP Lagrangian (E.134).</p>
+  <p><a href="#b-phonon-se">§B.7</a> summed these exchanges into the phonon self-energy $\Omega^{\rm e}=-J^*D^{\rm e}J$ (E.399) and split it into an electron-free part $\Omega^0$ and an electron-induced part $\Delta\Omega^{\rm e}$ (E.400–402); this section opens $\Delta\Omega^{\rm e}$. Notation as in the rest of Part B: $D^0$ is the free photon propagator (E.375), $D^{\rm e}$ the one dressed by electrons only (E.388), $\Pi^{\rm e,0}_{jj}$ and $\Pi^{\rm e}_{jj}$ the irreducible and reducible electronic photon self-energies, and $J_{\mu\sigma}(\bq,\omega)=\sqrt{\hbar/2c\Omega_{\rm uc}\omega_\sigma(\bq)}\;\omega\,j_{\mu\sigma}(\bq)$ the ionic current vertex (E.392), built from the mode current $j_{\mu\sigma}(\bq)=\sum_{a\nu}Z^*_{a\mu\nu}e_{a\nu\sigma}(\bq)/\sqrt{m_a}$ (E.295) with atomic masses $m_a$ and phonon eigenvectors $e_{a\nu\sigma}$. Numbers use $e^2/\varepsilon_0=180.95$ eV Å.</p>
+
+  <div class="callout intuition"><p class="callout-title">Physical picture</p><p>A polar phonon is an oscillating dipole $\bp=Z^*\bQ$, that is, a current $\dot\bp=-i\omega\bp$, and a current radiates. The longitudinal part of its field is the Coulomb potential of a polarization wave; the transverse part is light. An electron absorbs the field through a transition $n\bk\to m\bk+\bq$, which also carries a current. Both ends bring a factor $\omega$ and the propagator knows the speed of light, so the vertex depends on frequency and on $c$, unlike the adiabatic $g(\bk,\bq)$.</p></div>
+
+  <h3>Opening the electron bubble</h3>
+  <p>The electron-induced self-energy contains the reducible electronic correlator between two bare photon lines:</p>
+  <div class="eq">$$\begin{aligned}\Delta\Omega^{\rm e}_{\sigma\sigma'}(\bq,\omega)=-\sum_{\alpha\beta}\sum_{\alpha_1\beta_1}&J^*_{\alpha\sigma}(\bq,\omega)\,D^0_{\alpha\alpha_1}(\bq,\omega)\,\Pi^{\rm e}_{jj\alpha_1\beta_1}(\bq,\omega)\\&\times D^0_{\beta_1\beta}(\bq,\omega)\,J_{\beta\sigma'}(\bq,\omega)\end{aligned}\tag{E.411}$$</div>
+  <p>Expanding $\Pi^{\rm e}=\Pi^{\rm e,0}+\Pi^{\rm e,0}D^0\Pi^{\rm e,0}+\dots$ and regrouping the chain onto the left photon line gives</p>
+  <div class="eq">$$\begin{aligned}\Delta\Omega^{\rm e}_{\sigma\sigma'}(\bq,\omega)=-\sum_{\alpha\beta}\sum_{\alpha_1\beta_1}&J^*_{\alpha\sigma}(\bq,\omega)\,D^{\rm e}_{\alpha\alpha_1}(\bq,\omega)\,\Pi^{\rm e,0}_{jj\alpha_1\beta_1}(\bq,\omega)\\&\times D^0_{\beta_1\beta}(\bq,\omega)\,J_{\beta\sigma'}(\bq,\omega)\end{aligned}\tag{E.412}$$</div>
+  <p>One photon line is now screened, the other bare, and the electronic bubble between them is irreducible.</p>
+  <details class="derivation"><summary>Derivation: from (E.411) to (E.412)</summary><div class="d-body">
+    <p>Suppress the Cartesian indices; every product is a $3\times3$ matrix product at fixed $(\bq,\omega)$:</p>
+    $$\begin{aligned}D^0\Pi^{\rm e}D^0&=D^0\Pi^{\rm e,0}D^0+D^0\Pi^{\rm e,0}D^0\Pi^{\rm e,0}D^0+\dots\\&=\big(D^0+D^0\Pi^{\rm e,0}D^0+\dots\big)\,\Pi^{\rm e,0}D^0=D^{\rm e}\,\Pi^{\rm e,0}D^0,\end{aligned}$$
+    <p>using the Dyson series of $D^{\rm e}$ (E.388). Nothing is approximated: the same chain of bubbles is read from a different end.</p>
+  </div></details>
+  <p>Inserting the RPA current correlator (E.383, <a href="#b-photon-se">§B.5</a>) and splitting each transition into vertex × propagator × vertex defines the <em>dynamical electron current vertex</em> and the <em>bare electron–hole propagator</em>; the latter is boxed but unnumbered on EPP p. 92:</p>
+  <div class="eq">$$J^\mu_{n\bk,m\bk+\bq}(\omega)=\sqrt{\frac{1}{c\Omega}}\;\frac{\hbar\omega}{E_{n\bk}-E_{m\bk+\bq}}\;j^\mu_{n\bk,m\bk+\bq}\tag{E.414}$$</div>
+  <div class="eq">$$\chi^0_{n\bk,m\bk+\bq}(\omega)=2\,\frac{E_{n\bk}-E_{m\bk+\bq}}{\hbar\omega}\;\frac{f_{n\bk}-f_{m\bk+\bq}}{\hbar\omega+E_{n\bk}-E_{m\bk+\bq}+i\eta}$$</div>
+  <p>Here $E_{n\bk}$ and $f_{n\bk}$ are band energies and occupations, $\Omega=N\Omega_{\rm uc}$ is the crystal volume ($N$ cells), $j^\mu_{n\bk,m\bk+\bq}$ is the paramagnetic current matrix element of E.384 (it contains $e$), and the 2 counts spin. The product $J^\mu\chi^0[J^\nu]^*$ reproduces the summand of E.383 exactly.</p>
+
+  <div class="callout caveat"><p class="callout-title">Do not implement $J^{\rm e}$ and $\chi^0$ separately</p><p>EPP's $\chi^0$ is not the Lindhard function. With $\Delta E=E_{n\bk}-E_{m\bk+\bq}$ and $\Delta E/[\hbar\omega(\hbar\omega+\Delta E)]=1/\hbar\omega-1/(\hbar\omega+\Delta E)$ it splits into the familiar density bubble plus a term $\propto(f_{n\bk}-f_{m\bk+\bq})/\hbar\omega$ that cancels only for a complete band sum (longitudinally it is $\sum(f_{n\bk}-f_{m\bk+\bq})|\rho_{n\bk,m\bk+\bq}|^2=0$). The vertex $J^{\rm e}\propto1/\Delta E$ diverges for intraband transitions as $q\to0$ and for degenerate bands; only the product $J^{\rm e}\chi^0J^{\rm e*}$ is regular. In a truncated-band code use E.383 directly or, longitudinally, the charge vertices of (cf. E.428).</p></div>
+
+  <h3>Two vertices, one bubble</h3>
+  <p>Grouping each photon line with the two current vertices at its ends defines the bare and the screened electrodynamic electron–phonon vertices,</p>
+  <div class="eq">$$g^{\rm dyn,0}_{nm\sigma}(\bk,\bq,\omega)=i\sum_{\alpha\beta=xyz}\big[J^\alpha_{n\bk,m\bk+\bq}(\omega)\big]^*\,D^0_{\alpha\beta}(\bq,\omega)\,J_{\beta\sigma}(\bq,\omega)\tag{E.415}$$</div>
+  <div class="eq">$$g^{\rm dyn}_{nm\sigma}(\bk,\bq,\omega)=i\sum_{\alpha\beta=xyz}J^*_{\alpha\sigma}(\bq,\omega)\,D^{\rm e}_{\alpha\beta}(\bq,\omega)\,J^\beta_{n\bk,m\bk+\bq}(\omega)\tag{E.416}$$</div>
+  <p>and the electron-induced self-energy takes the shape of Giustino's phonon self-energy, vertex × bubble × vertex (EPP p. 92, unnumbered):</p>
+  <div class="eq">$$\Delta\Omega^{\rm e}_{\sigma\sigma'}(\bq,\omega)=\sum_{\bk\in{\rm BZ},nm}g^{\rm dyn}_{nm\sigma}(\bk,\bq,\omega)\;\chi^0_{n\bk,m\bk+\bq}(\omega)\;g^{\rm dyn,0}_{nm\sigma'}(\bk,\bq,\omega)$$</div>
+  <p>The two factors of $i$ supply the minus sign of E.412–413. Read from left to right (EPP Fig. 14): phonon $\sigma$ emits through its Born-charge current $J^*$; the photon crosses the polarizable electrons ($D^{\rm e}$, longitudinal and transverse); an electron makes the transition $n\bk\to m\bk+\bq$ ($\chi^0$); the pair recombines into a bare photon ($D^0$), which phonon $\sigma'$ absorbs. </p>
+
+  <div class="fd" id="b-frohlich-fd">
+    <figure><div id="b-frohlich-fd-epp"></div><figcaption style="max-width:46ch">EPP Fig. 14, redrawn. Teal dots: ionic current vertices $J$; blue dots: electronic ones $J^{\rm e}$. Heavy wavy line: $D^{\rm e}$; thin wavy line: $D^0$. (The PDF draws both lines in the same magenta.)</figcaption></figure>
+    <figure><div id="b-frohlich-fd-g"></div><figcaption style="max-width:40ch">Giustino Fig. 1(c) in the form of (G.145): a Kohn–Sham bubble between a bare vertex $g^{\rm b}$ (dot) and a screened vertex $g$ (gray disk). EPP puts the screened end on the left, Giustino on the right; the order is immaterial.</figcaption></figure>
+  </div>
+
+  <p><strong>Why only one dressed line?</strong> Write $x=D^0\Pi^{\rm e,0}$ for one electronic bubble hung on a bare line (schematically, as a scalar). Then $D^0\Pi^{\rm e}D^0=D^0(x+x^2+x^3+\dots)$ contains every chain of $k$ bubbles exactly once. Dressing both lines gives $D^{\rm e}\Pi^{\rm e,0}D^{\rm e}=D^0x/(1-x)^2$, that is $D^0(x+2x^2+3x^3+\dots)$, which contains the $k$-bubble chain $k$ times: double counting. Leaving both lines bare, $D^0\Pi^{\rm e,0}D^0=D^0x$, keeps only the one-bubble term: screening to first order, never resummed (derived here, not printed in EPP; steps of this kind are marked [derived] below). The correct count is either two bare lines around the reducible $\Pi^{\rm e}$ (E.411) or one bare and one screened line around the irreducible $\Pi^{\rm e,0}$ (E.412). In the static long-wavelength limit of an insulator, $1-x$ is the electronic dielectric constant $\epsilon$ (E.432), so the three pairings multiply the bare dipolar shift $\Omega^0$ by $1+(1/\epsilon-1)$, $1+(1-\epsilon)/\epsilon^2$ and $1+(1-\epsilon)$. The figure turns these factors into LO frequencies.</p>
+
+  <figure class="viz" id="viz-b-frohlich-pairing">
+    <p class="viz-title">Counting bubbles: which vertices go into the self-energy? <span class="tag">interactive</span></p>
+    <div class="pp"></div>
+    <div class="ctrls"></div>
+    <div class="ro"></div>
+    <figcaption><strong>Model.</strong> Cubic diatomic crystal, LO mode, electrostatic and static limit ($c\to\infty$, $\omega\to0$, $q\to0$). The pole condition $\omega^2=\omega_\sigma^2+2\omega_\sigma(\Omega^0+\Delta\Omega^{\rm e})/\hbar$ (E.405) becomes $\omega_{\rm LO}^2=\omega_\sigma^2+\omega_p^2\,f(\epsilon)$, with the unscreened ionic plasma frequency $\omega_p^2=4\pi Z^{*2}/\Omega_{\rm uc}\mu$ (Gaussian; $Z^{*2}_{\rm G}e^2/\varepsilon_0\Omega_{\rm uc}\mu$ in SI, with dimensionless $Z^*_{\rm G}$) and the bare short-range $\omega_\sigma=\omega_{\rm TO}$ (the Dyson route has no local-field correction, <a href="#b-phonon-se">§B.7</a>). $f=1/\epsilon$ for one bare and one screened line (E.412), $(\epsilon^2-\epsilon+1)/\epsilon^2$ for two screened, $2-\epsilon$ for two bare. Imaginary frequencies are plotted as negative, as phonon codes do; the dotted vertical line marks the material's $\epsilon^\infty$. $Z^*$, $\Omega_{\rm uc}$, $\mu$, $\epsilon^\infty$ and the measured $\omega_{\rm LO}$ are the <a href="#a-polar">§A.4</a> presets; the measured $\hbar\omega_{\rm TO}$ is 33.3 (GaAs), 49.1 (MgO) and 20.3 meV (NaCl). All are literature values, illustrative. Click the plot to move the cursor. <strong>What to notice.</strong> At $\epsilon=1$ the three pairings agree (no electrons). Only bare × screened lands on the measured LO; two screened vertices barely screen at all (GaAs: 54 meV instead of 36 meV), and two bare vertices overscreen until $\omega^2<0$, a spurious lattice instability above $\epsilon\approx2.6$ in GaAs.</figcaption>
+  </figure>
+
+  <div class="callout connect"><p class="callout-title">Bridge to Giustino: one bare vertex, one screened</p><p>Giustino's nonperturbative phonon self-energy (G §V.A.3, see <a href="#a-phonon-se">§A.6</a>) has the same structure, (G.141): the bare coupling $g^{\rm b}=\Delta_{\bq\nu}V^{\rm en}$ (G Eq. 142) at one end, the dynamically screened $g^{\rm cc}=\epsilon_{\rm e}^{-1}g^{\rm b,*}$ (G Eq. 144) at the other, and the irreducible $P_{\rm e}$ between them. $g^{\rm dyn,0}$ and $g^{\rm dyn}$ are their electrodynamic, long-range counterparts, and $D^{\rm e}=(\hat\epsilon^{\rm e})^{-1}D^0$ (E.431) mirrors $g=\epsilon_{\rm e}^{-1}g^{\rm b}$ (G Eq. 143). Two differences: EPP needs no static subtraction, because its bare phonons hold only short-range forces, and it keeps the $\omega$ dependence of the screened vertex, which Giustino drops in his approximation (iv) on the way to (G.145). Giustino notes that most ab initio calculations replace $g^{\rm b}$ by $g$ in (G.145), for nonadiabatic frequencies as well as in the lifetime formula (G.146), and asks for the effect of the bare vertex to be tested (G §V.A.3, p. 015003-25). For the real part, the frequency shift, the replacement is the miscount of the "two screened" curve above, applied to the nonadiabatic part; for the width it is harmless in a consistent RPA as long as $\epsilon(\omega_{\bq\nu})\approx\epsilon(0)$ (<a href="#a-phonon-se">§A.6</a>).</p></div>
+
+  <div class="callout caveat"><p class="callout-title">Which vertex is screened, and at which frequency</p><p>"One bare, one screened" holds for self-energies with an electron bubble between the vertices; Fan–Migdal, with no bubble there, has two screened vertices (<a href="#a-electron-se">§A.7</a>). The pairing is exact, but freezing the screened vertex at $\omega=0$, as (G.145) does, overestimates linewidths by about $\epsilon(\bq,0)$ in metals (<a href="#a-phonon-se">§A.6</a>). EPP keeps the dynamic form through $\hat\epsilon^{\rm e}(\bq,\omega)$.</p></div>
+
+  <h3>From currents to charges: the continuity identity</h3>
+  <p>To compare with the electrostatic vertices of Part A, the current vertex has to become a charge vertex. EPP evolves the density and current operators with the band Hamiltonian $H^{\rm e}_0=\sum_{n\bk}E_{n\bk}c^+_{n\bk}c_{n\bk}$ (E.421), imposes continuity $\dot\rho_{\rm e}=-\nabla\cdot\bj_{\rm e}$ (E.422), Fourier transforms and compares coefficients (E.423–427). With the charge restored on the left (see the note below), and with the charge vertex $\rho_{n\bk,m\bk+\bq}=\langle\phi_{n\bk}|e^{-i\bq\cdot\br}|\phi_{m\bk+\bq}\rangle$ (E.106 at $\bG=0$):</p>
+  <div class="eq">$$e\,\rho_{n\bk,m\bk+\bq}=-\sum_\mu\hbar q_\mu\,\frac{j^\mu_{n\bk,m\bk+\bq}}{E_{n\bk}-E_{m\bk+\bq}}\tag{cf. E.428}$$</div>
+  <p>This is $\partial_t\rho+\nabla\cdot\bj=0$ for a single transition: $\bq\cdot\bj=\omega_{\rm tr}\,e\rho$ with $\omega_{\rm tr}=(E_{m\bk+\bq}-E_{n\bk})/\hbar$. For the dynamical vertex it gives $\sum_\mu q_\mu J^\mu_{n\bk,m\bk+\bq}(\omega)=-\sqrt{1/c\Omega}\;\omega\,e\rho_{n\bk,m\bk+\bq}$ [derived]: the longitudinal part of the electron current vertex is $\omega$ times the charge vertex, and the singular $1/\Delta E$ disappears.</p>
+  <div class="callout intuition"><p class="callout-title">Familiar from optics codes</p><p>This is the identity behind the equivalence of velocity- and length-gauge dipoles in RPA and BSE codes, $\langle v|\mathbf p|c\rangle=im\,\omega_{vc}\langle v|\br|c\rangle$ with $\omega_{vc}=(E_v-E_c)/\hbar$, with the same fine print: it holds for a local band Hamiltonian, and nonlocal pseudopotentials or scissor-shifted energies add commutator terms.</p></div>
+  <div class="callout source"><p class="callout-title">Note on the source: the missing $e^2$</p><p>As printed, E.428 equates the number-density vertex $\rho$ (E.106, E.420) with $-\hbar\bq\cdot\bj/\Delta E$, while $j^\mu$ (E.384) contains $e$. A free-electron check, $\phi=e^{i\bk\cdot\br}/\sqrt\Omega$, gives $-\hbar\bq\cdot\bj/\Delta E=e$, not 1, so the left side must read $e\rho$. The author saw the symptom; a blue margin note in Croatian (p. 96) reads "U odnosu na Giustino-a fali ti taj $e^2$. Vjerojatno je u interakciji D ili u $Z^*$…", that is, "Compared with Giustino you are missing that $e^2$. It is probably in the interaction D or in $Z^*$. Also, his notation for this matrix element is $g^0_{mn\sigma}$ and ours $g^0_{nm\sigma}$, but that is irrelevant." Resolution: one $e$ sits in EPP's charge-dimensioned Born charge ($Z^*_{\rm EPP}=|e|Z^*_{\rm G}$), the other is the one missing from E.428; $D$ is innocent. The p. 95 and p. 98 vertices below are shown as printed and acquire this $e$. Three smaller slips: the text before E.418 calls $c\to\infty$ the "retarded limit" (it is the instantaneous, non-retarded limit); the text before E.417 says the bare vertex reduces to E.131, which holds only with $\epsilon^\infty=1$ and $\bG=0$ (as p. 96 then concedes); and the Heisenberg evolution on p. 93 lacks $\hbar$ in the exponent.</p></div>
+
+  <h3>The electrostatic limit: Verdi–Giustino with $\hat\epsilon^{\rm e}(\bq,\omega)$</h3>
+  <p>The Dyson equation for $D^{\rm e}$ (E.388) can be written as a dielectric problem,</p>
+  <div class="eq">$$\sum_\alpha\epsilon^{\rm e}_{\mu\alpha}(\bq,\omega)\,D^{\rm e}_{\alpha\nu}(\bq,\omega)=D^0_{\mu\nu}(\bq,\omega)\tag{E.431}$$</div>
+  <div class="eq">$$\epsilon^{\rm e}_{\mu\nu}(\bq,\omega)=\delta_{\mu\nu}-\sum_\alpha D^0_{\mu\alpha}(\bq,\omega)\,\Pi^{\rm e,0}_{jj\alpha\nu}(\bq,\omega)\tag{E.432}$$</div>
+  <p>As $c\to\infty$ only the longitudinal sector survives (derivation in <a href="#b-electrostatic">§B.9</a>), and $D^{\rm e}$ becomes the screened Coulomb interaction in vector form:</p>
+  <div class="eq">$$\lim_{c\to\infty}D^{\rm e}_{\mu\nu}(\bq,\omega)=-\frac{4\pi c}{\omega^2}\,\frac{q_\mu q_\nu}{\sum_{\alpha\beta}q_\alpha\,\epsilon^{\rm e}_{\alpha\beta}(\bq,\omega)\,q_\beta}\tag{E.446}$$</div>
+  <p>Inserting E.375 and E.446 into the two vertices and using E.428 gives (EPP pp. 95 and 98, unnumbered, as printed):</p>
+  <div class="eq">$$\lim_{c\to\infty}g^{\rm dyn,0}_{nm\sigma}(\bk,\bq,\omega)=\frac{4\pi i}{\Omega_{\rm uc}}\sum_a\sum_{\mu\nu=xyz}\sqrt{\frac{\hbar}{2Nm_a\omega_\sigma(\bq)}}\;\frac{q_\mu Z^*_{a\mu\nu}\,e_{a\nu\sigma}(\bq)}{q^2}\;\big[\rho_{n\bk,m\bk+\bq}\big]^*$$</div>
+  <div class="eq">$$\lim_{c\to\infty}g^{\rm dyn}_{nm\sigma}(\bk,\bq,\omega)=\frac{4\pi i}{\Omega_{\rm uc}}\sum_a\sum_{\mu\nu=xyz}\sqrt{\frac{\hbar}{2Nm_a\omega_\sigma(\bq)}}\;\frac{q_\mu Z^*_{a\mu\nu}\,e^*_{a\nu\sigma}(\bq)}{\bq\cdot\hat\epsilon^{\rm e}(\bq,\omega)\cdot\bq}\;\rho_{n\bk,m\bk+\bq}$$</div>
+  <p>Compare with the Verdi–Giustino long-range vertex (G Eq. 180, <a href="#a-polar">§A.4</a>), $\propto(\bq+\bG)\cdot\bZ^*_\kappa\cdot\be_{\kappa\nu}/[(\bq+\bG)\cdot\boldsymbol\epsilon^\infty\cdot(\bq+\bG)]$ times a plane-wave matrix element. The bare vertex is Verdi–Giustino with $\epsilon^\infty=1$ and $\bG=0$. The screened vertex is Verdi–Giustino with $\epsilon^\infty$ replaced by $\hat\epsilon^{\rm e}(\bq,\omega)$: the RPA tensor at the frequency at which the vertex is used, so the screening is nonadiabatic. This closes a loop opened in <a href="#b-foundations">§B.1</a>, where $\epsilon^\infty$ was put into the dipole potential by hand (EPP p. 23, E.112–120: "later we will remove it"); here it is generated by $\Pi^{\rm e,0}_{jj}$. EPP calls the screened result "the conjugated complex part" of the vertex; comparing the two boxes makes this precise [derived]:</p>
+  <div class="eq">$$\lim_{c\to\infty}g^{\rm dyn}_{nm\sigma}=-\big[g^{\rm dyn,0}_{nm\sigma}\big]^*\,\frac{q^2}{\bq\cdot\hat\epsilon^{\rm e}(\bq,\omega)\cdot\bq},\qquad \Delta\Omega^{\rm e}_{\sigma\sigma}\to-\frac{q^2}{\bq\cdot\hat\epsilon^{\rm e}\cdot\bq}\sum_{\bk nm}\big|g^{\rm dyn,0}_{nm\sigma}\big|^2\chi^0_{n\bk,m\bk+\bq}$$</div>
+  <p>The electronic correction is minus the bare vertex squared, times the bubble, times the screening factor. For an insulator it is negative: the electrons soften the bare dipolar stiffening $\Omega^0$, as they must.</p>
+
+  <div class="callout caveat"><p class="callout-title">What "almost identical" hides</p><ul>
+    <li>No local fields and no exchange–correlation: the screening is the head of the RPA dielectric matrix, not DFPT's macroscopic $\epsilon^\infty$ (<a href="#b-electrostatic">§B.9</a>).</li>
+    <li>The basis phase of G Eq. 180 is missing (source note in <a href="#b-foundations">§B.1</a>).</li>
+    <li>The zero-point amplitude contains the bare short-range $\omega_\sigma$, which is TO-like for a polar mode, whereas Verdi–Giustino use the physical $\omega_{\bq\nu}$. When $\Omega^{\rm e}$ is frequency independent, the phonon Dyson equation (E.405) gives the LO pole a quasiparticle weight $\omega_\sigma/\omega_{\rm LO}$, which turns $|g|^2\propto1/\omega_\sigma$ into $1/\omega_{\rm LO}$ [derived] (derivation in <a href="#x-dictionary">§X.2</a>).</li>
+  </ul></div>
+
+  <p>Nonadiabaticity matters when electrons can respond at the phonon frequency. In an undoped semiconductor the gap lies far above $\hbar\omega_{\rm LO}$, so $\hat\epsilon^{\rm e}(\bq,\omega_{\rm LO})\approx\epsilon^\infty$ and static Verdi–Giustino screening is accurate. With free carriers it is not.</p>
+
+  <figure class="viz" id="viz-b-frohlich-dynamic">
+    <p class="viz-title">Screening the vertex at the phonon frequency, not at zero <span class="tag">interactive</span></p>
+    <div class="pd"></div>
+    <div class="ctrls"></div>
+    <div class="ro"></div>
+    <figcaption><strong>Model.</strong> n-doped GaAs-like crystal: valence screening $\epsilon^\infty=10.9$ plus conduction electrons with $m^*=0.067\,m_e$ (literature values, illustrative) treated as a $T=0$ RPA (Lindhard) gas, $\epsilon^{\rm e}(q,\omega)=\epsilon^\infty+(k_{\rm TF}^2/q^2)\,F(q,\omega+i\eta)$ with $k_{\rm TF}^2=e^2N(E_F)/\varepsilon_0$ (SI), $F$ the Lindhard function normalized to $F(q\to0,0)=1$, and a broadening $\eta=\hbar\omega/70$ (0.5 meV at the default), so that $\omega\to0$ returns the static curve. $\omega_{\rm pl}^2=ne^2/\varepsilon_0m^*$ is the bare plasma frequency of the carriers. Plotted is the screening factor of the LO vertex, $|g^{\rm dyn}/g^{\rm dyn,0}|=q^2/|\bq\cdot\hat\epsilon^{\rm e}\cdot\bq|$ from the relation above ($c\to\infty$, isotropic crystal), evaluated at $\hbar\omega$ (default $\hbar\omega_{\rm LO}=36.2$ meV) and at $\omega=0$, the adiabatic screening that a static calculation would use. Markers: $\omega/v_F$, screened Thomas–Fermi $q_{\rm TF}=k_{\rm TF}/\sqrt{\epsilon^\infty}$, and $2k_F$. <strong>What to notice.</strong> For $q\gg\omega/v_F$ the carriers respond quasi-statically and the curves merge. For smaller $q$ static Thomas–Fermi screening kills the Fröhlich vertex ($\propto q$ instead of $1/q$), while at the phonon frequency the carriers cannot follow and the vertex keeps its $1/q$ form, screened by $\epsilon^\infty-\omega_{\rm pl}^2/\omega^2$. Near $n\approx7\times10^{17}$ cm$^{-3}$ that factor crosses zero at $\omega_{\rm LO}$: the plasmon–LO resonance of <a href="#b-electrostatic">§B.9</a>.</figcaption>
+  </figure>
+
+  <h3>Across the light line: LO is Coulomb, TO needs photons</h3>
+  <p>At finite $c$ the vertices contain the full propagator. Contracting E.375 with an ionic current along $\hat\bq$ (an LO mode in a cubic crystal) or perpendicular to it (TO) separates the two cases cleanly. Normalize each contraction $K$ by the bare Coulomb value $-4\pi c/\omega^2$.</p>
+  <details class="derivation"><summary>Derivation: LO and TO kernels from (E.375)</summary><div class="d-body">
+    <p>The free propagator of the total field is</p>
+    $$D^0_{\mu\nu}(\bq,\omega)=\frac{4\pi c}{\omega^2}\,\frac{-q_\mu q_\nu+\frac{\omega^2}{c^2}\delta_{\mu\nu}}{q^2-\frac{\omega^2}{c^2}-i\eta}\tag{E.375}$$
+    <p>For a unit vector $\hat{\mathbf t}\perp\bq$ [derived]:</p>
+    $$\hat q_\mu D^0_{\mu\nu}\hat q_\nu=-\frac{4\pi c}{\omega^2},\qquad \hat t_\mu D^0_{\mu\nu}\hat t_\nu=\frac{4\pi}{c}\,\frac{1}{q^2-\omega^2/c^2-i\eta},\qquad \hat q_\mu D^0_{\mu\nu}\hat t_\nu=0 .$$
+    <p>So $K^0_{\rm LO}=1$ and $K^0_{\rm TO}=\omega^2/(\omega^2-c^2q^2)$. For electrons with a constant isotropic dielectric constant $\epsilon$, take $\Pi^{\rm e,0}_{jj,\mu\nu}=(\epsilon-1)\,\omega^2\delta_{\mu\nu}/4\pi c$, which makes the longitudinal part of E.432 equal to $\epsilon$. Solving E.388 gives $K_{\rm LO}=1/\epsilon$ and $K_{\rm TO}=\omega^2/(\epsilon\omega^2-c^2q^2)=\epsilon^{-1}\,[1-(q/q_c)^2]^{-1}$ with $q_c=\sqrt\epsilon\,\omega/c$. For an LO current, $D^0\cdot\hat\bq=-(4\pi c/\omega^2)\hat\bq$ picks out $\hat\bq\cdot J^{\rm e*}$, and the corollary of (cf. E.428) turns E.415 into the p. 95 form at every $q$, not only for $c\to\infty$.</p>
+  </div></details>
+  <p>The LO kernel contains no $c$: longitudinal photons are the instantaneous Coulomb field at every $q$, so the $c\to\infty$ form of the LO vertex is exact, inside the light cone too. The TO kernel equals the LO one deep inside the light cone, resonates at the light line of the electronic medium, $q_c=\sqrt{\epsilon^\infty}\,\omega/c$ (the light-cone wave vector of <a href="#x-light-cone">§X.1</a>), and decays as $(q_c/q)^2$ outside. TO phonons therefore couple to electrons, through transverse electronic currents, only inside or near the light cone, $q\lesssim q_c$. For GaAs $q_c\approx6\times10^{-5}$ Å$^{-1}$, four orders of magnitude below the zone boundary: invisible on the k-grids of transport calculations, central in optics, where it becomes the phonon-polariton physics of <a href="#b-phonon-se">§B.7</a>.</p>
+
+  <figure class="viz" id="viz-b-frohlich-lightline">
+    <p class="viz-title">LO vs TO coupling across the light line <span class="tag">interactive</span></p>
+    <div class="viz-grid two"><div class="pa"></div><div class="pb"></div></div>
+    <div class="ctrls"></div>
+    <div class="ro"></div>
+    <figcaption><strong>Model.</strong> (a) Photon propagator contracted with a longitudinal (LO) or transverse (TO) ionic current, normalized to the bare Coulomb value: dashed lines use $D^0$ (the bare vertex $g^{\rm dyn,0}$), solid lines use $D^{\rm e}$ (the screened vertex $g^{\rm dyn}$) for a constant electronic $\epsilon^{\rm e}=\epsilon^\infty(1+i\gamma)$, as in the derivation above. $\gamma$ is a loss tangent that regularizes the light-line pole (for $D^0$ a numerical broadening); the TO kernel is evaluated at $\omega=\omega_{\rm TO}$. (b) LO vertex in the electrostatic form (p. 95 and p. 98 with the factor $e$ restored), $\bG=0$, intraband $\rho=1$, $\omega_{\rm LO}$ in the zero-point amplitude as in Verdi–Giustino; $\sqrt N|g|$ is Giustino's $|g|$ in the G Eq. 38 convention. The dotted line is Fröhlich's formula (G Eq. 7). The TO vertex has no universal form, since it needs the transverse electronic current matrix elements. Materials: the <a href="#a-polar">§A.4</a> presets plus the measured $\omega_{\rm TO}$ of the figure above (literature values, illustrative). <strong>What to notice.</strong> The LO kernel is flat: retardation in EPP's sense (finite $c$) never touches the Coulomb channel, and in (b) the Fröhlich $1/q$ runs straight through the light cone. The TO kernel matches LO deep inside the cone, peaks at $q_c$ and falls as $(q_c/q)^2$; raising $\lambda_c$ pushes $q_c$ to zero and TO decouples. In (b) the bare vertex is $\epsilon^\infty$ times the screened one at every $q$.</figcaption>
+  </figure>
+
+  <div class="callout caveat"><p class="callout-title">When the LO/TO split is clean</p><p>The clean split needs $\bj_\sigma$ purely along or across $\hat\bq$ and an isotropic $\hat\epsilon^{\rm e}$; otherwise both kernels contribute. Also, at finite $c$ the transverse part of E.432 is not the optical dielectric function: for a constant electronic $\epsilon$ it equals $(q^2-\epsilon\omega^2/c^2)/(q^2-\omega^2/c^2)$ [derived], which tends to 1 as $c\to\infty$. Only the longitudinal part enters E.445–446.</p></div>
+
+  <p>In short, EPP derives the polar electron–phonon vertex instead of postulating it. Its static electrostatic limit is the Verdi–Giustino vertex; the additions are frequency-dependent RPA screening, bare/screened bookkeeping that cannot double count, and a photon-mediated coupling of TO phonons near the light cone. <a href="#b-electrostatic">§B.9</a> takes $c\to\infty$ in the whole self-energy and recovers Giustino's LO–TO splitting.</p>
+</section>
+<script>
+(() => {
+  const HC = 1973.27;      // ħc, eV Å
+  const E2 = 180.95;       // e²/ε0, eV Å
+  const H2M = 4.1803e-3;   // ħ²/amu, eV Å²
+  const H2ME = 7.61996;    // ħ²/m_e, eV Å²
+  // §A.4 numbers: ε∞, ε0, ħω_LO, ħω_TO (meV), Ω_uc (Å³), Z* (|e|), reduced mass μ (amu)
+  const MAT = {
+    GaAs: { name: 'GaAs', einf: 10.9, e0: 12.9, wLO: 36.2, wTO: 33.3, Om: 45.2, Z: 2.07, mu: 36.1 },
+    MgO: { name: 'MgO', einf: 2.96, e0: 9.8, wLO: 89.0, wTO: 49.1, Om: 18.7, Z: 1.98, mu: 9.65 },
+    NaCl: { name: 'NaCl', einf: 2.34, e0: 5.9, wLO: 32.7, wTO: 20.3, Om: 44.9, Z: 1.12, mu: 13.9 }
+  };
+  const matOpts = [['GaAs', 'GaAs'], ['MgO', 'MgO'], ['NaCl', 'NaCl']];
+  const logspace = (a, b, n) => EPP.linspace(Math.log10(a), Math.log10(b), n).map(v => Math.pow(10, v));
+  const SUP = { '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹', '-': '⁻' };
+  const sci = (v, d = 2) => {
+    if (!isFinite(v)) return '—';
+    if (v === 0) return '0';
+    const e = Math.floor(Math.log10(Math.abs(v))), m = v / Math.pow(10, e);
+    if (e >= -2 && e <= 3) return Number(v.toPrecision(d)).toString();
+    return m.toFixed(d - 1) + '×10' + String(e).split('').map(c => SUP[c] || c).join('');
+  };
+  const C = EPP.C;
+
+  // ---------- Feynman diagrams ----------
+  EPP.fd.draw(document.getElementById('b-frohlich-fd-epp'), { w: 350, h: 172, label: 'EPP electron-induced phonon self-energy: screened vertex, electron-hole bubble, bare vertex', items: [
+    { t: 'phonon', a: [6, 66], b: [50, 66], label: 'σ' },
+    { t: 'photon2', a: [50, 66], b: [125, 66], label: 'D^e', lpos: 'right', ldist: 15 },
+    { t: 'fermion', a: [125, 66], b: [225, 66], bend: 0.42, label: 'nk' },
+    { t: 'fermion', a: [225, 66], b: [125, 66], bend: 0.42, label: 'mk+q' },
+    { t: 'photon', a: [225, 66], b: [300, 66], label: 'D^0', lpos: 'right', ldist: 14 },
+    { t: 'phonon', a: [300, 66], b: [344, 66], label: "σ'" },
+    { t: 'vertex', at: [50, 66], r: 4.5, color: 'c4' },
+    { t: 'vertex', at: [125, 66], r: 4.5, color: 'electron' },
+    { t: 'vertex', at: [225, 66], r: 4.5, color: 'electron' },
+    { t: 'vertex', at: [300, 66], r: 4.5, color: 'c4' },
+    { t: 'text', at: [50, 50], text: 'J^*', color: 'c4-t' },
+    { t: 'text', at: [111, 50], text: 'J^e', color: 'electron-t' },
+    { t: 'text', at: [241, 50], text: 'J^{e*}', color: 'electron-t' },
+    { t: 'text', at: [300, 50], text: 'J', color: 'c4-t' },
+    { t: 'text', at: [175, 71], text: 'χ^0', color: 'electron-t' },
+    { t: 'plain', a: [44, 132], b: [131, 132], color: 'muted', width: 1.2 },
+    { t: 'plain', a: [44, 126], b: [44, 132], color: 'muted', width: 1.2 },
+    { t: 'plain', a: [131, 126], b: [131, 132], color: 'muted', width: 1.2 },
+    { t: 'plain', a: [219, 132], b: [306, 132], color: 'muted', width: 1.2 },
+    { t: 'plain', a: [219, 126], b: [219, 132], color: 'muted', width: 1.2 },
+    { t: 'plain', a: [306, 126], b: [306, 132], color: 'muted', width: 1.2 },
+    { t: 'text', at: [88, 151], text: 'g^{dyn}' },
+    { t: 'text', at: [88, 167], text: 'screened', size: 12, upright: true, color: 'muted' },
+    { t: 'text', at: [262, 151], text: 'g^{dyn,0}' },
+    { t: 'text', at: [262, 167], text: 'bare', size: 12, upright: true, color: 'muted' }
+  ]});
+  EPP.fd.draw(document.getElementById('b-frohlich-fd-g'), { w: 300, h: 172, label: 'Giustino phonon self-energy: bare vertex, Kohn-Sham bubble, screened vertex', items: [
+    { t: 'phonon', a: [6, 66], b: [60, 66], label: 'qν' },
+    { t: 'fermion', a: [60, 66], b: [196, 66], bend: 0.33, label: 'mk+q' },
+    { t: 'fermion', a: [196, 66], b: [60, 66], bend: 0.33, label: 'nk' },
+    { t: 'phonon', a: [208, 66], b: [294, 66], label: "q'ν'" },
+    { t: 'vertex', at: [60, 66], r: 3.5 },
+    { t: 'blob', at: [200, 66], r: 10, color: 'muted' },
+    { t: 'text', at: [60, 151], text: 'g^b' },
+    { t: 'text', at: [60, 167], text: 'bare', size: 12, upright: true, color: 'muted' },
+    { t: 'text', at: [200, 151], text: 'g' },
+    { t: 'text', at: [200, 167], text: 'screened', size: 12, upright: true, color: 'muted' }
+  ]});
+
+  // ---------- Figure: counting bubbles ----------
+  (() => {
+    const fig = document.getElementById('viz-b-frohlich-pairing');
+    const P = new EPP.Plot(fig.querySelector('.pp'), { xlabel: 'static electronic screening ε^e (q → 0)', ylabel: 'ħω_{LO} (meV); imaginary < 0', xlim: [1, 15], ylim: [-60, 80], xname: 'ε^e', aspect: 0.5, minHeight: 280, hoverX: v => v.toFixed(2), hoverY: v => v.toFixed(1) + ' meV', ariaLabel: 'LO frequency versus electronic screening for three ways of pairing bare and screened vertices' });
+    const ro = EPP.readout(fig.querySelector('.ro'));
+    const es = EPP.linspace(1, 15, 400);
+    const sw = (w2) => Math.sign(w2) * Math.sqrt(Math.abs(w2));
+    const fC = e => 1 / e, fSS = e => (e * e - e + 1) / (e * e), fBB = e => 2 - e;
+    let lastMat = null, ui = null;
+    function draw(s) {
+      const m = MAT[s.mat];
+      if (s.mat !== lastMat) { lastMat = s.mat; ui.set('eps', m.einf, true); }
+      const eps = EPP.clamp(s.eps, 1, 15);
+      const wp2 = E2 * H2M * m.Z * m.Z / (m.Om * m.mu) * 1e6; // meV²
+      const wT2 = m.wTO * m.wTO, W = Math.sqrt(wT2 + wp2);
+      const yl = [-0.6 * W, 1.22 * W];
+      const curve = f => es.map(e => sw(wT2 + wp2 * f(e)));
+      const vC = sw(wT2 + wp2 * fC(eps)), vS = sw(wT2 + wp2 * fSS(eps)), vB = sw(wT2 + wp2 * fBB(eps));
+      P.draw([
+        { type: 'hband', y0: yl[0], y1: 0, color: 'photon', alpha: 0.06, text: 'ω^2 < 0: lattice unstable' },
+        { type: 'hline', at: m.wTO, color: 'muted' },
+        { type: 'text', x: 4.2, y: m.wTO, text: 'bare ω_σ = ω_{TO}', color: 'muted', size: 11, align: 'left', dy: 3, baseline: 'top' },
+        { type: 'hline', at: m.wLO, color: 'phonon', dash: [2, 3], width: 1.2, text: 'measured ω_{LO}' },
+        { type: 'vline', at: m.einf, color: 'muted', dash: [2, 3] },
+        { type: 'line', x: es, y: curve(fC), color: 'phonon', label: 'one bare + one screened (E.412)' },
+        { type: 'line', x: es, y: curve(fSS), color: 'c5', dash: [6, 4], label: 'two screened' },
+        { type: 'line', x: es, y: curve(fBB), color: 'photon', dash: [2, 3], label: 'two bare' },
+        { type: 'vline', at: eps, color: 'ink', dash: [4, 3], width: 1 },
+        { type: 'points', x: [eps, eps, eps], y: [vC, vS, vB], color: 'ink', r: 3.5 }
+      ], { ylim: yl });
+      const show = v => v >= 0 ? v.toFixed(1) + ' meV' : 'unstable (ω² < 0)';
+      ro.set({ 'ε^e': eps.toFixed(2), 'bare × screened': show(vC), 'screened × screened': show(vS), 'bare × bare': show(vB), 'measured ω_{LO}': m.wLO.toFixed(1) + ' meV', 'ħω_p (unscreened)': Math.sqrt(wp2).toFixed(1) + ' meV' });
+    }
+    ui = EPP.controls(fig.querySelector('.ctrls'), [
+      { key: 'mat', type: 'select', label: 'material', options: matOpts, value: 'GaAs' },
+      { key: 'eps', type: 'range', label: 'cursor ε^e', min: 1, max: 15, step: 0.01, value: 10.9, fmt: v => v.toFixed(2) }
+    ], draw);
+    P.onPointer = (x) => { if (isFinite(x)) ui.set('eps', EPP.clamp(x, 1, 15)); };
+  })();
+
+  // ---------- Figure: dynamic vs adiabatic screening of the vertex ----------
+  (() => {
+    const fig = document.getElementById('viz-b-frohlich-dynamic');
+    const P = new EPP.Plot(fig.querySelector('.pd'), { xlabel: 'q (Å^{-1})', ylabel: '|g^{dyn}/g^{dyn,0}|', logx: true, logy: true, xlim: [1e-4, 1], ylim: [1e-6, 10], xname: 'q (Å^{-1})', aspect: 0.52, minHeight: 260, hoverX: v => sci(v, 3), hoverY: v => sci(v, 3), ariaLabel: 'Screening factor of the Frohlich vertex versus wavevector, dynamic versus static' });
+    const ro = EPP.readout(fig.querySelector('.ro'));
+    const einf = 10.9, ms = 0.067; // ε∞, m*/m_e
+    const qs = logspace(1e-4, 1, 420);
+    const h = (nu) => C.mul(C.sub([1, 0], C.mul(nu, nu)), C.log(C.div(C.add(nu, [1, 0]), C.sub(nu, [1, 0]))));
+    // complex Lindhard function F = χ0/(−N(E_F)), 3D, T = 0, spin-summed; z = q/2k_F, u = (ħω + iη)/(ħ v_F q)
+    function lindF(z, u) {
+      const nm = [u[0] - z, u[1]], np = [u[0] + z, u[1]];
+      if (Math.min(C.abs(nm), C.abs(np)) > 6) { // large-|ν| series (avoids cancellation in the plasma regime)
+        let s = [0, 0]; const im = C.inv(nm), ip = C.inv(np), im2 = C.mul(im, im), ip2 = C.mul(ip, ip);
+        let pm = im, pp = ip;
+        for (let k = 0; k < 10; k++) { s = C.add(s, C.scale(C.sub(pm, pp), 1 / ((2 * k + 1) * (2 * k + 3)))); pm = C.mul(pm, im2); pp = C.mul(pp, ip2); }
+        return C.scale(s, -1 / (2 * z));
+      }
+      return C.sub([0.5, 0], C.scale(C.sub(h(nm), h(np)), 1 / (8 * z)));
+    }
+    const Fstat = z => Math.abs(z - 1) < 1e-9 ? 0.5 : 0.5 + (1 - z * z) / (4 * z) * Math.log(Math.abs((1 + z) / (1 - z)));
+    function draw(s) {
+      const n = s.n * 1e-24;                          // Å⁻³
+      const kF = Math.cbrt(3 * Math.PI * Math.PI * n); // Å⁻¹
+      const EF = 0.5 * H2ME * kF * kF / ms;           // eV
+      const hvF = H2ME * kF / ms;                     // ħ v_F, eV Å
+      const kTF2 = E2 * 1.5 * n / EF;                 // Å⁻²
+      const hwpl = Math.sqrt(E2 * n * H2ME / ms);     // eV, bare plasma energy
+      const hw = s.w / 1000, eta = Math.max(hw / 70, 1e-7); // eV; broadening ∝ ω so that ω → 0 gives the static limit
+      const dyn = new Array(qs.length), stat = new Array(qs.length);
+      for (let i = 0; i < qs.length; i++) {
+        const q = qs[i], z = q / (2 * kF);
+        const F = lindF(z, [hw / (hvF * q), eta / (hvF * q)]);
+        const epsD = [einf + kTF2 / (q * q) * F[0], kTF2 / (q * q) * F[1]];
+        const r = 1 / C.abs(epsD);
+        dyn[i] = isFinite(r) ? r : NaN;
+        stat[i] = 1 / (einf + kTF2 / (q * q) * Fstat(z));
+      }
+      const qTF = Math.sqrt(kTF2 / einf), qw = hw > 0 ? hw / hvF : NaN;
+      P.draw([
+        { type: 'line', x: qs, y: qs.map(() => 1 / einf), color: 'muted', dash: [2, 3], label: 'undoped, 1/ε_∞' },
+        { type: 'line', x: qs, y: stat, color: 'electron', dash: [6, 4], label: 'adiabatic, ε^e(q, 0)' },
+        { type: 'line', x: qs, y: dyn, color: 'electron', label: 'dynamic, ε^e(q, ω)' },
+        isFinite(qw) && qw > 1e-4 && qw < 1 ? { type: 'vline', at: qw, color: 'phonon', text: 'ω/v_F' } : null,
+        qTF > 1e-4 && qTF < 1 ? { type: 'vline', at: qTF, color: 'muted', text: 'q_{TF}', textDy: 15 } : null,
+        2 * kF > 1e-4 && 2 * kF < 1 ? { type: 'vline', at: 2 * kF, color: 'muted', text: '2k_F', textDy: 30 } : null
+      ]);
+      const reEps0 = hw > 0 ? einf - (hwpl / hw) ** 2 : Infinity;
+      ro.set({
+        'ħω_{pl}/√ε_∞': (1000 * hwpl / Math.sqrt(einf)).toFixed(1) + ' meV',
+        'E_F': (1000 * EF).toFixed(1) + ' meV',
+        'ε^e(q→0, ω)': isFinite(reEps0) ? reEps0.toFixed(2) : '∞ (static)',
+        'q_{TF}': sci(qTF, 3) + ' Å⁻¹',
+        'ω/v_F': isFinite(qw) ? sci(qw, 3) + ' Å⁻¹' : '0'
+      });
+    }
+    EPP.controls(fig.querySelector('.ctrls'), [
+      { key: 'n', type: 'range', label: 'electron density n', min: 1e15, max: 1e19, value: 1e17, log: true, step: 0.01, fmt: v => sci(v, 2) + ' cm⁻³' },
+      { key: 'w', type: 'range', label: 'vertex frequency ħω', min: 0, max: 80, step: 0.1, value: 36.2, fmt: v => v.toFixed(1) + ' meV' }
+    ], draw);
+  })();
+
+  // ---------- Figure: LO vs TO across the light line ----------
+  (() => {
+    const fig = document.getElementById('viz-b-frohlich-lightline');
+    const pA = new EPP.Plot(fig.querySelector('.pa'), { xlabel: 'q (Å^{-1})', ylabel: '|K|, normalized to bare Coulomb', logx: true, logy: true, xlim: [1e-8, 1], ylim: [1e-6, 1e4], xname: 'q', aspect: 0.78, hoverX: v => sci(v, 3), hoverY: v => sci(v, 3), ariaLabel: 'LO and TO photon kernels versus wavevector, bare and screened' });
+    const pB = new EPP.Plot(fig.querySelector('.pb'), { xlabel: 'q (Å^{-1})', ylabel: '√N |g| for the LO mode (eV)', logx: true, logy: true, xlim: [1e-6, 1], ylim: [1e-2, 1e6], xname: 'q (Å^{-1})', aspect: 0.78, hoverX: v => sci(v, 3), hoverY: v => sci(v, 3) + ' eV', ariaLabel: 'Bare and screened LO electron-phonon vertex versus wavevector' });
+    const ro = EPP.readout(fig.querySelector('.ro'));
+    const qAbs = logspace(1e-8, 1, 520), qNorm = logspace(1e-3, 1e3, 520), qB = logspace(1e-6, 1, 160);
+    function draw(s) {
+      const m = MAT[s.mat], eps = m.einf, g = s.gam, lam = s.lam;
+      const qvac = (m.wTO / 1000) / (HC * lam), q0 = Math.sqrt(eps) * qvac;
+      const norm = s.axis === 'n';
+      const xs = norm ? qNorm : qAbs, toQ = norm ? (x => x * q0) : (x => x);
+      const KeT = q => 1 / Math.hypot(eps - (q / qvac) ** 2, eps * g);
+      const K0T = q => 1 / Math.hypot(1 - (q / qvac) ** 2, g);
+      const KeL = 1 / (eps * Math.sqrt(1 + g * g)), K0L = 1;
+      const xl = norm ? [1e-3, 1e3] : [1e-8, 1];
+      const xR = norm ? 300 : 0.2;
+      const grid0 = norm ? 1e-3 / q0 : 1e-3, grid1 = norm ? 1e3 : 1;
+      pA.opt.xname = norm ? 'q/q_c' : 'q (Å^{-1})';
+      pA.draw([
+        grid0 < grid1 ? { type: 'band', x0: grid0, x1: grid1, color: 'muted', alpha: 0.08, text: grid1 / grid0 > 30 ? 'k-grid scales' : '' } : null,
+        { type: 'vline', at: norm ? 1 / Math.sqrt(eps) : qvac, color: 'muted' },
+        { type: 'text', x: norm ? 1 / Math.sqrt(eps) : qvac, y: 2500, text: 'ω/c', color: 'muted', size: 11, align: 'right', dx: -4 },
+        { type: 'vline', at: norm ? 1 : q0, color: 'photon', text: 'q_c' },
+        { type: 'line', x: xs, y: xs.map(() => K0L), color: 'c5', dash: [6, 4], label: 'LO, bare D^0' },
+        { type: 'line', x: xs, y: xs.map(() => KeL), color: 'c5', label: 'LO, screened D^e' },
+        { type: 'line', x: xs, y: xs.map(x => K0T(toQ(x))), color: 'photon', dash: [6, 4], label: 'TO, bare D^0' },
+        { type: 'line', x: xs, y: xs.map(x => KeT(toQ(x))), color: 'photon', label: 'TO, screened D^e' },
+        { type: 'text', x: xR, y: K0L, text: 'LO bare', color: 'c5', align: 'right', dy: -9 },
+        { type: 'text', x: xR, y: KeL, text: 'LO screened', color: 'c5', align: 'right', dy: 10 }
+      ], { xlim: xl, xlabel: norm ? 'q / q_c' : 'q (Å^{-1})' });
+      const l = Math.sqrt(H2M / (2 * m.mu * m.wLO / 1000));       // zero-point length, Å
+      const Cs = (E2 / m.Om) * (m.Z / eps) * l;                     // eV Å⁻¹ (screened, VG)
+      const CF = Math.sqrt((E2 / m.Om) * (m.wLO / 2000) * (1 / eps - 1 / m.e0)); // Fröhlich, eV Å⁻¹
+      pB.draw([
+        q0 > 1e-6 ? { type: 'band', x0: 1e-6, x1: q0, color: 'photon', alpha: 0.1, text: q0 > 3e-5 ? 'light cone' : '' } : null,
+        { type: 'line', x: qB, y: qB.map(q => eps * Cs / q), color: 'c5', dash: [6, 4], label: 'bare g^{dyn,0}' },
+        { type: 'line', x: qB, y: qB.map(q => Cs / q), color: 'c5', label: 'screened g^{dyn} (Verdi–Giustino)' },
+        { type: 'line', x: qB, y: qB.map(q => CF / q), color: 'muted', dash: [2, 3], label: 'Fröhlich, G Eq. 7' }
+      ]);
+      const ratio = KeT(1e-3) / KeL;
+      ro.set({
+        'q_c = √ε_∞ ω_{TO}/c': sci(q0, 3) + ' Å⁻¹',
+        '|K_{TO}/K_{LO}| at q = 10^{-3} Å^{-1}': sci(ratio, 2),
+        'q·√N|g^{dyn}|': Cs.toFixed(3) + ' eV Å⁻¹',
+        'Fröhlich': CF.toFixed(3) + ' eV Å⁻¹',
+        '|g^{dyn,0}/g^{dyn}|': eps.toFixed(2)
+      });
+    }
+    EPP.controls(fig.querySelector('.ctrls'), [
+      { key: 'mat', type: 'select', label: 'material', options: matOpts, value: 'GaAs' },
+      { key: 'lam', type: 'range', label: 'speed of light c → λ_c c', min: 1, max: 1e6, value: 1, log: true, step: 0.01, fmt: v => '×' + sci(v, 2) },
+      { key: 'gam', type: 'range', label: 'loss tangent γ', min: 1e-3, max: 0.1, value: 0.01, log: true, step: 0.01, fmt: v => v.toFixed(3) },
+      { key: 'axis', type: 'seg', label: 'panel (a) axis', options: [['q', 'q (Å⁻¹)'], ['n', 'q/q_c']], value: 'q' }
+    ], draw);
+  })();
+})();
+</script>

@@ -1,0 +1,453 @@
+<section class="chapter" id="b-propagator" data-num="B.6" data-title="Total propagator and polaritons">
+  <header class="ch-head">
+    <p class="eyebrow"><span class="num">B.6</span><span>EPP §6 · Eqs. 312–385</span></p>
+    <h2>Charge conservation, the total propagator and polaritons</h2>
+    <p class="lede">Coulomb lines and photon lines, charge vertices and current vertices: EPP §6 shows that charge conservation collapses all of them into one $3\times3$ Dyson equation, $D=D^0+D^0\Pi_{jj}D$. By the end you can derive it, read $D^0$ as the vacuum Maxwell propagator, and find plasmons, LO phonons and polaritons as its poles.</p>
+  </header>
+
+  <p><a href="#b-photon-se">§B.5</a> dressed the transverse photon (E Eq. 277) and kept the Coulomb interaction (E Eq. 235) as a separate, instantaneous scalar line $v$. EPP §6 puts both into one perturbation series. Units are Gaussian, $v(q)=4\pi/q^2$, with the charges in the vertices; the Born charges $Z^*$ carry the dimension of charge. Giustino's nuclear density correlator $D$ (G Eq. 103) is written $\mathcal D$, so that $D$ always means EPP's photon propagator.</p>
+
+  <div class="callout intuition">
+    <p class="callout-title">Physical picture: one current, two ways to look at it</p>
+    <p>A crystal has one response to the field: an induced current. Charge piles up only where that current converges, $\partial_t\rho+\nabla\cdot\bj=0$. So the density response of GW, BSE and DFPT is the longitudinal part of the current response, and the instantaneous Coulomb line is the longitudinal part of the photon line. With both statements, every line is a $3\times3$ tensor, every bubble a current–current correlator, and the series sums into one Dyson equation. In an isotropic medium it splits into a longitudinal channel, whose poles are <span class="t-e">plasmons</span> and LO <span class="t-p">phonons</span>, and a transverse channel, whose poles are <span class="t-g">polaritons</span>.</p>
+  </div>
+
+  <h3>One interaction, two kinds of lines</h3>
+  <p>Adding the longitudinal term of E Eq. 235 to the transverse couplings of §B.5 gives the full interaction (EPP p. 68):</p>
+  <div class="eq">$$\begin{aligned}V'={}&-\frac1c\int d\br\,\bj^{\rm e}(\br)\cdot\bA(\br)+\frac{e^2}{2m_{\rm e}c^2}\int d\br\,\rho^{\rm e}(\br)\,\bA^2(\br)\\&-\frac1c\int d\br\,\bj^{\rm ion}(\br)\cdot\bA(\br)+\frac{e^2}{2m_0c^2}\sum_{\alpha\beta}\int d\br\,A_\alpha(\br)\,\rho^{\rm ion}_{\alpha\beta}(\br)\,A_\beta(\br)\\&+\frac12\int d\br\int d\br'\,\frac{[\rho^{\rm e}(\br)+\rho^{\rm ion}(\br)][\rho^{\rm e}(\br')+\rho^{\rm ion}(\br')]}{|\br-\br'|}\end{aligned}\tag{E.312}$$</div>
+  <p>The ionic bound charge $\rho^{\rm ion}=-\nabla\cdot\bP$ of the point dipoles $P_\mu(\br)=\sum_{ia\nu}Z^*_{a\mu\nu}Q_{ia\nu}\,\delta(\br-\bR^0_i)$ (E Eqs. 313–314) is linear in the phonon operators. The c-number tensor $\rho^{\rm ion}_{\alpha\beta}\propto\sum_aZ^*_{a\alpha\mu}Z^*_{a\beta\mu}/m_a$ (E Eq. 315) belongs to the diamagnetic term. Mixed electron–ion bubbles vanish at lowest order, so $D=D^0+D^{1,\rm ion}+D^{1,\rm e}+\dots$ (E Eq. 316), each term a $4\times4$ matrix with one scalar (Coulomb) slot and a $3\times3$ vector block:</p>
+  <div class="eq">$$D^0=\begin{bmatrix}v&0\\0&\hat D^{0t}\end{bmatrix}\tag{E.317}$$</div>
+  <div class="eq">$$D^{1,i}=\begin{bmatrix}v\,\Pi^i_{\rho\rho}\,v&v\,\Pi^i_{\rho j}\,\hat D^{0t}\\ \hat D^{0t}\,\Pi^i_{j\rho}\,v&\hat D^{0t}\,\Pi^i_{jj}\,\hat D^{0t}\end{bmatrix},\qquad i={\rm e,\,ion}\tag{E.319}$$</div>
+  <p>$\hat D^{0t}_{\mu\nu}=\frac{i}{\hbar c}\langle T\{A_\mu A_\nu\}\rangle$ (E Eq. 318) is the transverse photon. The longitudinal pairing of the quantized field vanishes (E Eq. 263), so $v$ alone carries the longitudinal interaction. $\Pi^i_{\rho\rho}=-\frac{i}{\hbar}\langle T\{\rho^i\rho^i\}\rangle$ (E Eq. 320) is Hedin's irreducible polarizability $P$, here the bare RPA bubble, and $\Pi^i_{jj}$ the gauge-invariant (para plus dia) current correlator (E Eqs. 321–322). Each sector has its own series, and at higher order the lines mix: a transverse photon can sit inside the Coulomb sector (EPP Fig. 8).</p>
+
+  <figure id="b-propagator-blockfig" style="margin:20px 0 24px">
+    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px 14px">
+      <span style="font-size:1.05rem">$D^{1,i}=$</span>
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 12px;padding:8px 12px;border-left:2px solid var(--fg-2);border-right:2px solid var(--fg-2);border-radius:6px;flex:1 1 320px;max-width:600px;min-width:0">
+        <div style="display:grid;justify-items:center;gap:2px;min-width:0;text-align:center"><div class="b06-cell" data-ch="v,i:rr,v" data-aria="Coulomb sector: v, density-density bubble, v"></div><div style="font-size:0.88rem">$ll$: $v\,\Pi^i_{\rho\rho}\,v$</div><div style="font-size:0.8rem;color:var(--muted)">$\to v\big[-\tfrac{c}{\omega^2}\bq\cdot\Pi^i_{jj}\cdot\bq\big]v$</div></div>
+        <div style="display:grid;justify-items:center;gap:2px;min-width:0;text-align:center"><div class="b06-cell" data-ch="v,i:rj,t" data-aria="longitudinal-transverse sector: v, density-current bubble, transverse photon"></div><div style="font-size:0.88rem">$lt$: $v\,\Pi^i_{\rho j}\,\hat D^{0t}$</div><div style="font-size:0.8rem;color:var(--muted)">$\to v\big[\tfrac{1}{\omega}\bq\cdot\Pi^i_{jj}\big]\hat D^{0t}$</div></div>
+        <div style="display:grid;justify-items:center;gap:2px;min-width:0;text-align:center"><div class="b06-cell" data-ch="t,i:jr,v" data-aria="transverse-longitudinal sector: transverse photon, current-density bubble, v"></div><div style="font-size:0.88rem">$tl$: $\hat D^{0t}\,\Pi^i_{j\rho}\,v$</div><div style="font-size:0.8rem;color:var(--muted)">$\to \hat D^{0t}\big[-\tfrac{c}{\omega}\Pi^i_{jj}\cdot\bq\big]v$</div></div>
+        <div style="display:grid;justify-items:center;gap:2px;min-width:0;text-align:center"><div class="b06-cell" data-ch="t,i:jj,t" data-aria="transverse sector: transverse photon, current-current bubble, transverse photon"></div><div style="font-size:0.88rem">$tt$: $\hat D^{0t}\,\Pi^i_{jj}\,\hat D^{0t}$</div><div style="font-size:0.8rem;color:var(--muted)">$\to$ unchanged</div></div>
+      </div>
+    </div>
+    <figcaption style="font-size:0.92rem;line-height:1.5;color:var(--fg-2);margin-top:10px">E Eq. 319 after EPP Fig. 7, in this page's glyphs. Rose dashed: Coulomb line $v$; rose wavy: $\hat D^{0t}$; dots: charge vertices $\rho$; squares: current vertices $\bj$. Second line of each cell: the same entry in $\bq$-space after the connection formulas below. Only $\Pi_{jj}$ survives.</figcaption>
+  </figure>
+
+  <h3>Induced charges and currents</h3>
+  <p>Cut a diagram open and attach an external source. It is either a charge $\rho^{\rm ext}$, acting through $v$ (or $W$ once screened), or a vector potential coupled through $-\frac1c\int\bj\cdot\bA^{\rm ext}$, which does not distinguish $l$ from $t$. The bubbles are irreducible, so (EPP p. 72; $\otimes$ is a convolution in space and time)</p>
+  <div class="eq">$$\rho^{i,{\rm ind},l}=\Pi^i_{\rho\rho}\otimes W\otimes\rho^{\rm ext},\qquad i={\rm e,\,ion}\tag{E.330}$$</div>
+  <div class="eq">$$j^{i,{\rm ind}}_\mu=\sum_\nu\Pi^i_{jj\mu\nu}\otimes A^{{\rm ext,sc}}_\nu\tag{E.333}$$</div>
+  <p>and likewise $\rho^{i,\rm ind}=\sum_\mu\Pi^i_{\rho j\mu}\otimes A^{\rm ext,sc}_\mu$ and $j^{i,{\rm ind},l}_\mu=\Pi^i_{j\rho\mu}\otimes W\otimes\rho^{\rm ext}$ (E Eqs. 331–332), with $\bA^{\rm ext,sc}$ the screened external field. This is the identity $\chi v=PW$ for both kinds of probe. With time dependence $e^{-i\omega t}$, the temporal gauge and continuity read</p>
+  <div class="eq">$$\bE^{{\rm ext},\sigma,{\rm sc}}(\omega)=i\frac{\omega}{c}\,\bA^{{\rm ext},\sigma,{\rm sc}}(\omega),\qquad\sigma=l,t\tag{E.334}$$</div>
+  <div class="eq">$$\nabla\cdot\bj=i\omega\rho\tag{E.335}$$</div>
+
+  <h3>Charge conservation: the connection formulas</h3>
+  <p>Impose continuity on the pair induced by the longitudinal probe (E Eq. 340) and on the pair induced by the total field (E Eq. 342). Since $\rho^{\rm ext}$ and $\bA^{\rm ext,sc}$ are arbitrary and $W$ is invertible, the kernels themselves must agree (EPP p. 73):</p>
+  <div class="eq">$$\Pi^i_{\rho\rho}(\br,\br',\omega)=-\frac{i}{\omega}\sum_\mu\partial_\mu\Pi^i_{j\rho\mu}(\br,\br',\omega)\tag{E.341}$$</div>
+  <div class="eq">$$\Pi^i_{\rho j\nu}(\br,\br',\omega)=-\frac{i}{\omega}\sum_\mu\partial_\mu\Pi^i_{jj\mu\nu}(\br,\br',\omega)\tag{E.344}$$</div>
+  <p>The mixed correlators carry different prefactors, $\Pi_{j\rho}=-\frac{i}{\hbar}\langle T\{j\rho\}\rangle$ and $\Pi_{\rho j}=+\frac{i}{\hbar c}\langle T\{\rho j\}\rangle$ (E Eqs. 345–346), because a current vertex always comes from $-\frac1c\int\bj\cdot\bA$. Reversing the operator order in a time-ordered correlator gives</p>
+  <div class="eq">$$\Pi^i_{\rho j\mu}(\br',\br,\omega)=-\frac1c\,\Pi^i_{j\rho\mu}(\br,\br',-\omega)\tag{E.347}$$</div>
+  <p>and $\Pi^i_{jj\mu\nu}(\br,\br',-\omega)=\Pi^i_{jj\nu\mu}(\br',\br,\omega)$ (E Eq. 348). These move the derivative of E Eq. 344 onto $\br'$, and E Eq. 341 closes the set:</p>
+  <div class="eq">$$\Pi^i_{j\rho\mu}(\br,\br',\omega)=-i\frac{c}{\omega}\sum_\nu\partial'_\nu\Pi^i_{jj\mu\nu}(\br,\br',\omega)\tag{E.349}$$</div>
+  <div class="eq">$$\boxed{\Pi^i_{\rho\rho}(\br,\br',\omega)=-\frac{c}{\omega^2}\sum_{\mu\nu}\partial_\mu\partial'_\nu\,\Pi^i_{jj\mu\nu}(\br,\br',\omega)}\tag{E.350}$$</div>
+  <p>In a homogeneous medium, with $\partial_\mu\to iq_\mu$ and $\partial'_\nu\to-iq_\nu$ (derived from E Eqs. 344, 349 and 350):</p>
+  <div class="eq">$$\Pi_{\rho\rho}=-\frac{c}{\omega^2}\,\bq\cdot\Pi_{jj}\cdot\bq,\qquad \Pi_{\rho j}=\frac1\omega\,\bq\cdot\Pi_{jj},\qquad \Pi_{j\rho}=-\frac{c}{\omega}\,\Pi_{jj}\cdot\bq .$$</div>
+  <p>These are the Ward identities of QED, $q_\mu\Pi^{\mu\nu}=0$ for the four-current, written for a crystal. Only $\Pi_{jj}$ is independent. The density response is its longitudinal projection, and a transverse current ($\bq\cdot\bj=0$) carries no charge.</p>
+  <p>EPP §6.0.2 verifies E Eq. 350 for the ions. $\Pi^{\rm ion}_{\rho\rho}$ computed directly from $\rho^{\rm ion}=-\nabla\cdot\bP$ is, at $\bG=\bG'=0$ (cf. EPP p. 77),</p>
+  <div class="eq">$$\Pi^{\rm ion}_{\rho\rho}(\bq,\omega)=\frac{1}{\Omega_{\rm uc}}\sum_\sigma\frac{|\bq\cdot\bj_\sigma(\bq)|^2}{\omega^2-\omega^2_\sigma(\bq)+i\eta},$$</div>
+  <p>which is exactly $-\frac{c}{\omega^2}\bq\cdot\Pi^{\rm ion}_{jj}\cdot\bq$ for the gauge-invariant correlator of §B.5,</p>
+  <div class="eq">$$\Pi^{\rm ion}_{jj\mu\nu}(\bq,\omega)=-\frac{\omega^2}{c\,\Omega_{\rm uc}}\sum_{\sigma=1}^{3s}\frac{j_{\mu\sigma}(\bq)\,j^*_{\nu\sigma}(\bq)}{\omega^2-\omega^2_\sigma(\bq)+i\eta}.\tag{E.352}$$</div>
+  <p>Its overall $\omega^2$ comes from the diamagnetic subtraction $-\Pi^{\rm para}(0)$. The paramagnetic part alone would add $-\sum_\sigma|\bq\cdot\bj_\sigma|^2/(\Omega_{\rm uc}\omega^2)$, a static density response that diverges (third tab of the figure below). The numerator $\bq\cdot\bj_\sigma=\sum_a\bq\cdot Z^*_a\cdot\be_{a\sigma}/\sqrt{m_a}$ is that of the Verdi–Giustino vertex (G Eq. 180).</p>
+
+  <details class="derivation"><summary>Derivation: from E Eqs. 341 and 344 to E Eqs. 349 and 350, and the ionic check</summary><div class="d-body">
+    <p>By E Eq. 347, $\Pi_{j\rho\mu}(\br,\br',\omega)=-c\,\Pi_{\rho j\mu}(\br',\br,-\omega)$. E Eq. 344 with $\br\leftrightarrow\br'$ and $\omega\to-\omega$ gives $\Pi_{\rho j\mu}(\br',\br,-\omega)=\frac{i}{\omega}\sum_\nu\partial'_\nu\Pi_{jj\nu\mu}(\br',\br,-\omega)$, and E Eq. 348 turns the last factor into $\Pi_{jj\mu\nu}(\br,\br',\omega)$: this is E Eq. 349. Inserted into E Eq. 341 it gives the prefactor $(-\frac{i}{\omega})(-i\frac{c}{\omega})=-\frac{c}{\omega^2}$: E Eq. 350.</p>
+    <p>Ionic check: $\Pi^{\rm ion}_{\rho\rho}=-\frac{i}{\hbar}\sum_{\mu\nu}\partial_\mu\partial'_\nu\langle T\{P_\mu P_\nu\}\rangle$ (E Eq. 353). The displacement operator brings $\hbar/(2m_a\omega_\sigma)$ and the Fourier-transformed phonon pairing $2i\omega_\sigma/(\omega^2-\omega_\sigma^2+i\eta)$, so the prefactor is $-\frac{i}{N\hbar}\cdot\frac{\hbar}{2\omega_\sigma}\cdot2i\omega_\sigma=\frac1N$, and the lattice sums (E Eq. 354) turn $\frac1N$ into $\frac{1}{\Omega_{\rm uc}}$. The kernel $\frac{1}{\Omega_{\rm uc}}\sum_\sigma j_{\mu\sigma}j^*_{\nu\sigma}/(\omega^2-\omega_\sigma^2)$ is $-\frac{c}{\omega^2}\Pi^{\rm ion}_{jj\mu\nu}$ by E Eq. 352. With the paramagnetic part alone, $\Pi^{\rm para}_{\mu\nu}=-\frac{1}{c\Omega_{\rm uc}}\sum_\sigma\omega_\sigma^2j_{\mu\sigma}j^*_{\nu\sigma}/(\omega^2-\omega_\sigma^2)$ (E Eq. 297), the same contraction gives $\frac{1}{\Omega_{\rm uc}}\sum_\sigma|\bq\cdot\bj_\sigma|^2\frac{\omega_\sigma^2}{\omega^2(\omega^2-\omega_\sigma^2)}$, the direct result minus $\frac{1}{\Omega_{\rm uc}\omega^2}\sum_\sigma|\bq\cdot\bj_\sigma|^2$.</p>
+  </div></details>
+
+  <div class="callout connect">
+    <p class="callout-title">For the GW/BSE practitioner: length and velocity gauge</p>
+    <p>E Eq. 350 is why a length-gauge calculation with $\langle c|e^{-i\bq\cdot\br}|v\rangle$ and a velocity-gauge one with $\langle c|\hat\bp|v\rangle=im\omega_{cv}\langle c|\br|v\rangle$ give the same $\epsilon$. In E Eq. 383 below, the diamagnetic subtraction that makes it hold appears as the factor $\hbar\omega/(E_{n\bk}-E_{m\bk+\bq})$. The $1/\omega^2$ divergence of velocity-gauge spectra computed without the diamagnetic term violates it. The current must also obey continuity with the Hamiltonian: nonlocal pseudopotentials require the correction $\frac{ie}{\hbar}[V_{\rm NL},\br]$ to the current of E Eq. 384. EPP verifies E Eq. 350 only for the ionic RPA correlator and concludes "inductively" that all connection formulas hold. They do, provided $\Pi_{jj}$ contains the diamagnetic term and the current operator obeys continuity with the Hamiltonian.</p>
+  </div>
+
+  <h3>From four sectors to one tensor (EPP §6.0.3)</h3>
+  <p>With E Eqs. 344, 349 and 350 every lowest-order sector contains only $\Pi_{jj}$ (EPP Fig. 9). EPP labels the scalar (Coulomb) slot of the $4\times4$ matrix "1", so $D_{11}$ is the scalar–scalar entry, not the $xx$ component. The Coulomb sector reads</p>
+  <div class="eq">$$\begin{aligned}D_{11}(\br,\br',\omega)={}&v(\br,\br')\\&-\frac{c}{\omega^2}\sum_{i={\rm e,ion}}\sum_{\alpha\beta=xyz}\int d\br_1d\br_2\,v(\br,\br_1)\big[\partial_{1\alpha}\partial_{2\beta}\Pi^i_{jj\alpha\beta}(\br_1,\br_2,\omega)\big]v(\br_2,\br')+\dots\end{aligned}\tag{E.355}$$</div>
+  <p>Integrating by parts moves the derivatives onto the Coulomb lines (EPP p. 79), but the sectors remain a scalar, a row, a column and a matrix. EPP acts on them with $-\frac{c}{\omega^2}\partial_\mu\partial'_\nu$ (E Eq. 359), $i\frac{c}{\omega}\partial_\mu$, $\frac{i}{\omega}\partial'_\nu$ and $1$. In our reading (EPP does not say so) this is a change to the temporal gauge: a potential $\phi(\br)$ becomes $\bA_l=\frac{ic}{\omega}\nabla\phi$, and a charge source becomes a current source through $\rho=-\frac{i}{\omega}\nabla'\cdot\bj$. Every Coulomb line then appears as</p>
+  <div class="eq">$$\boxed{D^{0l}_{\mu\nu}(\br,\br',\omega)=-\frac{c}{\omega^2}\,\partial_\mu\partial'_\nu\,v(\br-\br')}\tag{E.364}$$</div>
+  <p>and all four sectors share the form $D^{ab}=\delta_{ab}D^{0a}+D^{0a}\Pi_{jj}D^{0b}+\dots$ with $a,b\in\{l,t\}$ (E Eqs. 365–368, EPP Fig. 10). The rule is</p>
+  <div class="eq">$$\rho^i\to j^i_\mu\quad(i={\rm ion,e}),\qquad v\to D^{0l}_{\mu\nu}(\omega),\tag{E.377}$$</div>
+  <p>and the sum is $D=D^0+D^0\Pi_{jj}D^0+\dots$ with $D^0=D^{0l}+D^{0t}$ and $\Pi_{jj}=\Pi^{\rm ion}_{jj}+\Pi^{\rm e}_{jj}$ (E Eqs. 369–371). The second tab of the figure below steps through EPP Figs. 9–11.</p>
+
+  <h3>What $D^0$ is: the vacuum Maxwell propagator (EPP §6.0.4)</h3>
+  <p>Fourier-transforming E Eq. 364 (E Eq. 373) and adding the transverse photon, with $\omega_\bq=cq$:</p>
+  <div class="eq">$$D^{0t}_{\mu\nu}(\bq,\omega)=-\frac{4\pi c}{q^2}\,\frac{q^2\delta_{\mu\nu}-q_\mu q_\nu}{\omega^2-\omega_\bq^2+i\eta},\tag{E.372}$$</div>
+  <div class="eq">$$D^{0l}_{\mu\nu}(\bq,\omega)=-\frac{4\pi c}{q^2}\,\frac{q_\mu q_\nu}{\omega^2},\tag{E.374}$$</div>
+  <div class="eq">$$D^0_{\mu\nu}(\bq,\omega)=D^{0l}_{\mu\nu}(\bq,\omega)+D^{0t}_{\mu\nu}(\bq,\omega)=\frac{4\pi c}{\omega^2}\,\frac{-q_\mu q_\nu+\frac{\omega^2}{c^2}\delta_{\mu\nu}}{q^2-\frac{\omega^2}{c^2}-i\eta}.\tag{E.375}$$</div>
+  <p>In projector form, $D^0=-\frac{4\pi c}{\omega^2}P^L+\frac{4\pi}{c}\frac{P^T}{q^2-\omega^2/c^2}$ with $P^L=\hat q\hat q$ and $P^T=1-\hat q\hat q$. This is the inverse of the temporal-gauge Maxwell operator: $[(q^2-\frac{\omega^2}{c^2})\delta_{\mu\nu}-q_\mu q_\nu]A_\nu=\frac{4\pi}{c}j_\mu$ (derived here; EPP cites its "Lecture 9"). So $D^0\bj^{\rm ext}$ is the field of an external current, and $D^0\Pi_{jj}D^0\bj^{\rm ext}$ the first induced field (E Eq. 376). The longitudinal part $-4\pi c/\omega^2$ is independent of $q$: it has no light cone. Where $D^{0t}$ competes with it is the subject of <a href="#x-light-cone">§X.1</a>.</p>
+
+  <div class="callout caveat">
+    <p class="callout-title">Is the longitudinal propagator zero or not? E Eq. 263 vs E Eq. 374</p>
+    <p>Both statements are correct, and they are about different objects.</p>
+    <ul>
+      <li><strong>E Eq. 263, $D^{0l}=0$</strong> (<a href="#b-photon-se">§B.5</a>), is the free propagator of the interaction-picture operator $\bA_l$, which has no restoring force. Its field energy $\frac{1}{8\pi}\int\bE_l^2$ became, through Gauss's law, the Coulomb term of E Eq. 312 and was moved into $V'$ (<a href="#b-fields">§B.4</a>). An operator with no dynamics in $H_0$ is static in the interaction picture, so its free propagator vanishes at every $\omega\neq0$ (only a $\delta(\omega)$ term remains). Hence $\hat D^{0t}$ is the only vector line in E Eq. 317.</li>
+      <li><strong>E Eq. 374</strong> is not a new line. It is the Coulomb line $v$ of E Eq. 312, carried by the connection formulas from charge vertices to current vertices. EPP calls E Eq. 364 "ad hoc", but $\bA_l=\frac{ic}{\omega}\nabla\phi$ and continuity fix it.</li>
+    </ul>
+    <p>Keeping $v$ and adding $D^{0l}$ would count Coulomb twice. The $1/\omega^2$ double pole of E Eq. 374, for which EPP gives no $i\eta$, describes a static charge in the temporal gauge, where $\bA_l$ grows linearly in time at constant $\bE$. It is harmless because $D^{0l}$ only meets conserved currents, and $\bq\cdot\bj=\omega\rho$ supplies the compensating powers of $\omega$. Likewise, "identical to the vacuum Maxwell propagator" holds in the temporal gauge: photon propagators are gauge dependent, and only their action on conserved currents is not.</p>
+  </div>
+
+  <h3>One Dyson equation</h3>
+  <p>At higher order each sector mixes both lines and all vertex types (EPP §6.0.5, Fig. 11a). E Eq. 377 maps every diagram to current vertices joined by $D^{0l}$ and $D^{0t}$. Compatible diagrams sum into $D^0$ lines and the bubbles into $\Pi_{jj}$, so the series is geometric (E Eq. 378):</p>
+  <div class="eq">$$D=D^0+D^0\,\Pi_{jj}\,D,\qquad D^0=D^{0l}+D^{0t},\qquad \Pi_{jj}=\Pi^{\rm e}_{jj}+\Pi^{\rm ion}_{jj}.\tag{E.379}$$</div>
+  <p>In $(\bq,\omega)$ space, with $D^0$ from E Eq. 375 (repeated as E Eq. 381) and $\Pi_{jj}=\Pi^{\rm ion}_{jj}+\Pi^{\rm e}_{jj}$ (E Eq. 382):</p>
+  <div class="eq">$$D_{\mu\nu}(\bq,\omega)=D^0_{\mu\nu}(\bq,\omega)+\sum_{\alpha\beta=xyz}D^0_{\mu\alpha}(\bq,\omega)\,\Pi_{jj\alpha\beta}(\bq,\omega)\,D_{\beta\nu}(\bq,\omega).\tag{E.380}$$</div>
+  <p>The ionic part is E Eq. 352 (repeated as E Eq. 385). The electronic part is the "para minus static para" form of §B.5, with the current vertices of E Eq. 384:</p>
+  <div class="eq">$$\begin{aligned}\Pi^{\rm e}_{jj\mu\nu}(\bq,\omega)&=\Pi^{\rm para,e}_{\mu\nu}(\bq,\omega)-\Pi^{\rm para,e}_{\mu\nu}(\bq,\omega=0)\\&=\frac{2}{c\Omega}\sum_{\bk\in{\rm BZ}}\sum_{nm}\frac{\hbar\omega}{E_{n\bk}-E_{m\bk+\bq}}\,\frac{f_{n\bk}-f_{m\bk+\bq}}{\hbar\omega+E_{n\bk}-E_{m\bk+\bq}+i\eta}\,j^\mu_{n\bk,m\bk+\bq}\big[j^\nu_{n\bk,m\bk+\bq}\big]^*\end{aligned}\tag{E.383}$$</div>
+  <p>Here $\Omega=N\Omega_{\rm uc}$ is the crystal volume, $f$ are occupations and the 2 counts spin. $D$ propagates the total field $\bA^l+\bA^t$ in a crystal of electrons and phonons: "$W$ with photons". It is RPA: lowest-order irreducible bubbles, no mixed electron–ion bubbles, no exchange–correlation kernel and, from E Eq. 380 on, no crystal local fields ($\bG=\bG'=0$).</p>
+
+  <h3>Isotropic medium: plasmons, LO phonons and polaritons</h3>
+  <p>In an isotropic medium, or a cubic crystal at small $q$, both $\Pi_{jj}=\Pi_LP^L+\Pi_TP^T$ and $D^0$ are diagonal in the projectors. E Eq. 380 decouples and $D^{lt}=D^{tl}=0$ to all orders (derived here, not in the manuscript):</p>
+  <div class="eq">$$D_L(\bq,\omega)=-\frac{4\pi c}{\omega^2\,\epsilon_L(\bq,\omega)},\qquad D_T(\bq,\omega)=-\frac{4\pi c}{\omega^2\epsilon_T(\bq,\omega)-c^2q^2},\qquad \epsilon_{L,T}=1+\frac{4\pi c\,\Pi_{L,T}}{\omega^2}.$$</div>
+  <p>By E Eq. 350, $\epsilon_L=1-v\Pi_{\rho\rho}$, the RPA dielectric function of GW and BSE. The two channels have different poles.</p>
+  <ul>
+    <li><strong>$\epsilon_L(\bq,\omega)=0$: longitudinal modes,</strong> Coulomb dressed by matter. They do not depend on $c$, because $c\,\Pi_{jj}$ does not. A Drude metal gives the plasmon at $\omega_p$. A polar crystal, $\epsilon=\epsilon_\infty+\Omega_p^2/(\omega_{TO}^2-\omega^2)$ with $\Omega_p^2=4\pi|j|^2/\Omega_{\rm uc}$ for one mode of E Eq. 352, gives the LO phonon at $\omega_{LO}^2=\omega_{TO}^2+\Omega_p^2/\epsilon_\infty$. Here $\omega_{TO}$ is the bare $\omega_\sigma$, since the Dyson route has no local field.</li>
+    <li><strong>$c^2q^2=\omega^2\epsilon_T(\bq,\omega)$: transverse modes,</strong> light dressed by matter. For the polar crystal these are the phonon polaritons</li>
+  </ul>
+  <div class="eq">$$\omega_\pm^2=\frac{(\epsilon_\infty\omega_{LO}^2+c^2q^2)\pm\sqrt{(\epsilon_\infty\omega_{LO}^2+c^2q^2)^2-4\epsilon_\infty c^2q^2\omega_{TO}^2}}{2\epsilon_\infty}.$$</div>
+  <p>The upper branch starts at $\omega_{LO}$ at $q=0$, where $L$ and $T$ cannot be told apart. The lower branch tends to $\omega_{TO}$ for $cq\gg\sqrt{\epsilon_0}\,\omega_{TO}$. Between them $\epsilon\lt0$ and no transverse mode exists: the Reststrahlen band. <a href="#b-phonon-se">§B.7</a> obtains the same branches from the phonon side and follows the order of the limits $q\to0$ and $c\to\infty$.</p>
+
+  <details class="derivation"><summary><span>Derivation: L and T decouple, $D_{11}=W$, and the polariton roots</span></summary><div class="d-body">
+    <p>Write $D^0=d_LP^L+d_TP^T$ with $d_L=-4\pi c/\omega^2$ and $d_T=-4\pi c/(\omega^2-c^2q^2)$ (E Eq. 375). Since $P^LP^L=P^L$, $P^TP^T=P^T$ and $P^LP^T=0$, the series E Eq. 378 sums channel by channel, $D_{L,T}=d_{L,T}/(1-d_{L,T}\Pi_{L,T})$, which gives the forms in the text; no product contains $P^LP^T$, so $D^{lt}=D^{tl}=0$. With E Eq. 350, $\Pi_{\rho\rho}=-\frac{cq^2}{\omega^2}\Pi_L$, hence $1-v\Pi_{\rho\rho}=\epsilon_L$.</p>
+    <p>In $\bq$-space E Eq. 359 is $-\frac{c}{\omega^2}q_\mu q_\nu$, so $D^{ll}_{\mu\nu}=-\frac{c}{\omega^2}q_\mu q_\nu D_{11}$. Comparing with $D^{ll}=D_LP^L$ gives $D_{11}=-\frac{\omega^2}{cq^2}D_L=\frac{4\pi}{q^2\epsilon_L}$.</p>
+    <p>For the polar model, $\epsilon=\epsilon_\infty(\omega_{LO}^2-\omega^2)/(\omega_{TO}^2-\omega^2)$, and $\omega^2\epsilon=c^2q^2$ is the quadratic $\epsilon_\infty\omega^4-(\epsilon_\infty\omega_{LO}^2+c^2q^2)\,\omega^2+c^2q^2\omega_{TO}^2=0$ with roots $\omega_\pm^2$. The same algebra with $\epsilon=(\omega_L^2-\omega^2)/(\Delta^2-\omega^2)$ gives the polaritons of the two-level insulator in the figure.</p>
+  </div></details>
+
+  <div class="callout connect">
+    <p class="callout-title">Bridge to Giustino: $W$ is the $ll$ sector of $D$</p>
+    <p>The scalar slot of EPP's propagator is Giustino's screened Coulomb interaction (<a href="#a-hedin-baym">§A.5</a>). In an isotropic medium, exactly,</p>
+    <div class="eq">$$D^{ll}_{\mu\nu}=-\frac{c}{\omega^2}\,q_\mu q_\nu\,W(\bq,\omega),\qquad W=D_{11}=\frac{4\pi}{q^2\,\epsilon_L(\bq,\omega)} .$$</div>
+    <p>Resumming only electronic bubbles gives Giustino's</p>
+    <div class="eq">$$W_{\rm e}(12)=v(12)+\int d(34)\,v(13)\,P_{\rm e}(34)\,W_{\rm e}(42),\tag{G.94}$$</div>
+    <p>with $P_{\rm e}\leftrightarrow\Pi^{\rm e}_{\rho\rho}=-\frac{c}{\omega^2}\bq\cdot\Pi^{\rm e}_{jj}\cdot\bq$. Adding the ions, $\epsilon_L=\epsilon_\infty-v\Pi^{\rm ion}_{\rho\rho}$ for the polar model, and expanding $1/\epsilon_L$ with $W_{\rm e}=4\pi/(q^2\epsilon_\infty)$:</p>
+    <div class="eq">$$W=W_{\rm e}+W_{\rm e}\,\Pi^{\rm ion}_{\rho\rho}\,W_{\rm e}+W_{\rm e}\,\Pi^{\rm ion}_{\rho\rho}\,W_{\rm e}\,\Pi^{\rm ion}_{\rho\rho}\,W_{\rm e}+\dots\equiv W_{\rm e}+W_{\rm e}\,\mathcal D\,W_{\rm e}.$$</div>
+    <p>This is $W=W_{\rm e}+W_{\rm ph}$ with $W_{\rm ph}=\int d(34)\,W_{\rm e}(13)\mathcal D(34)W_{\rm e}(24)$ (G Eqs. 104–105). Giustino's nuclear density correlator $\mathcal D$ (G Eq. 103) is represented by the Born-charge $\Pi^{\rm ion}_{\rho\rho}$ dressed by $W_{\rm e}$. Three things differ on EPP's side, one addition and two restrictions:</p>
+    <ul>
+      <li>the vector block ($lt$, $tl$, $tt$), which carries transverse photons;</li>
+      <li>Born-charge point dipoles instead of bare nuclei with $\nabla V_\kappa$ (G Eq. 110), so only the long-range part of $\mathcal D$ is represented;</li>
+      <li>RPA without xc or local fields.</li>
+    </ul>
+    <p>In an isotropic medium the $ll$ sector never sees $c$. Retardation in EPP's sense (finite speed of light) enters $W$ only through $l$–$t$ mixing, the diagrams of EPP Fig. 8: in anisotropic crystals off the principal axes, with local fields, and in 2D sheets (<a href="#b-2d">§B.10</a>). The formal $c\to\infty$ statement is E Eqs. 437 and 441 (<a href="#b-electrostatic">§B.9</a>).</p>
+  </div>
+
+  <figure class="viz" id="viz-b-propagator-map">
+    <p class="viz-title"><span>Photon spectral map, diagram transformer, and $\Pi_{\rho\rho}$ from $\Pi_{jj}$</span> <span class="tag">interactive</span></p>
+    <div class="b06-tabs"></div>
+    <div class="b06-v-map">
+      <div class="b06-pmap"></div>
+      <div class="b06-c-main"></div>
+      <div class="b06-pan-drude" hidden><div class="b06-c-drude"></div></div>
+      <div class="b06-pan-ins" hidden><div class="b06-c-ins"></div></div>
+      <div class="b06-pan-polar"><div class="b06-c-polar"></div></div>
+      <div class="b06-ro-map"></div>
+    </div>
+    <div class="b06-v-dia" hidden>
+      <div class="b06-c-dia"></div>
+      <div class="b06-step" data-step="1">
+        <div class="fd" style="justify-content:flex-start;gap:6px 10px;margin:10px 0 4px;padding:2px"><span class="b06-rl">(a) $D_{11}=$</span><span data-ch="v"></span><span class="op">+</span><span data-ch="v,ion:rr,v"></span><span class="op">+</span><span data-ch="v,e:rr,v"></span><span class="op">+ …</span></div>
+        <div class="fd" style="justify-content:flex-start;gap:6px 10px;margin:4px 0;padding:2px"><span class="b06-rl">(b) $D_{1\nu}=$</span><span data-ch="v,ion:rj,t"></span><span class="op">+</span><span data-ch="v,e:rj,t"></span><span class="op">+ …</span></div>
+        <div class="fd" style="justify-content:flex-start;gap:6px 10px;margin:4px 0;padding:2px"><span class="b06-rl">(c) $D_{\mu1}=$</span><span data-ch="t,ion:jr,v"></span><span class="op">+</span><span data-ch="t,e:jr,v"></span><span class="op">+ …</span></div>
+        <div class="fd" style="justify-content:flex-start;gap:6px 10px;margin:4px 0 8px;padding:2px"><span class="b06-rl">(d) $D_{\mu\nu}=$</span><span data-ch="t"></span><span class="op">+</span><span data-ch="t,ion:jj,t"></span><span class="op">+</span><span data-ch="t,e:jj,t"></span><span class="op">+ …</span></div>
+        <p class="b06-note"><strong>Step 1, EPP Fig. 9.</strong> Lowest order of E Eqs. 316–319, sector by sector. Coulomb lines end on charge vertices, photon lines on current vertices. The four rows are a scalar, a row, a column and a $3\times3$ tensor, so they cannot be added.</p>
+      </div>
+      <div class="b06-step" data-step="2" hidden>
+        <div class="fd" style="justify-content:flex-start;gap:6px 10px;margin:10px 0 4px;padding:2px"><span class="b06-rl">(a) $D^{ll}_{\mu\nu}=$</span><span data-ch="l"></span><span class="op">+</span><span data-ch="l,ion:jj,l"></span><span class="op">+</span><span data-ch="l,e:jj,l"></span><span class="op">+ …</span><span class="b06-opn">$-\tfrac{c}{\omega^2}\partial_\mu\partial'_\nu$</span></div>
+        <div class="fd" style="justify-content:flex-start;gap:6px 10px;margin:4px 0;padding:2px"><span class="b06-rl">(b) $D^{lt}_{\mu\nu}=$</span><span data-ch="l,ion:jj,t"></span><span class="op">+</span><span data-ch="l,e:jj,t"></span><span class="op">+ …</span><span class="b06-opn">$i\tfrac{c}{\omega}\partial_\mu$</span></div>
+        <div class="fd" style="justify-content:flex-start;gap:6px 10px;margin:4px 0;padding:2px"><span class="b06-rl">(c) $D^{tl}_{\mu\nu}=$</span><span data-ch="t,ion:jj,l"></span><span class="op">+</span><span data-ch="t,e:jj,l"></span><span class="op">+ …</span><span class="b06-opn">$\tfrac{i}{\omega}\partial'_\nu$</span></div>
+        <div class="fd" style="justify-content:flex-start;gap:6px 10px;margin:4px 0;padding:2px"><span class="b06-rl">(d) $D^{tt}_{\mu\nu}=$</span><span data-ch="t"></span><span class="op">+</span><span data-ch="t,ion:jj,t"></span><span class="op">+</span><span data-ch="t,e:jj,t"></span><span class="op">+ …</span><span class="b06-opn">$1$</span></div>
+        <div class="fd" style="justify-content:flex-start;gap:6px 10px;margin:4px 0 8px;padding:6px 2px 2px;border-top:1px solid var(--rule);border-radius:0"><span class="b06-rl">(e) $D_{\mu\nu}=$</span><span data-ch="0"></span><span class="op">+</span><span data-ch="0,ion:jj,0"></span><span class="op">+</span><span data-ch="0,e:jj,0"></span><span class="op">+ …</span></div>
+        <p class="b06-note"><strong>Step 2, EPP Fig. 10.</strong> The connection formulas (E Eqs. 344, 349, 350) and one integration by parts put every bubble in $\Pi_{jj}$ form. The boxed operators (E Eq. 359 and p. 80) turn every sector into a $3\times3$ tensor and every Coulomb line into $D^{0l}=-\frac{c}{\omega^2}\partial\partial'v$, which in $\bq$-space is $v=\frac{4\pi}{q^2}\to-\frac{4\pi c}{\omega^2}\hat q\hat q$ (E Eqs. 364, 374). Now the sectors add line by line: $D^{0l}+D^{0t}=D^0$ (E Eq. 370), row (e).</p>
+      </div>
+      <div class="b06-step" data-step="3" hidden>
+        <div class="fd" style="justify-content:flex-start;gap:6px 10px;margin:10px 0 4px;padding:2px"><span class="b06-rl">(a) next order:</span><span data-ch="v,e:rr,v,ion:rr,v"></span><span class="op">,</span><span data-ch="v,e:rj,t,ion:jr,v"></span><span class="op">,</span><span data-ch="v,e:rr,v,ion:rj,t"></span><span class="op">, …</span></div>
+        <div class="fd" style="justify-content:flex-start;gap:6px 10px;margin:4px 0;padding:2px"><span class="b06-rl">(b) by E Eq. 377:</span><span data-ch="l,e:jj,l,ion:jj,l"></span><span class="op">+</span><span data-ch="l,e:jj,t,ion:jj,l"></span><span class="op">+</span><span data-ch="l,e:jj,l,ion:jj,t"></span><span class="op">+ …</span></div>
+        <div class="fd" style="justify-content:flex-start;gap:6px 10px;margin:4px 0;padding:2px"><span class="b06-rl">(c, d) summed:</span><span data-ch="0,jj:jj,0,jj:jj,0"></span></div>
+        <div class="fd" style="justify-content:flex-start;gap:6px 10px;margin:4px 0 8px;padding:6px 2px 2px;border-top:1px solid var(--rule);border-radius:0"><span class="b06-rl">E Eq. 379:</span><span data-ch="D"></span><span class="op">=</span><span data-ch="0"></span><span class="op">+</span><span data-ch="0,jj:jj,D"></span></div>
+        <p class="b06-note"><strong>Step 3, EPP Fig. 11.</strong> At second order the diagrams of (a) belong to different sectors (two $ll$, one $lt$) and mix both lines and all vertex types. After E Eq. 377 they share one tensor rank and add (b). Compatible diagrams combine into $D^0$ lines, and the electronic and ionic bubbles into $\Pi_{jj}=\Pi^{\rm e}_{jj}+\Pi^{\rm ion}_{jj}$ (c, d). Every order works the same way, so the series is geometric (E Eq. 378) and resums into the Dyson equation.</p>
+      </div>
+    </div>
+    <div class="b06-v-rho" hidden>
+      <div class="viz-grid two"><div class="b06-prA"></div><div class="b06-prB"></div></div>
+      <div class="b06-c-rho"></div>
+      <div class="b06-ro-rho"></div>
+    </div>
+    <figcaption>
+      <span data-tab="map"><strong>Model.</strong> Local, isotropic response ($\Pi_L=\Pi_T$) in the decoupled $D_T$, $D_L$ above, with causal (retarded) denominators. $4\pi c\,\Pi_{jj}$ is $0$ (vacuum, small damping $\eta$ added for visibility), $-\omega_p^2\omega/(\omega+i\gamma)$ (Drude), $(\epsilon_{\rm e}(0)-1)\Delta^2\omega^2/(\Delta^2-\omega^2-i\gamma\omega)$ (two-level insulator: one oscillator standing in for all interband transitions, so its L–T splitting $(\sqrt{\epsilon_{\rm e}(0)}-1)\Delta$ is far larger than a real exciton's), or $(\epsilon_\infty-1)\omega^2+\Omega_p^2\omega^2/(\omega_{TO}^2-\omega^2-i\gamma\omega)$ (polar crystal: one mode of E Eq. 352, $\Omega_p^2=\epsilon_\infty(\omega_{LO}^2-\omega_{TO}^2)$, electrons as a constant $\epsilon_\infty$). Presets ($\hbar\omega_{TO}$/$\hbar\omega_{LO}$ in meV, $\epsilon_\infty$; literature values, illustrative): GaAs 33.3/36.2/10.9, NaCl 20.3/32.7/2.34, SiC 98.7/120.5/6.52, hBN in-plane 169.9/199.6/4.87 (treated as isotropic). Drude default 5.7 eV (Na-like); insulator default $\Delta=3.4$ eV, $\epsilon_{\rm e}(0)=4$. $\gamma$ is a fraction of $\omega_0=\omega_{TO}$, $\omega_p$, $\Delta$ or 1 eV. Colour: $\log_{10}$ of the dimensionless $\frac{\omega^2}{4\pi c}{\rm Im}\,D$, proportional to the spectral function of the field $\bE=\frac{i\omega}{c}\bA$, averaged over each pixel so that poles narrower than a pixel stay visible. The factor $\omega^2$ removes the temporal-gauge $1/\omega^2$ of $D_L$: the longitudinal panel is the loss function ${\rm Im}(-1/\epsilon)$, which vanishes at $\omega_{TO}$ (or $\Delta$) where $\epsilon\to\infty$, and at $q=0$ the channels coincide. EPP's $D=+\frac{i}{\hbar c}\langle T\{AA\}\rangle$ has the opposite overall sign of the usual boson propagator, so its spectral weight at $\omega\gt0$ is $+{\rm Im}\,D$. Short-dashed lines: poles at $\gamma=0$. <strong>What to notice.</strong> In the transverse channel of the polar crystal, light and the TO phonon anticross into two polaritons around a dark Reststrahlen band, and the upper branch starts at $\omega_{LO}$ at $q=0$. The longitudinal channel has one flat line at $\omega_{LO}$ (or $\omega_p$) for every $q$ and nothing at the light line, because $D_L$ is Coulomb dressed by matter. The Drude metal has no transverse mode below $\omega_p$, and the vacuum has weight only on the light line.</span>
+      <span data-tab="dia" hidden><strong>Diagrams</strong> after EPP Figs. 9–11, in this page's glyphs, with the whole electromagnetic field in rose: dashed, the Coulomb line $v$ (between dots) or $D^{0l}$ (between squares); wavy, $D^{0t}$; wavy over dashed, $D^0=D^{0l}+D^{0t}$; heavy wavy over double dashes, the dressed $D$. Dots are charge vertices $\rho$ and squares current vertices $\bj$. Blobs: electronic bubble (blue), ionic bubble (amber), total $\Pi_{jj}$ (grey). EPP's own colours differ ($D^{0l}$ red, $D^0$ magenta). <strong>What to notice.</strong> Step 1 cannot be summed, because its rows are tensors of different rank. After step 2 every line and every vertex is of one kind and the sectors add. Step 3 shows that the same happens at every order, which is what turns a $4\times4$ bookkeeping problem into one $3\times3$ Dyson equation.</span>
+      <span data-tab="rho" hidden><strong>Model.</strong> One polar mode whose current $\bj_\sigma$ makes an angle $\theta$ with $\bq$, damping $\gamma=0.01\,\omega_{TO}$ (retarded), same presets as the first tab. Left: $\Pi^{\rm ion}_{\rho\rho}$ normalized by its static value at $\theta=0$, from the direct correlator $\langle T\{PP\}\rangle$ (EPP p. 77), from E Eq. 350 applied to the gauge-invariant $\Pi^{\rm ion}_{jj}$ (E Eq. 352), and from E Eq. 350 applied to the paramagnetic part alone (E Eq. 297, taken as $\Pi_{jj}-\Pi^{\rm dia}$ as in <a href="#b-photon-se">§B.5</a>). The three are computed by separate formulas. Right: ${\rm Re}\,\epsilon_L=\epsilon_\infty-v\Pi_{\rho\rho}$ from the same two routes. <strong>What to notice.</strong> The first two curves coincide for every $\theta$. The paramagnetic-only result differs by $-\cos^2\theta\,\omega_{TO}^2/\omega^2$: it diverges at $\omega\to0$ and adds a wrong-sign Drude term $+\Omega_p^2\cos^2\theta/\omega^2$ to $\epsilon_L$. At $\theta=90^\circ$ the mode current is transverse, carries no charge, and $\Pi_{\rho\rho}$ vanishes.</span>
+    </figcaption>
+  </figure>
+
+  <div class="callout caveat">
+    <p class="callout-title">What the spectral map leaves out</p>
+    <p>The response is local. That is accurate here, since the plotted $q\lesssim10\,\omega/c$ is tiny on the scale of $k_F$ or the Brillouin zone; at larger $q$ plasmons disperse and $\Pi_L\neq\Pi_T$. The polar model uses a constant $\epsilon_\infty$ for the electrons. Uniaxial hBN mixes $L$ and $T$ off its axes, $\hat\bq\cdot\Pi_{jj}\cdot\hat{\mathbf t}\propto(\Pi_\parallel-\Pi_\perp)\sin\theta\cos\theta$. This mixing, with $\epsilon_\parallel$ and $\epsilon_\perp$ of opposite sign inside its Reststrahlen bands, produces its hyperbolic phonon polaritons, which the isotropic map cannot show. A 2D sheet needs the sheet propagator $D^0(\bQ,\omega;0,0)$, not just $\Omega\to S$ (<a href="#b-2d">§B.10</a>).</p>
+  </div>
+
+  <div class="callout source">
+    <p class="callout-title">Notes on the source</p>
+    <p>E Eq. 312 has the same number-versus-charge-density slip in $\rho^{\rm e}$ as E.235 (note in <a href="#b-fields">§B.4</a>). E Eq. 314 is printed with $\sum_{i\nu}$; the atom index $a$ must be summed too, as written above. The scalar slot labelled "1" in $D_{11}$, $D_{1\nu}$, $D_{\mu1}$ is conventionally labelled 0. On p. 74, "$\Pi_{j\rho}$ is paired with $-\frac1c\int\bj\cdot\bA^{\rm ext}$" should read $\Pi_{\rho j}$, and in Fig. 10(c) "$j^{ie}$" should read $j^{\rm e}$. E Eq. 380 drops $\bG,\bG'$ without comment. The claim on p. 86 that "the transition to 2D case is trivial" is incomplete, as noted above.</p>
+  </div>
+
+  <p>With E Eq. 379 in hand, EPP turns the series around: <a href="#b-phonon-se">§B.7</a> asks how light, screened by the electrons, dresses the lattice.</p>
+</section>
+<script>
+(() => {
+  if (!window.EPP) return;
+  const sec = document.getElementById('b-propagator');
+  const NS = 'http://www.w3.org/2000/svg';
+  const C = EPP.C;
+
+  // ---------- Feynman-diagram chains: lines and bubbles with dot (rho) or square (j) vertices ----------
+  const LL = 34, RB = 19, HH = 54, YY = 33, PAD = 4;
+  const SPEC = { e: ['Π^e', 'electron'], ion: ['Π^{ion}', 'phonon'], jj: ['Π_{jj}', 'muted'], i: ['Π^i', 'muted'] };
+  // the whole electromagnetic field is rose (page glyphs): dashed longitudinal, wavy transverse, both overlaid for D^0, heavy wavy over double dashes when dressed
+  const LINE = {
+    v: (a, b) => [{ t: 'coulomb', a, b, label: 'v' }],
+    t: (a, b) => [{ t: 'photon', a, b, label: 'D^{0t}' }],
+    l: (a, b) => [{ t: 'coulomb', a, b, label: 'D^{0l}' }],
+    0: (a, b) => [{ t: 'coulomb', a, b }, { t: 'photon', a, b, label: 'D^0' }],
+    D: (a, b) => [{ t: 'screened', a, b }, { t: 'photon2', a, b, label: 'D' }]
+  };
+  function chain(host, spec, aria) {
+    const toks = spec.split(',');
+    let x = PAD; const lines = [], blobs = [], dots = [], sq = [];
+    toks.forEach(tk => {
+      if (LINE[tk]) { lines.push(...LINE[tk]([x, YY], [x + LL, YY])); x += LL; return; }
+      const [sp, vv] = tk.split(':'); const s = SPEC[sp] || SPEC.i;
+      blobs.push({ t: 'blob', at: [x + RB, YY], r: RB, label: s[0], color: s[1] });
+      [[x, vv[0]], [x + 2 * RB, vv[1]]].forEach(([px, k]) => { if (k === 'r') dots.push({ t: 'vertex', at: [px, YY], r: 3.4, color: 'ink' }); else sq.push(px); });
+      x += 2 * RB;
+    });
+    const w = x + PAD;
+    const svg = EPP.fd.draw(host, { w, h: HH, label: aria || spec, items: [...lines, ...blobs, ...dots] });
+    svg.style.maxWidth = '100%'; svg.style.height = 'auto';
+    if (sq.length) {
+      const add = () => sq.forEach(px => { const r = document.createElementNS(NS, 'rect'); r.setAttribute('x', px - 4); r.setAttribute('y', YY - 4); r.setAttribute('width', 8); r.setAttribute('height', 8); r.setAttribute('fill', EPP.color('ink')); svg.appendChild(r); });
+      add(); EPP.onTheme(add);
+    }
+    return svg;
+  }
+  const ariaOf = (spec) => spec.split(',').map(tk => ({ v: 'Coulomb line v', t: 'transverse photon', l: 'longitudinal photon D0l', 0: 'free propagator D0', D: 'dressed propagator D' })[tk] || (() => { const [sp, vv] = tk.split(':'); return (SPEC[sp] ? SPEC[sp][0].replace(/[\^_{}]/g, '') : 'bubble') + ' bubble, ' + (vv[0] === 'r' ? 'charge' : 'current') + ' and ' + (vv[1] === 'r' ? 'charge' : 'current') + ' vertices'; })()).join(', ');
+  sec.querySelectorAll('.b06-cell').forEach(el => chain(el, el.dataset.ch, el.dataset.aria));
+
+  // ---------- figure: tabs ----------
+  const fig = document.getElementById('viz-b-propagator-map');
+  const views = { map: fig.querySelector('.b06-v-map'), dia: fig.querySelector('.b06-v-dia'), rho: fig.querySelector('.b06-v-rho') };
+  const caps = [...fig.querySelectorAll('figcaption [data-tab]')];
+  let rhoBuilt = false, curTab = 'map';
+  EPP.controls(fig.querySelector('.b06-tabs'), [
+    { key: 'tab', type: 'seg', label: 'View', options: [['map', 'Spectral map'], ['dia', 'Diagrams'], ['rho', 'Π_{ρρ} from Π_{jj}']], value: 'map', wide: true }
+  ], (s) => {
+    curTab = s.tab;
+    for (const k in views) views[k].hidden = k !== s.tab;
+    caps.forEach(c => { c.hidden = c.dataset.tab !== s.tab; });
+    if (s.tab === 'rho' && !rhoBuilt) buildRho();
+    if (s.tab === 'map') drawMap();
+  });
+
+  // ---------- tab 1: photon spectral map ----------
+  const HC = 0.197327; // hbar c in eV um
+  const PRE = {
+    gaas: { n: 'GaAs', to: 33.3, lo: 36.2, ei: 10.9 },
+    nacl: { n: 'NaCl', to: 20.3, lo: 32.7, ei: 2.34 },
+    sic: { n: 'SiC', to: 98.7, lo: 120.5, ei: 6.52 },
+    hbn: { n: 'hBN', to: 169.9, lo: 199.6, ei: 4.87 }
+  };
+  const PRE_OPTS = [['gaas', 'GaAs'], ['nacl', 'NaCl'], ['sic', 'SiC'], ['hbn', 'hBN in-plane']];
+  const vm = views.map;
+  const pmap = new EPP.Plot(vm.querySelector('.b06-pmap'), {
+    xlabel: 'q (μm^{-1})', ylabel: 'ħω (meV)', xlim: [0, 1], ylim: [0, 1], aspect: 0.6, minHeight: 280, margin: { r: 64 },
+    xname: 'q', yname: 'ħω', hoverX: v => EPP.fmt(v, 3) + ' μm⁻¹', ariaLabel: 'Heat map of the photon spectral function versus wave vector and energy'
+  });
+  const roMap = EPP.readout(vm.querySelector('.b06-ro-map'));
+  let sM = null, sD = null, sI = null, sP = null;
+  const panels = { drude: vm.querySelector('.b06-pan-drude'), ins: vm.querySelector('.b06-pan-ins'), polar: vm.querySelector('.b06-pan-polar') };
+  EPP.controls(vm.querySelector('.b06-c-main'), [
+    { key: 'model', type: 'seg', label: 'Π_{jj} model', options: [['vac', 'vacuum'], ['drude', 'Drude'], ['ins', 'insulator'], ['polar', 'polar']], value: 'polar' },
+    { key: 'ch', type: 'seg', label: 'channel', options: [['T', 'transverse Im D_T'], ['L', 'longitudinal Im D_L']], value: 'T' },
+    { key: 'g', type: 'range', label: 'damping γ/ω_0', min: 0.003, max: 0.1, value: 0.02, log: true, fmt: v => (100 * v).toFixed(1) + ' %' },
+    { key: 'br', type: 'toggle', label: 'poles at γ = 0', value: true }
+  ], s => { sM = s; for (const k in panels) panels[k].hidden = k !== s.model; drawMap(); });
+  EPP.controls(vm.querySelector('.b06-c-drude'), [
+    { key: 'wp', type: 'range', label: 'plasma energy ħω_p', min: 1, max: 10, step: 0.1, value: 5.7, fmt: v => v.toFixed(1) + ' eV' }
+  ], s => { sD = s; drawMap(); });
+  EPP.controls(vm.querySelector('.b06-c-ins'), [
+    { key: 'gap', type: 'range', label: 'gap Δ', min: 1, max: 5, step: 0.05, value: 3.4, fmt: v => v.toFixed(2) + ' eV' },
+    { key: 'e0', type: 'range', label: 'static ε_e(0)', min: 1.5, max: 10, step: 0.1, value: 4, fmt: v => v.toFixed(1) }
+  ], s => { sI = s; drawMap(); });
+  EPP.controls(vm.querySelector('.b06-c-polar'), [
+    { key: 'pre', type: 'select', label: 'crystal', options: PRE_OPTS, value: 'gaas' }
+  ], s => { sP = s; drawMap(); });
+
+  // model description: energies in eV internally; U converts to display units
+  function makeModel() {
+    const g = sM.g;
+    if (sM.model === 'vac') {
+      const w0 = 1, ga = g * w0;
+      return { U: 1, unit: 'eV', w0, ymax: 3, qmax: 1.2 * 3 / HC, eps: E => [1, ga / E], ga };
+    }
+    if (sM.model === 'drude') {
+      const wp = sD.wp, ga = g * wp;
+      return { U: 1, unit: 'eV', w0: wp, ymax: 12, qmax: 1.1 * 12 / HC, ga, wp,
+        eps: E => { const t = C.div([wp * wp, 0], [E * E, E * ga]); return [1 - t[0], -t[1]]; } };
+    }
+    if (sM.model === 'ins') {
+      const D = sI.gap, e0 = sI.e0, ga = g * D, A = (e0 - 1) * D * D, wl = Math.sqrt(e0) * D;
+      // fixed 16 eV window; it widens only when omega_L would leave it (large gap and large eps_e(0))
+      const ymax = Math.max(16, 1.3 * wl);
+      return { U: 1, unit: 'eV', w0: D, ymax, qmax: 1.6 * ymax / HC, ga, D, e0, wl,
+        eps: E => { const t = C.div([A, 0], [D * D - E * E, -ga * E]); return [1 + t[0], t[1]]; } };
+    }
+    const p = PRE[sP.pre], to = p.to / 1000, lo = p.lo / 1000, ei = p.ei, Op2 = ei * (lo * lo - to * to), ga = g * to;
+    return { U: 1000, unit: 'meV', w0: to, ymax: 1.7 * lo, qmax: 2.5 * Math.sqrt(ei) * lo / HC, ga, to, lo, ei, Op2, p,
+      eps: E => { const t = C.div([Op2, 0], [to * to - E * E, -ga * E]); return [ei + t[0], t[1]]; } };
+  }
+  const NX = 200, NY = 200;
+  function drawMap() {
+    if (!sM || !sD || !sI || !sP || curTab !== 'map') return;
+    const M = makeModel(), T = sM.ch === 'T', U = M.U, vacL = sM.model === 'vac' && !T;
+    // plotted: (omega^2/4 pi c) Im D = Im[-omega^2/(omega^2 eps - c^2 q^2)] (T) or Im(-1/eps) (L).
+    // A pole narrower than a pixel would be missed by point sampling, so where the real part of the denominator,
+    // dr(E) = E^2 Re eps - c^2 q^2, changes sign inside a pixel, the Lorentzian E^2 ai/(dr^2 + ai^2) is integrated
+    // across the pixel with dr interpolated linearly between the pixel edges (exact atan form).
+    const z = new Float64Array(NX * NY), h = M.ymax / NY, re2 = E => { const e = M.eps(E); return E * E * e[0]; };
+    for (let j = 0; j < NY; j++) {
+      const E = h * (j + 0.5), e = M.eps(E), ar = E * E * e[0], ai = E * E * e[1];
+      const rLo = re2(Math.max(1e-9, E - 0.5 * h)), rHi = re2(E + 0.5 * h);
+      for (let i = 0; i < NX; i++) {
+        const cq2 = T ? Math.pow(HC * M.qmax * (i + 0.5) / NX, 2) : 0;
+        const dr = ar - cq2, dLo = rLo - cq2, dHi = rHi - cq2, span = Math.abs(dHi - dLo);
+        let im;
+        if (vacL) im = 0; // vacuum D_L = -4 pi c/omega^2 is real
+        else if (dLo * dHi < 0 && span > ai) im = E * E / span * Math.abs(Math.atan(dHi / ai) - Math.atan(dLo / ai));
+        else im = E * E * ai / (dr * dr + ai * ai);
+        z[j * NX + i] = Math.log10(Math.max(im, 1e-12));
+      }
+    }
+    const zs = Float64Array.from(z).sort(), zq = zs[Math.floor(0.997 * (zs.length - 1))];
+    const vmax = zq < -11 ? 0 : Math.ceil(2 * Math.min(zq, 6)) / 2, vmin = vmax - 4;
+    const layers = [{ type: 'heatmap', x0: 0, x1: M.qmax, y0: 0, y1: M.ymax * U, nx: NX, ny: NY, z, vmin, vmax, color: 'c5',
+      label: T ? 'ω^2 Im D_T/4πc' : 'ω^2 Im D_L/4πc = Im(−1/ε)', colorbar: 'ω^2 Im D/4πc', cfmt: v => EPP.fmt(Math.pow(10, v), 2) }];
+    const qs = EPP.linspace(0, M.qmax, 400);
+    layers.push({ type: 'line', x: qs, y: qs.map(q => U * HC * q), color: 'photon', dash: [7, 4], width: 1.8, label: 'light line ω = cq' });
+    const yU = M.ymax * U;
+    if (sM.br) {
+      const br = (f, lab) => layers.push({ type: 'line', x: qs, y: qs.map(q => { const w = f(HC * q); return isFinite(w) && w * U <= yU * 1.02 ? w * U : NaN; }), color: 'ink', dash: [4, 3], width: 1.5, label: lab, hover: !!lab });
+      if (T) {
+        if (M.p) {
+          const roots = (cq, s) => { const A = M.ei * M.lo * M.lo + cq * cq, d = Math.sqrt(Math.max(0, A * A - 4 * M.ei * cq * cq * M.to * M.to)); return Math.sqrt((A + s * d) / (2 * M.ei)); };
+          br(cq => roots(cq, 1), 'polaritons, γ = 0'); br(cq => roots(cq, -1));
+        } else if (M.wp) br(cq => Math.sqrt(M.wp * M.wp + cq * cq), 'transverse pole, γ = 0');
+        else if (M.D) {
+          const roots = (cq, s) => { const A = M.wl * M.wl + cq * cq, d = Math.sqrt(Math.max(0, A * A - 4 * cq * cq * M.D * M.D)); return Math.sqrt((A + s * d) / 2); };
+          br(cq => roots(cq, 1), 'two-level polaritons, γ = 0'); br(cq => roots(cq, -1));
+        }
+      } else {
+        const lroot = M.p ? M.lo : (M.wp || M.wl);
+        if (lroot) layers.push({ type: 'line', x: [0, M.qmax], y: [lroot * U, lroot * U], color: 'ink', dash: [4, 3], width: 1.5, label: 'ε_L = 0, γ = 0' });
+      }
+    }
+    // the lower reference line is labelled below itself (left), the upper one above itself (right), so the two never collide
+    const below = (y, text, color) => layers.push({ type: 'text', x: 0, y, dx: 6, dy: 3, baseline: 'top', text, color, size: 11 });
+    if (M.p) {
+      layers.push({ type: 'hline', at: M.to * U, color: 'phonon', dash: [2, 3] }); below(M.to * U, 'ω_{TO}', 'phonon');
+      layers.push({ type: 'hline', at: M.lo * U, color: 'phonon', dash: [2, 3], text: 'ω_{LO}' });
+    } else if (M.wp) {
+      layers.push({ type: 'hline', at: M.wp, color: 'electron', dash: [2, 3], text: 'ω_p' });
+    } else if (M.D) {
+      layers.push({ type: 'hline', at: M.D, color: 'electron', dash: [2, 3] }); below(M.D, 'Δ', 'electron');
+      layers.push({ type: 'hline', at: M.wl, color: 'electron', dash: [2, 3], text: 'ω_L = √ε_e(0) Δ' });
+    }
+    pmap.opt.hoverX2 = v => EPP.fmt(v, 3) + ' ' + M.unit;
+    pmap.draw(layers, { xlim: [0, M.qmax], ylim: [0, yU], ylabel: 'ħω (' + M.unit + ')' });
+    const gaTxt = (M.ga * U).toPrecision(2) + ' ' + M.unit;
+    if (M.p) {
+      const e0 = M.ei * M.lo * M.lo / (M.to * M.to), qx = Math.sqrt(e0) * M.to / HC;
+      roMap.set({ 'ħω_{TO}': M.p.to.toFixed(1) + ' meV', 'ħω_{LO}': M.p.lo.toFixed(1) + ' meV', 'ε_0 = ε_∞ω_{LO}^2/ω_{TO}^2': e0.toFixed(2), 'ħΩ_p': (1000 * Math.sqrt(M.Op2)).toFixed(1) + ' meV', 'polariton crossover √ε_0 ω_{TO}/c': EPP.fmt(qx, 3) + ' μm⁻¹', 'its wavelength': EPP.fmt(2 * Math.PI / qx, 3) + ' μm', 'ħγ': gaTxt });
+    } else if (M.wp) {
+      roMap.set({ 'ħω_p': M.wp.toFixed(1) + ' eV', 'plasma wavelength 2πc/ω_p': EPP.fmt(1000 * 2 * Math.PI * HC / M.wp, 3) + ' nm', 'ħγ': gaTxt });
+    } else if (M.D) {
+      roMap.set({ 'Δ': M.D.toFixed(2) + ' eV', 'ħω_L = √ε_e(0) Δ': M.wl.toFixed(2) + ' eV', 'L–T splitting': (M.wl - M.D).toFixed(2) + ' eV', 'ħγ': gaTxt });
+    } else {
+      roMap.set({ 'Π_{jj}': '0', 'ħη (for visibility)': gaTxt, 'D_L': '−4πc/ω², real: no spectral weight' });
+    }
+  }
+
+  // ---------- tab 2: diagram transformer ----------
+  const vd = views.dia;
+  vd.querySelectorAll('[data-ch]').forEach(el => chain(el, el.dataset.ch, ariaOf(el.dataset.ch)));
+  vd.querySelectorAll('.b06-rl').forEach(el => { el.style.cssText = 'font-family:var(--font-ui);font-size:0.88rem;color:var(--fg-2);min-width:6.4em'; });
+  vd.querySelectorAll('.b06-opn').forEach(el => { el.style.cssText = 'font-size:0.9rem;color:var(--t-photon);margin-left:6px;padding:1px 8px;border:1px solid var(--rule);border-radius:4px'; });
+  vd.querySelectorAll('.b06-note').forEach(el => { el.style.cssText = 'font-size:0.93rem;line-height:1.5;color:var(--fg-2);margin:8px 0 2px;max-width:none'; });
+  const steps = [...vd.querySelectorAll('.b06-step')];
+  EPP.controls(vd.querySelector('.b06-c-dia'), [
+    { key: 'step', type: 'seg', label: 'step', options: [['1', '1 · sectors'], ['2', '2 · ρ → j'], ['3', '3 · Dyson']], value: '1' }
+  ], s => { steps.forEach(st => { st.hidden = st.dataset.step !== s.step; }); });
+
+  // ---------- tab 3: Pi_rhorho from Pi_jj ----------
+  const vr = views.rho;
+  let pA = null, pB = null, roRho = null, sR = null;
+  function buildRho() {
+    rhoBuilt = true;
+    pA = new EPP.Plot(vr.querySelector('.b06-prA'), { xlabel: 'ħω (meV)', ylabel: 'Π_{ρρ} / |Π_{ρρ}(0)|_{θ=0}', xlim: [0, 1], ylim: [-6, 6], aspect: 0.78, xname: 'ħω', hoverX: v => v.toFixed(1) + ' meV', hoverY: v => EPP.fmt(v, 3), ariaLabel: 'Ionic density response from three routes' });
+    pB = new EPP.Plot(vr.querySelector('.b06-prB'), { xlabel: 'ħω (meV)', ylabel: 'Re ε_L', xlim: [0, 1], ylim: [-1, 1], aspect: 0.78, xname: 'ħω', hoverX: v => v.toFixed(1) + ' meV', hoverY: v => EPP.fmt(v, 3), ariaLabel: 'Longitudinal dielectric function with and without the diamagnetic term' });
+    roRho = EPP.readout(vr.querySelector('.b06-ro-rho'));
+    EPP.controls(vr.querySelector('.b06-c-rho'), [
+      { key: 'rpre', type: 'select', label: 'crystal', options: PRE_OPTS, value: 'gaas' },
+      { key: 'th', type: 'range', label: 'angle θ between q and the mode current', min: 0, max: 90, step: 1, value: 0, fmt: v => v.toFixed(0) + '°' },
+      { key: 'para', type: 'toggle', label: 'show the Π^{para}-only route (no dia term)', value: true }
+    ], s => { sR = s; drawRho(); });
+  }
+  function drawRho() {
+    if (!sR || !pA) return;
+    const p = PRE[sR.rpre], to = p.to, lo = p.lo, ei = p.ei, Op2 = ei * (lo * lo - to * to), ga = 0.01 * to;
+    const c2 = Math.pow(Math.cos(sR.th * Math.PI / 180), 2), e0th = ei + c2 * Op2 / (to * to);
+    const xmax = 1.6 * lo, w = EPP.linspace(0.004 * xmax, xmax, 700);
+    // Units: Pi_rhorho in units of N0 = q^2|j|^2/(Omega_uc omega_TO^2) = |Pi_rhorho(0)| at theta = 0; Pi_jj along qhat in units of |j|^2/(c Omega_uc).
+    // The three routes are computed independently, so their agreement is a real check of (E.350).
+    const den = x => [x * x - to * to, ga * x];
+    const dir = w.map(x => C.div([c2 * to * to, 0], den(x)));                    // direct <T PP> correlator (EPP p. 77)
+    const piL = w.map(x => C.div([-x * x * c2, 0], den(x)));                       // qhat.Pi_jj.qhat from (E.352), para + dia
+    const piLpara = piL.map(p => [p[0] + c2, p[1]]);                               // Pi^para = Pi_jj - Pi^dia, Pi^dia = -c2 (E.304, one mode)
+    const conn = piL.map((p, k) => C.scale(p, -to * to / (w[k] * w[k])));          // (E.350): -(c q^2/omega^2) Pi_L
+    const para = piLpara.map((p, k) => C.scale(p, -to * to / (w[k] * w[k])));
+    const epsC = piL.map((p, k) => ei + Op2 * p[0] / (w[k] * w[k]));               // eps_L = eps_inf + 4 pi c Pi_L/omega^2
+    const epsP = piLpara.map((p, k) => ei + Op2 * p[0] / (w[k] * w[k]));
+    const LA = [
+      { type: 'fill', x: w, y1: dir.map(d => d[1]), color: 'phonon', alpha: 0.16, label: 'Im, direct' },
+      { type: 'line', x: w, y: dir.map(d => d[0]), color: 'phonon', width: 2.4, label: 'direct ⟨T PP⟩ (p. 77)' },
+      { type: 'line', x: w, y: conn.map(d => d[0]), color: 'ink', dash: [6, 4], width: 1.8, label: 'E.350 with Π_{jj} = para + dia' },
+      sR.para ? { type: 'line', x: w, y: para.map(d => d[0]), color: 'c5', width: 2, label: 'E.350 with Π^{para} only' } : null,
+      { type: 'vline', at: to, color: 'muted', dash: [2, 3], text: 'ω_{TO}' },
+      { type: 'points', x: [0.004 * xmax], y: [-c2], color: 'phonon', r: 4 }
+    ];
+    pA.draw(LA, { xlim: [0, xmax], ylim: [-6, 6] });
+    const wlo = Math.sqrt(to * to + c2 * Op2 / ei);
+    let wloP = NaN;
+    if (c2 > 1e-9) wloP = Math.sqrt((to * to + Math.sqrt(Math.pow(to, 4) + 4 * Op2 * c2 * to * to / ei)) / 2);
+    const LB = [
+      { type: 'band', x0: to, x1: wlo, color: 'phonon', alpha: 0.08 },
+      { type: 'hline', at: 0, color: 'muted', dash: [1, 0], width: 1 },
+      { type: 'line', x: w, y: epsC, color: 'phonon', width: 2.4, label: 'ε_L, gauge-invariant Π_{jj}' },
+      sR.para ? { type: 'line', x: w, y: epsP, color: 'c5', width: 2, label: 'ε_L, Π^{para} only' } : null,
+      c2 > 1e-9 ? { type: 'points', x: [wlo], y: [0], color: 'phonon', r: 4.5 } : null,
+      c2 > 1e-9 ? { type: 'text', x: wlo, y: 0, dx: 6, dy: -12, text: 'ω_{LO}(θ)', color: 'phonon' } : null,
+      { type: 'hline', at: ei, color: 'muted', dash: [4, 4], text: 'ε_∞', textAt: 'left' }
+    ];
+    pB.draw(LB, { xlim: [0, xmax], ylim: [-1.5 * (ei + Op2 / (to * to)), 2.5 * (ei + Op2 / (to * to))] });
+    roRho.set({
+      'Π_{ρρ}(ω→0)/|Π_{ρρ}(0)|_{θ=0}': (c2 > 1e-9 ? EPP.fix(-c2, 3) : '0') + (sR.para && c2 > 1e-9 ? ' · para only: → −∞' : ''),
+      'ε_L(0)': e0th.toFixed(2) + (sR.para && c2 > 1e-9 ? ' · para only: → +∞' : ''),
+      'ħω_{LO}(θ) from ε_L = 0': c2 > 1e-9 ? wlo.toFixed(1) + ' meV' + (sR.para ? ' · para only: ' + wloP.toFixed(1) + ' meV' : '') : 'none (θ = 90°)'
+    });
+  }
+})();
+</script>

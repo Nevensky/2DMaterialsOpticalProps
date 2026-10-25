@@ -1,0 +1,436 @@
+<section class="chapter" id="b-electrostatic" data-num="B.9" data-title="Electrostatic limit: recovering Giustino">
+  <header class="ch-head">
+    <p class="eyebrow"><span class="num">B.9</span><span>EPP §7.3 · Eqs. 433–454</span></p>
+    <h2>The electrostatic limit: recovering Giustino</h2>
+    <p class="lede">Let the speed of light go to infinity and EPP's electron-dressed photon keeps only its longitudinal–longitudinal sector, the RPA screened Coulomb interaction $W^{\rm e}$, which is the $W$ of GW without local fields. The phonon self-energy becomes proportional to $W^{\rm e}|\bq\cdot\bj_\sigma|^2$. At zero frequency it is the Gonze–Lee LO–TO term of DFPT; at the phonon frequency it produces the LO-phonon–plasmon modes that an adiabatic theory misses.</p>
+  </header>
+
+  <p>Part A never needed the speed of light. Giustino's interactions are the instantaneous Coulomb potential $v(\br-\br')\delta(t-t')$, dressed by the electrons into $W_{\rm e}$, and his LO–TO splitting and Fröhlich vertex are electrostatics with $Z^*$ and $\epsilon^\infty$ (<a href="#a-polar">§A.4</a>, <a href="#a-hedin-baym">§A.5</a>). EPP keeps $c$ finite, so $c\to\infty$ is a test it has to pass: the electrodynamic phonon self-energy of <a href="#b-phonon-se">§B.7</a> must collapse onto Giustino's formulas. EPP §7.3 shows that it does, and the way it collapses is worth following step by step.</p>
+  <p>Units are Gaussian, with Born charges $Z^*$ that carry the dimension of charge (<a href="#b-foundations">§B.1</a>). In this section "retardation" always means EPP's finite speed of light. Giustino's sense of the word, frequency-dependent electronic screening, is called <em>dynamic</em> screening here.</p>
+
+  <div class="callout intuition"><p class="callout-title">Physical picture: what $c\to\infty$ removes</p>
+    <p>The transverse field is the part that has to travel: its propagator has poles on the light cone $\omega=cq/\sqrt\epsilon$. The longitudinal field is tied to the charge density by Gauss's law at every instant, whatever $c$ is. For the LO phonon of GaAs the light cone sits at $q_c=\sqrt{\epsilon_\infty}\,\omega_{\rm LO}/c\approx6\times10^{-5}$ Å$^{-1}$ (<a href="#x-light-cone">§X.1</a>), about $5\times10^{-5}$ of the zone size. Sending $c\to\infty$ shrinks it to a point and leaves only the longitudinal field.</p>
+  </div>
+
+  <div class="fd" id="b-electrostatic-fd-chain" style="gap:10px 12px" aria-label="Limit chain: dressed photon, longitudinal sector, screened Coulomb interaction, phonon self-energy">
+    <figure><div class="d1"></div><figcaption>$D^{\rm e}_{\mu\nu}$: longitudinal + transverse, dressed by electrons (E.388)</figcaption></figure>
+    <div style="display:flex;align-items:center;gap:10px 12px"><span class="op">$\xrightarrow{\;c\to\infty\;}$</span>
+    <figure><div class="d2"></div><figcaption>only longitudinal lines survive, $D^{{\rm e},ll}$ (E.434)</figcaption></figure></div>
+    <div style="display:flex;align-items:center;gap:10px 12px"><span class="op">$=$</span>
+    <figure><div class="d3"></div><figcaption>$-\frac{c}{\omega^2}q_\mu q_\nu W^{\rm e}$, the RPA screened Coulomb line (E.441, E.445)</figcaption></figure></div>
+    <div style="display:flex;align-items:center;gap:10px 12px"><span class="op">$\xrightarrow{\;\omega\to0\;}$</span>
+    <figure><div class="d4"></div><figcaption>$\Omega^{\rm e}(\bq,0)$: the Gonze–Lee LO–TO term (E.452 at $\omega=0$, E.454)</figcaption></figure></div>
+  </div>
+  <p style="font-size:0.92rem;color:var(--fg-2)">The section in one line. Rose wavy: full field line, longitudinal plus transverse (heavy: dressed by electrons). Rose dashed: longitudinal (Coulomb) line; double dashed: $W^{\rm e}$. Blue blobs: electronic bubbles $\Pi^{\rm e,0}$. Amber zigzag: phonon; teal dots: ionic current vertices, which in this limit see only $\bq\cdot\bj_\sigma$.</p>
+
+  <h3>Four sectors, one survivor</h3>
+  <p>In <a href="#b-propagator">§B.6</a> the field propagator was assembled from longitudinal and transverse free lines, $D^0=D^{0l}+D^{0t}$ (E.375), and every diagram was sorted into one of four sectors by the type of its two outer lines (EPP Fig. 10, E Eqs. 365–368). The electron-dressed line of <a href="#b-phonon-se">§B.7</a>, which contains only electronic bubbles, splits the same way:</p>
+  <div class="eq">$$D^{\rm e}_{\mu\nu}=D^{{\rm e},ll}_{\mu\nu}+D^{{\rm e},lt}_{\mu\nu}+D^{{\rm e},tl}_{\mu\nu}+D^{{\rm e},tt}_{\mu\nu}\tag{E.433}$$</div>
+  <p>The transverse free line is</p>
+  <div class="eq">$$D^{0t}_{\mu\nu}(\bq,\omega)=-\frac{4\pi c}{q^2}\,\frac{q^2\delta_{\mu\nu}-q_\mu q_\nu}{\omega^2-\omega_\bq^2+i\eta},\qquad \omega_\bq=cq\tag{E.372}$$</div>
+  <p>At fixed $\bq$ and $\omega$ it vanishes like $1/c$. In EPP's words, "in the electrostatic limit ($c\to\infty$) there are no photons" (p. 97). Each term of the $lt$, $tl$ and $tt$ sectors contains at least one $D^{0t}$, hence</p>
+  <div class="eq">$$\lim_{c\to\infty}D^{\rm e}_{\mu\nu}=D^{{\rm e},ll}_{\mu\nu}\tag{E.434}$$</div>
+
+  <div class="fd" id="b-electrostatic-fd-sectors" style="gap:8px 18px" aria-label="First-order terms of the four sectors of the electron-dressed propagator">
+    <figure><div class="s-ll"></div><figcaption>$D^{{\rm e},ll}\propto c$: survives</figcaption></figure>
+    <figure><div class="s-lt"></div><figcaption>$D^{{\rm e},lt}\propto c^{-1}$</figcaption></figure>
+    <figure><div class="s-tl"></div><figcaption>$D^{{\rm e},tl}\propto c^{-1}$</figcaption></figure>
+    <figure><div class="s-tt"></div><figcaption>$D^{{\rm e},tt}\propto c^{-1}$</figcaption></figure>
+  </div>
+  <p style="font-size:0.92rem;color:var(--fg-2)">First-order term of each sector, after EPP Fig. 10 (which draws the full $D$, with ionic bubbles as well). Dashed: longitudinal line $D^{0l}$, the instantaneous Coulomb interaction in vector form; wavy: transverse photon $D^{0t}$; blob: electronic current–current bubble $\Pi^{\rm e,0}_{jj}$. Grey: the three sectors with a transverse outer line, which drop out for $c\to\infty$. The captions give the scaling of the whole sector at fixed $\bq,\omega$. For $tt$ it comes from the zeroth-order term, the free line $D^{0t}$; the first-order term drawn here falls faster, as $c^{-3}$.</p>
+
+  <p>One qualification makes the statement precise. $D^{{\rm e},ll}$ itself grows like $c$, because the longitudinal line does:</p>
+  <div class="eq">$$D^{0l}_{\mu\nu}(\bq,\omega)=-\frac{4\pi c}{q^2}\,\frac{q_\mu q_\nu}{\omega^2}\tag{E.374}$$</div>
+  <p>What enters a physical quantity is $D/c$. Every ionic and electronic current vertex carries a factor $c^{-1/2}$ (E.392, E.414), so the phonon self-energy $\Omega^{\rm e}=-J^*D^{\rm e}J$ is proportional to $D^{\rm e}/c$; EPP's digression E.439 makes the same remark. On that scale the $ll$ sector is of order $c^0$ and the other three vanish like $c^{-2}$. The figure computes this for an anisotropic insulator, where all four sectors are nonzero.</p>
+
+  <div class="callout source"><p class="callout-title">Note on the source: the power counting of E.440</p>
+    <p>EPP states</p>
+    <div class="eq">$$\begin{aligned}&D^{ll}_{\mu\nu}\sim c,\quad D^{lt}_{\mu\nu}\sim c^0,\\&D^{tl}_{\mu\nu}\sim c^0,\quad\text{and}\quad D^{tt}_{\mu\nu}\sim c^{-1}.\end{aligned}\tag{E.440}$$</div>
+    <p>The middle two are off by one power. At fixed $\bq,\omega$, $D^{0l}\propto c$ (E.374), $D^{0t}\propto c^{-1}$ (E.372) and $\Pi_{jj}\propto c^{-1}$ (the $1/c$ prefactor of E.383). The lowest $lt$ term, $D^{0l}\Pi D^{0t}$, therefore scales as $c\cdot c^{-1}\cdot c^{-1}=c^{-1}$, and every further pair $\Pi D^{0l}$ adds $c^0$. So $D^{lt}$, $D^{tl}$ and $D^{tt}$ all scale as $c^{-1}$ (derived here, not printed in EPP; steps of this kind are marked [derived] below). The same counting suppresses terms of the $ll$ sector that contain an internal transverse line, such as $D^{0l}\Pi D^{0t}\Pi D^{0l}\propto c^{-1}$, so what survives is the purely longitudinal chain. The conclusion E.434 is unaffected, since it only needs these terms to be subleading.</p>
+  </div>
+
+  <figure class="viz" id="viz-b-electrostatic-sectors">
+    <p class="viz-title"><span>Which sector survives $c\to\infty$?</span> <span class="tag">interactive</span></p>
+    <div class="ps"></div>
+    <div class="ctrls"></div>
+    <div class="ro"></div>
+    <figcaption><strong>Model.</strong> Uniaxial insulator with a frequency-independent electronic dielectric tensor $\epsilon={\rm diag}(\epsilon_\perp,\epsilon_\perp,\epsilon_\parallel)$, i.e. $\Pi^{\rm e,0}_{jj}=\frac{\omega^2}{4\pi c}(\epsilon-1)$ as in <a href="#b-phonon-se">§B.7</a>, and $\bq$ at angle $\theta$ to the optic axis. With $x=cq/\omega$, E.388 is solved by $d^{\rm e}\equiv\frac{\omega^2}{4\pi c}D^{\rm e}=(x^2P_T-\epsilon)^{-1}$, with the projectors $P_L=\hat\bq\hat\bq$ and $P_T=1-\hat\bq\hat\bq$ [derived, below]. $d^{\rm e}$ is the kernel of the phonon self-energy, $\Omega^{\rm e}_{\sigma\sigma}=-\frac{2\pi\hbar}{\Omega_{\rm uc}\omega_\sigma}\,\bj^*_\sigma\cdot d^{\rm e}\cdot\bj_\sigma$ (E.450). Plotted: norms of $P_Ld^{\rm e}P_L$ ($ll$), $P_Ld^{\rm e}P_T$ ($lt=tl$) and $P_Td^{\rm e}P_T$ ($tt$). At fixed $\bq,\omega$, $x\propto c$, so moving right is sending $c\to\infty$. Loss tangent 0.02; hBN-like defaults $\epsilon_\perp=4.87$, $\epsilon_\parallel=2.95$ (literature values, illustrative). Amber band: $x$ for phonons with $\hbar\omega\approx36$ meV and $10^{-3}\le q\le1$ Å$^{-1}$, i.e. most of the Brillouin zone. <strong>What to notice.</strong> Outside the light cone $ll$ settles on $1/\epsilon_L$, $\epsilon_L=\hat\bq\cdot\epsilon\cdot\hat\bq$ (E.446), while $lt$ and $tt$ fall as $x^{-2}$, not as the $x^{-1}$ that E.440 implies for $lt$. At $\theta=0°$, $90°$ or $\epsilon_\perp=\epsilon_\parallel$ the $lt$ sector vanishes by symmetry.</figcaption>
+  </figure>
+
+  <details class="derivation"><summary><span>Derivation: the closed form of $D^{\rm e}$ for a constant dielectric tensor, and its $c\to\infty$ limit</span></summary><div class="d-body">
+    <p>Write the free propagator E.375 in units of $4\pi c/\omega^2$, with $q^2=(\omega/c)^2x^2$:</p>
+    $$d^0\equiv\frac{\omega^2}{4\pi c}D^0=\frac{\delta-x^2\hat\bq\hat\bq}{x^2-1}=\frac{P_T}{x^2-1}-P_L,\qquad (d^0)^{-1}=(x^2-1)P_T-P_L .$$
+    <p>With $\Pi^{\rm e,0}_{jj}=\frac{\omega^2}{4\pi c}(\epsilon-1)$, E.388 reads $d^{\rm e}=d^0+d^0(\epsilon-1)d^{\rm e}$, so $(d^{\rm e})^{-1}=(d^0)^{-1}-(\epsilon-1)=x^2P_T-\epsilon$, using $P_L+P_T=1$. The vacuum light line $x=1$ cancels; the poles sit where $\det(x^2P_T-\epsilon)=0$, the light lines of the medium. For $x\to\infty$ only the longitudinal direction escapes the large term $x^2P_T$, and</p>
+    $$d^{\rm e}\to-\frac{\hat\bq\hat\bq}{\hat\bq\cdot\epsilon\cdot\hat\bq}+O(x^{-2}),$$
+    <p>which is E.446 with $\hat\epsilon^{\rm e}=\epsilon$. The $O(x^{-2})$ remainder contains all of $lt$, $tl$ and $tt$. For an isotropic $\epsilon$, $d^{\rm e}=P_T/(x^2-\epsilon)-P_L/\epsilon$: the two kernels of <a href="#b-frohlich">§B.8</a>.</p>
+  </div></details>
+
+  <h3>The survivor is $W^{\rm e}$</h3>
+  <p>The $ll$ sector is Coulomb physics written with vector indices. Undoing the connection formulas of <a href="#b-propagator">§B.6</a> (E Eqs. 350, 355, 359–360) turns its scalar core into a familiar Dyson equation, with $v=1/|\br-\br'|$ and $\otimes$ a convolution in space. The index 1 of $D^{\rm e}_{11}$ labels the scalar (Coulomb) row and column of EPP's $4\times4$ propagator, whose free part is $D^0={\rm diag}(v,\hat D^{0t})$ (E.317); it is not the Cartesian $x$.</p>
+  <div class="eq">$$D^{\rm e}_{11}=v+v\otimes\Pi^{\rm e,0}_{\rho\rho}\otimes v+\dots=v+v\otimes\Pi^{\rm e,0}_{\rho\rho}\otimes D^{\rm e}_{11}\tag{E.435}$$</div>
+  <div class="eq">$$D^{{\rm e},ll}_{\mu\nu}(\br,\br',\omega)=-\frac{c}{\omega^2}\,\partial_\mu\partial'_\nu D^{\rm e}_{11}(\br,\br',\omega)\tag{E.436}$$</div>
+  <p>E.435 screens the Coulomb interaction by the electronic density response $\Pi^{\rm e,0}_{\rho\rho}$ in the RPA, so EPP names it</p>
+  <div class="eq">$$D^{\rm e}_{11}(\br,\br',\omega)\equiv W^{\rm e}(\br,\br',\omega)\tag{E.437}$$</div>
+  <p>and, for a translationally invariant medium,</p>
+  <div class="eq">$$\lim_{c\to\infty}D^{\rm e}_{\mu\nu}(\bq,\omega)=-\frac{c}{\omega^2}\,q_\mu q_\nu\,W^{\rm e}(\bq,\omega)\tag{E.441}$$</div>
+  <p>$W^{\rm e}$ itself follows from the dielectric form of the Dyson equation, $\hat\epsilon^{\rm e}D^{\rm e}=D^0$ with $\epsilon^{\rm e}_{\mu\nu}=\delta_{\mu\nu}-\sum_\alpha D^0_{\mu\alpha}\Pi^{\rm e,0}_{jj\alpha\nu}$ (E.431–432, <a href="#b-frohlich">§B.8</a>). Inserting E.441 and the $c\to\infty$ limit of $D^0$, then contracting with $\bq$, gives</p>
+  <div class="eq">$$W^{\rm e}(\bq,\omega)=\frac{4\pi}{\sum_{\mu\nu}q_\mu\,\epsilon^{\rm e}_{\mu\nu}(\bq,\omega)\,q_\nu}\tag{E.445}$$</div>
+
+  <details class="derivation"><summary><span>Derivation: from (E.431) to (E.445), and why this is the RPA dielectric function</span></summary><div class="d-body">
+    <p>For $c\to\infty$ the free propagator E.375 becomes purely longitudinal,</p>
+    $$\lim_{c\to\infty}D^0_{\mu\nu}(\bq,\omega)=-\frac{4\pi c}{\omega^2}\,\frac{q_\mu q_\nu}{q^2}.\tag{E.442}$$
+    <p>Put E.441 on the left and E.442 on the right of E.431:</p>
+    $$\sum_\alpha\epsilon^{\rm e}_{\mu\alpha}(\bq,\omega)\,q_\alpha q_\nu\,W^{\rm e}(\bq,\omega)=4\pi\,\frac{q_\mu q_\nu}{q^2}.\tag{E.443}$$
+    <p>Cancel $q_\nu$ on both sides, multiply by $q_\mu$ and sum:</p>
+    $$\sum_{\mu\nu}q_\mu\,\epsilon^{\rm e}_{\mu\nu}(\bq,\omega)\,q_\nu\,W^{\rm e}(\bq,\omega)=4\pi,\tag{E.444}$$
+    <p>which is E.445. To identify the denominator, insert E.442 into E.432: $\epsilon^{\rm e}_{\mu\nu}\to\delta_{\mu\nu}+\frac{4\pi c}{\omega^2q^2}\,q_\mu\sum_\alpha q_\alpha\Pi^{\rm e,0}_{jj\alpha\nu}$. The longitudinal connection formula $\Pi_{\rho\rho}=-\frac{c}{\omega^2}\,\bq\cdot\Pi_{jj}\cdot\bq$ (E.350 in $\bq$ space, §B.6) then gives [derived]</p>
+    $$\frac{\bq\cdot\hat\epsilon^{\rm e}(\bq,\omega)\cdot\bq}{q^2}=1-\frac{4\pi}{q^2}\,\Pi^{\rm e,0}_{\rho\rho}(\bq,\omega)\equiv\epsilon^{\rm e}_L(\bq,\omega),\qquad W^{\rm e}=\frac{4\pi}{q^2\,\epsilon^{\rm e}_L(\bq,\omega)} .$$
+    <p>This is the longitudinal RPA dielectric function, $1-v\Pi^{\rm e,0}_{\rho\rho}$, and $W^{\rm e}=v/\epsilon^{\rm e}_L$ is the screened interaction that E.435 sums.</p>
+  </div></details>
+
+  <div class="callout connect"><p class="callout-title">Bridge to Giustino: this is the $W_{\rm e}$ of Hedin–Baym</p>
+    <p>Giustino's electronic screened interaction (<a href="#a-hedin-baym">§A.5</a>) is $W_{\rm e}=v+vP_{\rm e}W_{\rm e}$ (G.94), with $\epsilon_{\rm e}=1-vP_{\rm e}$ (G Eq. 95). E.435 is G.94 with $P_{\rm e}\to\Pi^{\rm e,0}_{\rho\rho}$, the RPA bubble (Giustino's approximation (i), $\Gamma=\delta\delta$, in G §V.A.3), restricted to $\bG=\bG'=0$. It is the RPA $W$ of a GW code with local fields switched off. EPP reaches it from the other side. Giustino postulates the instantaneous $v$; EPP obtains $W^{\rm e}$ as the part of the full electromagnetic propagator that survives $c\to\infty$. Hedin–Baym's objects are the longitudinal projections of EPP's.</p>
+  </div>
+  <div class="callout caveat"><p class="callout-title">Subtlety: the head of the RPA dielectric matrix</p>
+    <p>EPP keeps only $\bG=0$ ("CLFs are mostly neglected here", p. 95) and no exchange–correlation. So $\bq\cdot\hat\epsilon^{\rm e}\cdot\bq/q^2$ is the head $\epsilon_{00}$ of the RPA dielectric matrix and $W^{\rm e}=v/\epsilon_{00}$, whereas the head of $W$ in a GW code is $v\,\epsilon^{-1}_{00}$ and DFPT's $\epsilon^\infty$ is the macroscopic $1/\epsilon^{-1}_{00}$ with local fields and $f_{xc}$. In sp semiconductors dropping local fields raises $\epsilon^\infty$ by roughly 10% (literature, illustrative). Below, $\epsilon_\infty$ stands for whichever electronic dielectric tensor one trusts.</p>
+  </div>
+
+  <h3>Phonons dressed by $W^{\rm e}$ give the Gonze–Lee term</h3>
+  <p>Now insert the survivor into the phonon self-energy. In the diagonal approximation of <a href="#b-phonon-se">§B.7</a>, with the dynamical ionic vertex $J_{\mu\sigma}\propto\omega j_{\mu\sigma}$ (E.392),</p>
+  <div class="eq">$$\Omega^{\rm e}_{\sigma\sigma}(\bq,\omega)=-\frac{\hbar\omega^2}{2c\,\Omega_{\rm uc}\,\omega_\sigma(\bq)}\sum_{\alpha\beta}j^*_{\alpha\sigma}(\bq)\,D^{\rm e}_{\alpha\beta}(\bq,\omega)\,j_{\beta\sigma}(\bq)\tag{E.450}$$</div>
+  <p>Here $\omega_\sigma(\bq)$ is the bare phonon frequency, built from short-range force constants only, and $j_{\alpha\sigma}$ the ionic current vertex of mode $\sigma$ (E.295, written out below). With E.441 the prefactor $\omega^2/c$ cancels against $-c/\omega^2$:</p>
+  <div class="eq">$$\lim_{c\to\infty}\Omega^{\rm e}_{\sigma\sigma}(\bq,\omega)=\frac{\hbar\,W^{\rm e}(\bq,\omega)}{2\,\Omega_{\rm uc}\,\omega_\sigma(\bq)}\,\Big|\sum_\alpha q_\alpha\,j_{\alpha\sigma}(\bq)\Big|^2\tag{E.452}$$</div>
+  <p>A screened Coulomb line is exchanged between two Born-charge dipole currents, and only the component of the mode current along $\bq$ couples: only a longitudinal polarization wave carries bound charge (<a href="#a-polar">§A.4</a>). The poles of the phonon propagator (E.405), $\omega^2=\omega_\sigma^2+2\omega_\sigma\Omega^{\rm e}_{\sigma\sigma}/\hbar$, become</p>
+  <div class="eq">$$\omega^2=\omega^2_\sigma(\bq)+\frac{W^{\rm e}(\bq,\omega)}{\Omega_{\rm uc}}\,\Big|\sum_\alpha q_\alpha\,j_{\alpha\sigma}(\bq)\Big|^2\tag{E.453}$$</div>
+  <p>This condition is still self-consistent in $\omega$. EPP then argues that "the 3D electronic screening is in the range of phonon energies practically static" (p. 99) and sets $\omega=0$ on the right:</p>
+  <div class="eq">$$\tilde\omega^2_\sigma(\bq)=\omega^2_\sigma(\bq)+\frac{W^{\rm e}(\bq,\omega=0)}{\Omega_{\rm uc}}\,\Big|\sum_\alpha q_\alpha\,j_{\alpha\sigma}(\bq)\Big|^2\tag{E.454}$$</div>
+  <p>For an insulator $W^{\rm e}(\bq,0)=4\pi/(\bq\cdot\epsilon_\infty\cdot\bq)$. Writing out $|\bq\cdot\bj_\sigma|^2$ with $j_{\alpha\sigma}=\sum_{a\mu}Z^*_{a\alpha\mu}e_{a\mu\sigma}/\sqrt{m_a}$ (E.295) gives [derived]</p>
+  <div class="eq">$$\tilde\omega^2_\sigma=\omega^2_\sigma+\sum_{a\mu,\,b\nu}\frac{e^*_{a\mu\sigma}}{\sqrt{m_a}}\left[\frac{4\pi}{\Omega_{\rm uc}}\,\frac{(\bq\cdot Z^*_a)_\mu\,(\bq\cdot Z^*_b)_\nu}{\bq\cdot\epsilon_\infty\cdot\bq}\right]\frac{e_{b\nu\sigma}}{\sqrt{m_b}},\qquad (\bq\cdot Z^*_a)_\mu=\sum_\alpha q_\alpha Z^*_{a\alpha\mu}$$</div>
+  <p>The bracket is the nonanalytic dipole–dipole force constant of Gonze and Lee (cited in Giustino §VI.A.3; see <a href="#a-polar">§A.4</a>). In SI and with Giustino's dimensionless Born charges it reads</p>
+  <div class="eq">$$\tilde C^{\rm NA}_{\kappa\alpha,\kappa'\beta}(\bq)=\frac{4\pi}{\Omega}\,\frac{e^2}{4\pi\varepsilon_0}\,\frac{(\bq\cdot\bZ^*_\kappa)_\alpha\,(\bq\cdot\bZ^*_{\kappa'})_\beta}{\bq\cdot\boldsymbol\epsilon^\infty\cdot\bq}$$</div>
+  <p>and the two agree term by term once $Z^*_{\rm EPP}=|e|Z^*_{\rm G}$ and $e^2\to e^2/4\pi\varepsilon_0$. The agreement holds at small $q$. EPP puts all dipoles of a cell at its origin (E.314), so its $j_{\alpha\sigma}(\bq)$ lacks the basis phases $e^{-i\bq\cdot\boldsymbol\tau_\kappa}$, which are close to 1 only near $\Gamma$. E.454 is first-order perturbation theory in this term on the basis of bare modes, whereas DFPT adds it to the dynamical matrix before diagonalizing. The two coincide whenever the term does not mix modes, as for the optical modes of a cubic diatomic crystal. There $|\bj_\sigma|^2=Z^{*2}/\mu$ ($\mu$ the reduced mass), and for $\bj_\sigma\parallel\hat\bq$</p>
+  <div class="eq">$$\omega_{\rm LO}^2=\omega_{\rm TO}^2+\frac{\omega_p^2}{\epsilon_\infty},\qquad \omega_p^2=\frac{4\pi Z^{*2}}{\Omega_{\rm uc}\,\mu},\qquad \omega_\sigma=\omega_{\rm TO},$$</div>
+  <p>while modes with $\bj_\sigma\perp\hat\bq$ are not shifted. For GaAs ($Z^*=2.07$, $\Omega_{\rm uc}=45.2$ Å$^3$, $\mu=36.1$ amu, $\epsilon_\infty=10.9$, $\hbar\omega_{\rm TO}=33.3$ meV; literature values, illustrative) this gives $\hbar\omega_p=44.6$ meV and $\hbar\omega_{\rm LO}=35.9$ meV, against 36.2 meV measured. When several polar modes lie close together (perovskites, low-symmetry oxides) the off-diagonal elements $\Omega^{\rm e}_{\sigma\sigma'}$ of E.399 must be kept, which restores the matrix form. This is the electrostatic splitting, with $c\to\infty$ taken first; the $\bq=0$ result E.410 of <a href="#b-phonon-se">§B.7</a> is the opposite order of limits and describes a different object, the upper polariton without electrons.</p>
+
+  <div class="callout connect"><p class="callout-title">Bridge to Giustino: the LO–TO splitting, derived instead of added</p>
+    <p>In Part A the splitting is put in by hand. DFPT computes analytic force constants and adds the Gonze–Lee term built from $Z^*$ and $\epsilon^\infty$, the same kernel that gives the Verdi–Giustino vertex (G Eq. 180, <a href="#a-polar">§A.4</a>; Giustino calls the two strategies analogous in G §VI.A.3). In EPP the term is generated by one $W^{\rm e}$ line between two dipole currents; the Fröhlich vertex is the same line with one dipole replaced by an electronic density (<a href="#b-frohlich">§B.8</a>). The step from E.453 to E.454 is Giustino's adiabatic approximation, "setting $\omega=0$ in Eq. (121)" (G §V.A.1, after Keating 1968), applied to his phonon self-energy (G.121), displayed in <a href="#a-hedin-baym">§A.5</a>. In G.121 bare nuclear point charges $Z_\kappa$ interact through $W_{\rm e}$. In E.452 Born-charge point dipoles at the cell origins interact through $W^{\rm e}$, and only its long-range part, $\bG=0$, is kept; the short-range part sits in the bare $\omega_\sigma$. So $\Omega^{\rm e}(\bq,0)$ is the dipolar part of Giustino's adiabatic $\Pi^{\rm A}=\Pi^{\rm ph}(\omega=0)$ (G Eq. 125), and $\Omega^{\rm e}(\bq,\omega)-\Omega^{\rm e}(\bq,0)$ the dipolar part of his $\Pi^{\rm NA}$.</p>
+  </div>
+
+  <div class="callout source"><p class="callout-title">Note on the source: "probably identical"</p>
+    <p>EPP calls E.454 "very similar (probably identical)" to Eq. 2 of Sohier, Gibertini, Calandra, Mauri and Marzari, Nano Lett. 17, 3758 (2017), and its 2D counterpart "consistent with" their Eq. 3 (p. 102). The manuscript does not carry out the comparison. What is established is agreement in form: a bare frequency plus a dipole–dipole term screened by the static electronic $W$. That the prefactors and the dielectric object coincide (here the RPA head, there the DFPT dielectric tensor) is not shown. The 2D case is <a href="#b-2d">§B.10</a>.</p>
+  </div>
+
+  <p>Collecting the limits, Giustino's world is recovered piece by piece:</p>
+  <div class="tbl"><table>
+    <thead><tr><th>EPP, finite $c$</th><th>$c\to\infty$</th><th>Giustino</th></tr></thead>
+    <tbody>
+      <tr><td>$D^{\rm e}$, $3\times3$ (E.388)</td><td>$-\frac{c}{\omega^2}q_\mu q_\nu W^{\rm e}$ (E.441)</td><td>$W_{\rm e}=v+vP_{\rm e}W_{\rm e}$ (G Eq. 94), RPA, $\bG=0$</td></tr>
+      <tr><td>$\hat\epsilon^{\rm e}$ (E.432)</td><td>$\bq\cdot\hat\epsilon^{\rm e}\cdot\bq/q^2=1-v\Pi^{\rm e,0}_{\rho\rho}$</td><td>$\epsilon_{\rm e}=1-vP_{\rm e}$ (G Eq. 95), head only</td></tr>
+      <tr><td>$g^{\rm dyn}$ (E.416)</td><td>Verdi–Giustino with $\epsilon^\infty\to\hat\epsilon^{\rm e}(\bq,\omega)$ (<a href="#b-frohlich">§B.8</a>)</td><td>$g^{\mathcal L}$ (G Eq. 180)</td></tr>
+      <tr><td>$\Omega^{\rm e}(\bq,0)$</td><td>$\frac{\hbar}{2\Omega_{\rm uc}\omega_\sigma}W^{\rm e}(\bq,0)\,|\bq\cdot\bj_\sigma|^2$ (E.452, E.454)</td><td>Gonze–Lee term inside $\Pi^{\rm A}$ (G Eq. 125)</td></tr>
+      <tr><td>$\Omega^{\rm e}(\bq,\omega)-\Omega^{\rm e}(\bq,0)$</td><td>dynamic part of E.453</td><td>dipolar part of $\Pi^{\rm NA}$ (G Eq. 140)</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Keeping $\omega$: LO-phonon–plasmon modes</h3>
+  <p>The static step needs the electrons to follow the lattice. In an undoped semiconductor they do: the gap lies far above $\hbar\omega_{\rm LO}$, $\hat\epsilon^{\rm e}(\bq,\omega_{\rm LO})\approx\epsilon_\infty$, and E.454 is the DFPT result. Free carriers change this. Their screened plasma frequency $\omega_{\rm pl}/\sqrt{\epsilon_\infty}$, with $\omega_{\rm pl}^2=4\pi ne^2/m^*$, moves through the phonon range as the density $n$ grows, and near resonance $W^{\rm e}(\bq,\omega)$ is nothing like $W^{\rm e}(\bq,0)$. E.453 must then be solved as it stands.</p>
+  <p>Take the LO mode of a cubic polar semiconductor, $\bj_\sigma\parallel\hat\bq$, so that $W^{\rm e}|\bq\cdot\bj_\sigma|^2/\Omega_{\rm uc}=\omega_p^2/\epsilon^{\rm e}(\bq,\omega)$, with $\omega_p$ the ionic plasma frequency defined above. E.453 becomes $\omega^2=\omega_{\rm TO}^2+\omega_p^2/\epsilon^{\rm e}(\bq,\omega)$, which is the same as [derived]</p>
+  <div class="eq">$$\epsilon_{\rm tot}(\bq,\omega)\equiv\epsilon^{\rm e}(\bq,\omega)+\frac{\omega_p^2}{\omega_{\rm TO}^2-\omega^2}=0 .$$</div>
+  <p>The coupled longitudinal modes are the zeros of the total dielectric function, with electrons and ions on the same footing, as <a href="#b-propagator">§B.6</a> found from the photon side. For $q\to0$ the carriers respond like a Drude gas, $\epsilon^{\rm e}=\epsilon_\infty-\omega_{\rm pl}^2/\omega^2$, and the zeros are [derived]</p>
+  <div class="eq">$$\omega_\pm^2=\tfrac12\Big[\omega_{\rm LO}^2+\tilde\omega_{\rm pl}^2\pm\sqrt{\big(\omega_{\rm LO}^2+\tilde\omega_{\rm pl}^2\big)^2-4\,\tilde\omega_{\rm pl}^2\,\omega_{\rm TO}^2}\,\Big],\qquad \tilde\omega_{\rm pl}^2=\frac{\omega_{\rm pl}^2}{\epsilon_\infty},$$</div>
+  <p>where $\omega_{\rm LO}^2=\omega_{\rm TO}^2+\omega_p^2/\epsilon_\infty$ is the undoped LO frequency. At low density $L_+$ is the LO phonon and $L_-$ the plasmon. At high density $L_+$ becomes the plasmon and $L_-\to\omega_{\rm TO}$: the carriers screen the macroscopic field and the LO–TO splitting disappears. In between the branches anticross, where $\tilde\omega_{\rm pl}\approx\omega_{\rm LO}$; for GaAs ($m^*=0.067\,m_e$) that happens at $n\approx7\times10^{17}$ cm$^{-3}$.</p>
+  <p>The adiabatic version, E.454 with the static RPA screening of the carriers, $\epsilon^{\rm e}(\bq,0)=\epsilon_\infty+k_{\rm TF}^2/q^2$ for $q\ll2k_F$ (Thomas–Fermi, $k_{\rm TF}^2=6\pi ne^2/E_F$), has a single mode [derived],</p>
+  <div class="eq">$$\tilde\omega^2=\omega_{\rm TO}^2+\omega_p^2\,\frac{q^2}{\epsilon_\infty q^2+k_{\rm TF}^2},$$</div>
+  <p>which slides down to $\omega_{\rm TO}$ as soon as $q$ drops below the screened Thomas–Fermi wavevector $k_{\rm TF}/\sqrt{\epsilon_\infty}$, at any density, and misses the second branch altogether.</p>
+
+  <figure class="viz" id="viz-b-electrostatic-plasmon">
+    <p class="viz-title"><span>LO-phonon–plasmon coupled modes: dynamic vs static $W^{\rm e}$</span> <span class="tag">interactive</span></p>
+    <div class="viz-grid"><div class="pa"></div><div class="pb"></div></div>
+    <div class="ctrls"></div>
+    <div class="ro"></div>
+    <figcaption><strong>Model.</strong> Cubic polar semiconductor, LO mode ($\bj_\sigma\parallel\hat\bq$), electrostatic limit; $\omega_\sigma=\omega_{\rm TO}$ and $\omega_p^2=\epsilon_\infty(\omega_{\rm LO}^2-\omega_{\rm TO}^2)$ from the undoped crystal. Carriers: one parabolic band, mass $m^*$, $T=0$; $(\hbar\omega_{\rm pl})^2=(e^2/\varepsilon_0)\,n\hbar^2/m^*$ (SI form of $4\pi ne^2/m^*$). (a) Amber: $L_\pm$ from E.453 with Drude screening ($q\to0$, closed form above). Teal dashed: E.454 with static RPA screening $\epsilon^{\rm e}(q,0)=\epsilon_\infty+(k_{\rm TF}^2/q^2)F(q/2k_F)$ at the chosen $q$. Blue dotted: uncoupled plasmon; circle: resonance $\tilde\omega_{\rm pl}=\omega_{\rm LO}$. (b) Log-scale spectral weight at the chosen $q$ with the full $T=0$ Lindhard function $\epsilon^{\rm e}(q,\omega+i\gamma_{\rm e})$, $\hbar\gamma_{\rm e}=2.5$ meV, $\hbar\gamma_{\rm ph}=0.8$ meV (broadened for display): the loss function $-{\rm Im}\,1/\epsilon_{\rm tot}$, i.e. the spectral function of $W=4\pi/q^2\epsilon_{\rm tot}$ (Giustino's $W_{\rm e}+W_{\rm ph}$, G Eq. 104), or the phonon spectral function $-{\rm Im}\,F_\sigma$ in meV$^{-1}$ (E.405); dotted: $L_\pm$ for $q\to0$. Presets (literature values, illustrative): GaAs $33.3/36.2$ meV, $\epsilon_\infty=10.9$, $m^*=0.067$; GaN $69.2/92.0$ meV, $5.35$, $0.20$. Raman scattering on n-GaAs saw the $L_\pm$ pair (Mooradian and Wright 1966, cited by Giustino; no data plotted). Click a panel to move the density cursor. <strong>What to notice.</strong> Static screening just slides the LO mode down to $\omega_{\rm TO}$. The dynamic solution has two branches that anticross where the plasmon meets $\omega_{\rm LO}$; the phonon spectral function shows the lattice weight passing from $L_+$ to $L_-$. Raise $q$ until $\omega_{\rm LO}/qv_F\ll1$: the ridges move onto the static curve and the plasmon dissolves in the particle–hole continuum, where EPP's static step is right.</figcaption>
+  </figure>
+
+  <details class="derivation"><summary><span>Derivation: coupled-mode condition, closed form and spectral functions</span></summary><div class="d-body">
+    <p>For the diatomic LO mode, $|\bq\cdot\bj_\sigma|^2=q^2Z^{*2}/\mu$ and $W^{\rm e}=4\pi/(q^2\epsilon^{\rm e})$, so the shift in E.453 is $\omega_p^2/\epsilon^{\rm e}(\bq,\omega)$. Multiplying $\omega^2-\omega_{\rm TO}^2=\omega_p^2/\epsilon^{\rm e}$ by $\epsilon^{\rm e}/(\omega_{\rm TO}^2-\omega^2)$ gives $\epsilon^{\rm e}+\omega_p^2/(\omega_{\rm TO}^2-\omega^2)=0$. With $\epsilon^{\rm e}=\epsilon_\infty-\omega_{\rm pl}^2/\omega^2$ and a factor $\omega^2(\omega_{\rm TO}^2-\omega^2)/\epsilon_\infty$ this is the quadratic in $\omega^2$</p>
+    $$\omega^4-\omega^2\big(\omega_{\rm LO}^2+\tilde\omega_{\rm pl}^2\big)+\tilde\omega_{\rm pl}^2\,\omega_{\rm TO}^2=0,$$
+    <p>whose roots are $\omega_\pm^2$. The product of the roots shows that $L_-\to\omega_{\rm TO}$ when $\tilde\omega_{\rm pl}\to\infty$. Static screening instead puts $\epsilon^{\rm e}(\bq,0)$ into E.454, which yields the single Thomas–Fermi mode. With causal damping ($i\eta\to i\gamma_{\rm ph}\omega$, as in EPP's digression on p. 88) the phonon propagator E.405 is $\hbar F_\sigma=2\omega_{\rm TO}/[\omega^2-\omega_{\rm TO}^2-\omega_p^2/\epsilon^{\rm e}(\bq,\omega)+i\gamma_{\rm ph}\omega]$. Dividing by $\hbar$ gives an inverse energy, $F_\sigma=2\hbar\omega_{\rm TO}/[(\hbar\omega)^2-(\hbar\omega_{\rm TO})^2-(\hbar\omega_p)^2/\epsilon^{\rm e}+i\hbar\gamma_{\rm ph}\,\hbar\omega]$, which panel (b) plots in meV$^{-1}$. Its poles are the zeros of $\epsilon_{\rm tot}$, which are also the peaks of $-{\rm Im}\,1/\epsilon_{\rm tot}$. The two spectral functions share their poles and differ in the weights: the loss function weights the field, $F_\sigma$ the lattice.</p>
+  </div></details>
+
+  <p>When is the static step safe? The electrons must respond faster than the lattice: either collectively, with the plasmon (or, in an insulator, the interband gap) far above $\omega_{\rm LO}$, or one by one, with $qv_F\gg\omega_{\rm LO}$, so that carriers cross a wavelength within a phonon period. EPP's "practically static" argument holds for undoped 3D semiconductors. It fails near the anticrossing. At small $q$ it also fails for dilute carriers whose plasmon lies below the phonon: then $W^{\rm e}(\bq,\omega_{\rm LO})$ is close to the undoped $4\pi/q^2\epsilon_\infty$, while $W^{\rm e}(\bq,0)$ is fully screened.</p>
+
+  <div class="callout connect"><p class="callout-title">Bridge to Giustino: the speculation of §V.A.2, realized</p>
+    <p>Giustino expects new structure in the phonon spectrum "whenever $\epsilon_{\rm e}(\br,\br',\omega)$ exhibits dynamical structure close to vibrational frequencies", for instance in degenerate polar semiconductors, where phonons and plasmons combine into coupled plasmon–phonon modes, "the electronic analog of photon polaritons", predicted by Varga (1965) and confirmed by Raman measurements on GaAs (Mooradian and Wright 1966). He speculates that they should follow from the frequency dependence of the phonon self-energy in his Eq. (136) (G §V.A.2, p. 015003-23; see <a href="#a-phonon-se">§A.6</a>). E.453 does exactly this. In his language the plasmon pole lives entirely in $\Pi^{\rm NA}$, which is why no adiabatic, DFPT-type calculation can produce the $L_\pm$ pair. EPP holds both analogues side by side: phonon polaritons from transverse photons (<a href="#b-phonon-se">§B.7</a>), and plasmon–phonon modes from the longitudinal $W^{\rm e}(\omega)$.</p>
+  </div>
+  <div class="callout caveat"><p class="callout-title">Subtlety: two corners of the Lindhard function</p>
+    <p>The Drude form ($\omega\gg qv_F$) and the Thomas–Fermi form ($\omega\ll qv_F$) are opposite corners of one function, and their $\omega,\bq\to0$ limits do not commute (Giustino recalls that the electron-gas dielectric function diverges as $\omega,\bq\to0$, G §V.A.1). The heat map uses the full Lindhard function. It ignores nonparabolicity, local fields and finite temperature. In GaAs the $T=0$ picture is a stretch at room temperature below about $3\times10^{17}$ cm$^{-3}$, where $E_F$ drops below $k_BT$ and the carriers become nondegenerate [derived].</p>
+  </div>
+
+  <p>In short: with $c\to\infty$ and $\omega\to0$, EPP returns the world of DFPT, with the electronic $W$ of Hedin–Baym, the Gonze–Lee LO–TO term and the Verdi–Giustino vertex, now produced by one propagator instead of being added by hand. Relax either limit and something new appears. Finite $c$ gives phonon polaritons (<a href="#b-phonon-se">§B.7</a>) and photon-mediated TO coupling (<a href="#b-frohlich">§B.8</a>); finite $\omega$ gives the plasmon–phonon modes above. In a 2D crystal the same $W^{\rm e}$ becomes the Rytova–Keldysh interaction and removes the splitting at $\Gamma$ (<a href="#b-2d">§B.10</a>).</p>
+</section>
+<script>
+(() => {
+  const sec = document.getElementById('b-electrostatic');
+  if (!sec || !window.EPP) return;
+
+  // ---------- static diagrams ----------
+  const chain = document.getElementById('b-electrostatic-fd-chain');
+  EPP.fd.draw(chain.querySelector('.d1'), { w: 120, h: 52, label: 'electron-dressed photon line D^e', items: [
+    { t: 'photon2', a: [8, 32], b: [112, 32], label: 'D^e' }] });
+  EPP.fd.draw(chain.querySelector('.d2'), { w: 216, h: 56, label: 'longitudinal lines joined by electronic bubbles', items: [
+    { t: 'coulomb', a: [4, 32], b: [46, 32], label: 'D^{0l}' },
+    { t: 'blob', at: [66, 32], r: 18, label: 'Π^{e,0}', color: 'electron' },
+    { t: 'coulomb', a: [84, 32], b: [128, 32], label: 'D^{0l}' },
+    { t: 'blob', at: [148, 32], r: 18, label: 'Π^{e,0}', color: 'electron' },
+    { t: 'coulomb', a: [166, 32], b: [194, 32] },
+    { t: 'text', at: [206, 37], text: '…', color: 'muted', upright: true }] });
+  EPP.fd.draw(chain.querySelector('.d3'), { w: 120, h: 52, label: 'screened Coulomb interaction W^e', items: [
+    { t: 'screened', a: [8, 32], b: [112, 32], label: 'W^e' }] });
+  EPP.fd.draw(chain.querySelector('.d4'), { w: 200, h: 70, label: 'phonon self-energy: two ionic vertices joined by W^e', items: [
+    { t: 'phonon', a: [4, 28], b: [48, 28] },
+    { t: 'screened', a: [48, 28], b: [152, 28], label: 'W^e(q,0)' },
+    { t: 'phonon', a: [152, 28], b: [196, 28] },
+    { t: 'vertex', at: [48, 28], r: 4.2, color: 'c4' }, { t: 'vertex', at: [152, 28], r: 4.2, color: 'c4' },
+    { t: 'text', at: [48, 58], text: 'q·j_σ^*', color: 'c4-t', size: 13 },
+    { t: 'text', at: [152, 58], text: 'q·j_σ', color: 'c4-t', size: 13 }] });
+
+  const secFd = document.getElementById('b-electrostatic-fd-sectors');
+  const sector = (cls, left, right, live) => {
+    const col = live ? null : 'muted';
+    const line = (kind, a, b, lab) => Object.assign({ t: kind, a, b, label: lab }, col ? { color: col } : {});
+    EPP.fd.draw(secFd.querySelector(cls), { w: 176, h: 58, label: 'sector ' + cls.slice(3), items: [
+      line(left === 'l' ? 'coulomb' : 'photon', [4, 34], [64, 34], left === 'l' ? 'D^{0l}' : 'D^{0t}'),
+      { t: 'blob', at: [88, 34], r: 22, label: 'Π^{e,0}', color: live ? 'electron' : 'muted' },
+      line(right === 'l' ? 'coulomb' : 'photon', [112, 34], [172, 34], right === 'l' ? 'D^{0l}' : 'D^{0t}')] });
+  };
+  sector('.s-ll', 'l', 'l', true); sector('.s-lt', 'l', 't', false); sector('.s-tl', 't', 'l', false); sector('.s-tt', 't', 't', false);
+
+  // ---------- figure 1: sectors vs x = cq/omega ----------
+  (() => {
+    const fig = document.getElementById('viz-b-electrostatic-sectors');
+    const yt = [-10, -8, -6, -4, -2, 0, 2].map(e => ({ v: Math.pow(10, e), label: e === 0 ? '1' : (e === 2 ? '100' : `10^{${e}}`) }));
+    const plot = new EPP.Plot(fig.querySelector('.ps'), {
+      xlabel: 'x = cq/ω', ylabel: 'sector norm of d^e', xlim: [0.1, 1e5], ylim: [1e-11, 100], logx: true, logy: true,
+      yticks: yt, aspect: 0.55, minHeight: 270, xname: 'cq/ω', hoverX: v => EPP.fmt(v, 3), hoverY: v => v.toExponential(2),
+      ariaLabel: 'Norms of the ll, lt and tt sectors of the dressed photon propagator versus cq over omega'
+    });
+    const ro = EPP.readout(fig.querySelector('.ro'));
+    const N = 420, xs = Array.from({ length: N }, (_, i) => Math.pow(10, -1 + 6 * i / (N - 1)));
+    const TAN = 0.02;
+    // complex helpers on [re, im]
+    const cm = (a, b) => [a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0]];
+    const cs = (a, b) => [a[0] - b[0], a[1] - b[1]];
+    const ca = (a, b) => [a[0] + b[0], a[1] + b[1]];
+    const cd = (a, b) => { const d = b[0] * b[0] + b[1] * b[1]; return [(a[0] * b[0] + a[1] * b[1]) / d, (a[1] * b[0] - a[0] * b[1]) / d]; };
+    function inv3(M) {
+      const m = (i, j) => M[i * 3 + j];
+      const cof = (i, j) => {
+        const r0 = i === 0 ? 1 : 0, r1 = i === 2 ? 1 : 2, c0 = j === 0 ? 1 : 0, c1 = j === 2 ? 1 : 2;
+        const v = cs(cm(m(r0, c0), m(r1, c1)), cm(m(r0, c1), m(r1, c0)));
+        return ((i + j) % 2) ? [-v[0], -v[1]] : v;
+      };
+      let det = [0, 0]; for (let j = 0; j < 3; j++) det = ca(det, cm(m(0, j), cof(0, j)));
+      const out = new Array(9); for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) out[i * 3 + j] = cd(cof(j, i), det);
+      return out;
+    }
+    function sectors(x, th, ep, ez) {
+      const qh = [Math.sin(th), 0, Math.cos(th)], t1 = [Math.cos(th), 0, -Math.sin(th)], t2 = [0, 1, 0];
+      const eps = [ep, ep, ez], M = [];
+      for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) {
+        const PT = (i === j ? 1 : 0) - qh[i] * qh[j], e = i === j ? eps[i] : 0;
+        M.push([x * x * PT - e, -e * TAN]);
+      }
+      const d = inv3(M);
+      const pr = (a, b) => { let s = [0, 0]; for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) { const v = d[i * 3 + j], w = a[i] * b[j]; s = [s[0] + v[0] * w, s[1] + v[1] * w]; } return Math.hypot(s[0], s[1]); };
+      return { ll: pr(qh, qh), lt: Math.hypot(pr(qh, t1), pr(qh, t2)), tt: Math.hypot(pr(t1, t1), pr(t1, t2), pr(t2, t1), pr(t2, t2)) };
+    }
+    const pos = v => (v > 1e-30 ? v : NaN);
+    function draw(st) {
+      const th = st.th * Math.PI / 180, ep = st.ep, ez = st.ez;
+      const ll = [], lt = [], tt = [];
+      for (const x of xs) { const s = sectors(x, th, ep, ez); ll.push(pos(s.ll)); lt.push(pos(s.lt)); tt.push(pos(s.tt)); }
+      const epsL = ep * Math.sin(th) ** 2 + ez * Math.cos(th) ** 2;
+      const s3 = sectors(1e3, th, ep, ez), s5 = sectors(1e5, th, ep, ez), s10 = sectors(10, th, ep, ez);
+      const ltZero = !(s10.lt > 1e-14 * s10.tt);
+      const anchor = ltZero ? s10.tt : s10.lt;
+      const ref = xs.map(x => (x >= 3 ? anchor * 10 / x : NaN));
+      const slope = (a, b) => (a > 0 && b > 0 ? (Math.log10(b) - Math.log10(a)) / 2 : NaN);
+      const xlc = Math.sqrt(Math.max(ep, ez));
+      plot.draw([
+        { type: 'band', x0: 0.1, x1: xlc, color: 'photon', alpha: 0.08, text: 'light cone' },
+        { type: 'band', x0: 55, x1: 5.5e4, color: 'phonon', alpha: 0.08, text: '3D BZ phonons' },
+        { type: 'hline', at: 1 / epsL, color: 'muted', text: '1/ε_L (E.446)' },
+        { type: 'line', x: xs, y: ref, color: 'muted', width: 1.3, dash: [4, 4], label: 'slope −1, as E.440 implies for lt' },
+        { type: 'line', x: xs, y: tt, color: 'c5', dash: [2, 3], label: 'tt' },
+        { type: 'line', x: xs, y: lt, color: 'c4', dash: [7, 4], label: 'lt = tl' },
+        { type: 'line', x: xs, y: ll, color: 'photon', label: 'll' },
+        { type: 'text', x: 3e3, y: anchor * 10 / 3e3 * 25, text: 'slope −1 (E.440)', color: 'muted', align: 'center' },
+        { type: 'text', x: 2e3, y: Math.max(4e-11, (ltZero ? s3.tt : s3.lt) * 3e-4), text: ltZero ? 'tt ∝ x^{-2}' : 'lt, tt ∝ x^{-2}', color: 'fg2', align: 'center' }
+      ]);
+      ro.set({
+        'ε_L = q̂·ε·q̂': EPP.fix(epsL, 3),
+        '1/ε_L': EPP.fix(1 / epsL, 4),
+        '|ll| at x = 10^5': EPP.fix(s5.ll, 4),
+        'slope of lt, x > 10^3': ltZero ? 'none (lt ≡ 0)' : EPP.fix(slope(s3.lt, s5.lt), 2),
+        'slope of tt, x > 10^3': EPP.fix(slope(s3.tt, s5.tt), 2)
+      });
+    }
+    EPP.controls(fig.querySelector('.ctrls'), [
+      { key: 'th', type: 'range', label: 'angle θ between q and optic axis', min: 0, max: 90, step: 1, value: 45, fmt: v => v.toFixed(0) + '°' },
+      { key: 'ep', type: 'range', label: 'ε_⊥ (in-plane)', min: 1, max: 15, step: 0.01, value: 4.87, fmt: v => v.toFixed(2) },
+      { key: 'ez', type: 'range', label: 'ε_∥ (along optic axis)', min: 1, max: 15, step: 0.01, value: 2.95, fmt: v => v.toFixed(2) }
+    ], draw);
+  })();
+
+  // ---------- figure 2: LO-phonon–plasmon coupled modes ----------
+  (() => {
+    const fig = document.getElementById('viz-b-electrostatic-plasmon');
+    const E2 = 180.95, H2M = 7.61996, H2M2 = 3.80998; // e^2/eps0 [eV Å], hbar^2/m_e [eV Å^2], hbar^2/2m_e
+    const PRE = {
+      GaAs: { T: 33.3, L: 36.2, ei: 10.9, ms: 0.067, ymax: 70 },
+      GaN: { T: 69.2, L: 92.0, ei: 5.35, ms: 0.20, ymax: 150 }
+    };
+    const GE = 2.5, GPH = 0.8; // meV
+    const X0 = 16, X1 = 20;
+    const SUP = s => String(s).replace(/[-0-9]/g, c => '⁻⁰¹²³⁴⁵⁶⁷⁸⁹'['-0123456789'.indexOf(c)]);
+    const nfmt = (lg) => { const e = Math.floor(lg + 1e-9), m = Math.pow(10, lg - e); return `${m.toFixed(1)}×10${SUP(e)} cm⁻³`; };
+    const xticks = [16, 17, 18, 19, 20].map(e => ({ v: e, label: `10^{${e}}` }));
+    const pa = new EPP.Plot(fig.querySelector('.pa'), {
+      xlabel: 'carrier density n (cm^{-3})', ylabel: 'ħω (meV)', xlim: [X0, X1], ylim: [0, 70], xticks, aspect: 0.5, minHeight: 240,
+      margin: { l: 58, r: 64 }, xname: 'n', hoverX: nfmt, hoverY: v => EPP.fix(v, 1) + ' meV',
+      ariaLabel: 'Coupled LO-phonon plasmon mode energies versus carrier density, dynamic and static screening'
+    });
+    const pb = new EPP.Plot(fig.querySelector('.pb'), {
+      xlabel: 'carrier density n (cm^{-3})', ylabel: 'ħω (meV)', xlim: [X0, X1], ylim: [0, 70], xticks, aspect: 0.5, minHeight: 240,
+      margin: { l: 58, r: 64 }, xname: 'n', yname: 'ħω', hoverX: nfmt, hoverX2: v => EPP.fix(v, 1) + ' meV',
+      ariaLabel: 'Heat map of the loss function or phonon spectral function versus carrier density and energy'
+    });
+    const ro = EPP.readout(fig.querySelector('.ro'));
+
+    function carriers(lg, ms) {
+      const n = Math.pow(10, lg) * 1e-24; // Å^-3
+      const kF = Math.cbrt(3 * Math.PI * Math.PI * n);
+      const EF = H2M2 * kF * kF / ms;               // eV
+      return { kF, vF: H2M * kF / ms * 1e3,         // ħ v_F in meV Å
+        wpl2: E2 * n * H2M / ms * 1e6,              // (ħ ω_pl)^2 in meV^2
+        kTF2: 3 * n * E2 / (2 * EF) };              // Å^-2
+    }
+    // Lindhard f(z, u), u = ur + i ui (retarded for ui > 0): eps = eps_inf + (kTF^2/q^2) f
+    function lind(z, ur, ui) {
+      if (Math.hypot(ur, ui) > 40 * (1 + z)) {
+        const u2r = ur * ur - ui * ui, u2i = 2 * ur * ui, m2 = u2r * u2r + u2i * u2i;
+        const ar = u2r / m2, ai = -u2i / m2, br = ar * ar - ai * ai, bi = 2 * ar * ai, c4 = 0.2 + z * z / 3;
+        return [-ar / 3 - c4 * br, -ai / 3 - c4 * bi];
+      }
+      let sr = 0, si = 0;
+      for (let s = -1; s <= 1; s += 2) {
+        const wr = z + s * ur, wi = s * ui;
+        const Lr = 0.5 * Math.log(((wr + 1) * (wr + 1) + wi * wi) / ((wr - 1) * (wr - 1) + wi * wi));
+        const Li = Math.atan2(wi, wr + 1) - Math.atan2(wi, wr - 1);
+        const pr = 1 - (wr * wr - wi * wi), pi = -2 * wr * wi;
+        sr += pr * Lr - pi * Li; si += pr * Li + pi * Lr;
+      }
+      return [0.5 + sr / (8 * z), si / (8 * z)];
+    }
+    function staticF(z) { if (Math.abs(z - 1) < 1e-9) return 0.5; return 0.5 + (1 - z * z) / (4 * z) * Math.log(Math.abs((1 + z) / (1 - z))); }
+    function modes(lg, p, ms) {
+      const c = carriers(lg, ms), wt2 = c.wpl2 / p.ei, S = p.L * p.L + wt2;
+      const D = Math.sqrt(Math.max(0, S * S - 4 * wt2 * p.T * p.T));
+      return { c, wt: Math.sqrt(wt2), up: Math.sqrt((S + D) / 2), lo: Math.sqrt(Math.max(0, (S - D) / 2)) };
+    }
+    function staticMode(lg, p, ms, q, wp2) {
+      const c = carriers(lg, ms), es = p.ei + c.kTF2 / (q * q) * staticF(q / (2 * c.kF));
+      return Math.sqrt(p.T * p.T + wp2 / es);
+    }
+
+    let st = null, prevMat = null, lsel = 18, cache = null;
+    const NX = 120, NY = 200;
+    function heat(p, ms, q, qty, wp2) {
+      const z = new Float64Array(NX * NY), ymax = p.ymax;
+      for (let i = 0; i < NX; i++) {
+        const lg = X0 + (X1 - X0) * i / (NX - 1), c = carriers(lg, ms);
+        const zz = q / (2 * c.kF), A = c.kTF2 / (q * q), qv = q * c.vF;
+        for (let j = 0; j < NY; j++) {
+          const w = ymax * j / (NY - 1);
+          const f = lind(zz, w / qv, GE / qv);
+          const er = p.ei + A * f[0], ei = A * f[1];
+          let val;
+          if (qty === 'loss') {
+            const dr = p.T * p.T - w * w, di = -GPH * w, dm = dr * dr + di * di;
+            const tr = er + wp2 * dr / dm, ti = ei - wp2 * di / dm; // + wp2/(T^2 - w^2 - i g w)
+            val = ti / (tr * tr + ti * ti);
+          } else {
+            const em = er * er + ei * ei;
+            const sr = wp2 * er / em, si = -wp2 * ei / em;      // wp2 / eps_e
+            const ar = w * w - p.T * p.T - sr, ai = GPH * w - si;
+            val = 2 * p.T * ai / (ar * ar + ai * ai);              // -Im[2T/(ar + i ai)]
+          }
+          z[j * NX + i] = Math.log10(Math.max(val, 1e-12));
+        }
+      }
+      return z;
+    }
+    function draw() {
+      if (!st) return;
+      const p = PRE[st.mat], ms = st.ms, q = st.q, wp2 = p.ei * (p.L * p.L - p.T * p.T);
+      const key = [st.mat, ms, q, st.qty].join('|');
+      if (!cache || cache.key !== key) {
+        const xs = EPP.linspace(X0, X1, 241), up = [], lo = [], pl = [], sm = [];
+        for (const lg of xs) { const m = modes(lg, p, ms); up.push(m.up); lo.push(m.lo); pl.push(m.wt); sm.push(staticMode(lg, p, ms, q, wp2)); }
+        cache = { key, xs, up, lo, pl, sm, z: heat(p, ms, q, st.qty, wp2) };
+      }
+      const { xs, up, lo, pl, sm } = cache, ymax = p.ymax;
+      const nstar = Math.log10(p.L * p.L * p.ei * ms / (E2 * H2M * 1e6) * 1e24);
+      const lyrA = [
+        { type: 'hline', at: p.T, color: 'muted' },
+        { type: 'text', x: X0 + 0.08, y: p.T - 0.05 * ymax, text: 'ω_{TO}', color: 'muted', align: 'left' },
+        { type: 'hline', at: p.L, color: 'muted', text: 'ω_{LO} (undoped)' },
+        { type: 'line', x: xs, y: pl, color: 'electron', dash: [2, 3], label: 'plasmon ω_{pl}/√ε_∞' },
+        { type: 'line', x: xs, y: sm, color: 'c4', dash: [7, 4], label: 'static E.454 at q' },
+        { type: 'line', x: [], y: [], color: 'phonon', label: 'L_± dynamic E.453 (q → 0)', hover: false },
+        { type: 'line', x: xs, y: up, color: 'phonon', label: 'L_+', nolegend: true },
+        { type: 'line', x: xs, y: lo, color: 'phonon', label: 'L_−', nolegend: true },
+        nstar > X0 && nstar < X1 ? { type: 'points', x: [nstar], y: [p.L], color: 'ink', r: 4.5, hollow: true } : null,
+        { type: 'vline', at: lsel, color: 'ink', width: 1, dash: [3, 3] },
+        { type: 'text', x: X0 + 0.08, y: p.L + 0.09 * ymax, text: 'L_+', color: 'phonon', align: 'left' },
+        { type: 'text', x: X1 - 0.08, y: Math.max(lo[lo.length - 1] - 0.08 * ymax, 0.05 * ymax), text: 'L_−', color: 'phonon', align: 'right' }
+      ];
+      pa.draw(lyrA, { ylim: [0, ymax] });
+      const isLoss = st.qty === 'loss';
+      pb.draw([
+        { type: 'heatmap', x0: X0, x1: X1, y0: 0, y1: ymax, nx: NX, ny: NY, z: cache.z, vmin: -3, vmax: 0,
+          color: isLoss ? 'photon' : 'phonon', label: isLoss ? '−Im 1/ε_{tot}' : '−Im F_σ (meV^{-1})',
+          colorbar: isLoss ? '−Im 1/ε_{tot} (log)' : '−Im F_σ (meV^{-1}, log)',
+          cfmt: v => (Number.isInteger(v) ? (v === 0 ? '1' : `10^{${v}}`) : EPP.fmt(Math.pow(10, v), 2)) },
+        { type: 'line', x: xs, y: up, color: 'muted', width: 1.1, dash: [1.5, 3.5], label: 'L_± (q → 0)', hover: false },
+        { type: 'line', x: xs, y: lo, color: 'muted', width: 1.1, dash: [1.5, 3.5], hover: false },
+        { type: 'line', x: xs, y: sm, color: 'c4', width: 1.6, dash: [7, 4], label: 'static E.454 at q', hover: false },
+        { type: 'vline', at: lsel, color: 'ink', width: 1, dash: [3, 3] }
+      ], { ylim: [0, ymax] });
+      const m = modes(lsel, p, ms), s = staticMode(lsel, p, ms, q, wp2);
+      ro.set({
+        'n': nfmt(lsel),
+        'ħω_{pl}/√ε_∞': EPP.fix(m.wt, 1) + ' meV',
+        'L_+, L_− (E.453)': `${EPP.fix(m.up, 1)}, ${EPP.fix(m.lo, 1)} meV`,
+        'static (E.454)': EPP.fix(s, 1) + ' meV',
+        'ω_{LO}/qv_F': EPP.fmt(p.L / (q * m.c.vF), 2),
+        'resonance': nfmt(nstar)
+      });
+    }
+    const onPick = (x) => { lsel = EPP.clamp(x, X0, X1); draw(); };
+    pa.onPointer = onPick; pb.onPointer = onPick;
+    let ui = null;
+    ui = EPP.controls(fig.querySelector('.ctrls'), [
+      { key: 'mat', type: 'seg', label: 'material', options: [['GaAs', 'GaAs'], ['GaN', 'GaN']], value: 'GaAs' },
+      { key: 'q', type: 'range', label: 'wavevector q (Å^{-1})', min: 1e-3, max: 0.1, log: true, step: 0.01, value: 3e-3, fmt: v => (v < 0.01 ? v.toFixed(4) : v.toFixed(3)) },
+      { key: 'ms', type: 'range', label: 'effective mass m^*/m_e', min: 0.02, max: 1, step: 0.001, value: 0.067, fmt: v => v.toFixed(3) },
+      { key: 'qty', type: 'seg', label: 'panel (b) shows', options: [['loss', 'loss function'], ['phonon', 'phonon spectral fn']], value: 'loss' }
+    ], (s) => {
+      st = s;
+      if (prevMat !== null && prevMat !== s.mat && ui) { ui.set('ms', PRE[s.mat].ms, true); lsel = s.mat === 'GaN' ? 19 : 18; }
+      prevMat = s.mat;
+      draw();
+    });
+  })();
+})();
+</script>
