@@ -21,6 +21,9 @@ MathJax 3.2.2 from cdnjs and fonts from Google Fonts.
 Equation tags `(G.n)` and `(E.n)` refer to the equation numbers of the two PDFs.
 The PDFs are not in this repository.
 
+A short executive summary lives in `summary/`: `summary.html` is the content and
+`build_summary.py` builds `summary/out/epp-brief.html` with the same head, styles and library.
+
 ## Layout
 
 - `sections/` — one HTML fragment per section (prose, equations, figure markup and a scoped script).
