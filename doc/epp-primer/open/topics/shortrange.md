@@ -10,7 +10,7 @@ Labels: **[est]** established in the literature; **[derived]** algebra done for 
 - Non-polar optical modes (MoS₂ A$_1'$) and the acoustic deformation potential are absent.
 - Intervalley coupling reduces to the screened dipole tail.
 
-The table in [§B.1](../../sections/B01-foundations.html) lists $g^{\mathcal S}$ as "DFPT $g$ minus $g^{\mathcal L}$; not used."
+[§B.1](../../sections/B01-foundations.html) lists $g^{\mathcal S}$ as "not used."
 
 **Only the dipole moment.** Point dipoles at the sites (E.241′, 314′) give the ionic current vertex $j_{\alpha\sigma}(\bq+\bG)=\sum_{a\mu}Z^*_{a\alpha\mu}e_{a\mu\sigma}(\bq)e^{-i(\bq+\bG)\cdot\br^0_a}/\sqrt{m_a}$ (E.295′). This is the zeroth moment of the current a moving atom carries.
 
@@ -24,7 +24,7 @@ The table in [§B.1](../../sections/B01-foundations.html) lists $g^{\mathcal S}$
 
 ## 2. Why it matters
 
-- **Transport.** In MoS₂ the room-temperature mobility (~410 cm²/Vs) is limited by optical deformation potentials. They are 4.1×10⁸ eV/cm for the homopolar intravalley mode and 2.6×10⁸ eV/cm for the intervalley LO mode (Kaasbjerg *et al.* 2012). EPP has neither. In GaAs, intervalley scattering dominates hot-carrier relaxation (Sjakste *et al.* 2015).
+- **Transport.** The MoS₂ room-temperature mobility (~410 cm²/Vs) is limited by optical deformation potentials: 4.1×10⁸ eV/cm (homopolar, intravalley) and 2.6×10⁸ eV/cm (intervalley LO) (Kaasbjerg *et al.* 2012). EPP has neither. In GaAs, intervalley scattering dominates hot-carrier relaxation (Sjakste *et al.* 2015).
 - **Quadrupoles [est].**
   - Si, GaAs, GaP: neglecting quadrupoles gives large mobility errors (Brunin *et al.* 2020), up to ~30% per the authors' institution.
   - GaN: with quadrupoles, acoustic scattering of electrons falls from about half the total rate to a negligible share, and for holes from ~75% to below 50% (Jhalani *et al.* 2020).
@@ -37,8 +37,8 @@ The table in [§B.1](../../sections/B01-foundations.html) lists $g^{\mathcal S}$
 - **DFPT vertex.** $g_{mn\nu}(\bk,\bq)=\langle u_{m\bk+\bq}|\Delta_{\bq\nu}v^{\rm KS}|u_{n\bk}\rangle$ (G.38), with $\partial v^{\rm KS}=(\epsilon^{{\rm H}xc})^{-1}\partial v^{\rm en}$ (G.53). It contains all orders, statically screened ([§A.3](../../sections/A03-dfpt.html)).
 - **Decay in real space.** The potential of a displaced atom decays as $R^{-3}$ or faster in nonpolar insulators, so $g$ is finite at $q\to0$. In polar insulators it decays as $R^{-2}$ and $g\sim1/q$ (G §VI.A.2–3).
 - **Split for interpolation [est].** Subtract (G.180) on the coarse grid, Wannier-interpolate $g^{\mathcal S}$ (G.177–G.179), and add $g^{\mathcal L}$ back, Gaussian-filtered (footnote 7; Verdi and Giustino 2015; Sjakste *et al.* 2015). Force constants are treated the same way with the Ewald dipole–dipole term (Gonze and Lee 1997).
-- **Quadrupoles [est].** Long-wave DFPT gives the dynamical quadrupoles $Q^{\beta\gamma}_{\kappa\alpha}$ (Royo and Stengel 2019). With $\bk=\bq+\bG$ and $\rho(\bk)=-i\bk\cdot\mathbf p-\tfrac12k_\beta k_\gamma Q^{\beta\gamma}$, the long-range vertex is, schematically,
-  $$g^{\mathcal L}_{mn\nu}\propto\sum_{\kappa}\sum_{\bG\neq-\bq}\frac{\big[ik_\beta Z^*_{\kappa,\beta\alpha}+\tfrac12k_\beta k_\gamma Q^{\beta\gamma}_{\kappa\alpha}\big]e_{\kappa\alpha\nu}(\bq)}{\bk\cdot\epsilon^\infty\cdot\bk}\,\langle\psi_{m\bk_e+\bq}|e^{i\bk\cdot(\br-\boldsymbol\tau_\kappa)}[1+\dots]|\psi_{n\bk_e}\rangle .$$
+- **Quadrupoles [est].** Long-wave DFPT gives the dynamical quadrupoles $Q^{\beta\gamma}_{\kappa\alpha}$ (Royo and Stengel 2019). With $\tilde\bq=\bq+\bG$ and $\rho(\tilde\bq)=-i\tilde\bq\cdot\mathbf p-\tfrac12\tilde q_\beta \tilde q_\gamma Q^{\beta\gamma}$, the long-range vertex is, schematically,
+  $$g^{\mathcal L}_{mn\nu}\propto\sum_{\kappa}\sum_{\bG\neq-\bq}\frac{\big[i\tilde q_\beta Z^*_{\kappa,\beta\alpha}+\tfrac12\tilde q_\beta \tilde q_\gamma Q^{\beta\gamma}_{\kappa\alpha}\big]e_{\kappa\alpha\nu}(\bq)}{\tilde\bq\cdot\epsilon^\infty\cdot\tilde\bq}\,\langle\psi_{m\bk+\bq}|e^{i\tilde\bq\cdot(\br-\boldsymbol\tau_\kappa)}[1+\dots]|\psi_{n\bk}\rangle .$$
   The quadrupole term is $O(q^0)$ and direction dependent. It spoils interpolation even in Si (Park *et al.* 2020; Brunin *et al.* 2020). The "$\dots$" stands for two corrections. One is a local-field term in Brunin *et al.*, the Hxc response to a macroscopic field (its form was not re-checked here). The other, at quadrupolar order, is a Berry-connection term needed for Wannier-gauge covariance (Poncé *et al.* 2023).
 - **Multipolar force constants.** The same multipole orders in the force constants fix the sound velocity of piezoelectrics (Royo, Hahn, Stengel 2020).
 - **2D.** Truncated-Coulomb DFPT (Sohier *et al.* 2017) and exact quasi-2D electrostatics (Royo and Stengel 2021).
@@ -52,13 +52,13 @@ $$\bar\chi=\chi^0+\chi^0(\bar v+f^{xc})\bar\chi,\quad \bar v_{\bG}=v(\bq+\bG)(1-
 Since $1-v_{\bq}e^2\bar\chi_{00}=\epsilon_M$ [est], EPP then regenerates (via E.350) the $\epsilon^\infty$ that DFPT uses, and $Z^*$ and $Q$ are already zero-macroscopic-field quantities.
 
 **P1 · Multipolar ionic current.** Replace term (6) of E.134 by $\frac1c\int\mathbf j^{\rm ion}\cdot\bA$, with $\mathbf j^{\rm ion}(\br)=\sum_{ia}\dot Q_{ia\mu}\boldsymbol{\mathcal J}_{a\mu}(\br-\bR^0_{ia})$. Here $\boldsymbol{\mathcal J}$ is the current-density response to the atomic velocity (Stengel 2013). Its moments are $\int\mathcal J_{a\mu,\alpha}=Z^*_{a\alpha\mu}$ and $\int r_\beta\mathcal J_{a\mu,\alpha}=\frac12\mathcal Q_{a,\alpha\beta\mu}$. Then E.295′ becomes
-$$j_{\alpha\sigma}(\bk)=\sum_{a\mu}\Big[Z^*_{a\alpha\mu}-\tfrac i2k_\beta\,\mathcal Q_{a,\alpha\beta\mu}+O(k^2)\Big]\frac{e_{a\mu\sigma}(\bq)\,e^{-i\bk\cdot\br^0_a}}{\sqrt{m_a}},\qquad\bk=\bq+\bG.\tag{P1}$$
-- **[derived]** $\bk\cdot\mathbf j$ reproduces the dipole plus quadrupole charge of §3, so the symmetric part of $\mathcal Q$ is fixed by $Q$.
-- The antisymmetric part couples to $\bB$ **[spec: negligible]**.
-- **[derived]** P1 is linear in $\dot Q$, so E.183′, E.304′ and the gauge sum rule E.310 carry over with $\hat Z^*_a\to\tilde Z_a(\bk)=\hat Z^*_a-\frac i2\bk\cdot\mathcal Q_a$.
+$$j_{\alpha\sigma}(\tilde\bq)=\sum_{a\mu}\Big[Z^*_{a\alpha\mu}-\tfrac i2\tilde q_\beta\,\mathcal Q_{a,\alpha\beta\mu}+O(\tilde q^2)\Big]\frac{e_{a\mu\sigma}(\bq)\,e^{-i\tilde\bq\cdot\br^0_a}}{\sqrt{m_a}},\qquad\tilde\bq=\bq+\bG.\tag{P1}$$
+- **[derived]** $\tilde\bq\cdot\mathbf j$ reproduces the dipole plus quadrupole charge of §3, so the symmetric part of $\mathcal Q$ is fixed by $Q$.
+- The antisymmetric part couples to $\mathbf B$ **[spec: negligible]**.
+- **[derived]** P1 is linear in $\dot Q$, so E.183′, E.304′ and the gauge sum rule E.310 carry over with $\hat Z^*_a\to\tilde Z_a(\tilde\bq)=\hat Z^*_a-\frac i2\tilde\bq\cdot\mathcal Q_a$.
 
 **P2 · Bare phonons.** Take DFPT minus exactly what EPP regenerates statically:
-$$\tilde\Omega^2_0=\tilde C^{\rm DFPT}-\tilde C^{\mathcal L},\qquad \tilde C^{\mathcal L}_{a\mu,b\nu}(\bq)=\frac{4\pi}{\Omega_{\rm uc}\sqrt{m_am_b}}\sum_{\bG}{}^{\rm Ewald}\frac{[\bk\cdot\tilde Z_a]^*_\mu[\bk\cdot\tilde Z_b]_\nu}{\bk\cdot\epsilon^\infty\cdot\bk}\,e^{i\bk\cdot(\br^0_a-\br^0_b)}.\tag{P2}$$
+$$\tilde\Omega^2_0=\tilde C^{\rm DFPT}-\tilde C^{\mathcal L},\qquad \tilde C^{\mathcal L}_{a\mu,b\nu}(\bq)=\frac{4\pi}{\Omega_{\rm uc}\sqrt{m_am_b}}\sum_{\bG}{}^{\rm Ewald}\frac{[\tilde\bq\cdot\tilde Z_a]^*_\mu[\tilde\bq\cdot\tilde Z_b]_\nu}{\tilde\bq\cdot\epsilon^\infty\cdot\tilde\bq}\,e^{i\tilde\bq\cdot(\br^0_a-\br^0_b)}.\tag{P2}$$
 This is E.454a with $Z^*\to\tilde Z$: dipole–dipole, dipole–quadrupole and quadrupole–quadrupole terms, with the self term removed. **[derived]** EPP's $\bG=0$-only term is not periodic in $\bq$, so it jumps at the zone boundary. Keep the Gaussian-filtered $\bG$ sum (as in G.180), in $\tilde C^{\mathcal L}$ and in EPP alike. What the filter removes is analytic and stays in $\tilde\Omega^2_0$.
 
 **P3 · Vertex.** Fix $g^{\mathcal S}$ by matching to DFPT in the static, instantaneous limit:
@@ -66,7 +66,7 @@ $$g^{\rm tot}(\omega)=g^{\mathcal S}+\delta g^{\mathcal S}(\omega)+g^{\mathcal L
 $g^{\mathcal L,{\rm dyn}}$ is E.416 with P0 and P1, in Giustino's labels with the E.448a sign convention. Its static limit is (G.180) plus quadrupoles, so $g^{\rm tot}(c\to\infty,0)=g^{\rm DFPT}$ by construction.
 
 **P4 · Dynamic screening of $g^{\mathcal S}$.** Only the frequency-dependent remainder is added, as in EPP's own $\Pi(\omega)-\Pi(0)$:
-$$\delta g^{\mathcal S}_{mn\sigma}(\omega)=\rho^*_{n\bk_e,m\bk_e+\bq}\big[W^{\rm e}(\bq,\omega)\Lambda_\sigma(\bq,\omega)-W^{\rm e}(\bq,0)\Lambda_\sigma(\bq,0)\big].\tag{P4}$$
+$$\delta g^{\mathcal S}_{mn\sigma}(\omega)=\rho^*_{n\bk,m\bk+\bq}\big[W^{\rm e}(\bq,\omega)\Lambda_\sigma(\bq,\omega)-W^{\rm e}(\bq,0)\Lambda_\sigma(\bq,0)\big].\tag{P4}$$
 $\Lambda_\sigma$ is the bubble with one charge vertex and one proper vertex $\bar g^{\mathcal S}$ (screened by $\bar v+f^{xc}$ only). P4 matters in doped sheets ([§B.9](../../sections/B09-electrostatic.html)), not in gapped insulators.
 
 **P5 · Dyson equations.**
@@ -82,27 +82,27 @@ $$F=F^0+F^0\Omega^{\rm tot}F,\qquad \Omega^{\rm tot}=\Omega^{\rm e}(\omega)+\big
 - **Double screening.** DFPT's $g$ is already screened at $\bG=0$, so routing it through $D^{\rm e}$ again screens it twice. A screened $g^{\mathcal S}$ on both sides of a bubble overcounts by $\epsilon$: this is the G.145 versus G.146 ambiguity.
 - **Routing and periodicity.** Every nonanalytic $\bG=0$ charge (dipole, quadrupole, piezoelectric) goes through $A_l$, never into $g^{\mathcal S}$ or $\tilde\Omega^2_0$. A $\bG=0$-only $g^{\mathcal L,{\rm dyn}}$ makes $g^{\mathcal S}$ jump at the zone boundary, so use the filtered $\bG$ sum.
 - **Force constants.** Subtract the same multipole orders you regenerate. Keep the acoustic-sum-rule on-site block (missing from E.4) and check that results do not depend on the Ewald parameter.
-- **Basis phase.** Without $e^{-i\bk\cdot\br^0_a}$ and Giustino's sign of E.15, a spurious acoustic coupling appears (GaAs 0.6–1.8 C/m², *illustrative*), comparable to the quadrupole term itself.
+- **Basis phase.** Without $e^{-i\tilde\bq\cdot\br^0_a}$ and Giustino's sign of E.15, a spurious acoustic coupling appears (GaAs 0.6–1.8 C/m², *illustrative*), comparable to the quadrupole term itself.
 - **Nonlocal pseudopotentials.** Current vertices need the $i[V_{\rm NL},\br]$ term, as in velocity-gauge optics (Dreyer *et al.* 2018).
 - **2D.** Use one sheet propagator in DFPT, in the subtraction and in EPP §8. Include $Z^*_{zz}$ and out-of-plane quadrupoles.
 
 ## 6. State of the art (verified)
 
 1. S. de Gironcoli, S. Baroni, R. Resta, PRL **62**, 2853 (1989), [10.1103/PhysRevLett.62.2853](https://doi.org/10.1103/PhysRevLett.62.2853). Linear-response piezoelectric constants of III–V semiconductors.
-2. X. Gonze, C. Lee, PRB **55**, 10355 (1997), [10.1103/PhysRevB.55.10355](https://doi.org/10.1103/PhysRevB.55.10355). $Z^*$, $\epsilon^\infty$ and the Ewald dipole–dipole split of force constants.
+2. X. Gonze, C. Lee, PRB **55**, 10355 (1997), [10.1103/PhysRevB.55.10355](https://doi.org/10.1103/PhysRevB.55.10355). Ewald dipole–dipole split of force constants.
 3. M. Stengel, PRB **88**, 174106 (2013), [10.1103/PhysRevB.88.174106](https://doi.org/10.1103/PhysRevB.88.174106). Current response to long acoustic phonons. Nonlocal-pseudopotential implementation: C. E. Dreyer, M. Stengel, D. Vanderbilt, PRB **98**, 075153 (2018), [10.1103/PhysRevB.98.075153](https://doi.org/10.1103/PhysRevB.98.075153).
-4. C. Verdi, F. Giustino, PRL **115**, 176401 (2015), [10.1103/PhysRevLett.115.176401](https://doi.org/10.1103/PhysRevLett.115.176401). Long-range Fröhlich vertex and the $g^{\mathcal S}+g^{\mathcal L}$ interpolation.
-5. J. Sjakste, N. Vast, M. Calandra, F. Mauri, PRB **92**, 054307 (2015), [10.1103/PhysRevB.92.054307](https://doi.org/10.1103/PhysRevB.92.054307). Polar Wannier interpolation in GaAs; Fröhlich versus intervalley scattering.
+4. C. Verdi, F. Giustino, PRL **115**, 176401 (2015), [10.1103/PhysRevLett.115.176401](https://doi.org/10.1103/PhysRevLett.115.176401). The $g^{\mathcal S}+g^{\mathcal L}$ interpolation.
+5. J. Sjakste, N. Vast, M. Calandra, F. Mauri, PRB **92**, 054307 (2015), [10.1103/PhysRevB.92.054307](https://doi.org/10.1103/PhysRevB.92.054307). Polar Wannier interpolation in GaAs.
 6. M. Royo, M. Stengel, PRX **9**, 021050 (2019), [10.1103/PhysRevX.9.021050](https://doi.org/10.1103/PhysRevX.9.021050). Long-wave DFPT for dynamical quadrupoles.
 7. G. Brunin *et al.*, PRL **125**, 136601 (2020), [10.1103/PhysRevLett.125.136601](https://doi.org/10.1103/PhysRevLett.125.136601), and PRB **102**, 094308 (2020), [10.1103/PhysRevB.102.094308](https://doi.org/10.1103/PhysRevB.102.094308). Quadrupolar vertex; mobilities of Si, GaAs, GaP.
 8. V. A. Jhalani, J.-J. Zhou, J. Park, C. E. Dreyer, M. Bernardi, PRL **125**, 136602 (2020), [10.1103/PhysRevLett.125.136602](https://doi.org/10.1103/PhysRevLett.125.136602). Piezoelectric coupling from quadrupoles in GaN.
-9. J. Park, J.-J. Zhou, V. A. Jhalani, C. E. Dreyer, M. Bernardi, PRB **102**, 125203 (2020), [10.1103/PhysRevB.102.125203](https://doi.org/10.1103/PhysRevB.102.125203). Quadrupole vertex tested against DFPT in Si and PbTiO₃.
+9. J. Park, J.-J. Zhou, V. A. Jhalani, C. E. Dreyer, M. Bernardi, PRB **102**, 125203 (2020), [10.1103/PhysRevB.102.125203](https://doi.org/10.1103/PhysRevB.102.125203). Quadrupole vertex in Si and PbTiO₃.
 10. M. Royo, K. R. Hahn, M. Stengel, PRL **125**, 217602 (2020), [10.1103/PhysRevLett.125.217602](https://doi.org/10.1103/PhysRevLett.125.217602). Multipolar force constants and piezoelectric sound velocities.
 11. M. Royo, M. Stengel, PRX **11**, 041027 (2021), [10.1103/PhysRevX.11.041027](https://doi.org/10.1103/PhysRevX.11.041027). Exact quasi-2D long-range electrostatics.
 12. S. Poncé, M. Royo, M. Gibertini, N. Marzari, M. Stengel, PRL **130**, 166301 (2023), [10.1103/PhysRevLett.130.166301](https://doi.org/10.1103/PhysRevLett.130.166301), and PRB **107**, 155424 (2023), [10.1103/PhysRevB.107.155424](https://doi.org/10.1103/PhysRevB.107.155424). Gauge-covariant quadrupoles; 2D mobilities.
 13. T. Sohier, M. Calandra, F. Mauri, PRB **96**, 075448 (2017), [10.1103/PhysRevB.96.075448](https://doi.org/10.1103/PhysRevB.96.075448). 2D DFPT with Coulomb truncation and gating.
-14. K. Kaasbjerg, K. S. Thygesen, K. W. Jacobsen, PRB **85**, 115317 (2012), [10.1103/PhysRevB.85.115317](https://doi.org/10.1103/PhysRevB.85.115317). MoS₂ mobility limited by optical deformation potentials.
-15. M. Selig *et al.*, Nat. Commun. **7**, 13279 (2016), [10.1038/ncomms13279](https://doi.org/10.1038/ncomms13279). TMD exciton linewidths from intravalley and intervalley phonon scattering.
+14. K. Kaasbjerg, K. S. Thygesen, K. W. Jacobsen, PRB **85**, 115317 (2012), [10.1103/PhysRevB.85.115317](https://doi.org/10.1103/PhysRevB.85.115317). MoS₂ deformation potentials and mobility.
+15. M. Selig *et al.*, Nat. Commun. **7**, 13279 (2016), [10.1038/ncomms13279](https://doi.org/10.1038/ncomms13279). Phonon-limited exciton linewidths in TMDs.
 
 ## 7. First steps
 
