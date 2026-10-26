@@ -24,6 +24,11 @@ The PDFs are not in this repository.
 A short executive summary lives in `summary/`: `summary.html` is the content and
 `build_summary.py` builds `summary/out/epp-brief.html` with the same head, styles and library.
 
+A research roadmap of the topics EPP does not yet cover lives in `open/`: six verified notes in
+`open/topics/` (optics beyond RPA, 2D beyond in-plane modes, anisotropy and polaritons, electron
+self-energies, short-range coupling and multipoles, ordered phases), each with literature confirmed by
+web search, and `build_roadmap.py`, which builds the page `open/out/epp-roadmap.html` from `roadmap.html`.
+
 ## Layout
 
 - `sections/` — one HTML fragment per section (prose, equations, figure markup and a scoped script).
