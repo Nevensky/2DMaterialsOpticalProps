@@ -16,7 +16,7 @@ MathJax 3.2.2 from cdnjs and fonts from Google Fonts.
 | Part A · Giustino 2017 | A.1 lattice dynamics · A.2 the coupling *g* · A.3 DFPT · A.4 polar materials · A.5 Hedin–Baym · A.6 phonon self-energy · A.7 electron self-energy · A.8 temperature effects · A.9 optics, transport, superconductivity |
 | Bridge | X.1 Coulomb as the longitudinal photon · X.2 dictionary between the formalisms |
 | Part B · EPP | B.1 foundations · B.2 Lagrangian · B.3 dielectric · B.4 quantized fields · B.5 photon self-energy · B.6 total propagator · B.7 electrodynamic phonon self-energy · B.8 electrodynamic Fröhlich vertex · B.9 electrostatic limit · B.10 2D crystals |
-| Closing | Z.1 what EPP adds and what is open · Z.2 notes on the sources (errata for the EPP draft and Giustino 2017) |
+| Closing | Z.1 what EPP adds and what is open · Z.2 notes on the sources (errata for the EPP draft and Giustino 2017) · Z.3 corrections to three results |
 
 Equation tags `(G.n)` and `(E.n)` refer to the equation numbers of the two PDFs.
 The PDFs are not in this repository.
@@ -33,6 +33,14 @@ The PDFs are not in this repository.
 - `build/BUILDER_GUIDE.md` — conventions every section follows (markup, notation, units, colours, chart rules).
 - `notes/` — page-by-page study notes of both papers (G1–G6: Giustino, E1–E9: EPP) and `SYNTHESIS.md`
   (bridge table, notation dictionary, known pitfalls).
+- `corrections/EPP_corrections.tex` — paste-ready LaTeX corrections to the EPP draft (v2) for three issues:
+  the missing basis phase in the Born-dipole vertex (E.121–E.131 and downstream), the reading of E.410
+  (the zone-centre polariton point of an electron-free crystal, not the LO–TO splitting, with a new
+  general-q Sec. 7.1.1), and the factor e lost in the continuity equation (pp. 94–98, and the 2D bubble on
+  p. 101). It uses the manuscript's numbering: primed tags replace printed equations, lettered tags are new.
+  Not compiled here (no TeX installation); all math was render-checked with MathJax.
+  `issue-*.tex` and `issue-*-report.md` hold the per-issue derivations, numerical checks and review responses.
+  Section Z.3 of the primer presents the same corrections.
 
 ## Build and check
 

@@ -1,7 +1,13 @@
 % SUPERSEDED (25 Oct 2026) by corrections/EPP_corrections.tex, the single deliverable that merges this
 % correction with issue-phase.tex and issue-e410.tex. Paste from the merged file, not from this one.
 % Differences in the merged file (Secs. 4 and 5 there):
-%  - one tag convention: every display is equation*/align* with \tag, nothing steps the counter;
+%  - one tag convention: every tagged display is one equation* with one \tag; nothing in the file steps
+%    the counter, the paste rule (merged Sec. 1) adds \stepcounter{equation} after each primed equation;
+%  - the p. 94 replacement (with (p94'), (422')) is a quote; the stray closing quote mark in (422') is gone;
+%  - p. 38: the continuity display, (179) and (180) carry e*rho_e (in place), so (234') follows from (180);
+%    the (234) sentence replacement is scoped ("where rho_e = Psi^+Psi is ... and");
+%  - after "without a separate N^{-1/2}" (p. 96 quote): Giustino's Eqs. (1), (37) carry N_p^{-1/2} with the
+%    unit-cell g of his Eq. (38); his Eq. (180) as printed is N_p^{-1/2} times that g;
 %  - (p95'), (p96'), (p98') carry the basis phase as well as the factor e (merged Sec. 5.1);
 %    tau_kappa = r^0_a, not 0, in the (p96') paragraph, after (448a) and in check (iv);
 %  - (448a) states both forms in one display: -(e/|e|) q^2/(q.eps.q) [g^0]^* = -q^2/(q.eps.q) [lim g^{dyn,0}]^*;
@@ -9,8 +15,9 @@
 %  - the Heisenberg evolution on p. 93 is a tagged display (p93c'); (237') and (312') are displayed,
 %    (237') with the basis phase (merged Sec. 5.4); the remark before (417) refers to (131');
 %  - the Coulomb-route coefficient in the Justification carries e^{iq(r - r_a)};
-%  - GaAs check: 304.05 meV with q->0 LO eigenvectors on both sides; with finite-q eigenvectors and the
-%    phase the common value is 303.0 meV along [111] (unchanged along [100]).
+%  - GaAs check: 304.05 meV is the leading order in q (q->0 LO eigenvectors and basis phases set to 1) on
+%    both sides; with finite-q eigenvectors and the phase, hbar w_LO held at 36.2 meV, the common value is
+%    303.0 meV along [111] and 304.0 meV along [100] (computed in test/corr-merge/check_merge.py).
 \noindent\textit{Superseded by \texttt{corrections/EPP\_corrections.tex} (25 October 2026), which merges the three corrections into one document for the authors. This fragment is kept as the reviewed record; the differences are listed in the comments at its top.}\par
 
 % Correction to "Theory of the Electron-Phonon-Photon coupling" (draft v2), Sec. 7.2 (with Secs. 4.4, 6 and 8.1).

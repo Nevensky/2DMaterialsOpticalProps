@@ -55,7 +55,7 @@
     </div>
     <div class="path">
       <p class="path-t">The full EPP derivation</p>
-      <p class="path-d">Part B in order, each step paired with the Giustino section it generalizes. Read <a href="#a-lattice">A.1</a> and <a href="#a-polar">A.4</a>–<a href="#a-phonon-se">A.6</a> first. The issues in the draft met along the way are collected in <a href="#z-errata">Z.2</a>.</p>
+      <p class="path-d">Part B in order, each step paired with the Giustino section it generalizes. Read <a href="#a-lattice">A.1</a> and <a href="#a-polar">A.4</a>–<a href="#a-phonon-se">A.6</a> first. The issues in the draft met along the way are collected in <a href="#z-errata">Z.2</a>, and the three that change equations are corrected in <a href="#z-corrections">Z.3</a>.</p>
       <ol>
         <li><a href="#b-foundations">B.1</a> Lattice, bare vertex, static polar vertex (<a href="#a-lattice">A.1</a>, <a href="#a-polar">A.4</a>).</li>
         <li><a href="#b-lagrangian">B.2</a> One Lagrangian with no electron–phonon term (<a href="#a-coupling">A.2</a>).</li>
@@ -74,7 +74,7 @@
   <ul class="sources">
     <li><strong>Giustino 2017:</strong> F. Giustino, “Electron-phonon interactions from first principles”, <a href="https://doi.org/10.1103/RevModPhys.89.015003">Rev. Mod. Phys. 89, 015003 (2017)</a>. Equation tags such as (G.38) give Giustino’s equation numbers.</li>
     <li><strong>EPP manuscript:</strong> “Theory of the Electron-Phonon-Photon coupling” (102-page draft). Tags such as (E.375) give its equation numbers.</li>
-    <li><strong>Notes:</strong> Typos in either source are flagged in grey “Note on the source” boxes and collected in <a href="#z-errata">Z.2</a>. Material parameters that neither paper prints are literature values, used for illustration; figure captions mark them.</li>
+    <li><strong>Notes:</strong> Typos in either source are flagged in grey “Note on the source” boxes and collected in <a href="#z-errata">Z.2</a>; three issues in the EPP draft that change equations are corrected in <a href="#z-corrections">Z.3</a>, and the page uses the corrected forms. Material parameters that neither paper prints are literature values, used for illustration; figure captions mark them.</li>
   </ul>
 </header>
 <script>
@@ -104,7 +104,7 @@
   const host = document.getElementById('hero-fd-epp'), cap = document.getElementById('hero-epp-cap');
   const caps = {
     full: '<strong>Part B · EPP.</strong> No electron–phonon term appears in the EPP Lagrangian. The electron couples to the field through its current vertex $J^{\\rm e}$, and the phonon through the Born-charge current vertex $J$ of the ions. The screened photon $D^{\\rm e}$ carries the interaction, longitudinal and transverse parts together. The result is a frequency-dependent vertex $g^{\\rm dyn}=iJ^{*}D^{\\rm e}J^{\\rm e}$ (<a href="#b-frohlich">§B.8</a>).',
-    static: '<strong>Part B, with $c\\to\\infty$.</strong> Only the longitudinal (Coulomb) part of the photon survives, $D^{\\rm e}\\to-\\frac{c}{\\omega^2}\\bq\\bq\\,W^{\\rm e}$. The vertex reduces to the Verdi–Giustino long-range vertex, with $\\epsilon^\\infty$ replaced by the dynamical RPA tensor $\\hat\\epsilon^{\\rm e}(\\bq,\\omega)$, as derived in <a href="#b-frohlich">§B.8</a>. This is how Part A is recovered: <a href="#b-electrostatic">§B.9</a> takes the whole theory to this limit and returns Giustino\'s formulas.'
+    static: '<strong>Part B, with $c\\to\\infty$.</strong> Only the longitudinal (Coulomb) part of the photon survives, $D^{\\rm e}\\to-\\frac{c}{\\omega^2}\\bq\\bq\\,W^{\\rm e}$. Once the charge $e$ that the draft loses in its continuity equation is restored (<a href="#z-corrections">§Z.3</a>), the vertex reduces to the complex conjugate of the Verdi–Giustino long-range vertex, with $\\epsilon^\\infty$ replaced by the dynamical RPA tensor $\\hat\\epsilon^{\\rm e}(\\bq,\\omega)$, as derived in <a href="#b-frohlich">§B.8</a>. This is how Part A is recovered: <a href="#b-electrostatic">§B.9</a> takes the whole theory to this limit and returns Giustino\'s formulas.'
   };
   let mode = 'full';
   const draw = () => {
