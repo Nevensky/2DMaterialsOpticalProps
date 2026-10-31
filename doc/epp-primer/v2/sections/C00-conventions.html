@@ -1,0 +1,55 @@
+<section class="chapter" id="c-conventions" data-num="0" data-title="Conventions">
+  <header class="ch-head">
+    <p class="eyebrow"><span class="num">0</span><span>Notation · units · signs</span></p>
+    <h2>Conventions used on every page</h2>
+    <p class="lede">One notation for electrons, phonons and photons, chosen for clarity. The two sources this primer follows use different symbols for several quantities; their versions appear only in footnotes.</p>
+  </header>
+
+  <h3 id="c-indices">Indices</h3>
+  <p>Each kind of label has its own letters, and they keep their meaning on every page.</p>
+  <div class="tbl"><table style="min-width:520px">
+    <thead><tr><th>Index</th><th>Labels</th><th>Range</th></tr></thead>
+    <tbody>
+      <tr><td>$\ell,\ell'$</td><td>unit cell of the crystal</td><td>$N_\ell$ cells</td></tr>
+      <tr><td>$\kappa,\kappa'$</td><td>atom inside a cell</td><td>$1,\dots,N_\kappa$</td></tr>
+      <tr><td>$\alpha,\beta$; $\gamma,\delta$</td><td>Cartesian direction: free indices; summed indices</td><td>$x,y,z$</td></tr>
+      <tr><td>$\nu,\nu'$</td><td>phonon branch</td><td>$1,\dots,3N_\kappa$</td></tr>
+      <tr><td>$n,m$</td><td>electron band</td><td></td></tr>
+      <tr><td>$\lambda,\lambda'$</td><td>photon polarization</td><td>$1,2$ transverse, $3$ longitudinal</td></tr>
+    </tbody>
+  </table></div>
+  <p>For a surface or a two-dimensional sheet, $z$ is the normal direction and $x,y$ lie in the plane. The letter $\mu$ is the chemical potential, never an index.</p>
+
+  <h3 id="c-typography">How symbols are written</h3>
+  <ul>
+    <li><strong>Vectors and Cartesian tensors are bold</strong>, their components italic with indices: the displacement $\bu_{\ell\kappa}$ has components $u_{\ell\kappa\alpha}$.</li>
+    <li><strong>Labels that abbreviate a word are upright</strong>, the whole word: $\Pi^{\ion}$ (ionic), $\Pi^{\ph}$ (phonon), $\varepsilon^{\rme}$ (electrons only), $k_{\mathrm B}$ (Boltzmann), $\omega_{\mathrm{LO}}$. Running indices stay italic.</li>
+    <li><strong>Euler's number, the imaginary unit and the differential are upright</strong>, $\ee^{\ii\bq\cdot\bR_\ell}$ and $\dd^3r$, so that the exponential is never confused with the elementary charge $e$ or with the phonon eigenvector components $e_{\kappa\alpha,\nu}$.</li>
+    <li><strong>A tilde means mass-scaled</strong>: $\tPhi$ is the force-constant matrix divided by square roots of masses.</li>
+    <li><strong>Hats mark operators</strong> only where an operator and an ordinary number of the same name appear together. Unit vectors also carry hats: $\hat\bq=\bq/q$.</li>
+    <li>A comma separates index groups that belong to different objects: in $e_{\kappa\alpha,\nu}$ the pair $\kappa\alpha$ labels a component and $\nu$ labels the mode.</li>
+  </ul>
+
+  <h3 id="c-units">Units and numbers</h3>
+  <p>Equations are written in Gaussian units with $e$, $\hbar$, the electron mass $m_{\mathrm e}$ and the speed of light $c$ kept explicit, so atomic units follow by setting $e=\hbar=m_{\mathrm e}=1$. The elementary charge $e$ is positive and the electron carries $-e$. Key equations with charges or fields have a footnote with their SI form. Numbers are given in eV or meV, ångström (Å), atomic mass units (amu) and kelvin.</p>
+  <div class="tbl"><table style="min-width:420px">
+    <thead><tr><th>Combination</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td>$e^2$ (Gaussian), equal to $e^2/4\pi\varepsilon_0$ in SI</td><td>14.3996 eV Å</td></tr>
+      <tr><td>$\hbar c$</td><td>1973.27 eV Å</td></tr>
+      <tr><td>$\hbar^2/2m_{\mathrm e}$</td><td>3.80998 eV Å²</td></tr>
+      <tr><td>$\hbar\omega$ of a spring $K$ (eV/Å²) on a mass $M$ (amu)</td><td>$64.654\ \text{meV}\times\sqrt{K/M}$</td></tr>
+      <tr><td>$\hbar/(2M\omega)$</td><td>2.0901 Å² divided by $M$ (amu) times $\hbar\omega$ (meV)</td></tr>
+      <tr><td>$k_{\mathrm B}$</td><td>0.0861733 meV/K</td></tr>
+      <tr><td>1 meV</td><td>8.06554 cm⁻¹ = 0.241799 THz</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 id="c-signs">Signs and Fourier transforms</h3>
+  <p>Oscillations go as $\ee^{-\ii\omega t}$, and a function of time is transformed as $f(\omega)=\int\dd t\,\ee^{\ii\omega t}f(t)$. Waves on the lattice go as $\ee^{+\ii\bq\cdot\bR_\ell}$, where $\bR_\ell$ is the position of cell $\ell$. Section <a href="#a-lattice">A.1</a> introduces the lattice conventions where they are first needed.</p>
+
+  <div class="callout source">
+    <p class="callout-title">The two sources</p>
+    <p>Part A follows F. Giustino, “Electron-phonon interactions from first principles”, <em>Rev. Mod. Phys.</em> <strong>89</strong>, 015003 (2017). Part B follows the manuscript “Theory of the Electron-Phonon-Photon coupling” (draft v2), called the EPP manuscript. Neither is needed to read this page. Footnotes give their symbols and equation numbers wherever this page uses a different notation.</p>
+  </div>
+</section>
