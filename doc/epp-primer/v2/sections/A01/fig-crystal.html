@@ -4,7 +4,7 @@
     <div class="legend a1-crystal-leg"></div>
     <div class="a1-crystal-ctrls"></div>
     <div class="readout a1-crystal-ro" aria-live="polite" aria-atomic="true"><span>$\ell$<b class="a1-crystal-v-l"></b></span><span>$\kappa$<b class="a1-crystal-v-k"></b></span><span>$\bR_\ell$<b class="a1-crystal-v-R"></b></span><span>$\btau_\kappa$<b class="a1-crystal-v-t"></b></span><span>$\btau_{\ell\kappa}$<b class="a1-crystal-v-tl"></b></span><span>$\bu_{\ell\kappa}$<b class="a1-crystal-v-u"></b></span></div>
-    <figcaption><p class="cap-key"><strong>What to notice.</strong> Every atom, inside the supercell or in one of its faded images, is reached in the same two steps: $\bR_\ell$ to the corner of its cell, then $\btau_\kappa$ inside the cell. An image atom has exactly the displacement of its partner inside the supercell.</p><div class="cap-more"><p><strong>Marks.</strong> Each light parallelogram is a unit cell. The bold outline is the Born–von Kármán supercell of $N_1\times N_2$ cells, and the faded cells around it are its periodic images. $\mathrm O$ marks $\bR_0=\mathbf 0$. A halo marks the selected atom. Its displacement $\bu_{\ell\kappa}$ is redrawn from the rim of the halo, with the components $u_{\ell\kappa x}$ and $u_{\ell\kappa y}$ as the legs of a right triangle. For a selected image atom, a dashed ring marks its partner, and the dotted arrow is the translation from the partner to the image, made of steps $\pm N_1\ba_1$ and $\pm N_2\ba_2$.</p><p><strong>Try.</strong> Click or tap an atom to select it. With the patch focused, the arrow keys change $\ell_1$ (left, right) and $\ell_2$ (up, down), and the space bar switches $\kappa$. Select a faded atom to find its partner. The slider sets $N_1=N_2$ from 2 to 6; the check box hides the displacements.</p><p><strong>Model.</strong> A flat sheet modelled on hexagonal boron nitride (hBN), with motion in its plane only: <span class="nw">$a=2.504$ Å</span>, $\ba_1=a(1,0)$, $\ba_2=a(\tfrac12,\tfrac{\sqrt3}2)$, boron ($\kappa=1$, <span class="nw">$M_1=10.81$ amu</span>) at $\btau_1=(\ba_1+\ba_2)/3$ and nitrogen ($\kappa=2$, <span class="nw">$M_2=14.007$ amu</span>) at $\btau_2=2(\ba_1+\ba_2)/3$, so the B–N bond is <span class="nw">$a/\sqrt3=1.446$ Å</span> long (literature values, illustrative). The displacements are one made-up snapshot that obeys (A1.2), with a typical length of <span class="nw">0.03 Å</span>.</p></div></figcaption>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> Every atom, inside the supercell or in one of its faded images, is reached in the same two steps: $\bR_\ell$ to the corner of its cell, then $\btau_\kappa$ inside the cell. An image atom has exactly the displacement of its partner inside the supercell.</p><div class="cap-more"><p><strong>Marks.</strong> Each light parallelogram is a unit cell. The bold outline is the Born–von Kármán supercell of $N_1\times N_2$ cells, and the faded cells around it are its periodic images. $\mathrm O$ marks <span class="nw">$\bR_0=\mathbf 0$.</span> A halo marks the selected atom. Its displacement $\bu_{\ell\kappa}$ is redrawn from the rim of the halo, with the components $u_{\ell\kappa x}$ and $u_{\ell\kappa y}$ as the legs of a right triangle. For a selected image atom, a dashed ring marks its partner, which carries the same arrow, and the dotted arrow is the translation from the partner to the image, made of steps $\pm N_1\ba_1$ and <span class="nw">$\pm N_2\ba_2$.</span></p><p><strong>Try.</strong> Click or tap an atom to select it. With the patch focused, the arrow keys change $\ell_1$ (left, right) and $\ell_2$ (up, down), and the space bar switches <span class="nw">$\kappa$.</span> Select a faded atom to find its partner. The slider sets $N_1=N_2$ from 2 to 6; the check box hides the displacements.</p><p><strong>Model.</strong> Lattice constant <span class="nw">$a=2.504$ Å</span>, <span class="nw">$\ba_1=a(1,0)$,</span> <span class="nw">$\ba_2=a(\tfrac12,\tfrac{\sqrt3}2)$;</span> boron <span class="nw">($\kappa=1$,</span> <span class="nw">$M_1=10.81$ amu</span>) at $\btau_1=(\ba_1+\ba_2)/3$ and nitrogen <span class="nw">($\kappa=2$,</span> <span class="nw">$M_2=14.007$ amu</span>) at <span class="nw">$\btau_2=2(\ba_1+\ba_2)/3$,</span> so the <span class="nw">B–N</span> bond is <span class="nw">$a/\sqrt3=1.446$ Å</span> long (literature values for hBN, illustrative). The displacements are a made-up snapshot that obeys (A1.2), with a typical length of <span class="nw">0.03 Å</span>.</p></div></figcaption>
   </figure>
 <script>
 (() => {
@@ -107,7 +107,7 @@
         return c;
       },
       // centres beside the segment P0 -> P1, preferred side first (side +1 = screen-left of the direction)
-      along(L, P0, P1, side, ts = [0.5, 0.38, 0.62, 0.27, 0.73], gap = 3) {
+      along(L, P0, P1, side, ts = [0.5, 0.38, 0.62, 0.27, 0.73], gap = 5) {   // gap clears the square boxes that sample a slanted segment
         const [w, h] = api.size(L);
         const dx = P1[0] - P0[0], dy = P1[1] - P0[1], len = Math.hypot(dx, dy) || 1, nx = dy / len, ny = -dx / len;
         const ext = Math.abs(nx) * (w / 2 + 2) + Math.abs(ny) * h / 2 + gap, out = [];
@@ -193,11 +193,12 @@
     ctx.fillStyle = EPP.alpha('ink', 0.14); disc(ctx, Ap[0], Ap[1], rH); ctx.fill();
     if (!selIn) { ctx.fillStyle = EPP.alpha('ink', 0.09); disc(ctx, Pp[0], Pp[1], rH); ctx.fill(); }
     // atoms at their equilibrium positions tau_lk = R_l + tau_k
+    const cAt = KCOL.map(c => EPP.color(c)), cAtF = KCOL.map(c => EPP.alpha(c, 0.36)), cPhF = EPP.alpha('phonon', 0.42);
     for (let l1 = L1a; l1 <= L1b; l1++) for (let l2 = L2a; l2 <= L2b; l2++) for (let kk = 0; kk < 2; kk++) {
       const r = Rl(l1, l2), p = P([r[0] + TK[kk][0], r[1] + TK[kk][1]]);
       if (!onCv(p, -rA)) continue;                          // only atoms whose disc lies wholly on the canvas
       const inside = inSC(l1, l2);
-      ctx.fillStyle = inside ? EPP.color(KCOL[kk]) : EPP.alpha(KCOL[kk], 0.36);
+      ctx.fillStyle = inside ? cAt[kk] : cAtF[kk];
       disc(ctx, p[0], p[1], rA); ctx.fill();
       atomsPx.push({ x: p[0], y: p[1], l1, l2, k: kk, inside });
     }
@@ -205,7 +206,7 @@
     if (showU) for (const at of atomsPx) {
       if (at.l1 === sel.l1 && at.l2 === sel.l2 && at.k === k) continue;
       const u = disp(N, at.l1, at.l2, at.k), L = UF * Math.hypot(u[0], u[1]) * s;
-      arrow(ctx, at.x, at.y, at.x + UF * u[0] * s, at.y - UF * u[1] * s, { col: at.inside ? cPh : EPP.alpha('phonon', 0.42), lw: 1.5, head: EPP.clamp(0.42 * L, 2.5, 5.5) });
+      arrow(ctx, at.x, at.y, at.x + UF * u[0] * s, at.y - UF * u[1] * s, { col: at.inside ? cPh : cPhF, lw: 1.5, head: EPP.clamp(0.42 * L, 2.5, 5.5) });
     }
     // ----- selected atom: R_l, tau_k, tau_lk, u_lk -----
     const pl = placer(ctx, W, H), fs = W < 360 ? 11.5 : 12.5;
@@ -271,13 +272,13 @@
     const side = (P0, P1, away) => { const dx = P1[0] - P0[0], dy = P1[1] - P0[1], mx = (P0[0] + P1[0]) / 2 - away[0], my = (P0[1] + P1[1]) / 2 - away[1]; return (dy * mx - dx * my) >= 0 ? 1 : -1; };
     if (tri) {
       const { S0, E0, C0, u, xEnd, yEnd } = tri;
-      let L = lab([Bv('u'), Sb('ℓκ', 1)], cPhT, fs);
-      pl.put(L, pl.along(L, S0, E0, side(S0, E0, C0), [0.5, 0.62, 0.38, 0.75, 0.27]));
-      // each component label just beyond the arrowhead of its leg
-      L = lab([It('u'), Sb('ℓκx', 1)], cPhT, fs - 0.5);
-      pl.put(L, pl.around(L, xEnd, 2, u[0] >= 0 ? 0 : Math.PI));
+      // each component label just beyond the arrowhead of its leg (a leg shorter than 3 px gets none), then u_lk beside the hypotenuse
+      let L = lab([It('u'), Sb('ℓκx', 1)], cPhT, fs - 0.5);
+      if (Math.abs(E0[0] - S0[0]) >= 3) pl.put(L, pl.around(L, xEnd, 2, u[0] >= 0 ? 0 : Math.PI));
       L = lab([It('u'), Sb('ℓκy', 1)], cPhT, fs - 0.5);
-      pl.put(L, pl.around(L, yEnd, 2, u[1] >= 0 ? -Math.PI / 2 : Math.PI / 2));
+      if (Math.abs(E0[1] - S0[1]) >= 3) pl.put(L, pl.around(L, yEnd, 2, u[1] >= 0 ? -Math.PI / 2 : Math.PI / 2));
+      L = lab([Bv('u'), Sb('ℓκ', 1)], cPhT, fs);
+      pl.put(L, pl.along(L, S0, E0, side(S0, E0, C0), [0.5, 0.62, 0.38, 0.75, 0.27]));
     }
     // fixed labels of the origin cell before the vector triangle, so that they keep their places
     { let L = lab(A1P, cFg2, 12); pl.put(L, pl.along(L, A1s, A1e, -1, [0.5, 0.35, 0.65]));

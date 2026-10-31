@@ -18,7 +18,7 @@
     <div class="a1-waves-ctrls" style="grid-template-columns:repeat(auto-fill,minmax(170px,1fr))"></div>
     <div class="readout a1-waves-ro" aria-live="polite"><span>$qa$<b class="a1-waves-v-qa"></b></span><span>$K_{\mathrm{eff}}(q)=2K(1-\cos qa)$<b class="a1-waves-v-keff"></b></span><span>$\hbar\omega(q)$<b class="a1-waves-v-hw"></b></span><span>wavelength $2\pi/|q|$<b class="a1-waves-v-lam"></b></span></div>
     <div class="readout a1-waves-ro2" aria-live="polite"><span>$u_{\ell+1}+u_{\ell-1}=2\cos(qa)\,u_\ell$ at $u_\ell=1$<b class="a1-waves-v-sum"></b></span><span>BvK index $s=N_\ell qa/2\pi$<b class="a1-waves-v-s"></b></span><span class="a1-waves-ro-al" hidden>wavelength of $q+2\pi/a$<b class="a1-waves-v-lam2"></b></span></div>
-    <figcaption><p class="cap-key"><strong>What to notice.</strong> At $q=0$ all arrows coincide and $\omega=0$; at $q=\pi/a$ the neighbours point opposite to $u_\ell$ and $K_{\mathrm{eff}}=4K$. With aliasing on, $q$ and $q+2\pi/a$ pass through the same stem tips.</p><div class="cap-more"><p><strong>Marks.</strong> In (b) the dashed arrows are the pulls of the two springs on atom $\ell$, divided by $K$: $u_{\ell+1}-u_\ell$ (right spring) and $u_{\ell-1}-u_\ell$ (left spring), drawn from the tip of $u_\ell$; their sum is the amber arrow $F_\ell/K$. The dotted line is the projection of $u_\ell$ onto the real axis; the dot sits at the physical displacement $\mathrm{Re}\,u_\ell$, the stem height of atom $\ell$ in (a). Small dots mark atoms $\ell+2$ to $\ell+N_\ell-1$, each turned by a further $qa$; the ring, atom $\ell+N_\ell$, meets the tip of $u_\ell$ only at an allowed $q$.</p><p><strong>Try.</strong> The $q$ slider sets the wavevector, and Play runs the time. In (b), drag the tip of $u_{\ell+1}$ or $u_{\ell-1}$ to change $qa$, or the tip of $u_\ell$ to set the time. Click or drag in (c) to pick $q$; a click near a hollow dot picks it exactly. “Snap $q$ to the BvK grid” restricts $q$ to the hollow dots, and $N_\ell$ sets their number. “Continuous wave” shows or hides the amber curve; “aliasing” adds the wave $q+2\pi/a$.</p><p><strong>Model.</strong> The chain of (A1.7) with the mass of carbon, <span class="nw">$M=12.01$ amu</span>, and the C–C bond of graphene as spacing, <span class="nw">$a=1.42$ Å</span> (literature values, illustrative), joined by a model spring <span class="nw">$K=20$ eV/Å²</span>. The atoms move as in (A1.9), $\hbar\omega(q)$ follows (A1.10) up to <span class="nw">166.9 meV</span> at $q=\pi/a$, and the hollow dots are the wavevectors of (A1.11). Atom $\ell$ is atom 0 and $\xi$ is real, so the arrows in (b) turn clockwise. Displacements are exaggerated, and one period lasts <span class="nw">3.2 s</span>.</p></div></figcaption>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> At $q=0$ all arrows coincide and <span class="nw">$\omega=0$;</span> at $q=\pi/a$ the neighbours point opposite to $u_\ell$ and <span class="nw">$K_{\mathrm{eff}}=4K$.</span> With aliasing on, $q$ and $q+2\pi/a$ pass through the same stem tips.</p><div class="cap-more"><p><strong>Marks.</strong> In (b) the dashed arrows are the pulls of the two springs on atom <span class="nw">$\ell$,</span> divided by <span class="nw">$K$:</span> $u_{\ell+1}-u_\ell$ (right spring) and $u_{\ell-1}-u_\ell$ (left spring), drawn from the tip of <span class="nw">$u_\ell$;</span> their sum is <span class="nw">$F_\ell/K$.</span> The dotted line is the projection of $u_\ell$ onto the real axis; the dot sits at the physical displacement <span class="nw">$\mathrm{Re}\,u_\ell$,</span> the stem height of atom $\ell$ in (a). Small dots are atoms $\ell+2$ to <span class="nw">$\ell+N_\ell-1$,</span> each turned by a further <span class="nw">$qa$;</span> the ring, atom <span class="nw">$\ell+N_\ell$,</span> meets the tip of $u_\ell$ only for an allowed <span class="nw">$q$.</span></p><p><strong>Try.</strong> Pick $q$ with the slider or in (c), where a click on a hollow dot picks it exactly; Play runs the time. In (b), drag the tip of $u_{\ell\pm1}$ to change <span class="nw">$qa$,</span> or of $u_\ell$ to set the time. “Snap $q$ to the BvK grid” restricts $q$ to the hollow dots, whose number is <span class="nw">$N_\ell$.</span> “Continuous wave” shows or hides the amber curve; “aliasing” adds the wave <span class="nw">$q+2\pi/a$.</span></p><p><strong>Model.</strong> The chain of (A1.7) with the mass of carbon, <span class="nw">$M=12.01$ amu</span>, the C–C bond of graphene as spacing, <span class="nw">$a=1.42$ Å</span> (literature values, illustrative), and a model spring <span class="nw">$K=20$ eV/Å²</span>. The atoms follow (A1.9) and (A1.10), with $\hbar\omega$ up to <span class="nw">166.9 meV</span> at <span class="nw">$q=\pi/a$;</span> the hollow dots obey (A1.11). With $\ell=0$ and $\xi$ real, the arrows in (b) turn clockwise. Displacements are exaggerated; one period lasts <span class="nw">3.2 s</span>.</p></div></figcaption>
   </figure>
 <script>
 (() => {
@@ -285,7 +285,7 @@
     geo = { cx, cy };
     tips = [{ k: 1, x: tp[0], y: tp[1] }, { k: -1, x: tm[0], y: tm[1] }, { k: 0, x: t0[0], y: t0[1] }];
     const cMuted = EPP.color('muted'), cInk = EPP.color('ink'), cPh = EPP.color('phonon');
-    const boxes = [], segs = [], ticks = [], labs = [];
+    const boxes = [], segs = [], ticks = [], blobs = [], labs = [];
     const bounds = { x0: 2, x1: w - 2, y0: 2, y1: h - 2 };
     const absq = Math.abs(qa), near0 = absq < 0.1, nearPi = Math.PI - absq < 0.1;
     const nT = Math.floor(R - 0.12);
@@ -296,7 +296,7 @@
     const meas = (sg, size) => segW(ctx, sg, size, fTx, fTx);
     // Two labels keep 10 px apart side by side (3 px above each other), so that neighbours never read as one
     // expression; an essential label that finds no such spot takes the best spot with 2 px.
-    const clear = (b, px, py) => !boxes.some(o => overlap(b, o, px, py)) && !segs.some(s => segHits(s, b, 1.5)) && !ticks.some(s => segHits(s, b, 1.5));
+    const clear = (b, px, py) => !boxes.some(o => overlap(b, o, px, py)) && !blobs.some(o => overlap(b, o, 1, 1)) && !segs.some(s => segHits(s, b, 1.5)) && !ticks.some(s => segHits(s, b, 1.5));
     function put(sg, color, size, cands, optional) {
       const wL = meas(sg, size) + 2, hL = Math.round(size * 1.3), list = [];
       for (const c of cands(wL, hL)) {
@@ -350,22 +350,31 @@
     // physical displacement Re u_ℓ: projection onto the real axis
     ctx.strokeStyle = cPh; ctx.lineWidth = 1.4; ctx.setLineDash([2, 3]);
     ctx.beginPath(); ctx.moveTo(t0[0], t0[1]); ctx.lineTo(t0[0], cy); ctx.stroke(); ctx.setLineDash([]);
+    // arrowheads, the dot of Re u_ℓ and the ring are obstacles for the labels too
+    const arrowB = (x0, y0, x1, y1, col, lw, head, dash) => {
+      arrow(ctx, x0, y0, x1, y1, col, lw, head, dash);
+      const Lr = Math.hypot(x1 - x0, y1 - y0); if (Lr < 0.5) return;
+      const a = Math.atan2(y1 - y0, x1 - x0), hs = Math.min(head, 0.65 * Lr);
+      const xs = [x1, x1 - hs * Math.cos(a - 0.4), x1 - hs * Math.cos(a + 0.4)], ys = [y1, y1 - hs * Math.sin(a - 0.4), y1 - hs * Math.sin(a + 0.4)];
+      blobs.push({ x0: Math.min(...xs), x1: Math.max(...xs), y0: Math.min(...ys), y1: Math.max(...ys) });
+    };
+    const dotB = (x, y, r) => blobs.push({ x0: x - r, x1: x + r, y0: y - r, y1: y + r });
     // pulls of the springs, u_{ℓ±1} − u_ℓ, from the tip of u_ℓ (stopping just short of the neighbour tips)
     const shorten = (A, B, d) => { const Ls = Math.hypot(B[0] - A[0], B[1] - A[1]); return Ls > 2 * d ? [B[0] - (B[0] - A[0]) * d / Ls, B[1] - (B[1] - A[1]) * d / Ls] : B; };
     if (!near0) {
       const sp = shorten(t0, tp, 2.5), sm = shorten(t0, tm, 2.5);
-      arrow(ctx, t0[0], t0[1], sp[0], sp[1], EPP.color('fg2'), 1.5, 8, [5, 4]);
-      if (!nearPi) arrow(ctx, t0[0], t0[1], sm[0], sm[1], EPP.color('fg2'), 1.5, 8, [5, 4]);
+      arrowB(t0[0], t0[1], sp[0], sp[1], EPP.color('fg2'), 1.5, 8, [5, 4]);
+      if (!nearPi) arrowB(t0[0], t0[1], sm[0], sm[1], EPP.color('fg2'), 1.5, 8, [5, 4]);
     }
     // force F_ℓ/K = −2(1 − cos qa) u_ℓ from the origin
-    if (F * U > 2) arrow(ctx, cx, cy, tf[0], tf[1], cPh, 3.4, 12);
+    if (F * U > 2) arrowB(cx, cy, tf[0], tf[1], cPh, 3.4, 12);
     // displacement arrows
-    arrow(ctx, cx, cy, tm[0], tm[1], cInk, 1.9, 9);
-    arrow(ctx, cx, cy, tp[0], tp[1], cInk, 1.9, 9);
-    arrow(ctx, cx, cy, t0[0], t0[1], cPh, 2.6, 10);
-    ctx.fillStyle = cPh; ctx.beginPath(); ctx.arc(t0[0], cy, 3.4, 0, TAU); ctx.fill();
+    arrowB(cx, cy, tm[0], tm[1], cInk, 1.9, 9);
+    arrowB(cx, cy, tp[0], tp[1], cInk, 1.9, 9);
+    arrowB(cx, cy, t0[0], t0[1], cPh, 2.6, 10);
+    ctx.fillStyle = cPh; ctx.beginPath(); ctx.arc(t0[0], cy, 3.4, 0, TAU); ctx.fill(); dotB(t0[0], cy, 3.4);
     const ringOn = Math.hypot(ringP[0] - t0[0], ringP[1] - t0[1]) < 1.5;
-    ctx.strokeStyle = ringOn ? cInk : cMuted; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(ringP[0], ringP[1], 6.5, 0, TAU); ctx.stroke();
+    ctx.strokeStyle = ringOn ? cInk : cMuted; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(ringP[0], ringP[1], 6.5, 0, TAU); ctx.stroke(); dotB(ringP[0], ringP[1], 7.3);
     ctx.fillStyle = cInk; ctx.beginPath(); ctx.arc(cx, cy, 2.2, 0, TAU); ctx.fill();
 
     // labels: essential ones first
@@ -383,7 +392,10 @@
     if (F * U > 2) put([['F_ℓ', true], ['/', false], ['K', true]], tPh, 13.5, tipC(tf[0], tf[1], th + Math.PI));
     else put([['F_ℓ', true], [' = 0', false]], tPh, 13, tipC(cx, cy, th + Math.PI));
     const above = t0[1] < cy;
-    put([['Re ', false], ['u_ℓ', true]], tPh, 12, (wL, hL) => { const y = above ? cy + 4 + hL / 2 : cy - 4 - hL / 2, y2 = above ? cy - 4 - hL / 2 : cy + 4 + hL / 2; return [[t0[0], y], [t0[0] + wL / 2 + 6, y], [t0[0] - wL / 2 - 6, y], [t0[0] + wL / 2 + 6, y2], [t0[0] - wL / 2 - 6, y2]]; }, true);
+    put([['Re ', false], ['u_ℓ', true]], tPh, 12, (wL, hL) => {
+      const s = above ? 1 : -1, y = (d) => cy + s * (d + hL / 2), x = (d) => t0[0] + d * (wL / 2 + 7);
+      return [[t0[0], y(7)], [x(1), y(4)], [x(-1), y(4)], [x(1), y(-4 - hL)], [x(-1), y(-4 - hL)]];
+    }, true);
     if (absq > 0.08) {
       const ql = qa > 0 ? [['qa', true]] : [['|', false], ['qa', true], ['|', false]];
       for (const sgn of [1, -1]) put(ql, cMuted, 12.5, (wL, hL) => {
@@ -413,7 +425,7 @@
     for (let k = -nT; k <= nT; k++) {
       if (!k || k % step) continue;
       const s = minus(k), wT = EPP.measureRich(ctx, s, 10, fUI), b = { x0: cx + k * U - wT / 2 - 1, x1: cx + k * U + wT / 2 + 1, y0: cy + 5, y1: cy + 17 };
-      if (boxes.some(o => overlap(b, o, 8, 4)) || segs.some(sg => segHits(sg, b, 0.5))) continue;
+      if (boxes.some(o => overlap(b, o, 8, 4)) || blobs.some(o => overlap(b, o, 2, 2)) || segs.some(sg => segHits(sg, b, 0.5))) continue;
       boxes.push(b); ctx.fillStyle = cMuted; EPP.drawRich(ctx, s, cx + k * U, cy + 11, { size: 10, font: fUI, align: 'center' });
     }
     // draw the labels on a soft halo
@@ -451,12 +463,15 @@
   });
   const endDrag = () => { drag = null; };
   cvs.addEventListener('pointerup', endDrag); cvs.addEventListener('pointercancel', endDrag);
-  pD.onPointer = (x, y, type) => {
-    if (type === 'up' || !isFinite(x)) return;
-    // a click within 6 px of a hollow dot picks that allowed wavevector exactly
-    const N = cur ? cur.N : 12, xg = 2 * Math.round(x * N / 2) / N;
-    const pxPer = (pD.cv.w - pD.m.l - pD.m.r) / (pD.xlim[1] - pD.xlim[0]);
-    let v = Math.abs(x - xg) * pxPer <= 6 ? xg : x;
+  pD.onPointer = (x, y, type, d) => {
+    if (type === 'up' || !isFinite(x) || !d) return;
+    // a click within 8 px of a hollow dot picks that allowed wavevector exactly
+    const N = cur ? cur.N : 12, k0 = Math.round(x * N / 2);
+    let v = x, best = 8;
+    for (let k = k0 - 1; k <= k0 + 1; k++) {
+      const xg = 2 * k / N, dist = Math.hypot(pD.X(xg) - d.px, pD.Y(hwOf(xg)) - d.py);
+      if (dist <= best) { best = dist; v = xg; }
+    }
     if (v > 1 || v < -1) v = fold(v);
     ui.set('q', EPP.clamp(Math.round(v * 100) / 100, -1, 1));
   };
