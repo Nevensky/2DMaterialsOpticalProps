@@ -325,7 +325,8 @@
     // labels
     const segs = arrows.map(g => [g.x0, g.y0, g.x1, g.y1]);
     const discs = [];
-    for (let i = 0; i < at.length; i++) if (at[i].vis) { const p = pos(i); discs.push([p[0], p[1], r + 1]); }
+    const ringed = mB ? sel : c.pr; // the ringed atom keeps its ring clear of labels
+    for (let i = 0; i < at.length; i++) if (at[i].vis) { const p = pos(i); discs.push([p[0], p[1], i === ringed ? r + 6 : r + 1]); }
     const place = makePlacer(ctx, [3, BAND + 3, w - 3, h - 3], segs, discs, fUI);
     const put = (parts, col, x, y, rad, pref, size = 12.5) => {
       const pl = place(parts, size, x, y, rad, pref);
@@ -501,7 +502,7 @@
     { key: 'mode', type: 'seg', label: 'mode', options: [['push', 'push one atom'], ['shift', 'shift every atom']], value: 'push' },
     { key: 'theta', type: 'range', label: 'direction θ of d', min: 0, max: 360, step: 1, value: 30, fmt: v => v.toFixed(0) + '°' },
     { key: 'click', type: 'seg', label: 'click selects', options: [['pushed', 'pushed atom'], ['probe', 'probe atom']], value: 'pushed' },
-    { key: 'K1', type: 'range', label: 'K_1, nearest neighbours (eV/Å^2)', min: 5, max: 40, step: 0.1, value: 28.1, fmt: v => v.toFixed(1) },
+    { key: 'K1', type: 'range', label: 'K_1, nearest (eV/Å^2)', min: 5, max: 40, step: 0.1, value: 28.1, fmt: v => v.toFixed(1) },
     { key: 'K2', type: 'range', label: 'K_2, next-nearest (eV/Å^2)', min: 0, max: 10, step: 0.1, value: 5.0, fmt: v => v.toFixed(1) }
   ], s => {
     mode = s.mode; clickSel = s.click; K1 = s.K1; K2 = s.K2;
