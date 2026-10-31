@@ -316,7 +316,7 @@ dl.glossary dd { margin: 0; color: var(--fg-2); }
 .pop .pop-go { display: block; margin-top: 6px; font-family: var(--font-ui); font-size: 0.8rem; }
 .gl-btn { position: fixed; right: max(14px, calc(env(safe-area-inset-right, 0px) + 14px)); bottom: max(14px, calc(env(safe-area-inset-bottom, 0px) + 14px)); z-index: 30; font-family: var(--font-ui); font-size: 0.88rem; font-weight: 600; padding: 8px 15px; border-radius: 999px; border: 1px solid var(--rule); background: var(--surface); color: var(--fg); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.14); cursor: pointer; }
 .gl-btn:hover { border-color: var(--accent); color: var(--accent); }
-.gl-panel { position: fixed; z-index: 35; top: 0; right: 0; bottom: 0; width: min(460px, 100vw); background: var(--surface); border-left: 1px solid var(--rule); box-shadow: -10px 0 32px rgba(0, 0, 0, 0.18); display: flex; flex-direction: column; transform: translateX(105%); transition: transform 0.18s ease; padding-top: env(safe-area-inset-top, 0px); visibility: hidden; }
+.gl-panel { position: fixed; z-index: 35; top: 0; right: 0; bottom: 0; width: min(460px, 100vw); background: var(--surface); border-left: 1px solid var(--rule); box-shadow: -10px 0 32px rgba(0, 0, 0, 0.18); display: flex; flex-direction: column; transform: translateX(105%); transition: transform 0.18s ease; padding-top: env(safe-area-inset-top, 0px); padding-right: env(safe-area-inset-right, 0px); visibility: hidden; }
 .gl-panel.open { transform: none; visibility: visible; }
 @media (prefers-reduced-motion: reduce) { .gl-panel { transition: none; } }
 .gl-panel > header { padding: 14px 16px 10px; border-bottom: 1px solid var(--rule); display: grid; gap: 8px; }
