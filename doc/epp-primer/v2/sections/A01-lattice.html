@@ -28,7 +28,7 @@
   <p>A crystal is a pattern repeated by translations. The repeated unit is the <strong>unit cell</strong>, the parallelepiped spanned by three <strong>primitive vectors</strong> $\ba_1$, $\ba_2$, $\ba_3$. Cells are labelled by an index $\ell$ that stands for a triple of integers $(\ell_1,\ell_2,\ell_3)$. The corner of cell $\ell$ sits at the <strong>lattice vector</strong></p>
   <div class="eq">$$\bR_\ell=\ell_1\ba_1+\ell_2\ba_2+\ell_3\ba_3 .$$</div>
   <p>Every cell contains the same $N_\kappa$ atoms, the <strong>basis</strong>, labelled $\kappa=1,\dots,N_\kappa$. Atom $\kappa$ has mass $M_\kappa$ and sits at $\btau_\kappa$, measured from the corner of its cell. Atom $\kappa$ of cell $\ell$ therefore has its equilibrium position at $\btau_{\ell\kappa}$, and as it vibrates it is displaced from there by $\bu_{\ell\kappa}(t)$:<sup class="fn"><a href="#fn-a1-labels">3</a></sup></p>
-  <div class="eq" id="a1-eq-pos">$$\btau_{\ell\kappa}=\bR_\ell+\btau_\kappa,\qquad \text{position at time }t=\btau_{\ell\kappa}+\bu_{\ell\kappa}(t). \tag{A1.1}$$</div>
+  <div class="eq" id="a1-eq-pos">$$\begin{gathered}\btau_{\ell\kappa}=\bR_\ell+\btau_\kappa,\\ \text{position at time }t=\btau_{\ell\kappa}+\bu_{\ell\kappa}(t).\end{gathered} \tag{A1.1}$$</div>
   <dl class="where">
     <dt>$\ell$</dt><dd>cell index, the integer triple $(\ell_1,\ell_2,\ell_3)$; cell $\ell=0$ has its corner at the origin</dd>
     <dt>$\kappa$</dt><dd>atom of the basis, $1,\dots,N_\kappa$; its mass is $M_\kappa$ (amu)</dd>
@@ -52,7 +52,7 @@
     <li><p>The second-order terms are kept; third and higher orders are dropped.</p><span class="why">Each further order is smaller by roughly one more factor of displacement over bond length, a few percent. These anharmonic terms let phonons scatter off each other and cause thermal expansion; this primer leaves them out.</span></li>
   </ol>
   <p>The result is the harmonic energy</p>
-  <div class="eq" id="a1-eq-phi">$$U\simeq U_0+\frac12\sum_{\ell\kappa\alpha}\ \sum_{\ell'\kappa'\beta}\Phi_{\ell\kappa\alpha,\ell'\kappa'\beta}\,u_{\ell\kappa\alpha}\,u_{\ell'\kappa'\beta},\qquad \Phi_{\ell\kappa\alpha,\ell'\kappa'\beta}=\left.\frac{\partial^2U}{\partial u_{\ell\kappa\alpha}\,\partial u_{\ell'\kappa'\beta}}\right|_{\text{equilibrium}} . \tag{A1.3}$$</div>
+  <div class="eq" id="a1-eq-phi">$$\begin{gathered}U\simeq U_0+\frac12\sum_{\ell\kappa\alpha}\ \sum_{\ell'\kappa'\beta}\Phi_{\ell\kappa\alpha,\ell'\kappa'\beta}\,u_{\ell\kappa\alpha}\,u_{\ell'\kappa'\beta},\\ \Phi_{\ell\kappa\alpha,\ell'\kappa'\beta}=\left.\frac{\partial^2U}{\partial u_{\ell\kappa\alpha}\,\partial u_{\ell'\kappa'\beta}}\right|_{\text{equilibrium}} .\end{gathered} \tag{A1.3}$$</div>
   <dl class="where">
     <dt>$\Phi_{\ell\kappa\alpha,\ell'\kappa'\beta}$</dt><dd><strong>interatomic force constant</strong> that couples the motion of atom $\ell\kappa$ along $\alpha$ to the motion of atom $\ell'\kappa'$ along $\beta$ (eV/Å²)</dd>
     <dt>$\alpha,\beta$</dt><dd>Cartesian directions $x,y,z$</dd>
@@ -104,7 +104,7 @@
   <h3 id="a1-waves">Why waves: the chain again</h3>
   <p>Newton's equation for atom $\ell$ of the chain is mass times acceleration equals force, with the force from (A1.4):</p>
   <div class="eq">$$M\ddot u_\ell=-\sum_{\ell'}\Phi_{\ell,\ell'}\,u_{\ell'}=K\big(u_{\ell+1}-u_\ell\big)+K\big(u_{\ell-1}-u_\ell\big). \tag{A1.8}$$</div>
-  <p>These $N_\ell$ equations are coupled, because each atom is pulled by its neighbours. The way out is to look for patterns of motion in which all atoms oscillate at one common frequency, the normal modes, for which the coupled equations collapse into a single one. Translation invariance suggests which patterns to try. Shifting a normal mode along the chain by one cell must give another normal mode with the same frequency. The simplest patterns that reproduce themselves under such a shift, up to a constant factor, are waves in which each atom's amplitude is its left neighbour's times a fixed phase factor $\ee^{\ii qa}$:</p>
+  <p>These $N_\ell$ equations are coupled, because each atom is pulled by its neighbours. The way out is to look for patterns of motion in which all atoms oscillate at one common frequency, the normal modes, for which the coupled equations collapse into a single one. Translation invariance suggests which patterns to try. Shifting a normal mode along the chain by one cell must give another normal mode with the same frequency. The simplest patterns that reproduce themselves under such a shift, up to a constant factor, are waves in which each atom's amplitude is its left neighbour's times a fixed phase factor $\ee^{\ii qa}$. This is more than a guess. The equations of motion look the same from every cell, so their solutions can always be chosen to pick up a fixed factor under a shift by one cell; the Born–von Kármán condition makes that factor a pure phase. (The same argument gives Bloch's theorem for electrons.)</p>
   <div class="eq">$$u_\ell(t)=\mathrm{Re}\big[\xi\,\ee^{\ii(q\ell a-\omega t)}\big]. \tag{A1.9}$$</div>
   <dl class="where">
     <dt>$q$</dt><dd><strong>wavevector</strong> (Å⁻¹): the phase advances by $qa$ from one atom to the next, and the wavelength is $2\pi/q$</dd>
@@ -153,7 +153,7 @@
       <div class="eq">$$\sum_{\kappa'}\tPhi_{\kappa\kappa'}(q)\,e_{\kappa'}=\omega^2e_\kappa,\qquad \tPhi_{\kappa\kappa'}(q)=\frac{\Phi_{\kappa\kappa'}(q)}{\sqrt{M_\kappa M_{\kappa'}}} . \tag{A1.14}$$</div>
       <span class="why">(A1.13) has a mass matrix on the left: a generalized eigenvalue problem. After the rescaling it is an ordinary eigenvalue problem for a Hermitian matrix, which guarantees real $\omega^2$ and orthonormal eigenvectors. The rescaling is the same on both sides, $1/\sqrt{M_\kappa}$, and that is what keeps $\tPhi$ Hermitian.</span></li>
     <li><p>Solve the $2\times2$ problem. With $A=\tPhi_{11}$, $C=\tPhi_{22}$ and $B=\tPhi_{12}$,</p>
-      <div class="eq">$$\omega^2_\pm(q)=\frac{A+C}2\pm\sqrt{\Big(\frac{A-C}2\Big)^2+|B|^2},\qquad A=\frac{K_1+K_2}{M_1},\quad C=\frac{K_1+K_2}{M_2},\quad |B|^2=\frac{K_1^2+K_2^2+2K_1K_2\cos qa}{M_1M_2}. \tag{A1.15}$$</div>
+      <div class="eq">$$\begin{gathered}\omega^2_\pm(q)=\frac{A+C}2\pm\sqrt{\Big(\frac{A-C}2\Big)^2+|B|^2},\\ A=\frac{K_1+K_2}{M_1},\qquad C=\frac{K_1+K_2}{M_2},\qquad |B|^2=\frac{K_1^2+K_2^2+2K_1K_2\cos qa}{M_1M_2}.\end{gathered} \tag{A1.15}$$</div>
       <span class="why">These are the two roots of $\det\big(\tPhi(q)-\omega^2\big)=0$, a quadratic equation in $\omega^2$. Two atoms per cell give two branches.</span></li>
   </ol>
   <p>The pair $(e_1,e_2)$ is the <strong>eigenvector</strong> of the mode. Its two complex numbers say how far each atom moves, in mass-weighted units, and with which phase. The physical amplitudes are $\xi_\kappa=e_\kappa/\sqrt{M_\kappa}$, so a heavier atom moves less for the same $|e_\kappa|$. The overall phase of an eigenvector is free; <a href="#viz-a1-diatomic">Figure A1.4</a> makes $e_1$ real and positive. Three limits carry most of the physics.</p>
@@ -187,7 +187,7 @@
     <li><p>Use translation invariance (A1.5). Label the partner's cell relative to cell $\ell$, $\bR_{\ell'}=\bR_\ell+\bR_{\ell''}$, so that $\Phi_{\ell\kappa\alpha,\ell'\kappa'\beta}=\Phi_{0\kappa\alpha,\ell''\kappa'\beta}$ and $\ee^{\ii\bq\cdot\bR_{\ell'}}=\ee^{\ii\bq\cdot\bR_\ell}\,\ee^{\ii\bq\cdot\bR_{\ell''}}$.</p>
       <span class="why">Summing over all cells $\ell'$ is the same as summing over all relative cells $\ell''$. The relabelling isolates the factor $\ee^{\ii\bq\cdot\bR_\ell}$, which also stands on the left.</span></li>
     <li><p>Cancel $\ee^{\ii\bq\cdot\bR_\ell}$ and divide by $\sqrt{M_\kappa}$. The cell index has disappeared:</p>
-      <div class="eq" id="a1-eq-dyn">$$\sum_{\kappa'\beta}\tPhi_{\kappa\alpha,\kappa'\beta}(\bq)\,e_{\kappa'\beta}=\omega^2\,e_{\kappa\alpha},\qquad \tPhi_{\kappa\alpha,\kappa'\beta}(\bq)=\frac{\Phi_{\kappa\alpha,\kappa'\beta}(\bq)}{\sqrt{M_\kappa M_{\kappa'}}},\qquad \Phi_{\kappa\alpha,\kappa'\beta}(\bq)=\sum_{\ell}\Phi_{0\kappa\alpha,\ell\kappa'\beta}\,\ee^{\ii\bq\cdot\bR_\ell} . \tag{A1.18}$$</div>
+      <div class="eq" id="a1-eq-dyn">$$\begin{gathered}\sum_{\kappa'\beta}\tPhi_{\kappa\alpha,\kappa'\beta}(\bq)\,e_{\kappa'\beta}=\omega^2\,e_{\kappa\alpha},\\ \tPhi_{\kappa\alpha,\kappa'\beta}(\bq)=\frac{\Phi_{\kappa\alpha,\kappa'\beta}(\bq)}{\sqrt{M_\kappa M_{\kappa'}}},\qquad \Phi_{\kappa\alpha,\kappa'\beta}(\bq)=\sum_{\ell}\Phi_{0\kappa\alpha,\ell\kappa'\beta}\,\ee^{\ii\bq\cdot\bR_\ell} .\end{gathered} \tag{A1.18}$$</div>
       <span class="why">Every cell gives the same equation. So the wave (A1.17) solves all $3N_\kappa N_\ell$ equations of motion exactly when the amplitudes $e_{\kappa\alpha}$ form an eigenvector of $\tPhi(\bq)$ with eigenvalue $\omega^2$.</span></li>
   </ol>
   <dl class="where">
@@ -213,11 +213,11 @@
   <p>Each follows from a property of the force constants, and each is used later.<sup class="fn"><a href="#fn-a1-props">9</a></sup></p>
   <ol class="steps">
     <li><p><strong>The dynamical matrix is Hermitian</strong>, $\tPhi_{\kappa'\beta,\kappa\alpha}(\bq)^*=\tPhi_{\kappa\alpha,\kappa'\beta}(\bq)$, so the squared frequencies $\omega^2_{\bq\nu}$ are real.</p>
-      <span class="why">Conjugate the definition (A1.18). Since $\Phi$ is real, $\Phi_{\kappa'\beta,\kappa\alpha}(\bq)^*=\sum_\ell\Phi_{0\kappa'\beta,\ell\kappa\alpha}\ee^{-\ii\bq\cdot\bR_\ell}$. Translation invariance moves both atoms by $-\bR_\ell$, giving $\Phi_{(-\ell)\kappa'\beta,0\kappa\alpha}$, and symmetry swaps them, giving $\Phi_{0\kappa\alpha,(-\ell)\kappa'\beta}$. Renaming $-\ell$ as $\ell$ returns $\Phi_{\kappa\alpha,\kappa'\beta}(\bq)$.</span></li>
+      <span class="why">Conjugate the definition (A1.18). Since <a class="sym" href="#gl-a1-Phi">$\Phi$</a> is real, $\Phi_{\kappa'\beta,\kappa\alpha}(\bq)^*=\sum_\ell\Phi_{0\kappa'\beta,\ell\kappa\alpha}\ee^{-\ii\bq\cdot\bR_\ell}$. Translation invariance moves both atoms by $-\bR_\ell$, giving $\Phi_{(-\ell)\kappa'\beta,0\kappa\alpha}$, and symmetry swaps them, giving $\Phi_{0\kappa\alpha,(-\ell)\kappa'\beta}$. Renaming $-\ell$ as $\ell$ returns $\Phi_{\kappa\alpha,\kappa'\beta}(\bq)$.</span></li>
     <li><p><strong>A stable crystal has $\omega^2_{\bq\nu}\ge0$.</strong></p>
       <span class="why">Equilibrium is a minimum of $U$, so the harmonic energy (A1.3) is never negative. A negative eigenvalue, an imaginary frequency, means the assumed structure is unstable and distorts along that mode.</span></li>
     <li><p><strong>The eigenvectors are orthonormal and complete:</strong></p>
-      <div class="eq">$$\sum_{\kappa\alpha}e^*_{\kappa\alpha,\nu}(\bq)\,e_{\kappa\alpha,\nu'}(\bq)=\delta_{\nu\nu'},\qquad \sum_{\nu}e_{\kappa\alpha,\nu}(\bq)\,e^*_{\kappa'\beta,\nu}(\bq)=\delta_{\kappa\kappa'}\delta_{\alpha\beta} . \tag{A1.20}$$</div>
+      <div class="eq">$$\begin{gathered}\sum_{\kappa\alpha}e^*_{\kappa\alpha,\nu}(\bq)\,e_{\kappa\alpha,\nu'}(\bq)=\delta_{\nu\nu'},\\ \sum_{\nu}e_{\kappa\alpha,\nu}(\bq)\,e^*_{\kappa'\beta,\nu}(\bq)=\delta_{\kappa\kappa'}\delta_{\alpha\beta} .\end{gathered} \tag{A1.20}$$</div>
       <span class="why">A Hermitian matrix has a full set of orthonormal eigenvectors. Arranged as columns they form a unitary matrix. The first relation says its columns are orthonormal, the second that its rows are, so any pattern of mass-weighted amplitudes in a cell is a combination of the modes.</span></li>
     <li><p><strong>Waves running in opposite directions have the same frequency</strong>, and the eigenvectors can be chosen so that</p>
       <div class="eq">$$\omega_{-\bq\nu}=\omega_{\bq\nu},\qquad e_{\kappa\alpha,\nu}(-\bq)=e^*_{\kappa\alpha,\nu}(\bq) . \tag{A1.21}$$</div>
@@ -225,7 +225,7 @@
   </ol>
 
   <h4 id="a1-acopt">Acoustic and optical branches</h4>
-  <p>At $\bq=0$ the phase factor is 1 in every cell, and (A1.18) reads $\Phi_{\kappa\alpha,\kappa'\beta}(0)=\sum_\ell\Phi_{0\kappa\alpha,\ell\kappa'\beta}$. Summed over $\kappa'$, this is the left side of the acoustic sum rule (A1.6), so</p>
+  <p>At $\bq=0$ the phase factor is 1 in every cell, and (A1.18) reads <a class="sym" href="#gl-a1-Phiq">$\Phi_{\kappa\alpha,\kappa'\beta}(0)$</a>$\,=\sum_\ell\Phi_{0\kappa\alpha,\ell\kappa'\beta}$. Summed over $\kappa'$, this is the left side of the acoustic sum rule (A1.6), so</p>
   <div class="eq">$$\sum_{\kappa'\beta}\Phi_{\kappa\alpha,\kappa'\beta}(0)\,d_\beta=0\quad\text{for any vector }\bd . \tag{A1.22}$$</div>
   <p>In words: moving all atoms by the same vector, $\boldsymbol\xi_\kappa=\bd$ for every $\kappa$, is a mode with $\omega=0$ at $\bq=0$, and its mass-weighted eigenvector is $\be_\kappa\propto\sqrt{M_\kappa}\,\bd$. There is one such mode for each of the three independent directions of $\bd$, so <strong>every three-dimensional crystal has three acoustic branches</strong>, whose frequencies vanish at $\bq=0$. A sheet whose atoms move only within its plane has two. The remaining $3N_\kappa-3$ branches are <strong>optical</strong>. By (A1.20) their eigenvectors are orthogonal to the acoustic ones, which at $\bq=0$ reads</p>
   <div class="eq">$$\sum_\kappa\sqrt{M_\kappa}\,\be_{\kappa\nu}(0)=0\quad\Longleftrightarrow\quad\sum_\kappa M_\kappa\,\boldsymbol\xi_{\kappa}=0 ,$$</div>
@@ -242,11 +242,11 @@
   <p>The normal modes are independent oscillators, so quantizing the crystal means quantizing each mode as a harmonic oscillator. One complication remains: because displacements are real, the complex amplitude of a mode at $\bq$ is tied to that of the mode at $-\bq$. The construction below takes care of it. In this subsection hats mark operators, because classical and quantum displacements appear side by side.</p>
 
   <h4 id="a1-normal">Normal coordinates</h4>
-  <p>Any displacement pattern, not only a single wave, can be written as a superposition of all modes, with one complex amplitude per mode:</p>
-  <div class="eq">$$u_{\ell\kappa\alpha}=\frac{1}{\sqrt{N_\ell M_\kappa}}\sum_{\bq\nu}\ee^{\ii\bq\cdot\bR_\ell}\,e_{\kappa\alpha,\nu}(\bq)\,Q_{\bq\nu},\qquad Q_{\bq\nu}=\frac{1}{\sqrt{N_\ell}}\sum_{\ell\kappa\alpha}\ee^{-\ii\bq\cdot\bR_\ell}\sqrt{M_\kappa}\,e^*_{\kappa\alpha,\nu}(\bq)\,u_{\ell\kappa\alpha} . \tag{A1.23}$$</div>
+  <p>Any displacement pattern <a class="sym" href="#gl-a1-u">$u_{\ell\kappa\alpha}$</a>, not only a single wave, can be written as a superposition of all modes, with one complex amplitude per mode:</p>
+  <div class="eq">$$\begin{gathered}u_{\ell\kappa\alpha}=\frac{1}{\sqrt{N_\ell M_\kappa}}\sum_{\bq\nu}\ee^{\ii\bq\cdot\bR_\ell}\,e_{\kappa\alpha,\nu}(\bq)\,Q_{\bq\nu},\\ Q_{\bq\nu}=\frac{1}{\sqrt{N_\ell}}\sum_{\ell\kappa\alpha}\ee^{-\ii\bq\cdot\bR_\ell}\sqrt{M_\kappa}\,e^*_{\kappa\alpha,\nu}(\bq)\,u_{\ell\kappa\alpha} .\end{gathered} \tag{A1.23}$$</div>
   <dl class="where">
     <dt>$Q_{\bq\nu}$</dt><dd><strong>normal coordinate</strong>: the complex amplitude of mode $\bq\nu$ in the pattern (units of $\sqrt{\text{mass}}\times$length)</dd>
-    <dt>$\sum_{\bq}$</dt><dd>sum over the $N_\ell$ wavevectors allowed by the Born–von Kármán condition</dd>
+    <dt>$\sum_{\bq}$</dt><dd>sum over the <a class="sym" href="#gl-a1-N">$N_\ell$</a> wavevectors allowed by the Born–von Kármán condition</dd>
   </dl>
   <details class="derivation"><summary>Derivation: why the two relations in (A1.23) invert each other</summary><div class="d-body">
     <ol class="steps">
@@ -274,23 +274,23 @@
 
   <h4 id="a1-phonons">Phonons</h4>
   <p>The momentum conjugate to $Q_{\bq\nu}$ is $P_{\bq\nu}=\dot Q^*_{\bq\nu}$.<sup class="fn"><a href="#fn-a1-conj">11</a></sup> Quantization imposes $[\hat Q_{\bq\nu},\hat P_{\bq'\nu'}]=\ii\hbar\,\delta_{\bq\bq'}\delta_{\nu\nu'}$, and the ladder operators of a single oscillator carry over with one change forced by $Q_{-\bq\nu}=Q^*_{\bq\nu}$:</p>
-  <div class="eq">$$\hat Q_{\bq\nu}=\sqrt{\frac{\hbar}{2\omega_{\bq\nu}}}\,\big(\hat a_{\bq\nu}+\hat a^\dagger_{-\bq\nu}\big),\qquad \big[\hat a_{\bq\nu},\hat a^\dagger_{\bq'\nu'}\big]=\delta_{\bq\bq'}\delta_{\nu\nu'} . \tag{A1.25}$$</div>
+  <div class="eq">$$\begin{gathered}\hat Q_{\bq\nu}=\sqrt{\frac{\hbar}{2\omega_{\bq\nu}}}\,\big(\hat a_{\bq\nu}+\hat a^\dagger_{-\bq\nu}\big),\\ \big[\hat a_{\bq\nu},\hat a^\dagger_{\bq'\nu'}\big]=\delta_{\bq\bq'}\delta_{\nu\nu'} .\end{gathered} \tag{A1.25}$$</div>
   <p class="why">The single oscillator has $\hat x\propto\hat a+\hat a^\dagger$. Here the Hermitian conjugate of $\hat Q_{\bq\nu}$ must be $\hat Q_{-\bq\nu}$, the operator form of $Q^*_{\bq\nu}=Q_{-\bq\nu}$, and $(\hat a_{\bq\nu}+\hat a^\dagger_{-\bq\nu})^\dagger=\hat a_{-\bq\nu}+\hat a^\dagger_{\bq\nu}$ is exactly the same combination at $-\bq$. With $\hat P_{\bq\nu}=\ii\sqrt{\hbar\omega_{\bq\nu}/2}\,\big(\hat a^\dagger_{\bq\nu}-\hat a_{-\bq\nu}\big)$ the commutator above is reproduced.</p>
   <p>The Hamiltonian (A1.24) becomes a sum of independent quantum oscillators:</p>
   <div class="eq">$$\hat H=\sum_{\bq\nu}\hbar\omega_{\bq\nu}\Big(\hat a^\dagger_{\bq\nu}\hat a_{\bq\nu}+\frac12\Big) . \tag{A1.26}$$</div>
-  <p>$\hat a^\dagger_{\bq\nu}$ creates a quantum of vibration with energy $\hbar\omega_{\bq\nu}$ and crystal momentum $\hbar\bq$, a <strong>phonon</strong>, and $\hat a_{\bq\nu}$ removes one. Phonons are bosons. The three acoustic modes at $\bq=0$ have $\omega=0$. They are translations of the whole crystal rather than oscillations, and they are left out of every sum over modes from here on.<sup class="fn"><a href="#fn-a1-quant">12</a></sup></p>
+  <p>$\hat a^\dagger_{\bq\nu}$ creates a quantum of vibration with energy <a class="sym" href="#gl-a1-omega">$\hbar\omega_{\bq\nu}$</a> and crystal momentum $\hbar\bq$, a <strong>phonon</strong>, and $\hat a_{\bq\nu}$ removes one. Phonons are bosons. The three acoustic modes at $\bq=0$ have $\omega=0$. They are translations of the whole crystal rather than oscillations, and they are left out of every sum over modes from here on.<sup class="fn"><a href="#fn-a1-quant">12</a></sup></p>
   <p>Inserting (A1.25) into (A1.23) gives the displacement of any atom as an operator:</p>
-  <div class="eq" id="a1-eq-u">$$\hat u_{\ell\kappa\alpha}=\sum_{\bq\nu}\left(\frac{\hbar}{2N_\ell M_\kappa\,\omega_{\bq\nu}}\right)^{1/2}e_{\kappa\alpha,\nu}(\bq)\,\ee^{\ii\bq\cdot\bR_\ell}\,\hat\phi_{\bq\nu},\qquad \hat\phi_{\bq\nu}=\hat a_{\bq\nu}+\hat a^\dagger_{-\bq\nu} . \tag{A1.27}$$</div>
+  <div class="eq" id="a1-eq-u">$$\begin{gathered}\hat u_{\ell\kappa\alpha}=\sum_{\bq\nu}\left(\frac{\hbar}{2N_\ell M_\kappa\,\omega_{\bq\nu}}\right)^{1/2}e_{\kappa\alpha,\nu}(\bq)\,\ee^{\ii\bq\cdot\bR_\ell}\,\hat\phi_{\bq\nu},\\ \hat\phi_{\bq\nu}=\hat a_{\bq\nu}+\hat a^\dagger_{-\bq\nu} .\end{gathered} \tag{A1.27}$$</div>
   <dl class="where">
     <dt>$\hat\phi_{\bq\nu}$</dt><dd><strong>phonon field</strong> of mode $\bq\nu$ (dimensionless): it removes a phonon $\bq\nu$ or creates a phonon $-\bq\nu$</dd>
     <dt>$\big(\hbar/2M_\kappa\omega_{\bq\nu}\big)^{1/2}$</dt><dd><strong>zero-point amplitude</strong> of atom $\kappa$ in mode $\bq\nu$ (Å)</dd>
   </dl>
-  <p>This is the formula of the section that the rest of the primer uses most. Each mode contributes a displacement wave whose size is the zero-point amplitude divided by $\sqrt{N_\ell}$, because one phonon is spread over the whole crystal. Both terms of $\hat\phi_{\bq\nu}$ hand crystal momentum $\hbar\bq$ to whatever the displacement acts on: absorbing a phonon of wavevector $\bq$ or emitting one of wavevector $-\bq$. When an electron feels the displacement, in Section A.2, $\hat\phi_{\bq\nu}$ is the operator that multiplies the electron–phonon coupling.</p>
+  <p>This is the formula of the section that the rest of the primer uses most. Each mode contributes a displacement wave whose size is the zero-point amplitude divided by $\sqrt{N_\ell}$ (<a class="sym" href="#gl-a1-N">$N_\ell$</a> is the number of cells), because one phonon is spread over the whole crystal. Both terms of $\hat\phi_{\bq\nu}$ hand crystal momentum $\hbar\bq$ to whatever the displacement acts on: absorbing a phonon of wavevector $\bq$ or emitting one of wavevector $-\bq$. When an electron feels the displacement, in Section A.2, $\hat\phi_{\bq\nu}$ is the operator that multiplies the electron–phonon coupling.</p>
 
   <h4 id="a1-msd">How far atoms move</h4>
   <p>Thermal averages of two displacements need one fact about the phonon field. In thermal equilibrium $\langle\hat\phi_{\bq\nu}\hat\phi_{\bq'\nu'}\rangle$ vanishes unless $\bq'=-\bq$ and $\nu'=\nu$, and then $\langle\hat\phi_{\bq\nu}\hat\phi_{-\bq\nu}\rangle=2n_{\bq\nu}+1$, where $n_{\bq\nu}=n_{\mathrm B}(\omega_{\bq\nu})$ is the Bose–Einstein occupation of the mode. Squaring (A1.27), averaging, and using (A1.21) gives the mean-square displacement of one atom along one direction:</p>
   <div class="eq">$$\big\langle\hat u^2_{\ell\kappa\alpha}\big\rangle=\frac1{N_\ell}\sum_{\bq\nu}\frac{\hbar}{2M_\kappa\omega_{\bq\nu}}\,\big|e_{\kappa\alpha,\nu}(\bq)\big|^2\,\coth\frac{\hbar\omega_{\bq\nu}}{2\kB T} . \tag{A1.28}$$</div>
-  <p>Each mode adds its squared zero-point amplitude, weighted by how strongly atom $\kappa$ takes part in it, $|e_{\kappa\alpha,\nu}|^2$, and by $\coth(\hbar\omega/2\kB T)=2n_{\mathrm B}+1$. That factor stays at 1 while $\kB T\ll\hbar\omega$ and grows as $2\kB T/\hbar\omega$ in the classical regime. In numbers, $\hbar/(2M\omega)=2.0901\ \text{Å}^2/\big(M[\text{amu}]\cdot\hbar\omega[\text{meV}]\big)$. An optical phonon of silicon (28.09 amu, about 64 meV) has a zero-point amplitude of 0.034 Å, and so does the boron atom in an optical phonon of hBN (10.81 amu, about 170 meV); the bond lengths are 2.35 and 1.45 Å (literature values, illustrative). <a href="#viz-a1-zeropoint">Figure A1.6</a> explores single modes.</p>
+  <p>Each mode adds its squared zero-point amplitude, weighted by how strongly atom $\kappa$ takes part in it, <a class="sym" href="#gl-a1-e">$|e_{\kappa\alpha,\nu}|^2$</a>, and by $\coth(\hbar\omega/2\kB T)=2n_{\mathrm B}+1$. That factor stays at 1 while $\kB T\ll\hbar\omega$ and grows as $2\kB T/\hbar\omega$ in the classical regime. In numbers, $\hbar/(2M\omega)=2.0901\ \text{Å}^2/\big(M[\text{amu}]\cdot\hbar\omega[\text{meV}]\big)$. An optical phonon of silicon (28.09 amu, about 64 meV) has a zero-point amplitude of 0.034 Å, and so does the boron atom in an optical phonon of hBN (10.81 amu, about 170 meV); the bond lengths are 2.35 and 1.45 Å (literature values, illustrative). <a href="#viz-a1-zeropoint">Figure A1.6</a> explores single modes.</p>
 
   <!-- include: A01/fig-zeropoint.html -->
 
@@ -312,7 +312,7 @@
   </div></details>
 
   <div class="notes">
-    <h4>Notes: the notation of the sources</h4>
+    <h4>Notes</h4>
     <ol class="footnotes">
       <li id="fn-a1-units">No charges or fields appear in this section, so its equations read the same in Gaussian and SI units.</li>
       <li id="fn-a1-bo">Giustino calls $U$ the total potential energy of the Born–von Kármán supercell with the nuclei clamped, and writes its harmonic expansion as his Eq. (12). The EPP manuscript freezes the electrons and builds the energy from a pair potential $U(\bR_{ia}-\bR_{jb})$ between atoms (its §1, Eq. 3).</li>

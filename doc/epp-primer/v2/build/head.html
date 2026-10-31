@@ -269,7 +269,8 @@ dl.where { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap
 dl.where::before { content: "where"; grid-column: 1 / -1; font-family: var(--font-ui); font-weight: 600; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
 dl.where dt { white-space: nowrap; } dl.where dd { margin: 0; }
 ol.steps { counter-reset: step; list-style: none; padding-left: 0; margin: 14px 0 18px; }
-ol.steps > li { counter-increment: step; position: relative; padding-left: 2.3em; margin-bottom: 14px; max-width: 68ch; }
+ol.steps > li { counter-increment: step; position: relative; padding-left: 2.3em; margin-bottom: 14px; max-width: none; }
+ol.steps > li > p, ol.steps > li > .why { max-width: 68ch; }
 ol.steps > li::before { content: counter(step); position: absolute; left: 0; top: 0.15em; width: 1.55em; height: 1.55em; border-radius: 50%; background: var(--surface-2); color: var(--accent); font-family: var(--font-mono); font-size: 0.78rem; display: grid; place-items: center; }
 ol.steps > li > .eq { margin: 4px 0 6px; }
 .why { display: block; font-size: 0.92rem; color: var(--fg-2); margin: 2px 0 0; padding-left: 10px; border-left: 2px solid color-mix(in srgb, var(--c-4) 55%, transparent); }
