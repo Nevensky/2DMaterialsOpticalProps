@@ -1,0 +1,369 @@
+  <figure class="viz" id="viz-a1-zeropoint">
+    <p class="viz-title">How far does an atom move? Zero-point and thermal amplitude of one mode <span class="tag">interactive</span></p>
+    <div class="viz-grid two">
+      <div class="a1-zeropoint-pa"><div class="a1-zeropoint-h" style="font-family:var(--font-ui);font-size:0.82rem;font-weight:600;line-height:1.35;color:var(--fg-2);margin:0 0 4px">(a) Where the atom is: the distribution P(u)</div></div>
+      <div class="a1-zeropoint-pb"><div class="a1-zeropoint-h" style="font-family:var(--font-ui);font-size:0.82rem;font-weight:600;line-height:1.35;color:var(--fg-2);margin:0 0 4px">(b) How the width σ grows with temperature</div></div>
+    </div>
+    <div class="a1-zeropoint-h" style="font-family:var(--font-ui);font-size:0.82rem;font-weight:600;line-height:1.35;color:var(--fg-2);margin:14px 0 4px">(c) To scale: the atom and a neighbour one bond length apart</div>
+    <div class="a1-zeropoint-pc"></div>
+    <div class="a1-zeropoint-ctrls"></div>
+    <div class="a1-zeropoint-ro"></div>
+    <figcaption><strong>Model.</strong> One atom of mass $M$ in one mode of frequency $\omega$ (an Einstein oscillator), that is a single term of (A1.28) with $|e|^2=1$ and $N_\ell=1$. Its displacement $u$ along one direction has a Gaussian distribution, $P(u)=\ee^{-u^2/2\sigma^2}/\sqrt{2\pi\sigma^2}$, whose width is the root-mean-square displacement $\sigma=\langle\hat u^2\rangle^{1/2}$. In terms of the zero-point amplitude $\sigma_0=(\hbar/2M\omega)^{1/2}$ and the Bose–Einstein occupation $n_{\mathrm B}=1/(\ee^{\hbar\omega/\kB T}-1)$, $\sigma^2=\sigma_0^2\,(2n_{\mathrm B}+1)=\sigma_0^2\coth(\hbar\omega/2\kB T)$. For $\kB T\gg\hbar\omega$ this approaches the classical value $\sigma^2=\kB T/M\omega^2$, which equals $\sigma_0^2$ at $\kB T=\hbar\omega/2$. Units: $\hbar/2M\omega$ in Å² is $2.0901/(M\,\hbar\omega)$ with $M$ in amu and $\hbar\omega$ in meV, and $\kB=0.0861733$ meV/K.
+      <strong>(a)</strong> $P(u)$ at the chosen $T$ (amber, filled) and at $T=0$ (grey line). The filled dots and the bar between them mark $u=\pm\sigma(T)$, the hollow dots $u=\pm\sigma_0$; at these points a Gaussian has dropped to $\ee^{-1/2}\approx0.61$ of its peak. The horizontal range follows $\sigma(T)$ and spans roughly $\pm4\sigma$.
+      <strong>(b)</strong> $\sigma(T)$ from 0 to 1000 K (amber). The grey dotted line is the zero-point plateau $\sigma_0$ and the grey dashed line the classical limit $(\kB T/M\omega^2)^{1/2}$. They meet at $\kB T=\hbar\omega/2$, marked by a thin vertical line and a hollow dot when this falls below 1000 K. The large dot is the chosen $T$; click or drag in the panel to move it (on a touch screen, drag the vertical marker).
+      <strong>(c)</strong> To scale at the chosen $T$: the atom (violet) and a neighbour one bond length away (teal), each drawn as a cloud that shows where its nucleus is found, a Gaussian whose rms extent along every direction is $\sigma(T)$. Small dots mark the equilibrium positions. The neighbour is given the same $\sigma$. The box on the right magnifies the atom by the factor written in it, ×20 unless the ring would not fit; from ×5 up, a frame around the atom marks the region shown. In the box the amber ring has radius $\sigma(T)$ and the grey dotted ring radius $\sigma_0$.
+      <strong>Presets</strong> (literature values, illustrative): Si, optical mode, 28.09 amu, 64 meV, bond 2.35 Å; C in graphene, optical, 12.01 amu, 196 meV, bond 1.42 Å; B in hBN, optical, 10.81 amu, 170 meV, bond 1.45 Å; Pb, a typical lead phonon, 207.2 amu, 8 meV, bond 3.50 Å; H in PdH, optical, 1.008 amu, 60 meV, bond 2.0 Å. Moving $M$ or $\hbar\omega$ switches to custom and keeps the last bond length.
+      <strong>What to notice.</strong> Light atoms in stiff modes (H, C, B) are dominated by zero-point motion even at room temperature, where $\kB T&lt;\hbar\omega/2$, while a heavy atom in a soft mode (Pb) follows the classical line. In every case $\sigma$ stays a few percent of the bond length (hydrogen reaches 10 to 16 %), which is why the harmonic expansion and a coupling linear in $u$ work.</figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a1-zeropoint');
+  if (!fig || !window.EPP) return;
+  // Units: hbar/(2 M omega) = L2 / (M[amu] * hbar omega[meV]) in Å^2; kB in meV/K
+  const L2 = 2.0901, KB = 0.0861733, TMAX = 1000;
+  const PRESETS = {
+    si: { M: 28.09, hw: 64, bond: 2.35 },
+    c: { M: 12.01, hw: 196, bond: 1.42 },
+    b: { M: 10.81, hw: 170, bond: 1.45 },
+    pb: { M: 207.2, hw: 8, bond: 3.5 },
+    h: { M: 1.008, hw: 60, bond: 2.0 }
+  };
+  const cothT = (hw, T) => (T > 0 ? 1 / Math.tanh(hw / (2 * KB * T)) : 1); // = 2 n_B + 1
+  const nBose = (hw, T) => (T > 0 ? 1 / Math.expm1(hw / (KB * T)) : 0);
+  const sig0 = (M, hw) => Math.sqrt(L2 / (M * hw)); // zero-point amplitude (Å)
+  const sigT = (M, hw, T) => sig0(M, hw) * Math.sqrt(cothT(hw, T)); // rms displacement at T (Å)
+  const sigCl = (M, hw, T) => sig0(M, hw) * Math.sqrt(2 * KB * Math.max(0, T) / hw); // sqrt(kB T / M omega^2)
+  const gauss = (s) => (u) => Math.exp(-u * u / (2 * s * s)) / (Math.sqrt(2 * Math.PI) * s);
+  function niceCeil(v) {
+    if (!(v > 0) || !isFinite(v)) return 1;
+    const mag = Math.pow(10, Math.floor(Math.log10(v))), r = v / mag;
+    const st = [1, 1.2, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10].find(s => s >= r - 1e-9) || 10;
+    return st * mag;
+  }
+  // sticky autoscale: rescale only when the content leaves the frame or shrinks a lot
+  const sticky = (top, need) => ((need > top * 0.97 || need < top * 0.42) ? niceCeil(need * 1.15) : top);
+  const niceFine = (v) => { const mag = Math.pow(10, Math.floor(Math.log10(v))), r = v / mag; return ([1, 1.2, 1.4, 1.6, 1.8, 2, 2.5, 3, 3.5, 4, 4.5, 5, 6, 7, 8, 9, 10].find(q => q >= r - 1e-9) || 10) * mag; };
+
+  // ---- direct labels that never sit on a curve, a vertical line, a marker or another label (canvas px) ----
+  function clashes(plot, b, avoid) {
+    for (const v of avoid.vx) { const X = plot.X(v); if (X >= b[0] && X <= b[2]) return true; }
+    for (const q of avoid.boxes) if (b[0] < q[2] && b[2] > q[0] && b[1] < q[3] && b[3] > q[1]) return true;
+    for (const f of avoid.fns) {
+      let prev = null;
+      for (let px = b[0]; px <= b[2] + 0.01; px += 1.5) {
+        const yv = f(plot.invX(px));
+        if (!isFinite(yv)) { prev = null; continue; }
+        const py = plot.Y(yv);
+        if (py >= b[1] && py <= b[3]) return true;
+        if (prev !== null && Math.min(prev, py) < b[1] && Math.max(prev, py) > b[3]) return true; // steep crossing
+        prev = py;
+      }
+    }
+    return false;
+  }
+  function placeText(plot, text, size, cands, avoid) {
+    const m = plot.m, W = plot.cv.w, H = plot.cv.h;
+    if (!W || !H) return null;
+    const tw = EPP.measureRich(plot.ctx, text, size), th = size * 1.4;
+    for (const c of cands) {
+      if (!isFinite(c.y)) continue;
+      const X = plot.X(c.x) + (c.dx || 0), Y = plot.Y(c.y) + (c.dy || 0);
+      const x0 = c.align === 'right' ? X - tw : (c.align === 'center' ? X - tw / 2 : X), x1 = x0 + tw;
+      const y0 = Y - th / 2, y1 = Y + th / 2;
+      if (x0 < m.l + 3 || x1 > W - m.r - 3 || y0 < m.t + 2 || y1 > H - m.b - 2) continue;
+      if (clashes(plot, [x0 - 3, y0 - 2, x1 + 3, y1 + 2], avoid)) continue;
+      avoid.boxes.push([x0 - 7, y0, x1 + 7, y1]); // keep neighbouring labels visibly apart
+      return { type: 'text', x: c.x, y: c.y, dx: c.dx || 0, dy: c.dy || 0, align: c.align || 'left', text, color: c.color, size };
+    }
+    return null;
+  }
+  const markBox = (plot, avoid, x, y, r) => { const X = plot.X(x), Y = plot.Y(y); avoid.boxes.push([X - r, Y - r, X + r, Y + r]); };
+
+  // ---- panels ----
+  const pA = new EPP.Plot(fig.querySelector('.a1-zeropoint-pa'), {
+    xlabel: 'displacement u (Å)', ylabel: 'P(u) (Å^{−1})', xlim: [-0.2, 0.2], ylim: [0, 15], xname: 'u',
+    hoverX: v => EPP.fix(v, 3) + ' Å', hoverY: v => EPP.fmt(v, 3) + ' Å⁻¹', yfmt: v => String(Number(v.toPrecision(3))),
+    ariaLabel: 'Gaussian probability density of the displacement of the atom at the chosen temperature and at zero temperature'
+  });
+  const pB = new EPP.Plot(fig.querySelector('.a1-zeropoint-pb'), {
+    xlabel: 'temperature T (K)', ylabel: 'rms displacement σ (Å)', xlim: [0, TMAX], ylim: [0, 0.06], xname: 'T',
+    hoverX: v => EPP.fix(v, 0) + ' K', hoverY: v => EPP.fmt(v, 3) + ' Å', yfmt: v => String(Number(v.toPrecision(3))),
+    ariaLabel: 'Root-mean-square displacement against temperature, with the zero-point plateau and the classical limit'
+  });
+  const cv = EPP.canvas(fig.querySelector('.a1-zeropoint-pc'), { aspect: 0.27, minHeight: 196, maxHeight: 214 });
+  cv.canvas.setAttribute('role', 'img');
+  const ro = EPP.readout(fig.querySelector('.a1-zeropoint-ro'));
+  const Ts = EPP.linspace(0, TMAX, 201);
+  let cur = null, bondLen = PRESETS.si.bond, lastPreset = 'si';
+  let xlA = 0.2, ytA = 15, ytB = 0.06;
+
+  function compute(s) {
+    const M = s.M, hw = s.hw, T = s.T;
+    return { M, hw, T, bond: bondLen, s0: sig0(M, hw), sT: sigT(M, hw, T), nb: nBose(hw, T), x: KB * T / hw, Tstar: hw / (2 * KB) };
+  }
+  const tLab = (T) => `T = ${T.toFixed(0)} K`;
+
+  // (a) distribution of the displacement
+  function drawA() {
+    if (!cur || !pA.cv.w) return;
+    const { s0, sT, T } = cur;
+    if (!(xlA >= 3.5 * sT && xlA <= 5.5 * sT)) xlA = niceFine(4.2 * sT); // half range stays within 3.5 to 5.5 sigma(T)
+    ytA = sticky(ytA, 1 / (Math.sqrt(2 * Math.PI) * s0));
+    pA.setLimits({ xlim: [-xlA, xlA], ylim: [0, ytA] });
+    const us = EPP.linspace(-xlA, xlA, 241), fT = gauss(sT), f0 = gauss(s0);
+    const yT = us.map(fT), y0 = us.map(f0), hT = fT(sT), h0 = f0(s0);
+    const avoid = { fns: [fT, f0], vx: [], boxes: [] };
+    [sT, -sT].forEach(x => markBox(pA, avoid, x, hT, 5));
+    [s0, -s0].forEach(x => markBox(pA, avoid, x, h0, 5));
+    avoid.boxes.push([pA.X(-sT), pA.Y(hT) - 1.5, pA.X(sT), pA.Y(hT) + 1.5]); // the bar between the dots
+    const lab = placeText(pA, '±σ(T)', 11.5, [
+      { x: sT, y: hT, dx: 9, dy: -4, align: 'left' }, { x: -sT, y: hT, dx: -9, dy: -4, align: 'right' },
+      { x: sT, y: hT, dx: 10, dy: -13, align: 'left' }, { x: -sT, y: hT, dx: -10, dy: -13, align: 'right' },
+      { x: 0, y: hT, dy: -11, align: 'center' }, { x: 0, y: hT, dy: 11, align: 'center' },
+      { x: sT, y: hT, dx: 14, dy: -22, align: 'left' }, { x: -sT, y: hT, dx: -14, dy: -22, align: 'right' },
+      { x: 1.6 * sT, y: fT(1.6 * sT), dx: 6, dy: -14, align: 'left' }
+    ].map(c => Object.assign(c, { color: 'phonon' })), avoid);
+    pA.draw([
+      { type: 'fill', x: us, y1: yT, color: 'phonon', alpha: 0.26, label: 'P(u) at ' + tLab(T) },
+      { type: 'line', x: us, y: y0, color: 'muted', width: 1.6, label: 'P(u) at T = 0' },
+      { type: 'line', x: us, y: yT, color: 'phonon', width: 2, label: 'P(u) at ' + tLab(T), nolegend: true },
+      { type: 'segments', segs: [[-sT, hT, sT, hT]], color: 'phonon', width: 1.4 },
+      { type: 'points', x: [-s0, s0], y: [h0, h0], color: 'muted', r: 3.5, hollow: true },
+      { type: 'points', x: [-sT, sT], y: [hT, hT], color: 'phonon', r: 4 },
+      lab
+    ]);
+  }
+
+  // (b) sigma(T): quantum curve, zero-point plateau, classical limit
+  function drawB() {
+    if (!cur || !pB.cv.w) return;
+    const { M, hw, T, s0, sT, Tstar } = cur;
+    const f = t => sigT(M, hw, t), fc = t => sigCl(M, hw, t);
+    const sq = Ts.map(f), sc = Ts.map(fc);
+    ytB = sticky(ytB, sq[sq.length - 1]);
+    pB.setLimits({ ylim: [0, ytB] });
+    const showStar = Tstar < TMAX * 0.99;
+    const avoid = { fns: [f, fc, () => s0], vx: showStar ? [T, Tstar] : [T], boxes: [] };
+    markBox(pB, avoid, T, sT, 6);
+    if (showStar) markBox(pB, avoid, Tstar, s0, 5);
+    const withC = (arr, color) => arr.map(c => Object.assign(c, { color }));
+    const labs = [];
+    if (showStar) {
+      const cands = () => withC([
+        { x: Tstar, y: ytB, dx: 5, dy: 11, align: 'left' }, { x: Tstar, y: ytB, dx: -5, dy: 11, align: 'right' },
+        { x: Tstar, y: ytB * 0.78, dx: 5, align: 'left' }, { x: Tstar, y: ytB * 0.78, dx: -5, align: 'right' },
+        { x: Tstar, y: ytB * 0.5, dx: 5, align: 'left' }, { x: Tstar, y: ytB * 0.5, dx: -5, align: 'right' },
+        { x: Tstar, y: ytB * 0.2, dx: 5, align: 'left' }, { x: Tstar, y: ytB * 0.2, dx: -5, align: 'right' }
+      ], 'muted');
+      // this label is required: if the marker of the chosen T blocks every slot, let the text cross that thin line
+      labs.push(placeText(pB, 'k_BT = ħω/2', 11, cands(), avoid) ||
+        placeText(pB, 'k_BT = ħω/2', 11, cands(), Object.assign({}, avoid, { vx: [Tstar] })));
+    }
+    labs.push(placeText(pB, 'σ_0', 11.5, withC([
+      { x: TMAX * 0.985, y: s0, dy: 12, align: 'right' }, { x: TMAX * 0.985, y: s0, dy: -12, align: 'right' },
+      { x: TMAX * 0.015, y: s0, dy: -12, align: 'left' }, { x: TMAX * 0.015, y: s0, dy: 12, align: 'left' },
+      { x: TMAX * 0.5, y: s0, dy: 12, align: 'center' }, { x: TMAX * 0.5, y: s0, dy: -12, align: 'center' },
+      { x: TMAX * 0.75, y: s0, dy: 12, align: 'center' }, { x: TMAX * 0.25, y: s0, dy: -12, align: 'center' }
+    ], 'muted'), avoid));
+    const cl = [];
+    [880, 700, 520, 340].forEach(t => cl.push({ x: t, y: fc(t), dx: 4, dy: 13, align: 'left' }));
+    [880, 700, 520].forEach(t => cl.push({ x: t, y: fc(t), dx: -4, dy: -13, align: 'right' }));
+    labs.push(placeText(pB, 'classical', 11, withC(cl, 'muted'), avoid));
+    labs.push(placeText(pB, 'σ(T)', 11.5, withC([
+      { x: TMAX * 0.985, y: f(TMAX * 0.985), dy: -14, align: 'right' }, { x: 640, y: f(640), dy: -17, align: 'center' },
+      { x: 820, y: f(820), dy: -17, align: 'center' }, { x: 460, y: f(460), dy: -17, align: 'center' },
+      { x: 160, y: f(160), dy: -14, align: 'left' }, { x: 40, y: f(40), dy: -14, align: 'left' }
+    ], 'phonon'), avoid));
+    pB.draw([
+      { type: 'line', x: [], y: [], color: 'phonon', width: 2.2, label: 'σ(T)', hover: false }, // legend entry first
+      { type: 'line', x: [0, TMAX], y: [s0, s0], color: 'muted', dash: [2, 3], width: 1.5, label: 'zero-point plateau σ_0', hover: false },
+      { type: 'line', x: Ts, y: sc, color: 'muted', dash: [6, 4], width: 1.5, label: 'classical √(k_BT/Mω^2)', hover: false },
+      showStar ? { type: 'vline', at: Tstar, color: 'muted', dash: [3, 3], width: 1 } : null,
+      showStar ? { type: 'points', x: [Tstar], y: [s0], color: 'muted', r: 3.5, hollow: true } : null,
+      { type: 'vline', at: T, color: 'muted', dash: [], width: 1 },
+      { type: 'line', x: Ts, y: sq, color: 'phonon', width: 2.2, label: 'σ(T)', nolegend: true },
+      { type: 'points', x: [T], y: [sT], color: 'ink', r: 4.5 },
+      ...labs
+    ]);
+  }
+
+  // (c) true-scale picture with a magnified inset
+  function cloud(ctx, x, y, sp, name, a0) {
+    const c = EPP.rgb(name), rgba = (a) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+    if (sp < 0.8) { ctx.fillStyle = rgba(a0); ctx.beginPath(); ctx.arc(x, y, 1.8, 0, 2 * Math.PI); ctx.fill(); return; }
+    const r = 3 * sp, g = ctx.createRadialGradient(x, y, 0, x, y, r);
+    for (let k = 0; k <= 12; k++) { const q = 3 * k / 12; g.addColorStop(k / 12, rgba((a0 * Math.exp(-q * q / 2)).toFixed(4))); }
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, 2 * Math.PI); ctx.fill();
+  }
+  function drawC() {
+    cv.clear();
+    if (!cur || cv.w < 60) return;
+    const ctx = cv.ctx, w = cv.w, h = cv.h, fUI = EPP.css('--font-ui');
+    const { sT, s0, bond, T } = cur;
+    const narrow = w < 560, pad = 8;
+    const insW = Math.round(narrow ? EPP.clamp(w * 0.5, 140, 190) : Math.min(270, w * 0.34));
+    const insH = h - 2 * pad, bx = w - pad - insW, by = pad;
+    const mainL = pad, mainR = bx - pad, mainW = mainR - mainL;
+    const bondPx = Math.round(Math.min(narrow ? 0.62 * mainW : 0.38 * mainW, 190));
+    const s = bondPx / bond; // px per Å in the true-scale view
+    const sp = sT * s;
+    const yA = Math.round(h * 0.47), xm = (mainL + mainR) / 2, xN = xm - bondPx / 2, xAt = xm + bondPx / 2;
+    // magnification: the largest of 50, 20, 10, 5, 2, 1 at which the sigma(T) ring and its label fit the box
+    const fz = 11.5, twT = EPP.measureRich(ctx, 'σ(T)', fz, fUI), tw0 = EPP.measureRich(ctx, 'σ_0', fz, fUI);
+    const Rmax = Math.max(6, Math.min(insH / 2 - 12, (insW / 2 - 12 - Math.max(twT, tw0)) / 0.82));
+    const mag = [50, 20, 10, 5, 2, 1].find(k => k * sp <= Rmax) || 1;
+    const R = mag * sp, R0 = mag * s0 * s, ringT = R <= Rmax + 0.5, ring0 = R0 <= Rmax + 0.5;
+    const cx = bx + insW / 2, cy = by + insH / 2 + 5;
+    const showWin = mag >= 5; // frame the magnified region only when it is small next to the drawing
+    const wx0 = xAt + (bx - cx) / mag, wx1 = xAt + (bx + insW - cx) / mag;
+    const wy0 = yA + (by - cy) / mag, wy1 = yA + (by + insH - cy) / mag;
+    const cFg = EPP.css('--fg'), cFg2 = EPP.css('--fg-2'), cMuted = EPP.color('muted'), cRule = EPP.css('--rule');
+    const plate = EPP.alpha('surface', 0.82);
+    // text on a plate of the background colour, legible over a wide cloud
+    const label = (text, x, y, size, color, align) => {
+      const tw = EPP.measureRich(ctx, text, size, fUI);
+      const x0 = EPP.clamp(align === 'center' ? x - tw / 2 : (align === 'right' ? x - tw : x), 3, Math.max(3, bx - 6 - tw)); // stay inside the drawing
+      ctx.fillStyle = plate; ctx.fillRect(x0 - 2, y - size * 0.92, tw + 4, size * 1.3);
+      ctx.fillStyle = color; EPP.drawRich(ctx, text, x0, y, { size, font: fUI, align: 'left' });
+    };
+    ctx.textBaseline = 'alphabetic';
+    // true-scale view; a cloud wider than the bond is drawn fainter (its density is spread thin)
+    const aMain = 0.8 * EPP.clamp(Math.pow(0.4 * bondPx / Math.max(sp, 1e-9), 2), 0.15, 1);
+    ctx.save(); ctx.beginPath(); ctx.rect(0, 0, bx - 3, h); ctx.clip();
+    cloud(ctx, xN, yA, sp, 'c4', aMain); cloud(ctx, xAt, yA, sp, 'c5', aMain);
+    ctx.fillStyle = cFg;
+    [xN, xAt].forEach(x => { ctx.beginPath(); ctx.arc(x, yA, 1.4, 0, 2 * Math.PI); ctx.fill(); });
+    ctx.restore();
+    if (showWin) {
+      ctx.strokeStyle = cRule; ctx.lineWidth = 1; ctx.beginPath();
+      ctx.moveTo(wx1, wy0); ctx.lineTo(bx, by); ctx.moveTo(wx1, wy1); ctx.lineTo(bx, by + insH); ctx.stroke();
+      ctx.strokeStyle = cMuted; ctx.strokeRect(Math.round(wx0) + 0.5, Math.round(wy0) + 0.5, Math.max(2, Math.round(wx1 - wx0)), Math.max(2, Math.round(wy1 - wy0)));
+    }
+    // labels of the true-scale view
+    label(tLab(T), mainL, 15, 11, cMuted, 'left');
+    const lift = Math.max(16, 2.2 * sp + 8);
+    label('neighbour', xN, EPP.clamp(yA - lift, 32, yA - 12), 11.5, EPP.textColor('c4'), 'center');
+    label('atom', xAt, EPP.clamp(yA - Math.max(lift, showWin ? yA - wy0 + 8 : 0), 32, yA - 12), 11.5, EPP.textColor('c5'), 'center');
+    const yD = Math.min(h - 26, yA + Math.max(30, 2.2 * sp + 6, showWin ? wy1 - yA + 8 : 0));
+    ctx.strokeStyle = cMuted; ctx.lineWidth = 1; ctx.beginPath();
+    ctx.moveTo(xN, yD - 4); ctx.lineTo(xN, yD + 4); ctx.moveTo(xAt, yD - 4); ctx.lineTo(xAt, yD + 4);
+    ctx.moveTo(xN, yD); ctx.lineTo(xAt, yD); ctx.stroke();
+    label(`bond ${bond.toFixed(2)} Å`, xm, yD + 15, 11.5, cFg2, 'center');
+    // inset: the atom magnified
+    ctx.save(); ctx.beginPath();
+    if (ctx.roundRect) ctx.roundRect(bx + 0.5, by + 0.5, insW - 1, insH - 1, 6); else ctx.rect(bx + 0.5, by + 0.5, insW - 1, insH - 1);
+    ctx.fillStyle = EPP.color('surface2'); ctx.fill(); ctx.clip();
+    cloud(ctx, cx, cy, R, 'c5', 0.5 * EPP.clamp(Math.pow(Rmax / Math.max(R, 1e-9), 2), 0.25, 1));
+    if (ringT) { ctx.lineWidth = 1.8; ctx.strokeStyle = EPP.color('phonon'); ctx.beginPath(); ctx.arc(cx, cy, Math.max(R, 0.5), 0, 2 * Math.PI); ctx.stroke(); }
+    if (ring0) { ctx.lineWidth = 1.4; ctx.strokeStyle = cMuted; ctx.setLineDash([2, 3]); ctx.beginPath(); ctx.arc(cx, cy, Math.max(R0, 0.5), 0, 2 * Math.PI); ctx.stroke(); ctx.setLineDash([]); }
+    ctx.strokeStyle = cFg; ctx.lineWidth = 1; ctx.beginPath();
+    ctx.moveTo(cx - 4, cy); ctx.lineTo(cx + 4, cy); ctx.moveTo(cx, cy - 4); ctx.lineTo(cx, cy + 4); ctx.stroke();
+    const ca = Math.cos(35 * Math.PI / 180), sa = Math.sin(35 * Math.PI / 180);
+    ctx.textBaseline = 'middle';
+    if (ringT) { ctx.fillStyle = EPP.textColor('phonon'); EPP.drawRich(ctx, 'σ(T)', cx + (R + 5) * ca, cy - (R + 5) * sa - 3, { size: fz, font: fUI }); }
+    if (ring0) {
+      // sigma_0 label outside the outer ring, with a leader to the dotted ring when the rings are apart
+      const Ro = ringT ? R : R0;
+      if (Ro - R0 > 7) {
+        ctx.strokeStyle = cMuted; ctx.lineWidth = 1; ctx.beginPath();
+        ctx.moveTo(cx - (R0 + 2) * ca, cy + (R0 + 2) * sa); ctx.lineTo(cx - (Ro + 2) * ca, cy + (Ro + 2) * sa); ctx.stroke();
+      }
+      ctx.fillStyle = cMuted;
+      EPP.drawRich(ctx, 'σ_0', cx - (Ro + 5) * ca, cy + (Ro + 5) * sa + 4, { size: fz, font: fUI, align: 'right' });
+    }
+    // scale bar of the inset
+    const sZ = s * mag, Lmax = Math.min(64, insW * 0.32);
+    let Lb = 0.001;
+    [0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5].forEach(c => { if (c * sZ <= Lmax) Lb = c; });
+    const Lpx = Lb * sZ, xb1 = bx + insW - 10, xb0 = xb1 - Lpx, yb = by + insH - 10;
+    ctx.strokeStyle = cFg2; ctx.lineWidth = 1.5; ctx.beginPath();
+    ctx.moveTo(xb0, yb); ctx.lineTo(xb1, yb); ctx.moveTo(xb0, yb - 3); ctx.lineTo(xb0, yb + 3); ctx.moveTo(xb1, yb - 3); ctx.lineTo(xb1, yb + 3); ctx.stroke();
+    ctx.textBaseline = 'alphabetic'; ctx.fillStyle = cFg2;
+    EPP.drawRich(ctx, `${Lb} Å`, xb1, yb - 6, { size: 11, font: fUI, align: 'right' });
+    ctx.restore();
+    ctx.strokeStyle = cRule; ctx.lineWidth = 1; ctx.beginPath();
+    if (ctx.roundRect) ctx.roundRect(bx + 0.5, by + 0.5, insW - 1, insH - 1, 6); else ctx.rect(bx + 0.5, by + 0.5, insW - 1, insH - 1);
+    ctx.stroke();
+    ctx.fillStyle = cFg; ctx.textBaseline = 'alphabetic';
+    EPP.drawRich(ctx, `magnified ×${mag}`, bx + 8, by + 16, { size: 11.5, font: fUI });
+    if (!ringT) {
+      // the sigma(T) ring is wider than the box even without magnification: say so
+      const note = ring0 ? ['the σ(T) ring lies', 'outside this box'] : ['both rings lie', 'outside this box'];
+      ctx.fillStyle = cMuted;
+      note.forEach((t, k) => EPP.drawRich(ctx, t, bx + 8, by + 32 + 14 * k, { size: 11, font: fUI }));
+    }
+    cv.canvas.setAttribute('aria-label', `To-scale drawing of the atom and a neighbour ${bond.toFixed(2)} Å apart at ${T.toFixed(0)} K: ` +
+      `each nucleus is spread over a cloud of rms extent ${sT.toFixed(3)} Å, ${(100 * sT / bond).toFixed(1)} percent of the bond; the inset magnifies the atom ${mag} times`);
+  }
+
+  const fA = v => (v < 0.1 ? v.toFixed(4) : v < 10 ? v.toFixed(3) : v.toFixed(1));
+  function sci(v) {
+    let e = Math.floor(Math.log10(v)), m = v / Math.pow(10, e);
+    if (m >= 9.95) { m = 1; e += 1; }
+    return `${m.toFixed(1)} × 10<sup>${String(e).replace('-', '−')}</sup>`;
+  }
+  function readouts() {
+    const { s0, sT, bond, nb, x, T } = cur, pct = 100 * sT / bond;
+    ro.set({
+      'σ_0 = √(ħ/2Mω)': `${fA(s0)} Å`,
+      'σ(T)': `${fA(sT)} Å`,
+      'σ(T) / bond': `${pct < 10 ? pct.toFixed(2) : pct.toFixed(1)} % of ${bond.toFixed(2)} Å${pct > 20 ? ', too large for a harmonic model' : ''}`,
+      'n_B at T': T <= 0 ? '0' : !(nb > 0) ? '&lt; 10<sup>−300</sup>' : nb < 1e-3 ? sci(nb) : EPP.fmt(nb, 3),
+      'k_BT / ħω': T <= 0 ? '0' : EPP.fmt(x, 3)
+    });
+  }
+  function drawAll() {
+    if (!cur) return;
+    const t0 = performance.now();
+    drawA(); drawB(); drawC(); readouts();
+    fig.dataset.redrawMs = (performance.now() - t0).toFixed(2);
+  }
+
+  function onChange(s) {
+    if (s.preset !== lastPreset && PRESETS[s.preset]) {
+      const P = PRESETS[s.preset];
+      ui.set('M', P.M, true); ui.set('hw', P.hw, true);
+      bondLen = P.bond; lastPreset = s.preset;
+    } else if (PRESETS[s.preset]) {
+      const P = PRESETS[s.preset];
+      if (Math.abs(s.M - P.M) > 1e-6 * P.M || Math.abs(s.hw - P.hw) > 1e-6 * P.hw) { ui.set('preset', 'custom', true); lastPreset = 'custom'; }
+    } else lastPreset = s.preset;
+    cur = compute(ui.state);
+    drawAll();
+  }
+  const ui = EPP.controls(fig.querySelector('.a1-zeropoint-ctrls'), [
+    { key: 'preset', type: 'select', label: 'preset', value: 'si',
+      options: [['si', 'Si, optical mode'], ['c', 'C in graphene, optical'], ['b', 'B in hBN, optical'], ['pb', 'Pb'], ['h', 'H in PdH, optical'], ['custom', 'custom']] },
+    { key: 'M', type: 'range', label: 'mass M', min: 1, max: 250, value: 28.09, log: true, step: 'any',
+      fmt: v => (v < 10 ? v.toFixed(3) : v < 100 ? v.toFixed(2) : v.toFixed(1)) + ' amu' },
+    { key: 'hw', type: 'range', label: 'mode energy ħω', min: 2, max: 400, value: 64, log: true, step: 'any',
+      fmt: v => (v < 10 ? v.toFixed(2) : v < 100 ? v.toFixed(1) : v.toFixed(0)) + ' meV' },
+    { key: 'T', type: 'range', label: 'temperature T', min: 0, max: TMAX, step: 5, value: 300, fmt: v => v.toFixed(0) + ' K' }
+  ], onChange);
+  cur = compute(ui.state);
+
+  // drag in (b) to set T; on touch only a drag that starts on the T marker (10 px) moves it, so the page still scrolls
+  const cvsB = pB.cv.canvas;
+  let dragB = false;
+  const pxOf = (e) => { const r = cvsB.getBoundingClientRect(); return { px: e.clientX - r.left, py: e.clientY - r.top }; };
+  const inFrame = (p, tol) => { const m = pB.m; return p.px >= m.l - tol && p.px <= pB.cv.w - m.r + tol && p.py >= m.t - tol && p.py <= pB.cv.h - m.b + tol; };
+  const setT = (px) => ui.set('T', EPP.clamp(Math.round(pB.invX(px) / 5) * 5, 0, TMAX));
+  cvsB.addEventListener('pointerdown', (e) => {
+    const p = pxOf(e);
+    if (!inFrame(p, 10)) return;
+    if (e.pointerType === 'touch' && Math.abs(p.px - pB.X(ui.state.T)) > 10) return;
+    dragB = true; try { cvsB.setPointerCapture(e.pointerId); } catch (_) {}
+    e.preventDefault(); setT(p.px);
+  });
+  cvsB.addEventListener('pointermove', (e) => {
+    const p = pxOf(e);
+    if (dragB) { setT(p.px); return; }
+    if (e.pointerType !== 'touch') cvsB.style.cursor = inFrame(p, 0) ? 'ew-resize' : '';
+  });
+  const endB = () => { dragB = false; };
+  cvsB.addEventListener('pointerup', endB); cvsB.addEventListener('pointercancel', endB);
+
+  // label placement depends on the canvas size: recompute on resize and theme change
+  pA.cv.onResize(drawA); pB.cv.onResize(drawB); cv.onResize(drawC);
+})();
+</script>

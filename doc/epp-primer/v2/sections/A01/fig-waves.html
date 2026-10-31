@@ -1,0 +1,453 @@
+  <figure class="viz" id="viz-a1-waves">
+    <p class="viz-title">Why waves: the monatomic chain <span class="tag">interactive</span></p>
+    <p class="a1-waves-hd" style="margin:0 0 6px;font-family:var(--font-ui);font-size:0.86rem;font-weight:600;color:var(--fg-2)">(a) The chain: every atom carries the same wave, shifted in phase</p>
+    <div class="a1-waves-chain"></div>
+    <div class="legend a1-waves-leg1"></div>
+    <div class="viz-grid two" style="margin-top:14px">
+      <div>
+        <p class="a1-waves-hd" style="margin:0 0 6px;font-family:var(--font-ui);font-size:0.86rem;font-weight:600;color:var(--fg-2)">(b) Complex plane: atoms $\ell-1,\ \ell,\ \ell+1$</p>
+        <div class="a1-waves-phasor"></div>
+      </div>
+      <div>
+        <p class="a1-waves-hd" style="margin:0 0 6px;font-family:var(--font-ui);font-size:0.86rem;font-weight:600;color:var(--fg-2)">(c) Dispersion and the allowed wavevectors</p>
+        <div class="a1-waves-disp"></div>
+        <div class="legend a1-waves-leg2"></div>
+      </div>
+    </div>
+    <div class="a1-waves-ctrls"></div>
+    <div class="a1-waves-ro"></div>
+    <div class="a1-waves-ro2"></div>
+    <figcaption><strong>Model.</strong> A toy, carbon-like monatomic chain: atoms of mass $M=12.01$ amu at spacing $a=1.42$ Å, joined to their nearest neighbours by springs of stiffness $K=20$ eV/Å². The mass and the spacing are those of carbon and of the C–C bond in graphene (literature values, illustrative); the spring is a model value. The atoms move along the chain in the lattice wave $u_\ell(t)=\mathrm{Re}\big[\xi\,\ee^{\ii(q\ell a-\omega t)}\big]$ of (A1.9), with $\hbar\omega(q)=2\hbar\sqrt{K/M}\,|\sin(qa/2)|$, at most 166.9 meV at $q=\pi/a$. Displacements are exaggerated, and time is counted in periods $2\pi/\omega$. <strong>(a)</strong> Top row: the real motion, along the chain. Below it the same displacements are drawn as vertical amber stems for visibility, with each atom as a dot at the tip: atom $\ell$ amber, its neighbours $\ell\pm1$ black (white on the dark theme), the other atoms violet. The amber curve is the continuous wave $\mathrm{Re}\big[\xi\,\ee^{\ii(qx-\omega t)}\big]$, with $x$ the position along the chain, through the stem tips. With aliasing on, the dashed teal curve is the wave with $q+2\pi/a$; it passes through the same tips. <strong>(b)</strong> The complex displacements $u_{\ell-1}$, $u_\ell$, $u_{\ell+1}$ as arrows, in units of $|\xi|$; the circle has radius $|\xi|$. The central atom is $\ell=0$ and $\xi$ is real, so $u_\ell=\xi\,\ee^{-\ii\omega t}$ and the arrows turn clockwise as time runs. Grey dashed arrows: the stretches of the two springs, $u_{\ell+1}-u_\ell$ and $u_{\ell-1}-u_\ell$, drawn from the tip of $u_\ell$. Thick amber arrow: their sum, the force $F_\ell/K=(u_{\ell+1}-u_\ell)+(u_{\ell-1}-u_\ell)$, which equals $-2(1-\cos qa)\,u_\ell$. Dotted line: the physical displacement $\mathrm{Re}\,u_\ell$, which is the stem height of atom $\ell$ in (a). Small dots on the circle mark atoms $\ell+2$ to $\ell+N_\ell-1$, each turned by a further $qa$, and the ring marks atom $\ell+N_\ell$: the Born–von Kármán condition $u_{\ell+N_\ell}=u_\ell$ holds when the ring sits on the tip of $u_\ell$. Drag the tip of $u_{\ell+1}$ or $u_{\ell-1}$ to change $qa$, or the tip of $u_\ell$ to change the time. <strong>(c)</strong> $\hbar\omega(q)$ from (A1.10). Hollow dots: the $N_\ell$ wavevectors $q=2\pi s/(N_\ell a)$ of (A1.11) in the first Brillouin zone $-\pi/a\lt q\le\pi/a$. Filled dot: the current $q$; click or drag in the plot to move it. With aliasing on, the axis runs to $\pm3\pi/a$, the lighter curves repeat the first Brillouin zone (shaded), and the teal dot marks $q+2\pi/a$ at the same frequency. <strong>What to notice.</strong> The force arrow is always antiparallel to the displacement arrow, so each atom feels a single spring of stiffness $K_{\mathrm{eff}}(q)=2K(1-\cos qa)$, which is why waves are normal modes. At $q=0$ all arrows coincide, nothing stretches and $\omega=0$; at $q=\pi/a$ the neighbours point opposite to $u_\ell$ and $K_{\mathrm{eff}}=4K$. The waves $q$ and $q+2\pi/a$ move every atom identically.</figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a1-waves');
+  if (!fig || !window.EPP) return;
+  // Toy, carbon-like monatomic chain. K in eV/Å^2, M in amu: hbar*omega [meV] = HW * sqrt(K/M)
+  const M = 12.01, K = 20, ALAT = 1.42, HW = 64.654;
+  const WMAX = 2 * HW * Math.sqrt(K / M);              // 166.9 meV at q = π/a
+  const TPER = 3.2, TAU = 2 * Math.PI;                 // one period of the wave lasts TPER seconds on screen
+  const hwOf = (x) => WMAX * Math.abs(Math.sin(0.5 * Math.PI * x));   // x = qa/π
+  const pmod = (v, n) => ((v % n) + n) % n;
+  const fold = (x) => 1 - pmod(1 - x, 2);              // qa/π folded into (−1, 1]
+  const wrapPi = (v) => v - TAU * Math.ceil((v - Math.PI) / TAU);   // angle into (−π, π]
+  const mfix = (v, d) => EPP.fix(Math.abs(v) < 0.5 * Math.pow(10, -d) ? 0 : v, d);   // never "−0.00"
+  // nearest Born–von Kármán index s, with q = 2πs/(N a) kept in (−π/a, π/a]
+  function snapK(x, N) {
+    let k = Math.round(x * N / 2);
+    while (2 * k / N > 1 + 1e-9) k -= N;
+    while (2 * k / N <= -1 + 1e-9) k += N;
+    return k;
+  }
+  const sel = (s) => fig.querySelector(s);
+
+  // ---------- panels ----------
+  const cvC = EPP.canvas(sel('.a1-waves-chain'), { height: 250 });
+  cvC.canvas.setAttribute('role', 'img');
+  cvC.canvas.setAttribute('aria-label', 'Animated monatomic chain: the longitudinal motion of the atoms on springs, and the same displacements drawn as vertical stems with the continuous wave through their tips');
+  const cvP = EPP.canvas(sel('.a1-waves-phasor'), { aspect: 1, minHeight: 260, maxHeight: 440 });
+  cvP.canvas.setAttribute('role', 'img');
+  cvP.canvas.setAttribute('aria-label', 'Complex plane with the rotating displacement arrows of atoms l minus 1, l and l plus 1, the two spring stretches and the net force on atom l, which points opposite to its displacement');
+  const TK1 = [{ v: -1, label: '−π/a' }, { v: -0.5, label: '−π/2a' }, { v: 0, label: '0' }, { v: 0.5, label: 'π/2a' }, { v: 1, label: 'π/a' }];
+  const TK3 = [-3, -2, -1, 0, 1, 2, 3].map(k => ({ v: k, label: k === 0 ? '0' : `${k < 0 ? '−' : ''}${Math.abs(k) === 1 ? '' : Math.abs(k)}π/a` }));
+  const pD = new EPP.Plot(sel('.a1-waves-disp'), {
+    xlabel: 'wavevector q', ylabel: 'ħω (meV)', xlim: [-1, 1], ylim: [0, 180], xname: 'qa/π', xticks: TK1,
+    yticks: [0, 30, 60, 90, 120, 150, 180], aspect: 0.95, minHeight: 240, maxHeight: 420, legend: false,
+    hoverX: (v) => mfix(v, 2), hoverY: (v) => EPP.fix(v, 1) + ' meV',
+    ariaLabel: 'Phonon dispersion of the monatomic chain with the wavevectors allowed by the Born–von Kármán condition and the current wavevector'
+  });
+  const legA = sel('.a1-waves-leg1'), legC = sel('.a1-waves-leg2');
+  const ro = EPP.readout(sel('.a1-waves-ro')), ro2 = EPP.readout(sel('.a1-waves-ro2'));
+  const X1 = EPP.linspace(-1, 1, 241), Y1 = X1.map(hwOf);
+  const XL = EPP.linspace(-3, -1, 241), YL = XL.map(hwOf), XR = EPP.linspace(1, 3, 241), YR = XR.map(hwOf);
+
+  let cur = null, anim = null, tau = 0;   // tau = ωt/2π, advanced only while ω > 0
+  const phase = () => (cur && cur.hw < 1e-9 ? 0 : TAU * tau);   // ωt; at q = 0, ω = 0 and ωt = 0 for all t
+  const snapInfo = { on: false, N: 12 };
+
+  function compute(s) {
+    let qn = s.q, sIdx = s.q * s.N / 2;
+    if (s.snap) { const k = snapK(s.q, s.N); qn = 2 * k / s.N; sIdx = k; }
+    const qa = Math.PI * qn, F = 2 * (1 - Math.cos(qa));
+    return { qn, qa, F, Keff: K * F, hw: hwOf(qn), N: s.N, sIdx, snap: !!s.snap, wave: !!s.wave, alias: !!s.alias };
+  }
+
+  // ---------- (c) dispersion ----------
+  function drawDisp() {
+    if (!cur) return;
+    const al = cur.alias, N = cur.N, qn = cur.qn, hw = cur.hw;
+    pD.opt.xticks = al ? TK3 : TK1;
+    const L = [];
+    if (al) {
+      L.push({ type: 'band', x0: -1, x1: 1, color: 'phonon', alpha: 0.08, text: 'first Brillouin zone' });
+      L.push({ type: 'vline', at: -1, color: 'muted', width: 1, dash: [4, 3] }, { type: 'vline', at: 1, color: 'muted', width: 1, dash: [4, 3] });
+      L.push({ type: 'line', x: XL, y: YL, color: 'phonon', opacity: 0.38, label: 'ħω(q)' }, { type: 'line', x: XR, y: YR, color: 'phonon', opacity: 0.38, label: 'ħω(q)' });
+    }
+    L.push({ type: 'line', x: X1, y: Y1, color: 'phonon', label: 'ħω(q)' });
+    const bx = [], by = [], ex = [], ey = [];
+    for (let k = -Math.floor((N - 1) / 2); k <= Math.floor(N / 2); k++) {
+      const x = 2 * k / N; bx.push(x); by.push(hwOf(x));
+      if (al) for (const m of [-2, 2]) { const xe = x + m; if (xe >= -3 - 1e-9 && xe <= 3 + 1e-9) { ex.push(xe); ey.push(hwOf(xe)); } }
+    }
+    L.push({ type: 'points', x: bx, y: by, color: 'phonon', r: 3, hollow: true });
+    if (al) L.push({ type: 'points', x: ex, y: ey, color: 'phonon', r: 3, hollow: true, opacity: 0.45 });
+    L.push({ type: 'segments', segs: [[qn, 0, qn, hw]], color: 'muted', width: 1, dash: [2, 3] });
+    if (al) L.push({ type: 'segments', segs: [[qn, hw, qn + 2, hw]], color: 'c4', width: 1.3, dash: [2, 3] });
+    L.push({ type: 'points', x: [qn], y: [hw], color: 'ink', r: 5 });
+    if (al) L.push({ type: 'points', x: [qn + 2], y: [hw], color: 'c4', r: 5 });
+    // labels on the concave side of the curve: upper left on the rising flank, upper right on the falling one
+    const side = (x) => (x >= 0 ? -1 : 1);
+    L.push({ type: 'text', x: qn, y: hw, dx: 9 * side(qn), dy: -9, text: 'q', color: 'ink', align: side(qn) < 0 ? 'right' : 'left', size: 13, italic: true });
+    if (al) L.push({ type: 'text', x: qn + 2, y: hw, dx: 9 * side(qn), dy: -9, text: 'q + 2π/a', color: 'c4', align: side(qn) < 0 ? 'right' : 'left', size: 12 });
+    pD.draw(L, { xlim: al ? [-3, 3] : [-1, 1] });
+  }
+
+  // ---------- legends (HTML, colours read at render time) ----------
+  const swLine = (c, dash) => `<svg width="24" height="10" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><line x1="1" y1="5" x2="23" y2="5" stroke="${EPP.color(c)}" stroke-width="2.2"${dash ? ' stroke-dasharray="5 3"' : ''}/></svg>`;
+  const swDot = (c, hollow) => `<svg width="12" height="12" aria-hidden="true" style="vertical-align:middle;margin-right:5px"><circle cx="6" cy="6" r="4" fill="${hollow ? 'none' : EPP.color(c)}" stroke="${EPP.color(c)}" stroke-width="1.6"/></svg>`;
+  const item = (sw, txt) => `<span class="item">${sw}${EPP.richHTML(txt)}</span>`;
+  function legends() {
+    if (!cur) return;
+    const a = [];
+    if (cur.wave) a.push(item(swLine('phonon'), 'continuous wave Re[ξe^{i(qx−ωt)}]'));
+    if (cur.alias) a.push(item(swLine('c4', true), 'wave with q + 2π/a: same tips'));
+    legA.innerHTML = a.join(''); legA.hidden = !a.length;
+    const c = [item(swLine('phonon'), 'ħω(q)'), item(swDot('phonon', true), `allowed q, N_ℓ = ${cur.N}`), item(swDot('ink'), 'current q')];
+    if (cur.alias) c.push(item(swDot('c4'), 'q + 2π/a, same ħω'));
+    legC.innerHTML = c.join('');
+  }
+
+  // ---------- readouts ----------
+  function readouts() {
+    if (!cur) return;
+    const { qa, qn, hw, N, sIdx } = cur, c = Math.cos(qa), s = Math.sin(qa);
+    const cplx = (re, im) => `${mfix(re, 3)} ${im < -5e-4 ? '−' : '+'} ${EPP.fix(Math.abs(im), 3)}i`;
+    const lam = Math.abs(qa) > 1e-12 ? TAU * ALAT / Math.abs(qa) : Infinity;
+    const sR = Math.round(sIdx), onGrid = Math.abs(sIdx - sR) < 1e-6;
+    ro.set({
+      'qa': `${mfix(qa, 3)} rad = ${mfix(qn, 2)}π`,
+      'K_{eff}(q) = 2K(1 − cos qa)': `${EPP.fix(cur.Keff, 2)} eV/Å² = ${EPP.fix(cur.F, 3)} K`,
+      'ħω(q)': `${EPP.fix(hw, 1)} meV`,
+      'wavelength 2π/|q|': isFinite(lam) ? `${EPP.fix(lam, 2)} Å = ${EPP.fix(lam / ALAT, 2)} a` : '∞ (q = 0)'
+    });
+    const o2 = { 'u_{ℓ+1} + u_{ℓ−1} = 2 cos(qa) u_ℓ, at u_ℓ = 1': `(${cplx(c, s)}) + (${cplx(c, -s)}) = ${mfix(2 * c, 3)}` };
+    o2['BvK index s = N_ℓqa/2π'] = onGrid ? `${String(sR).replace('-', '−')}: allowed` : `${mfix(sIdx, 2)}: not an integer, not allowed`;
+    if (cur.alias) o2['wavelength of q + 2π/a'] = `${EPP.fix(TAU * ALAT / Math.abs(qa + TAU), 2)} Å`;
+    ro2.set(o2);
+  }
+
+  // ---------- drawing helpers ----------
+  function spring(ctx, xa, xb, y, col) {
+    const Ls = xb - xa;
+    ctx.strokeStyle = col; ctx.lineWidth = Math.min(1.4, Math.max(1, Ls / 7)); ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    ctx.beginPath();
+    if (Ls < 6) { ctx.moveTo(xa, y); ctx.lineTo(xb, y); ctx.stroke(); return; }
+    // coil count varies continuously with length; sin(πs) tapers both ends
+    const lead = 0.12 * Ls, body = Ls - 2 * lead, coils = EPP.clamp(body / 6.5, 1, 4), amp = 3.2, ns = Math.max(12, Math.ceil(body));
+    ctx.moveTo(xa, y); ctx.lineTo(xa + lead, y);
+    for (let j = 1; j <= ns; j++) { const s = j / ns; ctx.lineTo(xa + lead + body * s, y - amp * Math.sin(TAU * coils * s) * Math.sin(Math.PI * s)); }
+    ctx.lineTo(xb, y); ctx.stroke();
+  }
+  function arrow(ctx, x0, y0, x1, y1, col, lw, head, dash) {
+    const Lr = Math.hypot(x1 - x0, y1 - y0); if (Lr < 0.5) return;
+    const a = Math.atan2(y1 - y0, x1 - x0), hs = Math.min(head, 0.65 * Lr);
+    ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = lw; ctx.lineCap = 'butt';
+    ctx.setLineDash(dash || []);
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1 - 0.8 * hs * Math.cos(a), y1 - 0.8 * hs * Math.sin(a)); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(x1, y1);
+    ctx.lineTo(x1 - hs * Math.cos(a - 0.4), y1 - hs * Math.sin(a - 0.4)); ctx.lineTo(x1 - hs * Math.cos(a + 0.4), y1 - hs * Math.sin(a + 0.4));
+    ctx.closePath(); ctx.fill();
+  }
+  // label boxes: no overlap with other labels or with the arrows
+  const overlap = (a, b, pad) => a.x0 - pad < b.x1 && b.x0 - pad < a.x1 && a.y0 - pad < b.y1 && b.y0 - pad < a.y1;
+  function segHits(s, b, pad) {   // Liang–Barsky: does segment s cross box b?
+    const xmin = b.x0 - pad, xmax = b.x1 + pad, ymin = b.y0 - pad, ymax = b.y1 + pad, dx = s[2] - s[0], dy = s[3] - s[1];
+    const p = [-dx, dx, -dy, dy], q = [s[0] - xmin, xmax - s[0], s[1] - ymin, ymax - s[1]];
+    let t0 = 0, t1 = 1;
+    for (let i = 0; i < 4; i++) {
+      if (p[i] === 0) { if (q[i] < 0) return false; continue; }
+      const r = q[i] / p[i];
+      if (p[i] < 0) { if (r > t1) return false; if (r > t0) t0 = r; } else { if (r < t0) return false; if (r < t1) t1 = r; }
+    }
+    return true;
+  }
+
+  // ---------- (a) chain ----------
+  function drawChain() {
+    const ctx = cvC.ctx, w = cvC.w, h = cvC.h;
+    cvC.clear();
+    if (!cur || w < 40) return;
+    const fUI = EPP.css('--font-ui'), fTx = EPP.css('--font-text');
+    const narrow = w < 520, n = narrow ? 9 : 13, nh = (n - 1) / 2;
+    const padX = narrow ? 20 : 30, dx = (w - 2 * padX) / (n - 1), xc = w / 2;
+    const X = (l) => xc + l * dx;
+    const qa = cur.qa, ph = phase();
+    const re = (l) => Math.cos(qa * l - ph);            // Re u_ℓ / |ξ| at x = ℓa
+    const colOf = (l) => (l === 0 ? 'phonon' : (Math.abs(l) === 1 ? 'ink' : 'c5'));
+    const cMuted = EPP.color('muted'), cRule = EPP.color('rule');
+    // header row: what is drawn, and the time
+    ctx.textBaseline = 'alphabetic'; ctx.fillStyle = cMuted;
+    const head = narrow ? 'real motion, along the chain' : 'real motion: the atoms move along the chain (exaggerated)';
+    EPP.drawRich(ctx, head, 6, 14, { size: 11, font: fUI });
+    const tag = cur.hw < 1e-9 ? 'ω = 0: rigid translation, no oscillation' : `time ωt/2π = ${(Math.floor(pmod(tau, 1) * 100) / 100).toFixed(2)}`;
+    const tagRow = 6 + EPP.measureRich(ctx, head, 11, fUI) + 14 + EPP.measureRich(ctx, tag, 11, fUI) > w - 6 ? 28 : 14;
+    ctx.fillStyle = EPP.color('fg2');
+    EPP.drawRich(ctx, tag, w - 6, tagRow, { size: 11, font: fUI, align: 'right' });
+    // longitudinal strip: atoms on springs, displaced along the chain
+    const yL = 50, rA = narrow ? 5 : 6, AL = Math.min(0.2 * dx, 11);
+    const at = [];
+    for (let l = -nh - 1; l <= nh + 1; l++) at.push({ l, x: X(l) + AL * re(l) });
+    ctx.save(); ctx.beginPath(); ctx.rect(0, 0, w, h); ctx.clip();
+    ctx.strokeStyle = cRule; ctx.lineWidth = 1;
+    for (const A of at) { ctx.beginPath(); ctx.moveTo(X(A.l), yL - rA - 8); ctx.lineTo(X(A.l), yL - rA - 3); ctx.stroke(); }
+    for (let i = 0; i < at.length - 1; i++) spring(ctx, at[i].x + rA, at[i + 1].x - rA, yL, cMuted);
+    for (const A of at) { ctx.fillStyle = EPP.color(colOf(A.l)); ctx.beginPath(); ctx.arc(A.x, yL, rA, 0, TAU); ctx.fill(); }
+    ctx.restore();
+    // labels of the three atoms of panel (b)
+    ctx.textBaseline = 'alphabetic';
+    const labs = [[-1, 'ℓ−1'], [0, 'ℓ'], [1, 'ℓ+1']];
+    for (const [l, s] of labs) { ctx.fillStyle = EPP.textColor(colOf(l)); EPP.drawRich(ctx, s, X(l), yL + 26, { size: 13, font: fTx, italic: true, align: 'center' }); }
+    // transverse stems
+    const A = 46, y0 = 158;
+    ctx.fillStyle = cMuted;
+    EPP.drawRich(ctx, narrow ? 'the same displacements as stems' : 'the same displacements, drawn as transverse stems', 6, y0 - A - 12, { size: 11, font: fUI });
+    ctx.strokeStyle = cRule; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(4, y0); ctx.lineTo(w - 4, y0); ctx.stroke();
+    ctx.strokeStyle = EPP.alpha('muted', 0.7);
+    ctx.beginPath(); for (let l = -nh; l <= nh; l++) { ctx.moveTo(X(l), y0 - 3); ctx.lineTo(X(l), y0 + 3); } ctx.stroke();
+    const curve = (k, step) => { ctx.beginPath(); for (let x = 0; x <= w + 0.1; x += step) { const s = (x - xc) / dx, y = y0 - A * Math.cos(k * s - ph); if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y); } ctx.stroke(); };
+    ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    if (cur.wave) { ctx.strokeStyle = EPP.alpha('phonon', 0.75); ctx.lineWidth = 1.7; ctx.setLineDash([]); curve(qa, 2); }
+    if (cur.alias) { ctx.strokeStyle = EPP.color('c4'); ctx.lineWidth = 1.6; ctx.setLineDash([5, 4]); curve(qa + TAU, 1.5); ctx.setLineDash([]); }
+    for (let l = -nh; l <= nh; l++) {
+      const x = X(l), y = y0 - A * re(l), c = colOf(l), hi = Math.abs(l) <= 1;
+      // stems are displacements (amber); the dot at the tip is the atom (violet, or the highlight colour)
+      ctx.strokeStyle = hi ? EPP.color(c) : EPP.alpha('phonon', 0.55); ctx.lineWidth = l === 0 ? 2.6 : (hi ? 2.1 : 1.6); ctx.lineCap = 'butt';
+      ctx.beginPath(); ctx.moveTo(x, y0); ctx.lineTo(x, y); ctx.stroke();
+      ctx.fillStyle = EPP.color(c); ctx.beginPath(); ctx.arc(x, y, l === 0 ? 5.5 : (hi ? 4.8 : 4), 0, TAU); ctx.fill();
+    }
+    // lattice spacing
+    const yB = h - 26;
+    ctx.strokeStyle = cMuted; ctx.lineWidth = 1; ctx.beginPath();
+    ctx.moveTo(X(0), yB - 4); ctx.lineTo(X(0), yB); ctx.lineTo(X(1), yB); ctx.lineTo(X(1), yB - 4); ctx.stroke();
+    ctx.fillStyle = cMuted; EPP.drawRich(ctx, 'a', X(0.5), yB + 15, { size: 13, font: fTx, italic: true, align: 'center' });
+  }
+
+  // ---------- (b) phasors ----------
+  let tips = [], geo = null, drag = null;
+  function drawPhasor() {
+    const ctx = cvP.ctx, w = cvP.w, h = cvP.h;
+    cvP.clear();
+    if (!cur || w < 40) return;
+    const fUI = EPP.css('--font-ui'), fTx = EPP.css('--font-text');
+    const cx = w / 2, cy = h / 2, half = Math.min(w, h) / 2 - 22;
+    const qa = cur.qa, F = cur.F, N = cur.N;
+    const R = Math.max(1.55, F + 0.62), U = half / R;   // px per |ξ|; zooms out as the force grows
+    const th = -phase();                                // angle of u_ℓ (ℓ = 0, ξ real)
+    const P = (r, a) => [cx + U * r * Math.cos(a), cy - U * r * Math.sin(a)];
+    const t0 = P(1, th), tp = P(1, th + qa), tm = P(1, th - qa), tf = P(F, th + Math.PI);
+    geo = { cx, cy };
+    tips = [{ k: 1, x: tp[0], y: tp[1] }, { k: -1, x: tm[0], y: tm[1] }, { k: 0, x: t0[0], y: t0[1] }];
+    const cMuted = EPP.color('muted'), cInk = EPP.color('ink'), cPh = EPP.color('phonon');
+    const boxes = [], segs = [], labs = [];
+    const bounds = { x0: 2, x1: w - 2, y0: 2, y1: h - 2 };
+    const absq = Math.abs(qa), near0 = absq < 0.1, nearPi = Math.PI - absq < 0.1;
+    // obstacles for the labels
+    segs.push([cx, cy, t0[0], t0[1]], [cx, cy, tp[0], tp[1]], [cx, cy, tm[0], tm[1]], [cx, cy, tf[0], tf[1]]);
+    segs.push([t0[0], t0[1], tp[0], tp[1]], [t0[0], t0[1], tm[0], tm[1]], [t0[0], t0[1], t0[0], cy]);
+    const meas = (sg, size) => sg.reduce((s, p) => s + EPP.measureRich(ctx, p[0], size, p[2] || fTx, { italic: p[1] }), 0);
+    function put(sg, color, size, cands, optional) {
+      const wL = meas(sg, size) + 2, hL = Math.round(size * 1.3);
+      let first = null;
+      for (const c of cands(wL, hL)) {
+        const b = { x0: c[0] - wL / 2, x1: c[0] + wL / 2, y0: c[1] - hL / 2, y1: c[1] + hL / 2 };
+        if (b.x0 < bounds.x0 || b.x1 > bounds.x1 || b.y0 < bounds.y0 || b.y1 > bounds.y1) continue;
+        if (!first) first = b;
+        if (boxes.some(o => overlap(b, o, 2)) || segs.some(s => segHits(s, b, 1.5))) continue;
+        boxes.push(b); labs.push({ sg, color, size, b }); return b;
+      }
+      if (optional || !first) return null;
+      boxes.push(first); labs.push({ sg, color, size, b: first }); return first;
+    }
+    // candidate centres beyond an arrow tip, sorted by distance and sideways shift
+    const tipC = (x, y, ang) => (wL, hL) => {
+      const ux = Math.cos(ang), uy = -Math.sin(ang), ext = 0.5 * (wL * Math.abs(ux) + hL * Math.abs(uy)), out = [];
+      for (const r of [8, 14, 21, 30, 42]) for (const p of [0, 10, -10, 20, -20, 32, -32]) out.push([r + 0.9 * Math.abs(p), x + (r + ext) * ux - p * uy, y + (r + ext) * uy + p * ux]);
+      const ring = [];
+      for (const r of [9, 17, 27]) for (let k = 0; k < 12; k++) { const c = Math.cos(k * Math.PI / 6), s = Math.sin(k * Math.PI / 6), e = 0.5 * (wL * Math.abs(c) + hL * Math.abs(s)); ring.push([x + (r + e) * c, y - (r + e) * s]); }
+      return out.sort((a, b) => a[0] - b[0]).map(c => [c[1], c[2]]).concat(ring);
+    };
+    const fixedBox = (x0, y0, wB, hB) => boxes.push({ x0, y0, x1: x0 + wB, y1: y0 + hB });
+
+    // axes, ticks, circle, guide line along u_ℓ
+    ctx.setLineDash([]); ctx.lineWidth = 1; ctx.strokeStyle = EPP.alpha('muted', 0.6);
+    ctx.beginPath(); ctx.moveTo(cx - half - 8, cy); ctx.lineTo(cx + half + 8, cy); ctx.moveTo(cx, cy + half + 8); ctx.lineTo(cx, cy - half - 8); ctx.stroke();
+    const nT = Math.floor(R - 0.12);
+    ctx.beginPath();
+    for (let k = -nT; k <= nT; k++) { if (!k) continue; ctx.moveTo(cx + k * U, cy - 3); ctx.lineTo(cx + k * U, cy + 3); ctx.moveTo(cx - 3, cy - k * U); ctx.lineTo(cx + 3, cy - k * U); }
+    ctx.stroke();
+    ctx.strokeStyle = EPP.alpha('muted', 0.55); ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(cx, cy, U, 0, TAU); ctx.stroke();
+    const g0 = P(-R * 1.5, th), g1 = P(R * 1.5, th);
+    // labels keep off the axes and the guide line, so that a line poking out of a label never reads as a minus sign
+    segs.push([cx - half - 8, cy, cx + half + 8, cy], [cx, cy - half - 8, cx, cy + half + 8], [g0[0], g0[1], g1[0], g1[1]]);
+    ctx.strokeStyle = EPP.alpha('muted', 0.28); ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(g0[0], g0[1]); ctx.lineTo(g1[0], g1[1]); ctx.stroke();
+    // fixed texts: axis names and corner notes
+    ctx.textBaseline = 'middle';
+    const wRe = EPP.measureRich(ctx, 'Re', 12, fTx), wIm = EPP.measureRich(ctx, 'Im', 12, fTx);
+    ctx.fillStyle = cMuted;
+    EPP.drawRich(ctx, 'Re', w - 4 - wRe, cy - 10, { size: 12, font: fTx }); fixedBox(w - 6 - wRe, cy - 18, wRe + 4, 16);
+    EPP.drawRich(ctx, 'Im', cx + 7, 12, { size: 12, font: fTx }); fixedBox(cx + 5, 4, wIm + 4, 16);
+    const n1 = 'arrows in units of |ξ|', n2 = 'drag an arrow tip';
+    const w1 = EPP.measureRich(ctx, n1, 10.5, fUI), w2 = EPP.measureRich(ctx, n2, 10.5, fUI);
+    EPP.drawRich(ctx, n1, 6, h - 10, { size: 10.5, font: fUI }); fixedBox(4, h - 19, w1 + 4, 16);
+    if (w1 + w2 + 30 < w) { EPP.drawRich(ctx, n2, w - 6 - w2, h - 10, { size: 10.5, font: fUI }); fixedBox(w - 8 - w2, h - 19, w2 + 4, 16); }
+
+    // angle qa: one arc from u_{ℓ−1} through u_ℓ to u_{ℓ+1}
+    const rArc = EPP.clamp(0.4 * U, 16, 42);
+    if (absq > 0.02) { ctx.strokeStyle = cMuted; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(cx, cy, rArc, -(th - qa), -(th + qa), qa > 0); ctx.stroke(); }
+    // Born–von Kármán: atoms ℓ+2 ... ℓ+N_ℓ−1 (dots) and ℓ+N_ℓ (ring) on the circle
+    ctx.fillStyle = EPP.alpha('muted', 0.85);
+    for (let j = 2; j < N; j++) { const d = P(1, th + j * qa); ctx.beginPath(); ctx.arc(d[0], d[1], 1.9, 0, TAU); ctx.fill(); }
+    const ringP = P(1, th + N * qa);
+    // physical displacement Re u_ℓ: projection onto the real axis
+    ctx.strokeStyle = cPh; ctx.lineWidth = 1.4; ctx.setLineDash([2, 3]);
+    ctx.beginPath(); ctx.moveTo(t0[0], t0[1]); ctx.lineTo(t0[0], cy); ctx.stroke(); ctx.setLineDash([]);
+    // stretches u_{ℓ±1} − u_ℓ from the tip of u_ℓ (stopping just short of the neighbour tips)
+    const shorten = (A, B, d) => { const Ls = Math.hypot(B[0] - A[0], B[1] - A[1]); return Ls > 2 * d ? [B[0] - (B[0] - A[0]) * d / Ls, B[1] - (B[1] - A[1]) * d / Ls] : B; };
+    if (!near0) {
+      const sp = shorten(t0, tp, 2.5), sm = shorten(t0, tm, 2.5);
+      arrow(ctx, t0[0], t0[1], sp[0], sp[1], EPP.color('fg2'), 1.5, 8, [5, 4]);
+      if (!nearPi) arrow(ctx, t0[0], t0[1], sm[0], sm[1], EPP.color('fg2'), 1.5, 8, [5, 4]);
+    }
+    // force F_ℓ/K = −2(1 − cos qa) u_ℓ from the origin
+    if (F * U > 2) arrow(ctx, cx, cy, tf[0], tf[1], cPh, 3.4, 12);
+    // displacement arrows
+    arrow(ctx, cx, cy, tm[0], tm[1], cInk, 1.9, 9);
+    arrow(ctx, cx, cy, tp[0], tp[1], cInk, 1.9, 9);
+    arrow(ctx, cx, cy, t0[0], t0[1], cPh, 2.6, 10);
+    ctx.fillStyle = cPh; ctx.beginPath(); ctx.arc(t0[0], cy, 3.4, 0, TAU); ctx.fill();
+    const ringOn = Math.hypot(ringP[0] - t0[0], ringP[1] - t0[1]) < 1.5;
+    ctx.strokeStyle = ringOn ? cInk : cMuted; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(ringP[0], ringP[1], 6.5, 0, TAU); ctx.stroke();
+    ctx.fillStyle = cInk; ctx.beginPath(); ctx.arc(cx, cy, 2.2, 0, TAU); ctx.fill();
+
+    // labels: essential ones first
+    const tPh = EPP.textColor('phonon'), tInk = EPP.textColor('ink');
+    if (near0) {
+      put([[absq < 1e-9 ? 'u_{ℓ−1} = u_ℓ = u_{ℓ+1}' : 'u_{ℓ−1} ≈ u_ℓ ≈ u_{ℓ+1}', true]], tPh, 13, tipC(t0[0], t0[1], th));
+    } else {
+      put([['u_ℓ', true]], tPh, 13.5, tipC(t0[0], t0[1], th));
+      if (nearPi) put([['u_{ℓ±1}', true]], tInk, 13.5, tipC(tp[0], tp[1], th + qa));
+      else {
+        put([['u_{ℓ+1}', true]], tInk, 13.5, tipC(tp[0], tp[1], th + qa));
+        put([['u_{ℓ−1}', true]], tInk, 13.5, tipC(tm[0], tm[1], th - qa));
+      }
+    }
+    if (F * U > 2) put([['F_ℓ', true], ['/', false], ['K', true]], tPh, 13.5, tipC(tf[0], tf[1], th + Math.PI));
+    else put([['F_ℓ', true], [' = 0', false]], tPh, 13, tipC(cx, cy, th + Math.PI));
+    const above = t0[1] < cy;
+    put([['Re ', false], ['u_ℓ', true]], tPh, 12, (wL, hL) => { const y = above ? cy + 4 + hL / 2 : cy - 4 - hL / 2, y2 = above ? cy - 4 - hL / 2 : cy + 4 + hL / 2; return [[t0[0], y], [t0[0] + wL / 2 + 6, y], [t0[0] - wL / 2 - 6, y], [t0[0] + wL / 2 + 6, y2], [t0[0] - wL / 2 - 6, y2]]; }, true);
+    if (absq > 0.08) {
+      const ql = qa > 0 ? [['qa', true]] : [['|', false], ['qa', true], ['|', false]];
+      for (const sgn of [1, -1]) put(ql, cMuted, 12.5, (wL, hL) => {
+        const a = th + sgn * qa / 2, ux = Math.cos(a), uy = -Math.sin(a), ext = 0.5 * (wL * Math.abs(ux) + hL * Math.abs(uy)), out = [];
+        for (let r = rArc + 4; r < U - 6; r += 5) out.push([cx + (r + ext) * ux, cy + (r + ext) * uy]);
+        return out;
+      }, true);
+    }
+    if (!near0 && !nearPi && absq < 2.7) {
+      const chordC = (A, B) => (wL, hL) => {
+        const mx = (A[0] + B[0]) / 2, my = (A[1] + B[1]) / 2;
+        let nx = cx - mx, ny = cy - my; const nl = Math.hypot(nx, ny) || 1; nx /= nl; ny /= nl;
+        const ext = 0.5 * (wL * Math.abs(nx) + hL * Math.abs(ny));
+        return [5, 11, 18].flatMap(r => [[mx + (r + ext) * nx, my + (r + ext) * ny], [mx - (r + ext) * nx, my - (r + ext) * ny]]);
+      };
+      put([['u_{ℓ+1}', true], [' − ', false], ['u_ℓ', true]], EPP.color('fg2'), 11.5, chordC(t0, tp), true);
+      put([['u_{ℓ−1}', true], [' − ', false], ['u_ℓ', true]], EPP.color('fg2'), 11.5, chordC(t0, tm), true);
+    }
+    if (!ringOn && Math.hypot(ringP[0] - t0[0], ringP[1] - t0[1]) > 10) put([['ℓ+N_ℓ', true]], cMuted, 11.5, tipC(ringP[0], ringP[1], th + N * qa), true);
+    // tick labels on the real axis, only where free
+    ctx.font = `10px ${fUI}`;
+    const step = U < 24 ? 2 : 1;
+    for (let k = -nT; k <= nT; k++) {
+      if (!k || k % step) continue;
+      const s = String(k).replace('-', '−'), wT = EPP.measureRich(ctx, s, 10, fUI), b = { x0: cx + k * U - wT / 2 - 1, x1: cx + k * U + wT / 2 + 1, y0: cy + 5, y1: cy + 17 };
+      if (boxes.some(o => overlap(b, o, 1)) || segs.some(sg => segHits(sg, b, 0.5))) continue;
+      boxes.push(b); ctx.fillStyle = cMuted; EPP.drawRich(ctx, s, cx + k * U, cy + 11, { size: 10, font: fUI, align: 'center' });
+    }
+    // draw the labels on a soft halo
+    const halo = EPP.alpha('surface', 0.8);
+    for (const Lb of labs) {
+      const b = Lb.b; ctx.fillStyle = halo; ctx.fillRect(b.x0 - 1, b.y0 - 1, b.x1 - b.x0 + 2, b.y1 - b.y0 + 2);
+      let x = b.x0 + 1; const y = (b.y0 + b.y1) / 2 - 1;
+      ctx.fillStyle = Lb.color;
+      for (const p of Lb.sg) x += EPP.drawRich(ctx, p[0], x, y, { size: Lb.size, font: p[2] || fTx, italic: p[1] });
+    }
+  }
+
+  // ---------- pointer: drag arrow tips in (b), click or drag in (c) ----------
+  const cvs = cvP.canvas;
+  const local = (e) => { const r = cvs.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  const hit = (px, py, tol) => { let best = null, bd = Infinity; for (const T of tips) { const d = Math.hypot(px - T.x, py - T.y); if (d <= tol && d + (T.k === 0 ? 0.75 : 0) < bd) { bd = d + (T.k === 0 ? 0.75 : 0); best = T; } } return best; };
+  function dragTo(px, py) {
+    if (!geo || drag === null) return;
+    const a = Math.atan2(geo.cy - py, px - geo.cx);
+    if (drag === 0) { tau = pmod(-a / TAU, 1); if (anim) anim.redraw(); return; }
+    const th = -phase(), qa = wrapPi(drag === 1 ? a - th : th - a);
+    ui.set('q', EPP.clamp(Math.round(qa / Math.PI * 100) / 100, -1, 1));
+  }
+  cvs.addEventListener('pointerdown', (e) => {
+    const [px, py] = local(e), T = hit(px, py, e.pointerType === 'mouse' ? 10 : 16);
+    if (!T) return;
+    drag = T.k; e.preventDefault();
+    try { cvs.setPointerCapture(e.pointerId); } catch (_) {}
+    if (anim && anim.running) anim.pause();
+    dragTo(px, py);
+  });
+  cvs.addEventListener('pointermove', (e) => {
+    const [px, py] = local(e);
+    if (drag !== null) { dragTo(px, py); return; }
+    if (e.pointerType === 'mouse') cvs.style.cursor = hit(px, py, 10) ? 'grab' : '';
+  });
+  const endDrag = () => { drag = null; };
+  cvs.addEventListener('pointerup', endDrag); cvs.addEventListener('pointercancel', endDrag);
+  pD.onPointer = (x, y, type) => {
+    if (type === 'up' || !isFinite(x)) return;
+    let v = x; if (v > 1 || v < -1) v = fold(v);
+    ui.set('q', EPP.clamp(Math.round(v * 100) / 100, -1, 1));
+  };
+
+  // ---------- controls ----------
+  const qfmt = (v) => {
+    if (snapInfo.on) { const k = snapK(v, snapInfo.N), x = 2 * k / snapInfo.N; return `${x > 0 ? '+' : ''}${mfix(x, 3)} (s = ${String(k).replace('-', '−')})`; }
+    return `${v > 0 ? '+' : ''}${mfix(v, 2)}`;
+  };
+  function onChange(s) {
+    snapInfo.on = !!s.snap; snapInfo.N = s.N;
+    ui.set('q', s.q, true);                       // refresh the q read-out in the current snapping mode
+    cur = compute(s);
+    if (cur.hw < 1e-9) tau = 0;                   // leaving q = 0 starts from t = 0
+    drawDisp(); legends(); readouts();
+    if (anim) anim.redraw();
+  }
+  const ui = EPP.controls(sel('.a1-waves-ctrls'), [
+    { key: 'q', type: 'range', label: 'wavevector qa/π', min: -1, max: 1, step: 0.01, value: 0.3, fmt: qfmt },
+    { key: 'N', type: 'range', label: 'BvK cells N_ℓ', min: 4, max: 24, step: 1, value: 12, fmt: (v) => v.toFixed(0) },
+    { key: 'wave', type: 'toggle', label: 'continuous wave', value: true },
+    { key: 'alias', type: 'toggle', label: 'aliasing: q + 2π/a', value: false },
+    { key: 'snap', type: 'toggle', label: 'snap q to the BvK grid', value: false }
+  ], onChange);
+  cur = compute(ui.state);
+  const host = document.createElement('div');
+  host.className = 'ctrl';
+  host.innerHTML = '<span class="lab"><span>animation, time in periods</span></span>';
+  ui.el.insertBefore(host, ui.el.children[2] || null);
+  anim = EPP.anim(fig, (t, dt) => {
+    if (cur && cur.hw > 1e-9 && dt > 0) tau = pmod(tau + dt / TPER, 1);
+    drawChain(); drawPhasor();
+  }, { buttonHost: host });
+  anim.button.style.justifySelf = 'start';
+  cvC.onResize(() => anim.redraw());
+  cvP.onResize(() => anim.redraw());
+  EPP.onTheme(() => { drawDisp(); legends(); });
+})();
+</script>

@@ -1,0 +1,561 @@
+  <figure class="viz" id="viz-a1-forces">
+    <p class="viz-title">What a force constant is: push one atom, read the forces <span class="tag">interactive</span></p>
+    <div class="viz-grid side">
+      <div class="a1-forces-lat"></div>
+      <div class="a1-forces-side" style="min-width:0">
+        <div class="a1-forces-blk"></div>
+        <div class="legend a1-forces-legend"></div>
+      </div>
+    </div>
+    <div class="a1-forces-ctrl"></div>
+    <div class="a1-forces-ro"></div>
+    <div class="a1-forces-ro2"></div>
+    <figcaption><strong>Model.</strong> A flat sheet modelled on hexagonal boron nitride: $a=2.504$ Å, $\ba_1=a(1,0)$, $\ba_2=a(\tfrac12,\tfrac{\sqrt3}{2})$, atom $\kappa=1$ (B, 10.81 amu) at $\btau_1=(\ba_1+\ba_2)/3$ and atom $\kappa=2$ (N, 14.007 amu) at $\btau_2=2(\ba_1+\ba_2)/3$. Central springs join nearest neighbours (B–N, distance $a/\sqrt3=1.446$ Å, stiffness $K_1$) and next-nearest neighbours (B–B and N–N, distance $a$, stiffness $K_2$); the defaults $K_1=28.1$ and $K_2=5.0$ eV/Å² are illustrative. Atoms move in the plane only, so each block of $\Phi$ is a $2\times2$ matrix. A spring of stiffness $K$ along the unit vector $\bn$ between two atoms adds $-K\,\bn\bn^{\mathsf T}$ to the block that couples them and $+K\,\bn\bn^{\mathsf T}$ to the on-site block of each. P is the pushed atom $\ell'\kappa'$ and X the probe atom $\ell\kappa$: the block $\Phi_{\mathrm X,\mathrm P}$ holds the entries $\Phi_{\ell\kappa\alpha,\ell'\kappa'\beta}$, with rows $\alpha=x,y$ and columns $\beta=x,y$, and its column $\beta$ is minus the force on X per unit push of P along $\beta$. The masses play no role here: force constants belong to the energy surface alone.
+      <strong>Left.</strong> A patch of the sheet: violet discs are B, teal discs N, solid lines $K_1$ springs, dotted lines $K_2$ springs. In <em>push one atom</em>, P is displaced by $\bd$, with $|\bd|=0.05$ Å at the angle $\theta$, drawn 12 times enlarged; the dashed circle marks its equilibrium position. All force arrows share the scale printed at the top right: amber on P, $\bF_{\mathrm P}=-\Phi_{\mathrm P,\mathrm P}\bd$, and in the text colour on each neighbour X, $\bF_{\mathrm X}=-\Phi_{\mathrm X,\mathrm P}\bd$, thicker for the 3 nearest than for the 6 next-nearest neighbours. The ring marks the probe X. In <em>shift every atom</em>, all atoms move by the same $\bd$ (dashed rings mark equilibrium), and the terms of the force on the selected atom $\ell\kappa$, $-\sum_{\ell'\kappa'}\Phi_{\ell\kappa,\ell'\kappa'}\bd$, are drawn tip to tail from it: the on-site term in amber, then the 3 nearest and the 6 next-nearest neighbour terms, each group in order of direction.
+      <strong>Right.</strong> The block $\Phi_{\mathrm X,\mathrm P}$ in eV/Å² and the force it produces; in the second mode, the on-site block, the summed neighbour blocks and their total, the left side of (A1.6). Click an atom to push it, or switch <em>click selects</em> to read the block of another atom; in the second mode a click picks the atom whose balance is shown.
+      <strong>What to notice.</strong> The pushed atom is pulled back, and each neighbour is pushed or pulled along its bond, so a neighbour whose bond is perpendicular to $\bd$ feels nothing. When every atom shifts, every coupling still contributes, but the contributions close into a loop and cancel exactly: this is the acoustic sum rule. The on-site block, $\tfrac32K_1+3K_2$ times the unit matrix, is the total stiffness of the springs attached to the atom; set $K_2=0$ and the next-nearest blocks vanish.</figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a1-forces');
+  if (!fig || !window.EPP) return;
+  // Model of section A.1: hBN-like honeycomb with central springs. Lengths in Å, K in eV/Å^2, forces in eV/Å.
+  const A = 2.504, S3 = Math.sqrt(3), DNN = A / S3, DMAG = 0.05, EXAG = 12, BAND = 26;
+  const TAU = [[A / 2, A * S3 / 6], [A, A * S3 / 3]]; // tau_1 = (a_1 + a_2)/3, tau_2 = 2(a_1 + a_2)/3
+  const SP = [{ name: 'B', col: 'c5' }, { name: 'N', col: 'c4' }];
+  const DEF_SEL = '0,0,0', DEF_PROBE = '-1,0,1'; // keys l1,l2,kappa-1: B of cell (0,0); its nearest N at 150 degrees
+  const LADDER = [60, 50, 40, 35, 30, 25, 20, 15, 12, 10, 8, 6, 5];
+  const $ = s => fig.querySelector(s);
+  const elLeg = $('.a1-forces-legend'), elCtl = $('.a1-forces-ctrl'), elRo = $('.a1-forces-ro'), elRo2 = $('.a1-forces-ro2');
+  const cv = EPP.canvas($('.a1-forces-lat'), { aspect: 0.84, minHeight: 280, maxHeight: 440 });
+  const cb = EPP.canvas($('.a1-forces-blk'), { height: 300 });
+  cv.canvas.setAttribute('role', 'img');
+  cv.canvas.setAttribute('aria-label', 'Honeycomb patch of boron and nitrogen atoms joined by springs. One atom is pushed, or every atom is shifted, and arrows show the resulting forces.');
+  cb.canvas.setAttribute('role', 'img');
+  cb.canvas.setAttribute('aria-label', 'The two by two force-constant block for the chosen pair of atoms and the force it produces, or, in the second mode, the row sum of the force constants.');
+  [elRo, elRo2].forEach(el => { el.classList.add('readout'); el.setAttribute('aria-live', 'polite'); });
+
+  // ---------- helpers ----------
+  const f2 = v => (Math.abs(v) < 0.005 ? '0.00' : EPP.fix(v, 2));
+  const f3 = v => (Math.abs(v) < 0.0005 ? '0.000' : EPP.fix(v, 3));
+  const vec = v => `(${f3(v[0])}, ${f3(v[1])})`;
+  const matTxt = M => `(${f2(M[0][0])}, ${f2(M[0][1])}; ${f2(M[1][0])}, ${f2(M[1][1])})`;
+  const mv = (M, v) => [M[0][0] * v[0] + M[0][1] * v[1], M[1][0] * v[0] + M[1][1] * v[1]];
+  const neg = v => [-v[0], -v[1]];
+  const madd = (P, Q) => [[P[0][0] + Q[0][0], P[0][1] + Q[0][1]], [P[1][0] + Q[1][0], P[1][1] + Q[1][1]]];
+  const zero = () => [[0, 0], [0, 0]];
+  // rich-text runs: a leading '*' marks a bold run (vector symbol; sub/superscripts stay regular)
+  const strip = p => (p[0] === '*' ? p.slice(1) : p);
+  const rtW = (ctx, parts, size, fam) => parts.reduce((w, p) => w + EPP.measureRich(ctx, strip(p), size, fam, { bold: p[0] === '*' }), 0);
+  const rt = (ctx, parts, x, y, size, fam, align) => {
+    const tot = rtW(ctx, parts, size, fam);
+    let x0 = align === 'center' ? x - tot / 2 : align === 'right' ? x - tot : x;
+    for (const p of parts) x0 += EPP.drawRich(ctx, strip(p), x0, y, { size, font: fam, bold: p[0] === '*' });
+    return tot;
+  };
+  const boxHit = (a, b) => a[0] < b[2] && b[0] < a[2] && a[1] < b[3] && b[1] < a[3];
+  const discBox = (cx, cy, rr, b) => { const qx = EPP.clamp(cx, b[0], b[2]), qy = EPP.clamp(cy, b[1], b[3]); return (qx - cx) ** 2 + (qy - cy) ** 2 < rr * rr; };
+  function segBox(s, b) { // Liang-Barsky: does segment s = [x0,y0,x1,y1] cross box b = [x0,y0,x1,y1]?
+    const dx = s[2] - s[0], dy = s[3] - s[1], P = [-dx, dx, -dy, dy], Q = [s[0] - b[0], b[2] - s[0], s[1] - b[1], b[3] - s[1]];
+    let t0 = 0, t1 = 1;
+    for (let i = 0; i < 4; i++) {
+      if (Math.abs(P[i]) < 1e-12) { if (Q[i] < 0) return false; continue; }
+      const t = Q[i] / P[i];
+      if (P[i] < 0) { if (t > t1) return false; if (t > t0) t0 = t; } else { if (t < t0) return false; if (t < t1) t1 = t; }
+    }
+    return true;
+  }
+  const dPS = (px, py, s) => { const dx = s[2] - s[0], dy = s[3] - s[1], l2 = dx * dx + dy * dy; const t = l2 ? EPP.clamp(((px - s[0]) * dx + (py - s[1]) * dy) / l2, 0, 1) : 0; return Math.hypot(px - s[0] - t * dx, py - s[1] - t * dy); };
+  // ---------- lattice patch (rebuilt on resize) ----------
+  let L = null;
+  function build() {
+    const w = cv.w, h = cv.h, ph = h - BAND;
+    const ppa = Math.min(w / 4.2, ph / 3.3), pxA = ppa / A, Dpx = DNN * pxA; // px per a, px per Å, px per bond
+    const r = EPP.clamp(0.14 * Dpx, 6, 9.5), cx = w / 2, cy = BAND + ph / 2, c0 = TAU[0];
+    const ext = 1.2 * ppa + r, atoms = [], index = new Map();
+    for (let l2 = -8; l2 <= 8; l2++) for (let l1 = -8; l1 <= 8; l1++) for (let k = 0; k < 2; k++) {
+      const x = l1 * A + l2 * A / 2 + TAU[k][0], y = l2 * A * S3 / 2 + TAU[k][1];
+      const sx = cx + (x - c0[0]) * pxA, sy = cy - (y - c0[1]) * pxA;
+      if (sx < -ext || sx > w + ext || sy < BAND - ext || sy > h + ext) continue;
+      index.set(`${l1},${l2},${k}`, atoms.length);
+      atoms.push({ l1, l2, k, x, y, sx, sy, nn: [], nnn: [] });
+    }
+    const nnPairs = [], nnnPairs = [];
+    for (let i = 0; i < atoms.length; i++) for (let j = i + 1; j < atoms.length; j++) {
+      const dx = atoms[j].x - atoms[i].x, dy = atoms[j].y - atoms[i].y, d2 = dx * dx + dy * dy;
+      if (Math.abs(d2 - DNN * DNN) < 1e-6) { atoms[i].nn.push(j); atoms[j].nn.push(i); nnPairs.push([i, j]); }
+      else if (Math.abs(d2 - A * A) < 1e-6) { atoms[i].nnn.push(j); atoms[j].nnn.push(i); nnnPairs.push([i, j]); }
+    }
+    const m = r + 3, inside = a => a.sx >= m && a.sx <= w - m && a.sy >= BAND + m && a.sy <= h - m;
+    for (const a of atoms) {
+      a.vis = a.sx > -r && a.sx < w + r && a.sy > BAND - r && a.sy < h + r;
+      const ang = j => (Math.atan2(atoms[j].y - a.y, atoms[j].x - a.x) * 180 / Math.PI + 360 + 1e-9) % 360;
+      a.nn.sort((p, q) => ang(p) - ang(q)); a.nnn.sort((p, q) => ang(p) - ang(q));
+    }
+    // an atom can be pushed (or balanced) only if all 9 of its neighbours are in view
+    for (const a of atoms) a.pick = a.nn.length === 3 && a.nnn.length === 6 && inside(a) && a.nn.every(j => inside(atoms[j])) && a.nnn.every(j => inside(atoms[j]));
+    L = { w, h, ppa, pxA, Dpx, r, atoms, index, nnPairs, nnnPairs };
+  }
+  const keyOf = a => `${a.l1},${a.l2},${a.k}`;
+
+  // ---------- force constants of the spring model ----------
+  let K1 = 28.1, K2 = 5.0, theta = 30, mode = 'push', clickSel = 'pushed';
+  function kindOf(i, j) {
+    if (i === j) return 'same';
+    const a = L.atoms[i], b = L.atoms[j], rr = Math.hypot(b.x - a.x, b.y - a.y);
+    return Math.abs(rr - DNN) < 1e-6 ? 'nn' : Math.abs(rr - A) < 1e-6 ? 'nnn' : 'none';
+  }
+  // 2x2 block Phi_{i,j} (rows alpha of atom i, columns beta of atom j), eV/Å^2
+  function blk(i, j) {
+    const at = L.atoms;
+    if (i === j) { // on-site: +K n n^T summed over the springs attached to i
+      let xx = 0, xy = 0, yy = 0;
+      for (const [list, K] of [[at[i].nn, K1], [at[i].nnn, K2]]) for (const n of list) {
+        const dx = at[n].x - at[i].x, dy = at[n].y - at[i].y, rr = Math.hypot(dx, dy), ux = dx / rr, uy = dy / rr;
+        xx += K * ux * ux; xy += K * ux * uy; yy += K * uy * uy;
+      }
+      return [[xx, xy], [xy, yy]];
+    }
+    const kd = kindOf(i, j), K = kd === 'nn' ? K1 : kd === 'nnn' ? K2 : 0;
+    if (!K) return zero();
+    const dx = at[j].x - at[i].x, dy = at[j].y - at[i].y, rr = Math.hypot(dx, dy), ux = dx / rr, uy = dy / rr;
+    return [[-K * ux * ux, -K * ux * uy], [-K * ux * uy, -K * uy * uy]];
+  }
+  // one printed force scale (px per eV/Å): the largest that keeps every arrow of the selected atom in view, for any direction of d
+  function fitScale(sel, on) {
+    const at = L.atoms, a = at[sel], m = 6, w = L.w, h = L.h;
+    const s0 = Math.max(5, Math.round(0.62 * L.Dpx / 5) * 5);
+    const lam = 0.5 * (on[0][0] + on[1][1]) + Math.sqrt(0.25 * (on[0][0] - on[1][1]) ** 2 + on[0][1] ** 2);
+    const rho = EXAG * DMAG * L.pxA, room = Math.min(a.sx, w - a.sx, a.sy - BAND, h - a.sy) - m;
+    const ok = s => {
+      if (rho + lam * DMAG * s + 4 > room) return false;
+      for (const [list, K] of [[a.nn, K1], [a.nnn, K2]]) for (const j of list) {
+        const b = at[j], dx = b.sx - a.sx, dy = b.sy - a.sy, rr = Math.hypot(dx, dy), len = K * DMAG * s;
+        for (const sg of [1, -1]) {
+          const ex = b.sx + sg * dx / rr * len, ey = b.sy + sg * dy / rr * len;
+          if (ex < m || ex > w - m || ey < BAND + m || ey > h - m) return false;
+        }
+      }
+      return true;
+    };
+    for (const s of LADDER) if (s <= s0 && ok(s)) return s;
+    return LADDER[LADDER.length - 1];
+  }
+
+  // ---------- drawing helpers ----------
+  function drawArrows(ctx, list, halo) {
+    const geo = list.map(a => {
+      const dx = a.x1 - a.x0, dy = a.y1 - a.y0, len = Math.hypot(dx, dy), ux = dx / len, uy = dy / len;
+      const hl = Math.min(a.head, 0.6 * len), hw = hl * 0.48;
+      return Object.assign({ ux, uy, hl, hw, bx: a.x1 - ux * hl, by: a.y1 - uy * hl }, a);
+    });
+    const tri = g => { ctx.beginPath(); ctx.moveTo(g.x1, g.y1); ctx.lineTo(g.bx - g.uy * g.hw, g.by + g.ux * g.hw); ctx.lineTo(g.bx + g.uy * g.hw, g.by - g.ux * g.hw); ctx.closePath(); };
+    ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.strokeStyle = halo;
+    for (const g of geo) { ctx.lineWidth = g.lw + 3; ctx.beginPath(); ctx.moveTo(g.x0, g.y0); ctx.lineTo(g.bx, g.by); ctx.stroke(); ctx.lineWidth = 3; tri(g); ctx.stroke(); }
+    ctx.lineCap = 'butt';
+    for (const g of geo) {
+      ctx.strokeStyle = g.col; ctx.lineWidth = g.lw; ctx.beginPath(); ctx.moveTo(g.x0, g.y0); ctx.lineTo(g.bx + g.ux * 0.8, g.by + g.uy * 0.8); ctx.stroke();
+      ctx.fillStyle = g.col; tri(g); ctx.fill();
+    }
+  }
+  // greedy label placement: never on another label or outside the patch; avoids arrows and atoms where it can
+  function makePlacer(ctx, bounds, segs, discs, fam) {
+    const boxes = [];
+    return (parts, size, ax, ay, rad, pref) => {
+      const tw = rtW(ctx, parts, size, fam), th = Math.ceil(size * 1.4);
+      let best = null, bp = Infinity;
+      [0, 45, -45, 90, -90, 135, -135, 180].forEach((da, k) => {
+        for (const ex of [0, 7, 14]) {
+          const ang = (pref + da) * Math.PI / 180, c = Math.cos(ang), s = Math.sin(ang), dd = rad + 3 + ex;
+          const px = ax + c * dd, py = ay + s * dd;
+          const x0 = c > 0.38 ? px : c < -0.38 ? px - tw : px - tw / 2, y0 = s > 0.38 ? py : s < -0.38 ? py - th : py - th / 2;
+          const b = [x0 - 2, y0 - 1, x0 + tw + 2, y0 + th + 1];
+          let p = k * 0.8 + ex * 0.25;
+          if (b[0] < bounds[0] || b[2] > bounds[2] || b[1] < bounds[1] || b[3] > bounds[3]) p += 1e4;
+          for (const o of boxes) if (boxHit(b, o)) p += 1e4;
+          for (const sg of segs) if (segBox(sg, b)) p += 30;
+          for (const dc of discs) if (discBox(dc[0], dc[1], dc[2], b)) p += 20;
+          if (p < bp) { bp = p; best = b; }
+        }
+      });
+      if (!best || bp >= 1e4) return null;
+      boxes.push(best);
+      return { x: best[0] + 2, y: best[1] + 1 + Math.round(size * 0.92), box: best };
+    };
+  }
+  // ---------- state ----------
+  let selKey = DEF_SEL, probeKey = DEF_PROBE, hintUntil = 0;
+  function compute() {
+    if (!L || L.w !== cv.w || L.h !== cv.h) build();
+    const at = L.atoms;
+    let sel = L.index.get(selKey);
+    if (sel === undefined || !at[sel].pick) { selKey = DEF_SEL; sel = L.index.get(DEF_SEL); }
+    let pr = L.index.get(probeKey);
+    if (pr === undefined || !at[pr].vis) { probeKey = DEF_PROBE; pr = L.index.get(DEF_PROBE); }
+    const th = theta * Math.PI / 180, d = [DMAG * Math.cos(th), DMAG * Math.sin(th)];
+    const on = blk(sel, sel);
+    return { sel, pr, d, on, s: fitScale(sel, on) };
+  }
+  const shift = () => mode === 'shift';
+  // where atom i is drawn: the pushed atom (mode A) or every atom (mode B) is displaced by EXAG*d
+  const drawPos = (c, i) => {
+    const a = L.atoms[i];
+    if (shift() || i === c.sel) return [a.sx + EXAG * c.d[0] * L.pxA, a.sy - EXAG * c.d[1] * L.pxA];
+    return [a.sx, a.sy];
+  };
+
+  // ---------- left panel: the lattice ----------
+  function drawLattice(c) {
+    cv.clear();
+    const ctx = cv.ctx, w = cv.w, h = cv.h, at = L.atoms, r = L.r, sel = c.sel, mB = shift();
+    const fUI = EPP.css('--font-ui'), cInk = EPP.color('ink'), cPh = EPP.color('phonon'), cMut = EPP.color('muted');
+    const cAt = [EPP.color(SP[0].col), EPP.color(SP[1].col)], halo = EPP.alpha('surface', 0.9), back = EPP.alpha('surface', 0.82);
+    const pos = i => drawPos(c, i);
+    const dpx = [EXAG * c.d[0] * L.pxA, -EXAG * c.d[1] * L.pxA];
+    ctx.save();
+    ctx.beginPath(); ctx.rect(0, BAND, w, h - BAND); ctx.clip();
+    if (mB) { // equilibrium positions under the rigidly shifted sheet
+      ctx.strokeStyle = EPP.alpha('muted', 0.55); ctx.lineWidth = 1; ctx.setLineDash([2, 2]); ctx.beginPath();
+      for (const a of at) if (a.vis) { ctx.moveTo(a.sx + r, a.sy); ctx.arc(a.sx, a.sy, r, 0, 2 * Math.PI); }
+      ctx.stroke(); ctx.setLineDash([]);
+    }
+    // springs: the 9 attached to the selected atom are drawn darker; line width grows with stiffness
+    const lw1 = 0.6 + 0.035 * K1, lw2 = 0.5 + 0.08 * K2;
+    const springs = (pairs, attached) => {
+      ctx.beginPath();
+      for (const [i, j] of pairs) {
+        if ((i === sel || j === sel) !== attached || (!at[i].vis && !at[j].vis)) continue;
+        const p = pos(i), q = pos(j); ctx.moveTo(p[0], p[1]); ctx.lineTo(q[0], q[1]);
+      }
+      ctx.stroke();
+    };
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = EPP.alpha('muted', 0.5); ctx.lineWidth = lw1; springs(L.nnPairs, false);
+    ctx.strokeStyle = cMut; ctx.lineWidth = lw1 + 0.6; springs(L.nnPairs, true);
+    if (K2 > 0) {
+      ctx.setLineDash([0.1, 3.6]);
+      ctx.strokeStyle = EPP.alpha('muted', 0.55); ctx.lineWidth = lw2 + 0.4; springs(L.nnnPairs, false);
+      ctx.strokeStyle = cMut; ctx.lineWidth = lw2 + 0.9; springs(L.nnnPairs, true);
+      ctx.setLineDash([]);
+    }
+    // atoms, with the species letter inside (the direct label of the 'c4' series)
+    const fs = Math.round(r * 1.15);
+    for (let i = 0; i < at.length; i++) {
+      if (!at[i].vis) continue;
+      const p = pos(i); ctx.fillStyle = cAt[at[i].k]; ctx.beginPath(); ctx.arc(p[0], p[1], r, 0, 2 * Math.PI); ctx.fill();
+    }
+    ctx.fillStyle = EPP.color('surface'); ctx.font = `600 ${fs}px ${fUI}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    for (let i = 0; i < at.length; i++) { if (!at[i].vis) continue; const p = pos(i); ctx.fillText(SP[at[i].k].name, p[0], p[1] + 0.5); }
+    ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    const a0 = at[sel], pS = pos(sel);
+    if (!mB) { // dashed outline at the equilibrium position of P
+      ctx.strokeStyle = cAt[a0.k]; ctx.lineWidth = 1.4; ctx.setLineDash([3, 2.5]);
+      ctx.beginPath(); ctx.arc(a0.sx, a0.sy, r, 0, 2 * Math.PI); ctx.stroke(); ctx.setLineDash([]);
+    }
+    const ringAt = i => { const p = pos(i); ctx.strokeStyle = cInk; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(p[0], p[1], r + 4, 0, 2 * Math.PI); ctx.stroke(); };
+    if (mB) ringAt(sel); else if (at[c.pr].vis) ringAt(c.pr);
+    // force arrows
+    // a force arrow starts at the rim of its atom (rim = r) or, in the tip-to-tail chain, at the given point (rim = 0)
+    const arrows = [], add = (p, F, col, lw, head, tag, rim = 0) => {
+      const fl = Math.hypot(F[0], F[1]), p0 = fl > 0 && rim ? [p[0] + rim * F[0] / fl, p[1] - rim * F[1] / fl] : p;
+      const p1 = [p0[0] + F[0] * c.s, p0[1] - F[1] * c.s];
+      if (Math.hypot(p1[0] - p0[0], p1[1] - p0[1]) >= 1) arrows.push({ x0: p0[0], y0: p0[1], x1: p1[0], y1: p1[1], col, lw, head, tag });
+      return p1;
+    };
+    const labels = [];
+    if (!mB) {
+      for (const [list, nn] of [[a0.nn, true], [a0.nnn, false]]) for (const j of list) {
+        const tip = add(pos(j), neg(mv(blk(j, sel), c.d)), cInk, nn ? 2 : 1.5, nn ? 7 : 5.5, j, r + 1);
+        if (j === c.pr && arrows.length && arrows[arrows.length - 1].tag === j) labels.push({ parts: ['*F_X'], col: cInk, at: tip, rad: 3, pref: Math.atan2(tip[1] - pos(j)[1], tip[0] - pos(j)[0]) * 180 / Math.PI });
+      }
+      const FP = neg(mv(c.on, c.d)), nNb = arrows.length;
+      let tipP = add(pS, FP, cPh, 2.4, 8, 'P', r + 1);
+      const gP = arrows.length > nNb ? arrows[arrows.length - 1] : null;
+      if (gP) { // when d is antiparallel to a bond, F_P and that neighbour's force lie on one line: move F_P aside by 5 px
+        const sP = [gP.x0, gP.y0, gP.x1, gP.y1], on = g => [0, 0.25, 0.5, 0.75, 1].filter(t => dPS(g.x0 + (g.x1 - g.x0) * t, g.y0 + (g.y1 - g.y0) * t, sP) < 3).length >= 3;
+        if (arrows.slice(0, nNb).some(on)) {
+          const ln = Math.hypot(gP.x1 - gP.x0, gP.y1 - gP.y0), ox = -(gP.y1 - gP.y0) / ln * 5, oy = (gP.x1 - gP.x0) / ln * 5;
+          gP.x0 += ox; gP.x1 += ox; gP.y0 += oy; gP.y1 += oy; tipP = [gP.x1, gP.y1];
+        }
+      }
+      if (Math.hypot(FP[0], FP[1]) * c.s >= 1) labels.push({ parts: ['*F_P'], col: EPP.textColor('phonon'), at: tipP, rad: 3, pref: Math.atan2(-FP[1], FP[0]) * 180 / Math.PI });
+    } else {
+      // the force terms on the selected atom, tip to tail: on-site, then nearest, then next-nearest (by bond angle)
+      let cur = pS.slice();
+      const grp = { on: [], nn: [], nnn: [] };
+      const step = (F, col, lw, head, g) => { const nx = add(cur, F, col, lw, head, g); grp[g].push([cur[0], cur[1], nx[0], nx[1]]); cur = nx; };
+      const Fon = neg(mv(c.on, c.d)), phi0 = Math.atan2(Fon[1], Fon[0]), TWO = 2 * Math.PI;
+      const rel = F => { const t = (((Math.atan2(F[1], F[0]) - phi0) % TWO) + TWO) % TWO; return t < 1e-9 ? TWO : t; };
+      const terms = list => list.map(j => neg(mv(blk(sel, j), c.d))).filter(F => Math.hypot(F[0], F[1]) > 1e-12).sort((p, q) => rel(p) - rel(q));
+      step(Fon, cPh, 2.4, 8, 'on');
+      for (const F of terms(a0.nn)) step(F, cInk, 2, 7, 'nn');
+      for (const F of terms(a0.nnn)) step(F, cInk, 1.5, 5.5, 'nnn');
+      const mid = g => { const s = grp[g]; if (!s.length) return null; const x0 = s[0][0], y0 = s[0][1], x1 = s[s.length - 1][2], y1 = s[s.length - 1][3]; return [(x0 + x1) / 2, (y0 + y1) / 2, Math.atan2(y1 - y0, x1 - x0) * 180 / Math.PI, Math.hypot(x1 - x0, y1 - y0)]; };
+      const vs = [].concat(...['on', 'nn', 'nnn'].map(g => grp[g].map(sg => [sg[2], sg[3]])));
+      const ctr = vs.reduce((m, v) => [m[0] + v[0] / vs.length, m[1] + v[1] / vs.length], [0, 0]);
+      const away = m => Math.atan2(m[1] - ctr[1], m[0] - ctr[0]) * 180 / Math.PI;
+      const mo = mid('on'), mn = mid('nn'), mnn = mid('nnn');
+      if (mo) labels.push({ parts: ['on-site'], col: EPP.textColor('phonon'), at: mo, rad: 4, pref: away(mo) });
+      if (mn && mn[3] > 8) labels.push({ parts: ['3 nearest'], col: EPP.css('--fg-2'), at: mn, rad: 5, pref: away(mn) });
+      if (mnn && mnn[3] > 8) labels.push({ parts: ['6 next-nearest'], col: EPP.css('--fg-2'), at: mnn, rad: 5, pref: away(mnn) });
+    }
+    // displacement arrow d: parallel to the motion, beside the atom, on the side with fewer obstacles
+    const dl = Math.hypot(dpx[0], dpx[1]), ux = dpx[0] / dl, uy = dpx[1] / dl, off = r + 6;
+    const segs0 = arrows.map(g => [g.x0, g.y0, g.x1, g.y1]);
+    const cand = [1, -1].map(sg => [a0.sx - uy * off * sg, a0.sy + ux * off * sg, a0.sx + dpx[0] - uy * off * sg, a0.sy + dpx[1] + ux * off * sg]);
+    const pen = sgm => {
+      let p = 0;
+      for (let t = 0; t <= 1.001; t += 0.25) {
+        const px = sgm[0] + (sgm[2] - sgm[0]) * t, py = sgm[1] + (sgm[3] - sgm[1]) * t;
+        for (const s of segs0) if (dPS(px, py, s) < 5) p += 10;
+        for (let i = 0; i < at.length; i++) { if (i === sel || !at[i].vis) continue; const q = pos(i); if (Math.hypot(q[0] - px, q[1] - py) < r + 3) p += 6; }
+        if (px < 4 || px > w - 4 || py < BAND + 4 || py > h - 4) p += 50;
+      }
+      return p;
+    };
+    const dseg = pen(cand[0]) <= pen(cand[1]) ? cand[0] : cand[1];
+    arrows.push({ x0: dseg[0], y0: dseg[1], x1: dseg[2], y1: dseg[3], col: cPh, lw: 3, head: 8, tag: 'd' });
+    drawArrows(ctx, arrows, halo);
+    ctx.restore();
+    ctx.strokeStyle = EPP.css('--rule'); ctx.lineWidth = 1; ctx.strokeRect(0.5, BAND + 0.5, w - 1, h - BAND - 1);
+    // labels
+    const segs = arrows.map(g => [g.x0, g.y0, g.x1, g.y1]);
+    const discs = [];
+    for (let i = 0; i < at.length; i++) if (at[i].vis) { const p = pos(i); discs.push([p[0], p[1], r + 1]); }
+    const place = makePlacer(ctx, [3, BAND + 3, w - 3, h - 3], segs, discs, fUI);
+    const put = (parts, col, x, y, rad, pref, size = 12.5) => {
+      const pl = place(parts, size, x, y, rad, pref);
+      if (!pl) return;
+      ctx.fillStyle = back; ctx.fillRect(pl.box[0], pl.box[1], pl.box[2] - pl.box[0], pl.box[3] - pl.box[1]);
+      ctx.fillStyle = col; rt(ctx, parts, pl.x, pl.y, size, fUI);
+    };
+    const mx = (dseg[0] + dseg[2]) / 2, my = (dseg[1] + dseg[3]) / 2, side = Math.atan2(dseg[1] - a0.sy - dpx[1] / 2, dseg[0] - a0.sx - dpx[0] / 2) * 180 / Math.PI;
+    if (!mB) {
+      put(c.pr === sel ? ['P = X'] : ['P'], cInk, pS[0], pS[1], r + 1, side + 180, 13);
+      if (c.pr !== sel && at[c.pr].vis) { const q = pos(c.pr); put(['X'], cInk, q[0], q[1], r + 4, -90, 13); }
+    }
+    put(['*d'], EPP.textColor('phonon'), mx, my, 4, side, 13);
+    for (const lb of labels) put(lb.parts, lb.col, lb.at[0], lb.at[1], lb.rad, lb.pref, 12);
+    // band: what is drawn (left) and the force scale (right)
+    let sv = 1; while (sv * c.s < 22) sv *= 2;
+    const scl = `${sv} eV/Å`, barL = sv * c.s;
+    ctx.font = `11px ${fUI}`;
+    const sw = EPP.measureRich(ctx, scl, 11, fUI) + 8 + barL;
+    const now = performance.now();
+    const heads = now < hintUntil ? [['pick an atom nearer the middle: all its neighbours must be in view'], ['pick an atom nearer the middle']]
+      : mB ? [['every atom shifted by ', '*d', ', |', '*d', '| = 0.05 Å, drawn ×12'], ['all atoms shifted by ', '*d', ' (×12)']]
+        : [['P pushed by ', '*d', ', |', '*d', '| = 0.05 Å, drawn ×12'], ['P pushed by ', '*d', ' (×12)']];
+    const hd = heads.find(p => rtW(ctx, p, 11.5, fUI) + sw + 20 <= w) || heads[heads.length - 1];
+    ctx.fillStyle = now < hintUntil ? EPP.textColor('phonon') : EPP.css('--fg-2'); rt(ctx, hd, 6, 17, 11.5, fUI);
+    const bx1 = w - 6, by = 13;
+    drawArrows(ctx, [{ x0: bx1 - barL, y0: by, x1: bx1, y1: by, col: cInk, lw: 1.6, head: 6 }], halo);
+    ctx.fillStyle = cMut; EPP.drawRich(ctx, scl, bx1 - barL - 6, 17, { size: 11, font: fUI, align: 'right' });
+  }
+  // ---------- right panel: the 2x2 blocks ----------
+  function mat(ctx, M, x, y, o) { // 2x2 matrix with brackets, top-left at (x, y)
+    const fs = o.size, rowH = Math.round(fs * 1.45);
+    ctx.font = `${fs}px ${o.mono}`;
+    const s = M.map(row => row.map(f2));
+    const cw = Math.max(ctx.measureText('−00.00').width, ...s[0].concat(s[1]).map(t => ctx.measureText(t).width));
+    const pin = 7, gap = 12, w = 2 * pin + 2 * cw + gap, h = 2 * rowH + 6;
+    const g = { w, h, cx: j => x + pin + (cw + gap) * j + cw / 2, base: i => y + 3 + rowH * (i + 1) - Math.round(rowH * 0.32) };
+    if (!o.draw) return g;
+    ctx.strokeStyle = o.bracket; ctx.lineWidth = 1.2; ctx.lineCap = 'butt'; ctx.beginPath();
+    ctx.moveTo(x + 5, y + 0.5); ctx.lineTo(x + 0.5, y + 0.5); ctx.lineTo(x + 0.5, y + h - 0.5); ctx.lineTo(x + 5, y + h - 0.5);
+    ctx.moveTo(x + w - 5, y + 0.5); ctx.lineTo(x + w - 0.5, y + 0.5); ctx.lineTo(x + w - 0.5, y + h - 0.5); ctx.lineTo(x + w - 5, y + h - 0.5);
+    ctx.stroke();
+    ctx.fillStyle = o.color; ctx.textAlign = 'right';
+    for (let i = 0; i < 2; i++) for (let j = 0; j < 2; j++) ctx.fillText(s[i][j], x + pin + cw * (j + 1) + gap * j, g.base(i));
+    ctx.textAlign = 'left';
+    return g;
+  }
+  function drawPanel(c) {
+    cb.clear();
+    const ctx = cb.ctx, W = cb.w, pad = 10, fUI = EPP.css('--font-ui'), fMono = EPP.css('--font-mono');
+    const cInk = EPP.color('ink'), cFg2 = EPP.css('--fg-2'), cMut = EPP.color('muted'), cPhT = EPP.textColor('phonon');
+    ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left';
+    // draw the first variant that fits the width; returns the width used
+    const line = (variants, size, col, y, x = pad) => {
+      const v = variants.find(p => rtW(ctx, p, size, fUI) <= W - pad - x) || variants[variants.length - 1];
+      ctx.fillStyle = col; return rt(ctx, v, x, y, size, fUI);
+    };
+    // F = -Phi d = (..): on one line if it fits, else on two
+    const eqLine = (lhs, rhs, size, col, y) => {
+      if (rtW(ctx, lhs.concat(rhs), size, fUI) <= W - 2 * pad) { line([lhs.concat(rhs)], size, col, y); return y; }
+      line([lhs], size, col, y); line([rhs], size, col, y + size + 5, pad + 12); return y + size + 5;
+    };
+    if (!shift()) {
+      const P = c.sel, X = c.pr, same = P === X, kind = kindOf(X, P), M = blk(X, P), F = neg(mv(M, c.d));
+      let y = 18;
+      line(same ? [['on-site block ', 'Φ_{P,P}', ' (probe X = pushed P)'], ['on-site block ', 'Φ_{P,P}']]
+        : [['block ', 'Φ_{X,P}', ' for probe X, pushed P'], ['block ', 'Φ_{X,P}']], 13, cInk, y);
+      const labW = Math.max(EPP.measureRich(ctx, 'α = x', 11, fUI), EPP.measureRich(ctx, 'α = y', 11, fUI)) + 8;
+      const mx = pad + labW, my = y + 25;
+      const g = mat(ctx, M, mx, my, { mono: fMono, size: 13, color: cInk, bracket: cMut, draw: true });
+      ctx.fillStyle = cMut;
+      EPP.drawRich(ctx, 'β = x', g.cx(0), my - 5, { size: 11, font: fUI, align: 'center' });
+      EPP.drawRich(ctx, 'β = y', g.cx(1), my - 5, { size: 11, font: fUI, align: 'center' });
+      EPP.drawRich(ctx, 'α = x', pad, g.base(0), { size: 11, font: fUI });
+      EPP.drawRich(ctx, 'α = y', pad, g.base(1), { size: 11, font: fUI });
+      EPP.drawRich(ctx, 'eV/Å^2', mx + g.w + 8, my + g.h / 2 + 4, { size: 11, font: fUI });
+      y = my + g.h + 20;
+      if (same) {
+        line([['= sum of K ', '*nn^T', ' over the 9 springs at P']], 12, cFg2, y); y += 16;
+        line([['= (', '3/2', ')K_1 + 3K_2 = ' + f2(c.on[0][0]) + ' on the diagonal'], ['= ' + f2(c.on[0][0]) + ' on the diagonal']], 11, cMut, y);
+      } else if (kind === 'nn' || kind === 'nnn') {
+        const Kn = kind === 'nn' ? 'K_1' : 'K_2', Kv = kind === 'nn' ? K1 : K2;
+        const a = L.atoms[P], b = L.atoms[X], rr = Math.hypot(b.x - a.x, b.y - a.y), n = [(b.x - a.x) / rr, (b.y - a.y) / rr];
+        if (Kv > 0) {
+          line([['= −' + Kn + ' ', '*nn^T', ',  ', '*n', ' = ' + vec(n)]], 12, cFg2, y); y += 16;
+          line([['*n', ': unit vector along the bond from P to X'], ['*n', ' along the bond P to X']], 11, cMut, y);
+        } else {
+          line([[Kn + ' = 0: the spring is removed, so the block vanishes'], [Kn + ' = 0: no spring, block = 0']], 12, cFg2, y);
+        }
+      } else {
+        line([['no spring joins X and P, so the block is zero'], ['no spring joins X and P']], 12, cFg2, y);
+      }
+      y += 24;
+      line([['rows α: direction of the force on ' + (same ? 'P' : 'X')], ['rows α: force direction']], 11, cMut, y); y += 15;
+      line([['columns β: direction of the push of P'], ['columns β: push direction']], 11, cMut, y); y += 24;
+      line([['*d', ' = ' + vec(c.d) + ' Å']], 12.5, cPhT, y); y += 19;
+      eqLine(same ? ['*F_P', ' = −Φ_{P,P} ', '*d'] : ['*F_X', ' = −Φ_{X,P} ', '*d'], [' = ' + vec(F) + ' eV/Å'], 12.5, same ? cPhT : cInk, y);
+    } else {
+      const a = L.atoms[c.sel];
+      const sum = list => list.reduce((S, j) => madd(S, blk(c.sel, j)), zero());
+      const sNN = sum(a.nn), sNNN = sum(a.nnn), tot = madd(madd(c.on, sNN), sNNN), Fn = neg(mv(tot, c.d));
+      let y = 18;
+      line([['row sum of ', 'Φ', ' for the selected atom'], ['row sum of Φ']], 13, cInk, y); y += 16;
+      line([['blocks ', 'Φ_{ℓκ,ℓ′κ′}', ' of its row, in eV/Å^2'], ['blocks of its row, eV/Å^2'], ['eV/Å^2']], 11, cMut, y);
+      const rows = [
+        { lab: [['on-site block'], ['on-site']], M: c.on },
+        { lab: [['+ 3 nearest (K_1), summed'], ['+ 3 nearest']], M: sNN },
+        { lab: [['+ 6 next-nearest (K_2), summed'], ['+ 6 next-nearest'], ['+ 6 next-n.']], M: sNNN },
+        { lab: [['= row sum, left side of (A1.6)'], ['= row sum (A1.6)'], ['= row sum']], M: tot, strong: true }
+      ];
+      const g0 = mat(ctx, c.on, 0, 0, { mono: fMono, size: 12.5, draw: false }), mx = W - pad - g0.w;
+      let yy = y + 12, lev = 0;
+      while (lev < 2 && rows.some(R => rtW(ctx, R.lab[Math.min(lev, R.lab.length - 1)], 11.5, fUI) > mx - pad - 8)) lev++;
+      for (const R of rows) {
+        const g = mat(ctx, R.M, mx, yy, { mono: fMono, size: 12.5, color: R.strong ? cInk : cFg2, bracket: cMut, draw: true });
+        const v = R.lab[Math.min(lev, R.lab.length - 1)];
+        ctx.fillStyle = R.strong ? cInk : cFg2; rt(ctx, v, pad, yy + g.h / 2 + 4, 11.5, fUI);
+        yy += g.h + 8;
+      }
+      yy += 12;
+      eqLine(['net force ', '*F', ' = −(row sum) ', '*d'], [' = ' + vec(Fn) + ' eV/Å'], 12, cInk, yy);
+    }
+  }
+
+  // ---------- legend and readouts ----------
+  let legKey = '', roKey = '';
+  function drawLegend() {
+    const C = EPP.color, key = [mode, K2 > 0, C('c4'), C('c5'), C('phonon'), C('ink'), C('muted')].join('|');
+    if (key === legKey) return;
+    legKey = key;
+    const svg = (inner, w) => `<svg width="${w}" height="12" viewBox="0 0 ${w} 12" aria-hidden="true" style="vertical-align:-1px;margin-right:5px">${inner}</svg>`;
+    const dot = col => svg(`<circle cx="6" cy="6" r="5.5" fill="${col}"/>`, 12);
+    const ln = (col, dots) => svg(`<line x1="2" y1="6" x2="20" y2="6" stroke="${col}" stroke-width="${dots ? 1.8 : 1.6}" stroke-linecap="round"${dots ? ' stroke-dasharray="0.1 3.6"' : ''}/>`, 22);
+    const arr = (col, lw) => svg(`<line x1="1" y1="6" x2="15" y2="6" stroke="${col}" stroke-width="${lw}"/><path d="M21 6 L14 2.6 L14 9.4 Z" fill="${col}"/>`, 22);
+    const it = (sw, t) => `<span class="item">${sw}${t}</span>`;
+    const items = [it(dot(C('c5')), 'B, κ = 1'), it(dot(C('c4')), 'N, κ = 2'), it(ln(C('muted'), false), 'K<sub>1</sub> spring'),
+      K2 > 0 ? it(ln(C('muted'), true), 'K<sub>2</sub> spring') : it(ln(C('muted'), true), 'K<sub>2</sub> = 0: removed'),
+      it(arr(C('phonon'), 3), '<b>d</b>, drawn ×12')];
+    if (!shift()) items.push(it(arr(C('phonon'), 2), 'force on P'), it(arr(C('ink'), 2), 'force on a neighbour'));
+    else items.push(it(arr(C('phonon'), 2), 'on-site term'), it(arr(C('ink'), 2), 'neighbour terms'));
+    elLeg.innerHTML = items.join('');
+  }
+  const atomTxt = a => `ℓ = (${a.l1}, ${a.l2}), κ = ${a.k + 1} (${SP[a.k].name})`.replace(/-/g, '−');
+  const S = t => `<strong>${t}</strong>`;
+  function setReadouts(c) {
+    const at = L.atoms, a = at[c.sel];
+    let r1, r2;
+    if (!shift()) {
+      const M = blk(c.pr, c.sel), FX = neg(mv(M, c.d)), FP = neg(mv(c.on, c.d));
+      r1 = [['pushed P', atomTxt(a)], ['probe X', atomTxt(at[c.pr])], [S('d'), vec(c.d) + ' Å'],
+        [S('F') + '<sub>X</sub>', vec(FX) + ' eV/Å'], [S('F') + '<sub>P</sub>', vec(FP) + ' eV/Å']];
+      r2 = [['Φ<sub>X,P</sub>', matTxt(M) + ' eV/Å²'], ['on-site Φ<sub>P,P</sub>', matTxt(c.on) + ' eV/Å²'], ['scale', `1 eV/Å = ${c.s} px`]];
+    } else {
+      const tot = [...a.nn, ...a.nnn].reduce((T, j) => madd(T, blk(c.sel, j)), c.on), Fn = neg(mv(tot, c.d)), Fo = neg(mv(c.on, c.d));
+      r1 = [['selected atom', atomTxt(a)], [S('d') + ' (every atom)', vec(c.d) + ' Å'], ['on-site term', vec(Fo) + ' eV/Å'], ['net force', vec(Fn) + ' eV/Å']];
+      r2 = [['Σ<sub>ℓ′κ′</sub> Φ<sub>ℓκα,ℓ′κ′β</sub>', matTxt(tot) + ' eV/Å²'], ['on-site Φ<sub>ℓκ,ℓκ</sub>', matTxt(c.on) + ' eV/Å²'], ['scale', `1 eV/Å = ${c.s} px`]];
+    }
+    const html = p => p.map(([k, v]) => `<span>${k}<b>${v}</b></span>`).join('');
+    const h1 = html(r1), h2 = html(r2);
+    if (h1 + h2 === roKey) return;
+    roKey = h1 + h2; elRo.innerHTML = h1; elRo2.innerHTML = h2;
+  }
+  // ---------- redraw, controls, pointer, animation ----------
+  let anim = null, lastRo = 0, thA = 30, cur = null;
+  function redraw(forceRo) {
+    if (!(cv.w > 1 && cb.w > 1)) return;
+    cur = compute();
+    drawLattice(cur); drawPanel(cur); drawLegend();
+    const now = performance.now();
+    if (forceRo || !anim || !anim.running || now - lastRo > 250) { setReadouts(cur); lastRo = now; }
+  }
+  const ui = EPP.controls(elCtl, [
+    { key: 'mode', type: 'seg', label: 'mode', options: [['push', 'push one atom'], ['shift', 'shift every atom']], value: 'push' },
+    { key: 'theta', type: 'range', label: 'direction θ of d', min: 0, max: 360, step: 1, value: 30, fmt: v => v.toFixed(0) + '°' },
+    { key: 'click', type: 'seg', label: 'click selects', options: [['pushed', 'pushed atom'], ['probe', 'probe atom']], value: 'pushed' },
+    { key: 'K1', type: 'range', label: 'K_1, nearest neighbours (eV/Å^2)', min: 5, max: 40, step: 0.1, value: 28.1, fmt: v => v.toFixed(1) },
+    { key: 'K2', type: 'range', label: 'K_2, next-nearest (eV/Å^2)', min: 0, max: 10, step: 0.1, value: 5.0, fmt: v => v.toFixed(1) }
+  ], s => {
+    mode = s.mode; clickSel = s.click; K1 = s.K1; K2 = s.K2;
+    const th = Math.round(s.theta) % 360;
+    if (th !== theta) { theta = th; thA = th; }
+    const segBtns = [...elCtl.querySelectorAll('[data-v="pushed"], [data-v="probe"]')];
+    segBtns.forEach(b => { b.disabled = shift(); });
+    const box = segBtns.length ? segBtns[0].closest('.ctrl') : null;
+    if (box) box.style.opacity = shift() ? '0.5' : '';
+    redraw(true);
+  });
+  const thLab = elCtl.querySelector('label[for="viz-a1-forces-theta"] > span');
+  if (thLab) thLab.innerHTML = 'direction θ of <b>d</b>';
+
+  // pointer: a tap or click (moved < 10 px) selects the nearest atom within its radius + 10 px
+  const cvs = cv.canvas;
+  let down = null;
+  const local = e => { const b = cvs.getBoundingClientRect(); return [e.clientX - b.left, e.clientY - b.top]; };
+  function hit(x, y) {
+    if (!L || !cur) return -1;
+    let best = -1, bd = Infinity;
+    L.atoms.forEach((a, i) => { if (!a.vis) return; const p = drawPos(cur, i), dd = Math.hypot(p[0] - x, p[1] - y); if (dd < bd) { bd = dd; best = i; } });
+    return bd <= L.r + 10 && y > BAND ? best : -1;
+  }
+  cvs.addEventListener('pointerdown', e => { down = local(e); });
+  cvs.addEventListener('pointercancel', () => { down = null; });
+  cvs.addEventListener('pointerleave', () => { cvs.style.cursor = ''; });
+  cvs.addEventListener('pointermove', e => { if (e.pointerType === 'mouse') { const p = local(e); cvs.style.cursor = hit(p[0], p[1]) >= 0 ? 'pointer' : ''; } });
+  cvs.addEventListener('pointerup', e => {
+    if (!down) return;
+    const p = local(e), moved = Math.hypot(p[0] - down[0], p[1] - down[1]);
+    down = null;
+    if (moved > 10) return;
+    const i = hit(p[0], p[1]);
+    if (i < 0) return;
+    const a = L.atoms[i];
+    if (!shift() && clickSel === 'probe') probeKey = keyOf(a);
+    else if (a.pick) selKey = keyOf(a);
+    else { hintUntil = performance.now() + 2600; setTimeout(() => redraw(true), 2700); }
+    redraw(true);
+  });
+
+  // optional slow rotation of d (starts paused; EPP.anim pauses it offscreen and under reduced motion)
+  const host = document.createElement('div');
+  host.className = 'ctrl';
+  host.innerHTML = '<span class="lab"><span>rotate <b>d</b> slowly</span></span>';
+  elCtl.appendChild(host);
+  anim = EPP.anim(fig, (t, dt) => {
+    if (dt > 0) {
+      thA = (thA + 20 * dt) % 360;
+      const th = Math.round(thA) % 360;
+      if (th === theta) return;
+      theta = th; ui.set('theta', th, true);
+    }
+    redraw(false);
+  }, { buttonHost: host, autoplay: false });
+  anim.button.addEventListener('click', () => redraw(true));
+  cv.onResize(() => redraw(true));
+  cb.onResize(() => redraw(true));
+})();
+</script>

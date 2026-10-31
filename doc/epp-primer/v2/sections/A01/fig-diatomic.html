@@ -1,0 +1,399 @@
+  <figure class="viz" id="viz-a1-diatomic">
+    <p class="viz-title">The diatomic chain: two branches, and what an eigenvector means <span class="tag">interactive</span></p>
+    <div class="viz-grid two"><div class="a1-diatomic-disp"></div><div class="a1-diatomic-eig"></div></div>
+    <div class="a1-diatomic-chain"></div>
+    <div class="a1-diatomic-ctrls"></div>
+    <div class="readout a1-diatomic-ro" aria-live="polite"><span>$\hbar\omega$<b class="a1-diatomic-v-hw"></b></span><span>$e_1,\ e_2$<b class="a1-diatomic-v-e"></b></span><span>$\xi_2/\xi_1$<b class="a1-diatomic-v-ratio"></b></span><span>gap at $q=\pi/a$<b class="a1-diatomic-v-gap"></b></span></div>
+    <div class="readout a1-diatomic-ro2" aria-live="polite"><span>$\tPhi_{11},\ \tPhi_{12},\ \tPhi_{22}$<b class="a1-diatomic-v-phi"></b></span><span>$\omega^2_-,\ \omega^2_+$<b class="a1-diatomic-v-w2"></b></span><span>units of $\tPhi$ and $\omega^2$<b>eV Å⁻² amu⁻¹</b></span></div>
+    <figcaption><strong>Model.</strong> Cells of length $a$ hold atom $\kappa=1$ (mass $M_1$) at the cell corner and atom $\kappa=2$ (mass $M_2$) at $a/2$. A spring $K_1$ joins the two atoms of a cell, and a spring $K_2$ joins atom 2 of cell $\ell$ to atom 1 of cell $\ell+1$. For each wavevector $q$ the figure solves $\sum_{\kappa'}\tPhi_{\kappa\kappa'}(q)\,e_{\kappa'}=\omega^2e_\kappa$, where $\tPhi_{\kappa\kappa'}(q)=\Phi_{\kappa\kappa'}(q)/\sqrt{M_\kappa M_{\kappa'}}$, $\Phi_{11}=\Phi_{22}=K_1+K_2$ and $\Phi_{12}=\Phi_{21}^*=-(K_1+K_2\,\ee^{-\ii qa})$; each force constant carries the phase of the partner atom's cell. The eigenvalues are $\omega^2_\pm=\tfrac{A+C}{2}\pm\sqrt{\big(\tfrac{A-C}{2}\big)^2+|B|^2}$ with $A=(K_1+K_2)/M_1$, $C=(K_1+K_2)/M_2$ and $|B|^2=(K_1^2+K_2^2+2K_1K_2\cos qa)/(M_1M_2)$. With $K$ in eV/Å² and $M$ in amu, $\omega^2$ is in eV Å⁻² amu⁻¹ and $\hbar\omega=64.654\ \mathrm{meV}\times\sqrt{\omega^2}$.
+      <strong>(a)</strong> The acoustic branch $\hbar\omega_-(q)$ (solid) and the optical branch $\hbar\omega_+(q)$ (dashed). Click or drag to choose $q$ and the nearer branch; the filled dot and the vertical line mark the selected mode. The hollow dots are the 12 wavevectors allowed in a Born–von Kármán supercell of $N_\ell=12$ cells (the two end dots are the same wave, $q=\pm\pi/a$), and a click within a few pixels of one selects it exactly. The shaded band is the gap at $q=\pi/a$.
+      <strong>(b)</strong> The eigenvector $(e_1,e_2)$ of the selected mode. Its components are the amplitudes of the two atoms in mass-weighted units, $e_\kappa=\sqrt{M_\kappa}\,\xi_\kappa$, normalized so that $|e_1|^2+|e_2|^2=1$. The overall phase is free; here it makes $e_1$ real and positive ($e_2$ when $e_1=0$). Each dial is a complex plane whose rim is the unit circle, violet for atom 1 and teal for atom 2, and the amber arrow has length $|e_\kappa|$ and angle $\arg e_\kappa$, which the thin arc marks. The arrows below are the physical amplitudes $\xi_\kappa=e_\kappa/\sqrt{M_\kappa}$ on one common scale: the same angles, with lengths divided by $\sqrt{M_\kappa}$; the discs at their tails are drawn larger for the heavier atom. The last line gives the ratio $\xi_2/\xi_1$ as magnitude∠phase, or, for $|qa|<0.05\pi$, the relation that the two amplitudes obey.
+      <strong>(c)</strong> The selected mode as a running wave, $u_{\ell\kappa}(t)=\mathrm{Re}\,\big[\xi_\kappa\,\ee^{\ii(q\ell a-\omega t)}\big]$, with the phase taken at the cell corner. Amplitudes are exaggerated, and one period lasts 2.6 s whatever $\omega$; the acoustic mode at $q=0$ has $\omega=0$, a rigid translation, and is drawn oscillating only to show its pattern. Atoms are coloured as in (b) and drawn larger when heavier, short ticks mark their rest positions, stiffer springs are drawn thicker, and the bracket marks one cell, of length $a$. The lower row draws the same displacements transversely. 12 cells are shown, 6 on narrow screens.
+      <strong>Presets.</strong> The hBN-like chain (10.81 and 14.01 amu, $K_1=K_2=21.07$ eV/Å², 169.9 meV at $q=0$) and the GaAs-like chain (69.72 and 74.92 amu, $K_1=K_2=4.79$ eV/Å², 33.3 meV) are 1D models tuned to the optical energy at $q=0$ of the real crystals (literature values, illustrative), not to their full dispersions. “Equal masses, unequal springs” has $M_1=M_2=1$ amu, $K_1=0.5$ eV/Å² and $K_2=2.5$ eV/Å², and opens on the acoustic mode at $q=\pi/a$.
+      <strong>What to notice.</strong> Near $q=0$ the acoustic mode moves the cell rigidly ($\xi_1=\xi_2$), while the optical mode keeps the centre of mass fixed ($M_1\xi_1=-M_2\xi_2$). A gap opens at $q=\pi/a$ whenever $M_1\neq M_2$ or $K_1\neq K_2$. With equal masses and unequal springs at $q=\pi/a$ the dynamical matrix is real, $\tPhi=\left[\begin{smallmatrix}3&amp;2\\2&amp;3\end{smallmatrix}\right]$ eV Å⁻² amu⁻¹, and each mode stretches only one kind of spring.</figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a1-diatomic');
+  if (!fig || !window.EPP) return;
+  // Units: K in eV/Å^2, M in amu -> omega^2 in eV Å^-2 amu^-1; hbar*omega [meV] = HW * sqrt(omega^2)
+  const HW = 64.654, CM = 8.06554, PERIOD = 2.6;
+  const PRESETS = {
+    hbn: { M1: 10.81, M2: 14.01, K1: 21.07, K2: 21.07, q: 1 / 6, br: '1' },
+    gaas: { M1: 69.72, M2: 74.92, K1: 4.79, K2: 4.79, q: 1 / 6, br: '1' },
+    eqm: { M1: 1, M2: 1, K1: 0.5, K2: 2.5, q: 1, br: '0' }
+  };
+
+  // ---------- physics ----------
+  // mass-scaled dynamical matrix: A = Φ̃_11, C = Φ̃_22, B = Φ̃_12 = -(K1 + K2 e^{-iqa})/sqrt(M1 M2) as [re, im]
+  function dyn(p, qa) {
+    const s = Math.sqrt(p.M1 * p.M2);
+    return { A: (p.K1 + p.K2) / p.M1, C: (p.K1 + p.K2) / p.M2, B: [-(p.K1 + p.K2 * Math.cos(qa)) / s, p.K2 * Math.sin(qa) / s] };
+  }
+  const cmul = (a, b) => [a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0]];
+  const cdiv = (a, b) => { const d = b[0] * b[0] + b[1] * b[1]; return [(a[0] * b[0] + a[1] * b[1]) / d, (a[1] * b[0] - a[0] * b[1]) / d]; };
+  const cabs = (c) => Math.hypot(c[0], c[1]);
+  // closed-form 2x2 Hermitian eigenproblem, ascending; gauge: e_1 real and positive (e_2 when e_1 = 0)
+  function eig(D) {
+    const { A, C, B } = D, bb = B[0] * B[0] + B[1] * B[1];
+    const m = 0.5 * (A + C), r = Math.sqrt(0.25 * (A - C) * (A - C) + bb);
+    const vals = [m - r, m + r];
+    const vecs = vals.map((l, k) => {
+      let x, y;
+      const n1 = bb + (l - A) * (l - A), n2 = (l - C) * (l - C) + bb;
+      if (n1 >= n2 && n1 > 1e-24) { x = [B[0], B[1]]; y = [l - A, 0]; }
+      else if (n2 > 1e-24) { x = [l - C, 0]; y = [B[0], -B[1]]; }
+      else { x = [k ? 0 : 1, 0]; y = [k ? 1 : 0, 0]; }
+      const n = Math.sqrt(x[0] * x[0] + x[1] * x[1] + y[0] * y[0] + y[1] * y[1]) || 1;
+      x = [x[0] / n, x[1] / n]; y = [y[0] / n, y[1] / n];
+      const ax = cabs(x), ay = cabs(y);
+      const ph = ax > 1e-9 ? [x[0] / ax, -x[1] / ax] : [y[0] / (ay || 1), -y[1] / (ay || 1)];
+      const ex = cmul(x, ph), ey = cmul(y, ph);
+      if (ax > 1e-9) ex[1] = 0; else { ex[0] = 0; ex[1] = 0; ey[1] = 0; }
+      return [ex, ey];
+    });
+    return { vals, vecs, degenerate: r <= 1e-9 * Math.abs(m) };
+  }
+  function w2pm(p, qa) {
+    const A = (p.K1 + p.K2) / p.M1, C = (p.K1 + p.K2) / p.M2;
+    const bb = (p.K1 * p.K1 + p.K2 * p.K2 + 2 * p.K1 * p.K2 * Math.cos(qa)) / (p.M1 * p.M2);
+    const m = 0.5 * (A + C), r = Math.sqrt(0.25 * (A - C) * (A - C) + Math.max(0, bb));
+    return [Math.max(0, m - r), m + r];
+  }
+  function compute(s) {
+    const p = { M1: s.M1, M2: s.M2, K1: s.K1, K2: s.K2 };
+    let qn = s.q;
+    if (Math.abs(qn) < 1e-9) qn = 0; else if (Math.abs(Math.abs(qn) - 1) < 1e-9) qn = Math.sign(qn);
+    const qa = Math.PI * qn, br = +s.br;
+    const D = dyn(p, qa), E = eig(D);
+    // equal masses and springs at q = ±π/a: the branches touch, so take the eigenvectors in the limit from inside the zone
+    const V = E.degenerate ? eig(dyn(p, qa * (1 - 1e-6))).vecs : E.vecs;
+    const w2 = Math.max(0, E.vals[br]), hw = HW * Math.sqrt(w2), e = V[br];
+    const r1 = 1 / Math.sqrt(p.M1), r2 = 1 / Math.sqrt(p.M2);
+    const xi = [[e[0][0] * r1, e[0][1] * r1], [e[1][0] * r2, e[1][1] * r2]];
+    const ratio = cabs(e[0]) > 1e-6 && cabs(e[1]) > 1e-6 ? cdiv(xi[1], xi[0]) : null;
+    const zb = w2pm(p, Math.PI);
+    return { p, qn, qa, br, D, E, w2, hw, e, xi, ratio, gap: HW * (Math.sqrt(zb[1]) - Math.sqrt(zb[0])) };
+  }
+
+  // ---------- formatting ----------
+  const fx = (v, d) => (Math.abs(v) < 0.5 * Math.pow(10, -d) ? (0).toFixed(d) : EPP.fix(v, d));
+  const ang = (c) => { let d = Math.round(Math.atan2(c[1], c[0]) * 180 / Math.PI); if (d === -180) d = 180; return d === 0 ? 0 : d; };
+  const pol = (c, nd = 3) => { const a = cabs(c); if (!(a >= 5e-4)) return '0'; const d = ang(c); return `${a.toFixed(nd)}∠${d < 0 ? '−' + (-d) : d}°`; };
+  const zfmt = (c) => (Math.abs(c[1]) < 5e-4 ? fx(c[0], 3) : fx(c[0], 3) + (c[1] < 0 ? ' − ' : ' + ') + Math.abs(c[1]).toFixed(3) + 'i');
+  const qfmt = (v) => (Math.abs(v) < 5e-4 ? '0' : (v > 0 ? '+' : '−') + Math.abs(v).toFixed(3));
+  function niceCeil(v) {
+    if (!(v > 0) || !isFinite(v)) return 1;
+    const mag = Math.pow(10, Math.floor(Math.log10(v))), r = v / mag;
+    const st = [1, 1.2, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10].find(s => s >= r - 1e-9) || 10;
+    return st * mag;
+  }
+  // sticky autoscale: rescale only when the curve leaves the frame or shrinks a lot
+  const sticky = (top, need) => ((need > top * 0.97 || need < top * 0.42) ? niceCeil(need * 1.15) : top);
+
+  // ---------- canvas text: '$...$' marks math, where letters are italic and digits upright; _x, ^x as in EPP.drawRich ----------
+  const ITAL = /[A-Za-zα-ωℓ]/;
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const part of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: part.t, m: part.m, it: false }); continue; }
+        let buf = '', it = null;
+        for (const ch of part.t) {
+          const k = ITAL.test(ch);
+          if (it !== null && k !== it) { out.push({ t: buf, m: part.m, it }); buf = ''; }
+          buf += ch; it = k;
+        }
+        if (buf) out.push({ t: buf, m: part.m, it });
+      }
+    });
+    return out;
+  }
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, fam = EPP.css('--font-ui'), rs = runs(s);
+    const font = (r) => `${r.it ? 'italic ' : ''}${r.m ? Math.round(size * 0.72) : size}px ${fam}`;
+    const ws = rs.map(r => { ctx.font = font(r); return ctx.measureText(r.t).width; });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    let x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    if (o.color) ctx.fillStyle = o.color;
+    ctx.textAlign = 'left';
+    rs.forEach((r, k) => { ctx.font = font(r); ctx.fillText(r.t, x0, y + (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0))); x0 += ws[k]; });
+    return tot;
+  }
+  const tw = (ctx, s, size) => txt(ctx, s, 0, 0, { size, measure: true });
+  function arrow(ctx, x0, y0, x1, y1, col, lw, head) {
+    const L = Math.hypot(x1 - x0, y1 - y0);
+    ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = lw; ctx.lineCap = 'round'; ctx.setLineDash([]);
+    if (L < 2) { ctx.beginPath(); ctx.arc(x0, y0, lw, 0, 2 * Math.PI); ctx.fill(); return; }
+    const hs = Math.min(head, 0.6 * L), a = Math.atan2(y1 - y0, x1 - x0);
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1 - 0.8 * hs * Math.cos(a), y1 - 0.8 * hs * Math.sin(a)); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x1, y1);
+    ctx.lineTo(x1 - hs * Math.cos(a - 0.42), y1 - hs * Math.sin(a - 0.42));
+    ctx.lineTo(x1 - hs * Math.cos(a + 0.42), y1 - hs * Math.sin(a + 0.42));
+    ctx.closePath(); ctx.fill();
+  }
+
+  // ---------- panels ----------
+  const elCtl = fig.querySelector('.a1-diatomic-ctrls');
+  const pD = new EPP.Plot(fig.querySelector('.a1-diatomic-disp'), {
+    xlabel: 'wavevector q', ylabel: 'ħω (meV)', xlim: [-1, 1], ylim: [0, 200], xname: 'qa/π',
+    xticks: [{ v: -1, label: '−π/a' }, { v: -0.5, label: '−π/2a' }, { v: 0, label: '0' }, { v: 0.5, label: 'π/2a' }, { v: 1, label: 'π/a' }],
+    hoverX: v => fx(v, 3), hoverY: v => fx(v, 1) + ' meV', aspect: 0.8, maxHeight: 340, margin: { t: 26 },
+    ariaLabel: 'Panel a: phonon dispersion of the diatomic chain, acoustic and optical branch energies versus wavevector, with the selected mode marked'
+  });
+  const cvE = EPP.canvas(fig.querySelector('.a1-diatomic-eig'), { height: 322 });
+  cvE.canvas.setAttribute('role', 'img');
+  const cvC = EPP.canvas(fig.querySelector('.a1-diatomic-chain'), { height: 212 });
+  cvC.canvas.setAttribute('role', 'img');
+  cvC.canvas.setAttribute('aria-label', 'Panel c: animated diatomic chain showing the selected normal mode as a running wave, with the same displacements drawn transversely below');
+  // readout keys are static MathJax in the markup; only the values change
+  const roV = {};
+  ['hw', 'e', 'ratio', 'gap', 'phi', 'w2'].forEach(k => { roV[k] = fig.querySelector('.a1-diatomic-v-' + k); });
+  const qs = EPP.linspace(-1, 1, 321), bvk = EPP.linspace(-1, 1, 13);
+  let cur = null, yTop = 200, lastPreset = 'hbn', anim = null;
+
+  function drawDisp() {
+    const { p, qn, hw } = cur;
+    const ac = new Array(qs.length), op = new Array(qs.length);
+    for (let i = 0; i < qs.length; i++) { const w = w2pm(p, Math.PI * qs[i]); ac[i] = HW * Math.sqrt(w[0]); op[i] = HW * Math.sqrt(w[1]); }
+    const zb = w2pm(p, Math.PI).map(v => HW * Math.sqrt(v));
+    yTop = sticky(yTop, Math.max.apply(null, op));
+    const bac = bvk.map(x => HW * Math.sqrt(w2pm(p, Math.PI * x)[0])), bop = bvk.map(x => HW * Math.sqrt(w2pm(p, Math.PI * x)[1]));
+    const gap = zb[1] - zb[0];
+    const iL = Math.round(0.75 * (qs.length - 1)); // qa/π = +0.5: labels beside the curves, on their convex sides
+    pD.draw([
+      { type: 'text', x: -1, y: yTop, dx: 4 - pD.m.l, dy: -13, text: '(a) dispersion: click or drag to choose a mode', color: 'fg2', size: 11.5 },
+      gap > 0.004 * yTop ? { type: 'hband', y0: zb[0], y1: zb[1], color: 'phonon', alpha: 0.12 } : null,
+      gap > 0.07 * yTop ? { type: 'text', x: -0.5, y: (zb[0] + zb[1]) / 2, text: 'gap at q = π/a', color: 'phonon', align: 'center', size: 11 } : null,
+      { type: 'line', x: qs, y: ac, color: 'phonon', label: 'acoustic ω_−' },
+      { type: 'line', x: qs, y: op, color: 'phonon', dash: [7, 4], label: 'optical ω_+' },
+      { type: 'points', x: bvk, y: bac, color: 'phonon', r: 2.6, hollow: true },
+      { type: 'points', x: bvk, y: bop, color: 'phonon', r: 2.6, hollow: true },
+      { type: 'vline', at: qn, color: 'muted', width: 1 },
+      { type: 'points', x: [qn], y: [hw], color: 'ink', r: 5 },
+      { type: 'text', x: 0.5, y: ac[iL], dx: 7, dy: ac[iL] < 0.12 * yTop ? -10 : 12, text: 'acoustic', color: 'phonon', align: 'left', size: 11.5 },
+      { type: 'text', x: 0.5, y: op[iL], dx: 7, dy: -12, text: 'optical', color: 'phonon', align: 'left', size: 11.5 }
+    ], { ylim: [0, yTop] });
+  }
+
+  function relationText(c) {
+    const near = Math.abs(c.qn) < 0.05, eq = c.qn === 0 ? '=' : '≈';
+    if (near && c.br === 0) return [`acoustic, $q$ ${eq} 0: $ξ_1$ ${eq} $ξ_2$, the cell moves rigidly`, `acoustic: $ξ_1$ ${eq} $ξ_2$`];
+    if (near) return [`optical, $q$ ${eq} 0: $M_1ξ_1$ + $M_2ξ_2$ ${eq} 0, centre of mass at rest`, `optical: $M_1ξ_1$ + $M_2ξ_2$ ${eq} 0`];
+    if (cabs(c.e[0]) <= 1e-6) return ['atom 1 at rest ($ξ_1$ = 0): only atom 2 moves', 'atom 1 at rest: $ξ_1$ = 0'];
+    if (cabs(c.e[1]) <= 1e-6) return ['atom 2 at rest ($ξ_2$ = 0): only atom 1 moves', 'atom 2 at rest: $ξ_2$ = 0'];
+    const r = pol(c.ratio), d = ang(c.ratio);
+    return [`$ξ_2$/$ξ_1$ = ${r}: amplitude ratio ${cabs(c.ratio).toFixed(2)}, phase ${d < 0 ? '−' + (-d) : d}°`, `$ξ_2$/$ξ_1$ = ${r}`];
+  }
+
+  function drawEig() {
+    cvE.clear();
+    if (!cur) return;
+    const ctx = cvE.ctx, w = cvE.w, h = cvE.h, pad = 8;
+    const { p, e, xi, br, qn } = cur;
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMuted = EPP.color('muted'), cGrid = EPP.color('grid');
+    const cPh = EPP.color('phonon'), cPhT = EPP.textColor('phonon');
+    const cK = [EPP.color('c5'), EPP.color('c4')], cKT = [EPP.textColor('c5'), EPP.textColor('c4')];
+    ctx.textBaseline = 'alphabetic';
+    // header: title, then the mode on the same row if it fits
+    const title = '(b) eigenvector of the selected mode', tag = `${br ? 'optical' : 'acoustic'}, $qa$/π = ${qfmt(qn)}`;
+    txt(ctx, title, pad, 15, { size: 11.5, color: cFg2 });
+    const one = pad + tw(ctx, title, 11.5) + 16 + tw(ctx, tag, 11.5) <= w - pad;
+    txt(ctx, tag, one ? w - pad : pad, one ? 15 : 31, { size: 11.5, color: cPhT, align: one ? 'right' : 'left' });
+    const hb = one ? 22 : 38;
+    // layout: dial radius R from the height left after the fixed text rows, capped by the width
+    const fixedH = 12 + 13 + 13 + 22 + 8 + 20 + 17 + 10;
+    const R = Math.max(22, Math.min((h - hb - fixedH) / 3.54, 58, (w / 2 - 49) / 2.45));
+    const L = 0.62 * R, D = Math.min(Math.max(w / 4, 1.3 * R + 30), w / 2 - 1.15 * R - 19);
+    const cx = [w / 2 - D, w / 2 + D], cy = hb + 12 + 1.15 * R;
+    const k0 = cabs(e[0]) > 1e-9 ? 0 : 1; // the component made real and positive
+    for (let k = 0; k < 2; k++) {
+      const X = cx[k], c = e[k], a = cabs(c), ph = Math.atan2(c[1], c[0]);
+      ctx.strokeStyle = cGrid; ctx.lineWidth = 1; ctx.setLineDash([]); ctx.beginPath();
+      ctx.moveTo(X - 1.15 * R, cy); ctx.lineTo(X + 1.15 * R, cy); ctx.moveTo(X, cy + 1.15 * R); ctx.lineTo(X, cy - 1.15 * R); ctx.stroke();
+      txt(ctx, 'Re', X + 1.15 * R + 3, cy + 3.5, { size: 10, color: cMuted });
+      txt(ctx, 'Im', X + 4, cy - 1.15 * R + 4, { size: 10, color: cMuted });
+      txt(ctx, '1', X + R + 3, cy + 12, { size: 10, color: cMuted });
+      ctx.strokeStyle = cK[k]; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(X, cy, R, 0, 2 * Math.PI); ctx.stroke();
+      txt(ctx, `$e_${k + 1}$`, X - 0.8 * R, cy - 0.8 * R, { size: 14, color: cKT[k], align: 'right' });
+      if (a > 0.12 && Math.abs(ph) > 0.06) { ctx.strokeStyle = cPhT; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(X, cy, 0.3 * R, 0, -ph, ph > 0); ctx.stroke(); }
+      arrow(ctx, X, cy, X + R * c[0], cy - R * c[1], cPh, 2.6, 9);
+      const val = k === k0 ? `$e_${k + 1}$ = ${a.toFixed(3)}` : `$e_${k + 1}$ = ${pol(c)}`;
+      txt(ctx, val, X, cy + 1.15 * R + 13, { size: 11.5, color: cFg2, align: 'center' });
+      if (k === k0) txt(ctx, 'chosen real and positive', X, cy + 1.15 * R + 26, { size: 10, color: cMuted, align: 'center' });
+    }
+    // physical amplitudes on one common scale, discs sized by mass as in (c)
+    const yH = cy + 1.15 * R + 26 + 22;
+    let head = 'physical amplitudes $ξ_κ$ = $e_κ$/√$M_κ$, one common scale';
+    if (tw(ctx, head, 11) > w - 2 * pad) head = '$ξ_κ$ = $e_κ$/√$M_κ$, one common scale';
+    txt(ctx, head, w / 2, yH, { size: 11, color: cFg2, align: 'center' });
+    const y0 = yH + 8 + L, big = Math.max(cabs(xi[0]), cabs(xi[1])) || 1, Mk = [p.M1, p.M2], Mmax = Math.max(p.M1, p.M2);
+    for (let k = 0; k < 2; k++) {
+      const X = cx[k], c = xi[k], s = L / big, len = cabs(c) * s, ph = Math.atan2(c[1], c[0]);
+      ctx.strokeStyle = cGrid; ctx.lineWidth = 1; ctx.beginPath();
+      ctx.moveTo(X - 1.15 * L, y0); ctx.lineTo(X + 1.15 * L, y0); ctx.moveTo(X, y0 - 1.1 * L); ctx.lineTo(X, y0 + 1.1 * L); ctx.stroke();
+      const rr = 2.5 + 3.5 * Math.cbrt(Mk[k] / Mmax);
+      arrow(ctx, X, y0, X + s * c[0], y0 - s * c[1], cPh, 2.6, 8);
+      ctx.fillStyle = cK[k]; ctx.beginPath(); ctx.arc(X, y0, rr, 0, 2 * Math.PI); ctx.fill();
+      if (len < rr + 4) txt(ctx, `$ξ_${k + 1}$ = 0`, X + rr + 5, y0 - 6, { size: 12, color: cKT[k] });
+      else {
+        // label beyond the tip for mostly horizontal arrows, beside the tip (inside this row) for mostly vertical ones
+        const ux = Math.cos(ph), uy = -Math.sin(ph);
+        if (Math.abs(ux) > 0.35) txt(ctx, `$ξ_${k + 1}$`, X + (len + 9) * ux, y0 + (len + 9) * uy + 4.5, { size: 13, color: cKT[k], align: ux > 0 ? 'left' : 'right' });
+        else txt(ctx, `$ξ_${k + 1}$`, X + s * c[0] + 8, EPP.clamp(y0 - s * c[1] + 4.5, y0 - L + 9, y0 + L + 2), { size: 13, color: cKT[k] });
+      }
+    }
+    // normalization and the relation between the two amplitudes
+    const yN = y0 + L + 20, n1 = Math.round((e[0][0] * e[0][0] + e[0][1] * e[0][1]) * 1000) / 1000;
+    txt(ctx, `$|e_1|^2$ + $|e_2|^2$ = ${n1.toFixed(3)} + ${(1 - n1).toFixed(3)} = 1`, w / 2, yN, { size: 11.5, color: cFg2, align: 'center' });
+    const rel = relationText(cur), relS = tw(ctx, rel[0], 11.5) <= w - 2 * pad ? rel[0] : rel[1];
+    txt(ctx, relS, w / 2, yN + 17, { size: 11.5, color: cFg, align: 'center' });
+    cvE.canvas.setAttribute('aria-label', `Panel b: eigenvector of the ${br ? 'optical' : 'acoustic'} mode at qa/π = ${qfmt(qn)}. ` +
+      `e1 = ${pol(e[0])}, e2 = ${pol(e[1])}, drawn as arrows on two unit-circle dials; physical amplitudes xi1 and xi2 drawn below on one scale. ` + relS.replace(/\$/g, '').replace(/_/g, ''));
+  }
+
+  function spring(ctx, xa, xb, y, lw, col) {
+    const L = xb - xa;
+    // a compressed spring gets thinner coils so that it never renders as a solid block
+    ctx.strokeStyle = col; ctx.lineWidth = Math.min(lw, Math.max(1, L / 7)); ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    ctx.beginPath();
+    if (L < 6) { ctx.moveTo(xa, y); ctx.lineTo(xb, y); ctx.stroke(); return; }
+    // coil count varies continuously with length (no jumps during the animation); sin(pi s) tapers both ends
+    const lead = 0.12 * L, body = L - 2 * lead, coils = EPP.clamp(body / 6.5, 1, 4), amp = 3.2, ns = Math.max(12, Math.ceil(body));
+    ctx.moveTo(xa, y); ctx.lineTo(xa + lead, y);
+    for (let j = 1; j <= ns; j++) { const s = j / ns; ctx.lineTo(xa + lead + body * s, y - amp * Math.sin(2 * Math.PI * coils * s) * Math.sin(Math.PI * s)); }
+    ctx.lineTo(xb, y); ctx.stroke();
+  }
+
+  function drawChain(t) {
+    cvC.clear();
+    if (!cur) return;
+    const ctx = cvC.ctx, w = cvC.w, h = cvC.h;
+    const narrow = w < 520, ncell = narrow ? 6 : 12, padX = 10, cellW = (w - 2 * padX) / ncell;
+    const yC = 64, yS = h - 36, stemA = 26;
+    const { p, xi, qn, hw, br } = cur;
+    const dmax = Math.max(cabs(xi[0]), cabs(xi[1])) || 1;
+    const phi = 2 * Math.PI * t / PERIOD;
+    const Mmax = Math.max(p.M1, p.M2), rmax = Math.max(3.5, Math.min(cellW * 0.1, 8));
+    const rad = [rmax * (0.5 + 0.5 * Math.cbrt(p.M1 / Mmax)), rmax * (0.5 + 0.5 * Math.cbrt(p.M2 / Mmax))];
+    // keep neighbouring atoms (half a cell apart) from touching: |u| <= 1, so a bond shrinks by at most 2*amp
+    const amp = Math.max(2, Math.min(cellW * 0.13, 12, (0.5 * cellW - rad[0] - rad[1] - 7) / 2));
+    const col = [EPP.color('c5'), EPP.color('c4')], cMuted = EPP.color('muted'), cRule = EPP.color('rule'), cFg2 = EPP.color('fg2');
+    const x0 = (l, k) => padX + cellW * (l + 0.25 + 0.5 * k);
+    // u_{ℓκ}(t) = Re[ξ_κ e^{i(qℓa − ωt)}], phase at the cell corner, scaled to |u| <= 1
+    const disp = (l, k) => { const th = Math.PI * qn * l - phi; return (xi[k][0] * Math.cos(th) - xi[k][1] * Math.sin(th)) / dmax; };
+    const atoms = [];
+    for (let l = -1; l <= ncell; l++) for (let k = 0; k < 2; k++) atoms.push({ l, k, x0: x0(l, k), u: disp(l, k) });
+    const lw = K => EPP.clamp(0.8 + 0.55 * Math.log2(1 + K), 0.9, 3.2);
+    ctx.save(); ctx.beginPath(); ctx.rect(0, 0, w, h); ctx.clip();
+    ctx.strokeStyle = cRule; ctx.lineWidth = 1;
+    for (const A of atoms) { ctx.beginPath(); ctx.moveTo(A.x0, yC - 13); ctx.lineTo(A.x0, yC - 9); ctx.stroke(); }
+    // springs: K_1 inside a cell (atom 1 -> atom 2), K_2 between cells (atom 2 -> atom 1 of the next cell)
+    for (let i = 0; i < atoms.length - 1; i++) {
+      const A = atoms[i], B = atoms[i + 1];
+      spring(ctx, A.x0 + amp * A.u + rad[A.k], B.x0 + amp * B.u - rad[B.k], yC, lw(A.k === 0 ? p.K1 : p.K2), cMuted);
+    }
+    for (const A of atoms) { ctx.fillStyle = col[A.k]; ctx.beginPath(); ctx.arc(A.x0 + amp * A.u, yC, rad[A.k], 0, 2 * Math.PI); ctx.fill(); }
+    // the same displacements drawn transversely
+    ctx.strokeStyle = cRule; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(0, yS); ctx.lineTo(w, yS); ctx.stroke();
+    for (const A of atoms) {
+      const yy = yS - stemA * A.u;
+      ctx.strokeStyle = EPP.alpha(A.k ? 'c4' : 'c5', 0.7); ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(A.x0, yS); ctx.lineTo(A.x0, yy); ctx.stroke();
+      ctx.fillStyle = col[A.k]; ctx.beginPath(); ctx.arc(A.x0, yy, 3.2, 0, 2 * Math.PI); ctx.fill();
+    }
+    ctx.restore();
+    // header row(s)
+    ctx.textBaseline = 'alphabetic';
+    const title = narrow ? '(c) running wave, amplitudes exaggerated' : '(c) the selected mode as a running wave, amplitudes exaggerated';
+    const tag = (br ? 'optical' : 'acoustic') + (hw < 0.05 ? ', $ω$ = 0: rigid translation' : `, ħ$ω$ = ${fx(hw, 1)} meV`);
+    txt(ctx, title, padX, 16, { size: 11.5, color: cFg2 });
+    const tagW = tw(ctx, tag, 11.5), one = padX + tw(ctx, title, 11.5) + 16 + tagW <= w - padX;
+    txt(ctx, tag, one ? w - padX : padX, one ? 16 : 33, { size: 11.5, color: EPP.textColor('phonon'), align: one ? 'right' : 'left' });
+    // spring labels and the cell bracket
+    const yK = yC + 24, xa = x0(0, 0), xb = x0(0, 1), xc = x0(1, 0);
+    txt(ctx, '$K_1$', 0.5 * (xa + xb), yK, { size: 11.5, color: cMuted, align: 'center' });
+    txt(ctx, '$K_2$', 0.5 * (xb + xc), yK, { size: 11.5, color: cMuted, align: 'center' });
+    const yB = yC + 34;
+    ctx.strokeStyle = cMuted; ctx.lineWidth = 1; ctx.beginPath();
+    ctx.moveTo(xa, yB - 4); ctx.lineTo(xa, yB); ctx.lineTo(xc, yB); ctx.lineTo(xc, yB - 4); ctx.stroke();
+    txt(ctx, '$a$', 0.5 * (xa + xc), yB + 13, { size: 12, color: cMuted, align: 'center' });
+    const yL = yS - stemA - 12;
+    txt(ctx, 'same displacements $u_{ℓκ}$($t$), drawn transversely', padX, yL, { size: 11, color: cMuted });
+    // atom key: on the transverse-label row when wide, on the second header row when narrow
+    const w1 = tw(ctx, 'atom 1', 11), w2 = tw(ctx, 'atom 2', 11), keyW = w1 + w2 + 34;
+    let ky = yL;
+    if (narrow || padX + tw(ctx, 'same displacements $u_{ℓκ}$($t$), drawn transversely', 11) + 20 + keyW > w - padX) ky = (one || padX + tagW + 20 + keyW <= w - padX) ? 33 : yB + 13;
+    let x = w - padX - w2;
+    txt(ctx, 'atom 2', x, ky, { size: 11, color: cMuted });
+    ctx.fillStyle = col[1]; ctx.beginPath(); ctx.arc(x - 8, ky - 4, 4, 0, 2 * Math.PI); ctx.fill();
+    x = x - 22 - w1;
+    txt(ctx, 'atom 1', x, ky, { size: 11, color: cMuted });
+    ctx.fillStyle = col[0]; ctx.beginPath(); ctx.arc(x - 8, ky - 4, 4, 0, 2 * Math.PI); ctx.fill();
+  }
+
+  function draw() {
+    if (!cur) return;
+    drawDisp();
+    drawEig();
+    const { D, E, hw, e, ratio, gap } = cur;
+    roV.hw.textContent = hw >= 0.05 ? `${fx(hw, 1)} meV (${fx(hw * CM, 0)} cm⁻¹)` : '0 (rigid translation)';
+    roV.e.textContent = `${pol(e[0])}, ${pol(e[1])}`;
+    roV.ratio.textContent = ratio ? pol(ratio) : (cabs(e[0]) <= 1e-6 ? '∞ (atom 1 at rest)' : '0 (atom 2 at rest)');
+    roV.gap.textContent = `${fx(gap, 1)} meV`;
+    roV.phi.textContent = `${fx(D.A, 3)}, ${zfmt(D.B)}, ${fx(D.C, 3)}`;
+    roV.w2.textContent = `${fx(Math.max(0, E.vals[0]), 3)}, ${fx(E.vals[1], 3)}`;
+  }
+
+  function onChange(s) {
+    if (s.preset !== lastPreset && PRESETS[s.preset]) {
+      const P = PRESETS[s.preset];
+      ['M1', 'M2', 'K1', 'K2', 'q', 'br'].forEach(k => ui.set(k, P[k], true));
+      lastPreset = s.preset;
+    } else if (PRESETS[s.preset]) {
+      const P = PRESETS[s.preset];
+      if (['M1', 'M2', 'K1', 'K2'].some(k => Math.abs(s[k] - P[k]) > 1e-6 * P[k])) { ui.set('preset', 'custom', true); lastPreset = 'custom'; }
+    } else lastPreset = s.preset;
+    cur = compute(ui.state);
+    draw();
+    if (anim) anim.redraw();
+  }
+
+  const mfmt = v => (v < 10 ? v.toFixed(2) : v.toFixed(1)) + ' amu';
+  const kfmt = v => v.toFixed(2);
+  const ui = EPP.controls(elCtl, [
+    { key: 'preset', type: 'select', label: 'preset', options: [['hbn', 'hBN-like chain'], ['gaas', 'GaAs-like chain'], ['eqm', 'equal masses, unequal springs'], ['custom', 'custom']], value: 'hbn' },
+    { key: 'M1', type: 'range', label: 'mass M_1', min: 1, max: 200, value: 10.81, log: true, step: 'any', fmt: mfmt },
+    { key: 'M2', type: 'range', label: 'mass M_2', min: 1, max: 200, value: 14.01, log: true, step: 'any', fmt: mfmt },
+    { key: 'K1', type: 'range', label: 'intracell spring K_1 (eV/Å^2)', min: 0.1, max: 30, value: 21.07, log: true, step: 'any', fmt: kfmt },
+    { key: 'K2', type: 'range', label: 'intercell spring K_2 (eV/Å^2)', min: 0.1, max: 30, value: 21.07, log: true, step: 'any', fmt: kfmt },
+    { key: 'q', type: 'range', label: 'wavevector qa/π', min: -1, max: 1, step: 1 / 600, value: 1 / 6, fmt: qfmt },
+    { key: 'br', type: 'seg', label: 'branch', options: [['0', 'acoustic'], ['1', 'optical']], value: '1' }
+  ], onChange);
+  cur = compute(ui.state);
+
+  // click or drag on (a): the branch nearest to the pointer on 'down'; snap to an allowed q within 10 px
+  pD.onPointer = (x, y, type, d) => {
+    if (!cur || type === 'up' || !d) return;
+    const p = cur.p, hwq = (s, b) => HW * Math.sqrt(w2pm(p, Math.PI * s)[b]);
+    let qn = EPP.clamp(Math.round(x * 200) / 200, -1, 1), br = ui.state.br;
+    if (type === 'down') br = Math.abs(d.py - pD.Y(hwq(qn, 0))) <= Math.abs(d.py - pD.Y(hwq(qn, 1))) ? '0' : '1';
+    let best = 10;
+    for (const s of bvk) {
+      const dist = Math.hypot(pD.X(s) - d.px, pD.Y(hwq(s, +br)) - d.py);
+      if (dist <= best) { best = dist; qn = s; }
+    }
+    if (br !== ui.state.br) ui.set('br', br, true);
+    ui.set('q', qn);
+  };
+
+  cvE.onResize(drawEig);
+  const host = document.createElement('div');
+  host.className = 'ctrl';
+  host.innerHTML = '<span class="lab"><span>animation</span></span>';
+  elCtl.appendChild(host);
+  anim = EPP.anim(fig, (t) => drawChain(t), { buttonHost: host });
+  cvC.onResize(() => anim.redraw());
+})();
+</script>
