@@ -17,7 +17,7 @@ Section 9 maps the source symbols. Sections 10 and 11 set the writing rules that
 | Labels that abbreviate a word are upright, the **whole** word. | $\Pi^{\mathrm{ion}}$, $\Pi^{\mathrm{ph}}$, $\varepsilon^{\mathrm e}$, $\Omega_{\mathrm V}^{\mathrm{SC}}$, $M_{\mathrm r}$, $k_{\mathrm B}$, $\omega_{\mathrm{LO}}$, $V^{\mathrm{KS}}$ |
 | Euler's number, the imaginary unit and the differential are upright. | $\mathrm e^{\mathrm i\bq\cdot\bR_\ell}$, $\mathrm d^3r$ |
 | Vectors and Cartesian tensors are bold; their components are italic with indices. | $\bu_{\ell\kappa}$ and $u_{\ell\kappa\alpha}$; $\boldsymbol\varepsilon$ and $\varepsilon_{\alpha\beta}$; $\mathbf Z^*_\kappa$ and $Z^*_{\kappa,\alpha\beta}$ |
-| Unit vectors may carry a hat; nothing else does, except operators where ambiguous. | $\hat{\bq}=\bq/q$ |
+| A hat marks the unit vector of a vector; a vector defined as a unit vector (a bond direction $\bn$) needs none; otherwise hats mark operators where ambiguous. | $\hat{\bq}=\bq/q$ |
 | Operators carry hats only where an operator and a number of the same name meet (A.1 quantization, expectation values). | $\hat u_{\ell\kappa\alpha}$, $\langle\hat u^2\rangle$ |
 | A comma separates index groups that belong to different objects. | $e_{\kappa\alpha,\nu}$ (row $\kappa\alpha$, column $\nu$); $\Phi_{\ell\kappa\alpha,\ell'\kappa'\beta}$ |
 | A tilde means mass-scaled. | $\tilde\Phi=M^{-1/2}\Phi M^{-1/2}$ |
