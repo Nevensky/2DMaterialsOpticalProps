@@ -1,0 +1,1633 @@
+<title>EPP Primer v2</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&family=IBM+Plex+Sans+Condensed:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Math&text=%F0%9D%92%9F%E2%84%92%E2%84%8B%F0%9D%92%A2%F0%9D%92%AB&display=swap">
+<style>
+/* Layout: long-form lecture notes. Sticky contents rail on wide screens, one reading column
+   (~68ch text) whose figures run the full column width. Three particle hues encode
+   electron / phonon / photon everywhere: text, plots and Feynman diagrams. */
+:root {
+  --bg: #f4f6f9;
+  --surface: #ffffff;
+  --surface-2: #eaeef4;
+  --fg: #151b29;
+  --fg-2: #2c3446;
+  --muted: #5a6477;
+  --rule: #d3d9e3;
+  --grid: #e1e6ee;
+  /* plot/diagram marks: validated categorical order electron, phonon, photon, c4, c5 (light, on --surface) */
+  --c-electron: #2350c8;
+  --c-phonon: #c26a00;
+  --c-photon: #b5306c;
+  --c-4: #0b8aa3;
+  --c-5: #6d45c4;
+  /* text variants of the particle hues (prose, labels): higher contrast than the marks */
+  --t-electron: #2350c8;
+  --t-phonon: #92500a;
+  --t-photon: #a1295f;
+  --t-4: #076a80;
+  --t-5: #5a37a8;
+  --accent: var(--c-electron);
+  --hl: rgba(35, 80, 200, 0.08);
+  --font-text: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", "Noto Sans Math", "STIX Two Math", "Cambria Math", serif;
+  --font-ui: "IBM Plex Sans Condensed", "Arial Narrow", "Helvetica Neue", Arial, "Noto Sans Math", "STIX Two Math", "Cambria Math", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --step--1: 0.8125rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.25rem;
+  --step-2: 1.5625rem;
+  --step-3: 2.0rem;
+  --step-4: 2.75rem;
+  --radius: 6px;
+  --col: 820px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1119; --surface: #141a26; --surface-2: #1a2131; --fg: #e3e8f1; --fg-2: #c3cad8;
+    --muted: #96a0b3; --rule: #2a3346; --grid: #222a3a;
+    --c-electron: #6688f2; --c-phonon: #c67c18; --c-photon: #d95e94; --c-4: #169fb6; --c-5: #9372ee;
+    --t-electron: #93adff; --t-phonon: #f0aa4f; --t-photon: #f286b5; --t-4: #5cc8dc; --t-5: #b9a2ff;
+    --hl: rgba(134, 166, 255, 0.10);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1119; --surface: #141a26; --surface-2: #1a2131; --fg: #e3e8f1; --fg-2: #c3cad8;
+  --muted: #96a0b3; --rule: #2a3346; --grid: #222a3a;
+  --c-electron: #6688f2; --c-phonon: #c67c18; --c-photon: #d95e94; --c-4: #169fb6; --c-5: #9372ee;
+    --t-electron: #93adff; --t-phonon: #f0aa4f; --t-photon: #f286b5; --t-4: #5cc8dc; --t-5: #b9a2ff;
+  --hl: rgba(134, 166, 255, 0.10);
+  color-scheme: dark;
+}
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-text); font-size: var(--step-0); line-height: 1.62;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-underline-offset: 2px; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+
+.page {
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: 0 48px;
+  max-width: 1180px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 64px;
+}
+@media (min-width: 1120px) {
+  .page { grid-template-columns: 230px minmax(0, var(--col)); justify-content: center; }
+}
+main { min-width: 0; }
+
+/* ---------- contents rail ---------- */
+.toc { font-family: var(--font-ui); font-size: 0.9rem; line-height: 1.35; }
+.toc-inner { padding-block: 24px; }
+@media (min-width: 1120px) {
+  .toc-inner { position: sticky; top: env(safe-area-inset-top, 0px); max-height: 100vh; overflow-y: auto; padding-top: 40px; }
+  .toc details > summary { pointer-events: none; }
+  .toc details > summary::marker, .toc details > summary::-webkit-details-marker { display: none; content: ""; }
+}
+.toc summary { cursor: pointer; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; font-size: 0.75rem; color: var(--muted); list-style: none; }
+.toc summary::-webkit-details-marker { display: none; }
+@media (max-width: 1119px) {
+  .toc { border-bottom: 1px solid var(--rule); }
+  .toc summary::before { content: "▸ "; }
+  .toc details[open] summary::before { content: "▾ "; }
+}
+.toc ol { list-style: none; margin: 0; padding: 0; }
+.toc .toc-part { margin-top: 14px; }
+.toc .toc-part > span { display: block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.toc a { display: grid; grid-template-columns: 2.6em 1fr; gap: 4px; padding: 3px 6px; margin-left: -6px; border-radius: 4px; color: var(--fg-2); text-decoration: none; }
+.toc a:hover { background: var(--hl); color: var(--fg); }
+.toc a.active { background: var(--hl); color: var(--accent); }
+.toc a .n { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); padding-top: 1px; }
+
+/* ---------- hero ---------- */
+.hero { padding-block: 48px 24px; }
+.hero .kicker { font-family: var(--font-ui); font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; }
+.hero h1 { font-size: clamp(2.1rem, 6vw, var(--step-4)); line-height: 1.08; font-weight: 600; letter-spacing: -0.015em; margin: 0 0 16px; text-wrap: balance; }
+.hero h1 .e { color: var(--t-electron); } .hero h1 .p { color: var(--t-phonon); } .hero h1 .g { color: var(--t-photon); }
+.hero .lede { font-size: var(--step-1); line-height: 1.5; color: var(--fg-2); max-width: 62ch; margin: 0 0 20px; }
+.hero .sources { font-family: var(--font-ui); font-size: 0.9rem; color: var(--muted); display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; }
+
+/* hero figure and roadmap */
+.hero-vertex { display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 720px) { .hero-vertex { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.hv-panel { margin: 0; display: grid; gap: 6px; align-content: start; min-width: 0; }
+.hv-panel .fd { margin: 0; padding: 4px; min-height: 190px; }
+.hv-panel figcaption { font-size: 0.92rem; line-height: 1.5; color: var(--fg-2); }
+.hv-ctrls { margin-top: 4px; }
+.hero-road { display: grid; gap: 10px; grid-template-columns: minmax(0, 1fr); margin: 22px 0 18px; }
+@media (min-width: 720px) { .hero-road { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.road { display: grid; gap: 4px; align-content: start; padding: 12px 14px; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--surface); text-decoration: none; color: var(--fg); }
+.road:hover { border-color: var(--accent); }
+.road-k { font-family: var(--font-ui); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.road-t { font-weight: 600; font-size: 1.05rem; line-height: 1.3; }
+.road-d { font-size: 0.9rem; line-height: 1.45; color: var(--fg-2); }
+
+/* reading paths */
+.paths { display: grid; gap: 10px; grid-template-columns: minmax(0, 1fr); margin: 0 0 18px; }
+@media (min-width: 720px) { .paths { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.path { border-top: 2px solid var(--rule); padding-top: 8px; min-width: 0; }
+.path-t { font-family: var(--font-ui); font-weight: 600; font-size: 0.92rem; margin: 0 0 2px; }
+.path-d { font-size: 0.88rem; color: var(--fg-2); margin: 0 0 6px; line-height: 1.45; }
+.path ol { margin: 0; padding-left: 1.2em; font-size: 0.88rem; line-height: 1.45; }
+.path li { margin-bottom: 2px; }
+.hero h2.sub { font-family: var(--font-ui); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 22px 0 10px; }
+/* ---------- parts & chapters ---------- */
+.part-head { margin-top: 72px; padding-top: 28px; border-top: 2px solid var(--fg); }
+.part-head .part-label { font-family: var(--font-ui); font-weight: 600; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; }
+.part-head h2 { font-size: var(--step-3); line-height: 1.15; margin: 0 0 12px; font-weight: 600; text-wrap: balance; }
+.part-head p { max-width: 66ch; color: var(--fg-2); margin: 0 0 12px; }
+
+.chapter { margin-top: 64px; scroll-margin-top: 16px; }
+.ch-head { margin-bottom: 18px; }
+.ch-head .eyebrow { font-family: var(--font-ui); font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; display: flex; flex-wrap: wrap; gap: 4px 12px; }
+.ch-head .eyebrow .num { font-family: var(--font-mono); letter-spacing: 0; color: var(--accent); font-weight: 500; }
+.ch-head h2 { font-size: var(--step-2); line-height: 1.2; font-weight: 600; margin: 0 0 8px; text-wrap: balance; letter-spacing: -0.005em; }
+.ch-head .lede { font-size: 1.12rem; color: var(--fg-2); margin: 0; max-width: 66ch; font-style: italic; }
+.chapter h3 { font-size: var(--step-1); font-weight: 600; margin: 32px 0 8px; line-height: 1.3; text-wrap: balance; }
+.chapter h4 { font-family: var(--font-ui); font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin: 22px 0 6px; font-weight: 600; }
+.chapter p, .chapter li { max-width: 68ch; }
+.chapter p { margin: 0 0 14px; }
+.chapter ul, .chapter ol { padding-left: 1.3em; margin: 0 0 14px; }
+.chapter li { margin-bottom: 4px; }
+strong { font-weight: 600; }
+.t-e { color: var(--t-electron); } .t-p { color: var(--t-phonon); } .t-g { color: var(--t-photon); }
+
+/* display math */
+.eq { overflow-x: auto; overflow-y: hidden; margin: 6px 0 16px; padding: 2px 0; max-width: 100%; }
+mjx-container[display="true"] { margin: 0.6em 0 !important; }
+mjx-container { color: var(--fg); }
+.eq mjx-container[display="true"] { margin: 0.2em 0 !important; }
+
+/* callouts */
+.callout { border-left: 3px solid var(--rule); background: var(--surface); padding: 12px 16px; margin: 18px 0; border-radius: 0 var(--radius) var(--radius) 0; max-width: 100%; overflow-x: auto; }
+.callout > :last-child { margin-bottom: 0; }
+.callout .callout-title { font-family: var(--font-ui); font-weight: 600; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 6px; color: var(--muted); }
+.callout.intuition { border-left-color: var(--c-4); }
+.callout.intuition .callout-title { color: var(--t-4); }
+.callout.connect { border-left-color: var(--c-photon); background: linear-gradient(90deg, color-mix(in srgb, var(--c-photon) 7%, var(--surface)), var(--surface) 60%); }
+.callout.connect .callout-title { color: var(--t-photon); }
+.callout.caveat { border-left-color: var(--c-phonon); }
+.callout.caveat .callout-title { color: var(--t-phonon); }
+.callout.source { border-left-color: var(--muted); font-size: 0.95rem; }
+
+/* derivations */
+details.derivation { border: 1px solid var(--rule); border-radius: var(--radius); margin: 16px 0; background: var(--surface); max-width: 100%; }
+details.derivation > summary { cursor: pointer; padding: 10px 14px; font-family: var(--font-ui); font-weight: 500; font-size: 0.95rem; color: var(--fg-2); list-style: none; display: flex; gap: 8px; align-items: baseline; }
+details.derivation > summary::-webkit-details-marker { display: none; }
+details.derivation > summary::before { content: "+"; font-family: var(--font-mono); color: var(--accent); width: 1em; }
+details.derivation[open] > summary::before { content: "−"; }
+details.derivation > .d-body { padding: 0 16px 12px; border-top: 1px solid var(--rule); overflow-x: auto; }
+details.derivation > .d-body > :first-child { margin-top: 12px; }
+
+/* figures & interactives */
+figure.viz { margin: 24px 0 28px; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius); padding: 14px 14px 12px; }
+figure.viz .viz-title { max-width: none; font-family: var(--font-ui); font-weight: 600; font-size: 0.95rem; margin: 0 0 10px; color: var(--fg); display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; align-items: baseline; }
+figure.viz .viz-title .tag { font-weight: 500; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.viz-grid { display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 720px) { .viz-grid.two { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .viz-grid.side { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); } }
+.plot { position: relative; width: 100%; min-width: 0; }
+.plot canvas { display: block; width: 100%; touch-action: pan-y; }
+.plot .tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; padding: 4px 7px; font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.35; color: var(--fg); white-space: nowrap; box-shadow: 0 2px 8px rgba(0,0,0,0.08); z-index: 2; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-family: var(--font-ui); font-size: 0.82rem; color: var(--fg-2); margin-top: 6px; }
+.legend .sw { display: inline-block; width: 22px; height: 0; border-top: 2.5px solid currentColor; vertical-align: middle; margin-right: 6px; }
+.legend .sw.dash { border-top-style: dashed; }
+.legend .sw.dot { border-top-style: dotted; }
+.legend .sw.box { height: 10px; border: none; border-radius: 2px; opacity: 0.35; background: currentColor; }
+.legend span.item { white-space: nowrap; }
+figure.viz figcaption { font-size: 0.92rem; line-height: 1.5; color: var(--fg-2); margin-top: 10px; max-width: none; }
+figure.viz figcaption strong { color: var(--fg); }
+
+.controls { display: grid; gap: 10px 18px; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); margin-top: 12px; font-family: var(--font-ui); font-size: 0.88rem; }
+.ctrl { display: grid; gap: 2px; min-width: 0; }
+.ctrl label, .ctrl .lab { display: flex; justify-content: space-between; gap: 8px; color: var(--fg-2); }
+.ctrl output { font-family: var(--font-mono); font-size: 0.78rem; color: var(--fg); white-space: nowrap; }
+.ctrl input[type="range"] { width: 100%; accent-color: var(--accent); margin: 2px 0; }
+.ctrl select { font: inherit; padding: 4px 6px; border: 1px solid var(--rule); border-radius: 4px; background: var(--surface); color: var(--fg); }
+.ctrl.toggle label { justify-content: flex-start; align-items: center; gap: 8px; cursor: pointer; }
+.ctrl.toggle input { accent-color: var(--accent); width: 16px; height: 16px; }
+.seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--rule); border-radius: 5px; overflow: hidden; }
+.seg button { font: inherit; font-size: 0.82rem; border: 0; background: transparent; color: var(--fg-2); padding: 4px 10px; cursor: pointer; border-right: 1px solid var(--rule); }
+.seg button:last-child { border-right: 0; }
+@media (max-width: 560px) { .seg { display: flex; } .seg button { flex: 1 1 auto; text-align: center; box-shadow: 0 1px 0 var(--rule); } }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--surface); }
+.btn { font-family: var(--font-ui); font-size: 0.85rem; border: 1px solid var(--rule); background: var(--surface); color: var(--fg); border-radius: 5px; padding: 4px 12px; cursor: pointer; }
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.controls > .btn { justify-self: start; align-self: end; }
+.readout { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 10px; font-family: var(--font-ui); font-size: 0.85rem; color: var(--muted); }
+.readout b { font-family: var(--font-mono); font-weight: 500; color: var(--fg); font-size: 0.8rem; margin-left: 4px; }
+
+/* Feynman diagrams */
+.fd { display: flex; flex-wrap: wrap; gap: 16px 28px; align-items: center; justify-content: center; margin: 18px 0; padding: 12px; overflow-x: auto; }
+.fd figure { margin: 0; display: grid; justify-items: center; gap: 4px; }
+.fd figcaption { font-family: var(--font-ui); font-size: 0.82rem; color: var(--muted); text-align: center; max-width: 22ch; }
+.fd svg { overflow: visible; max-width: 100%; height: auto; }
+.fd .op { font-size: 1.4rem; color: var(--muted); font-family: var(--font-text); }
+svg text.fd-lab { font-family: var(--font-text); font-style: italic; font-size: 14px; }
+
+/* tables */
+.tbl { overflow-x: auto; margin: 16px 0 20px; border: 1px solid var(--rule); border-radius: var(--radius);
+  /* scroll-shadow cue: a soft edge appears on whichever side has hidden columns */
+  background:
+    linear-gradient(to right, var(--surface) 30%, transparent) left / 28px 100% no-repeat local,
+    linear-gradient(to left, var(--surface) 30%, transparent) right / 28px 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, color-mix(in srgb, var(--fg) 22%, transparent), transparent) left / 12px 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, color-mix(in srgb, var(--fg) 22%, transparent), transparent) right / 12px 100% no-repeat scroll,
+    var(--surface); }
+@media (max-width: 719px) {
+  .tbl th:first-child, .tbl td:first-child { position: sticky; left: 0; z-index: 1; background: var(--surface); box-shadow: 1px 0 0 var(--rule); }
+  .tbl th:first-child { background: var(--surface-2); }
+}
+.tbl table { border-collapse: collapse; width: 100%; font-size: 0.92rem; min-width: 560px; }
+.tbl th, .tbl td { text-align: left; vertical-align: top; padding: 8px 12px; border-bottom: 1px solid var(--rule); }
+.tbl th { font-family: var(--font-ui); font-weight: 600; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); background: var(--surface-2); }
+.tbl tr:last-child td { border-bottom: 0; }
+.tbl td:first-child { font-weight: 600; }
+
+.src { font-family: var(--font-ui); font-size: 0.8rem; color: var(--muted); white-space: nowrap; }
+.legend-strip { display: flex; flex-wrap: wrap; gap: 8px 22px; font-family: var(--font-ui); font-size: 0.88rem; color: var(--fg-2); align-items: center; margin: 14px 0 0; }
+.legend-strip svg { vertical-align: middle; margin-right: 6px; }
+
+footer.refs { margin-top: 80px; padding-top: 20px; border-top: 1px solid var(--rule); font-size: 0.92rem; color: var(--fg-2); }
+footer.refs h2 { font-size: var(--step-1); }
+footer.refs ol { padding-left: 1.4em; }
+footer.refs li { margin-bottom: 6px; max-width: 80ch; }
+.theme-toggle { position: fixed; right: max(12px, calc(env(safe-area-inset-right, 0px) + 12px)); bottom: max(12px, calc(env(safe-area-inset-bottom, 0px) + 12px)); z-index: 5; }
+@media print { .toc, .controls, .theme-toggle { display: none; } }
+
+/* ---------- v2 reading aids: where-keys, steps, background boxes, footnotes, glossary ---------- */
+dl.where { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 3px 14px; margin: -4px 0 18px; padding: 8px 12px; border-left: 2px solid var(--rule); font-size: 0.93rem; color: var(--fg-2); max-width: 68ch; }
+dl.where::before { content: "where"; grid-column: 1 / -1; font-family: var(--font-ui); font-weight: 600; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+dl.where dt { white-space: nowrap; } dl.where dd { margin: 0; }
+ol.steps { counter-reset: step; list-style: none; padding-left: 0; margin: 14px 0 18px; }
+ol.steps > li { counter-increment: step; position: relative; padding-left: 2.3em; margin-bottom: 14px; max-width: none; }
+ol.steps > li > p, ol.steps > li > .why { max-width: 68ch; }
+ol.steps > li::before { content: counter(step); position: absolute; left: 0; top: 0.15em; width: 1.55em; height: 1.55em; border-radius: 50%; background: var(--surface-2); color: var(--accent); font-family: var(--font-mono); font-size: 0.78rem; display: grid; place-items: center; }
+ol.steps > li > .eq { margin: 4px 0 6px; }
+.why { display: block; font-size: 0.92rem; color: var(--fg-2); margin: 2px 0 0; padding-left: 10px; border-left: 2px solid color-mix(in srgb, var(--c-4) 55%, transparent); }
+.why::before { content: "why "; font-family: var(--font-ui); font-weight: 600; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--t-4); margin-right: 4px; }
+details.background { border: 1px solid var(--rule); border-left: 3px solid var(--c-5); border-radius: 0 var(--radius) var(--radius) 0; margin: 16px 0; background: var(--surface); max-width: 100%; }
+details.background > summary { cursor: pointer; padding: 10px 14px; font-family: var(--font-ui); font-size: 0.95rem; color: var(--fg-2); list-style: none; display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; }
+details.background > summary::-webkit-details-marker { display: none; }
+details.background > summary::before { content: "Background"; font-weight: 600; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--t-5); }
+details.background > summary .skip { margin-left: auto; font-size: 0.8rem; color: var(--muted); }
+details.background[open] > summary .skip { display: none; }
+details.background > .b-body { padding: 0 16px 12px; border-top: 1px solid var(--rule); overflow-x: auto; }
+details.background > .b-body > :first-child { margin-top: 12px; }
+sup.fn { font-size: 0.72em; line-height: 0; margin-left: 1px; vertical-align: super; }
+sup.fn a { font-family: var(--font-ui); font-weight: 600; text-decoration: none; color: var(--accent); padding: 0 2px; border-radius: 3px; }
+sup.fn a:hover, sup.fn a[aria-expanded="true"] { background: var(--hl); }
+a.sym { color: inherit; text-decoration: underline dotted color-mix(in srgb, var(--accent) 70%, transparent); text-underline-offset: 3px; cursor: help; }
+section.chapter .notes { margin-top: 36px; padding-top: 14px; border-top: 1px solid var(--rule); }
+section.chapter .notes h4 { margin-top: 0; }
+ol.footnotes { font-size: 0.9rem; color: var(--fg-2); padding-left: 1.7em; margin: 6px 0 18px; }
+ol.footnotes > li { margin-bottom: 7px; max-width: 74ch; scroll-margin-top: 80px; }
+ol.footnotes > li:target { background: var(--hl); border-radius: 3px; }
+details.glossary-box { margin: 18px 0; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--surface); }
+details.glossary-box > summary { cursor: pointer; padding: 10px 14px; font-family: var(--font-ui); font-weight: 500; font-size: 0.95rem; color: var(--fg-2); }
+details.glossary-box > dl { padding: 4px 16px 14px; margin: 0; }
+dl.glossary { display: grid; grid-template-columns: minmax(4.5em, max-content) minmax(0, 1fr); gap: 8px 16px; font-size: 0.93rem; }
+dl.glossary dt { font-weight: 400; white-space: nowrap; scroll-margin-top: 80px; }
+dl.glossary dd { margin: 0; color: var(--fg-2); }
+.gl-src { display: block; font-size: 0.83rem; color: var(--muted); }
+.pop { position: absolute; z-index: 40; width: max-content; max-width: min(400px, calc(100vw - 24px)); background: var(--surface); color: var(--fg); border: 1px solid var(--rule); border-radius: var(--radius); box-shadow: 0 8px 28px rgba(0, 0, 0, 0.16); padding: 10px 13px 11px; font-family: var(--font-text); font-size: 0.92rem; line-height: 1.5; }
+.pop .pop-k { font-family: var(--font-ui); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0 0 4px; }
+.pop .pop-sym { font-size: 1.05rem; margin-bottom: 2px; }
+.pop .pop-go { display: block; margin-top: 6px; font-family: var(--font-ui); font-size: 0.8rem; }
+.gl-btn { position: fixed; right: max(14px, calc(env(safe-area-inset-right, 0px) + 14px)); bottom: max(14px, calc(env(safe-area-inset-bottom, 0px) + 14px)); z-index: 30; font-family: var(--font-ui); font-size: 0.88rem; font-weight: 600; padding: 8px 15px; border-radius: 999px; border: 1px solid var(--rule); background: var(--surface); color: var(--fg); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.14); cursor: pointer; }
+.gl-btn:hover { border-color: var(--accent); color: var(--accent); }
+.gl-panel { position: fixed; z-index: 35; top: 0; right: 0; bottom: 0; width: min(460px, 100vw); background: var(--surface); border-left: 1px solid var(--rule); box-shadow: -10px 0 32px rgba(0, 0, 0, 0.18); display: flex; flex-direction: column; transform: translateX(105%); transition: transform 0.18s ease; padding-top: env(safe-area-inset-top, 0px); visibility: hidden; }
+.gl-panel.open { transform: none; visibility: visible; }
+@media (prefers-reduced-motion: reduce) { .gl-panel { transition: none; } }
+.gl-panel > header { padding: 14px 16px 10px; border-bottom: 1px solid var(--rule); display: grid; gap: 8px; }
+.gl-panel > header .gl-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.gl-panel > header h2 { font-family: var(--font-ui); font-size: 1rem; font-weight: 600; margin: 0; }
+.gl-panel > header p { margin: 0; font-size: 0.85rem; color: var(--muted); }
+.gl-panel input[type="search"] { font: inherit; font-family: var(--font-ui); font-size: 0.92rem; padding: 6px 9px; border: 1px solid var(--rule); border-radius: 5px; background: var(--bg); color: var(--fg); width: 100%; box-sizing: border-box; }
+.gl-list { overflow-y: auto; padding: 4px 16px calc(24px + env(safe-area-inset-bottom, 0px)); }
+.gl-item { display: grid; grid-template-columns: minmax(4.2em, max-content) minmax(0, 1fr); gap: 2px 14px; padding: 9px 0; border-bottom: 1px solid var(--grid); font-size: 0.92rem; }
+.gl-item .gl-d { color: var(--fg-2); }
+.gl-item .gl-go { font-family: var(--font-ui); font-size: 0.8rem; }
+.gl-sec { font-family: var(--font-ui); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); padding: 14px 0 2px; }
+.conv-grid { display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 720px) { .conv-grid.two { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.viz-title .fig-n { font-family: var(--font-ui); font-weight: 600; color: var(--muted); margin-right: 0.6em; letter-spacing: 0.02em; }
+figure.viz .viz-title { justify-content: flex-start; }
+figure.viz .viz-title .tag { margin-left: auto; }
+.kbd-hint { font-family: var(--font-ui); font-size: 0.85rem; color: var(--muted); }
+.anat { display: grid; justify-items: center; gap: 6px; margin: 10px 0 18px; }
+@media print { .gl-btn, .gl-panel, .pop { display: none; } }
+.hero ul.how { margin: 0 0 14px; padding-left: 1.2em; max-width: 66ch; color: var(--fg-2); font-size: 1rem; }
+.hero ul.how li { margin-bottom: 4px; }
+</style>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true,
+    tags: 'none',
+    macros: {
+      bk: '\\mathbf{k}', bq: '\\mathbf{q}', br: '\\mathbf{r}', bR: '\\mathbf{R}', bG: '\\mathbf{G}',
+      bA: '\\mathbf{A}', bE: '\\mathbf{E}', bB: '\\mathbf{B}', bj: '\\mathbf{j}', bJ: '\\mathbf{J}', bP: '\\mathbf{P}',
+      bQ: '\\mathbf{Q}', bu: '\\mathbf{u}', be: '\\mathbf{e}', bp: '\\mathbf{p}', bZ: '\\mathbf{Z}',
+      dd: '\\mathrm{d}', ii: '\\mathrm{i}', Tr: '\\operatorname{Tr}',
+      ket: ['\\left|#1\\right\\rangle', 1], bra: ['\\left\\langle#1\\right|', 1],
+      braket: ['\\left\\langle#1\\middle|#2\\right\\rangle', 2],
+      mel: ['\\left\\langle#1\\middle|#2\\middle|#3\\right\\rangle', 3],
+      hc: '\\mathrm{h.c.}',
+      ee: '\\mathrm{e}', btau: '\\boldsymbol{\\tau}', ba: '\\mathbf{a}', bb: '\\mathbf{b}', bF: '\\mathbf{F}', bn: '\\mathbf{n}', bd: '\\mathbf{d}', bU: '\\mathbf{U}',
+      OV: '\\Omega_{\\mathrm{V}}', OS: '\\Omega_{\\mathrm{S}}', OVSC: '\\Omega_{\\mathrm{V}}^{\\mathrm{SC}}', OSSC: '\\Omega_{\\mathrm{S}}^{\\mathrm{SC}}', OBZ: '\\Omega_{\\mathrm{BZ}}',
+      rme: '\\mathrm{e}', ion: '\\mathrm{ion}', ph: '\\mathrm{ph}', SC: '\\mathrm{SC}', kB: 'k_{\\mathrm{B}}', tPhi: '\\tilde{\\Phi}'
+    }
+  },
+  loader: { load: ['ui/lazy'] },
+  svg: { fontCache: 'global' },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'canvas', 'svg', 'output', 'select'] }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js" async></script>
+
+<script>
+/* EPP helper library: theme-aware canvas plots, controls, animation loop,
+   Feynman-diagram SVG builder, small numerics. Exposed as window.EPP. */
+(function () {
+  'use strict';
+  const EPP = {};
+  const root = document.documentElement;
+
+  // ---------- theme ----------
+  const cssCache = {};
+  EPP.css = (name) => getComputedStyle(root).getPropertyValue(name).trim();
+  const NAMED = { electron: '--c-electron', phonon: '--c-phonon', photon: '--c-photon', c4: '--c-4', c5: '--c-5',
+    'electron-t': '--t-electron', 'phonon-t': '--t-phonon', 'photon-t': '--t-photon', 'c4-t': '--t-4', 'c5-t': '--t-5',
+    ink: '--fg', fg: '--fg', fg2: '--fg-2', muted: '--muted', grid: '--grid', rule: '--rule', accent: '--accent',
+    surface: '--surface', surface2: '--surface-2', bg: '--bg' };
+  EPP.color = (c) => {
+    if (!c) return EPP.css('--fg');
+    if (NAMED[c]) return EPP.css(NAMED[c]);
+    if (c.startsWith('--')) return EPP.css(c);
+    return c;
+  };
+  // text color for an annotation drawn next to a mark of color c: the hue's text variant, else secondary ink
+  EPP.textColor = (c) => (c && NAMED[c + '-t']) ? EPP.css(NAMED[c + '-t']) : (c && (c === 'muted' || c === 'ink' || c === 'fg' || c === 'fg2') ? EPP.color(c) : (c && !NAMED[c] ? EPP.color(c) : EPP.css('--fg-2')));
+  EPP.alpha = (c, a) => {
+    const col = EPP.color(c);
+    if (col.startsWith('#')) {
+      let h = col.slice(1);
+      if (h.length === 3) h = h.split('').map(x => x + x).join('');
+      const n = parseInt(h, 16);
+      return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`;
+    }
+    const m = col.match(/rgba?\(([^)]+)\)/);
+    if (m) { const p = m[1].split(',').map(s => s.trim()); return `rgba(${p[0]},${p[1]},${p[2]},${a})`; }
+    return col;
+  };
+  // parse any CSS color to [r,g,b] via a 1px canvas (cached per string)
+  const rgbCache = new Map();
+  const pc = document.createElement('canvas'); pc.width = pc.height = 1; const pctx = pc.getContext('2d', { willReadFrequently: true });
+  EPP.rgb = (c) => { const col = EPP.color(c); if (rgbCache.has(col)) return rgbCache.get(col); pctx.clearRect(0, 0, 1, 1); pctx.fillStyle = '#000'; pctx.fillStyle = col; pctx.fillRect(0, 0, 1, 1); const d = pctx.getImageData(0, 0, 1, 1).data; const out = [d[0], d[1], d[2]]; rgbCache.set(col, out); return out; };
+  const mix = (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t].map(Math.round);
+  // ramp(color, color2?, gamma) -> t in [0,1] -> [r,g,b]. Sequential: surface -> color -> deeper toward --fg.
+  // Diverging (color2 given): color2 at 0, surface-gray at 0.5, color at 1.
+  EPP.ramp = (color, color2, gamma = 1) => {
+    const s = EPP.rgb('--surface'), c = EPP.rgb(color), f = EPP.rgb('--fg');
+    if (color2) { const c2 = EPP.rgb(color2), mid = mix(s, EPP.rgb('--muted'), 0.18); return (t) => { t = EPP.clamp(t, 0, 1); return t < 0.5 ? mix(c2, mid, Math.pow(t / 0.5, 1 / gamma)) : mix(mid, c, Math.pow((t - 0.5) / 0.5, gamma)); }; }
+    return (t) => { t = Math.pow(EPP.clamp(t, 0, 1), gamma); return t < 0.82 ? mix(s, c, t / 0.82) : mix(c, f, (t - 0.82) / 0.18 * 0.38); };
+  };
+  const themeCbs = new Set();
+  EPP.onTheme = (cb) => { themeCbs.add(cb); return () => themeCbs.delete(cb); };
+  const fireTheme = () => { rgbCache.clear(); themeCbs.forEach(cb => { try { cb(); } catch (e) { console.error(e); } }); };
+  try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', fireTheme); } catch (e) {}
+  new MutationObserver(fireTheme).observe(root, { attributes: true, attributeFilter: ['data-theme', 'class', 'style'] });
+  try { document.fonts.ready.then(fireTheme); } catch (e) {}
+  EPP.reducedMotion = (() => { try { return matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; } })();
+
+  // ---------- numerics ----------
+  EPP.linspace = (a, b, n) => { const out = new Array(n); for (let i = 0; i < n; i++) out[i] = a + (b - a) * i / (n - 1); return out; };
+  EPP.clamp = (x, a, b) => Math.min(b, Math.max(a, x));
+  EPP.const = {
+    hbar_eVs: 6.582119569e-16, kB_eV: 8.617333262e-5, c_ms: 2.99792458e8, e_C: 1.602176634e-19,
+    me_kg: 9.1093837015e-31, amu_kg: 1.66053906660e-27, eps0: 8.8541878128e-12, a0_A: 0.529177210903,
+    Ry_eV: 13.605693122994, Ha_eV: 27.211386245988,
+    meV_per_cm1: 0.1239841984, // 1 cm^-1 = 0.12398 meV
+    THz_per_meV: 0.2417989242 // 1 meV = 0.2418 THz (frequency nu, not omega)
+  };
+  // Bose-Einstein occupation, E and kT in the same units (or E in eV, T in K via boseT)
+  EPP.bose = (E, kT) => (kT <= 0 ? 0 : 1 / Math.expm1(E / kT));
+  EPP.boseT = (E_eV, T_K) => EPP.bose(E_eV, EPP.const.kB_eV * T_K);
+  EPP.fermi = (E, mu, kT) => (kT <= 0 ? (E < mu ? 1 : (E === mu ? 0.5 : 0)) : 1 / (1 + Math.exp((E - mu) / kT)));
+  EPP.fmt = (v, d = 3) => {
+    if (!isFinite(v)) return v > 0 ? '∞' : (v < 0 ? '−∞' : '—');
+    const a = Math.abs(v);
+    let s;
+    if (a !== 0 && (a < 1e-3 || a >= 1e5)) s = v.toExponential(Math.max(0, d - 1)).replace('e', '×10^').replace('+', '');
+    else s = Number(v.toPrecision(d)).toString();
+    return s.replace('-', '−');
+  };
+  EPP.fix = (v, d = 2) => (isFinite(v) ? v.toFixed(d).replace('-', '−') : '—');
+
+  // minimal complex numbers [re, im]
+  const C = EPP.C = {
+    c: (re, im = 0) => [re, im],
+    add: (a, b) => [a[0] + b[0], a[1] + b[1]],
+    sub: (a, b) => [a[0] - b[0], a[1] - b[1]],
+    mul: (a, b) => [a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0]],
+    scale: (a, s) => [a[0] * s, a[1] * s],
+    div: (a, b) => { const d = b[0] * b[0] + b[1] * b[1]; return [(a[0] * b[0] + a[1] * b[1]) / d, (a[1] * b[0] - a[0] * b[1]) / d]; },
+    abs: (a) => Math.hypot(a[0], a[1]),
+    arg: (a) => Math.atan2(a[1], a[0]),
+    conj: (a) => [a[0], -a[1]],
+    inv: (a) => C.div([1, 0], a),
+    // principal sqrt with branch cut on negative real axis
+    sqrt: (a) => { const r = Math.hypot(a[0], a[1]); const re = Math.sqrt(Math.max(0, (r + a[0]) / 2)); let im = Math.sqrt(Math.max(0, (r - a[0]) / 2)); if (a[1] < 0) im = -im; return [re, im]; },
+    exp: (a) => { const e = Math.exp(a[0]); return [e * Math.cos(a[1]), e * Math.sin(a[1])]; },
+    log: (a) => [Math.log(Math.hypot(a[0], a[1])), Math.atan2(a[1], a[0])]
+  };
+
+  // eigen-decomposition of a real symmetric 2x2 [[a,b],[b,d]] -> {vals:[l1<=l2], vecs:[[x,y],[x,y]]}
+  EPP.eigSym2 = (a, b, d) => {
+    const tr = a + d, det = a * d - b * b, disc = Math.sqrt(Math.max(0, tr * tr / 4 - det));
+    const l1 = tr / 2 - disc, l2 = tr / 2 + disc;
+    const vec = (l) => { let x, y; if (Math.abs(b) > 1e-14) { x = b; y = l - a; } else { x = (Math.abs(l - a) < Math.abs(l - d)) ? 1 : 0; y = 1 - x; } const n = Math.hypot(x, y) || 1; return [x / n, y / n]; };
+    return { vals: [l1, l2], vecs: [vec(l1), vec(l2)] };
+  };
+  // Hermitian 2x2 [[a, b],[b*, d]] with a,d real, b complex [re,im] -> eigenvalues and complex eigenvectors
+  EPP.eigHerm2 = (a, d, b) => {
+    const tr = a + d, bb = b[0] * b[0] + b[1] * b[1];
+    const disc = Math.sqrt(Math.max(0, (a - d) * (a - d) / 4 + bb));
+    const vals = [tr / 2 - disc, tr / 2 + disc];
+    const vecs = vals.map(l => {
+      // (a-l) x + b y = 0  -> x = b, y = l - a (complex), fallback for b=0
+      let x, y;
+      if (bb > 1e-28) { x = [b[0], b[1]]; y = [l - a, 0]; } else { const first = Math.abs(l - a) < Math.abs(l - d); x = [first ? 1 : 0, 0]; y = [first ? 0 : 1, 0]; }
+      const n = Math.sqrt(x[0] * x[0] + x[1] * x[1] + y[0] * y[0] + y[1] * y[1]) || 1;
+      return [[x[0] / n, x[1] / n], [y[0] / n, y[1] / n]];
+    });
+    return { vals, vecs };
+  };
+  // Jacobi eigenvalue algorithm for a real symmetric n x n matrix (array of arrays). Returns ascending.
+  EPP.jacobi = (A0, maxSweeps = 60) => {
+    const n = A0.length, A = A0.map(r => r.slice()), V = A0.map((r, i) => r.map((_, j) => (i === j ? 1 : 0)));
+    for (let s = 0; s < maxSweeps; s++) {
+      let off = 0;
+      for (let p = 0; p < n; p++) for (let q = p + 1; q < n; q++) off += A[p][q] * A[p][q];
+      if (off < 1e-22) break;
+      for (let p = 0; p < n; p++) for (let q = p + 1; q < n; q++) {
+        if (Math.abs(A[p][q]) < 1e-300) continue;
+        const th = (A[q][q] - A[p][p]) / (2 * A[p][q]);
+        const t = Math.sign(th || 1) / (Math.abs(th) + Math.sqrt(th * th + 1));
+        const c = 1 / Math.sqrt(t * t + 1), sn = t * c;
+        for (let k = 0; k < n; k++) { const akp = A[k][p], akq = A[k][q]; A[k][p] = c * akp - sn * akq; A[k][q] = sn * akp + c * akq; }
+        for (let k = 0; k < n; k++) { const apk = A[p][k], aqk = A[q][k]; A[p][k] = c * apk - sn * aqk; A[q][k] = sn * apk + c * aqk; }
+        for (let k = 0; k < n; k++) { const vkp = V[k][p], vkq = V[k][q]; V[k][p] = c * vkp - sn * vkq; V[k][q] = sn * vkp + c * vkq; }
+      }
+    }
+    const idx = [...Array(n).keys()].sort((i, j) => A[i][i] - A[j][j]);
+    return { vals: idx.map(i => A[i][i]), vecs: idx.map(i => V.map(r => r[i])) };
+  };
+  // ---------- v2 numerics ----------
+  // Hermitian n x n eigenproblem by cyclic complex Jacobi rotations. re, im: arrays of rows (im antisymmetric).
+  // Returns ascending eigenvalues and eigenvectors vecs[k] = { re: [...], im: [...] }.
+  EPP.eigHerm = (re0, im0, maxSweeps = 60) => {
+    const n = re0.length;
+    const Ar = re0.map(r => r.slice()), Ai = im0.map(r => r.slice());
+    const Vr = Ar.map((_, i) => Ar.map((__, j) => (i === j ? 1 : 0))), Vi = Ar.map(() => new Array(n).fill(0));
+    for (let sw = 0; sw < maxSweeps; sw++) {
+      let off = 0, dg = 0;
+      for (let p = 0; p < n; p++) { dg += Ar[p][p] * Ar[p][p]; for (let q = p + 1; q < n; q++) off += Ar[p][q] * Ar[p][q] + Ai[p][q] * Ai[p][q]; }
+      if (off <= 1e-28 * (dg + 1e-300)) break;
+      for (let p = 0; p < n - 1; p++) for (let q = p + 1; q < n; q++) {
+        const xr = Ar[p][q], xi = Ai[p][q], r = Math.hypot(xr, xi);
+        if (r < 1e-300) continue;
+        // phase step: D = diag(1 at p, e^{-i phi} at q); A <- D^dagger A D makes A_pq = r real
+        const cr = xr / r, ci = -xi / r;
+        for (let k = 0; k < n; k++) { const a = Ar[k][q], b = Ai[k][q]; Ar[k][q] = a * cr - b * ci; Ai[k][q] = a * ci + b * cr; }
+        for (let k = 0; k < n; k++) { const a = Ar[q][k], b = Ai[q][k]; Ar[q][k] = a * cr + b * ci; Ai[q][k] = -a * ci + b * cr; }
+        for (let k = 0; k < n; k++) { const a = Vr[k][q], b = Vi[k][q]; Vr[k][q] = a * cr - b * ci; Vi[k][q] = a * ci + b * cr; }
+        Ar[p][q] = Ar[q][p] = r; Ai[p][q] = Ai[q][p] = 0; Ai[q][q] = 0;
+        // real Jacobi rotation in the (p, q) plane that zeroes A_pq
+        const th = (Ar[q][q] - Ar[p][p]) / (2 * r);
+        const t = Math.sign(th || 1) / (Math.abs(th) + Math.sqrt(th * th + 1));
+        const c = 1 / Math.sqrt(t * t + 1), sn = t * c;
+        for (let k = 0; k < n; k++) {
+          const ar = Ar[k][p], ai = Ai[k][p], br = Ar[k][q], bi = Ai[k][q];
+          Ar[k][p] = c * ar - sn * br; Ai[k][p] = c * ai - sn * bi; Ar[k][q] = sn * ar + c * br; Ai[k][q] = sn * ai + c * bi;
+        }
+        for (let k = 0; k < n; k++) {
+          const ar = Ar[p][k], ai = Ai[p][k], br = Ar[q][k], bi = Ai[q][k];
+          Ar[p][k] = c * ar - sn * br; Ai[p][k] = c * ai - sn * bi; Ar[q][k] = sn * ar + c * br; Ai[q][k] = sn * ai + c * bi;
+        }
+        for (let k = 0; k < n; k++) {
+          const ar = Vr[k][p], ai = Vi[k][p], br = Vr[k][q], bi = Vi[k][q];
+          Vr[k][p] = c * ar - sn * br; Vi[k][p] = c * ai - sn * bi; Vr[k][q] = sn * ar + c * br; Vi[k][q] = sn * ai + c * bi;
+        }
+        Ar[p][q] = Ar[q][p] = 0; Ai[p][q] = Ai[q][p] = 0; Ai[p][p] = 0; Ai[q][q] = 0;
+      }
+    }
+    const idx = [...Array(n).keys()].sort((i, j) => Ar[i][i] - Ar[j][j]);
+    return { vals: idx.map(i => Ar[i][i]), vecs: idx.map(i => ({ re: Vr.map(r => r[i]), im: Vi.map(r => r[i]) })) };
+  };
+  // global phase gauge for display: the largest component becomes real and positive
+  EPP.fixPhase = (v) => {
+    let k = 0, m = -1;
+    for (let i = 0; i < v.re.length; i++) { const a = v.re[i] * v.re[i] + v.im[i] * v.im[i]; if (a > m + 1e-12) { m = a; k = i; } }
+    const a = Math.sqrt(m) || 1, cr = v.re[k] / a, ci = -v.im[k] / a;
+    return { re: v.re.map((x, i) => x * cr - v.im[i] * ci), im: v.re.map((x, i) => x * ci + v.im[i] * cr) };
+  };
+  // simple bisection root finder on [a,b]
+  EPP.bisect = (f, a, b, tol = 1e-10, maxIt = 200) => {
+    let fa = f(a), fb = f(b);
+    if (!isFinite(fa) || !isFinite(fb) || fa * fb > 0) return NaN;
+    for (let i = 0; i < maxIt; i++) { const m = 0.5 * (a + b), fm = f(m); if (fa * fm <= 0) { b = m; fb = fm; } else { a = m; fa = fm; } if (Math.abs(b - a) < tol) break; }
+    return 0.5 * (a + b);
+  };
+  // trapezoid integration of samples y on grid x
+  EPP.trapz = (x, y) => { let s = 0; for (let i = 1; i < x.length; i++) s += 0.5 * (y[i] + y[i - 1]) * (x[i] - x[i - 1]); return s; };
+
+  // ---------- rich text: a_b, a_{bc}, a^b, a^{bc} ----------
+  function parseRich(s) {
+    const out = []; let i = 0, buf = '';
+    const flush = () => { if (buf) { out.push({ t: buf, m: 0 }); buf = ''; } };
+    while (i < s.length) {
+      const ch = s[i];
+      if ((ch === '_' || ch === '^') && i + 1 < s.length) {
+        flush();
+        let j = i + 1, txt;
+        if (s[j] === '{') { const k = s.indexOf('}', j); txt = s.slice(j + 1, k < 0 ? s.length : k); i = (k < 0 ? s.length : k + 1); }
+        else { txt = s[j]; i = j + 1; }
+        out.push({ t: txt, m: ch === '_' ? -1 : 1 });
+      } else { buf += ch; i++; }
+    }
+    flush();
+    return out;
+  }
+  EPP.parseRich = parseRich;
+  // draw rich text on canvas; returns width
+  EPP.drawRich = (ctx, s, x, y, opt = {}) => {
+    const size = opt.size || 12, fam = opt.font || EPP.css('--font-ui'), style = opt.italic ? 'italic ' : '';
+    // opt.bold: bold base text (vector symbols); sub- and superscripts stay regular
+    const fontOf = (p) => `${style}${opt.bold && !p.m ? '700 ' : ''}${p.m ? Math.round(size * 0.72) : size}px ${fam}`;
+    const parts = parseRich(String(s));
+    const widths = parts.map(p => { ctx.font = fontOf(p); return ctx.measureText(p.t).width; });
+    const total = widths.reduce((a, b) => a + b, 0);
+    let x0 = x;
+    const align = opt.align || 'left';
+    if (align === 'center') x0 = x - total / 2; else if (align === 'right') x0 = x - total;
+    const save = ctx.textAlign; ctx.textAlign = 'left';
+    parts.forEach((p, k) => {
+      ctx.font = fontOf(p);
+      const dy = p.m === -1 ? size * 0.28 : (p.m === 1 ? -size * 0.38 : 0);
+      ctx.fillText(p.t, x0, y + dy);
+      x0 += widths[k];
+    });
+    ctx.textAlign = save;
+    return total;
+  };
+  EPP.measureRich = (ctx, s, size = 12, fam, opt = {}) => {
+    fam = fam || EPP.css('--font-ui');
+    const style = opt.italic ? 'italic ' : '';
+    return parseRich(String(s)).reduce((w, p) => { ctx.font = `${style}${opt.bold && !p.m ? '700 ' : ''}${p.m ? Math.round(size * 0.72) : size}px ${fam}`; return w + ctx.measureText(p.t).width; }, 0);
+  };
+  // rich text -> HTML (for legends/readouts)
+  EPP.richHTML = (s) => parseRich(String(s)).map(p => {
+    const t = p.t.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+    return p.m === -1 ? `<sub>${t}</sub>` : p.m === 1 ? `<sup>${t}</sup>` : t;
+  }).join('');
+
+  // ---------- nice ticks ----------
+  function niceTicks(a, b, target = 6) {
+    if (!(isFinite(a) && isFinite(b)) || a === b) return [a];
+    const lo = Math.min(a, b), hi = Math.max(a, b);
+    const raw = (hi - lo) / target, mag = Math.pow(10, Math.floor(Math.log10(raw))), r = raw / mag;
+    const step = (r < 1.5 ? 1 : r < 3 ? 2 : r < 7 ? 5 : 10) * mag;
+    const out = []; for (let v = Math.ceil(lo / step - 1e-9) * step; v <= hi + step * 1e-9; v += step) out.push(Math.abs(v) < step * 1e-9 ? 0 : v);
+    return out;
+  }
+  EPP.niceTicks = niceTicks;
+  const tickLabel = (v) => { const a = Math.abs(v); if (a === 0) return '0'; if (a >= 1e4 || a < 1e-3) return v.toExponential(0).replace('-', '−'); return String(Number(v.toPrecision(4))).replace('-', '−'); };
+
+  // ---------- responsive canvas ----------
+  EPP.canvas = (container, opt = {}) => {
+    const el = typeof container === 'string' ? document.querySelector(container) : container;
+    el.classList.add('plot');
+    const cv = document.createElement('canvas');
+    el.appendChild(cv);
+    const ctx = cv.getContext('2d');
+    const self = { el, canvas: cv, ctx, w: 0, h: 0, dpr: 1, _cbs: [] };
+    const aspect = opt.aspect || 0.6, minH = opt.minHeight || 180, maxH = opt.maxHeight || 520;
+    const resize = () => {
+      const w = Math.max(1, el.clientWidth);
+      const h = opt.height ? opt.height : Math.round(EPP.clamp(w * aspect, minH, maxH));
+      const dpr = Math.min(3, window.devicePixelRatio || 1);
+      if (w === self.w && h === self.h && dpr === self.dpr) return false;
+      self.w = w; self.h = h; self.dpr = dpr;
+      cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+      cv.style.height = h + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      return true;
+    };
+    self.onResize = (cb) => { self._cbs.push(cb); };
+    self.clear = () => { ctx.setTransform(self.dpr, 0, 0, self.dpr, 0, 0); ctx.clearRect(0, 0, self.w, self.h); };
+    resize();
+    let raf = 0;
+    const ro = new ResizeObserver(() => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { if (resize()) self._cbs.forEach(cb => cb()); }); });
+    ro.observe(el);
+    EPP.onTheme(() => self._cbs.forEach(cb => cb()));
+    return self;
+  };
+
+  // ---------- Plot ----------
+  // new EPP.Plot(el, {xlabel, ylabel, xlim, ylim, aspect, height, legend, hover, xfmt, yfmt, margin})
+  // plot.draw(layers) ; layers: {type:'line'|'fill'|'points'|'hline'|'vline'|'band'|'hband'|'text'|'arrow'|'segments', ...}
+  class Plot {
+    constructor(container, opt = {}) {
+      this.opt = Object.assign({ aspect: 0.58, legend: true, hover: true, grid: true }, opt);
+      const el = typeof container === 'string' ? document.querySelector(container) : container;
+      this.wrap = el;
+      this.holder = document.createElement('div');
+      el.appendChild(this.holder);
+      this.cv = EPP.canvas(this.holder, { aspect: this.opt.aspect, height: this.opt.height, minHeight: this.opt.minHeight || 200, maxHeight: this.opt.maxHeight || 460 });
+      this.ctx = this.cv.ctx;
+      this.layers = [];
+      this.xlim = opt.xlim || [0, 1]; this.ylim = opt.ylim || [0, 1];
+      if (this.opt.legend) { this.legendEl = document.createElement('div'); this.legendEl.className = 'legend'; el.appendChild(this.legendEl); }
+      this.tip = document.createElement('div'); this.tip.className = 'tip'; this.tip.hidden = true; this.holder.appendChild(this.tip);
+      this.cv.onResize(() => this.render());
+      this._hoverX = null;
+      const cvs = this.cv.canvas;
+      const toData = (e) => { const r = cvs.getBoundingClientRect(); const px = e.clientX - r.left, py = e.clientY - r.top; return { px, py, x: this.invX(px), y: this.invY(py) }; };
+      this._dragging = false;
+      cvs.addEventListener('pointerdown', (e) => { const d = toData(e); if (this.onPointer) { this._dragging = true; try { cvs.setPointerCapture(e.pointerId); } catch (_) {} this.onPointer(d.x, d.y, 'down', d); } });
+      cvs.addEventListener('pointermove', (e) => {
+        const d = toData(e);
+        if (this._dragging && this.onPointer) this.onPointer(d.x, d.y, 'move', d);
+        if (this.opt.hover && e.pointerType !== 'touch') { const inside = d.px >= this.m.l && d.px <= this.cv.w - this.m.r && d.py >= this.m.t && d.py <= this.cv.h - this.m.b; this._hoverX = inside || (d.px >= this.m.l && d.px <= this.cv.w - this.m.r) ? d.x : null; this._hoverY = inside ? d.y : null; this.render(); }
+      });
+      const end = (e) => { if (this._dragging && this.onPointer) { const d = toData(e); this.onPointer(d.x, d.y, 'up', d); } this._dragging = false; };
+      cvs.addEventListener('pointerup', end); cvs.addEventListener('pointercancel', end);
+      cvs.addEventListener('pointerleave', () => { this._hoverX = null; this.tip.hidden = true; this.render(); });
+      if (this.opt.onPointer) this.onPointer = this.opt.onPointer;
+      if (this.opt.ariaLabel) { cvs.setAttribute('role', 'img'); cvs.setAttribute('aria-label', this.opt.ariaLabel); }
+    }
+    get m() {
+      const mm = this.opt.margin || {};
+      return { l: mm.l ?? (this.opt.ylabel ? 58 : 44), r: mm.r ?? 14, t: mm.t ?? 12, b: mm.b ?? (this.opt.xlabel ? 44 : 28) };
+    }
+    X(x) { const m = this.m, [a, b] = this.xlim; if (this.opt.logx) return m.l + (Math.log10(x) - Math.log10(a)) / (Math.log10(b) - Math.log10(a)) * (this.cv.w - m.l - m.r); return m.l + (x - a) / (b - a) * (this.cv.w - m.l - m.r); }
+    Y(y) { const m = this.m, [a, b] = this.ylim; if (this.opt.logy) return this.cv.h - m.b - (Math.log10(y) - Math.log10(a)) / (Math.log10(b) - Math.log10(a)) * (this.cv.h - m.t - m.b); return this.cv.h - m.b - (y - a) / (b - a) * (this.cv.h - m.t - m.b); }
+    invX(px) { const m = this.m, [a, b] = this.xlim, f = (px - m.l) / (this.cv.w - m.l - m.r); return this.opt.logx ? Math.pow(10, Math.log10(a) + f * (Math.log10(b) - Math.log10(a))) : a + f * (b - a); }
+    invY(py) { const m = this.m, [a, b] = this.ylim, f = (this.cv.h - m.b - py) / (this.cv.h - m.t - m.b); return this.opt.logy ? Math.pow(10, Math.log10(a) + f * (Math.log10(b) - Math.log10(a))) : a + f * (b - a); }
+    setLimits({ xlim, ylim, xlabel, ylabel } = {}) { if (xlim) this.xlim = xlim; if (ylim) this.ylim = ylim; if (xlabel !== undefined) this.opt.xlabel = xlabel; if (ylabel !== undefined) this.opt.ylabel = ylabel; }
+    draw(layers, lim) { if (lim) this.setLimits(lim); this.layers = layers.filter(Boolean); this.render(); this.renderLegend(); }
+    renderLegend() {
+      if (!this.legendEl) return;
+      const items = this.layers.filter(L => L.label && !L.nolegend && L.type !== 'heatmap');
+      this.legendEl.innerHTML = items.map(L => {
+        const col = EPP.color(L.color);
+        const cls = L.type === 'fill' || L.type === 'band' || L.type === 'hband' ? 'box' : (L.dash ? (L.dash[0] <= 2 ? 'dot' : 'dash') : '');
+        return `<span class="item" style="color:${col}"><span class="sw ${cls}"></span><span style="color:var(--fg-2)">${EPP.richHTML(L.label)}</span></span>`;
+      }).join('');
+      this.legendEl.hidden = items.length === 0;
+    }
+    render() {
+      const ctx = this.ctx, w = this.cv.w, h = this.cv.h, m = this.m, o = this.opt;
+      if (!w || !h) return;
+      this.cv.clear();
+      const fUI = EPP.css('--font-ui'), cGrid = EPP.css('--grid'), cMuted = EPP.css('--muted'), cFg = EPP.css('--fg'), cRule = EPP.css('--rule');
+      const [xa, xb] = this.xlim, [ya, yb] = this.ylim;
+      // ticks + grid
+      const xt = o.xticks || (o.logx ? this._logTicks(xa, xb) : niceTicks(xa, xb, Math.max(3, Math.round((w - m.l - m.r) / 90))));
+      const yt = o.yticks || (o.logy ? this._logTicks(ya, yb) : niceTicks(ya, yb, Math.max(3, Math.round((h - m.t - m.b) / 55))));
+      ctx.lineWidth = 1; ctx.font = `11px ${fUI}`; ctx.fillStyle = cMuted;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+      xt.forEach(t => { const v = typeof t === 'object' ? t.v : t, lab = typeof t === 'object' ? t.label : (o.xfmt ? o.xfmt(v) : tickLabel(v)); const X = this.X(v); if (X < m.l - 0.5 || X > w - m.r + 0.5) return; if (o.grid) { ctx.strokeStyle = cGrid; ctx.beginPath(); ctx.moveTo(Math.round(X) + 0.5, m.t); ctx.lineTo(Math.round(X) + 0.5, h - m.b); ctx.stroke(); } EPP.drawRich(ctx, lab, X, h - m.b + 6, { size: 11, align: 'center', font: fUI }); });
+      ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+      yt.forEach(t => { const v = typeof t === 'object' ? t.v : t, lab = typeof t === 'object' ? t.label : (o.yfmt ? o.yfmt(v) : tickLabel(v)); const Y = this.Y(v); if (Y < m.t - 0.5 || Y > h - m.b + 0.5) return; if (o.grid) { ctx.strokeStyle = cGrid; ctx.beginPath(); ctx.moveTo(m.l, Math.round(Y) + 0.5); ctx.lineTo(w - m.r, Math.round(Y) + 0.5); ctx.stroke(); } EPP.drawRich(ctx, lab, m.l - 6, Y, { size: 11, align: 'right', font: fUI }); });
+      // zero lines
+      ctx.strokeStyle = cRule; ctx.lineWidth = 1;
+      if (ya < 0 && yb > 0 && !o.logy) { const Y = Math.round(this.Y(0)) + 0.5; ctx.beginPath(); ctx.moveTo(m.l, Y); ctx.lineTo(w - m.r, Y); ctx.stroke(); }
+      if (xa < 0 && xb > 0 && !o.logx) { const X = Math.round(this.X(0)) + 0.5; ctx.beginPath(); ctx.moveTo(X, m.t); ctx.lineTo(X, h - m.b); ctx.stroke(); }
+      // frame
+      ctx.strokeStyle = cRule; ctx.strokeRect(m.l + 0.5, m.t + 0.5, w - m.l - m.r - 1, h - m.t - m.b - 1);
+      // axis labels
+      ctx.fillStyle = cFg; ctx.textBaseline = 'alphabetic';
+      if (o.xlabel) EPP.drawRich(ctx, o.xlabel, m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, align: 'center', font: fUI });
+      if (o.ylabel) { ctx.save(); ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2); EPP.drawRich(ctx, o.ylabel, 0, 0, { size: 12.5, align: 'center', font: fUI }); ctx.restore(); }
+      // layers (clipped)
+      ctx.save(); ctx.beginPath(); ctx.rect(m.l, m.t, w - m.l - m.r, h - m.t - m.b); ctx.clip();
+      for (const L of this.layers) this._layer(L, false);
+      ctx.restore();
+      for (const L of this.layers) if (L.type === 'text' || L.type === 'label') this._layer(L, true);
+      // colorbars for heatmaps (drawn in the right margin; give margin.r >= 54)
+      for (const L of this.layers) if (L.type === 'heatmap' && L.colorbar !== false && m.r >= 40) {
+        const ramp = EPP.ramp(L.color || 'electron', L.color2, L.gamma || 1), x = w - m.r + 10, bw = 9, top = m.t, bot = h - m.b, n = 64;
+        for (let k = 0; k < n; k++) { const c = ramp(k / (n - 1)); ctx.fillStyle = `rgb(${c[0]},${c[1]},${c[2]})`; const y1 = bot - (k + 1) * (bot - top) / n; ctx.fillRect(x, y1, bw, (bot - top) / n + 0.6); }
+        ctx.strokeStyle = cRule; ctx.strokeRect(x + 0.5, top + 0.5, bw, bot - top - 1);
+        ctx.fillStyle = cMuted; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+        const f = L.cfmt || ((v) => EPP.fmt(v, 2));
+        EPP.drawRich(ctx, f(L.vmax), x + bw + 3, top + 5, { size: 10 }); EPP.drawRich(ctx, f(L.vmin), x + bw + 3, bot - 5, { size: 10 });
+        if (L.colorbar && typeof L.colorbar === 'string') { ctx.save(); ctx.translate(w - 6, (top + bot) / 2); ctx.rotate(-Math.PI / 2); ctx.textAlign = 'center'; EPP.drawRich(ctx, L.colorbar, 0, 0, { size: 10.5 }); ctx.restore(); }
+      }
+      // hover
+      this._drawHover();
+    }
+    _logTicks(a, b) { const out = []; for (let e = Math.floor(Math.log10(a)); e <= Math.ceil(Math.log10(b)); e++) { const v = Math.pow(10, e); if (v >= a * 0.999 && v <= b * 1.001) out.push({ v, label: e >= -2 && e <= 3 ? String(v) : `10^{${e}}` }); } return out; }
+    _layer(L, unclipped) {
+      const ctx = this.ctx, m = this.m, w = this.cv.w, h = this.cv.h;
+      const col = EPP.color(L.color || 'ink');
+      ctx.setLineDash(L.dash || []);
+      ctx.lineWidth = L.width || 2; ctx.strokeStyle = col; ctx.fillStyle = col; ctx.globalAlpha = L.opacity ?? 1;
+      const t = L.type;
+      if (t === 'line') {
+        const x = L.x, y = L.y, ylo = this.ylim[0], yhi = this.ylim[1], span = Math.abs(yhi - ylo);
+        const jump = L.breakJump ?? 3 * span;
+        ctx.beginPath(); let pen = false, prev = null;
+        for (let i = 0; i < x.length; i++) {
+          const yi = y[i];
+          if (!isFinite(yi) || !isFinite(x[i]) || (prev !== null && Math.abs(yi - prev) > jump)) { pen = false; prev = isFinite(yi) ? yi : null; if (!isFinite(yi)) continue; }
+          const X = this.X(x[i]); let Y = this.Y(yi); Y = EPP.clamp(Y, -1e4, 1e4);
+          if (!pen) { ctx.moveTo(X, Y); pen = true; } else ctx.lineTo(X, Y);
+          prev = yi;
+        }
+        ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.stroke();
+      } else if (t === 'heatmap') {
+        // L.z: row-major, j over y (y0 -> y1), i over x (x0 -> x1), length nx*ny
+        const sig = [EPP.css('--surface'), col, EPP.css('--fg'), L.vmin, L.vmax, L.color2 || ''].join('|');
+        if (!L._img || L._sig !== sig || L._z !== L.z) {
+          const oc = document.createElement('canvas'); oc.width = L.nx; oc.height = L.ny;
+          const g = oc.getContext('2d'), im = g.createImageData(L.nx, L.ny);
+          const ramp = EPP.ramp(L.color || 'electron', L.color2, L.gamma || 1);
+          const lo = L.vmin, hi = L.vmax, div = !!L.color2;
+          for (let j = 0; j < L.ny; j++) for (let i = 0; i < L.nx; i++) {
+            const v = L.z[j * L.nx + i]; let tt;
+            if (!isFinite(v)) tt = div ? 0.5 : 0; else tt = EPP.clamp((v - lo) / (hi - lo), 0, 1);
+            const c = ramp(tt), k = ((L.ny - 1 - j) * L.nx + i) * 4;
+            im.data[k] = c[0]; im.data[k + 1] = c[1]; im.data[k + 2] = c[2]; im.data[k + 3] = 255;
+          }
+          g.putImageData(im, 0, 0); L._img = oc; L._sig = sig; L._z = L.z;
+        }
+        ctx.imageSmoothingEnabled = L.smooth !== false;
+        const X0 = this.X(L.x0), X1 = this.X(L.x1), Y0 = this.Y(L.y0), Y1 = this.Y(L.y1);
+        ctx.drawImage(L._img, Math.min(X0, X1), Math.min(Y0, Y1), Math.abs(X1 - X0), Math.abs(Y1 - Y0));
+      } else if (t === 'segments') { // L.segs: [[x0,y0,x1,y1],...]
+        ctx.beginPath(); for (const s of L.segs) { ctx.moveTo(this.X(s[0]), this.Y(s[1])); ctx.lineTo(this.X(s[2]), this.Y(s[3])); } ctx.stroke();
+      } else if (t === 'fill') {
+        ctx.globalAlpha = L.alpha ?? 0.18; ctx.beginPath();
+        const x = L.x, y1 = L.y1, y2 = L.y2 || L.x.map(() => (L.base ?? 0));
+        let started = false;
+        for (let i = 0; i < x.length; i++) { if (!isFinite(y1[i])) continue; const X = this.X(x[i]), Y = EPP.clamp(this.Y(y1[i]), -1e4, 1e4); if (!started) { ctx.moveTo(X, Y); started = true; } else ctx.lineTo(X, Y); }
+        for (let i = x.length - 1; i >= 0; i--) { if (!isFinite(y2[i])) continue; ctx.lineTo(this.X(x[i]), EPP.clamp(this.Y(y2[i]), -1e4, 1e4)); }
+        ctx.closePath(); ctx.fill();
+      } else if (t === 'points') {
+        const r = L.r || 3.5;
+        for (let i = 0; i < L.x.length; i++) { if (!isFinite(L.y[i])) continue; ctx.beginPath(); ctx.arc(this.X(L.x[i]), this.Y(L.y[i]), r, 0, 2 * Math.PI); if (L.hollow) { ctx.lineWidth = 1.6; ctx.stroke(); } else ctx.fill(); }
+      } else if (t === 'hline' || t === 'vline') {
+        ctx.lineWidth = L.width || 1.2; if (!L.dash) ctx.setLineDash([5, 4]);
+        ctx.beginPath();
+        if (t === 'hline') { const Y = this.Y(L.at); ctx.moveTo(m.l, Y); ctx.lineTo(w - m.r, Y); } else { const X = this.X(L.at); ctx.moveTo(X, m.t); ctx.lineTo(X, h - m.b); }
+        ctx.stroke(); ctx.setLineDash([]);
+        if (L.text) { ctx.fillStyle = EPP.textColor(L.color); ctx.font = `11px ${EPP.css('--font-ui')}`; if (t === 'hline') { ctx.textBaseline = 'bottom'; EPP.drawRich(ctx, L.text, (L.textAt === 'left' ? m.l + 6 : w - m.r - 6), this.Y(L.at) - 3, { size: 11, align: L.textAt === 'left' ? 'left' : 'right' }); } else { ctx.textBaseline = 'top'; EPP.drawRich(ctx, L.text, this.X(L.at) + 4, m.t + 4 + (L.textDy || 0), { size: 11 }); } }
+      } else if (t === 'band' || t === 'hband') {
+        ctx.globalAlpha = L.alpha ?? 0.12;
+        if (t === 'band') { const X0 = this.X(L.x0), X1 = this.X(L.x1); ctx.fillRect(Math.min(X0, X1), m.t, Math.abs(X1 - X0), h - m.t - m.b); }
+        else { const Y0 = this.Y(L.y0), Y1 = this.Y(L.y1); ctx.fillRect(m.l, Math.min(Y0, Y1), w - m.l - m.r, Math.abs(Y1 - Y0)); }
+        ctx.globalAlpha = 1;
+        if (L.text) { ctx.fillStyle = EPP.textColor(L.color); ctx.textBaseline = 'top'; if (t === 'band') EPP.drawRich(ctx, L.text, (this.X(L.x0) + this.X(L.x1)) / 2, m.t + 4, { size: 11, align: 'center' }); else EPP.drawRich(ctx, L.text, w - m.r - 6, Math.min(this.Y(L.y0), this.Y(L.y1)) + 3, { size: 11, align: 'right' }); }
+      } else if ((t === 'text' || t === 'label') && unclipped) {
+        ctx.globalAlpha = L.opacity ?? 1; ctx.textBaseline = L.baseline || 'middle'; ctx.fillStyle = EPP.textColor(L.color || 'fg2');
+        const X = this.X(L.x) + (L.dx || 0), Y = this.Y(L.y) + (L.dy || 0);
+        EPP.drawRich(ctx, L.text, X, Y, { size: L.size || 12, align: L.align || 'left', italic: L.italic, bold: L.bold });
+      } else if (t === 'arrow') {
+        const X0 = this.X(L.x0), Y0 = this.Y(L.y0), X1 = this.X(L.x1), Y1 = this.Y(L.y1);
+        ctx.lineWidth = L.width || 1.6; ctx.beginPath(); ctx.moveTo(X0, Y0); ctx.lineTo(X1, Y1); ctx.stroke();
+        const a = Math.atan2(Y1 - Y0, X1 - X0), s = L.head || 8; ctx.setLineDash([]);
+        ctx.beginPath(); ctx.moveTo(X1, Y1); ctx.lineTo(X1 - s * Math.cos(a - 0.4), Y1 - s * Math.sin(a - 0.4)); ctx.lineTo(X1 - s * Math.cos(a + 0.4), Y1 - s * Math.sin(a + 0.4)); ctx.closePath(); ctx.fill();
+      }
+      ctx.globalAlpha = 1; ctx.setLineDash([]);
+    }
+    _drawHover() {
+      const x = this._hoverX;
+      if (x === null || x === undefined) { this.tip.hidden = true; return; }
+      const lines = this.layers.filter(L => L.type === 'line' && L.label && L.hover !== false);
+      const heats = this.layers.filter(L => L.type === 'heatmap' && L.hover !== false);
+      if (!lines.length && !(heats.length && this._hoverY != null)) { this.tip.hidden = true; return; }
+      const ctx = this.ctx, m = this.m, X = this.X(x);
+      ctx.strokeStyle = EPP.css('--muted'); ctx.lineWidth = 1; ctx.setLineDash([2, 3]);
+      ctx.beginPath(); ctx.moveTo(X, m.t); ctx.lineTo(X, this.cv.h - m.b); ctx.stroke(); ctx.setLineDash([]);
+      const xf = this.opt.hoverX || ((v) => EPP.fmt(v, 3));
+      const yf = this.opt.hoverY || ((v) => EPP.fmt(v, 4));
+      const rows = [`<span style="color:var(--muted)">${EPP.richHTML(this.opt.xname || 'x')} = ${xf(x)}</span>`];
+      for (const L of lines) {
+        // nearest sample by x (assumes monotonic x)
+        const xs = L.x; let lo = 0, hi = xs.length - 1; const asc = xs[hi] >= xs[0];
+        while (hi - lo > 1) { const mid = (lo + hi) >> 1; if ((xs[mid] < x) === asc) lo = mid; else hi = mid; }
+        const i = Math.abs(xs[lo] - x) < Math.abs(xs[hi] - x) ? lo : hi;
+        const y = L.y[i];
+        if (!isFinite(y) || Math.abs(xs[i] - x) > Math.abs(this.xlim[1] - this.xlim[0]) * 0.03) continue;
+        const Y = this.Y(y);
+        if (Y >= m.t && Y <= this.cv.h - m.b) { ctx.fillStyle = EPP.color(L.color); ctx.beginPath(); ctx.arc(this.X(xs[i]), Y, 3.5, 0, 2 * Math.PI); ctx.fill(); }
+        rows.push(`<span style="color:${EPP.color(L.color)}">■</span> ${EPP.richHTML(L.label)}: ${yf(y)}`);
+      }
+      if (this._hoverY != null) for (const L of heats) {
+        const i = Math.round((x - L.x0) / (L.x1 - L.x0) * (L.nx - 1)), j = Math.round((this._hoverY - L.y0) / (L.y1 - L.y0) * (L.ny - 1));
+        if (i >= 0 && i < L.nx && j >= 0 && j < L.ny) { const yf2 = this.opt.hoverX2 || ((v) => EPP.fmt(v, 3)); rows.push(`<span style="color:var(--muted)">${EPP.richHTML(this.opt.yname || 'y')} = ${yf2(this._hoverY)}</span>`); rows.push(`${EPP.richHTML(L.label || 'value')}: ${(L.cfmt || ((v) => EPP.fmt(v, 3)))(L.z[j * L.nx + i])}`); }
+      }
+      if (rows.length <= 1) { this.tip.hidden = true; return; }
+      this.tip.innerHTML = rows.join('<br>');
+      this.tip.hidden = false;
+      const tw = this.tip.offsetWidth, left = X + 12 + tw > this.cv.w ? X - 12 - tw : X + 12;
+      this.tip.style.left = Math.max(0, left) + 'px'; this.tip.style.top = (m.t + 4) + 'px';
+    }
+  }
+  EPP.Plot = Plot;
+  EPP.sample = (f, a, b, n = 400) => { const x = EPP.linspace(a, b, n); return { x, y: x.map(f) }; };
+
+  // ---------- controls ----------
+  // EPP.controls(el, specs, onChange) ; spec: {key, type:'range'|'select'|'toggle'|'seg'|'button', label, min, max, step, value, fmt, options:[[value,label],...], onClick}
+  EPP.controls = (container, specs, onChange) => {
+    const el = typeof container === 'string' ? document.querySelector(container) : container;
+    el.classList.add('controls');
+    const fig = el.closest('figure, section, div[id]');
+    const base = (fig && fig.id) ? fig.id : ('c' + Math.random().toString(36).slice(2, 7));
+    const state = {}, setters = {};
+    let scheduled = false;
+    const fire = () => { if (scheduled) return; scheduled = true; requestAnimationFrame(() => { scheduled = false; onChange && onChange(state); }); };
+    specs.forEach(s => {
+      const id = `${base}-${s.key}`;
+      const box = document.createElement('div'); box.className = 'ctrl' + (s.type === 'toggle' ? ' toggle' : '');
+      const longSeg = s.type === 'seg' && s.options.reduce((n, o) => n + String(o[1]).length + 3, 0) > 30;
+      if (s.wide || longSeg) box.style.gridColumn = '1 / -1';
+      if (s.type === 'range') {
+        const fmt = s.fmt || ((v) => String(v));
+        box.innerHTML = `<label for="${id}"><span>${EPP.richHTML(s.label)}</span><output for="${id}"></output></label><input type="range" id="${id}" min="${s.min}" max="${s.max}" step="${s.step ?? 'any'}" value="${s.value}">`;
+        const inp = box.querySelector('input'), out = box.querySelector('output');
+        const map = s.log ? { to: (v) => Math.pow(10, v), from: (v) => Math.log10(v) } : null;
+        if (map) { inp.min = Math.log10(s.min); inp.max = Math.log10(s.max); inp.step = s.step ?? 'any'; inp.value = Math.log10(s.value); }
+        const read = () => { const v = parseFloat(inp.value); state[s.key] = map ? map.to(v) : v; out.textContent = fmt(state[s.key]); };
+        inp.addEventListener('input', () => { read(); fire(); });
+        setters[s.key] = (v) => { inp.value = map ? Math.log10(v) : v; read(); };
+        read();
+      } else if (s.type === 'select') {
+        box.innerHTML = `<label for="${id}"><span>${EPP.richHTML(s.label)}</span></label><select id="${id}">${s.options.map(o => `<option value="${o[0]}">${o[1]}</option>`).join('')}</select>`;
+        const sel = box.querySelector('select'); sel.value = s.value ?? s.options[0][0];
+        const read = () => { state[s.key] = sel.value; };
+        sel.addEventListener('change', () => { read(); fire(); });
+        setters[s.key] = (v) => { sel.value = v; read(); };
+        read();
+      } else if (s.type === 'toggle') {
+        box.innerHTML = `<label for="${id}"><input type="checkbox" id="${id}" ${s.value ? 'checked' : ''}><span>${EPP.richHTML(s.label)}</span></label>`;
+        const cb = box.querySelector('input');
+        const read = () => { state[s.key] = cb.checked; };
+        cb.addEventListener('change', () => { read(); fire(); });
+        setters[s.key] = (v) => { cb.checked = !!v; read(); };
+        read();
+      } else if (s.type === 'seg') {
+        box.innerHTML = `<span class="lab"><span>${EPP.richHTML(s.label)}</span></span><div class="seg" role="group" aria-label="${s.label.replace(/[_^{}]/g, '')}">${s.options.map(o => `<button type="button" id="${id}-${o[0]}" data-v="${o[0]}" aria-pressed="false">${EPP.richHTML(o[1])}</button>`).join('')}</div>`;
+        const btns = [...box.querySelectorAll('button')];
+        const setv = (v) => { state[s.key] = v; btns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === String(v)))); };
+        btns.forEach(b => b.addEventListener('click', () => { setv(b.dataset.v); fire(); }));
+        setters[s.key] = setv; setv(s.value ?? s.options[0][0]);
+      } else if (s.type === 'button') {
+        box.innerHTML = `<span class="lab"><span>&nbsp;</span></span><button type="button" class="btn" id="${id}">${EPP.richHTML(s.label)}</button>`;
+        box.querySelector('button').addEventListener('click', () => { s.onClick && s.onClick(state); fire(); });
+      }
+      el.appendChild(box);
+    });
+    const api = { state, set: (k, v, silent) => { setters[k] && setters[k](v); if (!silent) fire(); }, refresh: () => onChange && onChange(state), el };
+    // initial draw after fonts/layout
+    requestAnimationFrame(() => onChange && onChange(state));
+    return api;
+  };
+  // readout: EPP.readout(el).set({ 'ω_LO': '45 meV', ... })
+  EPP.readout = (container) => {
+    const el = typeof container === 'string' ? document.querySelector(container) : container;
+    el.classList.add('readout'); el.setAttribute('aria-live', 'polite');
+    return { set: (obj) => { el.innerHTML = Object.entries(obj).map(([k, v]) => `<span>${EPP.richHTML(k)}<b>${v}</b></span>`).join(''); } };
+  };
+
+  // ---------- animation ----------
+  // EPP.anim(figureEl, frame(t, dt), {buttonHost}) -> {play, pause, toggle, running}. Pauses offscreen; starts paused under reduced motion.
+  EPP.anim = (host, frame, opt = {}) => {
+    const el = typeof host === 'string' ? document.querySelector(host) : host;
+    let running = false, visible = true, raf = 0, last = 0, t = 0;
+    const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'btn';
+    const label = () => { btn.textContent = running ? 'Pause' : 'Play'; btn.setAttribute('aria-pressed', String(running)); };
+    const loop = (ts) => { if (!running || !visible) { raf = 0; return; } const dt = last ? Math.min(0.05, (ts - last) / 1000) : 0; last = ts; t += dt; frame(t, dt); raf = requestAnimationFrame(loop); };
+    const kick = () => { if (running && visible && !raf) { last = 0; raf = requestAnimationFrame(loop); } };
+    const api = {
+      play() { running = true; label(); kick(); }, pause() { running = false; label(); },
+      toggle() { running ? api.pause() : api.play(); }, get running() { return running; }, get t() { return t; },
+      redraw() { frame(t, 0); }, button: btn
+    };
+    btn.addEventListener('click', api.toggle);
+    if (opt.buttonHost) { const bh = typeof opt.buttonHost === 'string' ? el.querySelector(opt.buttonHost) : opt.buttonHost; bh.appendChild(btn); }
+    try { new IntersectionObserver((ents) => { visible = ents[0].isIntersecting; kick(); }).observe(el); } catch (e) {}
+    label();
+    requestAnimationFrame(() => { frame(0, 0); if (!EPP.reducedMotion && opt.autoplay !== false) api.play(); });
+    return api;
+  };
+
+  // ---------- Feynman diagrams (SVG) ----------
+  // EPP.fd.draw(el, {w, h, items:[...], label}) ; item types:
+  //   {t:'fermion'|'fermion2'|'phonon'|'phonon2'|'photon'|'photon2'|'coulomb'|'screened', a:[x,y], b:[x,y], bend:0, arrow:true, label, lpos:'+'|'-', ldist}
+  //   {t:'vertex', at:[x,y], r}   {t:'blob', at:[x,y], r, label}   {t:'text', at:[x,y], text, color, size, anchor}
+  const NS = 'http://www.w3.org/2000/svg';
+  function curvePoints(a, b, bend, n) {
+    const pts = []; const dx = b[0] - a[0], dy = b[1] - a[1], L = Math.hypot(dx, dy);
+    if (!bend) { for (let i = 0; i <= n; i++) { const s = i / n; pts.push([a[0] + dx * s, a[1] + dy * s, dx / L, dy / L]); } return pts; }
+    // circular arc through a, b with sagitta = bend * L (positive bulges to the screen-left of a->b: up for a left-to-right line)
+    const sag = bend * L, R = (L * L / 4 + sag * sag) / (2 * Math.abs(sag));
+    const mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2, nx = dy / L, ny = -dx / L; // screen-left normal (y down)
+    const sgn = Math.sign(sag), d = R - Math.abs(sag);
+    const cx = mx - sgn * nx * d, cy = my - sgn * ny * d;
+    let t0 = Math.atan2(a[1] - cy, a[0] - cx), t1 = Math.atan2(b[1] - cy, b[0] - cx);
+    // choose the arc passing through the sagitta point
+    const px = mx + sgn * nx * Math.abs(sag), py = my + sgn * ny * Math.abs(sag), tp = Math.atan2(py - cy, px - cx);
+    const norm = (x) => { while (x < 0) x += 2 * Math.PI; while (x >= 2 * Math.PI) x -= 2 * Math.PI; return x; };
+    let span = norm(t1 - t0); const tpRel = norm(tp - t0);
+    if (tpRel > span) span = span - 2 * Math.PI;
+    for (let i = 0; i <= n; i++) { const th = t0 + span * i / n; const x = cx + R * Math.cos(th), y = cy + R * Math.sin(th); const tx = -Math.sin(th) * Math.sign(span), ty = Math.cos(th) * Math.sign(span); pts.push([x, y, tx, ty]); }
+    return pts;
+  }
+  const pathFrom = (pts) => 'M' + pts.map(p => p[0].toFixed(2) + ' ' + p[1].toFixed(2)).join(' L');
+  function offsetPath(pts, f) { return pts.map((p, i) => { const s = i / (pts.length - 1); const o = f(s); return [p[0] - p[3] * o, p[1] + p[2] * o, p[2], p[3]]; }); }
+  function arcLen(pts) { let L = 0; for (let i = 1; i < pts.length; i++) L += Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]); return L; }
+  function svgEl(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+  function richSVG(textEl, s) {
+    parseRich(String(s)).forEach(p => {
+      const ts = svgEl('tspan', {}, textEl); ts.textContent = p.t;
+      if (p.m) { ts.setAttribute('font-size', '72%'); ts.setAttribute('baseline-shift', p.m === -1 ? 'sub' : 'super'); ts.setAttribute('font-style', 'normal'); }
+    });
+  }
+  EPP.fd = {
+    draw(container, spec) {
+      const el = typeof container === 'string' ? document.querySelector(container) : container;
+      const w = spec.w || 200, h = spec.h || 100;
+      const svg = svgEl('svg', { viewBox: `${spec.x0 || 0} ${spec.y0 || 0} ${w} ${h}`, width: w, height: h, role: 'img', 'aria-label': spec.label || 'Feynman diagram' });
+      const paint = () => {
+        svg.innerHTML = '';
+        const col = { fermion: EPP.color('electron'), phonon: EPP.color('phonon'), photon: EPP.color('photon'), ink: EPP.color('ink'), muted: EPP.color('muted') };
+        const tcol = { fermion: EPP.color('electron-t'), phonon: EPP.color('phonon-t'), photon: EPP.color('photon-t') };
+        for (const it of spec.items) {
+          const t = it.t;
+          if (['fermion', 'fermion2', 'phonon', 'phonon2', 'photon', 'photon2', 'coulomb', 'screened', 'plain'].includes(t)) {
+            const kind = t.replace('2', '');
+            const c = it.color ? EPP.color(it.color) : (kind === 'fermion' ? col.fermion : kind === 'phonon' ? col.phonon : (kind === 'photon' || kind === 'coulomb' || kind === 'screened') ? col.photon : col.ink);
+            const base = curvePoints(it.a, it.b, it.bend || 0, 120);
+            const L = arcLen(base);
+            // dressed lines: double for fermions/Coulomb, heavier stroke for wavy/zigzag lines
+            const dressed = t.endsWith('2') || kind === 'screened';
+            const dbl = dressed && (kind === 'fermion' || kind === 'screened' || kind === 'plain');
+            const strokes = dbl ? [-2.2, 2.2] : [0];
+            for (const off of strokes) {
+              let pts = off ? offsetPath(base, () => off) : base;
+              let d, attrs = { fill: 'none', stroke: c, 'stroke-width': it.width || (dressed && !dbl ? 3.2 : 1.8), 'stroke-linecap': 'round', 'stroke-linejoin': 'round' };
+              if (kind === 'photon') { const nw = Math.max(2, Math.round(L / (it.wl || 9))); pts = offsetPath(pts, s => (it.amp || 3.6) * Math.sin(2 * Math.PI * nw * s)); d = pathFrom(pts); }
+              else if (kind === 'phonon') { const nz = Math.max(2, Math.round(L / (it.wl || 7))); const zig = curvePoints(it.a, it.b, it.bend || 0, nz * 2); const zz = (off ? offsetPath(zig, () => off) : zig).map((p, i) => { const o = (i === 0 || i === zig.length - 1) ? 0 : (i % 2 ? 1 : -1) * (it.amp || 3.6); return [p[0] - p[3] * o, p[1] + p[2] * o]; }); d = 'M' + zz.map(p => p[0].toFixed(2) + ' ' + p[1].toFixed(2)).join(' L'); }
+              else { d = pathFrom(pts); if (kind === 'coulomb' || kind === 'screened') attrs['stroke-dasharray'] = '5 4'; }
+              attrs.d = d; svgEl('path', attrs, svg);
+            }
+            if (kind === 'fermion' && it.arrow !== false) {
+              const mid = base[Math.floor(base.length / 2)], ang = Math.atan2(mid[3], mid[2]) * 180 / Math.PI;
+              const g = svgEl('g', { transform: `translate(${mid[0]},${mid[1]}) rotate(${ang})` }, svg);
+              svgEl('path', { d: 'M5 0 L-4 -4.5 L-2 0 L-4 4.5 Z', fill: c }, g);
+            }
+            if (it.label) {
+              // label on the screen-left of the direction a->b by default (above a left-to-right line); lpos:'right' (or '+') puts it on the other side
+              const mid = base[Math.floor(base.length / 2)], dist = it.ldist ?? (dressed ? 14 : 12), sgn = (it.lpos === '+' || it.lpos === 'right') ? -1 : 1;
+              const lx = mid[0] + mid[3] * dist * sgn, ly = mid[1] - mid[2] * dist * sgn;
+              const lc = it.color ? EPP.color(it.color) : (kind === 'fermion' ? tcol.fermion : kind === 'phonon' ? tcol.phonon : (kind === 'photon' || kind === 'coulomb' || kind === 'screened') ? tcol.photon : col.ink);
+              const te = svgEl('text', { x: lx, y: ly + 4, 'text-anchor': 'middle', class: 'fd-lab', fill: lc }, svg); richSVG(te, it.label);
+            }
+          } else if (t === 'vertex') {
+            svgEl('circle', { cx: it.at[0], cy: it.at[1], r: it.r || 3, fill: it.color ? EPP.color(it.color) : col.ink }, svg);
+          } else if (t === 'blob') {
+            const c = it.color ? EPP.color(it.color) : col.ink;
+            svgEl('circle', { cx: it.at[0], cy: it.at[1], r: it.r || 14, fill: EPP.color('surface') }, svg); // opaque base hides lines underneath
+            svgEl('circle', { cx: it.at[0], cy: it.at[1], r: it.r || 14, fill: EPP.alpha(it.color || 'ink', 0.12), stroke: c, 'stroke-width': 1.6 }, svg);
+            if (it.label) { const te = svgEl('text', { x: it.at[0], y: it.at[1] + 5, 'text-anchor': 'middle', class: 'fd-lab', fill: c, 'font-style': 'normal' }, svg); richSVG(te, it.label); }
+          } else if (t === 'text') {
+            const te = svgEl('text', { x: it.at[0], y: it.at[1], 'text-anchor': it.anchor || 'middle', class: 'fd-lab', fill: it.color ? EPP.color(it.color) : col.ink, 'font-size': it.size || 14 }, svg);
+            if (it.upright) te.setAttribute('font-style', 'normal');
+            richSVG(te, it.text);
+          }
+        }
+      };
+      paint();
+      EPP.onTheme(paint);
+      el.appendChild(svg);
+      return svg;
+    }
+  };
+
+  // ---------- small DOM helpers ----------
+  EPP.$ = (sel, rootEl = document) => rootEl.querySelector(sel);
+  EPP.$$ = (sel, rootEl = document) => [...rootEl.querySelectorAll(sel)];
+  window.EPP = EPP;
+})();
+
+</script>
+<div class="page">
+<nav class="toc" aria-label="Contents"><div class="toc-inner"><details open id="toc-details"><summary>Contents</summary>
+<div class="toc-part"><ol>
+<li><a href="#c-conventions"><span class="n">0</span><span>Conventions</span></a></li>
+</ol></div>
+<div class="toc-part"><span><a href="#part-a" style="display:inline;padding:0;margin:0;color:inherit">Part A · Electron–phonon theory</a></span><ol>
+<li><a href="#a-lattice"><span class="n">A.1</span><span>Lattice dynamics and phonons</span></a></li>
+</ol></div>
+</details></div></nav>
+<main id="main">
+<header class="hero" id="top">
+  <p class="kicker">Electron–phonon–photon primer · version 2 · pilot</p>
+  <h1>A self-contained edition, tried on <span class="p">lattice dynamics</span></h1>
+  <p class="lede">This pilot tries the format of the second edition on one section. It uses a single notation for electrons, phonons and photons, defines every symbol where it first appears, and can be read without the review by Giustino or the EPP manuscript at hand. Their symbols and equation numbers sit in the footnotes.</p>
+  <h2 class="sub">How to read it</h2>
+  <ul class="how">
+    <li>An equation that introduces new symbols is followed by a <strong>where</strong> list.</li>
+    <li>Derivations go step by step, and every step says <strong>why</strong> it is taken.</li>
+    <li><strong>Background</strong> boxes (violet) recap standard material. Skip them if you know it; the main text does not depend on them.</li>
+    <li>Footnote numbers open short notes: mostly the notation and equation numbers of the two sources, plus a few side remarks.</li>
+    <li>The <strong>Symbols</strong> button, bottom right, lists every symbol with its meaning and a link to its definition. Dotted symbols in the text open the same entry.</li>
+  </ul>
+  <p class="kbd-hint">Only the conventions and Section A.1 are part of this pilot; references to other sections point ahead to the full edition. Version 1 of the primer stays available unchanged as the reference edition.</p>
+</header>
+
+<!-- ===== C00-conventions.html ===== -->
+<section class="chapter" id="c-conventions" data-num="0" data-title="Conventions">
+  <header class="ch-head">
+    <p class="eyebrow"><span class="num">0</span><span>Notation · units · signs</span></p>
+    <h2>Conventions used on every page</h2>
+    <p class="lede">One notation for electrons, phonons and photons, chosen for clarity. The two sources this primer follows use different symbols for several quantities; their versions appear only in footnotes.</p>
+  </header>
+
+  <h3 id="c-indices">Indices</h3>
+  <p>Each kind of label has its own letters, and they keep their meaning on every page.</p>
+  <div class="tbl"><table style="min-width:520px">
+    <thead><tr><th>Index</th><th>Labels</th><th>Range</th></tr></thead>
+    <tbody>
+      <tr><td>$\ell,\ell'$</td><td>unit cell of the crystal</td><td>$N_\ell$ cells</td></tr>
+      <tr><td>$\kappa,\kappa'$</td><td>atom inside a cell</td><td>$1,\dots,N_\kappa$</td></tr>
+      <tr><td>$\alpha,\beta$; $\gamma,\delta$</td><td>Cartesian direction: free indices; summed indices</td><td>$x,y,z$</td></tr>
+      <tr><td>$\nu,\nu'$</td><td>phonon branch</td><td>$1,\dots,3N_\kappa$</td></tr>
+      <tr><td>$n,m$</td><td>electron band</td><td></td></tr>
+      <tr><td>$\lambda,\lambda'$</td><td>photon polarization</td><td>$1,2$ transverse, $3$ longitudinal</td></tr>
+    </tbody>
+  </table></div>
+  <p>For a surface or a two-dimensional sheet, $z$ is the normal direction and $x,y$ lie in the plane. The letter $\mu$ is the chemical potential, never an index.</p>
+
+  <h3 id="c-typography">How symbols are written</h3>
+  <ul>
+    <li><strong>Vectors and Cartesian tensors are bold</strong>, their components italic with indices: the displacement $\bu_{\ell\kappa}$ has components $u_{\ell\kappa\alpha}$.</li>
+    <li><strong>Labels that abbreviate a word are upright</strong>, the whole word: $\Pi^{\ion}$ (ionic), $\Pi^{\ph}$ (phonon), $\varepsilon^{\rme}$ (electrons only), $k_{\mathrm B}$ (Boltzmann), $\omega_{\mathrm{LO}}$. Running indices stay italic.</li>
+    <li><strong>Euler's number, the imaginary unit and the differential are upright</strong>, $\ee^{\ii\bq\cdot\bR_\ell}$ and $\dd^3r$, so that the exponential is never confused with the elementary charge $e$ or with the phonon eigenvector components $e_{\kappa\alpha,\nu}$.</li>
+    <li><strong>A tilde means mass-scaled</strong>: $\tPhi$ is the force-constant matrix divided by square roots of masses.</li>
+    <li><strong>Hats mark operators</strong> only where an operator and an ordinary number of the same name appear together. Unit vectors also carry hats: $\hat\bq=\bq/q$.</li>
+    <li>A comma separates index groups that belong to different objects: in $e_{\kappa\alpha,\nu}$ the pair $\kappa\alpha$ labels a component and $\nu$ labels the mode.</li>
+  </ul>
+
+  <h3 id="c-units">Units and numbers</h3>
+  <p>Equations are written in Gaussian units with $e$, $\hbar$, the electron mass $m_{\mathrm e}$ and the speed of light $c$ kept explicit, so atomic units follow by setting $e=\hbar=m_{\mathrm e}=1$. The elementary charge $e$ is positive and the electron carries $-e$. Key equations with charges or fields have a footnote with their SI form. Numbers are given in eV or meV, ångström (Å), atomic mass units (amu) and kelvin.</p>
+  <div class="tbl"><table style="min-width:420px">
+    <thead><tr><th>Combination</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td>$e^2$ (Gaussian), equal to $e^2/4\pi\varepsilon_0$ in SI</td><td>14.3996 eV Å</td></tr>
+      <tr><td>$\hbar c$</td><td>1973.27 eV Å</td></tr>
+      <tr><td>$\hbar^2/2m_{\mathrm e}$</td><td>3.80998 eV Å²</td></tr>
+      <tr><td>$\hbar\omega$ of a spring $K$ (eV/Å²) on a mass $M$ (amu)</td><td>$64.654\ \text{meV}\times\sqrt{K/M}$</td></tr>
+      <tr><td>$\hbar/(2M\omega)$</td><td>2.0901 Å² divided by $M$ (amu) times $\hbar\omega$ (meV)</td></tr>
+      <tr><td>$k_{\mathrm B}$</td><td>0.0861733 meV/K</td></tr>
+      <tr><td>1 meV</td><td>8.06554 cm⁻¹ = 0.241799 THz</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 id="c-signs">Signs and Fourier transforms</h3>
+  <p>Oscillations go as $\ee^{-\ii\omega t}$, and a function of time is transformed as $f(\omega)=\int\dd t\,\ee^{\ii\omega t}f(t)$. Waves on the lattice go as $\ee^{+\ii\bq\cdot\bR_\ell}$, where $\bR_\ell$ is the position of cell $\ell$. Section <a href="#a-lattice">A.1</a> introduces the lattice conventions where they are first needed.</p>
+
+  <div class="callout source">
+    <p class="callout-title">The two sources</p>
+    <p>Part A follows F. Giustino, “Electron-phonon interactions from first principles”, <em>Rev. Mod. Phys.</em> <strong>89</strong>, 015003 (2017). Part B follows the manuscript “Theory of the Electron-Phonon-Photon coupling” (draft v2), called the EPP manuscript. Neither is needed to read this page. Footnotes give their symbols and equation numbers wherever this page uses a different notation.</p>
+  </div>
+</section>
+
+<!-- ===== A01-lattice.html ===== -->
+<div class="part-head" id="part-a" data-part-title="Part A · Electron–phonon theory">
+  <p class="part-label">Part A</p>
+  <h2>Electron–phonon interactions from first principles</h2>
+  <p>Part A builds the standard first-principles theory of electrons coupled to the vibrations of a crystal lattice. It starts in this section with the vibrations themselves. The later sections couple them to electrons, compute the coupling with density-functional perturbation theory, and treat both with many-body perturbation theory.</p>
+  <p>One thread runs through all of Part A. Every interaction in it is the instantaneous Coulomb interaction, screened by the electrons and, through the vibrations, by the ions. Light enters only as an external field. Part B replaces this picture with the full electromagnetic field.</p>
+</div>
+<section class="chapter" id="a-lattice" data-num="A.1" data-title="Lattice dynamics and phonons">
+  <header class="ch-head">
+    <p class="eyebrow"><span class="num">A.1</span><span>Labels · force constants · normal modes · phonons</span></p>
+    <h2>Lattice dynamics and phonons</h2>
+    <p class="lede">Atoms in a crystal sit near the bottom of an energy landscape and vibrate about it. This section builds the language the primer uses for those vibrations, from the ground up: how atoms and their displacements are labelled, what force constants are and why they obey a sum rule, why waves with a wavevector are the natural description of the motion, and how quantizing the waves gives phonons.</p>
+  </header>
+
+  <p><strong>What you need:</strong> Newton's equations for masses on springs, complex numbers, and the eigenvalues of Hermitian matrices. A background box recaps the quantum harmonic oscillator where it is needed. No electromagnetism appears in this section.<sup class="fn"><a href="#fn-a1-units">1</a></sup></p>
+
+  <h3 id="a1-picture">The picture: atoms on springs</h3>
+  <p>A nucleus is between 1800 (hydrogen) and 380,000 (lead) times heavier than an electron. When the nuclei move, the electrons have time to readjust, and they stay in their ground state for the current positions of the nuclei. This is the <strong>Born–Oppenheimer approximation</strong>. It turns the crystal into a mechanical problem. For every arrangement of the nuclei there is one energy $U$: the ground-state energy of the electrons plus the Coulomb repulsion of the nuclei, all held fixed in that arrangement. Seen as a function of all nuclear positions, $U$ is the <strong>Born–Oppenheimer energy surface</strong>. A density-functional code computes it for any frozen arrangement of atoms. The force on a nucleus is minus the gradient of $U$ with respect to that nucleus's position.<sup class="fn"><a href="#fn-a1-bo">2</a></sup></p>
+  <p>At equilibrium every force vanishes, so the atoms sit at a minimum of $U$. Close to a minimum any smooth function looks like a paraboloid, and a parabolic energy is the energy of a set of springs. This is the <strong>harmonic approximation</strong>. It holds because the vibrations are small: at room temperature atoms move by a few hundredths of an ångström, against bond lengths of 1.4 to 2.5 Å (<a href="#viz-a1-zeropoint">Figure A1.6</a> puts numbers on this).</p>
+  <p>The plan of the section follows from this picture:</p>
+  <ol>
+    <li>label every atom and its displacement;</li>
+    <li>expand $U$ to second order, which defines the spring constants of the crystal, the <strong>force constants</strong>;</li>
+    <li>find the patterns of motion in which all atoms oscillate at one frequency, the <strong>normal modes</strong>;</li>
+    <li>quantize the normal modes, which gives <strong>phonons</strong>.</li>
+  </ol>
+
+  <h3 id="a1-labels">Labelling a crystal</h3>
+  <p>A crystal is a pattern repeated by translations. The repeated unit is the <strong>unit cell</strong>, the parallelepiped spanned by three <strong>primitive vectors</strong> $\ba_1$, $\ba_2$, $\ba_3$. Cells are labelled by an index $\ell$ that stands for a triple of integers $(\ell_1,\ell_2,\ell_3)$. The corner of cell $\ell$ sits at the <strong>lattice vector</strong></p>
+  <div class="eq">$$\bR_\ell=\ell_1\ba_1+\ell_2\ba_2+\ell_3\ba_3 .$$</div>
+  <p>Every cell contains the same $N_\kappa$ atoms, the <strong>basis</strong>, labelled $\kappa=1,\dots,N_\kappa$. Atom $\kappa$ has mass $M_\kappa$ and sits at $\btau_\kappa$, measured from the corner of its cell. Atom $\kappa$ of cell $\ell$ therefore has its equilibrium position at $\btau_{\ell\kappa}$, and as it vibrates it is displaced from there by $\bu_{\ell\kappa}(t)$:<sup class="fn"><a href="#fn-a1-labels">3</a></sup></p>
+  <div class="eq" id="a1-eq-pos">$$\begin{gathered}\btau_{\ell\kappa}=\bR_\ell+\btau_\kappa,\\ \text{position at time }t=\btau_{\ell\kappa}+\bu_{\ell\kappa}(t).\end{gathered} \tag{A1.1}$$</div>
+  <dl class="where">
+    <dt>$\ell$</dt><dd>cell index, the integer triple $(\ell_1,\ell_2,\ell_3)$; cell $\ell=0$ has its corner at the origin</dd>
+    <dt>$\kappa$</dt><dd>atom of the basis, $1,\dots,N_\kappa$; its mass is $M_\kappa$ (amu)</dd>
+    <dt>$\btau_\kappa$</dt><dd>position of atom $\kappa$ inside its cell (Å)</dd>
+    <dt>$\bu_{\ell\kappa}$</dt><dd>displacement of atom $\kappa$ of cell $\ell$ from equilibrium (Å), with Cartesian components $u_{\ell\kappa\alpha}$, $\alpha=x,y,z$</dd>
+  </dl>
+  <p>The components $u_{\ell\kappa\alpha}$ are the coordinates of the problem: each atom contributes three, one per direction $\alpha$. <a href="#viz-a1-crystal">Figure A1.1</a> draws all these labels for a two-dimensional crystal with two atoms per cell, a sheet modelled on hexagonal boron nitride (hBN) that recurs throughout the section. In a sheet only $\alpha=x,y$ are needed for motion within the plane.</p>
+
+  <h4 id="a1-bvk">A finite crystal without surfaces</h4>
+  <p>A real crystal has about $10^{23}$ atoms, and its surfaces break the repetition. A standard device removes both problems. Take a block of $N_1\times N_2\times N_3$ cells, the <strong>Born–von Kármán supercell</strong>, and require the motion to repeat from one block to the next:</p>
+  <div class="eq">$$\bu_{\ell\kappa}=\bu_{\ell'\kappa}\quad\text{whenever }\bR_{\ell'}=\bR_\ell+N_j\ba_j\ \ (j=1,2,3). \tag{A1.2}$$</div>
+  <p>An atom near the right face of the block now has neighbours across that face: the atoms near the left face of the next copy, which move exactly like those of the block. No cell is special and there are no surfaces. The supercell holds $N_\ell=N_1N_2N_3$ cells and $3N_\kappa N_\ell$ coordinates. Bulk properties come out of the limit $N_\ell\to\infty$, where the choice of block no longer matters.</p>
+
+  <figure class="viz"><p class="viz-title">Figure pending: fig-crystal.html</p></figure>
+
+  <h3 id="a1-forces">The energy to second order: force constants</h3>
+  <p>Expand the energy surface $U$ in powers of all $3N_\kappa N_\ell$ displacements about equilibrium, the way one expands a function of one variable, $f(x)=f(0)+f'(0)\,x+\tfrac12f''(0)\,x^2+\dots$, term by term:</p>
+  <ol class="steps">
+    <li><p>The zeroth-order term is the equilibrium energy $U_0$.</p><span class="why">A constant shifts all energies equally and exerts no force, so it plays no role in the motion.</span></li>
+    <li><p>The first-order terms, $\sum_{\ell\kappa\alpha}(\partial U/\partial u_{\ell\kappa\alpha})\,u_{\ell\kappa\alpha}$, vanish.</p><span class="why">$-\partial U/\partial u_{\ell\kappa\alpha}$ is the force on atom $\ell\kappa$ along $\alpha$, and every force is zero at equilibrium.</span></li>
+    <li><p>The second-order terms are kept; third and higher orders are dropped.</p><span class="why">Each further order is smaller by roughly one more factor of displacement over bond length, a few percent. These anharmonic terms let phonons scatter off each other and cause thermal expansion; this primer leaves them out.</span></li>
+  </ol>
+  <p>The result is the harmonic energy</p>
+  <div class="eq" id="a1-eq-phi">$$\begin{gathered}U\simeq U_0+\frac12\sum_{\ell\kappa\alpha}\ \sum_{\ell'\kappa'\beta}\Phi_{\ell\kappa\alpha,\ell'\kappa'\beta}\,u_{\ell\kappa\alpha}\,u_{\ell'\kappa'\beta},\\ \Phi_{\ell\kappa\alpha,\ell'\kappa'\beta}=\left.\frac{\partial^2U}{\partial u_{\ell\kappa\alpha}\,\partial u_{\ell'\kappa'\beta}}\right|_{\text{equilibrium}} .\end{gathered} \tag{A1.3}$$</div>
+  <dl class="where">
+    <dt>$\Phi_{\ell\kappa\alpha,\ell'\kappa'\beta}$</dt><dd><strong>interatomic force constant</strong> that couples the motion of atom $\ell\kappa$ along $\alpha$ to the motion of atom $\ell'\kappa'$ along $\beta$ (eV/Å²)</dd>
+    <dt>$\alpha,\beta$</dt><dd>Cartesian directions $x,y,z$</dd>
+    <dt>$U_0$</dt><dd>energy at equilibrium (eV)</dd>
+  </dl>
+  <p>The comma in $\Phi_{\ell\kappa\alpha,\ell'\kappa'\beta}$ separates the two atoms involved: the labels before it name one atom and one direction, those after it the other. Since there are $3N_\kappa N_\ell$ coordinates, $\Phi$ is a $3N_\kappa N_\ell\times3N_\kappa N_\ell$ matrix whose rows and columns are each labelled by a triple: cell, atom, direction.<sup class="fn"><a href="#fn-a1-ifc">4</a></sup></p>
+
+  <h4 id="a1-meaning">What a force constant means</h4>
+  <p>Differentiating (A1.3) gives the force on any atom. Along $\alpha$, atom $\ell\kappa$ feels</p>
+  <div class="eq">$$F_{\ell\kappa\alpha}=-\frac{\partial U}{\partial u_{\ell\kappa\alpha}}=-\sum_{\ell'\kappa'\beta}\Phi_{\ell\kappa\alpha,\ell'\kappa'\beta}\,u_{\ell'\kappa'\beta} . \tag{A1.4}$$</div>
+  <p>The factor $\frac12$ is gone because $u_{\ell\kappa\alpha}$ appears in both slots of the double sum in (A1.3), and the two contributions are equal because $\Phi$ is symmetric (property 2 below).</p>
+  <p>Equation (A1.4) gives each force constant a direct meaning. Push a single atom $\ell'\kappa'$ by a small distance $d$ along $\beta$ and hold all the others fixed. Then each atom $\ell\kappa$ feels the force $F_{\ell\kappa\alpha}=-\Phi_{\ell\kappa\alpha,\ell'\kappa'\beta}\,d$. So <strong>$\Phi_{\ell\kappa\alpha,\ell'\kappa'\beta}$ is minus the force along $\alpha$ on atom $\ell\kappa$ per unit push of atom $\ell'\kappa'$ along $\beta$</strong>. One column of the matrix is the pattern of forces that one pushed atom creates across the crystal. This is also a practical way to compute force constants: push one atom in a supercell, compute all forces with density-functional theory, and repeat for each atom of the basis and each direction. Section A.3 describes the perturbative alternative.</p>
+  <p>When the pushed atom is the atom itself, $\ell'\kappa'=\ell\kappa$, the block $\Phi_{\ell\kappa\alpha,\ell\kappa\beta}$ is the <strong>on-site force constant</strong>: the stiffness of the cage that holds the atom in place while all its neighbours stay fixed.</p>
+
+  <figure class="viz"><p class="viz-title">Figure pending: fig-forces.html</p></figure>
+
+  <h4 id="a1-props">Four properties of the force constants</h4>
+  <ol>
+    <li><strong>Real.</strong> $U$ is a real function of real coordinates.</li>
+    <li><strong>Symmetric</strong>, $\Phi_{\ell\kappa\alpha,\ell'\kappa'\beta}=\Phi_{\ell'\kappa'\beta,\ell\kappa\alpha}$, because the order of two partial derivatives does not matter. In words: the force on atom A per unit push of atom B equals the force on B per unit push of A.</li>
+    <li><strong>Translation invariant.</strong> $\Phi$ depends on the two cells only through the vector between them:
+      <div class="eq">$$\Phi_{\ell\kappa\alpha,\ell'\kappa'\beta}=\Phi_{0\kappa\alpha,\ell''\kappa'\beta}\quad\text{where }\bR_{\ell''}=\bR_{\ell'}-\bR_\ell . \tag{A1.5}$$</div>
+      All cells are equivalent. Pushing an atom of cell $\ell$ and looking at cell $\ell'$ is the same as pushing the same atom of cell 0 and looking at the cell displaced by $\bR_{\ell'}-\bR_\ell$.</li>
+    <li><strong>Acoustic sum rule.</strong> For every atom $\ell\kappa$ and every pair of directions $\alpha,\beta$,
+      <div class="eq" id="a1-eq-asr">$$\sum_{\ell'\kappa'}\Phi_{\ell\kappa\alpha,\ell'\kappa'\beta}=0 . \tag{A1.6}$$</div></li>
+  </ol>
+  <p>The sum rule rests on one observation: moving the whole crystal costs no energy and creates no force. In steps:</p>
+  <ol class="steps">
+    <li><p>Displace every atom by the same small vector $\bd$, that is $u_{\ell'\kappa'\beta}=d_\beta$ for all $\ell'\kappa'$.</p><span class="why">This is a rigid translation. No bond is stretched or bent, so no atom feels a force.</span></li>
+    <li><p>Insert this displacement into (A1.4) and set the force to zero:</p><div class="eq">$$0=F_{\ell\kappa\alpha}=-\sum_\beta\Big(\sum_{\ell'\kappa'}\Phi_{\ell\kappa\alpha,\ell'\kappa'\beta}\Big)\,d_\beta .$$</div><span class="why">$d_\beta$ is the same for every atom, so it comes out of the sum over atoms.</span></li>
+    <li><p>Take $\bd$ along $x$, then $y$, then $z$. Each choice keeps a single $\beta$, so each bracket vanishes on its own, which is (A1.6).</p><span class="why">The force must vanish whatever the direction of the translation.</span></li>
+  </ol>
+  <p>Moving the on-site term to the other side turns the rule into a recipe for the on-site force constant:</p>
+  <div class="eq">$$\Phi_{\ell\kappa\alpha,\ell\kappa\beta}=-\sum_{\ell'\kappa'\neq\ell\kappa}\Phi_{\ell\kappa\alpha,\ell'\kappa'\beta} .$$</div>
+  <p>For atoms joined by springs this is a familiar statement. The stiffness that holds an atom in place is the sum of the stiffnesses of all the springs attached to it, and its coupling to each neighbour is minus the stiffness of the spring in between. The second mode of <a href="#viz-a1-forces">Figure A1.2</a> shows the rule at work. When the whole crystal shifts, every coupling still produces a force on the selected atom, but these forces add up tip to tail to zero. Computed force constants break (A1.6) slightly through numerical noise, so codes restore it before computing frequencies. The rule returns below, at zero wavevector, where it guarantees the vibrations of zero frequency.<sup class="fn"><a href="#fn-a1-asr">5</a></sup></p>
+
+  <h4 id="a1-chain">The simplest example: a chain of springs</h4>
+  <p>Take a line of identical atoms of mass $M$ at spacing $a$, joined to their nearest neighbours by springs of stiffness $K$, and let them move only along the line. There is one atom per cell and one direction, so the labels $\kappa$ and $\alpha$ can be dropped. The energy of the springs is</p>
+  <div class="eq">$$U=U_0+\frac K2\sum_\ell\big(u_{\ell+1}-u_\ell\big)^2 . \tag{A1.7}$$</div>
+  <p>The displacement $u_\ell$ appears in two terms of the sum, $(u_{\ell+1}-u_\ell)^2$ and $(u_\ell-u_{\ell-1})^2$. Differentiating twice therefore gives $\partial^2U/\partial u_\ell^2=K+K$ on the diagonal, $\partial^2U/\partial u_\ell\,\partial u_{\ell\pm1}=-K$ next to it, and zero for any other pair:</p>
+  <div class="eq">$$\Phi_{\ell,\ell}=2K,\qquad \Phi_{\ell,\ell\pm1}=-K,\qquad \Phi=\begin{pmatrix}2K&-K&0&0&-K\\-K&2K&-K&0&0\\0&-K&2K&-K&0\\0&0&-K&2K&-K\\-K&0&0&-K&2K\end{pmatrix}\ \ (N_\ell=5).$$</div>
+  <p>Every row holds $-K$, $2K$, $-K$, which add up to zero: the acoustic sum rule. Translation invariance is visible too, since each row is the row above shifted by one place. In the Born–von Kármán supercell the last atom is tied to the first, which is why entries appear in the corners of the matrix.</p>
+
+  <div class="callout caveat"><p class="callout-title">What the harmonic, Born–Oppenheimer picture leaves out</p>
+    <p>The force constants are computed with the electrons in their ground state for each frozen arrangement of the nuclei, so they include the screening of the nuclei by electrons that follow instantly. When the electrons cannot follow, as in metals at particular wavevectors or in doped graphene, corrections appear; Section A.6 treats them as a phonon self-energy. The harmonic truncation fails for very light atoms such as hydrogen, near structural instabilities where a vibration softens, and at high temperature.</p>
+    <p>In polar crystals, where the atoms carry opposite effective charges, the force constants also have a long-range tail that falls off as the inverse cube of the distance: the interaction between the oscillating dipoles of distant cells. It makes the vibrations of polar crystals depend on the direction from which the wavevector approaches zero (Section A.4). The short-range spring models of this section do not have it.</p>
+  </div>
+
+  <h3 id="a1-waves">Why waves: the chain again</h3>
+  <p>Newton's equation for atom $\ell$ of the chain is mass times acceleration equals force, with the force from (A1.4):</p>
+  <div class="eq">$$M\ddot u_\ell=-\sum_{\ell'}\Phi_{\ell,\ell'}\,u_{\ell'}=K\big(u_{\ell+1}-u_\ell\big)+K\big(u_{\ell-1}-u_\ell\big). \tag{A1.8}$$</div>
+  <p>These $N_\ell$ equations are coupled, because each atom is pulled by its neighbours. The way out is to look for patterns of motion in which all atoms oscillate at one common frequency, the normal modes, for which the coupled equations collapse into a single one. Translation invariance suggests which patterns to try. Shifting a normal mode along the chain by one cell must give another normal mode with the same frequency. The simplest patterns that reproduce themselves under such a shift, up to a constant factor, are waves in which each atom's amplitude is its left neighbour's times a fixed phase factor $\ee^{\ii qa}$. This is more than a guess. The equations of motion look the same from every cell, so their solutions can always be chosen to pick up a fixed factor under a shift by one cell; the Born–von Kármán condition makes that factor a pure phase. (The same argument gives Bloch's theorem for electrons.)</p>
+  <div class="eq">$$u_\ell(t)=\mathrm{Re}\big[\xi\,\ee^{\ii(q\ell a-\omega t)}\big]. \tag{A1.9}$$</div>
+  <dl class="where">
+    <dt>$q$</dt><dd><strong>wavevector</strong> (Å⁻¹): the phase advances by $qa$ from one atom to the next, and the wavelength is $2\pi/q$</dd>
+    <dt>$\omega$</dt><dd>angular frequency of the oscillation (s⁻¹); this primer quotes the energy $\hbar\omega$ in meV</dd>
+    <dt>$\xi$</dt><dd>complex amplitude (Å): $|\xi|$ is the size of the oscillation and its argument is the phase of atom 0 at $t=0$</dd>
+  </dl>
+  <p>Complex exponentials are used because a shift multiplies them by a phase. The equation of motion is linear with real coefficients, so whenever a complex pattern solves it, so does its real part, and the real part is the physical displacement. From here on, "Re" is understood.</p>
+  <ol class="steps">
+    <li><p>Insert (A1.9) into (A1.8). Two time derivatives give $-\omega^2$, and the neighbours carry the same wave evaluated at $\ell\pm1$:</p>
+      <div class="eq">$$-M\omega^2\,\xi\,\ee^{\ii(q\ell a-\omega t)}=K\,\xi\,\ee^{\ii(q\ell a-\omega t)}\big(\ee^{\ii qa}-1\big)+K\,\xi\,\ee^{\ii(q\ell a-\omega t)}\big(\ee^{-\ii qa}-1\big).$$</div>
+      <span class="why">$u_{\ell\pm1}=\ee^{\pm\ii qa}\,u_\ell$: each neighbour carries the complex amplitude of atom $\ell$ turned by $\pm qa$.</span></li>
+    <li><p>Cancel the common factor $\xi\,\ee^{\ii(q\ell a-\omega t)}$. The label $\ell$ disappears:</p>
+      <div class="eq">$$M\omega^2=2K\big(1-\cos qa\big)\equiv K_{\mathrm{eff}}(q).$$</div>
+      <span class="why">$\ee^{\ii qa}+\ee^{-\ii qa}=2\cos qa$. Every atom obeys the same equation, so one condition on $\omega$ solves all $N_\ell$ equations at once. That is what it means for (A1.9) to be a normal mode.</span></li>
+    <li><p>Solve for the frequency with $1-\cos qa=2\sin^2(qa/2)$:</p>
+      <div class="eq">$$\omega(q)=2\sqrt{\frac KM}\,\Big|\sin\frac{qa}2\Big| . \tag{A1.10}$$</div>
+      <span class="why">This is the <strong>dispersion relation</strong>, the frequency of a mode as a function of its wavevector.</span></li>
+  </ol>
+  <p><a href="#viz-a1-waves">Figure A1.3</a> shows the geometry behind step 2. Draw the complex amplitudes of atoms $\ell-1$, $\ell$ and $\ell+1$ as arrows (phasors) in the complex plane. The two neighbours are the arrow of atom $\ell$ turned by $+qa$ and by $-qa$, so their sum always points along the arrow of atom $\ell$, with $2\cos qa$ times its length. The net force on atom $\ell$ is therefore antiparallel to its own displacement, $F_\ell=-K_{\mathrm{eff}}(q)\,u_\ell$. In a wave, every atom moves as if it were tied to its equilibrium position by a single spring of stiffness $K_{\mathrm{eff}}(q)=2K(1-\cos qa)$.</p>
+
+  <h4 id="a1-bz">Which wavevectors exist</h4>
+  <p>Two facts restrict $q$.</p>
+  <ul>
+    <li><strong>$q$ and $q+2\pi/a$ are the same wave.</strong> At every atom, $\ee^{\ii(q+2\pi/a)\ell a}=\ee^{\ii q\ell a}\,\ee^{2\pi\ii\ell}=\ee^{\ii q\ell a}$. The two continuous waves differ between the atoms, but there is nothing there to move. So all distinct waves have $q$ in an interval of length $2\pi/a$. The conventional choice is $-\pi/a\lt q\le\pi/a$, the <strong>first Brillouin zone</strong>.</li>
+    <li><strong>The Born–von Kármán condition makes $q$ discrete.</strong> Condition (A1.2) requires $u_{\ell+N_\ell}=u_\ell$, so $\ee^{\ii qN_\ell a}=1$ and
+      <div class="eq">$$q=\frac{2\pi}{N_\ell\,a}\,s,\qquad s\ \text{an integer}. \tag{A1.11}$$</div>
+      The Brillouin zone holds exactly $N_\ell$ of these values: one mode per coordinate of the chain.</li>
+  </ul>
+  <p>Two limits can be read off (A1.10). At $q=0$ every atom moves by the same amount, a rigid translation, and $\omega=0$: the sum rule at work. At long wavelengths, $qa\ll1$, the frequency grows linearly, $\omega\simeq v_{\mathrm s}|q|$ with $v_{\mathrm s}=a\sqrt{K/M}$. This is a sound wave with velocity $v_{\mathrm s}$, and a branch whose frequency vanishes at $q=0$ is called <strong>acoustic</strong>.</p>
+
+  <figure class="viz"><p class="viz-title">Figure pending: fig-waves.html</p></figure>
+
+  <h3 id="a1-diatomic">Two atoms per cell: the diatomic chain</h3>
+  <p>Now put two atoms in each cell: $\kappa=1$ with mass $M_1$ at the corner of the cell and $\kappa=2$ with mass $M_2$ halfway along it. A spring $K_1$ joins the two atoms of a cell, and a spring $K_2$ joins atom 2 of cell $\ell$ to atom 1 of cell $\ell+1$. Counting the springs attached to each atom, as for the monatomic chain, gives the nonzero force constants</p>
+  <div class="eq">$$\Phi_{\ell1,\ell1}=\Phi_{\ell2,\ell2}=K_1+K_2,\qquad \Phi_{\ell1,\ell2}=-K_1,\qquad \Phi_{\ell2,(\ell+1)1}=\Phi_{(\ell+1)1,\ell2}=-K_2 ,$$</div>
+  <p>and each row again sums to zero. Newton's equations for the two atoms of cell $\ell$ read</p>
+  <div class="eq">$$\begin{aligned}M_1\ddot u_{\ell1}&=K_1\big(u_{\ell2}-u_{\ell1}\big)+K_2\big(u_{(\ell-1)2}-u_{\ell1}\big),\\ M_2\ddot u_{\ell2}&=K_1\big(u_{\ell1}-u_{\ell2}\big)+K_2\big(u_{(\ell+1)1}-u_{\ell2}\big).\end{aligned}$$</div>
+  <p>A wave now needs one complex amplitude per atom of the cell, because the two atoms can move by different amounts and out of phase. The phase still advances by $qa$ from cell to cell:</p>
+  <div class="eq">$$u_{\ell\kappa}(t)=\xi_\kappa\,\ee^{\ii(q\ell a-\omega t)},\qquad\kappa=1,2. \tag{A1.12}$$</div>
+  <p>The phase is taken at the corner of the cell, $\ell a$, not at the atom. Taking it at the atom instead would multiply $\xi_2$ by the constant $\ee^{\ii qa/2}$. Nothing physical would change, but the matrices below would pick up phases. This primer always uses the cell corner.<sup class="fn"><a href="#fn-a1-phase">6</a></sup></p>
+  <ol class="steps">
+    <li><p>Insert (A1.12). Atom 1 of cell $\ell$ is tied to atom 2 of cell $\ell-1$, whose displacement carries the extra phase $\ee^{-\ii qa}$; atom 2 is tied to atom 1 of cell $\ell+1$, with $\ee^{+\ii qa}$. Cancelling the common factor $\ee^{\ii(q\ell a-\omega t)}$ leaves</p>
+      <div class="eq">$$\omega^2\begin{pmatrix}M_1&0\\0&M_2\end{pmatrix}\begin{pmatrix}\xi_1\\ \xi_2\end{pmatrix}=\underbrace{\begin{pmatrix}K_1+K_2&-\big(K_1+K_2\,\ee^{-\ii qa}\big)\\-\big(K_1+K_2\,\ee^{\ii qa}\big)&K_1+K_2\end{pmatrix}}_{\displaystyle\Phi(q)}\begin{pmatrix}\xi_1\\ \xi_2\end{pmatrix}. \tag{A1.13}$$</div>
+      <span class="why">As for the monatomic chain, the cell index disappears, leaving one $2\times2$ problem for each $q$. The matrix $\Phi(q)$ collects the force constants, each weighted by the phase of the partner atom's cell. Its two off-diagonal entries are complex conjugates of each other: it is Hermitian.</span></li>
+    <li><p>Move the masses out of the way by measuring amplitudes in mass-weighted units, $\xi_\kappa=e_\kappa/\sqrt{M_\kappa}$, and dividing row $\kappa$ by $\sqrt{M_\kappa}$:</p>
+      <div class="eq">$$\sum_{\kappa'}\tPhi_{\kappa\kappa'}(q)\,e_{\kappa'}=\omega^2e_\kappa,\qquad \tPhi_{\kappa\kappa'}(q)=\frac{\Phi_{\kappa\kappa'}(q)}{\sqrt{M_\kappa M_{\kappa'}}} . \tag{A1.14}$$</div>
+      <span class="why">(A1.13) has a mass matrix on the left: a generalized eigenvalue problem. After the rescaling it is an ordinary eigenvalue problem for a Hermitian matrix, which guarantees real $\omega^2$ and orthonormal eigenvectors. The rescaling is the same on both sides, $1/\sqrt{M_\kappa}$, and that is what keeps $\tPhi$ Hermitian.</span></li>
+    <li><p>Solve the $2\times2$ problem. With $A=\tPhi_{11}$, $C=\tPhi_{22}$ and $B=\tPhi_{12}$,</p>
+      <div class="eq">$$\begin{gathered}\omega^2_\pm(q)=\frac{A+C}2\pm\sqrt{\Big(\frac{A-C}2\Big)^2+|B|^2},\\ A=\frac{K_1+K_2}{M_1},\qquad C=\frac{K_1+K_2}{M_2},\qquad |B|^2=\frac{K_1^2+K_2^2+2K_1K_2\cos qa}{M_1M_2}.\end{gathered} \tag{A1.15}$$</div>
+      <span class="why">These are the two roots of $\det\big(\tPhi(q)-\omega^2\big)=0$, a quadratic equation in $\omega^2$. Two atoms per cell give two branches.</span></li>
+  </ol>
+  <p>The pair $(e_1,e_2)$ is the <strong>eigenvector</strong> of the mode. Its two complex numbers say how far each atom moves, in mass-weighted units, and with which phase. The physical amplitudes are $\xi_\kappa=e_\kappa/\sqrt{M_\kappa}$, so a heavier atom moves less for the same $|e_\kappa|$. The overall phase of an eigenvector is free; <a href="#viz-a1-diatomic">Figure A1.4</a> makes $e_1$ real and positive. Three limits carry most of the physics.</p>
+  <ul>
+    <li><strong>$q=0$, lower branch:</strong> $\omega_-=0$ and $\xi_1=\xi_2$. The whole cell moves rigidly; this is the acoustic branch again.</li>
+    <li><strong>$q=0$, upper branch:</strong> $\omega_+^2=(K_1+K_2)/M_{\mathrm r}$, with the reduced mass $1/M_{\mathrm r}=1/M_1+1/M_2$, and $M_1\xi_1+M_2\xi_2=0$. The two atoms move against each other while the centre of mass of the cell stays at rest. A branch with a nonzero frequency at $q=0$ is called <strong>optical</strong>: in an ionic crystal this antiphase motion carries an oscillating dipole that infrared light can drive.</li>
+    <li><strong>$q=\pi/a$:</strong> $|B|=|K_1-K_2|/\sqrt{M_1M_2}$, and a gap separates the branches unless both $M_1=M_2$ and $K_1=K_2$. When both are equal the two branches are a single monatomic branch, folded back because the chosen cell is twice as long as needed.<sup class="fn"><a href="#fn-a1-2x2">7</a></sup></li>
+  </ul>
+  <details class="derivation"><summary>Derivation: the eigenvectors at $q=0$ and the sound velocity</summary><div class="d-body">
+    <p>At $q=0$, $B=-(K_1+K_2)/\sqrt{M_1M_2}$ is real. The lower root is $\omega_-^2=0$, and solving $\tPhi\,e=0$ gives $e_-\propto(\sqrt{M_1},\sqrt{M_2})$, so $\xi_1=\xi_2$. The upper eigenvector is orthogonal to it, $e_+\propto(\sqrt{M_2},-\sqrt{M_1})$, which gives $\xi_1/\xi_2=-M_2/M_1$, that is $M_1\xi_1+M_2\xi_2=0$.</p>
+    <p>For the sound velocity, use the product of the two eigenvalues, which equals the determinant: $\omega_+^2\omega_-^2=\det\tPhi=\big[(K_1+K_2)^2-|K_1+K_2\ee^{\ii qa}|^2\big]/(M_1M_2)=2K_1K_2(1-\cos qa)/(M_1M_2)$. For small $q$, $1-\cos qa\simeq q^2a^2/2$ and $\omega_+^2\simeq(K_1+K_2)(M_1+M_2)/(M_1M_2)$, so</p>
+    <div class="eq">$$\omega_-\simeq v_{\mathrm s}|q|,\qquad v_{\mathrm s}=a\sqrt{\frac{K_1K_2}{(K_1+K_2)(M_1+M_2)}} .$$</div>
+    <p>With $K$ in eV/Å² and $M$ in amu, $\omega^2$ comes out in eV Å⁻² amu⁻¹, and $\hbar\omega=64.654\ \text{meV}\times\sqrt{\omega^2}$.</p>
+  </div></details>
+
+  <figure class="viz"><p class="viz-title">Figure pending: fig-diatomic.html</p></figure>
+
+  <h3 id="a1-general">Any crystal: the dynamical matrix</h3>
+  <p>Nothing in the chain calculation depended on one dimension or on two atoms. For a three-dimensional crystal with $N_\kappa$ atoms per cell the same three steps go through, now with Cartesian indices. Newton's equation for the $\alpha$ coordinate of atom $\ell\kappa$ is</p>
+  <div class="eq">$$M_\kappa\,\ddot u_{\ell\kappa\alpha}=-\sum_{\ell'\kappa'\beta}\Phi_{\ell\kappa\alpha,\ell'\kappa'\beta}\,u_{\ell'\kappa'\beta}, \tag{A1.16}$$</div>
+  <p>and the wave has one mass-weighted complex amplitude $e_{\kappa\alpha}$ for each atom and direction, multiplied by the phase $\ee^{\ii\bq\cdot\bR_\ell}$ of the cell:</p>
+  <div class="eq">$$u_{\ell\kappa\alpha}(t)=\frac{e_{\kappa\alpha}}{\sqrt{M_\kappa}}\,\ee^{\ii(\bq\cdot\bR_\ell-\omega t)} . \tag{A1.17}$$</div>
+  <dl class="where">
+    <dt>$\bq$</dt><dd>wavevector (Å⁻¹): the phase changes by $\bq\cdot\ba_j$ from a cell to its neighbour along $\ba_j$</dd>
+    <dt>$e_{\kappa\alpha}$</dt><dd>mass-weighted complex amplitude of atom $\kappa$ along $\alpha$; the physical amplitude is $\xi_{\kappa\alpha}=e_{\kappa\alpha}/\sqrt{M_\kappa}$</dd>
+  </dl>
+  <ol class="steps">
+    <li><p>Insert (A1.17) into (A1.16):</p>
+      <div class="eq">$$-\omega^2\sqrt{M_\kappa}\,e_{\kappa\alpha}\,\ee^{\ii\bq\cdot\bR_\ell}=-\sum_{\ell'\kappa'\beta}\Phi_{\ell\kappa\alpha,\ell'\kappa'\beta}\,\frac{e_{\kappa'\beta}}{\sqrt{M_{\kappa'}}}\,\ee^{\ii\bq\cdot\bR_{\ell'}} .$$</div>
+      <span class="why">Two time derivatives of $\ee^{-\ii\omega t}$ give $-\omega^2$. The time factor is the same on both sides and has been cancelled.</span></li>
+    <li><p>Use translation invariance (A1.5). Label the partner's cell relative to cell $\ell$, $\bR_{\ell'}=\bR_\ell+\bR_{\ell''}$, so that $\Phi_{\ell\kappa\alpha,\ell'\kappa'\beta}=\Phi_{0\kappa\alpha,\ell''\kappa'\beta}$ and $\ee^{\ii\bq\cdot\bR_{\ell'}}=\ee^{\ii\bq\cdot\bR_\ell}\,\ee^{\ii\bq\cdot\bR_{\ell''}}$.</p>
+      <span class="why">Summing over all cells $\ell'$ is the same as summing over all relative cells $\ell''$. The relabelling isolates the factor $\ee^{\ii\bq\cdot\bR_\ell}$, which also stands on the left.</span></li>
+    <li><p>Cancel $\ee^{\ii\bq\cdot\bR_\ell}$ and divide by $\sqrt{M_\kappa}$. The cell index has disappeared:</p>
+      <div class="eq" id="a1-eq-dyn">$$\begin{gathered}\sum_{\kappa'\beta}\tPhi_{\kappa\alpha,\kappa'\beta}(\bq)\,e_{\kappa'\beta}=\omega^2\,e_{\kappa\alpha},\\ \tPhi_{\kappa\alpha,\kappa'\beta}(\bq)=\frac{\Phi_{\kappa\alpha,\kappa'\beta}(\bq)}{\sqrt{M_\kappa M_{\kappa'}}},\qquad \Phi_{\kappa\alpha,\kappa'\beta}(\bq)=\sum_{\ell}\Phi_{0\kappa\alpha,\ell\kappa'\beta}\,\ee^{\ii\bq\cdot\bR_\ell} .\end{gathered} \tag{A1.18}$$</div>
+      <span class="why">Every cell gives the same equation. So the wave (A1.17) solves all $3N_\kappa N_\ell$ equations of motion exactly when the amplitudes $e_{\kappa\alpha}$ form an eigenvector of $\tPhi(\bq)$ with eigenvalue $\omega^2$.</span></li>
+  </ol>
+  <dl class="where">
+    <dt>$\Phi_{\kappa\alpha,\kappa'\beta}(\bq)$</dt><dd>lattice Fourier transform of the force constants: atom $\kappa$ of cell 0 coupled to atom $\kappa'$ of every cell $\ell$, each coupling weighted by the phase $\ee^{\ii\bq\cdot\bR_\ell}$ of the partner's cell (eV/Å²)</dd>
+    <dt>$\tPhi_{\kappa\alpha,\kappa'\beta}(\bq)$</dt><dd>the <strong>dynamical matrix</strong>, the same object mass-scaled: a $3N_\kappa\times3N_\kappa$ Hermitian matrix whose eigenvalues are squared frequencies (eV Å⁻² amu⁻¹)</dd>
+  </dl>
+  <p>The problem of $3N_\kappa N_\ell$ coupled coordinates has become $N_\ell$ independent problems, one for each allowed $\bq$, each of size $3N_\kappa\times3N_\kappa$.<sup class="fn"><a href="#fn-a1-dyn">8</a></sup> For each $\bq$ there are $3N_\kappa$ eigenvalues $\omega^2_{\bq\nu}$, labelled by the <strong>branch index</strong> $\nu=1,\dots,3N_\kappa$, and as many eigenvectors $e_{\kappa\alpha,\nu}(\bq)$:</p>
+  <div class="eq">$$\sum_{\kappa'\beta}\tPhi_{\kappa\alpha,\kappa'\beta}(\bq)\,e_{\kappa'\beta,\nu}(\bq)=\omega^2_{\bq\nu}\,e_{\kappa\alpha,\nu}(\bq) . \tag{A1.19}$$</div>
+  <p>A plot of $\omega_{\bq\nu}$ along lines in the Brillouin zone is the <strong>phonon dispersion</strong>, which inelastic neutron and x-ray scattering measure. In three dimensions the Brillouin zone is a cell of the <strong>reciprocal lattice</strong>, spanned by the vectors $\bb_1,\bb_2,\bb_3$ defined by $\ba_j\cdot\bb_{j'}=2\pi\delta_{jj'}$. The Born–von Kármán condition allows $\bq=\sum_j(s_j/N_j)\,\bb_j$ with integers $s_j$. As in the chain, $\bq$ and $\bq+\bG$, for any reciprocal lattice vector $\bG$, are the same wave (<a href="#viz-a1-crystal">Figure A1.1</a>, right panel).</p>
+
+  <h4 id="a1-reading">Reading $e_{\kappa\alpha,\nu}(\bq)$</h4>
+  <p>The eigenvector carries four labels, and each has a geometric meaning, shown in <a href="#viz-a1-honeycomb">Figure A1.5</a>:</p>
+  <ul>
+    <li>$\bq$ says how the pattern repeats from cell to cell: the motion in cell $\ell$ is the motion in cell 0 times the phase $\ee^{\ii\bq\cdot\bR_\ell}$.</li>
+    <li>$\nu$ says which of the $3N_\kappa$ patterns at this $\bq$ is meant. For fixed $\bq$ the eigenvectors are the columns of a $3N_\kappa\times3N_\kappa$ matrix, one column per branch.</li>
+    <li>$\kappa\alpha$ labels the rows of that matrix: which atom, and which component of its arrow. The three components for one atom form a complex vector, $\be_{\kappa\nu}(\bq)=\big(e_{\kappa x,\nu},e_{\kappa y,\nu},e_{\kappa z,\nu}\big)$, the arrow attached to atom $\kappa$ in mode $\nu$.</li>
+  </ul>
+  <p>The physical displacement of atom $\ell\kappa$ in mode $\bq\nu$ is the real part of $\be_{\kappa\nu}(\bq)\,\ee^{\ii(\bq\cdot\bR_\ell-\omega_{\bq\nu}t)}/\sqrt{M_\kappa}$. A complex component means that the atom moves with a phase lag relative to others, or along an ellipse.</p>
+
+  <figure class="viz"><p class="viz-title">Figure pending: fig-honeycomb.html</p></figure>
+
+  <h4 id="a1-modeprops">Four properties of the modes</h4>
+  <p>Each follows from a property of the force constants, and each is used later.<sup class="fn"><a href="#fn-a1-props">9</a></sup></p>
+  <ol class="steps">
+    <li><p><strong>The dynamical matrix is Hermitian</strong>, $\tPhi_{\kappa'\beta,\kappa\alpha}(\bq)^*=\tPhi_{\kappa\alpha,\kappa'\beta}(\bq)$, so the squared frequencies $\omega^2_{\bq\nu}$ are real.</p>
+      <span class="why">Conjugate the definition (A1.18). Since <a class="sym" href="#gl-a1-Phi">$\Phi$</a> is real, $\Phi_{\kappa'\beta,\kappa\alpha}(\bq)^*=\sum_\ell\Phi_{0\kappa'\beta,\ell\kappa\alpha}\ee^{-\ii\bq\cdot\bR_\ell}$. Translation invariance moves both atoms by $-\bR_\ell$, giving $\Phi_{(-\ell)\kappa'\beta,0\kappa\alpha}$, and symmetry swaps them, giving $\Phi_{0\kappa\alpha,(-\ell)\kappa'\beta}$. Renaming $-\ell$ as $\ell$ returns $\Phi_{\kappa\alpha,\kappa'\beta}(\bq)$.</span></li>
+    <li><p><strong>A stable crystal has $\omega^2_{\bq\nu}\ge0$.</strong></p>
+      <span class="why">Equilibrium is a minimum of $U$, so the harmonic energy (A1.3) is never negative. A negative eigenvalue, an imaginary frequency, means the assumed structure is unstable and distorts along that mode.</span></li>
+    <li><p><strong>The eigenvectors are orthonormal and complete:</strong></p>
+      <div class="eq">$$\begin{gathered}\sum_{\kappa\alpha}e^*_{\kappa\alpha,\nu}(\bq)\,e_{\kappa\alpha,\nu'}(\bq)=\delta_{\nu\nu'},\\ \sum_{\nu}e_{\kappa\alpha,\nu}(\bq)\,e^*_{\kappa'\beta,\nu}(\bq)=\delta_{\kappa\kappa'}\delta_{\alpha\beta} .\end{gathered} \tag{A1.20}$$</div>
+      <span class="why">A Hermitian matrix has a full set of orthonormal eigenvectors. Arranged as columns they form a unitary matrix. The first relation says its columns are orthonormal, the second that its rows are, so any pattern of mass-weighted amplitudes in a cell is a combination of the modes.</span></li>
+    <li><p><strong>Waves running in opposite directions have the same frequency</strong>, and the eigenvectors can be chosen so that</p>
+      <div class="eq">$$\omega_{-\bq\nu}=\omega_{\bq\nu},\qquad e_{\kappa\alpha,\nu}(-\bq)=e^*_{\kappa\alpha,\nu}(\bq) . \tag{A1.21}$$</div>
+      <span class="why">Because $\Phi$ is real, replacing $\bq$ by $-\bq$ in (A1.18) conjugates the matrix: $\tPhi(-\bq)=\tPhi(\bq)^*$. Conjugating (A1.19) then shows that $e^*(\bq)$ is an eigenvector of $\tPhi(-\bq)$ with the same real eigenvalue. Physically this is time-reversal symmetry: a motion played backwards is also a solution.</span></li>
+  </ol>
+
+  <h4 id="a1-acopt">Acoustic and optical branches</h4>
+  <p>At $\bq=0$ the phase factor is 1 in every cell, and (A1.18) reads <a class="sym" href="#gl-a1-Phiq">$\Phi_{\kappa\alpha,\kappa'\beta}(0)$</a>$\,=\sum_\ell\Phi_{0\kappa\alpha,\ell\kappa'\beta}$. Summed over $\kappa'$, this is the left side of the acoustic sum rule (A1.6), so</p>
+  <div class="eq">$$\sum_{\kappa'\beta}\Phi_{\kappa\alpha,\kappa'\beta}(0)\,d_\beta=0\quad\text{for any vector }\bd . \tag{A1.22}$$</div>
+  <p>In words: moving all atoms by the same vector, $\boldsymbol\xi_\kappa=\bd$ for every $\kappa$, is a mode with $\omega=0$ at $\bq=0$, and its mass-weighted eigenvector is $\be_\kappa\propto\sqrt{M_\kappa}\,\bd$. There is one such mode for each of the three independent directions of $\bd$, so <strong>every three-dimensional crystal has three acoustic branches</strong>, whose frequencies vanish at $\bq=0$. A sheet whose atoms move only within its plane has two. The remaining $3N_\kappa-3$ branches are <strong>optical</strong>. By (A1.20) their eigenvectors are orthogonal to the acoustic ones, which at $\bq=0$ reads</p>
+  <div class="eq">$$\sum_\kappa\sqrt{M_\kappa}\,\be_{\kappa\nu}(0)=0\quad\Longleftrightarrow\quad\sum_\kappa M_\kappa\,\boldsymbol\xi_{\kappa}=0 ,$$</div>
+  <p>with $\boldsymbol\xi_\kappa=\be_{\kappa\nu}/\sqrt{M_\kappa}$ the physical amplitude. In an optical mode at $\bq=0$ the centre of mass of each cell is at rest, and the sublattices move against each other. When the atoms carry opposite charges, every cell then holds an oscillating dipole. That is the starting point for the coupling of lattice vibrations to electric fields in Section A.4 and to photons in Part B.</p>
+
+  <h3 id="a1-quantum">From normal modes to phonons</h3>
+  <details class="background"><summary>The quantum harmonic oscillator <span class="skip">skip if familiar</span></summary><div class="b-body">
+    <p>A particle of mass $M$ in the potential $\frac12M\omega^2x^2$ has the Hamiltonian $\hat H=\hat p^2/2M+\frac12M\omega^2\hat x^2$, with $[\hat x,\hat p]=\ii\hbar$. The ladder operators</p>
+    <div class="eq">$$\hat a=\sqrt{\frac{M\omega}{2\hbar}}\Big(\hat x+\frac{\ii}{M\omega}\hat p\Big),\qquad \hat a^\dagger=\sqrt{\frac{M\omega}{2\hbar}}\Big(\hat x-\frac{\ii}{M\omega}\hat p\Big)$$</div>
+    <p>obey $[\hat a,\hat a^\dagger]=1$. Inverting, $\hat x=\sqrt{\hbar/2M\omega}\,(\hat a+\hat a^\dagger)$, and the Hamiltonian becomes $\hat H=\hbar\omega\big(\hat a^\dagger\hat a+\frac12\big)$. Its eigenstates $|n\rangle$, $n=0,1,2,\dots$, have energies $\hbar\omega\big(n+\frac12\big)$; $\hat a^\dagger$ raises $n$ by one and $\hat a$ lowers it. In every eigenstate $\langle\hat x\rangle=0$, while</p>
+    <div class="eq">$$\langle n|\hat x^2|n\rangle=\frac{\hbar}{2M\omega}\,(2n+1) .$$</div>
+    <p>In the ground state the particle is spread over a Gaussian of root-mean-square width $\sqrt{\hbar/2M\omega}$, the <strong>zero-point amplitude</strong>. At temperature $T$ the states are occupied with Boltzmann weights. The mean of $n$ is then the Bose–Einstein occupation $n_{\mathrm B}=1/\big(\ee^{\hbar\omega/\kB T}-1\big)$, and $\langle\hat x^2\rangle=(\hbar/2M\omega)(2n_{\mathrm B}+1)=(\hbar/2M\omega)\coth(\hbar\omega/2\kB T)$.</p>
+  </div></details>
+  <p>The normal modes are independent oscillators, so quantizing the crystal means quantizing each mode as a harmonic oscillator. One complication remains: because displacements are real, the complex amplitude of a mode at $\bq$ is tied to that of the mode at $-\bq$. The construction below takes care of it. In this subsection hats mark operators, because classical and quantum displacements appear side by side.</p>
+
+  <h4 id="a1-normal">Normal coordinates</h4>
+  <p>Any displacement pattern <a class="sym" href="#gl-a1-u">$u_{\ell\kappa\alpha}$</a>, not only a single wave, can be written as a superposition of all modes, with one complex amplitude per mode:</p>
+  <div class="eq">$$\begin{gathered}u_{\ell\kappa\alpha}=\frac{1}{\sqrt{N_\ell M_\kappa}}\sum_{\bq\nu}\ee^{\ii\bq\cdot\bR_\ell}\,e_{\kappa\alpha,\nu}(\bq)\,Q_{\bq\nu},\\ Q_{\bq\nu}=\frac{1}{\sqrt{N_\ell}}\sum_{\ell\kappa\alpha}\ee^{-\ii\bq\cdot\bR_\ell}\sqrt{M_\kappa}\,e^*_{\kappa\alpha,\nu}(\bq)\,u_{\ell\kappa\alpha} .\end{gathered} \tag{A1.23}$$</div>
+  <dl class="where">
+    <dt>$Q_{\bq\nu}$</dt><dd><strong>normal coordinate</strong>: the complex amplitude of mode $\bq\nu$ in the pattern (units of $\sqrt{\text{mass}}\times$length)</dd>
+    <dt>$\sum_{\bq}$</dt><dd>sum over the <a class="sym" href="#gl-a1-N">$N_\ell$</a> wavevectors allowed by the Born–von Kármán condition</dd>
+  </dl>
+  <details class="derivation"><summary>Derivation: why the two relations in (A1.23) invert each other</summary><div class="d-body">
+    <ol class="steps">
+      <li><p>Insert the first relation into the second:</p>
+        <div class="eq">$$Q_{\bq\nu}=\frac1{N_\ell}\sum_{\bq'\nu'}\Big(\sum_\ell\ee^{\ii(\bq'-\bq)\cdot\bR_\ell}\Big)\Big(\sum_{\kappa\alpha}e^*_{\kappa\alpha,\nu}(\bq)\,e_{\kappa\alpha,\nu'}(\bq')\Big)Q_{\bq'\nu'} .$$</div>
+        <span class="why">The masses cancel: $\sqrt{M_\kappa}$ from the second relation against $1/\sqrt{M_\kappa}$ from the first.</span></li>
+      <li><p>The lattice sum is $\sum_\ell\ee^{\ii(\bq'-\bq)\cdot\bR_\ell}=N_\ell\,\delta_{\bq\bq'}$ for wavevectors on the Born–von Kármán grid.</p>
+        <span class="why">For $\bq'=\bq$ every term is 1. Otherwise, along each direction $\ba_j$ the phases are $N_j$ unit arrows spread evenly around the circle (the phase step is $2\pi\,\Delta s_j/N_j$), and evenly spread unit arrows add up to zero. The arrows of <a href="#viz-a1-crystal">Figure A1.1</a> show this pattern.</span></li>
+      <li><p>With $\bq'=\bq$, orthonormality (A1.20) gives $\sum_{\kappa\alpha}e^*_{\kappa\alpha,\nu}e_{\kappa\alpha,\nu'}=\delta_{\nu\nu'}$, and the right side reduces to $Q_{\bq\nu}$.</p>
+        <span class="why">The same two sums, used in the other order with completeness, show that the first relation follows from the second.</span></li>
+    </ol>
+  </div></details>
+  <p>Because displacements are real, the normal coordinates at $\bq$ and $-\bq$ are not independent. Conjugating the second relation of (A1.23) and using (A1.21) gives $Q_{-\bq\nu}=Q^*_{\bq\nu}$. Inserting (A1.23) into the kinetic energy $\sum_{\ell\kappa\alpha}\frac12M_\kappa\dot u^2_{\ell\kappa\alpha}$ and into the harmonic energy (A1.3) gives<sup class="fn"><a href="#fn-a1-normal">10</a></sup></p>
+  <div class="eq">$$H=\sum_{\bq\nu}\Big(\frac12\,\dot Q^*_{\bq\nu}\dot Q_{\bq\nu}+\frac12\,\omega^2_{\bq\nu}\,Q^*_{\bq\nu}Q_{\bq\nu}\Big) . \tag{A1.24}$$</div>
+  <details class="derivation"><summary>Derivation: the energy in normal coordinates</summary><div class="d-body">
+    <ol class="steps">
+      <li><p>Kinetic energy. Write $\dot u^2=\dot u^*\dot u$, which is allowed because $u$ is real, and insert (A1.23) for each factor:</p>
+        <div class="eq">$$\sum_{\ell\kappa\alpha}\frac{M_\kappa}2\dot u^*_{\ell\kappa\alpha}\dot u_{\ell\kappa\alpha}=\frac12\sum_{\bq\nu,\bq'\nu'}\frac1{N_\ell}\Big(\sum_\ell\ee^{\ii(\bq'-\bq)\cdot\bR_\ell}\Big)\Big(\sum_{\kappa\alpha}e^*_{\kappa\alpha,\nu}(\bq)e_{\kappa\alpha,\nu'}(\bq')\Big)\dot Q^*_{\bq\nu}\dot Q_{\bq'\nu'} .$$</div>
+        <span class="why">$M_\kappa$ cancels against the two factors $1/\sqrt{M_\kappa}$. The lattice sum gives $N_\ell\delta_{\bq\bq'}$ and orthonormality gives $\delta_{\nu\nu'}$, leaving $\frac12\sum_{\bq\nu}\dot Q^*_{\bq\nu}\dot Q_{\bq\nu}$.</span></li>
+      <li><p>Harmonic energy. Again write one factor of (A1.3) as $u^*$. The sum over the partner atom, $\sum_{\ell'}\Phi_{\ell\kappa\alpha,\ell'\kappa'\beta}\,\ee^{\ii\bq'\cdot\bR_{\ell'}}$, equals $\ee^{\ii\bq'\cdot\bR_\ell}\,\Phi_{\kappa\alpha,\kappa'\beta}(\bq')$ by translation invariance and the definition (A1.18).</p>
+        <span class="why">This is step 2 of the derivation of (A1.18) once more. What remains is the lattice sum over $\ell$, which sets $\bq'=\bq$, and the matrix element $\sum e^*_\nu\,\tPhi\,e_{\nu'}=\omega^2_{\bq\nu}\delta_{\nu\nu'}$ by (A1.19) and (A1.20).</span></li>
+    </ol>
+  </div></details>
+  <p>Each mode is now a separate oscillator of unit mass and frequency $\omega_{\bq\nu}$; the masses have been absorbed into the definition of $Q_{\bq\nu}$.</p>
+
+  <h4 id="a1-phonons">Phonons</h4>
+  <p>The momentum conjugate to $Q_{\bq\nu}$ is $P_{\bq\nu}=\dot Q^*_{\bq\nu}$.<sup class="fn"><a href="#fn-a1-conj">11</a></sup> Quantization imposes $[\hat Q_{\bq\nu},\hat P_{\bq'\nu'}]=\ii\hbar\,\delta_{\bq\bq'}\delta_{\nu\nu'}$, and the ladder operators of a single oscillator carry over with one change forced by $Q_{-\bq\nu}=Q^*_{\bq\nu}$:</p>
+  <div class="eq">$$\begin{gathered}\hat Q_{\bq\nu}=\sqrt{\frac{\hbar}{2\omega_{\bq\nu}}}\,\big(\hat a_{\bq\nu}+\hat a^\dagger_{-\bq\nu}\big),\\ \big[\hat a_{\bq\nu},\hat a^\dagger_{\bq'\nu'}\big]=\delta_{\bq\bq'}\delta_{\nu\nu'} .\end{gathered} \tag{A1.25}$$</div>
+  <p class="why">The single oscillator has $\hat x\propto\hat a+\hat a^\dagger$. Here the Hermitian conjugate of $\hat Q_{\bq\nu}$ must be $\hat Q_{-\bq\nu}$, the operator form of $Q^*_{\bq\nu}=Q_{-\bq\nu}$, and $(\hat a_{\bq\nu}+\hat a^\dagger_{-\bq\nu})^\dagger=\hat a_{-\bq\nu}+\hat a^\dagger_{\bq\nu}$ is exactly the same combination at $-\bq$. With $\hat P_{\bq\nu}=\ii\sqrt{\hbar\omega_{\bq\nu}/2}\,\big(\hat a^\dagger_{\bq\nu}-\hat a_{-\bq\nu}\big)$ the commutator above is reproduced.</p>
+  <p>The Hamiltonian (A1.24) becomes a sum of independent quantum oscillators:</p>
+  <div class="eq">$$\hat H=\sum_{\bq\nu}\hbar\omega_{\bq\nu}\Big(\hat a^\dagger_{\bq\nu}\hat a_{\bq\nu}+\frac12\Big) . \tag{A1.26}$$</div>
+  <p>$\hat a^\dagger_{\bq\nu}$ creates a quantum of vibration with energy <a class="sym" href="#gl-a1-omega">$\hbar\omega_{\bq\nu}$</a> and crystal momentum $\hbar\bq$, a <strong>phonon</strong>, and $\hat a_{\bq\nu}$ removes one. Phonons are bosons. The three acoustic modes at $\bq=0$ have $\omega=0$. They are translations of the whole crystal rather than oscillations, and they are left out of every sum over modes from here on.<sup class="fn"><a href="#fn-a1-quant">12</a></sup></p>
+  <p>Inserting (A1.25) into (A1.23) gives the displacement of any atom as an operator:</p>
+  <div class="eq" id="a1-eq-u">$$\begin{gathered}\hat u_{\ell\kappa\alpha}=\sum_{\bq\nu}\left(\frac{\hbar}{2N_\ell M_\kappa\,\omega_{\bq\nu}}\right)^{1/2}e_{\kappa\alpha,\nu}(\bq)\,\ee^{\ii\bq\cdot\bR_\ell}\,\hat\phi_{\bq\nu},\\ \hat\phi_{\bq\nu}=\hat a_{\bq\nu}+\hat a^\dagger_{-\bq\nu} .\end{gathered} \tag{A1.27}$$</div>
+  <dl class="where">
+    <dt>$\hat\phi_{\bq\nu}$</dt><dd><strong>phonon field</strong> of mode $\bq\nu$ (dimensionless): it removes a phonon $\bq\nu$ or creates a phonon $-\bq\nu$</dd>
+    <dt>$\big(\hbar/2M_\kappa\omega_{\bq\nu}\big)^{1/2}$</dt><dd><strong>zero-point amplitude</strong> of atom $\kappa$ in mode $\bq\nu$ (Å)</dd>
+  </dl>
+  <p>This is the formula of the section that the rest of the primer uses most. Each mode contributes a displacement wave whose size is the zero-point amplitude divided by $\sqrt{N_\ell}$ (<a class="sym" href="#gl-a1-N">$N_\ell$</a> is the number of cells), because one phonon is spread over the whole crystal. Both terms of $\hat\phi_{\bq\nu}$ hand crystal momentum $\hbar\bq$ to whatever the displacement acts on: absorbing a phonon of wavevector $\bq$ or emitting one of wavevector $-\bq$. When an electron feels the displacement, in Section A.2, $\hat\phi_{\bq\nu}$ is the operator that multiplies the electron–phonon coupling.</p>
+
+  <h4 id="a1-msd">How far atoms move</h4>
+  <p>Thermal averages of two displacements need one fact about the phonon field. In thermal equilibrium $\langle\hat\phi_{\bq\nu}\hat\phi_{\bq'\nu'}\rangle$ vanishes unless $\bq'=-\bq$ and $\nu'=\nu$, and then $\langle\hat\phi_{\bq\nu}\hat\phi_{-\bq\nu}\rangle=2n_{\bq\nu}+1$, where $n_{\bq\nu}=n_{\mathrm B}(\omega_{\bq\nu})$ is the Bose–Einstein occupation of the mode. Squaring (A1.27), averaging, and using (A1.21) gives the mean-square displacement of one atom along one direction:</p>
+  <div class="eq">$$\big\langle\hat u^2_{\ell\kappa\alpha}\big\rangle=\frac1{N_\ell}\sum_{\bq\nu}\frac{\hbar}{2M_\kappa\omega_{\bq\nu}}\,\big|e_{\kappa\alpha,\nu}(\bq)\big|^2\,\coth\frac{\hbar\omega_{\bq\nu}}{2\kB T} . \tag{A1.28}$$</div>
+  <p>Each mode adds its squared zero-point amplitude, weighted by how strongly atom $\kappa$ takes part in it, <a class="sym" href="#gl-a1-e">$|e_{\kappa\alpha,\nu}|^2$</a>, and by $\coth(\hbar\omega/2\kB T)=2n_{\mathrm B}+1$. That factor stays at 1 while $\kB T\ll\hbar\omega$ and grows as $2\kB T/\hbar\omega$ in the classical regime. In numbers, $\hbar/(2M\omega)=2.0901\ \text{Å}^2/\big(M[\text{amu}]\cdot\hbar\omega[\text{meV}]\big)$. An optical phonon of silicon (28.09 amu, about 64 meV) has a zero-point amplitude of 0.034 Å, and so does the boron atom in an optical phonon of hBN (10.81 amu, about 170 meV); the bond lengths are 2.35 and 1.45 Å (literature values, illustrative). <a href="#viz-a1-zeropoint">Figure A1.6</a> explores single modes.</p>
+
+  <figure class="viz"><p class="viz-title">Figure pending: fig-zeropoint.html</p></figure>
+
+  <div class="callout intuition"><p class="callout-title">Physical picture: a phonon is not an oscillating atom</p>
+    <p>In a state with a definite number of phonons the mean displacement of every atom is zero, $\langle\hat u\rangle=0$; only the spread $\langle\hat u^2\rangle\propto2n+1$ is nonzero. The running waves animated in the figures are classical oscillations, the mean displacement in a coherent state, which superposes many phonon numbers. The zero-point spread is physical: it makes band gaps depend on the isotope mass, and it shifts them even at zero temperature (Section A.8).</p>
+  </div>
+
+  <div class="callout connect"><p class="callout-title">Where these objects go next</p>
+    <p>The displacement operator (A1.27) feeds everything that follows. An electron feels the potential of the displaced nuclei. Expanding that potential to first order in $\hat u$ gives the electron–phonon coupling of Section A.2, with $\hat\phi_{\bq\nu}$ and the zero-point amplitude as factors.</p>
+    <p>The EPP formalism of Part B builds the same normal modes in the same way, but admits only the short-range part of the force constants. It regenerates the long-range dipole part, and the splitting this part causes in polar crystals, from the exchange of photons. The same three steps (Fourier transform, scaling, diagonalization) later quantize the electromagnetic field itself.</p>
+  </div>
+
+  <details class="derivation"><summary>Check yourself: three short questions</summary><div class="d-body">
+    <ol>
+      <li><p>A crystal has three atoms per cell. How many phonon branches does it have, how many acoustic and how many optical?</p><p><em>Answer.</em> $3N_\kappa=9$ branches: 3 acoustic and 6 optical.</p></li>
+      <li><p>Why does the acoustic frequency vanish at $\bq=0$, but not the optical one?</p><p><em>Answer.</em> At $\bq=0$ the acoustic modes are rigid translations, which stretch no bond; the sum rule (A1.22) gives them $\omega=0$. Optical modes move the sublattices against each other, which stretches bonds.</p></li>
+      <li><p>Replace every atom by a heavier isotope, $M_\kappa\to2M_\kappa$. How do the frequencies and the zero-point amplitudes change?</p><p><em>Answer.</em> The force constants do not change, because they come from the electrons. So $\tPhi\to\tPhi/2$, every $\omega$ drops by a factor $\sqrt2$, and the zero-point amplitude $\sqrt{\hbar/2M\omega}$, which scales as $M^{-1/4}$, drops by $2^{1/4}\approx1.19$.</p></li>
+    </ol>
+  </div></details>
+
+  <div class="notes">
+    <h4>Notes</h4>
+    <ol class="footnotes">
+      <li id="fn-a1-units">No charges or fields appear in this section, so its equations read the same in Gaussian and SI units.</li>
+      <li id="fn-a1-bo">Giustino calls $U$ the total potential energy of the Born–von Kármán supercell with the nuclei clamped, and writes its harmonic expansion as his Eq. (12). The EPP manuscript freezes the electrons and builds the energy from a pair potential $U(\bR_{ia}-\bR_{jb})$ between atoms (its §1, Eq. 3).</li>
+      <li id="fn-a1-labels">Giustino: cell $p$, lattice vector $\bR_p$, $N_p$ cells, $M$ atoms per cell (a count, not a mass), equilibrium position $\btau_{\kappa p}=\bR_p+\btau_\kappa$, displacement $\Delta\tau_{\kappa\alpha p}$. EPP: cell $i$, lattice vector $\bR^0_i$, $N$ cells, $s$ atoms per cell, atoms ${\rm a}$ and ${\rm b}$, in-cell position $\mathbf r^0_{\rm a}$, site $\bR^0_{i{\rm a}}=\bR^0_i+\mathbf r^0_{\rm a}$, displacement $Q_{i{\rm a}\mu}$ with Cartesian index $\mu$ (its Eqs. 1–2). Both use the lattice sums of the Born–von Kármán grid: Giustino's Appendix A, EPP Eq. (11).</li>
+      <li id="fn-a1-ifc">Giustino writes the force constants $C_{\kappa\alpha p,\kappa'\alpha'p'}$ (Eq. 13), the expansion as Eq. (12) and the lattice Hamiltonian as Eq. (19). The EPP manuscript calls them the elastic matrix $k_{i{\rm a}\mu,j{\rm b}\nu}$ (unnumbered equation on p. 2; Eq. 4 for pair potentials; Eq. 16 gives the "push one atom" reading), and its lattice Hamiltonian is Eq. (5).</li>
+      <li id="fn-a1-asr">Giustino uses the sum rule implicitly in his §III.A and states its many-body form as Eq. (120). The EPP manuscript does not state it in §1: its Eq. (4) gives only the blocks between different atoms, and the on-site block follows from (A1.6).</li>
+      <li id="fn-a1-phase">Both sources also put the phase at the cell, not at the atom.</li>
+      <li id="fn-a1-2x2">The EPP manuscript illustrates diagonalization with the matrix $\left[\begin{smallmatrix}3&2\\2&3\end{smallmatrix}\right]$, eigenvalues 1 and 5 (its Eq. 30). Read in eV Å⁻² amu⁻¹, it is exactly $\tPhi(\pi/a)$ of this chain with $M_1=M_2=1$ amu, $K_1=0.5$ and $K_2=2.5$ eV/Å². That reading is ours; the preset "equal masses, unequal springs" of Figure A1.4 reproduces it.</li>
+      <li id="fn-a1-dyn">Giustino defines only the mass-scaled matrix, $D^{\rm dm}_{\kappa\alpha,\kappa'\alpha'}(\bq)$ (Eq. 14), and calls it the dynamical matrix; (A1.19) is his Eq. (15). The EPP manuscript writes the unscaled matrix as $\Omega^2_{{\rm a}\mu{\rm b}\nu}(\bk)$ (Eq. 15) and the scaled one as $\tilde\Omega^2_{{\rm a}\mu{\rm b}\nu}(\bk)$ (Eq. 24). It calls the phonon wavevector $\bk$ in §1, and its eigenvectors are $e_{{\rm a}\mu\alpha}(\bk)$ with branch index $\alpha$ (Eqs. 25–29). Its Eq. (15) puts the phase on the first atom's cell, so its $\Omega^2(\bk)$ equals our $\Phi(\bq)^*=\Phi(-\bq)$. The frequencies are the same, but the eigenvectors are complex conjugated. The manuscript's diagonalization step on its p. 9 assumes that $\tilde\Omega^2$ is symmetric, which holds only where it is real ($\bq=0$, and points such as $q=\pi/a$ of the chain).</li>
+      <li id="fn-a1-props">Giustino: (A1.20) and (A1.21) are his Eqs. (16)–(18). EPP: Eqs. (27), (28) and (31)–(38).</li>
+      <li id="fn-a1-normal">Giustino's normal coordinates $z_{\bq\nu}$ (Appendix B, Eqs. B1–B3) contain a reference mass $M_0$: $z_{\bq\nu}=Q_{\bq\nu}/\sqrt{M_0}$. The EPP manuscript writes them $q_{\bk\alpha}$ (Eqs. 39–43 and 62), and (A1.24) is its Eqs. (44)–(45).</li>
+      <li id="fn-a1-conj">$Q_{\bq\nu}$ and $Q_{-\bq\nu}=Q^*_{\bq\nu}$ both appear in (A1.24), in the two terms $\frac12\dot Q^*_{\bq\nu}\dot Q_{\bq\nu}$ and $\frac12\dot Q^*_{-\bq\nu}\dot Q_{-\bq\nu}$, which are equal. Their sum is $\dot Q_{-\bq\nu}\dot Q_{\bq\nu}$, whose derivative with respect to $\dot Q_{\bq\nu}$ is $\dot Q_{-\bq\nu}=\dot Q^*_{\bq\nu}$.</li>
+      <li id="fn-a1-quant">Giustino: Eqs. (20)–(22) and Appendix B (Eqs. B13–B15), which quantize the pairs $\pm\bq$ with real and circular ladder operators. His zero-point length $l_{\bq\nu}=(\hbar/2M_0\omega_{\bq\nu})^{1/2}$ always appears multiplied by $(M_0/M_\kappa)^{1/2}$, which gives our $(\hbar/2M_\kappa\omega_{\bq\nu})^{1/2}$. EPP: Eqs. (72)–(78), and the displacement operator (A1.27) is its Eq. (83), with $a^+$ for $a^\dagger$. Its count of $3\times N\times s$ oscillators in Eq. (78) includes the three translations with $\omega=0$, which have to be left out.</li>
+    </ol>
+  </div>
+
+  <details class="glossary-box"><summary>Symbols defined in this section</summary>
+    <dl class="glossary">
+      <dt id="gl-a1-U" data-first="a1-picture">$U$, $U_0$</dt><dd>Born–Oppenheimer energy surface: energy of the electrons in their ground state plus the repulsion of the clamped nuclei, as a function of all nuclear positions; $U_0$ is its value at equilibrium (eV). <span class="gl-src">Giustino: $U$. EPP: $V$, built from a pair potential $U$.</span></dd>
+      <dt id="gl-a1-a" data-first="a1-labels">$\ba_j$; $a$</dt><dd>primitive lattice vectors, $j=1,2,3$; lattice constant (Å).</dd>
+      <dt id="gl-a1-l" data-first="a1-labels">$\ell$, $\bR_\ell$</dt><dd>cell index, the integer triple $(\ell_1,\ell_2,\ell_3)$; lattice vector $\bR_\ell=\ell_1\ba_1+\ell_2\ba_2+\ell_3\ba_3$ of its corner (Å). <span class="gl-src">Giustino: $p$, $\bR_p$. EPP: $i$, $\bR^0_i$.</span></dd>
+      <dt id="gl-a1-kappa" data-first="a1-labels">$\kappa$, $N_\kappa$</dt><dd>atom of the basis; number of atoms per cell. <span class="gl-src">Giustino: $\kappa$, $M$. EPP: ${\rm a}$, $s$.</span></dd>
+      <dt id="gl-a1-M" data-first="a1-labels">$M_\kappa$</dt><dd>mass of atom $\kappa$ (amu). <span class="gl-src">Giustino: $M_\kappa$ (plus a reference mass $M_0$). EPP: $m_{\rm a}$.</span></dd>
+      <dt id="gl-a1-tau" data-first="a1-labels">$\btau_\kappa$, $\btau_{\ell\kappa}$</dt><dd>position of atom $\kappa$ inside its cell; equilibrium position $\btau_{\ell\kappa}=\bR_\ell+\btau_\kappa$ of atom $\kappa$ of cell $\ell$ (Å). <span class="gl-src">Giustino: $\btau_\kappa$, $\btau_{\kappa p}$. EPP: $\mathbf r^0_{\rm a}$, $\bR^0_{i{\rm a}}$.</span></dd>
+      <dt id="gl-a1-u" data-first="a1-labels">$\bu_{\ell\kappa}$, $u_{\ell\kappa\alpha}$</dt><dd>displacement of atom $\kappa$ of cell $\ell$ from equilibrium, and its Cartesian components (Å). <span class="gl-src">Giustino: $\Delta\tau_{\kappa\alpha p}$. EPP: $Q_{i{\rm a}\mu}$.</span></dd>
+      <dt id="gl-a1-alpha" data-first="a1-labels">$\alpha,\beta$</dt><dd>Cartesian directions $x,y,z$. <span class="gl-src">Giustino: $\alpha,\alpha'$. EPP: $\mu,\nu$.</span></dd>
+      <dt id="gl-a1-N" data-first="a1-bvk">$N_1,N_2,N_3$; $N_\ell$</dt><dd>size of the Born–von Kármán supercell along each primitive vector; number of cells $N_\ell=N_1N_2N_3$, which is also the number of allowed wavevectors. <span class="gl-src">Giustino: $N_p$. EPP: $N$.</span></dd>
+      <dt id="gl-a1-Phi" data-first="a1-forces">$\Phi_{\ell\kappa\alpha,\ell'\kappa'\beta}$</dt><dd>interatomic force constant: second derivative of $U$; minus the force along $\alpha$ on atom $\ell\kappa$ per unit push of atom $\ell'\kappa'$ along $\beta$ (eV/Å²). <span class="gl-src">Giustino: $C_{\kappa\alpha p,\kappa'\alpha'p'}$. EPP: $k_{i{\rm a}\mu,j{\rm b}\nu}$.</span></dd>
+      <dt id="gl-a1-F" data-first="a1-meaning">$F_{\ell\kappa\alpha}$</dt><dd>force on atom $\ell\kappa$ along $\alpha$ (eV/Å).</dd>
+      <dt id="gl-a1-d" data-first="a1-props">$\bd$</dt><dd>a common displacement of every atom, a rigid translation (Å).</dd>
+      <dt id="gl-a1-K" data-first="a1-chain">$K$; $K_1,K_2$</dt><dd>spring stiffness in the chain models (eV/Å²).</dd>
+      <dt id="gl-a1-q" data-first="a1-waves">$q$, $\bq$</dt><dd>wavevector of a lattice wave: the phase advances by $\bq\cdot\ba_j$ from a cell to its neighbour (Å⁻¹). <span class="gl-src">EPP calls it $\bk$ in its §1.</span></dd>
+      <dt id="gl-a1-omega" data-first="a1-waves">$\omega$, $\omega_{\bq\nu}$</dt><dd>angular frequency of a mode; quoted as the energy $\hbar\omega$ (meV). <span class="gl-src">EPP: $\omega_\alpha(\bk)$.</span></dd>
+      <dt id="gl-a1-xi" data-first="a1-waves">$\xi$, $\xi_\kappa$, $\boldsymbol\xi_\kappa$</dt><dd>complex amplitude of a wave: physical displacement amplitude of atom $\kappa$ (Å); $\boldsymbol\xi_\kappa=\be_{\kappa\nu}/\sqrt{M_\kappa}$.</dd>
+      <dt id="gl-a1-Keff" data-first="a1-waves">$K_{\mathrm{eff}}(q)$</dt><dd>stiffness of the single spring that each atom of the monatomic chain feels in a wave, $2K(1-\cos qa)$ (eV/Å²).</dd>
+      <dt id="gl-a1-vs" data-first="a1-bz">$v_{\mathrm s}$</dt><dd>sound velocity, slope of an acoustic branch at $q=0$.</dd>
+      <dt id="gl-a1-Mr" data-first="a1-diatomic">$M_{\mathrm r}$</dt><dd>reduced mass of a two-atom cell, $1/M_{\mathrm r}=1/M_1+1/M_2$ (amu).</dd>
+      <dt id="gl-a1-Phiq" data-first="a1-general">$\Phi_{\kappa\alpha,\kappa'\beta}(\bq)$</dt><dd>lattice Fourier transform of the force constants, with the phase of the partner atom's cell (eV/Å²). <span class="gl-src">EPP: $\Omega^2_{{\rm a}\mu{\rm b}\nu}(\bk)$, with the opposite phase.</span></dd>
+      <dt id="gl-a1-tPhi" data-first="a1-general">$\tPhi_{\kappa\alpha,\kappa'\beta}(\bq)$</dt><dd>dynamical matrix: $\Phi(\bq)$ divided by $\sqrt{M_\kappa M_{\kappa'}}$; Hermitian, eigenvalues $\omega^2_{\bq\nu}$ (eV Å⁻² amu⁻¹). <span class="gl-src">Giustino: $D^{\rm dm}_{\kappa\alpha,\kappa'\alpha'}(\bq)$. EPP: $\tilde\Omega^2_{{\rm a}\mu{\rm b}\nu}(\bk)$.</span></dd>
+      <dt id="gl-a1-nu" data-first="a1-general">$\nu$</dt><dd>branch index, $1,\dots,3N_\kappa$. <span class="gl-src">EPP: $\alpha$ in §§1–6, $\sigma$ in §7.</span></dd>
+      <dt id="gl-a1-e" data-first="a1-reading">$e_{\kappa\alpha,\nu}(\bq)$, $\be_{\kappa\nu}(\bq)$</dt><dd>eigenvector of the dynamical matrix: component for atom $\kappa$ and direction $\alpha$ in mode $\bq\nu$; the complex 3-vector of atom $\kappa$. Mass-weighted: the physical amplitude is $\be_{\kappa\nu}/\sqrt{M_\kappa}$. <span class="gl-src">Giustino: same. EPP: $e_{{\rm a}\mu\alpha}(\bk)$.</span></dd>
+      <dt id="gl-a1-b" data-first="a1-general">$\bb_j$, $\bG$</dt><dd>reciprocal primitive vectors, $\ba_j\cdot\bb_{j'}=2\pi\delta_{jj'}$; reciprocal lattice vector (Å⁻¹).</dd>
+      <dt id="gl-a1-Q" data-first="a1-normal">$Q_{\bq\nu}$, $P_{\bq\nu}$</dt><dd>normal coordinate (complex amplitude of mode $\bq\nu$, units of $\sqrt{\text{mass}}\times$length) and its conjugate momentum. <span class="gl-src">Giustino: $z_{\bq\nu}=Q_{\bq\nu}/\sqrt{M_0}$. EPP: $q_{\bk\alpha}$, $p_{\bk\alpha}$.</span></dd>
+      <dt id="gl-a1-adag" data-first="a1-phonons">$\hat a_{\bq\nu}$, $\hat a^\dagger_{\bq\nu}$</dt><dd>phonon annihilation and creation operators. <span class="gl-src">EPP: $a_{\bk\alpha}$, $a^+_{\bk\alpha}$.</span></dd>
+      <dt id="gl-a1-phi" data-first="a1-phonons">$\hat\phi_{\bq\nu}$</dt><dd>phonon field, $\hat a_{\bq\nu}+\hat a^\dagger_{-\bq\nu}$ (dimensionless).</dd>
+      <dt id="gl-a1-zp" data-first="a1-phonons">$\big(\hbar/2M_\kappa\omega_{\bq\nu}\big)^{1/2}$</dt><dd>zero-point amplitude of atom $\kappa$ in mode $\bq\nu$ (Å). <span class="gl-src">Giustino: $(M_0/M_\kappa)^{1/2}\,l_{\bq\nu}$.</span></dd>
+      <dt id="gl-a1-nB" data-first="a1-msd">$n_{\bq\nu}$, $n_{\mathrm B}$</dt><dd>Bose–Einstein occupation of mode $\bq\nu$, $1/(\ee^{\hbar\omega_{\bq\nu}/\kB T}-1)$.</dd>
+    </dl>
+  </details>
+</section>
+
+<footer class="refs" id="references">
+  <h2>Sources and further reading</h2>
+  <ol>
+    <li>F. Giustino, “Electron-phonon interactions from first principles”, Rev. Mod. Phys. <b>89</b>, 015003 (2017).</li>
+    <li>“Theory of the Electron-Phonon-Photon coupling”, 102-page manuscript (draft v2), the source of Part B.</li>
+    <li>C. Verdi and F. Giustino, “Fröhlich electron-phonon vertex from first principles”, Phys. Rev. Lett. <b>115</b>, 176401 (2015).</li>
+    <li>J. Sjakste, N. Vast, M. Calandra and F. Mauri, Phys. Rev. B <b>92</b>, 054307 (2015).</li>
+    <li>X. Gonze and C. Lee, Phys. Rev. B <b>55</b>, 10355 (1997): Born charges, dielectric tensors and the nonanalytic term of the dynamical matrix.</li>
+    <li>S. Baroni, S. de Gironcoli, A. Dal Corso and P. Giannozzi, Rev. Mod. Phys. <b>73</b>, 515 (2001): density-functional perturbation theory.</li>
+    <li>L. Hedin, Phys. Rev. <b>139</b>, A796 (1965); G. Baym, Ann. Phys. (N.Y.) <b>14</b>, 1 (1961).</li>
+    <li>J. Bardeen and D. Pines, Phys. Rev. <b>99</b>, 1140 (1955); H. Fröhlich, Adv. Phys. <b>3</b>, 325 (1954).</li>
+    <li>K. Huang, Proc. R. Soc. London A <b>208</b>, 352 (1951): phonon polaritons; R. H. Lyddane, R. G. Sachs and E. Teller, Phys. Rev. <b>59</b>, 673 (1941).</li>
+    <li>S. L. Adler, Phys. Rev. <b>126</b>, 413 (1962); N. Wiser, Phys. Rev. <b>129</b>, 62 (1963): microscopic dielectric response.</li>
+    <li>P. B. Allen and V. Heine, J. Phys. C <b>9</b>, 2305 (1976); P. B. Allen and R. C. Dynes, Phys. Rev. B <b>12</b>, 905 (1975).</li>
+    <li>T. Sohier, M. Gibertini, M. Calandra, F. Mauri and N. Marzari, “Breakdown of optical phonons’ splitting in two-dimensional materials”, Nano Lett. <b>17</b>, 3758 (2017).</li>
+    <li>N. S. Rytova, Proc. MSU Phys. Astron. <b>3</b>, 30 (1967); L. V. Keldysh, JETP Lett. <b>29</b>, 658 (1979): screening in thin films.</li>
+  </ol>
+  <p>Literature values that appear in neither source are marked as illustrative where they are used. The main text does not require either source; their notation and equation numbers are given in the footnotes of each section.</p>
+</footer>
+<script>
+(() => {
+  // contents rail: highlight the chapter in view; collapse the mobile contents after a jump
+  const links = [...document.querySelectorAll('.toc a[href^="#"]')];
+  const byId = new Map(links.map(a => [a.getAttribute('href').slice(1), a]));
+  const secs = [...document.querySelectorAll('section.chapter')];
+  let current = null;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) current = e.target.id; });
+    links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  secs.forEach(s => io.observe(s));
+  const det = document.getElementById('toc-details');
+  const mq = matchMedia('(min-width: 1120px)');
+  const sync = () => { if (det) det.open = mq.matches; };
+  sync();
+  try { mq.addEventListener('change', sync); } catch (e) {}
+  links.forEach(a => a.addEventListener('click', () => { if (!mq.matches && det) det.open = false; }));
+  // open the chapter named in the hash
+  const h = location.hash.slice(1);
+  if (h && /^[\w.~-]+$/.test(h)) { const t = document.getElementById(h); if (t) setTimeout(() => t.scrollIntoView(), 50); }
+})();
+</script>
+<script>
+(() => {
+  // Footnote and symbol popovers, and the Symbols panel. This runs before MathJax typesets the page,
+  // so the raw HTML (TeX source) of every note and glossary entry is captured now and typeset on demand.
+  const raw = new Map(), gl = [];
+  // number the figures of each section in reading order: "Figure A1.3"
+  document.querySelectorAll('section.chapter').forEach(sec => {
+    const tag = (sec.dataset.num || '').replace(/\./g, '');
+    sec.querySelectorAll('figure.viz > .viz-title').forEach((t, k) => {
+      const n = document.createElement('span'); n.className = 'fig-n'; n.textContent = `Figure ${tag}.${k + 1}`;
+      t.prepend(n); t.closest('figure').dataset.fig = `${tag}.${k + 1}`;
+    });
+  });
+  // number footnote markers by the position of their target in its list, so numbers can never drift
+  document.querySelectorAll('sup.fn a[href^="#"]').forEach(a => {
+    const li = document.getElementById(a.getAttribute('href').slice(1));
+    if (li && li.parentElement) a.textContent = String([...li.parentElement.children].indexOf(li) + 1);
+  });
+  document.querySelectorAll('ol.footnotes > li[id]').forEach(li => raw.set(li.id, { kind: 'note', html: li.innerHTML }));
+  document.querySelectorAll('dl.glossary > dt[id]').forEach(dt => {
+    const dd = dt.nextElementSibling, sec = dt.closest('section.chapter');
+    const e = { kind: 'symbol', id: dt.id, sym: dt.innerHTML, html: dd ? dd.innerHTML : '', first: dt.dataset.first || '',
+      num: sec ? sec.dataset.num : '', title: sec ? sec.dataset.title : '' };
+    e.search = (dt.textContent + ' ' + (dd ? dd.textContent : '')).toLowerCase();
+    raw.set(dt.id, e); gl.push(e);
+  });
+  const typeset = (el) => (window.MathJax && MathJax.typesetPromise) ? MathJax.typesetPromise([el]).catch(() => {}) : Promise.resolve();
+  let cur = null;
+  let closePanel = () => {};
+  function place(pop, a) {
+    const r = a.getBoundingClientRect(), sx = window.scrollX, sy = window.scrollY, vw = document.documentElement.clientWidth;
+    const w = pop.offsetWidth, h = pop.offsetHeight;
+    const left = Math.max(sx + 12, Math.min(r.left + sx + r.width / 2 - w / 2, sx + vw - w - 12));
+    let top = r.bottom + sy + 8;
+    if (r.bottom + 8 + h > window.innerHeight && r.top - 8 - h > 0) top = r.top + sy - 8 - h;
+    pop.style.left = left + 'px'; pop.style.top = top + 'px';
+  }
+  function close() { if (!cur) return; cur.pop.remove(); cur.a.setAttribute('aria-expanded', 'false'); cur = null; }
+  function open(a, id) {
+    const e = raw.get(id); if (!e) return false;
+    if (cur && cur.a === a) { close(); return true; }
+    close();
+    const pop = document.createElement('div');
+    pop.className = 'pop'; pop.id = 'pop-' + id; pop.setAttribute('role', 'note');
+    pop.innerHTML = e.kind === 'note'
+      ? `<p class="pop-k">Note ${a.textContent.trim()}</p><div>${e.html}</div>`
+      : `<p class="pop-k">Symbol${e.num ? ' · defined in §' + e.num : ''}</p><div class="pop-sym">${e.sym}</div><div>${e.html}</div>` + (e.first ? `<a class="pop-go" href="#${e.first}">Go to its definition</a>` : '');
+    document.body.appendChild(pop);
+    a.setAttribute('aria-expanded', 'true'); a.setAttribute('aria-controls', pop.id);
+    cur = { pop, a };
+    place(pop, a);
+    typeset(pop).then(() => { if (cur && cur.pop === pop) place(pop, a); });
+    return true;
+  }
+  document.addEventListener('click', (ev) => {
+    const a = ev.target.closest('sup.fn a, a.sym');
+    if (a) { if (open(a, (a.getAttribute('href') || '').slice(1))) ev.preventDefault(); return; }
+    if (cur && (!cur.pop.contains(ev.target) || ev.target.closest('.pop-go'))) close();
+  });
+  document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') { close(); closePanel(); } });
+  window.addEventListener('resize', () => { if (cur) place(cur.pop, cur.a); });
+
+  if (!gl.length) return;
+  const btn = document.createElement('button');
+  btn.className = 'gl-btn'; btn.type = 'button'; btn.textContent = 'Symbols';
+  btn.setAttribute('aria-expanded', 'false'); btn.setAttribute('aria-controls', 'gl-panel');
+  const panel = document.createElement('aside');
+  panel.className = 'gl-panel'; panel.id = 'gl-panel'; panel.setAttribute('aria-label', 'Symbols');
+  panel.innerHTML = '<header><div class="gl-top"><h2>Symbols</h2><button type="button" class="btn gl-x">Close</button></div>'
+    + '<p>Every symbol this page defines, in order, with a link to its definition. Type to filter; TeX names work too, e.g. Phi or omega.</p>'
+    + '<input type="search" placeholder="Filter symbols" aria-label="Filter symbols"></header><div class="gl-list"></div>';
+  document.body.appendChild(btn); document.body.appendChild(panel);
+  const list = panel.querySelector('.gl-list'), inp = panel.querySelector('input');
+  let built = false;
+  const attr = (s) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+  function build() {
+    let h = '', sec = null;
+    for (const e of gl) {
+      if (e.num !== sec) { sec = e.num; h += `<p class="gl-sec" data-sec="${attr(e.num)}">§${e.num} · ${e.title}</p>`; }
+      h += `<div class="gl-item" data-sec="${attr(e.num)}" data-s="${attr(e.search)}"><div>${e.sym}</div><div class="gl-d">${e.html}`
+        + (e.first ? ` <a class="gl-go" href="#${e.first}">go to definition</a>` : '') + '</div></div>';
+    }
+    list.innerHTML = h; built = true; typeset(list);
+  }
+  function openPanel() { if (!built) build(); panel.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); setTimeout(() => inp.focus({ preventScroll: true }), 60); }
+  closePanel = (refocus = true) => {
+    if (!panel.classList.contains('open')) return;
+    panel.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); if (refocus) btn.focus({ preventScroll: true });
+  };
+  btn.addEventListener('click', () => panel.classList.contains('open') ? closePanel() : openPanel());
+  panel.querySelector('.gl-x').addEventListener('click', () => closePanel());
+  inp.addEventListener('input', () => {
+    const q = inp.value.trim().toLowerCase();
+    const shown = new Set();
+    list.querySelectorAll('.gl-item').forEach(it => { const ok = !q || it.dataset.s.includes(q); it.hidden = !ok; if (ok) shown.add(it.dataset.sec); });
+    list.querySelectorAll('.gl-sec').forEach(p => { p.hidden = !shown.has(p.dataset.sec); });
+  });
+  list.addEventListener('click', (ev) => { if (ev.target.closest('.gl-go')) closePanel(false); });
+})();
+</script>
+
+</main>
+</div>
