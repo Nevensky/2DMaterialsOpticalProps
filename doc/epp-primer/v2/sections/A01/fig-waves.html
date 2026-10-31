@@ -150,7 +150,7 @@
     const a = [];
     if (cur.wave) a.push(item(swLine('phonon'), `continuous wave Re[${I('ξ')}e<sup>i(${I('qx')}−${I('ωt')})</sup>], ${I('x')} along the chain`));
     if (cur.alias) a.push(item(swLine('c4', true), `the wave with ${I('q')} + 2π/${I('a')}: same stem tips`));
-    legA.innerHTML = a.join(''); legA.hidden = !a.length;
+    legA.innerHTML = a.join(''); legA.hidden = !a.length; legA.style.display = a.length ? '' : 'none';   // .legend sets display: flex
     const c = [item(swLine('phonon'), `${I('ħω')}(${I('q')})`), item(swDot('phonon', true), `allowed ${I('q')}, ${I('N')}<sub>${I('ℓ')}</sub> = ${cur.N}`), item(swDot('ink'), `current ${I('q')}`)];
     if (cur.alias) c.push(item(swDot('c4'), `${I('q')} + 2π/${I('a')}, same ${I('ħω')}`));
     legC.innerHTML = c.join('');
