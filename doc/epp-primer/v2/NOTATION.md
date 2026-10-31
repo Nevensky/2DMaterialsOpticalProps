@@ -98,7 +98,7 @@ In-plane positions are $\br_\parallel$, the normal coordinate is $z$.
 | $\tilde\Phi_{\kappa\alpha,\kappa'\beta}(\bq)=\Phi_{\kappa\alpha,\kappa'\beta}(\bq)/\sqrt{M_\kappa M_{\kappa'}}$ | dynamical matrix (mass-scaled) | eV Å⁻² amu⁻¹ (= $\omega^2$) |
 | $e_{\kappa\alpha,\nu}(\bq)$; $\be_{\kappa\nu}(\bq)$ | eigenvector of $\tilde\Phi(\bq)$: component; Cartesian 3-vector of atom $\kappa$ | dimensionless |
 | $\omega_{\bq\nu}$ | phonon frequency, $\omega^2_{\bq\nu}$ eigenvalue of $\tilde\Phi(\bq)$ | $\hbar\omega$ in meV |
-| $\xi$, $\xi_\kappa$, $\boldsymbol\xi_\kappa$ | complex amplitude of a lattice wave (physical displacement amplitude of atom $\kappa$), $\boldsymbol\xi_\kappa=\be_{\kappa\nu}/\sqrt{M_\kappa}$; in phasor pictures the complex displacement $u_\ell=\xi\,\mathrm e^{\mathrm i(q\ell a-\omega t)}$, physical part $\mathrm{Re}\,u_\ell$ | Å |
+| $\xi$, $\xi_\kappa$, $\boldsymbol\xi_\kappa$ | complex amplitude of a lattice wave (physical displacement amplitude of atom $\kappa$), $\boldsymbol\xi_\kappa\propto\be_{\kappa\nu}/\sqrt{M_\kappa}$ for a normalized eigenvector; in phasor pictures the complex displacement $u_\ell=\xi\,\mathrm e^{\mathrm i(q\ell a-\omega t)}$, physical part $\mathrm{Re}\,u_\ell$ | Å |
 | $K$, $K_1$, $K_2$; $K_{\mathrm{eff}}$ | spring stiffness in model crystals; effective stiffness felt by an atom in a wave | eV/Å² |
 | $\bd$ | a common displacement of every atom (rigid translation) | Å |
 | $\Phi^{\mathrm{sr}}$, $\Phi^{\mathrm{dd}}$ | short-range (analytic) and long-range dipole–dipole parts of $\Phi$ | |
@@ -186,7 +186,7 @@ Current vertices of electrons and ions are written $\mathbf J^{\mathrm e}$ and $
 | $e^2$ (Gaussian) $=e^2/4\pi\varepsilon_0$ (SI) | 14.3996 eV Å |
 | $\hbar c$ | 1973.27 eV Å |
 | $\hbar^2/2m_{\mathrm e}$ | 3.80998 eV Å² |
-| $\hbar^2/(\mathrm{amu}\cdot\text{Å}^2)$ | 4.1803 meV, so $\hbar\omega=64.654\ \text{meV}\times\sqrt{K[\text{eV/Å}^2]/M[\text{amu}]}$ |
+| $\hbar^2/(\mathrm{amu}\cdot\text{Å}^2)$ | 4.1802 meV, so $\hbar\omega=64.654\ \text{meV}\times\sqrt{K[\text{eV/Å}^2]/M[\text{amu}]}$ |
 | $k_{\mathrm B}$ | 0.0861733 meV/K |
 | 1 meV | 8.06554 cm⁻¹ = 0.241799 THz |
 | $\hbar/(2M\omega)$ | 2.0901 Å² / ($M$[amu] · $\hbar\omega$[meV]) |
@@ -210,19 +210,19 @@ Current vertices of electrons and ions are written $\mathbf J^{\mathrm e}$ and $
 | Quantity | v2 | Giustino (G) | EPP (E) |
 |---|---|---|---|
 | cell index; lattice vector | $\ell$; $\bR_\ell$ | $p$; $\bR_p$ | $i$; $\bR^0_i$ |
-| number of cells | $N_\ell$ | $N_p$ | $N$ |
+| number of cells | $N_\ell=N_1N_2N_3$ | $N_p=N_1N_2N_3$ | $N$ |
 | atom index; atoms per cell | $\kappa$; $N_\kappa$ | $\kappa$; $M$ (a count!) | $a,b$; $s$ |
-| basis position; equilibrium site | $\btau_\kappa$; $\btau_{\ell\kappa}$ | $\btau_\kappa$; $\btau_{\kappa p}$ | $\mathbf r^0_a$; $\bR^0_{ia}$ |
-| Cartesian index | $\alpha,\beta$ (outer), $\gamma,\delta$ (inner) | $\alpha,\alpha'$ | $\mu,\nu$ (§§1–4); $\alpha,\beta$ in §§5–7 |
+| basis position; equilibrium site | $\btau_\kappa$; $\btau_{\ell\kappa}$ | $\btau_\kappa$; $\btau^0_{\kappa p}$ ($\btau_{\kappa p}=\bR_p+\btau_\kappa$ is the moving position) | $\mathbf r^0_a$; $\bR^0_{ia}$ |
+| Cartesian index | $\alpha,\beta$ (outer), $\gamma,\delta$ (inner) | $\alpha,\alpha'$ | $\mu,\nu$ (§§1–4); $\alpha,\beta,\mu,\nu$ from p. 61 (§5.2.1) on |
 | displacement | $u_{\ell\kappa\alpha}$ | $\Delta\tau_{\kappa\alpha p}$ | $Q_{ia\mu}$ |
 | mass | $M_\kappa$ | $M_\kappa$; reference mass $M_0$ | $m_a$ |
 | force constants | $\Phi_{\ell\kappa\alpha,\ell'\kappa'\beta}$ | $C_{\kappa\alpha p,\kappa'\alpha'p'}$ | $k_{ia\mu,jb\nu}$ (elastic matrix) |
 | Fourier-transformed force constants | $\Phi_{\kappa\alpha,\kappa'\beta}(\bq)$ | (not named) | $\Omega^2_{a\mu b\nu}(\bk)$, opposite phase |
-| dynamical matrix | $\tilde\Phi_{\kappa\alpha,\kappa'\beta}(\bq)$ | $D^{\mathrm{dm}}_{\kappa\alpha,\kappa'\alpha'}(\bq)$ | $\tilde\Omega^2_{a\mu b\nu}(\bk)$ |
-| branch | $\nu$ | $\nu$ | $\alpha$ (§§1–6), $\sigma$ (§7) |
-| eigenvector | $e_{\kappa\alpha,\nu}(\bq)$ | $e_{\kappa\alpha,\nu}(\bq)$ | $e_{a\mu\alpha}(\bk)$ |
+| dynamical matrix | $\tilde\Phi_{\kappa\alpha,\kappa'\beta}(\bq)$ | $D^{\mathrm{dm}}_{\kappa\alpha,\kappa'\alpha'}(\bq)$ | $\tilde\Omega^2_{a\mu b\nu}(\bk)$, opposite phase ($=\tilde\Phi(\bq)^*$) |
+| branch | $\nu$ | $\nu$ | $\alpha$ (§§1–4; $\sigma$ already in §§4.5–4.6), $\sigma$ from p. 61 (§5.2.1) on |
+| eigenvector | $e_{\kappa\alpha,\nu}(\bq)$ | $e_{\kappa\alpha,\nu}(\bq)$ | $e_{a\mu\alpha}(\bk)$, complex conjugate of ours (opposite phase) |
 | phonon wavevector | $\bq$ | $\bq$ | $\bk$ in §1, $\bq$ from §2 |
-| normal coordinate | $Q_{\bq\nu}$ | $z_{\bq\nu}=Q_{\bq\nu}/\sqrt{M_0}$ | $q_{\bk\alpha}$ |
+| normal coordinate; momentum | $Q_{\bq\nu}$; $P_{\bq\nu}=\dot Q^*_{\bq\nu}$ | $z_{\bq\nu}=Q_{\bq\nu}/\sqrt{M_0}$ | $q_{\bk\alpha}$; $p_{\bk\alpha}=\dot q_{\bk\alpha}$ (our $P_{-\bq\nu}$) |
 | zero-point amplitude | $(\hbar/2M_\kappa\omega_{\bq\nu})^{1/2}$ | $(M_0/M_\kappa)^{1/2}l_{\bq\nu}$ | written out |
 | phonon field | $\phi_{\bq\nu}$ | $\hat a_{\bq\nu}+\hat a^\dagger_{-\bq\nu}$ | $a_{\bq\sigma}+a^+_{-\bq\sigma}$ |
 | cell volume; crystal volume | $\Omega_{\mathrm V}$; $\Omega_{\mathrm V}^{\mathrm{SC}}$ | $\Omega$; $N_p\Omega$ | $\Omega_{\mathrm{uc}}$ (also $\Omega_0$); $\Omega$ |
