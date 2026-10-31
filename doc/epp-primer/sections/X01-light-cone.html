@@ -1,0 +1,311 @@
+<div class="part-head" id="part-x" data-part-title="Bridge · e–ph → e–ph–photon">
+  <p class="part-label">Bridge</p>
+  <h2>From electron–phonon to electron–phonon–photon</h2>
+  <p>Part A rests on the four assumptions collected at the end of <a href="#a-applications">§A.9</a>: a single instantaneous, longitudinal Coulomb interaction; "retardation" only in the sense of frequency-dependent electronic screening; light as a classical external field; and polar coupling added by hand through $Z^*$ and $\epsilon^\infty$.</p>
+  <p>Part B replaces all of this with one Lagrangian for electrons, ions and the electromagnetic field, one photon propagator $D=D^{l}+D^{t}$ and one current–current self-energy $\Pi_{jj}=\Pi^{\rm e}+\Pi^{\rm ion}$. Coulomb's law comes back as the longitudinal photon. The LO–TO splitting, the Fröhlich vertex and $\epsilon^\infty$ stop being inputs and come out of Dyson equations. The two Bridge sections map one language onto the other before Part B builds the new one.</p>
+</div>
+<section class="chapter" id="x-light-cone" data-num="X.1" data-title="From Coulomb to the full field">
+  <header class="ch-head">
+    <p class="eyebrow"><span class="num">X.1</span><span>Giustino §IV ↔ EPP §§4–7</span></p>
+    <h2>From instantaneous Coulomb to the full electromagnetic field</h2>
+    <p class="lede">Giustino's screened interaction $W$ is the longitudinal, $c\to\infty$ corner of EPP's photon propagator $D$. By the end you will know how little of momentum space lies outside that corner, where that little matters anyway (optics, the zone centre), and why the order of the limits $q\to0$ and $c\to\infty$ is not a technicality.</p>
+  </header>
+
+  <h3>Every line in Part A is a Coulomb line</h3>
+  <p>Giustino's many-body Hamiltonian (G Eqs. 62–69) is nonrelativistic and contains a single interaction, $v(\br,\br')=e^2/(4\pi\varepsilon_0|\br-\br'|)$ in SI units, acting between all charges, electrons and nuclei alike. In space-time it is instantaneous: $v(12)=v(\br_1,\br_2)\,\delta(t_1-t_2)$, stated under G Eq. (74). The probe that generates the Hedin–Baym equations is a scalar potential $\varphi$ coupled to the total charge density. Sec. IV contains no vector potential, no current vertex and no transverse photon. Every dashed line of Part A, bare or screened, is this one longitudinal field.</p>
+  <p>Screening organizes those lines into Dyson series. With clamped nuclei $W_{\rm e}=v+vP_{\rm e}W_{\rm e}$ (G Eq. 94) is the $W$ of GW and BSE. Letting the nuclei move adds a second channel, $W=W_{\rm e}+W_{\rm e}\mathcal DW_{\rm e}$ (G Eqs. 104–105, <a href="#a-hedin-baym">§A.5</a>). Here $\mathcal D$ is Giustino's nuclear density–density correlator (G Eq. 103, printed $D$; the letter $D$ is kept for EPP's photon propagator). In the harmonic approximation the vertices at the two ends of $W_{\rm e}\mathcal DW_{\rm e}$ are the dynamically screened gradients $\epsilon_{\rm e}^{-1}\nabla V_\kappa$ (G Eq. 110). All of Part A rests on these two equations for one scalar function.</p>
+
+  <h3>Two meanings of "retardation"</h3>
+  <p>Giustino keeps what he calls retardation effects. Following Bardeen–Pines and Baym, he does not replace $\epsilon_{\rm e}^{-1}$ in G Eq. (110) by its static value, which would be the Born–Oppenheimer choice made by Hedin and Lundqvist (Giustino p. 18). That retardation is the finite response time of the electron gas. EPP adds a second, independent one: the finite time the field needs to cross a distance. Both make an interaction depend on frequency, which is why they are easy to conflate. They live on different axes.</p>
+  <div class="tbl"><table>
+    <thead><tr><th></th><th>Giustino: dynamical screening</th><th>EPP adds: finite speed of light</th></tr></thead>
+    <tbody>
+      <tr><td>What is delayed</td><td>the response of the electrons, $\epsilon_{\rm e}(\br,\br',\omega)$</td><td>the field itself, which travels at $c$</td></tr>
+      <tr><td>Where it lives</td><td>on the frequency axis, at fixed $q$</td><td>on the momentum axis, through $x=cq/\omega$</td></tr>
+      <tr><td>Small parameter</td><td>$\hbar\omega_{\rm ph}/E_{\rm el}$ ($E_{\rm el}$: gap, plasmon or Fermi energy)</td><td>$\omega/cq=1/x$</td></tr>
+      <tr><td>Dropping it gives</td><td>adiabatic screening: static $\epsilon_{\rm e}$, DFPT force constants and vertices</td><td>the electrostatic limit: only the longitudinal (Coulomb) sector, i.e. all of Part A</td></tr>
+      <tr><td>Where it matters</td><td>metals, doped semiconductors, graphene (<a href="#a-phonon-se">§A.6</a>)</td><td>optics, polaritons, LO–TO at Γ (<a href="#b-propagator">§B.6</a>, <a href="#b-phonon-se">§B.7</a>)</td></tr>
+      <tr><td>Carried in EPP by</td><td>$\hat\epsilon^{\rm e}(\bq,\omega)$, E Eq. (432)</td><td>$D^{0t}$, E Eq. (372)</td></tr>
+    </tbody>
+  </table></div>
+  <p>Below, "retarded" means finite $c$ and "dynamical" means frequency-dependent screening. EPP itself once calls $c\to\infty$ the "retarded limit" (just before E Eq. 418); it means the instantaneous, non-retarded limit (<a href="#z-errata">§Z.2</a>).</p>
+
+  <h3>What EPP puts in its place</h3>
+  <p>EPP starts one level lower (<a href="#b-lagrangian">§B.2</a>, <a href="#b-fields">§B.4</a>). Electrons and harmonic ions couple only to the vector potential $\bA$, in the temporal gauge $\Phi=0$. The ions couple through their Born-charge dipoles, $\frac1c\dot\bp\cdot\bA$ with $\bp=\hat Z^*\bQ$ (E Eqs. 134–135). There is no explicit electron–phonon term, and no short-range (deformation-potential) coupling at all: only the polar channel is carried by the field. Quantizing the field gives two transverse photons per wave vector, with $\hbar\omega=\hbar cq$ (E Eq. 214). The longitudinal component has no restoring force and no dynamics of its own. Gauss's law ties it to the charges, and its field energy $\frac1{8\pi}\int\bE_l^2$ is exactly the instantaneous Coulomb energy of electrons and ionic bound charges (E Eq. 235). Coulomb's law is not postulated; it is what the longitudinal part of the field does.</p>
+  <p>In Sec. 6 the manuscript writes both parts as $3\times3$ propagators of $\bA$. The units are Gaussian, and the charges sit in the vertices, so $v(q)=4\pi/q^2$ carries no $e^2$:</p>
+  <div class="eq">$$D^{0l}_{\mu\nu}(\bq,\omega)=-\frac{4\pi c}{q^2}\,\frac{q_\mu q_\nu}{\omega^2},\tag{E.374}$$</div>
+  <div class="eq">$$D^{0t}_{\mu\nu}(\bq,\omega)=-\frac{4\pi c}{q^2}\,\frac{q^2\delta_{\mu\nu}-q_\mu q_\nu}{\omega^2-\omega_\bq^2+i\eta},\tag{E.372}$$</div>
+  <div class="eq">$$D^{0}_{\mu\nu}(\bq,\omega)=D^{0l}_{\mu\nu}(\bq,\omega)+D^{0t}_{\mu\nu}(\bq,\omega)=\frac{4\pi c}{\omega^2}\,\frac{-q_\mu q_\nu+\frac{\omega^2}{c^2}\delta_{\mu\nu}}{q^2-\frac{\omega^2}{c^2}-i\eta},\tag{E.375}$$</div>
+  <p>with $\omega_\bq=cq$. With the projectors $P^L_{\mu\nu}=\hat q_\mu\hat q_\nu$ and $P^T=1-P^L$ the two pieces separate cleanly:</p>
+  <div class="eq">$$D^0=-\frac{4\pi c}{\omega^2}\,P^L\;+\;\frac{4\pi}{c}\,\frac{P^T}{q^2-\omega^2/c^2}.$$</div>
+  <p>The first term is Coulomb in vector form. In the Coulomb picture a charge produces $\bE=-\nabla\phi$. In the temporal gauge the same field is $\bE=\frac{i\omega}{c}\bA$, so the scalar potential becomes a longitudinal vector potential, $\bA_l=-\frac{c}{\omega}\bq\,\phi$. Continuity, $\bq\cdot\bj=\omega\rho$ (E Eq. 335 in $\bq$-space), turns the charge source into a current source. Applying both conversions to $v(q)=4\pi/q^2$ gives $D^{0l}_{\mu\nu}=-\frac{c}{\omega^2}q_\mu q_\nu\,v(q)$, which is E Eq. (374). Its longitudinal projection, $-4\pi c/\omega^2$, does not depend on $q$: there is no light cone in it. The second term is the retarded photon, with its pole on the light cone $\omega=cq$. Their sum is the free Maxwell propagator in the temporal gauge, as E Eq. (375) states.</p>
+  <div class="callout intuition"><p class="callout-title">Physical picture: a photon that cannot travel</p><p>The longitudinal mode has kinetic energy but no $q^2A^2$ restoring term, so it neither oscillates nor propagates. It is slaved to the charges at every instant, which is why its energy is the instantaneous Coulomb energy. In the temporal gauge a static charge produces an $\bA_l$ that grows linearly in time (constant $\bE=-\frac1c\partial_t\bA$), and that is the meaning of the $1/\omega^2$ double pole of E Eq. (374). Transverse photons do propagate, at $c$. "Instantaneous Coulomb" and "retarded radiation" are two polarizations of the same field.</p></div>
+  <div class="callout caveat"><p class="callout-title">Subtlety: is the longitudinal propagator zero or not?</p><p>EPP finds $D^{0l}=0$ in its §4.7 (E Eq. 263) and uses the nonzero E Eq. (374) from §6 on. Both are right, for different objects, and drawing both would count Coulomb twice; <a href="#b-propagator">§B.6</a> sorts this out, including why "identical to the free Maxwell propagator" holds only in the temporal gauge.</p></div>
+
+  <h3>Two Dyson equations, one structure</h3>
+  <p>To write every line as a $3\times3$ propagator, every density bubble must first be rewritten as a current–current correlator. Charge conservation does this. EPP derives a set of connection formulas (E Eqs. 341–350), the central one being</p>
+  <div class="eq">$$\Pi^{i}_{\rho\rho}(\br,\br',\omega)=-\frac{c}{\omega^2}\sum_{\mu\nu}\partial_\mu\partial'_\nu\,\Pi^{i}_{jj\mu\nu}(\br,\br',\omega),\qquad i={\rm e,\,ion}.\tag{E.350}$$</div>
+  <p>In a homogeneous medium this reads $\Pi_{\rho\rho}=-\frac{c}{\omega^2}\,\bq\cdot\Pi_{jj}\cdot\bq$: Giustino's density response is the longitudinal projection of EPP's current response. With the rule $\rho\to j$, $v\to D^{0l}$ (E Eq. 377), the mixed scalar–vector perturbation series collapses into a single $3\times3$ Dyson equation:</p>
+  <div class="eq">$$D=D^0+D^0\,\Pi_{jj}\,D,\qquad D^0=D^{0l}+D^{0t},\qquad \Pi_{jj}=\Pi^{\rm e}_{jj}+\Pi^{\rm ion}_{jj}.\tag{E.379}$$</div>
+  <p>Both bubbles in E Eq. (379) are bare (irreducible). From Sec. 7 on, the manuscript marks bare bubbles with a superscript 0, $\Pi^{\rm e,0}_{jj}$ and $\Pi^{\rm ion,0}_{jj}$, and keeps $\Pi^{\rm e}_{jj}$, $\Pi^{\rm ion}_{jj}$ for the dressed ones. We use that notation from here on. The match with Giustino becomes line by line if the electrons are resummed first. The electron-dressed photon is $D^{\rm e}=D^0+D^0\Pi^{\rm e,0}_{jj}D^{\rm e}$ (E Eq. 388). The bare ionic bubbles strung together by $D^{\rm e}$ form the dressed ionic correlator $\Pi^{\rm ion}_{jj}=\Pi^{\rm ion,0}_{jj}+\Pi^{\rm ion,0}_{jj}D^{\rm e}\Pi^{\rm ion,0}_{jj}+\dots$ (E Eq. 387). It equals $-JFJ^*$, with $J$ the Born-charge current vertex and $F$ the dressed phonon propagator (E Eqs. 392–398). E Eq. (379) is then equivalent to the right-hand column (this rearrangement follows from E Eqs. 379, 387 and 388; the text does not write it in this form):</p>
+  <div class="eq">$$\begin{aligned} W_{\rm e}&=v+v\,P_{\rm e}\,W_{\rm e} & &\quad\longleftrightarrow\quad & D^{\rm e}&=D^0+D^0\,\Pi^{\rm e,0}_{jj}\,D^{\rm e},\\ W&=W_{\rm e}+W_{\rm e}\,\mathcal D\,W_{\rm e} & &\quad\longleftrightarrow\quad & D&=D^{\rm e}+D^{\rm e}\,\Pi^{\rm ion}_{jj}\,D^{\rm e}. \end{aligned}$$</div>
+  <p>The dictionary reads off directly: $v\leftrightarrow D^0$, $P_{\rm e}\leftrightarrow\Pi^{\rm e,0}_{jj}$, $W_{\rm e}\leftrightarrow D^{\rm e}$, $\mathcal D\leftrightarrow\Pi^{\rm ion}_{jj}$ (point nuclei with charges $Z_\kappa$ become Born-charge dipoles) and $W\leftrightarrow D$. Each density correlator on the left is the longitudinal projection of the current correlator on the right, through E Eq. (350). In the electrostatic limit the correspondence is an identity rather than an analogy: the surviving sector of $D^{\rm e}$ is $-\frac{c}{\omega^2}q_\mu q_\nu W^{\rm e}$ (E Eq. 441), with $W^{\rm e}\equiv D^{\rm e}_{11}$ the RPA screened Coulomb interaction (E Eq. 437). The index 1 in $D_{11}$ is not the Cartesian $x$: it labels the scalar (Coulomb) slot of the $4\times4$ field propagator of EPP §6, whose other three slots are the components of $\bA$ (<a href="#b-propagator">§B.6</a>). Two differences remain even there. EPP's $\Pi^{\rm e,0}$ is RPA without exchange–correlation and without crystal local fields (E Eqs. 380–383 keep only $\bG=\bG'=0$), so its $W^{\rm e}$ uses the head of the RPA dielectric matrix rather than Giustino's exact $\epsilon_{\rm e}^{-1}$. And EPP's ions are point Born-charge dipoles, so only the long-range (dipolar) part of Giustino's vertex $\epsilon_{\rm e}^{-1}\nabla V_\kappa$ survives. The short-range coupling is absent from the EPP Lagrangian, and the short-range force constants enter only through the bare phonon frequencies. The full concept table is in <a href="#x-dictionary">§X.2</a>.</p>
+
+  <figure class="viz" id="viz-x-light-cone-dyson">
+    <p class="viz-title">Two Dyson chains, one structure <span class="tag">interactive</span></p>
+    <div class="ctrls-d"></div>
+    <p class="src x-lc-dnote" style="white-space:normal;margin:2px 0 4px"></p>
+    <h4>1 · The bare line</h4>
+    <div class="viz-grid two">
+      <div><div class="src" style="white-space:normal">Giustino · instantaneous Coulomb (G Eq. 74)</div><div class="fd x-lc-g1" style="margin:4px 0;padding:4px"></div></div>
+      <div><div class="src" style="white-space:normal">EPP · free field, E Eq. (375)</div><div class="fd x-lc-e1" style="margin:4px 0;padding:4px"></div></div>
+    </div>
+    <h4>2 · Electronic screening</h4>
+    <div class="viz-grid two">
+      <div><div class="src" style="white-space:normal">Giustino · G Eq. (94)</div><div class="fd x-lc-g2" style="margin:4px 0;padding:4px"></div></div>
+      <div><div class="src" style="white-space:normal">EPP · E Eq. (388)</div><div class="fd x-lc-e2" style="margin:4px 0;padding:4px"></div></div>
+    </div>
+    <h4>3 · Adding the lattice</h4>
+    <div class="viz-grid two">
+      <div><div class="src" style="white-space:normal">Giustino · G Eqs. (104)–(105), (110)</div><div class="fd x-lc-g3" style="margin:4px 0;padding:4px"></div></div>
+      <div><div class="src" style="white-space:normal">EPP · E Eqs. (379), (387)–(393)</div><div class="fd x-lc-e3" style="margin:4px 0;padding:4px"></div></div>
+    </div>
+    <div class="ro-d"></div>
+    <figcaption><strong>Glyphs.</strong> Rose dashed: Coulomb, i.e. the longitudinal photon; rose double dashed: its screened version. Rose wavy: transverse photon (heavy when dressed). A wavy line riding on a dashed line is the full field with both polarizations ($D^0$, $D^{\rm e}$, $D$). Blue disks: bare electronic bubbles ($P_{\rm e}$, $\Pi^{\rm e,0}_{jj}$). Amber zigzag: the nuclear correlator $\mathcal D$ or the dressed phonon $F$. Plain dots: Giustino's point-dipole vertex $Z_\kappa\nabla\delta(\br-\boldsymbol\tau^0_{\kappa p})$ (G Eq. 108); a $W_{\rm e}$ line ending on it is the screened vertex $\epsilon_{\rm e}^{-1}\nabla V_\kappa$ of G Eq. (110). Teal dots: EPP's Born-charge current vertex $J\propto\omega j$ (E Eq. 392). The EPP chain in row 3 is the rearrangement of E Eq. (379) described in the text; the minus sign of $\Pi^{\rm ion}_{jj}=-JFJ^*$ is not drawn. <strong>What to notice.</strong> Switch to $c\to\infty$: every wavy line disappears, because $D^{0t}\propto1/c$, and the EPP column becomes Giustino's column glyph for glyph, with $D^{\rm e}\to-\frac{c}{\omega^2}\bq\bq\,W^{\rm e}$ (E Eq. 441). Coulomb was the longitudinal photon all along.</figcaption>
+  </figure>
+
+  <div class="callout connect"><p class="callout-title">Bridge for the GW/BSE reader</p><p>The $W$ in your GW or BSE code is $W_{\rm e}$ of G Eq. (94). In EPP's language it is $D^{\rm e}_{11}$ (E Eq. 437), the scalar entry of the electron-dressed photon propagator at $c\to\infty$. The frequency dependence you keep in a full-frequency or plasmon-pole $W$ is retardation of the first kind. EPP adds the second kind, through the transverse part of $D^{\rm e}$, and the dressed ionic correlator: $D=D^{\rm e}+D^{\rm e}\Pi^{\rm ion}_{jj}D^{\rm e}$, whose longitudinal part is Giustino's $W_{\rm ph}$ with Born-charge vertices.</p></div>
+
+  <h3>How big is the light cone?</h3>
+  <p>Contract $D^0$ with a longitudinal current and you get $-4\pi c/\omega^2$ for every $q$. Contract it with a transverse current and you get $-4\pi c/(\omega^2-c^2q^2)$. The ratio of the two,</p>
+  <div class="eq">$$\left|\frac{D^0_T}{D^0_L}\right|=\frac{1}{|1-x^2|},\qquad x=\frac{cq}{\omega},$$</div>
+  <p>is all the retardation the free field contains. Deep inside the light cone ($x\ll1$) the two polarizations are equal, at its edge ($x=1$) the transverse one is resonant, and far outside it the transverse part is suppressed by $(\omega/cq)^2$. The same ratio sets how strongly a TO phonon, whose ionic current is transverse, couples through the field; <a href="#b-frohlich">§B.8</a> develops this. In a medium whose electrons respond with a constant $\epsilon_\infty$ (an insulator below its gap), the isotropic solution of E Eq. (380) is $D_L=-4\pi c/(\omega^2\epsilon_\infty)$ and $D_T=-4\pi c/(\omega^2\epsilon_\infty-c^2q^2)$. The edge of the cone moves to $q_c=\sqrt{\epsilon_\infty}\,\omega/c$, and the ratio becomes $\epsilon_\infty/|\epsilon_\infty-x^2|$ (derivation below).</p>
+  <details class="derivation"><summary>Derivation: projector form and the dressed propagators</summary><div class="d-body">
+    <p>From E Eq. (372), $q^2\delta_{\mu\nu}-q_\mu q_\nu=q^2P^T_{\mu\nu}$, so $D^{0t}=-4\pi c\,P^T/(\omega^2-c^2q^2)=\frac{4\pi}{c}P^T/(q^2-\omega^2/c^2)$. From E Eq. (374), $D^{0l}=-\frac{4\pi c}{\omega^2}P^L$. Over a common denominator the sum is $\frac{4\pi c}{\omega^2}\big[-q^2P^L+\frac{\omega^2}{c^2}(P^L+P^T)\big]/(q^2-\omega^2/c^2)$, which is E Eq. (375).</p>
+    <p>For an isotropic self-energy $\Pi=\Pi_LP^L+\Pi_TP^T$, the Dyson equation $D=D^0+D^0\Pi D$ decouples because $P^LP^T=0$:</p>
+    <div class="eq">$$D_L=\frac{D^0_L}{1-D^0_L\Pi_L}=-\frac{4\pi c}{\omega^2\,\epsilon_L},\qquad D_T=\frac{D^0_T}{1-D^0_T\Pi_T}=-\frac{4\pi c}{\omega^2\epsilon_T-c^2q^2},\qquad \epsilon_{L,T}=1+\frac{4\pi c\,\Pi_{L,T}}{\omega^2}.$$</div>
+    <p>An insulator below its gap has $\Pi^{\rm e}\propto\omega^2$ (E Eq. 383), so $\epsilon_L=\epsilon_T=\epsilon_\infty$. Then $|D_T/D_L|=\epsilon_\infty/|\epsilon_\infty-c^2q^2/\omega^2|$. Poles of $D_L$ ($\epsilon_L=0$) are plasmons and LO phonons; poles of $D_T$ ($c^2q^2=\omega^2\epsilon_T$) are polaritons (<a href="#b-propagator">§B.6</a>).</p>
+  </div></details>
+  <p>The numbers are what make Giustino's framework work. With $\hbar c=1973.27$ eV Å, a 50 meV phonon in vacuum has $q_c=2.5\times10^{-5}$ Å$^{-1}$, the GaAs TO phonon (33.3 meV, $\epsilon_\infty=10.9$) $5.6\times10^{-5}$ Å$^{-1}$, the in-plane TO phonon of hBN (169.9 meV, $\epsilon_\infty=4.87$) $1.9\times10^{-4}$ Å$^{-1}$, and a 2 eV exciton in vacuum $1.0\times10^{-3}$ Å$^{-1}$. The Brillouin zone extends about 1 Å$^{-1}$ from $\Gamma$. The figure lets you move the frequency and, as a thought experiment, the speed of light.</p>
+
+  <figure class="viz" id="viz-x-light-cone-cone">
+    <p class="viz-title">How big is the light cone? <span class="tag">interactive</span></p>
+    <div class="x-lc-main"></div>
+    <div class="x-lc-ladder"></div>
+    <div class="ctrls"></div>
+    <div class="ro"></div>
+    <figcaption><strong>Model.</strong> Free propagators E Eqs. (372) and (374), dressed by a frequency-independent electronic background $\epsilon_\infty$ (the isotropic solution of E Eq. 380 with $4\pi c\,\Pi^{\rm e}/\omega^2=\epsilon_\infty-1$), plotted as $|\omega^2D/4\pi c|$. Longitudinal: $1/\epsilon_\infty$. Transverse: $1/|\epsilon_\infty-x^2+i\eta|$ with $x=\lambda_c cq/\omega$ and a small damping $\eta=0.01$. The slider $\lambda_c$ rescales the speed of light, $c\to\lambda_c c$; $\lambda_c\to\infty$ is Giustino's electrostatic world. Presets (literature values, illustrative): GaAs TO 33.3 meV with $\epsilon_\infty=10.9$; hBN (bulk, in-plane) TO 169.9 meV with $\epsilon_\infty=4.87$; a 50 meV phonon and a 2 eV exciton in vacuum. The strip below shares the $q$ axis and places characteristic wave vectors on it (typical ranges, illustrative): $q_p=(2m^*\omega_{\rm LO})^{1/2}/\hbar$ is the polaron wave vector (GaAs 0.025 Å$^{-1}$), $\omega_{\rm ph}/v_F$ uses $v_F=10^6$ m/s and $\hbar\omega=50$–200 meV, $r_0$ is the 2D Keldysh screening length (10–50 Å), the zone-edge band runs from $\pi/a$ with $a=6$ Å to the GaAs Debye radius $q_D=1.09$ Å$^{-1}$, and $k_{\rm TF}$ is the Thomas–Fermi wave vector of a metal with $r_s=2$–4. <strong>What to notice.</strong> The longitudinal (Coulomb) line is flat: it knows nothing about $c$. The transverse line peaks at $q_c$ and falls as $(q_c/q)^2$, so for phonon frequencies it is $10^{-6}$–$10^{-4}$ of Coulomb at the polaron scale and below $10^{-7}$ at the zone edge (compare the presets). Push $\lambda_c$ up and the cone shrinks to the point $q=0$; pull it down to $10^{-2}$ and the cone of a 2 eV exciton reaches 0.1–0.2 Å$^{-1}$, past the polaron and Keldysh scales.</figcaption>
+  </figure>
+
+  <p>Two conclusions follow. First, wherever an electron–phonon calculation samples the zone, from the polaron scale to the zone edge, the transverse field at phonon frequencies is suppressed by four orders of magnitude or more. DFPT, GW and BSE are electrostatic for good reason. The Fröhlich catastrophe of adiabatic Allen–Heine theory is not cured by a finite speed of light either: the LO Fröhlich vertex is longitudinal and does not depend on $c$ at any $q$. It is cured by keeping the phonon frequency in the energy denominators (<a href="#a-temperature">§A.8</a>). Second, the region where the transverse field matters is exactly where optics happens. Absorbed light carries $q\approx q_c$, and the non-analytic LO–TO splitting lives at $q\to0$. A theory of infrared response and polaritons cannot drop $D^{0t}$, even though transport never notices it. The same holds for a 2D sheet, where the cone is equally thin and modes inside it radiate (<a href="#b-2d">§B.10</a>).</p>
+
+  <h3>The order of limits</h3>
+  <p>At fixed $\omega$ and apart from the overall factor $4\pi c/\omega^2$, E Eq. (375) depends on $q$ and $c$ only through the direction $\hat q$ and the ratio $x=cq/\omega$ (multiply numerator and denominator by $c^2/\omega^2$):</p>
+  <div class="eq">$$D^0_{\mu\nu}=-\frac{4\pi c}{\omega^2}\;\frac{x^2\,\hat q_\mu\hat q_\nu-\delta_{\mu\nu}}{x^2-1}.$$</div>
+  <p>The point $q=0$, $1/c=0$ is therefore a non-analytic point, and the two orders of the limit give different tensors:</p>
+  <div class="eq">$$D^0_{\alpha\beta}(\bq=0,\omega)=-\frac{4\pi c}{\omega^2}\,\delta_{\alpha\beta},\tag{E.408}$$</div>
+  <div class="eq">$$\lim_{c\to\infty}D^0_{\mu\nu}(\bq,\omega)=-\frac{4\pi c}{\omega^2}\,\frac{q_\mu q_\nu}{q^2}.\tag{E.442}$$</div>
+  <p>Taking $q\to0$ at finite $c$ ($x\to0$) gives an isotropic tensor: deep inside the light cone longitudinal and transverse currents feel the same field. Taking $c\to\infty$ at finite $q$ ($x\to\infty$) leaves only the longitudinal projector: Coulomb alone, which is Giustino's world. Power counting of the dressed propagator gives the same verdict: only the $ll$ sector survives (E Eq. 434), as <a href="#b-electrostatic">§B.9</a> shows term by term.</p>
+  <p>This is not a formality. Applied to the phonon self-energy, $\bq\to0$ at finite $c$ makes transverse and longitudinal polar modes feel the same isotropic field, so all of them get the same shift: the $q=0$ end of the upper phonon polariton, with no LO–TO splitting. Taking $c\to\infty$ first shifts only the longitudinal mode: E Eq. (454), the Gonze–Lee LO–TO splitting. The longitudinal frequency is the same in both orders; the order of limits moves only the TO modes. EPP's E Eq. (410), corrected as E Eq. (410′) to name its limit (<a href="#z-corrections">§Z.3</a>), differs from E Eq. (454) in a second, independent way: it leaves the electrons out, so its shift is unscreened ($\epsilon_\infty=1$). For GaAs, screening takes the $q\to0$ mode from 55.6 meV (E Eq. 410′) to 35.9 meV (E Eq. 410e, the same limit with electrons), and the order of limits then decides only whether the TO modes share that 35.9 meV or stay at 33.3 meV, as in E Eq. (454). The gap between 56 and the measured 36 meV is therefore electronic screening, not the order of limits. <a href="#b-phonon-se">§B.7</a> works out both orders with GaAs numbers; the crossover sits at $q_c\approx6\times10^{-5}$ Å$^{-1}$ for GaAs, the edge of the shaded cone in the GaAs preset above.</p>
+</section>
+<script>
+(() => {
+  // ---------- Figure 1: how big is the light cone? ----------
+  const fig = document.getElementById('viz-x-light-cone-cone');
+  if (!fig) return;
+  const HC = 1973.27;          // hbar*c in eV*Angstrom
+  const QD = 1.09;             // GaAs Debye radius, 1/Angstrom (zone size, illustrative)
+  const QZ = Math.PI / 6;      // pi/a for a = 6 Angstrom: low end of the zone-edge band (illustrative)
+  const QP = 0.025;            // GaAs polaron wave vector, 1/Angstrom
+  const ETA = 0.01;            // small damping in the transverse denominator
+  const XMIN = 1e-7, XMAX = 3;
+  const dec = (e) => (e === 0 ? '1' : e === -1 ? '0.1' : `10^{${e}}`);
+  const xticksFor = (w) => { const out = [], step = w < 520 ? 2 : 1; for (let e = -7; e <= 0; e += step) out.push({ v: Math.pow(10, e), label: dec(e) }); return out; };
+  // EPP.fmt writes exponents as "×10^−5"; readouts, slider outputs and tooltips are plain text, so use Unicode superscripts
+  const SUP = { '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹', '−': '⁻', '-': '⁻' };
+  const sci = (v, d) => EPP.fmt(v, d).replace(/\^([−-]?\d+)/, (_, e) => [...e].map(ch => SUP[ch] || ch).join(''));
+  const fmtQ = (v) => sci(v, 2) + ' Å⁻¹';
+
+  const main = new EPP.Plot(fig.querySelector('.x-lc-main'), {
+    xlabel: 'q (Å^{-1})', ylabel: '|ω^2 D / 4πc|', xlim: [XMIN, XMAX], ylim: [1e-12, 1e3], logx: true, logy: true,
+    aspect: 0.5, minHeight: 250, maxHeight: 400, margin: { l: 58, r: 14, t: 12, b: 44 },
+    yticks: [-12, -9, -6, -3, 0, 3].map(e => ({ v: Math.pow(10, e), label: e === 0 ? '1' : `10^{${e}}` })),
+    xname: 'q', hoverX: (v) => sci(v, 3) + ' Å⁻¹', hoverY: (v) => sci(v, 3),
+    ariaLabel: 'Longitudinal and transverse photon propagators versus wave vector on log axes'
+  });
+  const lad = new EPP.Plot(fig.querySelector('.x-lc-ladder'), {
+    xlabel: 'q (Å^{-1})', xlim: [XMIN, XMAX], ylim: [0.35, 6.65], logx: true, height: 196, yticks: [],
+    margin: { l: 58, r: 14, t: 6, b: 44 }, hover: false, legend: false,
+    ariaLabel: 'Ladder of characteristic wave vectors on the same axis'
+  });
+  const ro = EPP.readout(fig.querySelector('.ro'));
+
+  // fixed reference scales (typical ranges, illustrative)
+  const ROWS = [
+    { y: 6, a: 0.01 / HC, b: 3 / HC, color: 'photon', long: 'light cone ω/c for ħω = 10 meV – 3 eV', short: 'ω/c', side: 'right' },
+    { y: 5, a: 0.05 / 6.582, b: 0.2 / 6.582, color: 'electron', long: 'ω_{ph}/v_F (edge of the e–h continuum)', short: 'ω/v_F', side: 'left' },
+    { y: 4, a: 0.02, b: 0.07, color: 'phonon', long: 'polaron wave vector q_p', short: 'q_p', side: 'left' },
+    { y: 3, a: 0.02, b: 0.1, color: 'c5', long: '1/r_0 (2D Keldysh length)', short: '1/r_0', side: 'left' },
+    { y: 2, a: QZ, b: QD, color: 'muted', long: 'zone edge (π/a for a = 6 Å … q_D of GaAs)', short: 'zone edge', side: 'left' },
+    { y: 1, a: 1.48, b: 2.09, color: 'c4', long: 'k_{TF} (metals, r_s = 2–4)', short: 'k_{TF}', side: 'left' }
+  ];
+
+  const presets = { gaas: { hw: 0.0333, eps: 10.9 }, p50: { hw: 0.05, eps: 1 }, hbn: { hw: 0.1699, eps: 4.87 }, exc: { hw: 2.0, eps: 1 } };
+  let lastPreset = 'gaas', st = null, ui = null;
+
+  function grid(qc) {
+    const qs = [], N = 480, l0 = Math.log10(XMIN), l1 = Math.log10(XMAX);
+    for (let i = 0; i < N; i++) qs.push(Math.pow(10, l0 + (l1 - l0) * i / (N - 1)));
+    if (qc > XMIN && qc < XMAX) {
+      qs.push(qc);
+      for (let k = 0; k <= 40; k++) { const s = Math.pow(10, -5 + 4 * k / 40); [qc * (1 + s), qc * (1 - s)].forEach(q => { if (q > XMIN && q < XMAX) qs.push(q); }); }
+    }
+    return qs.sort((a, b) => a - b);
+  }
+  const ratio = (q, hw, lam, eps) => { const x = lam * HC * q / hw; return eps / Math.hypot(eps - x * x, ETA); };
+
+  function draw() {
+    if (!st) return;
+    const hw = st.hw, lam = st.lam, eps = st.eps;
+    const qc = Math.sqrt(eps) * hw / (lam * HC);
+    const qs = grid(qc);
+    const DT = qs.map(q => { const x = lam * HC * q / hw; return 1 / Math.hypot(eps - x * x, ETA); });
+    const DL = qs.map(() => 1 / eps);
+    const wide = main.cv.w >= 560;
+    main.opt.xticks = xticksFor(main.cv.w);
+    lad.opt.xticks = main.opt.xticks;
+    const L = [];
+    if (qc > XMIN) L.push({ type: 'band', x0: XMIN, x1: Math.min(qc, XMAX), color: 'photon', alpha: 0.08 });
+    L.push({ type: 'band', x0: QZ, x1: QD, color: 'muted', alpha: 0.12, text: wide ? 'zone edge' : '' });
+    if (Math.abs(Math.log10(lam)) > 0.004) {
+      const DTr = qs.map(q => { const x = HC * q / hw; return 1 / Math.hypot(eps - x * x, ETA); });
+      L.push({ type: 'line', x: qs, y: DTr, color: 'muted', width: 1.5, dash: [2, 3], label: 'transverse at the real c' });
+    }
+    L.push({ type: 'line', x: qs, y: DL, color: 'photon', dash: [6, 4], label: 'longitudinal = Coulomb' });
+    L.push({ type: 'line', x: qs, y: DT, color: 'photon', label: 'transverse photon' });
+    if (qc > XMIN && qc < XMAX) {
+      L.push({ type: 'vline', at: qc, color: 'photon', width: 1.2, text: 'q_c', textDy: 22 });
+      if (qc / XMIN > 60) L.push({ type: 'text', x: Math.sqrt(XMIN * qc), y: 2.5e2, text: 'light cone', color: 'photon', align: 'center', size: 11.5 });
+    } else if (qc <= XMIN) {
+      L.push({ type: 'text', x: 1.5e-7, y: 2.5e2, text: `q_c = ${sci(qc, 2)} Å^{-1}: cone off scale`, color: 'photon', size: 11.5 });
+    } else {
+      L.push({ type: 'text', x: 0.4, y: 2.5e2, text: 'q_c > 3 Å^{-1}: zone inside the cone', color: 'photon', align: 'right', size: 11.5 });
+    }
+    // direct labels
+    // Coulomb label above the dashed line, on the side away from the transverse resonance;
+    // the long label spans about 2.6 decades, so it goes left only when it ends inside the flat part of the cone
+    const right = qc < 1e-4;
+    L.push({ type: 'text', x: right ? 0.4 : 1.6e-7, y: Math.min(3e1, 8 / eps), text: wide ? 'longitudinal (Coulomb): flat, independent of c' : 'Coulomb: flat', color: 'photon', size: 11.5, align: right ? 'right' : 'left' });
+    // slope label above the falling transverse line (the line drops to the right, so the text stays clear of it)
+    const qa = qc * 40;
+    if (qa > XMIN && qa < (wide ? 0.02 : 0.005)) {
+      const ya = Math.min(1e-3 / eps, Math.max(3e-11, ratio(qa, hw, lam, eps) / eps * 40));
+      L.push({ type: 'text', x: qa, y: ya, text: 'transverse ∝ (q_c/q)^2', color: 'photon', size: 11.5 });
+    }
+    main.draw(L);
+
+    const LL = [];
+    if (qc > XMIN) LL.push({ type: 'band', x0: XMIN, x1: Math.min(qc, XMAX), color: 'photon', alpha: 0.07 });
+    ROWS.forEach(r => {
+      LL.push({ type: 'fill', x: [r.a, r.b], y1: [r.y + 0.27, r.y + 0.27], y2: [r.y - 0.27, r.y - 0.27], color: r.color, alpha: 0.5 });
+      LL.push({ type: 'text', x: r.side === 'right' ? r.b : r.a, y: r.y, dx: r.side === 'right' ? 6 : -6, text: wide ? r.long : r.short, color: r.color, size: 10.5, align: r.side === 'right' ? 'left' : 'right' });
+    });
+    if (qc > XMIN && qc < XMAX) LL.push({ type: 'vline', at: qc, color: 'photon', width: 1.4, dash: [3, 3] });
+    lad.draw(LL);
+
+    const rq = (q) => sci(ratio(q, hw, lam, eps), 2);
+    ro.set({
+      'q_c = √ε_∞ ω/c': fmtQ(qc),
+      '2π/q_c': sci(2 * Math.PI / qc / 1e4, 3) + ' µm',
+      'q_c/q_D': sci(qc / QD, 2),
+      'zone volume inside the cone': sci(Math.pow(Math.min(qc / QD, 1), 3), 2),
+      '|D_T/D_L| at q_p = 0.025 Å^{-1}': rq(QP),
+      '|D_T/D_L| at 1 Å^{-1}': rq(1)
+    });
+  }
+
+  ui = EPP.controls(fig.querySelector('.ctrls'), [
+    { key: 'preset', type: 'seg', label: 'preset', options: [['gaas', 'GaAs TO'], ['p50', '50 meV phonon'], ['hbn', 'hBN TO'], ['exc', '2 eV exciton'], ['custom', 'custom']], value: 'gaas', wide: true },
+    { key: 'hw', type: 'range', label: 'frequency ħω', min: 1e-3, max: 5, value: 0.0333, log: true, fmt: v => (v < 1 ? (v * 1000).toPrecision(3) + ' meV' : v.toPrecision(3) + ' eV') },
+    { key: 'lam', type: 'range', label: 'speed of light factor λ_c (c → λ_c c)', min: 1e-2, max: 1e6, value: 1, log: true, fmt: v => sci(v, 2) },
+    { key: 'eps', type: 'range', label: 'electronic background ε_∞', min: 1, max: 15, step: 0.01, value: 10.9, fmt: v => v.toFixed(2) }
+  ], (s) => {
+    st = s;
+    if (s.preset !== lastPreset) {
+      lastPreset = s.preset;
+      const P = presets[s.preset];
+      if (P) { ui.set('hw', P.hw, true); ui.set('eps', P.eps, true); }
+    } else if (s.preset !== 'custom') {
+      const P = presets[s.preset];
+      if (P && (Math.abs(Math.log(s.hw / P.hw)) > 1e-3 || Math.abs(s.eps - P.eps) > 1e-6)) { ui.set('preset', 'custom', true); lastPreset = 'custom'; }
+    }
+    draw();
+  });
+  main.cv.onResize(() => draw());
+})();
+(() => {
+  // ---------- Figure 2: Giustino's W chain vs EPP's D chain ----------
+  const fig = document.getElementById('viz-x-light-cone-dyson');
+  if (!fig) return;
+  const Y = 34, H = 60;
+  const op = (x, s) => ({ t: 'text', at: [x, Y + 6], text: s, size: 18, color: 'muted', upright: true });
+  const G = (kind, a, b, label) => [{ t: kind === 'v' ? 'coulomb' : 'screened', a: [a, Y], b: [b, Y], label }];
+  // EPP glyphs. inf = electrostatic limit c -> infinity (transverse parts vanish)
+  const E = (kind, a, b, lab, inf) => {
+    const A = [a, Y], B = [b, Y];
+    if (kind === 'free') return inf ? [{ t: 'coulomb', a: A, b: B, label: lab[1] }] : [{ t: 'coulomb', a: A, b: B }, { t: 'photon', a: A, b: B, label: lab[0], amp: 4.2 }];
+    if (kind === 'dressed') return inf ? [{ t: 'screened', a: A, b: B, label: lab[1] }] : [{ t: 'screened', a: A, b: B }, { t: 'photon2', a: A, b: B, label: lab[0], amp: 4.6, width: 2.4, ldist: 15 }];
+    if (kind === 'long') return [{ t: 'coulomb', a: A, b: B, label: lab }];
+    // c -> infinity: D^{0t} vanishes, so no wavy line is drawn, only a muted 0
+    const mid = (a + b) / 2;
+    return inf ? [{ t: 'text', at: [mid, Y + 6], text: '0', size: 18, color: 'muted', upright: true }, { t: 'text', at: [mid, Y - 14], text: 'D^{0t} → 0', size: 12, color: 'muted' }]
+      : [{ t: 'photon', a: A, b: B, label: lab }];
+  };
+  const D0 = ['D^0', 'D^{0l}'], DE = ['D^e', 'D^{e,ll}'], DD = ['D', 'D^{ll}'];
+  const rows = {
+    g1: () => [...G('v', 10, 110, 'v'), { t: 'text', at: [122, Y + 5], text: 'v(r_1,r_2) δ(t_1−t_2)', size: 13, color: 'muted', anchor: 'start' }],
+    g2: () => [...G('W', 8, 58, 'W_e'), op(70, '='), ...G('v', 84, 134, 'v'), op(146, '+'), ...G('v', 160, 196, 'v'),
+      { t: 'blob', at: [210, Y], r: 14, label: 'P_e', color: 'electron' }, ...G('W', 224, 274, 'W_e')],
+    g3: () => [...G('W', 8, 58, 'W'), op(70, '='), ...G('W', 84, 134, 'W_e'), op(146, '+'), ...G('W', 160, 192, 'W_e'),
+      { t: 'phonon2', a: [192, Y], b: [240, Y], label: '𝒟' }, ...G('W', 240, 274, 'W_e'),
+      { t: 'vertex', at: [192, Y], r: 3.5 }, { t: 'vertex', at: [240, Y], r: 3.5 }],
+    e1: (inf) => [...E('free', 8, 58, D0, inf), op(70, '='), ...E('long', 84, 134, 'D^{0l}', inf), op(146, '+'), ...E('trans', 160, 216, 'D^{0t}', inf)],
+    e2: (inf) => [...E('dressed', 8, 58, DE, inf), op(70, '='), ...E('free', 84, 134, D0, inf), op(146, '+'), ...E('free', 160, 196, D0, inf),
+      { t: 'blob', at: [210, Y], r: 14, label: 'Π^{e,0}', color: 'electron' }, ...E('dressed', 224, 274, DE, inf)],
+    e3: (inf) => [...E('dressed', 8, 58, DD, inf), op(70, '='), ...E('dressed', 84, 134, DE, inf), op(146, '+'), ...E('dressed', 160, 192, DE, inf),
+      { t: 'phonon2', a: [192, Y], b: [240, Y], label: 'F' }, ...E('dressed', 240, 274, DE, inf),
+      { t: 'vertex', at: [192, Y], r: 3.8, color: 'c4' }, { t: 'vertex', at: [240, Y], r: 3.8, color: 'c4' },
+      { t: 'text', at: [192, Y + 21], text: 'J', size: 12, color: 'c4' }, { t: 'text', at: [240, Y + 21], text: 'J^*', size: 12, color: 'c4' }]
+  };
+  const W = { g1: 290, g2: 282, g3: 282, e1: 232, e2: 282, e3: 282 };
+  const ARIA = {
+    g1: 'Bare instantaneous Coulomb line v', g2: 'W_e equals v plus v P_e W_e', g3: 'W equals W_e plus W_e times nuclear correlator times W_e',
+    e1: 'D0 equals longitudinal D0l plus transverse D0t', e2: 'De equals D0 plus D0 times the bare electronic bubble Pi e0 times De',
+    e3: 'D equals De plus De times the dressed ionic correlator times De; the correlator is minus J F J-star'
+  };
+  const SC = 1.3; // draw larger than the viewBox; max-width:100% shrinks it on phones
+  const big = (svg, k) => { svg.setAttribute('width', Math.round(W[k] * SC)); svg.setAttribute('height', Math.round(H * SC)); return svg; };
+  ['g1', 'g2', 'g3'].forEach(k => big(EPP.fd.draw(fig.querySelector('.x-lc-' + k), { w: W[k], h: H, label: ARIA[k], items: rows[k]() }), k));
+  const views = [];
+  ['e1', 'e2', 'e3'].forEach(k => {
+    const host = fig.querySelector('.x-lc-' + k);
+    const fin = document.createElement('div'), inf = document.createElement('div');
+    fin.style.maxWidth = inf.style.maxWidth = '100%';
+    host.appendChild(fin); host.appendChild(inf);
+    big(EPP.fd.draw(fin, { w: W[k], h: H, label: ARIA[k] + ' (finite c)', items: rows[k](false) }), k);
+    big(EPP.fd.draw(inf, { w: W[k], h: H, label: ARIA[k] + ' (c to infinity)', items: rows[k](true) }), k);
+    inf.style.display = 'none';
+    views.push([fin, inf]);
+  });
+  const ro = EPP.readout(fig.querySelector('.ro-d'));
+  const note = fig.querySelector('.x-lc-dnote');
+  EPP.controls(fig.querySelector('.ctrls-d'), [
+    { key: 'c', type: 'seg', label: 'speed of light', options: [['fin', 'finite c (EPP)'], ['inf', 'c → ∞ (electrostatic)']], value: 'fin' }
+  ], (s) => {
+    const inf = s.c === 'inf';
+    views.forEach(([f, i]) => { f.style.display = inf ? 'none' : ''; i.style.display = inf ? '' : 'none'; });
+    ro.set({ 'transverse (wavy) lines in the EPP column': inf ? '0' : '10' });
+    note.textContent = inf ? 'EPP column at c → ∞: Giustino’s chain, with v → D⁰ˡ and ρ → j.' : 'EPP column at finite c: every line carries both polarizations.';
+  });
+})();
+</script>

@@ -1,0 +1,253 @@
+% SUPERSEDED (25 Oct 2026) by corrections/EPP_corrections.tex, the single deliverable that merges this
+% correction with issue-phase.tex and issue-e410.tex. Paste from the merged file, not from this one.
+% Differences in the merged file (Secs. 4 and 5 there):
+%  - one tag convention: every tagged display is one equation* with one \tag; nothing in the file steps
+%    the counter, the paste rule (merged Sec. 1) adds \stepcounter{equation} after each primed equation;
+%  - the p. 94 replacement (with (p94'), (422')) is a quote; the stray closing quote mark in (422') is gone;
+%  - p. 38: the continuity display, (179) and (180) carry e*rho_e (in place), so (234') follows from (180);
+%    the (234) sentence replacement is scoped ("where rho_e = Psi^+Psi is ... and");
+%  - after "without a separate N^{-1/2}" (p. 96 quote): Giustino's Eqs. (1), (37) carry N_p^{-1/2} with the
+%    unit-cell g of his Eq. (38); his Eq. (180) as printed is N_p^{-1/2} times that g;
+%  - (p95'), (p96'), (p98') carry the basis phase as well as the factor e (merged Sec. 5.1);
+%    tau_kappa = r^0_a, not 0, in the (p96') paragraph, after (448a) and in check (iv);
+%  - (448a) states both forms in one display: -(e/|e|) q^2/(q.eps.q) [g^0]^* = -q^2/(q.eps.q) [lim g^{dyn,0}]^*;
+%    the minus sign is traced to the +i of both (415) and (416) (merged Sec. 5.2);
+%  - the Heisenberg evolution on p. 93 is a tagged display (p93c'); (237') and (312') are displayed,
+%    (237') with the basis phase (merged Sec. 5.4); the remark before (417) refers to (131');
+%  - the Coulomb-route coefficient in the Justification carries e^{iq(r - r_a)};
+%  - GaAs check: 304.05 meV is the leading order in q (q->0 LO eigenvectors and basis phases set to 1) on
+%    both sides; with finite-q eigenvectors and the phase, hbar w_LO held at 36.2 meV, the common value is
+%    303.0 meV along [111] and 304.0 meV along [100] (computed in test/corr-merge/check_merge.py).
+\noindent\textit{Superseded by \texttt{corrections/EPP\_corrections.tex} (25 October 2026), which merges the three corrections into one document for the authors. This fragment is kept as the reviewed record; the differences are listed in the comments at its top.}\par
+
+% Correction to "Theory of the Electron-Phonon-Photon coupling" (draft v2), Sec. 7.2 (with Secs. 4.4, 6 and 8.1).
+% Paste-ready fragment: no preamble, needs only amsmath/amssymb. Gaussian units,
+% Born charges Z^* with the dimension of charge, e the signed electron charge (Sec. 4 on),
+% notation and numbering of the manuscript. Corrected equations carry a prime, new equations a letter,
+% corrected unnumbered displays are tagged by page, e.g. (p95').
+
+\subsection*{The missing factor $e$ in the electrostatic Fr\"ohlich vertices (pp.~95 and 98)}
+
+\paragraph{Problem (pp.~93--99, Sec.~7.2; also p.~101).}
+The connection between charge and current vertices, Eq.~(428), equates the charge vertex
+$\rho_{n\mathbf k,m\mathbf k+\mathbf q}$ with
+$-\sum_\mu\hbar q_\mu j^\mu_{n\mathbf k,m\mathbf k+\mathbf q}/(E_{n\mathbf k}-E_{m\mathbf k+\mathbf q})$.
+The former is a matrix element of the electron \emph{number} density $\rho_{\rm e}=\Psi^+\Psi$
+[Eqs.~(106), (239), (420), (426)]: $\rho_{\rm e}$ has the dimension of an inverse volume and the matrix
+element $\rho_{n\mathbf k,m\mathbf k+\mathbf q}$ is dimensionless. The latter contains the charge $e$
+through the current vertex (384). The factor is lost in the continuity equation on
+p.~94, $\dot\rho_{\rm e}=-\nabla\mathbf j_{\rm e}$, which sets the rate of a number density equal to
+the divergence of a charge current. For free electrons, $\phi_{\mathbf k}=e^{i\mathbf k\cdot\mathbf r}/\sqrt\Omega$
+gives $\rho_{\mathbf k,\mathbf k+\mathbf q}=1$, $\mathbf j_{\mathbf k,\mathbf k+\mathbf q}=\frac{e\hbar}{2m_{\rm e}}(2\mathbf k+\mathbf q)$
+and $E_{\mathbf k}-E_{\mathbf k+\mathbf q}=-\frac{\hbar^2}{2m_{\rm e}}(2\mathbf k\cdot\mathbf q+q^2)$, so
+$-\hbar\mathbf q\cdot\mathbf j/(E_{\mathbf k}-E_{\mathbf k+\mathbf q})=e$, not $1$. Both electrostatic
+vertices obtained from (428), the bare one on p.~95 and the screened (boxed) one on p.~98, therefore
+lack one factor $e$. As printed they have the dimension of $Z^*/(\Omega_{\rm uc}q)$ times a length,
+i.e.\ of an electrostatic potential, not of an energy. This is the $e^2$ ``missing'' in the margin
+note on p.~96: one $e$ is inside $Z^*$, the other is the $e$ of (428). The propagator $D$ is not
+involved. The same slip affects the transcription of Verdi--Giustino's vertex on p.~96 (with our
+$Z^*$ it contains $e^3$) and the 2D electronic bubble on p.~101 (it needs $e^2$). The electrodynamic
+vertices (414)--(417), (429)--(430), (447)--(448) and Eqs.~(431)--(446) are correct: there the charge
+sits in $j^\mu$, $\Pi^{\rm e,0}_{jj}$ carries $e^2$, and so does $\Pi^{\rm e,0}_{\rho\rho}$ through (350).
+
+\paragraph{Choice of fix.}
+Keep $\rho_{\rm e}=\Psi^+\Psi$ and
+$\rho_{n\mathbf k,m\mathbf k+\mathbf q}(\mathbf G)=\langle\phi_{n\mathbf k}|e^{-i(\mathbf q+\mathbf G)\mathbf r}|\phi_{m\mathbf k+\mathbf q}\rangle$
+as number densities, as they are defined in (106), (239), (420), (426) and as the diamagnetic terms
+require: the $\mathbf A^2$ terms $\frac{e^2}{2m_{\rm e}c^2}\int\rho_{\rm e}\mathbf A^2$ of (237), (270), (273),
+(312) and $\Pi^{\rm e,dia}=-\frac{e^2}{mc}\rho^{\rm e}\delta(\mathbf r-\mathbf r')\delta_{\alpha\beta}$ of (279), (321).
+Write $e\rho_{\rm e}$ wherever a charge density is meant. This leaves every definition, and every result
+written with $j^\mu$, $j_{\alpha\sigma}$ or $W^{\rm e}$, unchanged. The alternative, $\rho_{\rm e}\equiv e\Psi^+\Psi$
+(the ``charge density operator'' of the text after (234)), would change (239), (420), the $\mathbf A^2$
+terms of (237), (270), (273), (312) and the diamagnetic terms of (279), (321) ($e^2\to e$). Since (420) is
+substituted explicitly, it would also need the factor $e$ on the left-hand sides of (423)--(425), of the
+two displays between (424) and (425) and of the display after (427); only the continuity equation on
+p.~94 and (422) would stay as printed. And (428) would still need the $e$ unless the
+vertex (106)/(426) were also redefined as $e\langle\phi|e^{-i(\mathbf q+\mathbf G)\mathbf r}|\phi\rangle$,
+which would in turn change (105)--(107), (130)--(131) and the display on p.~96. Within Sec.~7.2 the
+alternative therefore edits every equation edited here except the continuity equation and (422); it
+adds eight edits elsewhere and saves only the Coulomb terms and the Sec.~6 sentence of item~6.
+
+\paragraph{What changes, what does not.}
+\emph{Changed:} the continuity equation on p.~94 [now (p94$'$)], Eq.~(422) [(422$'$)], the left-hand
+sides of (423)--(425), of the two displays between (424) and (425) and of the display after (427),
+Eq.~(428) [(428$'$)], the vertices on pp.~95 and
+98 [(p95$'$), (p98$'$)], the display and the margin note on p.~96 [(p96$'$) and new (428a)], one
+sentence on p.~99 [new (448a)], the bubble on p.~101 [(p101$'$)], and, for the same convention, the
+Coulomb terms of (234), (235), (237), (312) and one sentence in Sec.~6. \emph{Unchanged:} (105)--(131)
+(Eq.~(131) already carries one explicit $e$), (239)--(240), (321), (383)--(421), (426)--(427),
+(429)--(454), and (455)--(472) apart from the bubble on p.~101.
+
+\paragraph{1. Continuity and Eqs.~(422)--(428) (pp.~93--95).}
+On p.~94 replace ``So the equation for charge density is'' by ``So the equation for the electron
+(number) density is''. Replace ``If we now use the continuity equation \ldots\ then we have (422)'' by: ``Since $\rho_{\rm e}$
+(420) is a number density and $\mathbf j_{\rm e}$ (419) a charge current density, the continuity
+equation reads
+\begin{equation*}
+e\,\dot\rho_{\rm e}(\mathbf r,t)=-\nabla\cdot\mathbf j_{\rm e}(\mathbf r,t)
+\tag{p94$'$}
+\end{equation*}
+and we have
+\begin{equation*}
+e\,[\rho_{\rm e}(\mathbf r,t),H^{\rm e}_0]_-=-i\hbar\,\nabla\cdot\mathbf j_{\rm e}(\mathbf r,t).\text{''}
+\tag{422$'$}
+\end{equation*}
+Multiply the left-hand sides of (423), (424), (425), of the two unnumbered displays between (424) and
+(425), and of the display after (427) by $e$. Eq.~(428) becomes
+\begin{equation*}
+e\,\rho_{n\mathbf k,m\mathbf k+\mathbf q}=-\sum_\mu\hbar q_\mu\,
+\frac{j^\mu_{n\mathbf k,m\mathbf k+\mathbf q}}{E_{n\mathbf k}-E_{m\mathbf k+\mathbf q}} .
+\tag{428$'$}
+\end{equation*}
+In the same passage: on p.~93 the Heisenberg evolution reads
+$c_{n\mathbf k}(t)=e^{iH^{\rm e}_0t/\hbar}c_{n\mathbf k}e^{-iH^{\rm e}_0t/\hbar}$; before (418),
+``retarded limit $c\to\infty$'' should read ``non-retarded (instantaneous) limit $c\to\infty$''; and
+before (417), ``reduce to standard bare Fr\"ohlich vertex Eq.~(131)'' should read ``reduces, up to
+the overall sign $e/|e|$ [see (428a)] and the relabelling $n\leftrightarrow m$,
+$\mathbf k\to\mathbf k+\mathbf q$, to the unscreened ($\hat\epsilon^\infty=1$), $\mathbf G=0$ form of
+the polar vertex (131), written in Gaussian units''. [Eq.~(131) uses $e>0$, with the electron charge
+written $-e$ in (123); from Sec.~4 on $e$ is the signed electron charge.]
+
+\paragraph{2. Bare vertex (p.~95).}
+``After using (428$'$) in (418) we get''
+\begin{equation*}
+\lim_{c\to\infty}g^{\rm dyn,0}_{nm\sigma}(\mathbf k,\mathbf q,\omega)=
+\frac{4\pi i\,e}{\Omega_{\rm uc}}\sum_{\rm a}\sum_{\mu\nu=xyz}
+\sqrt{\frac{\hbar}{2Nm_{\rm a}\omega_\sigma(\mathbf q)}}\,
+\frac{q_\mu Z^*_{{\rm a}\mu\nu}e_{{\rm a}\nu\sigma}(\mathbf q)}{q^2}\,
+\big[\rho_{n\mathbf k,m\mathbf k+\mathbf q}\big]^* .
+\tag{p95$'$}
+\end{equation*}
+
+\paragraph{3. Comparison with Verdi--Giustino (p.~96).}
+Replace the paragraph after (p95$'$), its display and the blue margin note (which can be deleted) by:
+\begin{quote}
+Let us write Eq.~4 of \textit{C.~Verdi and F.~Giustino, Phys.\ Rev.\ Lett.}\ \textbf{115}, 176401 (2015)
+for the moment without electronic polarizability ($\hat\epsilon^\infty=1$) and local fields ($\mathbf G=0$),
+with $\boldsymbol\tau_\kappa=0$ as for our dipoles at $\mathbf R^0_i$ (314), and in Gaussian units
+($e^2/4\pi\epsilon_0\equiv e^2$). Their Born charges are dimensionless, ours carry the charge,
+$Z^*_{{\rm a}\mu\nu}=|e|\,Z^{*\rm VG}_{{\rm a}\mu\nu}$. Their wave functions are normalized in the
+Born--von K\'arm\'an supercell of $N_p=N$ cells, as ours are in $\Omega=N\Omega_{\rm uc}$, and their
+$N_p^{-1/2}$ under the square root corresponds, as in (108), to $H_{\rm ep}=\sum g\,c^+c\,(a+a^+)$
+without a separate $N^{-1/2}$. In our notation their vertex reads
+\begin{equation*}
+g^0_{mn\sigma}(\mathbf k,\mathbf q)=\frac{4\pi i\,|e|}{\Omega_{\rm uc}}\sum_{\rm a}\sum_{\mu\nu}
+\sqrt{\frac{\hbar}{2Nm_{\rm a}\omega_\sigma(\mathbf q)}}\,
+\frac{q_\mu Z^*_{{\rm a}\mu\nu}e_{{\rm a}\nu\sigma}(\mathbf q)}{q^2}\,
+\langle\phi_{m\mathbf k+\mathbf q}|e^{i\mathbf q\mathbf r}|\phi_{n\mathbf k}\rangle .
+\tag{p96$'$}
+\end{equation*}
+Since $\langle\phi_{m\mathbf k+\mathbf q}|e^{i\mathbf q\mathbf r}|\phi_{n\mathbf k}\rangle=[\rho_{n\mathbf k,m\mathbf k+\mathbf q}]^*$,
+Eq.~(p95$'$) is
+\begin{equation*}
+\lim_{c\to\infty}g^{\rm dyn,0}_{nm\sigma}(\mathbf k,\mathbf q,\omega)=\frac{e}{|e|}\,g^0_{mn\sigma}(\mathbf k,\mathbf q)
+=-g^0_{mn\sigma}(\mathbf k,\mathbf q).
+\tag{428a}
+\end{equation*}
+The two agree up to the sign of the electron charge. This overall sign is a convention of the
+diagrammatic vertices (415)--(416), namely of the factor $i$ and of the order in which the two vertices
+are written. It cannot be absorbed in $e_{{\rm a}\nu\sigma}(\mathbf q)$, because (p95$'$) and (p96$'$) are
+linear in the same polarization vector. Only the product
+$g^{\rm dyn}\chi^0g^{\rm dyn,0}$ enters (413), and it is fixed: it does not depend on this convention or on the
+phase of $e_{{\rm a}\nu\sigma}(\mathbf q)$, and together with $\Omega^0_{\sigma\sigma}$ it reproduces (452).
+The sign therefore cancels in $\Delta\Omega^{\rm e}$ and in $|g|^2$. Where (p95$'$) is combined with
+vertices defined as Hamiltonian matrix elements, e.g.\ a short-range part $g^{\rm S}$ as in
+Verdi--Giustino's $g=g^{\rm S}+g^{\rm L}$, the Hamiltonian sign
+$g^0_{mn\sigma}=-\lim_{c\to\infty}g^{\rm dyn,0}_{nm\sigma}$ must be used. Of Verdi--Giustino's $e^2$, one $e$
+is contained in our $Z^*$ and the other is the $e$ of the charge--current relation (428$'$); nothing is
+missing in $D$. The order of the band indices ($g_{mn}$ there, $g_{nm}$ here) is only a label.
+\end{quote}
+
+\paragraph{4. Screened vertex (pp.~98--99).}
+``and using (428$'$) we get''
+\begin{equation*}
+\lim_{c\to\infty}g^{\rm dyn}_{nm\sigma}(\mathbf k,\mathbf q,\omega)=
+\frac{4\pi i\,e}{\Omega_{\rm uc}}\sum_{\rm a}\sum_{\mu\nu=x,y,z}
+\sqrt{\frac{\hbar}{2Nm_{\rm a}\omega_\sigma(\mathbf q)}}\,
+\frac{q_\mu Z^*_{{\rm a}\mu\nu}e^*_{{\rm a}\nu\sigma}(\mathbf q)}{\mathbf q\cdot\hat\epsilon^{\rm e}(\mathbf q,\omega)\cdot\mathbf q}\,
+\rho_{n\mathbf k,m\mathbf k+\mathbf q} .
+\tag{p98$'$}
+\end{equation*}
+On p.~99 replace ``This is again almost identical to \ldots\ electron-phonon vertex.'' by:
+\begin{quote}
+Compared with (p96$'$),
+\begin{equation*}
+\lim_{c\to\infty}g^{\rm dyn}_{nm\sigma}(\mathbf k,\mathbf q,\omega)=-\frac{e}{|e|}\,
+\frac{q^2}{\mathbf q\cdot\hat\epsilon^{\rm e}(\mathbf q,\omega)\cdot\mathbf q}\,
+\big[g^0_{mn\sigma}(\mathbf k,\mathbf q)\big]^* .
+\tag{448a}
+\end{equation*}
+For real $\hat\epsilon^{\rm e}$ this is the complex conjugate of the Verdi--Giustino vertex
+($\mathbf G=0$, $\boldsymbol\tau_\kappa=0$) with $\hat\epsilon^\infty$ replaced by the dynamical
+electronic dielectric tensor $\hat\epsilon^{\rm e}(\mathbf q,\omega)$. For $\hbar\omega$ well below the
+gap and $\mathbf q\to0$, $\hat\epsilon^{\rm e}(\mathbf q,\omega)$ tends to the clamped-ion $\hat\epsilon^\infty$
+(here the head of the RPA dielectric matrix, without local fields and exchange--correlation), and the
+two vertices have the same magnitude; for GaAs, $\sqrt N|g|=304$~meV at $q=0.1$~\AA$^{-1}$ from both
+(same phonon frequency $\omega_{\rm LO}$ under both square roots). Together, (428a) and (448a) give
+$\lim_{c\to\infty}g^{\rm dyn}=-[\lim_{c\to\infty}g^{\rm dyn,0}]^*\,q^2/(\mathbf q\cdot\hat\epsilon^{\rm e}\cdot\mathbf q)$.
+\end{quote}
+
+\paragraph{5. 2D electronic bubble (p.~101).}
+The bubble that enters (435) and (461)--(470) is the charge--charge correlator [cf.\ (350)]:
+\begin{equation*}
+\Pi^{\rm e,0}_{\rho\rho}(\mathbf Q,\omega)=\frac{2e^2}{S}\sum_{\mathbf K\in{\rm SBZ}}\sum_{nm}
+\frac{f_{n\mathbf K}-f_{m\mathbf K+\mathbf Q}}{\hbar\omega+E_{n\mathbf K}-E_{m\mathbf K+\mathbf Q}+i\eta}\,
+\big|\rho_{n\mathbf K,m\mathbf K+\mathbf Q}\big|^2 .
+\tag{p101$'$}
+\end{equation*}
+With it, (470) is dimensionless (with $v_Q=2\pi/Q$) and, for a 2D electron gas, gives Stern's
+$\epsilon^{\rm e}_{\rm 2D}(Q,0)=1+2m^*e^2/(\hbar^2Q)$, valid for $Q\le2k_{\rm F}$ at $T\to0$ and without
+a background dielectric constant. Eqs.~(461)--(462) and (469)--(472) are unchanged.
+
+\paragraph{6. The same convention in the Hamiltonian (pp.~47--48, 68).}
+Replace (234) and the sentence after it by
+\begin{equation*}
+\nabla\mathbf E=4\pi\big(e\rho_{\rm e}+\rho_{\rm ion}\big),
+\tag{234$'$}
+\end{equation*}
+``where $\rho_{\rm e}=\Psi^+\Psi$ is the electron density operator (239), so that $e\rho_{\rm e}$ is the
+electronic charge density operator'' [in (179)--(180) $\rho_{\rm e}$ denotes this charge density], and
+(235) by
+\begin{equation*}
+H^0_{\rm Lph}=\frac12\int d\mathbf r\int d\mathbf r'\,
+\frac{[e\rho_{\rm e}(\mathbf r)+\rho_{\rm ion}(\mathbf r)][e\rho_{\rm e}(\mathbf r')+\rho_{\rm ion}(\mathbf r')]}{|\mathbf r-\mathbf r'|} .
+\tag{235$'$}
+\end{equation*}
+The last terms of (237) and (312) change in the same way (in (312), $\rho^{\rm e}\to e\rho^{\rm e}$); their
+$\mathbf A^2$ terms stay as printed. In Sec.~6 add after (315): ``The electronic charge vertex is
+therefore $e\rho^{\rm e}$, and $\Pi^{\rm e}_{\rho\rho}$, $\Pi^{\rm e}_{\rho j}$, $\Pi^{\rm e}_{j\rho}$
+in (320)--(350) are correlators of $e\rho^{\rm e}$, as the continuity equation (335) requires.'' These
+edits change no displayed result.
+
+\paragraph{Justification.}
+Equation (428$'$) follows from the manuscript's own derivation once charge conservation is written for
+a number density, (p94$'$); with free electrons it is checked in one line (see above), and it holds
+for any local $H^{\rm e}_0$. Independently, the Coulomb term of (235$'$),
+$e\int d\mathbf r\,\rho_{\rm e}(\mathbf r)\phi_{\rm ion}(\mathbf r)$ with $\phi_{\rm ion}$ the potential of
+$\rho_{\rm ion}=-\nabla\mathbf P$, gives the electron--phonon coefficient
+$-\frac{4\pi ie}{\Omega_{\rm uc}}\sum\sqrt{\hbar/2Nm_{\rm a}\omega_\sigma}\,q_\mu Z^*_{{\rm a}\mu\nu}e_{{\rm a}\nu\sigma}\,q^{-2}\,
+\langle\phi_{m\mathbf k+\mathbf q}|e^{i\mathbf q\mathbf r}|\phi_{n\mathbf k}\rangle$, i.e.\ Eq.~(131) at
+$\hat\epsilon^\infty=1$, $\mathbf G=0$ in Gaussian units (with $n\leftrightarrow m$, $\mathbf k\to\mathbf k+\mathbf q$),
+which is $g^0_{mn\sigma}$ of (p96$'$) and,
+up to the sign convention of $g^{\rm dyn,0}$, Eq.~(p95$'$). Checks: (i)~dimensions: $[eZ^*]$ is energy$\times$length, so (p95$'$),
+(p98$'$) are energies, while the printed forms are energies divided by a charge; $v_Q\Pi^{\rm e,0}_{\rho\rho}$
+of (p101$'$) is dimensionless. (ii)~The longitudinal projection of (375),
+$\hat{\mathbf q}\cdot D^0\cdot\hat{\mathbf q}=-4\pi c/\omega^2$, equals that of (374) $=$ (442) for every $c$,
+and its factor $c$ cancels the $c^{-1}$ in the prefactor of (417). The longitudinal part of (417) therefore
+does not depend on $c$, and (p95$'$) is that longitudinal part for every $c$. Likewise (p98$'$) is the
+longitudinal part of (430) for an isotropic $\hat\epsilon^{\rm e}$
+($\hat{\mathbf q}\cdot D^{\rm e}\cdot\hat{\mathbf q}=-4\pi c/(\omega^2\epsilon^{\rm e}_{\rm L})$). The transverse
+parts vanish as $(\omega/cq)^2$. (iii)~With (p95$'$) and (p98$'$),
+$\sum g^{\rm dyn}\chi^0g^{\rm dyn,0}$ reproduces (413), and $\Omega^0_{\sigma\sigma}+\Delta\Omega^{\rm e}_{\sigma\sigma}$
+reproduces (452), i.e.\ the screened Gonze--Lee term; with the printed vertices both fail by $e^2$.
+(iv)~(428a), (448a) agree with Giustino, Rev.\ Mod.\ Phys.\ \textbf{89}, 015003 (2017), Eq.~(180)
+(SI, dimensionless $Z^*$; $\mathbf G=0$, $\boldsymbol\tau_\kappa=0$). For GaAs ($Z^*=2.07\,|e|$,
+$\Omega_{\rm uc}=45.2$~\AA$^3$, reduced mass $\mu=36.1$~amu, $\epsilon_\infty=10.9$, $\hbar\omega_{\rm LO}=36.2$~meV;
+literature values) both give $\sqrt N|g|=304$~meV at $q=0.1$~\AA$^{-1}$ (with $\omega_{\rm LO}$ under
+both square roots); Fr\"ohlich's vertex with
+$1/\epsilon_\infty-1/\epsilon(0)$ from Lyddane--Sachs--Teller ($\hbar\omega_{\rm TO}=33.3$~meV) gives
+319.8~meV, the ratio being $Z^*/Z^*_{\rm LST}=2.07/2.18$, a property of the input data. All of this was
+verified numerically, including (428$'$) to $10^{-8}$ or better for Bloch states of a
+non-centrosymmetric local potential, the $c$-independence of the longitudinal part in (ii) to $10^{-14}$,
+and the invariance of $g^{\rm dyn}g^{\rm dyn,0}$ and of the signs in (428a), (448a) under
+$e_{{\rm a}\nu\sigma}\to z\,e_{{\rm a}\nu\sigma}$, $|z|=1$.

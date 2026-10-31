@@ -1,0 +1,301 @@
+<section class="chapter" id="a-coupling" data-num="A.2" data-title="The e–ph Hamiltonian and g">
+  <header class="ch-head">
+    <p class="eyebrow"><span class="num">A.2</span><span>Giustino §I–II, §III.B · Eqs. 1–11, 38</span></p>
+    <h2>The electron–phonon Hamiltonian and a century of $g$</h2>
+    <p class="lede">Giustino's review is built around one model Hamiltonian with three sets of parameters. Read it term by term, see what it leaves out, and follow nearly nine decades of attempts to compute its coupling $g$, most of them lessons in how electrons screen a moving ion.</p>
+  </header>
+
+  <p>An <span class="t-e">electron</span> moving through a crystal feels the periodic potential of the ions. If one ion is displaced by a small $\mathbf u$, the potential changes by about $-\mathbf u\cdot\nabla V$, and this perturbation can scatter the electron from $\bk$ to $\bk+\bq$ while a <span class="t-p">phonon</span> of wavevector $\bq$ is absorbed or one of wavevector $-\bq$ is emitted. Every formula below refines that sentence in one of two ways: how large $\mathbf u$ is for a quantum oscillator, and which potential $V$ is differentiated, from the bare ionic potential to the one left after all other electrons have rearranged to screen it.</p>
+
+  <h3>Reading Eq. (1) term by term</h3>
+  <p>Giustino states the "standard form" of the coupled electron–phonon Hamiltonian at the start of his historical section (Giustino §II, Eq. (G.1)). Like all of Part A it is written in SI units, and every potential $V$ is the potential energy of an electron, so $g$ and $g^{\rm DW}$ have units of energy:</p>
+  <div class="eq">$$\begin{aligned}
+\hat H={}&\sum_{n\bk}\varepsilon_{n\bk}\hat c^\dagger_{n\bk}\hat c_{n\bk}+\sum_{\bq\nu}\hbar\omega_{\bq\nu}\big(\hat a^\dagger_{\bq\nu}\hat a_{\bq\nu}+1/2\big)\\
+&+N_p^{-1/2}\sum_{\substack{\bk,\bq\\ mn\nu}}g_{mn\nu}(\bk,\bq)\,\hat c^\dagger_{m\bk+\bq}\hat c_{n\bk}\big(\hat a_{\bq\nu}+\hat a^\dagger_{-\bq\nu}\big)\\
+&+\Big[N_p^{-1}\sum_{\substack{\bk,\bq,\bq'\\ mn\nu\nu'}}g^{\rm DW}_{mn\nu\nu'}(\bk,\bq,\bq')\,\hat c^\dagger_{m\bk+\bq+\bq'}\hat c_{n\bk}\\
+&\qquad\times\big(\hat a_{\bq\nu}+\hat a^\dagger_{-\bq\nu}\big)\big(\hat a_{\bq'\nu'}+\hat a^\dagger_{-\bq'\nu'}\big)\Big]
+\end{aligned}\tag{G.1}$$</div>
+  <ul>
+    <li><strong>Line 1</strong> holds two independent subsystems: band electrons with energies $\varepsilon_{n\bk}$ and fermion operators $\hat c^\dagger,\hat c$, and harmonic phonons with energies $\hbar\omega_{\bq\nu}$ and boson operators $\hat a^\dagger,\hat a$ (<a href="#a-lattice">§A.1</a>). $N_p$ is the number of unit cells in the Born–von Kármán supercell.</li>
+    <li><strong>Line 2</strong> is linear in the atomic displacements: $\hat a_{\bq\nu}+\hat a^\dagger_{-\bq\nu}$, times the zero-point length $l_{\bq\nu}$, is the normal coordinate of mode $\bq\nu$ (Eqs. (G.20)–(G.21)). An electron in $n\bk$ goes to $m\bk+\bq$ by absorbing a phonon $\bq\nu$ or emitting a phonon $-\bq\nu$, so crystal momentum is conserved up to a reciprocal-lattice vector.</li>
+    <li><strong>Lines 3–4</strong> are second order in the displacements, bracketed because this term "is rarely found in the early literature". To first order in perturbation theory only $\bq'=-\bq$, $\nu'=\nu$ survives, giving the static band shift $\Delta\varepsilon_{n\bk}=N_p^{-1}\sum_{\bq\nu}g^{\rm DW}_{nn\nu\nu}(\bk,\bq,-\bq)(2n_{\bq\nu}+1)$ (Giustino p. 10, unnumbered). It is finite at $T=0$ and essential for temperature-dependent band gaps (<a href="#a-temperature">§A.8</a>).</li>
+  </ul>
+
+  <div class="fd" id="a-coupling-fd" role="group" aria-label="Feynman diagrams of the electron–phonon vertices in Eq. (1)">
+    <figure><div id="a-coupling-fd1"></div><figcaption>First-order vertex $g_{mn\nu}(\bk,\bq)$, line 2</figcaption></figure>
+    <figure><div id="a-coupling-fd2"></div><figcaption>Second-order (Debye–Waller) vertex $g^{\rm DW}_{mn\nu\nu'}$, lines 3–4</figcaption></figure>
+    <figure><div id="a-coupling-fd3"></div><figcaption>Contracting $\bq'=-\bq$: static shift $\propto 2n_{\bq\nu}+1$ (<a href="#a-electron-se">§A.7</a>)</figcaption></figure>
+  </div>
+
+  <h3>What Eq. (1) leaves out</h3>
+  <p>Eq. (G.1) has no electron–electron interaction, no ion–ion interaction, no vector potential and no photons. Yet electrons and nuclei interact only through electromagnetic forces, so each Coulomb interaction must be hidden in one of the three parameter sets:</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Interaction</th><th>Hidden in</th><th>How Giustino obtains it</th></tr></thead>
+    <tbody>
+      <tr><td>electron–electron</td><td>band energies $\varepsilon_{n\bk}$</td><td>Hartree and xc potentials of Kohn–Sham theory (G.24–28), or quasiparticle corrections</td></tr>
+      <tr><td>ion–ion, screened by electrons</td><td>phonon frequencies $\omega_{\bq\nu}$</td><td>force constants of the clamped-ion electronic ground state (G.12–15), adiabatic; <a href="#a-lattice">§A.1</a></td></tr>
+      <tr><td>electron–ion</td><td>couplings $g$, $g^{\rm DW}$</td><td>screened first and second derivatives of $V^{\rm en}$ (G.38, G.40); <a href="#a-dfpt">§A.3</a></td></tr>
+      <tr><td>transverse field (photons)</td><td>nowhere</td><td>light appears later only as a classical external field; <a href="#a-applications">§A.9</a></td></tr>
+    </tbody>
+  </table></div>
+  <p>Eq. (G.1) is therefore an effective model in which the Coulomb field has been integrated out, statically and longitudinally, into screened parameters. Giustino names its assumptions: well-defined quasiparticles, harmonic and adiabatic phonons, and no prescription for the parameters. In his words, "the history of the study of electron-phonon interactions is really the history of how to calculate the parameters entering Eq. (1) using procedures that can be at once rigorous, reliable, and practical." The many-body justification, with the lattice placed inside the screened interaction $W$, comes in <a href="#a-hedin-baym">§A.5</a>.</p>
+
+  <div class="callout connect"><p class="callout-title">Bridge to EPP · putting the field back</p>
+    <p>EPP §2 starts from the same first three terms, built from bare quantities, plus an explicit bare electron–electron Coulomb term (Eq. (E.109)). Its bare vertex $g^0$ (Eq. (E.107)) is the rigid-ion vertex of the derivation below, written for general Bloch states as a sum over $\bG$. EPP then puts the field back: Coulomb becomes the energy of the longitudinal field (EPP §4.4, Eq. (E.235)) and transverse <span class="t-g">photons</span> couple to electronic and ionic currents. Its Lagrangian (Eq. (E.134)) contains no $g$. The polar coupling arises from exchanging a longitudinal or transverse photon between an electron and a Born-charge dipole, the short-range rigid-ion channel of §2 is left out, and there is no Debye–Waller vertex (the diamagnetic $A^2$ contact terms are only an analogue). Notation: EPP puts $N^{-1/2}$ inside $g$ and writes $c^\dagger_{n\bk}c_{m\bk-\bq}$, so $g^{\rm EPP}_{nm}(\bk,\bq)=N^{-1/2}g^{\rm G}_{nm}(\bk-\bq,\bq)$. See <a href="#x-light-cone">§X.1</a>, <a href="#b-foundations">§B.1</a>, <a href="#b-lagrangian">§B.2</a>.</p>
+  </div>
+
+  <h3>Anatomy of $g$: zero-point amplitude times a potential gradient</h3>
+  <p>Giustino derives line 2 in §III.B.2. Expanding the Kohn–Sham potential to first order in the displacements and inserting the phonon expansion (G.20) yields the coupling Hamiltonian (G.37) with the matrix element</p>
+  <div class="eq">$$ g_{mn\nu}(\bk,\bq)=\langle u_{m\bk+\bq}|\Delta_{\bq\nu}v^{\rm KS}|u_{n\bk}\rangle_{\rm uc}, \tag{G.38}$$</div>
+  <p>an integral over one unit cell between the lattice-periodic Bloch parts $u_{n\bk}$. The scattering potential is</p>
+  <div class="eq">$$ \Delta_{\bq\nu}v^{\rm KS}=l_{\bq\nu}\sum_{\kappa\alpha}(M_0/M_\kappa)^{1/2}e_{\kappa\alpha,\nu}(\bq)\,\partial_{\kappa\alpha,\bq}v^{\rm KS}, \tag{G.34}$$</div>
+  <p>where $\partial_{\kappa\alpha,\bq}v^{\rm KS}$ (G.35) is the lattice-periodic part of the response to displacing atom $\kappa$ along $\alpha$ in every cell with phase $e^{i\bq\cdot\bR_p}$, and $l_{\bq\nu}=[\hbar/(2M_0\omega_{\bq\nu})]^{1/2}$ is the zero-point length (G.21). Because $l_{\bq\nu}(M_0/M_\kappa)^{1/2}=(\hbar/2M_\kappa\omega_{\bq\nu})^{1/2}$, the reference mass $M_0$ cancels and, schematically,</p>
+  <div class="eq">$$ g\;\sim\;\underbrace{\Big(\frac{\hbar}{2M_\kappa\omega_{\bq\nu}}\Big)^{1/2}}_{\text{zero-point amplitude (Å)}}\times\underbrace{\mathbf e_{\kappa\nu}\cdot\Big\langle\frac{\partial V}{\partial\boldsymbol\tau_\kappa}\Big\rangle}_{\text{potential gradient (eV/Å)}}.$$</div>
+  <p>With the zero-point amplitudes of <a href="#a-lattice">§A.1</a> (0.034 Å for a silicon optical phonon, against a 2.35 Å Si–Si bond; literature values, illustrative) the linear expansion is safe, and a gradient of a few eV/Å gives $|g|\sim0.1$ eV.</p>
+  <p>The physics sits in the choice of $\partial V$. In the <strong>rigid-ion</strong> approximation $V^{\rm KS}\to V^{\rm en}$: each displaced ion carries its bare potential with it, and $\partial_{\kappa\alpha,\bq}v^{\rm en}$ is known analytically (G.43). In the <strong>self-consistent</strong> picture the other electrons respond, and the induced Hartree and xc terms of $\partial v^{\rm KS}=\partial v^{\rm en}+\partial v^{\rm H}+\partial v^{xc}$ (G.42) largely cancel the bare change. <a href="#a-dfpt">§A.3</a> shows that the result is $\partial v^{\rm KS}=(\epsilon^{{\rm H}xc})^{-1}\partial v^{\rm en}$ (G.53): the bare vertex screened by a static RPA+xc dielectric matrix. The history below is the slow discovery of that statement.</p>
+
+  <div class="callout source"><p class="callout-title">Note on the source · where $N_p$ goes</p>
+    <p>Eqs. (G.1) and (G.37) put $N_p^{-1/2}$ in front of the coupling, and (G.38) defines $g$ as an $N_p$-independent unit-cell integral. Eqs. (G.2), (G.57), (G.58), (G.61) and (G.180) nevertheless carry $N_p$ inside the square root, $(\hbar/2N_pM_\kappa\omega_{\bq\nu})^{1/2}$; inserted into (G.1) they would count $N_p^{-1/2}$ twice. Part A follows the (G.38) convention and drops $N_p$ from those formulas; EPP makes the other consistent choice, $N^{-1/2}$ inside $g$.</p>
+  </div>
+
+  <details class="derivation"><summary>Derivation: Bloch, Nordheim and Bardeen from (G.38) (Giustino §III.B.5)</summary><div class="d-body">
+    <p>Take the rigid-ion potential, one atom per cell at $\boldsymbol\tau_\kappa=0$, and free-electron Bloch parts $u_{n\bk}=\Omega^{-1/2}e^{i\bG_n\cdot\br}$. The bare perturbation is</p>
+    <div class="eq">$$ \partial_{\kappa\alpha,\bq}v^{\rm en}(\bG)=-i(\bq+\bG)_\alpha V_\kappa(\bq+\bG)\,e^{-i(\bq+\bG)\cdot\boldsymbol\tau_\kappa}. \tag{G.43}$$</div>
+    <p>With Giustino's Fourier convention, $f(\br)=\sum_\bG f(\bG)e^{i\bG\cdot\br}$, the unit-cell integral picks a single component, $\langle u_{m\bk+\bq}|f|u_{n\bk}\rangle_{\rm uc}=f(\bG_m-\bG_n)$. Inserting this and (G.34) into (G.38) gives</p>
+    <div class="eq">$$ g_{mn\nu}(\bk,\bq)=-i\Big(\frac{\hbar}{2M_\kappa\omega_{\bq\nu}}\Big)^{1/2}V_\kappa(\bq+\bG_m-\bG_n)\,(\bq+\bG_m-\bG_n)\cdot\mathbf e_{\kappa\nu}(\bq),$$</div>
+    <p>which is Eq. (G.57) without the $N_p$. Without umklapp ($\bG_m=\bG_n$) it reduces to $-i(\hbar/2M_\kappa\omega_{\bq\nu})^{1/2}\,\bq\cdot\mathbf e_{\kappa\nu}(\bq)\,V_\kappa(\bq)$ (cf. G.58): Nordheim's matrix element, and Bloch's after $V_\kappa\to V_0$. For a Coulomb ion $|g|\propto q^{-1}\omega_{\bq}^{-1/2}\propto q^{-3/2}$ for acoustic phonons. Screening the perturbation with the free-electron Lindhard function (G.59–60, <a href="#a-dfpt">§A.3</a>) replaces $V_\kappa(q)$ by $V_\kappa(q)/\epsilon(q)$ (cf. G.61), which is Bardeen's result. Its long-wavelength limit follows from $k_{\rm TF}^2=e^2N(\varepsilon_F)/\epsilon_0$, with $N(\varepsilon_F)=m_ek_F/(\pi^2\hbar^2)$ states per volume (both spins), and $n=Z/\Omega=k_F^3/3\pi^2$:</p>
+    <div class="eq">$$ \lim_{q\to0}\frac{V_\kappa(q)}{\epsilon(q)}=-\frac{Ze^2}{\epsilon_0\Omega k_{\rm TF}^2}=-\frac{n}{N(\varepsilon_F)}=-\frac{\hbar^2k_F^2}{3m_e}=-\frac23\varepsilon_F .$$</div>
+    <p>No factor of $N_p$ appears anywhere in this derivation, which confirms the source note above.</p>
+  </div></details>
+
+  <h3>A century of $V_0$</h3>
+  <p>Bloch (1929) wrote the first matrix element, for free electrons with $\varepsilon_{n\bk}=\hbar^2\bk^2/2m_e-\varepsilon_F$ scattered by Debye phonons with $\omega_{\bq\nu}=v_s|\bq|$. In modern notation, and with $N_p$ removed as explained above (cf. Eq. (G.2)), it reads</p>
+  <div class="eq">$$ g_{mn\nu}(\bk,\bq)=-i\left(\frac{\hbar}{2M_\kappa\omega_{\bq\nu}}\right)^{1/2}\bq\cdot\mathbf e_{\kappa\nu}(\bq)\,V_0 .$$</div>
+  <p>$V_0$ is the unit-cell average of the "effective" potential felt by the electrons. The polarization factor $\bq\cdot\mathbf e_{\kappa\nu}$ means that, without umklapp, only longitudinal sound waves scatter electrons. The rest of Giustino §II.A is a list of what to put in place of $V_0$.</p>
+
+  <figure class="viz" id="viz-a-coupling-timeline">
+    <p class="viz-title"><span>What replaces $V_0$: from Bloch to Verdi–Giustino and EPP</span> <span class="tag">timeline</span></p>
+    <ol style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:8px;">
+      <li style="margin:0;max-width:none;background:var(--surface-2);border-radius:5px;border-top:3px solid var(--c-4);padding:7px 10px 9px;font-size:0.86rem;line-height:1.38;"><span style="display:block;font-family:var(--font-mono);font-size:0.74rem;color:var(--muted);">1929</span><strong style="display:block;font-family:var(--font-ui);color:var(--fg);">Bloch</strong><span style="display:block;margin:2px 0;">$V_0=$ const $\approx1.7$ eV</span><span style="display:block;font-family:var(--font-ui);font-size:0.8rem;color:var(--fg-2);">deformable continuum; first quantum theory of resistivity</span></li>
+      <li style="margin:0;max-width:none;background:var(--surface-2);border-radius:5px;border-top:3px solid var(--c-4);padding:7px 10px 9px;font-size:0.86rem;line-height:1.38;"><span style="display:block;font-family:var(--font-mono);font-size:0.74rem;color:var(--muted);">1931</span><strong style="display:block;font-family:var(--font-ui);color:var(--fg);">Nordheim</strong><span style="display:block;margin:2px 0;">$V_\kappa(\bq)\propto q^{-2}$</span><span style="display:block;font-family:var(--font-ui);font-size:0.8rem;color:var(--fg-2);">bare rigid ion; far too strong</span></li>
+      <li style="margin:0;max-width:none;background:var(--surface-2);border-radius:5px;border-top:3px solid var(--c-4);padding:7px 10px 9px;font-size:0.86rem;line-height:1.38;"><span style="display:block;font-family:var(--font-mono);font-size:0.74rem;color:var(--muted);">1936</span><strong style="display:block;font-family:var(--font-ui);color:var(--fg);">Mott &amp; Jones</strong><span style="display:block;margin:2px 0;">$V_\kappa$ cut at the WS cell</span><span style="display:block;font-family:var(--font-ui);font-size:0.8rem;color:var(--fg-2);">screening by truncation</span></li>
+      <li style="margin:0;max-width:none;background:var(--surface-2);border-radius:5px;border-top:3px solid var(--c-4);padding:7px 10px 9px;font-size:0.86rem;line-height:1.38;"><span style="display:block;font-family:var(--font-mono);font-size:0.74rem;color:var(--muted);">1937</span><strong style="display:block;font-family:var(--font-ui);color:var(--fg);">Bardeen</strong><span style="display:block;margin:2px 0;">$V_\kappa(\bq)/\epsilon(q)$</span><span style="display:block;font-family:var(--font-ui);font-size:0.8rem;color:var(--fg-2);">Lindhard screening, self-consistent linear response</span></li>
+      <li style="margin:0;max-width:none;background:var(--surface-2);border-radius:5px;border-top:3px solid var(--c-4);padding:7px 10px 9px;font-size:0.86rem;line-height:1.38;"><span style="display:block;font-family:var(--font-mono);font-size:0.74rem;color:var(--muted);">1950</span><strong style="display:block;font-family:var(--font-ui);color:var(--fg);">Bardeen &amp; Shockley</strong><span style="display:block;margin:2px 0;">$E_1=\Omega\,\partial\varepsilon/\partial\Omega$</span><span style="display:block;font-family:var(--font-ui);font-size:0.8rem;color:var(--fg-2);">deformation potential, fitted to mobilities</span></li>
+      <li style="margin:0;max-width:none;background:var(--surface-2);border-radius:5px;border-top:3px solid var(--c-4);padding:7px 10px 9px;font-size:0.86rem;line-height:1.38;"><span style="display:block;font-family:var(--font-mono);font-size:0.74rem;color:var(--muted);">1950</span><strong style="display:block;font-family:var(--font-ui);color:var(--fg);">Fröhlich, Pelzer &amp; Zienau</strong><span style="display:block;margin:2px 0;">$V_0\propto|\bq|^{-2}$, $g\propto1/q$</span><span style="display:block;font-family:var(--font-ui);font-size:0.8rem;color:var(--fg-2);">polar crystals; <a href="#a-polar">§A.4</a></span><a href="#b-frohlich" style="display:inline-block;margin-top:4px;font-family:var(--font-ui);font-size:0.7rem;letter-spacing:0.05em;text-transform:uppercase;color:var(--t-photon);text-decoration:none;border:1px solid var(--c-photon);border-radius:3px;padding:0 5px;">EPP precursor</a></li>
+      <li style="margin:0;max-width:none;background:var(--surface-2);border-radius:5px;border-top:3px solid var(--c-4);padding:7px 10px 9px;font-size:0.86rem;line-height:1.38;"><span style="display:block;font-family:var(--font-mono);font-size:0.74rem;color:var(--muted);">1955</span><strong style="display:block;font-family:var(--font-ui);color:var(--fg);">Bardeen &amp; Pines</strong><span style="display:block;margin:2px 0;">$V_\kappa/\epsilon(q,\omega_{\bq\nu})$</span><span style="display:block;font-family:var(--font-ui);font-size:0.8rem;color:var(--fg-2);">first retarded (frequency-dependent) vertex, field theory</span><a href="#b-frohlich" style="display:inline-block;margin-top:4px;font-family:var(--font-ui);font-size:0.7rem;letter-spacing:0.05em;text-transform:uppercase;color:var(--t-photon);text-decoration:none;border:1px solid var(--c-photon);border-radius:3px;padding:0 5px;">EPP precursor</a></li>
+      <li style="margin:0;max-width:none;background:var(--surface-2);border-radius:5px;border-top:3px solid var(--muted);padding:7px 10px 9px;font-size:0.86rem;line-height:1.38;"><span style="display:block;font-family:var(--font-mono);font-size:0.74rem;color:var(--muted);">1959–61</span><strong style="display:block;font-family:var(--font-ui);color:var(--fg);">Phillips–Kleinman, Sham</strong><span style="display:block;margin:2px 0;">pseudopotential $g$</span><span style="display:block;font-family:var(--font-ui);font-size:0.8rem;color:var(--fg-2);">improved rigid ion</span></li>
+      <li style="margin:0;max-width:none;background:var(--surface-2);border-radius:5px;border-top:3px solid var(--c-5);padding:7px 10px 9px;font-size:0.86rem;line-height:1.38;"><span style="display:block;font-family:var(--font-mono);font-size:0.74rem;color:var(--muted);">1985</span><strong style="display:block;font-family:var(--font-ui);color:var(--fg);">Dacorogna, Cohen &amp; Lam</strong><span style="display:block;margin:2px 0;">$\langle u|\Delta_{\bq\nu}v^{\rm KS}|u\rangle$ (G.11)</span><span style="display:block;font-family:var(--font-ui);font-size:0.8rem;color:var(--fg-2);">frozen phonons in Al</span></li>
+      <li style="margin:0;max-width:none;background:var(--surface-2);border-radius:5px;border-top:3px solid var(--c-5);padding:7px 10px 9px;font-size:0.86rem;line-height:1.38;"><span style="display:block;font-family:var(--font-mono);font-size:0.74rem;color:var(--muted);">1987–92</span><strong style="display:block;font-family:var(--font-ui);color:var(--fg);">DFPT</strong><span style="display:block;margin:2px 0;">$\partial v^{\rm KS}=(\epsilon^{{\rm H}xc})^{-1}\partial v^{\rm en}$</span><span style="display:block;font-family:var(--font-ui);font-size:0.8rem;color:var(--fg-2);">any $\bq$ in one cell; <a href="#a-dfpt">§A.3</a></span></li>
+      <li style="margin:0;max-width:none;background:var(--surface-2);border-radius:5px;border-top:3px solid var(--c-5);padding:7px 10px 9px;font-size:0.86rem;line-height:1.38;"><span style="display:block;font-family:var(--font-mono);font-size:0.74rem;color:var(--muted);">2007</span><strong style="display:block;font-family:var(--font-ui);color:var(--fg);">Giustino, Cohen &amp; Louie</strong><span style="display:block;margin:2px 0;">Wannier-interpolated $g$</span><span style="display:block;font-family:var(--font-ui);font-size:0.8rem;color:var(--fg-2);">dense $\bk$ and $\bq$ grids</span></li>
+      <li style="margin:0;max-width:none;background:var(--surface-2);border-radius:5px;border-top:3px solid var(--c-5);padding:7px 10px 9px;font-size:0.86rem;line-height:1.38;"><span style="display:block;font-family:var(--font-mono);font-size:0.74rem;color:var(--muted);">2015</span><strong style="display:block;font-family:var(--font-ui);color:var(--fg);">Verdi &amp; Giustino; Sjakste <i>et al.</i></strong><span style="display:block;margin:2px 0;">long-range $g^{\mathcal L}$ (G.180)</span><span style="display:block;font-family:var(--font-ui);font-size:0.8rem;color:var(--fg-2);">polar Wannier interpolation; <a href="#a-polar">§A.4</a></span><a href="#b-foundations" style="display:inline-block;margin-top:4px;font-family:var(--font-ui);font-size:0.7rem;letter-spacing:0.05em;text-transform:uppercase;color:var(--t-photon);text-decoration:none;border:1px solid var(--c-photon);border-radius:3px;padding:0 5px;">EPP precursor</a></li>
+      <li style="margin:0;max-width:none;background:var(--surface-2);border-radius:5px;border-top:3px solid var(--c-photon);padding:7px 10px 9px;font-size:0.86rem;line-height:1.38;"><span style="display:block;font-family:var(--font-mono);font-size:0.74rem;color:var(--muted);">draft</span><strong style="display:block;font-family:var(--font-ui);color:var(--fg);">EPP manuscript</strong><span style="display:block;margin:2px 0;">$g^{\rm dyn}=iJ^*_\sigma D^{\rm e}J_{nm}$ <span style="white-space:nowrap">(cf. E.416)</span></span><span style="display:block;font-family:var(--font-ui);font-size:0.8rem;color:var(--fg-2);">photon exchange; $\epsilon^\infty\to\hat\epsilon^{\rm e}(\bq,\omega)$; <a href="#b-frohlich">§B.8</a></span></li>
+    </ol>
+    <div class="legend-strip"><span><span style="display:inline-block;width:20px;height:3px;background:var(--c-4);vertical-align:middle;margin-right:6px;"></span>model potentials</span><span><span style="display:inline-block;width:20px;height:3px;background:var(--muted);vertical-align:middle;margin-right:6px;"></span>pseudopotentials</span><span><span style="display:inline-block;width:20px;height:3px;background:var(--c-5);vertical-align:middle;margin-right:6px;"></span>first principles</span><span><span style="display:inline-block;width:20px;height:3px;background:var(--c-photon);vertical-align:middle;margin-right:6px;"></span>electrodynamic (Part B)</span></div>
+    <figcaption>Sources: Giustino §II.A–C, §VI.A. <strong>What to notice.</strong> Until 1985 progress meant a better guess for one effective potential; afterwards the potential is computed, and the open problems become numerical (dense grids) and electrostatic (the long-range polar part). "EPP precursor" marks the steps that EPP generalizes. The last entry is the EPP vertex itself: the Verdi–Giustino vertex rebuilt from photon exchange, with dynamical screening.</figcaption>
+  </figure>
+
+  <p>For simple metals the ladder has four rungs:</p>
+  <ul>
+    <li><strong>Bloch</strong> argued from a deformable continuum that $V_0=\hbar^2/(16m_ea_0^2)\approx1.70$ eV, with $a_0$ the Bohr radius.</li>
+    <li><strong>Nordheim</strong> (1931) replaced $V_0$ by the Fourier component of the bare ion, $V_\kappa(\bq)=-Z_\kappa e^2/(\epsilon_0\Omega|\bq|^2)$ in Giustino's per-cell convention. This rigid-ion model diverges as $q^{-2}$ and "leads to unrealistically strong EPIs".</li>
+    <li><strong>Mott and Jones</strong> (1936) integrated $V_\kappa(\br)$ over one Wigner–Seitz cell only, "the first attempt at including the electronic screening of the nuclear potential in a rudimentary form". For a Wigner–Seitz sphere of radius $R_{\rm WS}$ this gives $V_\kappa(q)[1-\cos(qR_{\rm WS})]$ (our closed form; Giustino describes the model only in words). It is finite as $q\to0$, but its limit $-\tfrac32 Z_\kappa e^2/(4\pi\epsilon_0R_{\rm WS})$ is, for Al, Na and K, about five times deeper than the screened value found next.</li>
+    <li><strong>Bardeen</strong> (1937) screened the ion with the static Lindhard function, computed self-consistently in linearized Hartree theory, a strategy "similar in spirit to modern DFPT calculations":</li>
+  </ul>
+  <div class="eq">$$ V_0\to V_\kappa(\bq)/\epsilon(q), \tag{G.3}$$</div>
+  <div class="eq">$$ \epsilon(q)=1+(k_{\rm TF}/q)^2F(q/2k_{\rm F}), \tag{G.4}$$</div>
+  <div class="eq">$$ F(x)=\frac12+\frac{1-x^2}{4x}\ln\left|\frac{1+x}{1-x}\right| .$$</div>
+  <p>$k_{\rm F}$ is the Fermi wavevector and $k_{\rm TF}$ the Thomas–Fermi wavevector, $k_{\rm TF}^2=4k_{\rm F}/(\pi a_0)$ (the expression given after (G.60), rewritten with the Bohr radius $a_0$). $F(0)=1$ and $F(1)=\tfrac12$, but $dF/dx$ diverges logarithmically at $x=1$, that is at $q=2k_{\rm F}$.</p>
+
+  <div class="callout intuition"><p class="callout-title">Physical picture · why screening removes the divergence</p>
+    <p>As $q\to0$ the Lindhard function behaves as $\epsilon\to(k_{\rm TF}/q)^2$, which cancels the $1/q^2$ of the ion exactly. What is left is $V_\kappa/\epsilon\to-\tfrac23\varepsilon_F$: $-7.80$ eV in Al, $-2.16$ eV in Na, $-1.41$ eV in K. The Fermi sea screens a slowly varying potential perfectly, and only a local shift of the Fermi level survives. Indeed, for jellium $\Omega\,\partial\varepsilon_F/\partial\Omega=-\tfrac23\varepsilon_F$: Bardeen's long-wavelength screened ion is the free-electron deformation potential of Eq. (G.6) below (our check, not stated by Giustino). An insulator screens with a finite $\epsilon$, so a dipolar $1/q$ part can survive: the polar coupling of Eq. (G.7).</p>
+  </div>
+
+  <figure class="viz" id="viz-a-coupling-bardeen">
+    <p class="viz-title"><span>From Bloch to Bardeen: screening the electron–ion vertex</span> <span class="tag">interactive</span></p>
+    <div class="viz-grid two"><div class="plotA"></div><div class="plotB"></div></div>
+    <div class="ctrls"></div>
+    <div class="ro"></div>
+    <figcaption><strong>Model.</strong> Jellium with $Z$ electrons per ion at density $r_s$ ($k_{\rm F}a_0=1.919/r_s$, $k_{\rm TF}^2=4k_{\rm F}/\pi a_0$, $\Omega=Z\tfrac{4\pi}{3}(r_sa_0)^3$); bare point ion $V_\kappa(q)=-4\pi Z\,(14.40\ \text{eV Å})/(\Omega q^2)$; one atom per cell, no umklapp, static screening without xc; Mott–Jones is the bare ion cut at a Wigner–Seitz sphere. Left: $V_0(q)$, with the energy axis scaled to $\varepsilon_F$ (Bloch's constant drawn attractive). Right, same line styles: $|g|=(\hbar/2M\omega_q)^{1/2}\,q\,|V_0|$ for a longitudinal Debye phonon $\omega_q=v_sq$, without $N_p$; beyond $q_D=(6\pi^2/\Omega)^{1/3}$ (shaded) the Debye model is unreliable. Presets: $r_s$ = 2.07, 3.93, 4.86 and $v_s$ = 6400, 3200, 2000 m/s for Al, Na, K (literature values, illustrative). The last readout evaluates Bardeen–Pines screening (G.5) at $q=k_{\rm F}$. <strong>What to notice.</strong> The bare ion gives $|g|\propto q^{-3/2}$, while any finite $V_0(0)$ gives $|g|\propto q^{1/2}$; Thomas–Fermi and Lindhard both tend to $-\tfrac23\varepsilon_F$, but the Mott–Jones cut stays several times deeper (readout). Lindhard screens less than Thomas–Fermi at short wavelengths, and for K its curve shows a small kink at $2k_{\rm F}$, the slope singularity that seeds the Kohn anomalies of <a href="#a-phonon-se">§A.6</a>. Switch to K to see that Bloch's constant has the right size for an alkali metal.</figcaption>
+  </figure>
+
+  <h3>Bardeen–Pines: the first retarded vertex</h3>
+  <p>Bardeen and Pines (1955), following Nakajima (1954), treated the electron–phonon problem field-theoretically for the first time. They found that the potential felt by an electron depends on how fast the ion moves, so the Lindhard function must be evaluated at the phonon frequency (Giustino §II.A.1):</p>
+  <div class="eq">$$ V_0\to V_\kappa(\bq)/\epsilon(q,\omega_{\bq\nu}). \tag{G.5}$$</div>
+  <p>This is the first <em>retarded</em> electron–phonon vertex, where "retarded" means, in Giustino's usage, a frequency-dependent electronic screening. Bardeen and Pines also included screened exchange. Giustino remarks: "Somewhat surprisingly, this development was not followed up in the literature on ab initio calculations of EPIs."</p>
+  <p>For acoustic phonons the static approximation is excellent. With $u=\omega/(qv_F)=v_s/v_F\approx3\times10^{-3}$, the dynamic Lindhard function has ${\rm Re}\,\epsilon(q,\omega)=\epsilon(q,0)+O(u^2)$ and ${\rm Im}\,\epsilon\approx\tfrac{\pi}{2}(k_{\rm TF}/q)^2u$ for $q<2k_{\rm F}$ (standard RPA, not printed by Giustino). The imaginary part is Landau damping by electron–hole pairs: a small phase of the vertex ($3\times10^{-3}$ at $q=k_{\rm F}$ in Al, see the readout) and a phonon linewidth. Dynamic screening matters only when $\omega\gtrsim qv_F$, as for optical phonons at small $q$ in doped semiconductors or graphene (<a href="#a-phonon-se">§A.6</a>).</p>
+
+  <div class="callout connect"><p class="callout-title">Bridge to EPP · the electrostatic precursor</p>
+    <p>Eq. (G.5) is the scalar, longitudinal ancestor of what EPP does. EPP's bare and screened vertices $g^{\rm dyn,0}$ and $g^{\rm dyn}$ (EPP §7.2, Eqs. (E.415)–(E.416)) depend on frequency. For $c\to\infty$ the screened one reduces to the Verdi–Giustino vertex with $\epsilon^\infty$ replaced by a dynamic RPA tensor $\hat\epsilon^{\rm e}(\bq,\omega)$, and the bare one to the same vertex without electronic screening. The replacement $g(\omega)\to g(0)$ that Giustino later makes in the phonon self-energy (<a href="#a-phonon-se">§A.6</a>) discards exactly this dependence, and EPP keeps it (<a href="#b-frohlich">§B.8</a>). In EPP "retardation" also has a second meaning, the finite speed of light in the photon propagator (<a href="#x-light-cone">§X.1</a>).</p>
+  </div>
+
+  <h3>Semiconductors and ionic crystals</h3>
+  <p>In semiconductors the carriers sit near band extrema, so the dominant scattering involves long-wavelength phonons. Bardeen and Shockley (1950) considered long acoustic waves, which look locally like a uniform strain, and showed that $V_0$ can then be replaced by a deformation potential (Giustino §II.A.2):</p>
+  <div class="eq">$$ V_0\to E_{1,n\bk}=\Omega\,\partial\varepsilon_{n\bk}/\partial\Omega . \tag{G.6}$$</div>
+  <p>A local dilation $\Delta\Omega/\Omega$ shifts the band edge by $E_1\Delta\Omega/\Omega$, and with $\omega=v_sq$ this again gives $|g|\propto q^{1/2}$. $E_1$ was fitted to mobility data, so the method "lacks predictive power". In ionic crystals the displacements create long-range electric fields, and Fröhlich, Pelzer and Zienau (1950) found (Giustino §II.A.3)</p>
+  <div class="eq">$$ V_0\to-\left[\frac{e^2M_\kappa\omega^2_{\bq\nu}}{\epsilon_0\Omega}\left(\frac{1}{\epsilon^\infty}-\frac{1}{\epsilon^0}\right)\right]^{1/2}\frac{1}{|\bq|^2}, \tag{G.7}$$</div>
+  <p>with $\epsilon_0$ the vacuum permittivity and $\epsilon^0$, $\epsilon^\infty$ the static and high-frequency relative permittivities. For an LO mode ($\omega_{\bq\nu}=\omega_{\rm LO}$, $\bq\cdot\mathbf e=|\bq|$) the mass cancels against the Bloch prefactor:</p>
+  <div class="eq">$$ |g^{\rm Fr}(\bq)|=\frac{1}{|\bq|}\left[\frac{e^2\hbar\omega_{\rm LO}}{2\epsilon_0\Omega}\left(\frac{1}{\epsilon^\infty}-\frac{1}{\epsilon^0}\right)\right]^{1/2}.$$</div>
+  <p>The $1/q$ survives because an insulator screens with a finite $\epsilon^\infty$ rather than the metallic $(k_{\rm TF}/q)^2$, and $1/\epsilon^\infty-1/\epsilon^0$ is the ionic part of the screening; the singular coupling is what dresses carriers into Fröhlich polarons (<a href="#a-electron-se">§A.7</a>, <a href="#a-temperature">§A.8</a>). <a href="#a-polar">§A.4</a> derives the general Born-charge form (G.180) and ties it to the LO–TO splitting.</p>
+
+  <div class="callout source"><p class="callout-title">Note on the source · Eq. (7)</p>
+    <p>Eq. (G.7) uses $\epsilon_0$ (subscript, vacuum permittivity) next to $\epsilon^0$ (superscript, static relative permittivity), and the sentence after it writes the divergence condition with subscripts, as $\epsilon_0>\epsilon_\infty$; it should read $\epsilon^0>\epsilon^\infty$. Since (G.2) is a one-atom formula, the factor $M_\kappa\omega^2_{\bq\nu}$ in (G.7) only cancels the mass; in a real diatomic crystal the masses enter through the LO eigenvector and still cancel, so the mass-free $|g^{\rm Fr}|$ is the form to use.</p>
+  </div>
+
+  <h3>From Bardeen to DFPT</h3>
+  <p>Pseudopotentials made the rigid-ion approach quantitative beyond the alkali metals: Phillips and Kleinman (1959) turned orthogonality to the cores into a repulsive potential, which Cohen and Heine (1961) showed largely cancels the nuclear attraction, and Sham (1961) showed how to obtain $g$ from local pseudopotentials moving rigidly with their cores, "an improved version of the rigid-ion approximation". Density-functional theory removed the rigid-ion assumption. Chang <i>et al.</i>, Dacorogna, Cohen and Lam (1985–86) computed $g$ as Giustino's Eq. (G.11), identical to (G.38), from frozen phonons in a supercell, "ab initio since only information about the Al atom, i.e., the atomic number and atomic mass, is used as input." The self-consistent $\Delta_{\bq\nu}v^{\rm KS}$ includes the rearrangement of the electronic charge. Density-functional perturbation theory (1987–1992) then delivered it at any $\bq$ from a single unit cell, a saving of order $N_p^2$ (<a href="#a-dfpt">§A.3</a>). Put free electrons back into (G.38) and Bloch, Nordheim and Bardeen reappear (see the derivation above): the century of models is contained in one formula.</p>
+
+  <div class="callout caveat"><p class="callout-title">What is still static and electrostatic</p>
+    <p>Apart from (G.5), every vertex here, DFPT included, uses static screening: $\partial v^{\rm en}$ is frequency independent and phonons are quasistatic (Giustino p. 12). And the screening field is always the instantaneous, longitudinal Coulomb interaction, with no transverse field and no ionic current. Giustino §IV (<a href="#a-hedin-baym">§A.5</a>) lifts the first restriction; the EPP formalism (Part B) lifts the second.</p>
+  </div>
+</section>
+<script>
+(() => {
+  // ---------- Feynman diagrams of Eq. (G.1) ----------
+  const fd = (id, spec) => { const el = document.getElementById(id); if (el) EPP.fd.draw(el, spec); };
+  fd('a-coupling-fd1', { w: 210, h: 124, label: 'First-order electron–phonon vertex: electron nk scatters to mk+q absorbing phonon qν', items: [
+    { t: 'fermion', a: [12, 92], b: [105, 92], label: 'nk', lpos: 'right' },
+    { t: 'fermion', a: [105, 92], b: [198, 92], label: 'mk+q', lpos: 'right' },
+    { t: 'phonon', a: [105, 14], b: [105, 92], label: 'qν', ldist: 16 },
+    { t: 'vertex', at: [105, 92], r: 3.4 },
+    { t: 'text', at: [105, 117], text: 'g', size: 15 },
+  ]});
+  fd('a-coupling-fd2', { w: 210, h: 124, label: 'Second-order Debye–Waller vertex with two phonon lines at one point', items: [
+    { t: 'fermion', a: [12, 92], b: [105, 92], label: 'nk', lpos: 'right' },
+    { t: 'fermion', a: [105, 92], b: [198, 92], label: 'mk+q+q′', lpos: 'right' },
+    { t: 'phonon', a: [56, 16], b: [105, 92], label: 'qν', lpos: 'right', ldist: 17 },
+    { t: 'phonon', a: [154, 16], b: [105, 92], label: 'q′ν′', ldist: 19 },
+    { t: 'vertex', at: [105, 92], r: 3.4 },
+    { t: 'text', at: [105, 119], text: 'g^{DW}', size: 14 },
+  ]});
+  fd('a-coupling-fd3', { w: 170, h: 124, label: 'Debye–Waller tadpole: the two phonon lines of the second-order vertex contracted into a loop', items: [
+    { t: 'fermion', a: [12, 98], b: [85, 98], label: 'nk', lpos: 'right' },
+    { t: 'fermion', a: [85, 98], b: [158, 98], label: 'nk', lpos: 'right' },
+    { t: 'phonon', a: [85, 98], b: [85, 32], bend: 0.5 },
+    { t: 'phonon', a: [85, 32], b: [85, 98], bend: 0.5 },
+    { t: 'vertex', at: [85, 98], r: 3.4 },
+    { t: 'text', at: [85, 70], text: 'qν', color: 'phonon-t', size: 14 },
+  ]});
+
+  // ---------- From Bloch to Bardeen ----------
+  const fig = document.getElementById('viz-a-coupling-bardeen');
+  if (!fig) return;
+  // constants: a0 (Å), Ry (eV), e^2/4πε0 (eV Å), ħ in meV per (m/s · Å^-1), ħ^2/(2 amu) (meV Å^2), Bohr velocity (m/s)
+  const K = { a0: 0.529177, Ry: 13.605693, e2: 14.3996, hbarV: 6.582119569e-3, l2: 2.0901, vB: 2.18769e6, bloch: 27.211386 / 16 };
+  const F = (x) => {
+    if (x < 1e-4) return 1 - x * x / 3;
+    if (Math.abs(x - 1) < 1e-9) return 0.5;
+    return 0.5 + (1 - x * x) / (4 * x) * Math.log(Math.abs((1 + x) / (1 - x)));
+  };
+  // dynamic Lindhard (T = 0), z = q/2kF, u = ω/(q vF), kq2 = (kTF/q)^2 -> [Re ε, Im ε]
+  const epsDyn = (z, u, kq2) => {
+    const L = (a) => (Math.abs(Math.abs(a) - 1) < 1e-12 ? 0 : (1 - a * a) / (8 * z) * Math.log(Math.abs((a + 1) / (a - 1))));
+    const re = 1 + kq2 * (0.5 + L(z - u) + L(z + u));
+    let im = 0;
+    if (z + u < 1) im = kq2 * Math.PI * u / 2;
+    else if (Math.abs(z - u) < 1) im = kq2 * Math.PI / (8 * z) * (1 - (z - u) * (z - u));
+    return [re, im];
+  };
+  const jellium = (rs, Z) => {
+    const kFa0 = 1.91916 / rs, kF = kFa0 / K.a0, eF = kFa0 * kFa0 * K.Ry;
+    const kTF = Math.sqrt(4 * kFa0 / Math.PI) / K.a0;
+    const Om = Z * 4 * Math.PI / 3 * Math.pow(rs * K.a0, 3), Rws = Math.cbrt(Z) * rs * K.a0;
+    return { Z, kF, eF, kTF, Om, Rws, qD: Math.cbrt(6 * Math.PI * Math.PI / Om), vF: kFa0 * K.vB };
+  };
+  const models = (J) => {
+    const VN = (q) => -4 * Math.PI * J.Z * K.e2 / (J.Om * q * q);
+    return {
+      bloch: () => -K.bloch,
+      nord: VN,
+      mj: (q) => { const s = Math.sin(q * J.Rws / 2); return VN(q) * 2 * s * s; },
+      tf: (q) => VN(q) / (1 + (J.kTF / q) * (J.kTF / q)),
+      lind: (q) => VN(q) / (1 + (J.kTF / q) * (J.kTF / q) * F(q / (2 * J.kF))),
+    };
+  };
+  const SER = [
+    { k: 'bloch', label: 'Bloch: constant V_0', color: 'muted', dash: [2, 3] },
+    { k: 'nord', label: 'Nordheim: bare ion', color: 'c5' },
+    { k: 'mj', label: 'Mott–Jones: WS cut', color: 'ink', dash: [8, 4], width: 1.6 },
+    { k: 'tf', label: 'Thomas–Fermi', color: 'c4', dash: [5, 3] },
+    { k: 'lind', label: 'Bardeen: Lindhard (G.3–4)', color: 'electron', width: 2.6 },
+  ];
+  const plotA = new EPP.Plot(fig.querySelector('.plotA'), {
+    xlabel: 'q / k_F', ylabel: 'V_0(q) (eV)', xlim: [0, 3], ylim: [-12, 1], aspect: 0.74, xname: 'q/k_F',
+    hoverY: (v) => EPP.fix(v, 2) + ' eV', hoverX: (v) => EPP.fix(v, 2),
+    ariaLabel: 'Effective potential V0 versus q over kF for the Bloch, Nordheim, Mott–Jones, Thomas–Fermi and Lindhard models',
+  });
+  const plotB = new EPP.Plot(fig.querySelector('.plotB'), {
+    xlabel: 'q / k_F', ylabel: '|g(q)| (meV)', xlim: [0.02, 3], ylim: [1, 1e5], logx: true, logy: true, aspect: 0.74, legend: false,
+    xname: 'q/k_F', hoverY: (v) => EPP.fmt(v, 3) + ' meV', hoverX: (v) => EPP.fix(v, 3),
+    xticks: [0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 3].map(v => ({ v, label: String(v) })),
+    ariaLabel: 'Coupling |g| in meV versus q over kF on log axes for the five models',
+  });
+  const ro = EPP.readout(fig.querySelector('.ro'));
+  const xa = EPP.linspace(0.004, 3, 700);
+  const xb = EPP.linspace(Math.log10(0.02), Math.log10(3), 420).map(t => Math.pow(10, t));
+  const sci = (v, d = 1) => { if (!isFinite(v) || v === 0) return '0'; const e = Math.floor(Math.log10(Math.abs(v))); const m = v / Math.pow(10, e); return `${m.toFixed(d)}×10<sup>${String(e).replace('-', '−')}</sup>`; };
+
+  function draw(s) {
+    const Z = +s.Z || 1, J = jellium(s.rs, Z), m = models(J);
+    const M = Math.max(1, s.M), vs = Math.max(100, s.vs);
+    // left panel: V0(q) in eV, y-axis scaled with εF so the curve shapes stay put while r_s changes
+    const eF = J.eF, lim = -2 / 3 * eF;
+    const layersA = [
+      { type: 'vline', at: 2, color: 'muted', text: '2k_F' },
+      { type: 'hline', at: lim, color: 'electron', dash: [3, 3], text: '−⅔ε_F' },
+    ];
+    SER.forEach(S => layersA.push({ type: 'line', x: xa, y: xa.map(x => m[S.k](x * J.kF)), color: S.color, dash: S.dash, width: S.width, label: S.label }));
+    plotA.draw(layersA, { ylim: [-1.6 * eF, 0.14 * eF] });
+
+    // right panel: |g| in meV for a longitudinal Debye phonon, (G.38) convention (no N_p)
+    const g = (V, q) => { const hw = K.hbarV * vs * q; return 1e3 * Math.sqrt(K.l2 / (M * hw)) * q * Math.abs(V); };
+    const ys = {};
+    SER.forEach(S => { ys[S.k] = xb.map(x => g(m[S.k](x * J.kF), x * J.kF)); });
+    const xD = J.qD / J.kF;
+    const gAt = (k, x) => g(m[k](x * J.kF), x * J.kF);
+    const yN = EPP.clamp(gAt('nord', 0.3) * 4, 3, 6e4);
+    const yS = EPP.clamp(Math.min(gAt('lind', 0.045), gAt('bloch', 0.045)) * 0.32, 1.4, 3e4);
+    const layersB = [
+      { type: 'band', x0: Math.min(xD, 3), x1: 3, color: 'muted', alpha: 0.12, text: 'q > q_D' },
+    ];
+    SER.forEach(S => layersB.push({ type: 'line', x: xb, y: ys[S.k], color: S.color, dash: S.dash, width: S.width, label: S.label }));
+    layersB.push({ type: 'text', x: 0.3, y: yN, text: '∝ q^{−3/2} (bare)', color: 'c5', align: 'left', size: 11.5 });
+    layersB.push({ type: 'text', x: 0.045, y: yS, text: '∝ q^{1/2} (finite V_0)', color: 'muted', align: 'left', size: 11.5 });
+    plotB.draw(layersB);
+
+    // readout: jellium numbers and the Bardeen–Pines (G.5) check at q = kF
+    const u = vs / J.vF, z = 0.5, kq2 = Math.pow(J.kTF / J.kF, 2);
+    const [re, im] = epsDyn(z, u, kq2);
+    const mj0 = -1.5 * Z * K.e2 / J.Rws;
+    ro.set({
+      'k_F': EPP.fix(J.kF, 2) + ' Å<sup>−1</sup>',
+      'k_{TF}': EPP.fix(J.kTF, 2) + ' Å<sup>−1</sup>',
+      'ε_F': EPP.fix(eF, 2) + ' eV',
+      'Ω': EPP.fix(J.Om, 1) + ' Å<sup>3</sup>',
+      '−⅔ε_F': EPP.fix(lim, 2) + ' eV',
+      'V_{MJ}(0)': EPP.fix(mj0, 1) + ' eV',
+      'q_D/k_F': EPP.fix(xD, 2),
+      'v_s/v_F': sci(u, 1),
+      'Im ε/Re ε at k_F (G.5)': sci(im / re, 1),
+    });
+  }
+
+  const P = { Al: { rs: 2.07, Z: '3', M: 26.98, vs: 6400 }, Na: { rs: 3.93, Z: '1', M: 22.99, vs: 3200 }, K: { rs: 4.86, Z: '1', M: 39.10, vs: 2000 } };
+  let last = {};
+  const ui = EPP.controls(fig.querySelector('.ctrls'), [
+    { key: 'preset', type: 'seg', label: 'metal preset', options: [['Al', 'Al'], ['Na', 'Na'], ['K', 'K']], value: 'Al' },
+    { key: 'rs', type: 'range', label: 'density r_s (a_0)', min: 1.5, max: 6, step: 0.01, value: 2.07, fmt: v => v.toFixed(2) },
+    { key: 'Z', type: 'seg', label: 'valence Z', options: [['1', '1'], ['2', '2'], ['3', '3'], ['4', '4']], value: '3' },
+    { key: 'M', type: 'range', label: 'ion mass M (amu)', min: 5, max: 210, step: 0.01, value: 26.98, fmt: v => v.toFixed(1) },
+    { key: 'vs', type: 'range', label: 'sound speed v_s (m/s)', min: 1000, max: 8000, step: 50, value: 6400, fmt: v => v.toFixed(0) },
+  ], (s) => {
+    if (s.preset && s.preset !== last.preset && P[s.preset]) {
+      const p = P[s.preset];
+      ui.set('rs', p.rs, true); ui.set('Z', p.Z, true); ui.set('M', p.M, true); ui.set('vs', p.vs, true);
+    } else if (s.preset && (s.rs !== last.rs || s.Z !== last.Z || s.M !== last.M || s.vs !== last.vs)) {
+      ui.set('preset', '', true);
+    }
+    last = Object.assign({}, s);
+    draw(s);
+  });
+})();
+</script>

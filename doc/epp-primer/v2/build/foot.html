@@ -1,0 +1,208 @@
+<footer class="refs" id="references">
+  <h2>Sources and further reading</h2>
+  <ol>
+    <li>F. Giustino, “Electron-phonon interactions from first principles”, Rev. Mod. Phys. <b>89</b>, 015003 (2017).</li>
+    <li>“Theory of the Electron-Phonon-Photon coupling”, 102-page manuscript (draft v2), the source of Part B.</li>
+    <li>C. Verdi and F. Giustino, “Fröhlich electron-phonon vertex from first principles”, Phys. Rev. Lett. <b>115</b>, 176401 (2015).</li>
+    <li>J. Sjakste, N. Vast, M. Calandra and F. Mauri, Phys. Rev. B <b>92</b>, 054307 (2015).</li>
+    <li>X. Gonze and C. Lee, Phys. Rev. B <b>55</b>, 10355 (1997): Born charges, dielectric tensors and the nonanalytic term of the dynamical matrix.</li>
+    <li>S. Baroni, S. de Gironcoli, A. Dal Corso and P. Giannozzi, Rev. Mod. Phys. <b>73</b>, 515 (2001): density-functional perturbation theory.</li>
+    <li>L. Hedin, Phys. Rev. <b>139</b>, A796 (1965); G. Baym, Ann. Phys. (N.Y.) <b>14</b>, 1 (1961).</li>
+    <li>J. Bardeen and D. Pines, Phys. Rev. <b>99</b>, 1140 (1955); H. Fröhlich, Adv. Phys. <b>3</b>, 325 (1954).</li>
+    <li>K. Huang, Proc. R. Soc. London A <b>208</b>, 352 (1951): phonon polaritons; R. H. Lyddane, R. G. Sachs and E. Teller, Phys. Rev. <b>59</b>, 673 (1941).</li>
+    <li>S. L. Adler, Phys. Rev. <b>126</b>, 413 (1962); N. Wiser, Phys. Rev. <b>129</b>, 62 (1963): microscopic dielectric response.</li>
+    <li>P. B. Allen and V. Heine, J. Phys. C <b>9</b>, 2305 (1976); P. B. Allen and R. C. Dynes, Phys. Rev. B <b>12</b>, 905 (1975).</li>
+    <li>T. Sohier, M. Gibertini, M. Calandra, F. Mauri and N. Marzari, “Breakdown of optical phonons’ splitting in two-dimensional materials”, Nano Lett. <b>17</b>, 3758 (2017).</li>
+    <li>N. S. Rytova, Proc. MSU Phys. Astron. <b>3</b>, 30 (1967); L. V. Keldysh, JETP Lett. <b>29</b>, 658 (1979): screening in thin films.</li>
+  </ol>
+  <p>Literature values that appear in neither source are marked as illustrative where they are used. The main text does not require either source; their notation and equation numbers are given in the footnotes of each section.</p>
+</footer>
+<script>
+(() => {
+  // contents rail: highlight the chapter in view; collapse the mobile contents after a jump
+  const links = [...document.querySelectorAll('.toc a[href^="#"]')];
+  const byId = new Map(links.map(a => [a.getAttribute('href').slice(1), a]));
+  const secs = [...document.querySelectorAll('section.chapter')];
+  let current = null;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) current = e.target.id; });
+    links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  secs.forEach(s => io.observe(s));
+  const det = document.getElementById('toc-details');
+  const mq = matchMedia('(min-width: 1120px)');
+  const sync = () => { if (det) det.open = mq.matches; };
+  sync();
+  try { mq.addEventListener('change', sync); } catch (e) {}
+  links.forEach(a => a.addEventListener('click', () => { if (!mq.matches && det) det.open = false; }));
+  // open the chapter named in the hash
+  const h = location.hash.slice(1);
+  if (h && /^[\w.~-]+$/.test(h)) { const t = document.getElementById(h); if (t) setTimeout(() => t.scrollIntoView(), 50); }
+})();
+</script>
+<script>
+(() => {
+  // Footnote and symbol popovers, the Symbols panel, figure numbers and caption details.
+  // This runs before MathJax typesets the page, so the raw HTML (TeX source) of every note and
+  // glossary entry is captured now and typeset on demand.
+  const raw = new Map(), gl = [];
+  const GREEK = { alpha: 'α', beta: 'β', gamma: 'γ', delta: 'δ', epsilon: 'ε', varepsilon: 'ε', kappa: 'κ', lambda: 'λ', mu: 'μ', nu: 'ν', xi: 'ξ', pi: 'π', rho: 'ρ', sigma: 'σ', tau: 'τ', btau: 'τ', phi: 'φ', varphi: 'φ', chi: 'χ', psi: 'ψ', omega: 'ω', ell: 'ℓ', hbar: 'ħ', Gamma: 'Γ', Phi: 'Φ', tPhi: 'Φ', Omega: 'Ω', Pi: 'Π', Sigma: 'Σ', Xi: 'Ξ', eta: 'η', theta: 'θ' };
+  const wide = matchMedia('(min-width: 720px)');
+  // number the figures of each section in reading order: "Figure A1.3"
+  document.querySelectorAll('section.chapter').forEach(sec => {
+    const tag = (sec.dataset.num || '').replace(/\./g, '');
+    sec.querySelectorAll('figure.viz > .viz-title').forEach((t, k) => {
+      const n = document.createElement('span'); n.className = 'fig-n'; n.textContent = `Figure ${tag}.${k + 1}`;
+      t.prepend(n); t.closest('figure').dataset.fig = `${tag}.${k + 1}`;
+    });
+  });
+  // captions: "What to notice" stays visible; the rest folds into a details element (open on wide screens)
+  document.querySelectorAll('figure.viz figcaption .cap-more').forEach(more => {
+    const d = document.createElement('details'); d.className = 'cap-details'; d.open = wide.matches;
+    const sm = document.createElement('summary'); sm.textContent = 'How to read this figure';
+    more.replaceWith(d); d.append(sm, more);
+  });
+  // number footnote markers by the position of their target in its list, so numbers can never drift
+  document.querySelectorAll('sup.fn a[href^="#"]').forEach(a => {
+    const li = document.getElementById(a.getAttribute('href').slice(1));
+    if (li && li.parentElement) a.textContent = String([...li.parentElement.children].indexOf(li) + 1);
+  });
+  document.querySelectorAll('ol.footnotes > li[id]').forEach(li => raw.set(li.id, { kind: 'note', html: li.innerHTML }));
+  document.querySelectorAll('dl.glossary > dt[id]').forEach(dt => {
+    const dd = dt.nextElementSibling, sec = dt.closest('section.chapter');
+    const e = { kind: 'symbol', id: dt.id, sym: dt.innerHTML, html: dd ? dd.innerHTML : '', first: dt.dataset.first || '',
+      num: sec ? sec.dataset.num : '', title: sec ? sec.dataset.title : '' };
+    const tex = dt.textContent + ' ' + (dd ? dd.textContent : '');
+    e.search = (tex + ' ' + tex.replace(/\\([A-Za-z]+)/g, (m, n) => GREEK[n] || '')).toLowerCase();
+    raw.set(dt.id, e); gl.push(e);
+  });
+  const typeset = (el) => (window.MathJax && MathJax.typesetPromise) ? MathJax.typesetPromise([el]).catch(() => {}) : Promise.resolve();
+
+  // In-page jumps: lazily typeset formulas grow while the page scrolls and push the target down,
+  // so re-align once the scroll has settled.
+  function realign(id) {
+    const t = document.getElementById(id); if (!t) return;
+    let n = 0;
+    const fix = () => { if (Math.abs(t.getBoundingClientRect().top) > 6 && n++ < 4) t.scrollIntoView({ block: 'start', behavior: 'instant' }); };
+    if ('onscrollend' in window) window.addEventListener('scrollend', fix, { once: true });
+    setTimeout(fix, 700); setTimeout(fix, 1600);
+  }
+
+  document.addEventListener('focusin', (ev) => {
+    const el = ev.target; if (!el.closest || !el.closest('main')) return;
+    const fix = () => { if (document.activeElement !== el) return; const r = el.getBoundingClientRect(); if (r.top < 0 || r.bottom > innerHeight - 60) el.scrollIntoView({ block: 'nearest', behavior: 'instant' }); };
+    if ('onscrollend' in window) window.addEventListener('scrollend', fix, { once: true });
+    setTimeout(fix, 700); setTimeout(fix, 1600);
+  });
+
+  let cur = null;
+  let closePanel = () => {};
+  function place(pop, a) {
+    const r = a.getBoundingClientRect(), sx = window.scrollX, sy = window.scrollY, vw = document.documentElement.clientWidth;
+    const w = pop.offsetWidth, h = pop.offsetHeight;
+    const left = Math.max(sx + 12, Math.min(r.left + sx + r.width / 2 - w / 2, sx + vw - w - 12));
+    let top = r.bottom + sy + 8;
+    if (r.bottom + 8 + h > window.innerHeight && r.top - 8 - h > 0) top = r.top + sy - 8 - h;
+    pop.style.left = left + 'px'; pop.style.top = top + 'px';
+  }
+  function close(refocus) {
+    if (!cur) return;
+    if (cur.ro) cur.ro.disconnect();
+    cur.pop.remove(); cur.a.setAttribute('aria-expanded', 'false');
+    if (refocus) cur.a.focus({ preventScroll: true });
+    cur = null;
+  }
+  function open(a, id) {
+    const e = raw.get(id); if (!e) return false;
+    if (cur && cur.a === a) { close(false); return true; }
+    close(false);
+    const pop = document.createElement('div');
+    pop.className = 'pop'; pop.id = 'pop-' + id; pop.setAttribute('role', 'dialog'); pop.tabIndex = -1;
+    pop.setAttribute('aria-label', e.kind === 'note' ? 'Note ' + a.textContent.trim() : 'Symbol');
+    pop.innerHTML = e.kind === 'note'
+      ? `<p class="pop-k">Note ${a.textContent.trim()}</p><div>${e.html}</div>`
+      : `<p class="pop-k">Symbol${e.num ? ' · defined in §' + e.num : ''}</p><div class="pop-sym">${e.sym}</div><div>${e.html}</div>` + (e.first ? `<a class="pop-go" href="#${e.first}">Go to its definition</a>` : '');
+    document.body.appendChild(pop);
+    a.setAttribute('aria-expanded', 'true'); a.setAttribute('aria-controls', pop.id);
+    cur = { pop, a };
+    place(pop, a);
+    if ('ResizeObserver' in window) { cur.ro = new ResizeObserver(() => { if (cur && cur.pop === pop) place(pop, a); }); cur.ro.observe(pop); }
+    typeset(pop).then(() => { if (cur && cur.pop === pop) place(pop, a); });
+    pop.addEventListener('keydown', (ev) => {
+      if (ev.key !== 'Tab') return;
+      const links = [...pop.querySelectorAll('a[href]')];
+      const atEnd = !links.length || document.activeElement === links[links.length - 1];
+      if ((ev.shiftKey && document.activeElement === pop) || (!ev.shiftKey && atEnd)) close(true);
+    });
+    a.setAttribute('aria-haspopup', 'dialog');
+    pop.focus({ preventScroll: true });
+    return true;
+  }
+  document.addEventListener('click', (ev) => {
+    const a = ev.target.closest('sup.fn a, a.sym');
+    if (a) { if (open(a, (a.getAttribute('href') || '').slice(1))) ev.preventDefault(); return; }
+    const go = ev.target.closest('a[href^="#"]');
+    if (go && !go.closest('.toc')) realign(go.getAttribute('href').slice(1));
+    if (cur && (!cur.pop.contains(ev.target) || ev.target.closest('a[href^="#"]'))) close(false);
+  });
+  document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') { if (cur) close(true); else closePanel(); } });
+  window.addEventListener('resize', () => { if (cur) place(cur.pop, cur.a); });
+
+  if (!gl.length) return;
+  const btn = document.createElement('button');
+  btn.className = 'gl-btn'; btn.type = 'button'; btn.textContent = 'Symbols';
+  btn.setAttribute('aria-expanded', 'false'); btn.setAttribute('aria-controls', 'gl-panel'); btn.setAttribute('aria-label', 'Symbols: list of every symbol on this page');
+  const panel = document.createElement('aside');
+  panel.className = 'gl-panel'; panel.id = 'gl-panel'; panel.setAttribute('role', 'dialog'); panel.setAttribute('aria-modal', 'true'); panel.setAttribute('aria-label', 'Symbols');
+  panel.innerHTML = '<header><div class="gl-top"><h2>Symbols</h2><button type="button" class="btn gl-x">Close</button></div>'
+    + '<p>Every symbol this page defines, in order, with a link to its definition. Type to filter; TeX names work too, e.g. Phi or omega.</p>'
+    + '<input type="search" placeholder="Filter symbols" aria-label="Filter symbols"></header><div class="gl-list"></div>';
+  document.body.appendChild(btn); document.body.appendChild(panel);
+  const list = panel.querySelector('.gl-list'), inp = panel.querySelector('input');
+  let built = false;
+  const attr = (s) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+  function build() {
+    let h = '', sec = null;
+    for (const e of gl) {
+      if (e.num !== sec) { sec = e.num; h += `<p class="gl-sec" data-sec="${attr(e.num)}">§${e.num} · ${e.title}</p>`; }
+      h += `<div class="gl-item" data-sec="${attr(e.num)}" data-s="${attr(e.search)}"><div>${e.sym}</div><div class="gl-d">${e.html}`
+        + (e.first ? ` <a class="gl-go" href="#${e.first}">go to definition</a>` : '') + '</div></div>';
+    }
+    list.innerHTML = h; built = true; typeset(list);
+  }
+  const filter = () => {
+    const q = inp.value.trim().toLowerCase();
+    const shown = new Set();
+    list.querySelectorAll('.gl-item').forEach(it => { const ok = !q || it.dataset.s.includes(q); it.hidden = !ok; if (ok) shown.add(it.dataset.sec); });
+    list.querySelectorAll('.gl-sec').forEach(p => { p.hidden = !shown.has(p.dataset.sec); });
+    let none = list.querySelector('.gl-none');
+    if (!none) { none = document.createElement('p'); none.className = 'gl-none'; list.prepend(none); }
+    none.hidden = shown.size > 0; none.textContent = shown.size ? '' : `No symbol matches “${inp.value.trim()}”.`;
+  };
+  function openPanel() { if (!built) build(); panel.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); setTimeout(() => inp.focus({ preventScroll: true }), 60); }
+  closePanel = (refocus = true) => {
+    if (!panel.classList.contains('open')) return;
+    panel.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); if (refocus) btn.focus({ preventScroll: true });
+  };
+  btn.addEventListener('click', () => panel.classList.contains('open') ? closePanel() : openPanel());
+  panel.querySelector('.gl-x').addEventListener('click', () => closePanel());
+  inp.addEventListener('input', filter);
+  // keep Tab inside the open panel
+  panel.addEventListener('keydown', (ev) => {
+    if (ev.key !== 'Tab') return;
+    const f = [...panel.querySelectorAll('button, input, a[href]')].filter(x => !x.closest('[hidden]'));
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (ev.shiftKey && document.activeElement === first) { ev.preventDefault(); last.focus(); }
+    else if (!ev.shiftKey && document.activeElement === last) { ev.preventDefault(); first.focus(); }
+  });
+  list.addEventListener('click', (ev) => { if (ev.target.closest('.gl-go')) { closePanel(false); inp.value = ''; filter(); } });
+  // on phones the floating button steps aside while the reader scrolls down
+  let lastY = window.scrollY;
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (!wide.matches && !panel.classList.contains('open')) btn.classList.toggle('away', y > lastY + 4 && y > 300);
+    if (Math.abs(y - lastY) > 4) lastY = y;
+  }, { passive: true });
+})();
+</script>

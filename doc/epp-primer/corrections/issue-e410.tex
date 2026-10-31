@@ -1,0 +1,265 @@
+% SUPERSEDED (25 Oct 2026) by corrections/EPP_corrections.tex, the single deliverable that merges this
+% correction with issue-phase.tex and issue-efactor.tex. Paste from the merged file, not from this one.
+% Differences in the merged file (Secs. 3 and 5 there):
+%  - one tag convention: (410') is an equation* with \tag and NO \stepcounter here; the merged file states
+%    the pasting rule once (Sec. 1: \stepcounter after each replaced numbered equation);
+%  - j_{alpha sigma}(q) in (410b)-(410h) is stated to be the phase-corrected vertex (p86a') [tagged (385')
+%    in issue-phase.tex; retagged because E.385 is Pi^ion_jj and the vertices are the two unnumbered
+%    displays after it]; the final paragraph of Sec. 7.1.1 refers to (p86a') and (131b) instead of
+%    "the companion correction";
+%  - the polariton region of the unchanged-results list of the phase correction is bounded by q_c (410h);
+%  - the explicit strengths with (p86a'), and the statement that (410d) for cq >> sqrt(eps) omega in the
+%    atom basis is the G = 0 term of (454a), are in merged Sec. 5.3;
+%  - the Sec. 7.3 paragraph is the first of two insertions after (454) (merged Sec. 5.5);
+%  - the subscript slip Omega^0_sigma -> Omega^0_{sigma sigma} in (406) is fixed in place (no tag).
+\noindent\textit{Superseded by \texttt{corrections/EPP\_corrections.tex} (25 October 2026), which merges the three corrections into one document for the authors. This fragment is kept as the reviewed record; the differences are listed in the comments at its top.}\par
+
+% Correction to "Theory of the Electron-Phonon-Photon coupling" (draft v2), Sec. 7.1.
+% Paste-ready fragment: no preamble, needs only amsmath/amssymb. Gaussian units,
+% Born charges Z^* with the dimension of charge, notation and numbering of the manuscript.
+% Corrected equations carry a prime, new equations a letter.
+% Equation counter: the new lettered equations use equation* with \tag, which never steps
+% the counter. The replacement of Eq. (410) is followed by \stepcounter{equation}, so that
+% Eqs. (411)-(472) keep their numbers (see the comment in item 3).
+% Numerical checks: test/corr-e410/check_e410.py.
+
+\subsection*{E.410 is the $q=0$ upper phonon polariton, not the LO--TO splitting}
+
+\paragraph{Problem (pp.~90--91, Sec.~7.1, Eqs.~(406)--(410)).}
+The title of Sec.~7.1 and its first sentence present Eq.~(410) as the LO--TO splitting,
+``completely analogous to the non-analytic dynamical matrix correction done by Quantum Espresso''.
+The algebra of Eqs.~(406)--(410) is correct, but Eq.~(410) is a different limit. It is taken at
+$\mathbf q=0$ for finite $c$, where the vacuum propagator, Eq.~(408), is isotropic. Every polar
+mode, transverse and longitudinal, is therefore shifted by the same
+$\frac{4\pi}{\Omega_{\rm uc}}\sum_\alpha|j_{\alpha\sigma}|^2$, and there is no LO--TO splitting at
+this point. Eq.~(410) is the $\mathbf q\to0$ end point of the upper phonon polariton (Huang) of a
+crystal without electrons. The standard non-analytic term that Quantum Espresso adds to the
+dynamical matrix is
+$\propto|\hat{\mathbf q}\cdot\mathbf j_\sigma|^2/(\hat{\mathbf q}\cdot\hat\epsilon^\infty\cdot\hat{\mathbf q})$:
+it leaves the TO modes unshifted and carries $1/\epsilon_\infty$. Its counterpart in the manuscript
+is Eq.~(454), obtained with $c\to\infty$ taken first and the electrons resummed into $D^{\rm e}$.
+Two separate questions are involved and must be kept apart.
+(a)~\emph{Order of limits.} For the longitudinal mode, Eq.~(410) is the unscreened LO frequency
+whichever limit is taken first, and coincides with Eq.~(454) for $\epsilon_\infty=1$. The order of limits changes
+only the transverse modes, which at $\mathbf q\to0$ and finite $c$ are degenerate with the
+longitudinal one.
+(b)~\emph{Screening.} For GaAs, Eq.~(410) gives $\approx56$~meV, against the measured LO energy of
+36.2~meV. This gap comes from the electron-free approximation, which Sec.~7.1 states (``Suppose
+that we neglect the interaction with electrons''), not from the order of limits: with electrons,
+the same $\mathbf q\to0$, finite-$c$ limit puts all three polar modes at 35.9~meV [Eq.~(410e) below].
+
+\paragraph{What changes, what does not.}
+No displayed equation is algebraically wrong, and no later equation uses Eq.~(410), so no
+downstream equation inherits a change. \emph{Changed:} the title of Sec.~7.1, its opening
+sentences, the sentences around Eqs.~(406)--(410) (including two photon/phonon slips), the label
+of Eq.~(410) [now (410$'$)], a new paragraph and a new Sec.~7.1.1 with Eqs.~(410a)--(410h) after
+Eq.~(410), and the title of Sec.~7.3 together with one paragraph after Eq.~(454).
+\emph{Unchanged:} Eqs.~(406)--(409), apart from the subscript slip in (406) noted in item~2;
+Eqs.~(411)--(454) (the electrodynamic vertices and the electrostatic phonon self-energy);
+Eqs.~(455)--(459) and the $z$-dependent Dyson equation on p.~100, which are the general,
+finite-$c$ transcription to 2D; the electrostatic Eqs.~(460)--(472) of Sec.~8.1, which do not
+describe $Q\lesssim\omega/c$ but need no change; and the classical discussion of pp.~33--35,
+Eqs.~(159)--(165), which assumes $\nabla\times\mathbf E=0$ and is the electrostatic picture.
+
+\paragraph{1. Title of Sec.~7.1 (p.~90).}
+Replace ``Lowest self-energy correction and LO-TO splitting'' by
+``Lowest self-energy correction and the phonon polariton at $\mathbf q=0$''.
+
+\paragraph{2. Opening of Sec.~7.1 (p.~90).}
+Replace ``This procedure is completely analogous to the non-analytic dynamical matrix correction
+done by Quantum Espresso. Let's continue with the diagonal approximation. Suppose that we neglect
+the interaction with electrons, then'' by:
+\begin{quote}
+The self-energy (399) describes how the long-range electromagnetic field of the Born-charge
+dipoles of a polar mode acts back on the bare, short-range phonons. In this respect it plays the
+role of the standard non-analytic correction that Quantum Espresso adds to the DFPT dynamical
+matrix [\textit{P.~Giannozzi, S.~de~Gironcoli, P.~Pavone and S.~Baroni, Phys.\ Rev.\ B}
+\textbf{43}, 7231 (1991); \textit{S.~Baroni, S.~de~Gironcoli, A.~Dal~Corso and P.~Giannozzi,
+Rev.\ Mod.\ Phys.} \textbf{73}, 515 (2001); \textit{X.~Gonze and C.~Lee, Phys.\ Rev.\ B}
+\textbf{55}, 10355 (1997)]. Here, however, the field is retarded, and the result depends on the
+order in which the limits $\mathbf q\to0$ and $c\to\infty$ are taken. We first evaluate the
+lowest, electron-free correction at $\mathbf q=0$ for finite $c$. General $\mathbf q$ and
+electronic screening follow in Sec.~7.1.1, and the electrostatic limit, which gives the
+non-analytic correction, in Sec.~7.3. We keep the diagonal approximation and neglect the
+interaction with electrons, so that
+\end{quote}
+(Two slips in the next lines: after the display, ``the photon self-energy is'' should read ``the
+phonon self-energy is'', with $\Omega^0_{\sigma\sigma}$ instead of $\Omega^0_\sigma$ on the left of
+Eq.~(406); and before Eq.~(407), ``the new corrected photon energy satisfy'' should read ``the new
+corrected phonon energy satisfies''.)
+
+\paragraph{3. Around Eqs.~(408)--(410) (p.~91).}
+Replace ``After the photon propagator (375) in optical limit $\mathbf q=0$'' by ``After the photon
+propagator (375), evaluated at $\mathbf q=0$ for finite $c$, i.e.\ deep inside the light cone
+($cq\ll\omega$), where it is isotropic,''. Replace ``From this is then possible to explicitly
+derive the phonon energy correction in the optical limit'' by ``The pole condition (407) then
+gives, for $\mathbf q\to0$ at finite $c$ and without electrons,'' and write Eq.~(410) as
+% Counter: equation* + \tag does not step the equation counter, so \stepcounter{equation}
+% below keeps Eqs. (411)-(472) at their printed numbers. Equivalent alternative: keep the
+% original \begin{equation} ... \end{equation} and add \tag{410$'$} inside it (amsmath's
+% equation environment steps the counter even when \tag is given). If the manuscript numbers
+% its equations by hand, delete the \stepcounter line.
+\begin{equation*}
+\tilde\omega^2_\sigma(\mathbf q\to0)\Big|_{c\ \text{finite}}
+=\omega^2_\sigma(\mathbf q=0)+\frac{4\pi}{\Omega_{\rm uc}}\sum_\alpha\big|j_{\alpha\sigma}(\mathbf q=0)\big|^2 .
+\tag{410$'$}
+\end{equation*}
+\stepcounter{equation}
+
+\paragraph{4. Insert after Eq.~(410$'$) (p.~91).}
+\begin{quote}
+Equation (410$'$) is not the LO--TO splitting. Because $D^0(\mathbf q=0,\omega)$ is isotropic,
+transverse and longitudinal polar modes are shifted by the same amount, so there is no splitting
+at this point, and since electrons are absent the shift is unscreened ($\epsilon_\infty=1$).
+Equation (410$'$) is the common $\mathbf q\to0$ frequency of the longitudinal mode and of the
+upper transverse phonon polariton [\textit{K.~Huang, Proc.\ R.\ Soc.\ Lond.\ A} \textbf{208}, 352
+(1951)] of a crystal without electrons; the lower polariton branch is photon-like and tends to
+$\omega=0$. The LO--TO splitting given by the standard non-analytic correction, a term
+$\propto|\hat{\mathbf q}\cdot\mathbf j_\sigma|^2/(\hat{\mathbf q}\cdot\hat\epsilon^\infty\cdot\hat{\mathbf q})$,
+leaves the TO modes unshifted and carries $1/\epsilon_\infty$. Its counterpart here is Eq.~(454),
+obtained with $c\to\infty$ taken first and the electrons resummed into $D^{\rm e}$. For the
+longitudinal mode alone the two agree when $\epsilon_\infty=1$: Eq.~(410$'$) is then the
+electron-free LO frequency, whichever limit is taken first. Both limits, and the separate role of
+electronic screening, follow from one formula, derived next.
+\end{quote}
+
+\noindent New Sec.~7.1.1, \emph{Finite $\mathbf q$, electronic screening and the order of limits}:
+\begin{quote}
+Keep $\mathbf q$ finite, write $\hat{\mathbf q}=\mathbf q/q$, and model the electrons of an
+insulator by the low-frequency, $\mathbf G=0$ form of the correlator (383),
+$\Pi^{\rm e,0}_{jj\mu\nu}(\mathbf q,\omega)\simeq\frac{(\epsilon_\infty-1)\,\omega^2}{4\pi c}\,\delta_{\mu\nu}$,
+so that $\hat{\mathbf q}\cdot\hat\epsilon^{\rm e}\cdot\hat{\mathbf q}=\epsilon_\infty$ in Eq.~(432).
+The longitudinal and transverse projections of Eq.~(375) are $-4\pi c/\omega^2$ and
+$-4\pi c/(\omega^2-c^2q^2)$, the two blocks decouple, and the Dyson equation (388) gives
+\begin{equation*}
+D^{\rm e}_{\mu\nu}(\mathbf q,\omega)=-4\pi c\left[\frac{\hat q_\mu\hat q_\nu}{\epsilon_\infty\,\omega^2}
++\frac{\delta_{\mu\nu}-\hat q_\mu\hat q_\nu}{\epsilon_\infty\,\omega^2-c^2q^2}\right].
+\tag{410a}
+\end{equation*}
+For $\epsilon_\infty=1$ this is Eq.~(375). For an anisotropic tensor $\hat\epsilon^\infty$,
+$D^{\rm e}_{\mu\nu}=-4\pi c\,(\Lambda^{-1})_{\mu\nu}$ with the Maxwell matrix
+$\Lambda_{\mu\nu}(\mathbf q,\omega)=\omega^2\epsilon^\infty_{\mu\nu}-c^2(q^2\delta_{\mu\nu}-q_\mu q_\nu)$.
+Inserting (410a) and the vertices (392) in Eq.~(399) gives
+\begin{equation*}
+\Omega^{\rm e}_{\sigma\sigma}(\mathbf q,\omega)=\frac{2\pi\hbar}{\Omega_{\rm uc}\,\omega_\sigma(\mathbf q)}
+\left[\frac{|\hat{\mathbf q}\cdot\mathbf j_\sigma|^2}{\epsilon_\infty}
++\frac{\omega^2\,|(1-\hat{\mathbf q}\hat{\mathbf q})\cdot\mathbf j_\sigma|^2}{\epsilon_\infty\,\omega^2-c^2q^2}\right],
+\tag{410b}
+\end{equation*}
+with $|\hat{\mathbf q}\cdot\mathbf j_\sigma|^2=\big|\sum_\alpha\hat q_\alpha j_{\alpha\sigma}(\mathbf q)\big|^2$ and
+$|(1-\hat{\mathbf q}\hat{\mathbf q})\cdot\mathbf j_\sigma|^2=\sum_\alpha|j_{\alpha\sigma}(\mathbf q)|^2-|\hat{\mathbf q}\cdot\mathbf j_\sigma|^2$.
+For $\epsilon_\infty=1$, (410b) is $\Omega^0_{\sigma\sigma}$ of Eq.~(406); the difference is
+$\Delta\Omega^{\rm e}_{\sigma\sigma}$ of Eq.~(402), which at $\mathbf q=0$ equals
+$\frac{2\pi\hbar}{\Omega_{\rm uc}\omega_\sigma}(\epsilon_\infty^{-1}-1)\sum_\alpha|j_{\alpha\sigma}|^2<0$.
+The poles of Eq.~(405) satisfy
+\begin{equation*}
+\omega^2=\omega^2_\sigma(\mathbf q)+\frac{4\pi}{\Omega_{\rm uc}}
+\left[\frac{|\hat{\mathbf q}\cdot\mathbf j_\sigma|^2}{\epsilon_\infty}
++\frac{\omega^2\,|(1-\hat{\mathbf q}\hat{\mathbf q})\cdot\mathbf j_\sigma|^2}{\epsilon_\infty\,\omega^2-c^2q^2}\right].
+\tag{410c}
+\end{equation*}
+Without the diagonal approximation, the $3s\times3s$ Dyson equation (398) gives instead
+\begin{equation*}
+\det\left[(\omega^2-\omega^2_\sigma)\,\delta_{\sigma\sigma'}
+-\frac{4\pi\omega^2}{\Omega_{\rm uc}}\sum_{\alpha\beta}j^*_{\alpha\sigma}(\mathbf q)\,(\Lambda^{-1})_{\alpha\beta}\,j_{\beta\sigma'}(\mathbf q)\right]=0 .
+\tag{410d}
+\end{equation*}
+For a single polar mode, or for degenerate modes chosen with mutually orthogonal
+$\mathbf j_\sigma$ along or across $\hat{\mathbf q}$ (isotropic $\epsilon_\infty$), (410d) reduces
+to (410c). The longitudinal term of (410c) contains no $c$: the LO frequency is not retarded. The
+transverse term contains $c$ and $q$ only through $cq$, so the limits $\mathbf q\to0$ and
+$c\to\infty$ do not commute. For $\mathbf q\to0$ at finite $c$,
+\begin{equation*}
+\tilde\omega^2_\sigma=\omega^2_\sigma+\frac{4\pi}{\Omega_{\rm uc}\,\epsilon_\infty}\sum_\alpha|j_{\alpha\sigma}|^2 ,
+\tag{410e}
+\end{equation*}
+while for $cq\gg\sqrt{\epsilon_\infty}\,\omega$
+\begin{equation*}
+\begin{aligned}
+\tilde\omega^2_\sigma(\mathbf q)&=\omega^2_\sigma(\mathbf q)+\frac{4\pi}{\Omega_{\rm uc}\,\epsilon_\infty}\,|\hat{\mathbf q}\cdot\mathbf j_\sigma|^2\\
+&=\omega^2_\sigma(\mathbf q)+\frac{W^{\rm e}(\mathbf q,0)}{\Omega_{\rm uc}}\Big|\sum_\alpha q_\alpha j_{\alpha\sigma}(\mathbf q)\Big|^2 .
+\end{aligned}
+\tag{410f}
+\end{equation*}
+Eq.~(410e) is isotropic and reduces to Eq.~(410$'$) for $\epsilon_\infty=1$. Eq.~(410f), with
+$W^{\rm e}(\mathbf q,0)=4\pi/(q^2\epsilon_\infty)$, is Eq.~(454); with a tensor $\hat\epsilon^\infty$
+it becomes $4\pi|\hat{\mathbf q}\cdot\mathbf j_\sigma|^2/(\Omega_{\rm uc}\,\hat{\mathbf q}\cdot\hat\epsilon^\infty\cdot\hat{\mathbf q})$,
+the standard non-analytic term, and in that limit (410d) is the mode-basis form of the dynamical
+matrix plus the non-analytic correction. For a longitudinal mode the two limits give the same
+frequency; they differ only for the transverse modes. For a cubic diatomic crystal
+($Z^*_{\rm a}=-Z^*_{\rm b}=Z^*$, $\sum_\alpha|j_{\alpha\sigma}|^2=Z^{*2}/M$ for each optical
+mode, $M$ the reduced mass, $\omega_p^2=4\pi Z^{*2}/(\Omega_{\rm uc}M)$ the ionic plasma
+frequency defined after Eq.~(152), p.~33), (410c) gives one longitudinal mode and two transverse
+polariton branches,
+\begin{equation*}
+\begin{gathered}
+\omega^2_{\rm L}=\omega^2_\sigma+\frac{\omega_p^2}{\epsilon_\infty},\qquad
+c^2q^2=\omega^2\epsilon(\omega),\quad \epsilon(\omega)=\epsilon_\infty+\frac{\omega_p^2}{\omega^2_\sigma-\omega^2},\\
+\omega^2_\pm=\frac{B\pm\sqrt{B^2-4\epsilon_\infty c^2q^2\omega^2_\sigma}}{2\epsilon_\infty},\qquad B=\epsilon_\infty\omega^2_{\rm L}+c^2q^2 .
+\end{gathered}
+\tag{410g}
+\end{equation*}
+At $\mathbf q\to0$, $\omega_+\to\omega_{\rm L}$ and $\omega_-\to0$; for $cq\gg\sqrt{\epsilon_\infty}\,\omega_\sigma$,
+$\omega_-\to\omega_\sigma=\omega_{\rm TO}$ and $\omega_{\rm L}=\omega_{\rm LO}$. The crossover
+between the two regimes is at
+\begin{equation*}
+q_c=\frac{\sqrt{\epsilon_\infty}\,\omega}{c},\qquad \omega\simeq\omega_\sigma .
+\tag{410h}
+\end{equation*}
+For GaAs ($Z^*=2.07\,|e|$, $\Omega_{\rm uc}=45.2$~\AA$^3$, $M=36.1$~amu, $\epsilon_\infty=10.9$,
+$\hbar\omega_{\rm TO}=33.3$~meV, $\hbar\omega_{\rm LO}=36.2$~meV; literature values) one finds
+$\hbar\omega_p=44.6$~meV. With $\omega_\sigma(0)=\omega_{\rm TO}$, since the $\mathbf G=0$
+treatment has no Lorentz local-field term, Eq.~(410$'$) gives 55.6~meV, (410e) gives 35.9~meV
+for all three polar modes, and (410f) gives LO at 35.9~meV and TO at 33.3~meV. The difference
+between 55.6 and 35.9~meV is electronic screening; the order of limits decides only whether the
+transverse modes share the shift. The crossover is $q_c=5.6\times10^{-5}$~\AA$^{-1}$, about
+$5\times10^{-5}$ of $2\pi/a$. At $q=10\,q_c$ the TO mode lies only 0.03~meV below
+$\omega_{\rm TO}$. Except for $q\lesssim q_c$, retardation is therefore negligible, and the
+electrostatic result (454) applies within the manuscript's $\mathbf G=0$ treatment (in the
+diagonal approximation; for mixed polar modes, the $c\to\infty$ limit of (410d)). At finite
+$\mathbf q$, $j_{\alpha\sigma}(\mathbf q)$ must carry the basis phase
+$e^{-i\mathbf q\cdot\mathbf r^0_a}$ [Eq.~(385$'$) of the companion correction on the basis
+phase]; otherwise (410c) gives the acoustic modes a spurious, cell-dependent dipolar shift.
+Eq.~(410$'$) and its screened form (410e) describe the polariton region $q\lesssim q_c$
+($q\lesssim\omega/c$ without electrons), probed by infrared spectroscopy and near-forward
+(polariton) Raman scattering. Visible-light backscattering Raman probes
+$q\approx10^{-2}$~\AA$^{-1}$, more than $10^2\,q_c$, and sees the split TO and LO of (410f). In
+the polariton region the direction dependence of the electrostatic term at $\Gamma$ is lifted by
+retardation.
+\end{quote}
+
+\paragraph{5. Sec.~7.3 (p.~99).}
+Title: ``Phonon's self-energy in electrostatic limit and the LO--TO splitting''. After the
+sentence that follows Eq.~(454), i.e.\ after ``\ldots\ Nano Lett.\ \textbf{17}, 3758 (2017).'',
+insert:
+\begin{quote}
+With $W^{\rm e}(\mathbf q,0)=4\pi/(\mathbf q\cdot\hat\epsilon^\infty\cdot\mathbf q)$, Eq.~(454) is
+the standard non-analytic term that Quantum Espresso adds to the DFPT dynamical matrix
+(references in Sec.~7.1). It shifts only modes with $\hat{\mathbf q}\cdot\mathbf j_\sigma\neq0$,
+and the shift is reduced by the factor $1/(\hat{\mathbf q}\cdot\hat\epsilon^\infty\cdot\hat{\mathbf q})$
+relative to the unscreened one. It is the $cq\gg\sqrt{\epsilon_\infty}\,\omega$ limit (410f) of
+Eq.~(410c), whereas Eq.~(410$'$) is its electron-free $\mathbf q\to0$ limit at finite $c$.
+\end{quote}
+
+\paragraph{Justification.}
+Equations (410a)--(410d) use only the manuscript's definitions. (410a) solves Eq.~(388) with
+Eq.~(375). (410b) is Eq.~(399) with the vertices (392). (410c) is the pole condition of Eq.~(405),
+and (410d) follows from Eq.~(398). The checks are as follows.
+(i)~Dimensions: in Gaussian units $[Z^{*2}]$ is energy$\times$length, so
+$\frac{4\pi}{\Omega_{\rm uc}}|j_{\alpha\sigma}|^2$ is a squared frequency, $\Omega^{\rm e}$ an energy and
+$q_c$ an inverse length.
+(ii)~$\epsilon_\infty=1$, $\mathbf q\to0$ reproduces Eqs.~(408)--(410).
+(iii)~$c\to\infty$ reproduces Eqs.~(446), (452) and (454), and with a tensor $\hat\epsilon^\infty$
+the standard non-analytic term.
+(iv)~The transverse roots obey Huang's $c^2q^2=\omega^2\epsilon(\omega)$ and the
+Lyddane--Sachs--Teller relation $\epsilon(0)/\epsilon_\infty=\omega_{\rm L}^2/\omega_\sigma^2$.
+(v)~The Verdi--Giustino vertex [Giustino, Rev.\ Mod.\ Phys.\ \textbf{89}, 015003 (2017), Eq.~(180);
+SI with dimensionless $Z^*$, so $Z^*_{\rm here}=|e|Z^*_{\rm Giustino}$ and
+$e^2/4\pi\varepsilon_0\to e^2$] equals the Fr\"ohlich coupling, $\propto[1/\epsilon_\infty-1/\epsilon(0)]$,
+if and only if $\omega_{\rm LO}^2-\omega_{\rm TO}^2=\omega_p^2/\epsilon_\infty$, whether $\epsilon(0)$
+is taken from the Lyddane--Sachs--Teller relation or from $\epsilon(0)=\epsilon_\infty+\omega_p^2/\omega_{\rm TO}^2$.
+This is the screened, unretarded L-mode shift of (410c), which holds at every $\mathbf q$, i.e.\
+for (410e) and (410f) alike. The unscreened shift of Eq.~(410) satisfies it only for
+$\epsilon_\infty=1$, i.e.\ within its own electron-free model. The check therefore tests the
+screening of the shift, not the order of limits.
+Each of these checks, and the GaAs numbers above, was also verified numerically.
