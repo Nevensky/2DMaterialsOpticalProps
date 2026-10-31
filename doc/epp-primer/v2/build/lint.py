@@ -58,6 +58,11 @@ ITALIC = [
     (r'\^\{(ion|ph|e|para|dia|SC|KS|xc|dd|sr)\}', 'italic label superscript: use \\mathrm{...} or the v2 macro'),
 ]
 
+SCRIPT_RESERVED = [
+    (r'D\^\{?dm|Δτ|N_p\b|M_0\b|Ω\^2|Ω_\{?uc', 'source-only symbol in a figure string'),
+    (r'σ(?![_]?\{?xx|_\{?αβ)', 'sigma is reserved for the conductivity (use u_rms for an rms displacement)'),
+]
+
 def sentence_at(text, pos):
     a = max(text.rfind('. ', 0, pos), text.rfind('\n', 0, pos), 0)
     b = text.find('. ', pos); b = len(text) if b < 0 else b + 1
@@ -68,10 +73,11 @@ SKIP_CMDS = {'frac', 'sum', 'qquad', 'quad', 'text', 'left', 'right', 'big', 'Bi
              'partial', 'sqrt', 'ee', 'ii', 'dd', 'le', 'ge', 'lt', 'gt', 'neq', 'simeq', 'equiv', 'pm', 'to', 'infty', 'Longleftrightarrow',
              'underbrace', 'displaystyle', 'tag', 'pmatrix', 'gathered', 'aligned', 'substack', 'smallmatrix', 'bmatrix', 'langle', 'rangle',
              'cos', 'sin', 'coth', 'det', 'Re', 'Im', 'exp', 'ln', 'log', 'delta', 'dagger', 'ell', 'kappa', 'alpha', 'beta', 'nu', 'mu', 'gamma',
-             'over', 'mathbf', 'boldsymbol', 'operatorname', 'times', 'approx', 'hbar', 'pi', 'kB', 'hat', 'tilde', 'circ', 'prime', 'in', 'notin'}
+             'over', 'mathbf', 'boldsymbol', 'operatorname', 'times', 'approx', 'hbar', 'pi', 'kB', 'hat', 'tilde', 'circ', 'prime', 'in', 'notin',
+             'tfrac', 'mathsf', 'ddot', 'dot', 'll', 'gg', 'mp', 'propto', 'arg', 'Delta', 'int', 'lesssim', 'gtrsim', 'quad', 'big', 'Big', 'bigg', 'vert', 'mid'}
 
 def main():
-    files = sorted(glob.glob(os.path.join(secdir, '*.html')))
+    files = sorted(glob.glob(os.path.join(secdir, '*.html'))) + [os.path.join(V, 'build', 'hero.html')]
     problems, inventory, seen = [], [], set()
     for f in files:
         raw = expand(open(f).read(), os.path.dirname(f))
@@ -91,6 +97,10 @@ def main():
         ids = set(re.findall(r'\bid="([^"]+)"', raw))
         for gid, first in re.findall(r'<dt id="(gl-[^"]+)" data-first="([^"]*)"', raw):
             if first and first not in ids: problems.append((name, 'glossary', f'{gid}: data-first="{first}" has no element with that id'))
+        for sc in re.findall(r'<script\b[^>]*>(.*?)</script>', raw, flags=re.S):
+            for lit in re.findall(r"'(?:[^'\\\n]|\\.)*'|\"(?:[^\"\\\n]|\\.)*\"|`[^`]*`", sc):
+                for pat, msg in SCRIPT_RESERVED:
+                    if re.search(pat, lit): problems.append((name, 'script string', f'{msg}  [{lit[:60]}]'))
         main_text = strip_blocks(raw)
         plain = html.unescape(re.sub(r'<[^>]+>', ' ', main_text))
         for m in MATH.finditer(main_text):
@@ -106,7 +116,7 @@ def main():
                 tex = re.sub(r'\\(begin|end|text|mathrm|tag|operatorname)\{[^{}]*\}', ' ', tex)
                 for t in TOKEN.finditer(tex):
                     tok = re.sub(r'\s+', '', t.group(0))
-                    base = re.sub(r'_.*', '', tok).lstrip('\\')
+                    tok = re.sub(r'^\\hat\s*', '', tok); base = re.sub(r'_.*', '', tok).lstrip('\\')
                     if base in SKIP_CMDS or tok in seen: continue
                     seen.add(tok)
                     ctx_plain = html.unescape(re.sub(r'<[^>]+>', ' ', main_text[max(0, m.start() - 300):m.end() + 200]))
@@ -114,9 +124,20 @@ def main():
     for p in problems: print(' | '.join(p))
     print(f'{len(problems)} problem(s) in {len(files)} fragment(s)')
     if inv_out:
+        gl_tex = ' '.join(t for f in files for t in re.findall(r'<dt id="gl-[^"]*"[^>]*>(.*?)</dt>', expand(open(f).read(), os.path.dirname(f)), flags=re.S))
+        gl_tex = re.sub(r'\s+', '', gl_tex)
+        ALLOW = {'x', 'y', 'z', 't', 'f', 'i', 'A', 'B', 'C', 'X', 'P', 'L', 'T_x', 'O'}
+        uncovered = []
+        for name, tok, ctx in inventory:
+            base = re.sub(r'_.*', '', tok)
+            if tok in gl_tex or base in gl_tex or base.lstrip('\\') in ALLOW: continue
+            uncovered.append((name, tok, ctx))
         with open(inv_out, 'w') as fh:
             fh.write('# Symbol inventory (first appearance in reading order)\n\n')
             for name, tok, ctx in inventory: fh.write(f'- `{tok}` ({name}): {ctx}\n')
+            fh.write('\n# Warnings: symbols in the main text with no glossary entry\n\n')
+            for name, tok, ctx in uncovered: fh.write(f'- `{tok}` ({name}): {ctx[:160]}\n')
+        print(f'{len(uncovered)} symbol(s) without a glossary entry (warnings, see {inv_out})')
         print(f'wrote {inv_out}: {len(inventory)} symbols')
     return 1 if problems else 0
 

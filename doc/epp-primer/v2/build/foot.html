@@ -42,9 +42,11 @@
 </script>
 <script>
 (() => {
-  // Footnote and symbol popovers, and the Symbols panel. This runs before MathJax typesets the page,
-  // so the raw HTML (TeX source) of every note and glossary entry is captured now and typeset on demand.
+  // Footnote and symbol popovers, the Symbols panel, figure numbers and caption details.
+  // This runs before MathJax typesets the page, so the raw HTML (TeX source) of every note and
+  // glossary entry is captured now and typeset on demand.
   const raw = new Map(), gl = [];
+  const wide = matchMedia('(min-width: 720px)');
   // number the figures of each section in reading order: "Figure A1.3"
   document.querySelectorAll('section.chapter').forEach(sec => {
     const tag = (sec.dataset.num || '').replace(/\./g, '');
@@ -52,6 +54,12 @@
       const n = document.createElement('span'); n.className = 'fig-n'; n.textContent = `Figure ${tag}.${k + 1}`;
       t.prepend(n); t.closest('figure').dataset.fig = `${tag}.${k + 1}`;
     });
+  });
+  // captions: "What to notice" stays visible; the rest folds into a details element (open on wide screens)
+  document.querySelectorAll('figure.viz figcaption .cap-more').forEach(more => {
+    const d = document.createElement('details'); d.className = 'cap-details'; d.open = wide.matches;
+    const sm = document.createElement('summary'); sm.textContent = 'How to read this figure';
+    more.replaceWith(d); d.append(sm, more);
   });
   // number footnote markers by the position of their target in its list, so numbers can never drift
   document.querySelectorAll('sup.fn a[href^="#"]').forEach(a => {
@@ -67,6 +75,17 @@
     raw.set(dt.id, e); gl.push(e);
   });
   const typeset = (el) => (window.MathJax && MathJax.typesetPromise) ? MathJax.typesetPromise([el]).catch(() => {}) : Promise.resolve();
+
+  // In-page jumps: lazily typeset formulas grow while the page scrolls and push the target down,
+  // so re-align once the scroll has settled.
+  function realign(id) {
+    const t = document.getElementById(id); if (!t) return;
+    let n = 0;
+    const fix = () => { if (Math.abs(t.getBoundingClientRect().top) > 6 && n++ < 4) t.scrollIntoView({ block: 'start', behavior: 'instant' }); };
+    if ('onscrollend' in window) window.addEventListener('scrollend', fix, { once: true });
+    setTimeout(fix, 700); setTimeout(fix, 1600);
+  }
+
   let cur = null;
   let closePanel = () => {};
   function place(pop, a) {
@@ -77,13 +96,20 @@
     if (r.bottom + 8 + h > window.innerHeight && r.top - 8 - h > 0) top = r.top + sy - 8 - h;
     pop.style.left = left + 'px'; pop.style.top = top + 'px';
   }
-  function close() { if (!cur) return; cur.pop.remove(); cur.a.setAttribute('aria-expanded', 'false'); cur = null; }
+  function close(refocus) {
+    if (!cur) return;
+    if (cur.ro) cur.ro.disconnect();
+    cur.pop.remove(); cur.a.setAttribute('aria-expanded', 'false');
+    if (refocus) cur.a.focus({ preventScroll: true });
+    cur = null;
+  }
   function open(a, id) {
     const e = raw.get(id); if (!e) return false;
-    if (cur && cur.a === a) { close(); return true; }
-    close();
+    if (cur && cur.a === a) { close(false); return true; }
+    close(false);
     const pop = document.createElement('div');
-    pop.className = 'pop'; pop.id = 'pop-' + id; pop.setAttribute('role', 'note');
+    pop.className = 'pop'; pop.id = 'pop-' + id; pop.setAttribute('role', 'dialog'); pop.tabIndex = -1;
+    pop.setAttribute('aria-label', e.kind === 'note' ? 'Note ' + a.textContent.trim() : 'Symbol');
     pop.innerHTML = e.kind === 'note'
       ? `<p class="pop-k">Note ${a.textContent.trim()}</p><div>${e.html}</div>`
       : `<p class="pop-k">Symbol${e.num ? ' · defined in §' + e.num : ''}</p><div class="pop-sym">${e.sym}</div><div>${e.html}</div>` + (e.first ? `<a class="pop-go" href="#${e.first}">Go to its definition</a>` : '');
@@ -91,23 +117,27 @@
     a.setAttribute('aria-expanded', 'true'); a.setAttribute('aria-controls', pop.id);
     cur = { pop, a };
     place(pop, a);
+    if ('ResizeObserver' in window) { cur.ro = new ResizeObserver(() => { if (cur && cur.pop === pop) place(pop, a); }); cur.ro.observe(pop); }
     typeset(pop).then(() => { if (cur && cur.pop === pop) place(pop, a); });
+    pop.focus({ preventScroll: true });
     return true;
   }
   document.addEventListener('click', (ev) => {
     const a = ev.target.closest('sup.fn a, a.sym');
     if (a) { if (open(a, (a.getAttribute('href') || '').slice(1))) ev.preventDefault(); return; }
-    if (cur && (!cur.pop.contains(ev.target) || ev.target.closest('.pop-go'))) close();
+    const go = ev.target.closest('a[href^="#"]');
+    if (go && !go.closest('.toc')) realign(go.getAttribute('href').slice(1));
+    if (cur && (!cur.pop.contains(ev.target) || ev.target.closest('.pop-go'))) close(false);
   });
-  document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') { close(); closePanel(); } });
+  document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') { if (cur) close(true); else closePanel(); } });
   window.addEventListener('resize', () => { if (cur) place(cur.pop, cur.a); });
 
   if (!gl.length) return;
   const btn = document.createElement('button');
   btn.className = 'gl-btn'; btn.type = 'button'; btn.textContent = 'Symbols';
-  btn.setAttribute('aria-expanded', 'false'); btn.setAttribute('aria-controls', 'gl-panel');
+  btn.setAttribute('aria-expanded', 'false'); btn.setAttribute('aria-controls', 'gl-panel'); btn.setAttribute('aria-label', 'Symbols: list of every symbol on this page');
   const panel = document.createElement('aside');
-  panel.className = 'gl-panel'; panel.id = 'gl-panel'; panel.setAttribute('aria-label', 'Symbols');
+  panel.className = 'gl-panel'; panel.id = 'gl-panel'; panel.setAttribute('role', 'dialog'); panel.setAttribute('aria-modal', 'true'); panel.setAttribute('aria-label', 'Symbols');
   panel.innerHTML = '<header><div class="gl-top"><h2>Symbols</h2><button type="button" class="btn gl-x">Close</button></div>'
     + '<p>Every symbol this page defines, in order, with a link to its definition. Type to filter; TeX names work too, e.g. Phi or omega.</p>'
     + '<input type="search" placeholder="Filter symbols" aria-label="Filter symbols"></header><div class="gl-list"></div>';
@@ -124,6 +154,12 @@
     }
     list.innerHTML = h; built = true; typeset(list);
   }
+  const filter = () => {
+    const q = inp.value.trim().toLowerCase();
+    const shown = new Set();
+    list.querySelectorAll('.gl-item').forEach(it => { const ok = !q || it.dataset.s.includes(q); it.hidden = !ok; if (ok) shown.add(it.dataset.sec); });
+    list.querySelectorAll('.gl-sec').forEach(p => { p.hidden = !shown.has(p.dataset.sec); });
+  };
   function openPanel() { if (!built) build(); panel.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); setTimeout(() => inp.focus({ preventScroll: true }), 60); }
   closePanel = (refocus = true) => {
     if (!panel.classList.contains('open')) return;
@@ -131,12 +167,23 @@
   };
   btn.addEventListener('click', () => panel.classList.contains('open') ? closePanel() : openPanel());
   panel.querySelector('.gl-x').addEventListener('click', () => closePanel());
-  inp.addEventListener('input', () => {
-    const q = inp.value.trim().toLowerCase();
-    const shown = new Set();
-    list.querySelectorAll('.gl-item').forEach(it => { const ok = !q || it.dataset.s.includes(q); it.hidden = !ok; if (ok) shown.add(it.dataset.sec); });
-    list.querySelectorAll('.gl-sec').forEach(p => { p.hidden = !shown.has(p.dataset.sec); });
+  inp.addEventListener('input', filter);
+  // keep Tab inside the open panel
+  panel.addEventListener('keydown', (ev) => {
+    if (ev.key !== 'Tab') return;
+    const f = [...panel.querySelectorAll('button, input, a[href]')].filter(x => !x.closest('[hidden]'));
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (ev.shiftKey && document.activeElement === first) { ev.preventDefault(); last.focus(); }
+    else if (!ev.shiftKey && document.activeElement === last) { ev.preventDefault(); first.focus(); }
   });
-  list.addEventListener('click', (ev) => { if (ev.target.closest('.gl-go')) closePanel(false); });
+  list.addEventListener('click', (ev) => { if (ev.target.closest('.gl-go')) { closePanel(false); inp.value = ''; filter(); } });
+  // on phones the floating button steps aside while the reader scrolls down
+  let lastY = window.scrollY;
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (!wide.matches && !panel.classList.contains('open')) btn.classList.toggle('away', y > lastY + 4 && y > 300);
+    if (Math.abs(y - lastY) > 4) lastY = y;
+  }, { passive: true });
 })();
 </script>

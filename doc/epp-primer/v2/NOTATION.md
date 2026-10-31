@@ -30,7 +30,7 @@ MathJax macros (v2 head): `\ee` = $\mathrm e$, `\ii` = $\mathrm i$, `\dd` = $\ma
 `\ba` = $\mathbf a$, `\bb` = $\mathbf b$, `\bF` = $\mathbf F$, `\bn` = $\mathbf n$,
 `\OV` = $\Omega_{\mathrm V}$, `\OS` = $\Omega_{\mathrm S}$, `\OVSC` = $\Omega_{\mathrm V}^{\mathrm{SC}}$,
 `\OSSC` = $\Omega_{\mathrm S}^{\mathrm{SC}}$, `\OBZ` = $\Omega_{\mathrm{BZ}}$, `\rme` = $\mathrm e$ (label),
-`\ion` = $\mathrm{ion}$, `\ph` = $\mathrm{ph}$, `\SC` = $\mathrm{SC}$, `\kB` = $k_{\mathrm B}$.
+`\ion` = $\mathrm{ion}$, `\ph` = $\mathrm{ph}$, `\SC` = $\mathrm{SC}$, `\kB` = $k_{\mathrm B}$, `\tPhi` = $\tilde\Phi$, `\bd` = $\mathbf d$, `\bU` = $\mathbf U$.
 Counts such as $N_\ell$ and $N_\kappa$ are written in full. The v1 macros (`\bk`, `\bq`, `\br`, `\bR`, `\bG`, `\bA`, `\bE`,
 `\bB`, `\bj`, `\bJ`, `\bP`, `\bQ`, `\bu`, `\be`, `\bp`, `\bZ`, `\Tr`, `\ket`, `\bra`, `\braket`, `\mel`, `\hc`) remain.
 
@@ -42,8 +42,8 @@ Counts such as $N_\ell$ and $N_\kappa$ are written in full. The v1 macros (`\bk`
 |---|---|---|
 | $\ell,\ell'$ | unit cell; also the integer triple $(\ell_1,\ell_2,\ell_3)$ | $N_\ell$ cells in the Born–von Kármán supercell |
 | $\kappa,\kappa'$ | atom of the basis | $1,\dots,N_\kappa$ |
-| $\alpha,\beta$ | Cartesian component, free (outer) indices | $x,y,z$ |
-| $\gamma,\delta$ | Cartesian component, summed (inner) indices | $x,y,z$ |
+| $\alpha,\beta$ | Cartesian component: the components of an object such as $\Phi_{\ell\kappa\alpha,\ell'\kappa'\beta}$ (summed when objects are multiplied) | $x,y,z$ |
+| $\gamma,\delta$ | further Cartesian components, summed inside a formula | $x,y,z$ |
 | $\nu,\nu'$ | phonon branch | $1,\dots,3N_\kappa$ |
 | $n,m$ | electron band | |
 | $\lambda,\lambda'$ | photon polarization | $1,2$ transverse, $3$ longitudinal |
@@ -74,6 +74,7 @@ $\mu$ is reserved for the chemical potential and is never a Cartesian index. $i$
 | $\Omega_{\mathrm V}$, $\Omega_{\mathrm S}$ | volume of the unit cell (3D); area of the unit cell (2D) | |
 | $\Omega_{\mathrm V}^{\mathrm{SC}}=N_\ell\Omega_{\mathrm V}$, $\Omega_{\mathrm S}^{\mathrm{SC}}=N_\ell\Omega_{\mathrm S}$ | supercell volume and area = the whole crystal under BvK | |
 | $\Omega_{\mathrm{BZ}}=(2\pi)^3/\Omega_{\mathrm V}$ | Brillouin-zone volume; $(2\pi)^2/\Omega_{\mathrm S}$ in 2D | |
+| $\Gamma$, $\mathrm M$, $\mathrm K$, … | special points of the Brillouin zone, upright ($\Gamma$ is $\bq=0$) | not a mass $M$ or a spring $K$ |
 
 Lattice sums: $\sum_{\ell}\mathrm e^{\mathrm i\bq\cdot\bR_\ell}=N_\ell\sum_{\bG}\delta_{\bq,\bG}$ and
 $\sum_{\bq\in\mathrm{BZ}}\mathrm e^{\mathrm i\bq\cdot\bR_\ell}=N_\ell\,\delta_{\ell,0}$.
@@ -99,7 +100,8 @@ In-plane positions are $\br_\parallel$, the normal coordinate is $z$.
 | $e_{\kappa\alpha,\nu}(\bq)$; $\be_{\kappa\nu}(\bq)$ | eigenvector of $\tilde\Phi(\bq)$: component; Cartesian 3-vector of atom $\kappa$ | dimensionless |
 | $\omega_{\bq\nu}$ | phonon frequency, $\omega^2_{\bq\nu}$ eigenvalue of $\tilde\Phi(\bq)$ | $\hbar\omega$ in meV |
 | $\xi$, $\xi_\kappa$, $\boldsymbol\xi_\kappa$ | complex amplitude of a lattice wave (physical displacement amplitude of atom $\kappa$), $\boldsymbol\xi_\kappa\propto\be_{\kappa\nu}/\sqrt{M_\kappa}$ for a normalized eigenvector; in phasor pictures the complex displacement $u_\ell=\xi\,\mathrm e^{\mathrm i(q\ell a-\omega t)}$, physical part $\mathrm{Re}\,u_\ell$ | Å |
-| $K$, $K_1$, $K_2$; $K_{\mathrm{eff}}$ | spring stiffness in model crystals; effective stiffness felt by an atom in a wave | eV/Å² |
+| $K$, $K_1$, $K_2$; $K_{\mathrm{nn}}$, $K_{\mathrm{nnn}}$; $K_{\mathrm{eff}}$ | spring stiffness in chain models; nearest- and next-nearest-neighbour springs of a sheet; effective stiffness felt by an atom in a wave | eV/Å² |
+| $u_{\mathrm{rms}}$ | root-mean-square displacement along one direction (σ is reserved for the conductivity) | Å |
 | $\bd$ | a common displacement of every atom (rigid translation) | Å |
 | $\Phi^{\mathrm{sr}}$, $\Phi^{\mathrm{dd}}$ | short-range (analytic) and long-range dipole–dipole parts of $\Phi$ | |
 | $Q_{\bq\nu}$, $P_{\bq\nu}$ | normal coordinate and its conjugate momentum | $\sqrt{\text{mass}}\times$length |

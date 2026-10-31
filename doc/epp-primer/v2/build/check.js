@@ -43,11 +43,13 @@ const doc = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta na
       const blank = [];
       document.querySelectorAll('canvas').forEach(c => { try { const g = c.getContext('2d'); const d = g.getImageData(0, 0, c.width, c.height).data; let n = 0; for (let i = 3; i < d.length; i += 4 * 97) if (d[i] > 0) n++; if (n === 0) blank.push(c.closest('figure')?.id || c.closest('section')?.id || '?'); } catch (e) {} });
       const sections = [...document.querySelectorAll('section.chapter')].map(s => s.id);
-      return { over, wide: wide.slice(0, 15), mErr, blank, sections, h: de.scrollHeight };
+      const dead = [...document.querySelectorAll('main a[href^="#"]')].map(a => a.getAttribute('href').slice(1)).filter(id => id && !document.getElementById(id));
+      return { over, wide: wide.slice(0, 15), mErr, blank, sections, dead: [...new Set(dead)], h: de.scrollHeight };
     });
     report.overflow[cfg.name] = { px: r.over, offenders: r.wide };
     report.mathErrors += r.mErr.length; if (r.mErr.length) report.errors.push(...r.mErr.map(x => `[${cfg.name}] TeX: ${x}`));
     if (r.blank.length) report.blankCanvases.push(`[${cfg.name}] ${r.blank.join(', ')}`);
+    if (r.dead.length) report.errors.push(`[${cfg.name}] dead in-page links: ${r.dead.join(', ')}`);
     report.sections = r.sections; report.height = report.height || {}; report.height[cfg.name] = r.h;
     if (shots) {
       const ids = secArg || r.sections;

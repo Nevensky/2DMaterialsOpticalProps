@@ -163,7 +163,15 @@ strong { font-weight: 600; }
 .t-e { color: var(--t-electron); } .t-p { color: var(--t-phonon); } .t-g { color: var(--t-photon); }
 
 /* display math */
-.eq { overflow-x: auto; overflow-y: hidden; margin: 6px 0 16px; padding: 2px 0; max-width: 100%; }
+.eq { overflow-x: auto; overflow-y: hidden; margin: 6px 0 16px; padding: 2px 0; max-width: 100%;
+  /* scroll cue: a soft edge shows on the side where the formula continues */
+  background:
+    linear-gradient(to right, var(--eqbg, var(--bg)) 30%, transparent) left / 24px 100% no-repeat local,
+    linear-gradient(to left, var(--eqbg, var(--bg)) 30%, transparent) right / 24px 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, color-mix(in srgb, var(--fg) 25%, transparent), transparent) left / 10px 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, color-mix(in srgb, var(--fg) 25%, transparent), transparent) right / 10px 100% no-repeat scroll; }
+.d-body, .b-body, .callout, figure.viz, .pop { --eqbg: var(--surface); }
+@media (max-width: 560px) { .eq mjx-container[display="true"] { font-size: 88%; } }
 mjx-container[display="true"] { margin: 0.6em 0 !important; }
 mjx-container { color: var(--fg); }
 .eq mjx-container[display="true"] { margin: 0.2em 0 !important; }
@@ -182,9 +190,9 @@ mjx-container { color: var(--fg); }
 
 /* derivations */
 details.derivation { border: 1px solid var(--rule); border-radius: var(--radius); margin: 16px 0; background: var(--surface); max-width: 100%; }
-details.derivation > summary { cursor: pointer; padding: 10px 14px; font-family: var(--font-ui); font-weight: 500; font-size: 0.95rem; color: var(--fg-2); list-style: none; display: flex; gap: 8px; align-items: baseline; }
+details.derivation > summary { cursor: pointer; padding: 10px 14px 10px 34px; font-family: var(--font-ui); font-weight: 500; font-size: 0.95rem; color: var(--fg-2); list-style: none; display: block; position: relative; }
 details.derivation > summary::-webkit-details-marker { display: none; }
-details.derivation > summary::before { content: "+"; font-family: var(--font-mono); color: var(--accent); width: 1em; }
+details.derivation > summary::before { content: "+"; font-family: var(--font-mono); color: var(--accent); position: absolute; left: 14px; top: 10px; }
 details.derivation[open] > summary::before { content: "−"; }
 details.derivation > .d-body { padding: 0 16px 12px; border-top: 1px solid var(--rule); overflow-x: auto; }
 details.derivation > .d-body > :first-child { margin-top: 12px; }
@@ -220,6 +228,7 @@ figure.viz figcaption strong { color: var(--fg); }
 .seg button:last-child { border-right: 0; }
 @media (max-width: 560px) { .seg { display: flex; } .seg button { flex: 1 1 auto; text-align: center; box-shadow: 0 1px 0 var(--rule); } }
 .seg button[aria-pressed="true"] { background: var(--accent); color: var(--surface); }
+.seg button:focus-visible { outline: 2px solid currentColor; outline-offset: -4px; }
 .btn { font-family: var(--font-ui); font-size: 0.85rem; border: 1px solid var(--rule); background: var(--surface); color: var(--fg); border-radius: 5px; padding: 4px 12px; cursor: pointer; }
 .btn:hover { border-color: var(--accent); color: var(--accent); }
 .controls > .btn { justify-self: start; align-self: end; }
@@ -286,7 +295,9 @@ details.background > .b-body > :first-child { margin-top: 12px; }
 sup.fn { font-size: 0.72em; line-height: 0; margin-left: 1px; vertical-align: super; }
 sup.fn a { font-family: var(--font-ui); font-weight: 600; text-decoration: none; color: var(--accent); padding: 0 2px; border-radius: 3px; }
 sup.fn a:hover, sup.fn a[aria-expanded="true"] { background: var(--hl); }
-a.sym { color: inherit; text-decoration: underline dotted color-mix(in srgb, var(--accent) 70%, transparent); text-underline-offset: 3px; cursor: help; }
+a.sym { color: inherit; text-decoration: none; cursor: help; }
+a.sym mjx-container > svg { border-bottom: 1.5px dotted color-mix(in srgb, var(--accent) 80%, transparent); padding-bottom: 1px; }
+a.sym:focus-visible mjx-container > svg { border-bottom-style: solid; }
 section.chapter .notes { margin-top: 36px; padding-top: 14px; border-top: 1px solid var(--rule); }
 section.chapter .notes h4 { margin-top: 0; }
 ol.footnotes { font-size: 0.9rem; color: var(--fg-2); padding-left: 1.7em; margin: 6px 0 18px; }
@@ -299,7 +310,7 @@ dl.glossary { display: grid; grid-template-columns: minmax(4.5em, max-content) m
 dl.glossary dt { font-weight: 400; white-space: nowrap; scroll-margin-top: 80px; }
 dl.glossary dd { margin: 0; color: var(--fg-2); }
 .gl-src { display: block; font-size: 0.83rem; color: var(--muted); }
-.pop { position: absolute; z-index: 40; width: max-content; max-width: min(400px, calc(100vw - 24px)); background: var(--surface); color: var(--fg); border: 1px solid var(--rule); border-radius: var(--radius); box-shadow: 0 8px 28px rgba(0, 0, 0, 0.16); padding: 10px 13px 11px; font-family: var(--font-text); font-size: 0.92rem; line-height: 1.5; }
+.pop { position: absolute; z-index: 40; box-sizing: border-box; width: max-content; max-width: min(400px, calc(100vw - 24px)); background: var(--surface); color: var(--fg); border: 1px solid var(--rule); border-radius: var(--radius); box-shadow: 0 8px 28px rgba(0, 0, 0, 0.16); padding: 10px 13px 11px; font-family: var(--font-text); font-size: 0.92rem; line-height: 1.5; }
 .pop .pop-k { font-family: var(--font-ui); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0 0 4px; }
 .pop .pop-sym { font-size: 1.05rem; margin-bottom: 2px; }
 .pop .pop-go { display: block; margin-top: 6px; font-family: var(--font-ui); font-size: 0.8rem; }
@@ -326,6 +337,13 @@ figure.viz .viz-title .tag { margin-left: auto; }
 .kbd-hint { font-family: var(--font-ui); font-size: 0.85rem; color: var(--muted); }
 .anat { display: grid; justify-items: center; gap: 6px; margin: 10px 0 18px; }
 @media print { .gl-btn, .gl-panel, .pop { display: none; } }
+@media (max-width: 719px) { .tbl table { min-width: 0 !important; } }
+.nw { white-space: nowrap; }
+figure.viz figcaption .cap-key { margin: 0 0 6px; color: var(--fg); }
+figure.viz figcaption .cap-more p { margin: 0 0 8px; }
+figure.viz figcaption details.cap-details > summary { cursor: pointer; font-family: var(--font-ui); font-size: 0.85rem; font-weight: 500; color: var(--accent); margin: 2px 0 6px; }
+@media (max-width: 719px) { .gl-btn { padding: 6px 12px; font-size: 0.8rem; transition: transform 0.2s ease, opacity 0.2s ease; } .gl-btn.away { transform: translateY(140%); opacity: 0; pointer-events: none; } }
+@media (prefers-reduced-motion: reduce) { .gl-btn { transition: none; } }
 .hero ul.how { margin: 0 0 14px; padding-left: 1.2em; max-width: 66ch; color: var(--fg-2); font-size: 1rem; }
 .hero ul.how li { margin-bottom: 4px; }
 </style>
@@ -352,7 +370,7 @@ window.MathJax = {
   },
   loader: { load: ['ui/lazy'] },
   svg: { fontCache: 'global' },
-  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'canvas', 'svg', 'output', 'select'] }
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'canvas', 'svg', 'output', 'select'], menuOptions: { settings: { inTabOrder: false } } }
 };
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js" async></script>

@@ -513,7 +513,7 @@
         const inp = box.querySelector('input'), out = box.querySelector('output');
         const map = s.log ? { to: (v) => Math.pow(10, v), from: (v) => Math.log10(v) } : null;
         if (map) { inp.min = Math.log10(s.min); inp.max = Math.log10(s.max); inp.step = s.step ?? 'any'; inp.value = Math.log10(s.value); }
-        const read = () => { const v = parseFloat(inp.value); state[s.key] = map ? map.to(v) : v; out.textContent = fmt(state[s.key]); };
+        const read = () => { const v = parseFloat(inp.value); state[s.key] = map ? map.to(v) : v; out.textContent = fmt(state[s.key]); inp.setAttribute('aria-valuetext', out.textContent); };
         inp.addEventListener('input', () => { read(); fire(); });
         setters[s.key] = (v) => { inp.value = map ? Math.log10(v) : v; read(); };
         read();
@@ -561,7 +561,13 @@
     const el = typeof host === 'string' ? document.querySelector(host) : host;
     let running = false, visible = true, raf = 0, last = 0, t = 0;
     const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'btn';
-    const label = () => { btn.textContent = running ? 'Pause' : 'Play'; btn.setAttribute('aria-pressed', String(running)); };
+    const label = () => {
+      btn.textContent = running ? 'Pause' : 'Play'; btn.setAttribute('aria-pressed', String(running));
+      const f = el.closest ? el.closest('figure') : null;
+      btn.setAttribute('aria-label', (running ? 'Pause' : 'Play') + ' animation' + (f && f.dataset.fig ? ', Figure ' + f.dataset.fig : ''));
+      // live readouts would be read out continuously while the animation runs
+      if (el.querySelectorAll) el.querySelectorAll('[aria-live]').forEach(r => r.setAttribute('aria-live', running ? 'off' : 'polite'));
+    };
     const loop = (ts) => { if (!running || !visible) { raf = 0; return; } const dt = last ? Math.min(0.05, (ts - last) / 1000) : 0; last = ts; t += dt; frame(t, dt); raf = requestAnimationFrame(loop); };
     const kick = () => { if (running && visible && !raf) { last = 0; raf = requestAnimationFrame(loop); } };
     const api = {
@@ -573,7 +579,7 @@
     if (opt.buttonHost) { const bh = typeof opt.buttonHost === 'string' ? el.querySelector(opt.buttonHost) : opt.buttonHost; bh.appendChild(btn); }
     try { new IntersectionObserver((ents) => { visible = ents[0].isIntersecting; kick(); }).observe(el); } catch (e) {}
     label();
-    requestAnimationFrame(() => { frame(0, 0); if (!EPP.reducedMotion && opt.autoplay !== false) api.play(); });
+    requestAnimationFrame(() => { frame(0, 0); label(); if (!EPP.reducedMotion && opt.autoplay !== false) api.play(); });
     return api;
   };
 
