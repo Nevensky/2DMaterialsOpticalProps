@@ -5,12 +5,7 @@
     <div class="a1-honeycomb-ro"></div>
     <div class="a1-honeycomb-mat"></div>
     <div class="a1-honeycomb-ro2"></div>
-    <figcaption><strong>Model.</strong> A toy model of a hexagonal boron nitride (hBN) sheet whose atoms move in the plane only. Lattice constant $a=2.504$ Å, $\ba_1=a(1,0)$, $\ba_2=a(\tfrac12,\tfrac{\sqrt3}{2})$. Atom $\kappa=1$ is boron (B, $M_1=10.81$ amu) at $\btau_1=(\ba_1+\ba_2)/3$; atom $\kappa=2$ is nitrogen (N, $M_2=14.007$ amu) at $\btau_2=2(\ba_1+\ba_2)/3$. Central springs join nearest neighbours (B–N, distance $a/\sqrt3$, $K_1=28.1$ eV/Å²) and next-nearest neighbours (B–B and N–N, distance $a$, $K_2=5.0$ eV/Å²). A spring $K$ along the unit vector $\bn$ from one atom to the other adds $-K\bn\bn^{\mathsf T}$ to their coupling and $+K\bn\bn^{\mathsf T}$ to the self-term of each, so the sum rule (A1.6) holds. The stiffnesses are fitted to the optical energy of hBN at Γ, about 170 meV, and to its longitudinal sound velocity, about 21 km/s (literature values, illustrative); the model gives 169.9 meV, 21.1 km/s, and 9.6 km/s for transverse sound. For each $\bq$ the figure diagonalizes the $4\times4$ Hermitian matrix $\tPhi(\bq)$ of (A1.18), with rows and columns ordered $\kappa\alpha=1x,1y,2x,2y$.
-    <strong>Indices.</strong> $\kappa$ picks the atom (violet B, teal N), $\alpha$ the component of its arrow ($x$ or $y$), and $\nu$ the mode, numbered 1 to 4 by increasing frequency at each $\bq$. $\bq$ is the wave: the motion in cell $\ell$ is the motion in cell 0 times $\ee^{\ii\bq\cdot\bR_\ell}$, a phase step of $\bq\cdot\ba_1$ and $\bq\cdot\ba_2$ from one cell to the next (readout).
-    <strong>(a)</strong> The branches $\hbar\omega_{\bq\nu}$ along Γ–M–K–Γ, with M $=(2\pi/a)(0,1/\sqrt3)$ and K $=(2\pi/3a)(1,\sqrt3)$; distances along the axis are proportional to $|\Delta\bq|$. All four branches are amber and labelled: $\nu=1$ solid, 2 dashed, 3 dotted, 4 dash-dot, the selected one thicker. The dot marks the selected $(\bq,\nu)$; click or drag to choose $\bq$ and the nearest branch. Branches 3 and 4 cross on Γ–M near 174 meV, and because $\nu$ counts by frequency, the labels 3 and 4 swap between the transverse and the longitudinal mode there.
-    <strong>(b)</strong> The selected mode in a window of about 6 × 5 cells. Each atom is drawn at $\btau_{\ell\kappa}+\bu_{\ell\kappa}(t)$, with $\bu_{\ell\kappa}(t)\propto\mathrm{Re}\big[M_\kappa^{-1/2}\be_{\kappa\nu}(\bq)\,\ee^{\ii(\bq\cdot\bR_\ell-\omega_{\bq\nu}t)}\big]$ scaled so that the largest displacement is 0.28 of the bond length. Time runs in units of the period $2\pi/\omega_{\bq\nu}$; the heavier N is drawn larger. Small grey dots: rest positions $\btau_{\ell\kappa}$. Amber arrows: the displacement of each atom at this instant. Faint loops: the path of each atom over one period, a straight line when its $x$ and $y$ motions are in phase or in antiphase, an ellipse otherwise. Grey lines: nearest-neighbour bonds. The shaded parallelogram is the cell $\ell=0$, spanned by $\ba_1$ and $\ba_2$; the corner arrow gives the direction of $\bq$ (at Γ it reads $\bq\to0$ and shows the direction of approach).
-    <strong>(c)</strong> The eigenvector matrix $e_{\kappa\alpha,\nu}(\bq)$ at the selected $\bq$, one row per atom and direction, one column per mode. Each entry is a dial: the circle has radius 1, the hand has length $|e_{\kappa\alpha,\nu}|$ and angle $\arg e_{\kappa\alpha,\nu}$ (counter-clockwise from the right), and the number below gives both (the angle is left out when it is 0°). Hands take the colour of the row's atom. The shaded column is the selected mode; click a column to select it. The overall phase of a column is free, and the figure makes its largest entry real and positive. At Γ the two acoustic and the two optical modes form degenerate pairs, so there the figure takes the eigenvectors at a point 0.1% of the path length away along the current segment; they come out longitudinal or transverse with respect to that direction of approach. The checks under the matrix belong to the selected column, with $M_{\mathrm c}=M_1+M_2$.
-    <strong>What to notice.</strong> A column of the matrix is one mode: its four dials say how far, and with what phase, each atom moves along $x$ and along $y$. Slide toward Γ: the two lowest columns then move both atoms by the same arrow (acoustic, dial lengths $\propto\sqrt{M_\kappa}$), and the two highest move them in opposite directions with dial lengths $\propto1/\sqrt{M_\kappa}$ (optical), so that the centre of mass stays at rest. Every column has $\sum_{\kappa\alpha}|e_{\kappa\alpha,\nu}|^2=1$, and different columns are orthogonal.</figcaption>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> On $\Gamma$–$\mathrm M$ each column is purely longitudinal or purely transverse, and branches 3 and 4 swap characters where they cross. At $\mathrm K$ every moving atom runs on a circle: its $x$ and $y$ dials show equal hands a quarter turn apart.</p><div class="cap-more"><p><strong>Marks.</strong> In (a), $\nu$ numbers the modes 1 to 4 by increasing frequency at each $\bq$. In (b), grey dots are rest positions and the heavier N is drawn larger. In (c), the number below each dial gives $|e|\angle\arg e$ (angle omitted when 0°); hands take the colour of the row's atom; the shaded column is the selected mode (click a column). Checks under the matrix: the norm (always 1), the longitudinal fraction (1 along $\bq$, 0 across), the centre-of-mass fraction $|\sum_\kappa\sqrt{M_\kappa}\,\be_{\kappa\nu}|^2/M_{\mathrm c}$, with $M_{\mathrm c}=M_1+M_2$ the mass of a cell (1 for a rigid acoustic translation, 0 for an optical mode at $\Gamma$), and the overlaps with the other columns (0, by (A1.20)).</p><p><strong>Try.</strong> Click or drag in (a) to choose $\bq$ and the nearest branch; the slider moves $\bq$ and the buttons choose $\nu$. Cross branches 3 and 4 on $\Gamma$–$\mathrm M$, then stop at $\mathrm K$.</p><p><strong>Model.</strong> The hexagonal sheet of Figure A1.1 with the springs $K_{\mathrm{nn}}$, $K_{\mathrm{nnn}}$ of Figure A1.2 (<span class="nw">28.1 and 5.0 eV/Å²</span>, illustrative), fitted to the transverse optical (TO) energy of hBN at $\Gamma$, about <span class="nw">170 meV</span> (in a single sheet LO and TO coincide at $\Gamma$), and to its longitudinal sound velocity, about <span class="nw">21 km/s</span> (literature values, illustrative; model: <span class="nw">169.9 meV</span>, <span class="nw">21.1 km/s</span>, transverse <span class="nw">9.6 km/s</span>). For each $\bq$ the figure diagonalizes $\tPhi(\bq)$ of (A1.18), rows and columns ordered $\kappa\alpha=1x,1y,2x,2y$, with the largest entry of each column made real and positive.</p></div></figcaption>
   </figure>
 <script>
 (() => {
@@ -23,14 +18,14 @@
   const a = 2.504, S3 = Math.sqrt(3), HW = 64.654;
   const A1 = [a, 0], A2 = [a / 2, a * S3 / 2];
   const MS = [10.81, 14.007], MC = MS[0] + MS[1];
-  const K1 = 28.1, K2 = 5.0, BOND = a / S3;
+  const KNN = 28.1, KNNN = 5.0, BOND = a / S3; // springs K_nn (B–N) and K_nnn (B–B, N–N), as in Figure A1.2
   const TAU = [[(A1[0] + A2[0]) / 3, (A1[1] + A2[1]) / 3], [2 * (A1[0] + A2[0]) / 3, 2 * (A1[1] + A2[1]) / 3]];
   // every spring seen from atom k of cell 0 to atom kp of the cell at lattice vector R
   const SPR = [];
   for (let k = 0; k < 2; k++) for (let kp = 0; kp < 2; kp++) for (let l1 = -2; l1 <= 2; l1++) for (let l2 = -2; l2 <= 2; l2++) {
     const R = [l1 * A1[0] + l2 * A2[0], l1 * A1[1] + l2 * A2[1]];
     const d = [R[0] + TAU[kp][0] - TAU[k][0], R[1] + TAU[kp][1] - TAU[k][1]], r = Math.hypot(d[0], d[1]);
-    const K = Math.abs(r - BOND) < 1e-6 ? K1 : (Math.abs(r - a) < 1e-6 ? K2 : 0);
+    const K = Math.abs(r - BOND) < 1e-6 ? KNN : (Math.abs(r - a) < 1e-6 ? KNNN : 0);
     if (K) SPR.push({ k, kp, R, n: [d[0] / r, d[1] / r], K });
   }
   const IMS = [0, 1, 2, 3].map(i => [0, 1, 2, 3].map(j => 1 / Math.sqrt(MS[i >> 1] * MS[j >> 1])));
@@ -42,7 +37,7 @@
       for (let al = 0; al < 2; al++) for (let be = 0; be < 2; be++) {
         const nn = s.K * s.n[al] * s.n[be], i = 2 * s.k + al;
         re[i][2 * s.kp + be] -= nn * c; im[i][2 * s.kp + be] -= nn * sn; // partner in cell R: -K n n^T e^{iq.R}
-        re[i][2 * s.k + be] += nn; // sum rule: +K n n^T on the atom itself
+        re[i][2 * s.k + be] += nn; // sum rule: +K n n^T in the on-site block
       }
     }
     for (let i = 0; i < 4; i++) for (let j = 0; j < 4; j++) { re[i][j] *= IMS[i][j]; im[i][j] *= IMS[i][j]; }
@@ -103,11 +98,13 @@
     const ov = vec.map(v => { let r = 0, i2 = 0; for (let i = 0; i < 4; i++) { r += u.re[i] * v.re[i] + u.im[i] * v.im[i]; i2 += u.re[i] * v.im[i] - u.im[i] * v.re[i]; } return Math.hypot(r, i2); });
     // physical amplitudes xi_kappa = e_kappa / sqrt(M_kappa) of the selected mode
     const xi = [0, 1].map(k => { const f = 1 / Math.sqrt(MS[k]); return { xr: u.re[2 * k] * f, xi: u.im[2 * k] * f, yr: u.re[2 * k + 1] * f, yi: u.im[2 * k + 1] * f }; });
-    return { s, nu, q, qn: Math.hypot(q[0], q[1]), qh, atG: s !== sE, sE, hw: E.vals.map(hwOf), vec, cols, ov, xi };
+    return { s, nu, q, qn: Math.hypot(q[0], q[1]), qh, atG: s !== sE, atK: s === CUM[2], sE, hw: E.vals.map(hwOf), vec, cols, ov, xi };
   }
 
   // ---------- drawing helpers ----------
   const FONT = () => EPP.css('--font-ui');
+  // HTML: bold vector, italic running variable
+  const B = (s) => `<strong>${s}</strong>`, I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
   // canvas labels: '$...$' = symbol in the italic text font (keeps ν apart from v), '*...*' = bold vector
   const P = (s) => s.split(/(\$[^$]*\$|\*[^*]*\*)/).filter(Boolean).map(t => (t[0] === '$' ? [t.slice(1, -1), 'm'] : (t[0] === '*' ? [t.slice(1, -1), 1] : [t, 0])));
   const pOpt = (p, size) => (p[1] === 'm' ? { size: size + 1, font: EPP.css('--font-text'), italic: true } : { size, font: FONT(), bold: !!p[1] });
@@ -135,8 +132,9 @@
 
   // ---------- (a) dispersion ----------
   const YTOP = 215;
+  // the y label is drawn in render() below, so that ħω can be italic; margin.l keeps the room the Plot gives a label
   const pD = new EPP.Plot($('.a1-honeycomb-disp'), {
-    xlabel: 'wavevector along Γ–M–K–Γ', ylabel: 'phonon energy ħω (meV)', xlim: [0, 1], ylim: [0, YTOP], aspect: 0.835,
+    xlabel: 'wavevector along Γ–M–K–Γ', margin: { l: 58 }, xlim: [0, 1], ylim: [0, YTOP], aspect: 0.835,
     xticks: CUM.map((v, i) => ({ v, label: NNAME[i] })), yticks: [0, 50, 100, 150, 200], legend: false,
     xname: 'path', hoverX: v => `${EPP.fix(v, 3)} (${where(v)})`, hoverY: v => `${EPP.fix(v, 1)} meV`,
     ariaLabel: 'Phonon dispersion of the honeycomb model along Gamma, M, K, Gamma: four branches, the selected mode marked'
@@ -147,8 +145,14 @@
   const baseRender = pD.render.bind(pD);
   pD.render = () => {
     baseRender();
-    if (!cur || !pD.cv.w || !pD.cv.h) return;
-    const ctx = pD.ctx;
+    if (!pD.cv.w || !pD.cv.h) return;
+    const ctx = pD.ctx, m = pD.m;
+    ctx.save(); ctx.translate(14, m.t + (pD.cv.h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    ctx.fillStyle = EPP.css('--fg'); ctx.textBaseline = 'alphabetic';
+    drawParts(ctx, 'phonon energy $ħω$ (meV)', 0, 0, 12.5, 'center');
+    ctx.restore();
+    if (!pD.tip.hidden) pD.tip.innerHTML = pD.tip.innerHTML.replace(/ν/g, I('ν'));
+    if (!cur) return;
     ctx.save(); ctx.textBaseline = 'middle'; ctx.fillStyle = EPP.textColor('phonon');
     LAB.forEach((p, n) => drawParts(ctx, `$ν$ = ${n + 1}`, pD.X(p.x), pD.Y(wAt(n, p.x)) + p.dy, 11.5, 'left'));
     ctx.fillStyle = EPP.css('--fg-2'); drawParts(ctx, '(a)', pD.m.l + 7, pD.m.t + 11, 11.5, 'left');
@@ -177,7 +181,22 @@
   };
 
   // ---------- (b) mode pattern ----------
-  const cvB = EPP.canvas($('.a1-honeycomb-mode'), { aspect: 0.835, minHeight: 250, maxHeight: 420 });
+  // key under the window: items flow left to right and wrap onto a further row (16 px) when the panel is narrow
+  const KEY = ['$κ$ = 1 (B)', '$κ$ = 2 (N)', 'displacement', 'path in one period'];
+  function keyRows(ctx, maxW) {
+    const rows = [[]]; let x = 0;
+    KEY.forEach((t, i) => {
+      const iw = 17 + partsW(ctx, P(t), 10.5);
+      if (x > 0 && x + iw > maxW) { rows.push([]); x = 0; }
+      rows[rows.length - 1].push({ i, x }); x += iw + 12;
+    });
+    return rows;
+  }
+  // the canvas grows by one key row for each extra row the key needs, so the window keeps its size on phones
+  const elB = $('.a1-honeycomb-mode'), MCTX = document.createElement('canvas').getContext('2d');
+  const cvB = EPP.canvas(elB, {
+    get height() { const w = Math.max(1, elB.clientWidth); return Math.round(EPP.clamp(w * 0.835, 250, 420)) + 16 * (keyRows(MCTX, w - 8).length - 1); }
+  });
   cvB.canvas.setAttribute('role', 'img');
   cvB.canvas.setAttribute('aria-label', 'Animated displacement pattern of the selected mode in a window of the honeycomb lattice, with displacement arrows, atom paths, bonds and the cell l = 0');
   // window onto the sheet (Å): 6a wide, 5 rows of cells high, centred near cell 0
@@ -189,16 +208,24 @@
     ATOMS.push({ k, x, y, Rx, Ry, th: 0 });
   }
   for (let i = 0; i < ATOMS.length; i++) for (let j = i + 1; j < ATOMS.length; j++) {
-    const A = ATOMS[i], B = ATOMS[j];
-    if (A.k !== B.k && Math.abs(Math.hypot(A.x - B.x, A.y - B.y) - BOND) < 1e-6) BONDS.push([i, j]);
+    const U = ATOMS[i], V = ATOMS[j];
+    if (U.k !== V.k && Math.abs(Math.hypot(U.x - V.x, U.y - V.y) - BOND) < 1e-6) BONDS.push([i, j]);
   }
   const TPER = 3.2; // seconds of animation per period of the mode
   function drawMode(t) {
     cvB.clear();
     if (!cur) return;
     const ctx = cvB.ctx, w = cvB.w, h = cvB.h, f = FONT();
-    const top = 24, bot = 26, pad = 4;
-    const S = Math.max(1, Math.min((w - 2 * pad) / WW, (h - top - bot) / WH));
+    const top = 24, pad = 4;
+    // the window shrinks to leave room for the rows of the key, which in turn must fit its width
+    let nk = 1, S = 1, rows = [];
+    for (;;) {
+      S = Math.max(1, Math.min((w - 2 * pad) / WW, (h - top - 10 - 16 * nk) / WH));
+      rows = keyRows(ctx, WW * S);
+      if (rows.length <= nk || nk >= KEY.length) break;
+      nk = rows.length;
+    }
+    const bot = 10 + 16 * nk;
     const wpx = WW * S, hpx = WH * S, ox = (w - wpx) / 2, oy = top + Math.max(0, (h - top - bot - hpx) / 2);
     const X = (x) => ox + (x - WX0) * S, Y = (y) => oy + hpx - (y - WY0) * S;
     const bpx = BOND * S, rN = EPP.clamp(0.17 * bpx, 3.5, 7.5), rad = [rN * Math.cbrt(MS[0] / MS[1]), rN];
@@ -262,33 +289,34 @@
     // heading
     ctx.textBaseline = 'alphabetic'; ctx.fillStyle = cFg2;
     const nu = cur.nu, hwv = cur.hw[nu];
-    let tag = P(cur.atG && nu < 2 ? `$ν$ = ${nu + 1} · ω → 0, rigid shift` : `$ν$ = ${nu + 1} · ħω = ${EPP.fix(hwv, 1)} meV`);
+    let tag = P(cur.atG && nu < 2 ? `$ν$ = ${nu + 1} · $ω$ → 0, rigid shift` : `$ν$ = ${nu + 1} · $ħω$ = ${EPP.fix(hwv, 1)} meV`);
     let head = P('(b)  displacement *u*$_{ℓκ}$($t$), exaggerated');
-    const room = w - 2 * pad - 14;
+    const room = wpx - 14; // heading and tag both sit over the window, at least 14 px apart
     if (partsW(ctx, head, 11) + partsW(ctx, tag, 11) > room) head = P('(b)  *u*$_{ℓκ}$($t$), exaggerated');
-    if (partsW(ctx, head, 11) + partsW(ctx, tag, 11) > room) tag = P(cur.atG && nu < 2 ? `$ν$ = ${nu + 1} · ω → 0` : `$ν$ = ${nu + 1} · ${EPP.fix(hwv, 1)} meV`);
+    if (partsW(ctx, head, 11) + partsW(ctx, tag, 11) > room) tag = P(cur.atG && nu < 2 ? `$ν$ = ${nu + 1} · $ω$ → 0` : `$ν$ = ${nu + 1} · ${EPP.fix(hwv, 1)} meV`);
     drawParts(ctx, head, ox, 15, 11, 'left');
     ctx.fillStyle = cFg; drawParts(ctx, tag, ox + wpx, 15, 11, 'right');
-    // key
-    const ky = h - 9, items = [
-      { t: '$κ$ = 1 (B)', m: (x) => { ctx.fillStyle = cA[0]; disc(ctx, x + 5, ky - 4, rad[0]); } },
-      { t: '$κ$ = 2 (N)', m: (x) => { ctx.fillStyle = cA[1]; disc(ctx, x + 5, ky - 4, rad[1]); } },
-      { t: 'displacement', m: (x) => { ctx.strokeStyle = cPh; ctx.fillStyle = cPh; ctx.lineWidth = 1.5; arrowPx(ctx, x, ky - 4, x + 13, ky - 4, 5); } },
-      { t: 'path in one period', m: (x) => { ctx.strokeStyle = EPP.alpha('c5', 0.6); ctx.lineWidth = 1; ctx.beginPath(); ctx.ellipse(x + 6, ky - 4, 6.5, 3.5, -0.4, 0, 2 * Math.PI); ctx.stroke(); } }
+    // key, in the rows laid out above (the last row sits 9 px above the bottom edge)
+    const mark = [
+      (x, y) => { ctx.fillStyle = cA[0]; disc(ctx, x + 5, y - 4, rad[0]); },
+      (x, y) => { ctx.fillStyle = cA[1]; disc(ctx, x + 5, y - 4, rad[1]); },
+      (x, y) => { ctx.strokeStyle = cPh; ctx.fillStyle = cPh; ctx.lineWidth = 1.5; arrowPx(ctx, x, y - 4, x + 13, y - 4, 5); },
+      (x, y) => { ctx.strokeStyle = EPP.alpha('c5', 0.6); ctx.lineWidth = 1; ctx.beginPath(); ctx.ellipse(x + 6, y - 4, 6.5, 3.5, -0.4, 0, 2 * Math.PI); ctx.stroke(); }
     ];
-    let kx = ox;
-    for (const it of items) {
-      const iw = 17 + partsW(ctx, P(it.t), 10.5);
-      if (kx + iw > ox + wpx) break;
-      it.m(kx); ctx.fillStyle = cFg2; drawParts(ctx, it.t, kx + 16, ky, 10.5, 'left');
-      kx += iw + 12;
-    }
+    rows.forEach((row, r) => {
+      const ky = h - 9 - 16 * (nk - 1 - r);
+      for (const { i, x } of row) {
+        mark[i](ox + x, ky);
+        ctx.fillStyle = cFg2; drawParts(ctx, KEY[i], ox + x + 16, ky, 10.5, 'left');
+      }
+    });
   }
 
   // ---------- (c) eigenvector anatomy ----------
   const cvC = EPP.canvas($('.a1-honeycomb-mat'), { height: 296 });
   cvC.canvas.setAttribute('role', 'img');
   const ROWLAB = ['$κ$ = 1 (B), $x$', '$κ$ = 1 (B), $y$', '$κ$ = 2 (N), $x$', '$κ$ = 2 (N), $y$'];
+  const ROWLAB_S = ['B, $x$', 'B, $y$', 'N, $x$', 'N, $y$']; // when the full labels would squeeze the columns below 44 px
   const ROWTXT = ['B x', 'B y', 'N x', 'N y'];
   let geo = null;
   function fmtE(re, im) {
@@ -313,10 +341,13 @@
     const ctx = cvC.ctx, w = cvC.w, f = FONT();
     const cFg = EPP.css('--fg'), cFg2 = EPP.css('--fg-2'), cMut = EPP.color('muted'), cRule = EPP.css('--rule'), cGrid = EPP.css('--grid');
     const narrow = w < 560, R = narrow ? 16 : 19, rowH = narrow ? 51 : 58;
-    const labTW = Math.max(...ROWLAB.map(s => partsW(ctx, P(s), 11)));
-    const rotW = 16, labW = labTW + 24, legW = narrow ? 0 : 290, gap = narrow ? 0 : 40;
-    const colW = Math.max(44, Math.min(narrow ? 56 : 76, (w - 6 - rotW - labW - gap - legW) / 4));
-    const blockW = rotW + labW + 4 * colW + gap + legW;
+    // brW: room for the right bracket of the matrix (on wide screens it sits in the gap before the dial legend)
+    const rotW = 16, legW = narrow ? 0 : 290, gap = narrow ? 0 : 40, brW = narrow ? 8 : 0;
+    const labTW0 = Math.max(...ROWLAB.map(s => partsW(ctx, P(s), 11)));
+    const rowLab = (w - 6 - rotW - labTW0 - 24 - brW - gap - legW) / 4 < 44 ? ROWLAB_S : ROWLAB;
+    const labW = Math.max(...rowLab.map(s => partsW(ctx, P(s), 11))) + 24;
+    const colW = Math.max(44, Math.min(narrow ? 56 : 76, (w - 6 - rotW - labW - brW - gap - legW) / 4));
+    const blockW = rotW + labW + 4 * colW + brW + gap + legW;
     const bx = Math.max(3, (w - blockW) / 2), gx0 = bx + rotW + labW, gx1 = gx0 + 4 * colW;
     const y0 = 58, gyb = y0 + 4 * rowH, nu = cur.nu, V = cur.vec;
     geo = { gx0, colW, yTop: 26, yBot: gyb };
@@ -348,7 +379,7 @@
       const k = r >> 1, cy = y0 + r * rowH + R + 3, col = EPP.color(k ? 'c4' : 'c5');
       ctx.fillStyle = col; disc(ctx, bx + rotW + 6, cy, 4.2);
       ctx.fillStyle = cFg2; ctx.textBaseline = 'middle';
-      drawParts(ctx, ROWLAB[r], bx + rotW + 14, cy, 11, 'left');
+      drawParts(ctx, rowLab[r], bx + rotW + 14, cy, 11, 'left');
       for (let n = 0; n < 4; n++) {
         const cx = gx0 + (n + 0.5) * colW, v = V[n];
         dialPx(ctx, cx, cy, R, v.re[r], v.im[r], col, cRule, cGrid);
@@ -396,22 +427,29 @@
   // ---------- readouts ----------
   const ro1 = $('.a1-honeycomb-ro'), ro2 = $('.a1-honeycomb-ro2');
   EPP.readout(ro1); EPP.readout(ro2);
-  const B = (s) => `<strong>${s}</strong>`, I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
   const put = (el, rows) => { el.innerHTML = rows.map(([k, v]) => `<span>${k}${v === undefined ? '' : `<b>${v}</b>`}</span>`).join(''); };
   const f3 = (v) => EPP.fix(Math.abs(v) < 5e-4 ? 0 : v, 3);
+  // character of a mode from its longitudinal fraction L: near L = 0.5 the motion is mixed, and at K every
+  // moving atom circles (e_y = ±i e_x), so all four modes have L = 0.50 there; a pure mode gets its branch name
+  function character(c, L, nu) {
+    const kind = nu < 2 ? 'acoustic' : 'optical';
+    if (Math.abs(L - 0.5) < 0.1) return `mixed${c.atK ? ' (circular at K)' : ''}, longitudinal fraction ${EPP.fix(L, 2)}, ${kind} branch`;
+    const lon = L > 0.5, fr = lon ? L : 1 - L;
+    return `${lon ? 'longitudinal' : 'transverse'} ${EPP.fix(fr, 2)}, ${kind} branch${fr >= 0.99 ? ` (${lon ? 'L' : 'T'}${nu < 2 ? 'A' : 'O'})` : ''}`;
+  }
   function setReadouts() {
     const c = cur, nu = c.nu, col = c.cols[nu], L = col.L, hw = c.hw[nu];
     const from = c.s < 0.5 ? 'Γ–M' : 'K–Γ';
     put(ro1, [
-      [B('q'), c.atG ? `0; eigenvectors taken at ${B('q')} → 0 along ${from}` : `(${f3(c.q[0])}, ${f3(c.q[1])}) Å⁻¹, |${B('q')}| = ${f3(c.qn)} Å⁻¹`],
-      [`ħω<sub>${B('q')}${I('ν')}</sub>`, c.atG && nu < 2 ? '0 (rigid shift at q = 0)' : `${EPP.fix(hw, 1)} meV`],
-      ['character', `${L >= 0.5 ? 'longitudinal' : 'transverse'} ${EPP.fix(L >= 0.5 ? L : 1 - L, 2)}, ${nu < 2 ? 'acoustic' : 'optical'} branch`],
+      [B('q'), c.atG ? `0 (degenerate pairs: eigenvectors taken at ${B('q')} → 0 along ${from})` : `(${f3(c.q[0])}, ${f3(c.q[1])}) Å⁻¹, |${B('q')}| = ${f3(c.qn)} Å⁻¹`],
+      [`${I('ħω')}<sub>${B('q')}${I('ν')}</sub>`, c.atG && nu < 2 ? `0 (rigid shift at ${B('q')} = 0)` : `${EPP.fix(hw, 1)} meV`],
+      ['character', character(c, L, nu)],
       [`phase step per cell ${B('q')}·${B('a')}<sub>1</sub>, ${B('q')}·${B('a')}<sub>2</sub>`, `${sdeg(deg(c.q[0] * A1[0] + c.q[1] * A1[1]))}, ${sdeg(deg(c.q[0] * A2[0] + c.q[1] * A2[1]))}`]
     ]);
     const others = [0, 1, 2, 3].filter(n => n !== nu);
     put(ro2, [
       [`checks for column ${I('ν')} = ${nu + 1}:`],
-      [`Σ<sub>${I('κα')}</sub> |${I('e')}<sub>${I('κα,ν')}</sub>|<sup>2</sup> =`, EPP.fix(col.n2, 3)],
+      [`norm Σ<sub>${I('κα')}</sub> |${I('e')}<sub>${I('κα,ν')}</sub>|<sup>2</sup> =`, EPP.fix(col.n2, 3)],
       [`longitudinal fraction Σ<sub>${I('κ')}</sub> |${B('q̂')}·${B('e')}<sub>${I('κν')}</sub>|<sup>2</sup> =`, EPP.fix(L, 3)],
       [`centre-of-mass fraction |Σ<sub>${I('κ')}</sub> √${I('M')}<sub>${I('κ')}</sub> ${B('e')}<sub>${I('κν')}</sub>|<sup>2</sup>/${I('M')}<sub>c</sub> =`, EPP.fix(col.com, 3)],
       [`overlaps |Σ<sub>${I('κα')}</sub> ${I('e')}<sup>*</sup><sub>${I('κα,ν')}</sub> ${I('e')}<sub>${I('κα,ν′')}</sub>| for ${I('ν′')} = ${others.map(n => n + 1).join(', ')}:`, others.map(n => EPP.fix(c.ov[n] < 5e-4 ? 0 : c.ov[n], 3)).join(', ')]
@@ -427,7 +465,7 @@
   }
   const elCtl = $('.a1-honeycomb-ctrls');
   const ui = EPP.controls(elCtl, [
-    { key: 's', type: 'range', label: 'position on Γ–M–K–Γ', min: 0, max: 1, step: 0.001, value: 0.15, fmt: v => `${v.toFixed(3)} (${where(v)})` },
+    { key: 's', type: 'range', label: 'position on Γ–M–K–Γ', min: 0, max: 1, step: 0.001, value: 0.25, fmt: v => `${v.toFixed(3)} (${where(v)})` },
     { key: 'nu', type: 'seg', label: 'branch ν', options: [['1', '1'], ['2', '2'], ['3', '3'], ['4', '4']], value: '3' }
   ], onChange);
   const segLab = elCtl.querySelector('.lab span');

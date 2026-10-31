@@ -1,16 +1,12 @@
   <figure class="viz" id="viz-a1-diatomic">
     <p class="viz-title">The diatomic chain: two branches, and what an eigenvector means <span class="tag">interactive</span></p>
-    <div class="viz-grid two"><div class="a1-diatomic-disp"></div><div class="a1-diatomic-eig"></div></div>
-    <div class="a1-diatomic-chain"></div>
+    <div class="viz-grid two"><div class="a1-diatomic-disp"><div class="legend a1-diatomic-leg"><span class="item" style="color:var(--c-phonon)"><span class="sw"></span><span style="color:var(--fg-2)">acoustic $\omega_-$</span></span><span class="item" style="color:var(--c-phonon)"><span class="sw dash"></span><span style="color:var(--fg-2)">optical $\omega_+$</span></span></div></div><div class="a1-diatomic-eig"></div></div>
+    <div class="a1-diatomic-mode"></div>
+    <div class="a1-diatomic-chain" style="margin-top:12px"></div>
     <div class="a1-diatomic-ctrls"></div>
     <div class="readout a1-diatomic-ro" aria-live="polite"><span>$\hbar\omega$<b class="a1-diatomic-v-hw"></b></span><span>$e_1,\ e_2$<b class="a1-diatomic-v-e"></b></span><span>$\xi_2/\xi_1$<b class="a1-diatomic-v-ratio"></b></span><span>gap at $q=\pi/a$<b class="a1-diatomic-v-gap"></b></span></div>
-    <div class="readout a1-diatomic-ro2" aria-live="polite"><span>$\tPhi_{11},\ \tPhi_{12},\ \tPhi_{22}$<b class="a1-diatomic-v-phi"></b></span><span>$\omega^2_-,\ \omega^2_+$<b class="a1-diatomic-v-w2"></b></span><span>units of $\tPhi$ and $\omega^2$<b>eV Å⁻² amu⁻¹</b></span></div>
-    <figcaption><strong>Model.</strong> Cells of length $a$ hold atom $\kappa=1$ (mass $M_1$) at the cell corner and atom $\kappa=2$ (mass $M_2$) at $a/2$. A spring $K_1$ joins the two atoms of a cell, and a spring $K_2$ joins atom 2 of cell $\ell$ to atom 1 of cell $\ell+1$. For each wavevector $q$ the figure solves $\sum_{\kappa'}\tPhi_{\kappa\kappa'}(q)\,e_{\kappa'}=\omega^2e_\kappa$, where $\tPhi_{\kappa\kappa'}(q)=\Phi_{\kappa\kappa'}(q)/\sqrt{M_\kappa M_{\kappa'}}$, $\Phi_{11}=\Phi_{22}=K_1+K_2$ and $\Phi_{12}=\Phi_{21}^*=-(K_1+K_2\,\ee^{-\ii qa})$; each force constant carries the phase of the partner atom's cell. The eigenvalues are $\omega^2_\pm=\tfrac{A+C}{2}\pm\sqrt{\big(\tfrac{A-C}{2}\big)^2+|B|^2}$ with $A=(K_1+K_2)/M_1$, $C=(K_1+K_2)/M_2$ and $|B|^2=(K_1^2+K_2^2+2K_1K_2\cos qa)/(M_1M_2)$. With $K$ in eV/Å² and $M$ in amu, $\omega^2$ is in eV Å⁻² amu⁻¹ and $\hbar\omega=64.654\ \mathrm{meV}\times\sqrt{\omega^2}$.
-      <strong>(a)</strong> The acoustic branch $\hbar\omega_-(q)$ (solid) and the optical branch $\hbar\omega_+(q)$ (dashed). Click or drag to choose $q$ and the nearer branch; the filled dot and the vertical line mark the selected mode. The hollow dots are the 12 wavevectors allowed in a Born–von Kármán supercell of $N_\ell=12$ cells (the two end dots are the same wave, $q=\pm\pi/a$), and a click within a few pixels of one selects it exactly. The shaded band is the gap at $q=\pi/a$.
-      <strong>(b)</strong> The eigenvector $(e_1,e_2)$ of the selected mode. Its components are the amplitudes of the two atoms in mass-weighted units, $e_\kappa=\sqrt{M_\kappa}\,\xi_\kappa$, normalized so that $|e_1|^2+|e_2|^2=1$. The overall phase is free; here it makes $e_1$ real and positive ($e_2$ when $e_1=0$). Each dial is a complex plane whose rim is the unit circle, violet for atom 1 and teal for atom 2, and the amber arrow has length $|e_\kappa|$ and angle $\arg e_\kappa$, which the thin arc marks. The arrows below are the physical amplitudes $\xi_\kappa=e_\kappa/\sqrt{M_\kappa}$ on one common scale: the same angles, with lengths divided by $\sqrt{M_\kappa}$; the discs at their tails are drawn larger for the heavier atom. The last line gives the ratio $\xi_2/\xi_1$ as magnitude∠phase, or, for $|qa|<0.05\pi$, the relation that the two amplitudes obey.
-      <strong>(c)</strong> The selected mode as a running wave, $u_{\ell\kappa}(t)=\mathrm{Re}\,\big[\xi_\kappa\,\ee^{\ii(q\ell a-\omega t)}\big]$, with the phase taken at the cell corner. Amplitudes are exaggerated, and one period lasts 2.6 s whatever $\omega$; the acoustic mode at $q=0$ has $\omega=0$, a rigid translation, and is drawn oscillating only to show its pattern. Atoms are coloured as in (b) and drawn larger when heavier, short ticks mark their rest positions, stiffer springs are drawn thicker, and the bracket marks one cell, of length $a$. The lower row draws the same displacements transversely. 12 cells are shown, 6 on narrow screens.
-      <strong>Presets.</strong> The hBN-like chain (10.81 and 14.01 amu, $K_1=K_2=21.07$ eV/Å², 169.9 meV at $q=0$) and the GaAs-like chain (69.72 and 74.92 amu, $K_1=K_2=4.79$ eV/Å², 33.3 meV) are 1D models tuned to the optical energy at $q=0$ of the real crystals (literature values, illustrative), not to their full dispersions. “Equal masses, unequal springs” has $M_1=M_2=1$ amu, $K_1=0.5$ eV/Å² and $K_2=2.5$ eV/Å², and opens on the acoustic mode at $q=\pi/a$.
-      <strong>What to notice.</strong> Near $q=0$ the acoustic mode moves the cell rigidly ($\xi_1=\xi_2$), while the optical mode keeps the centre of mass fixed ($M_1\xi_1=-M_2\xi_2$). A gap opens at $q=\pi/a$ whenever $M_1\neq M_2$ or $K_1\neq K_2$. With equal masses and unequal springs at $q=\pi/a$ the dynamical matrix is real, $\tPhi=\left[\begin{smallmatrix}3&amp;2\\2&amp;3\end{smallmatrix}\right]$ eV Å⁻² amu⁻¹, and each mode stretches only one kind of spring.</figcaption>
+    <div class="readout a1-diatomic-ro2" aria-live="polite"><span>$\tPhi_{11},\ \tPhi_{12},\ \tPhi_{22}$<b class="a1-diatomic-v-phi"></b></span><span>$\omega^2_-,\ \omega^2_+$<b class="a1-diatomic-v-w2"></b></span><span>units of $\tPhi$ and $\omega^2$<b class="nw">eV Å⁻² amu⁻¹</b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> Near $q=0$ the acoustic mode moves the cell rigidly ($\xi_1=\xi_2$) and the optical mode keeps the centre of mass fixed ($M_1\xi_1=-M_2\xi_2$). A gap opens at $q=\pi/a$ whenever $M_1\neq M_2$ or $K_1\neq K_2$.</p><div class="cap-more"><p><strong>Marks.</strong> In (a) the hollow dots are the wavevectors allowed for $N_\ell=12$ cells (the end dots are one wave). In (b) the amber arrows are $e_1$ and $e_2$ in the complex plane; for $|qa|\lt0.05\pi$ the last line gives the relation that holds as $q\to0$. Heavier atoms are drawn larger. In (c) ticks mark rest positions, thicker springs are stiffer, and a period lasts <span class="nw">2.6 s</span> whatever $\omega$.</p><p><strong>Try.</strong> Click or drag in (a), or use the $q$ slider and branch buttons, to choose a mode; a click near a hollow dot snaps to it. Play and Pause run (c). The controls under (c) set the chain; in the hBN-like chain, moving $M_1$ toward $M_2$ shrinks the gap. With “equal masses, unequal springs”, each mode at $q=\pi/a$ stretches only one kind of spring.</p><p><strong>Model.</strong> Cells of length $a$ hold atom $\kappa=1$ (mass $M_1$) at the corner and $\kappa=2$ (mass $M_2$) at $a/2$, joined by $K_1$ inside a cell and $K_2$ between cells. For each $q$ the figure diagonalizes the dynamical matrix $\tPhi(q)$ of (A1.14), built from $\Phi(q)$ of (A1.13); the branches are (A1.15), with $\omega^2$ in <span class="nw">eV Å⁻² amu⁻¹</span> and $\hbar\omega=64.654\ \mathrm{meV}\times\sqrt{\omega^2}$. The hBN-like and GaAs-like presets are tuned to the transverse optical (TO) energy at $q=0$ of the real crystals, about 170 and <span class="nw">33 meV</span> (literature values, illustrative; the short-range springs cannot produce the LO–TO splitting, <span class="nw">Section A.4</span>).</p></div></figcaption>
   </figure>
 <script>
 (() => {
@@ -92,7 +88,7 @@
   const sticky = (top, need) => ((need > top * 0.97 || need < top * 0.42) ? niceCeil(need * 1.15) : top);
 
   // ---------- canvas text: '$...$' marks math, where letters are italic and digits upright; _x, ^x as in EPP.drawRich ----------
-  const ITAL = /[A-Za-zα-ωℓ]/;
+  const ITAL = /[A-Za-zα-ωℓħ]/;
   function runs(s) {
     const out = [];
     String(s).split('$').forEach((seg, i) => {
@@ -135,13 +131,35 @@
   }
 
   // ---------- panels ----------
-  const elCtl = fig.querySelector('.a1-diatomic-ctrls');
-  const pD = new EPP.Plot(fig.querySelector('.a1-diatomic-disp'), {
-    xlabel: 'wavevector q', ylabel: 'ħω (meV)', xlim: [-1, 1], ylim: [0, 200], xname: 'qa/π',
-    xticks: [{ v: -1, label: '−π/a' }, { v: -0.5, label: '−π/2a' }, { v: 0, label: '0' }, { v: 0.5, label: 'π/2a' }, { v: 1, label: 'π/a' }],
-    hoverX: v => fx(v, 3), hoverY: v => fx(v, 1) + ' meV', aspect: 0.8, maxHeight: 340, margin: { t: 26 },
+  const elCtl = fig.querySelector('.a1-diatomic-ctrls'), elDisp = fig.querySelector('.a1-diatomic-disp');
+  // the tick and axis labels of (a) are drawn by the render hook below, with the symbols in italic
+  const XT = [{ v: -1, s: '−π/$a$' }, { v: -0.5, s: '−π/2$a$' }, { v: 0, s: '0' }, { v: 0.5, s: 'π/2$a$' }, { v: 1, s: 'π/$a$' }];
+  const pD = new EPP.Plot(elDisp, {
+    xlim: [-1, 1], ylim: [0, 200], xname: 'qa/π', legend: false, xticks: XT.map(t => ({ v: t.v, label: '' })),
+    hoverX: v => fx(v, 3), hoverY: v => fx(v, 1) + ' meV', aspect: 0.8, maxHeight: 340, margin: { t: 26, l: 58, b: 44 },
     ariaLabel: 'Panel a: phonon dispersion of the diatomic chain, acoustic and optical branch energies versus wavevector, with the selected mode marked'
   });
+  // the legend is static markup (MathJax), placed under the plot
+  const elLeg = elDisp.querySelector('.a1-diatomic-leg');
+  if (elLeg) elDisp.appendChild(elLeg);
+  let gapY = null; // centre of the gap band, when it is wide enough to carry its label
+  const baseRender = pD.render.bind(pD);
+  pD.render = () => {
+    baseRender();
+    const ctx = pD.ctx, w = pD.cv.w, h = pD.cv.h, m = pD.m;
+    if (!w || !h) return;
+    const cMuted = EPP.color('muted'), cFg = EPP.color('fg');
+    ctx.save();
+    ctx.textBaseline = 'top';
+    XT.forEach(t => txt(ctx, t.s, pD.X(t.v), h - m.b + 6, { size: 11, color: cMuted, align: 'center' }));
+    ctx.textBaseline = 'alphabetic';
+    txt(ctx, 'wavevector $q$', m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    if (gapY !== null) { ctx.textBaseline = 'middle'; txt(ctx, 'gap at $q$ = π/$a$', pD.X(-0.5), pD.Y(gapY), { size: 11, color: EPP.textColor('phonon'), align: 'center' }); }
+    ctx.textBaseline = 'alphabetic';
+    ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, '$ħω$ (meV)', 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+  };
   const cvE = EPP.canvas(fig.querySelector('.a1-diatomic-eig'), { height: 322 });
   cvE.canvas.setAttribute('role', 'img');
   const cvC = EPP.canvas(fig.querySelector('.a1-diatomic-chain'), { height: 212 });
@@ -162,10 +180,10 @@
     const bac = bvk.map(x => HW * Math.sqrt(w2pm(p, Math.PI * x)[0])), bop = bvk.map(x => HW * Math.sqrt(w2pm(p, Math.PI * x)[1]));
     const gap = zb[1] - zb[0];
     const iL = Math.round(0.75 * (qs.length - 1)); // qa/π = +0.5: labels beside the curves, on their convex sides
+    gapY = gap > 0.07 * yTop ? (zb[0] + zb[1]) / 2 : null;
     pD.draw([
       { type: 'text', x: -1, y: yTop, dx: 4 - pD.m.l, dy: -13, text: '(a) dispersion: click or drag to choose a mode', color: 'fg2', size: 11.5 },
       gap > 0.004 * yTop ? { type: 'hband', y0: zb[0], y1: zb[1], color: 'phonon', alpha: 0.12 } : null,
-      gap > 0.07 * yTop ? { type: 'text', x: -0.5, y: (zb[0] + zb[1]) / 2, text: 'gap at q = π/a', color: 'phonon', align: 'center', size: 11 } : null,
       { type: 'line', x: qs, y: ac, color: 'phonon', label: 'acoustic ω_−' },
       { type: 'line', x: qs, y: op, color: 'phonon', dash: [7, 4], label: 'optical ω_+' },
       { type: 'points', x: bvk, y: bac, color: 'phonon', r: 2.6, hollow: true },
@@ -307,7 +325,7 @@
     // header row(s)
     ctx.textBaseline = 'alphabetic';
     const title = narrow ? '(c) running wave, amplitudes exaggerated' : '(c) the selected mode as a running wave, amplitudes exaggerated';
-    const tag = (br ? 'optical' : 'acoustic') + (hw < 0.05 ? ', $ω$ = 0: rigid translation' : `, ħ$ω$ = ${fx(hw, 1)} meV`);
+    const tag = (br ? 'optical' : 'acoustic') + (hw < 0.05 ? ', $ω$ = 0: rigid translation' : `, $ħω$ = ${fx(hw, 1)} meV`);
     txt(ctx, title, padX, 16, { size: 11.5, color: cFg2 });
     const tagW = tw(ctx, tag, 11.5), one = padX + tw(ctx, title, 11.5) + 16 + tagW <= w - padX;
     txt(ctx, tag, one ? w - padX : padX, one ? 16 : 33, { size: 11.5, color: EPP.textColor('phonon'), align: one ? 'right' : 'left' });
@@ -338,10 +356,11 @@
     drawDisp();
     drawEig();
     const { D, E, hw, e, ratio, gap } = cur;
-    roV.hw.textContent = hw >= 0.05 ? `${fx(hw, 1)} meV (${fx(hw * CM, 0)} cm⁻¹)` : '0 (rigid translation)';
+    // no-break spaces keep every number with its unit
+    roV.hw.textContent = hw >= 0.05 ? `${fx(hw, 1)}\u00a0meV (${fx(hw * CM, 0)}\u00a0cm⁻¹)` : '0 (rigid translation)';
     roV.e.textContent = `${pol(e[0])}, ${pol(e[1])}`;
     roV.ratio.textContent = ratio ? pol(ratio) : (cabs(e[0]) <= 1e-6 ? '∞ (atom 1 at rest)' : '0 (atom 2 at rest)');
-    roV.gap.textContent = `${fx(gap, 1)} meV`;
+    roV.gap.textContent = `${fx(gap, 1)}\u00a0meV`;
     roV.phi.textContent = `${fx(D.A, 3)}, ${zfmt(D.B)}, ${fx(D.C, 3)}`;
     roV.w2.textContent = `${fx(Math.max(0, E.vals[0]), 3)}, ${fx(E.vals[1], 3)}`;
   }
@@ -361,17 +380,36 @@
   }
 
   const mfmt = v => (v < 10 ? v.toFixed(2) : v.toFixed(1)) + ' amu';
-  const kfmt = v => v.toFixed(2);
+  const kfmt = v => v.toFixed(2) + ' eV/Å²';
   const ui = EPP.controls(elCtl, [
     { key: 'preset', type: 'select', label: 'preset', options: [['hbn', 'hBN-like chain'], ['gaas', 'GaAs-like chain'], ['eqm', 'equal masses, unequal springs'], ['custom', 'custom']], value: 'hbn' },
     { key: 'M1', type: 'range', label: 'mass M_1', min: 1, max: 200, value: 10.81, log: true, step: 'any', fmt: mfmt },
     { key: 'M2', type: 'range', label: 'mass M_2', min: 1, max: 200, value: 14.01, log: true, step: 'any', fmt: mfmt },
-    { key: 'K1', type: 'range', label: 'intracell spring K_1 (eV/Å^2)', min: 0.1, max: 30, value: 21.07, log: true, step: 'any', fmt: kfmt },
-    { key: 'K2', type: 'range', label: 'intercell spring K_2 (eV/Å^2)', min: 0.1, max: 30, value: 21.07, log: true, step: 'any', fmt: kfmt },
+    { key: 'K1', type: 'range', label: 'intracell spring K_1', min: 0.1, max: 30, value: 21.07, log: true, step: 'any', fmt: kfmt },
+    { key: 'K2', type: 'range', label: 'intercell spring K_2', min: 0.1, max: 30, value: 21.07, log: true, step: 'any', fmt: kfmt },
     { key: 'q', type: 'range', label: 'wavevector qa/π', min: -1, max: 1, step: 1 / 600, value: 1 / 6, fmt: qfmt },
     { key: 'br', type: 'seg', label: 'branch', options: [['0', 'acoustic'], ['1', 'optical']], value: '1' }
   ], onChange);
   cur = compute(ui.state);
+  // slider labels: the symbols in italic, like the readout keys
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const LAB = { M1: `mass ${I('M')}<sub>1</sub>`, M2: `mass ${I('M')}<sub>2</sub>`, K1: `intracell spring ${I('K')}<sub>1</sub>`, K2: `intercell spring ${I('K')}<sub>2</sub>`, q: `wavevector ${I('qa')}/π` };
+  Object.keys(LAB).forEach(k => { const sp = elCtl.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  // the mode controls (q slider, branch, animation) form a row right under (a) and (b);
+  // preset, masses and springs stay under the chain (c). Branch and animation wrap as one unit.
+  const elMode = fig.querySelector('.a1-diatomic-mode');
+  const boxOf = (id) => { const e = document.getElementById(id); return e ? e.closest('.ctrl') : null; };
+  const bQ = boxOf(`${fig.id}-q`), bBr = boxOf(`${fig.id}-br-0`);
+  const pair = document.createElement('div');
+  pair.className = 'a1-diatomic-pair';
+  pair.style.cssText = 'display:flex;gap:10px 18px;align-items:flex-start;flex:1 1 230px;min-width:0';
+  elMode.classList.add('controls');
+  elMode.style.cssText = 'display:flex;flex-wrap:wrap;align-items:flex-start';
+  if (bQ && bBr) {
+    bQ.style.flex = '3 1 240px'; bBr.style.flex = '1 1 auto';
+    bBr.querySelectorAll('.seg button').forEach(b => { b.style.flex = '1 1 auto'; }); // the buttons fill the stretched segment
+    pair.appendChild(bBr); elMode.append(bQ, pair);
+  }
 
   // click or drag on (a): the branch nearest to the pointer on 'down'; snap to an allowed q within 10 px
   pD.onPointer = (x, y, type, d) => {
@@ -391,8 +429,9 @@
   cvE.onResize(drawEig);
   const host = document.createElement('div');
   host.className = 'ctrl';
+  host.style.flex = '0 0 auto';
   host.innerHTML = '<span class="lab"><span>animation</span></span>';
-  elCtl.appendChild(host);
+  (pair.parentNode ? pair : elCtl).appendChild(host);
   anim = EPP.anim(fig, (t) => drawChain(t), { buttonHost: host });
   cvC.onResize(() => anim.redraw());
 })();

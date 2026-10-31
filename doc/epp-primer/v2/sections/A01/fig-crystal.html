@@ -1,31 +1,27 @@
   <figure class="viz" id="viz-a1-crystal">
-    <p class="viz-title">Labelling a crystal: cells, basis, displacements, wavevectors <span class="tag">interactive</span></p>
-    <div class="viz-grid two"><div class="a1-crystal-real"></div><div class="a1-crystal-recip"></div></div>
+    <p class="viz-title">Labelling a crystal: cells, basis, displacements <span class="tag">interactive</span></p>
+    <div class="a1-crystal-real"></div>
+    <div class="legend a1-crystal-leg"></div>
     <div class="a1-crystal-ctrls"></div>
-    <div class="a1-crystal-ro"></div>
-    <div class="a1-crystal-ro2"></div>
-    <figcaption><strong>Model.</strong> A flat sheet modelled on hexagonal boron nitride (hBN), with motion in the plane only ($\alpha=x,y$). Lattice constant $a=2.504$ Å; primitive vectors $\ba_1=a(1,0)$ and $\ba_2=a(\tfrac12,\tfrac{\sqrt3}{2})$; boron ($\kappa=1$, $M_1=10.81$ amu) at $\btau_1=(\ba_1+\ba_2)/3$ and nitrogen ($\kappa=2$, $M_2=14.007$ amu) at $\btau_2=2(\ba_1+\ba_2)/3$, so the bond length is $a/\sqrt3=1.446$ Å (literature values, illustrative). <strong>Left, real space.</strong> Each light parallelogram is a unit cell, spanned by $\ba_1$ and $\ba_2$ (thin arrows) from its corner $\bR_\ell=\ell_1\ba_1+\ell_2\ba_2$; $\mathrm O$ marks $\bR_0=\mathbf 0$. Violet dots are boron and teal dots nitrogen, at their equilibrium positions. The bold outline is the Born–von Kármán supercell of $N_\ell=N\times N$ cells; the faded cells around it are its periodic images. The amber arrows are one snapshot of the displacements $\bu_{\ell\kappa}$, a sum of three allowed waves with a typical size of 0.03 Å, drawn 15 times longer than to scale. For the selected atom (click any atom; a halo marks the selection) the bold arrow is $\bR_\ell$, labelled with the cell index $\ell$, the arrow in the atom's colour is $\btau_\kappa$ and the dashed arrow is $\btau_{\ell\kappa}=\bR_\ell+\btau_\kappa$; the thick amber arrow is $\bu_{\ell\kappa}$, with dashed projections $u_{\ell\kappa x}$ and $u_{\ell\kappa y}$. The displacements repeat when $\ell_1$ or $\ell_2$ changes by $N$, so an image atom moves exactly like its partner inside the supercell. Select an image atom to see its partner (dashed ring) and the dotted translation, made of steps $\pm N\ba_1$ and $\pm N\ba_2$, that links them. The small dial at the corner of every cell shows the phase factor $\ee^{\ii\bq\cdot\bR_\ell}$ of the selected $\bq$: its hand points at the angle $\bq\cdot\bR_\ell$, measured anticlockwise from the $x$ direction. <strong>Right, reciprocal space.</strong> The bold arrows are $\bb_1=(2\pi/a)(1,-1/\sqrt3)$ and $\bb_2=(2\pi/a)(0,2/\sqrt3)$, which satisfy $\ba_j\cdot\bb_{j'}=2\pi\delta_{jj'}$. The hexagon is the first Brillouin zone, with corners $4\pi/3a=1.673$ Å⁻¹ from $\Gamma$, $\mathrm M=\bb_2/2$ and $\mathrm K=(2\pi/3a)(1,\sqrt3)$. The allowed wavevectors are $\bq=(s_1/N)\,\bb_1+(s_2/N)\,\bb_2$ with $s_j=0,\dots,N-1$; they fill the dashed cell spanned by $\bb_1$ and $\bb_2$, and grey dots mark those that lie outside the zone. The amber dots are all $N_\bq=N_\ell$ of them, each moved by a reciprocal lattice vector to its image closest to $\Gamma$. Hollow dots lie on the zone boundary, where several images are equally close and one is shown. Click a dot to select $\bq$ (ringed); the dashed arrow shows its move. Each allowed $\bq$ fixes the phase step $\bq\cdot\ba_j=2\pi s_j/N$ (modulo $2\pi$) between neighbouring cells, so the phase returns to itself after $N$ cells. Summed over the $N$ cells along $\ba_j$, these phases are evenly spread unit arrows that add to zero unless $s_j=0$. The two dials at the top left collect the hands of one row of cells along $\ba_1$ and along $\ba_2$ and give their sum. <strong>What to notice.</strong> Every atom, inside the supercell or in an image, is reached in the same two steps, $\bR_\ell$ to the corner of its cell and then $\btau_\kappa$ inside it, and each faded cell repeats the arrows and dial hands of the cell $N$ steps away. Raising $N$ adds cells and allowed wavevectors in equal number, $N_\bq=N_\ell=N^2$, and for every $\bq$ except $\Gamma$ the hands along $\ba_1$, along $\ba_2$ or along both spread evenly around the dial, so that their sum vanishes.</figcaption>
+    <div class="readout a1-crystal-ro" aria-live="polite" aria-atomic="true"><span>$\ell$<b class="a1-crystal-v-l"></b></span><span>$\kappa$<b class="a1-crystal-v-k"></b></span><span>$\bR_\ell$<b class="a1-crystal-v-R"></b></span><span>$\btau_\kappa$<b class="a1-crystal-v-t"></b></span><span>$\btau_{\ell\kappa}$<b class="a1-crystal-v-tl"></b></span><span>$\bu_{\ell\kappa}$<b class="a1-crystal-v-u"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> Every atom, inside the supercell or in one of its faded images, is reached in the same two steps: $\bR_\ell$ to the corner of its cell, then $\btau_\kappa$ inside the cell. An image atom has exactly the displacement of its partner inside the supercell.</p><div class="cap-more"><p><strong>Marks.</strong> Each light parallelogram is a unit cell. The bold outline is the Born–von Kármán supercell of $N_1\times N_2$ cells, and the faded cells around it are its periodic images. $\mathrm O$ marks $\bR_0=\mathbf 0$. A halo marks the selected atom. Its displacement $\bu_{\ell\kappa}$ is redrawn from the rim of the halo, with the components $u_{\ell\kappa x}$ and $u_{\ell\kappa y}$ as the legs of a right triangle. For a selected image atom, a dashed ring marks its partner, and the dotted arrow is the translation from the partner to the image, made of steps $\pm N_1\ba_1$ and $\pm N_2\ba_2$.</p><p><strong>Try.</strong> Click or tap an atom to select it. With the patch focused, the arrow keys change $\ell_1$ (left, right) and $\ell_2$ (up, down), and the space bar switches $\kappa$. Select a faded atom to find its partner. The slider sets $N_1=N_2$ from 2 to 6; the check box hides the displacements.</p><p><strong>Model.</strong> A flat sheet modelled on hexagonal boron nitride (hBN), with motion in its plane only: <span class="nw">$a=2.504$ Å</span>, $\ba_1=a(1,0)$, $\ba_2=a(\tfrac12,\tfrac{\sqrt3}2)$, boron ($\kappa=1$, <span class="nw">$M_1=10.81$ amu</span>) at $\btau_1=(\ba_1+\ba_2)/3$ and nitrogen ($\kappa=2$, <span class="nw">$M_2=14.007$ amu</span>) at $\btau_2=2(\ba_1+\ba_2)/3$, so the B–N bond is <span class="nw">$a/\sqrt3=1.446$ Å</span> long (literature values, illustrative). The displacements are one made-up snapshot that obeys (A1.2), with a typical length of <span class="nw">0.03 Å</span>.</p></div></figcaption>
   </figure>
 <script>
 (() => {
   const fig = document.getElementById('viz-a1-crystal');
   if (!fig || !window.EPP) return;
   const TAU = 2 * Math.PI, S3 = Math.sqrt(3);
-  // hBN-like sheet: lengths in Å, masses in amu, wavevectors in 1/Å
+  // hBN-like sheet: lengths in Å, masses in amu
   const A = 2.504;
   const a1 = [A, 0], a2 = [A / 2, A * S3 / 2];
   const TK = [[A / 2, A / (2 * S3)], [A, A / S3]];        // tau_1 = (a1+a2)/3, tau_2 = 2(a1+a2)/3
   const MASS = ['10.81', '14.007'], SPEC = ['B', 'N'], KCOL = ['c5', 'c4'];
-  const BQ = TAU / A;
-  const b1 = [BQ, -BQ / S3], b2 = [0, 2 * BQ / S3], b12 = [b1[0] + b2[0], b1[1] + b2[1]];
-  const BL = 2 * BQ / S3, KZ = 2 * TAU / (3 * A);         // |b_j| and the zone-corner distance 4π/3a
-  const HEX = [0, 1, 2, 3, 4, 5].map(j => [KZ * Math.cos(j * Math.PI / 3), KZ * Math.sin(j * Math.PI / 3)]);
-  const UF = 15;                                          // arrow exaggeration
+  const UF = 15, US = 50;                                 // exaggeration of all arrows; of the selected atom's arrow
   const mod = (n, m) => ((n % m) + m) % m;
   const Rl = (l1, l2) => [l1 * a1[0] + l2 * a2[0], l1 * a1[1] + l2 * a2[1]];
-  // displacement snapshot: three allowed waves s = (1,0), (0,1), (1,1) of the N x N grid,
-  // u_lk = sum_m [A_mk cos(th) + B_mk sin(th)], th = q_m.R_l + phi_mk, q_m.R_l = 2π (s_m . l)/N (taken mod N: exactly periodic).
-  // Amplitudes (Å) chosen for a generic look with median |u| = 0.030 Å and max 0.048 Å for every N = 2...6.
+  // displacement snapshot: a fixed sum of three patterns that repeat after N cells along a1 and a2,
+  // u_lk = sum_m [A_mk cos(th) + B_mk sin(th)], th = 2π (s_m . l)/N + phi_mk (taken mod N: exactly periodic).
+  // Amplitudes (Å) chosen for a generic look with median |u| = 0.03 Å and max 0.048 Å for every N = 2...6.
   const WAVES = [
     { s: [1, 0], A: [[-0.0100, 0.0126], [0.0148, 0.0202]], B: [[-0.0019, 0.0206], [0.0211, 0.0110]], ph: [3.05, 3.32] },
     { s: [0, 1], A: [[-0.0224, -0.0056], [0.0062, 0.0001]], B: [[0.0105, -0.0043], [-0.0019, 0.0030]], ph: [5.54, 3.74] },
@@ -39,20 +35,6 @@
       ux += w.A[k][0] * c + w.B[k][0] * sn; uy += w.A[k][1] * c + w.B[k][1] * sn;
     }
     return [ROT[0] * ux - ROT[1] * uy, ROT[1] * ux + ROT[0] * uy];
-  }
-  // grid point p = (s1/N) b1 + (s2/N) b2 and its image q = p - m1 b1 - m2 b2 closest to Γ
-  function qOf(N, s1, s2) {
-    const p = [(s1 * b1[0] + s2 * b2[0]) / N, (s1 * b1[1] + s2 * b2[1]) / N];
-    const c = [];
-    for (let m1 = -1; m1 <= 1; m1++) for (let m2 = -1; m2 <= 1; m2++) {
-      const q = [p[0] - m1 * b1[0] - m2 * b2[0], p[1] - m1 * b1[1] - m2 * b2[1]];
-      c.push({ q, m: [m1, m2], d: Math.hypot(q[0], q[1]) });
-    }
-    const dmin = Math.min(...c.map(o => o.d));
-    const near = c.filter(o => o.d < dmin + 1e-9);
-    // ties (zone boundary): keep the unmoved point if it is one of them, else the upper one
-    near.sort((u, v) => (Math.abs(u.m[0]) + Math.abs(u.m[1]) === 0 ? -1 : 0) - (Math.abs(v.m[0]) + Math.abs(v.m[1]) === 0 ? -1 : 0) || v.q[1] - u.q[1] || v.q[0] - u.q[0]);
-    return { p, q: near[0].q, m: near[0].m, edge: near.length > 1 };
   }
 
   // ---------- drawing helpers ----------
@@ -71,28 +53,36 @@
   }
   const shorten = (P0, P1, d) => { const dx = P1[0] - P0[0], dy = P1[1] - P0[1], L = Math.hypot(dx, dy); return L > d + 1 ? [P1[0] - dx / L * d, P1[1] - dy / L * d] : P1; };
   const disc = (ctx, x, y, r) => { ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); };
-  // explicit rich text parts {t, b: bold, i: italic, sub: subscript} for labels that mix bold and regular
-  const pFont = (p, size, fam) => `${p.i ? 'italic ' : ''}${p.b ? '700 ' : ''}${p.sub ? Math.round(size * 0.72) : size}px ${fam}`;
-  function partsW(ctx, parts, size, fam) { let w = 0; for (const p of parts) { ctx.font = pFont(p, size, fam); w += ctx.measureText(p.t).width; } return w; }
-  function partsDraw(ctx, parts, x, y, size, fam) { ctx.textAlign = 'left'; for (const p of parts) { ctx.font = pFont(p, size, fam); ctx.fillText(p.t, x, y + (p.sub ? size * 0.28 : 0)); x += ctx.measureText(p.t).width; } }
-  const labW = (ctx, L, fam) => (Array.isArray(L.s) ? partsW(ctx, L.s, L.size, fam) : EPP.measureRich(ctx, L.s, L.size, fam, { bold: L.bold, italic: L.italic }));
-  function labDraw(ctx, L, x, y, fam) {
-    ctx.fillStyle = L.color; ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
-    if (Array.isArray(L.s)) partsDraw(ctx, L.s, x, y, L.size, fam);
-    else EPP.drawRich(ctx, L.s, x, y, { size: L.size, font: fam, bold: L.bold, italic: L.italic });
+  // canvas labels as parts {t, b: bold vector (UI font), i: italic symbol (text font), sub: subscript}
+  let FAM = { ui: 'sans-serif', tx: 'serif' };
+  const pFont = (p, size) => { const z = (p.i ? size + 1 : size) * (p.sub ? 0.72 : 1); return `${p.i ? 'italic ' : ''}${p.b ? '700 ' : ''}${z.toFixed(1)}px ${p.i ? FAM.tx : FAM.ui}`; };
+  function partsW(ctx, parts, size) { let w = 0; for (const p of parts) { ctx.font = pFont(p, size); w += ctx.measureText(p.t).width; } return w; }
+  function partsDraw(ctx, parts, x, y, size) { ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic'; for (const p of parts) { ctx.font = pFont(p, size); ctx.fillText(p.t, x, y + (p.sub ? size * 0.28 : 0)); x += ctx.measureText(p.t).width; } }
+  const T = (t) => ({ t }), Bv = (t) => ({ t, b: 1 }), It = (t) => ({ t, i: 1 }), Sb = (t, i) => ({ t, sub: 1, i: i ? 1 : 0 });
+  const A1P = [Bv('a'), Sb('1')], A2P = [Bv('a'), Sb('2')];
+  const num = (n) => String(n).replace('-', '−');
+  // integer combination c1 a1 + c2 a2 as label parts
+  function combo(c1, c2) {
+    const out = [];
+    [[c1, A1P], [c2, A2P]].forEach(([c, V]) => {
+      if (!c) return;
+      const sg = c < 0 ? '−' : (out.length ? '+' : ''), mag = Math.abs(c);
+      out.push(T((out.length ? ' ' + sg + ' ' : sg) + (mag === 1 ? '' : String(mag))));
+      out.push(...V);
+    });
+    return out;
   }
   // label placer: tries candidate centres and takes the first box that stays on the canvas and clears every placed label
-  // (with a 3 px gap) and every obstacle; soft obstacles (lattice atoms, dials) are given up before a label moves away
-  function placer(ctx, W, H, fam) {
+  // (with a 3 px gap) and every obstacle; soft obstacles (lattice atoms) are given up before a label moves away
+  function placer(ctx, W, H) {
     const boxes = [], labels = [], soft = [];
     const hit = (b, o, g) => b[0] < o[2] + g && b[2] > o[0] - g && b[1] < o[3] + g && b[3] > o[1] - g;
     const free = (b, useSoft) => b[0] >= 1 && b[1] >= 1 && b[2] <= W - 1 && b[3] <= H - 1 && !boxes.some(o => hit(b, o, 0)) && !labels.some(o => hit(b, o, 3)) && !(useSoft && soft.some(o => hit(b, o, 0)));
     const api = {
-      block(x0, y0, x1, y1) { boxes.push([Math.min(x0, x1), Math.min(y0, y1), Math.max(x0, x1), Math.max(y0, y1)]); },
       disc(P, r) { boxes.push([P[0] - r, P[1] - r, P[0] + r, P[1] + r]); },
       soft(P, r) { soft.push([P[0] - r, P[1] - r, P[0] + r, P[1] + r]); },
       seg(P0, P1, r = 2.5) { const n = Math.max(1, Math.ceil(Math.hypot(P1[0] - P0[0], P1[1] - P0[1]) / 5)); for (let i = 0; i <= n; i++) { const x = P0[0] + (P1[0] - P0[0]) * i / n, y = P0[1] + (P1[1] - P0[1]) * i / n; boxes.push([x - r, y - r, x + r, y + r]); } },
-      size(L) { return [labW(ctx, L, fam), L.size * 1.3]; },
+      size(L) { return [partsW(ctx, L.s, L.size), L.size * 1.35]; },
       put(L, cands) {
         const [w, h] = api.size(L);
         const at = (c) => [c[0] - w / 2 - 2, c[1] - h / 2, c[0] + w / 2 + 2, c[1] + h / 2];
@@ -100,7 +90,7 @@
         if (!c) {
           // no candidate is free: search outwards from the first one and draw a leader line back to the anchor
           const c0 = cands[0];
-          search: for (let rad = 8; rad <= 84; rad += 6) for (const useSoft of [true, false]) for (let j = 0; j < 24; j++) {
+          search: for (let rad = 8; rad <= 90; rad += 6) for (const useSoft of [true, false]) for (let j = 0; j < 24; j++) {
             const cc = [c0[0] + rad * Math.cos(j * TAU / 24), c0[1] + rad * Math.sin(j * TAU / 24)];
             if (free(at(cc), useSoft)) { c = cc; lead = cands.anchor || c0; break search; }
           }
@@ -113,7 +103,7 @@
         }
         ctx.fillStyle = EPP.alpha('surface', 0.84);
         ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(b[0], b[1], b[2] - b[0], b[3] - b[1], 3); else ctx.rect(b[0], b[1], b[2] - b[0], b[3] - b[1]); ctx.fill();
-        labDraw(ctx, L, c[0] - w / 2, c[1] + L.size * 0.2, fam);
+        ctx.fillStyle = L.color; partsDraw(ctx, L.s, c[0] - w / 2, c[1] + L.size * 0.36, L.size);
         return c;
       },
       // centres beside the segment P0 -> P1, preferred side first (side +1 = screen-left of the direction)
@@ -140,128 +130,96 @@
     };
     return api;
   }
-  const lab = (s, color, size, o) => Object.assign({ s, color, size }, o || {});
-  const B1 = [{ t: 'b', b: 1 }, { t: '1', sub: 1 }], B2 = [{ t: 'b', b: 1 }, { t: '2', sub: 1 }];
-  const A1 = [{ t: 'a', b: 1 }, { t: '1', sub: 1 }], A2 = [{ t: 'a', b: 1 }, { t: '2', sub: 1 }];
-  // integer combination c1 v1 + c2 v2 as label parts (v = A or B parts); leading sign kept
-  function combo(c1, c2, V1, V2) {
-    const out = [];
-    [[c1, V1], [c2, V2]].forEach(([c, V]) => {
-      if (!c) return;
-      const sg = c < 0 ? '−' : (out.length ? '+' : ''), mag = Math.abs(c);
-      out.push({ t: (out.length ? ' ' + sg + ' ' : sg) + (mag === 1 ? '' : String(mag)) });
-      out.push(...V);
-    });
-    return out;
-  }
+  const lab = (s, color, size) => ({ s: typeof s === 'string' ? [T(s)] : s, color, size });
 
   // ---------- state ----------
-  let N = 3, showU = true, showPh = true;
+  let N = 3, showU = true;
   let sel = { l1: 2, l2: 0, k: 1 };   // selected atom: cell (l1, l2), k = κ − 1
-  let selS = [1, 0];                    // selected grid wavevector s = (s1, s2)
-  let atomsPx = [], qPx = [], rHitR = 15;
+  let atomsPx = [], rHitR = 15;
 
-  const cvR = EPP.canvas(fig.querySelector('.a1-crystal-real'), { aspect: 0.9, minHeight: 260, maxHeight: 470 });
-  const cvQ = EPP.canvas(fig.querySelector('.a1-crystal-recip'), { aspect: 0.9, minHeight: 260, maxHeight: 470 });
-  cvR.canvas.setAttribute('role', 'img');
-  cvR.canvas.setAttribute('aria-label', 'Real-space patch of the hBN-like sheet: unit cells, the bold Born–von Kármán supercell and its faded periodic images, boron and nitrogen atoms with displacement arrows, a phase dial at every cell corner, and the vectors R, tau and u of the selected atom. Click an atom to select it.');
-  cvQ.canvas.setAttribute('role', 'img');
-  cvQ.canvas.setAttribute('aria-label', 'Reciprocal space: the vectors b1 and b2, the hexagonal first Brillouin zone with Gamma, M and K, and the N by N allowed wavevectors moved into the zone. Click a dot to select a wavevector.');
-  const roEl = fig.querySelector('.a1-crystal-ro'), ro2El = fig.querySelector('.a1-crystal-ro2');
-  EPP.readout(roEl); EPP.readout(ro2El);
+  const cv = EPP.canvas(fig.querySelector('.a1-crystal-real'), { aspect: 0.58, minHeight: 300, maxHeight: 470 });
+  cv.canvas.setAttribute('tabindex', '0');
+  cv.canvas.setAttribute('role', 'application');
+  cv.canvas.setAttribute('aria-label', 'Real-space patch of the hBN-like sheet: unit cells, the bold Born–von Kármán supercell and its faded periodic images, boron and nitrogen atoms with displacement arrows, and the vectors R, tau and u of the selected atom. Click an atom to select it, or use the arrow keys to change the cell index l1 (left, right) and l2 (up, down) and the space bar to switch the atom kappa; the readout below reports the selected atom.');
+  const $v = (c) => fig.querySelector('.a1-crystal-v-' + c);
+  const roV = { l: $v('l'), k: $v('k'), R: $v('R'), t: $v('t'), tl: $v('tl'), u: $v('u') };
+  const legEl = fig.querySelector('.a1-crystal-leg');
 
   // ---------- real space ----------
-  function drawReal() {
-    const cv = cvR, ctx = cv.ctx, W = cv.w, H = cv.h;
+  function draw() {
+    const ctx = cv.ctx, W = cv.w, H = cv.h;
     cv.clear();
     atomsPx = [];
     if (W < 40) return;
-    const fam = EPP.css('--font-ui');
-    const top = 24, bot = 4, avail = H - top - bot;
-    let s = (W - 4) / ((1.5 * N + 1.1) * A);                    // px per Å: supercell plus 0.55 a on each side
-    const spanY = (S3 / 2) * (N + 2) * A;
-    if (spanY * s > avail) s = avail / spanY;
-    const cx = 0.75 * N * A, cy = (S3 / 4) * N * A;            // supercell centre = patch centre
-    const X = (x) => W / 2 + (x - cx) * s, Y = (y) => top + avail / 2 - (y - cy) * s;
+    FAM = { ui: EPP.css('--font-ui'), tx: EPP.css('--font-text') };
+    const pad = 4;
+    // px per Å: the supercell plus 0.55 a on each side across, one image row above and below
+    const s = Math.min((W - 4) / ((1.5 * N + 1.1) * A), (H - 2 * pad) / ((S3 / 2) * (N + 2) * A));
+    const cx = 0.75 * N * A, cy = (S3 / 4) * N * A;            // supercell centre = canvas centre
+    const X = (x) => W / 2 + (x - cx) * s, Y = (y) => H / 2 - (y - cy) * s;
     const P = (v) => [X(v[0]), Y(v[1])];
-    const aPx = A * s, rA = EPP.clamp(0.1 * aPx, 3.2, 7), rC = EPP.clamp(0.16 * aPx, 4.5, 10);
+    const aPx = A * s, rA = EPP.clamp(0.1 * aPx, 3.2, 7), rH = rA + 7;
     rHitR = rA + 10;
+    // cells that reach into the canvas
+    const toL = (px, py) => { const x = (px - W / 2) / s + cx, y = -(py - H / 2) / s + cy, l2 = y / (A * S3 / 2); return [x / A - l2 / 2, l2]; };
+    const cs = [toL(0, 0), toL(W, 0), toL(0, H), toL(W, H)];
+    const L1a = Math.floor(Math.min(...cs.map(c => c[0]))) - 1, L1b = Math.ceil(Math.max(...cs.map(c => c[0]))) + 1;
+    const L2a = Math.floor(Math.min(...cs.map(c => c[1]))) - 1, L2b = Math.ceil(Math.max(...cs.map(c => c[1]))) + 1;
     const inSC = (l1, l2) => l1 >= 0 && l1 < N && l2 >= 0 && l2 < N;
-    const onCv = (p, m) => p[0] > -m && p[0] < W + m && p[1] > top - m && p[1] < H + m;
-    const cellPath = (l1, l2) => {
-      const r = Rl(l1, l2), p0 = P(r), p1 = P([r[0] + a1[0], r[1] + a1[1]]), p2 = P([r[0] + a1[0] + a2[0], r[1] + a1[1] + a2[1]]), p3 = P([r[0] + a2[0], r[1] + a2[1]]);
-      ctx.beginPath(); ctx.moveTo(p0[0], p0[1]); ctx.lineTo(p1[0], p1[1]); ctx.lineTo(p2[0], p2[1]); ctx.lineTo(p3[0], p3[1]); ctx.closePath();
-    };
+    const onCv = (p, m) => p[0] > -m && p[0] < W + m && p[1] > -m && p[1] < H + m;
+    const quad = (pts) => { ctx.beginPath(); pts.forEach((p, j) => (j ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]))); ctx.closePath(); };
+    const cellPath = (l1, l2) => quad([P(Rl(l1, l2)), P(Rl(l1 + 1, l2)), P(Rl(l1 + 1, l2 + 1)), P(Rl(l1, l2 + 1))]);
+    const scPath = () => quad([P([0, 0]), P(Rl(N, 0)), P(Rl(N, N)), P(Rl(0, N))]);
     const k = sel.k, selIn = inSC(sel.l1, sel.l2), pl1 = mod(sel.l1, N), pl2 = mod(sel.l2, N);
-    ctx.save();
-    ctx.beginPath(); ctx.rect(0, top - 2, W, H - top + 2); ctx.clip();
+    const cInk = EPP.color('ink'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted'), cPh = EPP.color('phonon'), cPhT = EPP.color('phonon-t');
     // supercell tint, selected (and partner) cell tint
-    ctx.beginPath(); { const c0 = P([0, 0]), c1 = P(Rl(N, 0)), c2 = P(Rl(N, N)), c3 = P(Rl(0, N)); ctx.moveTo(c0[0], c0[1]); ctx.lineTo(c1[0], c1[1]); ctx.lineTo(c2[0], c2[1]); ctx.lineTo(c3[0], c3[1]); ctx.closePath(); }
-    ctx.fillStyle = EPP.alpha('ink', 0.03); ctx.fill();
+    scPath(); ctx.fillStyle = EPP.alpha('ink', 0.03); ctx.fill();
     cellPath(sel.l1, sel.l2); ctx.fillStyle = EPP.alpha('ink', 0.075); ctx.fill();
     if (!selIn) { cellPath(pl1, pl2); ctx.fillStyle = EPP.alpha('ink', 0.05); ctx.fill(); }
     // cell edges: faint everywhere, stronger inside the supercell
     const line = (p, q) => { ctx.moveTo(p[0], p[1]); ctx.lineTo(q[0], q[1]); };
     ctx.lineWidth = 1; ctx.strokeStyle = EPP.alpha('muted', 0.24); ctx.beginPath();
-    for (let j = -1; j <= N + 1; j++) { line(P(Rl(j, -1)), P(Rl(j, N + 1))); line(P(Rl(-1, j)), P(Rl(N + 1, j))); }
+    for (let j = L1a; j <= L1b; j++) line(P(Rl(j, L2a)), P(Rl(j, L2b)));
+    for (let j = L2a; j <= L2b; j++) line(P(Rl(L1a, j)), P(Rl(L1b, j)));
     ctx.stroke();
     ctx.strokeStyle = EPP.alpha('muted', 0.42); ctx.beginPath();
     for (let j = 1; j < N; j++) { line(P(Rl(j, 0)), P(Rl(j, N))); line(P(Rl(0, j)), P(Rl(N, j))); }
     ctx.stroke();
     // Born–von Kármán supercell outline
-    ctx.strokeStyle = EPP.color('ink'); ctx.lineWidth = 2.2; ctx.lineJoin = 'round';
-    ctx.beginPath(); { const c0 = P([0, 0]), c1 = P(Rl(N, 0)), c2 = P(Rl(N, N)), c3 = P(Rl(0, N)); ctx.moveTo(c0[0], c0[1]); ctx.lineTo(c1[0], c1[1]); ctx.lineTo(c2[0], c2[1]); ctx.lineTo(c3[0], c3[1]); ctx.closePath(); }
-    ctx.stroke();
-    // phase dials at the cell corners: hand at angle q.R_l = 2π (s . l)/N
-    const dialsPx = [];
-    if (showPh) {
-      ctx.lineCap = 'round';
-      for (let l1 = -1; l1 <= N; l1++) for (let l2 = -1; l2 <= N; l2++) {
-        const c = P(Rl(l1, l2));
-        if (!onCv(c, rC + 2)) continue;
-        dialsPx.push(c);
-        const f = inSC(l1, l2) ? 1 : 0.4, th = TAU * mod(selS[0] * l1 + selS[1] * l2, N) / N;
-        ctx.strokeStyle = EPP.alpha('muted', 0.5 * f); ctx.lineWidth = 1; disc(ctx, c[0], c[1], rC); ctx.stroke();
-        ctx.strokeStyle = EPP.alpha('fg2', 0.9 * f); ctx.lineWidth = 2;
-        ctx.beginPath(); ctx.moveTo(c[0], c[1]); ctx.lineTo(c[0] + 0.88 * rC * Math.cos(th), c[1] - 0.88 * rC * Math.sin(th)); ctx.stroke();
-      }
-    }
+    ctx.strokeStyle = cInk; ctx.lineWidth = 2.2; ctx.lineJoin = 'round'; scPath(); ctx.stroke();
     // selected atom (and its partner inside the supercell when an image is selected): soft halo under the atom
     const Rv = Rl(sel.l1, sel.l2), tv = TK[k], O = P([0, 0]), Rp = P(Rv), Ap = P([Rv[0] + tv[0], Rv[1] + tv[1]]);
     const Rpart = Rl(pl1, pl2), Pp = P([Rpart[0] + tv[0], Rpart[1] + tv[1]]);
-    const u = disp(N, sel.l1, sel.l2, k), U = [Ap[0] + UF * u[0] * s, Ap[1] - UF * u[1] * s];
-    ctx.fillStyle = EPP.alpha('ink', 0.14); disc(ctx, Ap[0], Ap[1], rA + 7); ctx.fill();
-    if (!selIn) { ctx.fillStyle = EPP.alpha('ink', 0.09); disc(ctx, Pp[0], Pp[1], rA + 7); ctx.fill(); }
+    ctx.fillStyle = EPP.alpha('ink', 0.14); disc(ctx, Ap[0], Ap[1], rH); ctx.fill();
+    if (!selIn) { ctx.fillStyle = EPP.alpha('ink', 0.09); disc(ctx, Pp[0], Pp[1], rH); ctx.fill(); }
     // atoms at their equilibrium positions tau_lk = R_l + tau_k
-    for (let l1 = -1; l1 <= N; l1++) for (let l2 = -1; l2 <= N; l2++) for (let kk = 0; kk < 2; kk++) {
+    for (let l1 = L1a; l1 <= L1b; l1++) for (let l2 = L2a; l2 <= L2b; l2++) for (let kk = 0; kk < 2; kk++) {
       const r = Rl(l1, l2), p = P([r[0] + TK[kk][0], r[1] + TK[kk][1]]);
-      if (!onCv(p, rA + 2)) continue;
+      if (!onCv(p, -rA)) continue;                          // only atoms whose disc lies wholly on the canvas
       const inside = inSC(l1, l2);
       ctx.fillStyle = inside ? EPP.color(KCOL[kk]) : EPP.alpha(KCOL[kk], 0.36);
       disc(ctx, p[0], p[1], rA); ctx.fill();
       atomsPx.push({ x: p[0], y: p[1], l1, l2, k: kk, inside });
     }
-    // displacement arrows from the equilibrium positions
+    // displacement arrows (×UF) from the equilibrium positions; the selected atom gets its own below
     if (showU) for (const at of atomsPx) {
+      if (at.l1 === sel.l1 && at.l2 === sel.l2 && at.k === k) continue;
       const u = disp(N, at.l1, at.l2, at.k), L = UF * Math.hypot(u[0], u[1]) * s;
-      arrow(ctx, at.x, at.y, at.x + UF * u[0] * s, at.y - UF * u[1] * s, { col: at.inside ? EPP.color('phonon') : EPP.alpha('phonon', 0.42), lw: 1.5, head: EPP.clamp(0.42 * L, 2.5, 5.5) });
+      arrow(ctx, at.x, at.y, at.x + UF * u[0] * s, at.y - UF * u[1] * s, { col: at.inside ? cPh : EPP.alpha('phonon', 0.42), lw: 1.5, head: EPP.clamp(0.42 * L, 2.5, 5.5) });
     }
     // ----- selected atom: R_l, tau_k, tau_lk, u_lk -----
-    const pl = placer(ctx, W, H, fam), fs = W < 360 ? 11.5 : 12.5;
-    pl.block(0, 0, W, top - 1);
+    const pl = placer(ctx, W, H), fs = W < 360 ? 11.5 : 12.5;
     for (const at of atomsPx) pl.soft([at.x, at.y], rA + 1);
-    for (const c of dialsPx) pl.soft(c, rC);
     const isO = sel.l1 === 0 && sel.l2 === 0;
-    const cInk = EPP.color('ink'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted');
     // translation from the partner to the selected image (a multiple of N a_j)
     let Tlab = null;
     if (!selIn) {
-      const T0 = shorten(Ap, Pp, rA + 4), T1 = shorten(Pp, Ap, rA + 4);
+      const T0 = shorten(Ap, Pp, rH + 1), T1 = shorten(Pp, Ap, rH + 1);
       arrow(ctx, T0[0], T0[1], T1[0], T1[1], { col: cMut, lw: 1.3, head: 6, dash: [2, 3] });
       pl.seg(T0, T1, 2);
-      Tlab = [lab(combo(sel.l1 - pl1, sel.l2 - pl2, A1, A2), cMut, 12), T0, T1];
+      Tlab = [lab(combo(sel.l1 - pl1, sel.l2 - pl2), cMut, 12), T0, T1];
       ctx.strokeStyle = cInk; ctx.lineWidth = 1.3; ctx.setLineDash([2.5, 2]); disc(ctx, Pp[0], Pp[1], rA + 2); ctx.stroke(); ctx.setLineDash([]);
-      pl.disc(Pp, rA + 5);
+      pl.disc(Pp, rA + 4);
     }
     // primitive vectors drawn as dimension arrows just outside cell (0,0)
     const off = 7, n2 = [-S3 / 2, -0.5];
@@ -280,215 +238,126 @@
     arrow(ctx, Rp[0], Rp[1], Ae[0], Ae[1], { col: EPP.color(KCOL[k]), lw: 2.3, head: 7.5 });
     pl.seg(Rp, Ae, 3);
     ctx.strokeStyle = cInk; ctx.lineWidth = 1.4; disc(ctx, Ap[0], Ap[1], rA + 1.6); ctx.stroke();
-    pl.disc(Ap, rA + 5);
+    pl.disc(Ap, rH);
     ctx.fillStyle = cInk; disc(ctx, O[0], O[1], 2.8); ctx.fill(); pl.disc(O, 4);
-    // u_lk with its Cartesian projections
-    const Ux = [U[0], Ap[1]], Uy = [Ap[0], U[1]];
+    // u_lk of the selected atom, ×US, from the rim of its halo: the hypotenuse of a right triangle whose legs are u_lkx and u_lky.
+    // The leg of the larger component comes first, so the corner lies well away from the halo.
+    let tri = null;
     if (showU) {
-      ctx.strokeStyle = EPP.alpha('phonon', 0.6); ctx.lineWidth = 1; ctx.setLineDash([1.5, 2.5]);
-      ctx.beginPath(); ctx.moveTo(Ux[0], Ux[1]); ctx.lineTo(U[0], U[1]); ctx.moveTo(Uy[0], Uy[1]); ctx.lineTo(U[0], U[1]); ctx.stroke(); ctx.setLineDash([]);
-      const cT = EPP.color('phonon-t');
-      arrow(ctx, Ap[0], Ap[1], Ux[0], Ux[1], { col: cT, lw: 1.5, head: 4.5, dash: [2.5, 1.5] });
-      arrow(ctx, Ap[0], Ap[1], Uy[0], Uy[1], { col: cT, lw: 1.5, head: 4.5, dash: [2.5, 1.5] });
-      arrow(ctx, Ap[0], Ap[1], U[0], U[1], { col: EPP.color('phonon'), lw: 2.8, head: 7.5 });
-      pl.seg(Ap, U, 2.5); pl.seg(Ap, Ux, 2); pl.seg(Ap, Uy, 2);
+      const u = disp(N, sel.l1, sel.l2, k), uL = Math.hypot(u[0], u[1]) || 1;
+      const dir = [u[0] / uL, -u[1] / uL];
+      const S0 = [Ap[0] + dir[0] * rH, Ap[1] + dir[1] * rH], E0 = [S0[0] + US * u[0] * s, S0[1] - US * u[1] * s];
+      const xFirst = Math.abs(u[0]) >= Math.abs(u[1]), C0 = xFirst ? [E0[0], S0[1]] : [S0[0], E0[1]];
+      const lx = Math.abs(E0[0] - S0[0]), ly = Math.abs(E0[1] - S0[1]);
+      if (lx > 5 && ly > 5) {                               // right-angle mark at the corner
+        const q = 4.5, sx = Math.sign((xFirst ? S0 : E0)[0] - C0[0]), sy = Math.sign((xFirst ? E0 : S0)[1] - C0[1]);
+        ctx.strokeStyle = EPP.alpha('phonon-t', 0.8); ctx.lineWidth = 1; ctx.beginPath();
+        ctx.moveTo(C0[0] + sx * q, C0[1]); ctx.lineTo(C0[0] + sx * q, C0[1] + sy * q); ctx.lineTo(C0[0], C0[1] + sy * q); ctx.stroke();
+      }
+      arrow(ctx, S0[0], S0[1], C0[0], C0[1], { col: cPhT, lw: 1.5, head: 5, dash: [3, 2] });
+      arrow(ctx, C0[0], C0[1], E0[0], E0[1], { col: cPhT, lw: 1.5, head: 5, dash: [3, 2] });
+      arrow(ctx, S0[0], S0[1], E0[0], E0[1], { col: cPh, lw: 2.8, head: 9 });
+      pl.seg(S0, E0, 3); pl.seg(S0, C0, 2.5); pl.seg(C0, E0, 2.5);
+      // end of each leg: the x leg ends at the corner when it comes first, else at the tip
+      tri = { S0, E0, C0, u, xEnd: xFirst ? C0 : E0, yEnd: xFirst ? E0 : C0 };
+      // the partner of a selected image moves the same way: the same arrow, lighter and without legs
+      if (!selIn) {
+        const S1 = [Pp[0] + dir[0] * rH, Pp[1] + dir[1] * rH], E1 = [S1[0] + US * u[0] * s, S1[1] - US * u[1] * s];
+        arrow(ctx, S1[0], S1[1], E1[0], E1[1], { col: EPP.alpha('phonon', 0.6), lw: 2.2, head: 8 });
+        pl.seg(S1, E1, 2.5);
+      }
     }
-    ctx.restore();
     // ----- labels (placed without overlaps, most constrained first) -----
     const side = (P0, P1, away) => { const dx = P1[0] - P0[0], dy = P1[1] - P0[1], mx = (P0[0] + P1[0]) / 2 - away[0], my = (P0[1] + P1[1]) / 2 - away[1]; return (dy * mx - dx * my) >= 0 ? 1 : -1; };
-    if (showU) {
-      const cT = EPP.color('phonon-t'), up = U[1] < Ap[1], right = U[0] >= Ap[0];
-      let L = lab('u_{ℓκ}', cT, fs, { bold: true });
-      pl.put(L, pl.around(L, U, 2, Math.atan2(U[1] - Ap[1], U[0] - Ap[0])));
-      L = lab('u_{ℓκx}', cT, fs - 0.5, { italic: true });
-      pl.put(L, pl.around(L, Ux, 2, up ? (right ? Math.PI / 4 : 3 * Math.PI / 4) : (right ? -Math.PI / 4 : -3 * Math.PI / 4)));
-      L = lab('u_{ℓκy}', cT, fs - 0.5, { italic: true });
-      pl.put(L, pl.around(L, Uy, 2, right ? (up ? -3 * Math.PI / 4 : 3 * Math.PI / 4) : (up ? -Math.PI / 4 : Math.PI / 4)));
+    if (tri) {
+      const { S0, E0, C0, u, xEnd, yEnd } = tri;
+      let L = lab([Bv('u'), Sb('ℓκ', 1)], cPhT, fs);
+      pl.put(L, pl.along(L, S0, E0, side(S0, E0, C0), [0.5, 0.62, 0.38, 0.75, 0.27]));
+      // each component label just beyond the arrowhead of its leg
+      L = lab([It('u'), Sb('ℓκx', 1)], cPhT, fs - 0.5);
+      pl.put(L, pl.around(L, xEnd, 2, u[0] >= 0 ? 0 : Math.PI));
+      L = lab([It('u'), Sb('ℓκy', 1)], cPhT, fs - 0.5);
+      pl.put(L, pl.around(L, yEnd, 2, u[1] >= 0 ? -Math.PI / 2 : Math.PI / 2));
     }
+    // fixed labels of the origin cell before the vector triangle, so that they keep their places
+    { let L = lab(A1P, cFg2, 12); pl.put(L, pl.along(L, A1s, A1e, -1, [0.5, 0.35, 0.65]));
+      L = lab(A2P, cFg2, 12); pl.put(L, pl.along(L, A2s, A2e, 1, [0.5, 0.35, 0.65])); }
+    { const L = lab('O', cInk, 12); pl.put(L, pl.around(L, O, 4, 3 * Math.PI / 4)); }
     {
-      const L = lab(isO ? 'τ_κ = τ_{ℓκ}' : 'τ_κ', EPP.color(KCOL[k] + '-t'), fs, { bold: true });
+      const L = lab(isO ? [Bv('τ'), Sb('κ', 1), T(' = '), Bv('τ'), Sb('ℓκ', 1)] : [Bv('τ'), Sb('κ', 1)], EPP.color(KCOL[k] + '-t'), fs);
       pl.put(L, pl.along(L, Rp, Ae, isO ? 1 : side(Rp, Ae, O)));
     }
     if (!isO) {
-      let L = lab('τ_{ℓκ}', cMut, fs, { bold: true });
+      let L = lab([Bv('τ'), Sb('ℓκ', 1)], cMut, fs);
       pl.put(L, pl.along(L, O, Ae2, side(O, Ae2, Rp), [0.55, 0.45, 0.65, 0.35, 0.75]));
-      L = lab([{ t: 'R', b: 1 }, { t: 'ℓ', sub: 1 }, { t: `, ℓ = (${sel.l1}, ${sel.l2})` }], cInk, fs);
+      L = lab([Bv('R'), Sb('ℓ', 1), T(', '), It('ℓ'), T(` = (${num(sel.l1)}, ${num(sel.l2)})`)], cInk, fs);
       pl.put(L, pl.along(L, O, Rp, side(O, Rp, Ap), [0.66, 0.54, 0.78, 0.42, 0.3]));
     }
-    { let L = lab(A1, cFg2, 12); pl.put(L, pl.along(L, A1s, A1e, -1, [0.5, 0.35, 0.65]));
-      L = lab(A2, cFg2, 12); pl.put(L, pl.along(L, A2s, A2e, 1, [0.5, 0.35, 0.65])); }
-    { const L = lab('O', cInk, 12); pl.put(L, pl.around(L, O, 4, 3 * Math.PI / 4)); }
-    if (isO) { const L = lab([{ t: 'R', b: 1 }, { t: 'ℓ', sub: 1 }, { t: ' = 0, ℓ = (0, 0)' }], cInk, fs); pl.put(L, pl.around(L, O, 6, Math.PI / 2)); }
+    if (isO) { const L = lab([Bv('R'), Sb('ℓ', 1), T(' = 0, '), It('ℓ'), T(' = (0, 0)')], cInk, fs); pl.put(L, pl.around(L, O, 6, Math.PI / 2)); }
     if (Tlab) pl.put(Tlab[0], pl.along(Tlab[0], Tlab[1], Tlab[2], 1));
-    if (!selIn) { const L2 = lab('partner', cFg2, 11); pl.put(L2, pl.around(L2, Pp, rA + 4, Math.PI / 2)); }
-    // ----- top band: legend and arrow scale -----
-    ctx.textBaseline = 'alphabetic';
-    let x = 6; const yb = 15;
-    for (let kk = 0; kk < 2; kk++) {
-      ctx.fillStyle = EPP.color(KCOL[kk]); disc(ctx, x + 4.5, yb - 4, 4.5); ctx.fill();
-      x += 12; ctx.fillStyle = cFg2;
-      x += EPP.drawRich(ctx, `κ = ${kk + 1} (${SPEC[kk]})`, x, yb, { size: 11.5, font: fam }) + 14;
-    }
-    if (showU) {
-      const t = `arrows ×${UF}`, tw = EPP.measureRich(ctx, t, 11.5, fam);
-      if (x + tw + 26 < W) {
-        ctx.fillStyle = EPP.color('phonon-t'); EPP.drawRich(ctx, t, W - 6, yb, { size: 11.5, font: fam, align: 'right' });
-        arrow(ctx, W - 6 - tw - 22, yb - 4, W - 6 - tw - 6, yb - 4, { col: EPP.color('phonon'), lw: 1.6, head: 5 });
-      }
-    }
+    if (!selIn) { const L2 = lab('partner', cFg2, 11); pl.put(L2, pl.around(L2, Pp, rH, Math.PI / 2)); }
   }
 
-  // ---------- reciprocal space ----------
-  function dial(ctx, cx, cy, r, sj, fam) {
-    ctx.strokeStyle = EPP.alpha('muted', 0.65); ctx.lineWidth = 1; disc(ctx, cx, cy, r); ctx.stroke();
-    const cnt = new Map();
-    for (let l = 0; l < N; l++) { const m = mod(sj * l, N); cnt.set(m, (cnt.get(m) || 0) + 1); }
-    ctx.strokeStyle = EPP.color('fg2'); ctx.lineWidth = 1.8; ctx.lineCap = 'round';
-    for (const [m, c] of cnt) {
-      const th = TAU * m / N, ct = Math.cos(th), st = Math.sin(th);
-      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + 0.88 * r * ct, cy - 0.88 * r * st); ctx.stroke();
-      if (c > 1) { ctx.fillStyle = EPP.color('muted'); EPP.drawRich(ctx, '×' + c, cx + (r + 8) * ct, cy - (r + 8) * st + 3.5, { size: 10, font: fam, align: 'center' }); }
-    }
-  }
-  function drawRecip() {
-    const cv = cvQ, ctx = cv.ctx, W = cv.w, H = cv.h;
-    cv.clear();
-    qPx = [];
-    if (W < 40) return;
-    const fam = EPP.css('--font-ui');
-    const mR = 30, mT = 12, mB = 10, mL = 6;
-    const kq = Math.min((W - mR - mL) / (b1[0] + KZ), (H - mT - mB) / (1.5 * BL));
-    const gx = W - mR - b1[0] * kq, gy = mT + BL * kq + Math.max(0, (H - mT - mB - 1.5 * BL * kq) / 2);
-    const P = (v) => [gx + v[0] * kq, gy - v[1] * kq], G0 = P([0, 0]);
-    const pl = placer(ctx, W, H, fam);
-    const pts = [];
-    for (let s1 = 0; s1 < N; s1++) for (let s2 = 0; s2 < N; s2++) { const f = qOf(N, s1, s2); pts.push(Object.assign({ s: [s1, s2], pp: P(f.p), pq: P(f.q) }, f)); }
-    const sp = pts.find(p => p.s[0] === selS[0] && p.s[1] === selS[1]) || pts[0];
-    const moved = (p) => p.m[0] !== 0 || p.m[1] !== 0;
-    const cInk = EPP.color('ink'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted');
-    // inset, top left: N_q = N_l = N^2 and the two phase dials
-    const ix = 8, iy = 17;
-    const t1 = [{ t: 'N', i: 1 }, { t: 'q', sub: 1, b: 1 }, { t: ' = ' }, { t: 'N', i: 1 }, { t: 'ℓ', sub: 1 }, { t: ' = ' }, { t: 'N', i: 1 }, { t: '² = ' + N * N }];
-    ctx.fillStyle = EPP.color('fg'); partsDraw(ctx, t1, ix, iy, 12, fam);
-    const w1 = partsW(ctx, t1, 12, fam);
-    const rD = EPP.clamp(0.04 * W, 11, 15);
-    const cap = (j) => [{ t: 'along ' }, { t: 'a', b: 1 }, { t: String(j), sub: 1 }];
-    const bw = Math.max(2 * rD + 24, partsW(ctx, cap(1), 10.5, fam) + 4);
-    const dyc = iy + 14 + rD, yCap = dyc + rD + 14;
-    for (let j = 0; j < 2; j++) {
-      const dcx = ix + bw / 2 + j * (bw + 10);
-      dial(ctx, dcx, dyc, rD, selS[j], fam);
-      ctx.fillStyle = cFg2;
-      const c = cap(j + 1), cw = partsW(ctx, c, 10.5, fam);
-      partsDraw(ctx, c, dcx - cw / 2, yCap, 10.5, fam);
-      EPP.drawRich(ctx, `sum = ${selS[j] === 0 ? N : 0}`, dcx, yCap + 12.5, { size: 10.5, font: fam, align: 'center' });
-    }
-    pl.block(0, 0, Math.max(ix + w1, ix + 2 * bw + 10) + 4, yCap + 17);
-    // dashed cell spanned by b1, b2 (the grid before folding)
-    const Pb1 = P(b1), Pb2 = P(b2), Pb12 = P(b12);
-    ctx.setLineDash([3, 4]); ctx.strokeStyle = EPP.alpha('muted', 0.75); ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(G0[0], G0[1]); ctx.lineTo(Pb1[0], Pb1[1]); ctx.lineTo(Pb12[0], Pb12[1]); ctx.lineTo(Pb2[0], Pb2[1]); ctx.closePath(); ctx.stroke(); ctx.setLineDash([]);
-    pl.seg(Pb1, Pb12, 1.5); pl.seg(Pb12, Pb2, 1.5);
-    // first Brillouin zone
-    const HP = HEX.map(P);
-    ctx.beginPath(); HP.forEach((p, j) => (j ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]))); ctx.closePath();
-    ctx.fillStyle = EPP.alpha('ink', 0.035); ctx.fill();
-    ctx.strokeStyle = cFg2; ctx.lineWidth = 1.4; ctx.lineJoin = 'round'; ctx.stroke();
-    HP.forEach((p, j) => pl.seg(p, HP[(j + 1) % 6], 1.5));
-    // grid points outside the zone, before folding (grey)
-    ctx.fillStyle = EPP.alpha('muted', 0.8);
-    for (const p of pts) if (moved(p)) { disc(ctx, p.pp[0], p.pp[1], 2.4); ctx.fill(); pl.disc(p.pp, 3.5); }
-    // b1, b2
-    arrow(ctx, G0[0], G0[1], Pb1[0], Pb1[1], { col: cInk, lw: 2.2, head: 8 });
-    arrow(ctx, G0[0], G0[1], Pb2[0], Pb2[1], { col: cInk, lw: 2.2, head: 8 });
-    pl.seg(G0, Pb1, 3); pl.seg(G0, Pb2, 3);
-    // the move of the selected q by a reciprocal lattice vector
-    let F = null;
-    if (moved(sp)) {
-      const f0 = shorten(sp.pq, sp.pp, 6), f1 = shorten(sp.pp, sp.pq, 9);
-      ctx.strokeStyle = cMut; ctx.lineWidth = 1.3; disc(ctx, sp.pp[0], sp.pp[1], 5); ctx.stroke();
-      arrow(ctx, f0[0], f0[1], f1[0], f1[1], { col: cMut, lw: 1.3, head: 6, dash: [4, 3] });
-      pl.seg(f0, f1, 2); pl.disc(sp.pp, 6);
-      F = [lab(combo(-sp.m[0], -sp.m[1], B1, B2), cMut, 12), f0, f1];
-    }
-    // allowed q in the zone (amber; hollow on the boundary)
-    for (const p of pts) {
-      disc(ctx, p.pq[0], p.pq[1], 3.8);
-      if (p.edge) { ctx.fillStyle = EPP.color('surface'); ctx.fill(); ctx.strokeStyle = EPP.color('phonon'); ctx.lineWidth = 1.6; ctx.stroke(); }
-      else { ctx.fillStyle = EPP.color('phonon'); ctx.fill(); }
-      pl.disc(p.pq, 5);
-    }
-    ctx.strokeStyle = cInk; ctx.lineWidth = 1.8; disc(ctx, sp.pq[0], sp.pq[1], 8); ctx.stroke(); pl.disc(sp.pq, 9.5);
-    // labels
-    let L = lab('q', cInk, 13, { bold: true }); pl.put(L, pl.around(L, sp.pq, 9, -Math.PI / 4));
-    L = lab('Γ', cFg2, 12.5); pl.put(L, pl.around(L, G0, 4, 3 * Math.PI / 4));
-    L = lab('M', cFg2, 12.5); pl.put(L, pl.around(L, P([0, BL / 2]), 4, -3 * Math.PI / 4));
-    L = lab('K', cFg2, 12.5); pl.put(L, pl.around(L, P([KZ / 2, BL / 2]), 5, -Math.PI / 4));
-    L = lab(B1, cInk, 12.5); pl.put(L, pl.around(L, Pb1, 3, 0));
-    L = lab(B2, cInk, 12.5); pl.put(L, pl.around(L, Pb2, 3, 0));
-    if (F) pl.put(F[0], pl.along(F[0], F[1], F[2], 1));
-    for (const p of pts) { qPx.push({ x: p.pq[0], y: p.pq[1], s: p.s }); if (moved(p)) qPx.push({ x: p.pp[0], y: p.pp[1], s: p.s }); }
+  // ---------- legend ----------
+  const I = (t) => `<i style="font-family:var(--font-text)">${t}</i>`;
+  function legend() {
+    const C = EPP.color;
+    const svg = (inner, w) => `<svg width="${w}" height="12" viewBox="0 0 ${w} 12" aria-hidden="true" style="vertical-align:-1px;margin-right:5px">${inner}</svg>`;
+    const dot = (col) => svg(`<circle cx="6" cy="6" r="5" fill="${col}"/>`, 12);
+    const arr = (col, lw, w, hd) => svg(`<line x1="1" y1="6" x2="${w - hd}" y2="6" stroke="${col}" stroke-width="${lw}"/><path d="M${w - 1} 6 L${w - 1 - hd} ${6 - hd * 0.45} L${w - 1 - hd} ${6 + hd * 0.45} Z" fill="${col}"/>`, w);
+    const it = (sw, t) => `<span class="item">${sw}${t}</span>`;
+    const items = [it(dot(C('c5')), `${I('κ')} = 1 (B)`), it(dot(C('c4')), `${I('κ')} = 2 (N)`)];
+    if (showU) items.push(it(arr(C('phonon'), 1.5, 18, 5), `displacements, ×${UF}`), it(arr(C('phonon'), 2.8, 30, 8), `selected atom, ×${US}`));
+    legEl.innerHTML = items.join('');
   }
 
   // ---------- readouts ----------
-  const bo = (x) => `<strong>${x}</strong>`;
   const fx = (v, d) => EPP.fix(Math.abs(v) < 0.5 * Math.pow(10, -d) ? 0 : v, d);
   const vec = (v, d) => `(${fx(v[0], d)}, ${fx(v[1], d)})`;
-  const setRO = (el, pairs) => { el.innerHTML = pairs.map(([kk, v]) => `<span>${kk}<b>${v}</b></span>`).join(''); };
   function readouts() {
     const k = sel.k, Rv = Rl(sel.l1, sel.l2), tv = TK[k], pos = [Rv[0] + tv[0], Rv[1] + tv[1]];
     const u = disp(N, sel.l1, sel.l2, k), selIn = sel.l1 >= 0 && sel.l1 < N && sel.l2 >= 0 && sel.l2 < N;
-    setRO(roEl, [
-      ['ℓ', `(${sel.l1}, ${sel.l2})` + (selIn ? ', inside the supercell' : `, image of (${mod(sel.l1, N)}, ${mod(sel.l2, N)})`)],
-      ['κ', `${k + 1} (${SPEC[k]}, ${MASS[k]} amu)`],
-      [`${bo('R')}<sub>ℓ</sub>`, vec(Rv, 3) + ' Å'],
-      [`${bo('τ')}<sub>κ</sub>`, vec(tv, 3) + ' Å'],
-      [`${bo('τ')}<sub>ℓκ</sub>`, vec(pos, 3) + ' Å'],
-      [`${bo('u')}<sub>ℓκ</sub>`, `${vec(u, 4)} Å, length ${fx(Math.hypot(u[0], u[1]), 4)} Å`]
-    ]);
-    const f = qOf(N, selS[0], selS[1]);
-    const gHTML = (m) => [[m[0], 1], [m[1], 2]].filter(t => t[0]).map(([c, j]) => ` ${c > 0 ? '−' : '+'} ${Math.abs(c) === 1 ? '' : Math.abs(c)}${bo('b')}<sub>${j}</sub>`).join('');
-    const ph = (x) => { const v = x / Math.PI; return Math.abs(v) < 5e-4 ? '0' : fx(v, 3) + 'π'; };
-    const qa1 = f.q[0] * a1[0] + f.q[1] * a1[1], qa2 = f.q[0] * a2[0] + f.q[1] * a2[1];
-    setRO(ro2El, [
-      [bo('q'), `(${selS[0]}/${N}) ${bo('b')}<sub>1</sub> + (${selS[1]}/${N}) ${bo('b')}<sub>2</sub>${gHTML(f.m)} = ${vec(f.q, 3)} Å⁻¹${f.edge ? ', on the zone boundary' : ''}`],
-      [`${bo('q')}·${bo('a')}<sub>1</sub>, ${bo('q')}·${bo('a')}<sub>2</sub>`, `${ph(qa1)}, ${ph(qa2)}`],
-      [`N<sub>ℓ</sub> = N<sub>${bo('q')}</sub>`, `${N * N} (${N} × ${N})`]
-    ]);
+    roV.l.textContent = `(${num(sel.l1)}, ${num(sel.l2)})` + (selIn ? ', inside the supercell' : `, image of (${mod(sel.l1, N)}, ${mod(sel.l2, N)})`);
+    roV.k.textContent = `${k + 1} (${SPEC[k]}, ${MASS[k]} amu)`;
+    roV.R.textContent = vec(Rv, 3) + ' Å';
+    roV.t.textContent = vec(tv, 3) + ' Å';
+    roV.tl.textContent = vec(pos, 3) + ' Å';
+    roV.u.textContent = `${vec(u, 4)} Å, length ${fx(Math.hypot(u[0], u[1]), 4)} Å`;
   }
-  function drawAll() { drawReal(); drawRecip(); readouts(); }
+  function drawAll() { draw(); readouts(); }
 
   // ---------- interaction ----------
-  const local = (cv, e) => { const r = cv.canvas.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
-  function nearest(list, x, y, tol) { let best = null, bd = tol; for (const o of list) { const d = Math.hypot(o.x - x, o.y - y); if (d <= bd) { bd = d; best = o; } } return best; }
-  cvR.canvas.addEventListener('pointerdown', (e) => {
-    const [x, y] = local(cvR, e), h = nearest(atomsPx, x, y, rHitR);
-    if (h) { sel = { l1: h.l1, l2: h.l2, k: h.k }; drawReal(); readouts(); }
+  const local = (e) => { const r = cv.canvas.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  function nearest(x, y, tol) { let best = null, bd = tol; for (const o of atomsPx) { const d = Math.hypot(o.x - x, o.y - y); if (d <= bd) { bd = d; best = o; } } return best; }
+  cv.canvas.addEventListener('pointerdown', (e) => {
+    const [x, y] = local(e), h = nearest(x, y, rHitR);
+    if (h) { sel = { l1: h.l1, l2: h.l2, k: h.k }; drawAll(); }
   });
-  cvR.canvas.addEventListener('pointermove', (e) => { const [x, y] = local(cvR, e); cvR.canvas.style.cursor = nearest(atomsPx, x, y, rHitR) ? 'pointer' : 'default'; });
-  cvQ.canvas.addEventListener('pointerdown', (e) => {
-    const [x, y] = local(cvQ, e), h = nearest(qPx, x, y, 12);
-    if (h) { selS = h.s.slice(); drawAll(); }
+  cv.canvas.addEventListener('pointermove', (e) => { const [x, y] = local(e); cv.canvas.style.cursor = nearest(x, y, rHitR) ? 'pointer' : 'default'; });
+  // keyboard: arrows change l1 (left, right) and l2 (up, down), the space bar switches kappa; only atoms drawn on the canvas can be reached
+  cv.canvas.addEventListener('keydown', (e) => {
+    const d = { ArrowLeft: [-1, 0, 0], ArrowRight: [1, 0, 0], ArrowUp: [0, 1, 0], ArrowDown: [0, -1, 0], ' ': [0, 0, 1], Spacebar: [0, 0, 1] }[e.key];
+    if (!d || e.altKey || e.ctrlKey || e.metaKey) return;
+    e.preventDefault();
+    const t = { l1: sel.l1 + d[0], l2: sel.l2 + d[1], k: d[2] ? 1 - sel.k : sel.k };
+    if (atomsPx.some(a => a.l1 === t.l1 && a.l2 === t.l2 && a.k === t.k)) { sel = t; drawAll(); }
   });
-  cvQ.canvas.addEventListener('pointermove', (e) => { const [x, y] = local(cvQ, e); cvQ.canvas.style.cursor = nearest(qPx, x, y, 12) ? 'pointer' : 'default'; });
 
   function onChange(st) {
     const n = EPP.clamp(Math.round(st.N), 2, 6);
-    if (n !== N) {
-      // keep s where it fits; otherwise keep its signed position (s or s − N) as close as the new grid allows
-      selS = selS.map(sj => { if (sj < n) return sj; const sg = sj <= N / 2 ? sj : sj - N; return mod(EPP.clamp(sg, -Math.floor((n - 1) / 2), Math.floor(n / 2)), n); });
-      if (sel.l1 < -1 || sel.l1 > n || sel.l2 < -1 || sel.l2 > n) sel = { l1: mod(sel.l1, n), l2: mod(sel.l2, n), k: sel.k };
-      N = n;
-    }
-    showU = !!st.showU; showPh = !!st.showPh;
-    drawAll();
+    const changed = n !== N;
+    N = n; showU = !!st.showU;
+    draw();
+    // keep the selected atom on the canvas: fall back to its partner inside the supercell
+    if (changed && !atomsPx.some(a => a.l1 === sel.l1 && a.l2 === sel.l2 && a.k === sel.k)) { sel = { l1: mod(sel.l1, N), l2: mod(sel.l2, N), k: sel.k }; draw(); }
+    readouts(); legend();
   }
-  EPP.controls(fig.querySelector('.a1-crystal-ctrls'), [
-    { key: 'N', type: 'range', label: 'supercell N × N', min: 2, max: 6, step: 1, value: 3, fmt: v => `${Math.round(v)} × ${Math.round(v)}` },
-    { key: 'showU', type: 'toggle', label: 'displacements', value: true },
-    { key: 'showPh', type: 'toggle', label: 'phase per cell', value: true }
+  const ctl = EPP.controls(fig.querySelector('.a1-crystal-ctrls'), [
+    { key: 'N', type: 'range', label: 'supercell N_1 × N_2', min: 2, max: 6, step: 1, value: 3, fmt: v => `${Math.round(v)} × ${Math.round(v)}` },
+    { key: 'showU', type: 'toggle', label: 'displacements', value: true }
   ], onChange);
-  cvR.onResize(drawReal);
-  cvQ.onResize(drawRecip);
+  { const sp = ctl.el.querySelector('.ctrl label span'); if (sp) sp.innerHTML = `supercell ${I('N')}<sub>1</sub> × ${I('N')}<sub>2</sub>`; }
+  cv.onResize(draw);
+  EPP.onTheme(legend);
 })();
 </script>
