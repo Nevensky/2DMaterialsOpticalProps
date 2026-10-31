@@ -562,7 +562,7 @@
     let running = false, visible = true, raf = 0, last = 0, t = 0;
     const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'btn';
     const label = () => {
-      btn.textContent = running ? 'Pause' : 'Play'; btn.setAttribute('aria-pressed', String(running));
+      btn.textContent = running ? 'Pause' : 'Play';
       const f = el.closest ? el.closest('figure') : null;
       btn.setAttribute('aria-label', (running ? 'Pause' : 'Play') + ' animation' + (f && f.dataset.fig ? ', Figure ' + f.dataset.fig : ''));
       // live readouts would be read out continuously while the animation runs

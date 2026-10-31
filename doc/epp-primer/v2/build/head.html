@@ -174,6 +174,8 @@ strong { font-weight: 600; }
 @media (max-width: 560px) { .eq mjx-container[display="true"] { font-size: 88%; } }
 mjx-container[display="true"] { margin: 0.6em 0 !important; }
 mjx-container { color: var(--fg); }
+mjx-container:not(:has(> svg)) > mjx-assistive-mml { display: none !important; }
+main { overflow-x: clip; overflow-clip-margin: 8px; }
 .eq mjx-container[display="true"] { margin: 0.2em 0 !important; }
 
 /* callouts */
@@ -328,6 +330,7 @@ dl.glossary dd { margin: 0; color: var(--fg-2); }
 .gl-item { display: grid; grid-template-columns: minmax(4.2em, max-content) minmax(0, 1fr); gap: 2px 14px; padding: 9px 0; border-bottom: 1px solid var(--grid); font-size: 0.92rem; }
 .gl-item .gl-d { color: var(--fg-2); }
 .gl-item .gl-go { font-family: var(--font-ui); font-size: 0.8rem; }
+.gl-none { font-family: var(--font-ui); font-size: 0.9rem; color: var(--muted); padding: 12px 0; margin: 0; }
 .gl-sec { font-family: var(--font-ui); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); padding: 14px 0 2px; }
 .conv-grid { display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr); }
 @media (min-width: 720px) { .conv-grid.two { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
@@ -339,6 +342,8 @@ figure.viz .viz-title .tag { margin-left: auto; }
 @media print { .gl-btn, .gl-panel, .pop { display: none; } }
 @media (max-width: 719px) { .tbl table { min-width: 0 !important; } }
 .nw { white-space: nowrap; }
+html { scroll-padding-bottom: 60px; }
+.chapter a[href^="#viz-"] { white-space: nowrap; }
 figure.viz figcaption .cap-key { margin: 0 0 6px; color: var(--fg); }
 figure.viz figcaption .cap-more p { margin: 0 0 8px; }
 figure.viz figcaption details.cap-details > summary { cursor: pointer; font-family: var(--font-ui); font-size: 0.85rem; font-weight: 500; color: var(--accent); margin: 2px 0 6px; }
@@ -370,7 +375,7 @@ window.MathJax = {
   },
   loader: { load: ['ui/lazy'] },
   svg: { fontCache: 'global' },
-  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'canvas', 'svg', 'output', 'select'], menuOptions: { settings: { inTabOrder: false } } }
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'canvas', 'svg', 'output', 'select'], menuOptions: { settings: { inTabOrder: false } }, lazyAlwaysTypeset: ['.pop', '.gl-panel'] }
 };
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js" async></script>

@@ -46,6 +46,7 @@
   // This runs before MathJax typesets the page, so the raw HTML (TeX source) of every note and
   // glossary entry is captured now and typeset on demand.
   const raw = new Map(), gl = [];
+  const GREEK = { alpha: 'α', beta: 'β', gamma: 'γ', delta: 'δ', epsilon: 'ε', varepsilon: 'ε', kappa: 'κ', lambda: 'λ', mu: 'μ', nu: 'ν', xi: 'ξ', pi: 'π', rho: 'ρ', sigma: 'σ', tau: 'τ', btau: 'τ', phi: 'φ', varphi: 'φ', chi: 'χ', psi: 'ψ', omega: 'ω', ell: 'ℓ', hbar: 'ħ', Gamma: 'Γ', Phi: 'Φ', tPhi: 'Φ', Omega: 'Ω', Pi: 'Π', Sigma: 'Σ', Xi: 'Ξ', eta: 'η', theta: 'θ' };
   const wide = matchMedia('(min-width: 720px)');
   // number the figures of each section in reading order: "Figure A1.3"
   document.querySelectorAll('section.chapter').forEach(sec => {
@@ -71,7 +72,8 @@
     const dd = dt.nextElementSibling, sec = dt.closest('section.chapter');
     const e = { kind: 'symbol', id: dt.id, sym: dt.innerHTML, html: dd ? dd.innerHTML : '', first: dt.dataset.first || '',
       num: sec ? sec.dataset.num : '', title: sec ? sec.dataset.title : '' };
-    e.search = (dt.textContent + ' ' + (dd ? dd.textContent : '')).toLowerCase();
+    const tex = dt.textContent + ' ' + (dd ? dd.textContent : '');
+    e.search = (tex + ' ' + tex.replace(/\\([A-Za-z]+)/g, (m, n) => GREEK[n] || '')).toLowerCase();
     raw.set(dt.id, e); gl.push(e);
   });
   const typeset = (el) => (window.MathJax && MathJax.typesetPromise) ? MathJax.typesetPromise([el]).catch(() => {}) : Promise.resolve();
@@ -85,6 +87,13 @@
     if ('onscrollend' in window) window.addEventListener('scrollend', fix, { once: true });
     setTimeout(fix, 700); setTimeout(fix, 1600);
   }
+
+  document.addEventListener('focusin', (ev) => {
+    const el = ev.target; if (!el.closest || !el.closest('main')) return;
+    const fix = () => { if (document.activeElement !== el) return; const r = el.getBoundingClientRect(); if (r.top < 0 || r.bottom > innerHeight - 60) el.scrollIntoView({ block: 'nearest', behavior: 'instant' }); };
+    if ('onscrollend' in window) window.addEventListener('scrollend', fix, { once: true });
+    setTimeout(fix, 700); setTimeout(fix, 1600);
+  });
 
   let cur = null;
   let closePanel = () => {};
@@ -119,6 +128,13 @@
     place(pop, a);
     if ('ResizeObserver' in window) { cur.ro = new ResizeObserver(() => { if (cur && cur.pop === pop) place(pop, a); }); cur.ro.observe(pop); }
     typeset(pop).then(() => { if (cur && cur.pop === pop) place(pop, a); });
+    pop.addEventListener('keydown', (ev) => {
+      if (ev.key !== 'Tab') return;
+      const links = [...pop.querySelectorAll('a[href]')];
+      const atEnd = !links.length || document.activeElement === links[links.length - 1];
+      if ((ev.shiftKey && document.activeElement === pop) || (!ev.shiftKey && atEnd)) close(true);
+    });
+    a.setAttribute('aria-haspopup', 'dialog');
     pop.focus({ preventScroll: true });
     return true;
   }
@@ -127,7 +143,7 @@
     if (a) { if (open(a, (a.getAttribute('href') || '').slice(1))) ev.preventDefault(); return; }
     const go = ev.target.closest('a[href^="#"]');
     if (go && !go.closest('.toc')) realign(go.getAttribute('href').slice(1));
-    if (cur && (!cur.pop.contains(ev.target) || ev.target.closest('.pop-go'))) close(false);
+    if (cur && (!cur.pop.contains(ev.target) || ev.target.closest('a[href^="#"]'))) close(false);
   });
   document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') { if (cur) close(true); else closePanel(); } });
   window.addEventListener('resize', () => { if (cur) place(cur.pop, cur.a); });
@@ -159,6 +175,9 @@
     const shown = new Set();
     list.querySelectorAll('.gl-item').forEach(it => { const ok = !q || it.dataset.s.includes(q); it.hidden = !ok; if (ok) shown.add(it.dataset.sec); });
     list.querySelectorAll('.gl-sec').forEach(p => { p.hidden = !shown.has(p.dataset.sec); });
+    let none = list.querySelector('.gl-none');
+    if (!none) { none = document.createElement('p'); none.className = 'gl-none'; list.prepend(none); }
+    none.hidden = shown.size > 0; none.textContent = shown.size ? '' : `No symbol matches “${inp.value.trim()}”.`;
   };
   function openPanel() { if (!built) build(); panel.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); setTimeout(() => inp.focus({ preventScroll: true }), 60); }
   closePanel = (refocus = true) => {
