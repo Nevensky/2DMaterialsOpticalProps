@@ -84,7 +84,7 @@ SKIP_CMDS = {'frac', 'sum', 'qquad', 'quad', 'text', 'left', 'right', 'big', 'Bi
              'partial', 'sqrt', 'ee', 'ii', 'dd', 'le', 'ge', 'lt', 'gt', 'neq', 'simeq', 'equiv', 'pm', 'to', 'infty', 'Longleftrightarrow',
              'underbrace', 'displaystyle', 'tag', 'pmatrix', 'gathered', 'aligned', 'substack', 'smallmatrix', 'bmatrix', 'langle', 'rangle',
              'cos', 'sin', 'coth', 'det', 'Re', 'Im', 'exp', 'ln', 'log', 'delta', 'dagger', 'ell', 'kappa', 'alpha', 'beta', 'nu', 'mu', 'gamma',
-             'over', 'mathbf', 'boldsymbol', 'operatorname', 'times', 'approx', 'hbar', 'pi', 'kB', 'hat', 'tilde', 'circ', 'prime', 'in', 'notin',
+             'over', 'mathbf', 'boldsymbol', 'operatorname', 'sinh', 'cosh', 'tanh', 'tan', 'sim', 'leftrightarrow', 'rightarrow', 'leftarrow', 'iint', 'iiint', 'oint', 'nabla', 'max', 'min', 'lim', 'sup', 'inf', 'mathcal', 'mathsf', 'bar', 'overline', 'widehat', 'widetilde', 'quad', 'lbrace', 'rbrace', 'Bigg', 'bigl', 'bigr', 'Bigl', 'Bigr', 'cot', 'csc', 'sec', 'arctan', 'arcsin', 'arccos', 'mapsto', 'Rightarrow', 'Leftarrow', 'perp', 'parallel', 'cap', 'cup', 'forall', 'exists', 'colon', 'phantom', 'hphantom', 'vphantom', 'qquad', 'textstyle', 'scriptstyle', 'limits', 'nolimits', 'stackrel', 'overset', 'underset', 'times', 'approx', 'hbar', 'pi', 'kB', 'hat', 'tilde', 'circ', 'prime', 'in', 'notin',
              'tfrac', 'mathsf', 'ddot', 'dot', 'll', 'gg', 'mp', 'propto', 'arg', 'Delta', 'int', 'lesssim', 'gtrsim', 'quad', 'big', 'Big', 'bigg', 'vert', 'mid'}
 
 def main():
