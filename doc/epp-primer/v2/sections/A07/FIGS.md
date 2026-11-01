@@ -213,7 +213,7 @@ band."
 - Brillouin–Wigner band: $k(E)$ from $E_k-E_{\mathrm F}=E-\mathrm{Re}\,\Sigma(E)$ (A7.16); on-shell (Rayleigh–Schrödinger)
   band: $E=E_k-E_{\mathrm F}+\mathrm{Re}\,\Sigma(E_k-E_{\mathrm F})$; roots at the cursor $k$ by sign change and bisection.
 - Verified numbers (3D, $\lambda=1.2$): $E_{\mathrm F}=10\hbar\omega_0$: $k_{\mathrm F}=0.162$ Å⁻¹,
-  $\lambda_{\mathrm{eff}}=-\partial\mathrm{Re}\,\Sigma/\partial E|_{E_{\mathrm F}}=1.11$, $Z^{\mathrm{qp}}=0.47$, maximum slope
+  $\lambda_{n\bk}=-\partial\mathrm{Re}\,\Sigma/\partial E|_{E_{\mathrm F}}=1.11$ (the $\lambda_{n\bk}$ of (A7.19) at $k_{\mathrm F}$), $Z^{\mathrm{qp}}=0.47$, maximum slope
   of $\mathrm{Re}\,\Sigma$ 1.34 (S-shape present). $E_{\mathrm F}=2\hbar\omega_0$: at $k=0$ the spectral function peaks at
   $E-E_{\mathrm F}=-0.081$ eV (quasiparticle band bottom, $-0.81\hbar\omega_0$) and at $-0.247$ eV (satellite,
   $1.66\hbar\omega_0$ below the quasiparticle bottom). Constant DOS: the step of $|\mathrm{Im}\,\Sigma|$ outside the
@@ -241,8 +241,8 @@ band."
 5. Cursor $k/k_{\mathrm F}$: 0 to 1.5, step 0.005, default 0.875.
 The v1 broadening slider is dropped: $\hbar\eta=20$ meV fixed, the review's value.
 
-**Readouts.** $k_{\mathrm F}$ (Å⁻¹); $\lambda_{\mathrm{eff}}=-\partial\,\mathrm{Re}\,\Sigma/\partial E$ at $E_{\mathrm F}$;
-$Z^{\mathrm{qp}}$ at $E_{\mathrm F}$; $m^{\mathrm{qp}}/m^*=1+\lambda_{\mathrm{eff}}$; maximum $\partial\,\mathrm{Re}\,\Sigma/\partial E$
+**Readouts.** $k_{\mathrm F}$ (Å⁻¹); $\lambda_{n\bk}=-\partial\,\mathrm{Re}\,\Sigma/\partial E$ at $E_{\mathrm F}$ (no new symbol: the $\lambda_{n\bk}$ of (A7.19) at $k_{\mathrm F}$);
+$Z^{\mathrm{qp}}$ at $E_{\mathrm F}$; $m^{\mathrm{qp}}/m^*=1+\lambda_{n\bk}$; maximum $\partial\,\mathrm{Re}\,\Sigma/\partial E$
 (with "(three solutions)" when > 1); number of BW roots at the cursor.
 
 **Initial state.** $E_{\mathrm F}=10\hbar\omega_0$, $\lambda_{\mathrm{ep}}=1.2$, 3D, zoom, cursor 0.875: the kink, the
@@ -261,7 +261,7 @@ sharp flattened band above $-\hbar\omega_0$, the broad band below, and the S-sha
   across the kink and watch the crossings in the side panel go from one to three and back.
 - *Model.* (A7.20) and its √E variant, (A7.15), (A7.16), (A7.18); $m^*=0.1\,m_{\mathrm e}$, $\hbar\omega_0=100$ meV,
   $\hbar\eta=20$ meV, $E_{\mathrm c}=5$ eV, $|g|^2N_{\mathrm F}=\lambda_{\mathrm{ep}}\hbar\omega_0/2$ ($N_{\mathrm F}$ per spin),
-  $T=0$, Luttinger shift, no Debye–Waller; after the review's Fig. 4. $\lambda_{\mathrm{eff}}$ differs slightly from the
+  $T=0$, Luttinger shift, no Debye–Waller; after the review's Fig. 4. The readout $\lambda_{n\bk}$ differs slightly from the
   slider because the band is finite and not particle–hole symmetric. $E_{\mathrm F}=10\hbar\omega_0$ mimics a metal,
   $2\hbar\omega_0$ a degenerately doped semiconductor.
 
