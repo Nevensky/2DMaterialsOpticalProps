@@ -378,7 +378,8 @@ window.MathJax = {
     }
   },
   loader: { load: ['ui/lazy'] },
-  svg: { fontCache: 'global' },
+  // phones: left-aligned displays reserve the tag width once instead of twice (centred layout)
+  svg: { fontCache: 'global', displayAlign: (window.innerWidth < 560 ? 'left' : 'center'), displayIndent: '0' },
   options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'canvas', 'svg', 'output', 'select'], menuOptions: { settings: { inTabOrder: false } }, lazyAlwaysTypeset: ['.pop', '.gl-panel'] }
 };
 </script>

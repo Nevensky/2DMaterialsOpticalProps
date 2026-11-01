@@ -378,7 +378,8 @@ window.MathJax = {
     }
   },
   loader: { load: ['ui/lazy'] },
-  svg: { fontCache: 'global' },
+  // phones: left-aligned displays reserve the tag width once instead of twice (centred layout)
+  svg: { fontCache: 'global', displayAlign: (window.innerWidth < 560 ? 'left' : 'center'), displayIndent: '0' },
   options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'canvas', 'svg', 'output', 'select'], menuOptions: { settings: { inTabOrder: false } }, lazyAlwaysTypeset: ['.pop', '.gl-panel'] }
 };
 </script>
@@ -2311,7 +2312,7 @@ window.MathJax = {
   <p>Take a line of identical atoms of mass $M$ at spacing $a$, joined to their nearest neighbours by springs of stiffness $K$, and let them move only along the line. There is one atom per cell and one direction, so the labels $\kappa$ and $\alpha$ can be dropped. The energy of the springs is</p>
   <div class="eq">$$U=U_0+\frac K2\sum_\ell\big(u_{\ell+1}-u_\ell\big)^2 . \tag{A1.7}$$</div>
   <p>The displacement $u_\ell$ appears in two terms of the sum, $(u_{\ell+1}-u_\ell)^2$ and $(u_\ell-u_{\ell-1})^2$. Differentiating twice therefore gives $\partial^2U/\partial u_\ell^2=K+K$ on the diagonal, $\partial^2U/\partial u_\ell\,\partial u_{\ell\pm1}=-K$ next to it, and zero for any other pair:</p>
-  <div class="eq">$$\Phi_{\ell,\ell}=2K,\qquad \Phi_{\ell,\ell\pm1}=-K,\qquad \Phi=\begin{pmatrix}2K&-K&0&0&-K\\-K&2K&-K&0&0\\0&-K&2K&-K&0\\0&0&-K&2K&-K\\-K&0&0&-K&2K\end{pmatrix}\ \ (N_\ell=5).$$</div>
+  <div class="eq">$$\begin{gathered}\Phi_{\ell,\ell}=2K,\qquad \Phi_{\ell,\ell\pm1}=-K,\\ \Phi=\begin{pmatrix}2K&-K&0&0&-K\\-K&2K&-K&0&0\\0&-K&2K&-K&0\\0&0&-K&2K&-K\\-K&0&0&-K&2K\end{pmatrix}\ \ (N_\ell=5).\end{gathered}$$</div>
   <p>Every row holds $-K$, $2K$, $-K$, which add up to zero: the acoustic sum rule. Translation invariance is visible too, since each row is the row above shifted by one place. In the Born–von Kármán supercell the last atom is tied to the first, which is why entries appear in the corners of the matrix.</p>
 
   <div class="callout caveat"><p class="callout-title">What the harmonic, Born–Oppenheimer picture leaves out</p>
@@ -2320,7 +2321,7 @@ window.MathJax = {
 
   <h3 id="a1-waves">Why waves: the chain again</h3>
   <p>Newton's equation for atom $\ell$ of the chain is mass times acceleration equals force, with the force from (A1.4):</p>
-  <div class="eq">$$M\ddot u_\ell=-\sum_{\ell'}\Phi_{\ell,\ell'}\,u_{\ell'}=K\big(u_{\ell+1}-u_\ell\big)+K\big(u_{\ell-1}-u_\ell\big). \tag{A1.8}$$</div>
+  <div class="eq">$$\begin{gathered}M\ddot u_\ell=-\sum_{\ell'}\Phi_{\ell,\ell'}\,u_{\ell'}\\ =K\big(u_{\ell+1}-u_\ell\big)+K\big(u_{\ell-1}-u_\ell\big).\end{gathered} \tag{A1.8}$$</div>
   <p>These $N_\ell$ equations are coupled, because each atom is pulled by its neighbours. The way out is to look for patterns of motion in which all atoms oscillate at one common frequency, the normal modes, for which the coupled equations collapse into a single one. Translation invariance suggests which patterns to try. Shifting a normal mode along the chain by one cell must give another normal mode with the same frequency. The simplest patterns that reproduce themselves under such a shift, up to a constant factor, are waves in which each atom's amplitude is its left neighbour's times a fixed phase factor $\ee^{\ii qa}$. This is more than a guess. Let $\mathcal S$ shift every displacement by one cell, $(\mathcal Su)_\ell=u_{\ell+1}$. Every row of $\Phi$ is the row above shifted by one place, so computing the forces and then shifting gives the same result as shifting and then computing the forces: $\mathcal S$ commutes with $\Phi$. Two commuting matrices that can each be diagonalized share a complete set of eigenvectors; here $\Phi$ is real and symmetric, and $\mathcal S$ is unitary because it only moves every atom one place around the Born–von Kármán ring. So the normal modes can be chosen with $u_{\ell+1}=\eta\,u_\ell$. The Born–von Kármán condition says that $N_\ell$ shifts change nothing, $\mathcal S^{N_\ell}=1$, so $\eta^{N_\ell}=1$ and $\eta=\ee^{\ii qa}$ is a pure phase. (The same argument applied to the electron Hamiltonian gives Bloch's theorem.)</p>
   <div class="eq">$$u_\ell(t)=\mathrm{Re}\big[\xi\,\ee^{\ii(q\ell a-\omega t)}\big]. \tag{A1.9}$$</div>
   <dl class="where">
@@ -2331,7 +2332,7 @@ window.MathJax = {
   <p>Complex exponentials are used because a shift multiplies them by a phase. The equation of motion is linear with real coefficients, so whenever a complex pattern solves it, so does its real part, and the real part is the physical displacement. In the wave calculations that follow, up to (A1.19), $u$ denotes the complex displacement, here $\xi\,\ee^{\ii(q\ell a-\omega t)}$; its real part is the physical displacement.</p>
   <ol class="steps">
     <li><p>Insert (A1.9) into (A1.8). Two time derivatives give $-\omega^2$, and the neighbours carry the same wave evaluated at $\ell\pm1$:</p>
-      <div class="eq">$$-M\omega^2\,\xi\,\ee^{\ii(q\ell a-\omega t)}=K\,\xi\,\ee^{\ii(q\ell a-\omega t)}\big(\ee^{\ii qa}-1\big)+K\,\xi\,\ee^{\ii(q\ell a-\omega t)}\big(\ee^{-\ii qa}-1\big).$$</div>
+      <div class="eq">$$\begin{gathered}-M\omega^2\,\xi\,\ee^{\ii(q\ell a-\omega t)}=K\,\xi\,\ee^{\ii(q\ell a-\omega t)}\big(\ee^{\ii qa}-1\big)\\ +K\,\xi\,\ee^{\ii(q\ell a-\omega t)}\big(\ee^{-\ii qa}-1\big).\end{gathered}$$</div>
       <span class="why">$u_{\ell\pm1}=\ee^{\pm\ii qa}\,u_\ell$: each neighbour carries the complex displacement of atom $\ell$ turned by $\pm qa$.</span></li>
     <li><p>Cancel the common factor $\xi\,\ee^{\ii(q\ell a-\omega t)}$. The label $\ell$ disappears:</p>
       <div class="eq">$$M\omega^2=2K\big(1-\cos qa\big)\equiv K_{\mathrm{eff}}(q).$$</div>
@@ -2884,7 +2885,7 @@ window.MathJax = {
 
   <h3 id="a1-diatomic">Two atoms per cell: the diatomic chain</h3>
   <p>Now put two atoms in each cell: $\kappa=1$ with mass $M_1$ at the corner of the cell and $\kappa=2$ with mass $M_2$ halfway along it. A spring $K_1$ joins the two atoms of a cell, and a spring $K_2$ joins atom 2 of cell $\ell$ to atom 1 of cell $\ell+1$. Counting the springs attached to each atom, as for the monatomic chain, gives the nonzero force constants</p>
-  <div class="eq">$$\Phi_{\ell1,\ell1}=\Phi_{\ell2,\ell2}=K_1+K_2,\qquad \Phi_{\ell1,\ell2}=\Phi_{\ell2,\ell1}=-K_1,\qquad \Phi_{\ell2,(\ell+1)1}=\Phi_{(\ell+1)1,\ell2}=-K_2 ,$$</div>
+  <div class="eq">$$\begin{gathered}\Phi_{\ell1,\ell1}=\Phi_{\ell2,\ell2}=K_1+K_2,\\ \Phi_{\ell1,\ell2}=\Phi_{\ell2,\ell1}=-K_1,\\ \Phi_{\ell2,(\ell+1)1}=\Phi_{(\ell+1)1,\ell2}=-K_2 ,\end{gathered}$$</div>
   <p>and each row again sums to zero. Newton's equations for the two atoms of cell $\ell$ read</p>
   <div class="eq">$$\begin{aligned}M_1\ddot u_{\ell1}&=K_1\big(u_{\ell2}-u_{\ell1}\big)+K_2\big(u_{(\ell-1)2}-u_{\ell1}\big),\\ M_2\ddot u_{\ell2}&=K_1\big(u_{\ell1}-u_{\ell2}\big)+K_2\big(u_{(\ell+1)1}-u_{\ell2}\big).\end{aligned}$$</div>
   <p>A wave now needs one complex amplitude per atom of the cell, because the two atoms can move by different amounts and out of phase. The phase still advances by $qa$ from cell to cell:</p>
@@ -2892,13 +2893,13 @@ window.MathJax = {
   <p>The phase is taken at the corner of the cell, $\ell a$, not at the atom. Taking it at the atom instead, $u_{\ell2}=\xi'_2\,\ee^{\ii[q(\ell a+a/2)-\omega t]}$, would replace $\xi_2$ by $\xi'_2=\xi_2\,\ee^{-\ii qa/2}$. Nothing physical would change, but the matrices below would pick up phases. This primer always uses the cell corner.<sup class="fn"><a href="#fn-a1-phase">6</a></sup></p>
   <ol class="steps">
     <li><p>Insert (A1.12). Atom 1 of cell $\ell$ is tied to atom 2 of cell $\ell-1$, whose displacement carries the extra phase $\ee^{-\ii qa}$; atom 2 is tied to atom 1 of cell $\ell+1$, with $\ee^{+\ii qa}$. Cancelling the common factor $\ee^{\ii(q\ell a-\omega t)}$ leaves</p>
-      <div class="eq">$$\omega^2\begin{pmatrix}M_1&0\\0&M_2\end{pmatrix}\begin{pmatrix}\xi_1\\ \xi_2\end{pmatrix}=\underbrace{\begin{pmatrix}K_1+K_2&-\big(K_1+K_2\,\ee^{-\ii qa}\big)\\-\big(K_1+K_2\,\ee^{\ii qa}\big)&K_1+K_2\end{pmatrix}}_{\displaystyle\Phi(q)}\begin{pmatrix}\xi_1\\ \xi_2\end{pmatrix}. \tag{A1.13}$$</div>
+      <div class="eq">$$\begin{gathered}\omega^2\begin{pmatrix}M_1&0\\0&M_2\end{pmatrix}\begin{pmatrix}\xi_1\\ \xi_2\end{pmatrix}=\Phi(q)\begin{pmatrix}\xi_1\\ \xi_2\end{pmatrix},\\ \Phi(q)=\begin{pmatrix}K_1+K_2&-(K_1+K_2\,\ee^{-\ii qa})\\-(K_1+K_2\,\ee^{\ii qa})&K_1+K_2\end{pmatrix}.\end{gathered} \tag{A1.13}$$</div>
       <span class="why">As for the monatomic chain, the cell index disappears, leaving one $2\times2$ problem for each $q$. The matrix $\Phi(q)$ collects the force constants, each weighted by the phase of the partner atom's cell. Its two off-diagonal entries are complex conjugates of each other: it is Hermitian.</span></li>
     <li><p>Move the masses out of the way by measuring amplitudes in mass-weighted units, $\xi_\kappa=e_\kappa/\sqrt{M_\kappa}$, and dividing row $\kappa$ by $\sqrt{M_\kappa}$:</p>
-      <div class="eq">$$\sum_{\kappa'}\tPhi_{\kappa\kappa'}(q)\,e_{\kappa'}=\omega^2e_\kappa,\qquad \tPhi_{\kappa\kappa'}(q)=\frac{\Phi_{\kappa\kappa'}(q)}{\sqrt{M_\kappa M_{\kappa'}}} . \tag{A1.14}$$</div>
+      <div class="eq">$$\begin{gathered}\sum_{\kappa'}\tPhi_{\kappa\kappa'}(q)\,e_{\kappa'}=\omega^2e_\kappa,\\ \tPhi_{\kappa\kappa'}(q)=\frac{\Phi_{\kappa\kappa'}(q)}{\sqrt{M_\kappa M_{\kappa'}}} .\end{gathered} \tag{A1.14}$$</div>
       <span class="why">(A1.13) has a mass matrix on the left: a generalized eigenvalue problem. After the rescaling it is an ordinary eigenvalue problem for a Hermitian matrix, which guarantees real $\omega^2$ and orthonormal eigenvectors. Rows and columns are rescaled alike: row $\kappa$ is divided by $\sqrt{M_\kappa}$, and column $\kappa'$ picks up $1/\sqrt{M_{\kappa'}}$ from $\xi_{\kappa'}=e_{\kappa'}/\sqrt{M_{\kappa'}}$. That symmetric rescaling is what keeps $\tPhi$ Hermitian. $\tPhi(q)$ is called the <strong>dynamical matrix</strong>.</span></li>
     <li><p>Solve the $2\times2$ problem. With $A=\tPhi_{11}$, $C=\tPhi_{22}$ and $B=\tPhi_{12}$,</p>
-      <div class="eq">$$\begin{gathered}\omega^2_\pm(q)=\frac{A+C}2\pm\sqrt{\Big(\frac{A-C}2\Big)^2+|B|^2},\\ A=\frac{K_1+K_2}{M_1},\qquad C=\frac{K_1+K_2}{M_2},\qquad |B|^2=\frac{K_1^2+K_2^2+2K_1K_2\cos qa}{M_1M_2}.\end{gathered} \tag{A1.15}$$</div>
+      <div class="eq">$$\begin{gathered}\omega^2_\pm(q)=\frac{A+C}2\pm\sqrt{\Big(\frac{A-C}2\Big)^2+|B|^2},\\ A=\frac{K_1+K_2}{M_1},\qquad C=\frac{K_1+K_2}{M_2},\\ |B|^2=\frac{K_1^2+K_2^2+2K_1K_2\cos qa}{M_1M_2}.\end{gathered} \tag{A1.15}$$</div>
       <span class="why">These are the two roots of $\det\big(\tPhi(q)-\omega^2\big)=0$, a quadratic equation in $\omega^2$. Two atoms per cell give two branches.</span></li>
   </ol>
   <p>The pair $(e_1,e_2)$ is the <strong>eigenvector</strong> of the mode. Its two complex numbers say how far each atom moves, in mass-weighted units, and with which phase. The physical amplitudes are $\xi_\kappa=e_\kappa/\sqrt{M_\kappa}$, so a heavier atom moves less for the same $|e_\kappa|$. The overall phase of an eigenvector is free; <a href="#viz-a1-diatomic">Figure A1.4</a> makes $e_1$ real and positive. Three limits carry most of the physics.</p>
@@ -3371,7 +3372,7 @@ window.MathJax = {
     <li><p>Use translation invariance (A1.5). Label the partner's cell relative to cell $\ell$, $\bR_{\ell'}=\bR_\ell+\bR_{\ell''}$, so that $\Phi_{\ell\kappa\alpha,\ell'\kappa'\beta}=\Phi_{0\kappa\alpha,\ell''\kappa'\beta}$ and $\ee^{\ii\bq\cdot\bR_{\ell'}}=\ee^{\ii\bq\cdot\bR_\ell}\,\ee^{\ii\bq\cdot\bR_{\ell''}}$.</p>
       <span class="why">Summing over all cells $\ell'$ is the same as summing over all relative cells $\ell''$. The relabelling isolates the factor $\ee^{\ii\bq\cdot\bR_\ell}$, which also stands on the left.</span></li>
     <li><p>Cancel $\ee^{\ii\bq\cdot\bR_\ell}$ and divide by $\sqrt{M_\kappa}$. The cell index has disappeared:</p>
-      <div class="eq" id="a1-eq-dyn">$$\begin{gathered}\sum_{\kappa'\beta}\tPhi_{\kappa\alpha,\kappa'\beta}(\bq)\,e_{\kappa'\beta}=\omega^2\,e_{\kappa\alpha},\\ \tPhi_{\kappa\alpha,\kappa'\beta}(\bq)=\frac{\Phi_{\kappa\alpha,\kappa'\beta}(\bq)}{\sqrt{M_\kappa M_{\kappa'}}},\qquad \Phi_{\kappa\alpha,\kappa'\beta}(\bq)=\sum_{\ell}\Phi_{0\kappa\alpha,\ell\kappa'\beta}\,\ee^{\ii\bq\cdot\bR_\ell} .\end{gathered} \tag{A1.18}$$</div>
+      <div class="eq" id="a1-eq-dyn">$$\begin{gathered}\sum_{\kappa'\beta}\tPhi_{\kappa\alpha,\kappa'\beta}(\bq)\,e_{\kappa'\beta}=\omega^2\,e_{\kappa\alpha},\\ \tPhi_{\kappa\alpha,\kappa'\beta}(\bq)=\frac{\Phi_{\kappa\alpha,\kappa'\beta}(\bq)}{\sqrt{M_\kappa M_{\kappa'}}},\\ \Phi_{\kappa\alpha,\kappa'\beta}(\bq)=\sum_{\ell}\Phi_{0\kappa\alpha,\ell\kappa'\beta}\,\ee^{\ii\bq\cdot\bR_\ell} .\end{gathered} \tag{A1.18}$$</div>
       <span class="why">Every cell gives the same equation. So the wave (A1.17) solves all $3N_\kappa N_\ell$ equations of motion exactly when the amplitudes $e_{\kappa\alpha}$ form an eigenvector of $\tPhi(\bq)$ with eigenvalue $\omega^2$.</span></li>
   </ol>
   <dl class="where">
@@ -4286,7 +4287,7 @@ window.MathJax = {
   <p>The normal modes are independent oscillators, so quantizing the crystal means quantizing each mode as a harmonic oscillator. One complication remains: because displacements are real, the complex amplitude of a mode at $\bq$ is tied to that of the mode at $-\bq$. The construction below takes care of it. In this subsection hats mark operators, because classical and quantum displacements appear side by side.</p>
   <details class="background"><summary>The quantum harmonic oscillator <span class="skip">skip if familiar</span></summary><div class="b-body">
     <p>A particle of mass $M$ in the potential $\frac12M\omega^2x^2$ has the Hamiltonian $\hat H=\hat p^2/2M+\frac12M\omega^2\hat x^2$, with $[\hat x,\hat p]=\ii\hbar$. The ladder operators</p>
-    <div class="eq">$$\hat a=\sqrt{\frac{M\omega}{2\hbar}}\Big(\hat x+\frac{\ii}{M\omega}\hat p\Big),\qquad \hat a^\dagger=\sqrt{\frac{M\omega}{2\hbar}}\Big(\hat x-\frac{\ii}{M\omega}\hat p\Big)$$</div>
+    <div class="eq">$$\begin{gathered}\hat a=\sqrt{\frac{M\omega}{2\hbar}}\Big(\hat x+\frac{\ii}{M\omega}\hat p\Big),\\ \hat a^\dagger=\sqrt{\frac{M\omega}{2\hbar}}\Big(\hat x-\frac{\ii}{M\omega}\hat p\Big)\end{gathered}$$</div>
     <p>obey $[\hat a,\hat a^\dagger]=1$. Inverting, $\hat x=\sqrt{\hbar/2M\omega}\,(\hat a+\hat a^\dagger)$, and the Hamiltonian becomes $\hat H=\hbar\omega\big(\hat a^\dagger\hat a+\frac12\big)$. Its eigenstates $|n\rangle$, $n=0,1,2,\dots$, have energies $\hbar\omega\big(n+\frac12\big)$; $\hat a^\dagger$ raises $n$ by one and $\hat a$ lowers it. In every eigenstate $\langle\hat x\rangle=0$, while</p>
     <div class="eq">$$\langle n|\hat x^2|n\rangle=\frac{\hbar}{2M\omega}\,(2n+1) .$$</div>
     <p>In the ground state the particle is spread over a Gaussian of root-mean-square width $\sqrt{\hbar/2M\omega}$, the <strong>zero-point amplitude</strong>. At temperature $T$ the states are occupied with Boltzmann weights. The mean of $n$ is then the Bose–Einstein occupation $n_{\mathrm B}=1/\big(\ee^{\hbar\omega/\kB T}-1\big)$, and $\langle\hat x^2\rangle=(\hbar/2M\omega)(2n_{\mathrm B}+1)=(\hbar/2M\omega)\coth(\hbar\omega/2\kB T)$.</p>
@@ -4304,7 +4305,7 @@ window.MathJax = {
   <details class="derivation"><summary>Derivation: why the two relations in (A1.23) invert each other</summary><div class="d-body">
     <ol class="steps">
       <li><p>Insert the first relation into the second:</p>
-        <div class="eq">$$Q_{\bq\nu}=\frac1{N_\ell}\sum_{\bq'\nu'}\Big(\sum_\ell\ee^{\ii(\bq'-\bq)\cdot\bR_\ell}\Big)\Big(\sum_{\kappa\alpha}e^*_{\kappa\alpha,\nu}(\bq)\,e_{\kappa\alpha,\nu'}(\bq')\Big)Q_{\bq'\nu'} .$$</div>
+        <div class="eq">$$\begin{gathered}Q_{\bq\nu}=\frac1{N_\ell}\sum_{\bq'\nu'}\Big(\sum_\ell\ee^{\ii(\bq'-\bq)\cdot\bR_\ell}\Big)\\ \times\Big(\sum_{\kappa\alpha}e^*_{\kappa\alpha,\nu}(\bq)\,e_{\kappa\alpha,\nu'}(\bq')\Big)Q_{\bq'\nu'} .\end{gathered}$$</div>
         <span class="why">The masses cancel: $\sqrt{M_\kappa}$ from the second relation against $1/\sqrt{M_\kappa}$ from the first.</span></li>
       <li><p>The lattice sum is $\sum_\ell\ee^{\ii(\bq'-\bq)\cdot\bR_\ell}=N_\ell\,\delta_{\bq\bq'}$ for wavevectors on the Born–von Kármán grid.</p>
         <span class="why">For $\bq'=\bq$ every term is 1. Otherwise $\bq$ and $\bq'$ differ along at least one direction $\ba_j$. The sum over cells is a product of one sum per direction, and along that direction the phases are $N_j$ unit arrows spread evenly around the circle (with $\bq=\sum_j(s_j/N_j)\bb_j$ and $\bq'=\sum_j(s'_j/N_j)\bb_j$, the phase step is $2\pi(s'_j-s_j)/N_j$), which add up to zero. So the product vanishes. The two row-sum dials of <a href="#viz-a1-bz">Figure A1.5</a> show this pattern.</span></li>
@@ -4317,7 +4318,7 @@ window.MathJax = {
   <details class="derivation"><summary>Derivation: the energy in normal coordinates</summary><div class="d-body">
     <ol class="steps">
       <li><p>Kinetic energy. Write $\dot u^2=\dot u^*\dot u$, which is allowed because $u$ is real, and insert (A1.23) for each factor:</p>
-        <div class="eq">$$\sum_{\ell\kappa\alpha}\frac{M_\kappa}2\dot u^*_{\ell\kappa\alpha}\dot u_{\ell\kappa\alpha}=\frac12\sum_{\bq\nu,\bq'\nu'}\frac1{N_\ell}\Big(\sum_\ell\ee^{\ii(\bq'-\bq)\cdot\bR_\ell}\Big)\Big(\sum_{\kappa\alpha}e^*_{\kappa\alpha,\nu}(\bq)e_{\kappa\alpha,\nu'}(\bq')\Big)\dot Q^*_{\bq\nu}\dot Q_{\bq'\nu'} .$$</div>
+        <div class="eq">$$\begin{gathered}\sum_{\ell\kappa\alpha}\frac{M_\kappa}2\dot u^*_{\ell\kappa\alpha}\dot u_{\ell\kappa\alpha}\\ =\frac12\sum_{\bq\nu,\bq'\nu'}\frac1{N_\ell}\Big(\sum_\ell\ee^{\ii(\bq'-\bq)\cdot\bR_\ell}\Big)\\ \times\Big(\sum_{\kappa\alpha}e^*_{\kappa\alpha,\nu}(\bq)e_{\kappa\alpha,\nu'}(\bq')\Big)\dot Q^*_{\bq\nu}\dot Q_{\bq'\nu'} .\end{gathered}$$</div>
         <span class="why">$M_\kappa$ cancels against the two factors $1/\sqrt{M_\kappa}$. The lattice sum gives $N_\ell\delta_{\bq\bq'}$ and orthonormality gives $\delta_{\nu\nu'}$, leaving $\frac12\sum_{\bq\nu}\dot Q^*_{\bq\nu}\dot Q_{\bq\nu}$.</span></li>
       <li><p>Harmonic energy. Again write one factor of (A1.3) as $u^*$. The sum over the partner atom, $\sum_{\ell'}\Phi_{\ell\kappa\alpha,\ell'\kappa'\beta}\,\ee^{\ii\bq'\cdot\bR_{\ell'}}$, equals $\ee^{\ii\bq'\cdot\bR_\ell}\,\Phi_{\kappa\alpha,\kappa'\beta}(\bq')$ by translation invariance and the definition (A1.18).</p>
         <span class="why">This is step 2 of the derivation of (A1.18) once more. What remains is the lattice sum over $\ell$, which sets $\bq'=\bq$, and the matrix element $\sum e^*_\nu\,\tPhi\,e_{\nu'}=\omega^2_{\bq\nu}\delta_{\nu\nu'}$ by (A1.19) and (A1.20).</span></li>
