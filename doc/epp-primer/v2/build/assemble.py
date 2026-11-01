@@ -21,7 +21,8 @@ def expand(text, base, depth=0):
         p = m.group(1) if os.path.isabs(m.group(1)) else os.path.join(base, m.group(1))
         if not os.path.exists(p):
             print(f'warning: include {os.path.relpath(p, S)} not found; placeholder inserted', file=sys.stderr)
-            fid = 'viz-a1-' + re.sub(r'^fig-|\.html$', '', os.path.basename(p))
+            m = re.match(r'([A-Z])0*(\d+)$', os.path.basename(os.path.dirname(p)))
+            fid = 'viz-' + (m.group(1).lower() + m.group(2) if m else 'a1') + '-' + re.sub(r'^fig-|\.html$', '', os.path.basename(p))
             return f'<figure class="viz" id="{fid}"><p class="viz-title">Figure pending: {html.escape(os.path.basename(p))}</p></figure>'
         return f'<!-- from {os.path.relpath(p, S)} -->\n' + expand(rd(p), os.path.dirname(p), depth + 1)
     return INC.sub(sub, text)

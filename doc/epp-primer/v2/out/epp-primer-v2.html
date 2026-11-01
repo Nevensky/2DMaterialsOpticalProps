@@ -4911,6 +4911,14 @@ window.MathJax = {
       t.prepend(n); t.closest('figure').dataset.fig = `${tag}.${k + 1}`;
     });
   });
+  // cross-references: a.eqref shows "(A2.5)" from the target's \tag{}, a.figref shows "Figure A4.1"
+  document.querySelectorAll('a.eqref, a.figref').forEach(a => {
+    const t = document.getElementById((a.getAttribute('href') || '').slice(1));
+    let txt = null;
+    if (t && a.classList.contains('eqref')) { const m = t.textContent.match(/\\tag\{([^}]*)\}/); if (m) txt = `(${m[1]})`; }
+    if (t && a.classList.contains('figref')) { const f = t.closest('figure.viz'); if (f && f.dataset.fig) txt = `Figure ${f.dataset.fig}`; }
+    if (txt) a.textContent = txt; else { a.classList.add('ref-missing'); if (!a.textContent.trim()) a.textContent = '(?)'; }
+  });
   // captions: "What to notice" stays visible; the rest folds into a details element (open on wide screens)
   document.querySelectorAll('figure.viz figcaption .cap-more').forEach(more => {
     const d = document.createElement('details'); d.className = 'cap-details'; d.open = wide.matches;

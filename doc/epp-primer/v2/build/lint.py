@@ -33,6 +33,7 @@ def strip_blocks(s):
     s = re.sub(r'<div class="notes">.*?</ol>\s*</div>', ' ', s, flags=re.S)
     s = re.sub(r'<details class="glossary-box">.*?</details>', ' ', s, flags=re.S)
     s = re.sub(r'<div class="callout source">.*?</div>', ' ', s, flags=re.S)
+    s = re.sub(r'<!--\s*srcmap\s*-->.*?<!--\s*/srcmap\s*-->', ' ', s, flags=re.S)  # dictionary tables (X.2)
     return s
 
 MATH = re.compile(r'\$\$(.+?)\$\$|\$(.+?)\$', re.S)
@@ -50,12 +51,18 @@ FORBIDDEN = [
     (r'(?<![A-Za-z\\])Q_\{i', 'EPP displacement Q_{ia mu}: use u'),
     (r'(?<![A-Za-z\\])m_\{?\\rm\s*a|(?<![A-Za-z\\])m_a\b', 'EPP mass m_a: use M_kappa'),
     (r'_\{[^}]*\\mu[^}]*\}', 'mu as an index: Cartesian indices are alpha, beta (mu is the chemical potential)'),
+    (r'\\epsilon', 'dielectric functions are \\varepsilon (the sources write \\epsilon)'),
+    (r'(?<![A-Za-z\\])D_\{?11\b', 'EPP sector D_11: use D_{\\rho\\rho}'),
+    (r'\\Pi_\{?(jj|\\rho\s*j|j\s*\\rho)', 'EPP correlator labels: use Pi_{alpha beta}, Pi_{rho beta}, Pi_{alpha rho}'),
+    (r'\\Omega\^\{?\\(rm|mathrm)\s*\{?e|\\Omega\^\{?e\b', 'EPP phonon self-energy Omega^e: use \\Pi^{\\ph}'),
+    (r'W_\{\\(rm|mathrm)\s*\{?(e|ph)', "Giustino's W_e, W_ph: use W^{\\rme}, W^{\\ph}"),
+    (r'(?<![A-Za-z\\])S_\{?\\(rm|mathrm)\s*\{?uc', 'EPP cell area S_uc: use \\OS'),
 ]
 ITALIC = [
     (r'[\^_]\{\\rm\s', 'label with {\\rm ...}: use \\mathrm{...} (or a v2 macro) so the whole word is upright'),
     (r'(?<![\\a-zA-Z])e\^\{\s*-?\s*(\\ii|i)\b', 'italic e in an exponential: use \\ee^{\\ii ...}'),
     (r'\\ee\^\{\s*-?\s*i\b', 'italic i in an exponential: use \\ii'),
-    (r'\^\{(ion|ph|e|para|dia|SC|KS|xc|dd|sr)\}', 'italic label superscript: use \\mathrm{...} or the v2 macro'),
+    (r'[\^_]\{(ion|ph|e|para|dia|SC|KS|xc|dd|sr|lr|FM|DW|qp|NA|irr|ZPR|mob|abs|2D|en|H|el|ep|L|T|LT|TL|LO|TO|F|ph,A|ph,NA)\}', 'italic label: use \\mathrm{...} or the v2 macro'),
 ]
 
 SCRIPT_RESERVED = [

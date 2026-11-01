@@ -270,3 +270,117 @@ Current vertices of electrons and ions are written $\mathbf J^{\mathrm e}$ and $
   `l_{\bq\nu}`, `\varepsilon_{n`, `\Omega^2`, `\Omega_{\rm uc}`, `Q_{ia`, `m_a`, `\mu` as a Cartesian index;
 - italic labels: `^{\rm `, `_{\rm ` (use `\mathrm`), `e^{i`, `e^{-i`, `e^{\ii` (use `\ee^{\ii`), `^{ion}`, `^{ph}`, `^{e}`;
 - a symbol inventory (first use in reading order) for the naive-reader check, plus glossary entries never used and symbols with no glossary entry.
+
+---
+
+## 12. Parts A.2–B.10: additions (binding for every author)
+
+These extend Sections 1–8. Each symbol has a **home section**, the first section that uses it; it is defined there,
+in words, with a glossary entry whose id is given below. Later sections remind the reader of its meaning in a few words
+at its first use and link it, `<a class="sym" href="#gl-a2-g">$g$</a>`, instead of defining it again.
+
+### 12.1 Electrons and the coupling (home A.2, A.3)
+
+| Symbol | Meaning | Home, glossary id |
+|---|---|---|
+| $E_{n\bk}$, $\psi_{n\bk}$, $u_{n\bk}$ | band energy; Bloch state normalized on the supercell; periodic part normalized on the cell | A.2 `gl-a2-E`, `gl-a2-psi` |
+| $c_{n\bk}$, $c^\dagger_{n\bk}$ | electron annihilation and creation operators | A.2 `gl-a2-c` |
+| $f_{n\bk}$, $\mu$, $E_{\mathrm F}$ | Fermi–Dirac occupation, chemical potential, Fermi energy | A.2 `gl-a2-f` |
+| $V^{\mathrm{en}}$, $V_\kappa$ | electron–nucleus potential energy of the crystal; potential energy of an electron near one ion $\kappa$ (bare or pseudopotential) | A.2 `gl-a2-V` |
+| $V^{\mathrm{KS}}=V^{\mathrm{en}}+V^{\mathrm H}+V^{\mathrm{xc}}$ | Kohn–Sham potential energy and its parts | A.2 `gl-a2-VKS` |
+| $\partial_{\kappa\alpha,\bq}V=\sum_\ell \ee^{\ii\bq\cdot\bR_\ell}\,\partial V/\partial u_{\ell\kappa\alpha}$ | change of a potential when atoms $\kappa$ move along $\alpha$ in a wave $\bq$ | A.2 `gl-a2-dV` |
+| $\Delta_{\bq\nu}V=\sum_{\kappa\alpha}\big(\hbar/2M_\kappa\omega_{\bq\nu}\big)^{1/2}e_{\kappa\alpha,\nu}(\bq)\,\partial_{\kappa\alpha,\bq}V$ | change of a potential per unit phonon field $\phi_{\bq\nu}$ | A.2 `gl-a2-dV` |
+| $g_{mn\nu}(\bk,\bq)=\langle\psi_{m\bk+\bq}\vert\Delta_{\bq\nu}V^{\mathrm{KS}}\vert\psi_{n\bk}\rangle$ | electron–phonon matrix element (supercell integral, states normalized on the supercell); energy | A.2 `gl-a2-g` |
+| $\hat H^{\mathrm{e\text{-}ph}}=N_\ell^{-1/2}\sum g_{mn\nu}(\bk,\bq)\,c^\dagger_{m\bk+\bq}c_{n\bk}\,\phi_{\bq\nu}$ | first-order electron–phonon Hamiltonian | A.2 `gl-a2-H` |
+| $g^{\mathrm{DW}}_{mn\nu\nu'}(\bk,\bq,\bq')$ | second-order (Debye–Waller) matrix element | A.3 `gl-a3-gDW` |
+| $v(\br-\br')=e^2/\vert\br-\br'\vert$, $v(\bq)=4\pi e^2/q^2$ | bare Coulomb interaction energy (Gaussian), per unit volume in $\bq$ space | A.3 `gl-a3-v` |
+| $\chi^0$ | independent-particle (Kohn–Sham) density response, $\delta n/\delta V$ at fixed $V^{\mathrm H}+V^{\mathrm{xc}}$ | A.3 `gl-a3-chi0` |
+| $f^{\mathrm{xc}}=\delta V^{\mathrm{xc}}/\delta n$ | exchange–correlation kernel | A.3 `gl-a3-fxc` |
+| $\varepsilon^{\mathrm e}$ | electronic dielectric function; in DFPT the test-electron form $1-(v+f^{\mathrm{xc}})\chi^0$; RPA $1-v\chi^0$ | A.3 `gl-a3-eps` |
+| $\Delta n$, $\Delta V^{\mathrm{KS}}$, $\Delta\psi$ | first-order changes in DFPT (always with the perturbation named) | A.3 `gl-a3-Delta` |
+
+$\eta$ is the positive infinitesimal of retarded functions from A.2 on (A.1 uses it once, locally, for a shift eigenvalue).
+A non-bold $\tau$, with or without labels ($\tau$, $\tau_{n\bk}$), is a lifetime; the bold $\btau_\kappa$ is a position.
+
+### 12.2 Polar crystals (home A.4)
+
+| Symbol | Meaning | Home, glossary id |
+|---|---|---|
+| $\mathbf Z^*_\kappa$, $Z^*_{\kappa,\alpha\beta}$ | Born effective charge tensor, dimensionless: $eZ^*_{\kappa,\alpha\beta}$ is the dipole along $\alpha$ per unit displacement along $\beta$ | A.4 `gl-a4-Z` |
+| $\varepsilon_\infty$, $\varepsilon_{\mathrm s}$; $\boldsymbol\varepsilon_\infty$ | electronic and static dielectric constants; tensor form | A.4 `gl-a4-epsinf` |
+| $\omega_{\mathrm{LO}}$, $\omega_{\mathrm{TO}}$ | longitudinal and transverse optical frequencies at $\Gamma$ | A.4 `gl-a4-wLO` |
+| $g^{\mathrm{lr}}$, $g^{\mathrm{sr}}=g-g^{\mathrm{lr}}$ | long-range (dipole, Fröhlich-type) part of $g$ and the short-range rest | A.4 `gl-a4-glr` |
+| $\alpha_{\mathrm F}$ | Fröhlich's dimensionless coupling constant | A.4 `gl-a4-alphaF` |
+| $\Phi^{\mathrm{sr}}$, $\Phi^{\mathrm{dd}}$ | short-range and dipole–dipole (long-range) parts of the force constants | A.4 `gl-a4-Phidd` |
+| $\bP$ | polarization density (dipole per unit volume); bold, never a scalar | A.4 `gl-a4-P` |
+
+### 12.3 Many-body objects (home A.5–A.9)
+
+| Symbol | Meaning | Home, glossary id |
+|---|---|---|
+| $G$, $G^0$ | electron propagator (Green's function), interacting and non-interacting | A.5 `gl-a5-G` |
+| $\Sigma$ | electron self-energy | A.5 `gl-a5-Sigma` |
+| $\chi^{\mathrm{irr}}$ | irreducible polarizability (Hedin's polarization; $\chi^{\mathrm{irr}}=\chi^0$ in the RPA). Not written $P$: $P_{\bq\nu}$ is a momentum and $\bP$ a polarization | A.5 `gl-a5-chiirr` |
+| $\chi$ | full (reducible) density response, $\chi=\chi^{\mathrm{irr}}+\chi^{\mathrm{irr}}v\chi$ | A.5 `gl-a5-chi` |
+| $\varepsilon=1-v\chi^{\mathrm{irr}}$, $\varepsilon^{-1}=1+v\chi$ | test-charge dielectric function (electrons only: $\varepsilon^{\mathrm e}$) | A.5 `gl-a5-eps` |
+| $W=\varepsilon^{-1}v$; $W^{\mathrm e}$, $W^{\mathrm{ph}}$; $W=W^{\mathrm e}+W^{\mathrm{ph}}$ | screened interaction; screened by electrons only (nuclei clamped); the part added by the moving nuclei | A.5 `gl-a5-W` |
+| $\Lambda$ | vertex function of Hedin's equations ($\Gamma$ is the zone centre) | A.5 `gl-a5-Lambda` |
+| $F_{\nu\nu'}(\bq,\omega)$, $F^0$ | phonon propagator built from $\phi_{\bq\nu}$, units 1/energy: $F_{\nu\nu'}(\bq,t)=-\frac{\ii}{\hbar}\langle\mathcal T\,\phi_{\bq\nu}(t)\,\phi^\dagger_{\bq\nu'}(0)\rangle$, free retarded $F^0_\nu(\bq,\omega)=\frac1\hbar\,\frac{2\omega_{\bq\nu}}{(\omega+\ii\eta)^2-\omega^2_{\bq\nu}}$ | A.5 `gl-a5-F` |
+| $\Pi^{\mathrm{ph}}_{\nu\nu'}(\bq,\omega)$; $\Pi^{\mathrm{ph,A}}$, $\Pi^{\mathrm{ph,NA}}$ | phonon self-energy (energy units) with $F=F^0+F^0\Pi^{\mathrm{ph}}F$; adiabatic and nonadiabatic parts | A.6 `gl-a6-Piph` |
+| $\gamma_{\bq\nu}$ | phonon linewidth (state FWHM or HWHM explicitly); $\gamma$ alone in an oscillator model is a damping rate. As a summed Cartesian index $\gamma$ appears only as a subscript | A.6 `gl-a6-gamma` |
+| $\Sigma^{\mathrm{FM}}$, $\Sigma^{\mathrm{DW}}$ | Fan–Migdal and Debye–Waller self-energies | A.7 `gl-a7-SigmaFM` |
+| $\mathcal A_{n\bk}(\omega)$ | spectral function (calligraphic: $\bA$ is the vector potential) | A.7 `gl-a7-A` |
+| $Z^{\mathrm{qp}}_{n\bk}$ | quasiparticle weight (renormalization factor) | A.7 `gl-a7-Zqp` |
+| $\alpha^2F(\omega)$, $\lambda_{\mathrm{ep}}$ | Eliashberg spectral function; mass-enhancement (coupling) parameter | A.7 `gl-a7-a2F` |
+| $\tau_{n\bk}$, $1/\tau_{n\bk}=2\,\mathrm{Im}\Sigma/\hbar$ | lifetime and scattering rate (sign convention stated where used) | A.8 `gl-a8-tau` |
+| $\Delta E^{\mathrm{ZPR}}$ | zero-point renormalization of a band energy or gap | A.8 `gl-a8-ZPR` |
+| $\mu_{\mathrm{mob}}$ | carrier mobility ($\mu$ alone is the chemical potential) | A.9 `gl-a9-mob` |
+| $T_{\mathrm c}$, $\mu^*$, $\omega_{\log}$, $\Delta$ | superconducting critical temperature; Coulomb pseudopotential (traditional name, unrelated to $\mu$); logarithmic average frequency; gap | A.9 `gl-a9-Tc` |
+| $\varepsilon_2=\mathrm{Im}\,\varepsilon$, $\alpha_{\mathrm{abs}}$ | absorptive part of the dielectric function; absorption coefficient | A.9 `gl-a9-abs` |
+
+### 12.4 Fields and photons (home X.1, B.2–B.6)
+
+| Symbol | Meaning | Home, glossary id |
+|---|---|---|
+| $D$, $D_{\alpha\beta}(\br,\br';t-t')=\frac{\ii}{\hbar c}\langle\mathcal T A_\alpha(\br,t)A_\beta(\br',t')\rangle$ | photon propagator (EPP's definition) | X.1 `gl-x1-D` (precise form in B.5 `gl-b5-D`) |
+| $D^{0\mathrm T}_{\alpha\beta}(\bq,\omega)=-\dfrac{4\pi c\,(\delta_{\alpha\beta}-\hat q_\alpha\hat q_\beta)}{(\omega+\ii\eta)^2-c^2q^2}$; $D^{0\mathrm L}$ | free transverse and longitudinal photon propagators | B.5 `gl-b5-D0` |
+| $D^{\mathrm e}$ | photon propagator dressed by the electrons only | B.5 `gl-b5-De` |
+| $\Pi$, $\Pi^{\mathrm e}$, $\Pi^{\mathrm{ion}}$; $\Pi^{\mathrm{para}}$, $\Pi^{\mathrm{dia}}$ | photon self-energy (all, electrons, ions); paramagnetic and diamagnetic parts | X.1 `gl-x1-Pi` (parts: B.5 `gl-b5-Pi`) |
+| $\Pi_{\rho\rho}$, $\Pi_{\rho\beta}$, $\Pi_{\alpha\rho}$, $\Pi_{\alpha\beta}$ | charge–charge, charge–current, current–charge and current–current correlators (EPP's $\Pi_{\rho\rho}$, $\Pi_{\rho j}$, $\Pi_{j\rho}$, $\Pi_{jj}$); a superscript e or ion selects the medium. $\Pi^{\mathrm e}_{\rho\rho}=e^2\chi^{\mathrm{irr}}$ connects to Part A | B.6 `gl-b6-sectors` |
+| $D_{\rho\rho}$, $D_{\rho\beta}$, $D_{\alpha\rho}$, $D_{\alpha\beta}$ | the four sectors of the total propagator (EPP's $D_{11}$, $D_{1\nu}$, $D_{\mu1}$, $D_{\mu\nu}$); $D_{\rho\rho}$ is the screened Coulomb sector and $W^{\mathrm e}=D^{\mathrm e}_{\rho\rho}$ | B.6 `gl-b6-sectors` |
+| $D^{\mathrm L}$, $D^{\mathrm T}$, $D^{\mathrm{LT}}$, $D^{\mathrm{TL}}$ | longitudinal, transverse and mixed parts of a tensor, projected with $\hat\bq$ | B.6 `gl-b6-LT` |
+| $\mathcal L$, $L$ | Lagrangian density, Lagrangian | B.2 `gl-b2-L` |
+| $\bA$, $A_\alpha$; $\bE=-\frac1c\partial_t\bA$ | vector potential in the temporal gauge $A_0=0$; electric field | B.2 `gl-b2-A` |
+| $\rho$, $\bj$; $\bj^{\mathrm e}$, $\bj^{\mathrm{ion}}$ | charge and current density; electronic and ionic parts | B.2 `gl-b2-j` |
+| $j_\alpha^{\,n\bk,m\bk+\bq}$ | electronic current vertex, the matrix element of the current density between $n\bk$ and $m\bk+\bq$ | B.5 `gl-b5-jel` |
+| $j_{\alpha\nu}(\bq)=\sum_{\kappa\beta}\dfrac{eZ^*_{\kappa,\alpha\beta}}{\sqrt{M_\kappa}}\,e_{\kappa\beta,\nu}(\bq)\,\ee^{-\ii(\bq+\bG)\cdot\btau_\kappa}$ | ionic current vertex of mode $\nu$ (charge/√mass), **with the basis phase** that EPP's Eq. (385) omits | B.5 `gl-b5-jion` |
+| $J_{\alpha\nu}(\bq,\omega)=\Big(\dfrac{\hbar}{2c\OV\omega_{\bq\nu}}\Big)^{1/2}\omega\,j_{\alpha\nu}(\bq)$ | dynamic ionic vertex; $\Pi^{\mathrm{ph}}_{\nu\nu'}=-\sum_{\alpha\beta}J^*_{\alpha\nu}D^{\mathrm e}_{\alpha\beta}J_{\beta\nu'}$ (B.7) | B.7 `gl-b7-J` |
+| $b_{\bq\lambda}$, $b^\dagger_{\bq\lambda}$ | photon annihilation and creation operators ($a$ is reserved for phonons) | B.4 `gl-b4-b` |
+| $\hat\bA(\br)=\sum_{\bq\lambda}\Big(\dfrac{2\pi\hbar c^2}{\OVSC\,\omega_q}\Big)^{1/2}\be_\lambda(\bq)\big(b_{\bq\lambda}+b^\dagger_{-\bq\lambda}\big)\ee^{\ii\bq\cdot\br}$, $\omega_q=cq$ | field expansion of the transverse photons (Gaussian); the longitudinal one as in B.4 | B.4 `gl-b4-A` |
+| $\omega_{\mathrm p}$, $\omega_{\mathrm p}^{\mathrm{ion}}$ | electronic and ionic plasma frequencies | A.5 `gl-a5-wp` (B.3 links it) |
+| $H_0$, $V'$ | free part and perturbation of the full Hamiltonian (the split of B.4) | B.4 `gl-b4-H0` |
+
+**Corrections to EPP that v2 builds in** (each stated once in a footnote of its section):
+the basis phase $\ee^{-\ii(\bq+\bG)\cdot\btau_\kappa}$ in the polar vertex and in $j_{\alpha\nu}$ (B.1, B.5, B.7);
+EPP Eq. (410′) gives the upper phonon polariton at $\bq\to0$, a transverse mode whose frequency equals $\omega_{\mathrm{LO}}$ in a cubic crystal; it is not the LO–TO splitting of phonons with $q\gg\omega/c$ (B.7);
+the factor $e$ in the continuity equation that links the charge and current correlators (B.6).
+
+### 12.5 Two dimensions (home B.10)
+
+| Symbol | Meaning | Home, glossary id |
+|---|---|---|
+| $\bQ_\parallel$, $Q_\parallel$ | in-plane wavevector and its length | B.10 `gl-b10-Q` |
+| $v^{\mathrm{2D}}(Q_\parallel)=2\pi e^2/Q_\parallel$ | Coulomb interaction of a sheet, per unit area | B.10 `gl-b10-v` |
+| $r_0$; $\varepsilon^{\mathrm{2D}}(Q_\parallel)=1+r_0Q_\parallel$ | screening length of a sheet; its static dielectric function | B.10 `gl-b10-r0` |
+| $\OS$, $\OSSC$ | cell and supercell area | A.1 `gl-a1-OV` |
+
+### 12.6 Cross-references
+
+- A section is linked as `<a href="#a-polar">Section A.4</a>` (section ids: `a-lattice`, `a-coupling`, `a-dfpt`, `a-polar`,
+  `a-hedin-baym`, `a-phonon-se`, `a-electron-se`, `a-temperature`, `a-applications`, `x-light-cone`, `x-dictionary`,
+  `b-foundations`, `b-lagrangian`, `b-dielectric`, `b-fields`, `b-photon-se`, `b-propagator`, `b-phonon-se`, `b-frohlich`,
+  `b-electrostatic`, `b-2d`).
+- An equation of **another** section is linked as `<a class="eqref" href="#a2-eq-g"></a>`: the page fills in "(A2.5)" from the
+  target's `\tag{}`. Only the element ids listed as **exports** in the section briefs may be used this way.
+- A figure of another section: `<a class="figref" href="#viz-a4-dipoles"></a>`; the page fills in "Figure A4.1".
+- In A.1 the exported equation ids are `a1-eq-pos` (A1.1), `a1-eq-phi` (A1.3), `a1-eq-asr` (A1.6), `a1-eq-dyn` (A1.18), `a1-eq-u` (A1.27).
