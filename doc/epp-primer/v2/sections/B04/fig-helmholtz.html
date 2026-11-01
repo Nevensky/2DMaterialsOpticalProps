@@ -1,0 +1,381 @@
+  <figure class="viz" id="viz-b4-helmholtz">
+    <p class="viz-title">One Fourier mode, split into a transverse and a longitudinal part <span class="tag">interactive</span></p>
+    <div class="viz-grid two">
+      <div>
+        <p class="b4-helmholtz-hd" style="margin:0 0 6px;font-family:var(--font-ui);font-size:0.86rem;font-weight:600;color:var(--fg-2)">(a) The amplitude $\bA_\bq$ and the triad; drag to turn</p>
+        <div class="b4-helmholtz-3d"></div>
+      </div>
+      <div>
+        <p class="b4-helmholtz-hd" style="margin:0 0 6px;font-family:var(--font-ui);font-size:0.86rem;font-weight:600;color:var(--fg-2)">(b) The field in real space, over two wavelengths</p>
+        <div class="b4-helmholtz-real"></div>
+        <div class="legend b4-helmholtz-leg"><span class="item">$-1$<span class="b4-helmholtz-ramp" aria-hidden="true" style="display:inline-block;width:64px;height:10px;margin:0 6px;border-radius:2px;vertical-align:middle;background:linear-gradient(90deg,var(--c-electron),color-mix(in srgb,var(--surface) 82%,var(--muted)),var(--c-photon))"></span>$+1$</span><span class="item">colour in units of $2q|\bA_\bq|$</span><span class="item">middle: $B$, out of the page</span><span class="item">bottom: $\nabla\cdot\bA$</span></div>
+      </div>
+    </div>
+    <div class="b4-helmholtz-ctrls" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))"></div>
+    <div class="readout b4-helmholtz-ro" aria-live="polite"><span>$A_{\bq1}$<b class="b4-helmholtz-v-a1"></b></span><span>$A_{\bq2}$<b class="b4-helmholtz-v-a2"></b></span><span>$A_{\bq3}$<b class="b4-helmholtz-v-a3"></b></span><span>longitudinal share $A_{\bq3}^2/|\bA_\bq|^2$<b class="b4-helmholtz-v-share"></b></span></div>
+    <div class="readout b4-helmholtz-ro2" aria-live="polite"><span>$|\hat\bq\times\bA_\bq|^2$<b class="b4-helmholtz-v-qxa"></b></span><span>$A_{\bq1}^2+A_{\bq2}^2$<b class="b4-helmholtz-v-a12"></b></span></div>
+    <div class="readout b4-helmholtz-ro3" aria-live="polite"><span>$\be_1$<b class="b4-helmholtz-v-e1"></b></span><span>$\be_2$<b class="b4-helmholtz-v-e2"></b></span><span>$\be_3=\hat\bq$<b class="b4-helmholtz-v-e3"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> Only the transverse part $\bA^{\mathrm T}_\bq$ has a curl, so only it makes a magnetic field and stores the spring-like magnetic energy of <a class="eqref" href="#b4-eq-Hfield">(B4.14)</a>. The longitudinal part $\bA^{\mathrm L}_\bq$ has a divergence but no curl, and nothing pulls it back.</p><div class="cap-more"><p><strong>Marks.</strong> In (a) the teal arrow is $\bq$ and the thin unit arrows are the polarization triad: $\be_1$ and $\be_2$ span the disc across $\bq$ <span class="nw">($\lambda=1,2$,</span> transverse) and <span class="nw">$\be_3=\hat\bq$</span> <span class="nw">($\lambda=3$,</span> longitudinal). The thick arrow is the amplitude <span class="nw">$\bA_\bq$;</span> dotted lines split it into $\bA^{\mathrm T}_\bq$ (rose) and $\bA^{\mathrm L}_\bq$ (rose, dashed), and the readouts give its components <span class="nw">$A_{\bq\lambda}=\be_\lambda\cdot\bA_\bq$.</span> In (b), right is along $\hat\bq$ and up is along <span class="nw">$\bA^{\mathrm T}_\bq$.</span> Colour: the component $B$ of $\bB$ out of the page (middle) and $\nabla\cdot\bA$ (bottom). Were the arrows an electric field, the bottom colour would be the charge density $\nabla\cdot\bE/4\pi$ of Gauss's law.</p><p><strong>Try.</strong> Press “$\bA_\bq\parallel\bq$”: $\bB$ vanishes everywhere and only the compression remains. Press “$\bA_\bq\perp\bq$”: a shear wave with no divergence, the shape of a photon. Move $\theta_q$ and <span class="nw">$\varphi_q$:</span> the triad, and $\bA_\bq$ with it, turn with <span class="nw">$\bq$,</span> and the two magnetic readouts stay equal. Drag (a), or use its arrow keys, to turn the view.</p><p><strong>Model.</strong> The modes $\pm\bq$ of <a class="eqref" href="#b4-eq-fourier">(B4.12)</a> with a real amplitude, <span class="nw">$|\bA_\bq|=1$</span> in arbitrary units: <span class="nw">$\bA(\br)=2\bA_\bq\cos(\bq\cdot\br)$,</span> so <span class="nw">$\bB=-2\sin(\bq\cdot\br)\,\bq\times\bA_\bq$</span> and <span class="nw">$\nabla\cdot\bA=-2qA_{\bq3}\sin(\bq\cdot\br)$.</span> In the triad of <a class="eqref" href="#b4-eq-triad">(B4.13)</a>, $\be_1$ is the $x$ axis projected across $\bq$ ($z$ when $\bq$ is within 11.5° of it) and <span class="nw">$\be_2=\hat\bq\times\be_1$,</span> right-handed for the $\bq$ shown (a convention). The angles $\vartheta$ and $\psi$ fix $\bA_\bq$ in the triad. The equal readouts are the identity behind the magnetic term of <a class="eqref" href="#b4-eq-Hfield">(B4.14)</a>.</p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b4-helmholtz');
+  if (!fig || !window.EPP) return;
+  const D2R = Math.PI / 180, TAU = 2 * Math.PI, EPS = 1e-9;
+  const dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+  const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+  const add = (a, b) => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
+  const scl = (a, s) => [a[0] * s, a[1] * s, a[2] * s];
+  const nrm = (a) => Math.hypot(a[0], a[1], a[2]);
+  // cos and sin of an angle in degrees, exact at multiples of 90° so that the presets give exact zeros
+  const cosd = (d) => { const r = ((d % 360) + 360) % 360; return r === 90 || r === 270 ? 0 : r === 0 ? 1 : r === 180 ? -1 : Math.cos(d * D2R); };
+  const sind = (d) => cosd(d - 90);
+  const fx = (v, d) => EPP.fix(Math.abs(v) < 0.5 * Math.pow(10, -d) ? 0 : v, d);   // never "−0.00"
+
+  // ---------- physics: one mode A(r) = 2 A_q cos(q·r) with a real amplitude, |A_q| = 1 ----------
+  // q̂ from (θ_q, φ_q); triad of (B4.13): e1 = x projected across q (z when |x·q̂| > 0.98), e2 = q̂ × e1, e3 = q̂;
+  // A_q = cos ϑ e3 + sin ϑ (cos ψ e1 + sin ψ e2). The readouts project A_q back on the triad.
+  function compute(s) {
+    const qh = [sind(s.th) * cosd(s.ph), sind(s.th) * sind(s.ph), cosd(s.th)];
+    let n = [1, 0, 0];
+    if (Math.abs(dot(n, qh)) > 0.98) n = [0, 0, 1];
+    let e1 = add(n, scl(qh, -dot(n, qh)));
+    e1 = scl(e1, 1 / nrm(e1));
+    const e2 = cross(qh, e1);
+    const st = sind(s.vt);
+    const A = add(add(scl(e1, st * cosd(s.ps)), scl(e2, st * sind(s.ps))), scl(qh, cosd(s.vt)));
+    const a1 = dot(e1, A), a2 = dot(e2, A), a3 = dot(qh, A);
+    const AT = add(scl(e1, a1), scl(e2, a2)), AL = scl(qh, a3), qxA = cross(qh, A);
+    return { qh, e1, e2, A, a1, a2, a3, AT, AL, An: nrm(A), ATn: nrm(AT), qxA2: dot(qxA, qxA), refZ: n[2] === 1 };
+  }
+
+  // ---------- canvas text in parts: {t, b: bold vector (UI font), i: italic variable (text font), sub, sup, hat,
+  // stk: drawn over the previous part (a subscript under a superscript, as in A^T_q)} ----------
+  let FAM = { ui: 'sans-serif', tx: 'serif' };
+  const T = (t, o) => Object.assign({ t }, o), I = (t, o) => Object.assign({ t, i: 1 }, o), V = (t, o) => Object.assign({ t, b: 1 }, o);
+  const SUP = (t) => T(t, { sup: 1 }), SUBV = (t, stk) => V(t, { sub: 1, stk: stk ? 1 : 0 });
+  const fontOf = (p, size) => { const z = (p.i ? 1.08 * size : size) * (p.sub || p.sup ? 0.72 : 1); return `${p.i ? 'italic ' : ''}${p.b ? '700 ' : ''}${z.toFixed(1)}px ${p.i ? FAM.tx : FAM.ui}`; };
+  function lay(ctx, parts, size) {
+    let x = 0, last = 0;
+    const items = [];
+    for (const p of parts) {
+      ctx.font = fontOf(p, size);
+      const w = ctx.measureText(p.t).width, x0 = p.stk ? last : x;
+      items.push({ p, x: x0, w, dy: p.sub ? 0.32 * size : p.sup ? -0.42 * size : 0 });
+      last = x0; x = Math.max(x, x0 + w);
+    }
+    const asc = parts.some(p => p.sup) ? 0.98 * size : 0.76 * size, desc = parts.some(p => p.sub) ? 0.5 * size : 0.24 * size;
+    return { items, w: x, asc, desc };
+  }
+  // draw with the left end at x and the baseline at y
+  function drawParts(ctx, L, x, y, size, color) {
+    ctx.fillStyle = color; ctx.strokeStyle = color; ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    for (const it of L.items) {
+      ctx.font = fontOf(it.p, size);
+      ctx.fillText(it.p.t, x + it.x, y + it.dy);
+      if (it.p.hat) {
+        const z = size * (it.p.sub || it.p.sup ? 0.72 : 1), c = x + it.x + it.w / 2, yb = y + it.dy;
+        ctx.lineWidth = Math.max(1, 0.09 * z); ctx.lineJoin = 'miter'; ctx.setLineDash([]);
+        ctx.beginPath(); ctx.moveTo(c - 0.24 * z, yb - 0.64 * z); ctx.lineTo(c, yb - 0.86 * z); ctx.lineTo(c + 0.24 * z, yb - 0.64 * z); ctx.stroke();
+      }
+    }
+  }
+  const label = (ctx, parts, size, color) => { const L = lay(ctx, parts, size); return { parts, size, color, L, w: L.w + 6, h: L.asc + L.desc + 3 }; };
+  // a label centred at c, on a soft surface-coloured chip so that it stays legible over lines
+  function chip(ctx, lb, c) {
+    ctx.fillStyle = EPP.alpha('surface', 0.86);
+    ctx.beginPath();
+    if (ctx.roundRect) ctx.roundRect(c[0] - lb.w / 2, c[1] - lb.h / 2, lb.w, lb.h, 3); else ctx.rect(c[0] - lb.w / 2, c[1] - lb.h / 2, lb.w, lb.h);
+    ctx.fill();
+    drawParts(ctx, lb.L, c[0] - lb.L.w / 2, c[1] - (lb.L.asc + lb.L.desc) / 2 + lb.L.asc, lb.size, lb.color);
+  }
+  // Label placer. A label takes the first candidate centre whose box stays on the canvas and clears the obstacles
+  // (arrow tips, the origin) and every placed label; failing that, the nearest free spot around its anchor, joined
+  // to the anchor by a thin leader line.
+  function placer(ctx, W, H) {
+    const boxes = [], labels = [];
+    const hit = (b, o, g) => b[0] < o[2] + g && b[2] > o[0] - g && b[1] < o[3] + g && b[3] > o[1] - g;
+    const box = (lb, c) => [c[0] - lb.w / 2, c[1] - lb.h / 2, c[0] + lb.w / 2, c[1] + lb.h / 2];
+    const onCanvas = (b) => b[0] >= 2 && b[1] >= 2 && b[2] <= W - 2 && b[3] <= H - 2;
+    const free = (b) => onCanvas(b) && !boxes.some(o => hit(b, o, 1)) && !labels.some(o => hit(b, o, 3));
+    return {
+      block(P, r) { boxes.push([P[0] - r, P[1] - r, P[0] + r, P[1] + r]); },
+      put(lb, cands, anchor) {
+        let c = cands.find(cc => free(box(lb, cc))), lead = null;
+        if (!c && anchor) {
+          search: for (let rad = 16; rad <= 96; rad += 6) for (let j = 0; j < 24; j++) {
+            const cc = [anchor[0] + rad * Math.cos(j * TAU / 24), anchor[1] + rad * Math.sin(j * TAU / 24)];
+            if (free(box(lb, cc))) { c = cc; lead = anchor; break search; }
+          }
+        }
+        if (!c) c = cands.find(cc => onCanvas(box(lb, cc))) || cands[0];
+        c = [EPP.clamp(c[0], lb.w / 2 + 2, W - lb.w / 2 - 2), EPP.clamp(c[1], lb.h / 2 + 2, H - lb.h / 2 - 2)];
+        labels.push(box(lb, c));
+        if (lead) {
+          const dx = lead[0] - c[0], dy = lead[1] - c[1], t = Math.min((lb.w / 2) / Math.max(Math.abs(dx), 1e-6), (lb.h / 2) / Math.max(Math.abs(dy), 1e-6));
+          if (t < 1) { ctx.strokeStyle = EPP.alpha('muted', 0.85); ctx.lineWidth = 0.9; ctx.setLineDash([]); ctx.beginPath(); ctx.moveTo(c[0] + dx * t, c[1] + dy * t); ctx.lineTo(lead[0] - dx * 0.06, lead[1] - dy * 0.06); ctx.stroke(); }
+        }
+        chip(ctx, lb, c);
+      }
+    };
+  }
+  // candidate centres around point P, starting in screen direction u and fanning out to both sides, in three rings
+  function around(P, u, lb, gap) {
+    const a0 = Math.atan2(u[1], u[0]), out = [];
+    for (const g0 of [gap, gap + 9, gap + 20]) for (const k of [0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6]) {
+      const a = a0 + k * Math.PI / 6.5, c = Math.cos(a), s = Math.sin(a);
+      const ext = g0 + Math.min((lb.w / 2) / Math.max(Math.abs(c), 1e-6), (lb.h / 2) / Math.max(Math.abs(s), 1e-6));
+      out.push([P[0] + c * ext, P[1] + s * ext]);
+    }
+    return out;
+  }
+  // candidate centres beside the segment O -> P, at fractions ts of its length; the side away from point F first
+  function beside(O, P, lb, gap, ts, F) {
+    const dx = P[0] - O[0], dy = P[1] - O[1], L = Math.hypot(dx, dy) || 1, nx = -dy / L, ny = dx / L;
+    const ext = gap + Math.abs(nx) * lb.w / 2 + Math.abs(ny) * lb.h / 2, out = [];
+    const s0 = F && (F[0] - O[0]) * nx + (F[1] - O[1]) * ny > 0 ? -1 : 1;
+    for (const sd of [s0, -s0]) for (const t of ts) out.push([O[0] + dx * t + sd * nx * ext, O[1] + dy * t + sd * ny * ext]);
+    return out;
+  }
+  const dirOf = (O, P) => { const dx = P[0] - O[0], dy = P[1] - O[1], L = Math.hypot(dx, dy); return L > 6 ? [dx / L, dy / L] : [0.7071, -0.7071]; };
+  // arrow with a filled head; a dash applies to the shaft only
+  function arrow(ctx, a, b, o) {
+    const L = Math.hypot(b[0] - a[0], b[1] - a[1]);
+    if (!(L > 1.5)) return;
+    const ang = Math.atan2(b[1] - a[1], b[0] - a[0]), hl = Math.min(o.head || 8, 0.5 * L);
+    ctx.strokeStyle = o.col; ctx.fillStyle = o.col; ctx.lineWidth = o.lw; ctx.lineCap = 'round';
+    ctx.setLineDash(o.dash || []);
+    ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0] - 0.75 * hl * Math.cos(ang), b[1] - 0.75 * hl * Math.sin(ang)); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(b[0], b[1]);
+    ctx.lineTo(b[0] - hl * Math.cos(ang - 0.4), b[1] - hl * Math.sin(ang - 0.4));
+    ctx.lineTo(b[0] - hl * Math.cos(ang + 0.4), b[1] - hl * Math.sin(ang + 0.4));
+    ctx.closePath(); ctx.fill();
+  }
+
+  // ---------- panels ----------
+  const cv3 = EPP.canvas(fig.querySelector('.b4-helmholtz-3d'), { aspect: 0.86, minHeight: 280, maxHeight: 400 });
+  const cvR = EPP.canvas(fig.querySelector('.b4-helmholtz-real'), { aspect: 0.86, minHeight: 320, maxHeight: 400 });
+  cv3.canvas.setAttribute('tabindex', '0');
+  cv3.canvas.setAttribute('role', 'application');
+  cv3.canvas.style.touchAction = 'none';    // the view is dragged in every direction, so a touch here must not pan the page
+  cv3.canvas.style.cursor = 'grab';
+  cvR.canvas.setAttribute('role', 'img');
+  const roV = {};
+  ['a1', 'a2', 'a3', 'share', 'qxa', 'a12', 'e1', 'e2', 'e3'].forEach(k => { roV[k] = fig.querySelector('.b4-helmholtz-v-' + k); });
+  // default view: x toward the viewer, y to the right, z up, seen from 34° above the x–y plane
+  const YAW0 = 22 * D2R, PITCH0 = 34 * D2R;
+  let g = null, yaw = YAW0, pitch = PITCH0, st = null;
+
+  // ---------- (a) the amplitude, its two parts and the triad, in an oblique view ----------
+  function draw3d() {
+    const cv = cv3, ctx = cv.ctx, W = cv.w, H = cv.h;
+    cv.clear();
+    if (!g || W < 40) return;
+    FAM = { ui: EPP.css('--font-ui'), tx: EPP.css('--font-text') };
+    // screen axes: R to the right, U up; the viewer looks from azimuth yaw and elevation pitch
+    const R = [-Math.sin(yaw), Math.cos(yaw), 0];
+    const U = [-Math.sin(pitch) * Math.cos(yaw), -Math.sin(pitch) * Math.sin(yaw), Math.cos(pitch)];
+    const s = Math.min(W, H) * 0.29, cx = W * 0.5, cy = H * 0.5;
+    const P = (v) => [cx + s * dot(v, R), cy - s * dot(v, U)];
+    const O = P([0, 0, 0]);
+    const cMut = EPP.color('muted'), cFg2 = EPP.color('fg2'), cInk = EPP.color('ink'), cRose = EPP.color('photon'), tRose = EPP.textColor('photon');
+    // the transverse plane: the disc spanned by e1 and e2
+    ctx.beginPath();
+    for (let k = 0; k <= 72; k++) {
+      const t = TAU * k / 72, p = P(add(scl(g.e1, 1.15 * Math.cos(t)), scl(g.e2, 1.15 * Math.sin(t))));
+      if (k) ctx.lineTo(p[0], p[1]); else ctx.moveTo(p[0], p[1]);
+    }
+    ctx.closePath(); ctx.fillStyle = EPP.alpha('photon', 0.08); ctx.fill();
+    ctx.strokeStyle = EPP.alpha('photon', 0.5); ctx.lineWidth = 1; ctx.setLineDash([3, 3]); ctx.stroke(); ctx.setLineDash([]);
+    const pl = placer(ctx, W, H), tips = [];
+    // Cartesian axes
+    const axes = [['x', [1, 0, 0]], ['y', [0, 1, 0]], ['z', [0, 0, 1]]].map(([l, v]) => {
+      const tip = P(scl(v, 1.4)); arrow(ctx, O, tip, { col: cMut, lw: 1, head: 6 }); tips.push(tip); return [l, tip];
+    });
+    // wavevector and triad
+    const qT = P(scl(g.qh, 1.5));
+    arrow(ctx, O, qT, { col: EPP.color('c4'), lw: 2.2, head: 9 }); tips.push(qT);
+    const eT = [P(g.e1), P(g.e2), P(g.qh)];
+    eT.forEach(t => { arrow(ctx, O, t, { col: cFg2, lw: 1.3, head: 7 }); tips.push(t); });
+    // the amplitude and its parts, with the dotted sides of the parallelogram
+    const hasT = g.ATn > EPS, hasL = Math.abs(g.a3) > EPS;
+    const AT = P(g.AT), AL = P(g.AL), Atip = P(g.A);
+    if (hasT && hasL) {
+      ctx.strokeStyle = EPP.alpha('muted', 0.85); ctx.lineWidth = 1; ctx.setLineDash([2, 3]);
+      ctx.beginPath(); ctx.moveTo(Atip[0], Atip[1]); ctx.lineTo(AT[0], AT[1]); ctx.moveTo(Atip[0], Atip[1]); ctx.lineTo(AL[0], AL[1]); ctx.stroke();
+      ctx.setLineDash([]);
+    }
+    if (hasL) { arrow(ctx, O, AL, { col: cRose, lw: 2.6, head: 9, dash: [7, 4] }); tips.push(AL); }
+    if (hasT) { arrow(ctx, O, AT, { col: cRose, lw: 2.6, head: 9 }); tips.push(AT); }
+    arrow(ctx, O, Atip, { col: cInk, lw: 2.4, head: 10 }); tips.push(Atip);
+    // labels, most important first; arrow tips and the origin are obstacles
+    tips.forEach(t => pl.block(t, 5)); pl.block(O, 4);
+    const Aq = [V('A'), SUBV('q')], ATq = [V('A'), SUP('T'), SUBV('q', true)], ALq = [V('A'), SUP('L'), SUBV('q', true)];
+    const seen = (pt) => Math.hypot(pt[0] - O[0], pt[1] - O[1]) >= 8;   // an arrow too short to see gets no label
+    let lb = label(ctx, !hasT ? [...Aq, T(' = '), ...ALq] : !hasL ? [...Aq, T(' = '), ...ATq] : Aq, 13.5, cInk);
+    // along q the wavevector continues past the tip of A_q, so a parallel A_q is labelled beside the shaft
+    pl.put(lb, !hasT ? [...beside(O, Atip, lb, 7, [0.9, 0.7]), ...around(Atip, dirOf(O, Atip), lb, 6)] : around(Atip, dirOf(O, Atip), lb, 6), Atip);
+    if (hasT && hasL) {
+      if (seen(AT)) { lb = label(ctx, ATq, 13, tRose); pl.put(lb, around(AT, dirOf(O, AT), lb, 5), AT); }
+      // beside its own shaft, on the side away from the parallelogram
+      if (seen(AL)) { lb = label(ctx, ALq, 13, tRose); pl.put(lb, [...beside(O, AL, lb, 6, [0.8, 0.6], AT), ...around(AL, dirOf(O, AL), lb, 5)], AL); }
+    }
+    lb = label(ctx, [V('q')], 14, EPP.textColor('c4')); pl.put(lb, around(qT, dirOf(O, qT), lb, 5), qT);
+    [0, 1].forEach(k => { lb = label(ctx, [V('e'), T(String(k + 1), { sub: 1 })], 12.5, cFg2); pl.put(lb, around(eT[k], dirOf(O, eT[k]), lb, 5), eT[k]); });
+    lb = label(ctx, [V('e'), T('3', { sub: 1 }), T(' = '), V('q', { hat: 1 })], 12.5, cFg2);
+    pl.put(lb, [...beside(O, eT[2], lb, 6, [0.95, 0.8], AT), ...around(eT[2], dirOf(O, eT[2]), lb, 5)], eT[2]);
+    axes.forEach(([l, tip]) => { lb = label(ctx, [I(l)], 12, cMut); pl.put(lb, around(tip, dirOf(O, tip), lb, 3), tip); });
+    cv3.canvas.setAttribute('aria-label', `Panel a, a three-dimensional view that turns when dragged, or with the arrow keys when focused (Home resets it): ` +
+      `the Cartesian axes x, y, z; the wavevector q at polar angle ${deg(st.th)} and azimuth ${deg(st.ph)}; the unit vectors e1, e2 and e3 = q-hat of the polarization triad, with e1 and e2 spanning the transverse disc; ` +
+      `the amplitude A_q at ${deg(st.vt)} from q, split into its transverse part, of length ${fx(g.ATn, 2)}, and its longitudinal part along q, ${fx(g.a3, 2)}.`);
+  }
+
+  // ---------- (b) three strips along q̂, in the plane of q and A_q ----------
+  // one field arrow centred at (xc, yc); a surface-coloured halo around shaft and head keeps it legible on both ends
+  // of the colour ramp; an arrow shorter than 8 px is drawn as its head alone
+  function fieldArrow(ctx, xc, yc, vx, vy, col, halo) {
+    const L = Math.hypot(vx, vy);
+    if (L < 3) { ctx.fillStyle = col; ctx.beginPath(); ctx.arc(xc, yc, 1.5, 0, TAU); ctx.fill(); return; }
+    const ux = vx / L, uy = vy / L, short = L < 8, hl = short ? Math.max(6, L) : Math.min(7.5, 0.5 * L), hw = 0.46 * hl;
+    const x1 = xc + ux * (short ? hl : L) / 2, y1 = yc + uy * (short ? hl : L) / 2, x0 = xc - vx / 2, y0 = yc - vy / 2;
+    const xb = x1 - ux * hl, yb = y1 - uy * hl;
+    const head = () => { ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(xb - uy * hw, yb + ux * hw); ctx.lineTo(xb + uy * hw, yb - ux * hw); ctx.closePath(); };
+    const shaft = () => { ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(xb + ux, yb + uy); };
+    ctx.setLineDash([]); ctx.lineJoin = 'round';
+    if (halo) {
+      ctx.strokeStyle = halo; ctx.fillStyle = halo; ctx.lineCap = 'round';
+      if (!short) { ctx.lineWidth = 4.4; shaft(); ctx.stroke(); }
+      ctx.lineWidth = 2.4; head(); ctx.stroke(); ctx.fill();
+    }
+    ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineCap = 'butt';
+    if (!short) { ctx.lineWidth = 2; shaft(); ctx.stroke(); }
+    head(); ctx.fill();
+  }
+  function drawReal() {
+    const cv = cvR, ctx = cv.ctx, W0 = cv.w, H0 = cv.h;
+    cv.clear();
+    if (!g || W0 < 40) return;
+    FAM = { ui: EPP.css('--font-ui'), tx: EPP.css('--font-text') };
+    const ml = 2, mr = 2, mt = 1, mb = 42, gap = 9;
+    const W = W0 - ml - mr, H = (H0 - mt - mb - 2 * gap) / 3;
+    const ramp = EPP.ramp('photon', 'electron');
+    // fractions of |A_q| = 1: the transverse length |A^T_q| and the signed longitudinal component A_q3
+    const aT = g.ATn / g.An, aL = g.a3 / g.An;
+    const zT = g.ATn <= EPS, zL = Math.abs(g.a3) <= EPS;
+    const strips = [
+      { title: [T('total:  '), V('A'), T(' = '), V('A'), SUP('T'), T(' + '), V('A'), SUP('L')], v: [aL, aT], bg: null },
+      { title: [T('transverse '), V('A'), SUP('T'), T(':  shear wave, colour = '), I('B')], v: [0, aT], bg: aT,
+        zero: zT ? [V('A'), SUP('T'), T(' = 0:  '), V('B'), T(' = 0 everywhere')] : null },
+      { title: [T('longitudinal '), V('A'), SUP('L'), T(':  compression wave, colour = ∇·'), V('A')], v: [aL, 0], bg: aL,
+        zero: zL ? [V('A'), SUP('L'), T(' = 0:  ∇·'), V('A'), T(' = 0 everywhere')] : null }
+    ];
+    // ten arrows over two wavelengths, at q·r = 36°, 108°, 180°, ...: lengths 0.81, 0.31 and 1 of the largest.
+    // At these phases two neighbours (centred on their points) cannot touch while the largest is below 1.23 spacings.
+    const NA = 10, dxp = W / NA, ell = Math.min(1.1 * dxp, 0.56 * H);
+    const surf = EPP.color('surface'), cRule = EPP.color('rule'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted'), cInk = EPP.color('ink');
+    strips.forEach((S, k) => {
+      const y0 = mt + k * (H + gap);
+      if (S.bg !== null) {
+        // background: B (out of the page) or div A at q·r = 4π px/W, in units of 2q|A_q|: −(fraction) sin(q·r)
+        for (let px = 0; px < W; px += 2) {
+          const c = ramp(0.5 - 0.5 * S.bg * Math.sin(4 * Math.PI * (px + 1) / W));
+          ctx.fillStyle = `rgb(${c[0]},${c[1]},${c[2]})`; ctx.fillRect(ml + px, y0, 2.6, H);
+        }
+      } else { ctx.fillStyle = EPP.color('surface2'); ctx.fillRect(ml, y0, W, H); }
+      ctx.strokeStyle = cRule; ctx.lineWidth = 1; ctx.strokeRect(ml + 0.5, y0 + 0.5, W - 1, H - 1);
+      const yc = y0 + 0.58 * H;
+      for (let j = 0; j < NA; j++) {
+        const c = Math.cos(4 * Math.PI * (j + 0.5) / NA);
+        fieldArrow(ctx, ml + (j + 0.5) * dxp, yc, S.v[0] * c * ell, -S.v[1] * c * ell, cInk, S.bg !== null ? surf : null);
+      }
+      // title chip, top left
+      const lt = label(ctx, S.title, 11.5, cFg2);
+      chip(ctx, lt, [ml + 4 + Math.min(lt.w, W - 8) / 2, y0 + 3 + lt.h / 2]);
+      if (S.zero) { const lz = label(ctx, S.zero, 12, cInk); chip(ctx, lz, [ml + W / 2, yc - 2]); }
+    });
+    // horizontal axis: position along q̂, ticks at multiples of π/q
+    const yb = H0 - mb + 1;
+    ctx.strokeStyle = cRule; ctx.lineWidth = 1;
+    [[T('0')], [T('π/'), I('q')], [T('2π/'), I('q')], [T('3π/'), I('q')], [T('4π/'), I('q')]].forEach((parts, k) => {
+      const X = ml + W * k / 4;
+      ctx.beginPath(); ctx.moveTo(X + 0.5, yb); ctx.lineTo(X + 0.5, yb + 4); ctx.stroke();
+      const L = lay(ctx, parts, 11.5);
+      drawParts(ctx, L, EPP.clamp(X - L.w / 2, ml, ml + W - L.w), yb + 16, 11.5, cMut);
+    });
+    const la = lay(ctx, [T('position along '), V('q', { hat: 1 })], 12.5);
+    drawParts(ctx, la, ml + W / 2 - la.w / 2, H0 - 5, 12.5, EPP.color('fg'));
+    cvR.canvas.setAttribute('aria-label', `Panel b, the field of the mode over two wavelengths along q, in the plane of q and A_q. Top: the total field. ` +
+      (zT ? 'Middle: no transverse part, so the magnetic field is zero everywhere. ' : `Middle: the transverse part, a shear wave, coloured by the magnetic field out of the page, amplitude ${fx(aT, 2)} in units of 2q|A_q|. `) +
+      (zL ? 'Bottom: no longitudinal part, so the divergence is zero everywhere.' : `Bottom: the longitudinal part, a compression wave, coloured by the divergence of A, amplitude ${fx(Math.abs(aL), 2)} in units of 2q|A_q|.`));
+  }
+
+  // ---------- readouts: the keys are static MathJax in the markup, only the values change ----------
+  const vec = (v) => `(${v.map(c => fx(c, 2)).join(', ')})`;
+  function readouts() {
+    roV.a1.textContent = fx(g.a1, 3); roV.a2.textContent = fx(g.a2, 3); roV.a3.textContent = fx(g.a3, 3);
+    roV.share.textContent = `${Math.round(100 * g.a3 * g.a3 / (g.An * g.An))} %`;
+    roV.qxa.textContent = fx(g.qxA2, 3); roV.a12.textContent = fx(g.a1 * g.a1 + g.a2 * g.a2, 3);
+    roV.e1.textContent = vec(g.e1) + (g.refZ ? ' (from z)' : ''); roV.e2.textContent = vec(g.e2); roV.e3.textContent = vec(g.qh);
+  }
+  function onChange(s) { st = s; g = compute(s); draw3d(); drawReal(); readouts(); }
+
+  // ---------- controls ----------
+  const deg = (v) => Math.round(v) + '°';
+  const elCtl = fig.querySelector('.b4-helmholtz-ctrls');
+  const ui = EPP.controls(elCtl, [
+    { key: 'th', type: 'range', label: 'polar angle θ_q of q', min: 0, max: 180, step: 1, value: 62, fmt: deg },
+    { key: 'ph', type: 'range', label: 'azimuth φ_q of q', min: 0, max: 360, step: 1, value: 90, fmt: deg },
+    { key: 'vt', type: 'range', label: 'angle ϑ between A_q and q', min: 0, max: 180, step: 1, value: 40, fmt: deg },
+    { key: 'ps', type: 'range', label: 'azimuth ψ of A_q about q, from e_1', min: 0, max: 360, step: 1, value: 30, fmt: deg }
+  ], onChange);
+  // slider labels: variables in italic, vectors in bold
+  const It = (s) => `<i style="font-family:var(--font-text)">${s}</i>`, Bf = (s) => `<b>${s}</b>`, Aq = `${Bf('A')}<sub>${Bf('q')}</sub>`;
+  const LAB = {
+    th: `polar angle ${It('θ')}<sub>${It('q')}</sub> of ${Bf('q')}`,
+    ph: `azimuth ${It('φ')}<sub>${It('q')}</sub> of ${Bf('q')}`,
+    vt: `angle ${It('ϑ')} between ${Aq} and ${Bf('q')}`,
+    ps: `azimuth ${It('ψ')} of ${Aq} about ${Bf('q')}, from ${Bf('e')}<sub>1</sub>`
+  };
+  Object.keys(LAB).forEach(k => { const sp = elCtl.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  // the preset pair sets ϑ exactly
+  const box = document.createElement('div');
+  box.className = 'ctrl';
+  box.style.gridColumn = '1 / -1';
+  box.innerHTML = `<span class="lab"><span>set ${It('ϑ')} exactly</span></span><div style="display:flex;flex-wrap:wrap;gap:8px"></div>`;
+  [[0, '∥', 'parallel'], [90, '⊥', 'perpendicular']].forEach(([v, sym, word]) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'btn';
+    b.innerHTML = `${Aq} ${sym} ${Bf('q')}`;
+    b.setAttribute('aria-label', `Set A_q ${word} to q: angle ${v}°`);
+    b.addEventListener('click', () => ui.set('vt', v));
+    box.lastElementChild.appendChild(b);
+  });
+  elCtl.appendChild(box);
+
+  // ---------- turning the view: drag, or the arrow keys on the focused panel ----------
+  let drag = null;
+  cv3.canvas.addEventListener('pointerdown', (e) => { drag = [e.clientX, e.clientY, yaw, pitch]; cv3.canvas.style.cursor = 'grabbing'; try { cv3.canvas.setPointerCapture(e.pointerId); } catch (_) {} });
+  cv3.canvas.addEventListener('pointermove', (e) => {
+    if (!drag) return;
+    yaw = drag[2] - (e.clientX - drag[0]) * 0.01;
+    pitch = EPP.clamp(drag[3] + (e.clientY - drag[1]) * 0.01, -1.35, 1.35);
+    draw3d();
+  });
+  const end = () => { drag = null; cv3.canvas.style.cursor = 'grab'; };
+  cv3.canvas.addEventListener('pointerup', end); cv3.canvas.addEventListener('pointercancel', end);
+  cv3.canvas.addEventListener('keydown', (e) => {
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+    // each key turns the view as a short drag in its direction would
+    const step = 5 * D2R;
+    if (e.key === 'ArrowLeft') yaw += step; else if (e.key === 'ArrowRight') yaw -= step;
+    else if (e.key === 'ArrowUp') pitch = EPP.clamp(pitch - step, -1.35, 1.35); else if (e.key === 'ArrowDown') pitch = EPP.clamp(pitch + step, -1.35, 1.35);
+    else if (e.key === 'Home') { yaw = YAW0; pitch = PITCH0; } else return;
+    e.preventDefault(); draw3d();
+  });
+  cv3.onResize(draw3d);
+  cvR.onResize(drawReal);
+  // outside its section (a stand-alone test), equation links have no target: keep their text, drop the link
+  if (!fig.closest('#b-fields')) fig.querySelectorAll('a.eqref').forEach(a => { if (!document.getElementById((a.getAttribute('href') || '').slice(1))) { const sp = document.createElement('span'); sp.textContent = a.textContent; a.replaceWith(sp); } });
+})();
+</script>

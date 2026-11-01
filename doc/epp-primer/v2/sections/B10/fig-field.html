@@ -1,0 +1,277 @@
+  <figure class="viz" id="viz-b10-field">
+    <p class="viz-title">Bulk versus sheet: the depolarizing field of an LO wave <span class="tag">interactive</span></p>
+    <div class="viz-grid two">
+      <div>
+        <p class="b10-field-hd" style="margin:0 0 6px;font-family:var(--font-ui);font-size:0.86rem;font-weight:600;color:var(--fg-2)">Bulk crystal: <span class="b10-field-lo">charge planes</span><span class="b10-field-to" hidden>no charge planes</span></p>
+        <div class="b10-field-bulk"></div>
+      </div>
+      <div>
+        <p class="b10-field-hd" style="margin:0 0 6px;font-family:var(--font-ui);font-size:0.86rem;font-weight:600;color:var(--fg-2)">Sheet at $z=0$: <span class="b10-field-lo">field leaks out to $\sim1/Q_\parallel$</span><span class="b10-field-to" hidden>no field to leak</span></p>
+        <div class="b10-field-sheet"></div>
+      </div>
+    </div>
+    <div class="legend b10-field-leg">
+      <span class="item b10-field-lo"><svg width="22" height="12" viewBox="0 0 22 12" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><path d="M2 6 H14" style="fill:none;stroke:var(--c-phonon);stroke-width:2"/><path d="M20 6 L13 2.6 L13 9.4 Z" style="fill:var(--c-phonon)"/></svg>Born-charge dipoles</span>
+      <span class="item b10-field-to" hidden><svg width="30" height="14" viewBox="0 0 30 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><circle cx="7" cy="7" r="5.6" style="fill:none;stroke:var(--c-phonon);stroke-width:1.5"/><circle cx="7" cy="7" r="1.7" style="fill:var(--c-phonon)"/><circle cx="22" cy="7" r="5.6" style="fill:none;stroke:var(--c-phonon);stroke-width:1.5"/><path d="M19 4 L25 10 M25 4 L19 10" style="stroke:var(--c-phonon);stroke-width:1.5"/></svg>dipoles out of and into the page</span>
+      <span class="item b10-field-lo"><svg width="31" height="14" viewBox="0 0 31 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><rect x="1" y="1" width="13" height="12" rx="2" style="fill:var(--c-photon);fill-opacity:0.32"/><text x="7.5" y="10.6" text-anchor="middle" style="fill:var(--t-photon);font:600 11px var(--font-ui)">+</text><rect x="17" y="1" width="13" height="12" rx="2" style="fill:var(--c-4);fill-opacity:0.32"/><text x="23.5" y="10.6" text-anchor="middle" style="fill:var(--t-4);font:600 11px var(--font-ui)">−</text></svg>bound charge</span>
+      <span class="item b10-field-lo"><svg width="24" height="12" viewBox="0 0 24 12" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><path d="M1 6 H23" style="fill:none;stroke:var(--fg-2);stroke-width:1.3"/><path d="M8 6 L15 2.7 L15 9.3 Z" style="fill:var(--fg-2)"/></svg>field lines, equal flux each</span>
+      <span class="item b10-field-lo"><svg width="24" height="12" viewBox="0 0 24 12" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><path d="M1 6 H23" style="fill:none;stroke:var(--muted);stroke-width:1.2;stroke-dasharray:4 3"/></svg>$z=1/Q_\parallel$</span>
+    </div>
+    <div class="b10-field-ctrls"></div>
+    <div class="readout b10-field-ro" aria-live="polite"><span>$Q_\parallel$<b class="b10-field-v-q"></b></span><span>$1/Q_\parallel$<b class="b10-field-v-iq"></b></span><span>sheet/bulk in-plane field<span class="b10-field-k0">, $Q_\parallel d/2$</span><span class="b10-field-k1" hidden>, $Q_\parallel d\,\varepsilon_\infty/[2(1+r_0Q_\parallel)]$</span><b class="b10-field-v-r"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> The bulk field is the same at every wavelength. In the sheet the field lines arc out to about <span class="nw">$1/Q_\parallel$,</span> and the in-plane field falls in proportion to <span class="nw">$Q_\parallel$,</span> so at long wavelength nothing is left to stiffen the LO mode.</p><div class="cap-more"><p><strong>Marks.</strong> Side views: $x$ along the wavevector, $z$ across it. Amber arrows: Born-charge dipoles; in TO, ⊙ and ⊗ mark dipoles out of and into the page. Rose and teal shading, + and −: the bound charge <span class="nw">$-\nabla\cdot\bP$.</span> Grey lines: field lines carrying equal flux, so their density is the field strength; each runs from + to − charge, opposite to the dipoles it passes. Each panel has its own flux per line. Dashed: <span class="nw">$z=1/Q_\parallel$.</span></p><p><strong>Try.</strong> Stretch the wavelength from 20 to <span class="nw">160 Å:</span> the bulk lines lengthen but stay as dense, the sheet's arcs grow, and the in-plane field ratio falls from 0.52 to 0.065. Choose TO: no charge and no field in either panel. Screening removes lines from both panels, from the sheet fewer at long wavelength.</p><p><strong>Model.</strong> Point dipoles in vacuum. Sheet: <span class="nw">$\bP^{\mathrm{2D}}\propto\cos(Q_\parallel x)\,\hat\bQ_\parallel$,</span> the real part of <a class="eqref" href="#b10-eq-P2d"></a>, with the potential <a class="eqref" href="#b10-eq-A0"></a> and the field <a class="eqref" href="#b10-eq-E2d"></a>; the lines are exact contours of <span class="nw">$\cos(Q_\parallel x)\,\ee^{-Q_\parallel|z|}$.</span> Bulk: the same wave fills space, and <span class="nw">$\bE=-4\pi\bP$,</span> <a class="eqref" href="#a4-eq-E"></a> with <span class="nw">$\varepsilon_\infty=1$.</span> The ratio compares the sheet with a bulk layer of thickness <span class="nw">$d=3.33$ Å</span> (hBN), <span class="nw">$\bP=\bP^{\mathrm{2D}}/d$.</span> Screening divides the bulk field by <span class="nw">$\varepsilon_\infty=4.87$</span> and the sheet field by <span class="nw">$1+r_0Q_\parallel$,</span> <a class="eqref" href="#b10-eq-eps2d"></a>, with the screening length <span class="nw">$r_0=10$ Å.</span></p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b10-field');
+  if (!fig || !window.EPP) return;
+  // tested alone, outside Section B.10, the equations are absent: show their numbers as plain text
+  if (!fig.closest('#b-2d')) {
+    const TAGS = { 'b10-eq-A0': 'B10.1', 'b10-eq-P2d': 'B10.4', 'b10-eq-E2d': 'B10.5', 'b10-eq-eps2d': 'B10.7', 'a4-eq-E': 'A4.6' };
+    fig.querySelectorAll('a.eqref').forEach(a => { const id = (a.getAttribute('href') || '').slice(1); if (!document.getElementById(id)) { const s = document.createElement('span'); s.textContent = '(' + (TAGS[id] || '?') + ')'; a.replaceWith(s); } });
+  }
+  // Lengths in Å. Window: x in [−XW, XW] along the wavevector, z in [−ZH, ZH] across it (normal to the sheet).
+  const XW = 50, ZH = 35;
+  const D = 3.33, EPS = 4.87, R0 = 10;     // hBN-like: layer thickness d, bulk ε_∞, sheet screening length r_0
+  const NL = 5;                             // flux levels c_k = (k − 1/2)/NL: arcs per side in the sheet, rows per half in bulk
+  const DIP = 5;                            // spacing of the drawn dipoles along x
+  // bulk field-line rows in the upper half (mirrored below) and the flux level k of each row: every level once per half,
+  // mixed so that the rows do not suggest a z dependence; the longest lines (k = 1, the last to survive screening) mid-half
+  const ZB = [31.5, 24.5, 17.5, 10.5, 3.5], KB = [3, 5, 1, 4, 2];
+  const ZD = [28, 14, 0, -14, -28];         // bulk dipole rows, between the field-line rows
+  const M = { l: 36, r: 8, t: 20, b: 38 };  // plot margins (px); the z title and the bulk's + and − glyphs sit in the top margin
+  let lam = 50, mode = 'LO', scr = false;
+
+  // ---------- canvas text: '$...$' marks math (letters italic, digits upright); _x, ^x as in EPP.drawRich ----------
+  const ITAL = /[A-Za-zα-ωℓħ]/;
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const part of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: part.t, m: part.m, it: false }); continue; }
+        let buf = '', it = null;
+        for (const ch of part.t) {
+          const k = ITAL.test(ch);
+          if (it !== null && k !== it) { out.push({ t: buf, m: part.m, it }); buf = ''; }
+          buf += ch; it = k;
+        }
+        if (buf) out.push({ t: buf, m: part.m, it });
+      }
+    });
+    return out;
+  }
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, fam = EPP.css('--font-ui'), rs = runs(s);
+    const font = (r) => `${r.it ? 'italic ' : ''}${o.weight ? o.weight + ' ' : ''}${r.m ? Math.round(size * 0.72) : size}px ${fam}`;
+    const ws = rs.map(r => { ctx.font = font(r); return ctx.measureText(r.t).width; });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    let x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    if (o.color) ctx.fillStyle = o.color;
+    ctx.textAlign = 'left';
+    rs.forEach((r, k) => { ctx.font = font(r); ctx.fillText(r.t, x0, y + (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0))); x0 += ws[k]; });
+    return tot;
+  }
+  // text on a light box, for labels that sit on top of field lines
+  function boxed(ctx, s, x, y, o) {
+    const wd = txt(ctx, s, 0, 0, Object.assign({}, o, { measure: true })), size = o.size || 11.5;
+    const x0 = o.align === 'center' ? x - wd / 2 : (o.align === 'right' ? x - wd : x);
+    ctx.fillStyle = EPP.alpha('surface', 0.9);
+    ctx.fillRect(x0 - 4, y - size * 0.95, wd + 8, size * 1.35);
+    txt(ctx, s, x, y, o);
+  }
+  // filled arrowhead with its tip at (x, y), pointing along +x (dir = 1) or −x (dir = −1)
+  function head(ctx, x, y, dir, s) {
+    ctx.beginPath(); ctx.moveTo(x, y);
+    ctx.lineTo(x - dir * s, y - 0.47 * s); ctx.lineTo(x - dir * s, y + 0.47 * s); ctx.closePath(); ctx.fill();
+  }
+
+  // ---------- frame and axes ----------
+  function frame(cv) {
+    const w = cv.w, h = cv.h, X = (x) => M.l + (x + XW) / (2 * XW) * (w - M.l - M.r), Y = (z) => M.t + (ZH - z) / (2 * ZH) * (h - M.t - M.b);
+    return { w, h, X, Y, sx: (w - M.l - M.r) / (2 * XW), sy: (h - M.t - M.b) / (2 * ZH) };
+  }
+  // mark: a height to label on the z axis (the decay length 1/Q_∥ of the sheet), or null
+  function axes(cv, f, mark) {
+    const ctx = cv.ctx, cMut = EPP.color('muted'), cFg = EPP.color('fg'), cRule = EPP.color('rule');
+    const ZT = [-30, -20, -10, 0, 10, 20, 30].filter(z => mark == null || Math.abs(f.Y(z) - f.Y(mark)) >= 12);
+    ctx.setLineDash([]); ctx.strokeStyle = cRule; ctx.lineWidth = 1;
+    ctx.strokeRect(M.l + 0.5, M.t + 0.5, f.w - M.l - M.r - 1, f.h - M.t - M.b - 1);
+    ctx.beginPath();
+    for (const x of [-40, -20, 0, 20, 40]) { const X = Math.round(f.X(x)) + 0.5; ctx.moveTo(X, f.h - M.b); ctx.lineTo(X, f.h - M.b + 4); }
+    for (const z of ZT) { const Y = Math.round(f.Y(z)) + 0.5; ctx.moveTo(M.l - 4, Y); ctx.lineTo(M.l, Y); }
+    ctx.stroke();
+    const lab = (v) => String(v).replace('-', '−');
+    ctx.fillStyle = cMut; ctx.font = `11px ${EPP.css('--font-ui')}`;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+    for (const x of [-40, -20, 0, 20, 40]) ctx.fillText(lab(x), f.X(x), f.h - M.b + 6);
+    ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    for (const z of ZT) ctx.fillText(lab(z), M.l - 6, f.Y(z));
+    ctx.textBaseline = 'alphabetic';
+    if (mark != null) {
+      const Y = Math.round(f.Y(mark)) + 0.5, c2 = EPP.color('fg2');
+      ctx.strokeStyle = c2; ctx.beginPath(); ctx.moveTo(M.l - 5, Y); ctx.lineTo(M.l, Y); ctx.stroke();
+      txt(ctx, '1/$Q_∥$', M.l - 7, Y + 3.5, { size: 11.5, color: c2, align: 'right' });
+    }
+    txt(ctx, '$x$ (Å)', M.l + (f.w - M.l - M.r) / 2, f.h - 7, { size: 12.5, color: cFg, align: 'center' });
+    txt(ctx, '$z$ (Å)', M.l - 4, M.t - 6, { size: 12.5, color: cFg, align: 'right' });   // above the axis, clear of the 1/Q_∥ mark
+  }
+  const clip = (ctx, f) => { ctx.save(); ctx.beginPath(); ctx.rect(M.l, M.t, f.w - M.l - M.r, f.h - M.t - M.b); ctx.clip(); };
+
+  // ---------- the wave ----------
+  // LO: P ∝ cos(Q x) x̂, bound charge −∂P/∂x ∝ sin(Q x) (+ in the photon hue, − in c4), alpha ∝ |sin|
+  function shade(ctx, f, Q, z0, z1, a) {
+    const x0 = f.X(-XW), x1 = f.X(XW), n = 240, cp = EPP.rgb('photon'), cn = EPP.rgb('c4');
+    const g = ctx.createLinearGradient(x0, 0, x1, 0);
+    for (let i = 0; i <= n; i++) {
+      const s = Math.sin(Q * (-XW + 2 * XW * i / n)), c = s > 0 ? cp : cn;
+      g.addColorStop(i / n, `rgba(${c[0]},${c[1]},${c[2]},${(a * Math.abs(s)).toFixed(4)})`);
+    }
+    ctx.fillStyle = g; ctx.fillRect(x0, f.Y(z1), x1 - x0, f.Y(z0) - f.Y(z1));
+  }
+  // one row of dipoles at height z: arrows along x (LO), or circles for dipoles along y (TO; +y points into the page)
+  function dipoles(ctx, f, Q, z) {
+    const col = EPP.color('phonon'), Y = f.Y(z), step = DIP * f.sx;
+    ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineCap = 'butt'; ctx.setLineDash([]);
+    for (let x = -XW + DIP / 2; x < XW; x += DIP) {
+      const P = Math.cos(Q * x), X = f.X(x);
+      if (mode === 'LO') {
+        const L = 0.78 * step * Math.abs(P); if (L < 3) continue;
+        const sg = Math.sign(P), hs = Math.min(6, 0.6 * L);
+        ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(X - sg * L / 2, Y); ctx.lineTo(X + sg * (L / 2 - 0.8 * hs), Y); ctx.stroke();
+        head(ctx, X + sg * L / 2, Y, sg, hs);
+      } else {
+        const r = 0.34 * step * Math.abs(P); if (r < 1.8) continue;
+        ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(X, Y, r, 0, 2 * Math.PI); ctx.stroke();
+        if (P > 0) { const d = 0.62 * r; ctx.beginPath(); ctx.moveTo(X - d, Y - d); ctx.lineTo(X + d, Y + d); ctx.moveTo(X + d, Y - d); ctx.lineTo(X - d, Y + d); ctx.stroke(); }
+        else { ctx.beginPath(); ctx.arc(X, Y, Math.max(1.3, 0.3 * r), 0, 2 * Math.PI); ctx.fill(); }
+      }
+    }
+  }
+  // "+" and "−" at the charge extrema, Q x = ±π/2 + 2πj
+  function glyphs(ctx, f, y, halo) {
+    const fam = EPP.css('--font-ui'), surf = EPP.alpha('surface', 0.88);
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    for (let j = -6; j <= 6; j++) for (const sg of [1, -1]) {
+      const x = sg * lam / 4 + j * lam; if (Math.abs(x) > XW - 2) continue;
+      const X = f.X(x);
+      if (halo) { ctx.fillStyle = surf; ctx.beginPath(); ctx.arc(X, y, 6.5, 0, 2 * Math.PI); ctx.fill(); }
+      ctx.font = `600 13px ${fam}`; ctx.fillStyle = EPP.textColor(sg > 0 ? 'photon' : 'c4');
+      ctx.fillText(sg > 0 ? '+' : '−', X, y + 0.5);
+    }
+    ctx.textBaseline = 'alphabetic';
+  }
+  // field lines run around each extremum x_m = jΛ/2 of P (Λ the wavelength); P(x_m) = (−1)^j and the field points against P
+  const extrema = (half) => { const out = []; for (let j = Math.floor(-XW / (lam / 2)) - 1; j <= Math.ceil(XW / (lam / 2)) + 1; j++) { const xm = j * lam / 2; if (xm + half > -XW && xm - half < XW) out.push({ xm, dir: Math.abs(j) % 2 === 0 ? -1 : 1 }); } return out; };
+  function note(ctx, f, s) { ctx.textBaseline = 'alphabetic'; boxed(ctx, s, (f.X(-XW) + f.X(XW)) / 2, f.Y(21) + 4, { size: 12, color: EPP.color('fg2'), align: 'center' }); }
+
+  // ---------- bulk: the polarization wave fills space; E = −4πP is uniform in z and the same at every wavelength ----------
+  function drawBulk() {
+    const cv = cvB, ctx = cv.ctx; if (!cv.w) return; cv.clear();
+    const f = frame(cv), Q = 2 * Math.PI / lam, LO = mode === 'LO';
+    clip(ctx, f);
+    if (LO) {
+      shade(ctx, f, Q, -ZH, ZH, 0.24);
+      // equal-flux field lines: a line of level c runs where |cos(Q x)| > c, i.e. |x − x_m| < arccos(c)/Q, from + to − charge;
+      // screening by ε_∞ keeps the flux per line and leaves the levels c_k ε_∞ < 1
+      const s = scr ? EPS : 1, ink = EPP.css('--fg-2');
+      ctx.strokeStyle = ink; ctx.fillStyle = ink; ctx.lineWidth = 1.3; ctx.lineCap = 'butt';
+      ZB.forEach((zr, r) => {
+        const c = (KB[r] - 0.5) * s / NL; if (c >= 1) return;
+        const half = Math.acos(c) / Q;
+        for (const z of [zr, -zr]) for (const { xm, dir } of extrema(half)) {
+          const Y = Math.round(f.Y(z)) + 0.5;
+          ctx.beginPath(); ctx.moveTo(f.X(xm - half), Y); ctx.lineTo(f.X(xm + half), Y); ctx.stroke();
+          if (Math.abs(xm) < XW - 1) head(ctx, f.X(xm) + dir * 3.5, Y, dir, 6.5);
+        }
+      });
+    }
+    for (const z of ZD) dipoles(ctx, f, Q, z);
+    ctx.restore();
+    axes(cv, f, null);
+    if (LO) glyphs(ctx, f, M.t / 2, false);   // above the frame: the sign of each charge plane
+    else note(ctx, f, 'TO: no bound charge, no field');
+  }
+
+  // ---------- sheet: dipoles in the plane z = 0; potential ∝ sin(Q x) e^{−Q|z|}, field lines = contours of cos(Q x) e^{−Q|z|} ----------
+  function drawSheet() {
+    const cv = cvS, ctx = cv.ctx; if (!cv.w) return; cv.clear();
+    const f = frame(cv), Q = 2 * Math.PI / lam, LO = mode === 'LO';
+    clip(ctx, f);
+    if (LO) {
+      // levels c_k at equal steps of the stream function: equal flux between neighbouring lines;
+      // screening divides the field by 1 + r_0 Q and leaves the levels c_k (1 + r_0 Q) < 1
+      const s = scr ? 1 + R0 * Q : 1, ink = EPP.css('--fg-2');
+      ctx.strokeStyle = ink; ctx.fillStyle = ink; ctx.lineWidth = 1.3; ctx.lineJoin = 'round'; ctx.lineCap = 'butt';
+      for (let k = 1; k <= NL; k++) {
+        const c = (k - 0.5) * s / NL; if (c >= 1) break;
+        const half = Math.acos(c) / Q, zt = Math.log(1 / c) / Q;   // half-width at z = 0 and apex height of the arc
+        for (const { xm, dir } of extrema(half)) for (const sg of [1, -1]) {
+          ctx.beginPath();
+          for (let i = 0; i <= 96; i++) {
+            const x = xm - half + 2 * half * i / 96, cc = Math.abs(Math.cos(Q * x));
+            const z = cc > c ? Math.log(cc / c) / Q : 0;
+            const X = f.X(x), Y = f.Y(sg * Math.min(z, 1.5 * ZH));
+            if (i) ctx.lineTo(X, Y); else ctx.moveTo(X, Y);
+          }
+          ctx.stroke();
+          // arrowhead at the apex, where the line runs parallel to the sheet; left out where the arc is too small to carry one
+          if (zt < 0.94 * ZH && zt * f.sy >= 11 && half * f.sx >= 9 && Math.abs(xm) < XW - 1) head(ctx, f.X(xm) + dir * 3.5, f.Y(sg * zt), dir, 6.5);
+        }
+      }
+      shade(ctx, f, Q, -1.6, 1.6, 0.42);
+    }
+    ctx.strokeStyle = EPP.css('--fg'); ctx.lineWidth = 1; ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(f.X(-XW), Math.round(f.Y(0)) + 0.5); ctx.lineTo(f.X(XW), Math.round(f.Y(0)) + 0.5); ctx.stroke();
+    dipoles(ctx, f, Q, 0);
+    const zq = LO && 1 / Q < 0.92 * ZH ? 1 / Q : null;   // the decay length, labelled on the z axis
+    if (LO) {
+      glyphs(ctx, f, f.Y(-1.6) + 10, true);
+      if (zq != null) {
+        const Y = Math.round(f.Y(zq)) + 0.5;
+        ctx.strokeStyle = EPP.css('--muted'); ctx.lineWidth = 1.2; ctx.setLineDash([4, 3]);
+        ctx.beginPath(); ctx.moveTo(f.X(-XW), Y); ctx.lineTo(f.X(XW), Y); ctx.stroke(); ctx.setLineDash([]);
+      }
+    }
+    ctx.restore();
+    axes(cv, f, zq);
+    if (!LO) note(ctx, f, 'TO: no bound charge, no field');
+  }
+
+  // ---------- readouts, legend, descriptions ----------
+  const $ = (c) => fig.querySelector('.b10-field-' + c);
+  const roQ = $('v-q'), roIQ = $('v-iq'), roR = $('v-r'), k0 = $('k0'), k1 = $('k1');
+  const ratio = (Q) => (scr ? Q * D * EPS / (2 * (1 + R0 * Q)) : Q * D / 2);   // E_sheet(z = 0)/E_bulk with P = P^{2D}/d
+  function update() {
+    const Q = 2 * Math.PI / lam, LO = mode === 'LO', r = ratio(Q), L = Math.round(lam);
+    roQ.textContent = EPP.fmt(Q, 3) + ' Å⁻¹';
+    roIQ.textContent = EPP.fmt(1 / Q, 3) + ' Å';
+    roR.textContent = LO ? EPP.fmt(r, 3) : 'no field';
+    k0.hidden = !LO || scr; k1.hidden = !LO || !scr;
+    fig.querySelectorAll('.b10-field-lo').forEach(e => { e.hidden = !LO; });
+    fig.querySelectorAll('.b10-field-to').forEach(e => { e.hidden = LO; });
+    const sc = scr ? ' Electronic screening thins the lines.' : '';
+    cvB.canvas.setAttribute('aria-label', LO
+      ? `Bulk LO wave, wavelength ${L} Å: bound-charge planes with uniform field lines. Rows of dipoles along x alternate in direction; straight field lines run from each plane of positive charge to the neighbouring negative plane, against the dipoles, as dense at every wavelength.${sc}`
+      : `Bulk TO wave, wavelength ${L} Å: rows of dipoles pointing out of and into the page, no bound charge and no field.`);
+    cvS.canvas.setAttribute('aria-label', LO
+      ? `Sheet LO wave, wavelength ${L} Å: field lines arching out of the plane to a height of order 1/Q∥ = ${EPP.fmt(1 / Q, 2)} Å, marked by a dashed line; the in-plane field is ${EPP.fmt(r, 2)} times the bulk field.${sc}`
+      : `Sheet TO wave, wavelength ${L} Å: one row of dipoles in the plane pointing out of and into the page, no bound charge and no field.`);
+  }
+  function drawAll() { drawBulk(); drawSheet(); update(); }
+
+  const cvB = EPP.canvas(fig.querySelector('.b10-field-bulk'), { aspect: 0.775, minHeight: 230, maxHeight: 440 });
+  const cvS = EPP.canvas(fig.querySelector('.b10-field-sheet'), { aspect: 0.775, minHeight: 230, maxHeight: 440 });
+  cvB.canvas.setAttribute('role', 'img'); cvS.canvas.setAttribute('role', 'img');
+  cvB.onResize(drawBulk); cvS.onResize(drawSheet);
+  const elCtl = fig.querySelector('.b10-field-ctrls');
+  EPP.controls(elCtl, [
+    { key: 'lam', type: 'range', label: 'wavelength 2π/Q_∥', min: 20, max: 160, value: 50, log: true, step: 'any', fmt: v => Math.round(v) + ' Å' },
+    { key: 'mode', type: 'seg', label: 'mode', options: [['LO', 'LO'], ['TO', 'TO']], value: 'LO' },
+    { key: 'scr', type: 'toggle', label: 'electronic screening', value: false }
+  ], (s) => { lam = s.lam; mode = s.mode; scr = !!s.scr; drawAll(); });
+  // slider label: the symbol in italic, as in the text
+  const sp = elCtl.querySelector(`label[for="${fig.id}-lam"] > span`);
+  if (sp) sp.innerHTML = 'wavelength 2π/<i style="font-family:var(--font-text)">Q</i><sub>∥</sub>';
+})();
+</script>

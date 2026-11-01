@@ -1,0 +1,426 @@
+  <figure class="viz" id="viz-x1-cone">
+    <p class="viz-title">The light cone, the zone and the phonon branches, to scale <span class="tag">interactive</span></p>
+    <div class="x1-cone-a"></div>
+    <div class="x1-cone-b" style="margin-top:10px"></div>
+    <div class="legend x1-cone-leg"><span class="item" style="color:var(--c-photon)"><span class="sw dash"></span><span style="color:var(--fg-2)">longitudinal, $|\omega^2D^{\mathrm L}/4\pi c|$</span></span><span class="item" style="color:var(--c-photon)"><span class="sw"></span><span style="color:var(--fg-2)">transverse, $|\omega^2D^{\mathrm T}/4\pi c|$</span></span><span class="item x1-cone-leg-ref" style="color:var(--muted)" hidden><span class="sw dot"></span><span style="color:var(--fg-2)">transverse at the real $c$</span></span></div>
+    <div class="x1-cone-ctrls"></div>
+    <div class="readout x1-cone-ro" aria-live="polite"><span>$q_{\mathrm{light}}=\sqrt{\varepsilon_\infty}\,\omega/c$<b class="x1-cone-v-ql"></b></span><span>$2\pi/q_{\mathrm{light}}$<b class="x1-cone-v-lam"></b></span><span>light cone / zone edge<b class="x1-cone-v-rz"></b></span><span><span class="x1-cone-k-frac">zone volume inside the cone</span><b class="x1-cone-v-frac"></b></span></div>
+    <div class="readout x1-cone-ro2" aria-live="polite"><span>$|D^{\mathrm T}/D^{\mathrm L}|$ at 0.025 Å⁻¹<b class="x1-cone-v-r1"></b></span><span>$|D^{\mathrm T}/D^{\mathrm L}|$ at the zone edge<b class="x1-cone-v-r2"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> At phonon frequencies the light cone is a sliver near <span class="nw">$10^{-4}$ Å⁻¹,</span> four decades below the zone edge; only there does TO turn into polaritons. In (b) the longitudinal (Coulomb) line is flat and independent of <span class="nw">$c$;</span> the transverse line peaks on the cone and falls as <span class="nw">$(q_{\mathrm{light}}/q)^2$:</span> $5\times10^{-6}$ of Coulomb where electrons scatter in GaAs, $2.5\times10^{-9}$ at the zone edge.</p><div class="cap-more"><p><strong>Marks.</strong> Shaded: the light cone, above the light line of the medium (solid rose; dashed: vacuum). Amber: phonon branches, LO dashed; teal: polaritons. Grey band: the zone edge, from $\pi/a$ for <span class="nw">$a=6$ Å</span> to X of GaAs (K of hBN). Blue band: electron–phonon scattering; violet bracket: spacing of fine wavevector grids. Dotted: the selected <span class="nw">$\hbar\omega$;</span> dashed vertical: its <span class="nw">$q_{\mathrm{light}}$.</span></p><p><strong>Try.</strong> Raise the speed of light to <span class="nw">$10^6\,c$:</span> the cone and the polaritons leave the left edge and LO and TO run flat to the axis, as in Part A. At <span class="nw">$10^{-2}\,c$</span> the cone stays within 1% of the zone. In vacuum at <span class="nw">$\hbar\omega=2$ eV</span> it is the cone of a visible exciton, <span class="nw">$10^{-3}$ Å⁻¹.</span> Clicking (a) sets <span class="nw">$\hbar\omega$.</span></p><p><strong>Model.</strong> (b) plots the field per unit current, $|\omega^2D/4\pi c|$ (the $|\bE|/4\pi|\bP|$ of <a class="figref" href="#viz-x1-polwave">Figure X1.1</a>), from <a class="eqref" href="#x1-eq-iso">(X1.13)</a> with <span class="nw">$\varepsilon^{\mathrm L}=\varepsilon^{\mathrm T}=\varepsilon_\infty$</span> (an insulator below its gap) and 1% damping; $q_{\mathrm{light}}$ is <a class="eqref" href="#x1-eq-ratio">(X1.16)</a>. Polaritons solve $\omega^2\varepsilon(\omega)=c^2q^2$ with the Lorentz $\varepsilon(\omega)$ of <a href="#b-dielectric">Section B.3</a>. Branches: illustrative models through literature values, GaAs along Γ–X (TO 33.3, LO <span class="nw">36.2 meV,</span> <span class="nw">$\varepsilon_\infty=10.9$),</span> hBN in plane along Γ–K (169.9, <span class="nw">199.6 meV,</span> 4.87). Zone fraction: a sphere of the zone's volume (hBN: a disc of its area; vacuum: the GaAs zone). The speed-of-light control multiplies $c$ everywhere.</p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-x1-cone');
+  if (!fig || !window.EPP) return;
+  // outside Section X.1 (the isolated figure test) the cross-references have no target: show them as text
+  if (!fig.closest('#x-light-cone')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+  const TAU = 2 * Math.PI;
+
+  // ---------- constants and media (literature values, illustrative) ----------
+  const HC = 1973.27;                  // ħc in eV Å
+  const HV = 6.582;                    // ħ × (1 km/s) in meV Å, for sound velocities
+  const ETA = 0.01;                    // display damping: i·0.01·ε in the transverse denominator
+  const QMIN = 1e-7, QMAX = 3;         // wavevector axis, Å⁻¹
+  const QZ = Math.PI / 6;              // π/a for a = 6 Å: low end of the zone-edge band
+  const QS = [0.02, 0.07];             // wavevectors exchanged in electron–phonon scattering (polar semiconductors)
+  const QG = [0.01, 0.05];             // spacing of fine wavevector grids
+  const QP = 0.025;                    // GaAs: a conduction electron's kinetic energy equals ħω_LO
+  const aG = 5.653, aH = 2.504;        // lattice constants of GaAs and hBN, Å
+  // zone edge (X of GaAs, K of hBN); radius of a sphere with the zone's volume, or of a disc with the 2D zone's area
+  const ZG = { edge: TAU / aG, pt: 'X', qD: Math.cbrt(6 * Math.PI * Math.PI / (aG * aG * aG / 4)), dim: 3 };
+  const MED = {
+    gaas: Object.assign({ eps: 10.9, ymax: 50, hw0: 33.3, name: 'GaAs',
+      br: { LO: { g: 36.2, e: 29.8 }, TO: { g: 33.3, e: 31.3 }, LA: { v: 4.7, e: 27.8 }, TA: { v: 3.3, e: 9.9 } } }, ZG),
+    hbn: { eps: 4.87, ymax: 240, hw0: 169.9, name: 'hBN', edge: 2 * TAU / (3 * aH), pt: 'K', qD: Math.sqrt(4 * Math.PI / (Math.sqrt(3) / 2 * aH * aH)), dim: 2,
+      br: { LO: { g: 199.6, e: 160 }, TO: { g: 169.9, e: 160 }, LA: { v: 20, e: 135 }, TA: { v: 13, e: 115 } } },
+    vac: Object.assign({ eps: 1, ymax: 50, hw0: 50, name: 'vacuum', br: null }, ZG)   // no branches; the GaAs zone for scale
+  };
+
+  // ---------- physics ----------
+  // branches in meV, Γ to the zone edge. Optical: ħω_Γ + (ħω_edge − ħω_Γ) sin²(πq/2q_edge).
+  // Acoustic: slope v at Γ, ħω_edge at the edge and flat there: ħω_edge[(1+B) sin(πt/2) + B sin(3πt/2)], t = q/q_edge
+  function branch(b, q, edge) {
+    if (q > edge * (1 + 1e-9)) return NaN;
+    const t = q / edge;
+    if (b.g !== undefined) { const s = Math.sin(Math.PI * t / 2); return b.g + (b.e - b.g) * s * s; }
+    const r = HV * b.v * edge / b.e, B = (2 * r / Math.PI - 1) / 4;
+    return b.e * ((1 + B) * Math.sin(Math.PI * t / 2) + B * Math.sin(1.5 * Math.PI * t));
+  }
+  // transverse modes of the crystal (no damping): ω²ε(ω) = c²q², ε(ω) = ε∞(ω_LO² − ω²)/(ω_TO² − ω²), with ω_TO, ω_LO of the branches at q.
+  // In energies E = ħω, K = ħcq: ε∞E⁴ − bE² + K²E_TO² = 0, b = ε∞E_LO² + K². Returns [lower, upper] in meV.
+  function polariton(q, M, s) {
+    const K = s * HC * 1e3 * q, TO = branch(M.br.TO, q, M.edge), LO = branch(M.br.LO, q, M.edge), e = M.eps;
+    const b = e * LO * LO + K * K, d = Math.sqrt(Math.max(0, b * b - 4 * e * K * K * TO * TO));
+    return [Math.sqrt(2 * K * K * TO * TO / (b + d)), Math.sqrt((b + d) / (2 * e))];
+  }
+  const snapHw = (v) => (v < 999.95 ? Math.round(v * 10) / 10 : Math.round(v / 10) * 10);   // the value used is the value shown
+  function model(st) {
+    const M = MED[st.med] || MED.gaas, s = st.sp, hw = snapHw(EPP.clamp(st.hw, 1, 5000)), eps = M.eps;
+    const k0 = hw * 1e-3 / (s * HC);                  // ω/c (with c multiplied), Å⁻¹
+    const k1 = hw * 1e-3 / HC;                        // ω/c at the real c
+    const qL = Math.sqrt(eps) * k0;                   // q_light = √ε∞ ω/c, (X1.16)
+    // |ω²D^L/4πc| = 1/ε∞ and |ω²D^T/4πc| = 1/|ε∞ − (cq/ω)² + 0.01iε∞|, (X1.13) with ε^L = ε^T = ε∞
+    const Tk = (k) => (q) => { const x2 = (q / k) * (q / k); return 1 / Math.hypot(eps - x2, ETA * eps); };
+    const T = Tk(k0);
+    // polaritons are drawn below 30 q_light(ω_TO); beyond, they coincide with TO and the light line
+    const qJ = M.br ? 30 * Math.sqrt(eps) * M.br.TO.g * 1e-3 / (s * HC) : 0;
+    const lightV = (q) => s * HC * 1e3 * q, lightM = (q) => lightV(q) / Math.sqrt(eps);   // ħω of light in vacuum and in the medium, meV
+    return { M, s, hw, eps, k0, qL, qL1: Math.sqrt(eps) * k1, qJ, T, T1: Tk(k1), ratio: (q) => T(q) * eps, lightV, lightM, scaled: Math.abs(Math.log10(s)) > 1e-6 };
+  }
+  // log grid over the axis, dense across the resonances at the given wavevectors
+  function grid(centres, extra) {
+    const qs = [], N = 560, l0 = Math.log10(QMIN), l1 = Math.log10(QMAX);
+    for (let i = 0; i < N; i++) qs.push(Math.pow(10, l0 + (l1 - l0) * i / (N - 1)));
+    for (const c of centres) {
+      if (!(c > QMIN && c < QMAX)) continue;
+      qs.push(c);
+      for (let k = 0; k <= 40; k++) { const f = Math.pow(10, -5 + 4 * k / 40); for (const q of [c * (1 + f), c * (1 - f)]) if (q > QMIN && q < QMAX) qs.push(q); }
+    }
+    for (const q of extra || []) if (q > QMIN && q < QMAX) qs.push(q);
+    return qs.sort((a, b) => a - b);
+  }
+
+  // ---------- numbers ----------
+  const SUP = { '−': '⁻', '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹' };
+  // d significant digits; plain between 10⁻³ and 10⁴, else m × 10ⁿ (rich: 10^{n} for canvas text)
+  function num(v, d = 3, rich = false) {
+    if (!isFinite(v)) return '∞';
+    if (v === 0) return '0';
+    const sg = v < 0 ? '−' : '', a = Math.abs(v);
+    if (a >= 1e-3 && a < 1e4) { const t = a.toPrecision(d); return sg + (t.includes('e') ? String(Number(t)) : t); }
+    let e = Math.floor(Math.log10(a)), m = Number((a / Math.pow(10, e)).toFixed(d - 1));
+    if (m >= 10) { m /= 10; e += 1; }
+    const es = (e < 0 ? '−' : '') + Math.abs(e);
+    return rich ? `${sg}${m.toFixed(d - 1)} × 10^{${es}}` : `${sg}${m.toFixed(d - 1)} × 10${[...es].map(ch => SUP[ch]).join('')}`;
+  }
+  const fmtE = (v) => (v < 999.95 ? v.toFixed(1) + ' meV' : (v / 1000).toFixed(2) + ' eV');
+  // the speed-of-light factor: powers of ten as 1, 10, …, 10⁶; otherwise two significant digits
+  function fmtS(v) {
+    const l = Math.log10(v), e = Math.round(l);
+    if (Math.abs(l - e) < 1e-6) return e >= -2 && e <= 3 ? String(Number(Math.pow(10, e).toPrecision(1))) : '10' + [...String(e)].map(ch => SUP[ch === '-' ? '−' : ch]).join('');
+    return num(v, 2);
+  }
+  const spokenS = (v) => fmtS(v).replace(/10([⁻⁰¹²³⁴⁵⁶⁷⁸⁹]+)/, (_, p) => '10 to the power ' + [...p].map(ch => Object.keys(SUP).find(k => SUP[k] === ch)).join('').replace('−', 'minus ')).replace('×', 'times');
+  // a length in Å, in nm, μm, mm, m or km
+  const lamStr = (a) => (a < 1e4 ? num(a / 10, 3) + ' nm' : a < 1e7 ? num(a / 1e4, 3) + ' μm' : a < 1e10 ? num(a / 1e7, 3) + ' mm' : a < 1e13 ? num(a / 1e10, 3) + ' m' : num(a / 1e13, 3) + ' km');
+  const I = (t) => `<i style="font-family:var(--font-text)">${t}</i>`;
+  const nw = (t) => `<span class="nw">${t}</span>`;
+  const EPSI = `${I('ε')}<sub>∞</sub>`;
+
+  // ---------- canvas text: '$..$' italic symbol (text font), '*..*' bold vector; _ and ^ as in EPP.drawRich ----------
+  let fUI = 'sans-serif', fTX = 'serif';
+  const fonts = () => { fUI = EPP.css('--font-ui'); fTX = EPP.css('--font-text'); };
+  const parse = s => s.split(/(\$[^$]*\$|\*[^*]*\*)/).filter(Boolean).map(t => (t[0] === '$' ? [t.slice(1, -1), 'i'] : t[0] === '*' ? [t.slice(1, -1), 'b'] : [t, '']));
+  const pOpt = (p, size) => (p[1] === 'i' ? { size: size + 1, font: fTX, italic: true } : { size, font: fUI, bold: p[1] === 'b' });
+  const rtW = (ctx, s, size) => parse(s).reduce((w, p) => { const o = pOpt(p, size); return w + EPP.measureRich(ctx, p[0], o.size, o.font, o); }, 0);
+  function rt(ctx, s, x, y, size, color, align) {
+    const tot = rtW(ctx, s, size);
+    let x0 = align === 'center' ? x - tot / 2 : align === 'right' ? x - tot : x;
+    ctx.fillStyle = color; ctx.textBaseline = 'alphabetic';
+    for (const p of parse(s)) { const o = pOpt(p, size); x0 += EPP.drawRich(ctx, p[0], x0, y, o); }
+    return tot;
+  }
+  // a label at baseline y, optionally on a soft surface patch so that crossing lines do not cut through it
+  function lab(ctx, s, x, y, color, align, halo, size = 11.5) {
+    const tw = rtW(ctx, s, size), xl = align === 'center' ? x - tw / 2 : align === 'right' ? x - tw : x;
+    if (halo) {
+      ctx.fillStyle = EPP.alpha('surface', 0.84); ctx.beginPath();
+      if (ctx.roundRect) ctx.roundRect(xl - 3, y - size + 0.5, tw + 6, size + 4, 3); else ctx.rect(xl - 3, y - size + 0.5, tw + 6, size + 4);
+      ctx.fill();
+    }
+    rt(ctx, s, x, y, size, color, align);
+    return { x0: xl - 2, x1: xl + tw + 2, y0: y - size, y1: y + 4 };
+  }
+  // the box a label would take, and whether a box meets any of a list
+  const boxAt = (ctx, s, x, y, align, size = 11.5) => { const tw = rtW(ctx, s, size), xl = align === 'center' ? x - tw / 2 : align === 'right' ? x - tw : x; return { x0: xl - 2, x1: xl + tw + 2, y0: y - size, y1: y + 4 }; };
+  const meets = (b, list, gx = 0) => list.some(o => o && b.x0 < o.x1 + gx && b.x1 > o.x0 - gx && b.y0 < o.y1 && b.y1 > o.y0);
+
+  // ---------- panels ----------
+  const XT = (w) => { const out = [], step = w < 520 ? 2 : 1; for (let e = -7; e <= 0; e += step) out.push({ v: Math.pow(10, e), label: e === 0 ? '1' : e === -1 ? '0.1' : `10^{−${-e}}` }); return out; };
+  const YT = [-12, -9, -6, -3, 0, 3].map(e => ({ v: Math.pow(10, e), label: e === 0 ? '1' : `10^{${e < 0 ? '−' : ''}${Math.abs(e)}}` }));
+  const pA = new EPP.Plot(fig.querySelector('.x1-cone-a'), {
+    logx: true, xlim: [QMIN, QMAX], ylim: [0, 50], aspect: 0.46, minHeight: 270, maxHeight: 380,
+    margin: { l: 58, r: 14, t: 28, b: 44 }, legend: false, xname: 'q', hoverX: v => num(v, 3) + ' Å⁻¹', hoverY: v => fmtE(v),
+    ariaLabel: 'Panel a: frequency against wavevector'
+  });
+  const pB = new EPP.Plot(fig.querySelector('.x1-cone-b'), {
+    logx: true, logy: true, xlim: [QMIN, QMAX], ylim: [1e-12, 1e3], yticks: YT, aspect: 0.34, minHeight: 220, maxHeight: 290,
+    margin: { l: 58, r: 14, t: 28, b: 44 }, legend: false, xname: 'q', hoverX: v => num(v, 3) + ' Å⁻¹', hoverY: v => num(v, 3),
+    ariaLabel: 'Panel b: field per unit current'
+  });
+  let cur = null;
+
+  // panel (a): the header holds the title and the linear-scale note, on one row when both fit
+  function headA(ctx, w) {
+    const c = cur, title = '(a) frequency against wavevector';
+    const note = `linear scale: the cone is ${num(c.qL / c.M.edge, 2, true)} of the ${c.M.br ? '' : 'GaAs '}zone radius`;
+    const two = 4 + rtW(ctx, title, 11.5) + 18 + rtW(ctx, note, 11.5) > w - 4;
+    return { title, note, two };
+  }
+
+  function drawA() {
+    const c = cur, M = c.M, ym = M.ymax, w = pA.cv.w;
+    fonts();
+    pA.opt.xticks = XT(w);
+    pA.opt.margin = { l: 58, r: 14, t: headA(pA.ctx, w).two ? 42 : 28, b: 44 };
+    const qs = grid([c.qL], [c.qJ]);
+    const lightV = c.lightV, lightM = c.lightM, cap = (y) => (y > 4 * ym ? NaN : y);
+    const L = [];
+    // light cone: the region above the light line of the medium
+    L.push({ type: 'fill', x: qs, y1: qs.map(() => ym), y2: qs.map(q => Math.min(ym, lightM(q))), color: 'photon', alpha: 0.08 });
+    L.push({ type: 'band', x0: QZ, x1: M.edge, color: 'muted', alpha: 0.12 });
+    if (c.hw <= ym) L.push({ type: 'hline', at: c.hw, color: 'muted', width: 1.2, dash: [2, 3] });
+    if (M.br) {
+      const P = qs.map(q => (q <= c.qJ ? polariton(q, M, c.s) : [NaN, NaN]));
+      L.push({ type: 'line', x: qs, y: P.map(p => p[0]), color: 'c4', width: 2, label: 'lower polariton' });
+      L.push({ type: 'line', x: qs, y: P.map(p => cap(p[1])), color: 'c4', width: 2, label: 'upper polariton' });
+    }
+    if (c.eps > 1) L.push({ type: 'line', x: qs, y: qs.map(q => cap(lightV(q))), color: 'photon', width: 1.3, dash: [5, 4], label: 'light in vacuum, ħcq' });
+    L.push({ type: 'line', x: qs, y: qs.map(q => cap(lightM(q))), color: 'photon', width: 2, label: c.eps > 1 ? 'light in the medium, ħcq/√ε_∞' : 'light, ħcq' });
+    if (M.br) {
+      const B = (k, cut) => qs.map(q => (cut && q < c.qJ ? NaN : branch(M.br[k], q, M.edge)));
+      L.push({ type: 'line', x: qs, y: B('TO', true), color: 'phonon', width: 2, label: 'TO' });
+      L.push({ type: 'line', x: qs, y: B('LA'), color: 'phonon', width: 1.4, label: 'LA' });
+      L.push({ type: 'line', x: qs, y: B('TA'), color: 'phonon', width: 1.4, label: 'TA' });
+      L.push({ type: 'line', x: qs, y: B('LO'), color: 'phonon', width: 2, dash: [6, 4], label: 'LO' });
+    }
+    if (c.qL > QMIN && c.qL < QMAX) L.push({ type: 'vline', at: c.qL, color: 'photon', width: 1.2 });
+    pA.draw(L, { ylim: [0, ym] });
+  }
+
+  const baseA = pA.render.bind(pA);
+  pA.render = () => {
+    baseA();
+    const c = cur, ctx = pA.ctx, w = pA.cv.w, h = pA.cv.h, m = pA.m;
+    if (!c || !w || !h) return;
+    fonts();
+    const M = c.M, ym = M.ymax, X = (q) => pA.X(q), Y = (v) => pA.Y(v);
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cGt = EPP.textColor('photon'), cPt = EPP.textColor('phonon'), c4t = EPP.textColor('c4');
+    const x0 = m.l, x1 = w - m.r, y0 = m.t, y1 = h - m.b;
+    rt(ctx, 'wavevector $q$ (Å^{−1})', (x0 + x1) / 2, h - 8, 12.5, cFg, 'center');
+    ctx.save(); ctx.translate(15, (y0 + y1) / 2); ctx.rotate(-Math.PI / 2); rt(ctx, '$ħω$ (meV)', 0, 0, 12.5, cFg, 'center'); ctx.restore();
+    const H = headA(ctx, w);
+    rt(ctx, H.title, 4, 15, 11.5, cFg2, 'left');
+    rt(ctx, H.note, H.two ? 4 : w - 4, H.two ? 30 : 15, 11.5, cGt, H.two ? 'left' : 'right');
+    // q at which the light lines reach ħω = y (meV)
+    const qv = (y) => y * 1e-3 / (c.s * HC), qm = (y) => Math.sqrt(c.eps) * qv(y);
+    ctx.save(); ctx.beginPath(); ctx.rect(x0, y0, x1 - x0, y1 - y0); ctx.clip();
+    // labels in order of importance; each later one keeps clear of those already placed, and the movable ones of the curves
+    const placed = [];
+    const inQ = c.qL > QMIN && c.qL < QMAX, xq = inQ ? X(c.qL) : -99;
+    if (inQ) placed.push({ x0: xq - 2, x1: xq + 2, y0: y0, y1: y1 });   // the vertical line at q_light
+    const curvesAt = (q) => {
+      const v = [c.lightM(q)];
+      if (c.eps > 1) v.push(c.lightV(q));
+      if (M.br) {
+        if (q <= c.qJ) v.push(...polariton(q, M, c.s));
+        if (q <= M.edge) { v.push(branch(M.br.LO, q, M.edge), branch(M.br.LA, q, M.edge), branch(M.br.TA, q, M.edge)); if (q >= c.qJ) v.push(branch(M.br.TO, q, M.edge)); }
+      }
+      return v;
+    };
+    const clear = (b) => {
+      if (b.x0 < x0 + 1 || b.x1 > x1 - 1 || b.y0 < y0 + 1 || b.y1 > y1 - 1 || meets(b, placed)) return false;
+      // curves lying on the axis (the acoustic branches at small q) do not count
+      for (let i = 0; i <= 16; i++) for (const v of curvesAt(pA.invX(b.x0 + (b.x1 - b.x0) * i / 16))) { const yy = Y(v); if (yy > b.y0 - 2 && yy < b.y1 + 2 && yy < y1 - 1.5) return false; }
+      return true;
+    };
+    // an arrow at the top edge when the selected ħω is above the axis, at its q_light
+    if (c.hw > ym && inQ) {
+      const col = EPP.color('fg2');
+      ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = 1.4; ctx.setLineDash([]);
+      ctx.beginPath(); ctx.moveTo(xq, y0 + 20); ctx.lineTo(xq, y0 + 8); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(xq, y0 + 2); ctx.lineTo(xq - 4, y0 + 9); ctx.lineTo(xq + 4, y0 + 9); ctx.closePath(); ctx.fill();
+      for (const t of [`$ħω$ = ${fmtE(c.hw)}, above the plot`, `$ħω$ = ${fmtE(c.hw)}`]) {
+        const tw = rtW(ctx, t, 11.5);
+        if (xq + 7 + tw <= x1 - 3) { placed.push(lab(ctx, t, xq + 7, y0 + 14, cFg2, 'left', true)); break; }
+        if (xq - 7 - tw >= x0 + 3) { placed.push(lab(ctx, t, xq - 7, y0 + 14, cFg2, 'right', true)); break; }
+      }
+    }
+    if (qm(ym) < QMIN) {
+      const t = `light cone off scale: $q$_{light} = ${num(c.qL, 2, true)} Å^{−1}`;
+      placed.push(lab(ctx, rtW(ctx, t, 11.5) <= x1 - x0 - 12 ? t : 'light cone off scale', x0 + 6, y0 + 14, cGt, 'left', true));
+    } else {
+      // the light lines, near the top: the medium line labelled on its right, the vacuum line on its left
+      const yL = M.br ? (M.br.LO.g + ym) / 2 : 0.8 * ym, xm = X(qm(yL)), xv = X(qv(yL));
+      if (xm > x0 + 2 && xm < x1 - 30) placed.push(lab(ctx, c.eps > 1 ? '$ħcq$/√$ε$_∞' : '$ħcq$', xm + 6, Y(yL) + 4, cGt, 'left', true));
+      if (c.eps > 1 && xv > x0 + 36 && xv < x1) placed.push(lab(ctx, '$ħcq$', xv - 6, Y(yL) + 4, cGt, 'right'));
+      // "light cone" inside the cone, left of the vacuum light line, clear of the curves and the q_light line
+      const t = 'light cone';
+      search: for (const f of [0.55, 0.8, 0.35, 0.95]) {
+        const xr = Math.min(X(qv(f * ym)), x1);
+        for (const fr of [0.5, 0.3, 0.7]) { const xc = x0 + fr * (xr - x0), b = boxAt(ctx, t, xc, Y(f * ym) + 4, 'center'); if (b.x1 < xr - 4 && clear(b)) { placed.push(lab(ctx, t, xc, Y(f * ym) + 4, cGt, 'center')); break search; } }
+      }
+    }
+    // the zone-edge band: its label in the top row, else in the second row, else left out
+    { const zw = rtW(ctx, 'zone edge', 11.5), xz = Math.min(X(Math.sqrt(QZ * M.edge)), x1 - 3 - zw / 2);
+      const row = [13, 30].find(dy => !meets(boxAt(ctx, 'zone edge', xz, y0 + dy, 'center'), placed));
+      if (row !== undefined) placed.push(lab(ctx, 'zone edge', xz, y0 + row, EPP.color('muted'), 'center', row > 13)); }
+    if (M.br) {
+      // LO above its dashed line, TO below its line, where both run flat (TO drawn), clear of the labels already placed
+      const at = (q) => [X(q), Y(branch(M.br.LO, q, M.edge)) - 5, Y(branch(M.br.TO, q, M.edge)) + 14];
+      const qc = [0.03, 0.1, 0.01, 0.2, 0.3 * M.edge].filter(q => q >= 1.2 * c.qJ && q <= 0.6 * M.edge);
+      let pos = null;
+      for (const q of qc) { const p = at(q); if (!meets(boxAt(ctx, 'LO', p[0], p[1], 'center'), placed) && !meets(boxAt(ctx, 'TO', p[0], p[2], 'center'), placed)) { pos = p; break; } }
+      if (!pos) pos = at(EPP.clamp(1.5 * c.qJ, 0.01, 0.6 * M.edge));
+      placed.push(lab(ctx, 'LO', pos[0], pos[1], cPt, 'center', true), lab(ctx, 'TO', pos[0], pos[2], cPt, 'center', true));
+      // "polaritons" beside the lower branch, below the TO frequency, where the cone bends it
+      const yp = M.br.TO.g - 0.14 * ym, f = (l) => polariton(Math.pow(10, l), M, c.s)[0] - yp;
+      let a = Math.log10(QMIN), b = Math.log10(Math.min(c.qJ, QMAX));
+      if (b > a && f(a) < 0 && f(b) > 0) {
+        for (let i = 0; i < 48; i++) { const mid = (a + b) / 2; if (f(mid) < 0) a = mid; else b = mid; }
+        const xp = X(Math.pow(10, b)) + 7;
+        if (xp > x0 + 4 && xp + rtW(ctx, 'polaritons', 11.5) < x1 - 4) placed.push(lab(ctx, 'polaritons', xp, Y(yp) + 4, c4t, 'left', true));
+      }
+    }
+    // q_light beside its line: at the foot, else near the top, else halfway, where no curve passes; the first spot otherwise, without a patch
+    if (inQ) {
+      const t = '$q$_{light}', spots = [];
+      for (const yy of [y1 - 6, y0 + 47, (y0 + y1) / 2 + 4, y1 - (y1 - y0) / 4]) spots.push([xq + 4, yy, 'left'], [xq - 4, yy, 'right']);
+      const sp = spots.find(p => clear(boxAt(ctx, t, p[0], p[1], p[2])));
+      if (sp) lab(ctx, t, sp[0], sp[1], cGt, sp[2], true);
+      else { const r = xq + 6 + rtW(ctx, t, 11.5) <= x1 - 2; lab(ctx, t, r ? xq + 4 : xq - 4, y1 - 6, cGt, r ? 'left' : 'right'); }
+    }
+    ctx.restore();
+    // acoustic labels at the right ends of their branches (they may reach into the right margin)
+    if (M.br) for (const k of ['LA', 'TA']) lab(ctx, k, X(M.edge) + 4, Y(branch(M.br[k], M.edge, M.edge)) + 4, cPt, 'left');
+  };
+
+  function drawB() {
+    const c = cur, w = pB.cv.w;
+    pB.opt.xticks = XT(w);
+    const qs = grid(c.scaled ? [c.qL, c.qL1] : [c.qL]);
+    const L = [];
+    if (c.qL > QMIN) L.push({ type: 'band', x0: QMIN, x1: Math.min(c.qL, QMAX), color: 'photon', alpha: 0.08 });
+    L.push({ type: 'band', x0: QS[0], x1: QS[1], color: 'electron', alpha: 0.1 });
+    L.push({ type: 'band', x0: QZ, x1: c.M.edge, color: 'muted', alpha: 0.12 });
+    if (c.scaled) L.push({ type: 'line', x: qs, y: qs.map(c.T1), color: 'muted', width: 1.5, dash: [2, 3], label: 'transverse at the real c' });
+    L.push({ type: 'line', x: qs, y: qs.map(() => 1 / c.eps), color: 'photon', width: 2, dash: [6, 4], label: 'longitudinal' });
+    L.push({ type: 'line', x: qs, y: qs.map(c.T), color: 'photon', width: 2, label: 'transverse' });
+    if (c.qL > QMIN && c.qL < QMAX) L.push({ type: 'vline', at: c.qL, color: 'photon', width: 1.2 });
+    pB.draw(L);
+  }
+
+  const baseB = pB.render.bind(pB);
+  pB.render = () => {
+    baseB();
+    const c = cur, ctx = pB.ctx, w = pB.cv.w, h = pB.cv.h, m = pB.m;
+    if (!c || !w || !h) return;
+    fonts();
+    const X = (q) => pB.X(q), Y = (v) => pB.Y(v), wide = w >= 560;
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cGt = EPP.textColor('photon');
+    const x0 = m.l, x1 = w - m.r, y0 = m.t, y1 = h - m.b;
+    rt(ctx, 'wavevector $q$ (Å^{−1})', (x0 + x1) / 2, h - 8, 12.5, cFg, 'center');
+    ctx.save(); ctx.translate(15, (y0 + y1) / 2); ctx.rotate(-Math.PI / 2); rt(ctx, '|$ω$^2$D$ / 4π$c$|', 0, 0, 12.5, cFg, 'center'); ctx.restore();
+    rt(ctx, '(b) field per unit current', 4, 15, 11.5, cFg2, 'left');
+    ctx.save(); ctx.beginPath(); ctx.rect(x0, y0, x1 - x0, y1 - y0); ctx.clip();
+    // band labels in the top row
+    const xs = X(Math.sqrt(QS[0] * QS[1]));
+    const sl = lab(ctx, wide ? 'electron–phonon scattering' : 'e–ph scattering', xs, y0 + 13, EPP.textColor('electron'), 'center'), placed = [sl];
+    if (wide) { const xz = X(Math.sqrt(QZ * c.M.edge)), zw = rtW(ctx, 'zone edge', 11.5); if (xz - zw / 2 > sl.x1 + 8) placed.push(lab(ctx, 'zone edge', xz, y0 + 13, EPP.color('muted'), 'center')); }
+    // a cone off either edge of the axis
+    if (c.qL <= QMIN) placed.push(lab(ctx, `$q$_{light} = ${num(c.qL, 2, true)} Å^{−1}: cone off scale`, x0 + 6, y0 + 30, cGt, 'left', true));
+    else if (c.qL >= QMAX) placed.push(lab(ctx, `$q$_{light} > 3 Å^{−1}: zone inside the cone`, x1 - 6, y0 + 30, cGt, 'right', true));
+    // a label box (baseline yb) is free when it stays in the frame, meets no placed label and no drawn curve passes through it
+    const curves = [c.T].concat(c.scaled ? [c.T1] : []);
+    const free = (xa, tw, yb) => {
+      if (xa < x0 + 2 || xa + tw > x1 - 2 || yb > y1 - 22 || meets({ x0: xa - 2, x1: xa + tw + 2, y0: yb - 11.5, y1: yb + 4 }, placed)) return false;
+      for (let i = 0; i <= 24; i++) {
+        const q = pB.invX(xa - 3 + (tw + 6) * i / 24);
+        for (const f of curves) { const yy = Y(f(q)); if (yy > yb - 12 && yy < yb + 5) return false; }
+      }
+      return true;
+    };
+    // the flat longitudinal line: above it on the right, else on the left, else below it
+    const tC = wide ? 'longitudinal = Coulomb: flat, independent of $c$' : 'Coulomb: flat', twC = rtW(ctx, tC, 11.5), yl = Y(1 / c.eps);
+    const cand = [[X(0.4) - twC, yl - 6], [x0 + 6, yl - 6], [X(0.4) - twC, yl + 15], [x0 + 6, yl + 15]];
+    const pick = cand.find(p => free(p[0], twC, p[1])) || cand[0];
+    placed.push(lab(ctx, tC, pick[0], pick[1], cGt, 'left'));
+    // the light cone, left of q_light: in the top row, else the second, kept well apart from the other labels
+    if (c.qL > QMIN && c.qL < QMAX) {
+      const xr = Math.min(X(c.qL), x1), t = 'light cone', tw = rtW(ctx, t, 11.5), xc = (x0 + xr) / 2;
+      const row = xr - x0 - 12 >= tw ? [13, 29].find(dy => !meets(boxAt(ctx, t, xc, y0 + dy, 'center'), placed, 12)) : undefined;
+      if (row !== undefined) placed.push(lab(ctx, t, xc, y0 + row, cGt, 'center'));
+    }
+    // the falling transverse line, labelled above its tail
+    const qa = 40 * c.qL, tT = wide ? 'transverse ∝ ($q$_{light}/$q$)^2' : '∝ ($q$_{light}/$q$)^2', twT = rtW(ctx, tT, 11.5);
+    if (qa > QMIN) {
+      const yT = [25, 250].map(k => Y(Math.max(1e-11, c.T(qa) * k))).find(yy => free(X(qa) + 4, twT, yy));
+      if (yT !== undefined) lab(ctx, tT, X(qa) + 4, yT, cGt, 'left');
+    }
+    // spacing of fine wavevector grids: a bracket near the bottom
+    const xg0 = X(QG[0]), xg1 = X(QG[1]), yb = y1 - 9, c5 = EPP.color('c5');
+    ctx.strokeStyle = c5; ctx.lineWidth = 1.6; ctx.setLineDash([]); ctx.beginPath();
+    ctx.moveTo(xg0, yb - 4); ctx.lineTo(xg0, yb); ctx.lineTo(xg1, yb); ctx.lineTo(xg1, yb - 4); ctx.stroke();
+    lab(ctx, 'grid spacing', (xg0 + xg1) / 2, yb - 6, EPP.textColor('c5'), 'center');
+    ctx.restore();
+  };
+
+  // ---------- readouts and descriptions ----------
+  const $v = (k) => fig.querySelector('.x1-cone-v-' + k);
+  const roV = { ql: $v('ql'), lam: $v('lam'), rz: $v('rz'), frac: $v('frac'), r1: $v('r1'), r2: $v('r2') };
+  const kFrac = fig.querySelector('.x1-cone-k-frac'), legRef = fig.querySelector('.x1-cone-leg-ref');
+  function readouts() {
+    const c = cur, M = c.M, vac = !M.br, zn = vac ? ' (GaAs zone)' : '';
+    roV.ql.innerHTML = nw(num(c.qL, 3) + ' Å⁻¹') + (vac ? ` (${EPSI} = 1)` : '');
+    roV.lam.innerHTML = nw(lamStr(TAU / c.qL));
+    roV.rz.textContent = num(c.qL / M.edge, 2) + zn;
+    kFrac.textContent = M.dim === 2 ? 'zone area inside the cone (2D zone)' : 'zone volume inside the cone';
+    roV.frac.textContent = num(Math.pow(Math.min(1, c.qL / M.qD), M.dim), 2) + zn;
+    roV.r1.textContent = num(c.ratio(QP), 2);
+    roV.r2.innerHTML = `${num(c.ratio(M.edge), 2)} ${nw(`(${M.pt}${vac ? ' of GaAs' : ''}, ${M.edge.toFixed(2)} Å⁻¹)`)}`;
+    if (legRef) legRef.hidden = !c.scaled;
+  }
+  function aria() {
+    const c = cur, M = c.M, on = c.qL > QMIN;
+    pA.cv.canvas.setAttribute('aria-label', 'Panel a: frequency ħω in meV against wavevector q on a logarithmic axis from 10⁻⁷ to 3 per ångström. ' +
+      (M.br ? `The ${M.name} phonon branches LO (dashed), TO, LA and TA run from Γ to the zone edge at ${M.edge.toFixed(2)} per ångström; ` : 'Vacuum: no phonon branches; ') +
+      `the shaded light cone lies above the light line${c.eps > 1 ? ' of the medium, with the vacuum light line dashed' : ''}${M.br && c.qJ > QMIN ? ', and two polariton branches replace TO where it meets the light line' : ''}. ` +
+      `Selected ħω = ${fmtE(c.hw)}${c.hw > M.ymax ? ', above the plot' : ''}: the cone radius q_light is ${num(c.qL, 3)} per ångström${on ? '' : ', off the scale'}. Click to choose ħω.`);
+    pB.cv.canvas.setAttribute('aria-label', `Panel b: field per unit current, the absolute value of ω²D/4πc, against q on log–log axes. The longitudinal (Coulomb) line is flat at ${num(1 / c.eps, 3)}. ` +
+      `The transverse line equals it inside the light cone, peaks at q_light and falls as (q_light/q)² outside: ${num(c.ratio(QP), 2)} of the longitudinal at 0.025 per ångström and ${num(c.ratio(M.edge), 2)} at the zone edge. ` +
+      'Bands mark the wavevectors of electron–phonon scattering, 0.02 to 0.07 per ångström, and the zone edge; a bracket marks the spacing of fine wavevector grids, 0.01 to 0.05 per ångström.' +
+      (c.scaled ? ' A dotted grey line shows the transverse field at the real speed of light.' : ''));
+  }
+  function draw() { if (!cur) return; drawA(); drawB(); }
+
+  // ---------- controls ----------
+  const elC = fig.querySelector('.x1-cone-ctrls');
+  let lastMed = 'gaas';
+  function onChange(st) {
+    // a new medium sets ħω to its TO energy (50 meV in vacuum) and its own ħω axis
+    if (st.med !== lastMed && MED[st.med]) { lastMed = st.med; ui.set('hw', MED[st.med].hw0, true); }
+    cur = model(ui.state);
+    draw(); readouts(); aria(); syncAria();
+  }
+  const ui = EPP.controls(elC, [
+    { key: 'med', type: 'seg', label: 'medium', options: [['gaas', 'GaAs'], ['hbn', 'hBN'], ['vac', 'vacuum (ε = 1)']], value: 'gaas' },
+    { key: 'hw', type: 'range', label: 'frequency ħω', min: 1, max: 5000, value: 33.3, log: true, step: 'any', fmt: v => fmtE(snapHw(v)) },
+    { key: 'sp', type: 'range', label: 'speed of light: c ×', min: 1e-2, max: 1e6, value: 1, log: true, step: 0.1, fmt: v => fmtS(v) }
+  ], onChange);
+  cur = model(ui.state);
+  const inHw = document.getElementById(`${fig.id}-hw`), inSp = document.getElementById(`${fig.id}-sp`);
+  function syncAria() {
+    if (inHw) inHw.setAttribute('aria-valuetext', fmtE(snapHw(ui.state.hw)).replace(' meV', ' millielectronvolts').replace(' eV', ' electronvolts'));
+    if (inSp) inSp.setAttribute('aria-valuetext', 'speed of light times ' + spokenS(ui.state.sp));
+  }
+  [inHw, inSp].forEach(e => { if (e) e.addEventListener('input', syncAria); });
+  syncAria();
+  { const lb = (k, html) => { const sp = elC.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = html; };
+    lb('hw', `frequency ${I('ħω')}`); lb('sp', `speed of light: ${I('c')} ×`);
+    const b = document.getElementById(`${fig.id}-med-vac`); if (b) b.innerHTML = `vacuum (${I('ε')} = 1)`; }
+  // a click (or a drag that starts) inside the frame of (a) sets ħω
+  let picking = false;
+  pA.onPointer = (x, y, type, d) => {
+    if (!d || !cur) return;
+    const m = pA.m;
+    if (type === 'down') picking = d.px >= m.l && d.px <= pA.cv.w - m.r && d.py >= m.t && d.py <= pA.cv.h - m.b;
+    if (type === 'up' || !picking) { if (type === 'up') picking = false; return; }
+    ui.set('hw', snapHw(EPP.clamp(y, 1, cur.M.ymax)));
+  };
+  pA.cv.onResize(() => { if (cur) drawA(); });
+  pB.cv.onResize(() => { if (cur) drawB(); });
+})();
+</script>

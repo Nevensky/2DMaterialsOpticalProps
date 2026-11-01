@@ -1,0 +1,446 @@
+  <figure class="viz" id="viz-a8-lo">
+    <p class="viz-title">LO-phonon scattering in a polar semiconductor: the emission threshold <span class="tag">interactive</span></p>
+    <div class="a8-lo-band"></div>
+    <div class="legend a8-lo-lega"><span class="item" style="color:var(--c-electron)"><span class="sw"></span><span style="color:var(--fg-2)">band $E_{\bk}=\hbar^2k^2/2m^*$</span></span><span class="item" style="color:var(--c-electron)"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><circle cx="7" cy="7" r="5" fill="currentColor"/></svg><span style="color:var(--fg-2)">carrier</span></span><span class="item" style="color:var(--c-phonon)"><svg width="28" height="14" viewBox="0 0 28 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><line x1="1" y1="7" x2="27" y2="7" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/><circle cx="14" cy="7" r="4.2" style="fill:var(--surface)" stroke="currentColor" stroke-width="1.7"/></svg><span style="color:var(--fg-2)">emission level $E_{\bk}-\hbar\omega_{\mathrm{LO}}$, final states</span></span><span class="item" style="color:var(--c-5)"><svg width="28" height="14" viewBox="0 0 28 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><line x1="1" y1="7" x2="27" y2="7" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/><circle cx="14" cy="7" r="4.2" style="fill:var(--surface)" stroke="currentColor" stroke-width="1.7"/></svg><span style="color:var(--fg-2)">absorption level $E_{\bk}+\hbar\omega_{\mathrm{LO}}$, final states</span></span><span class="item" style="color:var(--fg-2)"><svg width="28" height="14" viewBox="0 0 28 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><line x1="2" y1="7" x2="21" y2="7" stroke="currentColor" stroke-width="1.4"/><path d="M27 7 L20 3.6 L20 10.4 Z" fill="currentColor"/></svg><span style="color:var(--fg-2)">smallest and largest momentum transfer $q$</span></span></div>
+    <div class="viz-grid two a8-lo-plots" style="margin-top:14px">
+      <div class="a8-lo-rate"><div class="legend a8-lo-legb"><span class="item" style="color:var(--c-electron)"><span class="sw"></span><span style="color:var(--fg-2)">total at $T$</span></span><span class="item" style="color:var(--c-phonon)"><span class="sw dash"></span><span style="color:var(--fg-2)">emission $\propto n_{\mathrm B}+1$</span></span><span class="item" style="color:var(--c-5)"><span class="sw dot"></span><span style="color:var(--fg-2)">absorption $\propto n_{\mathrm B}$</span></span><span class="item" style="color:var(--muted)"><span class="sw" style="border-top-width:1.5px"></span><span style="color:var(--fg-2)">total at $T=0$</span></span></div></div>
+      <div class="a8-lo-life"><div class="legend a8-lo-legc"><span class="item" style="color:var(--c-electron)"><span class="sw"></span><span style="color:var(--fg-2)">at the carrier energy $E_{\bk}$</span></span><span class="item" style="color:var(--c-4)"><span class="sw dash"></span><span style="color:var(--fg-2)">$E_{\bk}=2\hbar\omega_{\mathrm{LO}}$, above threshold</span></span><span class="item" style="color:var(--muted)"><span class="sw dot"></span><span style="color:var(--fg-2)">$E_{\bk}=\hbar\omega_{\mathrm{LO}}/2$, below threshold</span></span></div></div>
+    </div>
+    <div class="a8-lo-ctrls"></div>
+    <div class="readout a8-lo-ro" aria-live="polite"><span>$\alpha_{\mathrm F}$<b class="a8-lo-v-a"></b></span><span>$\hbar\omega_{\mathrm{LO}}$<b class="a8-lo-v-hw"></b></span><span>$2\alpha_{\mathrm F}\omega_{\mathrm{LO}}$<b class="a8-lo-v-r0"></b></span><span>$n_{\mathrm B}(\omega_{\mathrm{LO}})$ at $T$<b class="a8-lo-v-n"></b></span></div>
+    <div class="readout a8-lo-ro2" aria-live="polite"><span>$E_{\bk}$<b class="a8-lo-v-e"></b></span><span>$1/\tau_{\bk}$<b class="a8-lo-v-r"></b></span><span>$\tau_{\bk}$<b class="a8-lo-v-tau"></b></span><span>$\hbar/\tau_{\bk}=2|\mathrm{Im}\,\Sigma_{\bk}|$<b class="a8-lo-v-w"></b></span><span>mean free path $\hbar k\tau_{\bk}/m^*$<b class="a8-lo-v-l"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> The rate switches on at $E_{\bk}=\hbar\omega_{\mathrm{LO}}$, rising as $(E_{\bk}-\hbar\omega_{\mathrm{LO}})^{1/2}$, where spontaneous emission becomes possible: in (a) the emission level reaches the band bottom there. As $T\to0$ the lifetime diverges below the threshold and levels off above it at the spontaneous-emission value, about <span class="nw">200 fs</span> in GaAs and <span class="nw">13 fs</span> in GaN at <span class="nw">$E_{\bk}=2\hbar\omega_{\mathrm{LO}}$.</span></p><div class="cap-more"><p><strong>Marks.</strong> (a) is a cut through the band along the carrier's wavevector. The dot is the carrier; the dashed lines one LO energy below and above it are the emission and absorption levels, and the rings, where they meet the band, are the final states. The thin arrows on each level are the smallest and the largest momentum transfer $q$, the limits of the $q$ integral in the derivation below. The weights $n_{\mathrm B}+1$ and $n_{\mathrm B}$ stand beside the vertical arrows; the absorption marks fade when <span class="nw">$n_{\mathrm B}\lt0.01$.</span> (b) Rates at $T$ and the total at $T=0$. (c) Lifetimes at three energies. Dashed vertical lines: the cursor.</p><p><strong>Try.</strong> Set $T=0$ and move the carrier below the threshold: the rate vanishes and the emission level drops below the band. Raise $T$ at $E_{\bk}=\hbar\omega_{\mathrm{LO}}/2$: absorption switches on as $n_{\mathrm B}$ grows. Switch to GaN: $\alpha_{\mathrm F}$ is six times larger and the rates about 16 times faster. Drag in (a) or (b) to move the carrier, in (c) to set $T$.</p><p><strong>Model.</strong> The rate <a class="eqref" href="#a8-eq-lorate"></a>, the golden rule <a class="eqref" href="#a8-eq-tau"></a> integrated with the Fröhlich coupling <a class="eqref" href="#a8-eq-gfr"></a>: one empty parabolic band and one dispersionless LO phonon, with no nonparabolicity, no other valleys and no factor $Z^{\mathrm{qp}}$. Parameters as in the note on <a class="eqref" href="#a8-eq-gfr"></a> (literature values, illustrative): $\alpha_{\mathrm F}=0.071$ and $\hbar\omega_{\mathrm{LO}}=36.2$ meV for GaAs, 0.44 and <span class="nw">92 meV</span> for GaN.</p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a8-lo');
+  if (!fig || !window.EPP) return;
+  // outside Section A.8 (the isolated figure test) the caption's links to the section have no target: show them as text
+  if (!fig.closest('#a-temperature')) fig.querySelectorAll('figcaption a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+
+  // ---------- model ----------
+  // The rate a8-eq-lorate: one empty parabolic band, one dispersionless LO phonon, the Fröhlich coupling a8-eq-gfr in the
+  // golden rule a8-eq-tau.
+  // x = E_k/ħω_LO; rates in ps⁻¹, lifetimes in fs, wavevectors in units of q_pol.
+  const RY = 13605.693, HB_EVS = 6.582120e-16, HB_MEVFS = 658.212, H2M = 3.80998, KB = 0.0861733;
+  const MAT = {
+    GaAs: { m: 0.067, hw: 36.2, ei: 10.9, es: 12.9 },
+    GaN: { m: 0.20, hw: 92, ei: 5.35, es: 9.5 }
+  };
+  const ash = (s) => (s < 1e-6 ? 1 - s * s / 6 : Math.asinh(s) / s);      // arsinh(s)/s, 1 at s = 0
+  // the two terms of the rate in units of 2α_F ω_LO: absorption ∝ n_B, emission ∝ n_B + 1 above the threshold x = 1
+  const absU = (x, n) => n * ash(Math.sqrt(x));
+  const emU = (x, n) => (x > 1 ? (n + 1) * Math.asinh(Math.sqrt(x - 1)) / Math.sqrt(x) : 0);
+  const nB = (p, T) => (T > 0 ? 1 / Math.expm1(p.hw / (KB * T)) : 0);
+  const niceStep = (r) => { const q = Math.pow(10, Math.floor(Math.log10(r))), m = r / q; return (m < 1.5 ? 1 : m < 3.5 ? 2 : m < 7.5 ? 5 : 10) * q; };
+  Object.values(MAT).forEach(p => {
+    p.a = (1 / p.ei - 1 / p.es) * Math.sqrt(p.m * RY / p.hw);   // α_F: 0.0714 (GaAs), 0.444 (GaN)
+    p.R0 = 2 * p.a * (p.hw / 1000 / HB_EVS) * 1e-12;              // 2α_F ω_LO in ps⁻¹: 7.85, 124.1
+    p.qpol = Math.sqrt(p.m * p.hw / 1000 / H2M);                   // q_pol in Å⁻¹
+    // fixed top of the rate axis: the maximum at 600 K, times 1.08, rounded up
+    const n6 = nB(p, 600); let mx = 0;
+    for (let i = 0; i <= 1000; i++) { const x = 5 * i / 1000; mx = Math.max(mx, absU(x, n6) + emU(x, n6)); }
+    const top = 1.08 * p.R0 * mx, st = niceStep(top / 4); p.ytop = Math.ceil(top / st - 1e-9) * st;
+  });
+  const rate = (p, x, n) => p.R0 * (absU(x, n) + emU(x, n));
+  const XMIN = 0.05, XMAX = 5, TMAX = 600;
+
+  // ---------- number formats ----------
+  const SUP = '⁰¹²³⁴⁵⁶⁷⁸⁹';
+  const sci = (v, d = 3) => {
+    if (!isFinite(v)) return '∞';
+    if (v === 0) return '0';
+    const e = Math.floor(Math.log10(Math.abs(v)));
+    if (e >= -2 && e <= 4) return String(Number(v.toPrecision(d))).replace('-', '−');
+    let mt = v / Math.pow(10, e), ee = e;
+    if (Math.abs(Number(mt.toFixed(d - 1))) >= 10) { mt /= 10; ee += 1; }
+    return mt.toFixed(d - 1) + '×10' + (ee < 0 ? '⁻' : '') + String(Math.abs(ee)).replace(/\d/g, c => SUP[+c]);
+  };
+  const wfmt = (n) => (n === 0 ? '0' : (n < 0.01 ? sci(n, 2) : n.toFixed(2)));
+
+  // ---------- canvas text: parts {t, i: italic symbol (text font), b: bold vector, sub} ----------
+  let FAM = { ui: 'sans-serif', tx: 'serif' };
+  const fonts = () => { FAM = { ui: EPP.css('--font-ui') || 'sans-serif', tx: EPP.css('--font-text') || 'serif' }; };
+  const T = (t) => ({ t }), I = (t) => ({ t, i: 1 }), Sb = (t, b) => ({ t, sub: 1, b: b ? 1 : 0 });
+  const pFont = (p, size) => `${p.i ? 'italic ' : ''}${p.b ? '700 ' : ''}${((p.i ? 1.06 : 1) * (p.sub ? 0.72 : 1) * size).toFixed(1)}px ${p.i ? FAM.tx : FAM.ui}`;
+  function textW(ctx, parts, size) { let w = 0; for (const p of parts) { ctx.font = pFont(p, size); w += ctx.measureText(p.t).width; } return w; }
+  function tdraw(ctx, parts, x, y, size, color, align) {
+    let x0 = x;
+    if (align === 'center' || align === 'right') { const w = textW(ctx, parts, size); x0 = align === 'center' ? x - w / 2 : x - w; }
+    ctx.fillStyle = color; ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    for (const p of parts) { ctx.font = pFont(p, size); ctx.fillText(p.t, x0, y + (p.sub ? size * 0.28 : 0)); x0 += ctx.measureText(p.t).width; }
+  }
+  const HWLO = [I('ħω'), Sb('LO')], EK = [I('E'), Sb('k', true)], NB = [I('n'), Sb('B')];
+  const LAB = {
+    titleA: [T('(a) band diagram: click or drag to move the carrier')], titleAs: [T('(a) band diagram: drag the carrier')],
+    xA: [I('k'), T(' / '), I('q'), Sb('pol')], yA: [T('energy / '), ...HWLO],
+    titleB: [T('(b) scattering rate at '), I('T'), T(': click or drag to choose '), ...EK], titleBs: [T('(b) scattering rate at '), I('T')],
+    xB: [T('carrier energy '), ...EK, T(' / '), ...HWLO], yB: [T('1/'), I('τ'), Sb('k', true), T(' (ps⁻¹)')],
+    titleC: [T('(c) lifetime against temperature: drag to set '), I('T')], titleCs: [T('(c) lifetime against temperature')],
+    xC: [I('T'), T(' (K)')], yC: [I('τ'), Sb('k', true), T(' (fs)')]
+  };
+  const fit = (ctx, a, b, wmax) => (textW(ctx, a, 11.5) <= wmax ? a : b);
+
+  // ---------- label placer: the first candidate box that stays in the frame and clears every obstacle and label ----------
+  function placer(ctx, frame, pts) {
+    // obstacles are kept in columns 16 px wide, so that a box is tested only against its neighbours
+    const CW = 16, cols = new Map(), labs = [];
+    const add = (o) => { for (let c = Math.floor(o[0] / CW); c <= Math.floor(o[2] / CW); c++) { let a = cols.get(c); if (!a) cols.set(c, a = []); a.push(o); } };
+    pts.forEach(q => add([q[0] - 2.5, q[1] - 2.5, q[0] + 2.5, q[1] + 2.5]));
+    const hit = (b, o, g) => b[0] < o[2] + g && b[2] > o[0] - g && b[1] < o[3] + g && b[3] > o[1] - g;
+    const blocked = (b) => { for (let c = Math.floor(b[0] / CW); c <= Math.floor(b[2] / CW); c++) { const a = cols.get(c); if (a && a.some(o => hit(b, o, 0))) return true; } return false; };
+    const free = (b, f) => b[0] >= f[0] + 1 && b[2] <= f[2] - 1 && b[1] >= f[1] + 1 && b[3] <= f[3] - 1 && !labs.some(o => hit(b, o, 3)) && !blocked(b);
+    return {
+      box(b) { add(b); },
+      // variants: [{lines: [parts, ...], size}] in order of preference; cands(w, h) -> [{x0, y0, al, c}] (top-left corner of the
+      // text block, cost c). A shorter variant close to the anchor beats a longer one far from it: each later variant costs 12 more.
+      // fr: an optional smaller region [x0, y0, x1, y1] that the label must stay in.
+      put(variants, color, cands, fr) {
+        const opts = [];
+        variants.forEach((v, vi) => {
+          const lh = Math.round(v.size * 1.2), ws = v.lines.map(l => textW(ctx, l, v.size)), w = Math.max(...ws), hh = lh * v.lines.length;
+          cands(w, hh).forEach((c, ci) => opts.push({ v, lh, ws, w, hh, c, cost: (c.c ?? ci) + 12 * vi }));
+        });
+        opts.sort((a, b) => a.cost - b.cost);
+        for (const { v, lh, ws, w, hh, c } of opts) {
+          const b = [c.x0 - 2, c.y0 - 1, c.x0 + w + 2, c.y0 + hh + 1];
+          if (!free(b, fr || frame)) continue;
+          labs.push(b);
+          ctx.fillStyle = EPP.alpha('surface', 0.85); ctx.fillRect(b[0], b[1], b[2] - b[0], b[3] - b[1]);
+          v.lines.forEach((l, i) => tdraw(ctx, l, c.al === 'right' ? c.x0 + w - ws[i] : c.x0, c.y0 + lh * i + v.size * 0.95, v.size, color));
+          return b;
+        }
+        return null;
+      }
+    };
+  }
+  // candidate blocks beside the anchor (ax, ay): preferred side s0 (+1 right, −1 left) first, then nearer positions first
+  const around = (ax, ay, s0) => (w, h) => {
+    const out = [];
+    for (const dx of [5, 12, 22, 36, 54]) for (const dy of [0, -7, 7, -14, 14, -22, 22, -32, 32, -44, 44]) for (const s of [s0, -s0]) {
+      out.push({ x0: s > 0 ? ax + dx : ax - dx - w, y0: ay + dy - h / 2, al: s > 0 ? 'left' : 'right', c: Math.hypot(dx, 1.2 * dy) + (s === s0 ? 0 : 16) });
+    }
+    return out.sort((u, v) => u.c - v.c);
+  };
+  // pixel points along a polyline, densified so that steep stretches are covered (for label avoidance)
+  function pxPoly(X, Y, xs, vs, h, out) {
+    let prev = null;
+    for (let i = 0; i < xs.length; i++) {
+      if (!isFinite(vs[i])) { prev = null; continue; }
+      const q = [X(xs[i]), EPP.clamp(Y(vs[i]), -40, h + 40)];
+      if (prev) { const n = Math.min(80, Math.ceil(Math.hypot(q[0] - prev[0], q[1] - prev[1]) / 4)); for (let j = 1; j < n; j++) out.push([prev[0] + (q[0] - prev[0]) * j / n, prev[1] + (q[1] - prev[1]) * j / n]); }
+      out.push(q); prev = q;
+    }
+    return out;
+  }
+  const segPts = (x0, y0, x1, y1, out) => { const n = Math.max(1, Math.ceil(Math.hypot(x1 - x0, y1 - y0) / 4)); for (let j = 0; j <= n; j++) out.push([x0 + (x1 - x0) * j / n, y0 + (y1 - y0) * j / n]); return out; };
+  function arrow(ctx, x0, y0, x1, y1, col, lw, head, dash) {
+    const L = Math.hypot(x1 - x0, y1 - y0);
+    if (!(L > 1)) return;
+    const hs = Math.min(head, 0.55 * L), a = Math.atan2(y1 - y0, x1 - x0), withHead = L > 7;
+    ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = lw; ctx.lineCap = 'round'; ctx.setLineDash(dash || []);
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(withHead ? x1 - 0.8 * hs * Math.cos(a) : x1, withHead ? y1 - 0.8 * hs * Math.sin(a) : y1); ctx.stroke();
+    ctx.setLineDash([]);
+    if (!withHead) return;
+    ctx.beginPath(); ctx.moveTo(x1, y1);
+    ctx.lineTo(x1 - hs * Math.cos(a - 0.42), y1 - hs * Math.sin(a - 0.42));
+    ctx.lineTo(x1 - hs * Math.cos(a + 0.42), y1 - hs * Math.sin(a + 0.42));
+    ctx.closePath(); ctx.fill();
+  }
+  const ring = (ctx, x, y, r, col) => { ctx.setLineDash([]); ctx.beginPath(); ctx.arc(x, y, r, 0, 2 * Math.PI); ctx.fillStyle = EPP.color('surface'); ctx.fill(); ctx.strokeStyle = col; ctx.lineWidth = 1.8; ctx.stroke(); };
+
+  // ---------- panel (a): the band diagram ----------
+  const elA = fig.querySelector('.a8-lo-band');
+  // taller on narrow screens, where the labels need two lines
+  const cvA = EPP.canvas(elA, { get height() { return elA.clientWidth < 560 ? 320 : 290; } });
+  const KA = [-2.6, 2.6], EA = [-1.2, 6.5], MA = { l: 50, r: 12, t: 26, b: 40 };
+  const geo = () => ({ w: cvA.w, h: cvA.h, L: MA.l, R: cvA.w - MA.r, T0: MA.t, B0: cvA.h - MA.b });
+  const XA = (g, k) => g.L + (k - KA[0]) / (KA[1] - KA[0]) * (g.R - g.L);
+  const YA = (g, E) => g.B0 - (E - EA[0]) / (EA[1] - EA[0]) * (g.B0 - g.T0);
+  const KS = EPP.linspace(KA[0], KA[1], 261);
+  let cur = null;
+
+  function drawBand() {
+    cvA.clear();
+    const g = geo(), ctx = cvA.ctx;
+    if (!g.w || !g.h || !cur) return;
+    fonts();
+    const X = (k) => XA(g, k), Y = (E) => YA(g, E);
+    const cFg = EPP.color('fg'), cMuted = EPP.color('muted'), cGrid = EPP.color('grid'), cRule = EPP.color('rule');
+    const cE = EPP.color('electron'), cP = EPP.color('phonon'), c5 = EPP.color('c5');
+    // grid, ticks, zero lines, frame
+    ctx.lineWidth = 1; ctx.setLineDash([]); ctx.strokeStyle = cGrid;
+    const kt = [-2, -1, 0, 1, 2], et = [0, 2, 4, 6];
+    ctx.beginPath();
+    kt.forEach(k => { const x = Math.round(X(k)) + 0.5; ctx.moveTo(x, g.T0); ctx.lineTo(x, g.B0); });
+    et.forEach(E => { const y = Math.round(Y(E)) + 0.5; ctx.moveTo(g.L, y); ctx.lineTo(g.R, y); });
+    ctx.stroke();
+    ctx.fillStyle = cMuted; ctx.font = `11px ${FAM.ui}`;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+    kt.forEach(k => ctx.fillText(String(k).replace('-', '−'), X(k), g.B0 + 6));
+    ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    et.forEach(E => ctx.fillText(String(E), g.L - 6, Y(E)));
+    ctx.strokeStyle = cRule; ctx.beginPath();
+    ctx.moveTo(Math.round(X(0)) + 0.5, g.T0); ctx.lineTo(Math.round(X(0)) + 0.5, g.B0);
+    ctx.moveTo(g.L, Math.round(Y(0)) + 0.5); ctx.lineTo(g.R, Math.round(Y(0)) + 0.5); ctx.stroke();
+    ctx.strokeRect(g.L + 0.5, g.T0 + 0.5, g.R - g.L - 1, g.B0 - g.T0 - 1);
+    tdraw(ctx, fit(ctx, LAB.titleA, LAB.titleAs, g.w - 8), 4, 15, 11.5, EPP.color('fg2'));
+    tdraw(ctx, LAB.xA, (g.L + g.R) / 2, g.h - 9, 12.5, cFg, 'center');
+    ctx.save(); ctx.translate(14, (g.T0 + g.B0) / 2); ctx.rotate(-Math.PI / 2); tdraw(ctx, LAB.yA, 0, 0, 12.5, cFg, 'center'); ctx.restore();
+
+    const { x, n } = cur, ks = Math.sqrt(x), kE = x >= 1 ? Math.sqrt(x - 1) : NaN, kAb = Math.sqrt(x + 1), open = x >= 1;
+    const yC = Y(x), yEm = Y(x - 1), yAb = Y(x + 1), Xc = X(ks), RR = 4.6;
+    // the absorption marks fade as n_B falls below 0.01: hardly any phonon to absorb
+    const fade = n <= 0 ? 0.3 : EPP.clamp(0.3 + 0.35 * Math.log10(n / 1e-4), 0.3, 1);
+    const cEm = open ? cP : cMuted, pts = [];
+    ctx.save(); ctx.beginPath(); ctx.rect(g.L, g.T0, g.R - g.L, g.B0 - g.T0); ctx.clip();
+    // below the band bottom there are no states
+    ctx.fillStyle = EPP.alpha('muted', 0.08); ctx.fillRect(g.L, Y(0), g.R - g.L, g.B0 - Y(0));
+    // the two final levels, across the frame
+    const level = (yy, col, alpha) => { ctx.globalAlpha = alpha; ctx.strokeStyle = col; ctx.lineWidth = 1.3; ctx.setLineDash([5, 4]); ctx.beginPath(); ctx.moveTo(g.L, yy); ctx.lineTo(g.R, yy); ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha = 1; for (let px = g.L; px <= g.R; px += 5) pts.push([px, yy]); };
+    level(yAb, c5, 0.85 * fade);
+    level(yEm, cEm, 0.85);
+    // the band
+    ctx.strokeStyle = cE; ctx.lineWidth = 2.3; ctx.lineJoin = 'round'; ctx.beginPath();
+    KS.forEach((k, i) => { const yy = EPP.clamp(Y(k * k), -50, g.h + 50); if (i) ctx.lineTo(X(k), yy); else ctx.moveTo(X(k), yy); });
+    ctx.stroke();
+    pxPoly(X, Y, KS, KS.map(k => k * k), g.h, pts);
+    // momentum transfers on each level: from the carrier's k to the final state on the same side (smallest q, above the line)
+    // and to the one on the opposite side (largest q, below the line)
+    const transfers = (yy, kf, col, alpha) => {
+      ctx.globalAlpha = alpha;
+      for (const [kt2, dy] of [[kf, -4], [-kf, 4]]) {
+        const xt = X(kt2), dir = Math.sign(xt - Xc) || -1;
+        const x1 = xt - dir * (RR + 1.5);
+        if (Math.abs(x1 - Xc) < 2) continue;
+        arrow(ctx, Xc, yy + dy, x1, yy + dy, col, 1.3, 6);
+        segPts(Xc, yy + dy, x1, yy + dy, pts);
+      }
+      ctx.globalAlpha = 1;
+    };
+    if (open) transfers(yEm, kE, cP, 1);
+    transfers(yAb, kAb, c5, fade);
+    // the phonon energy: down to the emission level, up to the absorption level
+    ctx.globalAlpha = fade; arrow(ctx, Xc, yC - 7, Xc, yAb, c5, 2, 8); ctx.globalAlpha = 1;
+    arrow(ctx, Xc, yC + 7, Xc, yEm, cEm, 2, 8, open ? null : [4, 3]);
+    segPts(Xc, yC - 7, Xc, yAb, pts); segPts(Xc, yC + 7, Xc, yEm, pts);
+    // the final states
+    ctx.globalAlpha = fade; [kAb, -kAb].forEach(k => ring(ctx, X(k), yAb, RR, c5)); ctx.globalAlpha = 1;
+    if (open) (kE > 0 ? [kE, -kE] : [0]).forEach(k => ring(ctx, X(k), yEm, RR, cP));
+    // the carrier
+    ctx.beginPath(); ctx.arc(Xc, yC, 5.6, 0, 2 * Math.PI); ctx.fillStyle = cE; ctx.fill(); ctx.lineWidth = 1.5; ctx.strokeStyle = EPP.color('surface'); ctx.stroke();
+    ctx.restore();
+
+    // labels
+    const pl = placer(ctx, [g.L, g.T0, g.R, g.B0], pts);
+    pl.box([Xc - 8, yC - 8, Xc + 8, yC + 8]);
+    [kAb, -kAb].forEach(k => pl.box([X(k) - 7, yAb - 7, X(k) + 7, yAb + 7]));
+    if (open) [kE, -kE].forEach(k => pl.box([X(k) - 7, yEm - 7, X(k) + 7, yEm + 7]));
+    const tP = EPP.textColor('phonon'), t5 = EPP.textColor('c5'), fs = g.w < 560 ? 10.5 : 11;
+    // the process and its weight beside each vertical arrow: on one line, on two, or the weight alone
+    const var3 = (verb, w) => [
+      { lines: [[T(verb + ' '), ...HWLO, T(', weight '), ...w]], size: fs },
+      { lines: [[T(verb + ' '), ...HWLO], w], size: fs },
+      { lines: [w], size: fs }
+    ];
+    // absorption first: above the carrier it has less room (the band rises beside its arrow)
+    // the weights stay above the band bottom: the shaded strip belongs to the closed emission channel
+    const above = [g.L, g.T0, g.R, Y(0) + 1];
+    ctx.globalAlpha = Math.max(fade, 0.55);
+    pl.put(var3('absorb', [...NB, T(' = ' + wfmt(n))]), t5, around(Xc, (yC + yAb) / 2, -1), above);
+    ctx.globalAlpha = 1;
+    if (open) pl.put(var3('emit', [...NB, T(' + 1 = ' + (n + 1).toFixed(2))]), tP, around(Xc, (yC + yEm) / 2, 1), above);
+    else pl.put([
+      { lines: [[T('no final state: '), ...EK, T(' < '), ...HWLO]], size: fs },
+      { lines: [[T('no final state:')], [...EK, T(' < '), ...HWLO]], size: fs },
+      { lines: [[T('no final state')]], size: fs }
+    ], cMuted, around(Xc, yEm, -1));
+    pl.put([{ lines: [[T('band '), ...EK]], size: fs }], EPP.textColor('electron'), around(X(-2.2), Y(4.84), 1));
+
+    const f2 = (v) => EPP.fix(v, 2);
+    cvA.canvas.setAttribute('aria-label', `Panel a: band diagram, a cut through the parabolic band along the carrier's wavevector, with k in units of the polaron wavevector q_pol and energies in units of ħω_LO. ` +
+      `The carrier sits at E_k = ${f2(x)} ħω_LO, k = ${f2(ks)} q_pol. ` +
+      (open ? `Emission level at ${f2(x - 1)} ħω_LO with final states at k = ±${f2(kE)} q_pol; momentum transfers from ${f2(ks - kE)} to ${f2(ks + kE)} q_pol; weight n_B + 1 = ${f2(n + 1)}. `
+        : `Emission level at ${f2(x - 1)} ħω_LO, below the band bottom: no final state, so the carrier cannot emit an LO phonon. `) +
+      `Absorption level at ${f2(x + 1)} ħω_LO with final states at k = ±${f2(kAb)} q_pol; momentum transfers from ${f2(kAb - ks)} to ${f2(kAb + ks)} q_pol; weight n_B = ${wfmt(n)}. ` +
+      `Click or drag to move the carrier along the band; with the panel focused, the arrow keys step its energy.`);
+  }
+  cvA.onResize(drawBand);
+
+  // ---------- panels (b) and (c) ----------
+  const elB = fig.querySelector('.a8-lo-rate'), elC = fig.querySelector('.a8-lo-life');
+  const common = { legend: false, aspect: 0.8, minHeight: 250, maxHeight: 330, margin: { l: 52, r: 12, t: 26, b: 42 } };
+  const pB = new EPP.Plot(elB, Object.assign({}, common, {
+    xlim: [0, 5], ylim: [0, 20], xticks: [0, 1, 2, 3, 4, 5], xname: 'E_k/ħω_{LO}',
+    hoverX: v => EPP.fix(v, 2), hoverY: v => sci(v) + ' ps⁻¹',
+    ariaLabel: 'Panel b: LO-phonon scattering rate 1/τ in inverse picoseconds against the carrier energy E_k in units of ħω_LO, at the chosen temperature: total, emission and absorption parts, and the total at T = 0; a vertical line marks the emission threshold E_k = ħω_LO and a dashed line the carrier energy. Click or drag to choose the carrier energy; with the panel focused, the arrow keys step it.'
+  }));
+  const pC = new EPP.Plot(elC, Object.assign({}, common, {
+    xlim: [0, TMAX], ylim: [1, 1e6], logy: true, xticks: [0, 100, 200, 300, 400, 500, 600], xname: 'T',
+    hoverX: v => EPP.fix(v, 0) + ' K', hoverY: v => sci(v) + ' fs',
+    ariaLabel: 'Panel c: lifetime τ in femtoseconds, on a logarithmic axis from 1 to a million, against temperature from 0 to 600 K, at the carrier energy, at E_k = 2ħω_LO above the threshold and at E_k = ħω_LO/2 below it; a dashed line marks the chosen temperature. Click or drag to set the temperature; with the panel focused, the arrow keys step it.'
+  }));
+  // the static legends (MathJax) go under their plots
+  [[elB, '.a8-lo-legb'], [elC, '.a8-lo-legc']].forEach(([el, sel]) => { const lg = el.querySelector(sel); if (lg) el.appendChild(lg); });
+  function axes(P, title, xl, yl) {
+    const ctx = P.ctx, w = P.cv.w, h = P.cv.h, m = P.m, cFg = EPP.color('fg');
+    tdraw(ctx, title, 4, 15, 11.5, EPP.color('fg2'));
+    tdraw(ctx, xl, (m.l + w - m.r) / 2, h - 9, 12.5, cFg, 'center');
+    ctx.save(); ctx.translate(14, (m.t + h - m.b) / 2); ctx.rotate(-Math.PI / 2); tdraw(ctx, yl, 0, 0, 12.5, cFg, 'center'); ctx.restore();
+  }
+  let CB = null;
+  function overlayB() {
+    const P = pB, ctx = P.ctx, w = P.cv.w, h = P.cv.h, m = P.m;
+    if (!w || !h || !cur || !CB) return;
+    fonts();
+    axes(P, fit(ctx, LAB.titleB, LAB.titleBs, w - 8), LAB.xB, LAB.yB);
+    const X = (v) => P.X(v), Y = (v) => P.Y(v), pts = [];
+    ['tot', 'em', 'ab', 'tot0'].forEach(k => pxPoly(X, Y, CB.x, CB[k], h, pts));
+    const Xc = X(cur.x), X1 = X(1), T0 = m.t, B0 = h - m.b;
+    const cands = (wd, hh) => [T0 + 5, T0 + 20, T0 + 35, B0 - 6 - hh, B0 - 21 - hh, (T0 + B0 - hh) / 2]
+      .flatMap(y0 => [{ x0: X1 + 5, y0, al: 'left' }, { x0: X1 - 5 - wd, y0, al: 'right' }]);
+    // the label of the threshold line avoids the curves and the cursor point; it may cross the dashed cursor line if it must
+    const label = (avoidCursor) => {
+      const pl = placer(ctx, [m.l, T0, w - m.r, B0], pts);
+      if (avoidCursor) pl.box([Xc - 2, T0, Xc + 2, B0]);
+      pl.box([Xc - 7, Y(CB.rc) - 7, Xc + 7, Y(CB.rc) + 7]); pl.box([X1 - 1.5, T0, X1 + 1.5, B0]);
+      return pl.put([{ lines: [[T('emission threshold')]], size: 11 }, { lines: [[T('threshold')]], size: 11 }], EPP.textColor('phonon'), cands);
+    };
+    if (!label(true)) label(false);
+  }
+  function overlayC() {
+    const P = pC, ctx = P.ctx, w = P.cv.w, h = P.cv.h;
+    if (!w || !h || !cur) return;
+    fonts();
+    axes(P, fit(ctx, LAB.titleC, LAB.titleCs, w - 8), LAB.xC, LAB.yC);
+  }
+  const baseB = pB.render.bind(pB), baseC = pC.render.bind(pC);
+  pB.render = () => { baseB(); overlayB(); };
+  pC.render = () => { baseC(); overlayC(); };
+
+  // carrier-energy grid of (b), refined just above the threshold where the emission term rises as (x − 1)^{1/2}
+  const XS = [...new Set([...EPP.linspace(0, 5, 501), 1 + 1e-5, 1 + 1e-4, 1 + 4e-4, 1 + 1e-3, 1 + 2.5e-3, 1 + 5e-3])].sort((u, v) => u - v);
+  const TS = EPP.linspace(0, TMAX, 241);
+  function drawRate() {
+    const p = cur.p, n = cur.n;
+    const em = XS.map(x => (x < 1 ? NaN : p.R0 * emU(x, n)));
+    const ab = XS.map(x => p.R0 * absU(x, n));
+    const tot = XS.map(x => rate(p, x, n)), tot0 = XS.map(x => rate(p, x, 0));
+    CB = { x: XS, em, ab, tot, tot0, rc: rate(p, cur.x, n) };
+    pB.draw([
+      { type: 'vline', at: 1, color: 'phonon', width: 1.3, dash: [] },
+      { type: 'line', x: XS, y: tot0, color: 'muted', width: 1.5, label: 'total at 0 K' },
+      { type: 'line', x: XS, y: ab, color: 'c5', width: 2, dash: [2, 3], label: 'absorption' },
+      { type: 'line', x: XS, y: em, color: 'phonon', width: 2, dash: [6, 4], label: 'emission' },
+      { type: 'line', x: XS, y: tot, color: 'electron', width: 2.3, label: 'total' },
+      { type: 'vline', at: cur.x, color: 'muted', width: 1, dash: [3, 3] },
+      { type: 'points', x: [cur.x], y: [CB.rc], color: 'electron', r: 4.5 }
+    ], { ylim: [0, p.ytop] });
+  }
+  function drawLife() {
+    const p = cur.p, tauAt = (x) => TS.map(t => { const r = rate(p, x, nB(p, t)); return r > 0 ? 1000 / r : NaN; });
+    const rc = rate(p, cur.x, cur.n);
+    pC.draw([
+      { type: 'line', x: TS, y: tauAt(0.5), color: 'muted', width: 1.9, dash: [2, 3], label: 'below threshold', breakJump: Infinity },
+      { type: 'line', x: TS, y: tauAt(2), color: 'c4', width: 1.9, dash: [6, 4], label: 'above threshold', breakJump: Infinity },
+      { type: 'line', x: TS, y: tauAt(cur.x), color: 'electron', width: 2.3, label: 'carrier energy', breakJump: Infinity },
+      { type: 'vline', at: cur.T, color: 'muted', width: 1, dash: [3, 3] },
+      { type: 'points', x: [cur.T], y: [rc > 0 ? 1000 / rc : NaN], color: 'electron', r: 4.5 }
+    ]);
+  }
+
+  // ---------- readouts ----------
+  const roV = {};
+  ['a', 'hw', 'r0', 'n', 'e', 'r', 'tau', 'w', 'l'].forEach(k => { roV[k] = fig.querySelector('.a8-lo-v-' + k); });
+  function readouts() {
+    const { p, x, n } = cur, r = rate(p, x, n), tau = r > 0 ? 1000 / r : Infinity;
+    const k = p.qpol * Math.sqrt(x), v = 2 * H2M * k / p.m / HB_EVS * 1e-15;   // band velocity ħk/m* in Å/fs
+    roV.a.textContent = String(Number(p.a.toPrecision(3)));
+    roV.hw.textContent = `${p.hw} meV`;
+    roV.r0.textContent = `${sci(p.R0)} ps⁻¹`;
+    roV.n.textContent = n === 0 ? '0' : sci(n);
+    roV.e.textContent = `${sci(x * p.hw)} meV`;
+    roV.r.textContent = `${sci(r)} ps⁻¹`;
+    roV.tau.textContent = r > 0 ? `${sci(tau)} fs` : '∞';
+    roV.w.textContent = `${sci(HB_MEVFS * r / 1000)} meV`;
+    roV.l.textContent = r > 0 ? `${sci(v * tau / 10)} nm` : '∞';
+  }
+
+  function onChange(s) {
+    const p = MAT[s.mat] || MAT.GaAs, temp = EPP.clamp(+s.T, 0, TMAX);
+    cur = { p, T: temp, x: EPP.clamp(+s.x, XMIN, XMAX), n: nB(p, temp) };
+    drawBand(); drawRate(); drawLife(); readouts();
+  }
+  const ui = EPP.controls(fig.querySelector('.a8-lo-ctrls'), [
+    { key: 'mat', type: 'seg', label: 'material', options: [['GaAs', 'GaAs'], ['GaN', 'GaN']], value: 'GaAs' },
+    { key: 'T', type: 'range', label: 'temperature T', min: 0, max: TMAX, step: 5, value: 300, fmt: v => v.toFixed(0) + ' K' },
+    { key: 'x', type: 'range', label: 'carrier energy E_k / ħω_{LO}', min: XMIN, max: XMAX, step: 0.01, value: 1.5, fmt: v => v.toFixed(2) }
+  ], onChange);
+  // slider labels with the symbols in italic and the vector in bold, like the readout keys
+  const Ih = (t) => `<i style="font-family:var(--font-text)">${t}</i>`;
+  const relabel = (key, html) => { const sp = fig.querySelector(`label[for="${fig.id}-${key}"] > span`); if (sp) sp.innerHTML = html; };
+  relabel('T', `temperature ${Ih('T')}`);
+  relabel('x', `carrier energy ${Ih('E')}<sub><b>k</b></sub> / ${Ih('ħω')}<sub>LO</sub>`);
+
+  // ---------- pointer and keyboard: (a) and (b) move the carrier, (c) sets T ----------
+  const setX = (v) => { v = Math.round(EPP.clamp(v, XMIN, XMAX) * 100) / 100; if (Math.abs(v - ui.state.x) > 1e-9) ui.set('x', v); };
+  const setT = (v) => { v = Math.round(EPP.clamp(v, 0, TMAX) / 5) * 5; if (Math.abs(v - ui.state.T) > 1e-9) ui.set('T', v); };
+  const stepKey = (key, v, st, big, lo, hi) => {
+    const k = { ArrowLeft: -st, ArrowDown: -st, ArrowRight: st, ArrowUp: st, PageDown: -big, PageUp: big }[key];
+    if (k !== undefined) { const s = Math.abs(k); return (k < 0 ? Math.ceil(v / s - 1e-9) * s - s : Math.floor(v / s + 1e-9) * s + s); }
+    return key === 'Home' ? lo : (key === 'End' ? hi : null);
+  };
+  function attach(cv, frame, pick, key) {
+    cv.setAttribute('tabindex', '0');
+    cv.setAttribute('role', 'application');
+    let drag = null, pend = null;
+    const loc = (e) => { const r = cv.getBoundingClientRect(); return { px: e.clientX - r.left, py: e.clientY - r.top }; };
+    const inFrame = (q, tol) => { const f = frame(); return q.px >= f[0] - tol && q.px <= f[2] + tol && q.py >= f[1] - tol && q.py <= f[3] + tol; };
+    cv.addEventListener('pointerdown', (e) => {
+      const q = loc(e);
+      if (!inFrame(q, 6)) return;
+      // a click or tap sets a value without focusing the panel (focus by Tab, for the arrow keys), so that the page does not
+      // scroll back to the panel when the reader scrolls away
+      e.preventDefault();
+      // on a touch screen a tap sets the value, a sideways drag moves it and a vertical swipe scrolls the page
+      if (e.pointerType === 'touch') { pend = { x: q.px, y: q.py, id: e.pointerId }; return; }
+      drag = e.pointerId; try { cv.setPointerCapture(e.pointerId); } catch (_) {}
+      pick(q.px, q.py);
+    });
+    cv.addEventListener('pointermove', (e) => {
+      const q = loc(e);
+      if (drag === e.pointerId) { pick(q.px, q.py); return; }
+      if (pend && pend.id === e.pointerId) {
+        const dx = q.px - pend.x, dy = q.py - pend.y;
+        if (Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy)) { drag = e.pointerId; pend = null; try { cv.setPointerCapture(e.pointerId); } catch (_) {} pick(q.px, q.py); }
+        else if (Math.abs(dy) > 8) pend = null;
+        return;
+      }
+      if (e.pointerType !== 'touch') cv.style.cursor = inFrame(q, 0) ? 'pointer' : '';
+    });
+    const end = (e) => { if (e.type === 'pointerup' && pend && pend.id === e.pointerId) pick(pend.x, pend.y); pend = null; if (drag === e.pointerId) drag = null; };
+    cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
+    cv.addEventListener('keydown', (e) => {
+      if (e.altKey || e.ctrlKey || e.metaKey) return;
+      if (key(e.key)) e.preventDefault();
+    });
+  }
+  const keyX = (k) => { const v = stepKey(k, ui.state.x, 0.01, 0.1, XMIN, XMAX); if (v === null) return false; setX(v); return true; };
+  const keyT = (k) => { const v = stepKey(k, ui.state.T, 5, 50, 0, TMAX); if (v === null) return false; setT(v); return true; };
+  // (a): the nearest point of the right branch (a point on the left branch picks its mirror image)
+  attach(cvA.canvas, () => { const g = geo(); return [g.L, g.T0, g.R, g.B0]; }, (px, py) => {
+    const g = geo(), kp = KA[0] + (px - g.L) / (g.R - g.L) * (KA[1] - KA[0]);
+    if (kp < 0) px = XA(g, -kp);
+    let best = Infinity, bx = ui.state.x;
+    const s0 = Math.sqrt(XMIN), s1 = Math.sqrt(XMAX);
+    for (let i = 0; i <= 400; i++) { const s = s0 + (s1 - s0) * i / 400, d = Math.hypot(XA(g, s) - px, YA(g, s * s) - py); if (d < best) { best = d; bx = s * s; } }
+    setX(bx);
+  }, keyX);
+  const frameOf = (P) => () => [P.m.l, P.m.t, P.cv.w - P.m.r, P.cv.h - P.m.b];
+  attach(pB.cv.canvas, frameOf(pB), (px) => setX(pB.invX(px)), keyX);
+  attach(pC.cv.canvas, frameOf(pC), (px) => setT(pC.invX(px)), keyT);
+})();
+</script>

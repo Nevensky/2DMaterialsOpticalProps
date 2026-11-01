@@ -1,0 +1,293 @@
+  <figure class="viz" id="viz-b3-lab">
+    <p class="viz-title"><span>Reststrahlen lab: $\varepsilon(\omega)$, reflectance, energy loss and $W$</span> <span class="tag">interactive</span></p>
+    <div class="viz-grid two">
+      <div class="b3-lab-panel">
+        <div class="b3-lab-h" style="font-family:var(--font-ui);font-size:0.82rem;font-weight:600;line-height:1.35;color:var(--fg-2);margin:0 0 4px">(a) Dielectric function $\varepsilon(\omega)$</div>
+        <div class="b3-lab-pa"></div>
+        <div class="legend b3-lab-leg"><span class="item" style="color:var(--fg)"><span class="sw"></span><span style="color:var(--fg-2)">$\mathrm{Re}\,\varepsilon$</span></span><span class="item" style="color:var(--c-photon)"><span class="sw dash"></span><span style="color:var(--fg-2)">$\mathrm{Im}\,\varepsilon$</span></span><span class="item" style="color:var(--muted)"><span class="sw dot"></span><span style="color:var(--fg-2)">$\varepsilon_\infty$</span></span><span class="item" style="color:var(--fg)"><span class="sw" style="width:8px;height:8px;border:0;border-radius:50%;background:currentColor"></span><span style="color:var(--fg-2)">$\varepsilon_{\mathrm s}=\varepsilon(0)$</span></span></div>
+      </div>
+      <div class="b3-lab-panel">
+        <div class="b3-lab-h" style="font-family:var(--font-ui);font-size:0.82rem;font-weight:600;line-height:1.35;color:var(--fg-2);margin:0 0 4px">(b) Reflectance $R$ at normal incidence</div>
+        <div class="b3-lab-pb"></div>
+        <div class="legend b3-lab-leg"><span class="item" style="color:var(--c-photon)"><span class="sw"></span><span style="color:var(--fg-2)">$R$</span></span><span class="item" style="color:var(--c-phonon)"><span class="sw box"></span><span style="color:var(--fg-2)">Reststrahlen band ($\varepsilon&lt;0$)</span></span></div>
+      </div>
+    </div>
+    <div class="viz-grid two" style="margin-top:14px">
+      <div class="b3-lab-panel">
+        <div class="b3-lab-h" style="font-family:var(--font-ui);font-size:0.82rem;font-weight:600;line-height:1.35;color:var(--fg-2);margin:0 0 4px">(c) Energy-loss function $-\mathrm{Im}[1/\varepsilon(\omega)]$</div>
+        <div class="b3-lab-pc"></div>
+        <div class="legend b3-lab-leg"><span class="item" style="color:var(--c-5)"><span class="sw"></span><span style="color:var(--fg-2)">$-\mathrm{Im}(1/\varepsilon)$ (EELS)</span></span></div>
+      </div>
+      <div class="b3-lab-panel">
+        <div class="b3-lab-h" style="font-family:var(--font-ui);font-size:0.82rem;font-weight:600;line-height:1.35;color:var(--fg-2);margin:0 0 4px">(d) Screened interaction $W/v=1/\varepsilon$ and its two parts</div>
+        <div class="b3-lab-pd"></div>
+        <div class="legend b3-lab-leg"><span class="item" style="color:var(--c-photon)"><span class="sw"></span><span style="color:var(--fg-2)">$\mathrm{Re}\,W/v$</span></span><span class="item" style="color:var(--c-4)"><span class="sw dash"></span><span style="color:var(--fg-2)">$W^{\rme}/v=1/\varepsilon_\infty$</span></span><span class="item" style="color:var(--c-phonon)"><span class="sw"></span><span style="color:var(--fg-2)">$\mathrm{Re}\,W^{\ph}/v$</span></span><span class="item" style="color:var(--muted)"><span class="sw dot"></span><span style="color:var(--fg-2)">$1/\varepsilon_{\mathrm s}$</span></span></div>
+      </div>
+    </div>
+    <div class="b3-lab-ctrls"></div>
+    <p class="b3-lab-note" hidden aria-live="polite" style="font-family:var(--font-ui);font-size:0.85rem;line-height:1.4;color:var(--fg-2);margin:8px 0 0;max-width:none"></p>
+    <div class="readout b3-lab-ro" aria-live="polite" aria-atomic="true"><span>$\hbar\omega_{\mathrm{TO}}$, $\hbar\omega_{\mathrm{LO}}$<b class="b3-lab-v-cm"></b></span><span>band, as wavelength<b class="b3-lab-v-um"></b></span><span>highest $R$ in the band<b class="b3-lab-v-rmax"></b></span><span>dip of $R$ ($\varepsilon\approx1$)<b class="b3-lab-v-dip"></b></span></div>
+    <div class="readout b3-lab-ro2" aria-live="polite" aria-atomic="true"><span>$\varepsilon_{\mathrm s}$ (LST)<b class="b3-lab-v-es"></b></span><span>$\hbar\omega_{\mathrm p}^{\ion}$<b class="b3-lab-v-wp"></b></span><span>implied $Z^*$ (preset's $\OV$, $M_{\mathrm r}$)<b class="b3-lab-v-z"></b></span><span>$1/\varepsilon_\infty-1/\varepsilon_{\mathrm s}$<b class="b3-lab-v-d"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> Infrared absorption ($\mathrm{Im}\,\varepsilon$) peaks at $\omega_{\mathrm{TO}}$, the energy loss and the lattice part of $W$ at $\omega_{\mathrm{LO}}$, and in between $\varepsilon&lt;0$ and the crystal reflects most of the light. $W$ goes from $v/\varepsilon_{\mathrm s}$ at $\omega=0$ to $v/\varepsilon_\infty$ far above $\omega_{\mathrm{LO}}$.</p><div class="cap-more">
+      <p><strong>Marks.</strong> In every panel the amber shading is the Reststrahlen band <span class="nw">$\omega_{\mathrm{TO}}&lt;\omega&lt;\omega_{\mathrm{LO}}$,</span> between the dashed lines TO and LO. (a) Ink $\mathrm{Re}\,\varepsilon$ and rose dashed $\mathrm{Im}\,\varepsilon$, clipped at the resonance; dotted <span class="nw">$\varepsilon_\infty$;</span> dot <span class="nw">$\varepsilon_{\mathrm s}$.</span> (b) Rose <span class="nw">$R$.</span> (c) Violet: the loss function. (d) Rose <span class="nw">$\mathrm{Re}\,W/v$,</span> teal dashed <span class="nw">$W^{\rme}/v$,</span> amber <span class="nw">$\mathrm{Re}\,W^{\ph}/v$,</span> dotted <span class="nw">$1/\varepsilon_{\mathrm s}$.</span> Hovering a panel gives $\hbar\omega$ in meV and cm⁻¹.</p>
+      <p><strong>Try.</strong> (1) Choose NaCl: its small $\varepsilon_\infty$ makes the band wider than half its TO energy. (2) Drag $\hbar\omega_{\mathrm{LO}}$ down to <span class="nw">$\hbar\omega_{\mathrm{TO}}$,</span> a nonpolar crystal: the band, the loss peak and $W^{\ph}$ disappear. (3) Raise <span class="nw">$\hbar\gamma$:</span> the plateau of $R$ sinks and the peaks broaden, but absorption stays at TO and loss at LO. Just above LO, $R$ dips nearly to zero where <span class="nw">$\varepsilon=1$</span> <span class="nw">(36.5 meV in GaAs).</span></p>
+      <p><strong>Model.</strong> <a class="eqref" href="#b3-eq-fact"></a> with one damping rate <span class="nw">$\gamma$,</span> then <a class="eqref" href="#b3-eq-R"></a>, <a class="eqref" href="#b3-eq-loss"></a> and <a class="eqref" href="#b3-eq-W"></a> with <span class="nw">$(\omega+\ii\eta)^2\to\omega^2+\ii\gamma\omega$.</span> Readouts: $\varepsilon_{\mathrm s}$ from <a class="eqref" href="#b3-eq-lst"></a>; <span class="nw">$(\omega_{\mathrm p}^{\ion})^2=\varepsilon_\infty(\omega_{\mathrm{LO}}^2-\omega_{\mathrm{TO}}^2)$</span> from <a class="eqref" href="#b3-eq-lo"></a>; $Z^*$ from <a class="eqref" href="#b3-eq-pion"></a> with the preset's $\OV$ and <span class="nw">$M_{\mathrm r}$.</span> Presets, as $\hbar\omega_{\mathrm{TO}}$, $\hbar\omega_{\mathrm{LO}}$ and $\hbar\gamma$ in meV, then $\varepsilon_\infty$ (literature values, illustrative): GaAs 33.3, 36.2, 0.31, 10.9; NaCl 20.33, 32.73, 0.99, 2.34; 3C-SiC 98.69, 120.51, 0.62, 6.52; hBN 169.86, 199.61, 0.62, 4.87. hBN is uniaxial; its in-plane values are used as if it were isotropic.</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b3-lab');
+  if (!fig || !window.EPP) return;
+  const C = EPP.C;
+
+  // ---------- presets: the Section B.3 table (literature values, illustrative) ----------
+  // ħω and ħγ in meV, Ω_V in Å^3, M_r in amu. X: energy axis [0, 1.6 ħω_LO] rounded up (meV); Xe: the wider axis
+  // used once ω_LO is dragged close to the right edge (it holds 1.8 times the preset ω_LO).
+  const MATS = {
+    gaas: { name: 'GaAs', TO: 33.3, LO: 36.2, einf: 10.9, gam: 0.31, OV: 45.17, Mr: 36.11, meas: '12.9', X: 60, Xe: 75 },
+    nacl: { name: 'NaCl', TO: 20.33, LO: 32.73, einf: 2.34, gam: 0.99, OV: 44.85, Mr: 13.95, meas: '5.9', X: 55, Xe: 70 },
+    sic: { name: '3C-SiC', TO: 98.69, LO: 120.51, einf: 6.52, gam: 0.62, OV: 20.72, Mr: 8.41, meas: '9.72', X: 200, Xe: 250 },
+    hbn: { name: 'hBN', TO: 169.86, LO: 199.61, einf: 4.87, gam: 0.62, OV: 18.08, Mr: 6.10, meas: '6.70', X: 320, Xe: 420 }
+  };
+  const CM = 8.06554;                                   // cm^-1 per meV
+  const UM = 1239.84;                                   // wavelength in µm = 1239.84 / (ħω in meV)
+  const KWP = 64.654 * 64.654 * 4 * Math.PI * 14.3996;  // 7.564e5 meV^2: (ħω_p^ion)^2 = KWP Z*^2 / (Ω_V M_r), from (B3.4)
+  const HOLD = 1.002;                                   // ω_LO is held at 1.002 ω_TO or above
+  // slider ranges of a preset: ω_TO from 0.5 to 1.6 times its value, ω_LO up to 1.8 times its value (0.01 meV grid)
+  const span = (P) => ({ lo: Math.floor(50 * P.TO + 1e-6) / 100, hiTO: Math.ceil(160 * P.TO - 1e-6) / 100, hiLO: Math.ceil(180 * P.LO - 1e-6) / 100 });
+
+  // ---------- physics ----------
+  function model(st) {
+    const P = MATS[st.mat] || MATS.gaas;
+    const TO = st.TO, held = st.LO < HOLD * TO, LO = held ? HOLD * TO : st.LO;
+    const einf = st.einf, g = st.gam, TO2 = TO * TO, LO2 = LO * LO;
+    const eps0 = einf * LO2 / TO2;                      // LST relation (B3.12)
+    const wp2 = einf * (LO2 - TO2);                     // (B3.10) solved for (ω_p^ion)^2
+    return { P, TO, LO, held, einf, g, TO2, LO2, eps0, wp: Math.sqrt(wp2), Z: Math.sqrt(wp2 * P.OV * P.Mr / KWP), dinv: 1 / einf - 1 / eps0 };
+  }
+  // (B3.11) with one damping rate, ε = ε_∞ (ω_LO^2 − ω^2 − iγω)/(ω_TO^2 − ω^2 − iγω); time dependence e^{−iωt}, Im ε > 0 is absorption
+  const epsAt = (w, m) => C.scale(C.div([m.LO2 - w * w, -m.g * w], [m.TO2 - w * w, -m.g * w]), m.einf);
+  // (B3.15); C.sqrt is the principal root, with imaginary part ≥ 0 when Im ε ≥ 0: the wave that decays into the crystal
+  function refl(e) { const s = C.sqrt(e), r = C.div(C.sub(s, [1, 0]), C.add(s, [1, 0])); return r[0] * r[0] + r[1] * r[1]; }
+  // energy grid: uniform, plus dense windows around ω_TO and ω_LO so that peaks of width γ are resolved
+  function grid(X, m) {
+    const xs = EPP.linspace(0, X, 701), h = Math.max(8 * m.g, 0.006 * X);
+    for (const w0 of [m.TO, m.LO]) for (let k = 0; k <= 160; k++) { const x = w0 - h + 2 * h * k / 160; if (x > 0 && x < X) xs.push(x); }
+    xs.sort((a, b) => a - b);
+    return xs.filter((v, i) => i === 0 || v - xs[i - 1] > 1e-9);
+  }
+  function spectra(m, X) {
+    const x = grid(X, m), n = x.length;
+    const S = { x, re: new Array(n), im: new Array(n), R: new Array(n), loss: new Array(n), W: new Array(n), We: new Array(n), Wph: new Array(n) };
+    const k = (m.LO2 - m.TO2) / m.einf;                 // (ω_LO^2 − ω_TO^2)/ε_∞ = (1/ε_∞ − 1/ε_s) ω_LO^2 by the LST relation
+    for (let i = 0; i < n; i++) {
+      const w = x[i], e = epsAt(w, m), inv = C.inv(e);
+      S.re[i] = e[0]; S.im[i] = e[1]; S.R[i] = refl(e);
+      S.loss[i] = -inv[1];                              // loss function −Im(1/ε), (B3.16)
+      S.W[i] = inv[0];                                  // Re W/v = Re 1/ε
+      S.We[i] = 1 / m.einf;                             // W^e/v = 1/ε_∞
+      S.Wph[i] = C.div([k, 0], [w * w - m.LO2, m.g * w])[0];   // Re W^ph/v: (B3.17) with (ω + iη)^2 → ω^2 + iγω; equals Re(1/ε − 1/ε_∞)
+    }
+    return S;
+  }
+  // readout features: the highest R inside the band, and the dip of R above ω_LO, near the point where ε = 1
+  function features(m) {
+    let Rmax = 0;
+    for (let k = 0; k <= 240; k++) Rmax = Math.max(Rmax, refl(epsAt(m.TO + (m.LO - m.TO) * k / 240, m)));
+    let wdip = NaN;
+    if (m.einf > 1.0005) {
+      const w1 = Math.sqrt((m.einf * m.LO2 - m.TO2) / (m.einf - 1));   // Re ε = 1 there when γ = 0
+      let a = m.LO, b = w1 + 3 * (w1 - m.LO) + 10 * m.g, best = Infinity;
+      for (let pass = 0; pass < 2; pass++) {
+        const n = pass ? 100 : 400, st = (b - a) / n;
+        for (let k = 0; k <= n; k++) { const w = a + st * k, R = refl(epsAt(w, m)); if (R < best) { best = R; wdip = w; } }
+        a = Math.max(m.LO, wdip - st); b = wdip + st;
+      }
+    }
+    return { Rmax, wdip };
+  }
+
+  // ---------- formatting ----------
+  const NB = '\u00a0';
+  const SUP = { '-': '⁻', 0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴', 5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹' };
+  function num(v, d) {
+    if (!isFinite(v)) return '—';
+    const a = Math.abs(v);
+    if (a === 0) return '0';
+    if (a >= 1e-3 && a < 1e5) return String(Number(v.toPrecision(d))).replace('-', '−');
+    const e = Math.floor(Math.log10(a));
+    return `${(v / Math.pow(10, e)).toFixed(d - 1).replace('-', '−')}×10${String(e).split('').map(c => SUP[c]).join('')}`;
+  }
+  const cm1 = (v) => (v * CM < 999.95 ? (v * CM).toFixed(1) : (v * CM).toFixed(0));
+  const It = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+
+  // ---------- canvas text: '$..$' is an italic symbol (text font); _ and ^ as in EPP.drawRich ----------
+  let fUI = 'sans-serif', fTX = 'serif';
+  const fonts = () => { fUI = EPP.css('--font-ui') || 'sans-serif'; fTX = EPP.css('--font-text') || 'serif'; };
+  const parse = (s) => s.split(/(\$[^$]*\$)/).filter(Boolean).map(t => (t[0] === '$' ? [t.slice(1, -1), 1] : [t, 0]));
+  const pOpt = (p, size) => (p[1] ? { size: size + 1, font: fTX, italic: true } : { size, font: fUI });
+  const rtW = (ctx, s, size) => parse(s).reduce((w, p) => { const o = pOpt(p, size); return w + EPP.measureRich(ctx, p[0], o.size, o.font, o); }, 0);
+  function rt(ctx, s, x, y, size, color, align) {
+    const tot = rtW(ctx, s, size);
+    let x0 = align === 'center' ? x - tot / 2 : align === 'right' ? x - tot : x;
+    ctx.fillStyle = color; ctx.textBaseline = 'alphabetic';
+    for (const p of parse(s)) { const o = pOpt(p, size); x0 += EPP.drawRich(ctx, p[0], x0, y, o); }
+    return tot;
+  }
+
+  // ---------- the four panels ----------
+  let cur = null, S = null, F = null;
+  const hov = (v) => `${EPP.fix(v, 2)} meV (${Math.round(v * CM)} cm⁻¹)`;
+  const mkPlot = (sel, aria) => new EPP.Plot(fig.querySelector(sel), {
+    xlim: [0, 60], ylim: [0, 1], legend: false, xname: 'ħω', hoverX: hov, hoverY: (v) => num(v, 4),
+    aspect: 0.62, minHeight: 200, maxHeight: 300, margin: { l: 54, r: 12, t: 18, b: 38 }, ariaLabel: aria
+  });
+  const pA = mkPlot('.b3-lab-pa', 'Panel a: real and imaginary parts of the dielectric function against energy');
+  const pB = mkPlot('.b3-lab-pb', 'Panel b: normal-incidence reflectance against energy');
+  const pC = mkPlot('.b3-lab-pc', 'Panel c: energy-loss function against energy');
+  const pD = mkPlot('.b3-lab-pd', 'Panel d: screened interaction over the bare Coulomb interaction, and its electronic and lattice parts, against energy');
+  // axis titles with italic symbols, the TO and LO labels above the frame, and panel annotations
+  function decorate(plot, ylab, extra) {
+    const base = plot.render.bind(plot);
+    plot.render = () => {
+      base();
+      const ctx = plot.ctx, w = plot.cv.w, h = plot.cv.h, mg = plot.m;
+      if (!w || !h || !cur) return;
+      fonts();
+      const cFg = EPP.color('fg'), cMu = EPP.textColor('muted');
+      ctx.save();
+      rt(ctx, '$ħω$ (meV)', mg.l + (w - mg.l - mg.r) / 2, h - 8, 12.5, cFg, 'center');
+      ctx.translate(14, mg.t + (h - mg.t - mg.b) / 2); ctx.rotate(-Math.PI / 2);
+      rt(ctx, ylab, 0, 0, 12.5, cFg, 'center');
+      ctx.restore();
+      // TO left of its line and LO right of its line, so the two labels never meet however narrow the band
+      rt(ctx, 'TO', plot.X(cur.TO) - 3, mg.t - 4, 11, cMu, 'right');
+      rt(ctx, 'LO', plot.X(cur.LO) + 3, mg.t - 4, 11, cMu, 'left');
+      if (extra) extra(ctx, plot, mg, w);
+    };
+  }
+  decorate(pA, '$ε$($ω$)', (ctx, p, mg, w) => {
+    const yl = p.ylim;
+    if (cur.einf > yl[0] && cur.einf < yl[1]) rt(ctx, '$ε$_∞', w - mg.r - 5, p.Y(cur.einf) - 4, 12, EPP.textColor('muted'), 'right');
+    if (cur.eps0 < yl[1]) {
+      const X0 = p.X(0), Y = p.Y(cur.eps0);
+      ctx.fillStyle = EPP.color('ink'); ctx.beginPath(); ctx.arc(X0, Y, 3.5, 0, 2 * Math.PI); ctx.fill();
+      rt(ctx, '$ε$_s', X0 + 7, Y - 18 > mg.t ? Y - 7 : Y + 16, 12, EPP.color('fg'), 'left');   // below the dot when it nears the top
+    }
+  });
+  decorate(pB, '$R$');
+  decorate(pC, '−Im(1/$ε$)');
+  decorate(pD, '$W$/$v$', (ctx, p, mg) => {
+    const v = 1 / cur.eps0, yl = p.ylim;
+    if (v > yl[0] && v < yl[1]) rt(ctx, '1/$ε$_s', mg.l + 6, p.Y(v) + 14, 12, EPP.textColor('muted'), 'left');
+  });
+
+  // axis limits: fixed per preset; the energy axis widens once (with hysteresis) when ω_LO nears its edge, and
+  // the ranges of (a) and (d) follow ε_s and 1/ε_∞ only when these leave the frame. (b) and (c) never rescale.
+  const refs = { E: 1, V: 1, L: 1, ext: false };
+  function resetRefs(m) { refs.E = m.eps0; refs.V = 1 / m.einf; refs.L = (m.LO2 - m.TO2) / (m.einf * m.g * m.LO); refs.ext = false; }
+
+  function draw() {
+    const m = cur, P = m.P;
+    if (!refs.ext && m.LO > 0.9 * P.X) refs.ext = true; else if (refs.ext && m.LO < 0.85 * P.X) refs.ext = false;
+    const X = refs.ext ? P.Xe : P.X;
+    if (!(m.eps0 <= 2.9 * refs.E && m.eps0 >= 0.28 * refs.E)) refs.E = m.eps0;
+    if (!(1 / m.einf <= 1.8 * refs.V && 1 / m.einf >= 0.35 * refs.V)) refs.V = 1 / m.einf;
+    S = spectra(m, X); F = features(m);
+    const x = S.x;
+    const marks = [
+      { type: 'band', x0: m.TO, x1: m.LO, color: 'phonon', alpha: 0.12 },
+      { type: 'vline', at: m.TO, color: 'muted', width: 1.1 },
+      { type: 'vline', at: m.LO, color: 'muted', width: 1.1 }
+    ];
+    pA.draw([
+      ...marks,
+      { type: 'hline', at: m.einf, color: 'muted', dash: [2, 3], width: 1.4 },
+      { type: 'line', x, y: S.re, color: 'ink', width: 2, label: 'Re ε' },
+      { type: 'line', x, y: S.im, color: 'photon', width: 2, dash: [6, 4], label: 'Im ε' }
+    ], { xlim: [0, X], ylim: [-2.5 * refs.E, 3.5 * refs.E] });
+    pB.draw([
+      ...marks,
+      { type: 'line', x, y: S.R, color: 'photon', width: 2, label: 'R' }
+    ], { xlim: [0, X], ylim: [0, 1.04] });
+    pC.draw([
+      ...marks,
+      { type: 'line', x, y: S.loss, color: 'c5', width: 2, label: '−Im(1/ε)' }
+    ], { xlim: [0, X], ylim: [0, 1.15 * refs.L] });
+    pD.draw([
+      ...marks,
+      { type: 'hline', at: 1 / m.eps0, color: 'muted', dash: [2, 3], width: 1.4 },
+      { type: 'line', x, y: S.We, color: 'c4', width: 2, dash: [6, 4], label: 'W^{e}/v' },
+      { type: 'line', x, y: S.Wph, color: 'phonon', width: 2, label: 'Re W^{ph}/v' },
+      { type: 'line', x, y: S.W, color: 'photon', width: 2, label: 'Re W/v' }
+    ], { xlim: [0, X], ylim: [-1.8 * refs.V, 2.4 * refs.V] });
+    readouts(m, X);
+  }
+
+  // ---------- readouts, note and descriptions ----------
+  const roV = {};
+  ['cm', 'um', 'rmax', 'dip', 'es', 'wp', 'z', 'd'].forEach(k => { roV[k] = fig.querySelector('.b3-lab-v-' + k); });
+  const note = fig.querySelector('.b3-lab-note');
+  if (note) note.innerHTML = `${It('ω')}<sub>LO</sub> is held at 1.002${NB}${It('ω')}<sub>TO</sub>. A lower value would need ${It('ε')}<sub>s</sub> &lt; ${It('ε')}<sub>∞</sub> by the LST relation, but the ions can only add to the screening.`;
+  function readouts(m, X) {
+    const f1 = (v) => EPP.fix(v, 1), P = m.P;
+    roV.cm.textContent = `${cm1(m.TO)}, ${cm1(m.LO)}${NB}cm⁻¹`;
+    roV.um.textContent = `${(UM / m.TO).toPrecision(3)} to ${(UM / m.LO).toPrecision(3)}${NB}µm`;
+    roV.rmax.textContent = EPP.fix(F.Rmax, 3);
+    if (isFinite(F.wdip)) roV.dip.textContent = `${EPP.fix(F.wdip, 2)}${NB}meV`; else roV.dip.innerHTML = `none: ${It('ε')}<sub>∞</sub> = 1`;
+    // the measured value is shown while ω_TO, ω_LO and ε_∞ sit at the preset
+    const atP = Math.abs(m.TO - P.TO) < 0.005 && Math.abs(ui.state.LO - P.LO) < 0.005 && Math.abs(m.einf - P.einf) < 0.005;
+    roV.es.textContent = `${EPP.fix(m.eps0, 2)}${atP ? ` (measured: ${P.meas})` : ''}`;
+    roV.wp.textContent = `${f1(m.wp)}${NB}meV`;
+    roV.z.textContent = EPP.fix(m.Z, 2);
+    roV.d.textContent = num(m.dinv, 3);
+    if (note) note.hidden = !m.held;
+    const band = `the Reststrahlen band from ${f1(m.TO)} to ${f1(m.LO)} meV`;
+    pA.cv.canvas.setAttribute('aria-label', `Panel a: dielectric function from 0 to ${X} meV. The imaginary part peaks at the TO energy, ${f1(m.TO)} meV. ` +
+      `The real part is negative in ${band}, tends to the static constant ${EPP.fix(m.eps0, 2)} at zero energy and to epsilon infinity, ${EPP.fix(m.einf, 2)}, above the band.`);
+    pB.cv.canvas.setAttribute('aria-label', `Panel b: normal-incidence reflectance from 0 to ${X} meV. It reaches ${EPP.fix(F.Rmax, 2)} in ${band}` +
+      (isFinite(F.wdip) ? `, and dips nearly to zero at ${EPP.fix(F.wdip, 1)} meV, where epsilon passes through 1.` : '.'));
+    pC.cv.canvas.setAttribute('aria-label', `Panel c: energy-loss function, minus the imaginary part of 1 over epsilon, from 0 to ${X} meV. It peaks at the LO energy, ${f1(m.LO)} meV.`);
+    pD.cv.canvas.setAttribute('aria-label', `Panel d: W over v, which equals 1 over epsilon, from 0 to ${X} meV, with its electronic part 1 over epsilon infinity, ${num(1 / m.einf, 3)}, and its lattice part, ` +
+      `which has its pole at the LO energy, ${f1(m.LO)} meV. W over v starts at 1 over epsilon s, ${num(1 / m.eps0, 3)}, is negative in ${band}, and tends to 1 over epsilon infinity far above it.`);
+  }
+
+  // ---------- controls ----------
+  const elCtl = fig.querySelector('.b3-lab-ctrls');
+  const G = span(MATS.gaas);
+  let toNow = MATS.gaas.TO, lastMat = 'gaas', fresh = true;
+  const fE = (v) => `${EPP.fix(v, 2)} meV`;
+  const ui = EPP.controls(elCtl, [
+    { key: 'mat', type: 'select', label: 'material', options: [['gaas', 'GaAs'], ['nacl', 'NaCl'], ['sic', '3C-SiC'], ['hbn', 'hBN (in plane)']], value: 'gaas' },
+    { key: 'TO', type: 'range', label: 'TO energy ħω_{TO}', min: G.lo, max: G.hiTO, step: 0.01, value: MATS.gaas.TO, fmt: fE },
+    { key: 'LO', type: 'range', label: 'LO energy ħω_{LO}', min: G.lo, max: G.hiLO, step: 0.01, value: MATS.gaas.LO, fmt: (v) => (v < HOLD * toNow ? `${fE(HOLD * toNow)} (held)` : fE(v)) },
+    { key: 'einf', type: 'range', label: 'electronic screening ε_∞', min: 1, max: 15, step: 0.01, value: MATS.gaas.einf, fmt: (v) => EPP.fix(v, 2) },
+    { key: 'gam', type: 'range', label: 'damping ħγ', min: 0.05, max: 3, step: 0.01, value: MATS.gaas.gam, fmt: fE }
+  ], onChange);
+  // slider labels with italic symbols, as in the text
+  const LAB = { TO: `TO energy ${It('ħω')}<sub>TO</sub>`, LO: `LO energy ${It('ħω')}<sub>LO</sub>`, einf: `electronic screening ${It('ε')}<sub>∞</sub>`, gam: `damping ${It('ħγ')}` };
+  Object.keys(LAB).forEach(k => { const sp = elCtl.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  function setRange(key, min, max, v) {
+    const inp = document.getElementById(`${fig.id}-${key}`);
+    if (inp) { inp.min = String(min); inp.max = String(max); inp.step = '0.01'; }
+    ui.set(key, EPP.clamp(v, min, max), true);
+  }
+  // a preset sets the four sliders, their ranges and the axis limits
+  function applyPreset(P) {
+    const R = span(P);
+    toNow = P.TO;
+    setRange('TO', R.lo, R.hiTO, P.TO);
+    setRange('LO', R.lo, R.hiLO, P.LO);
+    ui.set('einf', P.einf, true); ui.set('gam', P.gam, true);
+    fresh = true;
+  }
+  function onChange(st) {
+    if (st.mat !== lastMat && MATS[st.mat]) { lastMat = st.mat; applyPreset(MATS[st.mat]); }
+    toNow = ui.state.TO;
+    ui.set('LO', ui.state.LO, true);                    // refresh the LO output: held or not
+    cur = model(ui.state);
+    if (fresh) { resetRefs(cur); fresh = false; }
+    draw();
+  }
+})();
+</script>

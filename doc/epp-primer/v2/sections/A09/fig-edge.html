@@ -1,0 +1,379 @@
+  <figure class="viz" id="viz-a9-edge">
+    <p class="viz-title">Phonon-assisted absorption edge of silicon: two slopes and a moving gap <span class="tag">interactive</span></p>
+    <div class="viz-grid two">
+      <div class="a9-edge-log"><div class="legend a9-edge-lega"><span class="item" style="color:var(--c-photon)"><span class="sw"></span><span style="color:var(--fg-2)">$\alpha_{\mathrm{abs}}$ at the chosen $T$</span></span><span class="item" style="color:var(--muted)"><span class="sw dash"></span><span style="color:var(--fg-2)">$\alpha_{\mathrm{abs}}$ at 78 K</span></span><span class="item" style="color:var(--muted)"><span class="sw dot" style="border-top-width:2px"></span><span style="color:var(--fg-2)">gap in the δ function</span></span></div></div>
+      <div class="a9-edge-sqrt"><div class="legend a9-edge-legb"><span class="item" style="color:var(--c-photon)"><span class="sw"></span><span style="color:var(--fg-2)">total</span></span><span class="item a9-edge-kpart" style="color:var(--c-5)"><span class="sw dot"></span><span style="color:var(--fg-2)">phonon absorption, $s=-1$</span></span><span class="item a9-edge-kpart" style="color:var(--c-phonon)"><span class="sw dash"></span><span style="color:var(--fg-2)">phonon emission, $s=+1$</span></span><span class="item" style="color:var(--muted)"><span class="sw dash" style="border-top-width:1.5px"></span><span style="color:var(--fg-2)">gap in the δ function</span></span><span class="item"><span class="sw dot" style="color:var(--c-5);border-top-width:2px;width:11px;margin-right:2px"></span><span class="sw dot" style="color:var(--c-phonon);border-top-width:2px;width:11px"></span><span style="color:var(--fg-2)">thresholds, gap $-\hbar\omega_\nu$ and $+\hbar\omega_\nu$</span></span></div></div>
+    </div>
+    <div class="a9-edge-ctrls"></div>
+    <div class="readout a9-edge-ro" aria-live="polite"><span class="a9-edge-qp">gap in the δ function, $E^{\mathrm{qp}}_{\mathrm g}(T)$<b class="a9-edge-v-qp"></b></span><span class="a9-edge-cl" hidden>gap in the δ function, clamped $E_{\mathrm g}$<b class="a9-edge-v-cl"></b></span><span class="a9-edge-qp">$E_{\mathrm g}-E^{\mathrm{qp}}_{\mathrm g}(T)$<b class="a9-edge-v-sh"></b></span><span>$n_{\mathrm{TO}}$<b class="a9-edge-v-nto"></b></span><span>$n_{\mathrm{TA}}$<b class="a9-edge-v-nta"></b></span></div>
+    <div class="readout a9-edge-ro2" aria-live="polite"><span class="a9-edge-qp">$\alpha_{\mathrm{abs}}$ at $\hbar\omega=E^{\mathrm{qp}}_{\mathrm g}(T)$<b class="a9-edge-v-agq"></b></span><span class="a9-edge-cl" hidden>$\alpha_{\mathrm{abs}}$ at $\hbar\omega=E_{\mathrm g}$<b class="a9-edge-v-agc"></b></span><span>$\alpha_{\mathrm{abs}}$ at 1.5 eV<b class="a9-edge-v-a15"></b></span><span>$\alpha_{\mathrm{abs}}$ at 1.5 eV, 78 K<b class="a9-edge-v-a15r"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> Cooling removes the absorption below the gap, because that part is weighted by $n_\nu$: at 4&nbsp;K it is negligible ($n_{\mathrm{TA}}\approx7\times10^{-24}$), while the emission part keeps its slope, weighted by $n_\nu+1\to1$. With $E^{\mathrm{qp}}_{\mathrm g}(T)$ in the δ function the thresholds move down on heating; with the clamped gap they stay put.</p><div class="cap-more"><p><strong>Marks.</strong> (a), log scale: $\alpha_{\mathrm{abs}}$ at the chosen $T$ (rose) and at 78&nbsp;K (grey, dashed); dotted line: the gap in the δ function. (b), $\sqrt{\alpha_{\mathrm{abs}}}$: the total (rose), the phonon-absorption part ($s=-1$, violet, dotted) and the phonon-emission part ($s=+1$, amber, dashed). Grey dashed line: the gap. Thin violet and amber lines: the thresholds $\hbar\omega_\nu$ below and above it, where absorption and emission switch on, labelled by branch.</p><p><strong>Try.</strong> Press 78&nbsp;K, then 4&nbsp;K: the violet part vanishes and the amber slope stays. Switch the renormalized gap off, or set $|\Delta E^{\mathrm{ZPR}}_{\mathrm g}|$ to 0: every threshold jumps up with the gap, by 114&nbsp;meV at 296&nbsp;K but by only 60&nbsp;meV at 4&nbsp;K. With the renormalized gap the thresholds at 78 and 296&nbsp;K lie 52&nbsp;meV apart; the measured gaps differ by about 40&nbsp;meV, the shift that the review's Fig.&nbsp;14 imposes by hand.</p><p><strong>Model.</strong> <a class="eqref" href="#a9-eq-edge">(A9.6)</a> with the TO (57.8&nbsp;meV, $w_\nu=1$) and TA (18.4&nbsp;meV, $w_\nu=0.3$) phonons and $C=6.0\times10^3$&nbsp;cm⁻¹&nbsp;eV⁻¹, chosen so that $\alpha_{\mathrm{abs}}\approx10^3$&nbsp;cm⁻¹ at 1.5&nbsp;eV and 296&nbsp;K, as in the review's Fig.&nbsp;14. The gap follows <a class="eqref" href="#a8-eq-varshni">(A8.12)</a> of <a href="#a-temperature">Section A.8</a> with $E_{\mathrm g}=1.23$&nbsp;eV and $\hbar\omega_0=30$&nbsp;meV (silicon; literature values, illustrative). The formula holds only near the edge: parabolic bands, constant $|\mathcal M|^2$ and $n_{\mathrm r}$.</p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a9-edge');
+  if (!fig || !window.EPP) return;
+  // outside Section A.9 (the isolated figure test) links to other parts of the page have no target: keep their text, drop the link
+  if (!fig.closest('#a-applications')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+
+  // ---------- model: the parabolic edge (A9.6) with two phonon branches; energies in eV unless marked meV, T in K ----------
+  // α_abs(ω) = C/ħω Σ_ν w_ν [ (n_ν + 1)(ΔE_+)² Θ(ΔE_+) + n_ν (ΔE_−)² Θ(ΔE_−) ],  ΔE_± = ħω − E_gap ∓ ħω_ν,  n_ν = n_B(ω_ν)
+  // gap in the δ function: E^qp_g(T) = E_g − |ΔE^ZPR_g| [1 + 2 n_B(ω_0)] (A8.12) with the toggle on, the clamped E_g with it off
+  const KB = 0.0861733;        // k_B, meV/K
+  const EG = 1.23;             // clamped-nuclei gap E_g, eV
+  const W0 = 30;               // ħω_0 of the one-oscillator gap, meV
+  const CPRE = 6.0e3;          // C, cm⁻¹ eV⁻¹: α_abs(1.5 eV, 296 K) ≈ 1.06×10³ cm⁻¹, the review's Fig. 14
+  const TREF = 78;             // reference temperature, K
+  const PH = [{ name: 'TO', w: 57.8, wt: 1 }, { name: 'TA', w: 18.4, wt: 0.3 }];   // ħω_ν (meV) and w_ν (silicon, illustrative)
+  const FLOOR = 1e-3;          // below the log axis: α_abs = 0 is drawn here, outside the frame
+  const XA = [0.85, 2.0], YA = [1e-2, 1e5], XB = [0.88, 1.36], YB = [0, 45];
+  const nB = (E, T) => (T > 0 ? 1 / Math.expm1(E / (KB * T)) : 0);
+  const gapOf = (T, qp, zpr) => (qp ? EG - zpr / 1000 * (1 + 2 * nB(W0, T)) : EG);
+  // [emission part (s = +1), absorption part (s = −1)] in cm⁻¹, for occupations occ[ν] and gap eg
+  function parts(E, occ, eg) {
+    let em = 0, ab = 0;
+    for (let i = 0; i < PH.length; i++) {
+      const hw = PH[i].w / 1000, dp = E - eg - hw, dm = E - eg + hw;
+      if (dp > 0) em += PH[i].wt * (occ[i] + 1) * dp * dp;
+      if (dm > 0) ab += PH[i].wt * occ[i] * dm * dm;
+    }
+    return [CPRE / E * em, CPRE / E * ab];
+  }
+  const xA = EPP.linspace(XA[0], XA[1], 921), xB = EPP.linspace(XB[0], XB[1], 961);
+  // linear interpolation of samples (for the label placement)
+  const interp = (xs, ys) => (x) => {
+    const t = (x - xs[0]) / (xs[xs.length - 1] - xs[0]) * (xs.length - 1);
+    if (!(t >= 0 && t <= xs.length - 1)) return NaN;
+    const i = Math.min(xs.length - 2, Math.floor(t)), f = t - i;
+    return ys[i] + f * (ys[i + 1] - ys[i]);
+  };
+
+  // ---------- number formats: superscript exponents, no-break space before units ----------
+  const NB = ' ';
+  const SUP = { '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹', '-': '⁻' };
+  const sci = (v, d) => { const p = v.toExponential(d - 1).split('e'); return `${p[0]}×10${String(+p[1]).split('').map(ch => SUP[ch] || ch).join('')}`; };
+  const sig = (v, d) => String(Number(v.toPrecision(d)));
+  const fmtN = (v) => (v >= 1e-3 ? sig(v, 3) : sci(v, 2));
+  const fmtA = (v) => (!(v > 0) ? '0' : v >= 1e3 ? sci(v, 3) : v >= 1 ? sig(v, 3) : v >= 1e-3 ? sig(v, 2) : sci(v, 2));
+  const spoken = (v) => { if (!(v > 0)) return '0'; if (v >= 1e-3 && v < 1e4) return sig(v, 3); const p = v.toExponential(1).split('e'); return `${p[0]} times 10 to the ${+p[1] < 0 ? 'minus ' + (-p[1]) : +p[1]}`; };
+
+  // ---------- canvas text: '$…$' marks math, whose letters (Latin, Greek, ħ) are italic in the text font;
+  //            _x, _{..}, ^x, ^{..} as in EPP.drawRich, so a label written outside '$' stays upright: '$E$^{qp}_g'.
+  //            A superscript followed by a subscript is stacked, as in the prose. ----------
+  let FT = 'serif', FU = 'sans-serif';
+  const fonts = () => { FT = EPP.css('--font-text') || 'serif'; FU = EPP.css('--font-ui') || 'sans-serif'; };
+  const ITAL = /[A-Za-zα-ωħ]/;
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const p of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: p.t, m: p.m, it: false }); continue; }
+        let buf = '', it = null;
+        for (const ch of p.t) {
+          const k = ITAL.test(ch);
+          if (it !== null && k !== it) { out.push({ t: buf, m: p.m, it }); buf = ''; }
+          buf += ch; it = k;
+        }
+        if (buf) out.push({ t: buf, m: p.m, it });
+      }
+    });
+    return out;
+  }
+  const fontOf = (r, size) => `${r.it ? 'italic ' : ''}${(size * (r.m ? 0.72 : 1) * (r.it ? 1.07 : 1)).toFixed(1)}px ${r.it ? FT : FU}`;
+  function layout(ctx, rs, size) {
+    const w = rs.map(r => { ctx.font = fontOf(r, size); return ctx.measureText(r.t).width; });
+    const x = new Array(rs.length);
+    let X = 0, k = 0;
+    while (k < rs.length) {
+      const r = rs[k];
+      if (!r.m) {
+        x[k] = X; X += w[k];
+        const nx = rs[k + 1];
+        if (r.it && nx && !nx.it && !nx.m) X += 0.08 * size;   // italic correction before upright text
+        k++; continue;
+      }
+      let a = k; while (a + 1 < rs.length && rs[a + 1].m === r.m) a++;
+      let b = a;
+      if (b + 1 < rs.length && rs[b + 1].m === -r.m) { b++; while (b + 1 < rs.length && rs[b + 1].m === -r.m) b++; }
+      const x0 = X + (k > 0 && rs[k - 1].it ? 0.05 * size : 0);
+      let xa = x0, xb = x0;
+      for (let j = k; j <= a; j++) { x[j] = xa; xa += w[j]; }
+      for (let j = a + 1; j <= b; j++) { x[j] = xb; xb += w[j]; }
+      X = Math.max(xa, xb) + 0.04 * size; k = b + 1;
+    }
+    return { x, total: X };
+  }
+  // o: {size, align, color, halo (a ring of the surface colour, for text that crosses a line), baseline, measure}
+  function rich(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, rs = runs(s), L = layout(ctx, rs, size);
+    if (o.measure) return L.total;
+    const x0 = o.align === 'center' ? x - L.total / 2 : (o.align === 'right' ? x - L.total : x);
+    const dy = (r) => (r.m === -1 ? size * 0.3 : (r.m === 1 ? -size * 0.4 : 0));
+    ctx.save(); ctx.textAlign = 'left'; ctx.textBaseline = o.baseline || 'alphabetic'; ctx.setLineDash([]);
+    const pass = (stroke) => rs.forEach((r, k) => { ctx.font = fontOf(r, size); if (stroke) ctx.strokeText(r.t, x0 + L.x[k], y + dy(r)); else ctx.fillText(r.t, x0 + L.x[k], y + dy(r)); });
+    if (o.halo) { ctx.strokeStyle = EPP.color('surface'); ctx.lineWidth = 3.5; ctx.lineJoin = 'round'; pass(true); }
+    ctx.fillStyle = o.color || EPP.color('fg'); pass(false);
+    ctx.restore();
+    return L.total;
+  }
+  const tw = (ctx, s, size) => rich(ctx, s, 0, 0, { size, measure: true });
+  const fit = (ctx, list, size, wmax) => list.find(s => tw(ctx, s, size) <= wmax) || list[list.length - 1];
+
+  // ---------- direct labels: the first candidate that stays in the frame, off the curves, the vertical lines and the labels placed ----------
+  // av: {fns: curves y(x), vx: vertical lines (canvas px), boxes: taken rectangles (canvas px)}
+  function hits(P, b, av) {
+    for (const X of av.vx) if (X >= b[0] - 2 && X <= b[2] + 2) return true;
+    for (const q of av.boxes) if (b[0] < q[2] && b[2] > q[0] && b[1] < q[3] && b[3] > q[1]) return true;
+    for (const f of av.fns) {
+      let prev = null;
+      for (let px = b[0]; px <= b[2] + 0.01; px += 1.5) {
+        const v = f(P.invX(px));
+        if (!isFinite(v)) { prev = null; continue; }
+        const py = EPP.clamp(P.Y(v), -1e4, 1e4);
+        if (py >= b[1] && py <= b[3]) return true;
+        if (prev !== null && Math.min(prev, py) < b[1] && Math.max(prev, py) > b[3]) return true;
+        prev = py;
+      }
+    }
+    return false;
+  }
+  // c: {x, y (data), dx, dy (px, to the middle of the text), align}. The candidate that won last time is tried first, so a
+  // label stays put until a curve reaches it. With must, a label that finds no clear place takes the first candidate inside
+  // the frame (it is drawn with a halo); without, it is left out (the legend names that curve).
+  const memo = {};
+  function place(P, key, text, size, cands, av, must) {
+    const m = P.m, W = P.cv.w, H = P.cv.h, w = tw(P.ctx, text, size), h = size * 1.3;
+    const order = cands.map((_, i) => i);
+    if (memo[key] != null && memo[key] < cands.length) { order.splice(memo[key], 1); order.unshift(memo[key]); }
+    let first = null;
+    for (const i of order) {
+      const c = cands[i], X = P.X(c.x) + (c.dx || 0), Y = P.Y(c.y) + (c.dy || 0);
+      if (!isFinite(X) || !isFinite(Y)) continue;
+      const x0 = c.align === 'right' ? X - w : (c.align === 'center' ? X - w / 2 : X);
+      const b = [x0 - 2, Y - h / 2, x0 + w + 2, Y + h / 2];
+      if (b[0] < m.l + 1 || b[2] > W - m.r - 1 || b[1] < m.t + 1 || b[3] > H - m.b - 1) continue;
+      if (!first) first = { x: x0, y: Y, text, size, b };
+      if (hits(P, b, av)) continue;
+      memo[key] = i;
+      av.boxes.push([b[0] - 3, b[1] - 1, b[2] + 3, b[3] + 1]);
+      return { x: x0, y: Y, text, size };
+    }
+    if (must && first) { av.boxes.push(first.b); return first; }
+    return null;
+  }
+  // vertical offset that clears a sloping curve over the whole width of a label (px; side −1 above, +1 below)
+  function clear(P, f, x, w, h, side) {
+    const d = P.invX(P.X(x) + 1) - x, s = Math.abs(P.Y(f(x + d)) - P.Y(f(x)));
+    return side * (h / 2 + 5 + 0.5 * w * (isFinite(s) ? Math.min(s, 3) : 0));
+  }
+  const draw1 = (P, L, color) => { if (L) rich(P.ctx, L.text, L.x, L.y, { size: L.size, color, baseline: 'middle', halo: true }); };
+
+  // ---------- panels ----------
+  const elA = fig.querySelector('.a9-edge-log'), elB = fig.querySelector('.a9-edge-sqrt');
+  const legA = elA.querySelector('.legend'), legB = elB.querySelector('.legend');
+  const OPT = { legend: false, aspect: 0.92, minHeight: 270, maxHeight: 370, margin: { l: 58, r: 14, t: 26, b: 44 }, xfmt: (v) => v.toFixed(1) };
+  const pow10 = (e) => (e === 0 ? '1' : e === 1 ? '10' : `10^{${e < 0 ? '−' + (-e) : e}}`);
+  const pA = new EPP.Plot(elA, Object.assign({}, OPT, {
+    xlim: XA, ylim: YA, logy: true, xticks: [1.0, 1.2, 1.4, 1.6, 1.8, 2.0],
+    yticks: [-2, -1, 0, 1, 2, 3, 4, 5].map(e => ({ v: Math.pow(10, e), label: pow10(e) })),
+    xname: 'ħω', hoverX: (v) => v.toFixed(3) + ' eV', hoverY: (v) => (v <= 1.01 * FLOOR ? '0' : fmtA(v) + ' cm<sup>−1</sup>'),
+    ariaLabel: 'Panel a: absorption coefficient against photon energy, logarithmic scale'
+  }));
+  const pB = new EPP.Plot(elB, Object.assign({}, OPT, {
+    xlim: XB, ylim: YB, xticks: [0.9, 1.0, 1.1, 1.2, 1.3], yticks: [0, 10, 20, 30, 40],
+    xname: 'ħω', hoverX: (v) => v.toFixed(3) + ' eV', hoverY: (v) => v.toFixed(2) + ' cm<sup>−1/2</sup>',
+    ariaLabel: 'Panel b: square root of the absorption coefficient near the edge'
+  }));
+  // the legends are static markup (MathJax), placed under their plots
+  elA.appendChild(legA); elB.appendChild(legB);
+  const keyParts = [...legB.querySelectorAll('.a9-edge-kpart')];
+
+  function frameText(P, xt, yt, titles) {
+    const ctx = P.ctx, w = P.cv.w, h = P.cv.h, m = P.m, cFg = EPP.color('fg');
+    rich(ctx, xt, m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    ctx.save(); ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    rich(ctx, yt, 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+    rich(ctx, fit(ctx, titles, 11.5, w - 8), 4, 15, { size: 11.5, color: EPP.color('fg2') });
+  }
+  const gapText = (c) => (c.qp ? '$E$^{qp}_g($T$)' : '$E$_g');
+  const XS_A = [1.8, 1.65, 1.5, 1.95, 1.35, 1.25];
+  // label centres (canvas px) from the right end of the frame leftwards, in steps of a tenth of its width
+  const pxCands = (P, wl, n) => { const m = P.m, W = P.cv.w, a = W - m.r - 4 - wl / 2, st = 0.1 * (W - m.l - m.r); return Array.from({ length: n }, (_, k) => a - k * st); };
+
+  // (a): axis titles, the symbol of the gap line and the temperature of each curve, drawn after the curves
+  const baseA = pA.render.bind(pA);
+  pA.render = () => {
+    pA.ctx.lineCap = 'round';            // the dash patterns assume round caps on every line
+    baseA();
+    const P = pA, ctx = P.ctx, w = P.cv.w, h = P.cv.h, c = cur;
+    if (!w || !h || !c) return;
+    fonts();
+    frameText(P, 'photon energy $ħω$ (eV)', '$α$_{abs} (cm^{−1})', ['(a) absorption coefficient, log scale', '(a) absorption, log scale', '(a)']);
+    const XG = P.X(c.eg), boxes = [];
+    const labs = [];
+    // the gap: its symbol at the top of the line, on the right of it if there is room
+    labs.push([place(P, 'a-gap', gapText(c), 11.5, [{ x: c.eg, y: YA[1], dx: 5, dy: 12 }, { x: c.eg, y: YA[1], dx: -5, dy: 12, align: 'right' }],
+      { fns: [c.fT, c.fR], vx: [], boxes }, true), EPP.textColor('muted')]);
+    // the temperatures: above the upper curve and below the lower one (one label when T = 78 K)
+    const av = { fns: [c.fT, c.fR], vx: [XG], boxes };
+    const sT = `${c.Tn} K`, sR = `${TREF} K`, wT = tw(ctx, sT, 11.5), wR = tw(ctx, sR, 11.5);
+    const cands = (f, side, wl) => XS_A.map(x => ({ x, y: f(x), dy: clear(P, f, x, wl, 15, side), align: 'center' }));
+    if (c.Tn === TREF) labs.push([place(P, 'a-T', sT, 11.5, cands(c.fT, -1, wT), av), EPP.textColor('photon')]);
+    else {
+      const up = c.Tn > TREF ? 1 : -1;   // the curve at the higher temperature lies above everywhere
+      labs.push([place(P, 'a-T', sT, 11.5, cands(c.fT, -up, wT), av), EPP.textColor('photon')]);
+      labs.push([place(P, 'a-R', sR, 11.5, cands(c.fR, up, wR), av), EPP.textColor('muted')]);
+    }
+    for (const [L, col] of labs) draw1(P, L, col);
+  };
+
+  // (b): axis titles, the branch of each threshold, the symbol of the gap line and the curve names
+  const baseB = pB.render.bind(pB);
+  pB.render = () => {
+    pB.ctx.lineCap = 'round';
+    baseB();
+    const P = pB, ctx = P.ctx, w = P.cv.w, h = P.cv.h, m = P.m, c = cur;
+    if (!w || !h || !c) return;
+    fonts();
+    frameText(P, 'photon energy $ħω$ (eV)', '√$α$_{abs} (cm^{−1/2})', ['(b) the two slopes: √$α$_{abs} near the edge', '(b) the two slopes', '(b)']);
+    const boxes = [], yT = m.t + 9, yG = m.t + 24;
+    // thresholds: the branch at the top of each line, violet where absorption switches on, amber where emission does
+    for (const p of PH) for (const [sg, col] of [[-1, 'c5'], [1, 'phonon']]) {
+      const X0 = P.X(c.eg + sg * p.w / 1000), wl = tw(ctx, p.name, 10.5);
+      if (X0 < m.l || X0 > w - m.r) continue;
+      const X = EPP.clamp(X0, m.l + wl / 2 + 1, w - m.r - wl / 2 - 1);   // a line at the edge of the frame keeps its label inside
+      rich(ctx, p.name, X, yT, { size: 10.5, color: EPP.textColor(col), align: 'center', baseline: 'middle', halo: true });
+      boxes.push([X - wl / 2 - 2, yT - 7, X + wl / 2 + 2, yT + 7]);
+    }
+    // the gap: its symbol under the branch labels, centred on its line
+    const XG = P.X(c.eg), gt = gapText(c), wg = tw(ctx, gt, 11.5);
+    if (XG > m.l && XG < w - m.r) {
+      const x0 = EPP.clamp(XG, m.l + wg / 2 + 2, w - m.r - wg / 2 - 2);
+      rich(ctx, gt, x0, yG, { size: 11.5, color: EPP.textColor('muted'), align: 'center', baseline: 'middle', halo: true });
+      boxes.push([x0 - wg / 2 - 2, yG - 9, x0 + wg / 2 + 2, yG + 9]);
+    }
+    // the curves: total above its line, the parts below theirs, else the other side; a short name if the long one finds no room,
+    // else nothing (the legend names every curve). A label sits only where its curve has risen visibly off the axis, and keeps
+    // clear of the gap and threshold lines.
+    const vx = [XG, ...PH.flatMap(p => [P.X(c.eg - p.w / 1000), P.X(c.eg + p.w / 1000)])];
+    const av = { fns: c.parts ? [c.fTot, c.fEm, c.fAb] : [c.fTot], vx, boxes };
+    const labs = [], risen = 0.06 * YB[1];
+    const cands = (f, side, wl) => [side, -side].flatMap(sd => pxCands(P, wl, 8).map(px => P.invX(px)).filter(x => f(x) >= risen)
+      .map(x => ({ x, y: f(x), dy: clear(P, f, x, wl, 15, sd), align: 'center' })));
+    const lab = (key, texts, f, side, col) => {
+      for (const t of texts) { const L = place(P, key, t, 11.5, cands(f, side, tw(ctx, t, 11.5)), av); if (L) { labs.push([L, EPP.textColor(col)]); return; } }
+    };
+    lab('b-tot', ['total'], c.fTot, -1, 'photon');
+    if (c.parts) {
+      lab('b-em', ['emission, $s$ = +1', 'emission'], c.fEm, 1, 'phonon');
+      lab('b-ab', ['absorption, $s$ = −1', 'absorption'], c.fAb, 1, 'c5');
+    }
+    for (const [L, col] of labs) draw1(P, L, col);
+  };
+
+  // ---------- state ----------
+  let cur = null;
+  function compute(s) {
+    const T = s.T, Tn = Math.round(T), qp = !!s.qp, zpr = s.zpr;
+    const eg = gapOf(T, qp, zpr), egR = gapOf(TREF, qp, zpr);
+    const occ = PH.map(p => nB(p.w, T)), occR = PH.map(p => nB(p.w, TREF));
+    const tot = (E) => { const a = parts(E, occ, eg); return a[0] + a[1]; };
+    const totR = (E) => { const a = parts(E, occR, egR); return a[0] + a[1]; };
+    const yT = xA.map(E => Math.max(tot(E), FLOOR)), yR = xA.map(E => Math.max(totR(E), FLOOR));
+    const pp = xB.map(E => parts(E, occ, eg));
+    const sTot = pp.map(a => Math.sqrt(a[0] + a[1])), sEm = pp.map(a => Math.sqrt(a[0])), sAb = pp.map(a => Math.sqrt(a[1]));
+    return {
+      T, Tn, qp, zpr, eg, egR, occ, parts: !!s.parts, tot, totR, yT, yR, sTot, sEm, sAb,
+      fT: (E) => Math.max(tot(E), FLOOR), fR: (E) => Math.max(totR(E), FLOOR),
+      fTot: interp(xB, sTot), fEm: interp(xB, sEm), fAb: interp(xB, sAb)
+    };
+  }
+
+  const $v = (k) => fig.querySelector('.a9-edge-v-' + k);
+  const RO = { qp: $v('qp'), cl: $v('cl'), sh: $v('sh'), nto: $v('nto'), nta: $v('nta'), agq: $v('agq'), agc: $v('agc'), a15: $v('a15'), a15r: $v('a15r') };
+  const qpEls = [...fig.querySelectorAll('.readout .a9-edge-qp')], clEls = [...fig.querySelectorAll('.readout .a9-edge-cl')];
+  function draw() {
+    const c = cur = compute(ui.state);
+    pA.draw([
+      { type: 'vline', at: c.eg, color: 'muted', width: 1.4, dash: [0.01, 3.6] },
+      { type: 'line', x: xA, y: c.yR, color: 'muted', width: 1.8, dash: [6, 4.5], label: `α_{abs} at ${TREF} K` },
+      { type: 'line', x: xA, y: c.yT, color: 'photon', width: 2.2, label: `α_{abs} at ${c.Tn} K` }
+    ]);
+    const LB = [];
+    for (const p of PH) {
+      LB.push({ type: 'vline', at: c.eg - p.w / 1000, color: 'c5', width: 1.2, dash: [0.01, 3.4] });
+      LB.push({ type: 'vline', at: c.eg + p.w / 1000, color: 'phonon', width: 1.2, dash: [0.01, 3.4] });
+    }
+    LB.push({ type: 'vline', at: c.eg, color: 'muted', width: 1.3, dash: [5, 4] });
+    if (c.parts) {
+      LB.push({ type: 'line', x: xB, y: c.sAb, color: 'c5', width: 2.3, dash: [0.01, 4.6], label: 'absorption part, s = −1' });
+      LB.push({ type: 'line', x: xB, y: c.sEm, color: 'phonon', width: 2, dash: [6, 5], label: 'emission part, s = +1' });
+    }
+    LB.push({ type: 'line', x: xB, y: c.sTot, color: 'photon', width: 2.2, label: 'total' });
+    pB.draw(LB);
+    keyParts.forEach(e => { e.hidden = !c.parts; });
+
+    // readouts (the keys are static MathJax in the markup)
+    qpEls.forEach(e => { e.hidden = !c.qp; });
+    clEls.forEach(e => { e.hidden = c.qp; });
+    const aG = c.tot(c.eg), a15 = c.tot(1.5), a15r = c.totR(1.5);
+    RO.qp.textContent = c.eg.toFixed(3) + NB + 'eV';
+    RO.cl.textContent = EG.toFixed(3) + NB + 'eV';
+    RO.sh.textContent = ((EG - c.eg) * 1000).toFixed(0) + NB + 'meV';
+    RO.nto.textContent = fmtN(c.occ[0]);
+    RO.nta.textContent = fmtN(c.occ[1]);
+    RO.agq.textContent = RO.agc.textContent = fmtA(aG) + NB + 'cm⁻¹';
+    RO.a15.textContent = fmtA(a15) + NB + 'cm⁻¹';
+    RO.a15r.textContent = fmtA(a15r) + NB + 'cm⁻¹';
+
+    // the zero-point slider acts only on the renormalized gap
+    zIn.disabled = !c.qp;
+    zBox.style.opacity = c.qp ? '' : '0.5';
+    zBox.title = c.qp ? '' : 'no effect: the δ function uses the clamped gap';
+    zIn.setAttribute('aria-valuetext', `${c.zpr.toFixed(0)} meV` + (c.qp ? '' : ', no effect while the clamped gap is used'));
+
+    const gapS = `${c.eg.toFixed(3)} eV (${c.qp ? 'renormalized, E qp g of T' : 'clamped nuclei, E g'})`;
+    pA.cv.canvas.setAttribute('aria-label', `Panel a: absorption coefficient against photon energy from 0.85 to 2.0 eV, logarithmic scale from 0.01 to 100000 per cm. ` +
+      (c.Tn === TREF ? `Solid curve at ${TREF} K, on top of the dashed ${TREF} K reference` : `Solid curve at ${c.Tn} K, dashed curve at ${TREF} K`) +
+      `; dotted line at the gap in the delta function, ${gapS}. ` +
+      `At 1.5 eV the absorption coefficient is ${spoken(a15)} per cm at ${c.Tn} K and ${spoken(a15r)} per cm at ${TREF} K; at the gap it is ${spoken(aG)} per cm.`);
+    const th = (sg) => PH.map(p => ({ E: c.eg + sg * p.w / 1000, name: p.name })).sort((a, b) => a.E - b.E).map(t => `${t.E.toFixed(3)} eV (${t.name})`).join(' and ');
+    pB.cv.canvas.setAttribute('aria-label', `Panel b: square root of the absorption coefficient against photon energy from 0.88 to 1.36 eV, ` +
+      (c.parts ? 'total, phonon-absorption part (s = −1) and phonon-emission part (s = +1). ' : 'total only. ') +
+      `Absorption thresholds at ${th(-1)}, emission thresholds at ${th(1)}, gap at ${c.eg.toFixed(3)} eV. ` +
+      `At 1.36 eV the total is ${c.fTot(1.36).toFixed(1)} per square-root centimetre, at ${c.Tn} K.`);
+  }
+
+  // ---------- controls ----------
+  const PRESETS = ['4', '78', '296', '600'];
+  let lastTp = '296';
+  function onChange(s) {
+    if (s.Tp !== lastTp && PRESETS.includes(s.Tp)) ui.set('T', +s.Tp, true);           // a temperature button was pressed
+    else { const m = PRESETS.includes(String(s.T)) ? String(s.T) : 'none'; if (m !== s.Tp) ui.set('Tp', m, true); }  // the slider moved
+    lastTp = ui.state.Tp;
+    draw();
+  }
+  const ui = EPP.controls(fig.querySelector('.a9-edge-ctrls'), [
+    { key: 'T', type: 'range', label: 'temperature T', min: 4, max: 600, step: 1, value: 296, fmt: (v) => v.toFixed(0) + ' K' },
+    { key: 'Tp', type: 'seg', label: 'temperature presets', options: PRESETS.map(t => [t, t + ' K']), value: '296' },
+    { key: 'zpr', type: 'range', label: 'zero-point renormalization |ΔE^{ZPR}_g|', min: 0, max: 80, step: 1, value: 60, fmt: (v) => v.toFixed(0) + ' meV' },
+    { key: 'qp', type: 'toggle', label: 'renormalized gap E^{qp}_g(T) in the δ function', value: true },
+    { key: 'parts', type: 'toggle', label: 'show the emission and absorption parts', value: true }
+  ], onChange);
+  const zIn = document.getElementById(`${fig.id}-zpr`), zBox = zIn.closest('.ctrl');
+  // control labels: italic variables, upright labels, a superscript stacked over its subscript
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const SS = (sup, sub) => `<span style="display:inline-flex;flex-direction:column;font-size:0.72em;line-height:0.95;vertical-align:0.5em;margin-left:1px"><span>${sup}</span><span>${sub}</span></span>`;
+  const LAB = {
+    T: `temperature ${I('T')}`,
+    zpr: `zero-point renormalization <span class="nw">|Δ${I('E')}${SS('ZPR', 'g')}|</span>`,
+    qp: `renormalized gap <span class="nw">${I('E')}${SS('qp', 'g')}(${I('T')})</span> in the δ function`
+  };
+  Object.keys(LAB).forEach(k => { const sp = fig.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  draw();
+})();
+</script>

@@ -45,13 +45,23 @@ const doc = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta na
       const sections = [...document.querySelectorAll('section.chapter')].map(s => s.id);
       const dead = [...document.querySelectorAll('main a[href^="#"]')].map(a => a.getAttribute('href').slice(1)).filter(id => id && !document.getElementById(id));
       const unres = [...document.querySelectorAll('main a.ref-missing')].map(a => a.getAttribute('href'));
-      return { over, wide: wide.slice(0, 15), mErr, blank, sections, dead: [...new Set(dead)], unres: [...new Set(unres)], h: de.scrollHeight };
+      // inline math wider than the text column: main{overflow-x:clip} hides it, so measure it directly
+      const clip = [];
+      const tex = new Map(); try { for (const m of MathJax.startup.document.math) if (m.typesetRoot) tex.set(m.typesetRoot, m.math); } catch (e) {}
+      document.querySelectorAll('main mjx-container:not([display="true"])').forEach(c => {
+        if (c.closest('figure.viz, .pop, .gl-panel, details:not([open]), .tbl, .eq')) return;
+        let blk = c.parentElement; while (blk && getComputedStyle(blk).display === 'inline') blk = blk.parentElement;
+        if (!blk) return; const bb = blk.getBoundingClientRect(), cb = c.getBoundingClientRect();
+        if (cb.width > 0 && cb.right > Math.min(bb.right, de.clientWidth) + 2) clip.push((c.closest('section')?.id || '?') + ': $' + (tex.get(c) || c.textContent).slice(0, 90) + '$ (' + Math.round(cb.right - Math.min(bb.right, de.clientWidth)) + ' px)');
+      });
+      return { over, wide: wide.slice(0, 15), mErr, blank, sections, dead: [...new Set(dead)], unres: [...new Set(unres)], clip, h: de.scrollHeight };
     });
     report.overflow[cfg.name] = { px: r.over, offenders: r.wide };
     report.mathErrors += r.mErr.length; if (r.mErr.length) report.errors.push(...r.mErr.map(x => `[${cfg.name}] TeX: ${x}`));
     if (r.blank.length) report.blankCanvases.push(`[${cfg.name}] ${r.blank.join(', ')}`);
     if (r.dead.length) report.errors.push(`[${cfg.name}] dead in-page links: ${r.dead.join(', ')}`);
     if (r.unres.length) report.errors.push(`[${cfg.name}] unresolved eqref/figref (no \\tag or no figure number): ${r.unres.join(', ')}`);
+    if (r.clip.length) { report.inlineClip = report.inlineClip || {}; report.inlineClip[cfg.name] = r.clip; }
     report.sections = r.sections; report.height = report.height || {}; report.height[cfg.name] = r.h;
     if (shots) {
       const ids = secArg || r.sections;

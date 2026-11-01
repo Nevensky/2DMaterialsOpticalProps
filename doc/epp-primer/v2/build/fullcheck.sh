@@ -12,6 +12,9 @@ r = json.load(open(sys.argv[1]))
 for e in r['errors']: print('ERROR', e[:1500])
 print('math errors:', r['mathErrors'], '| overflow:', {k: (v['px'], v['offenders'][:5]) for k, v in r['overflow'].items()}, '| blank canvases:', r['blankCanvases'][:10])
 print('sections:', len(r.get('sections', [])), '| height:', r.get('height'))
+for k, v in (r.get('inlineClip') or {}).items():
+    print(f'CLIPPED INLINE MATH [{k}]: {len(v)}')
+    for x in v[:40]: print('   ', x)
 PY
 python3 "$V/build/textdump.py" >/dev/null 2>&1 && echo "text dump: $V/out/primer-text.md ($(wc -c < "$V/out/primer-text.md") bytes)"
 if [ "$1" = "--shots" ]; then node "$V/build/shoot.js" "$V/out/epp-primer-v2.html" "$V/test/full/shots" >/dev/null 2>&1; echo "shots: $(ls "$V/test/full/shots" | wc -l)"; fi

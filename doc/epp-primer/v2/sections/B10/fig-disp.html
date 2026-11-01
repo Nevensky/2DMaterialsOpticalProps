@@ -1,0 +1,539 @@
+  <figure class="viz" id="viz-b10-disp">
+    <p class="viz-title"><span>The LO branch of a polar sheet <span class="b10-disp-sub" style="font-weight:500;color:var(--fg-2)">· in-plane modes, electrostatic</span></span> <span class="tag">interactive</span></p>
+    <div class="viz-grid two">
+      <div class="b10-disp-a">
+        <div class="legend b10-disp-leg" data-view="flat">
+          <span class="item" style="color:var(--c-phonon)"><span class="sw"></span><span style="color:var(--fg-2)">LO of the sheet</span></span>
+          <span class="item" style="color:var(--muted)"><span class="sw dash" style="border-top-width:1.5px"></span><span style="color:var(--fg-2)">TO</span></span>
+          <span class="item" style="color:var(--c-5)"><span class="sw dash"></span><span style="color:var(--fg-2)">bulk LO</span></span>
+          <span class="item" style="color:var(--c-phonon)"><span class="sw dot"></span><span style="color:var(--fg-2)">plateau</span></span>
+          <span class="item" style="color:var(--muted)"><span class="sw dot" style="border-top-width:1.5px"></span><span style="color:var(--fg-2)">tangent at Γ</span></span>
+        </div>
+        <div class="legend b10-disp-leg" data-view="doped" style="display:none">
+          <span class="item" style="color:var(--c-phonon)"><span class="sw"></span><span style="color:var(--fg-2)">upper coupled mode</span></span>
+          <span class="item" style="color:var(--c-electron)"><span class="sw"></span><span style="color:var(--fg-2)">lower coupled mode</span></span>
+          <span class="item" style="color:var(--c-phonon)"><span class="sw dash"></span><span style="color:var(--fg-2)">undoped LO</span></span>
+          <span class="item" style="color:var(--c-electron)"><span class="sw dash"></span><span style="color:var(--fg-2)">uncoupled plasmon</span></span>
+          <span class="item" style="color:var(--muted)"><span class="sw dash" style="border-top-width:1.5px"></span><span style="color:var(--fg-2)">TO</span></span>
+        </div>
+        <div class="legend b10-disp-leg" data-view="ret" style="display:none">
+          <span class="item" style="color:var(--c-phonon)"><span class="sw"></span><span style="color:var(--fg-2)">LO shift $\hbar\Delta\omega$, finite $c$</span></span>
+          <span class="item" style="color:var(--c-phonon)"><span class="sw dash"></span><span style="color:var(--fg-2)">LO shift, electrostatic</span></span>
+          <span class="item" style="color:var(--c-photon)"><span class="sw"></span><span style="color:var(--fg-2)">width $\hbar\gamma^{\mathrm{rad}}_{\mathrm p}$, LO-like</span></span>
+          <span class="item" style="color:var(--c-5)"><span class="sw dash"></span><span style="color:var(--fg-2)">width $\hbar\gamma^{\mathrm{rad}}_{\mathrm s}$, TO-like</span></span>
+          <span class="item" style="color:var(--c-photon)"><span class="sw box"></span><span style="color:var(--fg-2)">light cone</span></span>
+        </div>
+      </div>
+      <div class="b10-disp-b">
+        <div class="legend b10-disp-leg" data-view="flat">
+          <span class="item" style="color:var(--c-phonon)"><span class="sw"></span><span style="color:var(--fg-2)">sheet</span></span>
+          <span class="item" style="color:var(--c-5)"><span class="sw dash"></span><span style="color:var(--fg-2)">bulk, a constant</span></span>
+          <span class="item" style="color:var(--muted)"><span class="sw dash" style="border-top-width:1.5px"></span><span style="color:var(--fg-2)">no sheet screening, $r_0=0$</span></span>
+          <span class="item" style="color:var(--c-phonon)"><span class="sw dot"></span><span style="color:var(--fg-2)">plateau</span></span>
+        </div>
+        <div class="legend b10-disp-leg" data-view="doped" style="display:none">
+          <span class="item" style="color:var(--c-phonon)"><span class="sw"></span><span style="color:var(--fg-2)">$-\mathrm{Im}\,F_{\nu\nu}/\pi$ of the LO mode</span></span>
+          <span class="item" style="color:var(--c-phonon)"><svg width="12" height="14" viewBox="0 0 12 14" aria-hidden="true" style="vertical-align:-2px;margin-right:6px"><path d="M6 1 V13" style="fill:none;stroke:currentColor;stroke-width:1.4;stroke-dasharray:3 2"/></svg><span style="color:var(--fg-2)">undoped LO</span></span>
+          <span class="item" style="color:var(--c-electron)"><svg width="12" height="14" viewBox="0 0 12 14" aria-hidden="true" style="vertical-align:-2px;margin-right:6px"><path d="M6 1 V13" style="fill:none;stroke:currentColor;stroke-width:1.4;stroke-dasharray:3 2"/></svg><span style="color:var(--fg-2)">uncoupled plasmon</span></span>
+        </div>
+        <div class="legend b10-disp-leg" data-view="ret" style="display:none">
+          <span class="item" style="color:var(--c-photon)"><span class="sw"></span><span style="color:var(--fg-2)">finite $c$: $\zeta/Q_\parallel$</span></span>
+          <span class="item" style="color:var(--muted)"><span class="sw dash" style="border-top-width:1.5px"></span><span style="color:var(--fg-2)">electrostatic: 1</span></span>
+          <span class="item" style="color:var(--c-photon)"><span class="sw box"></span><span style="color:var(--fg-2)">light cone</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="b10-disp-ctrls"></div>
+    <div class="readout b10-disp-ro" data-view="flat" aria-live="polite"><span>$\hbar^2\cdot2\pi e^2Z^{*2}/(\OS M_{\mathrm r})$<b class="b10-disp-v-C"></b></span><span>slope $\hbar\,\dd\omega_{\mathrm{LO}}/\dd Q_\parallel$ at Γ<b class="b10-disp-v-slope"></b></span><span>$\hbar\omega_{\mathrm{LO}}$ at $Q_\parallel=0.1$ Å⁻¹<b class="b10-disp-v-lo"></b></span><span>plateau<b class="b10-disp-v-plat"></b></span><span>crossover $\varepsilon_{\mathrm{env}}/r_0$<b class="b10-disp-v-cross"></b></span><span>bulk LO<b class="b10-disp-v-bulk"></b></span></div>
+    <div class="readout b10-disp-ro" data-view="doped" aria-live="polite" style="display:none"><span>spectrum at $Q_\parallel$<b class="b10-disp-v-q0"></b></span><span>uncoupled plasmon<b class="b10-disp-v-pl"></b></span><span>upper, lower coupled mode<b class="b10-disp-v-ul"></b></span><span>plasmon meets undoped LO at<b class="b10-disp-v-qc"></b></span><span>minimum splitting<b class="b10-disp-v-gap"></b></span></div>
+    <div class="readout b10-disp-ro" data-view="ret" aria-live="polite" style="display:none"><span>light line $Q_{\mathrm L}$<b class="b10-disp-v-ql"></b></span><span>$2\pi/Q_{\mathrm L}$<b class="b10-disp-v-lam"></b></span><span>$\hbar\gamma^{\mathrm{rad}}$ at Γ<b class="b10-disp-v-g0"></b></span><span>electrostatic shift at $Q_{\mathrm L}$<b class="b10-disp-v-es"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> LO equals TO at Γ for every parameter choice. Raising $\varepsilon_{\mathrm{env}}$ lowers the slope but not the plateau; raising $r_0$ lowers the plateau and moves the crossover $\varepsilon_{\mathrm{env}}/r_0$ to smaller <span class="nw">$Q_\parallel$.</span></p><div class="cap-more">
+      <p><strong>Marks.</strong> Undoped: amber, the LO branch <a class="eqref" href="#b10-eq-lo"></a>, in (b) its shift of <span class="nw">$\omega^2$;</span> dotted, the plateau and the tangent of slope <a class="eqref" href="#b10-eq-slope"></a>; violet dashed, the bulk LO; grey dashed, TO, and in (b) the shift without sheet screening; vertical line, the crossover. Doped: solid, the coupled modes <a class="eqref" href="#b10-eq-coupled"></a>; dashed, the undoped LO and the uncoupled plasmon; the marker picks the $Q_\parallel$ of <span class="nw">$-\mathrm{Im}\,F_{\nu\nu}/\pi$</span> in (b). Finite $c$, log axes: the radiative widths <a class="eqref" href="#b10-eq-rad"></a> in the light cone (rose), up to the light line <span class="nw">$Q_{\mathrm L}=\sqrt{\varepsilon_{\mathrm{env}}}\,\omega_{\mathrm{TO}}/c$;</span> beyond it the shift <span class="nw">$\hbar\Delta\omega=\hbar\omega-\hbar\omega_{\mathrm{TO}}$</span> of <a class="eqref" href="#b10-eq-loc"></a>; in (b), <span class="nw">$\zeta/Q_\parallel$.</span></p>
+      <p><strong>Try.</strong> Set <span class="nw">$\varepsilon_{\mathrm{env}}=4.5$</span> (hBN encapsulation): the slope drops 4.5 times, the plateau stays. Raise $r_0$ from 0 to <span class="nw">40 Å:</span> the plateau appears and sinks towards TO. In the doped view, drag the marker through the crossing (or focus (a) and press ← →): the weight passes from one peak to the other; MoS₂-like gives a <span class="nw">4.3 meV</span> splitting from a <span class="nw">0.2 meV</span> shift. In the finite-$c$ view, read the <span class="nw">42 μeV</span> width at Γ.</p>
+      <p><strong>Model.</strong> <a class="eqref" href="#b10-eq-lo"></a>, <a class="eqref" href="#b10-eq-slope"></a>, <a class="eqref" href="#b10-eq-drude"></a>–<a class="eqref" href="#b10-eq-rad"></a>; bulk line <a class="eqref" href="#a4-eq-lot"></a> with <span class="nw">$\OV=\OS d$.</span> Presets: the table below (literature values, illustrative); <span class="nw">$n^{\mathrm{2D}}=10^{13}$</span> (hBN, a thought experiment) or <span class="nw">$10^{12}$ cm⁻²</span> (MoS₂-like), <span class="nw">$m^*=0.5\,m_{\mathrm e}$,</span> damping <span class="nw">$\hbar\gamma_{\mathrm{ph}}=1$ meV</span> (phonon) and <span class="nw">$\hbar\gamma_{\mathrm e}=5$ meV</span> (carriers). $\varepsilon_{\mathrm{env}}$ is static (for a polar substrate its value at the phonon frequency enters), and the finite-$c$ view puts the same medium on both sides. The Drude sheet needs <span class="nw">$\omega\gg v_{\mathrm F}Q_\parallel$</span> (Fermi velocity <span class="nw">$v_{\mathrm F}$).</span></p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b10-disp');
+  if (!fig || !window.EPP) return;
+  // tested alone, outside Section B.10, the equations are absent: show their numbers as plain text
+  if (!fig.closest('#b-2d')) {
+    const TAGS = { 'b10-eq-lo': 'B10.14', 'b10-eq-slope': 'B10.15', 'b10-eq-drude': 'B10.25', 'b10-eq-coupled': 'B10.26', 'b10-eq-loc': 'B10.28', 'b10-eq-rad': 'B10.29', 'a4-eq-lot': 'A4.8' };
+    fig.querySelectorAll('a.eqref').forEach(a => { const id = (a.getAttribute('href') || '').slice(1); if (!document.getElementById(id)) { const s = document.createElement('span'); s.textContent = '(' + (TAGS[id] || '?') + ')'; a.replaceWith(s); } });
+  }
+
+  // ---------- physics: energies in eV, lengths in Å ----------
+  // C = ħ²·2πe²Z*²/(Ω_S M_r) = K Z*²/(Ω_S[Å²] M_r[amu]) in eV² Å, the coefficient of (B10.14);
+  // (ħω_p^2D)² = PL n^2D[Å⁻²] Q_∥[Å⁻¹]/(m*/m_e) in eV², (B10.25); ħc = HC in eV Å
+  const K = 0.378205, PL = 689.42, HC = 1973.27;
+  const GPH = 0.001, GE = 0.005;          // damping ħγ_ph (phonon) and ħγ_e (carriers) in the spectral function (eV)
+  const QF = 0.5, QD = 0.1, QR = [1e-6, 1e-2];   // Q_∥ ranges of the undoped, doped and finite-c views (Å⁻¹)
+  // literature values, illustrative (the table of Section B.10); win: energy window of the spectral function (meV)
+  const PRE = {
+    hbn: { name: 'hBN monolayer', S: 5.43, Mr: 6.10, Z: 2.7, wT: 0.170, r0: 10, env: 1, d: 3.33, einf: 4.87, n: 1e13, m: 0.5, Q0: 0.03, win: [100, 300] },
+    mos2: { name: 'MoS₂-like sheet', S: 8.65, Mr: 38.4, Z: 1.0, wT: 0.048, r0: 40, env: 1, d: 6.15, einf: 15, n: 1e12, m: 0.5, Q0: 0.05, win: [36, 60] }
+  };
+  const coef = (p) => K * p.Z * p.Z / (p.S * p.Mr);
+  // (B10.14) with (B10.8): (ħω_LO)² − (ħω_TO)² = C Q_∥/(ε_env + r_0 Q_∥)
+  const shift2 = (C, env, r0, Q) => C * Q / (env + r0 * Q);
+  // ħω − ħω_TO for a shift s of (ħω)², free of cancellation
+  const dW = (wT, s) => s / (Math.sqrt(wT * wT + s) + wT);
+  // (B10.26) as a quadratic in x = ω²: ε_b x² − x[ε_b ω_TO² + ω_p² + CQ] + ω_TO² ω_p² = 0, ε_b = ε_env + r_0 Q;
+  // the upper root with +√, the lower one from the product of the roots (no cancellation). Energies returned in meV.
+  function modes(p, C, env, r0, nA, Q) {
+    const wT = p.wT, eb = env + r0 * Q, wp2 = PL * nA * Q / p.m;
+    const b = eb * wT * wT + wp2 + C * Q, c = wp2 * wT * wT;
+    const x1 = (b + Math.sqrt(Math.max(0, b * b - 4 * eb * c))) / (2 * eb), x2 = x1 > 0 ? c / (eb * x1) : 0;
+    return { up: 1e3 * Math.sqrt(x1), lo: 1e3 * Math.sqrt(x2), pl: 1e3 * Math.sqrt(wp2 / eb), lo0: 1e3 * Math.sqrt(wT * wT + C * Q / eb), eb, wp2 };
+  }
+  // phonon spectral function −Im F_νν/π (eV⁻¹) at the energy e (eV), retarded: F_νν = 2ω_TO/D,
+  // D = ω² − ω_TO² − CQ/ε^2D(ω) + iγ_ph ω, ε^2D(ω) = ε_b − ω_p²/(ω² + iγ_e ω)
+  function spec(wT, C, Q, eb, wp2, e) {
+    const dr = e * e, di = GE * e, den = dr * dr + di * di;
+    const er = eb - wp2 * dr / den, ei = wp2 * di / den, ed = er * er + ei * ei;
+    const Dr = e * e - wT * wT - C * Q * er / ed, Di = GPH * e + C * Q * ei / ed;
+    return 2 * wT * Di / (Math.PI * (Dr * Dr + Di * Di));
+  }
+  // (B10.28) outside the light cone: ζ² = Q² − Q_L² − kζ/(ε_env + r_0ζ), k = ε_env C/(ħc)², by bisection on 0 < ζ < √(Q² − Q_L²)
+  function zeta(Q, QL, k, env, r0) {
+    const A2 = Q * Q - QL * QL; let lo = 0, hi = Math.sqrt(A2);
+    for (let it = 0; it < 60; it++) { const z = 0.5 * (lo + hi); if (z * z - A2 + k * z / (env + r0 * z) > 0) hi = z; else lo = z; }
+    return 0.5 * (lo + hi);
+  }
+
+  // ---------- axis limits: kept while the data fit and fill at least 40 % of the range ----------
+  const nice = (lo, hi) => {
+    const span = Math.max(hi - lo, 1e-9), raw = span / 5, mag = Math.pow(10, Math.floor(Math.log10(raw))), r = raw / mag;
+    const st = (r < 1.5 ? 1 : r < 3 ? 2 : r < 7 ? 5 : 10) * mag;
+    return [Math.floor(lo / st + 1e-9) * st, Math.ceil(hi / st - 1e-9) * st];
+  };
+  const lims = {};
+  const sticky = (key, lo, hi, make) => { const L = lims[key]; if (L && lo >= L[0] && hi <= L[1] && hi - lo > 0.4 * (L[1] - L[0])) return L; return (lims[key] = make()); };
+  // the spectral function: one height per material, raised only when a peak needs it (no jumps while the marker moves)
+  const tops = {};
+  const growTop = (key, amax) => { let t = tops[key] || 700; if (amax > 0.97 * t) t = nice(0, 1.1 * amax)[1]; return (tops[key] = t); };
+
+  // ---------- formatting ----------
+  const SUP = { '−': '⁻', '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹' };
+  const sup = (e) => String(e < 0 ? '−' + (-e) : e).split('').map(ch => SUP[ch] || ch).join('');
+  function sci(v, d = 3) {
+    if (!isFinite(v)) return '—';
+    const a = Math.abs(v);
+    if (a !== 0 && (a < 0.01 || a >= 1e5)) { let e = Math.floor(Math.log10(a)), m = Number((v / Math.pow(10, e)).toPrecision(d)); if (Math.abs(m) >= 10) { m /= 10; e += 1; } return m.toFixed(d - 1).replace('-', '−') + '×10' + sup(e); }
+    return v.toPrecision(d).replace('-', '−');
+  }
+  const mev = (v) => (isFinite(v) ? (v >= 100 ? v.toFixed(1) : v.toFixed(2)) + ' meV' : '—');
+  const qf = (v) => v.toFixed(3) + ' Å⁻¹';
+  function nfmt(v) { let e = Math.floor(Math.log10(v) + 1e-9), m = Number((v / Math.pow(10, e)).toFixed(1)); if (m >= 10) { m = 1; e += 1; } return `${m.toFixed(1)}×10${sup(e)} cm⁻²`; }
+  const words = (s) => s.replace(/×10([⁻⁰¹²³⁴⁵⁶⁷⁸⁹]+)/g, (x, e) => ' times 10 to the ' + e.split('').map(ch => '−0123456789'['⁻⁰¹²³⁴⁵⁶⁷⁸⁹'.indexOf(ch)]).join('')).replace(/Å⁻¹/g, 'per ångström').replace(/cm⁻²/g, 'per square centimetre');
+  const decTicks = (a, b) => { const t = []; for (let e = Math.round(Math.log10(a)); e <= Math.round(Math.log10(b)); e++) t.push({ v: Math.pow(10, e), label: `10^{${e < 0 ? '−' + (-e) : e}}` }); return t; };
+
+  // ---------- canvas text: '$…$' marks math (letters italic, digits upright); _x, ^x as in EPP.drawRich ----------
+  let FAM = { ui: 'sans-serif', tx: 'serif' };
+  const ITAL = /[A-Za-zα-ωħ]/;
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const part of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: part.t, m: part.m, it: false }); continue; }
+        let buf = '', it = null;
+        for (const ch of part.t) {
+          const k = ITAL.test(ch);
+          if (it !== null && k !== it) { out.push({ t: buf, m: part.m, it }); buf = ''; }
+          buf += ch; it = k;
+        }
+        if (buf) out.push({ t: buf, m: part.m, it });
+      }
+    });
+    return out;
+  }
+  const fontOf = (r, size) => { const z = (r.it ? size + 0.5 : size) * (r.m ? 0.72 : 1); return `${r.it ? 'italic ' : ''}${z.toFixed(1)}px ${r.it ? FAM.tx : FAM.ui}`; };
+  // o: {size, align, color, halo (a ring of the surface colour, for text near curves), measure}
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, rs = runs(s);
+    const ws = rs.map(r => { ctx.font = fontOf(r, size); return ctx.measureText(r.t).width; });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    const x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    const dy = (r) => (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0));
+    ctx.save(); ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    const pass = (stroke) => { let xx = x0; rs.forEach((r, k) => { ctx.font = fontOf(r, size); if (stroke) ctx.strokeText(r.t, xx, y + dy(r)); else ctx.fillText(r.t, xx, y + dy(r)); xx += ws[k]; }); };
+    if (o.halo) { ctx.strokeStyle = EPP.color('surface'); ctx.lineWidth = 3; ctx.lineJoin = 'round'; pass(true); }
+    ctx.fillStyle = o.color || EPP.color('fg'); pass(false);
+    ctx.restore();
+    return tot;
+  }
+  const tw = (ctx, s, size) => txt(ctx, s, 0, 0, { size, measure: true });
+  const fit = (ctx, list, size, wmax) => list.find(s => tw(ctx, s, size) <= wmax) || list[list.length - 1];
+
+  // ---------- label placement: the first candidate whose box stays in the frame, off every curve and off earlier labels ----------
+  function segHit(ax, ay, bx, by, b) {
+    if (Math.max(ax, bx) < b[0] || Math.min(ax, bx) > b[2] || Math.max(ay, by) < b[1] || Math.min(ay, by) > b[3]) return false;
+    let t0 = 0, t1 = 1;
+    const dx = bx - ax, dy = by - ay;
+    const clip = (p, q) => { if (p === 0) return q >= 0; const r = q / p; if (p < 0) { if (r > t1) return false; if (r > t0) t0 = r; } else { if (r < t0) return false; if (r < t1) t1 = r; } return true; };
+    return clip(-dx, ax - b[0]) && clip(dx, b[2] - ax) && clip(-dy, ay - b[1]) && clip(dy, b[3] - ay) && t0 <= t1;
+  }
+  // polylines in px from data arrays (NaN lifts the pen)
+  function polys(P, xs, ys) {
+    const out = []; let cur = null;
+    xs.forEach((x, i) => { const y = ys[i]; if (!isFinite(y) || y <= 0 && P.opt.logy) { cur = null; return; } const pt = [P.X(x), EPP.clamp(P.Y(y), -1e4, 1e4)]; if (cur) cur.push(pt); else { cur = [pt]; out.push(cur); } });
+    return out;
+  }
+  function placer(P, lines, boxes) {
+    const m = P.m, fx0 = m.l, fy0 = m.t, fx1 = P.cv.w - m.r, fy1 = P.cv.h - m.b, placed = boxes.slice();
+    const hit = (b) => { const g = [b[0] - 1, b[1] - 1, b[2] + 1, b[3] + 1]; return lines.some(pl => { for (let i = 1; i < pl.length; i++) if (segHit(pl[i - 1][0], pl[i - 1][1], pl[i][0], pl[i][1], g)) return true; return false; }); };
+    // texts: variants, longest first; cands(w) -> [[x of the left end, baseline], ...]
+    return (texts, size, color, cands) => {
+      for (const s of texts) {
+        const w = tw(P.ctx, s, size);
+        for (const [xl, base] of cands(w)) {
+          const b = [xl - 2, base - size * 0.95, xl + w + 2, base + size * 0.34];
+          if (b[0] < fx0 + 1 || b[2] > fx1 - 1 || b[1] < fy0 + 1 || b[3] > fy1 - 1) continue;
+          if (placed.some(o => b[0] < o[2] + 2 && b[2] > o[0] - 2 && b[1] < o[3] + 2 && b[3] > o[1] - 2)) continue;
+          if (hit(b)) continue;
+          placed.push(b); txt(P.ctx, s, xl, base, { size, color, halo: true });
+          return b;
+        }
+      }
+      return null;
+    };
+  }
+  const hl = (P, y) => [[P.m.l, P.Y(y)], [P.cv.w - P.m.r, P.Y(y)]];
+  const vl = (P, x) => [[P.X(x), P.m.t], [P.X(x), P.cv.h - P.m.b]];
+  function dot(ctx, x, y, r, col) {
+    ctx.save(); ctx.beginPath(); ctx.arc(x, y, r + 1.6, 0, 2 * Math.PI); ctx.fillStyle = EPP.color('surface'); ctx.fill();
+    ctx.beginPath(); ctx.arc(x, y, r, 0, 2 * Math.PI); ctx.fillStyle = col; ctx.fill(); ctx.restore();
+  }
+
+  // ---------- panels ----------
+  const elA = fig.querySelector('.b10-disp-a'), elB = fig.querySelector('.b10-disp-b');
+  const OPT = { legend: false, aspect: 0.8, minHeight: 260, maxHeight: 330, margin: { l: 56, r: 14, t: 26, b: 42 }, xlim: [0, QF], ylim: [160, 210], xname: 'Q_∥' };
+  const pA = new EPP.Plot(elA, Object.assign({}, OPT, { ariaLabel: 'Panel a: LO and TO energies of the sheet against the in-plane wavevector' }));
+  const pB = new EPP.Plot(elB, Object.assign({}, OPT, { ariaLabel: 'Panel b: the shift of the squared LO energy against the in-plane wavevector' }));
+  elA.querySelectorAll('.b10-disp-leg').forEach(l => elA.appendChild(l));   // the legends (static MathJax) go under their plots
+  elB.querySelectorAll('.b10-disp-leg').forEach(l => elB.appendChild(l));
+  // after each render: axis titles, panel header and labels in italic notation (P.deco is set by the view)
+  [pA, pB].forEach(P => {
+    const base = P.render.bind(P);
+    P.render = () => { base(); if (P.cv.w && P.cv.h && P.deco) { FAM = { ui: EPP.css('--font-ui'), tx: EPP.css('--font-text') }; P.deco(P); } };
+  });
+  function titles(P, xl, yl) {
+    const ctx = P.ctx, w = P.cv.w, h = P.cv.h, m = P.m, cFg = EPP.color('fg');
+    txt(ctx, fit(ctx, xl, 12.5, w - m.l - m.r), m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    ctx.save(); ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, fit(ctx, yl, 12.5, h - m.t - m.b + 16), 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+  }
+  const header = (P, list) => txt(P.ctx, fit(P.ctx, list, 11.5, P.cv.w - 8), 4, 16, { size: 11.5, color: EPP.color('fg2') });
+  const $v = (k) => fig.querySelector('.b10-disp-v-' + k);
+  const sub = fig.querySelector('.b10-disp-sub');
+  const linear = (P) => { P.opt.logx = false; P.opt.logy = false; P.opt.xticks = undefined; P.opt.yticks = undefined; };
+  let S = null, q0 = PRE.hbn.Q0;
+
+  // ---------- undoped view: (B10.14), its slope (B10.15), plateau, crossover; the bulk LO from (A4.8) ----------
+  function drawFlat() {
+    const p = PRE[S.mat], C = coef(p), wT = p.wT, W0 = 1e3 * wT, env = S.env, r0 = S.r0;
+    const Qs = EPP.linspace(0, QF, 301), s2 = Qs.map(Q => shift2(C, env, r0, Q)), lo = s2.map(s => 1e3 * Math.sqrt(wT * wT + s));
+    const d3 = 2 * C / (p.d * p.einf), wB = 1e3 * Math.sqrt(wT * wT + d3);   // (A4.8) with Ω_V = Ω_S d and the bulk ε_∞
+    const wP = r0 > 0 ? 1e3 * Math.sqrt(wT * wT + C / r0) : Infinity;        // plateau, Q_∥ ≫ ε_env/r_0
+    const slope = 1e3 * C / (2 * wT * env);                                  // (B10.15) times ħ, meV Å
+    const Qx = r0 > 0 ? env / r0 : Infinity, hasX = Qx < QF;                 // crossover
+    // the plateau sets the range only when the plot reaches the crossover; otherwise it may lie above the frame
+    const span = Math.max(wB - W0, lo[lo.length - 1] - W0, hasX ? wP - W0 : 0, 0.002 * W0);
+    const ylim = sticky('fa' + S.mat, W0 - 0.1 * span, W0 + 1.02 * span, () => nice(W0 - 0.15 * span, W0 + 1.15 * span));
+    const Qt = Math.min(QF, 0.5 * (ylim[1] - W0) / slope);                  // the tangent covers the lower half of the plot
+    linear(pA); pA.opt.xname = 'Q_∥'; pA.opt.hoverX = qf; pA.opt.hoverY = (v) => EPP.fix(v, 2) + ' meV';
+    pA.deco = (P) => {
+      const m = P.m, X0 = P.X(0), Yt = P.Y(W0), R = P.cv.w - m.r;
+      titles(P, ['$Q_∥$ (Å^{−1})'], ['$ħω$ (meV)']);
+      header(P, ['(a) LO and TO of the sheet: in-plane modes, electrostatic', '(a) in-plane modes, electrostatic', '(a) electrostatic']);
+      dot(P.ctx, X0, Yt, 4, EPP.color('phonon'));
+      const lines = [].concat(polys(P, Qs, lo), [hl(P, W0), hl(P, wB), [[X0, Yt], [P.X(Qt), P.Y(W0 + slope * Qt)]]]);
+      if (isFinite(wP)) lines.push(hl(P, wP));
+      const put = placer(P, lines, [[X0 - 5, Yt - 5, X0 + 5, Yt + 5]]);
+      // the key label first; it may cross the thin crossover line, which the later labels avoid
+      put(['LO = TO at Γ'], 11.5, EPP.textColor('phonon'), () => [[X0 + 9, Yt + 19], [X0 + 9, Yt + 31], [X0 + 34, Yt + 19], [X0 + 9, Yt - 9]]);
+      if (hasX) lines.push(vl(P, Qx));
+      if (hasX) { const xq = P.X(Qx); put(['$ε$_{env}/$r$_0'], 11.5, EPP.textColor('muted'), (w) => [m.t + 15, m.t + 30, m.t + 45, P.cv.h - m.b - 6].flatMap(y => [[xq + 5, y], [xq - 5 - w, y]])); }
+      put(['bulk LO'], 11.5, EPP.textColor('c5'), (w) => [R - 6 - w, P.X(0.62 * QF), P.X(0.3 * QF)].flatMap(x => [[x, P.Y(wB) - 5], [x, P.Y(wB) + 15]]));
+      if (isFinite(wP)) put(['plateau'], 11.5, EPP.textColor('phonon'), (w) => [R - 6 - w, P.X(0.62 * QF), P.X(0.3 * QF)].flatMap(x => [[x, P.Y(wP) - 5], [x, P.Y(wP) + 15]]));
+    };
+    pA.draw([
+      { type: 'line', x: [0, QF], y: [W0, W0], color: 'muted', dash: [5, 4], width: 1.5, hover: false },
+      { type: 'line', x: [0, QF], y: [wB, wB], color: 'c5', dash: [8, 4], width: 2, hover: false },
+      isFinite(wP) ? { type: 'line', x: [0, QF], y: [wP, wP], color: 'phonon', dash: [2, 3], width: 1.6, hover: false } : null,
+      { type: 'line', x: [0, Qt], y: [W0, W0 + slope * Qt], color: 'muted', dash: [1, 3], width: 1.4, hover: false },
+      hasX ? { type: 'vline', at: Qx, color: 'muted', width: 1 } : null,
+      { type: 'line', x: Qs, y: lo, color: 'phonon', width: 2.2, label: 'LO of the sheet' }
+    ], { xlim: [0, QF], ylim });
+
+    // (b): the squared shift itself; in bulk a constant, in the sheet C Q_∥/(ε_env + r_0 Q_∥)
+    const dmax = Math.max(d3, s2[s2.length - 1], 1e-12) * 1e6;   // meV²
+    const ylm = sticky('fb' + S.mat, 0, 1.05 * dmax, () => [0, nice(0, 1.25 * dmax)[1]]);
+    const big = ylm[1] > 2000, f = big ? 1e3 : 1e6, yl = [0, ylm[1] * (big ? 1e-3 : 1)], unit = big ? '10^3 meV^2' : 'meV^2';
+    linear(pB); pB.opt.xname = 'Q_∥'; pB.opt.hoverX = qf; pB.opt.hoverY = (v) => sci(v, 3) + (big ? ' ×10³ meV²' : ' meV²');
+    const yS = s2.map(s => s * f), y0 = Qs.map(Q => C * Q / env * f);
+    pB.deco = (P) => {
+      const m = P.m;
+      titles(P, ['$Q_∥$ (Å^{−1})'], [`($ħω$_{LO})^2 − ($ħω$_{TO})^2 (${unit})`, `shift of ($ħω$)^2 (${unit})`]);
+      header(P, ['(b) shift of the squared energy: sheet against bulk', '(b) shift of the squared energy', '(b) squared shift']);
+      if (hasX) {
+        const lines = [].concat(polys(P, Qs, yS), polys(P, Qs, y0), [hl(P, d3 * f), vl(P, Qx)]);
+        if (isFinite(wP)) lines.push(hl(P, C / r0 * f));
+        const xq = P.X(Qx);
+        placer(P, lines, [])(['$ε$_{env}/$r$_0'], 11.5, EPP.textColor('muted'), (w) => [m.t + 15, m.t + 30, m.t + 45, P.cv.h - m.b - 6].flatMap(y => [[xq + 5, y], [xq - 5 - w, y]]));
+      }
+    };
+    pB.draw([
+      { type: 'line', x: [0, QF], y: [d3 * f, d3 * f], color: 'c5', dash: [8, 4], width: 2, hover: false },
+      isFinite(wP) ? { type: 'line', x: [0, QF], y: [C / r0 * f, C / r0 * f], color: 'phonon', dash: [2, 3], width: 1.6, hover: false } : null,
+      { type: 'line', x: Qs, y: y0, color: 'muted', dash: [5, 4], width: 1.5, label: 'r_0 = 0' },
+      hasX ? { type: 'vline', at: Qx, color: 'muted', width: 1 } : null,
+      { type: 'line', x: Qs, y: yS, color: 'phonon', width: 2.2, label: 'sheet' }
+    ], { xlim: [0, QF], ylim: yl });
+
+    $v('C').textContent = sci(C, 3) + ' eV² Å';
+    $v('slope').textContent = slope >= 100 ? sci(slope / 1e3, 3) + ' eV Å' : sci(slope, 3) + ' meV Å';
+    $v('lo').textContent = mev(1e3 * Math.sqrt(wT * wT + shift2(C, env, r0, 0.1)));
+    $v('plat').textContent = isFinite(wP) ? mev(wP) : 'none without sheet screening';
+    $v('cross').textContent = isFinite(Qx) ? sci(Qx, 3) + ' Å⁻¹' : '—';
+    $v('bulk').textContent = mev(wB);
+    pA.cv.canvas.setAttribute('aria-label', `Panel a, ${p.name}: energies against the in-plane wavevector from 0 to ${QF} per ångström. ` +
+      `The LO branch starts at the TO energy, ${EPP.fix(W0, 0)} meV, with slope ${$v('slope').textContent}` +
+      (isFinite(wP) ? ` and bends towards the plateau at ${mev(wP)}` : ', and without sheet screening it keeps rising') +
+      `; the bulk LO is a dashed line at ${mev(wB)}` + (hasX ? `; the crossover ε_env/r_0 is at ${words(sci(Qx, 3) + ' Å⁻¹')}.` : '.'));
+    pB.cv.canvas.setAttribute('aria-label', `Panel b, ${p.name}: the shift of the squared LO energy against the in-plane wavevector. ` +
+      'The sheet curve rises linearly and saturates at the plateau; the bulk shift is a constant line; without sheet screening (r_0 = 0) the shift keeps rising linearly.');
+  }
+
+  // ---------- doped view: (B10.25) and (B10.26); right, the phonon spectral function at the marker ----------
+  function drawDoped() {
+    const p = PRE[S.mat], C = coef(p), wT = p.wT, W0 = 1e3 * wT, env = S.env, r0 = S.r0, nA = S.n * 1e-16, Q0 = q0;
+    const Qs = EPP.linspace(0, QD, 401), M = Qs.map(Q => modes(p, C, env, r0, nA, Q)), M0 = modes(p, C, env, r0, nA, Q0);
+    const up = M.map(o => o.up), lo = M.map(o => o.lo), pl = M.map(o => o.pl), lo0 = M.map(o => o.lo0), endLO = lo0[lo0.length - 1];
+    const top = sticky('da' + S.mat, 0, Math.max(1.2 * W0, 1.05 * endLO), () => [0, nice(0, Math.max(1.5 * W0, 1.1 * endLO))[1]])[1];
+    // the uncoupled plasmon meets the undoped LO at most once: their squared difference, (ω_p² − CQ)/ε_b − ω_TO², rises with Q
+    let Qc = NaN;
+    const dif = (Q) => { const o = modes(p, C, env, r0, nA, Q); return o.pl - o.lo0; };
+    for (let i = 1; i < Qs.length; i++) if (pl[i - 1] - lo0[i - 1] < 0 && pl[i] - lo0[i] >= 0) { Qc = EPP.bisect(dif, Qs[i - 1], Qs[i], 1e-9); break; }
+    // the minimum splitting of the coupled modes, if it lies inside the range
+    let gap = Infinity, ig = 0;
+    for (let i = 1; i < Qs.length; i++) { const g = up[i] - lo[i]; if (g < gap) { gap = g; ig = i; } }
+    const gapOK = isFinite(Qc) && ig < Qs.length - 1;
+    if (gapOK) {   // refine between the neighbouring grid points by golden section
+      const split = (Q) => { const o = modes(p, C, env, r0, nA, Q); return o.up - o.lo; }, R = 0.5 * (Math.sqrt(5) - 1);
+      let a = Qs[ig - 1], b = Qs[ig + 1];
+      for (let it = 0; it < 40; it++) { const c = b - R * (b - a), d = a + R * (b - a); if (split(c) < split(d)) b = d; else a = c; }
+      gap = Math.min(gap, split(0.5 * (a + b)));
+    }
+    linear(pA); pA.opt.xname = 'Q_∥'; pA.opt.hoverX = qf; pA.opt.hoverY = (v) => EPP.fix(v, 2) + ' meV';
+    pA.deco = (P) => {
+      const m = P.m, xq = P.X(Q0);
+      titles(P, ['$Q_∥$ (Å^{−1})'], ['$ħω$ (meV)']);
+      header(P, ['(a) doped sheet: click, drag or press ← → to move the marker', '(a) click or drag to move the marker', '(a) doped sheet']);
+      const yU = P.Y(M0.up), yL = P.Y(M0.lo);
+      if (yU >= m.t && yU <= P.cv.h - m.b) dot(P.ctx, xq, yU, 3.8, EPP.color('phonon'));
+      if (yL >= m.t && yL <= P.cv.h - m.b) dot(P.ctx, xq, yL, 3.8, EPP.color('electron'));
+      const lines = [].concat(polys(P, Qs, up), polys(P, Qs, lo), polys(P, Qs, pl), polys(P, Qs, lo0), [hl(P, W0)]);
+      const put = placer(P, lines, [[xq - 6, yU - 6, xq + 6, yU + 6], [xq - 6, yL - 6, xq + 6, yL + 6]]);
+      put(['spectrum in (b)', '(b)'], 11, EPP.color('fg2'), (w) => [m.t + 14, m.t + 28, P.cv.h - m.b - 6, P.cv.h - m.b - 20].flatMap(y => [[xq + 5, y], [xq - 5 - w, y]]));
+    };
+    pA.draw([
+      { type: 'line', x: [0, QD], y: [W0, W0], color: 'muted', dash: [5, 4], width: 1.5, hover: false },
+      { type: 'line', x: Qs, y: lo0, color: 'phonon', dash: [6, 4], width: 1.6, label: 'undoped LO' },
+      { type: 'line', x: Qs, y: pl, color: 'electron', dash: [6, 4], width: 1.6, label: 'uncoupled plasmon' },
+      { type: 'line', x: Qs, y: up, color: 'phonon', width: 2.2, label: 'upper coupled mode' },
+      { type: 'line', x: Qs, y: lo, color: 'electron', width: 2.2, label: 'lower coupled mode' },
+      { type: 'vline', at: Q0, color: 'ink', width: 1, dash: [3, 3] }
+    ], { xlim: [0, QD], ylim: [0, top] });
+
+    // (b): −Im F_νν/π on a fixed energy window per material
+    const win = p.win, E = EPP.linspace(win[0], win[1], 2400), A = E.map(e => spec(wT, C, Q0, M0.eb, M0.wp2, e / 1e3));
+    let amax = 0; for (const a of A) if (a > amax) amax = a;
+    const yTop = growTop('db' + S.mat, amax);
+    linear(pB); pB.opt.xname = 'ħω'; pB.opt.hoverX = (v) => EPP.fix(v, 1) + ' meV'; pB.opt.hoverY = (v) => sci(v, 3) + ' eV⁻¹';
+    const inWin = (x) => x > win[0] && x < win[1];
+    pB.deco = (P) => {
+      const m = P.m;
+      titles(P, ['$ħω$ (meV)'], ['−Im $F_{νν}$/π (eV^{−1})']);
+      const qs = Q0.toFixed(3);
+      header(P, [`(b) phonon spectral function at $Q_∥$ = ${qs} Å^{−1}`, `(b) spectral function at $Q_∥$ = ${qs} Å^{−1}`, `(b) $Q_∥$ = ${qs} Å^{−1}`]);
+      const lines = [].concat(polys(P, E, A));
+      if (inWin(M0.lo0)) lines.push(vl(P, M0.lo0));
+      if (inWin(M0.pl)) lines.push(vl(P, M0.pl));
+      const put = placer(P, lines, []);
+      const rows = [m.t + 14, m.t + 28, m.t + 42, m.t + 56, m.t + 70];
+      if (inWin(M0.lo0)) { const x = P.X(M0.lo0); put(['undoped LO', 'LO'], 11, EPP.textColor('phonon'), (w) => rows.flatMap(y => [[x + 4, y], [x - 4 - w, y]])); }
+      if (inWin(M0.pl)) { const x = P.X(M0.pl); put(['plasmon'], 11, EPP.textColor('electron'), (w) => rows.flatMap(y => [[x + 4, y], [x - 4 - w, y]])); }
+    };
+    pB.draw([
+      inWin(M0.lo0) ? { type: 'vline', at: M0.lo0, color: 'phonon', width: 1.3 } : null,
+      inWin(M0.pl) ? { type: 'vline', at: M0.pl, color: 'electron', width: 1.3 } : null,
+      { type: 'line', x: E, y: A, color: 'phonon', width: 2, label: '−Im F_{νν}/π' }
+    ], { xlim: win, ylim: [0, yTop] });
+
+    $v('q0').textContent = qf(Q0);
+    $v('pl').textContent = mev(M0.pl);
+    $v('ul').textContent = `${EPP.fix(M0.up, M0.up >= 100 ? 1 : 2)}, ${EPP.fix(M0.lo, M0.lo >= 100 ? 1 : 2)} meV`;
+    $v('qc').textContent = isFinite(Qc) ? sci(Qc, 3) + ' Å⁻¹' : 'not below 0.1 Å⁻¹';
+    $v('gap').textContent = gapOK ? sci(gap, 3) + ' meV' : '—';
+    pA.cv.canvas.setAttribute('aria-label', `Panel a, ${p.name}, carrier density ${words(nfmt(S.n))}: coupled LO-phonon–plasmon modes against the in-plane wavevector from 0 to 0.1 per ångström, ` +
+      `with the undoped LO and the uncoupled plasmon dashed. ` + (isFinite(Qc) ? `The plasmon crosses the undoped LO near ${words(sci(Qc, 3) + ' Å⁻¹')}, where the modes anticross` + (gapOK ? `, at least ${sci(gap, 3)} meV apart. ` : '. ') : 'The plasmon stays below the LO branch in this range. ') +
+      `Marker at ${words(qf(Q0))}: upper mode ${mev(M0.up)}, lower mode ${mev(M0.lo)}. Click or drag in the plot, or use the left and right arrow keys, to move the marker; Home and End go to the ends.`);
+    pB.cv.canvas.setAttribute('aria-label', `Panel b: phonon spectral function of the LO mode at ${words(qf(Q0))} against energy from ${win[0]} to ${win[1]} meV, ` +
+      `with vertical marks at the undoped LO, ${mev(M0.lo0)}, and at the uncoupled plasmon, ${mev(M0.pl)}; its peaks lie at the coupled modes, ${mev(M0.up)} and ${mev(M0.lo)}.`);
+  }
+
+  // ---------- finite-c view: (B10.28) outside the light cone, (B10.29) inside; log scales ----------
+  function drawRet() {
+    const p = PRE[S.mat], C = coef(p), wT = p.wT, env = S.env, r0 = S.r0, QL = Math.sqrt(env) * wT / HC, k = env * C / (HC * HC);
+    const g0 = 1e6 * C / (HC * Math.sqrt(env));                    // ħγ^rad at Γ, both polarizations (μeV)
+    // log-spaced wavevectors, plus points that close in on the light line from both sides
+    const Qs = [];
+    for (let i = 0; i <= 480; i++) Qs.push(Math.pow(10, -6 + 4 * i / 480));
+    for (let j = 1; j <= 6; j++) { const f = Math.pow(10, -j); Qs.push(QL * (1 - f), QL * (1 + f)); }
+    const Q = Qs.filter(x => x >= QR[0] && x <= QR[1]).sort((a, b) => a - b);
+    const es = [], fc = [], gp = [], gs = [], rat = [];
+    for (const q of Q) {
+      es.push(1e6 * dW(wT, shift2(C, env, r0, q)));               // electrostatic shift, (B10.14)
+      if (q > QL) {
+        const z = zeta(q, QL, k, env, r0);
+        fc.push(1e6 * dW(wT, C * z / (env + r0 * z))); rat.push(z / q); gp.push(NaN); gs.push(NaN);
+      } else {
+        const qz = Math.sqrt(QL * QL - q * q);                     // normal wavevector of the emitted light
+        gp.push(1e6 * C * env * qz / (wT * (env * env + r0 * r0 * qz * qz)));
+        gs.push(1e6 * C * wT / (HC * HC * qz));
+        fc.push(NaN); rat.push(NaN);
+      }
+    }
+    const esL = 1e6 * dW(wT, shift2(C, env, r0, QL));
+    const ymax = Math.pow(10, Math.ceil(Math.log10(Math.max(es[es.length - 1], 3 * g0, 1e-9)))), ylim = [ymax / 1e5, ymax];
+    const XT = decTicks(QR[0], QR[1]);
+    pA.opt.logx = true; pA.opt.logy = true; pA.opt.xticks = XT; pA.opt.yticks = decTicks(ylim[0], ylim[1]);
+    pA.opt.xname = 'Q_∥'; pA.opt.hoverX = (v) => sci(v, 3) + ' Å⁻¹'; pA.opt.hoverY = (v) => sci(v, 3) + ' μeV';
+    pA.deco = (P) => {
+      const m = P.m, xL = P.X(QL);
+      titles(P, ['$Q_∥$ (Å^{−1})'], ['$ħ$Δ$ω$, $ħγ$^{rad} (μeV)']);
+      header(P, ['(a) finite speed of light: LO shift and radiative widths', '(a) LO shift and radiative widths', '(a) finite $c$']);
+      const lines = [].concat(polys(P, Q, es), polys(P, Q, fc), polys(P, Q, gp), polys(P, Q, gs), [vl(P, QL)]);
+      const put = placer(P, lines, []);
+      put(['light line'], 11, EPP.textColor('photon'), (w) => [P.cv.h - m.b - 6, P.cv.h - m.b - 20, m.t + 14, m.t + 28].flatMap(y => [[xL + 5, y], [xL - 5 - w, y]]));
+      put(['radiative', 'rad.'], 11, EPP.textColor('photon'), (w) => [m.t + 14, m.t + 28, m.t + 42].flatMap(y => [[m.l + 6, y], [Math.max(m.l + 6, xL - 8 - w), y]]));
+    };
+    pA.draw([
+      { type: 'band', x0: QR[0], x1: QL, color: 'photon', alpha: 0.07 },
+      { type: 'vline', at: QL, color: 'photon', width: 1.2 },
+      { type: 'line', x: Q, y: es, color: 'phonon', dash: [6, 4], width: 1.6, label: 'LO shift, electrostatic' },
+      { type: 'line', x: Q, y: fc, color: 'phonon', width: 2.2, label: 'LO shift, finite c' },
+      { type: 'line', x: Q, y: gs, color: 'c5', dash: [6, 3], width: 2, label: 'ħγ^{rad}_s' },
+      { type: 'line', x: Q, y: gp, color: 'photon', width: 2, label: 'ħγ^{rad}_p' }
+    ], { xlim: QR, ylim });
+    // (b): ζ/Q_∥, by which a finite speed of light reduces the kernel; 1 in the electrostatic limit
+    pB.opt.logx = true; pB.opt.logy = false; pB.opt.xticks = XT; pB.opt.yticks = undefined;
+    pB.opt.xname = 'Q_∥'; pB.opt.hoverX = (v) => sci(v, 3) + ' Å⁻¹'; pB.opt.hoverY = (v) => EPP.fix(v, 3);
+    pB.deco = (P) => {
+      const m = P.m, xL = P.X(QL);
+      titles(P, ['$Q_∥$ (Å^{−1})'], ['$ζ$/$Q_∥$']);
+      header(P, ['(b) reduction of the sheet kernel by the finite speed of light', '(b) reduction of the sheet kernel', '(b) $ζ$/$Q_∥$']);
+      const lines = [].concat(polys(P, Q, rat), [hl(P, 1), vl(P, QL)]);
+      const put = placer(P, lines, []);
+      put(['light line'], 11, EPP.textColor('photon'), (w) => [P.cv.h - m.b - 6, P.cv.h - m.b - 20, m.t + 30].flatMap(y => [[xL + 5, y], [xL - 5 - w, y]]));
+      put(['radiative: $ζ$ imaginary', 'radiative'], 11, EPP.textColor('photon'), (w) => [P.Y(0.5), P.Y(0.35), P.Y(0.65)].flatMap(y => [[m.l + 6, y]]));
+    };
+    pB.draw([
+      { type: 'band', x0: QR[0], x1: QL, color: 'photon', alpha: 0.07 },
+      { type: 'vline', at: QL, color: 'photon', width: 1.2 },
+      { type: 'line', x: QR, y: [1, 1], color: 'muted', dash: [5, 4], width: 1.5, hover: false },
+      { type: 'line', x: Q, y: rat, color: 'photon', width: 2.2, label: 'ζ/Q_∥' }
+    ], { xlim: QR, ylim: [0, 1.1] });
+
+    $v('ql').textContent = sci(QL, 3) + ' Å⁻¹';
+    $v('lam').textContent = sci(2 * Math.PI / QL / 1e4, 3) + ' μm';
+    $v('g0').textContent = sci(g0, 3) + ' μeV';
+    $v('es').textContent = sci(esL, 3) + ' μeV';
+    pA.cv.canvas.setAttribute('aria-label', `Panel a, ${p.name}, logarithmic axes: LO shift and radiative widths against the in-plane wavevector from 10 to the −6 to 10 to the −2 per ångström. ` +
+      `Inside the light cone, below the light line at ${words(sci(QL, 3) + ' Å⁻¹')}, the modes radiate: both widths start at ${sci(g0, 3)} μeV; the p width falls to zero and the s width grows towards the light line. ` +
+      `Outside, the finite-c shift rises from zero at the light line and joins the electrostatic shift, which is ${sci(esL, 3)} μeV at the light line.`);
+    pB.cv.canvas.setAttribute('aria-label', 'Panel b: the ratio ζ/Q∥ against the in-plane wavevector, logarithmic axis: zero at the light line, close to 1 a few times beyond it; inside the light cone ζ is imaginary.');
+  }
+
+  // ---------- doped view: click, drag or arrow keys on (a) move the marker; a vertical swipe on a phone still scrolls ----------
+  const cvA = pA.cv.canvas;
+  let active = false, drag = null, pend = null, raf = 0, want = null;
+  const setQ = (Q) => {
+    want = EPP.clamp(Math.round(Q * 1000) / 1000, 0.002, QD);
+    if (!raf) raf = requestAnimationFrame(() => { raf = 0; const v = want; want = null; if (v !== null && Math.abs(v - q0) > 1e-9) { q0 = v; draw(); } });
+  };
+  const loc = (e) => { const r = cvA.getBoundingClientRect(); return { px: e.clientX - r.left, py: e.clientY - r.top }; };
+  const inFrame = (pt, tol) => { const m = pA.m; return pt.px >= m.l - tol && pt.px <= pA.cv.w - m.r + tol && pt.py >= m.t - tol && pt.py <= pA.cv.h - m.b + tol; };
+  cvA.addEventListener('pointerdown', (e) => {
+    if (!active) return;
+    const pt = loc(e); if (!inFrame(pt, 6)) return;
+    if (e.pointerType === 'touch' && Math.abs(pt.px - pA.X(q0)) > 16) { pend = { x: pt.px, y: pt.py, id: e.pointerId }; return; }
+    drag = e.pointerId; try { cvA.setPointerCapture(e.pointerId); } catch (_) {}
+    setQ(pA.invX(pt.px));
+  });
+  cvA.addEventListener('pointermove', (e) => {
+    if (!active) return;
+    const pt = loc(e);
+    if (drag === e.pointerId) { setQ(pA.invX(pt.px)); return; }
+    if (pend && pend.id === e.pointerId) {
+      const dx = pt.px - pend.x, dy = pt.py - pend.y;
+      if (Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy)) { drag = e.pointerId; pend = null; try { cvA.setPointerCapture(e.pointerId); } catch (_) {} setQ(pA.invX(pt.px)); }
+      else if (Math.abs(dy) > 8) pend = null;
+      return;
+    }
+    if (e.pointerType !== 'touch') cvA.style.cursor = inFrame(pt, 0) ? 'ew-resize' : '';
+  });
+  const end = (e) => { if (e.type === 'pointerup' && pend && pend.id === e.pointerId) setQ(pA.invX(pend.x)); pend = null; if (drag === e.pointerId) drag = null; };
+  cvA.addEventListener('pointerup', end); cvA.addEventListener('pointercancel', end);
+  cvA.addEventListener('keydown', (e) => {
+    if (!active || e.altKey || e.ctrlKey || e.metaKey) return;
+    const st = e.shiftKey ? 0.01 : 0.001, base = want !== null ? want : q0;
+    const v = { ArrowLeft: base - st, ArrowRight: base + st, PageDown: base - 0.01, PageUp: base + 0.01, Home: 0.002, End: QD }[e.key];
+    if (v === undefined) return;
+    e.preventDefault(); setQ(v);
+  });
+  function setActive(on) {
+    if (on === active) return;
+    active = on;
+    if (on) { cvA.setAttribute('tabindex', '0'); cvA.setAttribute('role', 'application'); }
+    else { cvA.removeAttribute('tabindex'); cvA.setAttribute('role', 'img'); cvA.style.cursor = ''; drag = pend = null; }
+  }
+
+  // ---------- controls ----------
+  const VIEW = { flat: '· in-plane modes, electrostatic', doped: '· in-plane modes, doped sheet, dynamic screening', ret: '· in-plane modes, finite speed of light' };
+  let nBox = null;
+  function draw() {
+    if (!S) return;
+    const v = S.view;
+    sub.textContent = VIEW[v];
+    fig.querySelectorAll('[data-view]').forEach(e => { e.style.display = e.dataset.view === v ? '' : 'none'; });
+    if (nBox) nBox.style.display = v === 'doped' ? '' : 'none';
+    setActive(v === 'doped');
+    if (v === 'doped') drawDoped(); else if (v === 'ret') drawRet(); else drawFlat();
+  }
+  const elCtl = fig.querySelector('.b10-disp-ctrls');
+  let prevMat = 'hbn';
+  const ui = EPP.controls(elCtl, [
+    { key: 'view', type: 'seg', label: 'view', options: [['flat', 'undoped'], ['doped', 'doped'], ['ret', 'finite c']], value: 'flat' },
+    { key: 'mat', type: 'select', label: 'material', options: [['hbn', 'hBN monolayer'], ['mos2', 'MoS₂-like (weakly polar)']], value: 'hbn' },
+    { key: 'env', type: 'range', label: 'ε_{env} (substrate, capping)', min: 1, max: 10, step: 0.05, value: 1, fmt: v => v.toFixed(2) },
+    { key: 'r0', type: 'range', label: 'screening length r_0', min: 0, max: 80, step: 0.5, value: 10, fmt: v => v.toFixed(1) + ' Å' },
+    { key: 'n', type: 'range', label: 'carrier density n^{2D}', min: 1e11, max: 1e14, step: 0.01, log: true, value: 1e13, fmt: nfmt }
+  ], (s) => {
+    // a new material loads its preset: ε_env, r_0, the carrier density and the Q_∥ of the spectrum
+    if (s.mat !== prevMat) { const p = PRE[s.mat]; ui.set('env', p.env, true); ui.set('r0', p.r0, true); ui.set('n', p.n, true); q0 = p.Q0; want = null; prevMat = s.mat; }
+    S = s; draw();
+  });
+  // control labels: the symbols in italic, as in the text
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const LAB = { env: `${I('ε')}<sub>env</sub> (substrate, capping)`, r0: `screening length ${I('r')}<sub>0</sub>`, n: `carrier density ${I('n')}<sup>2D</sup>` };
+  Object.keys(LAB).forEach(k => { const sp = elCtl.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  { const b = document.getElementById(`${fig.id}-view-ret`); if (b) b.innerHTML = `finite ${I('c')}`; }
+  { const inp = document.getElementById(`${fig.id}-n`); nBox = inp ? inp.closest('.ctrl') : null; }
+  S = ui.state; draw();
+})();
+</script>

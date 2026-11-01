@@ -1,0 +1,348 @@
+  <figure class="viz" id="viz-b5-electrons">
+    <p class="viz-title">Electrons: truncated band sums and the fake Drude metal <span class="tag">interactive</span></p>
+    <div class="viz-grid two">
+      <div class="b5-electrons-panel">
+        <div class="b5-electrons-h" style="font-family:var(--font-ui);font-size:0.82rem;font-weight:600;line-height:1.35;color:var(--fg-2);margin:0 0 4px">(a) Dielectric function $\varepsilon(\omega)$ of the model insulator</div>
+        <div class="b5-electrons-pa"></div>
+        <div class="legend b5-electrons-lega"><span class="item" style="color:var(--c-electron)"><span class="sw"></span><span style="color:var(--fg-2)">$\mathrm{Re}\,\varepsilon$, subtracted form</span></span><span class="item" style="color:var(--c-electron)"><span class="sw box"></span><span style="color:var(--fg-2)">$\mathrm{Im}\,\varepsilon$, subtracted form</span></span><span class="item b5-electrons-k-nv" style="color:var(--c-5)"><span class="sw dash"></span><span style="color:var(--fg-2)">$\mathrm{Re}\,\varepsilon$, contact term + truncated bubble</span></span></div>
+      </div>
+      <div class="b5-electrons-panel">
+        <div class="b5-electrons-h" style="font-family:var(--font-ui);font-size:0.82rem;font-weight:600;line-height:1.35;color:var(--fg-2);margin:0 0 4px">(b) Running f-sum, in units of $\omega_{\mathrm p}^2$</div>
+        <div class="b5-electrons-pb"></div>
+        <div class="legend b5-electrons-legb"><span class="item" style="color:var(--c-electron)"><span class="sw"></span><span style="color:var(--fg-2)">subtracted form</span></span><span class="item b5-electrons-k-nv" style="color:var(--c-5)"><span class="sw dash"></span><span style="color:var(--fg-2)">contact term + truncated bubble</span></span></div>
+      </div>
+    </div>
+    <div class="b5-electrons-ctrls"></div>
+    <div class="readout b5-electrons-ro" aria-live="polite"><span>$N_{\mathrm t}$<b class="b5-electrons-v-n"></b></span><span>$S=\sum_{s\le N_{\mathrm t}}W_s/\omega_{\mathrm p}^2$<b class="b5-electrons-v-s"></b></span><span>$\varepsilon(0)$, subtracted form<b class="b5-electrons-v-e0"></b></span><span>$\varepsilon(0)$, all 20 transitions<b class="b5-electrons-v-eall"></b></span><span>fake plasma energy $\hbar\omega_{\mathrm p}\sqrt{1-S}$<b class="b5-electrons-v-wp"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> With three transitions the dashed curve, contact term plus truncated bubble, turns the insulator into a metal: $\mathrm{Re}\,\varepsilon\to-\infty$ as $\omega\to0$. It still obeys the f-sum, because the contact term insists on the full $\omega_{\mathrm p}^2$ and puts the weight $1-S$ that the bubble misses at zero frequency. The subtracted form misses the same weight at high energy instead, and its $\varepsilon(0)$ already reaches 90 % of the converged value.</p><div class="cap-more">
+      <p><strong>Marks.</strong> In (a), solid and shaded: $\mathrm{Re}\,\varepsilon$ and $\mathrm{Im}\,\varepsilon$ of the subtracted form <a class="eqref" href="#b5-eq-Pie"></a>; dashed: contact term plus truncated bubble; dotted: $\varepsilon(0)$ with all twenty transitions. (b) shows the running f-sum $\frac{2}{\pi\omega_{\mathrm p}^2}\int_0^\omega\omega'\,\mathrm{Im}\,\varepsilon\,\dd\omega'$: the solid line at 1 is the whole f-sum $\omega_{\mathrm p}^2$ (the Thomas–Reiche–Kuhn rule), the dotted line the fraction $S$ that the kept transitions carry, and the bar at $\omega=0$ the zero-frequency weight of the dashed form.</p>
+      <p><strong>Try.</strong> Raise $N_{\mathrm t}$ to 20: the curves merge and $S=1$. Set $N_{\mathrm t}=1$: the fake plasma energy $\hbar\omega_{\mathrm p}\sqrt{1-S}$ rises to <span class="nw">14 eV.</span> Lower $\hbar\omega_1$ to <span class="nw">2 eV:</span> $\varepsilon(0)=1+\sum_{s\le N_{\mathrm t}}W_s/\omega_s^2$ grows to 28, because the lowest transitions weigh most.</p>
+      <p><strong>Model.</strong> Transitions $s=1,\dots,20$ at <span class="nw">$\hbar\omega_s=\hbar\omega_1+(s-1)\times1.2$ eV,</span> with strengths $W_s=w_s\,\omega_{\mathrm p}^2$, $w_s\propto\ee^{-(s-1)/3}$ and $\sum_sw_s=1$: all twenty exhaust the f-sum, with <span class="nw">$\hbar\omega_{\mathrm p}=16.6$ eV</span> (valence electrons of silicon; a model, not a band structure). Solid: <a class="eqref" href="#b5-eq-lorentz"></a> with damping as in a driven oscillator, $\varepsilon=1+\sum_{s\le N_{\mathrm t}}W_s/(\omega_s^2-\omega^2-\ii\gamma\omega)$. Dashed: the contact term $4\pi c\,\Pi^{\mathrm{e,dia}}=-\omega_{\mathrm p}^2$ <a class="eqref" href="#b5-eq-Pidef"></a> plus the bubble of the same transitions; through <a class="eqref" href="#b5-eq-eps"></a> their sum is the solid curve plus $-(1-S)\,\omega_{\mathrm p}^2/\omega^2$. All twenty give $\varepsilon(0)=11.8$; silicon measures 11.7 (literature value).</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b5-electrons');
+  if (!fig || !window.EPP) return;
+  // outside Section B.5 (the isolated figure test) the caption's equation links have no target: show the tags as text
+  const TAGS = { 'b5-eq-Pidef': 'B5.12', 'b5-eq-eps': 'B5.14', 'b5-eq-Pie': 'B5.19', 'b5-eq-lorentz': 'B5.20' };
+  if (!fig.closest('#b-photon-se')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    const id = a.getAttribute('href').slice(1);
+    if (document.getElementById(id)) return;
+    const s = document.createElement('span'); s.textContent = TAGS[id] ? `(${TAGS[id]})` : a.textContent; a.replaceWith(s);
+  });
+
+  // ---------- model ----------
+  // Twenty interband transitions s = 1..20 of a model insulator, energies in eV:
+  //   ħω_s = ħω_1 + (s − 1) × 1.2 eV, strengths W_s = w_s ω_p², w_s ∝ e^{−(s−1)/3} with Σ_s w_s = 1, ħω_p = 16.6 eV.
+  // Subtracted form (B5.19), at q → 0 the oscillators (B5.20), damped as a driven oscillator:
+  //   ε(ω) = 1 + Σ_{s≤N_t} W_s / (ω_s² − ω² − iγω)
+  // Contact term + truncated bubble: 4πcΠ = −ω_p² + Σ_{s≤N_t} W_s (ω_s² − iγω)/(ω_s² − ω² − iγω),
+  //   so by (B5.14) ε_naive(ω) = ε(ω) − (1 − S) ω_p²/ω², with S = Σ_{s≤N_t} w_s.
+  // Running f-sum: (2/πω_p²) ∫_0^ω ω' Im ε(ω') dω' (trapezoid rule, 0.01 eV steps). The naive form carries the extra
+  //   weight 1 − S at ω = 0⁺, the δ-function Drude peak of its −(1 − S) ω_p²/ω² term.
+  const WP = 16.6, WP2 = WP * WP, STEP = 1.2, NS = 20;
+  const raw = Array.from({ length: NS }, (_, k) => Math.exp(-k / 3));
+  const RAW = raw.reduce((a, b) => a + b, 0);
+  const wS = raw.map(v => v / RAW);                         // w_s for s = k + 1
+  const XLA = [0, 20], YLA = [-25, 55], XLB = [0, 32], YLB = [0, 1.15];
+  const XA = EPP.linspace(0.01, 20, 2000), XB = EPP.linspace(0, 32, 3201);
+  function eps(x, N, e1, g) {                                // [Re ε, Im ε] of the subtracted form
+    let re = 1, im = 0;
+    for (let k = 0; k < N; k++) {
+      const es = e1 + k * STEP, Wk = wS[k] * WP2, a = es * es - x * x, b = g * x, d = a * a + b * b;
+      re += Wk * a / d; im += Wk * b / d;
+    }
+    return [re, im];
+  }
+  function model(s) {
+    const N = Math.round(s.N), e1 = s.e1, g = s.g;
+    let S = 0; for (let k = 0; k < N; k++) S += wS[k];
+    const miss = Math.max(0, 1 - S);                         // f-sum weight outside the kept transitions (0 up to rounding at N = 20)
+    const reA = new Array(XA.length), imA = new Array(XA.length), nvA = new Array(XA.length);
+    for (let i = 0; i < XA.length; i++) {
+      const x = XA[i], e = eps(x, N, e1, g);
+      reA[i] = e[0]; imA[i] = e[1]; nvA[i] = e[0] - miss * WP2 / (x * x);
+    }
+    const cum = new Array(XB.length), cumNv = new Array(XB.length);
+    let acc = 0, prev = 0; cum[0] = 0;
+    for (let k = 1; k < XB.length; k++) {
+      const x = XB[k], f = x * eps(x, N, e1, g)[1];
+      acc += 0.5 * (prev + f) * (x - XB[k - 1]); prev = f;
+      cum[k] = acc * 2 / (Math.PI * WP2);
+    }
+    for (let k = 0; k < XB.length; k++) cumNv[k] = cum[k] + miss;   // the dashed line starts on top of the zero-frequency bar
+    const nv = !!s.nv;
+    return { N, e1, g, S, miss, reA, imA, nvA, cum, cumNv, nv, drude: nv && miss > 1e-3,
+      e0: eps(0, N, e1, g)[0], e0all: eps(0, NS, e1, g)[0], fake: WP * Math.sqrt(miss) };
+  }
+
+  // ---------- formatting ----------
+  const fx = (v, d) => (Math.abs(v) < 0.5 * Math.pow(10, -d) ? (0).toFixed(d) : EPP.fix(v, d));
+
+  // ---------- canvas text: '$...$' marks math, where letters are italic and digits upright; _x, ^x as in EPP.drawRich ----------
+  const ITAL = /[A-Za-zα-ωℓħ]/;
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const part of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: part.t, m: part.m, it: false }); continue; }
+        let buf = '', it = null;
+        for (const ch of part.t) {
+          const k = ITAL.test(ch);
+          if (it !== null && k !== it) { out.push({ t: buf, m: part.m, it }); buf = ''; }
+          buf += ch; it = k;
+        }
+        if (buf) out.push({ t: buf, m: part.m, it });
+      }
+    });
+    return out;
+  }
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, fam = EPP.css('--font-ui'), rs = runs(s);
+    const font = (r) => `${r.it ? 'italic ' : ''}${r.m ? Math.round(size * 0.72) : size}px ${fam}`;
+    const ws = rs.map(r => { ctx.font = font(r); return ctx.measureText(r.t).width; });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    let x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    if (o.color) ctx.fillStyle = o.color;
+    ctx.textAlign = 'left';
+    rs.forEach((r, k) => { ctx.font = font(r); ctx.fillText(r.t, x0, y + (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0))); x0 += ws[k]; });
+    return tot;
+  }
+  const tw = (ctx, s, size) => txt(ctx, s, 0, 0, { size, measure: true });
+  function arrow(ctx, x0, y0, x1, y1, col, lw, head) {
+    const L = Math.hypot(x1 - x0, y1 - y0);
+    if (L < 4) return;
+    const hs = Math.min(head, 0.6 * L), a = Math.atan2(y1 - y0, x1 - x0);
+    ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = lw; ctx.lineCap = 'butt'; ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1 - 0.8 * hs * Math.cos(a), y1 - 0.8 * hs * Math.sin(a)); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x1, y1);
+    ctx.lineTo(x1 - hs * Math.cos(a - 0.42), y1 - hs * Math.sin(a - 0.42));
+    ctx.lineTo(x1 - hs * Math.cos(a + 0.42), y1 - hs * Math.sin(a + 0.42));
+    ctx.closePath(); ctx.fill();
+  }
+
+  // ---------- label placement: the first candidate whose box stays in the frame and meets no curve, line or label ----------
+  // A curve becomes its vertical extent in every pixel column of the frame (the area down to `base` for a filled curve).
+  function envelope(P, xs, ys, base) {
+    const m = P.m, x0 = m.l, n = Math.max(1, Math.ceil(P.cv.w - m.r - m.l) + 1);
+    const lo = new Float64Array(n).fill(Infinity), hi = new Float64Array(n).fill(-Infinity);
+    const put = (c, ya, yb) => { if (c < 0 || c >= n) return; const a = Math.min(ya, yb), b = Math.max(ya, yb); if (a < lo[c]) lo[c] = a; if (b > hi[c]) hi[c] = b; };
+    const Yb = base === undefined ? null : P.Y(base);
+    let px = null, py = null;
+    for (let i = 0; i < xs.length; i++) {
+      if (!isFinite(ys[i])) { px = null; continue; }
+      const X = P.X(xs[i]) - x0, Y = EPP.clamp(P.Y(ys[i]), -1e4, 1e4);
+      if (px !== null && X > px) {
+        const c0 = Math.floor(px), c1 = Math.floor(X);
+        if (c0 === c1) put(c0, py, Y);
+        else for (let c = c0; c <= c1; c++) {
+          const t0 = (Math.max(px, c) - px) / (X - px), t1 = (Math.min(X, c + 1) - px) / (X - px);
+          put(c, py + (Y - py) * t0, py + (Y - py) * t1);
+        }
+      } else put(Math.floor(X), Y, Y);
+      if (Yb !== null) put(Math.floor(X), Y, Yb);
+      px = X; py = Y;
+    }
+    return { x0, n, lo, hi };
+  }
+  const flat = (P, Y) => { const m = P.m, n = Math.max(1, Math.ceil(P.cv.w - m.r - m.l) + 1); return { x0: m.l, n, lo: new Float64Array(n).fill(Y), hi: new Float64Array(n).fill(Y) }; };
+  // label L = {lines, x, yb (baseline of the first line), align, size}
+  const LH = 1.25;
+  const asc = (L) => (L.lines.some(s => s.includes('^')) ? 0.92 : 0.74) * L.size;
+  const desc = (L) => (L.lines.some(s => s.includes('_')) ? 0.45 : 0.24) * L.size;
+  // the box keeps a clearance of PX, PY pixels around the glyphs
+  const PX = 6, PY = 3;
+  function labBox(ctx, L) {
+    const wd = Math.max(...L.lines.map(s => tw(ctx, s, L.size)));
+    const x0 = L.align === 'right' ? L.x - wd : (L.align === 'center' ? L.x - wd / 2 : L.x);
+    return { x0: x0 - PX, x1: x0 + wd + PX, y0: L.yb - asc(L) - PY, y1: L.yb + (L.lines.length - 1) * LH * L.size + desc(L) + PY };
+  }
+  function place(P, cands, env, boxes) {
+    const m = P.m, W = P.cv.w, H = P.cv.h;
+    for (const L of cands) {
+      const b = labBox(P.ctx, L);
+      if (b.x0 < m.l - 2 || b.x1 > W - m.r + 2 || b.y0 < m.t - 1 || b.y1 > H - m.b + 1) continue;
+      if (boxes.some(o => b.x0 < o.x1 && b.x1 > o.x0 && b.y0 < o.y1 && b.y1 > o.y0)) continue;
+      let free = true;
+      for (const E of env) {
+        const c0 = Math.max(0, Math.floor(b.x0 - E.x0)), c1 = Math.min(E.n - 1, Math.ceil(b.x1 - E.x0));
+        for (let c = c0; c <= c1 && free; c++) if (E.lo[c] <= b.y1 && E.hi[c] >= b.y0) free = false;
+        if (!free) break;
+      }
+      if (!free) continue;
+      boxes.push(b);
+      return Object.assign({ box: b }, L);
+    }
+    return null;
+  }
+  function drawLab(ctx, L, col) {
+    ctx.textBaseline = 'alphabetic';
+    L.lines.forEach((s, i) => txt(ctx, s, L.x, L.yb + i * LH * L.size, { size: L.size, color: col, align: L.align }));
+  }
+  // beside a horizontal line at height Y: above or below it, at the ends or the middle, in the order given
+  function lineCands(P, Y, lines, size, order) {
+    const m = P.m, L0 = { lines, size };
+    const up = Y - 3 - desc(L0), dn = Y + 3 + asc(L0);
+    const at = { r: [P.cv.w - m.r - 6, 'right'], l: [m.l + 6, 'left'], c: [(m.l + P.cv.w - m.r) / 2, 'center'] };
+    return order.map(k => ({ lines, size, x: at[k[0]][0], align: at[k[0]][1], yb: k[1] === 'u' ? up : dn }));
+  }
+  // left-aligned labels to the right of xFrom, at the given baselines, nearest positions first
+  function sweepCands(P, xFrom, ybs, lineSets, size) {
+    const out = [], xEnd = P.cv.w - P.m.r;
+    for (const lines of lineSets) for (const yb of ybs) for (let x = xFrom; x < xEnd - 30; x += 6) out.push({ lines, size, x, yb, align: 'left' });
+    return out;
+  }
+  function axisLabels(P, xl, yl) {
+    const ctx = P.ctx, w = P.cv.w, h = P.cv.h, m = P.m, cFg = EPP.color('fg');
+    ctx.save();
+    ctx.textBaseline = 'alphabetic';
+    txt(ctx, xl, m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, yl, 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+  }
+
+  // ---------- panels ----------
+  const M = { l: 52, r: 12, t: 10, b: 42 };
+  let cur = null;
+  const pA = new EPP.Plot(fig.querySelector('.b5-electrons-pa'), {
+    xlim: XLA, ylim: YLA, legend: false, margin: M, aspect: 0.78, minHeight: 236, maxHeight: 330,
+    xname: 'ħω', hoverX: v => fx(v, 2) + ' eV', hoverY: v => fx(v, 2),
+    ariaLabel: 'Panel a: dielectric function of the model insulator against photon energy'
+  });
+  const pB = new EPP.Plot(fig.querySelector('.b5-electrons-pb'), {
+    xlim: XLB, ylim: YLB, legend: false, margin: M, aspect: 0.78, minHeight: 236, maxHeight: 330,
+    xname: 'ħω', hoverX: v => fx(v, 2) + ' eV', hoverY: v => fx(v, 3),
+    ariaLabel: 'Panel b: running f-sum of both forms against photon energy'
+  });
+
+  const baseA = pA.render.bind(pA);
+  pA.render = () => {
+    baseA();
+    const ctx = pA.ctx, m = pA.m;
+    if (!pA.cv.w || !pA.cv.h || !cur) return;
+    const c = cur;
+    axisLabels(pA, 'photon energy $ħω$ (eV)', '$ε$($ω$)');
+    ctx.save();
+    const boxes = [], env = [envelope(pA, XA, c.reA), envelope(pA, XA, c.imA, 0)];
+    if (c.nv) env.push(envelope(pA, XA, c.nvA));
+    // the dotted line ε(0) with all twenty transitions, labelled where it is free
+    if (c.e0all < YLA[1]) {
+      const L = place(pA, lineCands(pA, pA.Y(c.e0all), ['$ε$(0), all 20 transitions'], 11, ['ru', 'rd', 'cu', 'cd', 'lu', 'ld']), env, boxes);
+      if (L) drawLab(ctx, L, EPP.color('muted'));
+    }
+    // the fake Drude branch: an arrow from a free spot to where the dashed curve passes ε = −20
+    if (c.drude) {
+      let k = 0; while (k < XA.length - 1 && c.nvA[k] < -20) k++;
+      const tx = pA.X(XA[k]) + 4, ty = pA.Y(c.nvA[k]);
+      const one = ['fake Drude −(1 − $S$)$ω$_p^2/$ω$^2'], two = ['fake Drude', '−(1 − $S$)$ω$_p^2/$ω$^2'];
+      const ybs = [-13, -17, -9, -21, -5].map(v => pA.Y(v) + 4);
+      const L = place(pA, sweepCands(pA, tx + 24, ybs, [one, two], 11)
+        .concat(lineCands(pA, pA.Y(46), one, 11, ['rd', 'cd']), lineCands(pA, pA.Y(46), two, 11, ['rd'])), env.concat([flat(pA, pA.Y(0))]), boxes);
+      if (L) {
+        const col = EPP.textColor('c5');
+        drawLab(ctx, L, col);
+        const ax = L.align === 'left' ? L.box.x0 - 1 : (L.box.x0 + L.box.x1) / 2, ay = L.align === 'left' ? (L.box.y0 + L.box.y1) / 2 : L.box.y1 + 2;
+        arrow(ctx, ax, ay, tx, ty, EPP.color('c5'), 1.4, 8);
+      }
+    }
+    ctx.restore();
+  };
+
+  const baseB = pB.render.bind(pB);
+  pB.render = () => {
+    baseB();
+    const ctx = pB.ctx, m = pB.m;
+    if (!pB.cv.w || !pB.cv.h || !cur) return;
+    const c = cur;
+    axisLabels(pB, 'photon energy $ħω$ (eV)', 'running f-sum / $ω$_p^2');
+    ctx.save();
+    const boxes = [], cS = [envelope(pB, XB, c.cum)];
+    if (c.nv) cS.push(envelope(pB, XB, c.cumNv));
+    const Y1 = pB.Y(1), YS = pB.Y(c.S);
+    // the zero-frequency (Drude) weight of the dashed form: a bar at ω = 0 from 0 to 1 − S
+    if (c.drude) {
+      ctx.fillStyle = EPP.alpha('c5', 0.7);
+      ctx.fillRect(pB.X(0) + 1.5, pB.Y(c.miss), 4, pB.Y(0) - pB.Y(c.miss));
+    }
+    const fsum = place(pB, lineCands(pB, Y1, ['f-sum: $ω$_p^2'], 11, ['lu', 'cu', 'ru']), cS, boxes);
+    if (fsum) drawLab(ctx, fsum, EPP.color('fg2'));
+    if (Math.abs(1 - c.S) > 0.004) {
+      const L = place(pB, lineCands(pB, YS, [`$S$ = ${c.S.toFixed(3)}`], 11, ['ru', 'rd', 'ld', 'lu', 'cu', 'cd']), cS.concat([flat(pB, Y1)]), boxes);
+      if (L) drawLab(ctx, L, EPP.color('muted'));
+    }
+    if (c.drude) {
+      const tx = pB.X(0) + 7.5, ty = pB.Y(c.miss / 2);
+      const one = ['zero-frequency weight 1 − $S$'], two = ['zero-frequency', 'weight 1 − $S$'];
+      const ybs = [0, -14, 14, -28, 28].map(d => ty + 4 + d);
+      const L = place(pB, sweepCands(pB, tx + 26, ybs, [one, two], 11), cS.concat([flat(pB, Y1), flat(pB, YS)]), boxes);
+      if (L) {
+        drawLab(ctx, L, EPP.textColor('c5'));
+        arrow(ctx, L.box.x0 - 1, (L.box.y0 + L.box.y1) / 2, tx, ty, EPP.color('c5'), 1.4, 8);
+      }
+    }
+    ctx.restore();
+  };
+
+  function drawA() {
+    const c = cur;
+    pA.draw([
+      { type: 'fill', x: XA, y1: c.imA, color: 'electron', alpha: 0.14 },
+      { type: 'line', x: XA, y: c.imA, color: 'electron', width: 1, opacity: 0.55, label: 'Im ε, subtracted' },
+      { type: 'hline', at: c.e0all, color: 'muted', width: 1.3, dash: [2, 3] },
+      { type: 'line', x: XA, y: c.reA, color: 'electron', width: 2, label: 'Re ε, subtracted' },
+      c.nv ? { type: 'line', x: XA, y: c.nvA, color: 'c5', width: 2, dash: [6, 4], label: 'Re ε, contact + bubble' } : null
+    ]);
+    pA.cv.canvas.setAttribute('aria-label', `Panel a: dielectric function of the model insulator against photon energy from 0 to 20 eV, with ${c.N} of 20 transitions kept, the first at ${fx(c.e1, 2)} eV. ` +
+      `Subtracted form: real part starting at epsilon(0) = ${fx(c.e0, 2)}, with resonances and absorption peaks at the transitions; all 20 transitions would give ${fx(c.e0all, 2)}.` +
+      (c.drude ? ` Contact term plus truncated bubble: the same curve plus a fake Drude term that sends the real part to minus infinity at low energy, plasma energy ${fx(c.fake, 2)} eV.` : (c.nv ? ' Contact term plus truncated bubble: on top of the subtracted form.' : '')));
+  }
+  function drawB() {
+    const c = cur;
+    pB.draw([
+      { type: 'hline', at: 1, color: 'ink', width: 1, dash: [] },
+      { type: 'hline', at: c.S, color: 'muted', width: 1.3, dash: [2, 3] },
+      { type: 'line', x: XB, y: c.cum, color: 'electron', width: 2, label: 'subtracted form' },
+      c.nv ? { type: 'line', x: XB, y: c.cumNv, color: 'c5', width: 2, dash: [6, 4], label: 'contact + bubble' } : null
+    ]);
+    const end = c.cum[c.cum.length - 1];
+    pB.cv.canvas.setAttribute('aria-label', `Panel b: running f-sum in units of omega_p squared, photon energy 0 to 32 eV. ` +
+      `Subtracted form: rises in steps at the transitions to ${fx(end, 3)} at 32 eV, close to S = ${c.S.toFixed(3)}.` +
+      (c.nv ? ` Contact term plus truncated bubble: starts at the zero-frequency weight 1 − S = ${fx(c.miss, 3)} and rises to ${fx(end + c.miss, 3)}, close to the whole f-sum 1.` : ''));
+  }
+
+  // ---------- readouts ----------
+  const V = {};
+  ['n', 's', 'e0', 'eall', 'wp'].forEach(k => { V[k] = fig.querySelector('.b5-electrons-v-' + k); });
+  const keysNv = fig.querySelectorAll('.b5-electrons-k-nv');
+  function readouts() {
+    const c = cur;
+    V.n.textContent = String(c.N);
+    V.s.textContent = c.S.toFixed(3);
+    V.e0.textContent = fx(c.e0, 2);
+    V.eall.textContent = fx(c.e0all, 2);
+    V.wp.textContent = `${fx(c.fake, 2)} eV`;
+    keysNv.forEach(el => { el.style.display = c.nv ? '' : 'none'; });
+  }
+
+  // ---------- controls ----------
+  function onChange(s) {
+    cur = model(s);
+    drawA(); drawB(); readouts();
+  }
+  const elCtl = fig.querySelector('.b5-electrons-ctrls');
+  const ui = EPP.controls(elCtl, [
+    { key: 'N', type: 'range', label: 'transitions kept N_t', min: 1, max: 20, step: 1, value: 3, fmt: v => `${Math.round(v)} of 20` },
+    { key: 'e1', type: 'range', label: 'first transition ħω_1', min: 2, max: 5, step: 0.05, value: 3.6, fmt: v => `${v.toFixed(2)} eV` },
+    { key: 'g', type: 'range', label: 'broadening ħγ', min: 0.1, max: 1, step: 0.01, value: 0.3, fmt: v => `${v.toFixed(2)} eV` },
+    { key: 'nv', type: 'toggle', label: 'show contact term + truncated bubble', value: true, wide: true }
+  ], onChange);
+  cur = model(ui.state);
+  // slider labels: the symbols in italic, like the readout keys
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const LAB = { N: `transitions kept ${I('N')}<sub>t</sub>`, e1: `first transition ${I('ħω')}<sub>1</sub>`, g: `broadening ${I('ħγ')}` };
+  Object.keys(LAB).forEach(k => { const sp = elCtl.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+})();
+</script>

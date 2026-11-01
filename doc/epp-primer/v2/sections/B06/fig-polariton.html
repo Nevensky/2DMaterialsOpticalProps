@@ -1,0 +1,456 @@
+  <figure class="viz" id="viz-b6-polariton">
+    <p class="viz-title">Phonon polaritons and the LO mode in GaAs <span class="tag">interactive</span></p>
+    <div class="b6-polariton-plot"></div>
+    <div class="legend b6-polariton-leg">
+      <span class="item" style="white-space:normal">phonon fraction 0 (light)<span aria-hidden="true" style="display:inline-block;width:52px;height:8px;margin:0 6px;border-radius:2px;vertical-align:middle;background:linear-gradient(90deg,var(--c-photon),var(--c-phonon))"></span>1 (phonon)</span>
+      <span class="item"><svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><path d="M1 5H27" fill="none" stroke-width="3" stroke-dasharray="10 5" style="stroke:var(--c-phonon)"/></svg>LO mode, longitudinal</span>
+      <span class="item"><svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><path d="M1 5H27" fill="none" stroke-width="1.4" stroke-dasharray="5 4" style="stroke:var(--c-phonon)"/></svg>$\omega_{\mathrm{TO}}$</span>
+      <span class="item"><svg width="24" height="10" viewBox="0 0 24 10" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><rect x="1" y="1" width="22" height="8" rx="2" style="fill:var(--c-phonon);fill-opacity:0.22"/></svg>Reststrahlen band</span>
+      <span class="item"><svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><path d="M1 5H27" fill="none" stroke-width="1.5" stroke-dasharray="6 4" style="stroke:var(--c-photon)"/></svg>light in vacuum, $\omega=cq$</span>
+      <span class="item"><svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><path d="M1 5H27" fill="none" stroke-width="1.5" stroke-dasharray="2 3" style="stroke:var(--c-photon)"/></svg>$\omega=cq/\sqrt{\varepsilon_\infty}$</span>
+      <span class="item"><svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><path d="M1 5H27" fill="none" stroke-width="1.5" stroke-dasharray="7 3 2 3" style="stroke:var(--c-photon)"/></svg>$\omega=cq/\sqrt{\varepsilon_{\mathrm s}}$</span>
+    </div>
+    <div class="b6-polariton-ctrls"></div>
+    <div class="readout b6-polariton-ro" aria-live="polite"><span>$\hbar\omega_{\mathrm{TO}}$, $\hbar\omega_{\mathrm{LO}}$<b class="b6-polariton-v-w"></b></span><span>$\varepsilon_\infty$, $\varepsilon_{\mathrm s}$<b class="b6-polariton-v-eps"></b></span><span>$\sqrt{\varepsilon_\infty}\,\omega_{\mathrm{TO}}/c$<b class="b6-polariton-v-qx"></b></span></div>
+    <div class="readout b6-polariton-ro2" aria-live="polite"><span>cursor $q$<b class="b6-polariton-v-q"></b></span><span>$q$ in units of $\sqrt{\varepsilon_\infty}\,\omega_{\mathrm{TO}}/c$<b class="b6-polariton-v-qr"></b></span><span>$q$ / zone edge<b class="b6-polariton-v-qz"></b></span><span>$\hbar\omega_{\mathrm{UP}}$<b class="b6-polariton-v-up"></b></span><span>$\hbar\omega_{\mathrm{LP}}$<b class="b6-polariton-v-lp"></b></span><span>LO mode<b class="b6-polariton-v-lo"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> Light and the TO phonon anticross into two polaritons on either side of a band where no transverse wave exists, while the longitudinal LO mode stays flat at $\omega_{\mathrm{LO}}$. All of this happens at $q$ of order <span class="nw">$10^{-5}$–$10^{-4}$ Å⁻¹,</span> a few hundred-thousandths of the Brillouin zone.</p><div class="cap-more">
+      <p><strong>Marks.</strong> The colour of the polariton branches is their phonon fraction, the share of the wave's energy carried by the moving ions: rose is light, amber is phonon. The shaded Reststrahlen band lies between the dashed $\omega_{\mathrm{TO}}$ line and the LO line, drawn with long dashes because it is longitudinal. Rose lines are light in vacuum (dashed) and in the crystal (dotted, dash-dotted). The grey dotted line marks <span class="nw">$q=\sqrt{\varepsilon_\infty}\,\omega_{\mathrm{TO}}/c$;</span> the black line is the cursor.</p>
+      <p><strong>Try.</strong> Switch to the logarithmic axis: beyond about $10^{-3}$ Å⁻¹ only the flat TO and LO lines remain, the electrostatic picture of Part A. Raise the speed of light to ×1000: the polariton region slides toward $q=0$ and the LO line does not move, the order of limits of <a href="#b-phonon-se">Section B.7</a>. Put the cursor on the marker: both branches are exactly half phonon. Choose NaCl: a much wider Reststrahlen band.</p>
+      <p><strong>Model.</strong> <a class="eqref" href="#b6-eq-polar"></a> with a constant $\varepsilon_\infty$ for the electrons and the measured LO frequency, $(\omega^{\ion}_{\mathrm p})^2=\varepsilon_\infty(\omega^2_{\mathrm{LO}}-\omega^2_{\mathrm{TO}})$; the modes <a class="eqref" href="#b6-eq-modesL"></a>–<a class="eqref" href="#b6-eq-polariton"></a>; $\varepsilon_{\mathrm s}$ from Lyddane–Sachs–Teller; the energy split derived after <a class="eqref" href="#b6-eq-polariton"></a>; no damping; a local, isotropic response. The speed-of-light factor multiplies $c$ everywhere. Presets, literature values (illustrative) of $\hbar\omega_{\mathrm{TO}}$, $\hbar\omega_{\mathrm{LO}}$, $\varepsilon_\infty$: GaAs <span class="nw">33.3, 36.2 meV,</span> 10.9; NaCl <span class="nw">20.3, 32.7 meV,</span> 2.34; SiC <span class="nw">98.7, 120.5 meV,</span> 6.52; hBN in plane, treated as isotropic, <span class="nw">169.9, 199.6 meV,</span> 4.87. The zone edge is $2\pi/a$ (Γ–X; $a=5.653$, 5.64, <span class="nw">4.36 Å)</span>, for hBN $2\pi/(\sqrt3\,a)$ (Γ–M, <span class="nw">$a=2.50$ Å).</span></p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b6-polariton');
+  if (!fig || !window.EPP) return;
+
+  // ---------- physics: energies in meV, wavevectors in Å⁻¹ ----------
+  const HC = 1.97327e6;                     // ħc in meV Å
+  // literature values, illustrative: ħω_TO, ħω_LO (meV), ε_∞, lattice constant a (Å), zone-edge point (Γ–X, or Γ–M in plane)
+  const PRE = {
+    GaAs: { T: 33.3, L: 36.2, ei: 10.9, a: 5.653, pt: 'X', name: 'GaAs' },
+    NaCl: { T: 20.3, L: 32.7, ei: 2.34, a: 5.64, pt: 'X', name: 'NaCl' },
+    SiC: { T: 98.7, L: 120.5, ei: 6.52, a: 4.36, pt: 'X', name: '3C-SiC' },
+    hBN: { T: 169.9, L: 199.6, ei: 4.87, a: 2.50, pt: 'M', name: 'hBN, in plane' }
+  };
+  for (const P of Object.values(PRE)) {
+    P.T2 = P.T * P.T; P.L2 = P.L * P.L;
+    P.wp2 = P.ei * (P.L2 - P.T2);           // (ħω_p^ion)²: the zero of ε(ω) sits at the measured ω_LO
+    P.es = P.ei * P.L2 / P.T2;              // ε_s, Lyddane–Sachs–Teller
+    P.qx = Math.sqrt(P.ei) * P.T / HC;      // √ε_∞ ω_TO/c at the real speed of light (GaAs 5.57×10⁻⁵ Å⁻¹)
+    P.edge = P.pt === 'X' ? 2 * Math.PI / P.a : 2 * Math.PI / (Math.sqrt(3) * P.a);
+    P.ymax = Math.ceil(1.6 * P.L);          // fixed energy range: GaAs 58 meV
+    P.fLO = (P.T2 + P.L2) / (2 * P.L2);     // phonon fraction of the LO mode, the same at every q
+  }
+  // phonon fraction of a transverse wave at ω² = w2: ion energy (ω_p^ion)²(ω² + ω_TO²)/d² over itself plus the field and
+  // electron energy ε_∞ + ε(ω), with d = ω_TO² − ω²; multiplied through by d², so it stays finite as ω → ω_TO
+  function frac(P, w2, d) {
+    const ion = P.wp2 * (w2 + P.T2);
+    return ion / (ion + P.ei * d * d + P.ei * (P.L2 - w2) * d);
+  }
+  // the two transverse modes (B6.20) at wavevector q with the speed of light s·c, and their phonon fractions
+  function modes(P, s, q) {
+    const cq = s * HC * q, x = cq * cq / P.ei;               // c²q²/ε_∞
+    const hs = 0.5 * (P.L2 + x), prod = x * P.T2;           // half the sum and the product of the two roots in ω²
+    const disc = Math.sqrt(Math.max(0, hs * hs - prod));
+    const up2 = hs + disc, lp2 = prod / up2;                 // small root = product / large root: no cancellation at small q
+    // ω_TO² − ω_LP² = ω_TO²(ω_UP² − c²q²/ε_∞)/ω_UP², with ω_UP² − c²q²/ε_∞ = a + disc written without cancellation
+    const a = 0.5 * (P.L2 - x), ux = a >= 0 ? a + disc : x * (P.L2 - P.T2) / (disc - a);
+    return { up: Math.sqrt(up2), lp: Math.sqrt(lp2), fup: frac(P, up2, P.T2 - up2), flp: frac(P, lp2, P.T2 * ux / up2) };
+  }
+  const QMIN = 1e-7, QMAXLOG = 2;          // logarithmic axis; it reaches past every zone edge (1.11 to 1.45 Å⁻¹)
+  function curves(P, s, log) {
+    const qs = [];
+    if (log) { const n = 560; for (let i = 0; i < n; i++) qs.push(QMIN * Math.pow(QMAXLOG / QMIN, i / (n - 1))); }
+    else {
+      const qm = 4 * P.qx, n = 420; for (let i = 0; i < n; i++) qs.push(qm * i / (n - 1));
+      const qa = 8 * P.qx / s;              // a faster light squeezes the anticrossing to the left: sample it densely
+      if (qa < qm / 3) { for (let i = 1; i < 160; i++) qs.push(qa * i / 160); qs.sort((u, v) => u - v); }
+    }
+    const n = qs.length, c = { qs, up: new Float64Array(n), lp: new Float64Array(n), fu: new Float64Array(n), fl: new Float64Array(n) };
+    for (let i = 0; i < n; i++) { const r = modes(P, s, qs[i]); c.up[i] = r.up; c.lp[i] = r.lp; c.fu[i] = r.fup; c.fl[i] = r.flp; }
+    return c;
+  }
+
+  // ---------- formatting ----------
+  const nb = ' ';
+  const supD = (k) => String(k).split('').map(ch => (ch === '-' ? '⁻' : ('⁰¹²³⁴⁵⁶⁷⁸⁹'['0123456789'.indexOf(ch)] || ch))).join('');
+  // mantissa with d significant digits and exponent, carried when the mantissa rounds to 10
+  const mant = (v, d) => { let k = Math.floor(Math.log10(v)), mt = v / Math.pow(10, k); if (Number(mt.toFixed(d - 1)) >= 10) { mt /= 10; k += 1; } return [mt.toFixed(d - 1), k]; };
+  const sciH = (v, d) => { if (v === 0) return '0'; if (!(v > 0) || !isFinite(v)) return '—'; const [mt, k] = mant(v, d); return k === 0 ? mt : `${mt}×10<sup>${String(k).replace('-', '−')}</sup>`; };
+  const sciU = (v, d) => { if (v === 0) return '0'; if (!(v > 0) || !isFinite(v)) return '—'; const [mt, k] = mant(v, d); return k === 0 ? mt : `${mt}×10${supD(k)}`; };
+  const sciS = (v, d) => { if (v === 0) return '0'; if (!(v > 0) || !isFinite(v)) return 'undefined'; const [mt, k] = mant(v, d); return k === 0 ? mt : `${mt} times 10 to the ${k < 0 ? 'minus ' + (-k) : k}`; };
+  const plain = (v, d, f) => (v === 0 ? '0' : v >= 0.01 && v < 1000 ? String(Number(v.toPrecision(d))) : f(v, d));
+  const mevH = (v) => (v < 100 ? v.toFixed(3) + nb + 'meV' : v < 1000 ? v.toFixed(2) + nb + 'meV' : v < 1e6 ? (v / 1e3).toPrecision(4) + nb + 'eV' : sciH(v / 1e3, 3) + nb + 'eV');
+  const mevS = (v) => (v < 1000 ? v.toFixed(v < 100 ? 3 : 2) + ' meV' : v < 1e6 ? (v / 1e3).toPrecision(4) + ' eV' : sciS(v / 1e3, 3) + ' eV');
+  const pct = (f) => (100 * f).toFixed(1) + '%' + nb + 'phonon';
+  const sFmt = (v) => '×' + (v < 9.95 ? v.toFixed(1) : v.toFixed(0));
+  const sSpoken = (v) => 'c times ' + (v < 9.95 ? v.toFixed(1) : v.toFixed(0)) + (v < 1.005 ? ', the real speed of light' : '');
+
+  // ---------- canvas text: '$...$' marks math, whose letters are italic; _x, ^x as in EPP.drawRich ----------
+  const ITAL = /[A-Za-zα-ωħ]/;
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const part of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: part.t, m: part.m, it: false }); continue; }
+        let buf = '', it = null;
+        for (const ch of part.t) { const k = ITAL.test(ch); if (it !== null && k !== it) { out.push({ t: buf, m: part.m, it }); buf = ''; } buf += ch; it = k; }
+        if (buf) out.push({ t: buf, m: part.m, it });
+      }
+    });
+    return out;
+  }
+  // o: {size, color, align, halo (a colour: a thin outline that keeps a label legible across lines), measure}
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, fam = EPP.css('--font-ui'), rs = runs(s);
+    const font = (r) => `${r.it ? 'italic ' : ''}${r.m ? Math.round(size * 0.72) : size}px ${fam}`;
+    const ws = rs.map(r => { ctx.font = font(r); return ctx.measureText(r.t).width; });
+    const tot = ws.reduce((p, q) => p + q, 0);
+    if (o.measure) return tot;
+    const x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    const dy = (r) => (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0));
+    ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    if (o.halo) {
+      ctx.lineWidth = 3.5; ctx.lineJoin = 'round'; ctx.strokeStyle = o.halo; ctx.setLineDash([]);
+      let xx = x0; rs.forEach((r, k) => { ctx.font = font(r); ctx.strokeText(r.t, xx, y + dy(r)); xx += ws[k]; });
+    }
+    if (o.color) ctx.fillStyle = o.color;
+    let xx = x0; rs.forEach((r, k) => { ctx.font = font(r); ctx.fillText(r.t, xx, y + dy(r)); xx += ws[k]; });
+    return tot;
+  }
+  const tw = (ctx, s, size) => txt(ctx, s, 0, 0, { size, measure: true });
+
+  // ---------- geometry: clip a segment to a rectangle (Liang–Barsky); null if it misses ----------
+  function clipSeg(p, q, b) {
+    const dx = q[0] - p[0], dy = q[1] - p[1];
+    if (!isFinite(dx) || !isFinite(dy)) return null;
+    let t0 = 0, t1 = 1;
+    const P = [-dx, dx, -dy, dy], Q = [p[0] - b.x0, b.x1 - p[0], p[1] - b.y0, b.y1 - p[1]];
+    for (let k = 0; k < 4; k++) {
+      if (P[k] === 0) { if (Q[k] < 0) return null; continue; }
+      const r = Q[k] / P[k];
+      if (P[k] < 0) { if (r > t1) return null; if (r > t0) t0 = r; } else { if (r < t0) return null; if (r < t1) t1 = r; }
+    }
+    return { t0, t1, p0: [p[0] + t0 * dx, p[1] + t0 * dy], p1: [p[0] + t1 * dx, p[1] + t1 * dy] };
+  }
+  // stroke a pixel polyline inside the plot frame as one path per visible piece, so that dash patterns run on
+  function strokeClipped(ctx, pts, b) {
+    ctx.beginPath(); let open = false;
+    for (let i = 1; i < pts.length; i++) {
+      const c = clipSeg(pts[i - 1], pts[i], b);
+      if (!c) { open = false; continue; }
+      if (!open || c.t0 > 0) ctx.moveTo(c.p0[0], c.p0[1]);
+      ctx.lineTo(c.p1[0], c.p1[1]);
+      open = c.t1 === 1;
+    }
+    ctx.stroke();
+  }
+
+  // ---------- label placement: the first candidate whose box no listed curve and no earlier label crosses ----------
+  function labeler(ctx, curves, frame) {
+    const boxes = [];
+    // a curve hits a box if one of its segments does; bounding boxes (of the curve, then of each segment) reject most quickly
+    curves.forEach(k => { let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity; for (const p of k.pts) { x0 = Math.min(x0, p[0]); x1 = Math.max(x1, p[0]); y0 = Math.min(y0, p[1]); y1 = Math.max(y1, p[1]); } k.bb = { x0, x1, y0, y1 }; });
+    const hits = (b, k) => {
+      if (k.bb.x1 < b.x0 || k.bb.x0 > b.x1 || k.bb.y1 < b.y0 || k.bb.y0 > b.y1) return false;
+      const pts = k.pts;
+      for (let i = 1; i < pts.length; i++) {
+        const p = pts[i - 1], q = pts[i];
+        if ((p[0] < b.x0 && q[0] < b.x0) || (p[0] > b.x1 && q[0] > b.x1) || (p[1] < b.y0 && q[1] < b.y0) || (p[1] > b.y1 && q[1] > b.y1)) continue;
+        if (clipSeg(p, q, b)) return true;
+      }
+      return false;
+    };
+    const inFrame = (b) => b.x0 >= frame.x0 - 1 && b.x1 <= frame.x1 + 1 && b.y0 >= frame.y0 - 1 && b.y1 <= frame.y1 + 1;
+    const clear = (b) => !boxes.some(o => b.x0 < o.x1 && b.x1 > o.x0 && b.y0 < o.y1 && b.y1 > o.y0);
+    // opt.tight: a box only as tall as the glyphs (for text without descenders inside a narrow band)
+    const boxOf = (c, size, tight) => { const wd = tw(ctx, c.t, size), x0 = c.align === 'right' ? c.x - wd : c.align === 'center' ? c.x - wd / 2 : c.x; return { x0: x0 - 2, x1: x0 + wd + 2, y0: c.y - (tight ? 0.76 * size : size - 1), y1: c.y + (tight ? 1 : 4) }; };
+    const crossings = (b, skip) => curves.reduce((s, k) => s + (!(skip && skip.includes(k.name)) && hits(b, k) ? 1 : 0), 0);
+    const anyHit = (b, skip) => curves.some(k => !(skip && skip.includes(k.name)) && hits(b, k));
+    const L = {
+      boxes,
+      // cands: [{t (text), x, y (baseline), align}]; opt.skip: names of curves the label may cross
+      find(cands, size, opt = {}) {
+        for (const c of cands) {
+          const b = boxOf(c, size, opt.tight);
+          if (inFrame(b) && clear(b) && !anyHit(b, opt.skip)) return { c, b };
+        }
+        return null;
+      },
+      // style: an object, or a function of the chosen candidate
+      commit(f, style) { const st = typeof style === 'function' ? style(f.c) : style; boxes.push(f.b); txt(ctx, f.c.t, f.c.x, f.c.y, Object.assign({}, st, { align: f.c.align || 'left' })); return f; },
+      // without a free candidate: opt.optional draws nothing; otherwise the candidate inside the frame and clear of other
+      // labels that crosses the fewest curves is used (a curve under a haloed label is the lesser evil), else the first one
+      put(cands, style, opt = {}) {
+        const size = (typeof style === 'function' ? style(cands[0] || {}) : style).size, f = L.find(cands, size, opt);
+        if (f) return L.commit(f, style);
+        if (opt.optional || !cands.length) return null;
+        let best = null, bc = Infinity;
+        for (const c of cands) { const b = boxOf(c, size, opt.tight); if (!inFrame(b) || !clear(b)) continue; const k = crossings(b, opt.skip); if (k < bc) { bc = k; best = { c, b }; } }
+        return L.commit(best || { c: cands[0], b: boxOf(cands[0], size, opt.tight) }, style);
+      }
+    };
+    return L;
+  }
+
+  // ---------- the plot ----------
+  const elPlot = fig.querySelector('.b6-polariton-plot');
+  const plot = new EPP.Plot(elPlot, {
+    xlim: [0, 1], ylim: [0, 58], legend: false, hover: false, aspect: 0.5, minHeight: 320, maxHeight: 420,
+    margin: { l: 52, r: 14, t: 26, b: 44 },
+    ariaLabel: 'Mode energies of a polar crystal against the wavevector: the two transverse phonon polaritons, the flat longitudinal optical mode and the light lines'
+  });
+  plot.cv.canvas.style.touchAction = 'none';     // the cursor is dragged on this canvas
+  const LOGT = [-7, -6, -5, -4, -3, -2, -1, 0].map(e => ({ v: Math.pow(10, e), label: e === 0 ? '1' : '10^{−' + (-e) + '}' }));
+  let cur = null;
+
+  const base = plot.render.bind(plot);
+  plot.render = () => { base(); if (cur) overlay(); };
+
+  function overlay() {
+    const ctx = plot.ctx, w = plot.cv.w, h = plot.cv.h, m = plot.m;
+    if (!w || !h) return;
+    const { P, s, log } = cur.st, C = cur.c, r = cur.r, q0 = cur.q, n = C.qs.length;
+    const fr = { x0: m.l, x1: w - m.r, y0: m.t, y1: h - m.b }, pw = fr.x1 - fr.x0;
+    const X = (q) => plot.X(log ? q : q * 1e4), Y = (v) => plot.Y(v);
+    const fs = w < 520 ? 11 : 11.5, halo = EPP.color('surface'), cMut = EPP.color('muted'), cFg = EPP.color('fg'), cFg2 = EPP.color('fg2');
+    const cPh = EPP.color('phonon'), tPh = EPP.textColor('phonon'), tPhot = EPP.textColor('photon');
+    const mixer = (a, b) => { const A = EPP.rgb(a), B = EPP.rgb(b); return (f) => { const t = EPP.clamp(f, 0, 1); return `rgb(${Math.round(A[0] + (B[0] - A[0]) * t)},${Math.round(A[1] + (B[1] - A[1]) * t)},${Math.round(A[2] + (B[2] - A[2]) * t)})`; }; };
+    const mix = mixer('photon', 'phonon'), mixT = mixer('photon-t', 'phonon-t');   // marks; text
+    const yT = Y(P.T), yL = Y(P.L), qxs = P.qx / s, Xm = X(qxs), mIn = Xm >= fr.x0 - 0.5 && Xm <= fr.x1 + 0.5;
+    const Xe = log ? X(P.edge) : null;
+    // pixel polylines of the branches and of the light lines ω = s·c·q/√ε
+    const upPx = new Array(n), lpPx = new Array(n);
+    for (let i = 0; i < n; i++) { const xx = X(C.qs[i]); upPx[i] = [xx, Y(C.up[i])]; lpPx[i] = [xx, Y(C.lp[i])]; }
+    const light = (eps) => {
+      const k = s * HC / Math.sqrt(eps);
+      if (!log) { const qm = 4 * P.qx, qe = Math.min(qm, P.ymax / k); return [[X(0), Y(0)], [X(qe), Y(k * qe)]]; }
+      const pts = []; for (const q of C.qs) { const v = k * q; pts.push([X(q), Y(v)]); if (v > P.ymax) break; } return pts;
+    };
+    const lvac = light(1), linf = light(P.ei), lst = light(P.es);
+    const hline = (y) => [[fr.x0, y], [fr.x1, y]], vline = (x) => [[x, fr.y0], [x, fr.y1]];
+
+    ctx.save();
+    ctx.beginPath(); ctx.rect(fr.x0, fr.y0, pw, fr.y1 - fr.y0); ctx.clip();
+    // Reststrahlen band (a little stronger on a dark surface), ω_TO line
+    const sf = EPP.rgb('surface'), dark = 0.2126 * sf[0] + 0.7152 * sf[1] + 0.0722 * sf[2] < 100;
+    ctx.fillStyle = EPP.alpha('phonon', dark ? 0.22 : 0.13); ctx.fillRect(fr.x0, yL, pw, yT - yL);
+    ctx.strokeStyle = cPh; ctx.lineWidth = 1.4; ctx.lineCap = 'butt'; ctx.setLineDash([5, 4]);
+    ctx.beginPath(); ctx.moveTo(fr.x0, yT); ctx.lineTo(fr.x1, yT); ctx.stroke();
+    // light lines: vacuum dashed, ε_∞ dotted, ε_s dash-dot
+    ctx.strokeStyle = EPP.color('photon'); ctx.lineWidth = 1.5;
+    [[lvac, [6, 4]], [linf, [2, 3]], [lst, [7, 3, 2, 3]]].forEach(([pts, d]) => { ctx.setLineDash(d); strokeClipped(ctx, pts, fr); });
+    // the marker √ε_∞ ω_TO/c, the zone edge, the polariton-region bracket (logarithmic axis)
+    ctx.strokeStyle = cMut; ctx.lineWidth = 1.2;
+    if (mIn) { ctx.setLineDash([2, 3]); ctx.beginPath(); ctx.moveTo(Xm, fr.y0); ctx.lineTo(Xm, fr.y1); ctx.stroke(); }
+    let br = null;
+    if (log) {
+      ctx.setLineDash([]); ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(Xe, fr.y0); ctx.lineTo(Xe, fr.y1); ctx.stroke();
+      const xb0 = X(0.1 * qxs), xb1 = X(10 * qxs), yb = fr.y1 - 10;
+      if (xb1 > fr.x0 + 4) {
+        br = { x0: Math.max(xb0, fr.x0), x1: Math.min(xb1, fr.x1), y: yb };
+        ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(br.x0, yb); ctx.lineTo(br.x1, yb);
+        if (xb0 >= fr.x0) { ctx.moveTo(xb0, yb - 5); ctx.lineTo(xb0, yb + 4); }
+        if (xb1 <= fr.x1) { ctx.moveTo(xb1, yb - 5); ctx.lineTo(xb1, yb + 4); }
+        ctx.stroke();
+      }
+    }
+    // the polaritons: short segments coloured by their phonon fraction
+    ctx.setLineDash([]); ctx.lineWidth = 3; ctx.lineCap = 'round';
+    [[lpPx, C.fl], [upPx, C.fu]].forEach(([pts, f]) => {
+      for (let i = 1; i < n; i++) {
+        const c = clipSeg(pts[i - 1], pts[i], fr);
+        if (!c) continue;
+        ctx.strokeStyle = mix(0.5 * (f[i - 1] + f[i]));
+        ctx.beginPath(); ctx.moveTo(c.p0[0], c.p0[1]); ctx.lineTo(c.p1[0], c.p1[1]); ctx.stroke();
+      }
+    });
+    // the LO mode on top, long dashes: where the upper branch runs along it the gaps fill in
+    ctx.strokeStyle = cPh; ctx.lineWidth = 3; ctx.lineCap = 'butt'; ctx.setLineDash([12, 6]);
+    ctx.beginPath(); ctx.moveTo(fr.x0, yL); ctx.lineTo(fr.x1, yL); ctx.stroke();
+    // the cursor line
+    const Xc = X(Math.max(q0, log ? QMIN : 0));
+    ctx.strokeStyle = cFg; ctx.lineWidth = 1.2; ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(Xc, fr.y0); ctx.lineTo(Xc, fr.y1); ctx.stroke();
+    ctx.restore();
+
+    // ---------- labels ----------
+    const curvesL = [{ name: 'up', pts: upPx }, { name: 'lp', pts: lpPx }, { name: 'vac', pts: lvac }, { name: 'inf', pts: linf }, { name: 'st', pts: lst },
+      { name: 'TO', pts: hline(yT) }, { name: 'LO', pts: hline(yL) }];
+    if (mIn) curvesL.push({ name: 'marker', pts: vline(Xm) });
+    if (log) curvesL.push({ name: 'edge', pts: vline(Xe) });
+    const Lb = labeler(ctx, curvesL, fr);
+    // no label under a cursor dot
+    [yL, Y(r.lp), Y(r.up)].forEach(y => Lb.boxes.push({ x0: Xc - 7, x1: Xc + 7, y0: y - 7, y1: y + 7 }));
+    const xL = fr.x0 + 6, xR = fr.x1 - 6, sty = (color) => ({ size: fs, color, halo });
+    const rights = (t, y) => { const out = [{ t, x: xR, y, align: 'right' }]; if (log) out.push({ t, x: Xe - 5, y, align: 'right' }); [0.82, 0.66, 0.5].forEach(f => out.push({ t, x: fr.x0 + f * pw, y, align: 'right' })); return out; };
+    // the band: inside it, away from the light lines (the horizontal lines at its edges do not count)
+    // (a tall band also offers baselines near its lower and upper edges, where the light lines cross elsewhere)
+    const bh = yT - yL, bs = Math.max(8.5, Math.min(fs, bh - 2.5)), yb = (yT + yL) / 2 + 0.36 * bs;
+    const ybs = bh > 3 * bs ? [yb, yT - 0.5 * bs, yL + 1.3 * bs] : [yb];
+    Lb.put([].concat(...['Reststrahlen: no transverse wave', 'no transverse wave', 'Reststrahlen band', 'Reststrahlen'].map(t => [].concat(...ybs.map(y => [...rights(t, y), { t, x: fr.x0 + 0.62 * pw, y, align: 'center' }, { t, x: xL, y }])))),
+      { size: bs, color: tPh, halo }, { skip: ['TO', 'LO'], tight: true });
+    // ω_TO below its line at the left; the LO mode above its line at the right
+    const toC = []; for (let x = xL; x < fr.x0 + 0.45 * pw; x += 5) toC.push({ t: '$ω$_{TO}', x, y: yT + fs + 3 });
+    Lb.put(toC, sty(tPh));
+    Lb.put([].concat(...['$ω$_{LO}: LO mode, longitudinal ($ε$^L = 0)', '$ω$_{LO}: LO, longitudinal', '$ω$_{LO}'].map(t => rights(t, yL - 6))), sty(tPh));
+    // ω_LP below its right end, where it has merged with ω_TO
+    const lpEnd = lpPx[n - 1][1];
+    Lb.put([].concat(...['$ω$_{LP} → $ω$_{TO}', '$ω$_{LP}'].map(t => rights(t, Math.max(lpEnd, yT) + fs + 3))), sty(mixT(C.fl[n - 1])));
+    // ω_UP, coloured like the branch where it sits: beside its upper part, or above its right end, or on the LO line at the
+    // left, where it starts (logarithmic axis); nothing when the whole branch lies above the frame
+    const at = (v) => { for (let i = 1; i < n; i++) if (C.up[i - 1] < v && C.up[i] >= v) { const t = (v - C.up[i - 1]) / (C.up[i] - C.up[i - 1]); return { x: upPx[i - 1][0] + t * (upPx[i][0] - upPx[i - 1][0]), f: C.fu[i - 1] + t * (C.fu[i] - C.fu[i - 1]) }; } return null; };
+    const upC = [];
+    [0.92, 0.84, 0.76, 0.68].forEach(fv => { const v = fv * P.ymax; if (v <= P.L + 2) return; const a = at(v); if (!a) return; upC.push({ t: '$ω$_{UP}', x: a.x + 6, y: Y(v) + fs + 5, f: a.f }, { t: '$ω$_{UP}', x: a.x + 10, y: Y(v) + 4, f: a.f }, { t: '$ω$_{UP}', x: a.x - 12, y: Y(v) + 4, align: 'right', f: a.f }); });
+    if (C.up[n - 1] < P.ymax) { const ye = upPx[n - 1][1]; upC.push({ t: '$ω$_{UP}', x: xR, y: ye - 7, align: 'right', f: C.fu[n - 1] }, { t: '$ω$_{UP}', x: xR, y: ye + fs + 4, align: 'right', f: C.fu[n - 1] }); }
+    if (Math.abs(upPx[0][1] - yL) < 1.5) upC.push({ t: '$ω$_{UP} → $ω$_{LO}', x: xL, y: yL - 6, f: C.fu[0] });
+    // above its shallow lower part, at fixed fractions of the width
+    [0.06, 0.12, 0.18, 0.26, 0.34].forEach(k => {
+      const xx = fr.x0 + k * pw;
+      for (let i = 1; i < n; i++) if (upPx[i - 1][0] <= xx && upPx[i][0] >= xx && upPx[i][0] > upPx[i - 1][0]) {
+        const t = (xx - upPx[i - 1][0]) / (upPx[i][0] - upPx[i - 1][0]), yy = upPx[i - 1][1] + t * (upPx[i][1] - upPx[i - 1][1]);
+        if (yy > fr.y0 + fs + 8 && yy < yL - 2) upC.push({ t: '$ω$_{UP}', x: xx, y: yy - 7, align: 'center', f: C.fu[i - 1] + t * (C.fu[i] - C.fu[i - 1]) });
+        break;
+      }
+    });
+    if (upC.length) Lb.put(upC, (c) => sty(mixT(c.f)));
+    // the marker, or an arrow toward it when a fast light has pushed it off the logarithmic axis
+    const mv = [0.3, 0.2, 0.42, 0.12].map(f => Y(f * P.ymax) + 4);
+    const mt = '√$ε$_∞ $ω$_{TO}/$c$';
+    if (mIn) Lb.put([...mv.map(y => ({ t: mt, x: Xm + 5, y })), ...mv.map(y => ({ t: mt, x: Xm - 5, y, align: 'right' })), { t: mt, x: Xm + 5, y: fr.y0 + fs + 2 }], sty(cMut), { skip: ['marker'] });
+    else Lb.put(mv.map(y => ({ t: '← ' + mt + ' = ' + sciU(qxs, 2) + ' Å⁻¹', x: xL, y })), sty(cMut));
+    if (log) {
+      const zt = 'zone edge (' + P.pt + ')';
+      Lb.put([fr.y0 + fs + 2, Y(0.85 * P.ymax), Y(0.7 * P.ymax), yT + 2 * fs + 8].map(y => ({ t: zt, x: Xe - 5, y, align: 'right' })), sty(cMut), { skip: ['edge'] });
+      if (br) {
+        const t = 'polariton region', yb2 = br.y - 6, cx = EPP.clamp(Xm, br.x0, br.x1);
+        Lb.put([{ t, x: cx, y: yb2, align: 'center' }, { t, x: br.x1 + 6, y: br.y + 4 }, { t, x: br.x0 + 4, y: yb2 }, { t, x: br.x1 - 4, y: yb2, align: 'right' }, { t, x: cx, y: yb2 - 16, align: 'center' }], sty(cMut), { optional: true });
+      }
+    }
+    // the light lines: beside them where nothing crosses; the two in the crystal share a label when they lie close together
+    const along = (pts, t, eps) => {
+      const k = s * HC / Math.sqrt(eps), out = [];
+      [0.92, 0.8, 0.68, 0.56, 0.44].forEach(fv => {
+        const v = fv * P.ymax, xx = X(v / k);
+        if (!(xx > fr.x0 + 2 && xx < fr.x1 - 2)) return;
+        out.push({ t, x: xx + 6, y: Y(v) + 12 }, { t, x: xx - 6, y: Y(v) - 2, align: 'right' });
+      });
+      const e = pts[pts.length - 1];
+      if (e[1] > fr.y0 + 2 && e[0] >= fr.x1 - 1) out.push({ t, x: xR, y: e[1] + fs + 6, align: 'right' }, { t, x: xR, y: e[1] - 8, align: 'right' });
+      return out;
+    };
+    Lb.put(along(lvac, '$cq$', 1), sty(tPhot), { optional: true });
+    const cI = along(linf, '$cq$/√$ε$_∞', P.ei), cS = along(lst, '$cq$/√$ε$_s', P.es);
+    const fI = Lb.find(cI, fs);
+    let fS = null;
+    if (fI) { Lb.boxes.push(fI.b); fS = Lb.find(cS, fs); Lb.boxes.pop(); }
+    if (fI && fS) { Lb.commit(fI, sty(tPhot)); Lb.commit(fS, sty(tPhot)); }
+    else if (!Lb.put(along(lst, '$cq$/√$ε$_∞, $cq$/√$ε$_s', P.es), sty(tPhot), { optional: true })) {
+      if (fI) Lb.commit(fI, sty(tPhot)); else Lb.put(cS, sty(tPhot), { optional: true });
+    }
+
+    // ---------- the cursor dots on the three modes (a caret at the top when a branch is above the frame) ----------
+    const dot = (y, col) => {
+      if (y < fr.y0 - 0.5) { ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(Xc, fr.y0 + 1); ctx.lineTo(Xc - 5, fr.y0 + 9); ctx.lineTo(Xc + 5, fr.y0 + 9); ctx.closePath(); ctx.fill(); return; }
+      if (y > fr.y1 + 0.5) return;
+      ctx.beginPath(); ctx.arc(Xc, y, 4.6, 0, 2 * Math.PI); ctx.fillStyle = col; ctx.fill(); ctx.lineWidth = 1.5; ctx.strokeStyle = halo; ctx.stroke();
+    };
+    dot(yL, cPh); dot(Y(r.lp), mix(r.flp)); dot(Y(r.up), mix(r.fup));
+
+    // ---------- axis titles and the hint ----------
+    ctx.save();
+    const t1 = 'drag or click in the plot to move the cursor', t2 = 'drag to move the cursor';
+    txt(ctx, tw(ctx, t1, 11.5) <= w - 8 ? t1 : t2, 4, 16, { size: 11.5, color: cFg2 });
+    txt(ctx, log ? 'wavevector $q$ (Å⁻¹)' : 'wavevector $q$ (μm⁻¹)', m.l + pw / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, '$ħω$ (meV)', 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+  }
+
+  // ---------- readouts ----------
+  const $v = (k) => fig.querySelector('.b6-polariton-v-' + k);
+  const RO = { w: $v('w'), eps: $v('eps'), qx: $v('qx'), q: $v('q'), qr: $v('qr'), qz: $v('qz'), up: $v('up'), lp: $v('lp'), lo: $v('lo') };
+  const umH = (v) => plain(v, 3, sciH) + nb + 'μm<sup>−1</sup>';
+  function readouts() {
+    const { P, s, log } = cur.st, q = cur.q, r = cur.r, qxs = P.qx / s;
+    RO.w.innerHTML = `${P.T.toFixed(1)}, ${P.L.toFixed(1)}${nb}meV`;
+    RO.eps.innerHTML = `${P.ei}, ${P.es.toFixed(2)}`;
+    RO.qx.innerHTML = `${sciH(qxs, 3)}${nb}Å<sup>−1</sup> = ${umH(qxs * 1e4)}, wavelength ${plain(2 * Math.PI / qxs * 1e-4, 3, sciH)}${nb}μm` + (s > 1.005 ? ` (speed of light ${sFmt(s)})` : '');
+    RO.q.innerHTML = q > 0 ? `${umH(q * 1e4)} = ${sciH(q, 3)}${nb}Å<sup>−1</sup>` : '0';
+    const rq = q / qxs;
+    RO.qr.innerHTML = rq === 0 ? '0' : rq >= 0.01 && rq < 1000 ? rq.toPrecision(3) : sciH(rq, 3);
+    RO.qz.innerHTML = `${sciH(q / P.edge, 2)} of Γ–${P.pt} (${P.edge.toFixed(3)}${nb}Å<sup>−1</sup>)`;
+    RO.up.innerHTML = `${mevH(r.up)}, ${pct(r.fup)}`;
+    RO.lp.innerHTML = q > 0 ? `${mevH(r.lp)}, ${pct(r.flp)}` : `0 (limit $q$ → 0), ${pct(r.flp)}`.replace('$q$', '<i>q</i>');
+    RO.lo.innerHTML = `${P.L.toFixed(1)}${nb}meV at every <i>q</i>, ${pct(P.fLO)}`;
+    const ax = log ? 'logarithmic axis from 10 to the minus 7 to 2 per ångström' : `linear axis from 0 to ${(4e4 * P.qx).toPrecision(3)} per micrometre`;
+    plot.cv.canvas.setAttribute('aria-label', `Mode energies ħω, 0 to ${P.ymax} meV, against the wavevector q on a ${ax}; ${P.name}, ${sSpoken(s)}. ` +
+      `The LO mode is flat at ${P.L} meV. No transverse wave exists between ${P.T} and ${P.L} meV, the Reststrahlen band. ` +
+      `The upper polariton starts at ${P.L} meV at q = 0 and turns into light; the lower polariton starts as light and levels off just below ${P.T} meV. ` +
+      `The marker root epsilon infinity omega TO over c is at ${sciS(qxs, 3)} per ångström. ` +
+      `Cursor at ${sciS(q, 3)} per ångström: upper polariton ${mevS(r.up)}, ${(100 * r.fup).toFixed(1)} percent phonon; lower polariton ${mevS(r.lp)}, ${(100 * r.flp).toFixed(1)} percent phonon.`);
+  }
+
+  // ---------- controls ----------
+  const mode = { P: PRE.GaAs, log: false };    // read by the slider format
+  const qRange = (P, log) => (log ? [QMIN, P.edge] : [0, 4 * P.qx]);
+  const fromS = (v, P, log) => (log ? QMIN * Math.pow(P.edge / QMIN, v) : v * 4 * P.qx);
+  const toS = (q, P, log) => (log ? Math.log(Math.max(q, QMIN) / QMIN) / Math.log(P.edge / QMIN) : q / (4 * P.qx));
+  const qText = (q, log) => (log ? sciU(q, 3) + ' Å⁻¹' : plain(q * 1e4, 3, sciU) + ' μm⁻¹');
+  const qSpoken = (q, P, s, log) => (log ? sciS(q, 3) + ' per ångström' : plain(q * 1e4, 3, sciS) + ' per micrometre') + ', ' + plain(q * s / P.qx, 3, sciS) + ' times the marked wavevector';
+  let qCur = null, lastCs = null, lastMat = null, lastAxis = null, cache = null;
+  const elCtl = fig.querySelector('.b6-polariton-ctrls');
+  const ui = EPP.controls(elCtl, [
+    { key: 'mat', type: 'select', label: 'crystal (illustrative)', options: [['GaAs', 'GaAs'], ['NaCl', 'NaCl'], ['SiC', 'SiC (3C)'], ['hBN', 'hBN, in plane']], value: 'GaAs' },
+    { key: 'axis', type: 'seg', label: 'q axis', options: [['lin', 'linear (μm⁻¹)'], ['log', 'logarithmic (Å⁻¹)']], value: 'lin' },
+    { key: 's', type: 'range', label: 'speed of light, multiple of c', min: 1, max: 1000, log: true, step: 'any', value: 1, fmt: sFmt },
+    { key: 'cs', type: 'range', label: 'cursor wavevector q', min: 0, max: 1, step: 'any', value: 0.25, fmt: (v) => qText(fromS(v, mode.P, mode.log), mode.log), wide: true }
+  ], update);
+  const inS = document.getElementById(`${fig.id}-s`), inC = document.getElementById(`${fig.id}-cs`);
+  // spoken values, set right after the library's own handler has read the new value
+  if (inS) inS.addEventListener('input', () => inS.setAttribute('aria-valuetext', sSpoken(ui.state.s)));
+  if (inC) inC.addEventListener('input', () => { if (cur) inC.setAttribute('aria-valuetext', qSpoken(fromS(ui.state.cs, cur.st.P, cur.st.log), cur.st.P, cur.st.s, cur.st.log)); });
+  // the axis buttons share a row with the other controls; control labels: symbols italic, labels upright
+  const segBox = document.getElementById(`${fig.id}-axis-lin`);
+  if (segBox && segBox.closest('.ctrl')) segBox.closest('.ctrl').style.gridColumn = 'auto';
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const LAB = { s: `speed of light, multiple of ${I('c')}`, cs: `cursor wavevector ${I('q')}` };
+  Object.keys(LAB).forEach(k => { const sp = elCtl.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  const segLab = segBox && segBox.closest('.ctrl') ? segBox.closest('.ctrl').querySelector('.lab > span') : null;
+  if (segLab) segLab.innerHTML = `${I('q')} axis`;
+
+  function setCursor(q) {
+    const { P, s, log } = cur.st, rg = qRange(P, log);
+    qCur = EPP.clamp(q, rg[0], rg[1]);
+    ui.set('cs', toS(qCur, P, log), true); lastCs = ui.state.cs;
+    if (inC) inC.setAttribute('aria-valuetext', qSpoken(qCur, P, s, log));
+    cur.q = qCur; cur.r = modes(P, s, qCur);
+    plot.render(); readouts();
+  }
+  function update(st) {
+    const P = PRE[st.mat] || PRE.GaAs, log = st.axis === 'log', s = st.s, rg = qRange(P, log);
+    mode.P = P; mode.log = log;
+    if (st.mat !== lastMat) qCur = P.qx / s;                                    // a new crystal: the cursor on its marker
+    else if (st.axis === lastAxis && lastCs !== null && Math.abs(st.cs - lastCs) > 1e-9) qCur = fromS(st.cs, P, log);   // the slider moved
+    qCur = EPP.clamp(qCur, rg[0], rg[1]);                                      // a new axis keeps the cursor where it was, if it can
+    lastMat = st.mat; lastAxis = st.axis;
+    ui.set('cs', toS(qCur, P, log), true); lastCs = ui.state.cs;
+    const key = st.mat + '|' + st.axis + '|' + s;
+    if (!cache || cache.key !== key) cache = { key, c: curves(P, s, log) };
+    cur = { st: { P, s, log }, c: cache.c, q: qCur, r: modes(P, s, qCur) };
+    plot.opt.logx = log; plot.opt.xticks = log ? LOGT : null;
+    plot.draw([], { xlim: log ? [QMIN, QMAXLOG] : [0, 4e4 * P.qx], ylim: [0, P.ymax] });
+    readouts();
+    if (inS) inS.setAttribute('aria-valuetext', sSpoken(s));
+    if (inC) inC.setAttribute('aria-valuetext', qSpoken(qCur, P, s, log));
+  }
+  // click or drag on the plot moves the cursor
+  plot.onPointer = (x, y, type) => { if (type !== 'up' && cur && isFinite(x)) setCursor(cur.st.log ? x : x * 1e-4); };
+  update(ui.state);
+
+  // previewed outside Section B.6 (the figure test), the cited equations and sections are absent: show their names as text
+  const TAGS = { 'b6-eq-polar': '(B6.16)', 'b6-eq-modesL': '(B6.18)', 'b6-eq-polariton': '(B6.20)' };
+  if (!fig.closest('#b-propagator')) fig.querySelectorAll('a[href^="#"]').forEach(a => { const id = (a.getAttribute('href') || '').slice(1); if (!document.getElementById(id)) { const sp = document.createElement('span'); sp.textContent = TAGS[id] || a.textContent; a.replaceWith(sp); } });
+})();
+</script>

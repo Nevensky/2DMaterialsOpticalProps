@@ -1,0 +1,174 @@
+  <figure class="viz" id="viz-a7-cumulant">
+    <p class="viz-title">Dyson against cumulant for one level and one phonon <span class="tag">interactive</span></p>
+    <div class="a7-cumulant-plot"><div class="legend a7-cumulant-leg"><span class="item" style="color:var(--c-electron)"><span class="sw"></span><span style="color:var(--fg-2)">cumulant, exact for this model</span></span><span class="item" style="color:var(--c-4)"><span class="sw dash"></span><span style="color:var(--fg-2)">Dyson equation with $\Sigma^{\mathrm{FM}}$</span></span><span class="item" style="color:var(--c-electron)"><svg width="14" height="12" viewBox="0 0 14 12" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><circle cx="7" cy="6" r="4.3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span style="color:var(--fg-2)">replica weights $\ee^{-S}S^s/s!$, labelled by $s$</span></span><span class="item" style="color:var(--c-4)"><svg width="14" height="12" viewBox="0 0 14 12" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><circle cx="7" cy="6" r="3.6" fill="currentColor"/></svg><span style="color:var(--fg-2)">Dyson pole weights $Z_\pm$</span></span></div></div>
+    <div class="a7-cumulant-ctrls"></div>
+    <div class="readout a7-cumulant-ro" aria-live="polite" style="display:grid;grid-template-columns:auto auto auto;justify-content:start;align-items:baseline;gap:5px 18px"><span></span><span style="color:var(--t-4);font-weight:600">Dyson</span><span style="color:var(--t-electron);font-weight:600">cumulant</span><span>quasiparticle weight $Z^{\mathrm{qp}}$</span><span>$Z_+$<b class="a7-cumulant-v-zd"></b></span><span>$\ee^{-S}$<b class="a7-cumulant-v-zc"></b></span><span>quasiparticle shift</span><span>$x_+$<b class="a7-cumulant-v-xd"></b></span><span>$S\hbar\omega_0$<b class="a7-cumulant-v-xc"></b></span><span>gap to the satellite</span><span>$\hbar\omega_0\sqrt{1+4S}$<b class="a7-cumulant-v-gd"></b></span><span>$\hbar\omega_0$<b class="a7-cumulant-v-gc"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> At small $S$ both approaches shift the quasiparticle up by about $S\hbar\omega_0$, toward the Fermi level, with weight $1-S$. At larger $S$ Dyson keeps one satellite, too far below, and too much weight in the quasiparticle; the cumulant moves the weight into replicas spaced by exactly $\hbar\omega_0$.</p><div class="cap-more">
+      <p><strong>Marks.</strong> Solid: cumulant; dashed: Dyson equation with the Fan–Migdal self-energy. Each peak is a Lorentzian of half-width $\hbar\eta$, scaled so that an isolated peak is as high as its weight. Hollow circles: exact replica weights, labelled by the number $s$ of phonons left behind; filled dots: Dyson weights $Z_\pm$. Vertical line: the bare level $E_0$, the mean energy that both spectra keep. Grid lines are $\hbar\omega_0$ apart; $E=\hbar\omega$ is the probe energy.</p>
+      <p><strong>Try.</strong> (1) $S=0.25$: shifts of 20.7 and <span class="nw">25.0 meV</span>, weights 0.85 and 0.78, as in “Check yourself”. (2) $S=3$: the replicas $s=2$ and 3 are the tallest peaks; Dyson shows one satellite $\sqrt{13}\,\hbar\omega_0$ below its quasiparticle. (3) Change $\hbar\omega_0$: positions and weights stay, since in these units $S$ alone fixes them; only the widths $\hbar\eta/\hbar\omega_0$ change, and the shifts in meV scale with $\hbar\omega_0$.</p>
+      <p><strong>Model.</strong> One occupied level $E_0$ coupled with a constant $g_0$ to one dispersionless phonon at zero temperature, $S=|g_0|^2/(\hbar\omega_0)^2$, solved both ways in the derivation box “One level, one phonon” below. Dyson: <a class="eqref" href="#a7-eq-gnk">(A7.14)</a> with $\Sigma(\omega)=|g_0|^2/[\hbar(\omega+\ii\eta)-E_0+\hbar\omega_0]$, poles $x_\pm$, weights $Z_\pm$. Cumulant: <a class="eqref" href="#a7-eq-cumulant">(A7.26)</a> and <a class="eqref" href="#a7-eq-poisson">(A7.27)</a>, exact here (Langreth's core-hole problem). Plasmon satellites in GW show the same failure and the same cure, GW plus cumulant; ARPES of $n$-doped anatase TiO₂ shows phonon replicas of this kind.</p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a7-cumulant');
+  if (!fig || !window.EPP) return;
+  // previewed outside Section A.7 (the isolated figure test), the caption's links have no target: keep their text, drop the link
+  if (!fig.closest('#a-electron-se')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+  const C = EPP.C;
+
+  // ---------- model: energies in units of ħω_0, measured from the bare level E_0; r = ħη/ħω_0 ----------
+  // Dyson: Σ/ħω_0 = S/(x + 1 + i r), G ħω_0 = 1/(x + i r − Σ/ħω_0); poles x_± = (−1 ± √(1+4S))/2, weights Z_± = [1 + S/(x_± + 1)²]^−1.
+  // Cumulant (A7.27): weights e^{−S} S^s/s! at x = S − s. Both curves are π ħη 𝒜 = −r Im(G ħω_0), so an isolated peak is as high as its weight.
+  const XLIM = [-9, 5], YLIM = [0, 1.08];
+  const GRID = EPP.linspace(XLIM[0], XLIM[1], 1401);
+  const XT = []; for (let v = XLIM[0]; v <= XLIM[1]; v++) XT.push(v);
+  function compute(st) {
+    const S = st.S, w0 = st.w0, eta = st.eta, r = eta / w0;
+    const sq = Math.sqrt(1 + 4 * S), xp = 0.5 * (-1 + sq), xm = 0.5 * (-1 - sq);
+    const Zp = 1 / (1 + S / ((xp + 1) * (xp + 1))), Zm = S > 0 ? 1 / (1 + S / ((xm + 1) * (xm + 1))) : 0;
+    const smax = Math.max(8, Math.ceil(S + 8 * Math.sqrt(S + 0.5) + 6));
+    const wt = []; let w = Math.exp(-S); for (let s = 0; s <= smax; s++) { wt.push(w); w *= S / (s + 1); }
+    // sample on a uniform grid plus every peak position, so that narrow peaks reach their full height
+    const xs = GRID.slice(), add = (x) => { if (x > XLIM[0] && x < XLIM[1]) xs.push(x); };
+    add(xp); if (Zm > 0) add(xm); wt.forEach((v, s) => add(S - s));
+    xs.sort((a, b) => a - b);
+    const dys = xs.map(x => { const sg = C.div([S, 0], [x + 1, r]); const g = C.inv([x - sg[0], r - sg[1]]); return -r * g[1]; });
+    const r2 = r * r;
+    const cum = xs.map(x => { let y = 0; for (let s = 0; s <= smax; s++) { const d = x - S + s; y += wt[s] * r2 / (d * d + r2); } return y; });
+    // markers of the exact weights (drawn by the render hook): replicas e^{−S} S^s/s! at x = S − s, Dyson poles Z_± at x_±
+    const rx = [], ry = [];
+    wt.forEach((v, s) => { if (v > 2e-3 && S - s > XLIM[0]) { rx.push(S - s); ry.push(v); } });
+    const dx = Zm > 1e-6 ? [xp, xm] : [xp], dy = Zm > 1e-6 ? [Zp, Zm] : [Zp];
+    return { S, w0, eta, r, sq, xp, xm, Zp, Zm, wt, xs, dys, cum, rx, ry, dx, dy };
+  }
+
+  // ---------- canvas text: '$…$' marks math, where letters are italic (serif) and digits and signs upright; _x, ^x as in EPP.drawRich ----------
+  const ITAL = /[A-Za-zα-ωħ]/;
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const part of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: part.t, m: part.m, it: false }); continue; }
+        let buf = '', it = null;
+        for (const ch of part.t) {
+          const k = ITAL.test(ch);
+          if (it !== null && k !== it) { out.push({ t: buf, m: part.m, it }); buf = ''; }
+          buf += ch; it = k;
+        }
+        if (buf) out.push({ t: buf, m: part.m, it });
+      }
+    });
+    return out;
+  }
+  // o: {size, color, align, halo: color of a thin outline that keeps the text legible over lines}
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, ui = EPP.css('--font-ui'), tx = EPP.css('--font-text'), rs = runs(s);
+    const font = (r) => `${r.it ? 'italic ' : ''}${((r.it ? size + 1 : size) * (r.m ? 0.72 : 1)).toFixed(1)}px ${r.it ? tx : ui}`;
+    const ws = rs.map(r => { ctx.font = font(r); return ctx.measureText(r.t).width; });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    let x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    ctx.textAlign = 'left';
+    rs.forEach((r, k) => {
+      ctx.font = font(r);
+      const yy = y + (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0));
+      if (o.halo) { ctx.strokeStyle = o.halo; ctx.lineWidth = 3; ctx.lineJoin = 'round'; ctx.setLineDash([]); ctx.strokeText(r.t, x0, yy); }
+      ctx.fillStyle = o.color || EPP.color('fg'); ctx.fillText(r.t, x0, yy);
+      x0 += ws[k];
+    });
+    return tot;
+  }
+  const num = (v) => String(v).replace('-', '−');
+
+  // ---------- plot ----------
+  const elPlot = fig.querySelector('.a7-cumulant-plot');
+  const pc = new EPP.Plot(elPlot, {
+    xlim: XLIM, ylim: YLIM, legend: false, aspect: 0.46, minHeight: 280, maxHeight: 380, margin: { l: 50, r: 14, t: 14, b: 44 },
+    xname: '(E − E_0)/ħω_0', hoverX: v => num(v.toFixed(2)), hoverY: v => v.toFixed(3),
+    ariaLabel: 'Spectral function of one level coupled to one phonon, from the cumulant and from the Dyson equation'
+  });
+  // the legend is static markup (MathJax), placed under the plot
+  const elLeg = elPlot.querySelector('.a7-cumulant-leg');
+  if (elLeg) elPlot.appendChild(elLeg);
+  let cur = null;
+  const base = pc.render.bind(pc);
+  pc.render = () => {
+    // a grid line at every integer: one grid step is one phonon energy; numbers on every other line when the plot is narrow
+    const m = pc.m, unit = (pc.cv.w - m.l - m.r) / (XLIM[1] - XLIM[0]);
+    pc.opt.xticks = XT.map(v => ({ v, label: unit >= 30 || v % 2 === 0 ? num(v) : '' }));
+    base();
+    const ctx = pc.ctx, w = pc.cv.w, h = pc.cv.h;
+    if (!w || !h || !cur) return;
+    const cFg = EPP.color('fg'), halo = EPP.color('surface');
+    ctx.save();
+    ctx.textBaseline = 'alphabetic';
+    // axis titles: the symbols in italic
+    txt(ctx, '($E$ − $E_0$)/$ħω_0$', m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    ctx.save(); ctx.translate(15, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, 'π$ħη$ 𝒜($E$)', 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+    // the bare level, labelled on its left, where neither spectrum ever reaches the top
+    const X0 = pc.X(0);
+    txt(ctx, 'bare level $E_0$', X0 - 5, m.t + 13, { size: 11, color: EPP.textColor('muted'), align: 'right', halo });
+    // exact weights, drawn unclipped so that a small one shows as a whole circle on the axis
+    ctx.setLineDash([]);
+    ctx.strokeStyle = EPP.color('electron'); ctx.lineWidth = 1.6;
+    cur.rx.forEach((x, i) => { ctx.beginPath(); ctx.arc(pc.X(x), pc.Y(cur.ry[i]), 4.5, 0, 2 * Math.PI); ctx.stroke(); });
+    ctx.fillStyle = EPP.color('c4');
+    cur.dx.forEach((x, i) => { ctx.beginPath(); ctx.arc(pc.X(x), pc.Y(cur.dy[i]), 3.4, 0, 2 * Math.PI); ctx.fill(); });
+    // replicas: the number s of phonons left behind, centred above each circle tall enough to label; the first one
+    // carries "s =" on its right, where no other peak lies (the quasiparticle is the rightmost replica)
+    const cE = EPP.textColor('electron');
+    let first = true;
+    cur.wt.forEach((v, s) => {
+      const x = cur.S - s;
+      if (v < 0.03 || x < XLIM[0] + 0.15 || x > XLIM[1] - 0.15) return;
+      if (first) txt(ctx, `$s$ = ${s}`, pc.X(x) + 8, pc.Y(v) + 4, { size: 10.5, color: cE, halo });
+      else txt(ctx, String(s), pc.X(x), pc.Y(v) - 8, { size: 10.5, color: cE, align: 'center', halo });
+      first = false;
+    });
+    // the Dyson satellite, named on its left
+    if (cur.Zm > 0.03 && cur.xm > XLIM[0] + 1) txt(ctx, 'Dyson satellite', pc.X(cur.xm) - 8, pc.Y(0.75 * cur.Zm) + 4, { size: 11, color: EPP.textColor('c4'), align: 'right', halo });
+    ctx.restore();
+  };
+
+  const $v = (k) => fig.querySelector('.a7-cumulant-v-' + k);
+  const RO = { zd: $v('zd'), xd: $v('xd'), gd: $v('gd'), zc: $v('zc'), xc: $v('xc'), gc: $v('gc') };
+  const mev = (v, d) => (v > 0.5 * Math.pow(10, -d) ? '+' : '') + v.toFixed(d) + ' meV';
+  function draw() {
+    const c = cur;
+    pc.draw([
+      { type: 'vline', at: 0, color: 'muted', width: 1 },
+      { type: 'line', x: c.xs, y: c.cum, color: 'electron', width: 2, label: 'cumulant' },
+      { type: 'line', x: c.xs, y: c.dys, color: 'c4', width: 2, dash: [6, 4], label: 'Dyson' }
+    ]);
+    const sat = c.S > 0;
+    RO.zd.textContent = c.Zp.toFixed(3);
+    RO.xd.textContent = mev(c.xp * c.w0, 1);
+    RO.gd.textContent = sat ? (c.sq * c.w0).toFixed(0) + ' meV' : 'no satellite';
+    RO.zc.textContent = Math.exp(-c.S).toFixed(3);
+    RO.xc.textContent = mev(c.S * c.w0, 1);
+    RO.gc.textContent = sat ? c.w0.toFixed(0) + ' meV' : 'no satellite';
+    const reps = []; c.wt.forEach((v, s) => { if (s > 0 && v >= 0.03 && reps.length < 6) reps.push(`s = ${s}: ${v.toFixed(3)}`); });
+    pc.cv.canvas.setAttribute('aria-label', `Spectral function of one level coupled to one phonon, S = ${c.S.toFixed(2)}, phonon energy ${c.w0.toFixed(0)} meV, broadening ${c.eta.toFixed(0)} meV, ` +
+      `against (E minus E0) in units of the phonon energy. Cumulant: quasiparticle at ${c.S.toFixed(2)} with weight ${Math.exp(-c.S).toFixed(3)}` +
+      (reps.length ? `, replicas one phonon energy apart below it with weights ${reps.join(', ')}. ` : ', no replicas. ') +
+      `Dyson: quasiparticle at ${c.xp.toFixed(2)} with weight ${c.Zp.toFixed(3)}` + (sat ? `, one satellite at ${c.xm.toFixed(2)} with weight ${c.Zm.toFixed(3)}.` : ', no satellite.'));
+  }
+  function onChange(s) { cur = compute(s); draw(); }
+
+  const ui = EPP.controls(fig.querySelector('.a7-cumulant-ctrls'), [
+    { key: 'S', type: 'range', label: 'Huang–Rhys factor S', min: 0, max: 4, step: 0.05, value: 1, fmt: v => v.toFixed(2) },
+    { key: 'w0', type: 'range', label: 'phonon energy ħω_0', min: 20, max: 200, step: 5, value: 100, fmt: v => v.toFixed(0) + ' meV' },
+    { key: 'eta', type: 'range', label: 'broadening ħη', min: 5, max: 40, step: 1, value: 12, fmt: v => v.toFixed(0) + ' meV' }
+  ], onChange);
+  cur = compute(ui.state);
+  // slider labels: the symbols in italic, like the readout keys
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const LAB = { S: `Huang–Rhys factor ${I('S')}`, w0: `phonon energy ${I('ħω')}<sub>0</sub>`, eta: `broadening ${I('ħη')}` };
+  Object.keys(LAB).forEach(k => { const sp = fig.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+})();
+</script>

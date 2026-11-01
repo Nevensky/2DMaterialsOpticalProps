@@ -1,0 +1,414 @@
+  <figure class="viz" id="viz-a9-indirect">
+    <p class="viz-title">Indirect absorption in silicon: two steps through a virtual state <span class="tag">interactive</span></p>
+    <div class="a9-indirect-bands"></div>
+    <div class="legend a9-indirect-leg"><span class="item" style="color:var(--c-electron)"><span class="sw"></span><span style="color:var(--fg-2)">bands $E_{n\bk}$</span></span><span class="item" style="color:var(--c-photon)"><svg width="26" height="12" viewBox="0 0 26 12" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><path d="M1 6 Q3.5 1.8 6 6 T11 6 T16 6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M25 6 L17 2.4 L17 9.6 Z" fill="currentColor"/></svg><span style="color:var(--fg-2)">light, energy $\hbar\omega$</span></span><span class="item" style="color:var(--c-phonon)"><svg width="26" height="12" viewBox="0 0 26 12" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><path d="M1 6 L3.5 3 L6.5 9 L9.5 3 L12.5 9 L15.5 3 L17 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M25 6 L17 2.4 L17 9.6 Z" fill="currentColor"/></svg><span style="color:var(--fg-2)">phonon, wavevector $\bq$</span></span><span class="item" style="color:var(--muted)"><svg width="24" height="12" viewBox="0 0 24 12" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><line x1="1" y1="6" x2="23" y2="6" stroke="currentColor" stroke-width="1.6" stroke-dasharray="4 3"/></svg><span style="color:var(--fg-2)">virtual state</span></span><span class="item" style="color:var(--fg-2)"><svg width="24" height="12" viewBox="0 0 24 12" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><path d="M2 2 V10 M2 6 H22 M22 2 V10" fill="none" stroke="currentColor" stroke-width="1.3"/></svg><span style="color:var(--fg-2)">mismatch = energy denominator</span></span><span class="item" style="color:var(--muted)"><span class="sw box"></span><span style="color:var(--fg-2)">gap: no states</span></span></div>
+    <div class="viz-grid two a9-indirect-orders" style="margin-top:12px"><div class="a9-indirect-d1"></div><div class="a9-indirect-d2"></div></div>
+    <div class="a9-indirect-ctrls"></div>
+    <div class="readout a9-indirect-ro" aria-live="polite"><span>$\hbar\omega$ and the threshold, gap $+\,s\hbar\omega_{\bq\nu}$<b class="a9-indirect-v-thr"></b></span><span>$|\bq|$<b class="a9-indirect-v-q"></b></span><span>$\hbar\omega_{\bq\nu}$<b class="a9-indirect-v-hwq"></b></span></div>
+    <div class="readout a9-indirect-ro2" aria-live="polite"><span>first denominator $E_{n'\bk}-E_{n\bk}-\hbar\omega$<b class="a9-indirect-v-d1"></b></span><span>second denominator $E_{n'\bk+\bq}-E_{n\bk}+s\hbar\omega_{\bq\nu}$<b class="a9-indirect-v-d2"></b></span></div>
+    <div class="readout a9-indirect-ro3" aria-live="polite"><span>phonon weight $n_{\bq\nu}+\tfrac12+\tfrac s2$<b class="a9-indirect-v-w"></b></span><span>$q_{\mathrm L}/|\bq|$<b class="a9-indirect-v-r"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> Light supplies the energy and the phonon the crystal momentum: photon arrows are vertical, phonon arrows nearly horizontal. Each order passes through a virtual state, whose energy mismatch with the real band state at the same wavevector, 2 to 3 eV in silicon, is a denominator of <a class="eqref" href="#a9-eq-amp">(A9.4)</a>.</p><div class="cap-more"><p><strong>Marks.</strong> In (a): bands blue, light rose and wavy, phonon amber and zigzag. Dashed levels are virtual states; brackets join them to the band states $n'\bk$ and $n'\,\bk+\bq$ and measure the mismatch. Filled dot: $n\bk$; open dot: $m\,\bk+\bq$; shaded strip: the gap. The tick below $n\bk$ is the photon wavevector to scale. With both paths shown, the phonon-first one is faint. In (b) time runs left to right; the cross marks the light as a classical field, not a propagator.</p><p><strong>Try.</strong> With emission, lower $\hbar\omega$ below the gap plus $\hbar\omega_{\bq\nu}$: no final state is left. Switch to absorption: final states return down to the gap minus $\hbar\omega_{\bq\nu}$, but at 4 K the weight $n_{\bq\nu}$ vanishes. Drag $n\bk$ down the valence band (arrow keys with (a) focused): the light must also supply its depth.</p><p><strong>Model.</strong> Schematic silicon bands along $\Gamma$–X, $a=5.431$ Å (literature values, illustrative): indirect gap 1.17 eV at $0.85\times2\pi/a$, the measured low-temperature value, zero-point renormalization included (about 1.23 eV with clamped nuclei, <a href="#a-temperature">Section A.8</a>); longitudinal mass $0.92\,m_{\mathrm e}$; 3.4 eV at $\Gamma$, $-2.9$ eV at X. TO phonon, $\hbar\omega_{\bq\nu}=57.8$ meV (TA, 18.4 meV, also assists); $n_{\mathrm r}=3.5$; $T$ sets only the phonon weight. The final state obeys the δ function of <a class="eqref" href="#a9-eq-indirect">(A9.5)</a>, on the $\Gamma$ side of the minimum; each denominator keeps only the other band at the same wavevector, whereas <a class="eqref" href="#a9-eq-amp">(A9.4)</a> sums over all bands.</p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a9-indirect');
+  if (!fig || !window.EPP) return;
+  // outside Section A.9 (the isolated figure test) the caption's links to the section have no target: show them as text
+  if (!fig.closest('#a-applications')) fig.querySelectorAll('figcaption a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+
+  // ---------- model: wavevectors in 1/Å along Γ–X, energies in eV from the valence-band maximum ----------
+  const A_LAT = 5.431, KX = 2 * Math.PI / A_LAT, KC = 0.85 * KX;   // k_X = 1.157, conduction minimum 0.983
+  const EG = 1.17, EGAM = 3.4, EVX = -2.9;                          // indirect gap; conduction band at Γ; valence band at X
+  const CL = 3.80998 / 0.92;                                        // ħ²/2m_l with the longitudinal mass 0.92 m_e, eV Å²
+  // Γ side of the conduction band: E_g + CL u² + QB u³ + QC u⁴, u = k_c − k; reaches 3.4 eV at Γ with zero slope there,
+  // and has the same mass 0.92 m_e as the X side at the minimum
+  const QB = 4 * (EGAM - EG) / Math.pow(KC, 3) - 2 * CL / KC, QC = (-2 * CL - 3 * QB * KC) / (4 * KC * KC);
+  const HWQ = 0.0578, KB = 8.61733e-5, NR = 3.5, HBARC = 1973.27;   // TO phonon (eV), k_B (eV/K), refractive index, ħc (eV Å)
+  const KIMAX = 0.3, YL = [-3.2, 4.0];
+  const Ev = (k) => EVX * Math.pow(Math.sin(Math.PI * Math.abs(k) / (2 * KX)), 2);
+  const Ec = (k) => { k = Math.abs(k); if (k >= KC) return EG + CL * (k - KC) * (k - KC); const u = KC - k; return EG + u * u * (CL + u * (QB + u * QC)); };
+  function compute(st, ki) {
+    const hw = st.hw, s = +st.s, T = st.T;
+    const Ei = Ev(ki), Et = Ei + hw - s * HWQ;                       // energy left for the electron once the phonon is made or taken
+    // final state: root of E_c(k) = E_t on the Γ side of the minimum (A9.5)
+    const kf = (Et >= EG && Et <= EGAM) ? EPP.bisect(k => Ec(k) - Et, 0, KC, 1e-10) : NaN;
+    const ok = isFinite(kf), n = EPP.bose(HWQ, KB * T);
+    return {
+      hw, s, T, ki, Ei, Et, kf, ok, path: st.path, n, w: s > 0 ? n + 1 : n,
+      q: ok ? kf - ki : NaN,
+      D1: Ec(ki) - Ei - hw,                                           // photon first: conduction band at k
+      D2: ok ? Ev(kf) - Ei + s * HWQ : NaN,                           // phonon first: valence band at k + q
+      thr: EG + s * HWQ, thrK: EG - Ei + s * HWQ, qL: NR * hw / HBARC
+    };
+  }
+
+  // ---------- canvas text as parts {t, i: italic symbol, b: bold vector, sub, sup} ----------
+  let FAM = { ui: 'sans-serif', tx: 'serif' };
+  const pFont = (p, size) => { const z = (p.i ? size + 1 : size) * (p.sub || p.sup ? 0.72 : 1); return `${p.i ? 'italic ' : ''}${p.b ? '700 ' : ''}${z.toFixed(1)}px ${p.i ? FAM.tx : FAM.ui}`; };
+  function partsW(ctx, parts, size) { let w = 0; for (const p of parts) { ctx.font = pFont(p, size); w += ctx.measureText(p.t).width; } return w; }
+  function partsDraw(ctx, parts, x, y, size, align) {
+    if (align === 'center') x -= partsW(ctx, parts, size) / 2; else if (align === 'right') x -= partsW(ctx, parts, size);
+    ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    for (const p of parts) { ctx.font = pFont(p, size); ctx.fillText(p.t, x, y + (p.sub ? size * 0.28 : p.sup ? -size * 0.4 : 0)); x += ctx.measureText(p.t).width; }
+  }
+  const T = (t) => ({ t }), It = (t) => ({ t, i: 1 }), Bv = (t) => ({ t, b: 1 }), Sb = (t, o) => Object.assign({ t, sub: 1 }, o || {}), Sp = (t) => ({ t, sup: 1 });
+  const P_NK = [It('n'), Bv('k')], P_MKQ = [It('m'), T(' '), Bv('k'), T('+'), Bv('q')];
+  const P_NPK = [It('n′'), Bv('k')], P_NPKQ = [It('n′'), T(' '), Bv('k'), T('+'), Bv('q')];
+  const P_Q = [Bv('q')], P_HW = [It('ħω')];
+
+  // multi-line labels: {lines: [parts...], size, lh, color, align, alpha}
+  function lsize(ctx, L) { const ws = L.lines.map(p => partsW(ctx, p, L.size)); return { w: Math.max(...ws), h: L.lines.length * L.lh, ws }; }
+  function ldraw(ctx, L, b) {
+    const { ws } = lsize(ctx, L);
+    ctx.save(); ctx.globalAlpha = L.alpha ?? 1; ctx.fillStyle = L.color;
+    L.lines.forEach((p, i) => {
+      const x = L.align === 'right' ? b[2] - ws[i] : L.align === 'center' ? (b[0] + b[2] - ws[i]) / 2 : b[0];
+      partsDraw(ctx, p, x, b[1] + i * L.lh + 0.5 * L.lh + 0.36 * L.size, L.size);
+    });
+    ctx.restore();
+  }
+  const lab = (lines, color, o) => Object.assign({ lines: lines.map(l => (typeof l === 'string' ? [T(l)] : l)), size: 11.5, lh: 14, color, align: 'left' }, o || {});
+  // label placer: the first candidate box that stays inside B and clears every mark and every placed label wins;
+  // a label with no free candidate is left out rather than drawn over something
+  function placer(ctx, B) {
+    const obs = [], labs = [];
+    const hit = (a, o, g) => a[0] < o[2] + g && a[2] > o[0] - g && a[1] < o[3] + g && a[3] > o[1] - g;
+    const free = (b) => b[0] >= B[0] + 2 && b[1] >= B[1] + 2 && b[2] <= B[2] - 2 && b[3] <= B[3] - 2 && !obs.some(o => hit(b, o, 1)) && !labs.some(o => hit(b, o, 3));
+    const api = {
+      box(x0, y0, x1, y1) { obs.push([Math.min(x0, x1), Math.min(y0, y1), Math.max(x0, x1), Math.max(y0, y1)]); },
+      seg(x0, y0, x1, y1, r) { const n = Math.max(1, Math.ceil(Math.hypot(x1 - x0, y1 - y0) / 4)); for (let i = 0; i <= n; i++) { const x = x0 + (x1 - x0) * i / n, y = y0 + (y1 - y0) * i / n; obs.push([x - r, y - r, x + r, y + r]); } },
+      poly(P, r) { for (let i = 1; i < P.length; i++) api.seg(P[i - 1][0], P[i - 1][1], P[i][0], P[i][1], r); },
+      dot(x, y, r) { obs.push([x - r, y - r, x + r, y + r]); },
+      boxOf(L, c) {
+        const s = lsize(ctx, L);
+        const x0 = c.ax === 'r' ? c.x - s.w : c.ax === 'c' ? c.x - s.w / 2 : c.x, y0 = c.ay === 'b' ? c.y - s.h : c.ay === 'm' ? c.y - s.h / 2 : c.y;
+        return [x0, y0, x0 + s.w, y0 + s.h];
+      },
+      // variants: label objects tried in order (wide first); cands(L) gives the candidate anchors for one variant.
+      // lead = [x, y, angle]: if no candidate is free, search outward from that point, starting in the direction angle,
+      // and join the label to the point with a thin leader line
+      put(variants, cands, lead) {
+        for (const L of variants) for (const c of cands(L)) { const b = api.boxOf(L, c); if (free(b)) { labs.push(b); ldraw(ctx, L, b); return b; } }
+        if (lead) for (const L of variants) {
+          const s = lsize(ctx, L);
+          for (let r = 18; r <= 160; r += 7) for (let j = 0; j < 24; j++) {
+            const a = lead[2] + (j % 2 ? 1 : -1) * Math.ceil(j / 2) * Math.PI / 12, cx = lead[0] + r * Math.cos(a), cy = lead[1] + r * Math.sin(a);
+            const b = [cx - s.w / 2, cy - s.h / 2, cx + s.w / 2, cy + s.h / 2];
+            if (!free(b)) continue;
+            const px = EPP.clamp(lead[0], b[0], b[2]), py = EPP.clamp(lead[1], b[1], b[3]), d = Math.hypot(lead[0] - px, lead[1] - py) || 1;
+            const ex = lead[0] - 3 * (lead[0] - px) / d, ey = lead[1] - 3 * (lead[1] - py) / d;
+            ctx.save(); ctx.globalAlpha = L.alpha ?? 1; ctx.strokeStyle = EPP.alpha('muted', 0.9); ctx.lineWidth = 0.9; ctx.setLineDash([]);
+            ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(ex, ey); ctx.stroke(); ctx.restore();
+            api.seg(px, py, ex, ey, 1.5); labs.push(b); ldraw(ctx, L, b); b.led = true; return b;
+          }
+        }
+        return null;
+      }
+    };
+    return api;
+  }
+  // candidate anchors around a point, in the order of the compass names given
+  function around(x, y, r, order) {
+    const D = { r: [1, 0, 'l', 'm'], l: [-1, 0, 'r', 'm'], u: [0, -1, 'c', 'b'], d: [0, 1, 'c', 't'], ur: [0.7, -0.7, 'l', 'b'], ul: [-0.7, -0.7, 'r', 'b'], dr: [0.7, 0.7, 'l', 't'], dl: [-0.7, 0.7, 'r', 't'] };
+    const out = [];
+    for (const rr of [r, r + 5, r + 11]) for (const o of order) { const d = D[o]; out.push({ x: x + d[0] * rr, y: y + d[1] * rr, ax: d[2], ay: d[3] }); }
+    return () => out;
+  }
+
+  // ---------- drawing primitives ----------
+  function head(ctx, x, y, ux, uy, s, col) {
+    const bx = x - s * ux, by = y - s * uy, w = 0.42 * s;
+    ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(bx - w * uy, by + w * ux); ctx.lineTo(bx + w * uy, by - w * ux); ctx.closePath(); ctx.fill();
+  }
+  // wavy line (light) from (x0, y0) to (x1, y1), whole waves so that both ends lie on the axis; o.head > 0 adds an arrowhead
+  function wavy(ctx, x0, y0, x1, y1, col, o = {}) {
+    const L = Math.hypot(x1 - x0, y1 - y0); if (L < 3) return;
+    const ux = (x1 - x0) / L, uy = (y1 - y0) / L, px = -uy, py = ux;
+    const hs = o.head ? Math.min(o.head, 0.45 * L) : 0, Lb = L - 0.85 * hs, amp = o.amp ?? 2.8;
+    const nw = Math.max(1, Math.round(Lb / (o.wl ?? 9))), N = Math.max(12, Math.ceil(Lb / 1.2));
+    ctx.strokeStyle = col; ctx.lineWidth = o.lw ?? 1.8; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.setLineDash([]);
+    ctx.beginPath();
+    for (let i = 0; i <= N; i++) { const t = Lb * i / N, a = amp * Math.sin(2 * Math.PI * nw * i / N), x = x0 + ux * t + px * a, y = y0 + uy * t + py * a; if (i) ctx.lineTo(x, y); else ctx.moveTo(x, y); }
+    ctx.stroke();
+    if (hs) head(ctx, x1, y1, ux, uy, hs, col);
+  }
+  // zigzag line (phonon)
+  function zigzag(ctx, x0, y0, x1, y1, col, o = {}) {
+    const L = Math.hypot(x1 - x0, y1 - y0); if (L < 3) return;
+    const ux = (x1 - x0) / L, uy = (y1 - y0) / L, px = -uy, py = ux;
+    const hs = o.head ? Math.min(o.head, 0.45 * L) : 0, Lb = L - 0.85 * hs, amp = o.amp ?? 2.6;
+    const half = Math.max(2, Math.round(Lb / ((o.wl ?? 8) / 2)));
+    ctx.strokeStyle = col; ctx.lineWidth = o.lw ?? 1.7; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(x0, y0);
+    for (let i = 1; i < half; i++) { const t = Lb * i / half, a = (i % 2 ? 1 : -1) * amp; ctx.lineTo(x0 + ux * t + px * a, y0 + uy * t + py * a); }
+    ctx.lineTo(x0 + ux * Lb, y0 + uy * Lb); ctx.stroke();
+    if (hs) head(ctx, x1, y1, ux, uy, hs, col);
+  }
+  // vertical double arrow from yTop to yBot (pixels, yTop < yBot)
+  function dimArrow(ctx, x, yTop, yBot, col) {
+    ctx.strokeStyle = col; ctx.lineWidth = 1.2; ctx.setLineDash([]); ctx.lineCap = 'butt';
+    ctx.beginPath(); ctx.moveTo(x, yTop + 5); ctx.lineTo(x, yBot - 5); ctx.stroke();
+    head(ctx, x, yTop, 0, -1, 6, col); head(ctx, x, yBot, 0, 1, 6, col);
+  }
+  // bracket: a thin vertical line with end ticks
+  function bracket(ctx, x, ya, yb, col) {
+    ctx.strokeStyle = col; ctx.lineWidth = 1.3; ctx.setLineDash([]); ctx.lineCap = 'butt';
+    ctx.beginPath(); ctx.moveTo(x, ya); ctx.lineTo(x, yb); ctx.moveTo(x - 4.5, ya); ctx.lineTo(x + 4.5, ya); ctx.moveTo(x - 4.5, yb); ctx.lineTo(x + 4.5, yb); ctx.stroke();
+  }
+  function level(ctx, xa, xb, y, col) { ctx.strokeStyle = col; ctx.lineWidth = 1.7; ctx.setLineDash([4, 3]); ctx.lineCap = 'butt'; ctx.beginPath(); ctx.moveTo(xa, y); ctx.lineTo(xb, y); ctx.stroke(); ctx.setLineDash([]); }
+  function disc(ctx, x, y, r, fill, stroke, lw) { ctx.beginPath(); ctx.arc(x, y, r, 0, 2 * Math.PI); if (fill) { ctx.fillStyle = fill; ctx.fill(); } if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = lw || 1.6; ctx.stroke(); } }
+  function rrect(ctx, x, y, w, h, r) { ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(x, y, w, h, r); else ctx.rect(x, y, w, h); }
+
+  // ---------- panel (a): bands, the two paths, gaps ----------
+  const elA = fig.querySelector('.a9-indirect-bands');
+  const XT = [{ v: 0, label: 'Γ' }, { v: 0.2, label: '0.2' }, { v: 0.4, label: '0.4' }, { v: 0.6, label: '0.6' }, { v: 0.8, label: '0.8' }, { v: 1.0, label: '1.0' }, { v: KX, label: 'X' }];
+  const pA = new EPP.Plot(elA, {
+    xlim: [-0.04, KX], ylim: YL, legend: false, hover: false, aspect: 0.56, minHeight: 450, maxHeight: 470,
+    margin: { l: 46, r: 12, t: 26, b: 44 }, xticks: XT, yticks: [-3, -2, -1, 0, 1, 2, 3, 4]
+  });
+  const legA = fig.querySelector('.a9-indirect-leg');
+  if (legA) elA.appendChild(legA);
+  const cvA = pA.cv.canvas;
+  cvA.setAttribute('tabindex', '0');
+  cvA.setAttribute('role', 'slider');
+  cvA.setAttribute('aria-valuemin', '0');
+  cvA.setAttribute('aria-valuemax', String(KIMAX));
+  cvA.setAttribute('aria-label', 'Panel a: bands of silicon along Γ–X with the two paths of a phonon-assisted transition. This control sets the wavevector of the initial state n k on the valence band: arrow keys move it by 0.01 per ångström, Home returns it to Γ.');
+  // a strip of a few pixels left of Γ carries the direct-gap arrow, beside the photon arrow at Γ
+  const stripPx = (W) => EPP.clamp(0.032 * W, 18, 26);
+  function setXlim() {
+    const W = pA.cv.w - pA.m.l - pA.m.r; if (W <= 0) return;
+    const sp = stripPx(W), scale = (W - sp) / KX;
+    pA.xlim = [-sp / scale, KX];
+  }
+  let cur = null, ki = 0, dragOn = false;
+  const NB = 241, KS = EPP.linspace(-0.08, KX, NB);
+
+  const baseA = pA.render.bind(pA);
+  pA.render = () => { if (pA.cv.w) setXlim(); baseA(); drawA(); };
+
+  function drawA() {
+    const ctx = pA.ctx, w = pA.cv.w, h = pA.cv.h, m = pA.m;
+    if (!w || !h || !cur) return;
+    FAM = { ui: EPP.css('--font-ui'), tx: EPP.css('--font-text') };
+    const X = (k) => pA.X(k), Y = (E) => pA.Y(E), c = cur;
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted'), cSurf = EPP.color('surface');
+    const cEl = EPP.color('electron'), cPh = EPP.color('phonon'), cPt = EPP.color('photon');
+    const tEl = EPP.textColor('electron'), tPh = EPP.textColor('phonon'), tPt = EPP.textColor('photon');
+    // axis titles and panel title
+    ctx.fillStyle = cFg;
+    partsDraw(ctx, [T('wavevector '), It('k'), T(' along Γ–X (Å'), Sp('−1'), T(')')], m.l + (w - m.l - m.r) / 2, h - 8, 12.5, 'center');
+    ctx.save(); ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2); partsDraw(ctx, [T('energy (eV)')], 0, 0, 12.5, 'center'); ctx.restore();
+    ctx.fillStyle = cFg2; partsDraw(ctx, [T(w < 520 ? '(a) bands and the two paths' : '(a) bands of silicon and the two paths of one transition')], 4, 16, 11.5);
+
+    const pl = placer(ctx, [m.l, m.t, w - m.r, h - m.b]);
+    const bandPx = (f) => KS.map(k => [X(k), Y(f(k))]);
+    pl.poly(bandPx(Ev), 2.5); pl.poly(bandPx(Ec), 2.5);
+    ctx.save(); ctx.beginPath(); ctx.rect(m.l, m.t - 4, w - m.l - m.r, h - m.t - m.b + 8); ctx.clip();
+
+    // the direct gap at Γ (in the strip) and the indirect gap beside the conduction minimum
+    const xD = X(0) - stripPx(w - m.l - m.r) / 2, yG0 = Y(0), yGam = Y(EGAM);
+    dimArrow(ctx, xD, yGam, yG0, cFg2); pl.seg(xD, yGam, xD, yG0, 4);
+    const xE = X(KC) + 12, yEg = Y(EG);
+    dimArrow(ctx, xE, yEg, yG0, cFg2); pl.seg(xE, yEg, xE, yG0, 4);
+
+    // the two paths; with both shown, the phonon-first path is faint
+    const a1 = c.path === 'ph2' ? 0 : 1, a2 = c.path === 'ph1' ? 0 : (c.path === 'both' ? 0.4 : 1);
+    const xi = X(c.ki), yi = Y(c.Ei), xf = c.ok ? X(c.kf) : NaN, yf = c.ok ? Y(c.Et) : NaN;
+    const yV1 = Y(c.Ei + c.hw), yN1 = Y(Ec(c.ki));                       // photon first: virtual level, then the band state n'k
+    const yV2 = Y(c.Ei - c.s * HWQ), yN2 = c.ok ? Y(Ev(c.kf)) : NaN;      // phonon first: virtual level, then the band state n' k+q
+    const RI = 5.5, RF = 5;
+    const labQ = [];                                     // [priority, place()]: labels go in once every mark is known
+    // label centres beside a vertical span (a bracket), from its middle outward; side +1 = right of it
+    const alongV = (x, ya, yb, side) => (L) => {
+      const s = lsize(ctx, L), lo = Math.min(ya, yb), hi = Math.max(ya, yb), ym = (lo + hi) / 2, out = [];
+      for (let d = 0; d <= (hi - lo + s.h) / 2; d += 4) for (const sg of d ? [1, -1] : [1]) out.push({ x: x + side * 9, y: ym + sg * d, ax: side > 0 ? 'l' : 'r', ay: 'm' });
+      return out;
+    };
+    const both = (f, g) => (L) => f(L).concat(g(L));
+    const sgn2 = (v) => `${v >= 0 ? '+' : '−'}${Math.abs(v).toFixed(2)} eV`;
+    // the bracket labels: long form, then three lines, then without "mismatch =" (the legend gives it)
+    const brk = (which, val, o) => [lab([`mismatch = ${which} denominator`, val], cFg2, o), lab(['mismatch =', `${which} denominator`, val], cFg2, o),
+      lab([`${which} denominator`, val], cFg2, o), lab([`${which} denominator`, val], cFg2, Object.assign({}, o, { size: 10, lh: 12 }))];
+    // label boxes just under a band curve, starting at x0 and running right (the curve is sampled a little beyond the box)
+    const underCurve = (f, x0) => (L) => { const s = lsize(ctx, L); let y1 = -Infinity; for (let x = x0 - 4; x <= x0 + s.w + 4.1; x += 2) y1 = Math.max(y1, Y(f(pA.invX(x)))); return [0, 4, 8, 12].map(dy => ({ x: x0, y: y1 + 5 + dy, ax: 'l', ay: 't' })); };
+    if (a2 && c.ok) {
+      ctx.globalAlpha = a2;
+      zigzag(ctx, xi + RI + 1, yi, xf - 19, yV2, cPh, { head: 8, wl: 9 }); pl.seg(xi + RI, yi, xf - 19, yV2, 4.5);
+      level(ctx, xf - 18, xf + 13, yV2, cMut); pl.seg(xf - 18, yV2, xf + 13, yV2, 2);
+      bracket(ctx, xf, yV2 + 2, yN2, cFg2); pl.seg(xf, yV2, xf, yN2, 5);
+      wavy(ctx, xf, yV2 - 1, xf, yf + RF + 1.5, cPt, { head: 8 }); pl.seg(xf, yV2, xf, yf, 4.5);
+      disc(ctx, xf, yN2, 3.6, cSurf, cEl, 1.5); pl.dot(xf, yN2, 5);
+      ctx.globalAlpha = 1;
+      const o = { alpha: a2, size: 11, align: 'right' };
+      labQ.push([1.5, () => pl.put([lab([P_NPKQ], tEl, { alpha: a2 })], around(xf, yN2, 6, ['r', 'ur', 'dl', 'l', 'dr', 'd', 'ul', 'u']), [xf, yN2, 0])]);
+      labQ.push([2.5, () => pl.put(brk('second', sgn2(c.D2), o), both(alongV(xf, yV2, yN2, -1), alongV(xf, yV2, yN2, 1)), [xf - 3, (yV2 + yN2) / 2, Math.PI])]);
+      labQ.push([3.5, () => pl.put([lab([P_HW], tPt, { alpha: a2, size: 12.5 })], () => [0.5, 0.35, 0.65].flatMap(t => { const y = yV2 + (yf - yV2) * t; return [{ x: xf - 7, y, ax: 'r', ay: 'm' }, { x: xf + 7, y, ax: 'l', ay: 'm' }]; }), [xf - 3, (yV2 + yf) / 2, Math.PI])]);
+      labQ.push([4.5, () => pl.put([lab([P_Q], cFg, { alpha: a2, size: 13 })], () => [0.5, 0.4, 0.6, 0.3, 0.7, 0.2, 0.8].flatMap(t => { const x = xi + (xf - 19 - xi) * t, y = yi + (yV2 - yi) * t; return [{ x, y: y + 6, ax: 'c', ay: 't' }, { x, y: y - 6, ax: 'c', ay: 'b' }]; }))]);
+    }
+    if (a1) {
+      ctx.globalAlpha = a1;
+      wavy(ctx, xi, yi - RI - 1, xi, yV1, cPt, { head: 8 }); pl.seg(xi, yi, xi, yV1, 4.5);
+      level(ctx, xi - 5, xi + 20, yV1, cMut); pl.seg(xi - 5, yV1, xi + 20, yV1, 2);
+      bracket(ctx, xi, yV1 - 2, yN1, cFg2); pl.seg(xi, yV1, xi, yN1, 5);
+      disc(ctx, xi, yN1, 3.6, cSurf, cEl, 1.5); pl.dot(xi, yN1, 5);
+      if (c.ok) { zigzag(ctx, xi + 21, yV1, xf - RF - 1.5, yf, cPh, { head: 8, wl: 9 }); pl.seg(xi + 21, yV1, xf, yf, 4.5); }
+      ctx.globalAlpha = 1;
+      labQ.push([1, () => pl.put([lab([P_NPK], tEl)], both(underCurve(Ec, xi + 7), around(xi, yN1, 6, ['dr', 'r', 'ur', 'd', 'u'])), [xi, yN1, Math.PI / 4])]);
+      labQ.push([2, () => pl.put(brk('first', sgn2(c.D1), { size: 11 }), alongV(xi, yV1, yN1, 1), [xi + 3, (yV1 + yN1) / 2, 0])]);
+      labQ.push([3, () => pl.put([lab([P_HW], tPt, { size: 12.5 })], () => [0.5, 0.35, 0.65].flatMap(t => { const y = yi + (yV1 - yi) * t; return [{ x: xi + 7, y, ax: 'l', ay: 'm' }, { x: xi - 7, y, ax: 'r', ay: 'm' }]; }), [xi + 3, (yi + yV1) / 2, 0])]);
+      if (c.ok) labQ.push([4, () => pl.put([lab([P_Q], cFg, { size: 13 })], () => [0.5, 0.4, 0.6, 0.3, 0.7, 0.2, 0.8].flatMap(t => { const x = xi + 21 + (xf - xi - 21) * t, y = yV1 + (yf - yV1) * t; return [{ x, y: y - 6, ax: 'c', ay: 'b' }, { x, y: y + 6, ax: 'c', ay: 't' }]; }))]);
+    }
+    // no final state: the energy left for the electron falls in the gap
+    if (!c.ok && c.Et > YL[0] && c.Et < EG) {
+      const yt = Y(c.Et), xa = X(KC) - 40, xb = X(KC) + 8;
+      level(ctx, xa, xb, yt, cPt); pl.seg(xa, yt, xb, yt, 2.5);
+      labQ.push([5, () => pl.put([lab(['no final state:', 'energy in the gap'], tPt, { size: 11, align: 'right' })], () => [{ x: xa - 4, y: yt, ax: 'r', ay: 'm' }, { x: xa, y: yt + 6, ax: 'r', ay: 't' }, { x: xa, y: yt - 6, ax: 'r', ay: 'b' }, { x: xa + 20, y: yt + 6, ax: 'r', ay: 't' }], [xa, yt, Math.PI])]);
+    }
+    // final and initial states
+    if (c.ok && (a1 || a2)) { disc(ctx, xf, yf, RF, cSurf, cEl, 1.9); pl.dot(xf, yf, RF + 2); }
+    disc(ctx, xi, yi, RI, cEl, cSurf, 1.5); pl.dot(xi, yi, RI + 2);
+    // the photon wavevector to scale, a tick below n k
+    const yT = yi + 12, qpx = X(c.ki + c.qL) - xi;
+    ctx.strokeStyle = cFg; ctx.lineWidth = 3; ctx.lineCap = 'butt'; ctx.beginPath(); ctx.moveTo(xi, yT); ctx.lineTo(xi + Math.max(qpx, 0.3), yT); ctx.stroke();
+    pl.box(xi - 2, yT - 3, xi + 3, yT + 3);
+    ctx.restore();
+
+    // labels, most important first
+    pl.put([lab(['direct gap 3.4 eV'], cFg2, { size: 11 })], () => [{ x: m.l + 3, y: yGam - 8, ax: 'l', ay: 'b' }, { x: m.l + 3, y: yGam - 4, ax: 'l', ay: 'b' }]);
+    if (c.ok && (a1 || a2)) pl.put([lab([P_MKQ], tEl, { size: 12.5 })], around(xf, yf, 8, ['ur', 'u', 'r', 'ul', 'dr', 'd', 'l', 'dl']), [xf, yf, -Math.PI / 4]);
+    pl.put([lab([P_NK], tEl, { size: 12.5 })], around(xi, yi, 8, ['ur', 'r', 'u', 'dr', 'ul', 'l', 'd', 'dl']), [xi, yi, -Math.PI / 4]);
+    labQ.sort((u, v) => u[0] - v[0]).forEach(e => e[1]());
+    pl.put([lab(['indirect gap', '1.17 eV'], cFg2, { size: 11 }), lab(['1.17 eV'], cFg2, { size: 11 })],
+      () => { const ym = (yEg + yG0) / 2; return [0, -12, 12, -24, 24].map(dy => ({ x: xE + 6, y: ym + dy, ax: 'l', ay: 'm' }))
+        .concat([5, 12].map(dy => ({ x: w - m.r - 4, y: yG0 + dy, ax: 'r', ay: 't' }))); });   // narrow panels: under the foot of the arrow
+    // the tick's label, with a leader line
+    const tb = pl.put([lab(['photon wavevector, to scale'], cFg2, { size: 10.5, lh: 13 }), lab(['photon wavevector,', 'to scale'], cFg2, { size: 10.5, lh: 13 })],
+      () => [6, 12, 18, 26, 34, 44, 54, 66, 78, 92].map(dy => ({ x: xi + 10, y: yT + dy, ax: 'l', ay: 't' })), [xi + 1, yT + 2, Math.PI / 3]);
+    if (tb && !tb.led) {
+      const lx = tb[0] - 2, ly = tb[1] + 6, tx = xi + Math.max(qpx, 0.3) + 2, ty = yT + 1.5;
+      ctx.strokeStyle = EPP.alpha('muted', 0.8); ctx.lineWidth = 0.9; ctx.beginPath(); ctx.moveTo(lx, ly); ctx.lineTo(tx, ty); ctx.stroke();
+      pl.seg(lx, ly, tx, ty, 2);
+    }
+    // band names beside their curves; the curve is sampled a little beyond the label on each side
+    const nearCurve = (f, side, ks) => (L) => { const s = lsize(ctx, L); return [6, 14, 24].flatMap(g => ks.map(k0 => { const xc = X(k0), xa = xc - s.w / 2 - 6, xb = xc + s.w / 2 + 6; let y0 = Infinity, y1 = -Infinity; for (let x = xa; x <= xb + 0.1; x += 2) { const yy = Y(f(pA.invX(x))); y0 = Math.min(y0, yy); y1 = Math.max(y1, yy); } return side > 0 ? { x: xc, y: y0 - g, ax: 'c', ay: 'b' } : { x: xc, y: y1 + g, ax: 'c', ay: 't' }; })); };
+    pl.put([lab(['conduction band'], tEl, { size: 11 })], nearCurve(Ec, 1, [0.62, 0.7, 0.55, 0.78, 0.48, 0.4, 0.86, 0.33]));
+    pl.put([lab(['valence band'], tEl, { size: 11 })], nearCurve(Ev, -1, [0.42, 0.5, 0.35, 0.58, 0.28, 0.66, 0.74, 0.2, 0.82, 0.9]), [X(0.55), Y(Ev(0.55)) + 3, Math.PI / 2]);
+    // live description for assistive technology
+    cvA.setAttribute('aria-valuenow', c.ki.toFixed(2));
+    cvA.setAttribute('aria-valuetext', `initial state n k at k = ${c.ki.toFixed(2)} per ångström, ${c.Ei.toFixed(2)} eV. ` + (c.ok
+      ? `Final state m k+q at k = ${c.kf.toFixed(3)} per ångström, ${c.Et.toFixed(3)} eV; phonon wavevector ${c.q.toFixed(3)} per ångström. Photon first: the light lifts the electron by ${c.hw.toFixed(3)} eV to a virtual level ${c.D1.toFixed(2)} eV below the conduction band, then the phonon carries it across. Phonon first: the phonon carries it to a virtual level ${Math.abs(c.D2).toFixed(2)} eV above the valence band, then the light lifts it.`
+      : `No final state: the energy left for the electron, ${c.Et.toFixed(3)} eV, lies in the gap. Photon first: virtual level ${c.D1.toFixed(2)} eV below the conduction band.`));
+  }
+
+  // ---------- panel (b): the two time orders ----------
+  const cvD = [EPP.canvas(fig.querySelector('.a9-indirect-d1'), { height: 160 }), EPP.canvas(fig.querySelector('.a9-indirect-d2'), { height: 160 })];
+  cvD.forEach(cv => cv.canvas.setAttribute('role', 'img'));
+  function drawD(i) {
+    const cv = cvD[i], ctx = cv.ctx, W = cv.w, H = cv.h;
+    cv.clear();
+    if (!cur || W < 60) return;
+    FAM = { ui: EPP.css('--font-ui'), tx: EPP.css('--font-text') };
+    const c = cur, sel = c.path === 'both' || (c.path === 'ph1' ? i === 0 : i === 1), em = c.s > 0;
+    const cEl = EPP.color('electron'), cPh = EPP.color('phonon'), cPt = EPP.color('photon'), cInk = EPP.color('ink'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted');
+    const tEl = EPP.textColor('electron'), tPh = EPP.textColor('phonon'), tPt = EPP.textColor('photon');
+    if (sel) { rrect(ctx, 0.5, 0.5, W - 1, H - 1, 6); ctx.fillStyle = EPP.alpha('electron', 0.05); ctx.fill(); ctx.strokeStyle = EPP.alpha('electron', 0.4); ctx.lineWidth = 1; ctx.stroke(); }
+    ctx.save(); ctx.globalAlpha = sel ? 1 : 0.38;
+    ctx.fillStyle = cFg2; partsDraw(ctx, [T(i ? '(b) phonon first, then photon' : '(b) photon first, then phonon')], 10, 18, 11.5);
+    ctx.fillStyle = cMut; partsDraw(ctx, [T('time →')], W - 10, 18, 10.5, 'right');
+    const y0 = 80, xa = 16, xb = W - 16, x1 = xa + (xb - xa) * 0.36, x2 = xa + (xb - xa) * 0.64;
+    const xP = i ? x2 : x1, xQ = i ? x1 : x2;                              // vertices of the light and of the phonon
+    // electron line n k -> n' -> m k+q, arrowheads at the segment midpoints
+    ctx.strokeStyle = cEl; ctx.lineWidth = 2; ctx.setLineDash([]); ctx.beginPath(); ctx.moveTo(xa, y0); ctx.lineTo(xb, y0); ctx.stroke();
+    [[xa, x1], [x1, x2], [x2, xb]].forEach(([a, b]) => head(ctx, (a + b) / 2 + 5, y0, 1, 0, 9, cEl));
+    // light: a wavy line from a cross (the classical field) to its vertex
+    const xc = xP - 24, yc = y0 + 44;
+    wavy(ctx, xc, yc, xP, y0, cPt, { amp: 2.8, wl: 8.5 });
+    ctx.strokeStyle = cPt; ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(xc - 4.5, yc - 4.5); ctx.lineTo(xc + 4.5, yc + 4.5); ctx.moveTo(xc - 4.5, yc + 4.5); ctx.lineTo(xc + 4.5, yc - 4.5); ctx.stroke();
+    // phonon: an emitted one leaves the vertex, an absorbed one enters it
+    if (em) zigzag(ctx, xQ, y0, xQ + 28, y0 - 42, cPh, { amp: 3 }); else zigzag(ctx, xQ - 28, y0 - 42, xQ, y0, cPh, { amp: 3 });
+    disc(ctx, x1, y0, 3.4, cInk); disc(ctx, x2, y0, 3.4, cInk);
+    // labels
+    ctx.fillStyle = tEl;
+    partsDraw(ctx, P_NK, (xa + x1) / 2, y0 - 9, 12.5, 'center');
+    partsDraw(ctx, i ? P_NPKQ : P_NPK, (x1 + x2) / 2, y0 - 9, 12.5, 'center');
+    partsDraw(ctx, P_MKQ, (x2 + xb) / 2, y0 - 9, 12.5, 'center');
+    ctx.fillStyle = cMut; partsDraw(ctx, [T('virtual')], (x1 + x2) / 2, y0 + 18, 10.5, 'center');
+    ctx.fillStyle = tPh;
+    if (em) partsDraw(ctx, [T('−'), Bv('q'), It('ν')], xQ + 32, y0 - 36, 12.5); else partsDraw(ctx, [Bv('q'), It('ν')], xQ - 32, y0 - 36, 12.5, 'right');
+    ctx.fillStyle = tPt; partsDraw(ctx, P_HW, xc - 9, yc + 5, 12.5, 'right');
+    const D = i ? c.D2 : c.D1, ok = i ? c.ok : true;
+    ctx.fillStyle = cFg2;
+    partsDraw(ctx, [T(`${i ? 'second' : 'first'} denominator` + (ok ? ` ${D >= 0 ? '+' : '−'}${Math.abs(D).toFixed(2)} eV` : ': no final state'))], W / 2, H - 9, 11, 'center');
+    ctx.restore();
+    cv.canvas.setAttribute('aria-label', `Panel b, ${i ? 'phonon first, then photon' : 'photon first, then phonon'}: the electron line runs from n k through the virtual state ${i ? "n' k+q" : "n' k"} to m k+q. ` +
+      `The light, a wavy line starting at a cross (a classical field), is absorbed at the ${i ? 'second' : 'first'} vertex; a phonon is ${em ? 'emitted' : 'absorbed'} at the ${i ? 'first' : 'second'}. ` +
+      (ok ? `${i ? 'Second' : 'First'} denominator ${D.toFixed(2)} eV.` : 'No final state at this photon energy.') + (sel ? '' : ' Not the path shown in panel a.'));
+  }
+
+  // ---------- readouts ----------
+  const $v = (k) => fig.querySelector('.a9-indirect-v-' + k);
+  const RO = { thr: $v('thr'), q: $v('q'), hwq: $v('hwq'), d1: $v('d1'), d2: $v('d2'), w: $v('w'), r: $v('r') };
+  const nb = ' ', I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const sgn = (v, d) => (v >= 0 ? '+' : '−') + Math.abs(v).toFixed(d);
+  const sci = (v, d = 2) => { if (v === 0) return '0'; let e = Math.floor(Math.log10(Math.abs(v))), mt = (v / Math.pow(10, e)).toFixed(d - 1); if (parseFloat(mt) >= 10) { e += 1; mt = (v / Math.pow(10, e)).toFixed(d - 1); } return `${mt}×10<sup>${String(e).replace('-', '−')}</sup>`; };
+  function readouts() {
+    const c = cur;
+    RO.thr.innerHTML = `${c.hw.toFixed(3)}${nb}eV, ${c.thr.toFixed(3)}${nb}eV`;
+    RO.q.innerHTML = c.ok ? `${c.q.toFixed(3)}${nb}Å⁻¹` : (c.ki < 1e-9 ? 'no final state below threshold' : `no final state: this initial state needs ${I('ħω')} ≥ ${c.thrK.toFixed(3)}${nb}eV`);
+    RO.hwq.innerHTML = `57.8${nb}meV (TO)`;
+    RO.d1.innerHTML = `${sgn(c.D1, 3)}${nb}eV`;
+    RO.d2.innerHTML = c.ok ? `${sgn(c.D2, 3)}${nb}eV` : '— (no final state)';
+    RO.w.innerHTML = `${c.w >= 1e-3 ? c.w.toFixed(3) : sci(c.w)} = ${c.s > 0 ? I('n') + ' + 1' : I('n')} at ${Math.round(c.T)}${nb}K`;
+    RO.r.innerHTML = c.ok ? `${sci(c.qL / c.q)}, with ${I('q')}<sub>L</sub> = ${sci(c.qL, 3)}${nb}Å⁻¹` : `—, ${I('q')}<sub>L</sub> = ${sci(c.qL, 3)}${nb}Å⁻¹`;
+  }
+
+  function drawAll() {
+    if (!cur) return;
+    pA.draw([
+      { type: 'hband', y0: 0, y1: EG, color: 'muted', alpha: 0.12 },
+      { type: 'line', x: KS, y: KS.map(Ev), color: 'electron', width: 2 },
+      { type: 'line', x: KS, y: KS.map(Ec), color: 'electron', width: 2 }
+    ]);
+    drawD(0); drawD(1); readouts();
+  }
+  function update() { cur = compute(ui.state, ki); drawAll(); }
+
+  const ui = EPP.controls(fig.querySelector('.a9-indirect-ctrls'), [
+    { key: 'hw', type: 'range', label: 'photon energy ħω', min: 1.0, max: 1.4, step: 0.005, value: 1.25, fmt: (v) => v.toFixed(3) + ' eV' },
+    { key: 'T', type: 'range', label: 'temperature T', min: 4, max: 600, step: 1, value: 296, fmt: (v) => Math.round(v) + ' K' },
+    { key: 's', type: 'seg', label: 'process', options: [['1', 'phonon emission (s = +1)'], ['-1', 'phonon absorption (s = −1)']], value: '1' },
+    { key: 'path', type: 'seg', label: 'path shown', options: [['ph1', 'photon first'], ['ph2', 'phonon first'], ['both', 'both']], value: 'both' }
+  ], () => update());
+  // control labels: the symbols in italic, like the readout keys
+  { const sp = (k) => fig.querySelector(`label[for="${fig.id}-${k}"] > span`);
+    const a = sp('hw'), b = sp('T');
+    if (a) a.innerHTML = `photon energy ${I('ħω')}`;
+    if (b) b.innerHTML = `temperature ${I('T')}`;
+    const e1 = document.getElementById(`${fig.id}-s-1`), e2 = document.getElementById(`${fig.id}-s--1`);
+    if (e1) e1.innerHTML = `phonon emission (${I('s')} = +1)`;
+    if (e2) e2.innerHTML = `phonon absorption (${I('s')} = −1)`; }
+  cur = compute(ui.state, ki);
+
+  // drag n k along the valence band (horizontal drags; vertical ones still scroll on touch screens), or use the keys
+  const setKi = (v) => { const nv = EPP.clamp(Math.round(v / 0.005) * 0.005, 0, KIMAX); if (Math.abs(nv - ki) > 1e-12) { ki = nv; update(); } };
+  const nearVB = (px, py) => { const k = EPP.clamp(pA.invX(px), 0, KIMAX); return Math.abs(px - pA.X(k)) < 16 && Math.abs(py - pA.Y(Ev(k))) < 18; };
+  pA.onPointer = (x, y, type, d) => {
+    if (!d) return;
+    if (type === 'down') { dragOn = nearVB(d.px, d.py); if (dragOn) { cvA.style.cursor = 'grabbing'; setKi(x); } }
+    else if (type === 'move' && dragOn) setKi(x);
+    else if (type === 'up') { dragOn = false; cvA.style.cursor = nearVB(d.px, d.py) ? 'grab' : 'default'; }
+  };
+  cvA.addEventListener('pointermove', (e) => { if (dragOn) return; const r = cvA.getBoundingClientRect(); cvA.style.cursor = nearVB(e.clientX - r.left, e.clientY - r.top) ? 'grab' : 'default'; });
+  cvA.addEventListener('keydown', (e) => {
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+    const step = { ArrowRight: 0.01, ArrowUp: 0.01, ArrowLeft: -0.01, ArrowDown: -0.01, PageUp: 0.05, PageDown: -0.05 }[e.key];
+    if (step !== undefined) { e.preventDefault(); setKi(ki + step); }
+    else if (e.key === 'Home' || e.key === 'End') { e.preventDefault(); setKi(e.key === 'Home' ? 0 : KIMAX); }
+  });
+  cvD.forEach((cv, i) => cv.onResize(() => drawD(i)));
+})();
+</script>

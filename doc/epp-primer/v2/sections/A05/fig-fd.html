@@ -1,0 +1,231 @@
+  <figure class="viz" id="viz-a5-fd">
+    <p class="viz-title"><span>The lattice inside $W$</span> <span class="tag">interactive</span></p>
+    <p class="a5-fd-hd">(a) Exact: the screened interaction splits into an electronic and a lattice part, <a class="eqref" href="#a5-eq-split">(A5.23)</a></p>
+    <div class="fd a5-fd-row" data-y="30">
+      <figure class="a5-fd-g"><div id="fd-a5-fd-w" data-d="W"></div><figcaption>total $W$</figcaption></figure>
+      <div class="a5-fd-term"><span class="a5-fd-op" aria-hidden="true">=</span><figure class="a5-fd-g"><div id="fd-a5-fd-we" data-d="We"></div><figcaption>nuclei clamped: <span class="nw">$W^{\rme}$,</span> the $W$ of GW</figcaption></figure></div>
+      <div class="a5-fd-term a5-fd-lat"><span class="a5-fd-op" aria-hidden="true">+</span><figure class="a5-fd-g"><div id="fd-a5-fd-wph" data-d="Wph"></div><figcaption>$W^{\ph}=W^{\rme}\chi^{\ion}W^{\rme}$</figcaption></figure></div>
+    </div>
+    <div class="a5-fd-live" aria-live="polite"><p class="a5-fd-note" data-n="clamp">Nuclei clamped, <span class="nw">$F=0$:</span> the nuclear charge cannot fluctuate, so <span class="nw">$\chi^{\ion}=0$,</span> <span class="nw">$W^{\ph}=0$</span> and <span class="nw">$W=W^{\rme}$,</span> the interaction screened by the electrons alone that GW uses.</p></div>
+    <div class="a5-fd-lat">
+      <p class="a5-fd-hd">(b) The lattice part written with phonons, <a class="eqref" href="#a5-eq-Wph">(A5.28)</a></p>
+      <div class="fd a5-fd-row" data-y="34">
+        <div class="a5-fd-term"><span class="a5-fd-op a5-fd-sum"><span data-v="dyn">$W^{\ph}=\dfrac{1}{N_\ell}\displaystyle\sum_{\bq\nu\nu'}$</span><span data-v="st">$W^{\ph}\simeq\dfrac{1}{N_\ell}\displaystyle\sum_{\bq\nu}$</span></span><figure class="a5-fd-g"><div id="fd-a5-fd-v" data-d="Vdyn" data-v="dyn"></div><div id="fd-a5-fd-v0" data-d="Vst" data-v="st"></div><figcaption><span data-v="dyn">screened vertex $\mathcal V=(\varepsilon^{\rme})^{-1}\Delta_{\bq\nu}V^{\mathrm{en}}$ at both ends</span><span data-v="st">static vertex $\mathcal V(0)\simeq\Delta_{\bq\nu}V^{\mathrm{KS}}$ at both ends, as in DFPT</span></figcaption></figure></div>
+        <div class="a5-fd-term"><span class="a5-fd-op a5-fd-with">with</span><figure class="a5-fd-g"><div id="fd-a5-fd-calv" data-d="Cdyn" data-v="dyn"></div><div id="fd-a5-fd-calv0" data-d="Cst" data-v="st"></div><figcaption>a screened vertex is $W^{\rme}$ acting on the bare nuclear-charge vertex $\Delta_{\bq\nu}n^{\ion}$</figcaption></figure></div>
+      </div>
+      <div class="a5-fd-live" aria-live="polite"><p class="a5-fd-note" data-n="static">Static screening, as in DFPT: <span class="nw">$\mathcal V_{\bq\nu}(\br,0)\simeq\Delta_{\bq\nu}V^{\mathrm{KS}}(\br)$,</span> whose matrix elements are the <span class="nw">$g_{mn\nu}(\bk,\bq)$</span> of Section A.2, <a class="eqref" href="#a5-eq-dfpt">(A5.29)</a>. The force constants take their Born–Oppenheimer values, so the phonon line is the free propagator <span class="nw">$F^0_\nu$,</span> diagonal in <span class="nw">$\nu$,</span> <a class="eqref" href="#a5-eq-Finv">(A5.33)</a>.</p></div>
+    </div>
+    <div class="a5-fd-ctrls"></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> The lattice part of the screened interaction is a nuclear charge fluctuation between two electron-screened lines. Written with phonons, it is a phonon exchanged between two screened vertices: crystal momentum $\bq$ leaves one electron and reaches the other.</p><div class="cap-more">
+      <p><strong>Marks.</strong> Double-dashed lines: screened interactions, the total $W$ (rose label) and <span class="nw">$W^{\rme}$,</span> screened by the electrons alone (blue label). Heavy amber zigzag: the nuclear charge fluctuation <a class="sym" href="#gl-a5-chiion">$\chi^{\ion}$</a> in (a), the <a class="sym" href="#gl-a5-F">phonon propagator $F$</a> in (b); thin when it is the free <span class="nw">$F^0$.</span> Dots: where a screened line meets the nuclear charge, with phonons the bare nuclear-charge vertex <span class="nw">$\Delta_{\bq\nu}n^{\ion}$.</span> Grey disks: screened vertices <span class="nw"><a class="sym" href="#gl-a5-calV">$\mathcal V$</a>.</span> 1 and 2 are the points of the two electrons; 3 and 4 are internal points, integrated over. The arrow is the crystal momentum $\bq$ that the phonon carries from 2 to 1.</p>
+      <p><strong>Try.</strong> Read (a) from right to left: electron 2 pushes the nuclei at 4, the fluctuation travels to 3, and its field, screened again, acts on electron 1. Clamp the nuclei: only $W^{\rme}$ survives, the GW case. Switch on static screening: the vertex becomes DFPT's <span class="nw">$\Delta_{\bq\nu}V^{\mathrm{KS}}$,</span> whose matrix elements are the <a class="sym" href="#gl-a2-g">$g_{mn\nu}(\bk,\bq)$</a> of <a href="#a-coupling">Section A.2</a>, and the phonon line becomes the free propagator of the Born–Oppenheimer phonons.</p>
+      <p><strong>Model.</strong> Row (a) is <a class="eqref" href="#a5-eq-split">(A5.23)</a>, exact for electrons and nuclei with Coulomb interactions. Row (b) inserts the one-phonon form of <span class="nw">$\chi^{\ion}$,</span> <a class="eqref" href="#a5-eq-chiF">(A5.27)</a>, which gives <a class="eqref" href="#a5-eq-Wph">(A5.28)</a> with <span class="nw">$\mathcal V_{\bq\nu}=(\varepsilon^{\rme})^{-1}\Delta_{\bq\nu}V^{\mathrm{en}}$.</span> Static screening uses <a class="eqref" href="#a5-eq-dfpt">(A5.29)</a>, and <a class="eqref" href="#a5-eq-Finv">(A5.33)</a> with the force constants at zero frequency. No numerics: the figure is a map of the equations.</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a5-fd');
+  if (!fig || !window.EPP) return;
+  // outside Section A.5 (the isolated figure test) the links into the page have no target: show them as text
+  if (!fig.closest('#a-hedin-baym')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+  const NS = 'http://www.w3.org/2000/svg';
+  const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
+  const q = (s) => fig.querySelector(s), qa = (s) => [...fig.querySelectorAll(s)];
+
+  // ---------- layout: inline styles (a fragment carries no style sheet) ----------
+  // Rows align at the top; every diagram of a row has its line at the height data-y (px, before scaling),
+  // and the operators sit in boxes of twice that height, so they line up with the lines.
+  const ST = {
+    hd: 'margin:14px 0 0;max-width:none;font-family:var(--font-ui);font-size:0.86rem;font-weight:600;line-height:1.35;color:var(--fg-2)',
+    row: 'align-items:flex-start;justify-content:center;gap:10px 26px;margin:6px 0 2px;padding:6px 0',
+    term: 'display:flex;align-items:flex-start;gap:10px;min-width:0;max-width:100%',
+    op: 'display:flex;align-items:center;justify-content:center;font-family:var(--font-text);font-size:1.4rem;line-height:1;color:var(--muted)',
+    sum: 'font-size:1.02rem;color:var(--fg-2);position:relative;top:4px', // the fraction bar, not the box centre, on the line
+    with: 'font-family:var(--font-ui);font-size:0.95rem;font-style:italic',
+    g: 'margin:0;display:grid;justify-items:center;align-content:start;gap:2px;flex:0 0 auto;max-width:100%',
+    note: 'margin:2px auto 8px;max-width:64ch;font-family:var(--font-ui);font-size:0.86rem;line-height:1.45;color:var(--fg);text-align:center',
+    lat: 'transition:opacity 0.25s,filter 0.25s'
+  };
+  for (const k in ST) qa('.a5-fd-' + k).forEach(el => { el.style.cssText += ';' + ST[k]; });
+  // the page rule "figure.viz figcaption" (caption size, wide measure) also reaches the small captions under the diagrams
+  qa('.a5-fd-g figcaption').forEach(c => { c.style.cssText = 'font-family:var(--font-ui);font-size:0.8rem;line-height:1.35;color:var(--muted);margin:2px 0 0;text-align:center;max-width:none'; });
+  if (EPP.reducedMotion) qa('.a5-fd-lat').forEach(el => { el.style.transition = 'none'; });
+
+  // ---------- labels in the primer's notation ----------
+  // markup: _x, _{..}, ^x, ^{..} scripts (a script right after a script is stacked under or over it);
+  // ‹..› an upright label (e, ion, en); !c a bold upright vector; Latin and lower-case Greek letters italic;
+  // everything else (digits, Δ, 𝒱, brackets, primes) upright
+  const ITAL = /[A-Za-zα-ω]/;
+  function lex(s) {
+    const out = [];
+    const scan = (cs, lvl) => {
+      for (let i = 0; i < cs.length;) {
+        const ch = cs[i];
+        if ((ch === '_' || ch === '^') && lvl === 0 && i + 1 < cs.length) {
+          let inner; const j = i + 1;
+          if (cs[j] === '{') { let d = 1, k = j + 1; while (k < cs.length && d) { if (cs[k] === '{') d++; else if (cs[k] === '}') d--; k++; } inner = cs.slice(j + 1, k - 1); i = k; }
+          else { inner = [cs[j]]; i = j + 1; }
+          const prev = out[out.length - 1], start = out.length;
+          scan(inner, ch === '_' ? -1 : 1);
+          if (prev && prev.lvl !== 0 && out[start]) out[start].stack = true;
+          continue;
+        }
+        if (ch === '‹') { const k = cs.indexOf('›', i + 1); out.push({ t: cs.slice(i + 1, k).join(''), it: false, b: false, lvl }); i = k + 1; continue; }
+        if (ch === '!') { out.push({ t: cs[i + 1], it: false, b: true, lvl }); i += 2; continue; }
+        out.push({ t: ch, it: ITAL.test(ch), b: false, lvl }); i++;
+      }
+    };
+    scan(Array.from(String(s)), 0);
+    const runs = [];
+    for (const p of out) { const r = runs[runs.length - 1]; if (r && !p.stack && r.it === p.it && r.b === p.b && r.lvl === p.lvl) r.t += p.t; else runs.push(Object.assign({}, p)); }
+    return runs;
+  }
+  const mctx = document.createElement('canvas').getContext('2d');
+  const measure = (t, px, it, b, fam) => { mctx.font = `${it ? 'italic ' : ''}${b ? '700 ' : ''}${px}px ${fam}`; return mctx.measureText(t).width; };
+  // label(group, markup, x, y, {size, anchor, color}); scripts at 72 %, subscripts down 0.3, superscripts up 0.42 of the size
+  function label(g, s, x, y, o = {}) {
+    const size = o.size || 14, fam = EPP.css('--font-text');
+    const text = mk('text', { x, y, 'text-anchor': o.anchor || 'middle', fill: o.color || EPP.color('fg'), 'font-family': fam, 'font-size': size }, g);
+    let cur = 0, prevLvl = 0, grp = 0, under = -1, stackW = 0;
+    for (const r of lex(s)) {
+      const z = r.lvl ? 0.72 * size : size, w = measure(r.t, z, r.it, r.b, fam);
+      const ts = mk('tspan', { 'font-size': z.toFixed(2), 'font-style': r.it ? 'italic' : 'normal', 'font-weight': r.b ? 700 : 400 }, text);
+      const tgt = r.lvl === -1 ? 0.3 * size : (r.lvl === 1 ? -0.42 * size : 0);
+      if (Math.abs(tgt - cur) > 1e-6) ts.setAttribute('dy', (tgt - cur).toFixed(2));
+      cur = tgt;
+      let dx = 0;
+      if (r.lvl === 0) { if (under >= 0) dx = Math.max(0, under - stackW); under = -1; stackW = 0; grp = 0; }
+      else if (r.stack) { dx = -grp; under = grp; stackW = w; grp = 0; }
+      else if (under >= 0) stackW += w;
+      else grp = prevLvl === r.lvl ? grp + w : w;
+      if (dx) ts.setAttribute('dx', dx.toFixed(2));
+      prevLvl = r.lvl;
+      ts.textContent = r.t;
+    }
+    return text;
+  }
+  const pt = (g, s, x, y) => { const t = mk('text', { x, y, 'text-anchor': 'middle', fill: EPP.color('muted'), 'font-family': EPP.css('--font-text'), 'font-size': 12 }, g); t.textContent = s; };
+  const C = () => ({ fg: EPP.color('fg'), mu: EPP.color('muted'), el: EPP.color('electron-t'), ph: EPP.color('photon-t'), pn: EPP.color('phonon-t') });
+
+  // ---------- glyphs that EPP.fd does not draw ----------
+  // grey disk: a screened vertex (an opaque base hides the line ends); a small arrow: the crystal momentum of the phonon
+  const disk = (g, x, y) => {
+    mk('circle', { cx: x, cy: y, r: 8.5, fill: EPP.color('surface') }, g);
+    mk('circle', { cx: x, cy: y, r: 8.5, fill: EPP.alpha('muted', 0.6), stroke: EPP.color('muted'), 'stroke-width': 1.3 }, g);
+  };
+  const arrowLeft = (g, x0, x1, y, col) => {
+    mk('path', { d: `M${x0} ${y}L${x1 + 5} ${y}`, fill: 'none', stroke: col, 'stroke-width': 1.5, 'stroke-linecap': 'round' }, g);
+    mk('path', { d: `M${x1} ${y}L${x1 + 7.5} ${y - 3.6}L${x1 + 7.5} ${y + 3.6}Z`, fill: col }, g);
+  };
+
+  // ---------- the diagrams ----------
+  // (a) W, W^e and the lattice part W^e χ^ion W^e, line at Y1; (b) the phonon form and the screened vertex, line at Y2.
+  // In (b) electron 1 sits at the left disk and electron 2 at the right one: (A5.28) reads 𝒱_{qν}(r_1) F 𝒱_{−qν'}(r_2).
+  // F_{νν'}(q, t) = −(i/ħ)<T φ_{qν}(t) φ†_{qν'}(0)>: φ† creates the phonon q at 2, φ destroys it at 1, so the
+  // crystal momentum q runs from 2 to 1 (to the left). Static screening: 𝒱(ω) → 𝒱(0), and F → F^0 (thin, diagonal in ν).
+  const Y1 = 30, Y2 = 34;
+  const screened = (a, b, y) => ({ t: 'screened', a: [a, y], b: [b, y] });
+  const vtx = (x, y) => ({ t: 'vertex', at: [x, y], r: 3.5 });
+  const phononForm = (st) => ({
+    w: 200, h: 74,
+    items: [{ t: st ? 'phonon' : 'phonon2', a: [26, Y2], b: [174, Y2] }],
+    deco: (g, c) => {
+      disk(g, 26, Y2); disk(g, 174, Y2);
+      pt(g, '1', 9, Y2 + 4); pt(g, '2', 191, Y2 + 4);
+      arrowLeft(g, 115, 85, Y2 - 15, c.pn);
+      label(g, '!q', 100, Y2 - 22, { color: c.pn });
+      label(g, st ? '𝒱_{!qν}(0)' : '𝒱_{!qν}(ω)', 26, Y2 + 28);
+      label(g, st ? 'F^0_ν(!q,ω)' : 'F_{νν′}(!q,ω)', 100, Y2 + 28, { color: c.pn });
+      label(g, st ? '𝒱_{−!qν}(0)' : '𝒱_{−!qν′}(ω)', 174, Y2 + 28);
+    },
+    aria: st
+      ? 'Row b with static screening: grey disks, the static vertices V q nu at zero frequency at point 1 and V minus q nu at zero frequency at point 2, each equal to the DFPT potential change Delta q nu V KS, joined by a thin amber zigzag, the free phonon propagator F zero nu of q and omega. An arrow above the zigzag carries the crystal momentum q from point 2 to point 1.'
+      : 'Row b: a grey disk at point 1, the screened vertex V q nu of omega; a heavy amber zigzag, the phonon propagator F nu nu prime of q and omega; a grey disk at point 2, the screened vertex V minus q nu prime of omega. An arrow above the zigzag carries the crystal momentum q from point 2 to point 1.'
+  });
+  const vertexForm = (st) => ({
+    w: 186, h: 74,
+    items: [screened(82, 162, Y2), vtx(162, Y2)],
+    deco: (g, c) => {
+      disk(g, 24, Y2);
+      label(g, '=', 55, Y2 + 6, { size: 20, color: c.mu });
+      label(g, st ? 'W^{‹e›}(0)' : 'W^{‹e›}(ω)', 122, Y2 - 12, { color: c.el });
+      label(g, st ? '𝒱_{!qν}(0)' : '𝒱_{!qν}(ω)', 24, Y2 + 28);
+      label(g, 'Δ_{!qν}n^{‹ion›}', 162, Y2 + 28);
+    },
+    aria: 'What a screened vertex is: the grey disk V q nu of ' + (st ? 'zero frequency' : 'omega') + ' equals a double-dashed line, the interaction W e screened by the electrons' + (st ? ' at zero frequency' : '') + ', ending on a dot, the bare nuclear-charge vertex Delta q nu n ion.'
+  });
+  const D = {
+    W: { w: 120, h: 58, items: [screened(20, 100, Y1)],
+      deco: (g, c) => { label(g, 'W', 60, Y1 - 12, { color: c.ph }); pt(g, '1', 9, Y1 + 4); pt(g, '2', 111, Y1 + 4); },
+      aria: 'Row a: the total screened interaction W between the electrons at points 1 and 2, a double-dashed line,' },
+    We: { w: 120, h: 58, items: [screened(20, 100, Y1)],
+      deco: (g, c) => { label(g, 'W^{‹e›}', 60, Y1 - 12, { color: c.el }); pt(g, '1', 9, Y1 + 4); pt(g, '2', 111, Y1 + 4); },
+      aria: 'equals the interaction screened by the electrons alone, W e, between points 1 and 2, a double-dashed line,' },
+    Wph: { w: 262, h: 58, items: [screened(20, 80, Y1), { t: 'phonon2', a: [80, Y1], b: [182, Y1] }, screened(182, 242, Y1), vtx(80, Y1), vtx(182, Y1)],
+      deco: (g, c) => {
+        label(g, 'W^{‹e›}', 50, Y1 - 12, { color: c.el }); label(g, 'χ^{‹ion›}', 131, Y1 - 13, { color: c.pn }); label(g, 'W^{‹e›}', 212, Y1 - 12, { color: c.el });
+        pt(g, '1', 9, Y1 + 4); pt(g, '2', 253, Y1 + 4); pt(g, '3', 80, Y1 + 21); pt(g, '4', 182, Y1 + 21);
+      },
+      aria: 'plus the lattice part W ph: a double-dashed line W e from point 1 to a dot at point 3, a heavy amber zigzag chi ion from 3 to 4, the nuclear charge fluctuation, and a double-dashed line W e from a dot at point 4 to point 2. Points 3 and 4 are integrated over.' },
+    Vdyn: phononForm(false), Vst: phononForm(true),
+    Cdyn: vertexForm(false), Cst: vertexForm(true)
+  };
+
+  const drawn = [];
+  qa('[data-d]').forEach(el => {
+    const d = D[el.dataset.d];
+    if (!d) return;
+    const svg = EPP.fd.draw(el, { w: d.w, h: d.h, label: d.aria, items: d.items });
+    svg.style.cssText = 'display:block;max-width:100%;height:auto;overflow:visible';
+    drawn.push({ svg, d, fig: el.closest('figure') });
+  });
+  // EPP.fd repaints a diagram (and drops these glyphs) when the theme changes; this callback is registered after
+  // those repaints, so it runs after them and draws the glyphs again in the new colours.
+  const decorate = ({ svg, d }) => {
+    svg.querySelectorAll('g.a5-fd-deco').forEach(n => n.remove());
+    d.deco(mk('g', { class: 'a5-fd-deco' }, svg), C());
+  };
+  drawn.forEach(decorate);
+  EPP.onTheme(() => drawn.forEach(decorate));
+
+  // wide screens draw the diagrams 1.2 times their natural size; the operator boxes follow the line height
+  let lastS = 0;
+  const scale = () => {
+    const S = fig.clientWidth >= 640 ? 1.2 : 1;
+    if (S === lastS) return;
+    lastS = S;
+    drawn.forEach(({ svg, d, fig: f }) => {
+      svg.style.width = (d.w * S).toFixed(1) + 'px';
+      if (f) f.style.width = (d.w * S).toFixed(1) + 'px';
+    });
+    qa('.a5-fd-row').forEach(row => {
+      const y = +row.dataset.y;
+      row.querySelectorAll('.a5-fd-op').forEach(op => { op.style.height = (2 * y * S).toFixed(1) + 'px'; });
+    });
+  };
+  scale();
+  // rescale in the next frame: resizing inside the observer callback would notify it again in the same frame
+  try { new ResizeObserver(() => requestAnimationFrame(scale)).observe(fig); } catch (e) {}
+
+  // ---------- state ----------
+  const show = (el, on) => { el.style.display = on ? '' : 'none'; };
+  function apply(s) {
+    const st = !!s.stat, cl = !!s.clamp;
+    qa('[data-v]').forEach(el => show(el, (el.dataset.v === 'st') === st));
+    qa('.a5-fd-note').forEach(el => show(el, el.dataset.n === 'clamp' ? cl : st));
+    qa('.a5-fd-lat').forEach(el => { el.style.opacity = cl ? '0.3' : ''; el.style.filter = cl ? 'grayscale(1)' : ''; });
+  }
+  const ui = EPP.controls(q('.a5-fd-ctrls'), [
+    { key: 'clamp', type: 'toggle', label: 'clamp the nuclei (F = 0)', value: false },
+    { key: 'stat', type: 'toggle', label: 'static screening (DFPT)', value: false }
+  ], apply);
+  // the symbol F in italic, as in the prose
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const lc = ui.el.querySelector(`label[for="${fig.id}-clamp"] > span`);
+  if (lc) lc.innerHTML = `clamp the nuclei (${I('F')} = 0)`;
+  apply(ui.state);
+})();
+</script>

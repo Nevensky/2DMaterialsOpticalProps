@@ -56,6 +56,9 @@ for e in r['errors']:
         if bad: print('ERROR', f'[{m.group(1)}] dead links inside this section or to unknown ids:', ', '.join(bad))
     else: print('ERROR', e)
 if ext: print('EXTERNAL (must be registry/export ids):', ', '.join(sorted(ext)))
+for k, v in (r.get('inlineClip') or {}).items():
+    print(f'CLIPPED INLINE MATH [{k}] (wider than the text column; shorten it or move it to a display equation): {len(v)}')
+    for x in v[:12]: print('   ', x)
 print('math errors:', r['mathErrors'], '| overflow px:', {k: v['px'] for k, v in r['overflow'].items()}, '| blank canvases:', r['blankCanvases'])
 PY
 if [ "$1" = "--shots" ]; then node "$V/build/shoot.js" "$D/page.html" "$D/shots" >/dev/null 2>&1; ls "$D/shots" | grep -v '^index' | grep -i "$PFX\|$(echo $ID | tr A-Z a-z)" | head -40; fi

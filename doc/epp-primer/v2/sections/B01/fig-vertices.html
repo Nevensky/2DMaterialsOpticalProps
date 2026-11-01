@@ -1,0 +1,366 @@
+  <figure class="viz" id="viz-b1-vertices">
+    <p class="viz-title">Bare, screened and polar vertices <span class="tag">interactive</span></p>
+    <div class="b1-vertices-rows">
+      <div class="b1-vertices-row" style="display:grid;grid-template-columns:minmax(0,1fr);gap:4px 18px;align-items:start;padding:2px 0 10px">
+        <div class="b1-vertices-lab" style="min-width:0">
+          <p style="margin:0 0 3px;max-width:none;font-family:var(--font-ui);font-weight:600;font-size:0.9rem;color:var(--fg)">(a) bare vertex $g^0$</p>
+          <p style="margin:0 0 3px;max-width:none;font-size:0.92rem;color:var(--fg)">$g^0=\langle\psi_{m\bk+\bq}|\Delta_{\bq\nu}V^{\mathrm{en}}|\psi_{n\bk}\rangle$</p>
+          <p style="margin:0;max-width:none;font-family:var(--font-ui);font-size:0.82rem;color:var(--muted)">the phonon moves the potential of the unscreened ion</p>
+        </div>
+        <div class="b1-vertices-dg" data-p="a" style="min-width:0"></div>
+      </div>
+      <div class="b1-vertices-row" style="display:grid;grid-template-columns:minmax(0,1fr);gap:4px 18px;align-items:start;padding:10px 0;border-top:1px solid var(--rule)">
+        <div class="b1-vertices-lab" style="min-width:0">
+          <p style="margin:0 0 3px;max-width:none;font-family:var(--font-ui);font-weight:600;font-size:0.9rem;color:var(--fg)">(b) screened vertex $g$</p>
+          <p style="margin:0 0 3px;max-width:none;font-size:0.92rem;color:var(--fg)">$g=\langle\psi_{m\bk+\bq}|(\varepsilon^{\mathrm e})^{-1}\Delta_{\bq\nu}V^{\mathrm{en}}|\psi_{n\bk}\rangle$</p>
+          <p style="margin:0;max-width:none;font-family:var(--font-ui);font-size:0.82rem;color:var(--muted)">the bare vertex plus every chain of bubbles</p>
+        </div>
+        <div class="b1-vertices-dg" data-p="b" style="min-width:0"></div>
+      </div>
+      <div class="b1-vertices-row" style="display:grid;grid-template-columns:minmax(0,1fr);gap:4px 18px;align-items:start;padding:10px 0 4px;border-top:1px solid var(--rule)">
+        <div class="b1-vertices-lab" style="min-width:0">
+          <p style="margin:0 0 3px;max-width:none;font-family:var(--font-ui);font-weight:600;font-size:0.9rem;color:var(--fg)">(c) polar vertex $g^{\mathrm{lr}}$</p>
+          <p style="margin:0 0 3px;max-width:none;font-size:0.92rem;color:var(--fg)">(a) with $V_\kappa\to4\pi e^2/(\bq\cdot\boldsymbol\varepsilon_\infty\cdot\bq)$ and $\be_{\kappa\nu}\to-\mathbf Z^*_\kappa\cdot\be_{\kappa\nu}$</p>
+          <p style="margin:0;max-width:none;font-family:var(--font-ui);font-size:0.82rem;color:var(--muted)">the Born dipole, through a Coulomb line screened by the electrons</p>
+        </div>
+        <div class="b1-vertices-dg" data-p="c" style="min-width:0"></div>
+      </div>
+    </div>
+    <p class="legend-strip b1-vertices-leg" style="margin-top:8px;gap:6px 18px;max-width:none">
+      <span><svg data-sw="e" width="30" height="14" viewBox="0 0 30 14" aria-hidden="true"></svg>electron</span>
+      <span><svg data-sw="p" width="30" height="14" viewBox="0 0 30 14" aria-hidden="true"></svg>phonon</span>
+      <span><svg data-sw="v" width="30" height="14" viewBox="0 0 30 14" aria-hidden="true"></svg>bare Coulomb $v$</span>
+      <span><svg data-sw="w" width="30" height="14" viewBox="0 0 30 14" aria-hidden="true"></svg>screened Coulomb</span>
+      <span><svg data-sw="x" width="22" height="18" viewBox="0 0 22 18" aria-hidden="true"></svg>bubble $\chi^0$</span>
+    </p>
+    <div class="b1-vertices-ctrls"></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> The screened vertex (b) is the bare vertex (a) plus every chain of electron–hole bubbles joined by Coulomb lines; a calculation that starts from (b) must not add those bubbles again. The polar vertex (c) is the long-range part of (b) in a polar insulator: the Born dipole of the moving atom reaches the electron through a Coulomb line already screened by the electrons.</p><div class="cap-more">
+      <p><strong>Marks.</strong> Arrowed lines: electrons, $n\bk$ in and $m\,\bk+\bq$ out. Zigzag line: phonon <span class="nw">$\bq\nu$.</span> Dashed line: bare Coulomb interaction <span class="nw">$v$.</span> Doubled dashed line: the screened Coulomb interaction <span class="nw">$4\pi e^2/(\bq\cdot\boldsymbol\varepsilon_\infty\cdot\bq)$.</span> Loop: electron–hole bubble <span class="nw">$\chi^0$.</span> Blob: $(\varepsilon^{\mathrm e})^{-1}$ acting on the bare vertex, which sums all its bubble chains. Dot in (c): the Born charge $e\mathbf Z^*_\kappa$ of the displaced atom, whose dipole is <span class="nw">$e\mathbf Z^*_\kappa\cdot\bu_{\ell\kappa}$.</span></p>
+      <p><strong>Try.</strong> (1) Show what a density-functional starting point contains: DFPT vertices already include everything shaded. (2) Expand the line of (c): its bubbles are those of (b), which is why (c) may not be screened again either.</p>
+      <p><strong>Model.</strong> (a) is <a class="eqref" href="#b1-eq-bare">(B1.4)</a>. (b) is the random-phase series of the background box “Screening as a sum of bubbles”; with $v+f^{\mathrm{xc}}$ on the Coulomb lines for exchange and correlation, its sum is <a class="eqref" href="#a3-eq-scf">(A3.13)</a>. It is summed in closed form; term by term it diverges where <span class="nw">$|v\chi^0|\gt1$,</span> at long wavelength in a metal or in an insulator with <span class="nw">$\varepsilon_\infty\gt2$.</span> (c) is <a class="eqref" href="#b1-eq-polar">(B1.13)</a>, obtained from (a) by the replacement <a class="eqref" href="#b1-eq-map">(B1.12)</a> and drawn for one Fourier component. In Part B the doubled line becomes the longitudinal photon (<a href="#b-fields">Section B.4</a>) and $\boldsymbol\varepsilon_\infty$ part of a photon self-energy (<a href="#b-photon-se">Section B.5</a>).</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b1-vertices');
+  if (!fig || !window.EPP) return;
+  // outside Section B.1 (the isolated figure test) the links to equations and sections have no target: show their text
+  if (!fig.closest('#b-foundations')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+  const NS = 'http://www.w3.org/2000/svg';
+  const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
+  const C = (n) => EPP.color(n);
+  const rows = [...fig.querySelectorAll('.b1-vertices-row')];
+  const host = {};
+  fig.querySelectorAll('.b1-vertices-dg').forEach(h => { host[h.dataset.p] = h; });
+
+  // ---------- geometry (SVG px, 1 unit = 1 CSS px) ----------
+  // Every diagram has the same legs: the electron line at height YE, n k in from the left and m k+q out to the right,
+  // the phonon q nu entering from below (YB). Bubble chains and the Coulomb lines of (c) end at YV.
+  const YE = 30, YV = 108, YB = 152, H = 158, GAPY = 12, R = 11;
+  const WM = 160, CM = 80;          // main diagrams (a), (b) blob, (c): width and junction
+  const WS = 84, CS = 42;           // series terms
+  const WOP = 24, WEL = 42;         // operators "=", "+" and "+ …"
+
+  // ---------- labels as SVG text ----------
+  // Markup: letters are italic (math); [..] is a bold vector (Latin upright, Greek bold italic); |..| is upright;
+  // @..@ is a word in the UI font; _x, _{..}, ^x, ^{..} are scripts; a subscript right after a superscript is stacked under it.
+  function parse(s) {
+    const atoms = [], st = { b: false, u: false, w: false };
+    let cur = null;
+    const add = (ch, lev) => {
+      const greek = /[α-ω]/.test(ch), latin = /[A-Za-z]/.test(ch);
+      const it = !st.w && !st.u && (greek || (latin && !st.b));
+      if (!cur || cur.lev !== lev) { cur = { lev, runs: [] }; atoms.push(cur); }
+      const L = cur.runs[cur.runs.length - 1];
+      if (L && L.it === it && L.b === st.b && L.w === st.w) L.t += ch; else cur.runs.push({ t: ch, it, b: st.b, w: st.w });
+    };
+    const run = (str, lev) => {
+      for (let k = 0; k < str.length;) {
+        const ch = str[k];
+        if (ch === '[') { st.b = true; k++; }
+        else if (ch === ']') { st.b = false; k++; }
+        else if (ch === '|') { st.u = !st.u; k++; }
+        else if (ch === '@') { st.w = !st.w; k++; }
+        else if ((ch === '_' || ch === '^') && k + 1 < str.length) {
+          let g;
+          if (str[k + 1] === '{') { let e = str.indexOf('}', k + 2); if (e < 0) e = str.length; g = str.slice(k + 2, e); k = e + 1; }
+          else { g = str[k + 1]; k += 2; }
+          const keep = Object.assign({}, st);
+          cur = null; run(g, ch === '_' ? -1 : 1); cur = null;
+          Object.assign(st, keep);
+        } else { add(ch, lev); k++; }
+      }
+    };
+    run(String(s), 0);
+    return atoms;
+  }
+  const mctx = document.createElement('canvas').getContext('2d');
+  let F = { tx: 'serif', ui: 'sans-serif' };
+  const fontOf = (r, sz) => `${r.it ? 'italic ' : ''}${r.b ? '700 ' : ''}${sz.toFixed(2)}px ${r.w ? F.ui : F.tx}`;
+  function place(atoms, size) {
+    let x = 0, prev = null;
+    for (const a of atoms) {
+      a.sz = a.lev ? size * 0.72 : size;
+      a.w = 0;
+      for (const r of a.runs) { mctx.font = fontOf(r, a.sz); r.w = mctx.measureText(r.t).width; a.w += r.w; }
+      const lastRun = prev && !prev.lev ? prev.runs[prev.runs.length - 1] : null;
+      const ic = lastRun && lastRun.it ? (a.lev === 1 ? 0.1 : a.lev === -1 ? -0.03 : 0) * size : (!a.lev && prev && prev.lev ? 0.06 * size : 0);   // italic correction; space after a script
+      if (a.lev && prev && prev.lev === -a.lev && !prev.stacked) { a.x0 = prev.x0; a.stacked = true; x = Math.max(prev.x0 + prev.w, a.x0 + a.w); }
+      else { a.x0 = x + ic; x += a.w + ic; }
+      prev = a;
+    }
+    return x;
+  }
+  const measure = (s, size) => place(parse(s), size);
+  function rich(parent, x, y, s, o = {}) {
+    const size = o.size || 14, atoms = parse(s), W = place(atoms, size);
+    const x0 = o.anchor === 'middle' ? x - W / 2 : o.anchor === 'end' ? x - W : x;
+    const t = mk('text', { x: x0.toFixed(1), y: y.toFixed(1), fill: o.color || C('fg') }, parent);
+    for (const a of atoms) {
+      const dy = a.lev === -1 ? size * 0.3 : a.lev === 1 ? -size * 0.4 : 0;
+      let xx = x0 + a.x0;
+      for (const r of a.runs) {
+        const ts = mk('tspan', { x: xx.toFixed(2), y: (y + dy).toFixed(2), 'font-size': a.sz.toFixed(2), 'font-family': r.w ? F.ui : F.tx, 'font-style': r.it ? 'italic' : 'normal', 'font-weight': r.b ? '700' : '400' }, t);
+        ts.textContent = r.t;
+        xx += r.w;
+      }
+    }
+    return W;
+  }
+  // stacked fraction with its bar at height yBar, starting at x
+  function frac(parent, x, yBar, num, den, o = {}) {
+    const size = o.size || 13, w = Math.max(measure(num, size), measure(den, size)) + 4;
+    rich(parent, x + w / 2, yBar - 4.5, num, { size, anchor: 'middle', color: o.color });
+    mk('path', { d: `M${x.toFixed(1)} ${yBar} H${(x + w).toFixed(1)}`, stroke: o.color, 'stroke-width': 1 }, parent);
+    rich(parent, x + w / 2, yBar + size + 0.5, den, { size, anchor: 'middle', color: o.color });
+    return w;
+  }
+
+  // ---------- line styles (the visual language of the primer's diagrams) ----------
+  const fx = (v) => v.toFixed(2);
+  function seg(g, a, b, col, o = {}) {
+    const at = { d: `M${fx(a[0])} ${fx(a[1])} L${fx(b[0])} ${fx(b[1])}`, fill: 'none', stroke: col, 'stroke-width': o.w || 1.8, 'stroke-linecap': o.dash ? 'butt' : 'round' };
+    if (o.dash) at['stroke-dasharray'] = o.dash;
+    return mk('path', at, g);
+  }
+  function arrowHead(g, x, y, deg, col, s = 1) {
+    const gg = mk('g', { transform: `translate(${fx(x)},${fx(y)}) rotate(${deg.toFixed(1)}) scale(${s})` }, g);
+    mk('path', { d: 'M5 0 L-4 -4.5 L-2 0 L-4 4.5 Z', fill: col }, gg);
+  }
+  function fermion(g, a, b) {
+    const col = C('electron');
+    seg(g, a, b, col);
+    arrowHead(g, (a[0] + b[0]) / 2 + 1.5, (a[1] + b[1]) / 2, Math.atan2(b[1] - a[1], b[0] - a[0]) * 180 / Math.PI, col);
+  }
+  function phonon(g, a, b) {
+    const dx = b[0] - a[0], dy = b[1] - a[1], L = Math.hypot(dx, dy);
+    if (!(L > 1)) return;
+    const n = 2 * Math.max(2, Math.round(L / 7)), ux = dx / L, uy = dy / L, A = 3.6;
+    let d = '';
+    for (let i = 0; i <= n; i++) {
+      const s = i / n, o = (i === 0 || i === n) ? 0 : (i % 2 ? A : -A);
+      d += (i ? ' L' : 'M') + fx(a[0] + dx * s - uy * o) + ' ' + fx(a[1] + dy * s + ux * o);
+    }
+    mk('path', { d, fill: 'none', stroke: C('phonon'), 'stroke-width': 1.8, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }, g);
+  }
+  const coulomb = (g, a, b) => seg(g, a, b, C('photon'), { dash: '5 4' });
+  function screened(g, a, b) {
+    const dx = b[0] - a[0], dy = b[1] - a[1], L = Math.hypot(dx, dy), nx = -dy / L * 2.3, ny = dx / L * 2.3;
+    for (const s of [-1, 1]) seg(g, [a[0] + s * nx, a[1] + s * ny], [b[0] + s * nx, b[1] + s * ny], C('photon'), { dash: '5 4', w: 1.6 });
+  }
+  // closed electron-hole loop between a vertex at its top and one at its bottom: up on the left, down on the right
+  function bubble(g, cx, cy) {
+    const col = C('electron');
+    mk('path', { d: `M${fx(cx)} ${fx(cy + R)} A${R} ${R} 0 0 1 ${fx(cx)} ${fx(cy - R)}`, fill: 'none', stroke: col, 'stroke-width': 1.8 }, g);
+    mk('path', { d: `M${fx(cx)} ${fx(cy - R)} A${R} ${R} 0 0 1 ${fx(cx)} ${fx(cy + R)}`, fill: 'none', stroke: col, 'stroke-width': 1.8 }, g);
+    arrowHead(g, cx - R, cy - 1, -90, col, 0.85);
+    arrowHead(g, cx + R, cy + 1, 90, col, 0.85);
+  }
+  const dot = (g, x, y, r = 3) => mk('circle', { cx: fx(x), cy: fx(y), r, fill: C('ink') }, g);
+  function blob(g, x, y, r = 11) {
+    mk('circle', { cx: fx(x), cy: fx(y), r, fill: C('surface') }, g);
+    mk('circle', { cx: fx(x), cy: fx(y), r, fill: EPP.alpha('ink', 0.16), stroke: C('ink'), 'stroke-width': 1.5 }, g);
+  }
+  // the legs shared by all diagrams; lab adds n k, m k+q and q nu
+  function legs(L, x, w, cx, yTop, lab) {
+    const e0 = w === WM ? 6 : 4;
+    fermion(L.line, [x + e0, YE], [x + cx, YE]);
+    fermion(L.line, [x + cx, YE], [x + w - e0, YE]);
+    phonon(L.line, [x + cx, YB], [x + cx, yTop]);
+    if (lab) {
+      rich(L.lab, x + 40, YE - 12, 'n[k]', { anchor: 'middle', color: C('electron-t') });
+      rich(L.lab, x + 120, YE - 12, 'm\u2009[k]\u2009+\u2009[q]', { anchor: 'middle', color: C('electron-t') });
+      rich(L.lab, x + cx + 9, YB - 5, '[q]ν', { color: C('phonon-t') });
+    }
+  }
+  // a chain of n bubbles joined by Coulomb lines, from the electron line (YE) down to y1; lead: a Coulomb line below the last bubble
+  function chain(L, c, n, y1, lead) {
+    const s = (y1 - YE - 2 * R * n) / (n + (lead ? 1 : 0));
+    let y = YE;
+    dot(L.dot, c, y);
+    for (let k = 0; k < n; k++) {
+      coulomb(L.line, [c, y], [c, y + s]); y += s;
+      dot(L.dot, c, y, 2.6);
+      bubble(L.line, c, y + R); y += 2 * R;
+      if (k < n - 1 || lead) dot(L.dot, c, y, 2.6);
+    }
+    if (lead) coulomb(L.line, [c, y], [c, y1]);
+    return s;
+  }
+
+  // ---------- the diagrams ----------
+  // shade: what a density-functional starting point already contains (half-width of the band about the junction, label place)
+  const D = {
+    a: { w: WM, leg: CM, draw(L, x) {
+      legs(L, x, WM, CM, YE, true); dot(L.dot, x + CM, YE, 3.2);
+      rich(L.lab, x + CM + 9, YE + 22, 'Δ_{[q]ν}V^{|en|}');
+    } },
+    blob: { w: WM, leg: CM, draw(L, x) {
+      legs(L, x, WM, CM, YE, true); blob(L.dot, x + CM, YE);
+      rich(L.lab, x + CM + 15, YE + 24, '(ε^{|e|})^{−1}');
+    } },
+    b0: { w: WS, leg: CS, draw(L, x) { legs(L, x, WS, CS, YE); dot(L.dot, x + CS, YE); } },
+    b1: { w: WS, leg: CS, shade: { k: 'dft', half: 20, lab: 'next' }, draw(L, x) {
+      const c = x + CS; legs(L, x, WS, CS, YV); chain(L, c, 1, YV, false); dot(L.dot, c, YV);
+      rich(L.lab, c + 6, (YE + YV - 2 * R) / 2 + 5, 'v', { color: C('photon-t') });
+      rich(L.lab, c + R + 7, YV - R + 4, 'χ^0', { color: C('electron-t') });
+    } },
+    b2: { w: WS, leg: CS, shade: { k: 'dft', half: 20 }, draw(L, x) {
+      const c = x + CS; legs(L, x, WS, CS, YV); chain(L, c, 2, YV, false); dot(L.dot, c, YV);
+    } },
+    c: { w: WM, leg: CM, shade: { k: 'eps', half: 9, lab: 'left' }, draw(L, x) {
+      const c = x + CM; legs(L, x, WM, CM, YV, true);
+      screened(L.line, [c, YE], [c, YV]); dot(L.dot, c, YE); dot(L.dot, c, YV, 3.6);
+      frac(L.lab, c + 11, (YE + YV) / 2 + 1, '4πe^2', '[q]\u2009·\u2009[ε]_∞\u2009·\u2009[q]', { size: 13.5, color: C('photon-t') });
+      rich(L.lab, c + 9, YV + 5, 'e[Z]^*_κ');
+    } },
+    c0: { w: WS, leg: CS, draw(L, x) {
+      const c = x + CS; legs(L, x, WS, CS, YV);
+      coulomb(L.line, [c, YE], [c, YV]); dot(L.dot, c, YE); dot(L.dot, c, YV, 3.6);
+      rich(L.lab, c + 6, (YE + YV) / 2 + 5, 'v', { color: C('photon-t') });
+    } },
+    c1: { w: WS, leg: CS, shade: { k: 'eps', half: 20 }, draw(L, x) {
+      const c = x + CS; legs(L, x, WS, CS, YV); chain(L, c, 1, YV, true); dot(L.dot, c, YV, 3.6);
+      rich(L.lab, c + R + 7, (YE + YV) / 2 + 4, 'χ^0', { color: C('electron-t') });
+    } }
+  };
+  const OP = (t, w = WOP) => ({ op: t, w });
+  function groups(p, st) {
+    if (p === 'a') return [[D.a]];
+    if (p === 'b') return [[D.blob], [OP('='), D.b0], [OP('+'), D.b1], [OP('+'), D.b2, OP('+ …', WEL)]];
+    const g = [[D.c]];
+    if (st.exp) g.push([OP('='), D.c0], [OP('+'), D.c1, OP('+ …', WEL)]);
+    return g;
+  }
+  // flow the groups into lines no wider than W; a group (operator + diagram) never splits, so a continued line starts with its operator
+  function flow(gs, W) {
+    const lines = []; let cur = { items: [], w: 0 };
+    for (const g of gs) {
+      const gw = g.reduce((s, it) => s + it.w, 0);
+      if (cur.items.length && cur.w + gw > W) { lines.push(cur); cur = { items: [], w: 0 }; }
+      for (const it of g) { cur.items.push({ it, x: cur.w }); cur.w += it.w; }
+    }
+    if (cur.items.length) lines.push(cur);
+    return lines;
+  }
+  const BAND = { dft: '@inside DFPT@', eps: '@inside @[ε]_∞' };
+  const ARIA = {
+    a: () => 'Bare vertex g0: the electron line, n k in from the left and m k+q out to the right, meets the zigzag phonon line q nu from below at one dot, the change of the potential of the unscreened ions per unit phonon field.',
+    b: (st) => 'Screened vertex g: a blob at the junction, the inverse electronic dielectric function acting on the bare vertex, equals the bare dot, plus a chain of one electron–hole bubble and one dashed Coulomb line to the electron, plus a chain of two bubbles and two Coulomb lines, and so on.' + (st.dft ? ' The bubble chains are shaded and labelled inside DFPT: a density-functional vertex already contains them.' : ''),
+    c: (st) => 'Polar vertex g lr: the phonon line ends at a dot, the Born dipole e Z star of atom kappa, joined to the electron line by a doubled dashed line, the Coulomb interaction screened by the electrons, 4 pi e squared over q dot epsilon infinity dot q.' + (st.exp ? ' Expanded: the doubled line equals a bare dashed Coulomb line, plus a Coulomb line with one electron–hole bubble in it, and so on.' : '') + (st.dft ? ' The screening of the line is shaded and labelled inside epsilon infinity.' : '')
+  };
+
+  let state = { dft: false, exp: false };
+  const lastW = {};
+  function drawPanel(p) {
+    const el = host[p]; if (!el) return;
+    const W = Math.max(200, Math.floor(el.clientWidth));
+    lastW[p] = W;
+    const lines = flow(groups(p, state), W);
+    const Ht = lines.length * H + (lines.length - 1) * GAPY;
+    el.innerHTML = '';
+    const svg = mk('svg', { viewBox: `0 0 ${W} ${Ht}`, width: W, height: Ht, role: 'img', 'aria-label': ARIA[p](state) }, el);
+    svg.style.display = 'block'; svg.style.overflow = 'visible';
+    const opCol = C('muted'), bandCol = C('c4'), bandTxt = C('c4-t');
+    let bandLabelDone = false;
+    lines.forEach((ln, li) => {
+      const g = mk('g', { transform: `translate(0,${li * (H + GAPY)})` }, svg);
+      const L = { band: mk('g', {}, g), line: mk('g', {}, g), dot: mk('g', {}, g), lab: mk('g', {}, g) };
+      // bands: shaded diagrams on one line merge across the operators between them, and over a trailing "+ …"
+      if (state.dft) {
+        const spans = [];
+        ln.items.forEach((e, k) => {
+          const it = e.it;
+          if (it.shade) spans.push({ x0: e.x + it.leg - it.shade.half, x1: e.x + it.leg + it.shade.half, k, leg: e.x + it.leg, sh: it.shade, lastIdx: k });
+          else if (it.op && it.op.indexOf('…') >= 0 && spans.length && spans[spans.length - 1].lastIdx === k - 1) { spans[spans.length - 1].x1 = e.x + it.w - 3; spans[spans.length - 1].lastIdx = k; }
+        });
+        const merged = [];
+        for (const s of spans) {
+          const m = merged[merged.length - 1];
+          const between = m ? ln.items.slice(m.lastIdx + 1, s.k).every(e => e.it.op) : false;
+          if (m && between && m.sh.k === s.sh.k) { m.x1 = Math.max(m.x1, s.x1); m.lastIdx = s.lastIdx; m.legs.push(s.leg); }
+          else merged.push(Object.assign({}, s, { legs: [s.leg] }));
+        }
+        for (const m of merged) {
+          mk('rect', { x: fx(m.x0), y: YE + 5, width: fx(m.x1 - m.x0), height: YV - YE - 10, rx: 7, fill: bandCol, 'fill-opacity': 0.15, stroke: EPP.alpha('c4', 0.5), 'stroke-width': 1 }, L.band);
+          if (bandLabelDone) continue;
+          const lab = BAND[m.sh.k], o = { size: 12, color: bandTxt };
+          if (m.sh.lab === 'left') rich(L.lab, m.x0 - 5, (YE + YV) / 2 + 5, lab, Object.assign(o, { anchor: 'end' }));
+          else if (m.sh.lab === 'next' && m.legs.length > 1) rich(L.lab, (m.legs[0] + m.legs[1]) / 2, YV + 18, lab, Object.assign(o, { anchor: 'middle' }));
+          else if (m.sh.lab) rich(L.lab, m.legs[0] + 10, YV + 18, lab, o);
+          else continue;
+          bandLabelDone = true;
+        }
+      }
+      for (const e of ln.items) {
+        if (e.it.op) { rich(L.lab, e.x + e.it.w / 2, 86, '|' + e.it.op + '|', { size: 19, anchor: 'middle', color: opCol }); continue; }
+        e.it.draw(L, e.x);
+      }
+    });
+  }
+  const LABW = 13.5, LINEB = WM + 2 * (WOP + WS) + WOP + WS + WEL;      // label column (em); one-line width of (b)
+  function layout() {
+    const r0 = rows[0]; if (!r0) return;
+    const fs = parseFloat(getComputedStyle(r0).fontSize) || 16;
+    const wide = r0.clientWidth - LABW * fs - 18 >= LINEB + 8;
+    rows.forEach(r => { r.style.gridTemplateColumns = wide ? `${LABW}em minmax(0,1fr)` : 'minmax(0,1fr)'; });
+  }
+  function swatches() {
+    const sw = (k) => fig.querySelector(`svg[data-sw="${k}"]`);
+    const put = (k, html) => { const s = sw(k); if (s) s.innerHTML = html; };
+    const e = C('electron'), p = C('phonon'), v = C('photon');
+    put('e', `<path d="M2 7 H28" stroke="${e}" stroke-width="1.8" fill="none"/><path d="M20 7 L11 2.5 L13 7 L11 11.5 Z" fill="${e}"/>`);
+    let d = 'M2 7'; for (let i = 1; i <= 8; i++) d += ` L${2 + 3.25 * i} ${i === 8 ? 7 : (i % 2 ? 3.6 : 10.4)}`;
+    put('p', `<path d="${d}" stroke="${p}" stroke-width="1.8" fill="none" stroke-linejoin="round"/>`);
+    put('v', `<path d="M2 7 H28" stroke="${v}" stroke-width="1.8" stroke-dasharray="5 4" fill="none"/>`);
+    put('w', `<path d="M2 4.7 H28 M2 9.3 H28" stroke="${v}" stroke-width="1.6" stroke-dasharray="5 4" fill="none"/>`);
+    put('x', `<circle cx="11" cy="9" r="7" stroke="${e}" stroke-width="1.7" fill="none"/>`);
+  }
+  function drawAll() {
+    F = { tx: EPP.css('--font-text') || 'serif', ui: EPP.css('--font-ui') || 'sans-serif' };
+    layout();
+    ['a', 'b', 'c'].forEach(drawPanel);
+    swatches();
+  }
+
+  EPP.controls(fig.querySelector('.b1-vertices-ctrls'), [
+    { key: 'dft', type: 'toggle', label: 'Show what a density-functional starting point already contains', value: false, wide: true },
+    { key: 'exp', type: 'toggle', label: 'Expand the screened line of (c)', value: false, wide: true }
+  ], (st) => { state = { dft: !!st.dft, exp: !!st.exp }; drawAll(); });
+  let raf = 0;
+  const ro = new ResizeObserver(() => {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => {
+      layout();
+      ['a', 'b', 'c'].forEach(p => { if (host[p] && Math.floor(host[p].clientWidth) !== lastW[p]) drawPanel(p); });
+    });
+  });
+  ro.observe(fig);
+  Object.values(host).forEach(h => ro.observe(h));
+  EPP.onTheme(drawAll);
+  drawAll();
+})();
+</script>

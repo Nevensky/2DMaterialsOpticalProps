@@ -1,0 +1,292 @@
+  <figure class="viz" id="viz-b3-lt">
+    <p class="viz-title">Why the LO wave carries a field and the TO wave does not <span class="tag">interactive</span></p>
+    <div class="b3-lt-lo"></div>
+    <div class="b3-lt-to" style="margin-top:14px"></div>
+    <div class="b3-lt-ctrls"></div>
+    <div class="readout b3-lt-ro" aria-live="polite"><span style="color:var(--fg);font-weight:600">LO wave</span><span>$E_x/(4\pi P^{\ion}_x)=-1/\varepsilon_\infty$<b class="b3-lt-v-ratio"></b></span><span>added stiffness $4\pi e^2Z^{*2}/(\OV\varepsilon_\infty)$<b class="b3-lt-v-k"></b></span><span>$\hbar\omega_{\mathrm{LO}}$<b class="b3-lt-v-lo"></b></span></div>
+    <div class="readout b3-lt-ro2" aria-live="polite"><span style="color:var(--fg);font-weight:600">TO wave</span><span>$\bE$<b>0</b></span><span>added stiffness<b>0</b></span><span>$\hbar\omega_{\mathrm{TO}}$<b class="b3-lt-v-to"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> In the LO wave $\bP^{\ion}$ meets the slab faces head-on, so a face between slabs of different $\bP^{\ion}$ carries polarization charge, and the field of these charges points against $\bP^{\ion}$ in every slab: $\mathbf D=0$, and the field pulls every ion back. In the TO wave $\bP^{\ion}$ lies in the faces, the faces stay neutral, and there is no field.</p><div class="cap-more"><p><strong>Marks.</strong> Filled and open discs: Ga cations and As anions; amber arrows: their displacements (exaggerated). The rows of arrows, sampled at the slab centres, share one scale: violet $4\pi\bP^{\ion}$, teal $4\pi\bP^{\rme}$, rose $\bE$, grey $\mathbf D$, and each column adds up to $\mathbf D=\bE+4\pi(\bP^{\ion}+\bP^{\rme})$. Rose + and blue − on a face: the polarization charge of the ions, more signs for more charge; the electrons cancel a fraction $1-1/\varepsilon_\infty$ of it.</p><p><strong>Try.</strong> Lower $\varepsilon_\infty$ to 1: $\bP^{\rme}$ vanishes, the field grows to $-4\pi\bP^{\ion}$, and $\hbar\omega_{\mathrm{LO}}$ rises from 35.9 to <span class="nw">55.6 meV</span>. Switch to the continuum: the face charges merge into the density $-\nabla\cdot\bP^{\ion}$, largest where $\bP^{\ion}$ changes sign. Play: both waves run to the right, the charges travel with the nodes of $\bP^{\ion}$, and the LO wave runs faster by $\omega_{\mathrm{LO}}/\omega_{\mathrm{TO}}$.</p><p><strong>Model.</strong> One wavelength, $\bq$ along $x$, $\bP^{\ion}=P_0\cos(qx-\omega t)$ along $x$ (LO) or $y$ (TO), cut into 12 slabs; the face between slabs $j$ and $j+1$ carries the charge $P^{\ion}_{j,x}-P^{\ion}_{j+1,x}$ per unit area. LO: $\bE$ from <a class="eqref" href="#b3-eq-Elo"></a>, $\bP^{\rme}=(\varepsilon_\infty-1)\bE/4\pi$. TO: $\bE=0$, $\mathbf D=4\pi\bP^{\ion}$. Frequencies from <a class="eqref" href="#b3-eq-lo"></a> with <span class="nw">$\hbar\omega_{\mathrm{TO}}=33.3$ meV</span> and <span class="nw">$\hbar\omega_{\mathrm p}^{\ion}=44.6$ meV</span> from <a class="eqref" href="#b3-eq-pion"></a> ($Z^*=2.07$, <span class="nw">$\OV=45.17$ Å³</span>, <span class="nw">$M_{\mathrm r}=36.11$ amu</span>: GaAs, literature values, illustrative). Electrostatic limit $cq\gg\omega$ of <a class="eqref" href="#b3-eq-max"></a>.</p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b3-lt');
+  if (!fig || !window.EPP) return;
+  // ---------- physics: GaAs-like two-atom cubic crystal (Section B.3 table; literature values, illustrative) ----------
+  const E2 = 14.3996;                 // e^2 in eV Å (Gaussian)
+  const HW = 64.654;                  // ħω [meV] = 64.654 sqrt(K [eV/Å^2] / M [amu])
+  const ZS = 2.07, OMV = 45.17, M1 = 69.72, M2 = 74.92, MR = 36.11, HW_TO = 33.3, CM = 8.06554;
+  const WP2 = HW * HW * 4 * Math.PI * E2 * ZS * ZS / (OMV * MR);   // (ħω_p^ion)^2 = 1987 meV^2, (B3.4)
+  const KSPR = MR * HW_TO * HW_TO / (HW * HW);                      // springs K = M_r ω_TO^2 = 9.58 eV/Å^2
+  const kAdd = (eps) => 4 * Math.PI * E2 * ZS * ZS / (OMV * eps);   // stiffness of the LO field, 4π e^2 Z*^2/(Ω_V ε_∞), eV/Å^2
+  const hwLO = (eps) => Math.sqrt(HW_TO * HW_TO + WP2 / eps);       // (B3.10)
+  // shares of the relative displacement (times 2): the centre of mass of a cell stays at rest, the lighter ion moves more
+  const FC = 2 * M2 / (M1 + M2), FA = 2 * M1 / (M1 + M2);
+  const N = 12, PERIOD = 4, TAU = 2 * Math.PI;                       // slabs per wavelength; seconds per TO period on screen
+  // the wave: slab j holds P^ion_j = P_0 cos θ_j (normalized, 4πP_0 = 1), θ_j = 2π(j + 1/2)/N − φ;
+  // the face f between slabs f−1 and f carries P_{f−1} − P_f = 2 sin(π/N) P_0 sin(2π f/N − φ)
+  const pSlab = (j, ph) => Math.cos(TAU * (j + 0.5) / N - ph);
+  const sFace = (f, ph) => Math.sin(TAU * f / N - ph);
+
+  // ---------- canvas text: '$..$' italic symbol (text font), '*..*' bold vector; _ and ^ as in EPP.drawRich ----------
+  let fUI = 'sans-serif', fTX = 'serif';
+  const parse = s => s.split(/(\$[^$]*\$|\*[^*]*\*)/).filter(Boolean).map(t => (t[0] === '$' ? [t.slice(1, -1), 'i'] : t[0] === '*' ? [t.slice(1, -1), 'b'] : [t, '']));
+  const pOpt = (p, size) => (p[1] === 'i' ? { size: /^[_^]/.test(p[0]) ? size : size + 1, font: fTX, italic: true } : { size, font: fUI, bold: p[1] === 'b' });
+  const rtW = (ctx, s, size) => parse(s).reduce((w, p) => { const o = pOpt(p, size); return w + EPP.measureRich(ctx, p[0], o.size, o.font, o); }, 0);
+  function rt(ctx, s, x, y, size, color, align) {
+    const tot = rtW(ctx, s, size);
+    let x0 = align === 'center' ? x - tot / 2 : align === 'right' ? x - tot : x;
+    ctx.fillStyle = color; ctx.textBaseline = 'alphabetic';
+    for (const p of parse(s)) { const o = pOpt(p, size); x0 += EPP.drawRich(ctx, p[0], x0, y, o); }
+    return tot;
+  }
+
+  // ---------- drawing helpers ----------
+  function arrow(ctx, x0, y0, x1, y1, col, lw, head) {
+    const L = Math.hypot(x1 - x0, y1 - y0);
+    if (L < 1) return;
+    const ux = (x1 - x0) / L, uy = (y1 - y0) / L, h = Math.min(head, 0.6 * L), wv = 0.45 * h;
+    ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = lw; ctx.lineCap = 'butt'; ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1 - ux * h * 0.8, y1 - uy * h * 0.8); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x1 - ux * h - uy * wv, y1 - uy * h + ux * wv); ctx.lineTo(x1 - ux * h + uy * wv, y1 - uy * h - ux * wv); ctx.closePath(); ctx.fill();
+  }
+  // field-row arrow centred at (cx, cy) along (ux, uy), length L. A short arrow is drawn as its head alone, at least 1.7 L long
+  // (at most 4.6 px), so that its direction stays visible; the drawn length still grows with L
+  function carrow(ctx, cx, cy, ux, uy, L, col, lw) {
+    if (!(L > 0.7)) return;
+    const h = Math.min(7.5, Math.max(0.4 * L, Math.min(4.6, 1.7 * L))), wv = 0.55 * h;
+    const tx = cx + ux * L / 2, ty = cy + uy * L / 2;
+    ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = lw; ctx.lineCap = 'butt'; ctx.setLineDash([]);
+    if (L > h) { ctx.beginPath(); ctx.moveTo(cx - ux * L / 2, cy - uy * L / 2); ctx.lineTo(tx - ux * h * 0.8, ty - uy * h * 0.8); ctx.stroke(); }
+    ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(tx - ux * h - uy * wv, ty - uy * h + ux * wv); ctx.lineTo(tx - ux * h + uy * wv, ty - uy * h - ux * wv); ctx.closePath(); ctx.fill();
+  }
+  // ion: cation filled with "+", anion open with "−", the signs drawn as strokes so that they stay legible at small radii
+  function ion(ctx, x, y, r, cation, cInk, cSurf) {
+    ctx.beginPath(); ctx.arc(x, y, r, 0, TAU);
+    ctx.fillStyle = cation ? cInk : cSurf; ctx.fill();
+    if (!cation) { ctx.strokeStyle = cInk; ctx.lineWidth = 1.3; ctx.stroke(); }
+    const a = 0.5 * r;
+    ctx.strokeStyle = cation ? cSurf : cInk; ctx.lineWidth = r < 4.5 ? 1.1 : 1.5; ctx.lineCap = 'butt';
+    ctx.beginPath(); ctx.moveTo(x - a, y); ctx.lineTo(x + a, y); if (cation) { ctx.moveTo(x, y - a); ctx.lineTo(x, y + a); } ctx.stroke();
+  }
+  // polarization-charge sign on a slab face, on a small backing that hides the face line
+  function charge(ctx, x, y, a, plus, col, alpha, cSurf) {
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = cSurf; ctx.fillRect(x - a - 1.5, y - a - 1.5, 2 * a + 3, 2 * a + 3);
+    ctx.strokeStyle = col; ctx.lineWidth = 1.8; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(x - a, y); ctx.lineTo(x + a, y); if (plus) { ctx.moveTo(x, y - a); ctx.lineTo(x, y + a); } ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
+
+  // ---------- layout (px). Rows: 4πP^ion, 4πP^e, E, D under a strip of N slabs ----------
+  // strip: cations in a row near the top, anions near the bottom, the face charges stacked in the band between them
+  const ST = 28, SH = 80, YC = ST + 18, YA = ST + SH - 18, BY = ST + SH + 6, BH = 12, ROW0 = BY + BH + 9, RH = 24;
+  const SLOT = [-1.5, -0.5, 0.5, 1.5], ORDER = [1, 2, 0, 3];   // face-sign slots (units of their spacing), filled from the middle
+  function geom(ctx, w) {
+    const lab = Math.ceil(Math.max(rtW(ctx, '4π*P*^{ion}', 12), rtW(ctx, '−∇·*P*^{ion}', 12))) + 16;
+    const x0 = lab, x1 = w - 7, D = (x1 - x0) / N;
+    const S = Math.min(0.94 * D, 52);                       // px for |4πP_0|: one scale for every row of both panels
+    const r = EPP.clamp(0.16 * D, 3.2, 6);
+    const arm = EPP.clamp(0.11 * D, 2.5, 3.6), sp = 2 * arm + 1.4;
+    // ion displacement on screen: an LO ion at its largest swing stays inside its slab
+    const A = Math.max(1.5, Math.min(0.2 * D, 7, (D / 2 - 1 - r) / FC));
+    const G = Math.min(0.4 * D, 16, (D / 2 - 1.5) / FC), GT = Math.min(G + 4, 14);   // displacement arrows: LO (along x) and TO (along y)
+    const RT = Math.round(S + 12);
+    return { x0, x1, D, S, r, arm, sp, A, G, GT, RT, hLO: ROW0 + 4 * RH + 6, hTO: ROW0 + 2 * RT + 2 * RH + 6 };
+  }
+  function fit(cv, opt, need) {
+    need = Math.ceil(need);
+    if (need === cv.h) return;
+    opt.height = need; cv.h = need;
+    cv.canvas.height = Math.round(need * cv.dpr); cv.canvas.style.height = need + 'px';
+  }
+
+  // ---------- state ----------
+  let eps = 10.9, mode = 'slabs', phLO = 0, phTO = 0;
+  const optLO = { height: 220 }, optTO = { height: 240 };
+  const cvLO = EPP.canvas(fig.querySelector('.b3-lt-lo'), optLO);
+  const cvTO = EPP.canvas(fig.querySelector('.b3-lt-to'), optTO);
+  cvLO.canvas.setAttribute('role', 'img');
+  cvTO.canvas.setAttribute('role', 'img');
+
+  function drawPanel(cv, opt, lo, ph) {
+    const ctx = cv.ctx, w = cv.w;
+    if (w < 80) return;
+    fUI = EPP.css('--font-ui'); fTX = EPP.css('--font-text');
+    const g = geom(ctx, w);
+    fit(cv, opt, lo ? g.hLO : g.hTO);
+    cv.clear();
+    const { x0, x1, D, S, r, arm, sp, A, G, GT, RT } = g;
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted'), cSurf = EPP.color('surface');
+    const cPh = EPP.color('phonon'), cPlus = EPP.color('photon'), cMinus = EPP.color('electron');
+    const slabs = mode === 'slabs';
+    const xc = (j) => x0 + (j + 0.5) * D;
+    const p = Array.from({ length: N }, (_, j) => pSlab(j, ph));
+
+    // header: the wave type, then the wavevector q as an arrow pointing to the right
+    const wT = rt(ctx, lo ? '*LO*' : '*TO*', 2, 16, 13.5, cFg);
+    let desc = lo ? 'longitudinal wave: the ions move along' : 'transverse wave: the ions move across';
+    const wq = rtW(ctx, '*q*', 13);
+    if (2 + wT + 10 + rtW(ctx, desc, 12) + 5 + wq + 40 > w - 4) desc = lo ? 'ions move along' : 'ions move across';
+    const xq = 2 + wT + 10 + rt(ctx, desc, 2 + wT + 10, 16, 12, cFg2) + 5;
+    rt(ctx, '*q*', xq, 16, 13, cFg);
+    arrow(ctx, xq + wq + 5, 11.5, xq + wq + 37, 11.5, cFg2, 1.6, 7);
+
+    // the strip: one wavelength cut into N slabs (faces extended faintly through the rows below)
+    const yTop = ST, yBot = ST + SH, hAll = cv.h;
+    ctx.fillStyle = EPP.alpha('ink', 0.035); ctx.fillRect(x0, yTop, x1 - x0, SH);
+    ctx.lineWidth = 1; ctx.setLineDash([]);
+    if (slabs) {
+      ctx.strokeStyle = EPP.alpha('muted', 0.16); ctx.beginPath();
+      for (let f = 0; f <= N; f++) { const X = Math.round(x0 + f * D) + 0.5; ctx.moveTo(X, BY); ctx.lineTo(X, hAll - 4); }
+      ctx.stroke();
+      ctx.strokeStyle = EPP.alpha('muted', 0.55); ctx.beginPath();
+      for (let f = 0; f <= N; f++) { const X = Math.round(x0 + f * D) + 0.5; ctx.moveTo(X, yTop); ctx.lineTo(X, yBot); }
+      ctx.moveTo(x0, yTop + 0.5); ctx.lineTo(x1, yTop + 0.5); ctx.moveTo(x0, yBot - 0.5); ctx.lineTo(x1, yBot - 0.5);
+      ctx.stroke();
+    } else {
+      ctx.strokeStyle = EPP.alpha('muted', 0.4); ctx.strokeRect(Math.round(x0) + 0.5, yTop + 0.5, Math.round(x1 - x0) - 1, SH - 1);
+    }
+    // polarization charge on the faces (LO, slabs): up to 4 signs, the last one faded in proportion
+    if (lo && slabs) {
+      for (let f = 0; f <= N; f++) {
+        const s = sFace(f, ph), n = 4 * Math.abs(s), X = x0 + f * D;
+        for (let k = 0; k < 4; k++) {
+          const a = EPP.clamp(n - k, 0, 1);
+          if (a > 0.04) charge(ctx, X, yTop + SH / 2 + sp * SLOT[ORDER[k]], arm, s > 0, s > 0 ? cPlus : cMinus, a, cSurf);
+        }
+      }
+    }
+    // ions, one cation-anion pair per slab, and their displacement arrows (rest position at the slab centre)
+    const yC = YC, yA = YA;
+    rt(ctx, 'Ga', x0 - 12, yC + 4, 11, cFg2, 'right');
+    rt(ctx, 'As', x0 - 12, yA + 4, 11, cFg2, 'right');
+    for (let j = 0; j < N; j++) {
+      const X = xc(j), v = p[j];
+      if (lo) {
+        ion(ctx, X + A * FC * v, yC, r, true, cFg2, cSurf);
+        ion(ctx, X - A * FA * v, yA, r, false, cFg2, cSurf);
+        arrow(ctx, X, yC - r - 5, X + G * FC * v, yC - r - 5, cPh, 1.8, 6);
+        arrow(ctx, X, yA + r + 5, X - G * FA * v, yA + r + 5, cPh, 1.8, 6);
+      } else {
+        ion(ctx, X, yC - A * FC * v, r, true, cFg2, cSurf);
+        ion(ctx, X, yA + A * FA * v, r, false, cFg2, cSurf);
+        const xa = X + r + 4;
+        arrow(ctx, xa, yC, xa, yC - GT * FC * v, cPh, 1.8, 6);
+        arrow(ctx, xa, yA, xa, yA + GT * FA * v, cPh, 1.8, 6);
+      }
+    }
+    // band row: the charge density −∇·P^ion (continuum), or why there is none (TO)
+    const bMid = (x0 + x1) / 2;
+    if (!slabs) {
+      rt(ctx, '−∇·*P*^{ion}', x0 - 12, BY + BH / 2 + 4, 12, cFg2, 'right');
+      if (lo) {
+        const wl = x1 - x0, X0 = Math.floor(x0), X1 = Math.ceil(x1);
+        for (const pos of [true, false]) {
+          ctx.fillStyle = pos ? cPlus : cMinus;
+          for (let X = X0; X < X1; X++) {
+            const s = Math.sin(TAU * (X + 0.5 - x0) / wl - ph);
+            if ((s > 0) === pos && Math.abs(s) > 0.01) { ctx.globalAlpha = 0.85 * Math.abs(s); ctx.fillRect(X, BY, 1, BH); }
+          }
+        }
+        ctx.globalAlpha = 1;
+      }
+      ctx.strokeStyle = EPP.alpha('muted', 0.4); ctx.lineWidth = 1; ctx.strokeRect(Math.round(x0) + 0.5, BY + 0.5, Math.round(x1 - x0) - 1, BH - 1);
+      if (!lo) {
+        const long = '= 0 everywhere: *P*^{ion} does not change along its own direction';
+        ctx.fillStyle = cSurf; const t = rtW(ctx, long, 11) + 8 < x1 - x0 ? long : '= 0 everywhere';
+        const tw = rtW(ctx, t, 11); ctx.fillRect(bMid - tw / 2 - 4, BY + 1, tw + 8, BH - 2);
+        rt(ctx, t, bMid, BY + BH / 2 + 4, 11, cMut, 'center');
+      }
+    } else if (!lo) {
+      const long = 'faces neutral: *P*^{ion} lies in the faces';
+      rt(ctx, rtW(ctx, long, 11) + 8 < x1 - x0 ? long : 'faces neutral', bMid, BY + BH / 2 + 4, 11, cMut, 'center');
+    }
+
+    // rows of arrows, one scale S per |4πP_0|
+    const rows = lo ? [
+      { lab: '4π*P*^{ion}', col: 'c5', v: (q) => q },
+      eps < 1.005 ? { lab: '4π*P*^{e}', col: 'c4', zero: ['*P*^{e} = 0: $ε$_∞ = 1, no electronic screening', '*P*^{e} = 0'] } : { lab: '4π*P*^{e}', col: 'c4', v: (q) => -(1 - 1 / eps) * q },
+      { lab: '*E*', col: 'photon', v: (q) => -q / eps },
+      { lab: '*D*', col: 'muted', zero: ['*D* = *E* + 4π*P*^{ion} + 4π*P*^{e} = 0 in every slab', '*D* = 0 in every slab', '*D* = 0'] }
+    ] : [
+      { lab: '4π*P*^{ion}', col: 'c5', v: (q) => q, tall: true },
+      { lab: '4π*P*^{e}', col: 'c4', zero: ['*P*^{e} = 0: no field to polarize the electrons', '*P*^{e} = 0'] },
+      { lab: '*E*', col: 'photon', zero: ['*E* = 0: the faces carry no charge', '*E* = 0'] },
+      { lab: '*D*', col: 'muted', v: (q) => q, tall: true }
+    ];
+    let y = ROW0;
+    for (const R of rows) {
+      const hgt = R.tall ? RT : RH, yc = y + hgt / 2;
+      const tc = EPP.textColor(R.col), mc = EPP.color(R.col);
+      rt(ctx, R.lab, x0 - 12, yc + 4.5, 12, tc, 'right');
+      if (R.zero) {
+        const t = R.zero.find(z => rtW(ctx, z, 11.5) + 10 < x1 - x0) || R.zero[R.zero.length - 1];
+        const tw = rtW(ctx, t, 11.5);
+        ctx.fillStyle = cSurf; ctx.fillRect(bMid - tw / 2 - 5, yc - 8, tw + 10, 16);
+        rt(ctx, t, bMid, yc + 4, 11.5, tc, 'center');
+      } else {
+        if (R.tall) { ctx.strokeStyle = EPP.alpha('muted', 0.3); ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x0, Math.round(yc) + 0.5); ctx.lineTo(x1, Math.round(yc) + 0.5); ctx.stroke(); }
+        for (let j = 0; j < N; j++) {
+          const v = R.v(p[j]), L = S * Math.abs(v), sg = Math.sign(v);
+          if (lo) carrow(ctx, xc(j), yc, sg, 0, L, mc, 2.2); else carrow(ctx, xc(j), yc, 0, -sg, L, mc, 2.2);
+        }
+      }
+      y += hgt;
+    }
+  }
+
+  function drawAll() {
+    drawPanel(cvLO, optLO, true, phLO);
+    drawPanel(cvTO, optTO, false, phTO);
+  }
+
+  // ---------- readouts and descriptions ----------
+  const roV = {};
+  ['ratio', 'k', 'lo', 'to'].forEach(k => { roV[k] = fig.querySelector('.b3-lt-v-' + k); });
+  const nb = '\u00a0';
+  function readouts() {
+    const lo = hwLO(eps), k = kAdd(eps);
+    roV.ratio.textContent = '= ' + EPP.fix(-1 / eps, 3);
+    roV.k.innerHTML = `${EPP.fmt(k, 3)}${nb}eV/Å², ${Math.round(100 * k / KSPR)}${nb}% of <i style="font-family:var(--font-text)">K</i>`;
+    roV.lo.textContent = `${lo.toFixed(1)}${nb}meV (${Math.round(lo * CM)}${nb}cm⁻¹)`;
+    roV.to.textContent = `${HW_TO.toFixed(1)}${nb}meV (${Math.round(HW_TO * CM)}${nb}cm⁻¹)`;
+    const e = eps.toFixed(1), how = mode === 'slabs' ? 'cut into 12 slabs' : 'drawn as a continuum';
+    cvLO.canvas.setAttribute('aria-label', `LO panel: one wavelength of a longitudinal optical wave, wavevector q to the right, ${how}. Ga cations and As anions move along q in antiphase. ` +
+      (mode === 'slabs' ? 'Plus and minus signs on the slab faces show the polarization charge, largest where the polarization changes sign. ' : 'A colour band shows the charge density minus the divergence of P, largest where the polarization changes sign. ') +
+      `Rows below: 4 pi P ion; 4 pi P e, opposite to it and ${EPP.fix(1 - 1 / eps, 2)} of its size; the field E, against P ion in every slab and 1/${e} of 4 pi P ion; and D = 0. Electronic screening epsilon infinity = ${e}.`);
+    cvTO.canvas.setAttribute('aria-label', `TO panel: one wavelength of a transverse optical wave, wavevector q to the right, ${how}. Ga cations and As anions move perpendicular to q in antiphase. ` +
+      'The polarization lies in the slab faces, so the faces stay neutral. Rows below: 4 pi P ion; P e = 0; E = 0; and D = 4 pi P ion.');
+  }
+
+  function onChange(st) {
+    eps = EPP.clamp(+st.eps, 1, 15);
+    mode = st.mode === 'cont' ? 'cont' : 'slabs';
+    readouts();
+    drawAll();
+  }
+  const elCtl = fig.querySelector('.b3-lt-ctrls');
+  const ui = EPP.controls(elCtl, [
+    { key: 'eps', type: 'range', label: 'electronic screening ε_∞', min: 1, max: 15, step: 0.1, value: 10.9, fmt: v => v.toFixed(1) },
+    { key: 'mode', type: 'seg', label: 'crystal', options: [['slabs', '12 slabs'], ['cont', 'continuum']], value: 'slabs' }
+  ], onChange);
+  { const sp = elCtl.querySelector(`label[for="${fig.id}-eps"] > span`); if (sp) sp.innerHTML = 'electronic screening <i style="font-family:var(--font-text)">ε</i><sub>∞</sub>'; }
+  eps = ui.state.eps; mode = ui.state.mode;
+  readouts();
+
+  // ---------- animation: the waves travel to the right; the LO wave faster, by ω_LO/ω_TO ----------
+  const host = document.createElement('div');
+  host.className = 'ctrl';
+  host.innerHTML = '<span class="lab"><span>animation</span></span>';
+  elCtl.appendChild(host);
+  EPP.anim(fig, (t, dt) => {
+    if (dt > 0) {
+      phTO = (phTO + TAU * dt / PERIOD) % TAU;
+      phLO = (phLO + TAU * dt / PERIOD * hwLO(eps) / HW_TO) % TAU;
+    }
+    drawAll();
+  }, { buttonHost: host });
+  { const b = host.querySelector('button'); if (b) b.style.justifySelf = 'start'; }
+  cvLO.onResize(() => drawPanel(cvLO, optLO, true, phLO));
+  cvTO.onResize(() => drawPanel(cvTO, optTO, false, phTO));
+})();
+</script>

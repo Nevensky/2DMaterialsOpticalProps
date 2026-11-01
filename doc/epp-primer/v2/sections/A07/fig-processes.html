@@ -1,0 +1,282 @@
+  <figure class="viz" id="viz-a7-processes">
+    <p class="viz-title">Emission and absorption of a phonon, with Pauli blocking <span class="tag">interactive</span></p>
+    <div class="viz-grid two">
+      <div class="a7-processes-band"><div class="legend a7-processes-lega"><span class="item" style="color:var(--c-electron)"><svg width="24" height="12" viewBox="0 0 24 12" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" stroke-width="7" stroke-opacity="0.34" stroke-linecap="round"/><line x1="1" y1="6" x2="23" y2="6" stroke="currentColor" stroke-width="2"/></svg><span style="color:var(--fg-2)">band $E_k$, thick where occupied (opacity $f$)</span></span><span class="item" style="color:var(--c-phonon)"><svg width="24" height="12" viewBox="0 0 24 12" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><line x1="1" y1="6" x2="16" y2="6" stroke="currentColor" stroke-width="2"/><path d="M23 6 L15 2 L15 10 Z" fill="currentColor"/></svg><span style="color:var(--fg-2)">emission, $-\hbar\omega_0$</span></span><span class="item" style="color:var(--c-phonon)"><svg width="24" height="12" viewBox="0 0 24 12" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><line x1="1" y1="6" x2="16" y2="6" stroke="currentColor" stroke-width="2" stroke-dasharray="4 3"/><path d="M23 6 L15 2 L15 10 Z" fill="currentColor"/></svg><span style="color:var(--fg-2)">absorption, $+\hbar\omega_0$</span></span><span class="item" style="color:var(--c-electron)"><svg width="24" height="12" viewBox="0 0 24 12" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><circle cx="6" cy="6" r="4.2" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="18" cy="6" r="4.2" fill="currentColor" stroke="currentColor" stroke-width="1.5"/></svg><span style="color:var(--fg-2)">final states, filled by $f$</span></span><span class="item" style="color:var(--c-phonon)"><span class="sw box"></span><span style="color:var(--fg-2)">window at $T=0$</span></span></div></div>
+      <div class="a7-processes-wt"><div class="legend a7-processes-legb"><span class="item" style="color:var(--c-phonon)"><span class="sw"></span><span style="color:var(--fg-2)">emission $n_{\mathrm B}+1-f(E-\hbar\omega_0)$</span></span><span class="item" style="color:var(--c-phonon)"><span class="sw dash"></span><span style="color:var(--fg-2)">absorption $n_{\mathrm B}+f(E+\hbar\omega_0)$</span></span><span class="item" style="color:var(--fg)"><span class="sw"></span><span style="color:var(--fg-2)">sum $=|\mathrm{Im}\,\Sigma^{\mathrm{FM}}|\,/\,\tfrac{\pi}{2}\lambda_{\mathrm{ep}}\hbar\omega_0$</span></span></div></div>
+    </div>
+    <div class="a7-processes-ctrls"></div>
+    <div class="readout a7-processes-ro" aria-live="polite"><span>$n_{\mathrm B}(\omega_0)$<b class="a7-processes-v-nb"></b></span><span>$f(E-\hbar\omega_0)$<b class="a7-processes-v-flo"></b></span><span>$f(E+\hbar\omega_0)$<b class="a7-processes-v-fup"></b></span></div>
+    <div class="readout a7-processes-ro2" aria-live="polite"><span>emission $n_{\mathrm B}+1-f$<b class="a7-processes-v-wem"></b></span><span>absorption $n_{\mathrm B}+f$<b class="a7-processes-v-wab"></b></span></div>
+    <div class="readout a7-processes-ro3" aria-live="polite"><span>$|\mathrm{Im}\,\Sigma^{\mathrm{FM}}|$ for $\lambda_{\mathrm{ep}}=0.5$<b class="a7-processes-v-im"></b></span><span>$\tau=\hbar/2|\mathrm{Im}\,\Sigma^{\mathrm{FM}}|$<b class="a7-processes-v-tau"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> At low temperature both weights vanish within $\hbar\omega_0$ of the Fermi level, so a state there cannot decay by phonons. Above this window the electron emits into empty states; below it the hole decays through the second term, as an electron from one phonon energy higher drops in.</p><div class="cap-more"><p><strong>Marks.</strong> In (a) the dot is the probed state $n\bk$ at energy $E$; the dashed lines at $E\pm\hbar\omega_0$ meet the band at the final states, filled by their occupation $f$. Solid arrows emit, dashed arrows absorb. An arrow leaving $n\bk$ is the electron scattering out; one ending on it is an electron from the final state filling a hole. Width and opacity follow each probability; the readouts split each weight into these out and in parts. The bracket $\bq$ joins $\bk$ to the final state $\bk+\bq$ on the far side of the band.</p><p><strong>Try.</strong> (1) Set $T=0$ and drag the dot into the window: every arrow fades, $|\mathrm{Im}\,\Sigma^{\mathrm{FM}}|=0$ and $\tau=\infty$. (2) Move it to <span class="nw">$-0.2$ eV</span>: the second term now carries the weight, $f\approx1$, and solid arrows end on $n\bk$: the hole decays. (3) Set $\hbar\omega_0=30$ meV and $T=600$ K: both weights grow by $n_{\mathrm B}\approx1.3$ and the window fills in.</p><p><strong>Model.</strong> <a class="eqref" href="#a7-eq-fm">(A7.8)</a> and <a class="eqref" href="#a7-eq-im">(A7.9)</a> for one band, one Einstein phonon and a constant $|g|^2$, with $|g|^2N_{\mathrm F}=\lambda_{\mathrm{ep}}\hbar\omega_0/2$ and $\lambda_{\mathrm{ep}}=0.5$. Two-dimensional parabolic band, $m^*=0.5\,m_{\mathrm e}$, $E_{\mathrm F}=0.40$ eV above its bottom, constant density of states; the final states form a ring of radius $k'$, which the cut meets twice. Illustrative, not a specific material. Emission out of $n\bk$ creates the phonon $-\bq\nu$ and absorption removes $\bq\nu$, as for $g_{mn\nu}(\bk,\bq)$ in <a href="#a-coupling">Section A.2</a>.</p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a7-processes');
+  if (!fig || !window.EPP) return;
+  // outside Section A.7 (the isolated figure test) the caption's links to the section have no target: show them as text
+  if (!fig.closest('#a-electron-se')) fig.querySelectorAll('figcaption a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+  // ---------- model: energies E in eV measured from E_F (mu = E_F), unless named *mev ----------
+  const KB = 0.0861733;             // k_B, meV/K
+  const H2M = 3.80998 / 0.5;        // hbar^2/2m* for m* = 0.5 m_e, eV Å^2
+  const EF = 0.40;                  // Fermi energy above the band bottom, eV (k_F = 0.229 1/Å)
+  const EB = -EF;                   // band bottom on the E - E_F scale, eV
+  const LAM = 0.5;                  // lambda_ep, with |g|^2 N_F = lambda_ep hbar omega_0 / 2
+  const HBAR = 658.212;             // hbar, meV fs
+  const YLIM = [-0.45, 0.55], KLIM = [-0.36, 0.36], WLIM = [-0.08, 4];
+  const kOf = (E) => Math.sqrt(Math.max(0, (E - EB) / H2M));   // |k| on the band at energy E, 1/Å
+  const Eof = (k) => H2M * k * k + EB;                          // E_k - E_F, eV
+  const fermi = (mev, kT) => EPP.fermi(mev, 0, kT);             // f, energy in meV from E_F; step at T = 0
+  // the four processes that connect the probed state (energy Em, meV) with the final states one phonon energy below and above
+  function weights(Em, hw, kT, n) {
+    const lo = Em - hw, up = Em + hw, eb = EB * 1000;
+    const hasLo = lo > eb, hasUp = up > eb;                     // a final state must lie above the band bottom
+    const flo = hasLo ? fermi(lo, kT) : NaN, fup = hasUp ? fermi(up, kT) : NaN;
+    const outEm = hasLo ? (1 - flo) * (n + 1) : 0, inAb = hasLo ? flo * n : 0;   // lower: drop by emission; reverse: absorb and come up
+    const outAb = hasUp ? (1 - fup) * n : 0, inEm = hasUp ? fup * (n + 1) : 0;   // upper: rise by absorption; reverse: drop in by emission
+    return { lo, up, hasLo, hasUp, flo, fup, outEm, inAb, outAb, inEm, wem: outEm + inAb, wab: outAb + inEm };
+  }
+  const NE = 951, ES = Array.from({ length: NE }, (_, i) => (EB * 1000 + i) / 1000);   // probe energies of (b), 1 meV apart
+  function compute(s) {
+    const Em = Math.round(s.E * 1000), hw = Math.round(s.hw), T = Math.round(s.T), kT = KB * T;
+    const n = EPP.bose(hw, kT);
+    const w = weights(Em, hw, kT, n);
+    const pref = Math.PI * LAM * hw / 2;                        // pi lambda hbar omega_0 / 2, meV
+    const im = pref * (w.wem + w.wab), tau = im > 0 ? HBAR / (2 * im) : Infinity;
+    const em = new Array(NE), ab = new Array(NE), sum = new Array(NE);
+    for (let i = 0; i < NE; i++) { const v = weights(EB * 1000 + i, hw, kT, n); em[i] = v.wem; ab[i] = v.wab; sum[i] = v.wem + v.wab; }
+    return Object.assign({ Em, E: Em / 1000, hw, T, kT, n, im, tau, kP: kOf(Em / 1000), em, ab, sum, sum0: weights(0, hw, kT, n).wem * 2 }, w);
+  }
+
+  // ---------- canvas text as parts {t, i: italic symbol, b: bold vector, sub, sup} ----------
+  let FAM = { ui: 'sans-serif', tx: 'serif' };
+  const pFont = (p, size) => { const z = (p.i ? size + 1 : size) * (p.sub || p.sup ? 0.72 : 1); return `${p.i ? 'italic ' : ''}${p.b ? '700 ' : ''}${z.toFixed(1)}px ${p.i ? FAM.tx : FAM.ui}`; };
+  function partsW(ctx, parts, size) { let w = 0; for (const p of parts) { ctx.font = pFont(p, size); w += ctx.measureText(p.t).width; } return w; }
+  function partsDraw(ctx, parts, x, y, size, align) {
+    if (align === 'center') x -= partsW(ctx, parts, size) / 2; else if (align === 'right') x -= partsW(ctx, parts, size);
+    ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    for (const p of parts) { ctx.font = pFont(p, size); ctx.fillText(p.t, x, y + (p.sub ? size * 0.28 : p.sup ? -size * 0.4 : 0)); x += ctx.measureText(p.t).width; }
+  }
+  const T = (t) => ({ t }), It = (t) => ({ t, i: 1 }), Bv = (t) => ({ t, b: 1 }), Sb = (t) => ({ t, sub: 1 }), Sp = (t) => ({ t, sup: 1 });
+  const LB = {
+    k: [It('k'), T(' (Å'), Sp('−1'), T(')')], e: [It('E'), T(' − '), It('E'), Sb('F'), T(' (eV)')], w: [T('weight')],
+    EF: [It('E'), Sb('F')], lo: [It('E'), T(' − '), It('ħω'), Sb('0')], up: [It('E'), T(' + '), It('ħω'), Sb('0')],
+    nk: [It('n'), Bv('k')], q: [Bv('q')], win: [T('window at '), It('T'), T(' = 0')], bot: [T('band bottom')]
+  };
+  const rgba = (c, a) => { const v = EPP.rgb(c); return `rgba(${v[0]},${v[1]},${v[2]},${a})`; };
+  // arrow from A to B, both disc centres, trimmed by the disc radii and moved sideways by off (to the right of its direction)
+  // p: probability of the process; width and opacity grow with it (p clipped at 2), and a blocked process (p near 0) is not drawn
+  function lane(ctx, A, B, rA, rB, off, p, dashed, col) {
+    if (!(p > 0.005)) return;
+    const dx = B[0] - A[0], dy = B[1] - A[1], L = Math.hypot(dx, dy);
+    if (L < rA + rB + 11) return;            // too short to read: the final state sits next to the dot
+    const ux = dx / L, uy = dy / L, nx = -uy, ny = ux;
+    const x0 = A[0] + ux * rA + nx * off, y0 = A[1] + uy * rA + ny * off;
+    const x1 = B[0] - ux * (rB + 1) + nx * off, y1 = B[1] - uy * (rB + 1) + ny * off;
+    const len = Math.hypot(x1 - x0, y1 - y0), lw = 1 + 1.1 * Math.min(p, 2), hs = Math.min(5 + 1.5 * lw, 0.55 * len);
+    ctx.save();
+    ctx.globalAlpha = 0.12 + 0.88 * Math.pow(Math.min(1, p), 0.6);
+    ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = lw; ctx.lineCap = 'butt';
+    ctx.setLineDash(dashed ? [5, 3.5] : []);
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1 - ux * hs * 0.8, y1 - uy * hs * 0.8); ctx.stroke();
+    ctx.setLineDash([]);
+    const a = Math.atan2(y1 - y0, x1 - x0);
+    ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x1 - hs * Math.cos(a - 0.42), y1 - hs * Math.sin(a - 0.42)); ctx.lineTo(x1 - hs * Math.cos(a + 0.42), y1 - hs * Math.sin(a + 0.42)); ctx.closePath(); ctx.fill();
+    ctx.restore();
+  }
+
+  // ---------- panels ----------
+  const elA = fig.querySelector('.a7-processes-band'), elB = fig.querySelector('.a7-processes-wt');
+  const legA = elA.querySelector('.legend'), legB = elB.querySelector('.legend');
+  const MARG = { t: 24, b: 40 };
+  const pA = new EPP.Plot(elA, {
+    xlim: KLIM, ylim: YLIM, legend: false, hover: false, aspect: 1.0, minHeight: 300, maxHeight: 420,
+    margin: { l: 50, r: 56, t: MARG.t, b: MARG.b }, xticks: [-0.3, -0.2, -0.1, 0, 0.1, 0.2, 0.3]
+  });
+  const pB = new EPP.Plot(elB, {
+    xlim: WLIM, ylim: YLIM, legend: false, hover: false, aspect: 1.0, minHeight: 300, maxHeight: 420,
+    margin: { l: 50, r: 14, t: MARG.t, b: MARG.b }, xticks: [0, 1, 2, 3, 4],
+    ariaLabel: 'Panel b: the emission weight, the absorption weight and their sum against the probe energy E minus E_F, with the shaded window and a horizontal line at the probe energy.'
+  });
+  // the legends are static markup (MathJax), placed under their plots
+  elA.appendChild(legA); elB.appendChild(legB);
+  const cvA = pA.cv.canvas;
+  cvA.style.touchAction = 'none';          // the probe is dragged along the band in (a)
+  cvA.style.cursor = 'pointer';
+  cvA.setAttribute('role', 'img');
+  const $v = (k) => fig.querySelector('.a7-processes-v-' + k);
+  const RO = { nb: $v('nb'), flo: $v('flo'), fup: $v('fup'), wem: $v('wem'), wab: $v('wab'), im: $v('im'), tau: $v('tau') };
+  let cur = null;
+  const RP = 5.5, RF = 4.5;                 // radii of the probed-state dot and the final-state circles, px
+
+  const baseA = pA.render.bind(pA);
+  pA.render = () => {
+    baseA();
+    const ctx = pA.ctx, w = pA.cv.w, h = pA.cv.h, m = pA.m;
+    if (!w || !h || !cur) return;
+    FAM = { ui: EPP.css('--font-ui'), tx: EPP.css('--font-text') };
+    const X = (k) => pA.X(k), Y = (E) => pA.Y(E);
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted'), cSurf = EPP.color('surface');
+    const cEl = EPP.color('electron'), cPh = EPP.color('phonon'), cPhT = EPP.textColor('phonon');
+    // axis titles and panel title
+    ctx.fillStyle = cFg;
+    partsDraw(ctx, LB.k, m.l + (w - m.l - m.r) / 2, h - 8, 12.5, 'center');
+    ctx.save(); ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2); partsDraw(ctx, LB.e, 0, 0, 12.5, 'center'); ctx.restore();
+    ctx.fillStyle = cFg2; partsDraw(ctx, [T('(a) band, final states and processes')], 4, 15, 11.5);
+    ctx.save(); ctx.beginPath(); ctx.rect(m.l, m.t, w - m.l - m.r, h - m.t - m.b); ctx.clip();
+    // the band, stroked thick with opacity f(E_k) (the Fermi sea), then thin on top
+    const yTop = Y(YLIM[1]), yBot = Y(YLIM[0]), g = ctx.createLinearGradient(0, yTop, 0, yBot);
+    for (let i = 0; i <= 200; i++) { const E = YLIM[1] - (YLIM[1] - YLIM[0]) * i / 200; g.addColorStop(i / 200, rgba('electron', 0.34 * fermi(E * 1000, cur.kT))); }
+    const band = () => { ctx.beginPath(); for (let i = 0; i <= 240; i++) { const k = KLIM[0] + (KLIM[1] - KLIM[0]) * i / 240; if (i) ctx.lineTo(X(k), Y(Eof(k))); else ctx.moveTo(X(k), Y(Eof(k))); } };
+    ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    band(); ctx.strokeStyle = g; ctx.lineWidth = 7; ctx.stroke();
+    band(); ctx.strokeStyle = cEl; ctx.lineWidth = 2; ctx.stroke();
+    // processes: for each final level, an arrow out of n k and an arrow into it, to the final states at +k' and -k'
+    const P = [X(cur.kP), Y(cur.E)];
+    const levels = [];
+    if (cur.hasLo) levels.push({ lower: true, E: cur.lo / 1000, k: kOf(cur.lo / 1000), f: cur.flo, out: cur.outEm, inn: cur.inAb, outDash: false });
+    if (cur.hasUp) levels.push({ lower: false, E: cur.up / 1000, k: kOf(cur.up / 1000), f: cur.fup, out: cur.outAb, inn: cur.inEm, outDash: true });
+    for (const L of levels) for (const sg of [1, -1]) {
+      const F = [X(sg * L.k), Y(L.E)];
+      lane(ctx, P, F, RP, RF, 2.6, L.out, L.outDash, cPh);
+      lane(ctx, F, P, RF, RP, 2.6, L.inn, !L.outDash, cPh);
+    }
+    // the bracket q: from k to the final state k + q on the far side of the band, at the level with the larger weight
+    // (below the lower guide, or above the upper one); its label sits beyond the arrowhead, outside the band
+    const lvLo = levels.find(L => L.lower), lvUp = levels.find(L => !L.lower);
+    const Lq = ((cur.wab > cur.wem || (cur.wab === cur.wem && cur.Em < 0)) ? lvUp : lvLo) || lvLo || lvUp;
+    let qLab = null;
+    if (Lq) {
+      const xa = X(cur.kP), xb = X(-Lq.k), yb = Y(Lq.E) + (Lq.lower ? 11 : -11);
+      ctx.strokeStyle = cFg2; ctx.fillStyle = cFg2; ctx.lineWidth = 1.2; ctx.setLineDash([]); ctx.lineCap = 'butt';
+      ctx.beginPath(); ctx.moveTo(xa, yb - 4); ctx.lineTo(xa, yb + 4); ctx.moveTo(xb, yb - 4); ctx.lineTo(xb, yb + 4);
+      ctx.moveTo(xa, yb); ctx.lineTo(xb + 6, yb); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(xb, yb); ctx.lineTo(xb + 7, yb - 3.2); ctx.lineTo(xb + 7, yb + 3.2); ctx.closePath(); ctx.fill();
+      const qw = partsW(ctx, LB.q, 13);
+      qLab = xb - 6 - qw >= m.l + 2 ? [xb - 6 - qw, yb + 4.5] : [(xa + xb) / 2 - qw / 2, Lq.lower ? yb + 15 : yb - 6];
+    }
+    // final states, filled by their occupation, and the probed state
+    for (const L of levels) for (const sg of [1, -1]) {
+      const x = X(sg * L.k), y = Y(L.E);
+      ctx.beginPath(); ctx.arc(x, y, RF, 0, 2 * Math.PI);
+      ctx.fillStyle = cSurf; ctx.fill(); ctx.fillStyle = rgba('electron', EPP.clamp(L.f, 0, 1)); ctx.fill();
+      ctx.strokeStyle = cEl; ctx.lineWidth = 1.6; ctx.stroke();
+    }
+    ctx.beginPath(); ctx.arc(P[0], P[1], RP, 0, 2 * Math.PI); ctx.fillStyle = cFg; ctx.fill();
+    ctx.strokeStyle = cSurf; ctx.lineWidth = 1.6; ctx.stroke();
+    ctx.restore();
+    // labels: q, the probed state, and the energy marks in the right margin
+    if (qLab) { ctx.fillStyle = cFg2; partsDraw(ctx, LB.q, qLab[0], qLab[1], 13); }
+    const nw = partsW(ctx, LB.nk, 13);
+    const nkPos = P[0] + 9 + nw <= w - m.r - 2 && P[1] + 17 <= h - m.b - 2 ? [P[0] + 9, P[1] + 16] : [P[0] - 9 - nw, P[1] - 9];
+    ctx.fillStyle = cFg; partsDraw(ctx, LB.nk, nkPos[0], nkPos[1], 13);
+    const marks = [{ v: 0, s: LB.EF, c: cMut }, { v: cur.lo / 1000, s: LB.lo, c: cPhT }, { v: cur.up / 1000, s: LB.up, c: cPhT }]
+      .filter(o => o.v > YLIM[0] + 0.004 && o.v < YLIM[1] - 0.004).map(o => Object.assign(o, { y: Y(o.v), ly: Y(o.v) })).sort((a, b) => a.y - b.y);
+    const gap = 13, top = m.t + 5, bot = h - m.b - 3;
+    for (let i = 0; i < marks.length; i++) marks[i].ly = Math.max(marks[i].ly, i ? marks[i - 1].ly + gap : top);
+    for (let i = marks.length - 1; i >= 0; i--) marks[i].ly = Math.min(marks[i].ly, i < marks.length - 1 ? marks[i + 1].ly - gap : bot);
+    const x0 = w - m.r;
+    for (const o of marks) {
+      ctx.strokeStyle = o.c; ctx.lineWidth = 1; ctx.setLineDash([]);
+      ctx.beginPath(); ctx.moveTo(x0, o.y); ctx.lineTo(x0 + 4, o.y); if (Math.abs(o.ly - o.y) > 0.5) ctx.lineTo(x0 + 7, o.ly); ctx.stroke();
+      const sw = partsW(ctx, o.s, 11), sz = x0 + 9 + sw > w - 1 ? 11 * (w - 1 - x0 - 9) / sw : 11;
+      ctx.fillStyle = o.c; partsDraw(ctx, o.s, x0 + 9, o.ly + 4, sz);
+    }
+  };
+
+  const baseB = pB.render.bind(pB);
+  pB.render = () => {
+    baseB();
+    const ctx = pB.ctx, w = pB.cv.w, h = pB.cv.h, m = pB.m;
+    if (!w || !h || !cur) return;
+    FAM = { ui: EPP.css('--font-ui'), tx: EPP.css('--font-text') };
+    const X = (v) => pB.X(v), Y = (E) => pB.Y(E);
+    ctx.fillStyle = EPP.color('fg');
+    partsDraw(ctx, LB.w, m.l + (w - m.l - m.r) / 2, h - 8, 12.5, 'center');
+    ctx.save(); ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2); partsDraw(ctx, LB.e, 0, 0, 12.5, 'center'); ctx.restore();
+    ctx.fillStyle = EPP.color('fg2'); partsDraw(ctx, [T('(b) the weights of the two terms')], 4, 15, 11.5);
+    // window label: inside the strip (top, then bottom half) when it is tall enough, else just above or below it,
+    // never across the probe line; on the side that the curves leave free
+    const hwE = cur.hw / 1000, yP = Y(cur.E), tall = Y(0) - Y(hwE) >= 15;
+    const cands = (tall ? [Y(hwE) + 12, Y(-hwE) - 4] : []).concat([Y(hwE) - 4, Y(-hwE) + 12]);
+    const yl = cands.find(b => yP < b - 12 || yP > b + 3) ?? cands[0];
+    const ww = partsW(ctx, LB.win, 11), right = cur.sum0 < 2.4;
+    ctx.fillStyle = EPP.textColor('phonon');
+    partsDraw(ctx, LB.win, right ? w - m.r - 6 - ww : X(0) + 8, yl, 11);
+    ctx.fillStyle = EPP.color('muted');
+    partsDraw(ctx, LB.bot, w - m.r - 6, Y(EB) + 12, 10.5, 'right');
+  };
+
+  function readouts() {
+    const c = cur, I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+    const sci = (v, d = 2) => { if (v === 0) return '0'; let e = Math.floor(Math.log10(Math.abs(v))), mt = (v / Math.pow(10, e)).toFixed(d - 1); if (parseFloat(mt) >= 10) { e += 1; mt = (v / Math.pow(10, e)).toFixed(d - 1); } return `${mt}×10<sup>${String(e).replace('-', '−')}</sup>`; };
+    const occ = (f) => (f === 0 || f === 1 ? String(f) : f < 1e-3 ? sci(f) : f >= 0.9995 ? '1.000' : f.toFixed(3));
+    const w3 = (v) => (v === 0 ? '0' : v < 5e-4 ? '0.000' : v.toFixed(3));
+    RO.nb.innerHTML = c.n === 0 ? '0' : c.n < 1e-3 ? sci(c.n) : c.n.toFixed(3);
+    RO.flo.innerHTML = c.hasLo ? occ(c.flo) : 'no state (below the band bottom)';
+    RO.fup.innerHTML = occ(c.fup);
+    RO.wem.innerHTML = c.hasLo ? `${w3(c.wem)} = ${w3(c.outEm)} out + ${w3(c.inAb)} in` : '0, no final state';
+    RO.wab.innerHTML = `${w3(c.wab)} = ${w3(c.outAb)} out + ${w3(c.inEm)} in`;
+    RO.im.innerHTML = c.im === 0 ? '0 meV' : (c.im < 0.01 ? sci(c.im) : c.im < 10 ? c.im.toFixed(2) : c.im.toFixed(1)) + ' meV';
+    RO.tau.innerHTML = !isFinite(c.tau) ? '∞' : (c.tau < 10 ? c.tau.toFixed(2) : c.tau < 1000 ? c.tau.toFixed(1) : sci(c.tau, 2)) + ' fs';
+    const sE = (c.E < 0 ? 'minus ' : 'plus ') + Math.abs(c.E).toFixed(3);
+    cvA.setAttribute('aria-label', `Panel a: parabolic band with the Fermi sea filled up to E_F, and the probed state n k at E minus E_F = ${sE} eV. ` +
+      `Final states one phonon energy below (${c.hasLo ? 'occupation ' + (c.flo < 1e-3 ? '0' : c.flo.toFixed(2)) : 'none, below the band bottom'}) and above (occupation ${c.fup < 1e-3 ? '0' : c.fup.toFixed(2)}). ` +
+      `Emission weight ${c.wem.toFixed(2)}, absorption weight ${c.wab.toFixed(2)}; arrows out of and into the state are drawn with these probabilities. Drag along the band to move the state.`);
+  }
+
+  function draw() {
+    if (!cur) return;
+    const hwE = cur.hw / 1000;
+    pA.draw([
+      { type: 'hband', y0: -hwE, y1: hwE, color: 'phonon', alpha: 0.12 },
+      { type: 'hline', at: 0, color: 'muted', width: 1.2, dash: [5, 4] },
+      { type: 'hline', at: cur.lo / 1000, color: 'phonon', width: 1.2, dash: [3, 3] },
+      { type: 'hline', at: cur.up / 1000, color: 'phonon', width: 1.2, dash: [3, 3] }
+    ]);
+    pB.draw([
+      { type: 'hband', y0: -hwE, y1: hwE, color: 'phonon', alpha: 0.12 },
+      { type: 'hline', at: 0, color: 'muted', width: 1.2, dash: [5, 4] },
+      { type: 'hline', at: EB, color: 'muted', width: 1, dash: [2, 3] },
+      { type: 'hline', at: cur.E, color: 'muted', width: 1, dash: [] },
+      // the sum goes underneath and wider, so that a weight lying on it (one weight zero, as at T = 0) shows as amber edged in ink
+      { type: 'line', x: cur.sum, y: ES, color: 'ink', width: 3 },
+      { type: 'line', x: cur.ab, y: ES, color: 'phonon', width: 2, dash: [6, 4] },
+      { type: 'line', x: cur.em, y: ES, color: 'phonon', width: 2 },
+      { type: 'points', x: [cur.wem + cur.wab], y: [cur.E], color: 'ink', r: 4 },
+      { type: 'points', x: [cur.wab], y: [cur.E], color: 'phonon', r: 5.5, hollow: true },
+      { type: 'points', x: [cur.wem], y: [cur.E], color: 'phonon', r: 3.6 }
+    ]);
+    readouts();
+  }
+  function onChange(s) { cur = compute(s); draw(); }
+
+  const ui = EPP.controls(fig.querySelector('.a7-processes-ctrls'), [
+    { key: 'E', type: 'range', label: 'probe energy E − E_F', min: -0.38, max: 0.5, step: 0.005, value: 0.15, fmt: (v) => (v < -0.0005 ? '−' : '+') + Math.abs(v).toFixed(3) + ' eV' },
+    { key: 'hw', type: 'range', label: 'phonon energy ħω_0', min: 30, max: 150, step: 5, value: 60, fmt: (v) => Math.round(v) + ' meV' },
+    { key: 'T', type: 'range', label: 'temperature T', min: 0, max: 600, step: 10, value: 300, fmt: (v) => Math.round(v) + ' K' }
+  ], onChange);
+  // slider labels: the symbols in italic, like the readout keys
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const LAB = { E: `probe energy ${I('E')} − ${I('E')}<sub>F</sub>`, hw: `phonon energy ${I('ħω')}<sub>0</sub>`, T: `temperature ${I('T')}` };
+  Object.keys(LAB).forEach(k => { const sp = fig.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  cur = compute(ui.state);
+
+  // drag in (a): the probed state follows the nearest point of the band (either branch maps to k > 0)
+  pA.onPointer = (x, y, type, d) => {
+    if (!d || type === 'up') return;
+    let best = null, bd = Infinity;
+    const px = pA.X(Math.abs(x)), py = d.py;
+    for (let i = 0; i <= 360; i++) {
+      const k = 0.36 * i / 360, dd = Math.hypot(pA.X(k) - px, pA.Y(Eof(k)) - py);
+      if (dd < bd) { bd = dd; best = k; }
+    }
+    if (best === null) return;
+    const E = EPP.clamp(Math.round(Eof(best) / 0.005) * 0.005, -0.38, 0.5);
+    if (Math.abs(E - ui.state.E) > 1e-9) ui.set('E', Number(E.toFixed(3)));
+  };
+})();
+</script>

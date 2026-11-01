@@ -1,0 +1,406 @@
+  <figure class="viz" id="viz-a6-window">
+    <p class="viz-title">A doped sheet: hardening above the continuum, Landau damping inside <span class="tag">interactive</span></p>
+    <div class="viz-grid side">
+      <div class="a6-window-map"><div class="legend a6-window-lega"><span class="item" style="color:var(--c-electron)"><span class="sw" style="border-top-width:1.6px"></span><span style="color:var(--fg-2)">continuum edges $\hbar\omega^{\max}$, $\hbar\omega^{\min}$ <a class="eqref" href="#a6-eq-edges">(A6.21)</a></span></span><span class="item" style="color:var(--muted)"><span class="sw dash" style="border-top-width:1.2px"></span><span style="color:var(--fg-2)">$\hbar\omega_0$</span></span><span class="item" style="color:var(--fg)"><svg width="14" height="12" viewBox="0 0 14 12" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><circle cx="7" cy="6" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span style="color:var(--fg-2)">$\hbar\bar\omega_\bq$ at the cursor</span></span></div></div>
+      <div class="a6-window-col" style="display:grid;gap:12px;min-width:0;align-content:start">
+        <div class="a6-window-shift"><div class="legend a6-window-legb"><span class="item" style="color:var(--c-phonon)"><span class="sw"></span><span style="color:var(--fg-2)">shift $\hbar\Delta\omega_\bq$</span></span><span class="item" style="color:var(--c-5)"><span class="sw dash"></span><span style="color:var(--fg-2)">half width $\hbar\gamma_\bq$</span></span><span class="item" style="color:var(--muted)"><span class="sw dot" style="border-top-width:2px"></span><span style="color:var(--fg-2)">limits <a class="eqref" href="#a6-eq-stiff">(A6.25)</a>, <a class="eqref" href="#a6-eq-landau">(A6.26)</a></span></span><span class="item" style="color:var(--c-electron)"><span class="sw box"></span><span style="color:var(--fg-2)">$\omega_0$ inside the continuum</span></span></div></div>
+        <div class="a6-window-tau"></div>
+      </div>
+    </div>
+    <div class="a6-window-ctrls"></div>
+    <div class="readout a6-window-ro" aria-live="polite"><span>$k_{\mathrm F}$<b class="a6-window-v-kF"></b></span><span>$E_{\mathrm F}$<b class="a6-window-v-EF"></b></span><span>$\hbar\omega_0/E_{\mathrm F}$<b class="a6-window-v-ratio"></b></span><span>$|g|$ for $\OS=8.65$ Å²<b class="a6-window-v-g"></b></span><span>$\omega_0$ inside the continuum for $q/k_{\mathrm F}$ from<b class="a6-window-v-win"></b></span></div>
+    <div class="readout a6-window-ro2" aria-live="polite"><span>cursor $q/k_{\mathrm F}$<b class="a6-window-v-q"></b></span><span>$\Pi^{\mathrm{ph,NA}}$ at <span class="a6-window-k-fo">$\omega_0$</span><span class="a6-window-k-sc" hidden>$\bar\omega_\bq$</span><b class="a6-window-v-pi"></b></span><span>$\hbar\bar\omega_\bq$<b class="a6-window-v-wb"></b></span><span>$\hbar\Delta\omega_\bq$<b class="a6-window-v-dw"></b></span><span>$\hbar\gamma_\bq$ (HWHM)<b class="a6-window-v-gam"></b></span><span>$\tau^{\ph}_\bq$<b class="a6-window-v-tau"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> At small <span class="nw">$q$,</span> above the continuum, the phonon is hardened by about $2N_{\mathrm F}|g|^2$ and undamped: the electrons cannot follow it, so the static softening built into $\omega_0$ is undone. Inside the continuum it is Landau damped and returns toward <span class="nw">$\omega_0$;</span> beyond <span class="nw">$q\approx2.4\,k_{\mathrm F}$</span> it is nearly free.</p><div class="cap-more">
+      <p><strong>Marks.</strong> (a) Square-root colour scale; blue: the continuum edges; dashed grey: <span class="nw">$\hbar\omega_0$;</span> ring: $\hbar\bar\omega_\bq$ at the cursor, the dashed vertical line. (b) Amber: the shift; dashed violet: the half width; dotted grey: the limits <a class="eqref" href="#a6-eq-stiff">(A6.25)</a> and <a class="eqref" href="#a6-eq-landau">(A6.26)</a>; blue band: $\omega_0$ inside the continuum. (c) The lifetime, infinite outside the band.</p>
+      <p><strong>Try.</strong> Click, drag or use the arrow keys to move the cursor. Raise $n_{\mathrm e}$ until <span class="nw">$E_{\mathrm F}\gg\hbar\omega_0$:</span> the window shrinks toward <span class="nw">$q\lesssim\omega_0/v_{\mathrm F}$,</span> and the width approaches <a class="eqref" href="#a6-eq-landau">(A6.26)</a>. Choose the pole equation and put the cursor at <span class="nw">$q\approx0.5\,k_{\mathrm F}$:</span> the hardened pole stays sharp just above the edge, where first order already finds a width. Set the coupling to zero.</p>
+      <p><strong>Model.</strong> One dispersionless optical phonon of DFPT energy $\hbar\omega_0$ couples through a constant $g$ to one parabolic band (<span class="nw">$m^*=0.5\,m_{\mathrm e}$,</span> one valley, two spins) at zero temperature. $\Pi^{\mathrm{ph,NA}}$ is <a class="eqref" href="#a6-eq-2d">(A6.24)</a> with the closed-form Lindhard function of the sheet; the map is $\mathcal B_\bq(\omega)$ of <a class="eqref" href="#a6-eq-B">(A6.1)</a>, with $F$ from <a class="eqref" href="#a6-eq-diag">(A6.5)</a> and a display broadening <span class="nw">$\eta$.</span> For <span class="nw">$\eta\to0$,</span> shift and width follow from <a class="eqref" href="#a6-eq-shift">(A6.8)</a> at <span class="nw">$\omega_0$,</span> or from <a class="eqref" href="#a6-eq-pole">(A6.6)</a> with $\Pi^{\mathrm{ph,NA}}$ on the real axis at <span class="nw">$\bar\omega_\bq$;</span> the lifetime is <a class="eqref" href="#a6-eq-tau">(A6.10)</a>. $|g|$ assumes the cell of MoS₂; values are illustrative. Without a Coulomb chain there is no plasmon, and one mode cannot mix.</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a6-window');
+  if (!fig || !window.EPP) return;
+  // outside Section A.6 (the isolated figure test) the links into the section have no target: keep their text
+  if (!fig.closest('#a-phonon-se')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+  // number of an equation of the section, read from its \tag before MathJax typesets the page
+  const tagOf = (id, fb) => { const e = document.getElementById(id), m = e && e.textContent.match(/\\tag\{([^}]*)\}/); return '(' + (m ? m[1] : fb) + ')'; };
+
+  // ---------- model: one dispersionless phonon, one parabolic band in two dimensions, T = 0 ----------
+  // Energies in meV, x = q/k_F, reduced energy z = ħω/E_F. Π^{ph,NA} of (A6.24) is C [χ⁰(q,ω) − χ⁰(q,0)] with χ⁰ in
+  // units of 2N_F/Ω_S (the Lindhard function of a sheet, both spins) and the coupling energy C = 2N_F|g|².
+  const HBAR = 0.6582119569;   // ħ, meV ps
+  const H2M = 3809.98;         // ħ²/2m_e, meV Å²
+  const MSTAR = 0.5;           // m*/m_e
+  const OMS = 8.65;            // cell area of MoS₂, Å² (only for the |g| readout)
+  const NF = OMS * MSTAR / (2 * Math.PI * 2 * H2M);  // N_F per spin and per cell, 1/meV (0.0903 per eV)
+  const QMIN = 0.02, QMAX = 3, NQ = 300, NX = 150, NY = 220;
+  const ZI0 = 1e-12;           // η → 0⁺ (in units of E_F) for the shift, the width and the lifetime
+  const nb = '\u00a0';         // no-break space: a number stays with its unit
+  // m × 10ⁿ with a superscript exponent: densities (one decimal) and lifetimes above 10⁴ ps (three digits)
+  const SUP = { '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹', '-': '⁻' };
+  const pow10 = (v, d) => {
+    let e = Math.floor(Math.log10(v) + 1e-9), m = v / Math.pow(10, e);
+    if (+m.toFixed(d) >= 10) { e += 1; m /= 10; }
+    return m.toFixed(d) + '×10' + String(e).split('').map(c => SUP[c] || c).join('');
+  };
+  const sci = (v) => pow10(v, 1) + nb + 'cm⁻²';
+  const tfmt = (v) => (v >= 1e4 ? pow10(v, 2) : EPP.fmt(v, 3));
+
+  // Lindhard function of the sheet at z = zr + i zi, zi > 0 (retarded), in units of 2N_F/Ω_S (Stern 1967):
+  // −[1 + (s(z − x²) + s(−z − x²))/2x²] with s(y) = y(1 − 4x²/y²)^{1/2} = (y − 2x)^{1/2}(y + 2x)^{1/2}, principal roots.
+  // Written without allocations (the map needs 33 000 values per redraw); lind returns a shared array, read at once.
+  const T = new Float64Array(4), A = new Float64Array(2), LR = new Float64Array(2);
+  function csq(re, im, k) {          // principal square root into T[k], T[k + 1], without cancellation near the cut
+    const r = Math.sqrt(re * re + im * im);
+    if (r === 0) { T[k] = 0; T[k + 1] = 0; return; }
+    if (re >= 0) { const t = Math.sqrt(0.5 * (r + re)); T[k] = t; T[k + 1] = im / (2 * t); }
+    else { const t = Math.sqrt(0.5 * (r - re)); T[k] = Math.abs(im) / (2 * t); T[k + 1] = im < 0 ? -t : t; }
+  }
+  function sAdd(x, yr, yi) { csq(yr - 2 * x, yi, 0); csq(yr + 2 * x, yi, 2); A[0] += T[0] * T[2] - T[1] * T[3]; A[1] += T[0] * T[3] + T[1] * T[2]; }
+  function lind(x, zr, zi) {
+    A[0] = 0; A[1] = 0;
+    sAdd(x, zr - x * x, zi); sAdd(x, -zr - x * x, -zi);
+    const d = 2 * x * x;
+    LR[0] = -(1 + A[0] / d); LR[1] = -A[1] / d;
+    return LR;
+  }
+  const lind0 = (x) => (x <= 2 ? -1 : -(1 - Math.sqrt(1 - 4 / (x * x))));   // static value
+  // Π^{ph,NA}(q, E) in meV, [re, im]. eta > 0: the display broadening ħη (meV) of the map. eta = 0: the limit η → 0⁺,
+  // where the imaginary part vanishes exactly outside the continuum (A6.21), [x² − 2x, x² + 2x] in units of E_F
+  function Pi(x, E, eta, p) {
+    const z = E / p.eF;
+    if (eta > 0) { const c = lind(x, z, eta / p.eF); return [p.C * (c[0] - lind0(x)), Math.min(0, p.C * c[1])]; }
+    const c = lind(x, z, ZI0), out = z >= x * x + 2 * x || z <= x * x - 2 * x;
+    return [p.C * (c[0] - lind0(x)), out ? 0 : Math.min(0, p.C * c[1])];
+  }
+  // first order, (A6.8): ħΔω = Re Π(ω_0), ħγ = −Im Π(ω_0)
+  function firstOrder(x, p) { const P = Pi(x, p.w0, 0, p); return { wb: p.w0 + P[0], g: -P[1], P }; }
+  // pole equation (A6.6) with Π on the real axis at ω̄ (the derivation after (A6.10)): ω̄² − γ² = ω_0² + 2ω_0 Re Π(ω̄)
+  // and γ = −ω_0 Im Π(ω̄)/ω̄, in energy units. Eliminating γ leaves one real equation, fp(ω̄) = 0.
+  const fp = (x, E, p) => { const P = Pi(x, E, 0, p), g = -p.w0 * P[1] / E; return E * E - g * g - p.w0 * p.w0 - 2 * p.w0 * P[0]; };
+  function bis(x, a, b, fa, p) {
+    for (let k = 0; k < 60; k++) { const m = 0.5 * (a + b), fm = fp(x, m, p); if ((fm < 0) === (fa < 0)) { a = m; fa = fm; } else b = m; if (b - a < 1e-9 * p.w0) break; }
+    return 0.5 * (a + b);
+  }
+  function roots(x, p) {             // every sign change of fp on a scan
+    const lo = 0.02 * p.w0, hi = 3 * p.w0 + 6 * p.C, n = 400, out = [];
+    let a = lo, fa = fp(x, a, p);
+    for (let i = 1; i <= n; i++) { const b = lo + (hi - lo) * i / n, fb = fp(x, b, p); if ((fa < 0) !== (fb < 0)) out.push(bis(x, a, b, fa, p)); a = b; fa = fb; }
+    return out;
+  }
+  // the root nearest to E = near: brackets of growing size around it, then the full scan
+  function track(x, near, p) {
+    const lo = 0.02 * p.w0, f0 = fp(x, near, p);
+    if (f0 === 0) return near;
+    let dP = 0, fR0 = f0, fL0 = f0;
+    for (let d = 0.002 * p.w0; d <= 0.25 * p.w0; d *= 2) {
+      const ER = near + d, fR = fp(x, ER, p);
+      if ((fR < 0) !== (fR0 < 0)) return bis(x, near + dP, ER, fR0, p);
+      const EL = near - d;
+      if (EL > lo) { const fL = fp(x, EL, p); if ((fL < 0) !== (fL0 < 0)) return bis(x, EL, near - dP, fL, p); fL0 = fL; }
+      fR0 = fR; dP = d;
+    }
+    const r = roots(x, p);
+    return r.length ? r.reduce((b, e) => (Math.abs(e - near) < Math.abs(b - near) ? e : b), r[0]) : NaN;
+  }
+  function poleEq(x, near, p) {
+    const E = track(x, near, p);
+    if (!isFinite(E)) return { wb: NaN, g: NaN, P: [NaN, NaN] };
+    const P = Pi(x, E, 0, p);
+    return { wb: E, g: Math.max(0, -p.w0 * P[1] / E), P };
+  }
+
+  function compute(s) {
+    const kF = Math.sqrt(2 * Math.PI * s.ne * 1e-16);          // Å⁻¹, n_e in cm⁻²
+    const eF = H2M * kF * kF / MSTAR;                          // meV
+    const p = { kF, eF, w0: s.w0, C: s.C, eta: s.eta };
+    const w = s.w0 / eF, r = Math.sqrt(1 + w);
+    const sc = s.mode === 'sc';
+    // shift, width and lifetime along q; the pole equation follows its root from small q
+    const xs = EPP.linspace(QMIN, QMAX, NQ), sh = new Array(NQ), wd = new Array(NQ), tau = new Array(NQ), wbs = new Array(NQ);
+    let near = null;
+    for (let i = 0; i < NQ; i++) {
+      const x = xs[i];
+      let o;
+      if (!sc) o = firstOrder(x, p);
+      else {
+        if (near === null) near = Math.sqrt(Math.max(1e-6, s.w0 * s.w0 + 2 * s.w0 * Pi(x, s.w0, 0, p)[0]));
+        o = poleEq(x, near, p);
+        if (isFinite(o.wb)) near = o.wb;
+      }
+      wbs[i] = o.wb; sh[i] = o.wb - s.w0; wd[i] = o.g; tau[i] = o.g > 0 ? HBAR / (2 * o.g) : NaN;
+    }
+    // the small-q limit (A6.25) above the continuum and the Landau-damping estimate (A6.26) inside it
+    const x1 = r - 1, x2 = r + 1;
+    // (A6.26) holds away from q = 2k_F, where its square root vanishes: drawn up to q = 1.9 k_F
+    const la = Math.max(QMIN, x1), lb = Math.min(1.9, x2, QMAX);
+    const lx = la < lb ? EPP.linspace(la, lb, 120) : [];
+    const ly = lx.map(x => s.C * w / (x * Math.sqrt(4 - x * x)));
+    // spectral function on the map, with the display broadening in F and in Π
+    const ymax = 2 * s.w0, z = new Float64Array(NX * NY), ze = s.eta / eF;
+    for (let i = 0; i < NX; i++) {
+      const x = QMAX * (i + 0.5) / NX, l0 = lind0(x);
+      for (let j = 0; j < NY; j++) {
+        const E = ymax * (j + 0.5) / NY, c = lind(x, E / eF, ze), pr = s.C * (c[0] - l0), pi = Math.min(0, s.C * c[1]);   // Π, as in Pi()
+        const dr = E * E - s.w0 * s.w0 - 2 * s.w0 * pr, di = 2 * s.eta * E - 2 * s.w0 * pi;
+        const B = (2 * s.w0 / Math.PI) * di / (dr * dr + di * di);
+        z[j * NX + i] = isFinite(B) ? B : 0;
+      }
+    }
+    const heat = { type: 'heatmap', x0: 0, x1: QMAX, y0: 0, y1: ymax, nx: NX, ny: NY, z, vmin: 0, vmax: 1 / (Math.PI * s.eta), color: 'phonon', gamma: 0.5,
+      label: 'ℬ (meV^{-1})', colorbar: 'ℬ (meV^{-1})', cfmt: (v) => EPP.fmt(v, 2) };
+    return { s, p, w, x1, x2, sc, xs, sh, wd, tau, wbs, lx, ly, heat, ymax };
+  }
+  // the solution at the cursor: the root of the pole equation that continues the curve
+  function atCursor(c, x) {
+    if (!c.sc) return firstOrder(x, c.p);
+    const f = (x - QMIN) / (QMAX - QMIN) * (NQ - 1), i = EPP.clamp(Math.floor(f), 0, NQ - 2), t = f - i;
+    const a = c.wbs[i], b = c.wbs[i + 1];
+    const near = isFinite(a) && isFinite(b) ? a + t * (b - a) : (isFinite(a) ? a : (isFinite(b) ? b : c.s.w0));
+    return poleEq(x, near, c.p);
+  }
+  // where the energy E lies at x relative to the continuum (A6.21)
+  const region = (c, x, E) => {
+    const e = c.p.eF, up = e * (x * x + 2 * x), dn = e * (x * x - 2 * x);
+    return E >= up ? 'above the continuum' : (E <= dn ? 'below the continuum' : 'inside the continuum');
+  };
+
+  // ---------- canvas text in the primer's notation ----------
+  // Outside $…$ the text is upright. Inside, letters are italic; !x is a bold upright vector; [..] is upright
+  // (a label such as ph); _x, _{..}, ^x, ^{..} are sub- and superscripts; a combining macron (U+0304) draws a bar
+  // over the character before it. o.halo outlines the glyphs in the panel colour, for labels drawn on the map.
+  const ITAL = /[A-Za-zα-ωħ]/, BAR = '̄';
+  function lex(s) {
+    const out = [];
+    let math = false;
+    const add = (t, it, b, lvl, bar) => {
+      const p = out[out.length - 1];
+      if (p && !bar && !p.bar && p.it === it && p.b === b && p.lvl === lvl) p.t += t; else out.push({ t, it, b, lvl, bar });
+    };
+    const scan = (str, lvl) => {
+      for (let i = 0; i < str.length; i++) {
+        const ch = str[i];
+        if (ch === '$') { math = !math; continue; }
+        if ((ch === '_' || ch === '^') && i + 1 < str.length) {
+          const L = ch === '_' ? -1 : 1;
+          if (str[i + 1] === '{') { const k = str.indexOf('}', i + 2); scan(str.slice(i + 2, k < 0 ? str.length : k), L); i = k < 0 ? str.length : k; }
+          else { scan(str[i + 1], L); i += 1; }
+          continue;
+        }
+        if (math && ch === '!' && i + 1 < str.length) { const bar = str[i + 2] === BAR; add(str[i + 1], false, true, lvl, bar); i += bar ? 2 : 1; continue; }
+        if (math && ch === '[') { const k = str.indexOf(']', i + 1); add(str.slice(i + 1, k < 0 ? str.length : k), false, false, lvl, false); i = k < 0 ? str.length : k; continue; }
+        const bar = str[i + 1] === BAR;
+        add(ch, math && ITAL.test(ch), false, lvl, bar);
+        if (bar) i += 1;
+      }
+    };
+    scan(String(s), 0);
+    return out;
+  }
+  // draws with the baseline at y; returns the width
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, fam = EPP.css('--font-ui'), rs = lex(s);
+    const zs = (r) => (r.lvl ? Math.round(size * 0.72) : size);
+    const font = (r) => `${r.it ? 'italic ' : ''}${r.b ? '700 ' : ''}${zs(r)}px ${fam}`;
+    const ws = rs.map(r => { ctx.font = font(r); return ctx.measureText(r.t).width; });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    let x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    ctx.save();
+    ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    if (o.halo) { ctx.strokeStyle = EPP.alpha('surface', 0.85); ctx.lineWidth = 3; ctx.lineJoin = 'round'; }
+    rs.forEach((r, k) => {
+      ctx.font = font(r);
+      const dy = r.lvl === -1 ? size * 0.28 : (r.lvl === 1 ? -size * 0.38 : 0);
+      if (o.halo) ctx.strokeText(r.t, x0, y + dy);
+      ctx.fillStyle = o.color || EPP.color('fg');
+      ctx.fillText(r.t, x0, y + dy);
+      if (r.bar) { const z = zs(r), sl = r.it ? 0.1 * z : 0; ctx.fillRect(x0 + 0.14 * ws[k] + sl, y + dy - 0.7 * z, 0.74 * ws[k], Math.max(1, 0.075 * z)); }
+      x0 += ws[k];
+    });
+    ctx.restore();
+    return tot;
+  }
+  const tw = (ctx, s, size) => txt(ctx, s, 0, 0, { size, measure: true });
+  const XLAB = '$q/k$_F';
+  function axes(pl, title, ylab) {           // panel title in the top margin, axis titles with italic symbols
+    const ctx = pl.ctx, w = pl.cv.w, h = pl.cv.h, m = pl.m, cFg = EPP.color('fg');
+    txt(ctx, title, 2, 14, { size: 11.5, color: EPP.color('fg2') });
+    txt(ctx, XLAB, m.l + (w - m.l - m.r) / 2, h - 7, { size: 12.5, color: cFg, align: 'center' });
+    ctx.save(); ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, ylab, 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+  }
+
+  // ---------- panels ----------
+  const elMap = fig.querySelector('.a6-window-map'), elSh = fig.querySelector('.a6-window-shift'), elTau = fig.querySelector('.a6-window-tau');
+  const legA = fig.querySelector('.a6-window-lega'), legB = fig.querySelector('.a6-window-legb');
+  const hx = (v) => EPP.fix(v, 2);
+  const pA = new EPP.Plot(elMap, {
+    xlim: [0, QMAX], ylim: [0, 100], aspect: 0.84, minHeight: 300, maxHeight: 440, legend: false, margin: { l: 48, r: 62, t: 24, b: 40 },
+    xname: 'q/k_F', yname: 'ħω', hoverX: hx, hoverX2: (v) => EPP.fix(v, 1) + ' meV', ariaLabel: 'Panel a: phonon spectral function'
+  });
+  const pB = new EPP.Plot(elSh, {
+    xlim: [0, QMAX], ylim: [-3, 15], aspect: 0.66, minHeight: 205, maxHeight: 300, legend: false, margin: { l: 44, r: 12, t: 24, b: 40 },
+    xname: 'q/k_F', hoverX: hx, hoverY: (v) => EPP.fix(v, 2) + ' meV', ariaLabel: 'Panel b: shift and half width'
+  });
+  const pC = new EPP.Plot(elTau, {
+    xlim: [0, QMAX], ylim: [0.005, 100], logy: true, aspect: 0.52, minHeight: 175, maxHeight: 260, legend: false, margin: { l: 44, r: 12, t: 24, b: 40 },
+    xname: 'q/k_F', hoverX: hx, hoverY: (v) => tfmt(v) + ' ps', ariaLabel: 'Panel c: phonon lifetime'
+  });
+  elMap.appendChild(legA); elSh.appendChild(legB);   // the legends (static markup, MathJax) go under the canvases
+
+  let cur = null, xq = 1, sel = null;
+
+  const baseA = pA.render.bind(pA);
+  pA.render = () => {
+    baseA();
+    const ctx = pA.ctx, w = pA.cv.w, h = pA.cv.h, m = pA.m;
+    if (!w || !h || !cur) return;
+    axes(pA, '(a) spectral function $ℬ_{!q}(ω)$', '$ħω$ (meV)');
+    const e = cur.p.eF, ym = cur.ymax, cE = EPP.textColor('electron');
+    // edge labels: right of the point where the edge crosses 84 % (upper) or 72 % (lower) of the height; an edge that
+    // stays lower gets its label at the right end of the frame, above the upper edge and below the lower one
+    const yBot = h - m.b, xr = QMAX - 0.08, LMAX = '$ħω^{[max]}$', LMIN = '$ħω^{[min]}$';
+    const xt = Math.sqrt(1 + 0.84 * ym / e) - 1;
+    if (xt <= 2.5) txt(ctx, LMAX, pA.X(xt) + 7, pA.Y(0.84 * ym) + 4, { size: 12, color: cE, halo: true });
+    else txt(ctx, LMAX, pA.X(xr), pA.Y(e * (xr * xr + 2 * xr)) - 6, { size: 12, color: cE, halo: true, align: 'right' });
+    const xb = 1 + Math.sqrt(1 + 0.72 * ym / e);
+    if (xb <= 2.7) txt(ctx, LMIN, pA.X(xb) + 7, pA.Y(0.72 * ym) + 4, { size: 12, color: cE, halo: true });
+    else { const Y = pA.Y(e * (xr * xr - 2 * xr)); txt(ctx, LMIN, pA.X(xr), Y + 15 < yBot - 2 ? Y + 15 : Y - 6, { size: 12, color: cE, halo: true, align: 'right' }); }
+    txt(ctx, '$ħω_0$', m.l + 6, pA.Y(cur.s.w0) + 16, { size: 12, color: EPP.textColor('muted'), halo: true });   // below the line: the hardened line runs above it
+    // the renormalized frequency at the cursor (first order or pole equation)
+    if (sel && isFinite(sel.wb) && sel.wb > 0 && sel.wb < ym) {
+      const X = pA.X(xq), Y = pA.Y(sel.wb);
+      ctx.save(); ctx.setLineDash([]);
+      ctx.strokeStyle = EPP.alpha('surface', 0.9); ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(X, Y, 5.5, 0, 2 * Math.PI); ctx.stroke();
+      ctx.strokeStyle = EPP.color('fg'); ctx.lineWidth = 1.8; ctx.beginPath(); ctx.arc(X, Y, 5.5, 0, 2 * Math.PI); ctx.stroke();
+      ctx.restore();
+    }
+  };
+  const baseB = pB.render.bind(pB);
+  pB.render = () => { baseB(); if (pB.cv.w && pB.cv.h && cur) axes(pB, '(b) shift and half width', 'energy (meV)'); };
+  const baseC = pC.render.bind(pC);
+  pC.render = () => {
+    baseC();
+    const w = pC.cv.w, h = pC.cv.h, m = pC.m;
+    if (!w || !h || !cur) return;
+    axes(pC, '(c) lifetime', '$τ^{[ph]}_{!q}$ (ps)');
+    if (!cur.tau.some(isFinite)) txt(pC.ctx, 'undamped at every $q$ shown', m.l + (w - m.l - m.r) / 2, m.t + (h - m.t - m.b) / 2 - 8, { size: 11.5, color: EPP.textColor('muted'), align: 'center' });
+  };
+
+  // ---------- readouts ----------
+  const RO = {};
+  ['kF', 'EF', 'ratio', 'g', 'win', 'q', 'pi', 'wb', 'dw', 'gam', 'tau'].forEach(k => { RO[k] = fig.querySelector('.a6-window-v-' + k); });
+  const kFo = fig.querySelector('.a6-window-k-fo'), kSc = fig.querySelector('.a6-window-k-sc');
+  const sg = (v, d) => (v >= 0.5 * Math.pow(10, -d) ? '+' : '') + EPP.fix(v, d);
+  const xf = (v) => (v < 0.1 ? EPP.fix(v, 3) : EPP.fix(v, 2));
+
+  function draw() {
+    if (!cur) return;
+    const c = cur, s = c.s, w0 = s.w0, C = s.C;
+    sel = atCursor(c, xq);
+    const band = c.x1 < QMAX ? { type: 'band', x0: c.x1, x1: Math.min(c.x2, QMAX), color: 'electron', alpha: 0.1 } : null;
+    const vcur = { type: 'vline', at: xq, color: 'ink', dash: [3, 3], width: 1 };
+    // (a) map, edges (A6.21), ħω_0 and the cursor
+    const qe = EPP.linspace(0, QMAX, 241), qm = EPP.linspace(2, QMAX, 81);
+    pA.draw([
+      c.heat,
+      { type: 'line', x: qe, y: qe.map(x => c.p.eF * (x * x + 2 * x)), color: 'electron', width: 1.6, hover: false },
+      { type: 'line', x: qm, y: qm.map(x => c.p.eF * (x * x - 2 * x)), color: 'electron', width: 1.6, hover: false },
+      { type: 'hline', at: w0, color: 'muted', width: 1.2 },
+      vcur
+    ], { ylim: [0, c.ymax] });
+    // (b) shift and width; the y range steps with the coupling, so the curves grow with it between steps
+    const top = 15 * Math.max(1, Math.ceil(C / 5 - 1e-9));
+    pB.draw([
+      band,
+      c.x1 > QMIN ? { type: 'line', x: [0, Math.min(c.x1, QMAX)], y: [C, C], color: 'muted', width: 1.6, dash: [1.5, 3], hover: false } : null,
+      { type: 'line', x: c.lx, y: c.ly, color: 'muted', width: 1.6, dash: [1.5, 3], hover: false },
+      { type: 'line', x: c.xs, y: c.sh, color: 'phonon', width: 2, label: 'shift' },
+      { type: 'line', x: c.xs, y: c.wd, color: 'c5', width: 2, dash: [6, 3], label: 'half width' },
+      vcur,
+      { type: 'points', x: [xq], y: [sel.wb - w0], color: 'phonon', r: 3.6 },
+      { type: 'points', x: [xq], y: [sel.g], color: 'c5', r: 3.6 }
+    ], { ylim: [-top / 5, top] });
+    // (c) lifetime (A6.10)
+    const tq = sel.g > 0 ? HBAR / (2 * sel.g) : NaN;
+    pC.draw([
+      band,
+      { type: 'line', x: c.xs, y: c.tau, color: 'c5', width: 2, label: 'lifetime' },
+      vcur,
+      { type: 'points', x: [xq], y: [tq], color: 'c5', r: 3.6 }
+    ]);
+    readouts(tq);
+  }
+
+  function readouts(tq) {
+    const c = cur, s = c.s, P = sel.P, reg = region(c, xq, c.sc ? sel.wb : s.w0);
+    RO.kF.textContent = EPP.fix(c.p.kF, 4) + nb + 'Å⁻¹';
+    RO.EF.textContent = (c.p.eF < 100 ? EPP.fix(c.p.eF, 1) : EPP.fix(c.p.eF, 0)) + nb + 'meV';
+    RO.ratio.textContent = c.w < 0.1 ? EPP.fix(c.w, 3) : EPP.fix(c.w, 2);
+    RO.g.textContent = EPP.fix(Math.sqrt(s.C / (2 * NF)) / 1000, 3) + nb + 'eV';
+    RO.win.textContent = `${xf(c.x1)}${nb}to${nb}${xf(c.x2)}`;
+    RO.q.textContent = EPP.fix(xq, 2);
+    kFo.hidden = c.sc; kSc.hidden = !c.sc;
+    RO.pi.textContent = isFinite(P[0]) ? `${EPP.fix(P[0], 2)}${nb}${P[1] < 0 ? '−' : '+'}${nb}${EPP.fix(Math.abs(P[1]), 2)}i${nb}meV (${reg.replace(/ /g, nb)})` : '—';
+    RO.wb.textContent = EPP.fix(sel.wb, 2) + nb + 'meV';
+    RO.dw.textContent = sg(sel.wb - s.w0, 2) + nb + 'meV';
+    RO.gam.textContent = !isFinite(sel.g) ? '—' : sel.g > 0 ? EPP.fix(sel.g, 2) + nb + 'meV' : '0 (undamped)';
+    RO.tau.textContent = isFinite(tq) ? tfmt(tq) + nb + 'ps' : (isFinite(sel.g) ? '∞ (undamped)' : '—');
+    // what the panels show, for screen readers
+    const f1 = (v) => EPP.fix(v, 1), f2 = (v) => EPP.fix(v, 2), how = c.sc ? 'from the pole equation' : 'to first order';
+    const vt = `q/k_F = ${f2(xq)}`;
+    const keys = ' The left and right arrow keys move the cursor.';
+    pA.cv.canvas.setAttribute('aria-label', `Panel a: phonon spectral function as a heat map, q/k_F from 0 to 3 and phonon energy from 0 to ${f1(c.ymax)} meV, ` +
+      `with the edges of the electron-hole continuum and the line at the phonon energy ${f1(s.w0)} meV. At the cursor, q/k_F = ${f2(xq)}, ` +
+      `the ring marks the renormalized energy ${f2(sel.wb)} meV ${how}; the energy at which the self-energy is taken lies ${reg}.` + keys);
+    pB.cv.canvas.setAttribute('aria-label', `Panel b: frequency shift and half width against q/k_F, ${how}. The phonon energy lies inside the continuum ` +
+      `for q/k_F from ${xf(c.x1)} to ${xf(c.x2)}, shaded. At the smallest q the shift is ${f2(c.sh[0])} meV. At the cursor the shift is ${sg(sel.wb - s.w0, 2)} meV and the half width ${f2(sel.g)} meV.` + keys);
+    pC.cv.canvas.setAttribute('aria-label', `Panel c: phonon lifetime on a logarithmic scale against q/k_F, infinite where the phonon is undamped. At the cursor: ` +
+      (isFinite(tq) ? `${tfmt(tq)} ps.` : 'undamped.') + keys);
+    [pA, pB, pC].forEach(pl => { pl.cv.canvas.setAttribute('aria-valuenow', f2(xq)); pl.cv.canvas.setAttribute('aria-valuetext', vt); });
+  }
+
+  // ---------- cursor: click or drag in any panel, or the arrow keys on a focused panel ----------
+  const setQ = (x) => { const v = EPP.clamp(x, QMIN, QMAX); if (Math.abs(v - xq) < 1e-9) return; xq = v; draw(); };
+  [pA, pB, pC].forEach(pl => {
+    pl.onPointer = (x, y, type) => { if (type !== 'up') setQ(x); };
+    const cv = pl.cv.canvas;
+    cv.setAttribute('tabindex', '0');
+    cv.setAttribute('role', 'slider');
+    cv.setAttribute('aria-valuemin', String(QMIN));
+    cv.setAttribute('aria-valuemax', String(QMAX));
+    cv.addEventListener('keydown', (e) => {
+      if (e.altKey || e.ctrlKey || e.metaKey) return;
+      const st = { ArrowLeft: -0.01, ArrowDown: -0.01, ArrowRight: 0.01, ArrowUp: 0.01, PageDown: -0.1, PageUp: 0.1 }[e.key];
+      let v = null;
+      if (st !== undefined) v = Math.round((xq + st) * 100) / 100;
+      else if (e.key === 'Home') v = QMIN; else if (e.key === 'End') v = QMAX;
+      if (v === null) return;
+      e.preventDefault(); setQ(v);
+    });
+  });
+
+  // ---------- controls (below the plots) ----------
+  const elCtl = fig.querySelector('.a6-window-ctrls');
+  const ui = EPP.controls(elCtl, [
+    { key: 'ne', type: 'range', label: 'electron density n_e', min: 1e12, max: 1e14, value: 1e13, log: true, step: 0.01, fmt: sci },
+    { key: 'w0', type: 'range', label: 'phonon energy ħω_0', min: 10, max: 200, step: 1, value: 50, fmt: (v) => EPP.fix(v, 0) + nb + 'meV' },
+    { key: 'C', type: 'range', label: 'coupling 2N_F|g|^2', min: 0, max: 15, step: 0.1, value: 5, fmt: (v) => EPP.fix(v, 1) + nb + 'meV' },
+    { key: 'eta', type: 'range', label: 'map broadening ħη', min: 0.5, max: 5, step: 0.1, value: 1, fmt: (v) => EPP.fix(v, 1) + nb + 'meV' },
+    { key: 'mode', type: 'seg', label: 'shift and width from', options: [['fo', 'first order ' + tagOf('a6-eq-shift', 'A6.8')], ['sc', 'pole equation ' + tagOf('a6-eq-pole', 'A6.6')]], value: 'fo' }
+  ], (s) => { cur = compute(s); draw(); });
+  // control labels: symbols italic, labels upright, as in the text
+  const it = (t) => `<i style="font-family:var(--font-text)">${t}</i>`, up = (t) => `<span style="font-family:var(--font-text)">${t}</span>`;
+  const LAB = {
+    ne: `electron density ${it('n')}<sub>${up('e')}</sub>`, w0: `phonon energy ${it('ħω')}<sub>${up('0')}</sub>`,
+    C: `coupling ${up('2')}${it('N')}<sub>${up('F')}</sub>${up('|')}${it('g')}${up('|')}<sup>${up('2')}</sup>`, eta: `map broadening ${it('ħη')}`
+  };
+  Object.keys(LAB).forEach(k => { const sp = elCtl.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  cur = compute(ui.state); draw();
+})();
+</script>

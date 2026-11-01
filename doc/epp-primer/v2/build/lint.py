@@ -15,7 +15,11 @@ the sentence where it first appears, for the naive-reader check.
 import re, sys, os, glob, html
 
 V = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-args = [a for a in sys.argv[1:] if not a.startswith('--')]
+args, _skip = [], False
+for _a in sys.argv[1:]:
+    if _skip: _skip = False; continue
+    if _a == '--inventory': _skip = True; continue
+    if not _a.startswith('--'): args.append(_a)
 secdir = args[0] if args else os.path.join(V, 'sections')
 inv_out = sys.argv[sys.argv.index('--inventory') + 1] if '--inventory' in sys.argv else None
 

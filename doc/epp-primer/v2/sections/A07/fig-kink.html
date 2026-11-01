@@ -1,0 +1,307 @@
+  <figure class="viz" id="viz-a7-kink">
+    <p class="viz-title">The ARPES kink: a band coupled to one Einstein phonon <span class="tag">interactive</span></p>
+    <div class="viz-grid side">
+      <div class="a7-kink-map"><div class="legend a7-kink-lega"><span class="item" style="color:var(--c-electron)"><span class="sw dash"></span><span style="color:var(--fg-2)">bare band $E_k$</span></span><span class="item" style="color:var(--c-electron)"><span class="sw"></span><span style="color:var(--fg-2)">quasiparticle band <a class="eqref" href="#a7-eq-qp">(A7.16)</a></span></span><span class="item" style="color:var(--c-4)"><span class="sw dot"></span><span style="color:var(--fg-2)">on-shell (Rayleigh–Schrödinger)</span></span><span class="item" style="color:var(--c-electron)"><svg width="14" height="12" viewBox="0 0 14 12" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><circle cx="7" cy="6" r="4.2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span style="color:var(--fg-2)">solutions at the cursor $k$</span></span></div></div>
+      <div class="a7-kink-sig"><div class="legend a7-kink-legb"><span class="item" style="color:var(--fg)"><span class="sw"></span><span style="color:var(--fg-2)">$\mathrm{Re}\,\Sigma$</span></span><span class="item" style="color:var(--c-5)"><span class="sw dash"></span><span style="color:var(--fg-2)">$\mathrm{Im}\,\Sigma$</span></span><span class="item" style="color:var(--muted)"><span class="sw dot"></span><span style="color:var(--fg-2)">$E-E_k$ at the cursor $k$</span></span></div></div>
+    </div>
+    <div class="a7-kink-ctrls"></div>
+    <div class="readout a7-kink-ro" aria-live="polite"><span>$k_{\mathrm F}$<b class="a7-kink-v-kf"></b></span><span>$\lambda_{\mathrm{eff}}=-\partial\,\mathrm{Re}\,\Sigma/\partial E$ at $E_{\mathrm F}$<b class="a7-kink-v-lam"></b></span><span>$Z^{\mathrm{qp}}$ at $E_{\mathrm F}$<b class="a7-kink-v-z"></b></span><span>$m^{\mathrm{qp}}/m^*=1+\lambda_{\mathrm{eff}}$<b class="a7-kink-v-m"></b></span></div>
+    <div class="readout a7-kink-ro2" aria-live="polite"><span>largest $\partial\,\mathrm{Re}\,\Sigma/\partial E$<b class="a7-kink-v-slope"></b></span><span>solutions at the cursor<b class="a7-kink-v-roots"></b></span><span>three solutions of <a class="eqref" href="#a7-eq-qp">(A7.16)</a> for $k/k_{\mathrm F}$<b class="a7-kink-v-three"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> With $E_{\mathrm F}=10\hbar\omega_0$ the band within $\hbar\omega_0$ of the Fermi level is flattened by the factor $Z^{\mathrm{qp}}\approx0.47$ and stays sharp; below $E_{\mathrm F}-\hbar\omega_0$ it returns to the bare band, broadened. Where the slope of $\mathrm{Re}\,\Sigma$ exceeds one, the quasiparticle band bends into an S. With $E_{\mathrm F}=2\hbar\omega_0$ and the 3D density of states, a broad satellite lies about $1.7\hbar\omega_0$ below the quasiparticle band, and no quasiparticle solution follows it.</p><div class="cap-more"><p><strong>Marks.</strong> Grey scale: the spectral function $\mathcal A(k,E)$ of <a class="eqref" href="#a7-eq-spectral">(A7.15)</a>, clipped at <span class="nw">3 eV⁻¹</span>. Dashed: the bare band $E_k$; solid: every solution of <a class="eqref" href="#a7-eq-qp">(A7.16)</a>; dotted: the on-shell estimate $E_k+\mathrm{Re}\,\Sigma(E_k)$. Horizontal dashes mark $E_{\mathrm F}$ and $E_{\mathrm F}\pm\hbar\omega_0$. In (b) each crossing of the dotted line $E-E_k$ with $\mathrm{Re}\,\Sigma$ solves <a class="eqref" href="#a7-eq-qp">(A7.16)</a> at the cursor $k$; circles mark these solutions in both panels.</p><p><strong>Try.</strong> (1) Set $E_{\mathrm F}/\hbar\omega_0=2$ and “full band”: the satellite lies below the band, away from the solid curve; with “2D, constant”, extra branches of the solid curve reach it. (2) Lower $\lambda_{\mathrm{ep}}$ to 0.85: the largest slope falls below one and the S vanishes. (3) At $\lambda_{\mathrm{ep}}=2$, step the cursor from 0.80 to 0.88: one crossing, then three from 0.825 to 0.85, then one.</p><p><strong>Model.</strong> <a class="eqref" href="#a7-eq-model">(A7.20)</a>, or the same integrals with a density of states growing as the square root of the energy above the band bottom (“3D”), in <a class="eqref" href="#a7-eq-spectral">(A7.15)</a>, <a class="eqref" href="#a7-eq-qp">(A7.16)</a> and <a class="eqref" href="#a7-eq-Z">(A7.18)</a>. After the review's Fig. 4: $m^*=0.1\,m_{\mathrm e}$, <span class="nw">$\hbar\omega_0=100$ meV</span>, <span class="nw">$E_{\mathrm c}=5$ eV</span>, <span class="nw">$\hbar\eta=20$ meV</span>, $|g|^2N_{\mathrm F}=\lambda_{\mathrm{ep}}\hbar\omega_0/2$ with $N_{\mathrm F}$ per spin, $T=0$, no Debye–Waller term, $\mathrm{Re}\,\Sigma$ shifted to zero at $E_{\mathrm F}$ (Luttinger). $\lambda_{\mathrm{eff}}$, the $\lambda_{n\bk}$ of <a class="eqref" href="#a7-eq-v">(A7.19)</a> at $k_{\mathrm F}$, differs slightly from $\lambda_{\mathrm{ep}}$ because the band is finite and not particle–hole symmetric. $10\hbar\omega_0$ mimics a metal, $2\hbar\omega_0$ a degenerately doped semiconductor.</p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a7-kink');
+  if (!fig || !window.EPP) return;
+  // outside Section A.7 (the isolated figure test) the links to the section have no target: show them as text
+  if (!fig.closest('#a-electron-se')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+  const C = EPP.C;
+
+  // ---------- model: energies in eV measured from E_F (E below stands for E − E_F), k in 1/Å ----------
+  const W0 = 0.1;                    // ħω_0, the Einstein phonon
+  const EC = 5.0;                    // cutoff E_c of the intermediate states above E_F
+  const ETA = 0.02;                  // ħη, kept finite in the self-energy and in the propagator (the review's value)
+  const H2M = 3.80998 / 0.1;         // ħ²/2m* for m* = 0.1 m_e, eV Å²
+  const AMAX = 3;                    // 𝒜 is clipped at 3 1/eV, as in the review
+  const DE = 0.001;                  // energy grid step, eV
+
+  // I(a; U) = ∫_0^U √u du/(a − u) = −2√U + √a ln[(√a + √U)/(√a − √U)] for Im a > 0;
+  // with the principal branches the logarithm is continuous along the path of integration
+  function I3(a, U, sa = C.sqrt(a)) {
+    const sU = Math.sqrt(U);
+    const r = C.div([sa[0] + sU, sa[1]], [sa[0] - sU, sa[1]]);
+    return C.add([-2 * sU, 0], C.mul(sa, C.log(r)));
+  }
+  // retarded T = 0 Fan–Migdal self-energy at z = E + iħη, with |g|^2 N_F = λ_ep ħω_0/2.
+  // dim '2': constant density of states, (A7.20). dim '3': N(u) = N_F √(u/E_F), u = E + E_F the energy above the band bottom;
+  // the empty states (E_F < u < E_F + E_c) enter with z − ħω_0, the occupied ones (0 < u < E_F) with z + ħω_0
+  function sigmaRaw(E, p) {
+    const pre = p.lam * W0 / 2;
+    if (p.dim === '2') {
+      const lg = (a) => [0.5 * Math.log((E - a) * (E - a) + ETA * ETA), Math.atan2(ETA, E - a)];   // ln(z − a)
+      const A = lg(W0), B = lg(W0 + EC), Cc = lg(-W0 - p.eF), D = lg(-W0);
+      return [pre * (A[0] - B[0] + Cc[0] - D[0]), pre * (A[1] - B[1] + Cc[1] - D[1])];
+    }
+    const q = pre / Math.sqrt(p.eF);
+    const occ = I3([E + W0 + p.eF, ETA], p.eF);
+    const a = [E - W0 + p.eF, ETA], sa = C.sqrt(a);
+    const emp = C.sub(I3(a, p.eF + EC, sa), I3(a, p.eF, sa));
+    return [q * (occ[0] + emp[0]), q * (occ[1] + emp[1])];
+  }
+  // everything that depends on E_F, λ_ep and the density of states (not on the window or the cursor)
+  function makeModel(s) {
+    const p = { lam: s.lam, eF: s.eF * W0, dim: s.dim };
+    const s0 = sigmaRaw(0, p)[0];
+    const sig = (E) => { const v = sigmaRaw(E, p); return [v[0] - s0, v[1]]; };   // Luttinger: Re Σ = 0 at E_F
+    const kF = Math.sqrt(p.eF / H2M);
+    const eps = (k) => H2M * k * k - p.eF;                                       // E_k − E_F
+    const kOf = (e) => Math.sqrt(Math.max(0, (e + p.eF) / H2M));
+    // energy grid: 1 meV across both windows, from f0 just below −E_F − 3ħω_0 to just above 2ħω_0; 4 meV beyond,
+    // where Re Σ is smooth (|Re Σ| < 0.45 eV, slope below one above 2ħω_0), only to find the solutions at a cursor k ≤ 1.5 k_F
+    // whose energy lies outside the windows
+    const f0 = -p.eF - 3 * W0 - 2 * DE, nf = Math.round((2 * W0 + 2 * DE - f0) / DE) + 1, list = [];
+    for (let x = -p.eF - 4 * W0; x < f0 - 1e-9; x += 4 * DE) list.push(x);
+    const jf = list.length;
+    for (let i = 0; i < nf; i++) list.push(f0 + i * DE);
+    const top = list[list.length - 1], hi = 1.25 * p.eF + 0.6;
+    for (let x = top + 4 * DE; x <= hi; x += 4 * DE) list.push(x);
+    const n = list.length, Eg = Float64Array.from(list), sRe = new Float64Array(n), sIm = new Float64Array(n);
+    for (let j = 0; j < n; j++) { const v = sig(Eg[j]); sRe[j] = v[0]; sIm[j] = v[1]; }
+    const d = 1e-5, lamEff = -(sig(d)[0] - sig(-d)[0]) / (2 * d);               // −∂ Re Σ/∂E at E_F
+    // over the full window, E − E_F from −E_F − 3ħω_0 to 2ħω_0 (the same for both views): the largest slope of Re Σ, and
+    // the ranges of k with three solutions of (A7.16). Where the slope exceeds one, g(E) = E − Re Σ(E) falls from a local
+    // maximum to a local minimum, and E_k − E_F = g(E) has three solutions for every value in between that a real k reaches
+    const a0 = jf + 2, a1 = jf + nf - 3, g = (j) => Eg[j] - sRe[j], S = [];
+    let slope = -Infinity;
+    for (let j = a0 + 1; j <= a1; j++) slope = Math.max(slope, (sRe[j] - sRe[j - 1]) / DE);
+    for (let j = a0 + 1; j <= a1; j++) {
+      if (!(g(j) < g(j - 1))) continue;
+      const top = j - 1; while (j + 1 <= a1 && g(j + 1) < g(j)) j++;
+      const eHi = g(top), eLo = Math.max(g(j), -p.eF);
+      if (eHi > eLo) S.push([kOf(eLo) / kF, kOf(eHi) / kF]);
+    }
+    S.sort((u, v) => u[0] - v[0]);
+    return { key: `${s.eF}|${s.lam}|${s.dim}`, p, sig, kF, eps, kOf, f0, jf, nf, n, Eg, sRe, sIm, lamEff, slope: Math.abs(slope) < 5e-3 ? 0 : slope, S };
+  }
+  // the energy window and everything drawn in it except the cursor
+  function makeView(M, view) {
+    const p = M.p, Ehi = 2 * W0;
+    let Elo, k0, k1;
+    // zoom: the bare band enters at the lower left and leaves through the top; the right edge leaves room for
+    // the nearly vertical quasiparticle band just above +ħω_0
+    if (view === 'zoom') { Elo = Math.max(-p.eF - 3 * W0, -5 * W0); k0 = M.kOf(-5.5 * W0); k1 = Math.max(M.kOf(3 * W0), k0 + 0.02); }
+    else { Elo = -p.eF - 3 * W0; k0 = 0; k1 = 1.5 * M.kF; }
+    // spectral function (A7.15) with the finite ħη of the propagator (A7.14)
+    const nx = 180, ny = 230, z = new Float64Array(nx * ny);
+    for (let j = 0; j < ny; j++) {
+      const E = Elo + (Ehi - Elo) * j / (ny - 1), s = M.sig(E), gi = ETA - s[1];
+      for (let i = 0; i < nx; i++) { const d = E - M.eps(k0 + (k1 - k0) * i / (nx - 1)) - s[0]; z[j * nx + i] = gi / Math.PI / (d * d + gi * gi); }
+    }
+    // quasiparticle band (A7.16) as k(E): E_k − E_F = E − Re Σ(E), and panel (b)
+    const j0 = M.jf + Math.floor((Elo - M.f0) / DE + 1e-9), j1 = M.jf + Math.min(M.nf - 1, Math.ceil((Ehi - M.f0) / DE - 1e-9)), m = j1 - j0 + 1;
+    const Ev = new Array(m), kBW = new Array(m), yBW = new Array(m), reMeV = new Array(m), imMeV = new Array(m);
+    for (let t = 0; t < m; t++) {
+      const j = j0 + t, E = M.Eg[j], arg = E - M.sRe[j] + p.eF;
+      Ev[t] = E; reMeV[t] = 1000 * M.sRe[j]; imMeV[t] = 1000 * M.sIm[j];
+      kBW[t] = arg >= 0 ? Math.sqrt(arg / H2M) : NaN; yBW[t] = arg >= 0 ? E : NaN;   // NaN lifts the pen below the band
+    }
+    // bare band and on-shell (Rayleigh–Schrödinger) band E_k + Re Σ(E_k)
+    const ks = EPP.linspace(k0, k1, 240), bare = ks.map(M.eps), rs = ks.map(k => { const e = M.eps(k); return e + M.sig(e)[0]; });
+    const heat = { type: 'heatmap', x0: k0, x1: k1, y0: Elo, y1: Ehi, nx, ny, z, vmin: 0, vmax: AMAX, color: 'ink', gamma: 0.75,
+      label: '𝒜(k, E)', colorbar: '𝒜 (eV^{−1}), clipped at 3', cfmt: v => (v === 0 || v === AMAX ? String(v) : EPP.fix(v, 2)) };
+    return { key: M.key + '|' + view, Elo, Ehi, k0, k1, heat, Ev, kBW, yBW, reMeV, imMeV, ks, bare, rs };
+  }
+  // all solutions of (A7.16) at the cursor: sign changes of E − (E_k − E_F) − Re Σ(E) on the grid, refined by bisection
+  function solve(M, kc) {
+    const e = M.eps(kc), h = (E) => E - e - M.sig(E)[0], out = [];
+    let prev = M.Eg[0] - e - M.sRe[0];
+    for (let j = 1; j < M.n; j++) {
+      const v = M.Eg[j] - e - M.sRe[j];
+      if (v === 0 || v * prev < 0) { const r = EPP.bisect(h, M.Eg[j - 1], M.Eg[j], 1e-7); if (isFinite(r)) out.push(r); }
+      prev = v;
+    }
+    return { kc, e, roots: out };
+  }
+
+  // ---------- canvas text: '$…$' marks math, where letters are italic and digits upright; _x, ^x as in EPP.drawRich ----------
+  let FAM = { ui: 'sans-serif', tx: 'serif' };
+  const ITAL = /[A-Za-zα-ωħ]/;
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const part of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: part.t, m: part.m, it: false }); continue; }
+        let buf = '', it = null;
+        for (const ch of part.t) {
+          const k = ITAL.test(ch);
+          if (it !== null && k !== it) { out.push({ t: buf, m: part.m, it }); buf = ''; }
+          buf += ch; it = k;
+        }
+        if (buf) out.push({ t: buf, m: part.m, it });
+      }
+    });
+    return out;
+  }
+  const fontOf = (r, size) => { const z = (r.it ? size + 0.5 : size) * (r.m ? 0.72 : 1); return `${r.it ? 'italic ' : ''}${z.toFixed(1)}px ${r.it ? FAM.tx : FAM.ui}`; };
+  // o: {size, align, color, halo (a ring of the surface colour, for text over the map), measure}
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, rs = runs(s);
+    const ws = rs.map(r => { ctx.font = fontOf(r, size); return ctx.measureText(r.t).width; });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    const x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    const dy = (r) => (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0));
+    ctx.save(); ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    const pass = (stroke) => { let xx = x0; rs.forEach((r, k) => { ctx.font = fontOf(r, size); if (stroke) ctx.strokeText(r.t, xx, y + dy(r)); else ctx.fillText(r.t, xx, y + dy(r)); xx += ws[k]; }); };
+    if (o.halo) { ctx.strokeStyle = EPP.color('surface'); ctx.lineWidth = 3; ctx.lineJoin = 'round'; pass(true); }
+    ctx.fillStyle = o.color || EPP.color('fg'); pass(false);
+    ctx.restore();
+    return tot;
+  }
+  const tw = (ctx, s, size) => txt(ctx, s, 0, 0, { size, measure: true });
+  // first variant that fits the width
+  const fit = (ctx, list, size, wmax) => list.find(s => tw(ctx, s, size) <= wmax) || list[list.length - 1];
+
+  // ---------- panels ----------
+  const elA = fig.querySelector('.a7-kink-map'), elB = fig.querySelector('.a7-kink-sig');
+  const legA = elA.querySelector('.legend'), legB = elB.querySelector('.legend');
+  const H = 400, MT = 26, MB = 44;   // both panels share the energy axis: same height and vertical margins
+  const pA = new EPP.Plot(elA, {
+    legend: false, hover: true, height: H, margin: { l: 58, r: 62, t: MT, b: MB },
+    xname: 'k (Å^{−1})', yname: 'E − E_F (eV)', hoverX: v => EPP.fix(v, 4), hoverX2: v => EPP.fix(v, 3),
+    ariaLabel: 'Panel a: spectral function map of the band coupled to one Einstein phonon'
+  });
+  const pB = new EPP.Plot(elB, {
+    legend: false, hover: false, height: H, margin: { l: 58, r: 14, t: MT, b: MB }, xlim: [-450, 350],
+    ariaLabel: 'Panel b: real and imaginary parts of the self-energy against E minus E_F'
+  });
+  // the legends are static markup (MathJax), placed under their plots
+  elA.appendChild(legA); elB.appendChild(legB);
+  const cvA = pA.cv.canvas, cvB = pB.cv.canvas;
+  cvA.style.cursor = 'ew-resize';
+  // the cursor moves along k only: horizontal drags set it, vertical swipes still scroll the page on phones
+  cvA.style.touchAction = 'pan-y';
+  const $v = (k) => fig.querySelector('.a7-kink-v-' + k);
+  const RO = { kf: $v('kf'), lam: $v('lam'), z: $v('z'), m: $v('m'), slope: $v('slope'), three: $v('three'), roots: $v('roots') };
+  let M = null, V = null, R = null;
+
+  // energy guides, labelled at the left edge inside the plot
+  const GUIDES = [{ v: 0, s: '$E$_F', c: 'muted' }, { v: -W0, s: '−$ħω_0$', c: 'phonon' }, { v: W0, s: '+$ħω_0$', c: 'phonon' }];
+  function guideLabels(P) {
+    const ctx = P.ctx, m = P.m;
+    for (const g of GUIDES) txt(ctx, g.s, m.l + 5, P.Y(g.v) - 4, { size: 11, color: EPP.textColor(g.c), halo: true });
+  }
+  function axisTitles(P, xt) {
+    const ctx = P.ctx, w = P.cv.w, h = P.cv.h, m = P.m, cFg = EPP.color('fg');
+    txt(ctx, xt, m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    ctx.save(); ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, '$E$ − $E$_F (eV)', 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+  }
+  const baseA = pA.render.bind(pA);
+  pA.render = () => {
+    baseA();
+    const ctx = pA.ctx, w = pA.cv.w, h = pA.cv.h;
+    if (!w || !h || !V) return;
+    FAM = { ui: EPP.css('--font-ui'), tx: EPP.css('--font-text') };
+    axisTitles(pA, '$k$ (Å^{−1})');
+    const title = fit(ctx, ['(a) spectral function 𝒜($k$, $E$): drag to move the cursor', '(a) 𝒜($k$, $E$): drag to move the cursor', '(a) spectral function 𝒜($k$, $E$)'], 11.5, w - 8);
+    txt(ctx, title, 4, 15, { size: 11.5, color: EPP.color('fg2') });
+    guideLabels(pA);
+  };
+  const baseB = pB.render.bind(pB);
+  pB.render = () => {
+    baseB();
+    const ctx = pB.ctx, w = pB.cv.w, h = pB.cv.h;
+    if (!w || !h || !V) return;
+    FAM = { ui: EPP.css('--font-ui'), tx: EPP.css('--font-text') };
+    axisTitles(pB, 'Σ and $E$ − $E_k$ (meV)');
+    txt(ctx, fit(ctx, ['(b) self-energy and the line $E$ − $E_k$', '(b) Σ and the line $E$ − $E_k$'], 11.5, w - 8), 4, 15, { size: 11.5, color: EPP.color('fg2') });
+    guideLabels(pB);
+  };
+
+  const guides = () => GUIDES.map(g => ({ type: 'hline', at: g.v, color: g.c, width: 1.1, dash: [5, 4] }));
+  const eV = (v) => (v < -5e-4 ? '−' : v > 5e-4 ? '+' : '') + Math.abs(v).toFixed(3);
+  // solutions at the cursor: a ring on a disc of the surface colour
+  const marks = (x, y) => [{ type: 'points', x, y, color: 'surface', r: 5.6 }, { type: 'points', x, y, color: 'electron', r: 4.2, hollow: true }];
+  const range = (u) => (u[1] - u[0] < 5e-4 ? u[0].toFixed(3) : u[0].toFixed(3) + '–' + u[1].toFixed(3));
+  let OVER = [];
+  function draw() {
+    if (!M || !V || !R) return;
+    const { kc, e, roots } = R;
+    OVER = [
+      { type: 'line', x: V.ks, y: V.bare, color: 'electron', dash: [7, 5], width: 1.6 },
+      { type: 'line', x: V.kBW, y: V.yBW, color: 'electron', width: 2 },
+      { type: 'line', x: V.ks, y: V.rs, color: 'c4', dash: [2, 3], width: 2 }
+    ];
+    pA.draw([
+      V.heat,
+      ...guides(),
+      // the quasiparticle band runs along the ridge of the map: a thin halo of the surface colour keeps it visible there
+      Object.assign({}, OVER[1], { color: 'surface', width: 3.8, opacity: 0.8 }),
+      ...OVER,
+      { type: 'vline', at: kc, color: 'muted', width: 1.2, dash: [3, 3] },
+      ...marks(roots.map(() => kc), roots)
+    ], { xlim: [V.k0, V.k1], ylim: [V.Elo, V.Ehi] });
+    pB.draw([
+      ...guides(),
+      { type: 'line', x: V.reMeV, y: V.Ev, color: 'ink', width: 2 },
+      { type: 'line', x: V.imMeV, y: V.Ev, color: 'c5', width: 2, dash: [6, 4] },
+      { type: 'line', x: [1000 * (V.Elo - e), 1000 * (V.Ehi - e)], y: [V.Elo, V.Ehi], color: 'muted', width: 1.5, dash: [2, 3] },
+      ...marks(roots.map(r => 1000 * M.sig(r)[0]), roots)
+    ], { ylim: [V.Elo, V.Ehi] });
+    // readouts (keys are static MathJax in the markup)
+    const lam = Math.abs(M.lamEff) < 5e-4 ? 0 : M.lamEff;
+    RO.kf.textContent = M.kF.toFixed(3) + ' Å⁻¹';
+    RO.lam.textContent = EPP.fix(lam, 3);
+    RO.z.textContent = EPP.fix(1 / (1 + lam), 3);
+    RO.m.textContent = EPP.fix(1 + lam, 2);
+    RO.slope.textContent = EPP.fix(M.slope, 2);
+    RO.three.textContent = M.S.length ? M.S.map(range).join(', ') : 'none';
+    RO.roots.textContent = String(roots.length);
+    const s = ui.state, dos = s.dim === '3' ? 'square-root (3D)' : 'constant (2D)';
+    const inView = roots.filter(r => r >= V.Elo && r <= V.Ehi);
+    cvA.setAttribute('aria-label', `Panel a: spectral function map, k from ${V.k0.toFixed(3)} to ${V.k1.toFixed(3)} per ångström, E minus E_F from ${eV(V.Elo)} to ${eV(V.Ehi)} eV; ` +
+      `E_F = ${s.eF.toFixed(1)} ħω_0, λ_ep = ${s.lam.toFixed(2)}, ${dos} density of states. Overlays: bare band, quasiparticle band, on-shell band, ` +
+      `guides at E_F and E_F ± ħω_0. Cursor at k = ${s.kc.toFixed(3)} k_F with ${roots.length} solution${roots.length === 1 ? '' : 's'}` +
+      (inView.length ? ` at E minus E_F = ${inView.map(eV).join(', ')} eV` : '') + '. Drag across the map to move the cursor.');
+    cvB.setAttribute('aria-label', `Panel b: real part (solid) and imaginary part (dashed) of the self-energy, in meV, against E minus E_F, ` +
+      `and the dotted line E minus E_k for the cursor k; it crosses the real part ${roots.length === 1 ? 'once' : roots.length + ' times'}. Largest slope of the real part ${EPP.fix(M.slope, 2)}; ` +
+      (M.S.length ? `three solutions for k between ${M.S.map(u => u[0].toFixed(3) + ' and ' + u[1].toFixed(3)).join(', and between ')} k_F.` : 'one solution for every k.'));
+  }
+  function onChange(s) {
+    const mk = `${s.eF}|${s.lam}|${s.dim}`;
+    if (!M || M.key !== mk) M = makeModel(s);
+    if (!V || V.key !== mk + '|' + s.view) V = makeView(M, s.view);
+    R = solve(M, s.kc * M.kF);
+    draw();
+  }
+
+  const ui = EPP.controls(fig.querySelector('.a7-kink-ctrls'), [
+    { key: 'eF', type: 'range', label: 'Fermi energy E_F/ħω_0', min: 0.5, max: 15, step: 0.5, value: 10, fmt: v => v.toFixed(1) + ' (' + (100 * v).toFixed(0) + ' meV)' },
+    { key: 'lam', type: 'range', label: 'coupling λ_{ep}', min: 0, max: 2, step: 0.05, value: 1.2, fmt: v => v.toFixed(2) },
+    { key: 'dim', type: 'seg', label: 'density of states', options: [['3', '3D, √E'], ['2', '2D, constant']], value: '3' },
+    { key: 'view', type: 'seg', label: 'energy window', options: [['zoom', 'zoom on E_F'], ['full', 'full band']], value: 'zoom' },
+    { key: 'kc', type: 'range', label: 'cursor k/k_F', min: 0, max: 1.5, step: 0.005, value: 0.875, fmt: v => v.toFixed(3), wide: true }
+  ], onChange);
+  // two columns on wide screens, so that every label fits on one line; the cursor slider spans the row
+  ui.el.style.gridTemplateColumns = 'repeat(auto-fill, minmax(290px, 1fr))';
+  // control labels: the symbols in italic, like the readout keys
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const LAB = { eF: `Fermi energy ${I('E')}<sub>F</sub>/${I('ħω')}<sub>0</sub>`, lam: `coupling ${I('λ')}<sub>ep</sub>`, kc: `cursor ${I('k')}/${I('k')}<sub>F</sub>` };
+  Object.keys(LAB).forEach(k => { const sp = fig.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  const B3 = document.getElementById(`${fig.id}-dim-3`), BZ = document.getElementById(`${fig.id}-view-zoom`);
+  if (B3) B3.innerHTML = `3D, √${I('E')}`;
+  if (BZ) BZ.innerHTML = `zoom on ${I('E')}<sub>F</sub>`;
+  onChange(ui.state);
+
+  // click or drag on the map sets the cursor (snapped to the slider step)
+  pA.onPointer = (x, y, type) => {
+    if (type === 'up' || !M) return;
+    ui.set('kc', EPP.clamp(x / M.kF, 0, 1.5));
+  };
+})();
+</script>

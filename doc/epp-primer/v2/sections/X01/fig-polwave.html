@@ -1,0 +1,292 @@
+  <figure class="viz" id="viz-x1-polwave">
+    <p class="viz-title">The field of a polarization wave <span class="tag">interactive</span></p>
+    <div class="x1-polwave-strips"></div>
+    <div class="legend x1-polwave-leg"><span class="item" style="color:var(--c-phonon)"><svg width="22" height="10" viewBox="0 0 22 10" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><line x1="1" y1="5" x2="15" y2="5" stroke="currentColor" stroke-width="2.4"/><path d="M21 5 L13.5 1.6 L13.5 8.4 Z" fill="currentColor"/></svg><span style="color:var(--fg-2)">polarization $\bP$</span></span><span class="item" style="color:var(--c-photon)"><svg width="22" height="10" viewBox="0 0 22 10" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><line x1="1" y1="5" x2="15" y2="5" stroke="currentColor" stroke-width="2"/><path d="M21 5 L14 1.8 L14 8.2 Z" fill="currentColor"/></svg><span style="color:var(--fg-2)">field $\bE$, in units of $4\pi|\bP|$</span></span><span class="item" style="color:var(--c-photon)"><svg width="22" height="10" viewBox="0 0 22 10" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><line x1="1" y1="5" x2="13" y2="5" stroke="currentColor" stroke-width="2"/><path d="M20.5 5 L13.5 1.8 L13.5 8.2 Z" fill="var(--surface)" stroke="currentColor" stroke-width="1.4"/></svg><span style="color:var(--fg-2)">capped near the resonance</span></span><span class="item" style="color:var(--c-5)"><span class="sw box"></span><span style="color:var(--fg-2)">+ bound charge</span></span><span class="item" style="color:var(--c-electron)"><span class="sw box"></span><span style="color:var(--fg-2)">− bound charge</span></span></div>
+    <div class="x1-polwave-plot" style="margin-top:12px"></div>
+    <div class="x1-polwave-ctrls"></div>
+    <div class="readout x1-polwave-ro" aria-live="polite"><span>$q$<b class="x1-polwave-v-q"></b></span><span>$q_{\mathrm{light}}$<b class="x1-polwave-v-ql"></b></span><span>$q/q_{\mathrm{light}}$<b class="x1-polwave-v-qr"></b></span><span>wavelength $2\pi/q$<b class="x1-polwave-v-lam"></b></span><span>phase velocity $\omega/q$<b class="x1-polwave-v-vp"></b></span></div>
+    <div class="readout x1-polwave-ro2" aria-live="polite"><span>$E^{\mathrm L}/(-4\pi P^{\mathrm L})$<b class="x1-polwave-v-rl"></b></span><span>$E^{\mathrm T}/(-4\pi P^{\mathrm T})$<b class="x1-polwave-v-rt"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> The longitudinal field stays at <span class="nw">$-4\pi\bP^{\mathrm L}$,</span> divided by $\varepsilon_\infty$ with electrons, at every <span class="nw">$q$:</span> it is the Coulomb field of the charge sheets, set up instantly. The transverse field equals it only deep inside the light cone, diverges at <span class="nw">$q=q_{\mathrm{light}}$,</span> and outside the cone shrinks as $(q_{\mathrm{light}}/q)^2$ and turns parallel to <span class="nw">$\bP$.</span></p><div class="cap-more"><p><strong>Marks.</strong> Amber arrows: the polarization <span class="nw">$\bP$.</span> Rose arrows: the field $\bE$ on the same scale, so equal lengths mean <span class="nw">$|\bE|=4\pi|\bP|$;</span> hollow heads: capped at 2.5 times that length, near the resonance. Violet + and blue − bands: the bound charge <span class="nw">$-\nabla\cdot\bP$.</span> Plot: dashed longitudinal, solid transverse, dots at the current <span class="nw">$q$.</span> Shaded: the light cone <span class="nw">$q\lt q_{\mathrm{light}}$,</span> where <span class="nw">$q_{\mathrm{light}}$,</span> the wavevector of light of frequency <span class="nw">$\omega$,</span> is $\omega/c$ for the ions alone and $\sqrt{\varepsilon_\infty}\,\omega/c$ with electrons <a class="eqref" href="#x1-eq-ratio">(X1.16)</a>.</p><p><strong>Try.</strong> Sweep $q$ with the slider, or click the plot: only the transverse row changes. Switch the electrons on: deep inside the cone both fields are divided by <span class="nw">$\varepsilon_\infty$,</span> and the resonance moves from $\omega/c$ to <span class="nw">$\sqrt{\varepsilon_\infty}\,\omega/c$.</span> At <span class="nw">$q=0.025$ Å⁻¹,</span> typical of electron–phonon scattering in GaAs, the transverse field is $(q_{\mathrm{light}}/q)^2=4.6\times10^{-7}$ of the longitudinal one, and $5\times10^{-6}$ with electrons.</p><p><strong>Model.</strong> The wave <span class="nw">$\bP\,\ee^{\ii(qx-\omega t)}$,</span> with $\bq$ along <span class="nw">$x$,</span> enters the wave equation <a class="eqref" href="#x1-eq-wave">(X1.2)</a> as the current <span class="nw">$\bj=-\ii\omega\bP$.</span> Its fields are $\bE^{\mathrm L}=-4\pi\bP^{\mathrm L}/\varepsilon^{\mathrm L}$ and <span class="nw">$\bE^{\mathrm T}=-4\pi\bP^{\mathrm T}/(\varepsilon^{\mathrm T}-c^2q^2/\omega^2)$,</span> with $\varepsilon^{\mathrm L}=\varepsilon^{\mathrm T}=1$ for the ions alone <a class="eqref" href="#x1-eq-EP">(X1.4)</a> and $\varepsilon_\infty$ with electrons <a class="eqref" href="#x1-eq-iso">(X1.13)</a>. A damping $0.02\,\ii\,\varepsilon^{\mathrm T}$ in the transverse denominator keeps the resonance finite; arrows show the real part of the field. TO phonons: GaAs, <span class="nw">33.3 meV,</span> <span class="nw">$\varepsilon_\infty=10.9$;</span> hBN in plane, <span class="nw">169.9 meV,</span> $\varepsilon_\infty=4.87$ (literature values, illustrative).</p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-x1-polwave');
+  if (!fig || !window.EPP) return;
+  // outside Section X.1 (the isolated figure test) the equation links have no target: show them as text
+  if (!fig.closest('#x-light-cone')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+  const C = EPP.C, TAU = 2 * Math.PI;
+
+  // ---------- physics: a polarization wave P e^{i(qx − ωt)}, q along x ----------
+  const HC = 1973.27;                  // ħc in eV Å
+  const GAM = 0.02;                    // display damping: i·0.02·ε^T added to the transverse denominator
+  const CAP = 2.5;                     // drawn field capped at 2.5 × 4π|P|
+  const PERIOD = 3;                    // seconds per period on screen, whatever ω
+  const PHS = 0.3;                     // |Im r_T| > 0.3 |r_T| (a phase shift above 17°, within about 3% of q_light): called phase-shifted
+  const QMIN = 1e-6, QMAX = 1e-1;      // Å⁻¹
+  const MAT = {                        // TO phonons (literature values, illustrative)
+    gaas: { hw: 33.3, einf: 10.9 },
+    hbn: { hw: 169.9, einf: 4.87 }     // in plane
+  };
+  // q is kept to two significant digits, so the value used is the value shown
+  const snap = (v) => { const e = Math.floor(Math.log10(v)), u = Math.pow(10, e - 1); return EPP.clamp(Math.round(v / u) * u, QMIN, QMAX); };
+  function model(s) {
+    const m = MAT[s.mat] || MAT.gaas, el = s.el === 'el', eps = el ? m.einf : 1;
+    const k0 = m.hw * 1e-3 / HC;                       // ω/c (Å⁻¹)
+    const qL = Math.sqrt(eps) * k0;                    // q_light = √ε ω/c: light of frequency ω in the medium
+    const q = snap(s.q), x2 = (q / k0) * (q / k0);     // (cq/ω)²
+    const rL = 1 / eps;                                // E^L/(−4πP^L) = 1/ε^L: (X1.4), (X1.13)
+    const rT = C.div([1, 0], [eps - x2, GAM * eps]);   // E^T/(−4πP^T) = 1/(ε^T − c²q²/ω²), damped for display
+    return { m, el, eps, k0, qL, q, x2, rL, rT, aT: C.abs(rT), lam: TAU / q };
+  }
+  // |E/4πP| against q for the plot, sampled densely across the resonance (cached per medium)
+  const cache = {};
+  function curves(c) {
+    const key = c.m.hw + '|' + c.eps;
+    if (cache[key]) return cache[key];
+    const xs = [];
+    for (let i = 0; i <= 600; i++) xs.push(Math.pow(10, -6 + 5 * i / 600));
+    for (let i = -80; i <= 80; i++) xs.push(c.qL * (1 + 0.0012 * i));
+    xs.sort((a, b) => a - b);
+    const yL = xs.map(() => c.rL);
+    const yT = xs.map(q => 1 / Math.hypot(c.eps - (q / c.k0) * (q / c.k0), GAM * c.eps));
+    return (cache[key] = { xs, yL, yT });
+  }
+
+  // ---------- numbers ----------
+  const SUP = { '−': '⁻', '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹' };
+  // d significant digits; plain between 10⁻³ and 10⁴, else m × 10ⁿ (rich: 10^{n} for canvas text)
+  function num(v, d = 3, rich = false) {
+    if (!isFinite(v)) return '∞';
+    if (v === 0) return '0';
+    const sg = v < 0 ? '−' : '', a = Math.abs(v);
+    if (a >= 1e-3 && a < 1e4) { const t = a.toPrecision(d); return sg + (t.includes('e') ? String(Number(t)) : t); }
+    let e = Math.floor(Math.log10(a)), m = Number((a / Math.pow(10, e)).toFixed(d - 1));
+    if (m >= 10) { m /= 10; e += 1; }
+    const es = (e < 0 ? '−' : '') + Math.abs(e);
+    return rich ? `${sg}${m.toFixed(d - 1)} × 10^{${es}}` : `${sg}${m.toFixed(d - 1)} × 10${[...es].map(ch => SUP[ch]).join('')}`;
+  }
+  // a wavelength in Å, in nm, μm or mm
+  const lamStr = (a) => (a < 1e4 ? num(a / 10, 3) + ' nm' : a < 1e7 ? num(a / 1e4, 3) + ' μm' : num(a / 1e7, 3) + ' mm');
+  const I = (t) => `<i style="font-family:var(--font-text)">${t}</i>`;
+  const BV = (t) => `<span style="font-family:var(--font-text);font-weight:700;font-size:1.12em">${t}</span>`;
+  const nw = (t) => `<span class="nw">${t}</span>`;
+  const EPSI = `${I('ε')}<sub>∞</sub>`;
+
+  // ---------- canvas text: '$..$' italic symbol (text font), '*..*' bold vector; _ and ^ as in EPP.drawRich ----------
+  let fUI = 'sans-serif', fTX = 'serif';
+  const parse = s => s.split(/(\$[^$]*\$|\*[^*]*\*)/).filter(Boolean).map(t => (t[0] === '$' ? [t.slice(1, -1), 'i'] : t[0] === '*' ? [t.slice(1, -1), 'b'] : [t, '']));
+  const pOpt = (p, size) => (p[1] === 'i' ? { size: size + 1, font: fTX, italic: true } : { size, font: fUI, bold: p[1] === 'b' });
+  const rtW = (ctx, s, size) => parse(s).reduce((w, p) => { const o = pOpt(p, size); return w + EPP.measureRich(ctx, p[0], o.size, o.font, o); }, 0);
+  function rt(ctx, s, x, y, size, color, align) {
+    const tot = rtW(ctx, s, size);
+    let x0 = align === 'center' ? x - tot / 2 : align === 'right' ? x - tot : x;
+    ctx.fillStyle = color; ctx.textBaseline = 'alphabetic';
+    for (const p of parse(s)) { const o = pOpt(p, size); x0 += EPP.drawRich(ctx, p[0], x0, y, o); }
+    return tot;
+  }
+  // arrow from (x0,y0) to (x1,y1); a hollow head marks a capped field arrow
+  function arrow(ctx, x0, y0, x1, y1, col, lw, head, hollow, surf) {
+    const dx = x1 - x0, dy = y1 - y0, L = Math.hypot(dx, dy);
+    if (L < 1.2) return;
+    const ux = dx / L, uy = dy / L, h = Math.min(head, 0.7 * L), wv = h * 0.46;
+    ctx.setLineDash([]); ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = lw; ctx.lineCap = 'butt';
+    if (L > h) { const b = hollow ? h : 0.7 * h; ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1 - ux * b, y1 - uy * b); ctx.stroke(); }
+    ctx.beginPath(); ctx.moveTo(x1, y1);
+    ctx.lineTo(x1 - ux * h - uy * wv, y1 - uy * h + ux * wv);
+    ctx.lineTo(x1 - ux * h + uy * wv, y1 - uy * h - ux * wv);
+    ctx.closePath();
+    if (hollow) { ctx.fillStyle = surf; ctx.fill(); ctx.lineWidth = 1.4; ctx.lineJoin = 'miter'; ctx.stroke(); }
+    else ctx.fill();
+  }
+
+  // ---------- strips: one wavelength each, the longitudinal row above the transverse row ----------
+  const elS = fig.querySelector('.x1-polwave-strips');
+  function geom(W) {
+    const narrow = W < 520, N = narrow ? 12 : 14;                 // N + 1 sites, the first and last one wavelength apart
+    const gL = narrow ? 34 : 46, padR = 6, sp = (W - gL - padR) / (N + 1);
+    const x0 = gL + sp / 2, xN = x0 + N * sp, LP = Math.min(0.84 * sp, 40);   // LP: arrow length of 4π|P|
+    const yH1 = 15, bT = 23, bH = 46, y1 = bT + bH / 2;
+    const yH2 = bT + bH + 21, y2 = yH2 + 10 + 0.5 * CAP * LP, yB = y2 + 0.5 * CAP * LP + 3;
+    const yStat = yB + 13, yBar = yStat + 13, yBarL = yBar + 15;
+    return { narrow, N, gL, padR, sp, x0, xN, LP, yH1, bT, bH, y1, yH2, y2, yStat, yBar, yBarL, H: Math.ceil(yBarL + 6) };
+  }
+  const cvS = EPP.canvas(elS, { get height() { return geom(Math.max(1, elS.clientWidth)).H; } });
+  cvS.canvas.setAttribute('role', 'img');
+  let cur = null, anim = null;
+
+  function statusT() {
+    const { rT, aT } = cur, a = num(aT, 2, true);
+    if (aT < 0.02) return [`|*E*^T| / 4π|*P*| = ${a} (too small to draw)`, `|*E*^T| / 4π|*P*| = ${a}: too small to draw`];
+    if (aT > CAP) return [`resonance: |*E*^T| = ${a} × 4π|*P*|, drawn capped at 2.5 (hollow heads)`, `resonance: |*E*^T| = ${a} × 4π|*P*|, capped`];
+    if (Math.abs(rT[1]) > PHS * aT) return [`|*E*^T| = ${a} × 4π|*P*|, phase-shifted from *P* near the resonance`, `|*E*^T| = ${a} × 4π|*P*|, phase-shifted`];
+    const dir = rT[0] > 0 ? 'antiparallel' : 'parallel';
+    return [`|*E*^T| = ${a} × 4π|*P*|, ${dir} to *P*`, `|*E*^T| = ${a} × 4π|*P*|, ${dir} to *P*`];
+  }
+
+  function drawStrips(t) {
+    cvS.clear();
+    if (!cur) return;
+    const ctx = cvS.ctx, W = cvS.w;
+    if (W < 60) return;
+    fUI = EPP.css('--font-ui'); fTX = EPP.css('--font-text');
+    const G = geom(W), { N, gL, padR, sp, x0, xN, LP } = G, lam = xN - x0, pad = 8;
+    const phi = ((TAU * t / PERIOD) % TAU + TAU) % TAU;          // ωt: the pattern runs to the right
+    const cPh = EPP.color('phonon'), cG = EPP.color('photon'), cGt = EPP.textColor('photon');
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted'), cGrid = EPP.color('grid'), cSurf = EPP.color('surface');
+    const c5 = EPP.color('c5'), cEl = EPP.color('electron'), c5t = EPP.textColor('c5'), cElt = EPP.textColor('electron');
+    const { rL, rT, aT, el } = cur;
+    // screen position x stands for qx − ωt = 2π(x − x0)/(one wavelength) − ωt
+
+    // --- longitudinal row: bound charge ρ = −∂P_x/∂x ∝ sin(qx − ωt), violet +, blue − ---
+    for (let X = Math.floor(gL); X < W - padR; X += 2) {
+      const rho = Math.sin(TAU * (X + 1 - x0) / lam - phi);
+      ctx.globalAlpha = 0.2 * Math.abs(rho); ctx.fillStyle = rho > 0 ? c5 : cEl;
+      ctx.fillRect(X, G.bT, 2, G.bH);
+    }
+    ctx.globalAlpha = 1;
+    // + and − at the middle of each charge sheet, where qx − ωt = π/2 (+) and 3π/2 (−)
+    ctx.font = `600 13px ${fUI}`; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+    for (let k = -3; k <= 3; k++) {
+      const X = x0 + lam * (0.25 + k / 2 + phi / TAU);
+      if (X < gL + 6 || X > W - padR - 6) continue;
+      const plus = ((k % 2) + 2) % 2 === 0, g = plus ? '+' : '−';
+      ctx.fillStyle = plus ? c5t : cElt;
+      ctx.fillText(g, X, G.bT + 12); ctx.fillText(g, X, G.bT + G.bH - 4);
+    }
+    ctx.textAlign = 'left';
+    // sites, P along x (above) and E along x (below), on one scale: an arrow of length LP is 4π|P|
+    ctx.fillStyle = EPP.alpha('muted', 0.7);
+    for (let j = 0; j <= N; j++) { ctx.beginPath(); ctx.arc(x0 + j * sp, G.y1, 1.5, 0, TAU); ctx.fill(); }
+    for (let j = 0; j <= N; j++) {
+      const xj = x0 + j * sp, c = Math.cos(TAU * j / N - phi), lp = c * LP, le = -rL * c * LP;
+      arrow(ctx, xj - lp / 2, G.y1 - 5, xj + lp / 2, G.y1 - 5, cPh, 2.4, 7);
+      arrow(ctx, xj - le / 2, G.y1 + 5, xj + le / 2, G.y1 + 5, cG, 2, 6);
+    }
+
+    // --- transverse row: P along y; E = Re[r_T (−4πP) e^{i(qx − ωt)}], capped at 2.5 × 4π|P| ---
+    ctx.strokeStyle = cGrid; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(gL, Math.round(G.y2) + 0.5); ctx.lineTo(W - padR, Math.round(G.y2) + 0.5); ctx.stroke();
+    const showE = aT >= 0.02, capped = aT > CAP, f = capped ? CAP / aT : 1, off = Math.min(4, 0.16 * sp);
+    for (let j = 0; j <= N; j++) {
+      const xj = x0 + j * sp, th = TAU * j / N - phi, c = Math.cos(th), s = Math.sin(th), lp = c * LP;
+      arrow(ctx, xj - off, G.y2 + lp / 2, xj - off, G.y2 - lp / 2, cPh, 2.4, 7);
+      if (showE) { const e = -(rT[0] * c - rT[1] * s) * f * LP; arrow(ctx, xj + off, G.y2 + e / 2, xj + off, G.y2 - e / 2, cG, 2, 6, capped, cSurf); }
+    }
+
+    // --- q arrows, row titles, the transverse status line, the wavelength bar ---
+    for (const y of [G.y1, G.y2]) {
+      arrow(ctx, 8, y, gL - 10, y, cFg2, 1.6, 6);
+      rt(ctx, '*q*', (gL - 2) / 2, y - 7, 12.5, cFg, 'center');
+    }
+    rt(ctx, 'longitudinal: *P* along *q*', pad, G.yH1, 11.5, cFg2, 'left');
+    rt(ctx, el ? '*E*^L = −4π*P*^L/$ε$_∞' : '*E*^L = −4π*P*^L', W - padR, G.yH1, 11.5, cGt, 'right');
+    rt(ctx, 'transverse: *P* across *q*', pad, G.yH2, 11.5, cFg2, 'left');
+    rt(ctx, 'no bound charge: ∇·*P* = 0', W - padR, G.yH2, 11, cMut, 'right');
+    const st = statusT();
+    rt(ctx, rtW(ctx, st[0], 11) <= W - pad - padR ? st[0] : st[1], pad, G.yStat, 11, cGt, 'left');
+    ctx.strokeStyle = cFg2; ctx.lineWidth = 1.2; ctx.setLineDash([]); ctx.beginPath();
+    ctx.moveTo(x0, G.yBar); ctx.lineTo(xN, G.yBar);
+    ctx.moveTo(x0, G.yBar - 4); ctx.lineTo(x0, G.yBar + 4); ctx.moveTo(xN, G.yBar - 4); ctx.lineTo(xN, G.yBar + 4); ctx.stroke();
+    rt(ctx, `one wavelength = 2π/$q$ = ${lamStr(cur.lam)}`, (x0 + xN) / 2, G.yBarL, 11.5, cFg2, 'center');
+  }
+
+  function ariaStrips() {
+    const { rL, rT, aT, el } = cur;
+    const dir = Math.abs(rT[1]) > PHS * aT ? 'phase-shifted from' : (rT[0] > 0 ? 'antiparallel to' : 'parallel to');
+    const tT = aT < 0.02 ? `a transverse field too small to draw, ${num(aT, 2)} of 4π|P|`
+      : `field arrows ${dir} the polarization, ${num(aT, 2)} of 4π|P|${aT > CAP ? ', drawn capped at 2.5 near the resonance' : ''}`;
+    cvS.canvas.setAttribute('aria-label', `Two strips, each one wavelength long (${lamStr(cur.lam)}), with q along x. ` +
+      `Longitudinal row: polarization arrows along q, sheets of positive and negative bound charge between them, and field arrows antiparallel to the polarization, ${el ? `1/ε∞ = ${num(rL, 3)} of 4π|P|` : 'as long as 4π|P|'}. ` +
+      `Transverse row: polarization arrows across q, no bound charge, and ${tT}.`);
+  }
+
+  // ---------- plot: |E|/4π|P| against q ----------
+  const XT = [-6, -5, -4, -3, -2, -1].map(e => ({ v: Math.pow(10, e), label: `10^{−${-e}}` }));
+  const YT = [-8, -6, -4, -2, 0, 2].map(e => ({ v: Math.pow(10, e), label: e === 0 ? '1' : `10^{${e < 0 ? '−' : ''}${Math.abs(e)}}` }));
+  const pl = new EPP.Plot(fig.querySelector('.x1-polwave-plot'), {
+    logx: true, logy: true, xlim: [QMIN, QMAX], ylim: [1e-8, 1e2], xticks: XT, yticks: YT,
+    aspect: 0.45, minHeight: 220, maxHeight: 320, margin: { l: 58, r: 12, t: 10, b: 44 },
+    xname: 'q', hoverX: v => num(v, 2) + ' Å⁻¹', hoverY: v => num(v, 2),
+    ariaLabel: 'Log–log plot of the field per unit polarization, |E| over 4π|P|, against the wavevector q. The longitudinal line is flat, at 1 or at 1/ε∞ with electrons. The transverse line equals it inside the shaded light cone, peaks at q_light and falls as 1/q² outside. Dots mark the current q; click to set q.'
+  });
+  const baseRender = pl.render.bind(pl);
+  pl.render = () => {
+    baseRender();
+    const ctx = pl.ctx, w = pl.cv.w, h = pl.cv.h, m = pl.m;
+    if (!w || !h || !cur) return;
+    fUI = EPP.css('--font-ui'); fTX = EPP.css('--font-text');
+    const cFg = EPP.color('fg'), cGt = EPP.textColor('photon'), c = cur;
+    rt(ctx, 'wavevector $q$ (Å^{−1})', m.l + (w - m.l - m.r) / 2, h - 8, 12.5, cFg, 'center');
+    ctx.save(); ctx.translate(16, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    rt(ctx, '|*E*| / 4π|*P*|', 0, 0, 12.5, cFg, 'center'); ctx.restore();
+    rt(ctx, '$q$_{light}', pl.X(c.qL) + 4, h - m.b - 7, 11.5, cGt, 'left');   // low on the line, clear of the peak
+    rt(ctx, 'longitudinal: flat', pl.X(1e-2), pl.Y(c.rL) - 8, 11, cGt, 'center');
+    const lx = 12 * c.qL, ly = 1 / Math.hypot(c.eps - (lx / c.k0) * (lx / c.k0), GAM * c.eps);
+    rt(ctx, w < 480 ? 'transverse' : 'transverse ∝ ($q$_{light}/$q$)^2', pl.X(lx) + 6, pl.Y(ly) - 8, 11, cGt, 'left');
+  };
+  function drawPlot() {
+    const c = cur, K = curves(c);
+    pl.draw([
+      { type: 'band', x0: QMIN, x1: c.qL, color: 'photon', alpha: 0.08, text: 'light cone', label: 'light cone' },
+      { type: 'vline', at: c.qL, color: 'photon', width: 1, dash: [2, 3] },
+      { type: 'line', x: K.xs, y: K.yL, color: 'photon', dash: [7, 4], label: 'longitudinal' },
+      { type: 'line', x: K.xs, y: K.yT, color: 'photon', label: 'transverse' },
+      { type: 'vline', at: c.q, color: 'muted', width: 1, dash: [] },
+      { type: 'points', x: [c.q], y: [c.rL], color: 'photon', r: 5.5, hollow: true },
+      { type: 'points', x: [c.q], y: [c.aT], color: 'photon', r: 3.8 }
+    ]);
+  }
+  pl.onPointer = (x, y, type) => { if (type === 'up' || !(x > 0)) return; ui.set('q', snap(EPP.clamp(x, QMIN, QMAX))); };
+
+  // ---------- readouts ----------
+  const $v = (k) => fig.querySelector('.x1-polwave-v-' + k);
+  const roV = { q: $v('q'), ql: $v('ql'), qr: $v('qr'), lam: $v('lam'), vp: $v('vp'), rl: $v('rl'), rt: $v('rt') };
+  function readouts() {
+    const c = cur, r = c.rT;
+    roV.q.innerHTML = nw(num(c.q, 2) + ' Å⁻¹');
+    roV.ql.innerHTML = `${nw(num(c.qL, 3) + ' Å⁻¹')} = ${c.el ? `√${EPSI} ${I('ω')}/${I('c')}` : `${I('ω')}/${I('c')}`}`;
+    roV.qr.textContent = num(c.q / c.qL, 3);
+    roV.lam.innerHTML = nw(lamStr(c.lam));
+    roV.vp.innerHTML = nw(`${num(c.qL / c.q, 3)} ${c.el ? `${I('c')}/√${EPSI}` : I('c')}`);
+    roV.rl.innerHTML = `${c.el ? `${num(c.rL, 3)} = 1/${EPSI}` : '1'}: antiparallel to ${BV('P')}`;
+    roV.rt.innerHTML = Math.abs(r[1]) > PHS * c.aT
+      ? `${nw(`${num(r[0], 3)} ${r[1] < 0 ? '−' : '+'} ${num(Math.abs(r[1]), 3)}i`)}: resonance, phase-shifted`
+      : `${nw(num(r[0], 3))}: ${r[0] > 0 ? 'antiparallel' : 'parallel'} to ${BV('P')}`;
+  }
+
+  // ---------- controls ----------
+  const elC = fig.querySelector('.x1-polwave-ctrls');
+  function onChange(st) {
+    cur = model(st);
+    readouts(); drawPlot(); ariaStrips(); syncAria();
+    if (anim) anim.redraw();
+  }
+  const ui = EPP.controls(elC, [
+    { key: 'q', type: 'range', label: 'wavevector q', min: QMIN, max: QMAX, value: 5e-5, log: true, step: 'any', fmt: v => num(snap(v), 2) + ' Å⁻¹' },
+    { key: 'mat', type: 'seg', label: 'material', options: [['gaas', 'GaAs TO (33.3 meV)'], ['hbn', 'hBN TO (169.9 meV)']], value: 'gaas' },
+    { key: 'el', type: 'seg', label: 'electrons', options: [['ions', 'ions only (vacuum)'], ['el', 'with electrons (ε_∞)']], value: 'ions' }
+  ], onChange);
+  cur = model(ui.state);
+  const inQ = document.getElementById(`${fig.id}-q`);
+  function syncAria() { if (inQ) inQ.setAttribute('aria-valuetext', `${num(snap(ui.state.q), 2)} per ångström`); }
+  if (inQ) inQ.addEventListener('input', syncAria);
+  syncAria();
+  { const sp = elC.querySelector(`label[for="${fig.id}-q"] > span`); if (sp) sp.innerHTML = `wavevector ${I('q')}`;
+    const b = document.getElementById(`${fig.id}-el-el`); if (b) b.innerHTML = `with electrons (${EPSI})`; }
+  // layout: the q slider and Play on one row, the two media switches on the next
+  const boxOf = (id) => { const e = document.getElementById(id); return e ? e.closest('.ctrl') : null; };
+  const bQ = boxOf(`${fig.id}-q`), bM = boxOf(`${fig.id}-mat-gaas`), bE = boxOf(`${fig.id}-el-ions`);
+  elC.style.cssText = 'display:flex;flex-wrap:wrap;gap:10px 18px;align-items:flex-end';
+  const host = document.createElement('div');
+  host.className = 'ctrl'; host.style.flex = '0 0 auto';
+  host.innerHTML = '<span class="lab"><span>animation</span></span>';
+  if (bQ) { bQ.style.flex = '1 1 280px'; bQ.after(host); } else elC.appendChild(host);
+  const brk = document.createElement('div'); brk.style.cssText = 'flex-basis:100%;height:0'; host.after(brk);
+  [bM, bE].forEach(b => { if (b) { b.style.gridColumn = ''; b.style.flex = '1 1 260px'; } });
+
+  anim = EPP.anim(fig, (t) => drawStrips(t), { buttonHost: host, autoplay: false });
+  cvS.onResize(() => anim.redraw());
+})();
+</script>

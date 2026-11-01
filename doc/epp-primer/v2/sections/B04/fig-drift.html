@@ -1,0 +1,278 @@
+  <figure class="viz" id="viz-b4-drift">
+    <p class="viz-title">Oscillator and drift: a transverse and a longitudinal mode in phase space <span class="tag">interactive</span></p>
+    <div class="viz-grid two">
+      <div class="b4-drift-pa" style="min-width:0;width:100%;max-width:440px;justify-self:center"><div class="b4-drift-h" style="font-family:var(--font-ui);font-size:0.82rem;font-weight:600;line-height:1.35;color:var(--fg-2);margin:0 0 4px">(a) Transverse mode, $\lambda=1,2$<br>$H^{\mathrm T}=\hbar\omega_q\,(X^2+P^2)/4$</div></div>
+      <div class="b4-drift-pb" style="min-width:0;width:100%;max-width:440px;justify-self:center"><div class="b4-drift-h" style="font-family:var(--font-ui);font-size:0.82rem;font-weight:600;line-height:1.35;color:var(--fg-2);margin:0 0 4px">(b) Longitudinal mode, $\lambda=3$<br>$H^{\mathrm L}=\hbar\omega_q\,P_3^2/4$: no spring</div></div>
+    </div>
+    <div class="legend b4-drift-leg1" style="margin-top:8px">
+      <span class="item"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><circle cx="7" cy="7" r="4.5" style="fill:var(--c-photon)"/></svg>state of the mode at time $t$</span>
+      <span class="item"><svg width="22" height="14" viewBox="0 0 22 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><path d="M2 7 H15" style="stroke:var(--muted);stroke-width:1.3"/><path d="M20 7 L14 4 L14 10 Z" style="fill:var(--muted)"/></svg>flow of Hamilton's equations</span>
+      <span class="item"><svg width="22" height="14" viewBox="0 0 22 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><path d="M1 12 Q11 1 21 12" style="fill:none;stroke:var(--muted);stroke-width:1.1"/></svg>constant energy</span>
+      <span class="item" data-qm><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="vertical-align:-3px;margin-right:5px"><circle cx="8" cy="8" r="6.5" style="fill:none;stroke:var(--muted);stroke-width:1.3;stroke-dasharray:3 2.4"/></svg>vacuum</span>
+      <span class="item" data-qm><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="vertical-align:-3px;margin-right:5px"><circle cx="8" cy="8" r="7" style="fill:var(--c-photon);fill-opacity:0.22"/><circle cx="8" cy="8" r="2.6" style="fill:var(--c-photon)"/></svg>coherent state</span>
+      <span class="item" data-qm><svg width="22" height="14" viewBox="0 0 22 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><rect x="1" y="4" width="20" height="6" style="fill:var(--c-photon);fill-opacity:0.2"/></svg>states allowed by Gauss's law</span>
+    </div>
+    <div class="b4-drift-h" style="font-family:var(--font-ui);font-size:0.82rem;font-weight:600;line-height:1.35;color:var(--fg-2);margin:14px 0 4px">(c) Energy of each mode against time, <span class="nw">in units of $\hbar\omega_q$</span></div>
+    <div class="b4-drift-pe"></div>
+    <div class="legend b4-drift-leg2">
+      <span class="item" style="color:var(--c-photon)"><span class="sw"></span><span style="color:var(--fg-2)">transverse: electric, $\hbar\omega_qP^2/4$</span></span>
+      <span class="item" style="color:var(--c-5)"><span class="sw"></span><span style="color:var(--fg-2)">transverse: magnetic, $\hbar\omega_qX^2/4$</span></span>
+      <span class="item" style="color:var(--fg)"><span class="sw" style="border-top-width:1.5px"></span><span style="color:var(--fg-2)">transverse: total</span></span>
+      <span class="item" style="color:var(--c-photon)"><span class="sw dash"></span><span style="color:var(--fg-2)">longitudinal: electric only (= Coulomb)</span></span>
+    </div>
+    <div class="b4-drift-ctrls"></div>
+    <div class="readout b4-drift-ro" aria-live="polite"><span>$\hbar\omega_q$<b class="b4-drift-v-hw"></b></span><span>$2\pi/q$<b class="b4-drift-v-len"></b></span><span>period $2\pi/\omega_q$<b class="b4-drift-v-per"></b></span><span>$\bar n=(X_0^2+P_0^2)/4$<b class="b4-drift-v-n"></b></span><span>$\langle H^{\mathrm T}\rangle=\hbar\omega_q(\bar n+\tfrac12)$<b class="b4-drift-v-ht"></b></span><span>$H^{\mathrm L}=\hbar\omega_qP_0^2/4$<b class="b4-drift-v-hl"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> The transverse point circles, and its energy sloshes between the electric and the magnetic part: an oscillator, whose energy changes in quanta <span class="nw">$\hbar\omega_q$.</span> The longitudinal point never turns back, and with $P_0=0$ it does not move at all. Its energy is purely electric, constant and set by the charge: the Coulomb energy.</p><div class="cap-more">
+      <p><strong>Marks.</strong> Each panel is the phase plane of one mode: the coordinate $X$ (across) measures the vector potential, the momentum $P$ (up) minus the electric field. The rose dot is the state at time <span class="nw">$t$,</span> on its path: the circle in (a), the dashed line in (b). With the quantum states on, the dashed unit circle is the vacuum, <span class="nw">$\langle X^2\rangle=\langle P^2\rangle=1$,</span> and the rose disc a coherent state, the vacuum moved to the classical point. The band in (b) holds the states that Gauss's law allows: $P_3$ fixed, $X_3$ undetermined. Panel (c) shows classical energies; the vertical line marks <span class="nw">$t$.</span></p>
+      <p><strong>Try.</strong> Set <span class="nw">$P_0=0$,</span> no charge: the longitudinal point stops, while the transverse one still circles. Raise <span class="nw">$q$:</span> the rotation runs faster in time and the quanta grow, but the drift keeps its form. Switch the quantum states off and on.</p>
+      <p><strong>Model.</strong> One mode of the free field, as a single real coordinate in the units of <a class="eqref" href="#b4-eq-ladder">(B4.17)</a>: $X=A_{\bq\lambda}/(2\pi\hbar c^2/\OVSC\omega_q)^{1/2}$ and <span class="nw">$P=-E_{\bq\lambda}/(2\pi\hbar\omega_q/\OVSC)^{1/2}$,</span> so that <span class="nw">$[X,P]=2\ii$,</span> with <span class="nw">$\omega_q=cq$.</span> Its terms of <a class="eqref" href="#b4-eq-Hfield">(B4.14)</a>, $H^{\mathrm T}$ and <span class="nw">$H^{\mathrm L}$,</span> turn the state clockwise at $\omega_q$ and drive the drift <span class="nw">$\partial_tX_3=\omega_qP_3$,</span> which is <span class="nw">$\partial_tA_{\bq3}=-cE_{\bq3}$.</span> Gauss's law, <span class="nw">$E_{\bq3}=-4\pi\ii\rho_\bq/q$,</span> fixes <span class="nw">$P_3$,</span> and <a class="eqref" href="#b4-eq-coulomb">(B4.20)</a> makes $H^{\mathrm L}$ the Coulomb energy. Panel (b) uses $\omega_q$ only as a plotting scale. $\bar n$ is the mean photon number of the coherent state. At <span class="nw">$q=10^{-4}$&nbsp;Å⁻¹:</span> <span class="nw">$\hbar\omega_q=0.197$&nbsp;eV</span> (mid-infrared), <span class="nw">$2\pi/q=6.3$&nbsp;µm,</span> period 21&nbsp;fs.</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b4-drift');
+  if (!fig || !window.EPP) return;
+  // ---------- constants ----------
+  // ħc in eV Å, ħ in eV fs; the q slider is in units of 1e-4 1/Å
+  const HBARC = 1973.27, HBAR = 0.6582119569, TAU = 2 * Math.PI;
+  const LIM = 4.5, TWIN = 70, TK = [-4, -2, 0, 2, 4];   // phase-plane half-width; time window of (c) in fs, longer than the longest period (66 fs)
+  const RATE = TAU / 3;                                 // animation: one transverse period every 3 s of real time
+
+  // ---------- physics ----------
+  // One mode in the units of (B4.17): X = A_qλ / (2πħc²/Ω ω_q)^(1/2), P = −E_qλ / (2πħω_q/Ω)^(1/2), [X, P] = 2i,
+  // with Ω the supercell volume. Its terms of (B4.14):
+  //   transverse, λ = 1, 2: H^T = ħω_q (X² + P²)/4, so dX/dt = ω_q P and dP/dt = −ω_q X, a clockwise rotation;
+  //   longitudinal, λ = 3:  H^L = ħω_q P3²/4 (no spring), so dP3/dt = 0 and dX3/dt = ω_q P3, i.e. ∂_t A_q3 = −c E_q3.
+  // ph = ω_q t is the phase of the transverse rotation; P3 = P0 is fixed by Gauss's law, E_q3 = −4πi ρ_q / q.
+  const qOf = (s) => s.q4 * 1e-4;                       // q in 1/Å
+  const hwOf = (s) => HBARC * qOf(s);                   // ħω_q = ħcq in eV
+  const wOf = (s) => hwOf(s) / HBAR;                    // ω_q in rad/fs
+  const rot = (X0, P0, ph) => { const c = Math.cos(ph), s = Math.sin(ph); return [X0 * c + P0 * s, P0 * c - X0 * s]; };
+  const drift = (X0, P0, ph) => [X0 + P0 * ph, P0];
+  // classical energies over the window of (c), in units of ħω_q
+  function series(s) {
+    const w = wOf(s), n = 1801, t = EPP.linspace(0, TWIN, n), eE = new Array(n), eB = new Array(n);
+    for (let i = 0; i < n; i++) { const [X, P] = rot(s.X0, s.P0, w * t[i]); eE[i] = P * P / 4; eB[i] = X * X / 4; }
+    const tot = (s.X0 * s.X0 + s.P0 * s.P0) / 4, eL = s.P0 * s.P0 / 4;
+    return { t, eE, eB, tot: t.map(() => tot), eL: t.map(() => eL) };
+  }
+
+  // ---------- canvas text ----------
+  // '$...$' is math: its letters (Latin, Greek, ħ) are italic in the text font, digits and signs upright;
+  // '[x]' is a bold upright vector; _x, _{...}, ^x, ^{...} are sub- and superscripts (one level, markup allowed inside).
+  // A script written outside '$' stays upright: '$H$^T'.
+  const ITAL = /[A-Za-zα-ωħℓ]/;
+  let FT = '', FU = '';
+  function runs(s) {
+    const out = [], mode = { math: false, bold: false };
+    const push = (ch, lvl) => {
+      const it = mode.math && !mode.bold && ITAL.test(ch), L = out[out.length - 1];
+      if (L && L.lvl === lvl && L.it === it && L.b === mode.bold) L.t += ch; else out.push({ t: ch, lvl, it, b: mode.bold });
+    };
+    const walk = (str, lvl) => {
+      for (let k = 0; k < str.length;) {
+        const ch = str[k];
+        if (ch === '$') { mode.math = !mode.math; k++; }
+        else if (ch === '[') { mode.bold = true; k++; }
+        else if (ch === ']') { mode.bold = false; k++; }
+        else if ((ch === '_' || ch === '^') && k + 1 < str.length) {
+          let g;
+          if (str[k + 1] === '{') { let e = str.indexOf('}', k + 2); if (e < 0) e = str.length; g = str.slice(k + 2, e); k = e + 1; }
+          else { g = str[k + 1]; k += 2; }
+          const keep = { math: mode.math, bold: mode.bold };
+          walk(g, ch === '_' ? -1 : 1);
+          mode.math = keep.math; mode.bold = keep.bold;
+        } else { push(ch, lvl); k++; }
+      }
+    };
+    walk(String(s), 0);
+    return out;
+  }
+  const runFont = (r, size) => { const sz = r.lvl ? Math.round(size * 0.72) : size; return r.it ? `italic ${sz + 1}px ${FT}` : `${r.b ? '700 ' : ''}${sz}px ${FU}`; };
+  function rich(ctx, s, x, y, o = {}) {
+    FT = EPP.css('--font-text'); FU = EPP.css('--font-ui');
+    const size = o.size || 11.5, rs = runs(s);
+    // a little air after an italic letter that is followed by upright text (italic correction)
+    const ws = rs.map((r, k) => { ctx.font = runFont(r, size); const nx = rs[k + 1]; return ctx.measureText(r.t).width + (r.it && nx && !nx.it && nx.lvl !== -1 ? 0.1 * size : 0); });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    let x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    if (o.color) ctx.fillStyle = o.color;
+    const ta = ctx.textAlign; ctx.textAlign = 'left';
+    rs.forEach((r, k) => { ctx.font = runFont(r, size); ctx.fillText(r.t, x0, y + (r.lvl === -1 ? size * 0.28 : (r.lvl === 1 ? -size * 0.38 : 0))); x0 += ws[k]; });
+    ctx.textAlign = ta;
+    return tot;
+  }
+
+  // ---------- panels: axis titles and annotations are drawn here, so that variables are italic and vectors bold ----------
+  function decorate(plot, axis) {
+    const base = plot.render.bind(plot);
+    plot.b4Labels = [];
+    plot.render = () => {
+      base();
+      const ctx = plot.ctx, w = plot.cv.w, h = plot.cv.h, m = plot.m;
+      if (!w || !h) return;
+      const cFg = EPP.css('--fg');
+      ctx.save();
+      ctx.textBaseline = 'alphabetic';
+      rich(ctx, axis.x, m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, align: 'center', color: cFg });
+      ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+      rich(ctx, axis.y, 0, 0, { size: 12.5, align: 'center', color: cFg });
+      ctx.restore();
+      ctx.save(); ctx.textBaseline = 'middle';
+      for (const L of plot.b4Labels) {
+        const X = plot.X(L.x) + (L.dx || 0), Y = plot.Y(L.y) + (L.dy || 0), size = L.size || 11;
+        // a plate of the background colour keeps the message legible over grid, level lines and flow arrows
+        const tw = rich(ctx, L.text, 0, 0, { size, measure: true }), x0 = L.align === 'center' ? X - tw / 2 : (L.align === 'right' ? X - tw : X);
+        ctx.fillStyle = EPP.alpha('surface', 0.88); ctx.fillRect(x0 - 3, Y - 0.75 * size, tw + 6, 1.5 * size);
+        rich(ctx, L.text, X, Y, { size, align: L.align, color: EPP.textColor(L.color) });
+      }
+      ctx.restore();
+    };
+  }
+  // the inner frames are square (l + r = t + b, aspect 1), so circles stay round; the boxes are capped at 440 px
+  const base = { xlim: [-LIM, LIM], ylim: [-LIM, LIM], xticks: TK, yticks: TK, aspect: 1, legend: false, hover: false, minHeight: 240, maxHeight: 440, margin: { l: 46, r: 12, t: 14, b: 44 } };
+  const pT = new EPP.Plot(fig.querySelector('.b4-drift-pa'), Object.assign({ ariaLabel: 'Panel a: phase plane of a transverse mode' }, base));
+  const pL = new EPP.Plot(fig.querySelector('.b4-drift-pb'), Object.assign({ ariaLabel: 'Panel b: phase plane of the longitudinal mode' }, base));
+  const HWQ = '<i style="font-family:var(--font-text)">ħω</i><sub><i style="font-family:var(--font-text)">q</i></sub>';
+  const pE = new EPP.Plot(fig.querySelector('.b4-drift-pe'), {
+    xlim: [0, TWIN], ylim: [-0.06, 2.2], yticks: [0, 0.5, 1, 1.5, 2], aspect: 0.34, minHeight: 200, maxHeight: 290, legend: false,
+    margin: { l: 58, r: 14, t: 12, b: 44 }, xname: 'time', hoverX: v => `${EPP.fix(v, 1)} fs`, hoverY: v => `${EPP.fix(v, 3)} ${HWQ}`,
+    ariaLabel: 'Panel c: electric, magnetic and total energy of the transverse mode, and the constant electric energy of the longitudinal mode, against time in femtoseconds, in units of the photon energy'
+  });
+  decorate(pT, { x: '$X$ ∝ $A_{[q]λ}$ (vector potential)', y: '$P$ ∝ −$E_{[q]λ}$ (electric field)' });
+  decorate(pL, { x: '$X_3$ ∝ $A_{[q]3}$ (vector potential)', y: '$P_3$ ∝ −$E_{[q]3}$ (electric field)' });
+  decorate(pE, { x: 'time $t$ (fs)', y: 'energy / $ħω_q$' });
+
+  // ---------- fixed marks: flow of Hamilton's equations and curves of constant energy ----------
+  const circle = (cx, cy, r, n = 160) => { const x = [], y = []; for (let k = 0; k <= n; k++) { const a = TAU * k / n; x.push(cx + r * Math.cos(a)); y.push(cy + r * Math.sin(a)); } return { x, y }; };
+  const disc = (cx, cy, r, n = 60) => { const x = [], y1 = [], y2 = []; for (let k = 0; k <= n; k++) { const xx = -r + 2 * r * k / n, d = Math.sqrt(Math.max(0, r * r - xx * xx)); x.push(cx + xx); y1.push(cy + d); y2.push(cy - d); } return { x, y1, y2 }; };
+  const GRID = [-3, -1.5, 0, 1.5, 3];
+  const FIX_T = [], FIX_L = [];
+  // transverse: circles X² + P² = const; flow (dX, dP) ∝ (P, −X)
+  [1, 2, 3].forEach(r => { const c = circle(0, 0, r); FIX_T.push({ type: 'line', x: c.x, y: c.y, color: 'muted', width: 0.8, opacity: 0.45 }); });
+  GRID.forEach(x => GRID.forEach(y => { if (x === 0 && y === 0) return; const vx = 0.17 * y, vy = -0.17 * x; FIX_T.push({ type: 'arrow', x0: x - vx / 2, y0: y - vy / 2, x1: x + vx / 2, y1: y + vy / 2, color: 'muted', width: 1, head: 5, opacity: 0.55 }); }));
+  // longitudinal: lines P3 = const; flow (dX3, dP3) ∝ (P3, 0)
+  [-3, -2, -1, 1, 2, 3].forEach(p => FIX_L.push({ type: 'line', x: [-LIM, LIM], y: [p, p], color: 'muted', width: 0.8, opacity: 0.45 }));
+  GRID.forEach(x => GRID.forEach(y => { if (y === 0) return; const vx = 0.17 * y; FIX_L.push({ type: 'arrow', x0: x - vx / 2, y0: y, x1: x + vx / 2, y1: y, color: 'muted', width: 1, head: 5, opacity: 0.55 }); }));
+
+  // ---------- state ----------
+  let st = null, ser = null, ph = 0, prev = null;
+  const roV = {};
+  ['hw', 'len', 'per', 'n', 'ht', 'hl'].forEach(k => { roV[k] = fig.querySelector('.b4-drift-v-' + k); });
+  const qmItems = [...fig.querySelectorAll('.b4-drift-leg1 [data-qm]')];
+
+  function draw() {
+    if (!st || !ser) return;
+    const t0 = performance.now();
+    const { X0, P0, qm } = st;
+    const [XT, PT] = rot(X0, P0, ph), [XL, PL] = drift(X0, P0, ph), r0 = Math.hypot(X0, P0);
+    // (a) transverse: the orbit, the state, and the vacuum and coherent state
+    const LT = FIX_T.slice();
+    if (qm) { const v = circle(0, 0, 1); LT.push({ type: 'line', x: v.x, y: v.y, color: 'muted', width: 1.3, dash: [3, 3] }); }
+    if (r0 > 1e-3) { const o = circle(0, 0, r0); LT.push({ type: 'line', x: o.x, y: o.y, color: 'photon', width: 2 }); }
+    if (qm) { const d = disc(XT, PT, 1); LT.push({ type: 'fill', x: d.x, y1: d.y1, y2: d.y2, color: 'photon', alpha: 0.2 }); }
+    LT.push({ type: 'points', x: [XT], y: [PT], color: 'photon', r: 5 });
+    pT.draw(LT);
+    // (b) longitudinal: the band that Gauss's law allows, the open path and the drifting state
+    const LL = FIX_L.slice(), labs = [];
+    if (qm) LL.push({ type: 'hband', y0: PL - 0.22, y1: PL + 0.22, color: 'photon', alpha: 0.16 });
+    if (Math.abs(P0) > 0.02) LL.push({ type: 'line', x: [X0, P0 > 0 ? LIM : -LIM], y: [P0, P0], color: 'photon', width: 2, dash: [7, 4] });
+    else labs.push({ x: 0, y: -3.95, text: '$P_3$ = 0 (no charge): $X_3$ is pure gauge', color: 'fg2', size: 11, align: 'center' });
+    if (Math.abs(XL) <= LIM) LL.push({ type: 'points', x: [XL], y: [PL], color: 'photon', r: 5 });
+    else labs.push({ x: XL > 0 ? 4.3 : -4.3, y: PL + 0.45, text: XL > 0 ? 'runs off →' : '← runs off', color: 'photon', size: 11, align: XL > 0 ? 'right' : 'left' });
+    pL.b4Labels = labs;
+    pL.draw(LL);
+    // (c) energies against time, with the present time marked. When the energy oscillates faster than once per
+    // 14 px (high q, narrow screen) the oscillating curves are thinned and the two constant lines get a halo.
+    const tfs = ph / wOf(st);
+    const pxPerOsc = Math.max(1, pE.cv.w - pE.m.l - pE.m.r) * Math.PI / (wOf(st) * TWIN), dense = pxPerOsc < 14;
+    const wOsc = dense ? 1 : 1.8, aOsc = dense ? 0.6 : 1;
+    const halo = (y) => (dense ? { type: 'line', x: [0, TWIN], y: [y, y], color: 'surface', width: 5 } : null);
+    pE.draw([
+      { type: 'line', x: ser.t, y: ser.eE, color: 'photon', width: wOsc, opacity: aOsc, label: 'transverse: electric' },
+      { type: 'line', x: ser.t, y: ser.eB, color: 'c5', width: wOsc, opacity: aOsc, label: 'transverse: magnetic' },
+      halo(ser.tot[0]),
+      { type: 'line', x: ser.t, y: ser.tot, color: 'ink', width: 1.4, label: 'transverse: total' },
+      halo(ser.eL[0]),
+      { type: 'line', x: ser.t, y: ser.eL, color: 'photon', width: 2, dash: [8, 4], label: 'longitudinal: electric (Coulomb)' },
+      tfs <= TWIN ? { type: 'vline', at: tfs, color: 'muted', width: 1.2 } : null
+    ]);
+    fig.dataset.redrawMs = (performance.now() - t0).toFixed(2);
+  }
+
+  // ---------- readouts and descriptions ----------
+  const fmtE = (eV) => (eV >= 1 ? `${EPP.fmt(eV, 3)} eV` : `${EPP.fmt(eV * 1e3, 3)} meV`);
+  const f3 = (v) => (v < 10 ? v.toFixed(2) : v < 100 ? v.toFixed(1) : v.toFixed(0));
+  const f2 = (v) => EPP.fix(Math.abs(v) < 5e-3 ? 0 : v, 2);
+  // q slider value (units of 1e-4 1/Å) in scientific notation: 3.16×10⁻⁵ Å⁻¹ … 1.00×10⁻³ Å⁻¹
+  const SUP = { '-': '⁻', 0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴', 5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹' };
+  const qfmt = (v) => {
+    const q = v * 1e-4; let e = Math.floor(Math.log10(q) + 1e-9), m = q / Math.pow(10, e);
+    if (m >= 9.995) { m /= 10; e += 1; }
+    return `${m.toFixed(2)}×10${String(e).replace(/./g, c => SUP[c])} Å⁻¹`;
+  };
+  function readouts() {
+    const E = hwOf(st), nbar = (st.X0 * st.X0 + st.P0 * st.P0) / 4;
+    roV.hw.textContent = fmtE(E);
+    roV.len.textContent = `${f3(TAU / qOf(st) * 1e-4)} µm`;
+    roV.per.textContent = `${f3(TAU / wOf(st))} fs`;
+    roV.n.textContent = f2(nbar);
+    roV.ht.textContent = fmtE(E * (nbar + 0.5));
+    roV.hl.textContent = fmtE(E * st.P0 * st.P0 / 4);
+  }
+  function describe() {
+    const { X0, P0, qm } = st, r0 = Math.hypot(X0, P0);
+    pT.cv.canvas.setAttribute('aria-label', 'Panel a: phase plane of a transverse mode, X (vector potential) across and P (minus the electric field) up, with grey flow arrows and circles of constant energy. ' +
+      `The state starts at X = ${f2(X0)}, P = ${f2(P0)} and circles clockwise on a circle of radius ${f2(r0)}, once every ${f3(TAU / wOf(st))} fs.` +
+      (qm ? ' A dashed unit circle marks the vacuum, and a disc of radius 1 around the state marks a coherent state.' : ''));
+    pL.cv.canvas.setAttribute('aria-label', Math.abs(P0) > 0.02
+      ? `Panel b: phase plane of the longitudinal mode, X3 across and P3 up, with horizontal flow arrows. P3 stays at ${f2(P0)}, fixed by the charge, and X3 drifts to the ${P0 > 0 ? 'right' : 'left'} from ${f2(X0)} without turning back.` + (qm ? ' A band at this P3 marks the states that Gauss’s law allows.' : '')
+      : `Panel b: phase plane of the longitudinal mode. P3 = 0, no charge: the state stays at X3 = ${f2(X0)}, and X3 is pure gauge.`);
+  }
+
+  // ---------- controls ----------
+  function onChange(s) {
+    if (prev && (s.X0 !== prev.X0 || s.P0 !== prev.P0)) ph = 0;   // a new initial state starts the clock again
+    prev = { X0: s.X0, P0: s.P0 };
+    st = s; ser = series(s);
+    readouts(); describe();
+    qmItems.forEach(e => { e.style.opacity = s.qm ? '' : '0.4'; });
+    draw();
+  }
+  const elC = fig.querySelector('.b4-drift-ctrls');
+  EPP.controls(elC, [
+    { key: 'q4', type: 'range', label: 'photon wavevector q', min: Math.pow(10, -0.5), max: 10, value: 1, step: 0.01, log: true, fmt: qfmt },
+    { key: 'X0', type: 'range', label: 'initial X_0', min: -2, max: 2, step: 0.05, value: -1.5, fmt: f2 },
+    { key: 'P0', type: 'range', label: 'initial P_0 (λ = 3: set by the charge)', min: -2, max: 2, step: 0.05, value: 1, fmt: f2 },
+    { key: 'qm', type: 'toggle', label: 'show quantum states', value: true }
+  ], onChange);
+  // slider labels with italic variables
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const relabel = (key, html) => { const sp = elC.querySelector(`label[for="${fig.id}-${key}"] > span`); if (sp) sp.innerHTML = html; };
+  relabel('q4', `photon wavevector ${I('q')}`);
+  relabel('X0', `initial ${I('X')}<sub>0</sub>`);
+  relabel('P0', `initial ${I('P')}<sub>0</sub> (${I('λ')} = 3: set by the charge)`);
+
+  // ---------- animation: the Play/Pause button shares a cell with the quantum-state toggle ----------
+  // two columns on wide screens, one on phones, so that no slider label wraps
+  elC.style.gridTemplateColumns = 'repeat(auto-fill, minmax(290px, 1fr))';
+  const host = document.createElement('div');
+  host.className = 'ctrl b4-drift-play';
+  host.style.cssText = 'display:flex;flex-wrap:wrap;align-items:center;gap:8px 24px;align-self:end';
+  elC.appendChild(host);
+  const tog = elC.querySelector('.ctrl.toggle');
+  if (tog) host.appendChild(tog);
+  const anim = EPP.anim(fig, (t, dt) => {
+    if (!st) return;
+    ph += dt * RATE;
+    // loop after a whole number of periods (two, or one when two do not fit the window), so the transverse state closes its circle
+    const turns = EPP.clamp(Math.floor(TWIN * wOf(st) / TAU), 1, 2);
+    if (ph > turns * TAU) ph = 0;
+    draw();
+  }, { buttonHost: host });
+  void anim;
+  // outside its section (a stand-alone test), equation links have no target: keep their text, drop the link
+  if (!fig.closest('#b-fields')) fig.querySelectorAll('a.eqref').forEach(a => { if (!document.getElementById((a.getAttribute('href') || '').slice(1))) { const sp = document.createElement('span'); sp.textContent = a.textContent; a.replaceWith(sp); } });
+})();
+</script>

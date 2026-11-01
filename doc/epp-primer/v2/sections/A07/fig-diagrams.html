@@ -1,0 +1,153 @@
+  <figure class="viz" id="viz-a7-diagrams">
+    <p class="viz-title">The electron–phonon self-energy as diagrams <span class="tag">diagram</span></p>
+    <p class="a7-diagrams-hd" style="margin:0;font-family:var(--font-ui);font-size:0.86rem;font-weight:600;color:var(--fg-2)">(a) The Dyson equation <a class="eqref" href="#a7-eq-dyson">(A7.3)</a>: the full propagator, built on the clamped-nuclei one</p>
+    <div class="fd a7-diagrams-row">
+      <figure style="width:120px"><div data-d="G"></div><figcaption>$G$: nuclei moving</figcaption></figure>
+      <div class="a7-diagrams-term"><span class="op">=</span><figure style="width:120px"><div data-d="Gcn"></div><figcaption>$G^{\mathrm{cn}}$: nuclei clamped</figcaption></figure></div>
+      <div class="a7-diagrams-term"><span class="op">+</span><figure style="width:176px"><div data-d="dyson"></div><figcaption>$\Sigma^{\mathrm{ep}}$: all that the motion of the nuclei adds</figcaption></figure></div>
+    </div>
+    <p class="a7-diagrams-hd" style="margin:0;font-family:var(--font-ui);font-size:0.86rem;font-weight:600;color:var(--fg-2)">(b) The three parts of the self-energy <a class="eqref" href="#a7-eq-split">(A7.4)</a></p>
+    <div class="fd a7-diagrams-row">
+      <figure style="width:74px"><div data-d="sigma"></div></figure>
+      <div class="a7-diagrams-term"><span class="op">=</span><figure style="width:160px"><div data-d="fm"></div><figcaption>$\Sigma^{\mathrm{FM}}$: two screened vertices</figcaption></figure></div>
+      <div class="a7-diagrams-term"><span class="op">+</span><figure style="width:128px"><div data-d="dw"></div><figcaption>$\Sigma^{\mathrm{DW}}$: equal-time loop, static</figcaption></figure></div>
+      <div class="a7-diagrams-term"><span class="op">+</span><figure style="width:264px"><div data-d="dgw"></div><figcaption>$\Sigma^{\mathrm{dGW}}$: change of the electronic GW term (dropped)</figcaption></figure></div>
+    </div>
+    <p class="a7-diagrams-hd" style="margin:0;font-family:var(--font-ui);font-size:0.86rem;font-weight:600;color:var(--fg-2)">(c) Counting screened vertices</p>
+    <div class="fd a7-diagrams-row">
+      <figure style="width:204px"><div data-d="bubble"></div><figcaption>$\Pi^{\ph}$ (<a href="#a-phonon-se">Section A.6</a>): one bare, one screened</figcaption></figure>
+      <div class="a7-diagrams-term"><span class="op a7-diagrams-vs">versus</span><figure style="width:160px"><div data-d="fm2"></div><figcaption>$\Sigma^{\mathrm{FM}}$: both ends screened</figcaption></figure></div>
+    </div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> Everything the moving nuclei add sits in <span class="nw">$\Sigma^{\mathrm{ep}}$,</span> on top of <span class="nw">$G^{\mathrm{cn}}$.</span> The Fan–Migdal phonon line joins two times, so that term depends on frequency; the Debye–Waller loop starts and ends at one time, so that term is static. Both Fan–Migdal vertices are screened, while the phonon self-energy has one bare and one screened vertex.</p><div class="cap-more">
+      <p><strong>Marks.</strong> Arrows point the way the electron propagates; each row follows its formula, so the electron enters on the right. Thin line: <span class="nw">$G^{\mathrm{cn}}$;</span> thick double line: the full <a class="sym" href="#gl-a5-G">propagator $G$</a>. Amber zigzag: the <a class="sym" href="#gl-a5-F">phonon propagator $F$</a>, thick when full, thin when free. Rose double dashed line: the <a class="sym" href="#gl-a5-W">interaction screened by the electrons</a>, bold for $W^{\mathrm{e}}$ and thin for <span class="nw">$W^{\mathrm{e,cn}}$.</span> Large grey disk: a self-energy. Small grey disk: a screened vertex <span class="nw">$g$,</span> which DFPT computes. Small solid dot: a bare vertex, the unscreened potential change <span class="nw">$\Delta_{\bq\nu}V^{\mathrm{en}}$.</span> Hatched disk: the <a class="sym" href="#gl-a3-gDW">second-order vertex $g^{\mathrm{DW}}$</a>. Short stubs show where outside lines attach.</p>
+      <p><strong>Try.</strong> Read the Fan–Migdal diagram from right to left: the electron emits a phonon at one screened vertex, propagates, and reabsorbs it at the other. In the bubble of (c), one end of the phonon line meets the bare potential; the chain of further bubbles that screens it is already inside the other vertex.</p>
+      <p><strong>Model.</strong> Equations <a class="eqref" href="#a7-eq-dyson">(A7.3)</a>–<a class="eqref" href="#a7-eq-wph">(A7.5)</a> with the <a class="sym" href="#gl-a5-Lambda">vertex function $\Lambda$</a> set to one and not drawn, after the review's Figs. 2 and 1(c). The working formula <a class="eqref" href="#a7-eq-fm">(A7.8)</a> makes the thick lines of $\Sigma^{\mathrm{FM}}$ thin, and the Debye–Waller loop becomes the factor $2n_{\bq\nu}+1$ of <a class="eqref" href="#a7-eq-dw">(A7.12)</a>. $\Sigma^{\mathrm{dGW}}$ has never been computed and is dropped.</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a7-diagrams');
+  if (!fig || !window.EPP) return;
+  // outside Section A.7 (the isolated figure test) the links to the section have no target: show them as text
+  if (!fig.closest('#a-electron-se')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+  const NS = 'http://www.w3.org/2000/svg';
+  const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
+
+  // ---------- glyphs that EPP.fd does not draw ----------
+  // small grey disk: screened vertex g; hatched disk: second-order vertex g^DW; a word; the minus sign of dGW
+  const disk = (g, x, y) => {
+    mk('circle', { cx: x, cy: y, r: 6.5, fill: EPP.color('surface') }, g); // opaque base hides the line ends
+    mk('circle', { cx: x, cy: y, r: 6.5, fill: EPP.alpha('muted', 0.6), stroke: EPP.color('muted'), 'stroke-width': 1.3 }, g);
+  };
+  const hatch = (g, x, y, r) => {
+    const pat = mk('pattern', { id: 'a7-diagrams-hatch', width: 3.4, height: 3.4, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)' }, mk('defs', {}, g));
+    mk('line', { x1: 0.85, y1: 0, x2: 0.85, y2: 3.4, stroke: EPP.color('muted'), 'stroke-width': 1.2 }, pat);
+    mk('circle', { cx: x, cy: y, r, fill: EPP.color('surface') }, g);
+    mk('circle', { cx: x, cy: y, r, fill: 'url(#a7-diagrams-hatch)', stroke: EPP.color('muted'), 'stroke-width': 1.4 }, g);
+  };
+  const word = (g, s, x, y, anchor) => {
+    const t = mk('text', { x, y, 'text-anchor': anchor || 'middle', fill: EPP.color('fg2'), 'font-family': EPP.css('--font-ui'), 'font-size': 12.5 }, g);
+    t.textContent = s;
+  };
+  const minus = (g, x, y) => {
+    const t = mk('text', { x, y: y + 7, 'text-anchor': 'middle', fill: EPP.color('muted'), 'font-family': EPP.css('--font-text'), 'font-size': 22 }, g);
+    t.textContent = '−';
+  };
+
+  // ---------- the diagrams ----------
+  // Electron lines run from right to left (a: where the electron is created, b: where it is removed), so each row
+  // reads like its formula: in G^cn Σ^ep G the rightmost factor acts first. Thin: clamped nuclei; '2': full (dressed).
+  // Fan–Migdal: stubs, the internal line G, the phonon arc F; the screened vertices are added by deco.
+  const fmItems = (y) => [
+    { t: 'fermion', a: [26, y], b: [4, y], arrow: false },
+    { t: 'fermion', a: [156, y], b: [134, y], arrow: false },
+    { t: 'fermion2', a: [134, y], b: [26, y], label: 'G' },
+    { t: 'phonon2', a: [26, y], b: [134, y], bend: 0.42, label: 'F', ldist: 16 }
+  ];
+  const fmDeco = (g, y) => { disk(g, 26, y); disk(g, 134, y); };
+  const D = {
+    G: { w: 80, h: 58, y: 36, items: (y) => [{ t: 'fermion2', a: [74, y], b: [6, y], label: 'G', lpos: 'right', ldist: 14 }],
+      aria: 'Full electron propagator G, with the nuclei moving: a thick double line whose arrow points left.' },
+    Gcn: { w: 80, h: 58, y: 36, items: (y) => [{ t: 'fermion', a: [74, y], b: [6, y], label: 'G^{cn}', lpos: 'right', ldist: 14 }],
+      aria: 'Clamped-nuclei propagator G cn: a thin line whose arrow points left.' },
+    dyson: { w: 172, h: 58, y: 36, items: (y) => [
+      { t: 'fermion', a: [66, y], b: [6, y], label: 'G^{cn}', lpos: 'right', ldist: 14 },
+      { t: 'fermion2', a: [166, y], b: [106, y], label: 'G', lpos: 'right', ldist: 14 },
+      { t: 'blob', at: [86, y], r: 19, color: 'muted', label: 'Σ^{ep}' }
+    ], aria: 'Second term of the Dyson equation: the electron enters on the right along the thick double line G, passes the large grey disk Sigma ep, and leaves on the left along the thin line G cn.' },
+    sigma: { w: 74, h: 112, y: 80, items: (y) => [
+      { t: 'fermion', a: [20, y], b: [4, y], arrow: false },
+      { t: 'fermion', a: [70, y], b: [54, y], arrow: false },
+      { t: 'blob', at: [37, y], r: 18, color: 'muted', label: 'Σ^{ep}' }
+    ], aria: 'The electron–phonon self-energy Sigma ep: a large grey disk with two short electron stubs.' },
+    fm: { w: 160, h: 112, y: 80, items: fmItems, deco: fmDeco,
+      aria: 'Fan–Migdal self-energy: a thick electron line G from right to left, spanned by a thick zigzag phonon arc F; each end of the arc is a small grey disk, a screened vertex.' },
+    dw: { w: 104, h: 112, y: 80, items: (y) => [
+      { t: 'fermion', a: [44, y], b: [8, y], arrow: false },
+      { t: 'fermion', a: [96, y], b: [60, y], arrow: false },
+      { t: 'phonon2', a: [52, y - 8], b: [52, y - 52], bend: 0.5 },
+      { t: 'phonon2', a: [52, y - 52], b: [52, y - 8], bend: 0.5, label: 'F', ldist: 14 },
+      { t: 'text', at: [52, y + 28], text: 'g^{DW}' }
+    ], deco: (g, y) => hatch(g, 52, y, 8),
+      aria: 'Debye–Waller self-energy: a thick zigzag phonon loop F that starts and ends at one hatched disk, the second-order vertex g DW, on the electron line. The loop takes no time, so the term is static.' },
+    dgw: { w: 264, h: 112, y: 80, items: (y) => [
+      { t: 'fermion', a: [14, y], b: [2, y], arrow: false },
+      { t: 'fermion', a: [116, y], b: [104, y], arrow: false },
+      { t: 'fermion2', a: [104, y], b: [14, y], label: 'G' },
+      { t: 'screened', a: [14, y], b: [104, y], bend: 0.45, label: 'W^{e}' },
+      { t: 'fermion', a: [160, y], b: [148, y], arrow: false },
+      { t: 'fermion', a: [262, y], b: [250, y], arrow: false },
+      { t: 'fermion', a: [250, y], b: [160, y], label: 'G^{cn}', ldist: 14 },
+      { t: 'screened', a: [160, y], b: [250, y], bend: 0.45, label: 'W^{e,cn}', width: 1.1 }
+    ], deco: (g, y) => minus(g, 132, y),
+      aria: 'dGW self-energy: a thick electron line G spanned by a bold double dashed line W e, the interaction screened by the electrons, minus a thin line G cn spanned by a thin double dashed line W e cn, the same with the nuclei clamped.' },
+    bubble: { w: 204, h: 124, y: 70, items: (y) => [
+      { t: 'phonon', a: [4, y], b: [46, y] },
+      { t: 'phonon', a: [158, y], b: [200, y] },
+      { t: 'fermion2', a: [158, y], b: [46, y], bend: -0.27, label: 'G', lpos: 'right' },
+      { t: 'fermion2', a: [46, y], b: [158, y], bend: -0.27, label: 'G', lpos: 'right' },
+      { t: 'vertex', at: [46, y], r: 3.6 },
+      { t: 'text', at: [168, y + 24], text: 'g', anchor: 'start' }
+    ], deco: (g, y) => { disk(g, 158, y); word(g, 'bare', 40, y + 24, 'end'); },
+      aria: 'Phonon self-energy of Section A.6: a thin zigzag phonon line ends on a small solid dot, the bare vertex; an electron bubble of two thick lines G follows; it ends on a small grey disk g, the screened vertex, from which the outgoing thin zigzag leaves.' },
+    fm2: { w: 160, h: 124, y: 70, items: (y) => fmItems(y).concat([
+      { t: 'text', at: [14, y + 24], text: 'g' },
+      { t: 'text', at: [146, y + 24], text: 'g' }
+    ]), deco: fmDeco,
+      aria: 'Fan–Migdal self-energy again: both ends of the phonon arc F are small grey disks labelled g, screened vertices.' }
+  };
+
+  // ---------- layout: each row is one equation; an operator stays with the term after it when the row wraps ----------
+  // Every diagram of a row has its electron line at the same height y (px from the top of its SVG), so the
+  // operators are set at that height too.
+  fig.querySelectorAll('.a7-diagrams-row').forEach(row => {
+    const y = D[row.querySelector('[data-d]').dataset.d].y;
+    row.style.cssText = 'align-items:flex-start;gap:12px;margin:4px 0 18px;padding:6px 0';
+    row.querySelectorAll('.a7-diagrams-term').forEach(t => { t.style.cssText = 'display:flex;align-items:flex-start;gap:12px'; });
+    row.querySelectorAll('.op').forEach(op => { op.style.lineHeight = '1'; op.style.marginTop = `calc(${y}px - 0.53em)`; });
+    row.querySelectorAll('figcaption').forEach(c => { c.style.cssText = 'font-family:var(--font-ui);font-size:0.8rem;line-height:1.35;color:var(--muted);margin:2px 0 0;text-align:center;max-width:none'; });
+  });
+  fig.querySelectorAll('.a7-diagrams-vs').forEach(v => { v.style.fontFamily = 'var(--font-ui)'; v.style.fontSize = '0.95rem'; v.style.fontStyle = 'italic'; });
+
+  const drawn = [];
+  fig.querySelectorAll('[data-d]').forEach(el => {
+    const d = D[el.dataset.d];
+    if (!d) return;
+    drawn.push([EPP.fd.draw(el, { w: d.w, h: d.h, label: d.aria, items: d.items(d.y) }), d]);
+  });
+  // EPP.fd repaints a diagram (and drops our glyphs) when the theme changes; this callback is registered after
+  // those repaints, so it runs after them and draws the glyphs again in the new colours.
+  const decorate = () => drawn.forEach(([svg, d]) => {
+    // the label of a self-energy disk (Σ^ep) is upright, like every capital Greek letter: the page rule that makes
+    // diagram labels italic outranks EPP.fd's font-style attribute, so restate it as an inline style
+    svg.querySelectorAll('text.fd-lab[font-style="normal"]').forEach(t => { t.style.fontStyle = 'normal'; });
+    svg.querySelectorAll('g.a7-diagrams-deco').forEach(n => n.remove());
+    if (d.deco) d.deco(mk('g', { class: 'a7-diagrams-deco' }, svg), d.y);
+  });
+  decorate();
+  EPP.onTheme(decorate);
+})();
+</script>

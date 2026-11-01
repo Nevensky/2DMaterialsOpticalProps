@@ -1,0 +1,508 @@
+  <figure class="viz" id="viz-a6-fermi">
+    <p class="viz-title"><span>Electron–hole pairs: the Fermi disc and its copy shifted by $\bq$</span> <span class="tag">interactive</span></p>
+    <div class="viz-grid side a6-fermi-grid">
+      <div class="a6-fermi-k"></div>
+      <div class="legend a6-fermi-leg" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px 12px">
+        <span class="item" style="white-space:normal;display:flex;align-items:flex-start"><svg width="16" height="14" viewBox="0 0 16 14" aria-hidden="true" style="flex:none;vertical-align:-2px;margin:2px 6px 0 0"><circle cx="8" cy="7" r="6" style="fill:var(--c-electron);fill-opacity:0.18;stroke:var(--c-electron);stroke-width:1.5"/></svg><span>occupied states</span></span>
+        <span class="item" style="white-space:normal;display:flex;align-items:flex-start"><svg width="16" height="14" viewBox="0 0 16 14" aria-hidden="true" style="flex:none;vertical-align:-2px;margin:2px 6px 0 0"><circle cx="8" cy="7" r="6" style="fill:none;stroke:var(--c-electron);stroke-width:1.5;stroke-dasharray:3 2.2"/></svg><span>shifted Fermi circle</span></span>
+        <span class="item" style="white-space:normal;display:flex;align-items:flex-start"><svg width="16" height="14" viewBox="0 0 16 14" aria-hidden="true" style="flex:none;vertical-align:-2px;margin:2px 6px 0 0"><rect x="1" y="2" width="14" height="10" rx="2" style="fill:var(--c-4);fill-opacity:0.28"/></svg><span>allowed final states</span></span>
+        <span class="item" style="white-space:normal;display:flex;align-items:flex-start"><svg width="16" height="14" viewBox="0 0 16 14" aria-hidden="true" style="flex:none;vertical-align:-2px;margin:2px 6px 0 0"><rect x="1" y="2" width="14" height="10" rx="2" style="fill:var(--c-electron);fill-opacity:0.18"/><path d="M1.5 7.5 L5.5 2.5 M4 12 L12 2 M9.5 11.5 L14.5 5" style="fill:none;stroke:var(--muted);stroke-width:1"/></svg><span>blocked: occupied</span></span>
+        <span class="item" style="white-space:normal;display:flex;align-items:flex-start"><svg width="16" height="14" viewBox="0 0 16 14" aria-hidden="true" style="flex:none;vertical-align:-2px;margin:2px 6px 0 0"><line x1="2" y1="7" x2="14" y2="7" style="stroke:var(--c-phonon);stroke-width:4"/></svg><span>pairs with energy $\hbar\omega$</span></span>
+        <span class="item" style="white-space:normal;display:flex;align-items:flex-start"><svg width="16" height="14" viewBox="0 0 16 14" aria-hidden="true" style="flex:none;vertical-align:-2px;margin:2px 6px 0 0"><circle cx="8" cy="7" r="3.6" style="fill:var(--fg)"/></svg><span>zero-energy pairs</span></span>
+        <span class="item a6-fermi-leg-arr" style="white-space:normal;grid-column:1 / -1">0<svg width="46" height="10" viewBox="0 0 46 10" aria-hidden="true" style="vertical-align:-1px;margin:0 4px"><defs><linearGradient id="a6-fermi-grad" x1="0" x2="1" y1="0" y2="0"><stop offset="0"/><stop offset="0.25"/><stop offset="0.5"/><stop offset="0.75"/><stop offset="1"/></linearGradient></defs><rect x="0" y="1" width="46" height="8" rx="2" fill="url(#a6-fermi-grad)"/></svg>$3E_{\mathrm F}$: pair energy of an arrow $\bk\to\bk+\bq$; grey arrow: blocked</span>
+      </div>
+      <div class="a6-fermi-map"></div>
+    </div>
+    <div class="a6-fermi-ctrls"></div>
+    <div class="readout a6-fermi-ro" aria-live="polite"><span>$(q/k_{\mathrm F},\ \hbar\omega/E_{\mathrm F})$<b class="a6-fermi-v-pt"></b></span><span>the phonon is<b class="a6-fermi-v-where"></b></span><span>$\hbar\omega^{\min}/E_{\mathrm F},\ \hbar\omega^{\max}/E_{\mathrm F}$<b class="a6-fermi-v-edges"></b></span><span>zero-energy pairs<b class="a6-fermi-v-n0"></b></span></div>
+    <div class="readout a6-fermi-ro2" aria-live="polite"><span>$L_{\mathrm{res}}/k_{\mathrm F}$<b class="a6-fermi-v-L"></b></span><span>$\mathrm{Im}\,\chi^0$ in units of $N_{\mathrm F}/\OS$, <a class="eqref" href="#a6-eq-chord">(A6.22)</a><b class="a6-fermi-v-chi"></b></span><span>small-$\omega$ form <a class="eqref" href="#a6-eq-imchi">(A6.23)</a><b class="a6-fermi-v-chi0"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> A phonon of wavevector $\bq$ and energy $\hbar\omega$ can create only the pairs on the dashed line inside the crescent, and $\mathrm{Im}\,\chi^0$ is proportional to the length of that part. Above $\hbar\omega^{\max}$ the line misses the crescent and the phonon cannot decay. Pairs of zero energy, the dots, exist only while the circles cross, up to <span class="nw">$q=2k_{\mathrm F}$.</span></p><div class="cap-more">
+      <p><strong>Marks.</strong> (a) Blue disc: occupied states; dashed circle: the Fermi circle shifted by <span class="nw">$\bq$,</span> holding the final states <span class="nw">$\bk+\bq$;</span> teal crescent: allowed final states; hatched lens: blocked by the Pauli principle. Arrows $\bk\to\bk+\bq$ from sample occupied states are coloured by their energy <a class="eqref" href="#a6-eq-pair">(A6.20)</a>, grey when blocked. Dashed amber line: final states of the pairs with energy <span class="nw">$\hbar\omega$;</span> bold: its allowed part, of length <a class="sym" href="#gl-a6-Lres">$L_{\mathrm{res}}$</a>. (b) Teal: the continuum <a class="eqref" href="#a6-eq-edges">(A6.21)</a>, between $\hbar\omega^{\min}$ and <span class="nw">$\hbar\omega^{\max}$;</span> dashed: <span class="nw">$\hbar v_{\mathrm F}q$;</span> amber marker: the chosen <span class="nw">$(q,\hbar\omega)$,</span> filled inside the continuum.</p>
+      <p><strong>Try.</strong> At fixed <span class="nw">$\hbar\omega$,</span> lower $q$ until the bold segments vanish: the phonon leaves the continuum. Set $\hbar\omega$ near 0 and move $q$ through <span class="nw">$2k_{\mathrm F}$:</span> the dots merge and vanish, and $\mathrm{Im}\,\chi^0$ grows as they approach. Drag the tip of $\bq$ or the dashed line in (a), or click in (b).</p>
+      <p><strong>Model.</strong> One two-dimensional parabolic band at zero temperature, pairs within the band, $\bq$ along <span class="nw">$x$;</span> wavevectors in units of <span class="nw">$k_{\mathrm F}$,</span> energies in units of <span class="nw">$E_{\mathrm F}$.</span> By <a class="eqref" href="#a6-eq-pair">(A6.20)</a> the final states of energy $\hbar\omega$ lie on <span class="nw">$k_x=q/2+m^*\omega/\hbar q$;</span> <a class="eqref" href="#a6-eq-chord">(A6.22)</a> gives <span class="nw">$\mathrm{Im}\,\chi^0=-(N_{\mathrm F}/\OS)L_{\mathrm{res}}/q$,</span> with <a class="sym" href="#gl-a6-NF">$N_{\mathrm F}/\OS=m^*/2\pi\hbar^2$</a> the density of states per spin and unit area, and <a class="eqref" href="#a6-eq-imchi">(A6.23)</a> is its small-$\omega$ limit. The doped sheet of <a class="figref" href="#viz-a6-window">Figure A6.4</a> and the Kohn anomaly of <a class="figref" href="#viz-a6-kohn">Figure A6.5</a> use the same geometry.</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a6-fermi');
+  if (!fig || !window.EPP) return;
+  // outside Section A.6 (the isolated figure test) the links into the section have no target: keep their text
+  if (!fig.closest('#a-phonon-se')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+
+  // ---------- model ----------
+  // One parabolic band in two dimensions at T = 0, pairs k -> k + q within the band, q along +x.
+  // Reduced units: wavevectors in k_F, energies in E_F = ħ²k_F²/2m*; below, q = q/k_F and w = ħω/E_F.
+  // Pair energy (A6.20): (E_{k+q} − E_k)/E_F = 2 k_x q + q². The final states k + q of the pairs with energy w lie on the
+  // line k_x = c = q/2 + w/2q, their initial states on k_x = c − q (= k*/k_F). A final state is allowed inside the disc
+  // shifted by q and outside the Fermi disc, so the allowed part of the line has the length
+  // L_res/k_F = 2[(1 − (c − q)²)^{1/2} − max(0, 1 − c²)^{1/2}], and (A6.22) gives Im χ⁰ = −L/q in units of N_F/Ω_S.
+  // Edges (A6.21): w_max = q² + 2q, w_min = max(0, q² − 2q). Zero-energy pairs: (q/2, ±(1 − q²/4)^{1/2}) for q < 2.
+  const TAU = 2 * Math.PI;
+  const XR = [-1.6, 4.4], YR = [-2.2, 2.2];        // frame of (a), units of k_F
+  const QMIN = 0.05, QMAX = 3, WTOP = 2.5;          // slider ranges
+  const ESC = 3;                                     // colour scale of the arrows: pair energy 0 to 3 E_F
+  const TOUCH = 0.005;                               // |q/k_F − 2| below this: the circles touch
+  const RAD = 205 * Math.PI / 180;                   // direction of the drawn radius k_F
+  // sample occupied states k (units of k_F): one per row, |k_y| ≥ 0.48 so that q and its label keep the middle; at the
+  // initial q = 0.8 k_F three land in the crescent, three in the lens, and none touches a dot or a bold segment
+  const SAMPLES = [[-0.52, 0.8], [0.3, 0.64], [-0.8, 0.48], [0.82, -0.48], [0.55, -0.64], [-0.56, -0.8]];
+
+  function model(q, w) {
+    const c = q / 2 + w / (2 * q), ks = c - q;
+    const wmax = q * q + 2 * q, wmin = Math.max(0, q * q - 2 * q);
+    const hs = Math.abs(ks) < 1 ? Math.sqrt(1 - ks * ks) : 0;   // half chord of the shifted disc on the line
+    const hf = c < 1 ? Math.sqrt(1 - c * c) : 0;                 // half chord of the Fermi disc on the line
+    let L = 0, segs = [];
+    if (Math.abs(ks) < 1 && hs > hf + 1e-12) { L = 2 * (hs - hf); segs = hf > 0 ? [[hf, hs], [-hs, -hf]] : [[-hs, hs]]; }
+    const eps = 1e-9;
+    let where;
+    if (w >= wmax - eps) where = w <= wmax + eps ? 'upper' : 'above';
+    else if (q > 2 && w <= wmin + eps) where = w >= wmin - eps ? 'lower' : 'below';
+    else if (w <= eps) where = 'zero';
+    else where = 'inside';
+    if (where !== 'inside') { L = 0; segs = []; }                 // on an edge no rounding sliver survives
+    const n0 = q < 2 - TOUCH ? 2 : (q <= 2 + TOUCH ? 1 : 0);
+    const chiSmall = where === 'inside' && q < 2 ? -w / (q * Math.sqrt(1 - q * q / 4)) : NaN;
+    return { q, w, c, ks, wmax, wmin, hs, hf, L, segs, where, n0, chi: -L / q, chiSmall };
+  }
+
+  // ---------- canvas text in the primer's notation ----------
+  // Outside $…$ the text is upright. Inside, letters are italic; !x is a bold upright vector; [..] is upright
+  // (a label such as F or max); _x, _{..}, ^x, ^{..} are sub- and superscripts.
+  const ITAL = /[A-Za-zα-ωħ]/;
+  function lex(s) {
+    const out = [];
+    let math = false;
+    const add = (t, it, b, lvl) => { const p = out[out.length - 1]; if (p && p.it === it && p.b === b && p.lvl === lvl) p.t += t; else out.push({ t, it, b, lvl }); };
+    const scan = (str, lvl) => {
+      for (let i = 0; i < str.length; i++) {
+        const ch = str[i];
+        if (ch === '$') { math = !math; continue; }
+        if ((ch === '_' || ch === '^') && i + 1 < str.length) {
+          const L = ch === '_' ? -1 : 1;
+          if (str[i + 1] === '{') { const k = str.indexOf('}', i + 2); scan(str.slice(i + 2, k < 0 ? str.length : k), L); i = k < 0 ? str.length : k; }
+          else { scan(str[i + 1], L); i += 1; }
+          continue;
+        }
+        if (math && ch === '!' && i + 1 < str.length) { add(str[i + 1], false, true, lvl); i += 1; continue; }
+        if (math && ch === '[') { const k = str.indexOf(']', i + 1); add(str.slice(i + 1, k < 0 ? str.length : k), false, false, lvl); i = k < 0 ? str.length : k; continue; }
+        add(ch, math && ITAL.test(ch), false, lvl);
+      }
+    };
+    scan(String(s), 0);
+    return out;
+  }
+  // draws with the baseline at y; returns the width
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, fam = EPP.css('--font-ui'), rs = lex(s);
+    const zs = (r) => (r.lvl ? Math.round(size * 0.72) : size);
+    const font = (r) => `${r.it ? 'italic ' : ''}${r.b ? '700 ' : ''}${zs(r)}px ${fam}`;
+    const ws = rs.map(r => { ctx.font = font(r); return ctx.measureText(r.t).width; });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    let x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    ctx.save();
+    if (o.color) ctx.fillStyle = o.color;
+    ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    rs.forEach((r, k) => { ctx.font = font(r); ctx.fillText(r.t, x0, y + (r.lvl === -1 ? size * 0.28 : (r.lvl === 1 ? -size * 0.38 : 0))); x0 += ws[k]; });
+    ctx.restore();
+    return tot;
+  }
+  const tw = (ctx, s, size) => txt(ctx, s, 0, 0, { size, measure: true });
+  const tick = (v) => (v < 0 ? '−' + (-v) : String(v));
+  function arrow(ctx, x0, y0, x1, y1, col, lw, head) {
+    const L = Math.hypot(x1 - x0, y1 - y0);
+    if (L < 2) return;
+    const hs = Math.min(head, 0.55 * L), a = Math.atan2(y1 - y0, x1 - x0);
+    ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = lw; ctx.lineCap = 'round'; ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1 - 0.8 * hs * Math.cos(a), y1 - 0.8 * hs * Math.sin(a)); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x1, y1);
+    ctx.lineTo(x1 - hs * Math.cos(a - 0.42), y1 - hs * Math.sin(a - 0.42));
+    ctx.lineTo(x1 - hs * Math.cos(a + 0.42), y1 - hs * Math.sin(a + 0.42));
+    ctx.closePath(); ctx.fill();
+  }
+  // colour of an arrow of pair energy t·3E_F: one hue (violet), light to dark on the light theme, the reverse on the dark
+  const mix = (a, b, t) => [0, 1, 2].map(i => Math.round(a[i] + (b[i] - a[i]) * t));
+  function eCol(t) {
+    const S = EPP.rgb('--surface'), V = EPP.rgb('c5'), F = EPP.rgb('--fg');
+    const u = 0.55 + 0.45 * EPP.clamp(t, 0, 1);
+    const c = u <= 0.78 ? mix(S, V, u / 0.78) : mix(V, F, (u - 0.78) / 0.22 * 0.42);
+    return `rgb(${c[0]},${c[1]},${c[2]})`;
+  }
+  // label placer: the first candidate centre whose box stays in bounds and clears the obstacles and the labels already
+  // placed (and passes an optional region test); an optional leader joins the label to the point it names. Soft
+  // obstacles (the sample arrows) are avoided where possible and covered, on the label's backing, where not.
+  function placer(ctx, bounds) {
+    const obs = [], soft = [], labs = [];
+    const hit = (a, b, g) => a[0] < b[2] + g && a[2] > b[0] - g && a[1] < b[3] + g && a[3] > b[1] - g;
+    const along = (list, x0, y0, x1, y1, r) => { const n = Math.max(1, Math.ceil(Math.hypot(x1 - x0, y1 - y0) / 4)); for (let i = 0; i <= n; i++) { const x = x0 + (x1 - x0) * i / n, y = y0 + (y1 - y0) * i / n; list.push([x - r, y - r, x + r, y + r]); } };
+    return {
+      box(x0, y0, x1, y1) { obs.push([Math.min(x0, x1), Math.min(y0, y1), Math.max(x0, x1), Math.max(y0, y1)]); },
+      seg(x0, y0, x1, y1, r) { along(obs, x0, y0, x1, y1, r); },
+      soft(x0, y0, x1, y1, r) { along(soft, x0, y0, x1, y1, r); },
+      put(s, o, cands) {
+        const size = o.size || 11.5, w = tw(ctx, s, size), h = size + 4;
+        const ok = (b, useSoft) => !(b[0] < bounds[0] || b[1] < bounds[1] || b[2] > bounds[2] || b[3] > bounds[3]) && !obs.some(x => hit(b, x, 0))
+          && !labs.some(x => hit(b, x, 3)) && !(useSoft && soft.some(x => hit(b, x, 0))) && !(o.test && !o.test(b));
+        const boxOf = (c) => [c[0] - w / 2 - 3, c[1] - h / 2, c[0] + w / 2 + 3, c[1] + h / 2];
+        let c = cands.find(cc => ok(boxOf(cc), true));
+        if (!c && !o.strict) c = cands.find(cc => ok(boxOf(cc), false));
+        if (c) {
+          const b = boxOf(c);
+          labs.push(b);
+          if (c.lead) {
+            const px = EPP.clamp(c.lead[0], b[0], b[2]), py = EPP.clamp(c.lead[1], b[1], b[3]), d = Math.hypot(c.lead[0] - px, c.lead[1] - py);
+            if (d > 7) {
+              const ux = (c.lead[0] - px) / d, uy = (c.lead[1] - py) / d;
+              ctx.save(); ctx.strokeStyle = o.leadColor || EPP.alpha('muted', 0.9); ctx.lineWidth = 1; ctx.setLineDash([]);
+              ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(c.lead[0] - ux * 3, c.lead[1] - uy * 3); ctx.stroke(); ctx.restore();
+            }
+          }
+          if (o.bg) { ctx.fillStyle = EPP.alpha('surface', 0.86); ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(b[0], b[1], b[2] - b[0], b[3] - b[1], 3); else ctx.rect(b[0], b[1], b[2] - b[0], b[3] - b[1]); ctx.fill(); }
+          txt(ctx, s, c[0], c[1] + size * 0.36, { size, color: o.color, align: 'center' });
+          return b;
+        }
+        return null;
+      }
+    };
+  }
+  const C = (x, y, lead) => { const c = [x, y]; if (lead) c.lead = lead; return c; };
+
+  // ---------- layout: (a), its legend, (b); on wide screens (a) spans both rows of the left column ----------
+  const elA = fig.querySelector('.a6-fermi-k'), elLeg = fig.querySelector('.a6-fermi-leg'), elB = fig.querySelector('.a6-fermi-map');
+  elLeg.style.alignSelf = 'start'; elLeg.style.marginTop = '0';
+  const wideMQ = matchMedia('(min-width: 720px)');
+  const arrange = () => {
+    const wd = wideMQ.matches;
+    elA.style.gridRow = wd ? '1 / span 2' : ''; elA.style.gridColumn = wd ? '1' : '';
+    elB.style.gridRow = wd ? '1' : ''; elB.style.gridColumn = wd ? '2' : '';
+    elLeg.style.gridRow = wd ? '2' : ''; elLeg.style.gridColumn = wd ? '2' : '';
+  };
+  arrange();
+  try { wideMQ.addEventListener('change', arrange); } catch (e) {}
+
+  let cur = null, arrowsOn = true, A = null;
+
+  // ---------- (a) the wavevector plane ----------
+  const cvA = EPP.canvas(elA, { aspect: 0.8, minHeight: 250, maxHeight: 430 });
+  cvA.canvas.setAttribute('role', 'img');
+  function drawA() {
+    const cv = cvA, ctx = cv.ctx, W = cv.w, H = cv.h;
+    cv.clear();
+    if (!cur || W < 80) return;
+    const { q, c, segs, n0 } = cur;
+    const m = { l: 42, r: 8, t: 26, b: 40 };
+    const s = Math.min((W - m.l - m.r) / (XR[1] - XR[0]), (H - m.t - m.b) / (YR[1] - YR[0]));
+    const pw = s * (XR[1] - XR[0]), ph = s * (YR[1] - YR[0]);
+    const fx0 = m.l + Math.max(0, (W - m.l - m.r - pw) / 2), fy0 = m.t + Math.max(0, (H - m.t - m.b - ph) / 2), fx1 = fx0 + pw, fy1 = fy0 + ph;
+    const X = (x) => fx0 + (x - XR[0]) * s, Y = (y) => fy0 + (YR[1] - y) * s;
+    A = { X, Y, invX: (px) => XR[0] + (px - fx0) / s, invY: (py) => YR[1] - (py - fy0) / s };
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMu = EPP.color('muted'), cGrid = EPP.color('grid'), cRule = EPP.color('rule');
+    const cEl = EPP.color('electron'), cPh = EPP.color('phonon'), cSurf = EPP.color('surface');
+    const tPh = EPP.textColor('phonon'), t4 = EPP.textColor('c4');
+    // grid, frame, ticks and axis titles
+    ctx.strokeStyle = cGrid; ctx.lineWidth = 1; ctx.beginPath();
+    for (let v = -1; v <= 4; v++) { const x = Math.round(X(v)) + 0.5; ctx.moveTo(x, fy0); ctx.lineTo(x, fy1); }
+    for (let v = -2; v <= 2; v++) { const y = Math.round(Y(v)) + 0.5; ctx.moveTo(fx0, y); ctx.lineTo(fx1, y); }
+    ctx.stroke();
+    ctx.strokeStyle = cRule; ctx.strokeRect(fx0 + 0.5, fy0 + 0.5, pw - 1, ph - 1);
+    for (let v = -1; v <= 4; v++) txt(ctx, tick(v), X(v), fy1 + 15, { size: 11, color: cMu, align: 'center' });
+    for (let v = -2; v <= 2; v++) txt(ctx, tick(v), fx0 - 6, Y(v) + 4, { size: 11, color: cMu, align: 'right' });
+    txt(ctx, '$k_x$/$k_{[F]}$', (fx0 + fx1) / 2, H - 8, { size: 12.5, color: cFg, align: 'center' });
+    ctx.save(); ctx.translate(fx0 - 30, (fy0 + fy1) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, '$k_y$/$k_{[F]}$', 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+    txt(ctx, '(a) wavevector plane', 2, 14, { size: 11.5, color: cFg2 });
+
+    const O = [X(0), Y(0)], Q = [X(q), Y(0)];
+    ctx.save(); ctx.beginPath(); ctx.rect(fx0, fy0, pw, ph); ctx.clip();
+    // allowed final states: the shifted disc minus the Fermi disc
+    ctx.save();
+    ctx.beginPath(); ctx.arc(Q[0], Q[1], s, 0, TAU); ctx.clip();
+    ctx.beginPath(); ctx.rect(fx0, fy0, pw, ph); ctx.arc(O[0], O[1], s, 0, TAU, true);
+    ctx.fillStyle = EPP.alpha('c4', 0.24); ctx.fill('evenodd');
+    ctx.restore();
+    // occupied states
+    ctx.beginPath(); ctx.arc(O[0], O[1], s, 0, TAU); ctx.fillStyle = EPP.alpha('electron', 0.15); ctx.fill();
+    // blocked final states: the overlap of the two discs, hatched (the hatch is fixed to the frame, so it does not swim)
+    if (q < 2) {
+      ctx.save();
+      ctx.beginPath(); ctx.arc(O[0], O[1], s, 0, TAU); ctx.clip();
+      ctx.beginPath(); ctx.arc(Q[0], Q[1], s, 0, TAU); ctx.clip();
+      ctx.strokeStyle = EPP.alpha('muted', 0.6); ctx.lineWidth = 1; ctx.beginPath();
+      for (let k = fx0 - ph; k <= fx1; k += 6) { ctx.moveTo(k, fy1); ctx.lineTo(k + ph, fy0); }
+      ctx.stroke();
+      ctx.restore();
+    }
+    // the Fermi circle and its copy shifted by q
+    ctx.strokeStyle = cEl; ctx.lineWidth = 1.8; ctx.setLineDash([]);
+    ctx.beginPath(); ctx.arc(O[0], O[1], s, 0, TAU); ctx.stroke();
+    ctx.lineWidth = 1.6; ctx.setLineDash([6, 4]);
+    ctx.beginPath(); ctx.arc(Q[0], Q[1], s, 0, TAU); ctx.stroke();
+    ctx.setLineDash([]);
+    // final states of the pairs with energy ħω
+    const onFrame = c <= XR[1];
+    if (onFrame) { ctx.strokeStyle = cPh; ctx.lineWidth = 1.3; ctx.setLineDash([5, 4]); ctx.beginPath(); ctx.moveTo(X(c), fy0); ctx.lineTo(X(c), fy1); ctx.stroke(); ctx.setLineDash([]); }
+    // sample pairs k -> k + q
+    if (arrowsOn) {
+      for (const [x, y] of SAMPLES) {
+        const tx = x + q, ok = tx * tx + y * y > 1, E = 2 * x * q + q * q;
+        arrow(ctx, X(x), Y(y), X(tx), Y(y), ok ? eCol(E / ESC) : EPP.alpha('muted', 0.8), 1.5, 7);
+      }
+      ctx.fillStyle = cEl;
+      for (const [x, y] of SAMPLES) { ctx.beginPath(); ctx.arc(X(x), Y(y), 2.4, 0, TAU); ctx.fill(); }
+    }
+    // q from the centre of the Fermi disc to the centre of its copy; the radius k_F
+    arrow(ctx, O[0], O[1], Q[0], Q[1], cFg, 2.4, 9);
+    const R1 = [X(Math.cos(RAD)), Y(Math.sin(RAD))];
+    ctx.strokeStyle = cFg2; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(O[0], O[1]); ctx.lineTo(R1[0], R1[1]); ctx.stroke();
+    ctx.fillStyle = cFg; ctx.beginPath(); ctx.arc(O[0], O[1], 2.2, 0, TAU); ctx.fill();
+    // the allowed part of the line, of total length L_res
+    if (onFrame) {
+      ctx.strokeStyle = cPh; ctx.lineWidth = 4; ctx.lineCap = 'butt';
+      for (const [a, b] of segs) { ctx.beginPath(); ctx.moveTo(X(c), Y(a)); ctx.lineTo(X(c), Y(b)); ctx.stroke(); }
+    }
+    // pairs of zero energy: the crossing points of the two circles
+    const zp = n0 === 2 ? [[q / 2, Math.sqrt(1 - q * q / 4)], [q / 2, -Math.sqrt(1 - q * q / 4)]] : n0 === 1 ? [[q / 2, 0]] : [];
+    for (const [x, y] of zp) {
+      ctx.beginPath(); ctx.arc(X(x), Y(y), 5.4, 0, TAU); ctx.fillStyle = cSurf; ctx.fill();
+      ctx.beginPath(); ctx.arc(X(x), Y(y), 3.8, 0, TAU); ctx.fillStyle = cFg; ctx.fill();
+    }
+    if (n0 === 1) { ctx.strokeStyle = cFg; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(X(q / 2), Y(0), 8.5, 0, TAU); ctx.stroke(); }
+    ctx.restore();
+
+    // ---------- labels ----------
+    const P = placer(ctx, [fx0 + 2, fy0 + 2, fx1 - 2, fy1 - 2]);
+    if (arrowsOn) for (const [x, y] of SAMPLES) { P.soft(X(x), Y(y), X(x + q), Y(y), 3.5); P.box(X(x) - 3, Y(y) - 3, X(x) + 3, Y(y) + 3); }
+    P.seg(O[0], O[1], Q[0], Q[1], 4);
+    P.seg(O[0], O[1], R1[0], R1[1], 2.5);
+    if (onFrame) { P.seg(X(c), fy0, X(c), fy1, 1.5); for (const [a, b] of segs) P.seg(X(c), Y(a), X(c), Y(b), 4); }
+    for (const [x, y] of zp) P.box(X(x) - 6, Y(y) - 6, X(x) + 6, Y(y) + 6);
+    // q: beside the middle of the arrow, else beside its tip
+    {
+      const mq = (O[0] + Q[0]) / 2, wq = tw(ctx, '$!q$', 13), dy = 4 + 1 + 17 / 2, dx = 4 + wq / 2 + 4;
+      P.put('$!q$', { size: 13, color: cFg, bg: true }, [C(mq, O[1] - dy), C(mq, O[1] + dy), C(Q[0] - wq, O[1] - dy), C(Q[0] - wq, O[1] + dy), C(Q[0] + dx, O[1]), C(Q[0] + dx, O[1] - dy), C(Q[0] + dx, O[1] + dy)]);
+    }
+    // the line of energy ħω, or where it lies when it leaves the frame
+    if (onFrame) {
+      const has = segs.length > 0;
+      const lab = has ? 'pairs with energy $ħω$' : (cur.where === 'zero' ? 'energy $ħω$ = 0: only the dots' : 'energy $ħω$: no allowed pairs');
+      const wl = tw(ctx, lab, 11.5), cands = [];
+      for (const sg of [1, -1]) for (const yl of [Math.max(1.24, cur.hs + 0.24), 1.62, 1.95]) for (const sd of [1, -1]) {
+        cands.push(C(X(c) + sd * (9 + wl / 2), Y(sg * yl), has ? [X(c), Y(sg * cur.hs)] : null));
+      }
+      P.put(lab, { size: 11.5, color: tPh, bg: true, leadColor: EPP.alpha('phonon', 0.9) }, cands);
+    } else {
+      const lab = `line of energy $ħω$ at $k_x$ = ${EPP.fix(c, 1)} $k_{[F]}$`, wl = tw(ctx, lab, 11.5);
+      for (const yl of [1.75, -1.75]) {
+        const y = Y(yl), b = P.put(lab, { size: 11.5, color: tPh, bg: true }, [C(fx1 - 30 - wl / 2, y)]);
+        if (b) { arrow(ctx, fx1 - 25, y, fx1 - 6, y, cPh, 1.6, 7); break; }
+      }
+    }
+    if (n0 === 1) {
+      // beside the dashed line, below the circles first, with a leader to the ring around the touching point
+      const T0 = [X(q / 2), Y(0)], lab = 'circles touch: $q$ = 2$k_{[F]}$', wt = tw(ctx, lab, 11.5), cands = [];
+      for (const yl of [-1.36, 1.36, -1.72, 1.72]) for (const sd of [-1, 1]) {
+        const cx = T0[0] + sd * (10 + wt / 2), cy = Y(yl), d = Math.hypot(cx - T0[0], cy - T0[1]);
+        cands.push(C(cx, cy, [T0[0] + (cx - T0[0]) / d * 9, T0[1] + (cy - T0[1]) / d * 9]));
+      }
+      P.put(lab, { size: 11.5, color: cFg, bg: true }, cands);
+    }
+    // k_F beside the radius, above it first
+    {
+      const lab = '$k_{[F]}$', dx = R1[0] - O[0], dy = R1[1] - O[1], len = Math.hypot(dx, dy), nx = -dy / len, ny = dx / len;
+      const ext = Math.abs(nx) * (tw(ctx, lab, 12) / 2 + 3) + Math.abs(ny) * 8 + 3, cands = [];
+      for (const sd of [1, -1]) for (const t of [0.5, 0.66, 0.34]) cands.push(C(O[0] + dx * t + sd * nx * ext, O[1] + dy * t + sd * ny * ext));
+      P.put(lab, { size: 12, color: cFg2, bg: true }, cands);
+    }
+    // region labels, inside their region; "allowed" goes just outside the shifted circle, with a leader, if it fits nowhere inside
+    const toD = (b) => { const xs = [b[0], (b[0] + b[2]) / 2, b[2]], ys = [b[1], (b[1] + b[3]) / 2, b[3]], out = []; for (const x of xs) for (const y of ys) out.push([A.invX(x), A.invY(y)]); return out; };
+    const inCres = (b) => toD(b).every(([x, y]) => Math.hypot(x - q, y) < 0.99 && Math.hypot(x, y) > 1.01);
+    const inLens = (b) => toD(b).every(([x, y]) => Math.hypot(x - q, y) < 0.99 && Math.hypot(x, y) < 0.99);
+    {
+      // points midway across the crescent, along rays from the centre of the shifted disc
+      const mid = (deg, f = 0.5) => {
+        const a = deg * Math.PI / 180, ux = Math.cos(a), uy = Math.sin(a), d = 1 - q * q * uy * uy;
+        const tF = d >= 0 ? EPP.clamp(-q * ux + Math.sqrt(d), 0, 1) : 0, t = tF + f * (1 - tF);
+        return [X(q + t * ux), Y(t * uy)];
+      };
+      const cands = [];
+      for (const deg of [0, 20, -20, 40, -40, 60, -60, 80, -80, 100, -100]) for (const f of [0.5, 0.35, 0.65]) cands.push(C(...mid(deg, f)));
+      const wa = tw(ctx, 'allowed', 11);
+      for (const deg of [0, 18, -18, 36, -36]) { const a = deg * Math.PI / 180; cands.push(C(X(q + Math.cos(a)) + 9 + wa / 2, Y(Math.sin(a)), mid(deg))); }
+      P.put('allowed', { size: 11, color: t4, bg: true, test: (b) => inCres(b) || b[0] > X(q + 1) - 2 }, cands);
+    }
+    if (q < 2) {
+      // a grid over the lens, nearest its middle first
+      const cands = [], xm = q / 2;
+      for (const dy of [0.24, -0.24, 0.34, -0.34, 0.16, -0.16, 0.46, -0.46, 0.6, -0.6, 0.74, -0.74]) for (let k = 0; k <= 18; k++) cands.push(C(X(xm + (k % 2 ? 1 : -1) * 0.05 * Math.ceil(k / 2)), Y(dy)));
+      P.put('blocked', { size: 11, color: cMu, bg: true, test: inLens }, cands);
+    }
+
+    const f2 = (v) => EPP.fix(v, 2);
+    cvA.canvas.setAttribute('aria-label', `Panel a: wavevector plane, in units of k_F. The Fermi disc of radius k_F, centred at the origin, holds the occupied states; the dashed Fermi circle shifted by q = ${f2(q)} k_F along x holds the final states k + q. ` +
+      (q < 2 ? 'Its overlap with the Fermi disc, a hatched lens, holds the blocked final states; the rest, a crescent, the allowed ones. ' : 'The shifted disc lies outside the Fermi disc, so every final state is allowed. ') +
+      (!onFrame ? `The line of final states of the pairs with energy ħω = ${f2(cur.w)} E_F lies at k_x = ${EPP.fix(c, 1)} k_F, beyond the frame, and misses the crescent. `
+        : `The line of final states of the pairs with energy ħω = ${f2(cur.w)} E_F, at k_x = ${f2(c)} k_F, ` + (segs.length === 2 ? `crosses the crescent in two segments of total length ${EPP.fix(cur.L, 3)} k_F. ` : segs.length === 1 ? `crosses the crescent in one segment of length ${EPP.fix(cur.L, 3)} k_F. ` : 'misses the crescent. ')) +
+      (n0 === 2 ? 'Two pairs of zero energy sit at the crossing points of the circles.' : n0 === 1 ? 'The circles touch: one pair of zero energy, straight across the Fermi circle.' : 'The circles do not meet: no pairs of zero energy.'));
+  }
+  cvA.onResize(drawA);
+
+  // ---------- (b) the (q, ħω) map ----------
+  const pB = new EPP.Plot(elB, {
+    xlim: [0, 3], ylim: [0, 3], aspect: 0.8, minHeight: 236, maxHeight: 300, legend: false, hover: false,
+    margin: { l: 46, r: 10, t: 26, b: 42 }, xticks: [0, 0.5, 1, 1.5, 2, 2.5, 3], yticks: [0, 0.5, 1, 1.5, 2, 2.5, 3],
+    ariaLabel: 'Panel b: the electron–hole continuum in the plane of q/k_F and ħω/E_F, with the chosen point'
+  });
+  const QS = EPP.linspace(0, 3, 301), WMX = QS.map(x => x * x + 2 * x), WMN = QS.map(x => Math.max(0, x * x - 2 * x)), VF = QS.map(x => 2 * x);
+  const Q2 = EPP.linspace(2, 3, 101), WMN2 = Q2.map(x => x * x - 2 * x);
+  const qUp = (y) => Math.sqrt(1 + y) - 1, qLo = (y) => 1 + Math.sqrt(1 + y);   // where the upper and lower edges reach the energy y
+  const baseB = pB.render.bind(pB);
+  pB.render = () => {
+    baseB();
+    const ctx = pB.ctx, w = pB.cv.w, h = pB.cv.h, m = pB.m;
+    if (!w || !h || !cur) return;
+    const X = (x) => pB.X(x), Y = (y) => pB.Y(y);
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMu = EPP.color('muted'), t4 = EPP.textColor('c4');
+    txt(ctx, '(b) where pairs exist', 2, 14, { size: 11.5, color: cFg2 });
+    txt(ctx, '$q$/$k_{[F]}$', m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    ctx.save(); ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, '$ħω$/$E_{[F]}$', 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+    // labels in data coordinates, each at the first of its positions that the marker of the chosen phonon leaves free
+    const mx = X(cur.q), my = Y(Math.min(cur.w, 3)), cPh = EPP.color('phonon');
+    const free = (b) => !(b[0] < mx + 9 && b[2] > mx - 9 && b[1] < my + 9 && b[3] > my - 9);
+    const boxAt = (s, size, x, y, al) => { const wd = tw(ctx, s, size), x0 = al === 'right' ? x - wd : (al === 'center' ? x - wd / 2 : x); return [x0 - 1, y - size, x0 + wd + 1, y + 3]; };
+    const lab = (s, size, color, al, opts) => {
+      for (const [x, y] of opts) if (free(boxAt(s, size, x, y, al))) { txt(ctx, s, x, y, { size, color, align: al }); return; }
+    };
+    // above the upper edge: two short lines, in the first wording that fits left of the edge, high up or lower down
+    const x0 = X(0) + 5;
+    for (const [l1, l2] of [['no pairs:', 'cannot decay'], ['no pairs,', 'no decay']]) {
+      const fits = x0 + tw(ctx, l1, 11) <= X(qUp(2.72)) - 4 && x0 + tw(ctx, l2, 11) <= X(qUp(2.47)) - 4;
+      if (!fits && l2 !== 'no decay') continue;
+      for (const [y1, y2] of [[2.8, 2.55], [2.1, 1.85]]) {
+        if (free(boxAt(l1, 11, x0, Y(y1) + 4, 'left')) && free(boxAt(l2, 11, x0, Y(y2) + 4, 'left'))) { txt(ctx, l1, x0, Y(y1) + 4, { size: 11, color: cMu }); txt(ctx, l2, x0, Y(y2) + 4, { size: 11, color: cMu }); break; }
+      }
+      break;
+    }
+    lab('$ħω^{[max]}$', 11.5, t4, 'right', [[X(qUp(1.45)) - 6, Y(1.45) + 4], [X(qUp(1.75)) - 6, Y(1.75) + 4]]);
+    lab('$ħv_{[F]}q$', 11.5, cFg2, 'left', [[X(1.15) + 7, Y(2.3) + 4], [X(0.6) + 7, Y(1.2) + 4]]);
+    lab('continuum', 11, t4, 'center', [[X(1.55), Y(1.72) + 4], [X(1.55), Y(1.1) + 4], [X(1.55), Y(0.5) + 4]]);
+    lab('$ħω^{[min]}$', 11.5, t4, 'right', [[X(qLo(2.2)) - 6, Y(2.2) + 4], [X(qLo(1.2)) - 6, Y(1.2) + 4]]);
+    lab('no pairs', 11, cMu, 'right', [[X(3) - 5, Y(0.42) + 4], [X(3) - 5, Y(0.12) + 4]]);
+    lab('2$k_{[F]}$', 11, cMu, 'left', [[X(2) + 4, Y(2.85) + 4], [X(2) + 4, Y(2.45) + 4]]);
+    // the chosen phonon: filled inside the continuum, hollow outside
+    ctx.beginPath(); ctx.arc(mx, my, 7.4, 0, TAU); ctx.fillStyle = EPP.alpha('surface', 0.9); ctx.fill();
+    ctx.beginPath(); ctx.arc(mx, my, 5.4, 0, TAU);
+    if (cur.where === 'inside') { ctx.fillStyle = cPh; ctx.fill(); } else { ctx.fillStyle = EPP.color('surface'); ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = cPh; ctx.stroke(); }
+  };
+  function drawB() {
+    pB.draw([
+      { type: 'fill', x: QS, y1: WMX, y2: WMN, color: 'c4', alpha: 0.24 },
+      { type: 'vline', at: 2, color: 'muted', width: 1, dash: [2, 3] },
+      { type: 'line', x: QS, y: VF, color: 'fg2', width: 1.3, dash: [5, 4] },
+      { type: 'line', x: QS, y: WMX, color: 'c4', width: 1.8 },
+      { type: 'line', x: Q2, y: WMN2, color: 'c4', width: 1.8 }
+    ]);
+    const f2 = (v) => EPP.fix(v, 2);
+    pB.cv.canvas.setAttribute('aria-label', `Panel b: the electron–hole continuum in the plane of q/k_F (0 to 3) and ħω/E_F (0 to 3), shaded between ħω_min = max(0, q² − 2q) and ħω_max = q² + 2q in these units, with the dashed line ħv_F q = 2q and a dotted line at q = 2k_F. ` +
+      `The chosen point (${f2(cur.q)}, ${f2(cur.w)}) lies ${WHERE[cur.where]}.`);
+  }
+
+  // ---------- readouts ----------
+  const WHERE = { inside: 'inside the continuum: it can decay', above: 'above the continuum: no pairs, no decay', upper: 'on the upper edge: no decay', below: 'below the continuum: no pairs, no decay', lower: 'on the lower edge: no decay', zero: 'static (ω = 0): zero-energy pairs only' };
+  const RO = {};
+  ['pt', 'where', 'edges', 'n0', 'L', 'chi', 'chi0'].forEach(k => { RO[k] = fig.querySelector('.a6-fermi-v-' + k); });
+  const it = (s) => `<i style="font-family:var(--font-text)">${s}</i>`, bv = (s) => `<b style="font-family:var(--font-text)">${s}</b>`;
+  const fx = (v, d) => EPP.fix(Math.abs(v) < 0.5 * Math.pow(10, -d) ? 0 : v, d);
+  function readouts() {
+    const m = cur;
+    RO.pt.textContent = `${fx(m.q, 2)}, ${fx(m.w, 2)}`;
+    RO.where.textContent = WHERE[m.where];
+    RO.edges.textContent = `${fx(m.wmin, 2)}, ${fx(m.wmax, 2)}`;
+    RO.n0.textContent = m.n0 === 2 ? '2' : m.n0 === 1 ? '1, the circles touch' : '0';
+    RO.L.textContent = fx(m.L, 3);
+    RO.chi.textContent = fx(m.chi, 3);
+    RO.chi0.innerHTML = isFinite(m.chiSmall) ? fx(m.chiSmall, 3) : (m.q >= 2 ? `— (needs ${it('q')} &lt; 2${it('k')}<sub>F</sub>)` : '— (outside the continuum)');
+  }
+  // the colour scale of the arrows in the legend, read from the theme
+  const stops = [...fig.querySelectorAll('#a6-fermi-grad stop')], legArr = fig.querySelector('.a6-fermi-leg-arr');
+  const paintLegend = () => stops.forEach((st, i) => st.setAttribute('stop-color', eCol(i / (stops.length - 1))));
+  paintLegend();
+  EPP.onTheme(paintLegend);
+
+  function update(st) {
+    cur = model(EPP.clamp(st.q, QMIN, QMAX), EPP.clamp(st.w, 0, WTOP));
+    arrowsOn = !!st.arrows;
+    legArr.style.display = arrowsOn ? '' : 'none';
+    drawA(); drawB(); readouts();
+  }
+
+  // ---------- controls (below the plots) ----------
+  const elCtl = fig.querySelector('.a6-fermi-ctrls');
+  const ui = EPP.controls(elCtl, [
+    { key: 'q', type: 'range', label: 'wavevector q/k_F', min: QMIN, max: QMAX, step: 0.01, value: 0.8, fmt: v => v.toFixed(2) },
+    { key: 'w', type: 'range', label: 'phonon energy ħω/E_F', min: 0, max: WTOP, step: 0.01, value: 0.4, fmt: v => v.toFixed(2) },
+    { key: 'arrows', type: 'toggle', label: 'sample arrows', value: true },
+    { key: 'touch', type: 'button', label: 'circles touch', onClick: () => { ui.set('q', 2, true); ui.set('w', 0.02, true); } }
+  ], update);
+  // control labels: symbols italic, vectors bold, labels upright, as in the text
+  const LAB = { q: `wavevector ${it('q')}/${it('k')}<sub>F</sub>`, w: `phonon energy ${it('ħω')}/${it('E')}<sub>F</sub>`, arrows: `sample arrows ${bv('k')} → ${bv('k')} + ${bv('q')}` };
+  Object.keys(LAB).forEach(k => { const sp = elCtl.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  const btn = document.getElementById(`${fig.id}-touch`);
+  if (btn) { btn.innerHTML = `circles touch: ${it('q')} = 2${it('k')}<sub>F</sub>`; btn.setAttribute('aria-label', 'Set q to 2 k_F and ħω to 0.02 E_F, where the two circles touch'); }
+
+  // ---------- pointer: a mouse acts at once; a touch acts on a tap or a sideways drag, so vertical swipes still scroll ----------
+  const local = (cv, e) => { const r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  function pointer(cv, handle) {
+    let st = null;
+    cv.addEventListener('pointerdown', (e) => {
+      const p = local(cv, e);
+      st = { id: e.pointerId, x: p[0], y: p[1], touch: e.pointerType === 'touch', live: false };
+      if (!st.touch) { st.live = handle(p[0], p[1], 'start') !== false; if (st.live) { try { cv.setPointerCapture(e.pointerId); } catch (_) {} e.preventDefault(); } }
+    });
+    cv.addEventListener('pointermove', (e) => {
+      if (!st || e.pointerId !== st.id) return;
+      const p = local(cv, e);
+      if (st.touch && !st.live) {
+        const dx = p[0] - st.x, dy = p[1] - st.y;
+        if (Math.abs(dx) < 6 || Math.abs(dx) < 1.5 * Math.abs(dy)) return;
+        st.live = handle(st.x, st.y, 'start') !== false;
+        if (st.live) try { cv.setPointerCapture(e.pointerId); } catch (_) {}
+      }
+      if (st.live) handle(p[0], p[1], 'move');
+    });
+    const end = (e) => {
+      if (!st || e.pointerId !== st.id) return;
+      if (e.type === 'pointerup' && st.touch && !st.live) { const p = local(cv, e); if (Math.hypot(p[0] - st.x, p[1] - st.y) < 10) handle(p[0], p[1], 'start'); }
+      st = null;
+    };
+    cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
+  }
+  // (a): the tip of q drags q; anywhere else moves the line of energy ħω to the pointer, which sets ħω = q(2k_x − q)
+  let aMode = 'w';
+  const nearTip = (px, py) => A && cur && Math.hypot(px - A.X(cur.q), py - A.Y(0)) <= 14;
+  pointer(cvA.canvas, (px, py, phase) => {
+    if (!A || !cur) return false;
+    if (phase === 'start') aMode = nearTip(px, py) ? 'q' : 'w';
+    const x = A.invX(px);
+    if (aMode === 'q') ui.set('q', EPP.clamp(x, QMIN, QMAX));
+    else { const q = ui.state.q; ui.set('w', EPP.clamp(q * (2 * x - q), 0, WTOP)); }
+    return true;
+  });
+  cvA.canvas.addEventListener('pointermove', (e) => { if (e.pointerType === 'mouse') { const p = local(cvA.canvas, e); cvA.canvas.style.cursor = nearTip(p[0], p[1]) ? 'ew-resize' : 'col-resize'; } });
+  // (b): a click or drag sets q and ħω
+  pointer(pB.cv.canvas, (px, py) => {
+    ui.set('q', EPP.clamp(pB.invX(px), QMIN, QMAX), true);
+    ui.set('w', EPP.clamp(pB.invY(py), 0, WTOP));
+    return true;
+  });
+  pB.cv.canvas.style.cursor = 'crosshair';
+
+  update(ui.state);
+})();
+</script>

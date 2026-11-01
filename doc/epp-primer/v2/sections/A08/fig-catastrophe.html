@@ -1,0 +1,444 @@
+  <figure class="viz" id="viz-a8-catastrophe">
+    <p class="viz-title"><span>The Fröhlich catastrophe: convergence of the band-edge shift with the $\bq$ grid</span> <span class="tag">interactive</span></p>
+    <div class="viz-grid two">
+      <div class="a8-catastrophe-conv"><div class="legend a8-catastrophe-lega"><span class="item" style="color:var(--c-electron)"><span class="sw"></span><span style="color:var(--fg-2)">nonadiabatic $|\Delta E^{\mathrm{NA}}_{\mathrm c}|$, $\hbar\omega_{\mathrm{LO}}$ kept</span></span><span class="item" style="color:var(--c-5)"><span class="sw dash"></span><span style="color:var(--fg-2)">adiabatic $|\Delta E^{\mathrm A}_{\mathrm c}|$, Allen–Heine</span></span><span class="item" style="color:var(--muted)"><span class="sw" style="border-top-width:1.5px"></span><span style="color:var(--fg-2)">polaron shift $\alpha_{\mathrm F}\hbar\omega_{\mathrm{LO}}$</span></span><span class="item" style="color:var(--c-phonon)"><span class="sw" style="border-top-width:1.5px"></span><span style="color:var(--fg-2)">grid with $q_{\mathrm{min}}=q_{\mathrm{pol}}$</span></span></div></div>
+      <div class="a8-catastrophe-int"><div class="legend a8-catastrophe-legb"><span class="item" style="color:var(--c-electron)"><span class="sw"></span><span style="color:var(--fg-2)">nonadiabatic</span></span><span class="item" style="color:var(--c-5)"><span class="sw dash"></span><span style="color:var(--fg-2)">adiabatic, $\propto1/q$</span></span><span class="item" style="color:var(--c-electron)"><span class="sw box"></span><span style="color:var(--fg-2)">included by the grid, $q_{\mathrm{min}}\lt q\lt q_{\mathrm D}$</span></span><span class="item a8-catastrophe-k-lc" style="color:var(--c-photon)"><span class="sw box"></span><span style="color:var(--fg-2)">light cone, $q\lt q_{\mathrm{lc}}$</span></span></div></div>
+    </div>
+    <div class="a8-catastrophe-ctrls"></div>
+    <div class="readout a8-catastrophe-ro" aria-live="polite"><span>$\alpha_{\mathrm F}$<b class="a8-catastrophe-v-a"></b></span><span>$q_{\mathrm{pol}}$<b class="a8-catastrophe-v-qp"></b></span><span>$1/q_{\mathrm{pol}}$<b class="a8-catastrophe-v-rp"></b></span><span>$q_{\mathrm D}$<b class="a8-catastrophe-v-qd"></b></span><span>$q_{\mathrm{lc}}$<b class="a8-catastrophe-v-qlc"></b></span></div>
+    <div class="readout a8-catastrophe-ro2" aria-live="polite"><span>$q_{\mathrm{min}}=q_{\mathrm D}/N_1$<b class="a8-catastrophe-v-qmin"></b></span><span>$\Delta E^{\mathrm{NA}}_{\mathrm c}(N_1)$<b class="a8-catastrophe-v-na"></b></span><span>$\Delta E^{\mathrm A}_{\mathrm c}(N_1)$<b class="a8-catastrophe-v-ad"></b></span></div>
+    <div class="readout a8-catastrophe-ro3" aria-live="polite"><span>$\Delta E^{\mathrm{NA}}_{\mathrm c}(N_1\to\infty)$<b class="a8-catastrophe-v-conv"></b></span><span>$N_1$ for 90% of it<b class="a8-catastrophe-v-n90"></b></span><span>$N_1$ with $q_{\mathrm{min}}=q_{\mathrm{lc}}$<b class="a8-catastrophe-v-nlc"></b></span><span>$\Delta E^{\mathrm A}_{\mathrm c}$ cut at $q_{\mathrm{lc}}$<b class="a8-catastrophe-v-alc"></b></span><span>share of $\Delta E^{\mathrm{NA}}_{\mathrm c}$ from $q\lt q_{\mathrm{lc}}$<b class="a8-catastrophe-v-share"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> The adiabatic shift grows in proportion to <span class="nw">$N_1$.</span> The nonadiabatic one levels off near $-\alpha_{\mathrm F}\hbar\omega_{\mathrm{LO}}$ once $q_{\mathrm{min}}$ is well below <span class="nw">$q_{\mathrm{pol}}$;</span> half of it is reached at <span class="nw">$q_{\mathrm{min}}=q_{\mathrm{pol}}$.</span> The light cone lies 400 to 1200 times below $q_{\mathrm{pol}}$ and holds about $10^{-3}$ of the converged shift: the phonon energy cures the divergence, not the speed of light.</p><div class="cap-more"><p><strong>Marks.</strong> In (a), the magnitudes of the two shifts against the grid size, the polaron shift (grey line), the grid with $q_{\mathrm{min}}=q_{\mathrm{pol}}$ (amber) and the chosen $N_1$ (dashed). In (b), the contribution per logarithmic interval of <span class="nw">$q$,</span> so that equal areas mean equal contributions; shaded: what the grid includes, from $q_{\mathrm{min}}$ (dashed) to <span class="nw">$q_{\mathrm D}$.</span> The adiabatic curve leaves the frame at small <span class="nw">$q$:</span> that is the divergence. Amber line: <span class="nw">$q_{\mathrm{pol}}$;</span> rose band: the light cone.</p><p><strong>Try.</strong> Drag in either panel, or use the slider. Raise $N_1$ from 4 to 1000 in GaAs: the nonadiabatic shift settles near <span class="nw">$-2.5$ meV,</span> the adiabatic one reaches <span class="nw">$-38$ meV.</span> In MgO, with $\alpha_{\mathrm F}\approx1.7$ outside weak coupling, 90% of the converged shift needs only <span class="nw">$N_1=107$,</span> because $q_{\mathrm{pol}}$ is larger. Compare the light cone with where the integrands live.</p><p><strong>Model.</strong> <a class="eqref" href="#a8-eq-catastrophe">(A8.17)</a> for the conduction-band minimum of one parabolic band and one dispersionless LO phonon with the coupling <span class="nw"><a class="eqref" href="#a8-eq-gfr">(A8.3)</a>,</span> at <span class="nw">$T=0$,</span> on shell (Rayleigh–Schrödinger), in a spherical zone of radius <span class="nw">$q_{\mathrm D}=(6\pi^2/\OV)^{1/3}$,</span> with <span class="nw">$q_{\mathrm{min}}=q_{\mathrm D}/N_1$;</span> <a class="eqref" href="#a8-eq-power">(A8.16)</a> is the power counting of the adiabatic curve. In (b), the integrands are $(2/\pi)\,q\,q_{\mathrm{pol}}/(q^2+q_{\mathrm{pol}}^2)$ and <span class="nw">$(2/\pi)\,q_{\mathrm{pol}}/q$.</span> Parameters as in the note on <a class="eqref" href="#a8-eq-gfr">(A8.3)</a> (literature values, illustrative).</p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a8-catastrophe');
+  if (!fig || !window.EPP) return;
+  // outside Section A.8 (the isolated figure test) the caption's links to the section have no target: show them as text
+  if (!fig.closest('#a-temperature')) fig.querySelectorAll('figcaption a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+
+  // ---------- model ----------
+  // Conduction-band minimum of one parabolic band, coupled by the Fröhlich element (A8.3) to one dispersionless LO phonon;
+  // T = 0, on shell (Rayleigh–Schrödinger), spherical zone of radius q_D = (6π²/Ω_V)^{1/3}, grid cutoff q_min = q_D/N_1.
+  // (A8.17), magnitudes in meV:
+  //   nonadiabatic |ΔE^NA_c| = α_F ħω_LO (2/π) [arctan(q_D/q_pol) − arctan(q_min/q_pol)]   (radial integrand q_pol/(q² + q_pol²))
+  //   adiabatic    |ΔE^A_c|  = α_F ħω_LO (2/π) q_pol (1/q_min − 1/q_D)                     (ħω_LO dropped: integrand q_pol/q²)
+  // contributions per logarithmic interval of q (integrand times q), in units of α_F ħω_LO, zero for q > q_D:
+  //   (2/π) q q_pol/(q² + q_pol²)  and  (2/π) q_pol/q
+  const RY = 13605.693, H2M = 3.80998, HBARC = 1973.27;   // Rydberg (meV), ħ²/2m_e (eV Å²), ħc (eV Å)
+  const MAT = {   // m*/m_e, ħω_LO (meV), ε_∞, ε_s, Ω_V (Å³): literature values, illustrative (the note on (A8.3))
+    GaAs: { m: 0.067, hw: 36.2, ei: 10.9, es: 12.9, Om: 45.2 },
+    GaN: { m: 0.20, hw: 92, ei: 5.35, es: 9.5, Om: 45.7 },
+    MgO: { m: 0.35, hw: 89, ei: 2.96, es: 9.8, Om: 18.7 }
+  };
+  const N_MIN = 4, N_MAX = 1000, Q_LO = 1e-6, Q_HI = 3, C2 = 2 / Math.PI;
+  const TOP = 0.6;   // the adiabatic integrand is cut just above the frame of (b), whose top is 0.5, so that it is clipped at the edge
+  const cache = {};
+  function material(key) {
+    if (cache[key]) return cache[key];
+    const p = MAT[key], hwE = p.hw / 1000;
+    const aF = (1 / p.ei - 1 / p.es) * Math.sqrt(p.m * RY / p.hw);   // α_F
+    const qp = Math.sqrt(p.m * hwE / H2M);                            // q_pol (Å⁻¹): ħ²q_pol²/2m* = ħω_LO
+    const qD = Math.cbrt(6 * Math.PI * Math.PI / p.Om);               // q_D (Å⁻¹)
+    const qlc = Math.sqrt(p.ei) * hwE / HBARC;                         // q_lc = √ε_∞ ω_LO/c (Å⁻¹)
+    const aw = aF * p.hw, A0 = Math.atan(qD / qp);                     // α_F ħω_LO (meV)
+    const NA = (N) => aw * C2 * (A0 - Math.atan(qD / (N * qp)));
+    const AD = (N) => aw * C2 * qp * (N - 1) / qD;
+    const fNA = (q) => (q > qD ? 0 : C2 * q * qp / (q * q + qp * qp));
+    const fAD = (q) => (q > qD ? 0 : C2 * qp / q);
+    // fixed axis of (a) per material: whole decades from below the curves at N_1 = 4 to above the adiabatic shift at N_1 = 1000
+    const ylim = [Math.pow(10, Math.floor(Math.log10(0.5 * NA(N_MIN)))), Math.pow(10, Math.ceil(Math.log10(1.2 * AD(N_MAX))))];
+    return (cache[key] = {
+      key, aF, qp, qD, qlc, aw, NA, AD, fNA, fAD, ylim,
+      conv: aw * C2 * A0,                          // converged nonadiabatic shift, q_min → 0
+      N90: qD / (qp * Math.tan(0.1 * A0)),         // N_1 for 90% of it
+      Nres: qD / qp,                               // the grid with q_min = q_pol
+      Nlc: qD / qlc,                               // the grid with q_min = q_lc
+      Alc: aw * C2 * qp * (1 / qlc - 1 / qD),      // adiabatic shift with the cutoff at q_lc
+      share: Math.atan(qlc / qp) / A0              // share of the converged nonadiabatic shift from q < q_lc
+    });
+  }
+
+  // ---------- canvas text: '$…$' marks math, whose letters (Latin, Greek, ħ) are italic in the text font;
+  //            _x, _{..}, ^x, ^{..} as in EPP.drawRich, so a label written outside '$' stays upright: '$q$_{pol}'. ----------
+  let FT = 'serif', FU = 'sans-serif';
+  const fonts = () => { FT = EPP.css('--font-text') || 'serif'; FU = EPP.css('--font-ui') || 'sans-serif'; };
+  const ITAL = /[A-Za-zα-ωħ]/;
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const p of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: p.t, m: p.m, it: false }); continue; }
+        let buf = '', it = null;
+        for (const ch of p.t) {
+          const k = ITAL.test(ch);
+          if (it !== null && k !== it) { out.push({ t: buf, m: p.m, it }); buf = ''; }
+          buf += ch; it = k;
+        }
+        if (buf) out.push({ t: buf, m: p.m, it });
+      }
+    });
+    return out;
+  }
+  const fontOf = (r, size) => `${r.it ? 'italic ' : ''}${(size * (r.m ? 0.72 : 1) * (r.it ? 1.07 : 1)).toFixed(1)}px ${r.it ? FT : FU}`;
+  function layout(ctx, rs, size) {
+    const w = rs.map(r => { ctx.font = fontOf(r, size); return ctx.measureText(r.t).width; });
+    const x = new Array(rs.length);
+    let X = 0, k = 0;
+    while (k < rs.length) {
+      const r = rs[k];
+      if (!r.m) {
+        x[k] = X; X += w[k];
+        const nx = rs[k + 1];
+        if (r.it && nx && !nx.it && !nx.m) X += 0.08 * size;   // italic correction before upright text
+        k++; continue;
+      }
+      let a = k; while (a + 1 < rs.length && rs[a + 1].m === r.m) a++;
+      let b = a;
+      if (b + 1 < rs.length && rs[b + 1].m === -r.m) { b++; while (b + 1 < rs.length && rs[b + 1].m === -r.m) b++; }
+      const x0 = X + (k > 0 && rs[k - 1].it ? 0.05 * size : 0);
+      let xa = x0, xb = x0;
+      for (let j = k; j <= a; j++) { x[j] = xa; xa += w[j]; }
+      for (let j = a + 1; j <= b; j++) { x[j] = xb; xb += w[j]; }
+      X = Math.max(xa, xb) + 0.04 * size; k = b + 1;
+    }
+    return { x, total: X };
+  }
+  // o: {size, align, color, halo (a ring of the surface colour, for text that crosses a line), baseline, measure}
+  function rich(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, rs = runs(s), L = layout(ctx, rs, size);
+    if (o.measure) return L.total;
+    const x0 = o.align === 'center' ? x - L.total / 2 : (o.align === 'right' ? x - L.total : x);
+    const dy = (r) => (r.m === -1 ? size * 0.3 : (r.m === 1 ? -size * 0.4 : 0));
+    ctx.save(); ctx.textAlign = 'left'; ctx.textBaseline = o.baseline || 'alphabetic';
+    const pass = (stroke) => rs.forEach((r, k) => { ctx.font = fontOf(r, size); if (stroke) ctx.strokeText(r.t, x0 + L.x[k], y + dy(r)); else ctx.fillText(r.t, x0 + L.x[k], y + dy(r)); });
+    if (o.halo) { ctx.strokeStyle = EPP.color('surface'); ctx.lineWidth = 3.5; ctx.lineJoin = 'round'; pass(true); }
+    ctx.fillStyle = o.color || EPP.color('fg'); pass(false);
+    ctx.restore();
+    return L.total;
+  }
+  const tw = (ctx, s, size) => rich(ctx, s, 0, 0, { size, measure: true });
+  const fit = (ctx, list, size, wmax) => list.find(s => tw(ctx, s, size) <= wmax) || list[list.length - 1];
+
+  // ---------- direct labels: the first candidate that stays in the frame, off the curves, the lines and the labels already placed ----------
+  // av: {fns: curves y(x), vx: vertical lines (canvas px), boxes: taken rectangles (canvas px)}
+  function hits(P, b, av) {
+    for (const X of av.vx) if (X >= b[0] - 2 && X <= b[2] + 2) return true;
+    for (const q of av.boxes) if (b[0] < q[2] && b[2] > q[0] && b[1] < q[3] && b[3] > q[1]) return true;
+    for (const f of av.fns) {
+      let prev = null;
+      for (let px = b[0]; px <= b[2] + 0.01; px += 1.5) {
+        const v = f(P.invX(px));
+        if (!isFinite(v)) { prev = null; continue; }
+        const py = P.Y(v);
+        if (py >= b[1] && py <= b[3]) return true;
+        if (prev !== null && Math.min(prev, py) < b[1] && Math.max(prev, py) > b[3]) return true;
+        prev = py;
+      }
+    }
+    return false;
+  }
+  // c: {x, y (data), dx, dy (px, to the middle of the text), align}. The candidate that won last time is tried first, so a
+  // label stays put until the cursor or a curve reaches it. With must, a label that finds no clear place takes the first
+  // candidate inside the frame and is drawn on a patch of the panel colour; without, it is left out (the legend names that curve).
+  const memo = {};
+  function place(P, key, text, size, cands, av, must) {
+    const m = P.m, W = P.cv.w, H = P.cv.h, w = tw(P.ctx, text, size), h = size * 1.3, id = key + '|' + text;
+    const order = cands.map((_, i) => i);
+    if (memo[id] != null && memo[id] < cands.length) { order.splice(memo[id], 1); order.unshift(memo[id]); }
+    let first = null;
+    for (const i of order) {
+      const c = cands[i], X = P.X(c.x) + (c.dx || 0), Y = P.Y(c.y) + (c.dy || 0);
+      if (!isFinite(X) || !isFinite(Y)) continue;
+      const x0 = c.align === 'right' ? X - w : (c.align === 'center' ? X - w / 2 : X);
+      const b = [x0 - 2, Y - h / 2, x0 + w + 2, Y + h / 2];
+      if (b[0] < m.l + 1 || b[2] > W - m.r - 1 || b[1] < m.t + 1 || b[3] > H - m.b - 1) continue;
+      if (!first) first = { x: x0, y: Y, text, size, b, w, forced: true };
+      if (hits(P, b, av)) continue;
+      memo[id] = i;
+      av.boxes.push([b[0] - 3, b[1] - 1, b[2] + 3, b[3] + 1]);
+      return { x: x0, y: Y, text, size, w };
+    }
+    if (must && first) { av.boxes.push(first.b); return first; }
+    return null;
+  }
+  // vertical offset that clears a sloping line over the whole width of a label (px; side −1 above, +1 below)
+  function clear(P, f, x, w, h, side) {
+    const d = (P.invX(P.X(x) + 1) - x), s = Math.abs(P.Y(f(x + d)) - P.Y(f(x)));
+    return side * (h / 2 + 4 + 0.5 * w * s);
+  }
+
+  // ---------- panels ----------
+  const elA = fig.querySelector('.a8-catastrophe-conv'), elB = fig.querySelector('.a8-catastrophe-int');
+  const legA = elA.querySelector('.legend'), legB = elB.querySelector('.legend');
+  const keyLC = legB.querySelector('.a8-catastrophe-k-lc');
+  const OPT = { legend: false, hover: false, aspect: 0.8, minHeight: 250, maxHeight: 330, margin: { l: 58, r: 14, t: 26, b: 44 } };
+  const XTA = [4, 10, 20, 50, 100, 200, 500, 1000].map(v => ({ v, label: String(v) }));
+  const XTB = [-6, -5, -4, -3, -2, -1, 0].map(e => ({ v: Math.pow(10, e), label: e >= -2 ? String(Math.pow(10, e)) : `10^{−${-e}}` }));
+  const pA = new EPP.Plot(elA, Object.assign({ logx: true, logy: true, xlim: [N_MIN, N_MAX], ylim: [0.01, 100], xticks: XTA, ariaLabel: 'Panel a: band-edge shift against the grid size' }, OPT));
+  const pB = new EPP.Plot(elB, Object.assign({ logx: true, xlim: [Q_LO, Q_HI], ylim: [0, 0.5], xticks: XTB, ariaLabel: 'Panel b: contribution to the shift per logarithmic interval of q' }, OPT));
+  // the legends are static markup (MathJax), placed under their plots
+  elA.appendChild(legA); elB.appendChild(legB);
+
+  function frameText(P, xt, yt, titles) {
+    const ctx = P.ctx, w = P.cv.w, h = P.cv.h, m = P.m, cFg = EPP.color('fg');
+    rich(ctx, xt, m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    ctx.save(); ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    rich(ctx, yt, 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+    rich(ctx, fit(ctx, titles, 11.5, w - 8), 4, 15, { size: 11.5, color: EPP.color('fg2') });
+  }
+  const draw1 = (P, L, color) => {
+    if (!L) return;
+    if (L.forced) { const ctx = P.ctx; ctx.save(); ctx.fillStyle = EPP.color('surface'); ctx.fillRect(L.x - 3, L.y - 0.62 * L.size - 1, L.w + 6, 1.24 * L.size + 2); ctx.restore(); }
+    rich(P.ctx, L.text, L.x, L.y, { size: L.size, color, baseline: 'middle', halo: true });
+  };
+  // a value on a curve, drawn unclipped with a ring of the panel colour so that it stays whole at the frame edges
+  const dot = (P, x, y, col) => {
+    const X = P.X(x), Y = P.Y(y), m = P.m, ctx = P.ctx;
+    if (!(Y >= m.t - 1 && Y <= P.cv.h - m.b + 1)) return;
+    ctx.save(); ctx.beginPath(); ctx.arc(X, Y, 4.3, 0, 2 * Math.PI);
+    ctx.fillStyle = EPP.color(col); ctx.fill(); ctx.lineWidth = 1.4; ctx.strokeStyle = EPP.color('surface'); ctx.stroke(); ctx.restore();
+  };
+  const ok = (v, a, b) => v > a && v < b;
+
+  // (a): titles, the labels of the reference lines and of the curves, the cursor values
+  const baseA = pA.render.bind(pA);
+  pA.render = () => {
+    baseA();
+    const P = pA, w = P.cv.w, h = P.cv.h, c = cur;
+    if (!w || !h || !c) return;
+    fonts();
+    const M = c.M;
+    frameText(P, 'grid size $N$_1 (points per direction)', 'band-edge shift |Δ$E$_c| (meV)',
+      ['(a) the shift against the grid: drag to change $N$_1', '(a) the shift against $N$_1: drag to change it', '(a) the shift against the grid size']);
+    const XN = P.X(c.N), YNA = P.Y(c.na), YAD = P.Y(c.ad), resIn = ok(M.Nres, N_MIN, N_MAX);
+    const boxes = [[XN - 7, YNA - 7, XN + 7, YNA + 7], [XN - 7, YAD - 7, XN + 7, YAD + 7]];
+    const fns = [M.NA, M.AD, () => M.aw];
+    const labs = [];
+    // the grid where q_min = q_pol: at the top of its line, on the side away from the cursor if possible
+    if (resIn) {
+      const sides = XN > P.X(M.Nres) ? [-1, 1] : [1, -1];
+      labs.push([place(P, 'res', '$q$_{min} = $q$_{pol}', 11, [12, 28].flatMap(dy => sides.map(sg => ({ x: M.Nres, y: M.ylim[1], dx: 5 * sg, dy, align: sg > 0 ? 'left' : 'right' }))),
+        { fns, vx: [XN], boxes }, true), EPP.textColor('phonon')]);
+    }
+    // the polaron shift: above its line at the left end, else at the right end, else below
+    const vxA = [XN].concat(resIn ? [P.X(M.Nres)] : []);
+    labs.push([place(P, 'aw', `$α$_F$ħω$_{LO} = ${fmtE(M.aw)} meV`, 11, [
+      { x: N_MIN, y: M.aw, dx: 6, dy: -10 }, { x: N_MAX, y: M.aw, dx: -6, dy: -10, align: 'right' },
+      { x: N_MIN, y: M.aw, dx: 6, dy: 10 }, { x: 60, y: M.aw, dy: -10, align: 'center' }], { fns, vx: vxA, boxes }, true), EPP.textColor('muted')]);
+    // the curves: the nonadiabatic one below its plateau, the adiabatic one above its line; the candidates are label
+    // centres in canvas px, first in the right part of the frame, where the two curves are apart, then beside the cursor
+    // (a candidate outside the frame is skipped by place)
+    const ctx = P.ctx, av = { fns, vx: vxA, boxes }, x0 = P.m.l, x1 = w - P.m.r;
+    const along = (f, text, side) => {
+      const XR = resIn ? P.X(M.Nres) : x0;
+      const tw0 = tw(ctx, text, 11.5), xs = [x1 - 6 - tw0 / 2, (XN + x1) / 2, x0 + 0.84 * (x1 - x0), x0 + 0.7 * (x1 - x0), x0 + 0.56 * (x1 - x0),
+        (XR + XN) / 2, XN - tw0 / 2 - 14, XN + tw0 / 2 + 14];
+      // a second pass 5 px further from the curve clears the cursor dots
+      return [0, 5].flatMap(extra => xs.map(px => P.invX(px)).map(n => ({ x: n, y: f(n), dy: clear(P, f, n, tw0, 15, side) + side * extra, align: 'center' })));
+    };
+    labs.push([place(P, 'a-na', 'nonadiabatic', 11.5, along(M.NA, 'nonadiabatic', 1), av), EPP.textColor('electron')]);
+    labs.push([place(P, 'a-ad', 'adiabatic', 11.5, along(M.AD, 'adiabatic', -1), av), EPP.textColor('c5')]);
+    dot(P, c.N, c.ad, 'c5'); dot(P, c.N, c.na, 'electron');
+    for (const [L, col] of labs) draw1(P, L, col);
+  };
+
+  // (b): titles, the labels of the wavevector lines, of the light cone and of the curves, the values at q_min
+  const baseB = pB.render.bind(pB);
+  pB.render = () => {
+    baseB();
+    const P = pB, w = P.cv.w, h = P.cv.h, c = cur;
+    if (!w || !h || !c) return;
+    fonts();
+    const M = c.M, fA = (q) => Math.min(M.fAD(q), TOP), fns = [M.fNA, fA];
+    frameText(P, 'phonon wavevector $q$ (Å^{−1})', '|dΔ$E$_c/d ln $q$| / $α$_F$ħω$_{LO}',
+      ['(b) where the shift comes from: drag to move $q$_{min}', '(b) where the shift comes from: drag $q$_{min}', '(b) where the shift comes from']);
+    const vl = [{ k: 'qmin', x: c.qmin, t: '$q$_{min}', col: 'muted' }, { k: 'qp', x: M.qp, t: '$q$_{pol}', col: 'phonon' }, { k: 'qd', x: M.qD, t: '$q$_D', col: 'muted' }];
+    if (c.lc) vl.push({ k: 'qlc', x: M.qlc, t: '$q$_{lc}', col: 'photon' });
+    const Xs = vl.map(o => P.X(o.x)), Xm = P.X(c.qmin), ya = fA(c.qmin), yn = M.fNA(c.qmin);
+    const boxes = [[Xm - 7, P.Y(yn) - 7, Xm + 7, P.Y(yn) + 7]];
+    if (ya <= 0.5) boxes.push([Xm - 7, P.Y(ya) - 7, Xm + 7, P.Y(ya) + 7]);
+    const labs = [];
+    // each line is labelled at the top of the frame, right or left of it, in the first of three rows that is free
+    vl.forEach((L, i) => {
+      const av = { fns, vx: Xs.filter((_, j) => j !== i), boxes };
+      labs.push([place(P, 'v-' + L.k, L.t, 11, [12, 27, 42].flatMap(dy => [{ x: L.x, y: 0.5, dx: 5, dy }, { x: L.x, y: 0.5, dx: -5, dy, align: 'right' }]), av, true), EPP.textColor(L.col)]);
+    });
+    if (c.lc) {
+      const xc = Math.sqrt(Q_LO * M.qlc);
+      labs.push([place(P, 'lc', 'light cone', 11, [0.25, 0.32, 0.18].map(y => ({ x: xc, y, align: 'center' })), { fns, vx: Xs, boxes }, true), EPP.textColor('photon')]);
+    }
+    // the curves, if there is room (the legend names them): the nonadiabatic bump above its left half, beside its left flank or
+    // inside its shaded area under the right flank; the adiabatic curve where it enters the frame or above its right flank
+    const av = { fns, vx: Xs, boxes }, qL = (y) => { const a = Math.PI * y / 2; return M.qp * (1 - Math.sqrt(1 - 4 * a * a)) / (2 * a); };
+    const qe = C2 * M.qp / 0.5, qm = Math.sqrt(M.qp * M.qD);
+    labs.push([place(P, 'b-na', 'nonadiabatic', 11.5, [{ x: M.qp, y: 0.37, dx: -6, align: 'right' }, { x: qL(0.2), y: 0.2, dx: -7, align: 'right' },
+      { x: qm, y: 0.045, align: 'center' }, { x: qm, y: 0.07, align: 'center' }, { x: qL(0.13), y: 0.13, dx: -7, align: 'right' },
+      { x: qL(0.27), y: 0.27, dx: -7, align: 'right' }], av), EPP.textColor('electron')]);
+    const cAD = [{ x: qe, y: 0.5, dx: 6, dy: 12 }, { x: qe, y: 0.5, dx: 6, dy: 27 }].concat([2.2, 3, 4.5, 6.5].map(f => ({ x: f * M.qp, y: M.fAD(f * M.qp), dx: 4, dy: -10 })));
+    labs.push([place(P, 'b-ad', 'adiabatic ∝ 1/$q$', 11.5, cAD, av) || place(P, 'b-ad', 'adiabatic', 11.5, cAD, av), EPP.textColor('c5')]);
+    if (ya <= 0.5) dot(P, c.qmin, ya, 'c5');
+    dot(P, c.qmin, yn, 'electron');
+    for (const [L, col] of labs) draw1(P, L, col);
+  };
+
+  // ---------- drawing ----------
+  const NB = '\u00a0';   // no-break space between a number and its unit
+  const SUP = { '−': '⁻', '-': '⁻', '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹' };
+  function sci(v, sig = 2) {
+    if (!isFinite(v)) return '—';
+    if (v === 0) return '0';
+    let e = Math.floor(Math.log10(Math.abs(v))), ms = (v / Math.pow(10, e)).toFixed(sig - 1);
+    if (Math.abs(parseFloat(ms)) >= 10) { e += 1; ms = (v / Math.pow(10, e)).toFixed(sig - 1); }
+    return ms + '×10' + String(e).split('').map(ch => SUP[ch]).join('');
+  }
+  // an energy magnitude in meV: 3 decimals below 1 meV, 2 below 10 meV, 1 above
+  const fmtE = (v) => (v < 1 ? v.toFixed(3) : v < 10 ? v.toFixed(2) : v.toFixed(1));
+  // a signed shift: meV, or eV from 1000 meV on
+  const shift = (v) => '−' + (v < 1000 ? fmtE(v) + NB + 'meV' : (v / 1000).toFixed(2) + NB + 'eV');
+  const $v = (k) => fig.querySelector('.a8-catastrophe-v-' + k);
+  const RO = {}; ['a', 'qp', 'rp', 'qd', 'qlc', 'qmin', 'na', 'ad', 'conv', 'n90', 'nlc', 'alc', 'share'].forEach(k => { RO[k] = $v(k); });
+  const Ns = EPP.linspace(Math.log10(N_MIN), Math.log10(N_MAX), 241).map(e => Math.pow(10, e));
+  const QS = EPP.linspace(Math.log10(Q_LO), Math.log10(Q_HI), 391).map(e => Math.pow(10, e));
+
+  let cur = null;
+  function compute() {
+    const s = ui.state, M = material(s.mat), N = Math.round(EPP.clamp(s.N1, N_MIN, N_MAX));
+    return { M, N, qmin: M.qD / N, lc: !!s.lc, na: M.NA(N), ad: M.AD(N) };
+  }
+  function draw() {
+    const c = cur = compute(), M = c.M;
+    pA.draw([
+      { type: 'hline', at: M.aw, color: 'muted', width: 1.3, dash: [] },
+      ok(M.Nres, N_MIN, N_MAX) ? { type: 'vline', at: M.Nres, color: 'phonon', width: 1.4, dash: [] } : null,
+      { type: 'line', x: Ns, y: Ns.map(M.AD), color: 'c5', width: 2.2, dash: [6, 4] },
+      { type: 'line', x: Ns, y: Ns.map(M.NA), color: 'electron', width: 2.2 },
+      { type: 'vline', at: c.N, color: 'muted', width: 1.1, dash: [3, 3] }
+    ], { ylim: M.ylim });
+    // (b): q_pol is a sample; at q_D the integrands drop to zero vertically; the fills run exactly from q_min to q_D
+    const fA = (q) => Math.min(M.fAD(q), TOP);
+    const grid = QS.filter(q => Math.abs(q / M.qp - 1) > 1e-6).concat([M.qp]).sort((a, b) => a - b);
+    const curve = (f) => {
+      const x = [], y = [];
+      for (const q of grid) if (q < M.qD) { x.push(q); y.push(f(q)); }
+      x.push(M.qD, M.qD); y.push(f(M.qD), 0);
+      for (const q of grid) if (q > M.qD) { x.push(q); y.push(0); }
+      return { x, y };
+    };
+    const inc = [c.qmin].concat(grid.filter(q => q > c.qmin && q < M.qD), [M.qD]);
+    const lA = curve(fA), lN = curve(M.fNA);
+    pB.draw([
+      c.lc ? { type: 'band', x0: Q_LO, x1: M.qlc, color: 'photon', alpha: 0.16 } : null,
+      { type: 'fill', x: inc, y1: inc.map(fA), color: 'c5', alpha: 0.10 },
+      { type: 'fill', x: inc, y1: inc.map(M.fNA), color: 'electron', alpha: 0.22 },
+      { type: 'vline', at: M.qD, color: 'muted', width: 1.2, dash: [] },
+      c.lc ? { type: 'vline', at: M.qlc, color: 'photon', width: 1.3, dash: [] } : null,
+      { type: 'vline', at: M.qp, color: 'phonon', width: 1.4, dash: [] },
+      { type: 'line', x: lA.x, y: lA.y, color: 'c5', width: 2.2, dash: [6, 4] },
+      { type: 'line', x: lN.x, y: lN.y, color: 'electron', width: 2.2 },
+      { type: 'vline', at: c.qmin, color: 'muted', width: 1.1, dash: [3, 3] }
+    ]);
+    keyLC.hidden = !c.lc;
+
+    // readouts (the keys are static MathJax in the markup)
+    RO.a.textContent = M.aF.toPrecision(3) + (M.aF > 1 ? ' (outside weak coupling)' : '');
+    RO.qp.textContent = M.qp.toPrecision(3) + NB + 'Å⁻¹';
+    RO.rp.textContent = (1 / M.qp).toFixed(0) + NB + 'Å';
+    RO.qd.textContent = M.qD.toFixed(2) + NB + 'Å⁻¹';
+    RO.qlc.textContent = sci(M.qlc) + NB + 'Å⁻¹';
+    RO.qmin.textContent = c.qmin.toPrecision(3) + NB + 'Å⁻¹';
+    RO.na.textContent = shift(c.na) + ' (' + (100 * c.na / M.conv).toFixed(0) + '%)';
+    RO.ad.textContent = shift(c.ad);
+    RO.conv.textContent = shift(M.conv);
+    RO.n90.textContent = M.N90.toFixed(0);
+    RO.nlc.textContent = sci(M.Nlc);
+    RO.alc.textContent = '−' + (M.Alc / 1000).toPrecision(3) + NB + 'eV';
+    RO.share.textContent = (100 * M.share).toPrecision(2) + '%';
+
+    const f2 = (v) => (v < 1000 ? fmtE(v) + ' meV' : (v / 1000).toFixed(2) + ' eV');
+    pA.cv.canvas.setAttribute('aria-label', `Panel a: magnitude of the shift of the conduction-band minimum of ${M.key} against the grid size N1, ` +
+      `from 4 to 1000 points per direction, both axes logarithmic. The nonadiabatic shift, with the phonon energy kept, levels off below the polaron shift ` +
+      `${fmtE(M.aw)} meV and converges to ${fmtE(M.conv)} meV, with 90 percent at N1 = ${M.N90.toFixed(0)}. The adiabatic shift grows in proportion to N1 ` +
+      `without limit, to ${f2(M.AD(N_MAX))} at N1 = 1000. The two separate near the grid with q_min = q_pol, N1 = ${M.Nres.toFixed(0)}. ` +
+      `Cursor at N1 = ${c.N}: nonadiabatic −${f2(c.na)}, adiabatic −${f2(c.ad)}. Click or drag in the panel, or use the arrow keys, to change N1.`);
+    pB.cv.canvas.setAttribute('aria-label', `Panel b: contribution to the shift per logarithmic interval of the phonon wavevector q, from 10 to the minus 6 to 3 ` +
+      `inverse ångström, in units of the polaron shift. The nonadiabatic contribution is a bump of height 1 over pi at q_pol = ${M.qp.toPrecision(3)} per ångström ` +
+      `and vanishes at smaller q; the adiabatic one grows as 1/q and leaves the frame below q = ${qeText(M)} per ångström. The shaded areas, between q_min = ` +
+      `${c.qmin.toPrecision(3)} and q_D = ${M.qD.toFixed(2)}, are what the grid includes. ` +
+      (c.lc ? `The light cone, q below q_lc = ${sci(M.qlc)} per ångström, is the band at the far left, ${(M.qp / M.qlc).toFixed(0)} times below q_pol. ` : '') +
+      'Click or drag in the panel, or use the arrow keys, to move q_min.');
+  }
+  const qeText = (M) => (C2 * M.qp / 0.5).toPrecision(2);
+
+  // ---------- controls ----------
+  const ui = EPP.controls(fig.querySelector('.a8-catastrophe-ctrls'), [
+    { key: 'mat', type: 'seg', label: 'material', options: [['GaAs', 'GaAs'], ['GaN', 'GaN'], ['MgO', 'MgO']], value: 'GaAs' },
+    { key: 'N1', type: 'range', label: 'grid size N_1', min: N_MIN, max: N_MAX, log: true, value: 200, fmt: v => Math.round(v).toFixed(0) },
+    { key: 'lc', type: 'toggle', label: 'mark the light cone q < q_{lc}', value: true }
+  ], () => draw());
+  // control labels: italic variables, upright labels
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const LAB = { N1: `grid size ${I('N')}<sub>1</sub> (per direction)`, lc: `mark the light cone ${I('q')} &lt; ${I('q')}<sub>lc</sub>` };
+  Object.keys(LAB).forEach(k => { const sp = fig.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  draw();
+
+  // ---------- the cursor: click or drag in (a) sets N_1, in (b) it moves q_min = q_D/N_1; arrow keys on a focused panel ----------
+  function setN(v) {
+    if (!isFinite(v)) return;
+    const n = Math.round(EPP.clamp(v, N_MIN, N_MAX));
+    if (cur && n === cur.N) return;
+    ui.set('N1', n);
+  }
+  const stepN = (dir, big) => { const f = Math.pow(10, big ? 0.2 : 0.02); let n = Math.round(dir > 0 ? cur.N * f : cur.N / f); if (n === cur.N) n += dir; return n; };
+  // toN: canvas x (px) -> N_1; curX: the cursor's canvas x; sense: +1 if the cursor moves right as N_1 grows
+  function attach(P, toN, curX, sense) {
+    const cv = P.cv.canvas;
+    cv.setAttribute('tabindex', '0');
+    cv.setAttribute('role', 'application');
+    // horizontal drags move the cursor; vertical swipes still scroll the page on phones
+    cv.style.touchAction = 'pan-y';
+    let drag = null, pend = null;
+    const loc = (e) => { const r = cv.getBoundingClientRect(); return { px: e.clientX - r.left, py: e.clientY - r.top }; };
+    const inFrame = (p, tol) => { const m = P.m; return p.px >= m.l - tol && p.px <= P.cv.w - m.r + tol && p.py >= m.t - tol && p.py <= P.cv.h - m.b + tol; };
+    const clampX = (px) => EPP.clamp(px, P.m.l, P.cv.w - P.m.r);
+    cv.addEventListener('pointerdown', (e) => {
+      const p = loc(e);
+      if (!inFrame(p, 6)) return;
+      // on a touch screen a touch away from the cursor waits: a tap sets it, a sideways drag moves it, a vertical swipe scrolls
+      if (e.pointerType === 'touch' && Math.abs(p.px - curX()) > 16) { pend = { x: p.px, y: p.py, id: e.pointerId }; return; }
+      drag = e.pointerId; try { cv.setPointerCapture(e.pointerId); } catch (_) {}
+      setN(toN(clampX(p.px)));
+    });
+    cv.addEventListener('pointermove', (e) => {
+      const p = loc(e);
+      if (drag === e.pointerId) { setN(toN(clampX(p.px))); return; }
+      if (pend && pend.id === e.pointerId) {
+        const dx = p.px - pend.x, dy = p.py - pend.y;
+        if (Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy)) { drag = e.pointerId; pend = null; try { cv.setPointerCapture(e.pointerId); } catch (_) {} setN(toN(clampX(p.px))); }
+        else if (Math.abs(dy) > 8) pend = null;
+        return;
+      }
+      if (e.pointerType !== 'touch') cv.style.cursor = inFrame(p, 0) ? 'ew-resize' : '';
+    });
+    const end = (e) => { if (e.type === 'pointerup' && pend && pend.id === e.pointerId) setN(toN(clampX(pend.x))); pend = null; if (drag === e.pointerId) drag = null; };
+    cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
+    cv.addEventListener('keydown', (e) => {
+      if (e.altKey || e.ctrlKey || e.metaKey || !cur) return;
+      const k = e.key, big = k === 'PageUp' || k === 'PageDown';
+      let v = null;
+      if (k === 'ArrowRight' || k === 'ArrowUp' || k === 'PageUp') v = stepN(sense, big);
+      else if (k === 'ArrowLeft' || k === 'ArrowDown' || k === 'PageDown') v = stepN(-sense, big);
+      else if (k === 'Home') v = sense > 0 ? N_MIN : N_MAX;
+      else if (k === 'End') v = sense > 0 ? N_MAX : N_MIN;
+      if (v === null) return;
+      e.preventDefault(); setN(v);
+    });
+  }
+  attach(pA, (px) => pA.invX(px), () => pA.X(cur ? cur.N : 200), 1);
+  attach(pB, (px) => (cur ? cur.M.qD : 1) / pB.invX(px), () => pB.X(cur ? cur.qmin : 0.005), -1);
+})();
+</script>

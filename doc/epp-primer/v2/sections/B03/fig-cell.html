@@ -1,0 +1,324 @@
+  <figure class="viz" id="viz-b3-cell">
+    <p class="viz-title">Two masses, one spring and one field <span class="tag">interactive</span></p>
+    <div class="b3-cell-row"></div>
+    <div class="legend b3-cell-key"><span class="item"><svg width="26" height="14" viewBox="0 0 26 14" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><line x1="3" y1="1.5" x2="3" y2="12.5" style="stroke:var(--muted);stroke-width:1.2"/><line x1="3" y1="7" x2="17" y2="7" style="stroke:var(--c-phonon);stroke-width:2.2;stroke-linecap:round"/><path d="M24 7 L16 3 L16 11 Z" style="fill:var(--c-phonon)"/></svg>displacement from the rest position (tick)</span><span class="item"><svg width="16" height="14" viewBox="0 0 16 14" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><line x1="8" y1="0.5" x2="8" y2="13.5" style="stroke:var(--rule);stroke-width:1;stroke-dasharray:2 2"/><path d="M4 3 L12 11 M4 11 L12 3" style="stroke:var(--fg);stroke-width:1.8;stroke-linecap:round"/></svg>centre of mass of a cell (dotted: at rest)</span><span class="item b3-cell-ghost"><svg width="16" height="14" viewBox="0 0 16 14" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><circle cx="8" cy="7" r="5.5" style="fill:var(--c-phonon);opacity:0.3"/></svg>ions a quarter period later (paused)</span></div>
+    <div class="b3-cell-plot" style="margin-top:14px"></div>
+    <div class="legend b3-cell-leg"><span class="item" style="color:var(--fg)"><span class="sw"></span><span style="color:var(--fg-2)">relative displacement $|\xi_{\mathrm{rel}}|$</span></span><span class="item" style="color:var(--c-photon)"><span class="sw"></span><span style="color:var(--fg-2)">centre of mass $|\xi_{\mathrm c}|$, only if $Z^*_1+Z^*_2\neq0$</span></span></div>
+    <div class="b3-cell-ctrls"></div>
+    <div class="readout b3-cell-ro" aria-live="polite" aria-atomic="true"><span>$|\xi_1|,\ |\xi_2|$<b class="b3-cell-v-x12"></b></span><span>$\xi_1/\xi_2$<b class="b3-cell-v-ratio"></b></span><span>lag of $u_{\mathrm{rel}}$ behind $E$<b class="b3-cell-v-lag"></b></span><span>$|\xi_{\mathrm c}|$<b class="b3-cell-v-xc"></b></span><span>dipole per cell $|\mathbf p|$<b class="b3-cell-v-p"></b></span></div>
+    <div class="readout b3-cell-ro2" aria-live="polite" aria-atomic="true"><span>$\hbar\omega_{\mathrm{TO}}$<b class="b3-cell-v-to"></b></span><span>$K$<b class="b3-cell-v-k"></b></span><span>$M_1,\ M_2$<b class="b3-cell-v-m"></b></span><span>$-M_2/M_1$<b class="b3-cell-v-mr"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> Every cell moves in step. In each cell the cation and the anion swing against each other while the centre of mass stays still: the uniform field drives only the bond stretch, a single oscillator of reduced mass $M_{\mathrm r}$ with its resonance at <span class="nw">$\hbar\omega_{\mathrm{TO}}=33.3$ meV.</span></p><div class="cap-more">
+      <p><strong>Marks.</strong> In (a), filled and open discs are cations and anions, larger when heavier; the zigzag is the spring <span class="nw">$K$;</span> the rose arrow is the field <span class="nw">$\bE(t)$;</span> amber arrows are the displacements, magnified by the factor in the header (relative to a Ga–As spacing of <span class="nw">2.45 Å);</span> crosses mark the centres of mass; violet arrows are the cell dipoles <span class="nw">$\mathbf p=e(Z^*_1\bu_1+Z^*_2\bu_2)$</span> divided by $eZ^*$, on the same scale (for a neutral cell, the stretch <span class="nw">$\bu_{\mathrm{rel}}$).</span> In (b), $|\xi_{\mathrm{rel}}|$ is ink and $|\xi_{\mathrm c}|$ rose, for <span class="nw">$E_0=100$ kV/cm;</span> the dashed line marks $\omega_{\mathrm{TO}}$ and the dots the drive.</p>
+      <p><strong>Try.</strong> (1) Sweep $\hbar\omega$ through <span class="nw">33.3 meV:</span> the stretch peaks, the lag passes 90°, and above resonance the ions move against the force. (2) Change the mass ratio: the lighter ion moves more, <span class="nw">$\xi_1/\xi_2=-M_2/M_1$,</span> and the resonance stays put. (3) Give the cell a net charge and lower <span class="nw">$\hbar\omega$:</span> the centre of mass swings with an amplitude rising as <span class="nw">$1/\omega^2$,</span> like a free charge, a response an insulator cannot have.</p>
+      <p><strong>Model.</strong> <a class="eqref" href="#b3-eq-eom"></a>–<a class="eqref" href="#b3-eq-xi"></a> with arbitrary charges, as in the derivation box, and damping on the relative coordinate only. Along the field, $\xi_{\mathrm{rel}}=e(Z^*_1/M_1-Z^*_2/M_2)E_0/(\omega_{\mathrm{TO}}^2-\omega^2-\ii\gamma\omega)$ and <span class="nw">$\xi_{\mathrm c}=-e(Z^*_1+Z^*_2)E_0/(M_{\mathrm c}\omega^2)$.</span> GaAs (literature values, illustrative): $M_1=69.72$ and $M_2=74.92$ amu, <span class="nw">$Z^*_1=2.07$,</span> <span class="nw">$K=9.58$ eV/Å²,</span> <span class="nw">$\hbar\gamma=0.31$ meV.</span> The mass ratio keeps $M_{\mathrm r}=36.1$ amu and $K$ fixed; the imbalance changes only <span class="nw">$Z^*_2$.</span></p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b3-cell');
+  if (!fig || !window.EPP) return;
+  const C = EPP.C, TAU = 2 * Math.PI;
+
+  // ---------- model: GaAs (literature values, illustrative) ----------
+  // ħω in meV, masses in amu, forces in eV/Å, amplitudes in Å (shown in pm).
+  // ξ[Å] = F[eV/Å]·4180.2 / (M[amu]·Δ[meV²]), since ħ²/(amu Å²) = 4.1802 meV and 1 eV = 1000 meV.
+  const HB = 4180.2, CM = 8.06554, HW = 64.654;
+  const M1G = 69.72, M2G = 74.92, MR = M1G * M2G / (M1G + M2G), RHO_G = M1G / M2G;
+  const ZS = 2.07, WTO = 33.3, GAM = 0.31, E0 = 1e-3;   // Z*; ħω_TO and ħγ in meV; E_0 = 100 kV/cm = 1e-3 V/Å
+  const K = MR * (WTO / HW) * (WTO / HW);                 // 9.58 eV/Å²; fixed together with M_r, so ω_TO does not move
+  const BOND = 2.448, PERIOD = 2.6, SWING = 0.25;         // Ga–As spacing (Å) for the magnification; s per drive period; largest swing / ion spacing
+  const snapRho = (r) => (Math.abs(Math.log(r / RHO_G)) < 0.004 ? RHO_G : r);
+  const den = (hw) => [WTO * WTO - hw * hw, -GAM * hw];   // ω_TO² − ω² − iγω (meV²)
+  // (B3.1) with the friction of (B3.2) on the relative coordinate; e^{−iωt} convention
+  function model(hw, rho, dz) {
+    const M1 = MR * (1 + rho), M2 = MR * (1 + 1 / rho), Mc = M1 + M2;    // 1/M_1 + 1/M_2 = 1/M_r for every ratio
+    const Z1 = ZS, Z2 = -ZS + dz;                                         // dz = Z*_1 + Z*_2, the charge imbalance
+    const fr = E0 * (Z1 / M1 - Z2 / M2) * HB;                             // e(Z*_1/M_1 − Z*_2/M_2)E_0 (Å meV²)
+    const fc = -E0 * dz * HB / Mc;                                        // −e(Z*_1 + Z*_2)E_0/M_c (Å meV²)
+    const xr = C.div([fr, 0], den(hw)), xc = fc / (hw * hw);              // ξ_rel (complex), ξ_c (real: free, undamped)
+    const x1 = [xc + M2 / Mc * xr[0], M2 / Mc * xr[1]], x2 = [xc - M1 / Mc * xr[0], -M1 / Mc * xr[1]];
+    const p = [Z1 * x1[0] + Z2 * x2[0], Z1 * x1[1] + Z2 * x2[1]];          // dipole per cell in units of e Å
+    return { hw, rho, dz, M1, M2, Mc, fr, fc, xr, xc, x1, x2, p };
+  }
+  // drive grid for (b): 0.05 meV steps, refined to 0.0125 meV within 1 meV of the resonance (ħγ = 0.31 meV)
+  const XS = (() => {
+    const a = [];
+    for (let i = 0; i <= 1180; i++) a.push(1 + 0.05 * i);
+    for (let k = -80; k <= 80; k++) a.push(WTO + 0.0125 * k);
+    a.sort((u, v) => u - v);
+    return a.filter((v, i) => i === 0 || v - a[i - 1] > 1e-9);
+  })();
+
+  // ---------- formatting ----------
+  const NB = ' ';
+  const SUP = { '-': '⁻', 0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴', 5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹' };
+  function fmtNum(v) {
+    if (!isFinite(v)) return '∞';
+    if (v === 0) return '0';
+    const a = Math.abs(v);
+    if (a >= 1e-3 && a < 1000) return v.toPrecision(3).replace('-', '−');
+    const e = Math.floor(Math.log10(a));
+    return `${(v / Math.pow(10, e)).toFixed(2).replace('-', '−')}×10${String(e).split('').map(c => SUP[c]).join('')}`;
+  }
+  const fmtMag = (m) => { const e = Math.floor(Math.log10(m)), f = Math.pow(10, Math.max(0, e - 1)); return String(Math.round(m / f) * f); };
+  const fmtMass = (M) => (M >= 100 ? M.toFixed(1) : M.toFixed(2));
+  function fmtRatio(z) {
+    const a = C.abs(z);
+    if (!isFinite(a)) return '∞';
+    const num = (v) => { const b = Math.abs(v); return b >= 100 ? b.toFixed(0) : (b >= 10 ? b.toFixed(1) : b.toFixed(3)); };
+    if (Math.abs(z[1]) < 5e-4 * Math.max(1, a)) return (z[0] < 0 ? '−' : '+') + num(z[0]);
+    return `${z[0] < 0 ? '−' : ''}${num(z[0])} ${z[1] < 0 ? '−' : '+'} ${num(z[1])}i`;
+  }
+
+  // ---------- canvas text: parts {t, i: italic symbol (text font), b: bold vector, s: −1 sub / +1 sup} ----------
+  let FAM = { ui: 'sans-serif', tx: 'serif' };
+  const T = (t) => ({ t }), I = (t) => ({ t, i: 1 }), B = (t) => ({ t, b: 1 });
+  const Sb = (t, it) => ({ t, s: -1, i: it ? 1 : 0 }), Sp = (t, it) => ({ t, s: 1, i: it ? 1 : 0 });
+  const pFont = (p, size) => { const z = (p.i ? size + 1 : size) * (p.s ? 0.72 : 1); return `${p.i ? 'italic ' : ''}${p.b ? '700 ' : ''}${z.toFixed(1)}px ${p.i ? FAM.tx : FAM.ui}`; };
+  function pw(ctx, parts, size) { let w = 0; for (const p of parts) { ctx.font = pFont(p, size); w += ctx.measureText(p.t).width; } return w; }
+  function pd(ctx, parts, x, y, size, color, align) {
+    const W = pw(ctx, parts, size);
+    let x0 = align === 'center' ? x - W / 2 : (align === 'right' ? x - W : x);
+    ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic'; ctx.fillStyle = color;
+    for (const p of parts) { ctx.font = pFont(p, size); ctx.fillText(p.t, x0, y + (p.s === -1 ? size * 0.28 : (p.s === 1 ? -size * 0.38 : 0))); x0 += ctx.measureText(p.t).width; }
+    return W;
+  }
+  const fonts = () => { FAM = { ui: EPP.css('--font-ui') || 'sans-serif', tx: EPP.css('--font-text') || 'serif' }; };
+
+  // ---------- drawing helpers ----------
+  function arrow(ctx, x0, y0, x1, y1, col, lw, head) {
+    const L = Math.hypot(x1 - x0, y1 - y0);
+    ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = lw; ctx.lineCap = 'round'; ctx.setLineDash([]);
+    if (L < 1.5) { ctx.beginPath(); ctx.arc(x0, y0, Math.max(1.3, 0.7 * lw), 0, TAU); ctx.fill(); return; }
+    const hs = Math.min(head, 0.6 * L), a = Math.atan2(y1 - y0, x1 - x0);
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1 - 0.8 * hs * Math.cos(a), y1 - 0.8 * hs * Math.sin(a)); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x1, y1);
+    ctx.lineTo(x1 - hs * Math.cos(a - 0.42), y1 - hs * Math.sin(a - 0.42));
+    ctx.lineTo(x1 - hs * Math.cos(a + 0.42), y1 - hs * Math.sin(a + 0.42));
+    ctx.closePath(); ctx.fill();
+  }
+  // zigzag spring with a fixed number of teeth, so it stretches and compresses smoothly
+  function zigzag(ctx, xa, xb, y, amp, col) {
+    const L = xb - xa;
+    ctx.strokeStyle = col; ctx.lineWidth = 1.4; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(xa, y);
+    if (L > 10) {
+      const lead = Math.min(5, 0.15 * L), body = L - 2 * lead, n = 8, a = Math.min(amp, 0.45 * body / n + 1.5);
+      ctx.lineTo(xa + lead, y);
+      for (let j = 1; j < n; j++) ctx.lineTo(xa + lead + body * j / n, y + (j % 2 ? -a : a));
+      ctx.lineTo(xb - lead, y);
+    }
+    ctx.lineTo(xb, y); ctx.stroke();
+  }
+  // cation: filled disc with "+"; anion: open disc with "−"
+  function ion(ctx, x, y, r, cation, col, alpha) {
+    ctx.save(); ctx.globalAlpha = alpha;
+    ctx.beginPath(); ctx.arc(x, y, r, 0, TAU);
+    ctx.fillStyle = cation ? col.ph : col.surf; ctx.fill();
+    if (!cation) { ctx.lineWidth = 1.8; ctx.strokeStyle = col.ph; ctx.stroke(); }
+    const s = 0.48 * r;
+    ctx.lineWidth = Math.max(1.5, 0.2 * r); ctx.lineCap = 'round'; ctx.strokeStyle = cation ? col.surf : col.phT;
+    ctx.beginPath(); ctx.moveTo(x - s, y); ctx.lineTo(x + s, y);
+    if (cation) { ctx.moveTo(x, y - s); ctx.lineTo(x, y + s); }
+    ctx.stroke(); ctx.restore();
+  }
+  function cross(ctx, x, y, s, col) {
+    ctx.strokeStyle = col; ctx.lineWidth = 1.8; ctx.lineCap = 'round'; ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(x - s, y - s); ctx.lineTo(x + s, y + s); ctx.moveTo(x - s, y + s); ctx.lineTo(x + s, y - s); ctx.stroke();
+  }
+
+  // ---------- panel (a): a row of cells moving in step ----------
+  const elRow = fig.querySelector('.b3-cell-row');
+  const cvOpt = { height: 186 };
+  const cv = EPP.canvas(elRow, cvOpt);
+  cv.canvas.setAttribute('role', 'img');
+  const ghostKey = fig.querySelector('.b3-cell-ghost');
+  let cur = null, anim = null, tNow = 0;
+  // the height follows the layout (it depends on the width only)
+  function ensureH(H) {
+    H = Math.ceil(H);
+    if (cv.h === H) return;
+    cvOpt.height = H; cv.h = H;
+    cv.canvas.height = Math.round(H * cv.dpr); cv.canvas.style.height = H + 'px';
+    cv.ctx.setTransform(cv.dpr, 0, 0, cv.dpr, 0, 0);
+  }
+  function layout(w) {
+    const narrow = w < 480, N = narrow ? 3 : 5, padX = narrow ? 16 : 22;
+    const cw = (w - 2 * padX) / N, d = cw / 2, r = EPP.clamp(0.14 * d, 7, 11);
+    const yLab = 40, yF = 53, yTop = 67, yEl = yTop + 15, yA = yEl + 12, yI = yA + r + 9, yC = yI + r + 14, yP = yC + 18, yPl = yP + 19, yBot = yPl + 6;
+    return { narrow, N, padX, cw, d, r, yLab, yF, yTop, yEl, yA, yI, yC, yP, yPl, yBot, H: yBot + 8 };
+  }
+  function drawRow(t) {
+    tNow = t;
+    if (!cur || !cv.w) return;
+    const Lo = layout(cv.w);
+    ensureH(Lo.H);
+    cv.clear();
+    fonts();
+    const ctx = cv.ctx, w = cv.w;
+    const col = { fg: EPP.color('fg'), fg2: EPP.color('fg2'), mu: EPP.color('muted'), muT: EPP.textColor('muted'), rule: EPP.color('rule'), surf: EPP.color('surface'),
+      ph: EPP.color('phonon'), phT: EPP.textColor('phonon'), E: EPP.color('photon'), ET: EPP.textColor('photon'), P: EPP.color('c5'), PT: EPP.textColor('c5') };
+    const running = !!(anim && anim.running);
+    if (ghostKey) ghostKey.style.visibility = running ? 'hidden' : 'visible';
+    const { M1, M2, Mc, x1, x2, xc, p, hw } = cur;
+    const th = TAU * t / PERIOD;                                        // ωt
+    const re = (z, a) => z[0] * Math.cos(a) + z[1] * Math.sin(a);       // Re[z e^{−ia}]
+    const amax = Math.max(C.abs(x1), C.abs(x2)) || 1e-30, g = SWING * Lo.d / amax;   // largest swing: SWING × the ion spacing
+    const gp = g / ZS;                                                  // dipole drawn as p/eZ* on the displacement scale (= u_rel for a neutral cell)
+    const Mmax = Math.max(M1, M2), rad = [Lo.r * (0.62 + 0.38 * Math.cbrt(M1 / Mmax)), Lo.r * (0.62 + 0.38 * Math.cbrt(M2 / Mmax))];
+    const xEq = (l, k) => Lo.padX + Lo.cw * (l + 0.25 + 0.5 * k);
+    // header: title left, drive right (when it fits)
+    const title = [T(`(a) ${Lo.N === 5 ? 'five' : 'three'} cells in step; displacements magnified ×${fmtMag(SWING * BOND / amax)}`)];
+    const tW = pd(ctx, title, 6, 15, 11.5, col.fg2);
+    const drv = [I('ħω'), T(` = ${hw.toFixed(1)} meV`)];
+    if (6 + tW + 18 + pw(ctx, drv, 11.5) <= w - 6) pd(ctx, drv, w - 6, 15, 11.5, col.phT, 'right');
+    // field arrow, E(t) = E_0 cos ωt along x
+    const Lmax = Math.min(0.36 * w, 240);
+    pd(ctx, [B('E'), T('('), I('t'), T(')')], w / 2, Lo.yLab, 13, col.ET, 'center');
+    arrow(ctx, w / 2, Lo.yF, w / 2 + Lmax * Math.cos(th), Lo.yF, col.E, 3, 12);
+    // cell boundaries; the row continues on both sides
+    ctx.strokeStyle = col.rule; ctx.lineWidth = 1; ctx.setLineDash([4, 4]);
+    for (let l = 0; l <= Lo.N; l++) { const X = Math.round(Lo.padX + l * Lo.cw) + 0.5; ctx.beginPath(); ctx.moveTo(X, Lo.yTop); ctx.lineTo(X, Lo.yBot); ctx.stroke(); }
+    ctx.setLineDash([]);
+    pd(ctx, [T('⋯')], Lo.padX / 2, Lo.yI + 4, 12, col.mu, 'center');
+    pd(ctx, [T('⋯')], w - Lo.padX / 2, Lo.yI + 4, 12, col.mu, 'center');
+    // every cell: the same displacements at the same time
+    const u1 = re(x1, th), u2 = re(x2, th), uc = xc * Math.cos(th), pp = re(p, th);
+    const g1 = re(x1, th + TAU / 4), g2 = re(x2, th + TAU / 4);         // a quarter period later (ghosts)
+    for (let l = 0; l < Lo.N; l++) {
+      const a0 = xEq(l, 0), b0 = xEq(l, 1), a = a0 + g * u1, b = b0 + g * u2;
+      ctx.strokeStyle = col.mu; ctx.lineWidth = 1.2; ctx.setLineDash([]);
+      ctx.beginPath(); ctx.moveTo(a0, Lo.yA - 6); ctx.lineTo(a0, Lo.yA + 6); ctx.moveTo(b0, Lo.yA - 6); ctx.lineTo(b0, Lo.yA + 6); ctx.stroke();
+      zigzag(ctx, a + rad[0], b - rad[1], Lo.yI, Math.max(2.6, 0.4 * Lo.r), col.mu);
+      if (!running) { ion(ctx, a0 + g * g1, Lo.yI, rad[0], true, col, 0.28); ion(ctx, b0 + g * g2, Lo.yI, rad[1], false, col, 0.28); }
+      ion(ctx, a, Lo.yI, rad[0], true, col, 1);
+      ion(ctx, b, Lo.yI, rad[1], false, col, 1);
+      arrow(ctx, a0, Lo.yA, a, Lo.yA, col.ph, 2.2, 7);
+      arrow(ctx, b0, Lo.yA, b, Lo.yA, col.ph, 2.2, 7);
+      // centre of mass: dotted rest position and the cross
+      const c0 = (M1 * a0 + M2 * b0) / Mc;
+      ctx.strokeStyle = col.rule; ctx.lineWidth = 1; ctx.setLineDash([2, 2]);
+      ctx.beginPath(); ctx.moveTo(c0, Lo.yC - 8); ctx.lineTo(c0, Lo.yC + 8); ctx.stroke(); ctx.setLineDash([]);
+      cross(ctx, c0 + g * uc, Lo.yC, 4, col.fg);
+      // cell dipole from the cell centre
+      const pc = Lo.padX + Lo.cw * (l + 0.5);
+      ctx.strokeStyle = col.rule; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(pc, Lo.yP - 5); ctx.lineTo(pc, Lo.yP + 5); ctx.stroke();
+      arrow(ctx, pc, Lo.yP, pc + EPP.clamp(gp * pp, -0.45 * Lo.cw, 0.45 * Lo.cw), Lo.yP, col.P, 2.4, 8);
+    }
+    // labels in the middle cell
+    const m = Math.floor(Lo.N / 2), a0 = xEq(m, 0), b0 = xEq(m, 1), a = a0 + g * u1, b = b0 + g * u2;
+    const isG = cur.rho === RHO_G;
+    // element names for GaAs; otherwise the masses, without the unit when the two labels would collide
+    let lab = isG ? ['Ga', 'As'] : [fmtMass(M1) + ' amu', fmtMass(M2) + ' amu'];
+    if (!isG && (pw(ctx, [T(lab[0])], 11.5) + pw(ctx, [T(lab[1])], 11.5)) / 2 + 8 > Lo.d) lab = [M1, M2].map(M => (M >= 100 ? M.toFixed(0) : M.toFixed(1)));
+    pd(ctx, [T(lab[0])], a0, Lo.yEl, 11.5, col.fg2, 'center');
+    pd(ctx, [T(lab[1])], b0, Lo.yEl, 11.5, col.fg2, 'center');
+    pd(ctx, [I('K')], 0.5 * (a + rad[0] + b - rad[1]), Lo.yI - 6, 12, col.muT, 'center');
+    pd(ctx, [B('p')], Lo.padX + Lo.cw * (m + 0.5), Lo.yPl, 13, col.PT, 'center');
+  }
+
+  // ---------- panel (b): amplitudes against the drive ----------
+  const pP = new EPP.Plot(fig.querySelector('.b3-cell-plot'), {
+    xlim: [0, 60], ylim: [1e-3, 1e2], logy: true, legend: false,
+    yticks: [1e-3, 1e-2, 0.1, 1, 10, 100].map(v => ({ v, label: String(v) })),
+    xname: 'ħω', hoverX: (v) => `${EPP.fix(v, 1)} meV (${Math.round(v * CM)} cm⁻¹)`, hoverY: (v) => `${fmtNum(v)} pm`,
+    aspect: 0.42, minHeight: 230, maxHeight: 300, margin: { l: 58, r: 14, t: 26, b: 44 },
+    ariaLabel: 'Panel b: amplitudes of the relative displacement and of the centre-of-mass displacement, in picometres on a logarithmic scale, against the drive energy from 1 to 60 meV, with a dashed line at the TO resonance, 33.3 meV, and dots at the current drive. Click or drag to set the drive energy.'
+  });
+  pP.cv.canvas.style.cursor = 'pointer';
+  const baseRender = pP.render.bind(pP);
+  pP.render = () => {
+    baseRender();
+    const ctx = pP.ctx, w = pP.cv.w, h = pP.cv.h, mg = pP.m;
+    if (!w || !h || !cur) return;
+    fonts();
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2');
+    ctx.save();
+    const t1 = [T('(b) amplitudes for '), I('E'), Sb('0'), T(' = 100 kV/cm')], t2 = [T('; click or drag to set the drive')];
+    pd(ctx, pw(ctx, t1.concat(t2), 11.5) <= w - 10 ? t1.concat(t2) : t1, 4, 15, 11.5, cFg2);
+    pd(ctx, [T('drive energy '), I('ħω'), T(' (meV)')], mg.l + (w - mg.l - mg.r) / 2, h - 8, 12.5, cFg, 'center');
+    ctx.translate(14, mg.t + (h - mg.t - mg.b) / 2); ctx.rotate(-Math.PI / 2);
+    pd(ctx, [T('amplitude |'), I('ξ'), T('| (pm)')], 0, 0, 12.5, cFg, 'center');
+    ctx.restore();
+    ctx.save(); ctx.beginPath(); ctx.rect(mg.l, mg.t, w - mg.l - mg.r, h - mg.t - mg.b); ctx.clip();
+    pd(ctx, [I('ω'), Sb('TO')], pP.X(WTO) + 4, mg.t + 14, 12, EPP.textColor('muted'));
+    const yr52 = 100 * C.abs(C.div([cur.fr, 0], den(52)));
+    pd(ctx, [T('|'), I('ξ'), Sb('rel'), T('|')], pP.X(52), pP.Y(yr52) - 9, 12, cFg, 'center');
+    if (cur.dz) {
+      // label above and to the right of a point of the falling 1/ω² curve: above the ink curve when the curve reaches that high, else below it
+      const c1 = 100 * Math.abs(cur.fc), yL = c1 > 0.6 ? 0.3 : 0.003, wL = Math.sqrt(c1 / yL);
+      if (wL >= 1 && wL < 40) pd(ctx, [T('|'), I('ξ'), Sb('c'), T('| ∝ 1/'), I('ω'), Sp('2')], pP.X(wL) + 5, pP.Y(yL) - 6, 12, EPP.textColor('photon'));
+    }
+    ctx.restore();
+  };
+  function drawPlot() {
+    const s = cur;
+    const yr = XS.map(v => 100 * C.abs(C.div([s.fr, 0], den(v))));
+    const yc = s.dz ? XS.map(v => 100 * Math.abs(s.fc) / (v * v)) : null;
+    pP.draw([
+      { type: 'vline', at: WTO, color: 'muted', width: 1.2 },
+      { type: 'vline', at: s.hw, color: 'muted', width: 1, dash: [], opacity: 0.5 },
+      { type: 'line', x: XS, y: yr, color: 'ink', width: 2, label: '|ξ_{rel}|' },
+      yc ? { type: 'line', x: XS, y: yc, color: 'photon', width: 2, label: '|ξ_c|' } : null,
+      yc ? { type: 'points', x: [s.hw], y: [100 * Math.abs(s.xc)], color: 'photon', r: 4.5 } : null,
+      { type: 'points', x: [s.hw], y: [100 * C.abs(s.xr)], color: 'ink', r: 5 }
+    ]);
+  }
+  pP.onPointer = (x, y, type) => { if (type === 'up' || !isFinite(x)) return; ui.set('hw', EPP.clamp(Math.round(x * 10) / 10, 1, 60)); };
+
+  // ---------- readouts ----------
+  const roV = {};
+  ['x12', 'ratio', 'lag', 'xc', 'p', 'to', 'k', 'm', 'mr'].forEach(k => { roV[k] = fig.querySelector('.b3-cell-v-' + k); });
+  function readouts() {
+    const s = cur;
+    roV.x12.textContent = `${fmtNum(100 * C.abs(s.x1))}, ${fmtNum(100 * C.abs(s.x2))}${NB}pm`;
+    roV.ratio.textContent = fmtRatio(C.div(s.x1, s.x2));
+    let lag = Math.atan2(s.xr[1], s.xr[0]) * 180 / Math.PI;
+    if (lag < 0) lag += 360;
+    roV.lag.textContent = `${lag.toFixed(1)}°`;
+    roV.xc.textContent = s.dz ? `${fmtNum(100 * Math.abs(s.xc))}${NB}pm` : '0 (neutral cell)';
+    roV.p.innerHTML = `${fmtNum(100 * C.abs(s.p))} <i style="font-family:var(--font-text)">e</i>${NB}pm`;
+    roV.to.textContent = `${WTO.toFixed(1)}${NB}meV (${(WTO * CM).toFixed(1)}${NB}cm⁻¹)`;
+    roV.k.textContent = `${K.toFixed(2)}${NB}eV/Å²`;
+    roV.m.textContent = `${fmtMass(s.M1)}, ${fmtMass(s.M2)}${NB}amu`;
+    roV.mr.textContent = fmtRatio([-s.M2 / s.M1, 0]);
+    const where = s.hw < WTO - 0.5 ? 'below' : (s.hw > WTO + 0.5 ? 'above' : 'at');
+    cv.canvas.setAttribute('aria-label', `Panel a: a row of cells of a two-atom crystal, all moving in step, driven by a uniform field along x at ${s.hw.toFixed(1)} meV, ${where} the TO resonance at 33.3 meV. ` +
+      `Cation amplitude ${fmtNum(100 * C.abs(s.x1))} pm, anion amplitude ${fmtNum(100 * C.abs(s.x2))} pm, in opposite directions; ` +
+      (s.dz ? `the cells carry a net charge, so the centre of mass swings with amplitude ${fmtNum(100 * Math.abs(s.xc))} pm. ` : 'the centre of mass of each cell stays at rest. ') +
+      'Violet arrows show the dipole of each cell.');
+  }
+
+  // ---------- controls ----------
+  function onChange(st) {
+    cur = model(EPP.clamp(st.hw, 1, 60), snapRho(st.rho), Math.abs(st.dz) < 5e-4 ? 0 : st.dz);
+    drawPlot();
+    readouts();
+    if (anim) anim.redraw(); else drawRow(tNow);
+  }
+  const elCtl = fig.querySelector('.b3-cell-ctrls');
+  const ui = EPP.controls(elCtl, [
+    { key: 'hw', type: 'range', label: 'drive energy ħω', min: 1, max: 60, step: 0.1, value: 25, fmt: (v) => `${v.toFixed(1)} meV` },
+    { key: 'rho', type: 'range', label: 'mass ratio M_1/M_2', min: 0.2, max: 5, log: true, step: 'any', value: RHO_G,
+      fmt: (v) => { const r = snapRho(v); return r === RHO_G ? `${r.toFixed(3)} (GaAs)` : (r < 1 ? r.toFixed(3) : r.toFixed(2)); } },
+    { key: 'dz', type: 'range', label: 'charge imbalance Z^*_1 + Z^*_2 (unphysical unless 0)', min: -0.3, max: 0.3, step: 0.01, value: 0,
+      fmt: (v) => (Math.abs(v) < 5e-4 ? '0' : (v > 0 ? '+' : '−') + Math.abs(v).toFixed(2)) }
+  ], onChange);
+  // slider labels with italic symbols, as in the text
+  const It = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const zs = (k) => `${It('Z')}<span style="display:inline-block;vertical-align:-0.45em;line-height:1;font-size:0.72em;margin-left:1px">*<br>${k}</span>`;
+  const LAB = { hw: `drive energy ${It('ħω')}`, rho: `mass ratio ${It('M')}<sub>1</sub>/${It('M')}<sub>2</sub>`, dz: `charge imbalance ${zs(1)} + ${zs(2)} <span class="nw">(unphysical unless 0)</span>` };
+  Object.keys(LAB).forEach(k => { const sp = elCtl.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  cur = model(ui.state.hw, snapRho(ui.state.rho), 0);
+  const host = document.createElement('div');
+  host.className = 'ctrl';
+  host.style.justifyItems = 'start';
+  host.innerHTML = '<span class="lab"><span>animation</span></span>';
+  // the animation button joins the first row; the charge imbalance, with its long label, takes a row of its own
+  const dzIn = document.getElementById(`${fig.id}-dz`), dzBox = dzIn ? dzIn.closest('.ctrl') : null;
+  if (dzBox) { dzBox.style.gridColumn = '1 / -1'; elCtl.insertBefore(host, dzBox); } else elCtl.appendChild(host);
+  anim = EPP.anim(fig, (t) => drawRow(t), { buttonHost: host });
+  anim.button.addEventListener('click', () => anim.redraw());   // show or hide the ghosts at once
+  cv.onResize(() => anim.redraw());
+})();
+</script>

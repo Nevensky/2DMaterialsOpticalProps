@@ -243,7 +243,9 @@ figure.viz figcaption strong { color: var(--fg); }
 .fd figcaption { font-family: var(--font-ui); font-size: 0.82rem; color: var(--muted); text-align: center; max-width: 22ch; }
 .fd svg { overflow: visible; max-width: 100%; height: auto; }
 .fd .op { font-size: 1.4rem; color: var(--muted); font-family: var(--font-text); }
-svg text.fd-lab { font-family: var(--font-text); font-style: italic; font-size: 14px; }
+svg text.fd-lab { font-family: var(--font-text); }
+svg text.fd-lab:not([font-style]) { font-style: italic; }
+svg text.fd-lab:not([font-size]) { font-size: 14px; }
 
 /* tables */
 .tbl { overflow-x: auto; margin: 16px 0 20px; border: 1px solid var(--rule); border-radius: var(--radius);
@@ -260,7 +262,7 @@ svg text.fd-lab { font-family: var(--font-text); font-style: italic; font-size: 
 }
 .tbl table { border-collapse: collapse; width: 100%; font-size: 0.92rem; min-width: 560px; }
 .tbl th, .tbl td { text-align: left; vertical-align: top; padding: 8px 12px; border-bottom: 1px solid var(--rule); }
-.tbl th { font-family: var(--font-ui); font-weight: 600; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); background: var(--surface-2); }
+.tbl th { font-family: var(--font-ui); font-weight: 600; font-size: 0.82rem; color: var(--muted); background: var(--surface-2); }
 .tbl tr:last-child td { border-bottom: 0; }
 .tbl td:first-child { font-weight: 600; }
 
