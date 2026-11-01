@@ -70,7 +70,7 @@ the Gonze–Lee dipole–dipole term; with $\omega$ kept it gives the plasmon–
   - L–Π–L: dashed, blob, dashed. Caption under it: $D^{\mathrm{e,L}}\propto c$ and, smaller, "Coulomb–Coulomb, $D_{\rho\rho}$".
   - L–Π–T: dashed, blob, wavy. $D^{\mathrm{e,LT}}\propto 1/c$, "$D_{\rho\beta}$".
   - T–Π–L: wavy, blob, dashed. $D^{\mathrm{e,TL}}\propto 1/c$, "$D_{\alpha\rho}$".
-  - T–Π–T: wavy, blob, wavy. $D^{\mathrm{e,T}}\propto 1/c$, "$D_{\alpha\beta}$".
+  - T–Π–T: wavy, blob, wavy. $D^{\mathrm{e,T}}\propto 1/c$, "$D^{\mathrm T}_{\alpha\beta}$".
   Line labels $D^{0\mathrm L}$ (dashed) and $D^{0\mathrm T}$ (wavy) on the first diagram that uses each; blob label
   $\Pi^{\mathrm e}$ (colour `electron`). Field lines colour `photon`.
 - Row (b), label "(b) the survivor and what it does": a chain of four panels with operators between them:
@@ -111,7 +111,7 @@ current state: "surviving sectors: 4" or "surviving sectors: 1 ($D_{\rho\rho}$)"
   see the last panel change from the Gonze–Lee term to the coupled LO-phonon–plasmon modes.
 - Model: scalings from (B9.1) and the counting behind (B9.5); the survivor (B9.6); the self-energy (B9.8); the
   dipole–dipole term (B9.12); the coupled modes (B9.18). The sector names $D_{\rho\rho}$, $D_{\rho\beta}$, $D_{\alpha\rho}$,
-  $D_{\alpha\beta}$ are those of Section B.6.
+  $D^{\mathrm T}_{\alpha\beta}$ are those of Section B.6.
 
 ---
 
@@ -141,8 +141,8 @@ four for hexagonal boron nitride."
 - $\hat{\bq}=(\sin\theta,0,\cos\theta)$, $\mathbf t_1=(\cos\theta,0,-\sin\theta)$, $\mathbf t_2=(0,1,0)$.
 - Plotted norms: $|{\rm L}|=|\hat{\bq}\cdot d\cdot\hat{\bq}|$; $|{\rm LT}|=\sqrt{|\hat{\bq}\cdot d\cdot\mathbf t_1|^2+|\hat{\bq}\cdot d\cdot\mathbf t_2|^2}$
   (equal to $|{\rm TL}|$ by symmetry of $d$); $|{\rm T}|$ = Frobenius norm of the $2\times2$ block on $\mathbf t_1,\mathbf t_2$.
-- Limits to check: for $s\to\infty$, $|{\rm L}|\to1/(\hat{\bq}\cdot\boldsymbol\varepsilon\cdot\hat{\bq})$ (0.2557 at $\theta=45^\circ$
-  with hBN values), $|{\rm LT}|$ and $|{\rm T}|\propto s^{-2}$ (at $\theta=45^\circ$: $|{\rm LT}|=2.46\times10^{-7}$, $|{\rm T}|=1.41\times10^{-6}$
+- Limits to check: for $s\to\infty$, $|{\rm L}|\to1/(\hat{\bq}\cdot\boldsymbol\varepsilon\cdot\hat{\bq})$ (0.2558 at $\theta=45^\circ$
+  with hBN values; 0.2557 with the 0.02 loss), $|{\rm LT}|$ and $|{\rm T}|\propto s^{-2}$ (at $\theta=45^\circ$: $|{\rm LT}|=2.46\times10^{-7}$, $|{\rm T}|=1.41\times10^{-6}$
   at $s=10^3$; $2.46\times10^{-11}$ and $1.41\times10^{-10}$ at $s=10^5$). Light lines of the medium at $s^2=\varepsilon$.
 - The v1 code (`inv3`, `sectors`) does this correctly; keep it.
 - Material: hexagonal boron nitride, $\varepsilon_{xx}=4.87$ (in plane), $\varepsilon_{zz}=2.95$ (along the c axis)
@@ -153,8 +153,8 @@ four for hexagonal boron nitride."
 **What to draw.** One log–log plot (keep the v1 `EPP.Plot` set-up): $x$ axis "cq/ω" from 0.1 to $10^5$; $y$ axis
 "norm of a sector of (ω²/4πc) D^e" from $10^{-11}$ to $100$, ticks every two decades. Curves: L solid (`photon`), LT = TL
 dashed (`c4`), T dotted (`c5`). Horizontal muted line at $1/(\hat{\bq}\cdot\boldsymbol\varepsilon\cdot\hat{\bq})$ labelled
-"1/(q̂·ε·q̂)" (bold q̂, `EPP.drawRich`). Muted dashed reference of slope −1 anchored on LT at $cq/\omega=10$ (on T when
-LT ≡ 0), labelled "slope −1: printed power counting". Shaded band from 0.1 to $\sqrt{\max\varepsilon}$ labelled "light
+"1/(q̂·ε·q̂)" (bold q̂, `EPP.drawRich`). Muted dashed reference of slope −1 anchored on LT at $cq/\omega=10$ and drawn only
+while LT ≠ 0 (the printed counting for T is slope −2 here), labelled "slope −1: printed power counting". Shaded band from 0.1 to $\sqrt{\max\varepsilon}$ labelled "light
 cone"; shaded band for the phonons (amber, `phonon`, low alpha) labelled "phonons, 10⁻³–1 Å⁻¹". Text near the right end:
 "LT, T ∝ (cq/ω)^{-2}" (or "T ∝ (cq/ω)^{-2}" when LT ≡ 0).
 
