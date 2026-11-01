@@ -350,15 +350,15 @@ light cone; adiabatic shift cut at $q_{\mathrm{lc}}$ (eV); share of the nonadiab
 one already three times larger and still rising.
 
 **Caption.**
-- *What to notice.* The adiabatic shift grows linearly with N_1; the nonadiabatic one levels off at −α_Fħω_LO once
-  q_min is well below q_pol (half of it is reached at q_min = q_pol). The light cone sits 400 to 1200 times below
+- *What to notice.* The adiabatic shift grows linearly with N_1; the nonadiabatic one levels off near −α_Fħω_LO (at 0.96–0.99 of it,
+  because the zone is finite) once q_min is well below q_pol (half of it is reached at q_min = q_pol). The light cone sits 400 to 1200 times below
   q_pol and holds about 10⁻³ of the converged shift: the phonon energy ħω_LO cures the divergence, not the speed of
   light.
 - *Marks.* (a): nonadiabatic and adiabatic |ΔE_c| against the grid size, the polaron shift α_Fħω_LO, the grid where
   q_min = q_pol, the cursor. (b): contribution per logarithmic interval of q, so that equal areas mean equal
   contributions; filled areas are what the grid includes; markers q_pol, q_min, q_D; rose band: the light cone.
-- *Try.* Increase N_1 from 4 to 1000 in GaAs: the nonadiabatic shift settles near −2.5 meV, the adiabatic one passes
-  −38 meV. Switch to MgO: α_F ≈ 1.7, outside weak coupling, and convergence needs only N_1 ≈ 100 because q_pol is
+- *Try.* Increase N_1 from 4 to 1000 in GaAs: the nonadiabatic shift settles near −2.5 meV, the adiabatic one reaches
+  −37.9 meV. Switch to MgO: α_F ≈ 1.7, outside weak coupling, and convergence needs only N_1 ≈ 100 because q_pol is
   larger. Turn the light cone on and compare its width with the region where the integrands live.
 - *Model.* (A8.17) for the conduction-band minimum of one parabolic band coupled to one dispersionless LO phonon by
   (A8.3), T = 0, Rayleigh–Schrödinger, spherical zone of radius q_D = (6π²/Ω_V)^{1/3}, grid cutoff q_min = q_D/N_1.

@@ -230,8 +230,10 @@ $\varepsilon=\varepsilon_\infty$ (crystal) or 1 (vacuum).
 - Phonon branches across the zone (illustrative models, along Γ–X for GaAs, Γ–K for hBN; $q_{\mathrm{edge}}=2\pi/a$ for GaAs,
   $4\pi/3a$ for hBN):
   - optical: $\hbar\omega(q)=\hbar\omega_\Gamma+(\hbar\omega_{\mathrm{edge}}-\hbar\omega_\Gamma)\sin^2(\pi q/2q_{\mathrm{edge}})$;
-  - acoustic: $\hbar\omega(q)=\hbar\omega_{\mathrm{edge}}\tanh(\hbar v\,q/\hbar\omega_{\mathrm{edge}})$, linear with slope $v$ (the sound
-    velocity) at small $q$;
+  - acoustic: $\hbar\omega(q)=\hbar\omega_{\mathrm{edge}}\big[(1+B)\sin(\pi t/2)+B\sin(3\pi t/2)\big]$ with $t=q/q_{\mathrm{edge}}$ and
+    $B=(2r/\pi-1)/4$, $r=\hbar v\,q_{\mathrm{edge}}/\hbar\omega_{\mathrm{edge}}$: slope $v$ (the sound velocity) at Γ, the value
+    $\hbar\omega_{\mathrm{edge}}$ at the zone edge, and zero slope there (as implemented; a $\tanh$ form cannot meet both the slope
+    and the edge value);
   - GaAs ($a=5.653$ Å, $q_{\mathrm{edge}}=1.111$ Å⁻¹, $\varepsilon_\infty=10.9$): LO 36.2 → 29.8 meV, TO 33.3 → 31.3 meV,
     LA $v=4.7$ km/s → 27.8 meV, TA $v=3.3$ km/s → 9.9 meV;
   - hBN in plane ($a=2.504$ Å, $q_{\mathrm{edge}}=1.673$ Å⁻¹, $\varepsilon_\infty=4.87$): LO 199.6 → 160 meV, TO 169.9 → 160 meV,
@@ -273,7 +275,7 @@ $\varepsilon=\varepsilon_\infty$ (crystal) or 1 (vacuum).
 2. $\hbar\omega$: log slider, 1 meV to 5 eV (shown as meV below 1 eV).
 3. speed of light: log slider, "c ×" from $10^{-2}$ to $10^{6}$, default 1, `aria-valuetext` "speed of light times 1".
 
-**Readouts.** $q_{\mathrm{light}}=\sqrt{\varepsilon}\,\omega/c$ (Å⁻¹); $2\pi/q_{\mathrm{light}}$ (μm); "light cone / zone edge" (the ratio
+**Readouts.** $q_{\mathrm{light}}=\sqrt{\varepsilon}\,\omega/c$ (Å⁻¹); $2\pi/q_{\mathrm{light}}$ (μm); "$q_{\mathrm{light}}$ / zone edge" (the ratio
 of $q_{\mathrm{light}}$ to the zone-edge wavevector); "zone volume inside the cone", the cube of the ratio of $q_{\mathrm{light}}$ to the radius
 of a sphere with the zone's volume, $(6\pi^2/\OV)^{1/3}$ (GaAs 1.09 Å⁻¹; for hBN use the area fraction of the 2D zone and say so);
 $|D^{\mathrm T}/D^{\mathrm L}|$ at 0.025 Å⁻¹; the same at the zone edge. Write these labels in words; do not introduce symbols for the
