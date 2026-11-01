@@ -66,22 +66,25 @@ python3 build/textdump.py                               # text-only dump in read
 `check.js` serves the local MathJax copy in place of the CDN and blocks web fonts, so screenshots use
 fallback fonts.
 
-## Second edition (pilot)
+## Second edition (`v2/`)
 
-`v2/` holds the pilot of a self-contained second edition: the conventions page and Section A.1
-(lattice dynamics) rewritten so that they can be read without the two source papers. Version 1 above
-stays unchanged as the reference edition.
+`v2/` holds the self-contained second edition: the conventions page, Part A (A.1–A.9), the bridge (X.1–X.2)
+and Part B (B.1–B.10), rewritten so that they can be read without the two source papers. Version 1 above stays
+unchanged as the reference edition (it keeps the source notations and adds the outlook and errata appendices).
 
 - `v2/NOTATION.md` fixes one notation for the whole primer (indices, typography with upright labels and
   upright e and i, units, Fourier and sign conventions) and maps it to the symbols of Giustino and of the
-  EPP manuscript. The main text uses only this notation; source symbols and equation numbers appear in
-  footnotes and in the glossary's source notes.
+  EPP manuscript. Section 12 is the registry for A.2–B.10: each symbol's home section and glossary id,
+  and the propagators, response functions and photon-field conventions shared by Parts A and B.
+  The main text uses only this notation; source symbols and equation numbers appear in footnotes and in the
+  glossary's source notes.
 - Reading aids in the v2 build: a "where" list after every equation that introduces symbols, step-by-step
   derivations with a "why" for each step, skippable background boxes, footnote popovers, a Symbols panel
-  listing every symbol with a link to its definition, and figure captions that open with "What to notice".
-- `v2/sections/A01/` holds the seven figures of A.1: crystal labels and the Born-von Karman supercell,
-  force constants and the acoustic sum rule, the phasor picture of waves on a chain, the diatomic chain,
-  wavevectors and the Brillouin zone, the eigenvector matrix of a hexagonal sheet, and zero-point motion.
+  listing every symbol with a link to its definition, live equation and figure cross-references, and figure
+  captions that open with "What to notice".
+- `v2/build/BUILDER_GUIDE.md` and `v2/build/SECTION_BRIEFS.md` are the author guide and the per-section briefs
+  (coverage, figures, exported equation ids, corrections to build in).
+- `v2/sections/<ID>/` holds each section's figures, and `FIGS.md` holds the figure specifications.
 
 ```sh
 cd doc/epp-primer
@@ -89,5 +92,6 @@ python3 v2/build/assemble.py                              # writes v2/out/epp-pr
 python3 v2/build/lint.py v2/sections --inventory v2/test/inventory.md   # notation linter + symbol inventory
 node v2/build/check.js v2/out/epp-primer-v2.html v2/test/check --eager  # errors, TeX, overflow, blank canvases, dead links
 bash v2/build/figtest.sh v2/sections/A01/fig-waves.html   # one figure in isolation, with screenshots
+bash v2/build/sectest.sh B06 --shots                      # one section in context (lint, checks, external links, shots)
 python3 v2/build/textdump.py                              # text-only dump for reviewers (v2/out/primer-text.md)
 ```
