@@ -60,7 +60,13 @@
   document.querySelectorAll('a.eqref, a.figref').forEach(a => {
     const t = document.getElementById((a.getAttribute('href') || '').slice(1));
     let txt = null;
-    if (t && a.classList.contains('eqref')) { const m = t.textContent.match(/\\tag\{([^}]*)\}/); if (m) txt = `(${m[1]})`; }
+    if (t && a.classList.contains('eqref')) {
+      const m = t.textContent.match(/\\tag\{([^}]*)\}/);
+      // a link already written inside parentheses, "(<a class=eqref>)", gets the bare number
+      const pv = a.previousSibling, nx = a.nextSibling;
+      const wrapped = pv && pv.nodeType === 3 && /\($/.test(pv.textContent) && nx && nx.nodeType === 3 && /^\)/.test(nx.textContent);
+      if (m) txt = wrapped ? m[1] : `(${m[1]})`;
+    }
     if (t && a.classList.contains('figref')) { const f = t.closest('figure.viz'); if (f && f.dataset.fig) txt = `Figure ${f.dataset.fig}`; }
     if (txt) a.textContent = txt; else { a.classList.add('ref-missing'); if (!a.textContent.trim()) a.textContent = '(?)'; }
   });
