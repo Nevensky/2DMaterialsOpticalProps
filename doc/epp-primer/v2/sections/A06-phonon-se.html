@@ -154,7 +154,7 @@
   <dl class="where">
     <dt>$n_{\mathrm e}(\br)$</dt><dd>ground-state electron density (Å⁻³)</dd>
     <dt>$U^{\mathrm{nn}}$</dt><dd>Coulomb repulsion energy of the nuclei (eV)</dd>
-    <dt>$\chi(\br,\br';\omega)$</dt><dd>density response of the electrons with the nuclei held in place: density change at $\br$ per unit change of the potential energy at $\br'$ (eV⁻¹ Å⁻⁶); at $\omega=0$ a negative kernel: $\int\!\!\int f^*\chi f\le0$ for every potential change $f$</dd>
+    <dt>$\chi(\br,\br';\omega)$</dt><dd>density response of the electrons with the nuclei held in place: density change at $\br$ per unit change of the potential energy at $\br'$ (eV⁻¹ Å⁻⁶); at $\omega=0$ a negative kernel: $\int\!\!\int\delta V^*\chi\,\delta V\le0$ for every change $\delta V$ of the potential energy</dd>
   </dl>
   <p>The first term of <a class="eqref" href="#a6-eq-hf"></a> is the potential change, times the static response, times the potential change. It is negative for every displacement pattern, so the induced electrons always soften the lattice. The second term is the curvature of the nuclear potential weighted by the unperturbed density, and the third is the direct repulsion of the nuclei. DFPT evaluates exactly this expression, with the Kohn–Sham response of Section A.3. So the DFPT lattice is the reference lattice plus $\Pi^{\mathrm{ph,A}}$: <strong>the adiabatic self-energy is what DFPT computes</strong>. It is real and symmetric, so adiabatic phonons have real frequencies and never decay, as in Section A.1.<sup class="fn"><a href="#fn-a6-real">8</a></sup></p>
 
