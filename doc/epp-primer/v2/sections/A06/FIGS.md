@@ -293,8 +293,8 @@ meV ps, $\hbar^2/2m_{\mathrm e}=3.80998$ eV Å², 1 meV = 8.06554 cm⁻¹.
   - Limits to check: (A6.25) $\hbar\Delta\omega_\bq\to C$ at small $q$; (A6.26) $\hbar\gamma_\bq\simeq C\,\omega_0/(v_{\mathrm F}q\sqrt{1-(q/2k_{\mathrm F})^2})$ for $\omega_0\ll v_{\mathrm F}q$.
   - Values (illustrative, cell area of MoS₂ $\OS=8.65$ Å², one valley): $n_{\mathrm e}=10^{13}$ cm⁻² gives
     $k_{\mathrm F}=0.0793$ Å⁻¹, $E_{\mathrm F}=47.9$ meV; $N_{\mathrm F}=0.090$ eV⁻¹ per spin; $C=5$ meV ↔ $|g|=0.17$ eV;
-    window $0.43<q/k_{\mathrm F}<2.43$ for $\hbar\omega_0=50$ meV; at $q=k_{\mathrm F}$, $\hbar\gamma\approx3$ meV,
-    $\tau\approx0.1$ ps.
+    window $0.43<q/k_{\mathrm F}<2.43$ for $\hbar\omega_0=50$ meV; at $q=k_{\mathrm F}$, $\hbar\gamma\approx5$ meV,
+    $\tau\approx0.07$ ps (first order; (A6.26) gives 3 meV but needs $\omega_0\ll v_{\mathrm F}q$).
 - **What to draw** (as v1): (a) heat map of $\mathcal B_\bq(\omega)$, $x$ = $q/k_{\mathrm F}\in[0,3]$, $y=\hbar\omega\in[0,2\hbar\omega_0]$
   meV, square-root colour scale, colour bar "𝓑 (meV⁻¹)", continuum edges `ħω^{max}`, `ħω^{min}` in the electron colour,
   line `ħω_0`, dashed $q$ cursor. (b) $\hbar\Delta\omega_\bq$ and $\hbar\gamma_\bq$ (HWHM) versus $q/k_{\mathrm F}$, band
@@ -307,7 +307,7 @@ meV ps, $\hbar^2/2m_{\mathrm e}=3.80998$ eV Å², 1 meV = 8.06554 cm⁻¹.
   cursor: $q/k_{\mathrm F}$, $\Pi^{\mathrm{ph,NA}}$ at $\omega_0$ (or at the pole), $\hbar\bar\omega_\bq$, $\hbar\gamma_\bq$,
   $\tau^{\ph}_\bq$ (∞ when undamped).
 - **Initial state.** v1 defaults ($n_{\mathrm e}=10^{13}$ cm⁻², 50 meV, 5 meV, 1 meV, first order, cursor at
-  $q=k_{\mathrm F}$): hardening of about 5 meV at small $q$, width of about 3 meV at the cursor.
+  $q=k_{\mathrm F}$): hardening of about 5 meV at small $q$, width of about 5 meV at the cursor.
 - **Caption key points.**
   - *What to notice:* above the continuum the phonon is hardened by about $2N_{\mathrm F}|g|^2$ and undamped (the
     electrons cannot follow, so the static softening built into $\omega_0$ is undone); inside it is Landau damped and

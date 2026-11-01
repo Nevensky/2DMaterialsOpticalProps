@@ -225,7 +225,7 @@
       C.el.style.boxShadow = kept ? '0 0 0 1px var(--c-photon)' : 'none';
       if (C.k === 'L') C.svg.setAttribute('aria-label', C.S.aria + (inf ? KEPT : ''));
     }
-    dims.forEach(el => { el.style.opacity = inf ? '1' : '0.45'; });
+    dims.forEach(el => { el.style.opacity = inf ? '1' : '0.58'; });   // dimmed, but its text stays legible in both themes
     show(els.h0, !inf); show(els.h1, inf);
     els.w0.forEach(el => show(el, !dyn));
     els.ww.forEach(el => show(el, dyn));

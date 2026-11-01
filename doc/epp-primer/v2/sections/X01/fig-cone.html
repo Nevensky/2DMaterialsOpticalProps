@@ -320,19 +320,24 @@
     const xs = X(Math.sqrt(QS[0] * QS[1]));
     const sl = lab(ctx, wide ? 'electron–phonon scattering' : 'e–ph scattering', xs, y0 + 13, EPP.textColor('electron'), 'center'), placed = [sl];
     if (wide) { const xz = X(Math.sqrt(QZ * c.M.edge)), zw = rtW(ctx, 'zone edge', 11.5); if (xz - zw / 2 > sl.x1 + 8) placed.push(lab(ctx, 'zone edge', xz, y0 + 13, EPP.color('muted'), 'center')); }
-    // a cone off either edge of the axis
-    if (c.qL <= QMIN) placed.push(lab(ctx, `$q$_{light} = ${num(c.qL, 2, true)} Å^{−1}: cone off scale`, x0 + 6, y0 + 30, cGt, 'left', true));
-    else if (c.qL >= QMAX) placed.push(lab(ctx, `$q$_{light} > 3 Å^{−1}: zone inside the cone`, x1 - 6, y0 + 30, cGt, 'right', true));
     // a label box (baseline yb) is free when it stays in the frame, meets no placed label and no drawn curve passes through it
     const curves = [c.T].concat(c.scaled ? [c.T1] : []);
-    const free = (xa, tw, yb) => {
+    const free = (xa, tw, yb, fs = curves) => {
       if (xa < x0 + 2 || xa + tw > x1 - 2 || yb > y1 - 22 || meets({ x0: xa - 2, x1: xa + tw + 2, y0: yb - 11.5, y1: yb + 4 }, placed)) return false;
       for (let i = 0; i <= 24; i++) {
         const q = pB.invX(xa - 3 + (tw + 6) * i / 24);
-        for (const f of curves) { const yy = Y(f(q)); if (yy > yb - 12 && yy < yb + 5) return false; }
+        for (const f of fs) { const yy = Y(f(q)); if (yy > yb - 12 && yy < yb + 5) return false; }
       }
       return true;
     };
+    // a cone off either edge of the axis. Off the left edge, the full note goes where it clears the curves, the flat
+    // longitudinal line and the labels (the peak of the real-c reference curve can sit under it); else a short note,
+    // above the flat line or below it
+    if (c.qL <= QMIN) {
+      const tl = `$q$_{light} = ${num(c.qL, 2, true)} Å^{−1}: cone off scale`, ts = 'cone off scale', flat = () => 1 / c.eps, yf = Y(1 / c.eps) + 16;
+      const pick = [[tl, y0 + 30], [tl, y0 + 13], [ts, y0 + 30], [ts, y0 + 13], [tl, yf], [ts, yf]].find(([t, yb]) => free(x0 + 6, rtW(ctx, t, 11.5), yb, curves.concat([flat]))) || [ts, y0 + 30];
+      placed.push(lab(ctx, pick[0], x0 + 6, pick[1], cGt, 'left', true));
+    } else if (c.qL >= QMAX) placed.push(lab(ctx, `$q$_{light} > 3 Å^{−1}: zone inside the cone`, x1 - 6, y0 + 30, cGt, 'right', true));
     // the flat longitudinal line: above it on the right, else on the left, else below it
     const tC = wide ? 'longitudinal = Coulomb: flat, independent of $c$' : 'Coulomb: flat', twC = rtW(ctx, tC, 11.5), yl = Y(1 / c.eps);
     const cand = [[X(0.4) - twC, yl - 6], [x0 + 6, yl - 6], [X(0.4) - twC, yl + 15], [x0 + 6, yl + 15]];
