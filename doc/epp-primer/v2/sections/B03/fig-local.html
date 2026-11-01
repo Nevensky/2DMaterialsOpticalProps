@@ -384,12 +384,12 @@
   const mev = (v) => `${v.toFixed(1)}${NB}meV (${Math.round(v * CM)}${NB}cm⁻¹)`;
   function readouts() {
     const s = cur, m = s.m;
-    roV.zeta.textContent = s.kind === 'k' ? '0' : s.kind === 'lor' ? '1/3' : `1/(ε∞${NB}+${NB}2) = ${s.zeta.toFixed(4)}`;
+    roV.zeta.innerHTML = s.kind === 'k' ? '0' : s.kind === 'lor' ? '1/3' : `1/(<i style="font-family:var(--font-text)">ε</i><sub>∞</sub>${NB}+${NB}2) = ${s.zeta.toFixed(4)}`;
     roV.w0.textContent = mev(s.w0);
     if (zsBox) zsBox.style.display = s.kind === 'cm' ? '' : 'none';
     roV.zs.textContent = s.ZS.toFixed(2);
     roV.wp.textContent = mev(s.x);
-    roV.to.textContent = s.stable ? mev(s.TO) : `unstable: ω_TO² = −${Math.round(-s.to2)}${NB}meV² < 0`;
+    roV.to.innerHTML = s.stable ? mev(s.TO) : `unstable: (<i style="font-family:var(--font-text)">ħω</i><sub>TO</sub>)<sup>2</sup> = −${Math.round(-s.to2)}${NB}meV² &lt; 0`;
     roV.lo.textContent = s.stable ? mev(s.LO) : '—';
     roV.d2.textContent = `${(s.x * s.x / s.einf).toFixed(1)}${NB}meV², the same for every ζ`;
     roV.es.textContent = s.stable ? EPP.fmt(s.es, 3) : 'unstable';

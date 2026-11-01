@@ -96,10 +96,15 @@
     setTimeout(fix, 700); setTimeout(fix, 1600);
   }
 
+  // keyboard focus only: keep the focused control in view while lazy typesetting shifts the layout.
+  // Pointer focus is ignored, and any scroll gesture by the reader cancels the correction.
   document.addEventListener('focusin', (ev) => {
     const el = ev.target; if (!el.closest || !el.closest('main')) return;
-    const fix = () => { if (document.activeElement !== el) return; const r = el.getBoundingClientRect(); if (r.top < 0 || r.bottom > innerHeight - 60) el.scrollIntoView({ block: 'nearest', behavior: 'instant' }); };
-    if ('onscrollend' in window) window.addEventListener('scrollend', fix, { once: true });
+    let kb = true; try { kb = el.matches(':focus-visible'); } catch (e) {}
+    if (!kb) return;
+    let off = false; const stop = () => { off = true; };
+    ['wheel', 'touchmove', 'pointerdown'].forEach(t => window.addEventListener(t, stop, { once: true, passive: true }));
+    const fix = () => { if (off || document.activeElement !== el) return; const r = el.getBoundingClientRect(); if (r.top < 0 || r.bottom > innerHeight - 60) el.scrollIntoView({ block: 'nearest', behavior: 'instant' }); };
     setTimeout(fix, 700); setTimeout(fix, 1600);
   });
 

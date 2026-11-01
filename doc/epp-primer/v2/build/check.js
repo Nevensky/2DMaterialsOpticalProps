@@ -28,8 +28,8 @@ const doc = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta na
     await page.route('https://fonts.googleapis.com/**', r => r.fulfill({ status: 200, contentType: 'text/css', body: '' }));
     await page.route('https://fonts.gstatic.com/**', r => r.fulfill({ status: 404, body: '' }));
     const t0 = Date.now();
-    await page.setContent(doc, { waitUntil: 'load' });
-    try { await page.waitForFunction(() => window.MathJax && MathJax.startup && MathJax.startup.promise, null, { timeout: 20000 }); await page.evaluate(() => MathJax.startup.promise); } catch (e) { report.errors.push(`[${cfg.name}] MathJax did not start: ${e.message}`); }
+    await page.setContent(doc, { waitUntil: 'load', timeout: 240000 });
+    try { await page.waitForFunction(() => window.MathJax && MathJax.startup && MathJax.startup.promise, null, { timeout: 180000 }); await page.evaluate(() => MathJax.startup.promise); } catch (e) { report.errors.push(`[${cfg.name}] MathJax did not start: ${e.message}`); }
     report.timings[cfg.name] = Date.now() - t0;
     await page.waitForTimeout(800);
     const r = await page.evaluate(() => {

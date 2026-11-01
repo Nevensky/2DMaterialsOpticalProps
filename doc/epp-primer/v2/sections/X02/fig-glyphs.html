@@ -151,7 +151,7 @@
       if (id) {
         if (g === id) { bc = 'var(--accent)'; bg = 'var(--hl)'; sh = 'inset 0 0 0 1px var(--accent)'; op = 1; }
         else if (part.includes(g)) { bc = 'var(--c-photon)'; bg = 'color-mix(in srgb, var(--c-photon) 10%, var(--surface))'; sh = 'inset 0 0 0 1px var(--c-photon)'; op = 1; }
-        else op = faded ? 0.25 : 0.42;
+        else op = faded ? 0.3 : 0.55;   // dimmed but still readable, also in the dark theme
       }
       card.style.borderColor = bc; card.style.background = bg; card.style.boxShadow = sh; card.style.opacity = String(op);
       btn.setAttribute('aria-pressed', String(pinned === g));

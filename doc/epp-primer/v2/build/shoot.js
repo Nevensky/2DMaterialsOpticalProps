@@ -17,8 +17,8 @@ const doc = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta na
     const page = await ctx.newPage();
     await page.route('https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/**', r => { const f = path.join(MJ, r.request().url().split('/es5/')[1].split('?')[0]); fs.existsSync(f) ? r.fulfill({ path: f, contentType: 'application/javascript' }) : r.fulfill({ status: 404, body: '' }); });
     await page.route('https://fonts.googleapis.com/**', r => r.fulfill({ status: 200, contentType: 'text/css', body: '' }));
-    await page.setContent(doc, { waitUntil: 'load' });
-    await page.waitForFunction(() => window.MathJax && MathJax.startup && MathJax.startup.promise, null, { timeout: 30000 });
+    await page.setContent(doc, { waitUntil: 'load', timeout: 240000 });
+    await page.waitForFunction(() => window.MathJax && MathJax.startup && MathJax.startup.promise, null, { timeout: 180000 });
     await page.evaluate(() => MathJax.startup.promise);
     await page.waitForTimeout(800);
     const items = await page.evaluate(() => {
