@@ -51,7 +51,7 @@ const doc = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta na
       document.querySelectorAll('main mjx-container:not([display="true"])').forEach(c => {
         if (c.closest('figure.viz, .pop, .gl-panel, details:not([open]), .tbl, .eq')) return;
         let blk = c.parentElement; while (blk && getComputedStyle(blk).display === 'inline') blk = blk.parentElement;
-        if (!blk) return; const bb = blk.getBoundingClientRect(), cb = c.getBoundingClientRect();
+        if (!blk || /auto|scroll/.test(getComputedStyle(blk).overflowX)) return; const bb = blk.getBoundingClientRect(), cb = c.getBoundingClientRect();
         if (cb.width > 0 && cb.right > Math.min(bb.right, de.clientWidth) + 2) clip.push((c.closest('section')?.id || '?') + ': $' + (tex.get(c) || c.textContent).slice(0, 90) + '$ (' + Math.round(cb.right - Math.min(bb.right, de.clientWidth)) + ' px)');
       });
       return { over, wide: wide.slice(0, 15), mErr, blank, sections, dead: [...new Set(dead)], unres: [...new Set(unres)], clip, h: de.scrollHeight };

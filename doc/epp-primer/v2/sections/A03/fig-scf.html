@@ -26,7 +26,7 @@
     <figcaption><p class="cap-key"><strong>What to notice.</strong> At the default the loop converges with <span class="nw">$\zeta\lt0$:</span> each cycle overshoots, and the iterate settles on $1/\varepsilon^{\mathrm e}$ from alternate sides. The plain iteration, <span class="nw">$w=1$,</span> sums the series of (a), which diverges wherever <span class="nw">$\varepsilon^{\mathrm e}\gt2$,</span> in a metal at every long wavelength; Kerker's weight keeps $w\varepsilon^{\mathrm e}$ between about $w_0/2$ and $w_0$ at every <span class="nw">$q$.</span></p><div class="cap-more">
       <p><strong>Marks.</strong> In (a) the amber zigzag is the phonon <span class="nw">$\bq\nu$,</span> the blue arrowed lines are electrons, the large dot the bare vertex <span class="nw">$\Delta V^{\mathrm{en}}$,</span> the grey disk the screened vertex <span class="nw">$\Delta V^{\mathrm{KS}}$,</span> each loop a bubble $\chi^0$ and each dashed line the interaction <span class="nw">$v+f^{\mathrm{xc}}$.</span> In (b) hollow points are negative. In (c) the active scheme is solid, the other dashed; the loop converges inside the shaded band.</p>
       <p><strong>Try.</strong> Raise $w$ above the stable value in the readout: the iterates grow and the induced charge sloshes; at $w=1$ they are the partial sums of (a). Lower $q$ at fixed <span class="nw">$w$:</span> below about $k_{\mathrm{TF}}\sqrt{w/2}$ the loop diverges, since <span class="nw">$\varepsilon^{\mathrm e}\simeq(k_{\mathrm{TF}}/q)^2$.</span> Switch to Kerker: curve (c) flattens near <span class="nw">$1-w_0$,</span> and $w_0=1$ converges in fewer than 20 cycles at every <span class="nw">$q$.</span> Turn on the exchange kernel: $1/\varepsilon^{\mathrm e}$ rises slightly, because a test electron is screened less.</p>
-      <p><strong>Model.</strong> One Fourier component of the electron gas, without local fields: <span data-eq="a3-eq-loop">(A3.12)</span>–<span data-eq="a3-eq-mix">(A3.15)</span> with $v\chi^0=-(k_{\mathrm{TF}}/q)^2F_{\mathrm L}(q/2k_{\mathrm F})$ from <span data-eq="a3-eq-lindhard">(A3.18)</span>–<span data-eq="a3-eq-epsj">(A3.19)</span> and <span class="nw">$(k_{\mathrm{TF}}/k_{\mathrm F})^2=0.663\,r_s$.</span> Without the kernel $f^{\mathrm{xc}}=0$ (RPA, test charge); the exchange kernel $f^{\mathrm{xc}}=-\pi e^2/k_{\mathrm F}^2$ of the text after <span data-eq="a3-eq-dxc">(A3.6)</span> multiplies $v\chi^0$ by <span class="nw">$1-q^2/4k_{\mathrm F}^2$.</span> Kerker uses <span class="nw">$q_0=k_{\mathrm{TF}}$.</span> The cycles are counted until the error is below $10^{-6}$ of <span class="nw">$1/\varepsilon^{\mathrm e}$.</span> $r_s=3.93$ is sodium-like (literature value, illustrative).</p>
+      <p><strong>Model.</strong> One Fourier component of the electron gas, without local fields: <span data-eq="a3-eq-loop">(A3.12)</span>–<span data-eq="a3-eq-mix">(A3.15)</span> with $v\chi^0=-(k_{\mathrm{TF}}/q)^2F_{\mathrm L}(q/2k_{\mathrm F})$ from <span data-eq="a3-eq-lindhard">(A3.18)</span>–<span data-eq="a3-eq-epsj">(A3.19)</span> and <span class="nw">$(k_{\mathrm{TF}}/k_{\mathrm F})^2=0.663\,r_{\mathrm s}$.</span> Without the kernel $f^{\mathrm{xc}}=0$ (RPA, test charge); the exchange kernel $f^{\mathrm{xc}}=-\pi e^2/k_{\mathrm F}^2$ of the text after <span data-eq="a3-eq-dxc">(A3.6)</span> multiplies $v\chi^0$ by <span class="nw">$1-q^2/4k_{\mathrm F}^2$.</span> Kerker uses <span class="nw">$q_0=k_{\mathrm{TF}}$.</span> The cycles are counted until the error is below $10^{-6}$ of <span class="nw">$1/\varepsilon^{\mathrm e}$.</span> $r_{\mathrm s}=3.93$ is sodium-like (literature value, illustrative).</p>
     </div></figcaption>
   </figure>
 <script>
@@ -53,7 +53,7 @@
     if (Math.abs(x - 1) < 1e-9) return 0.5;
     return 0.5 + (1 - x * x) / (4 * x) * Math.log(Math.abs((1 + x) / (1 - x)));
   };
-  // (k_TF/k_F)^2 = 4/(π k_F a_0) with k_F = 1.91916/(r_s a_0): 0.66343 r_s
+  // (k_TF/k_F)^2 = 4/(π k_F a_0) with k_F = 1.91916/(r_{\mathrm s} a_0): 0.66343 r_{\mathrm s}
   const TF2 = (rs) => 4 * rs / (PI * 1.91916);
   // one round of response, (v + f^xc) χ^0 = −(k_TF/q)^2 F_L(q/2k_F) (A3.18, A3.19), times 1 − q^2/4k_F^2 with the
   // exchange kernel f^xc = −πe^2/k_F^2 (text after A3.6); q in units of k_F
@@ -382,7 +382,7 @@
   const elCtl = fig.querySelector('.a3-scf-ctrls');
   const ui = EPP.controls(elCtl, [
     { key: 'q', type: 'range', label: 'wavevector q/k_F', min: 0.05, max: 3, step: 0.01, value: 0.5, fmt: (v) => v.toFixed(2) },
-    { key: 'rs', type: 'range', label: 'density parameter r_s', min: 1, max: 6, step: 0.01, value: 3.93, fmt: (v) => v.toFixed(2) + (Math.abs(v - 3.93) < 0.006 ? ' (Na)' : '') },
+    { key: 'rs', type: 'range', label: 'density parameter r_{\mathrm s}', min: 1, max: 6, step: 0.01, value: 3.93, fmt: (v) => v.toFixed(2) + (Math.abs(v - 3.93) < 0.006 ? ' (Na)' : '') },
     { key: 'w', type: 'range', label: 'mixing weight w (Kerker: w_0)', min: 0.05, max: 1.5, step: 0.01, value: 0.15, fmt: (v) => v.toFixed(2) },
     { key: 'mix', type: 'seg', label: 'mixing scheme', options: [['plain', 'plain'], ['kerker', 'Kerker']], value: 'plain' },
     { key: 'xc', type: 'toggle', label: 'exchange kernel f^{xc} (toy; test electron)', value: false }

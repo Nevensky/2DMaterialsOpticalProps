@@ -275,6 +275,8 @@ Current vertices of electrons and ions are written $\mathbf J^{\mathrm e}$ and $
 
 ## 12. Parts A.2–B.10: additions (binding for every author)
 
+See also `build/INTEGRATION_DECISIONS.md`, which resolves the conflicts found after the sections were written (homes of shared symbols, renames, shared numbers).
+
 These extend Sections 1–8. Each symbol has a **home section**, the first section that uses it; it is defined there,
 in words, with a glossary entry whose id is given below. Later sections remind the reader of its meaning in a few words
 at its first use and link it, `<a class="sym" href="#gl-a2-g">$g$</a>`, instead of defining it again.
@@ -347,7 +349,7 @@ A non-bold $\tau$, with or without labels ($\tau$, $\tau_{n\bk}$), is a lifetime
 | $D^{\mathrm e}$ | photon propagator dressed by the electrons only | B.5 `gl-b5-De` |
 | $\Pi$, $\Pi^{\mathrm e}$, $\Pi^{\mathrm{ion}}$; $\Pi^{\mathrm{para}}$, $\Pi^{\mathrm{dia}}$ | photon self-energy (all, electrons, ions); paramagnetic and diamagnetic parts | X.1 `gl-x1-Pi` (parts: B.5 `gl-b5-Pi`) |
 | $\Pi_{\rho\rho}$, $\Pi_{\rho\beta}$, $\Pi_{\alpha\rho}$, $\Pi_{\alpha\beta}$ | charge–charge, charge–current, current–charge and current–current correlators (EPP's $\Pi_{\rho\rho}$, $\Pi_{\rho j}$, $\Pi_{j\rho}$, $\Pi_{jj}$); a superscript e or ion selects the medium. $\Pi^{\mathrm e}_{\rho\rho}=e^2\chi^{\mathrm{irr}}$ connects to Part A | B.6 `gl-b6-sectors` |
-| $D_{\rho\rho}$, $D_{\rho\beta}$, $D_{\alpha\rho}$, $D_{\alpha\beta}$ | the four sectors of the total propagator (EPP's $D_{11}$, $D_{1\nu}$, $D_{\mu1}$, $D_{\mu\nu}$); $D_{\rho\rho}$ is the screened Coulomb sector and $W^{\mathrm e}=D^{\mathrm e}_{\rho\rho}$ | B.6 `gl-b6-sectors` |
+| $D_{\rho\rho}$, $D_{\rho\beta}$, $D_{\alpha\rho}$, $D^{\mathrm T}_{\alpha\beta}$ | the four sectors of the total propagator (EPP's $D_{11}$, $D_{1\nu}$, $D_{\mu1}$, $D_{\mu\nu}$), normalized so that $D^0_{\rho\rho}=v/e^2$ in vacuum; $D_{\rho\rho}$ is the screened Coulomb sector, $W^{\mathrm e}=e^2D^{\mathrm e}_{\rho\rho}$, and $D_{\alpha\beta}$ is the full 3×3 propagator | B.6 `gl-b6-sectors` |
 | $D^{\mathrm L}$, $D^{\mathrm T}$, $D^{\mathrm{LT}}$, $D^{\mathrm{TL}}$ | longitudinal, transverse and mixed parts of a tensor, projected with $\hat\bq$ | B.6 `gl-b6-LT` |
 | $\mathcal L$, $L$ | Lagrangian density, Lagrangian | B.2 `gl-b2-L` |
 | $\bA$, $A_\alpha$; $\bE=-\frac1c\partial_t\bA$ | vector potential in the temporal gauge $A_0=0$; electric field | B.2 `gl-b2-A` |
