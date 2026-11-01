@@ -37,14 +37,14 @@ The same symbol with **different meanings** in different sections is allowed onl
 | $\OVSC$ | `gl-a3-OVSC` | |
 | $c$ (speed of light) | `gl-a4-c` (A.4 creates this entry, separate from the light-cone entry) | |
 | $\bE$, $A_0$ | `gl-a4-E` | B.2's `gl-b2-A` keeps $\bA$ and the temporal gauge |
-| $q_{\mathrm{light}}(\omega)=\sqrt{\varepsilon_\infty}\,\omega/c$ | `gl-a4-qc` (A.4 rewrites its entry and text to define $q_{\mathrm{light}}(\omega)$, and its value at $\omega_{\mathrm{LO}}$) | replaces $q_{\mathrm c}$ (A.4, B.7, B.8), $q_{\mathrm{lc}}$ (A.8) and X.1's own entry; B.7's crossover is $q_{\mathrm{light}}(\omega_{\mathrm{TO}})$ |
+| $q_{\mathrm{light}}(\omega)=\sqrt{\varepsilon_\infty}\,\omega/c$ | `gl-a4-qc` | the wavevector of light of frequency $\omega$ inside the crystal, whose light line is $\omega=cq/\sqrt{\varepsilon_\infty}$ (in vacuum $\omega=cq$). It replaces $q_{\mathrm c}$ and $q_{\mathrm{lc}}$, which are now written $q_{\mathrm{light}}(\omega_{\mathrm{LO}})$; B.7's crossover is $q_{\mathrm{light}}(\omega_{\mathrm{TO}})$ |
 | $M_{\mathrm c}$ | `gl-a4-Mc` | |
 | $m^*$ | `gl-a4-mstar` | |
 | $\mathbf p$, $\mathbf p_{\ell\kappa}$ (electric dipole) | `gl-a4-p` | see §3 for momenta |
 | $\hat\psi(\br)$ (field operator) | `gl-a5-psi` | |
 | $\mathcal T$ (time ordering) | `gl-a5-Tord` | |
 | $\omega_{\mathrm p}$, $\omega^{\mathrm{ion}}_{\mathrm p}$ | `gl-a5-wp` | see §4 |
-| $g^{\mathrm b}$ (bare, unscreened vertex) | A.6's entry | B.1 renames its $g^0$ to $g^{\mathrm b}$; its footnote says EPP writes $g^0$ |
+| $g^0$ (bare, unscreened vertex) | A.6's entry | superscript 0 means bare or free throughout ($G^0$, $F^0$, $D^0$, $\chi^0$, $\Pi^{\mathrm{ph},0}$); A.6 replaces Giustino's $g^{\mathrm b}$, which stays in its footnotes |
 | $N_{\mathrm F}$ (density of states per spin and per cell at $E_{\mathrm F}$) | A.6's entry (`gl-a6-NF`) | A.3 writes its per-volume, both-spin quantity as $\partial n_0/\partial\mu$, without the name $N_{\mathrm F}$ |
 | $q_{\mathrm D}$ | A.2 or A.6, whichever is earlier with this meaning | |
 | $\mathcal V_{\bq\nu}$ (screened vertex) | earliest of A.5, A.6 | |
@@ -72,6 +72,9 @@ The same symbol with **different meanings** in different sections is allowed onl
 | X.1 | $\mathcal M_{\alpha\gamma}$ (Maxwell operator) | $\mathsf M_{\alpha\gamma}$ | A.9's $\mathcal M^s_{mn\nu}$ is the two-path amplitude |
 | B.8 | $\varepsilon^{\mathrm e}_{\alpha\beta}=\delta_{\alpha\beta}-\sum_\gamma D^0_{\alpha\gamma}\Pi^{\mathrm e}_{\gamma\beta}$ | a distinct symbol for this screening matrix, plus a sentence saying that its longitudinal element equals $\varepsilon^{\mathrm{e,L}}$ | the dielectric tensor is $\varepsilon^{\mathrm e}_{\alpha\beta}=\delta_{\alpha\beta}+(4\pi c/\omega^2)\Pi^{\mathrm e}_{\alpha\beta}$ (B.5, B.9); the transverse elements differ at finite $c$ |
 | A.4, B.7, B.8, A.8, X.1 | $q_{\mathrm c}$, $q_{\mathrm{lc}}$, X.1's own entry | $q_{\mathrm{light}}(\omega)$ with its argument | §2 |
+| B.9 | the screened plasma frequency written $\omega_{\mathrm p}$ | $\bar\omega_{\mathrm p}=\omega_{\mathrm p}/\sqrt{\varepsilon_\infty}$ | $\omega_{\mathrm p}$ is the unscreened plasma frequency of A.5 |
+| B.8 | $1-D^0\Pi^{\mathrm e}$ written $\boldsymbol\varepsilon^{\mathrm e}$ | $\mathbf S^{\mathrm e}$ (screening tensor of the photon line) | §3, row above |
+| B.8 | carrier density $n_{\mathrm e}$ | $n_{\mathrm c}$ | §2 |
 | A.3, figures of A.3 and A.5 | $r_s$ | $r_{\mathrm s}$ | §2 |
 | A.8 | $\langle u_{\kappa\alpha}u_{\kappa\beta}\rangle$ | $\langle\hat u_{\kappa\alpha}\hat u_{\kappa\beta}\rangle$ | as A.3 and (A1.28) |
 
@@ -111,3 +114,7 @@ The same symbol with **different meanings** in different sections is allowed onl
 - Display equations: at 390 px, the body plus tag of each display should fit its box. The A.1 pilot already scrolls
   some equations sideways. Split every display whose overflow exceeds 40 px (`eqwidth.json` lists them). Smaller
   overflows may stay.
+
+## 6. Done in the integration pass
+
+Applied by script and by hand after the section reviews: every rename above, the numbers of §4, the phone layout of §5 (display math is left-aligned on phones, so a tag is reserved once), and the merge of 21 glossary entries that only repeated an earlier home entry (their links now point to the home). Entries that repeat an earlier symbol but also define the section's own symbols are kept.
