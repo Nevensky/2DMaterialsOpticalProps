@@ -148,7 +148,7 @@ $\hat H^{\mathrm{e\text{-}ph}}=N_\ell^{-1/2}\sum_{\bk\bq mn\nu}g_{mn\nu}(\bk,\bq
 | Symbol | Meaning |
 |---|---|
 | $\bE$, $\bB$, $\bA$, $A_0$ | electric field, magnetic field, vector potential, scalar potential; temporal gauge is $A_0=0$ |
-| $n$, $\rho$, $\bj$ | number density, charge density ($\rho=-e\,n_{\mathrm e}+\rho^{\mathrm{ion}}$), current density |
+| $n$, $\rho$, $\bj$ | number density, charge density ($\rho=-e\,n^{\mathrm e}+\rho^{\mathrm{ion}}$), current density; the rules for $n$ are in §12.7 |
 | $\bP$ | polarization density |
 | $Z_\kappa$; $\mathbf Z^*_\kappa$, $Z^*_{\kappa,\alpha\beta}$ | ionic valence; Born effective charge tensor, **dimensionless** (the charge is $eZ^*$) |
 | $\varepsilon$, $\boldsymbol\varepsilon$, $\varepsilon_{\alpha\beta}$ | dielectric function: scalar, tensor, components |
@@ -386,3 +386,19 @@ the factor $e$ in the continuity equation that links the charge and current corr
   target's `\tag{}`. Only the element ids listed as **exports** in the section briefs may be used this way.
 - A figure of another section: `<a class="figref" href="#viz-a4-dipoles"></a>`; the page fills in "Figure A4.1".
 - In A.1 the exported equation ids are `a1-eq-pos` (A1.1), `a1-eq-phi` (A1.3), `a1-eq-asr` (A1.6), `a1-eq-dyn` (A1.18), `a1-eq-u` (A1.27).
+
+### 12.7 The letter n
+
+$n$ counts particles; its labels say which, with the same superscript convention as $\rho^{\mathrm e}$, $\bj^{\mathrm e}$, $\Pi^{\mathrm e}$.
+
+| Symbol | Meaning |
+|---|---|
+| $n(\br)$; $\Delta n$, $n^{\mathrm{ind}}$, $n^{\mathrm{ext}}$ | electron number density as a field (DFT, A.2–A.3); its first-order change, induced and external parts |
+| $n^{\mathrm e}(\br)$, $n^{\ion}(\br)$ | electron and ion parts where both appear (A.5, Part B); $\rho^{\mathrm e}=-e\,n^{\mathrm e}$ |
+| $n_0$ | mean (uniform) electron density per unit volume (A.2 home; also the mean of $n^{\mathrm e}$ in B.5) |
+| $n_{\mathrm c}$; $n^{\mathrm{2D}}_{\mathrm c}$ | free carriers of a doped semiconductor per unit volume (A.9 home); of a doped sheet per unit area (A.6, B.10) |
+| $n_{\bq\nu}=n_{\mathrm B}(\omega_{\bq\nu})$ | phonon occupation: the number of phonons in mode $\bq\nu$ (dimensionless), the boson partner of $f_{n\bk}=f(E_{n\bk})$ |
+| $n$ (with $\bk$) | band index, always paired with $\bk$ |
+| $n_{\mathrm r}(\omega)$ | refractive index (A.9 only) |
+
+The subscript e appears only in the electron mass $m_{\mathrm e}$.

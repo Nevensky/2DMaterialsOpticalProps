@@ -118,3 +118,7 @@ The same symbol with **different meanings** in different sections is allowed onl
 ## 6. Done in the integration pass
 
 Applied by script and by hand after the section reviews: every rename above, the numbers of §4, the phone layout of §5 (display math is left-aligned on phones, so a tag is reserved once), and the merge of 21 glossary entries that only repeated an earlier home entry (their links now point to the home). Entries that repeat an earlier symbol but also define the section's own symbols are kept.
+
+## 7. Densities
+
+$n_{\mathrm e}$ is replaced by $n^{\mathrm e}$ (electron part of the number density, B.2, B.4–B.6), $n_0$ (mean density: A.6's electron gas, B.5's $\bar n_{\mathrm e}$), $n_{\mathrm c}$ (B.8's carriers) and $n^{\mathrm{2D}}_{\mathrm c}$ (doped sheets in A.6 and B.10). The full rule is NOTATION §12.7.
