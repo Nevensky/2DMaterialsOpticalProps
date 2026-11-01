@@ -1,0 +1,455 @@
+<section class="chapter" id="b-2d" data-num="B.10" data-title="2D crystals: no LO–TO splitting">
+  <header class="ch-head">
+    <p class="eyebrow"><span class="num">B.10</span><span>EPP §8 · Eqs. 455–472 · corrections (300′), (305′), (p101′)</span></p>
+    <h2>Two-dimensional crystals: no LO–TO splitting at Γ</h2>
+    <p class="lede">A polar monolayer talks to the electromagnetic field only at $z=0$. By the end you can derive EPP's 2D phonon self-energy, reduce it to the strictly two-dimensional screened interaction $W^{\rm e,2D}=v_Q/\epsilon^{\rm e}_{\rm 2D}$, and explain why the LO branch then starts at the TO frequency and rises linearly, with the same screening length $r_0$ that sets Rytova–Keldysh exciton binding in 2D BSE.</p>
+  </header>
+
+  <p><a href="#b-electrostatic">Section B.9</a> derived the bulk electrostatic result, E Eq. 454. With static electronic screening, $W^{\rm e}(\bq,0)=4\pi/(\bq\cdot\epsilon_\infty\cdot\bq)$, the factor $q^2$ in $|\bq\cdot\mathbf j_\sigma|^2$ cancels against the Coulomb kernel:</p>
+  <div class="eq">$$\tilde\omega^2_\sigma(\bq)-\omega^2_\sigma(\bq)=\frac{4\pi}{\Omega_{\rm uc}}\,\frac{|\hat\bq\cdot\mathbf j_\sigma(\bq)|^2}{\hat\bq\cdot\epsilon_\infty\cdot\hat\bq}\qquad(\text{3D, cf. E.454})$$</div>
+  <p>The shift depends on the direction of $\bq$ but not on its length, so it survives at $\Gamma$. That is the LO–TO splitting. EPP §8 repeats the construction for a single polar layer. Units stay Gaussian, so a sheet has the Coulomb kernel $v_Q=2\pi/Q$. Born charges carry the dimension of charge, $\bQ=(Q_x,Q_y)$ is an in-plane wave vector, and all symbols are EPP's own: nothing is renamed in this section.</p>
+
+  <div class="callout intuition">
+    <p class="callout-title">Physical picture: where does the depolarization field go?</p>
+    <p>An LO <span class="t-p">phonon</span> is a polarization wave, $P\propto\cos Qx$, along its own wave vector. Its bound charge $-\partial_xP$ piles up where the dipoles converge. In bulk these charges form infinite planes, and the field between charged planes does not depend on their spacing: it is the capacitor field $-4\pi P/\epsilon_\infty$ at every wavelength, which stiffens the LO mode equally for every $q$. In a monolayer the bound charge sits on a line inside the sheet. Its field lines bulge out into the vacuum or the substrate, to a distance of about $1/Q$, before closing on the opposite charge. The longer the wavelength, the weaker the in-plane field. At $Q\to0$ only the short-range springs remain, so LO and TO are degenerate.</p>
+  </div>
+
+  <figure class="viz" id="viz-b-2d-field">
+    <p class="viz-title">Bulk versus sheet: the depolarization field of an LO wave <span class="tag">interactive</span></p>
+    <div class="viz-grid two">
+      <div><p style="font-family:var(--font-ui);font-size:0.85rem;color:var(--fg-2);margin:0 0 4px">3D crystal: field confined between charge planes</p><div class="b-2d-f3"></div></div>
+      <div><p style="font-family:var(--font-ui);font-size:0.85rem;color:var(--fg-2);margin:0 0 4px">2D sheet at $z=0$: field leaks out to $\sim1/Q$</p><div class="b-2d-f2"></div></div>
+    </div>
+    <div class="ctrls"></div>
+    <div class="ro"></div>
+    <figcaption><strong>Model.</strong> A longitudinal polarization wave $P(x)\propto\cos Qx$ of point dipoles (amber arrows) with bound charge $-\partial_xP$ (rose: +, teal: −), in vacuum, without electronic screening; window 10 nm wide. Left: dipoles fill space (rows schematic) and $E=-4\pi P$ at every wavelength. Right: dipoles at $z=0$, potential $\phi=2\pi P_{\rm 2D}\sin(Qx)\,e^{-Q|z|}$ ($P_{\rm 2D}$: dipole moment per area); the lines are the exact field lines, contours of $\cos(Qx)\,e^{-Q|z|}$ at equal flux spacing. <strong>What to notice.</strong> Stretch λ. In 3D the field does not change. In 2D the same flux spreads over a longer period and bulges further out, so the in-plane field, $2\pi QP_{\rm 2D}$, drops. The ratio of 2D to 3D restoring fields, and of LO shifts, is $Qd/2$ for a layer of thickness $d$.</figcaption>
+  </figure>
+
+  <h3>A sheet of point dipoles</h3>
+  <p>EPP builds the ionic photon self-energy from Born-charge point dipoles on the atomic sites (<a href="#b-photon-se">§B.5</a>). The printed draft puts every dipole of a monolayer in the plane $z=0$ and at its cell origin. The correction (<a href="#z-corrections">§Z.3</a>) places atom $a$ at its in-plane position $\boldsymbol\rho^0_a$ and height $z_a$. Repeating the lattice sums with 2D wave vectors (EPP pp. 64 and 66–67) then gives paramagnetic and diamagnetic parts confined to the atomic planes, as matrices in the in-plane reciprocal-lattice vectors $\bG,\bG'$ (as in §Z.3, a primed tag marks a corrected equation and a page tag such as p.101′ a corrected unnumbered display):</p>
+  <div class="eq">$$\begin{aligned}\Pi^{\rm ion,para}_{\alpha\beta,\bG\bG'}(\bQ,\omega,z,z')={}&-\frac{\hbar}{cS_{\rm uc}}\sum_{\sigma=1}^{3s}\frac{\omega_\sigma(\bQ)}{2}F_\sigma(\bQ,\omega)\\&\times\sum_{ab}j^a_{\alpha\sigma}(\bQ+\bG)\,j^{b*}_{\beta\sigma}(\bQ+\bG')\,\delta(z-z_a)\,\delta(z'-z_b)\end{aligned}\tag{E.300$'$}$$</div>
+  <div class="eq">$$\begin{aligned}\Pi^{\rm ion,dia}_{\alpha\beta,\bG\bG'}(\bQ,\omega,z,z')={}&-\frac{1}{S_{\rm uc}c}\sum_{a\mu}\frac{1}{m_a}Z^*_{a\alpha\mu}Z^*_{a\beta\mu}\\&\times e^{-i(\bG-\bG')\cdot\boldsymbol\rho^0_a}\,\delta(z-z_a)\,\delta(z'-z_a)\end{aligned}\tag{E.305$'$}$$</div>
+  <p>The atom-resolved vertex $j^a_{\alpha\sigma}(\bQ+\bG)=\sum_\mu Z^*_{a\alpha\mu}e_{a\mu\sigma}(\bQ)\,e^{-i(\bQ+\bG)\cdot\boldsymbol\rho^0_a}/\sqrt{m_a}$ carries the in-plane basis phase. For a planar sheet, $z_a=0$, the atom sums in E.300′ collapse to $j_{\alpha\sigma}(\bQ+\bG)\,j^*_{\beta\sigma}(\bQ+\bG')\,\delta(z)\delta(z')$ with $j=\sum_aj^a$. At $\bG=\bG'=0$, the only element EPP keeps, E.300′ and E.305′ are then the printed E.300 and E.305, with the phase-corrected vertex $j_{\alpha\sigma}(\bQ)=\sum_{a\mu}Z^*_{a\alpha\mu}e_{a\mu\sigma}(\bQ)\,e^{-i\bQ\cdot\boldsymbol\rho^0_a}/\sqrt{m_a}$ (E p.86a′ with in-plane positions). Everything below is written for a planar sheet with this $j$, and E Eqs. 455–472 keep their printed form. The diamagnetic term cancels the static paramagnetic one exactly as in 3D, by completeness of the phonon eigenvectors (E Eqs. 306–310). The strictly 2D electronic bubble of a layer (E Eq. 285) has the same sheet form. The ionic self-energy of the sheet is therefore the bulk one, renormalized from volume to area:</p>
+  <div class="eq">$$\Pi^{\rm ion}_{jj}(\bQ,\omega,z,z')=\frac{\Omega_{\rm uc}}{S_{\rm uc}}\,\Pi^{\rm ion}_{jj}(\bQ,\omega)\,\delta(z)\delta(z')\tag{E.455}$$</div>
+  <p>Here $\Pi^{\rm ion}_{jj}(\bQ,\omega)$ is the bare ionic bubble of E Eq. 391, which carries $1/\Omega_{\rm uc}$; the prefactor replaces it by $1/S_{\rm uc}$. The δ functions pin both ends of every ionic bubble to $z=0$. The resummation of <a href="#b-phonon-se">§B.7</a> therefore goes through with two replacements (E Eqs. 456–457): $D^{\rm e}_{\alpha\beta}(\bq,\omega)\to D^{\rm e}_{\alpha\beta}(\bQ,\omega,z=0,z'=0)$ and $\Pi^{\rm ion}_{jj}(\bq,\omega)\to(\Omega_{\rm uc}/S_{\rm uc})\,\Pi^{\rm ion}_{jj}(\bQ,\omega)$. The phonon self-energy of a 2D crystal is</p>
+  <div class="eq">$$\Omega^{\rm e}_{\sigma\sigma'}(\bQ,\omega)=-\sum_{\alpha\beta}J^*_{\alpha\sigma}(\bQ,\omega)\,D^{\rm e}_{\alpha\beta}(\bQ,\omega,z=0,z'=0)\,J_{\beta\sigma'}(\bQ,\omega),\tag{E.458}$$</div>
+  <div class="eq">$$J_{\mu\sigma}(\bQ,\omega)=\sqrt{\frac{\hbar}{2cS_{\rm uc}\,\omega_\sigma(\bQ)}}\;\omega\,j_{\mu\sigma}(\bQ).\tag{E.459}$$</div>
+  <p>The real change is in the photon line. It is evaluated in the plane of the sheet and obeys a $z$-resolved Dyson equation (unnumbered, EPP p. 100), in which the electronic bubble may spread over the thickness of the layer:</p>
+  <div class="eq">$$\begin{aligned}D^{\rm e}_{\alpha\beta}(\bQ,\omega,z,z')&=D^0_{\alpha\beta}(\bQ,\omega,z,z')\\&\quad+\sum_{\mu\nu}\int_{-l/2}^{l/2}dz_1dz_2\,D^0_{\alpha\mu}(\bQ,\omega,z,z_1)\,\Pi^{\rm e,0}_{jj\mu\nu}(\bQ,\omega,z_1,z_2)\,D^{\rm e}_{\nu\beta}(\bQ,\omega,z_2,z')\end{aligned}$$</div>
+  <p>This is where crystal local-field effects along $z$ enter, the same effects that a supercell RPA calculation of a monolayer has to handle.</p>
+
+  <div class="callout caveat">
+    <p class="callout-title">Subtlety: “Ω → S” is not enough, and out-of-plane dipoles are dropped</p>
+    <p>EPP p. 86 calls the transition to 2D trivial: $\Omega\to S$, $\Omega_{\rm uc}\to S_{\rm uc}$, $\bq\to\bQ$. That holds for the self-energies, which carry $\delta(z)\delta(z')$, but not for the photon line. A sheet exchanges photons with itself only at $z=z'=0$, so it sees the vacuum propagator of E Eq. 375 integrated over $q_z$ (derived, not printed in EPP), for in-plane $\mu,\nu$:</p>
+    <div class="eq">$$D^0_{\mu\nu}(\bQ,\omega;0,0)=\int\frac{dq_z}{2\pi}\,D^0_{\mu\nu}(\bQ,q_z,\omega)=\frac{2\pi c}{\omega^2\beta}\left(\frac{\omega^2}{c^2}\delta_{\mu\nu}-Q_\mu Q_\nu\right),\qquad\beta=\sqrt{Q^2-\frac{\omega^2}{c^2}}$$</div>
+    <p>Its longitudinal projection is $-2\pi c\beta/\omega^2$, which tends to $-\frac{c}{\omega^2}Q^2v_Q$ for $c\to\infty$. The kernel $v_Q=2\pi/Q$ thus comes from the $q_z$ integral, not from a change of normalization. The $zz$ component contains a contact term $\propto\delta(z-z')$, the depolarization field of a sheet of out-of-plane dipoles. EPP discards it as the “divergent local term” before E Eq. 463 and keeps only $\alpha=x,y$ from there on, although E Eq. 300′ contains out-of-plane dipoles. Everything below applies to <strong>in-plane modes</strong> (the in-plane LO/TO pair of hBN or the E′ mode of MoS₂), and everything except the last subsection and its figure tab is <strong>electrostatic</strong>. ZO-type modes with $Z^*_{zz}$ receive a $Q$-independent depolarization shift instead.</p>
+  </div>
+
+  <h3>The electrostatic limit: a strictly 2D screened interaction</h3>
+  <p>For $c\to\infty$ only the longitudinal sector survives, as in bulk. The partial Fourier transform of E Eq. 438 gives</p>
+  <div class="eq">$$\lim_{c\to\infty}D^{\rm e}_{\mu\nu}(\bQ,\omega,z,z')\equiv-\frac{c}{\omega^2}\left[i\bQ+\frac{\partial}{\partial z}\right]\left[-i\bQ+\frac{\partial}{\partial z'}\right]W^{\rm e}(\bQ,\omega,z,z').\tag{E.460}$$</div>
+  <p>The brackets are the 3-vectors $(iQ_x,iQ_y,\partial_z)$ and $(-iQ_x,-iQ_y,\partial_{z'})$, of which components $\mu$ and $\nu$ are taken. EPP then switches off the electronic local fields along $z$ and squeezes the electronic bubble into the sheet, $\Pi^{\rm e,0}_{\rho\rho}(\bQ,\omega,z,z')\approx\Pi^{\rm e,0}_{\rho\rho}(\bQ,\omega)\delta(z)\delta(z')$, with the 2D RPA polarizability (unnumbered, EPP p. 101, here corrected; SBZ is the surface Brillouin zone):</p>
+  <div class="eq">$$\Pi^{\rm e,0}_{\rho\rho}(\bQ,\omega)=\frac{2e^2}{S}\sum_{\mathbf K\in{\rm SBZ}}\sum_{nm}\frac{f_{n\mathbf K}-f_{m\mathbf K+\bQ}}{\hbar\omega+E_{n\mathbf K}-E_{m\mathbf K+\bQ}+i\eta}\,\left|\rho_{n\mathbf K,m\mathbf K+\bQ}\right|^2\tag{E p.101$'$}$$</div>
+  <p>The printed display has $2/S$ in place of $2e^2/S$. With the dimensionless number-density vertices $\rho_{n\mathbf K,m\mathbf K+\bQ}$ it is the number bubble, while E Eqs. 461–462 and 470 need the charge–charge correlator, $e^2$ times it (cf. E Eq. 350 and <a href="#b-electrostatic">§B.9</a>). It is the same lost factor $e$ as in the continuity equation of <a href="#b-frohlich">§B.8</a> (<a href="#z-corrections">§Z.3</a>).</p>
+  <p>Summing the RPA chain of sheet bubbles gives the screened Coulomb interaction between heights $z$ and $z'$:</p>
+  <div class="eq">$$W^{\rm e}(\bQ,\omega,z,z')=v_Q\,e^{-Q|z-z'|}+v_Q^2\,e^{-Q(|z|+|z'|)}\,\Pi^{\rm e}_{\rho\rho}(\bQ,\omega),\tag{E.461}$$</div>
+  <div class="eq">$$\Pi^{\rm e}_{\rho\rho}=\frac{\Pi^{\rm e,0}_{\rho\rho}}{1-v_Q\Pi^{\rm e,0}_{\rho\rho}},\tag{E.462}$$</div>
+  <p>with $v_Q=2\pi/Q$. The first term is the bare Coulomb interaction after the in-plane Fourier transform. The second is the potential of the charge induced in the sheet, which decays away from it as $e^{-Q|z|}$. For in-plane components no $z$-derivatives appear in E Eq. 460, and at $z=z'=0$ (E Eq. 463)</p>
+  <div class="eq">$$\lim_{c\to\infty}D^{\rm e}_{\mu\nu}(\bQ,\omega,z=0,z'=0)\equiv-\frac{c}{\omega^2}\,Q_\mu Q_\nu\,W^{\rm e}(\bQ,\omega,z=0,z'=0);\qquad\mu,\nu=x,y.\tag{E.464}$$</div>
+  <p>Inserted into E Eq. 458 with the vertices of E Eq. 459 (this is E Eq. 465), it gives</p>
+  <div class="eq">$$\Omega^{\rm e}_{\sigma\sigma}(\bQ,\omega)=\frac{\hbar\,W^{\rm e}(\bQ,\omega,z=0,z'=0)}{2S_{\rm uc}\,\omega_\sigma(\bQ)}\left|\sum_{\alpha=x,y}j_{\alpha\sigma}(\bQ)\,Q_\alpha\right|^2.\tag{E.466}$$</div>
+  <p>The 2D phonon propagator keeps the bulk form of E Eq. 405 (E Eq. 467), so the renormalized frequencies solve</p>
+  <div class="eq">$$\omega^2=\omega^2_\sigma(\bQ)+\frac{W^{\rm e}(\bQ,\omega,z=0,z'=0)}{S_{\rm uc}}\left|\sum_{\alpha=x,y}j_{\alpha\sigma}(\bQ)\,Q_\alpha\right|^2.\tag{E.468}$$</div>
+  <p>In the plane, E Eqs. 461–462 collapse to the form every 2D RPA practitioner knows:</p>
+  <div class="eq">$$W^{\rm e}(\bQ,\omega,z=0,z'=0)\equiv W^{\rm e,2D}(\bQ,\omega)=\frac{v_Q}{\epsilon^{\rm e}_{\rm 2D}(\bQ,\omega)},\tag{E.469}$$</div>
+  <div class="eq">$$\epsilon^{\rm e}_{\rm 2D}(\bQ,\omega)=1-v_Q\,\Pi^{\rm e,0}_{\rho\rho}(\bQ,\omega).\tag{E.470}$$</div>
+  <p>With the bubble of E p.101′ and $v_Q=2\pi/Q$, E Eq. 470 is dimensionless (with the printed $2/S$ it is not). For a 2D electron gas it gives Stern's $\epsilon^{\rm e}_{\rm 2D}(Q,0)=1+2m^*e^2/(\hbar^2Q)$, valid for $Q\le2k_F$ at $T\to0$ without a background dielectric constant. With a static electronic response, $\omega=0$ inside $W$ (E Eq. 471), EPP's final result is</p>
+  <div class="eq">$$\tilde\omega^2_\sigma(\bQ)=\omega^2_\sigma(\bQ)+\frac{1}{S_{\rm uc}}\,\frac{v_Q}{\epsilon^{\rm e}_{\rm 2D}(\bQ,\omega=0)}\left|\sum_{\alpha=x,y}j_{\alpha\sigma}(\bQ)\,Q_\alpha\right|^2.\tag{E.472}$$</div>
+
+  <details class="derivation"><summary>Derivation: from E.461 to E.469, and from E.465 to E.468</summary><div class="d-body">
+    <p><strong>The in-plane screened interaction.</strong> At $z=z'=0$ both exponentials in E Eq. 461 equal 1. With E Eq. 462,</p>
+    <div class="eq">$$W^{\rm e}(\bQ,\omega,0,0)=v_Q+v_Q^2\,\frac{\Pi^{\rm e,0}_{\rho\rho}}{1-v_Q\Pi^{\rm e,0}_{\rho\rho}}=v_Q\,\frac{1-v_Q\Pi^{\rm e,0}_{\rho\rho}+v_Q\Pi^{\rm e,0}_{\rho\rho}}{1-v_Q\Pi^{\rm e,0}_{\rho\rho}}=\frac{v_Q}{1-v_Q\Pi^{\rm e,0}_{\rho\rho}},$$</div>
+    <p>which is E Eqs. 469–470. E Eq. 461 is the solution of $W=v+v\Pi^{\rm e,0}_{\rho\rho}W$ when the bubble is a δ function in $z$ and $v(\bQ,z,z')=v_Qe^{-Q|z-z'|}$ is the in-plane transform of $1/|\br-\br'|$.</p>
+    <p><strong>The self-energy.</strong> E Eq. 465 is E Eq. 458 for $\sigma=\sigma'$ with E Eq. 459 inserted: $J^*_{\alpha\sigma}J_{\beta\sigma}=\frac{\hbar\omega^2}{2cS_{\rm uc}\omega_\sigma}j^*_{\alpha\sigma}j_{\beta\sigma}$. Now insert E Eq. 464:</p>
+    <div class="eq">$$\Omega^{\rm e}_{\sigma\sigma}=-\frac{\hbar\omega^2}{2cS_{\rm uc}\omega_\sigma}\sum_{\alpha\beta=x,y}j^*_{\alpha\sigma}\left(-\frac{c}{\omega^2}Q_\alpha Q_\beta W^{\rm e}\right)j_{\beta\sigma}=\frac{\hbar W^{\rm e}}{2S_{\rm uc}\omega_\sigma}\Big|\sum_{\alpha}j_{\alpha\sigma}Q_\alpha\Big|^2 .$$</div>
+    <p>The factors $\omega^2$ and $c$ cancel, as in bulk (E Eq. 452). The poles of E Eq. 467 satisfy $\omega^2=\omega_\sigma^2+2\omega_\sigma\Omega^{\rm e}_{\sigma\sigma}/\hbar$, which gives E Eq. 468.</p>
+    <p><strong>The 3D check.</strong> The same steps with $\Omega_{\rm uc}$, $v(q)=4\pi/q^2$ and $\epsilon_\infty$ give the bulk shift at the top of this section. Only the Coulomb kernel and the cell measure differ.</p>
+  </div></details>
+
+  <h3>Why LO meets TO at Γ</h3>
+  <p>Put the two results side by side, for a mode with in-plane dipole $\mathbf j_\sigma$:</p>
+  <div class="eq">$$\begin{aligned}\text{3D:}\quad&\tilde\omega^2_\sigma-\omega^2_\sigma=\frac{4\pi}{\Omega_{\rm uc}}\,\frac{q^2\,|\hat\bq\cdot\mathbf j_\sigma|^2}{q^2\;\hat\bq\cdot\epsilon_\infty\cdot\hat\bq}\;\xrightarrow{\;q\to0\;}\;\text{const},\\[4pt]\text{2D:}\quad&\tilde\omega^2_\sigma-\omega^2_\sigma=\frac{2\pi}{S_{\rm uc}}\,\frac{Q^2\,|\hat\bQ\cdot\mathbf j_\sigma|^2}{Q\;\epsilon^{\rm e}_{\rm 2D}(\bQ,0)}\;\xrightarrow{\;Q\to0\;}\;0.\end{aligned}$$</div>
+  <p>The vertex $|\bQ\cdot\mathbf j_\sigma|^2$ supplies $Q^2$ in both cases. The 3D kernel removes $q^2$; the sheet kernel removes only one power of $Q$. For an insulator $\epsilon^{\rm e}_{\rm 2D}(\bQ,0)$ tends to a finite value as $Q\to0$, so the LO branch leaves the TO frequency with a finite slope (derived from E Eq. 472):</p>
+  <div class="eq">$$\hbar\,\frac{d\tilde\omega_{\rm LO}}{dQ}\bigg|_{Q=0}=\frac{\pi\hbar\,|\hat\bQ\cdot\mathbf j_\sigma|^2}{S_{\rm uc}\,\omega_\sigma\,\epsilon^{\rm e}_{\rm 2D}(0,0)}$$</div>
+  <p>TO modes, with $\hat\bQ\cdot\mathbf j_\sigma=0$, are not shifted in either case. The first figure shows the same counting in real space: without electronic screening the 2D shift is the 3D one times $Qd/2$, for a layer of thickness $d$ with $\Omega_{\rm uc}=S_{\rm uc}d$.</p>
+
+  <div class="callout caveat">
+    <p class="callout-title">Agreement with Sohier et al. 2017 is in form</p>
+    <p>EPP's comparisons with Sohier et al., Nano Lett. 17, 3758 (2017) (E Eq. 454 "probably identical" to their Eq. 2, E Eq. 472 "consistent with" their Eq. 3) are agreements in form, not term-by-term identities; see the note in <a href="#b-electrostatic">§B.9</a>. Two points from the literature, not from EPP: Sohier et al. take their screening from DFPT, which includes local fields and exchange–correlation, rather than the strictly 2D RPA of E Eq. 470; and in a 3D-periodic supercell the periodic images restore a spurious splitting unless the Coulomb interaction is truncated in $z$.</p>
+  </div>
+
+  <div class="callout connect">
+    <p class="callout-title">Bridge to Giustino</p>
+    <p>Giustino's treatment of polar coupling is three-dimensional. The LO–TO splitting it points to (the Gonze–Lee nonanalytic term, cited in Giustino §VI.A.3 but not printed) carries $\epsilon^\infty$, and its long-range vertex is the Verdi–Giustino form $\propto(\bq\cdot\mathbf Z^*_\kappa\cdot\mathbf e_{\kappa\nu})/(\bq\cdot\epsilon^\infty\cdot\bq)$ (Giustino §VI.A.3, Eq. G.180; <a href="#a-polar">§A.4</a>). Both rest on the 3D kernel $4\pi/q^2$. EPP's 2D result follows from the single replacement $4\pi/(\bq\cdot\epsilon_\infty\cdot\bq)\to2\pi/[Q\,\epsilon^{\rm e}_{\rm 2D}(\bQ,0)]$. Applied to the electrostatic vertex of <a href="#b-frohlich">§B.8</a>, the same replacement turns the $1/q$ Fröhlich divergence into a coupling that tends to a finite value, $\propto\hat\bQ\cdot Z^*\cdot\mathbf e/\epsilon^{\rm e}_{\rm 2D}(\bQ,0)$, as $Q\to0$ (derived, not in EPP). In Giustino's language (his phonon self-energy is written $\Pi^{\rm ph}$ on this page), E Eq. 472 is the long-range part of the adiabatic phonon self-energy $\Pi^{\rm A}=\Pi^{\rm ph}(\omega=0)$ (Eq. G.125, <a href="#a-phonon-se">§A.6</a>), the part DFPT adds through $Z^*$ and $\epsilon^\infty$, now evaluated with a two-dimensional $W_{\rm e}$.</p>
+  </div>
+
+  <h3>The same $r_0$ that sets your exciton binding</h3>
+  <p>For a gapped layer the static sheet bubble is quadratic at small $Q$, $\Pi^{\rm e,0}_{\rho\rho}(\bQ,0)\approx-\alpha_{\rm 2D}Q^2$, where $\alpha_{\rm 2D}$ is the in-plane sheet polarizability (a length in Gaussian units, with the $e^2$ of E p.101′). E Eq. 470 then gives $\epsilon^{\rm e}_{\rm 2D}=1+r_0Q$ with $r_0=2\pi\alpha_{\rm 2D}$, and $W^{\rm e,2D}=2\pi/[Q(1+r_0Q)]$ is the Rytova–Keldysh interaction of 2D BSE and Wannier-exciton models. A substrate below and a capping layer above, with dielectric constants $\epsilon_{\rm a}$ and $\epsilon_{\rm b}$, add the environment. This is standard electrostatics and a literature parameterization; EPP itself treats a freestanding sheet:</p>
+  <div class="eq">$$\epsilon_{\rm 2D}(Q)=\epsilon_{\rm env}+r_0Q,\qquad\epsilon_{\rm env}=\tfrac12(\epsilon_{\rm a}+\epsilon_{\rm b})$$</div>
+  <p>Some papers write $\epsilon_{\rm env}(1+r_0'Q)$ with $r_0'=r_0/\epsilon_{\rm env}$. For a diatomic in-plane mode $|\hat\bQ\cdot\mathbf j_{\rm LO}|^2=Z^{*2}/\mu$, and E Eq. 472 becomes</p>
+  <div class="eq">$$\begin{aligned}(\hbar\tilde\omega_{\rm LO})^2&=(\hbar\omega_{\rm T})^2+\frac{C\,Q}{\epsilon_{\rm env}+r_0Q},\\ C&=\frac{2\pi e^2Z^{*2}\hbar^2}{S_{\rm uc}\,\mu}=0.3782\,\frac{Z^{*2}}{S_{\rm uc}[\text{Å}^2]\;\mu[\text{u}]}\ \text{eV}^2\,\text{Å},\end{aligned}$$</div>
+  <p>with $Z^*$ in units of $|e|$ and $e^2=14.40$ eV Å. Two regimes meet at $Q^*=\epsilon_{\rm env}/r_0$:</p>
+  <ul>
+    <li><strong>$Q\ll Q^*$:</strong> a linear rise with slope $C/(2\hbar\omega_{\rm T}\epsilon_{\rm env})$. Encapsulation divides the slope by $\epsilon_{\rm env}$.</li>
+    <li><strong>$Q\gg Q^*$:</strong> the sheet's own electrons dominate the screening, and $(\hbar\tilde\omega_{\rm LO})^2\to(\hbar\omega_{\rm T})^2+C/r_0$. This plateau does not depend on the environment.</li>
+  </ul>
+  <p>These are the two regimes of the Keldysh potential in real space: $1/(\epsilon_{\rm env}r)$ for $r\gg r_0/\epsilon_{\rm env}$, logarithmic inside. An exciton of radius $a_X$ samples $W$ around $Q\sim1/a_X$; an LO phonon of wave vector $Q$ samples the same function at the same $Q$. If your BSE workflow already gives you $r_0$, the LO dispersion needs only $Z^*$ and the mode eigenvector on top. With hBN numbers ($S_{\rm uc}=5.43$ Å², $Z^*=2.7$, $\mu=6.10$ u, $\hbar\omega_{\rm T}=170$ meV, $r_0=10$ Å; literature values, illustrative) one finds $C=0.0832$ eV² Å, an initial slope of 0.245 eV Å, $\hbar\tilde\omega_{\rm LO}=181.8$ meV at $Q=0.1$ Å$^{-1}$, and a plateau at 193 meV, close to the bulk LO near 200 meV.</p>
+
+  <div class="callout caveat">
+    <p class="callout-title">Why the plateau looks like bulk, and where the model stops</p>
+    <p>A layer of thickness $d$ cut from a bulk crystal has $r_0\approx d(\epsilon_\infty-1)/2$ (a common literature estimate). Then $C/r_0=4\pi|\mathbf j|^2/[\Omega_{\rm uc}(\epsilon_\infty-1)]$ with $\Omega_{\rm uc}=S_{\rm uc}d$: the plateau is the bulk splitting of E Eq. 454 with $\epsilon_\infty-1$ in place of $\epsilon_\infty$ (derived). It is also where the strictly 2D model is least trustworthy, because $Qd$ approaches 1 and the finite thickness neglected in E Eq. 461 starts to matter. EPP's $W$ is RPA without local fields or exchange–correlation; a production calculation would use the macroscopic, $z$-truncated $\epsilon$ of the layer.</p>
+  </div>
+
+  <figure class="viz" id="viz-b-2d-disp">
+    <p class="viz-title"><span class="b-2d-vt">2D LO dispersion · in-plane modes, electrostatic</span> <span class="tag">interactive</span></p>
+    <div class="viz-grid two"><div class="pA"></div><div class="pB"></div></div>
+    <div class="c1"></div>
+    <div class="c2"></div>
+    <div class="ro"></div>
+    <figcaption><strong>Model.</strong> <em>Undoped:</em> E Eq. 472 with $\epsilon_{\rm 2D}=\epsilon_{\rm env}+r_0Q$ for a diatomic in-plane mode, $|\hat\bQ\cdot\mathbf j|^2=Z^{*2}/\mu$; TO is the bare $\omega_\sigma$; the bulk LO is E Eq. 454 with $\Omega_{\rm uc}=S_{\rm uc}d$ and the preset's bulk $\epsilon_\infty$. Right: the squared shift, literally the Keldysh form. <em>Doped:</em> the quadratic below (Drude sheet; for hBN, which cannot be doped this far in practice, a thought experiment). Right: phonon spectral function $-\frac1\pi{\rm Im}\,F_\sigma$ (E Eq. 467, retarded, $\hbar\gamma_{\rm ph}=1$ meV, plasmon damping 5 meV) at the $Q$ set by the slider or a click on the left panel. <em>Finite c</em> (retardation in EPP's sense; derived, not in EPP): the finite-$c$ sheet result below, in a homogeneous medium $\epsilon_{\rm env}$; right, the reduction $\beta/Q$ of the sheet kernel. Presets (literature values, illustrative): hBN monolayer ($S_{\rm uc}=5.43$ Å², $\mu=6.10$ u, $Z^*=2.7$, $\hbar\omega_{\rm T}=170$ meV, $r_0=10$ Å; bulk $d=3.33$ Å, $\epsilon_\infty=4.87$) and a weakly polar MoS₂-like sheet ($S_{\rm uc}=8.65$ Å², $\mu=38.4$ u, $Z^*=1.0$, $\hbar\omega_{\rm T}=48$ meV, $r_0=40$ Å; $d=6.15$ Å, $\epsilon_\infty=15$). $\epsilon_{\rm env}\approx2.5$ mimics SiO₂ and $\approx4.5$ hBN encapsulation; these are static values, and for a polar substrate the value at the phonon frequency is what enters. <strong>What to notice.</strong> LO equals TO at Γ for every parameter choice. Raising $\epsilon_{\rm env}$ lowers the slope but not the plateau; raising $r_0$ lowers the plateau and moves the knee $Q^*$ inward. Doping adds a plasmon that anticrosses the LO branch; the finite speed of light matters only below $10^{-4}$ Å$^{-1}$.</figcaption>
+  </figure>
+
+  <h3>Doped sheets: plasmon–phonon modes in one sample</h3>
+  <p>E Eq. 471 sets $\omega=0$ inside $W$. As in bulk (<a href="#b-electrostatic">§B.9</a>), that fails when free carriers put a plasmon near the phonon. Keep the dynamical $W$ of E Eq. 468 and describe the carriers by a Drude sheet, $\epsilon_{\rm 2D}(Q,\omega)=\epsilon_{\rm env}+r_0Q-\omega_{\rm pl}^2(Q)/\omega^2$ with $\omega_{\rm pl}^2=2\pi ne^2Q/m^*$ (Gaussian, $n$ per area). E Eq. 468 becomes a quadratic in $\omega^2$ (derived):</p>
+  <div class="eq">$$(\epsilon_{\rm env}+r_0Q)\,\omega^4-\omega^2\Big[(\epsilon_{\rm env}+r_0Q)\,\omega_{\rm T}^2+\omega_{\rm pl}^2+C'Q\Big]+\omega_{\rm pl}^2\,\omega_{\rm T}^2=0,\qquad C'=C/\hbar^2$$</div>
+  <p>The 2D plasmon rises as $\sqrt Q$ from zero, so a single doped sample shows the whole anticrossing as a function of $Q$, where bulk GaAs needs a series of densities. At small $Q$ the upper branch is LO-like and starts at $\omega_{\rm T}$. Beyond the crossing it turns plasmon-like, and the lower branch is pushed below $\omega_{\rm T}$: below the plasmon frequency the carriers overscreen, $\epsilon_{\rm 2D}\lt0$, which reverses the sign of the shift. Even the weakly polar MoS₂-like sheet, whose undoped LO shift is a fraction of a meV, shows an anticrossing of about 4 meV: at resonance the splitting grows as the square root of the coupling, $\sqrt{C'Q/\epsilon_{\rm 2D}}$, not linearly. The Drude form is the local limit of the 2D Lindhard function. It holds while the plasmon lies well above the intraband electron–hole continuum, $\omega\gg v_FQ$, and it drops both the $(v_FQ/\omega)^2$ correction to the plasmon dispersion and Landau damping. At the crossing of both presets $\hbar v_FQ\lesssim0.4\,\hbar\omega_{\rm T}$ (our estimate), so the curves are qualitatively right there.</p>
+
+  <h3>Finite $c$: when the sheet radiates</h3>
+  <p>Keeping $c$ finite (retardation in EPP's sense) means keeping $\beta$ in the sheet propagator. For a sheet inside a homogeneous medium $\epsilon_{\rm env}$, the longitudinal pole condition gives (derived with the same $q_z$ integral, now in the medium; not in EPP)</p>
+  <div class="eq">$$\omega^2=\omega_{\rm T}^2+\frac{C'\beta}{\epsilon_{\rm env}+r_0\beta},\qquad\beta=\sqrt{Q^2-\epsilon_{\rm env}\,\omega^2/c^2}.$$</div>
+  <p>Outside the light cone $\beta\lt Q$, and the shift falls to zero at the light line. Inside it $\beta$ is imaginary and the in-plane polar modes radiate. At $Q=0$ the radiative width (FWHM) is $\hbar\gamma_0=C/(\hbar c\sqrt{\epsilon_{\rm env}})$, about 42 μeV for freestanding hBN. It varies as $\sqrt{1-x^2}$ for the p-polarized, LO-like mode and as $1/\sqrt{1-x^2}$ for the s-polarized, TO-like mode, with $x=cQ/(\sqrt{\epsilon_{\rm env}}\,\omega_{\rm T})$. The same two laws govern the radiative widths of in-plane 2D excitons (literature, quantum-well excitons). All of it happens at $Q\lesssim10^{-4}$ Å$^{-1}$, where the electrostatic shift is itself only tens of μeV. The smallness of this window is why E Eq. 472 is safe for phonon physics.</p>
+
+  <div class="callout source">
+    <p class="callout-title">Note on the source</p>
+    <p>E Eq. 455 is introduced as “your $\Pi^{\rm ion,0}_{jj}$” but written without the superscript 0; both it and E Eq. 391, to which it refers, are the bare ionic bubble (notation switch of EPP p. 87). The “divergent local term” dropped before E Eq. 463 exists only in the $zz$ component (see the subtlety box above). The thickness $l$ in the $z$-resolved Dyson equation and “SBZ” are not defined (read: layer thickness, surface Brillouin zone). Typo: “the the 2D dielectric function” (p. 102). Two slips are corrected above (<a href="#z-corrections">§Z.3</a>): E Eqs. 300 and 305 put every dipole at its cell origin in the plane $z=0$ and so lack the in-plane basis phase (E Eqs. 300′, 305′), and the 2D bubble on p. 101 lacks the factor $e^2$ (E p.101′).</p>
+  </div>
+
+  <p>This is where the EPP manuscript ends. <a href="#z-outlook">Section Z.1</a> collects what EPP adds to Giustino's picture and lists what is still open, including the out-of-plane modes and the full finite-$c$ sheet problem set aside here.</p>
+</section>
+<script>
+(() => {
+  // Units: eV, Å. C = K Z*^2/(S mu) in eV^2 Å; (ħω_pl)^2 = PL n[Å^-2] Q[Å^-1]/(m*/m_e) in eV^2.
+  const K = 0.378214, HC = 1973.27, PL = 689.42;
+  const SUP = { '-': '⁻', '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹' };
+  const sci = (v, d = 3) => { if (!isFinite(v)) return '—'; const a = Math.abs(v); if (a !== 0 && (a < 1e-3 || a >= 1e5)) { const e = Math.floor(Math.log10(a)); return Number((v / Math.pow(10, e)).toPrecision(d)) + '×10' + String(e).split('').map((c) => SUP[c]).join(''); } return String(Number(v.toPrecision(d))).replace('-', '−'); };
+
+  // ===================== Figure 1: field lines, bulk vs sheet =====================
+  {
+    const fig = document.getElementById('viz-b-2d-field');
+    const cv3 = EPP.canvas(fig.querySelector('.b-2d-f3'), { aspect: 0.7, minHeight: 210, maxHeight: 330 });
+    const cv2 = EPP.canvas(fig.querySelector('.b-2d-f2'), { aspect: 0.7, minHeight: 210, maxHeight: 330 });
+    cv3.canvas.setAttribute('role', 'img'); cv3.canvas.setAttribute('aria-label', 'Bulk LO wave: bound-charge planes with uniform horizontal field lines');
+    cv2.canvas.setAttribute('role', 'img'); cv2.canvas.setAttribute('aria-label', 'Sheet LO wave: field lines arching out of the sheet to a height of order 1/Q');
+    const ro = EPP.readout(fig.querySelector('.ro'));
+    const W = 10, H = 3.5, D = 0.333; // nm: window width, half height, layer thickness (hBN-like)
+    let lam = 5;
+    const map = (cv) => { const p = 6, sx = (cv.w - 2 * p) / W, sz = (cv.h - 2 * p) / (2 * H); return { X: (x) => p + x * sx, Z: (z) => cv.h / 2 - z * sz, sx, sz, p }; };
+    const head = (ctx, x, y, ang, s) => { ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x - s * Math.cos(ang - 0.45), y - s * Math.sin(ang - 0.45)); ctx.lineTo(x - s * Math.cos(ang + 0.45), y - s * Math.sin(ang + 0.45)); ctx.closePath(); ctx.fill(); };
+    const Pof = (x, Q) => Math.cos(Q * (x - W / 2));
+    function dipoles(ctx, f, Q, z) {
+      ctx.strokeStyle = EPP.color('phonon'); ctx.fillStyle = EPP.color('phonon'); ctx.lineWidth = 2;
+      for (let x = 0.25; x < W; x += 0.5) {
+        const p = Pof(x, Q), L = 0.4 * f.sx * Math.abs(p); if (L < 3) continue;
+        const X = f.X(x), Y = f.Z(z), s = Math.sign(p);
+        ctx.beginPath(); ctx.moveTo(X - s * L / 2, Y); ctx.lineTo(X + s * L / 2 - s * 3, Y); ctx.stroke();
+        head(ctx, X + s * L / 2, Y, s > 0 ? 0 : Math.PI, 6);
+      }
+    }
+    function charge(ctx, f, Q, z0, z1, a) { // bound charge -dP/dx ∝ sin(Q(x - W/2)); one gradient fill, no overlapping strips
+      const n = 200, g = ctx.createLinearGradient(f.X(0), 0, f.X(W), 0);
+      for (let i = 0; i <= n; i++) { const xa = i * W / n, s = Math.sin(Q * (xa - W / 2)); g.addColorStop(i / n, EPP.alpha(s > 0 ? 'photon' : 'c4', +(a * Math.abs(s)).toFixed(4))); }
+      ctx.fillStyle = g; ctx.fillRect(f.X(0), f.Z(z1), f.X(W) - f.X(0), f.Z(z0) - f.Z(z1));
+    }
+    function glyphs(ctx, f, z, dy) {
+      ctx.font = `600 13px ${EPP.css('--font-ui')}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      for (let k = -8; k <= 8; k++) {
+        const xp = W / 2 + lam / 4 + k * lam, xn = W / 2 - lam / 4 + k * lam;
+        if (xp > 0.3 && xp < W - 0.3) { ctx.fillStyle = EPP.textColor('photon'); ctx.fillText('+', f.X(xp), f.Z(z) + dy); }
+        if (xn > 0.3 && xn < W - 0.3) { ctx.fillStyle = EPP.textColor('c4'); ctx.fillText('−', f.X(xn), f.Z(z) + dy); }
+      }
+    }
+    const clipBox = (ctx, cv, f) => { ctx.save(); ctx.beginPath(); ctx.rect(f.p, f.p, cv.w - 2 * f.p, cv.h - 2 * f.p); ctx.clip(); };
+    function frameBox(ctx, cv, f) { ctx.strokeStyle = EPP.css('--rule'); ctx.lineWidth = 1; ctx.strokeRect(f.p + 0.5, f.p + 0.5, cv.w - 2 * f.p - 1, cv.h - 2 * f.p - 1); }
+    function draw3() {
+      const cv = cv3, ctx = cv.ctx; if (!cv.w) return; cv.clear();
+      const f = map(cv), Q = 2 * Math.PI / lam;
+      clipBox(ctx, cv, f);
+      charge(ctx, f, Q, -H, H, 0.26);
+      const ink = EPP.css('--fg-2');
+      ctx.strokeStyle = ink; ctx.fillStyle = ink; ctx.lineWidth = 1.3;
+      for (const z of [-2.8, -1.4, 0, 1.4, 2.8]) {
+        ctx.beginPath(); ctx.moveTo(f.X(0), f.Z(z)); ctx.lineTo(f.X(W), f.Z(z)); ctx.stroke();
+        for (let m = -8; m <= 8; m++) { const xm = W / 2 + m * lam / 2; if (xm < 0.2 || xm > W - 0.2) continue; const dir = (m % 2 === 0) ? -1 : 1; head(ctx, f.X(xm) + dir * 5, f.Z(z), dir > 0 ? 0 : Math.PI, 7); }
+      }
+      for (const z of [-2.1, -0.7, 0.7, 2.1]) dipoles(ctx, f, Q, z);
+      glyphs(ctx, f, H, 11);
+      ctx.restore(); frameBox(ctx, cv, f);
+    }
+    function draw2() {
+      const cv = cv2, ctx = cv.ctx; if (!cv.w) return; cv.clear();
+      const f = map(cv), Q = 2 * Math.PI / lam, ink = EPP.css('--fg-2');
+      clipBox(ctx, cv, f);
+      ctx.strokeStyle = ink; ctx.fillStyle = ink; ctx.lineWidth = 1.3;
+      const N = 5;
+      for (let m = -8; m <= 8; m++) {
+        const xm = W / 2 + m * lam / 2; if (xm < -lam / 2 || xm > W + lam / 2) continue;
+        const dir = (m % 2 === 0) ? -1 : 1; // field opposes P at the apex
+        for (let k = 1; k <= N; k++) {
+          const c = (k - 0.5) / N, half = Math.acos(c) / Q, zt = Math.log(1 / c) / Q;
+          for (const sg of [1, -1]) {
+            ctx.beginPath();
+            for (let i = 0; i <= 90; i++) {
+              const x = xm - half + 2 * half * i / 90, cc = Math.abs(Pof(x, Q)), z = cc > c ? Math.log(cc / c) / Q : 0;
+              const X = f.X(x), Y = f.Z(sg * Math.min(z, 1.3 * H));
+              if (i === 0) ctx.moveTo(X, Y); else ctx.lineTo(X, Y);
+            }
+            ctx.stroke();
+            if (zt < 0.96 * H && xm > 0.15 && xm < W - 0.15) head(ctx, f.X(xm) + dir * 5, f.Z(sg * zt), dir > 0 ? 0 : Math.PI, 7);
+          }
+        }
+      }
+      // the sheet: bound charge strip, plane, dipoles
+      charge(ctx, f, Q, -0.16, 0.16, 0.42);
+      ctx.strokeStyle = EPP.css('--fg'); ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(f.X(0), f.Z(0)); ctx.lineTo(f.X(W), f.Z(0)); ctx.stroke();
+      dipoles(ctx, f, Q, 0);
+      glyphs(ctx, f, -0.16, 10);
+      const zq = 1 / Q;
+      if (zq < 0.92 * H) {
+        ctx.strokeStyle = EPP.css('--muted'); ctx.lineWidth = 1; ctx.setLineDash([4, 4]);
+        ctx.beginPath(); ctx.moveTo(f.X(0), f.Z(zq)); ctx.lineTo(f.X(W), f.Z(zq)); ctx.stroke(); ctx.setLineDash([]);
+        ctx.font = `11px ${EPP.css('--font-ui')}`; ctx.textAlign = 'right'; ctx.textBaseline = 'bottom';
+        const tw = ctx.measureText('z = 1/Q').width; ctx.fillStyle = EPP.css('--surface'); ctx.fillRect(f.X(W) - tw - 7, f.Z(zq) - 15, tw + 5, 13);
+        ctx.fillStyle = EPP.css('--muted'); ctx.fillText('z = 1/Q', f.X(W) - 4, f.Z(zq) - 2);
+      }
+      ctx.restore(); frameBox(ctx, cv, f);
+    }
+    const drawAll = () => {
+      draw3(); draw2();
+      const Qnm = 2 * Math.PI / lam;
+      ro.set({ 'λ': lam.toFixed(1) + ' nm', 'Q': sci(Qnm / 10) + ' Å⁻¹', '1/Q': sci(1 / Qnm) + ' nm', 'E_∥^{2D}/E^{3D} = Qd/2 (d = 3.33 Å)': sci(Qnm * D / 2) });
+    };
+    cv3.onResize(draw3); cv2.onResize(draw2);
+    EPP.controls(fig.querySelector('.ctrls'), [
+      { key: 'lam', type: 'range', label: 'wavelength λ = 2π/Q (nm)', min: 2, max: 16, step: 0.005, log: true, value: 5, fmt: (v) => v.toFixed(1) + ' nm' }
+    ], (s) => { lam = s.lam; drawAll(); });
+  }
+
+  // ===================== Figure 2: 2D LO dispersion =====================
+  {
+    const fig = document.getElementById('viz-b-2d-disp');
+    const vt = fig.querySelector('.b-2d-vt');
+    const c2el = fig.querySelector('.c2');
+    const pA = new EPP.Plot(fig.querySelector('.pA'), { xlabel: 'Q (Å^{-1})', ylabel: 'ħω (meV)', xlim: [0, 0.5], ylim: [160, 210], xname: 'Q', hoverX: (v) => sci(v, 3), ariaLabel: 'Two-dimensional LO and TO phonon dispersion versus in-plane wave vector' });
+    const pB = new EPP.Plot(fig.querySelector('.pB'), { xlabel: 'Q (Å^{-1})', ylabel: 'shift', xlim: [0, 0.5], ylim: [0, 1], xname: 'Q', hoverX: (v) => sci(v, 3), ariaLabel: 'Squared LO shift, phonon spectral function or finite-c kernel factor' });
+    const ro = EPP.readout(fig.querySelector('.ro'));
+    const PRE = {
+      hbn: { S: 5.43, mu: 6.10, Z: 2.7, wT: 170, r0: 10, env: 1, d: 3.33, einf: 4.87, n: 1e13, m: 0.5, Q0: 0.03 },
+      mos2: { S: 8.65, mu: 38.4, Z: 1.0, wT: 48, r0: 40, env: 1, d: 6.15, einf: 15.0, n: 1e12, m: 0.5, Q0: 0.05 }
+    };
+    let S1 = null, S2 = null, ui1 = null, ui2 = null, lastPreset = 'hbn';
+    const nice = (lo, hi) => {
+      const span = Math.max(hi - lo, 1e-9), raw = span / 5, mag = Math.pow(10, Math.floor(Math.log10(raw))), r = raw / mag;
+      const st = (r < 1.5 ? 1 : r < 3 ? 2 : r < 7 ? 5 : 10) * mag;
+      return [Math.floor(lo / st + 1e-9) * st, Math.ceil(hi / st - 1e-9) * st];
+    };
+    // Axis limits stay put while the data fit and fill at least 40 % of the range; otherwise they are recomputed.
+    const lims = {};
+    const sticky = (key, lo, hi, make) => { const L = lims[key]; if (L && lo >= L[0] && hi <= L[1] && hi - lo > 0.4 * (L[1] - L[0])) return L; return (lims[key] = make()); };
+    const meV = (v) => isFinite(v) ? (v < 100 ? v.toFixed(2) : v.toFixed(1)) + ' meV' : '—';
+    const decTicks = (a, b) => { const t = []; for (let e = Math.round(Math.log10(a)); e <= Math.round(Math.log10(b)); e++) t.push({ v: Math.pow(10, e), label: `10^{${e}}` }); return t; };
+    const setAxes = (plot, log) => { plot.opt.logx = log; plot.opt.logy = false; plot.opt.xticks = undefined; };
+    function par() {
+      const p = PRE[S1.preset];
+      return { p, C: K * S1.Z * S1.Z / (p.S * p.mu), wT: S1.wT / 1000, env: S1.env, r0: S1.r0 };
+    }
+
+    function drawFlat() {
+      const { p, C, wT, env, r0 } = par(), W0 = S1.wT, Qmax = 0.5, N = 301;
+      const Qs = EPP.linspace(0, Qmax, N), d2 = (Q) => C * Q / (env + r0 * Q);
+      const wLO = Qs.map((Q) => 1000 * Math.sqrt(wT * wT + d2(Q)));
+      const d3 = 2 * C / (p.d * p.einf), wB = 1000 * Math.sqrt(wT * wT + d3);
+      const wInf = r0 > 0 ? 1000 * Math.sqrt(wT * wT + C / r0) : Infinity;
+      const span = Math.max(wB - W0, wLO[N - 1] - W0, isFinite(wInf) ? wInf - W0 : 0, 0.02 * W0);
+      const ylim = sticky('flatA' + S1.preset, W0 - 0.1 * span, W0 + 1.02 * span, () => nice(W0 - 0.15 * span, W0 + 1.15 * span));
+      const Qst = r0 > 0 ? env / r0 : Infinity, slope = 1000 * C / (2 * wT * env); // meV Å
+      const Qt = slope > 0 ? Math.min(Qmax, 0.5 * (ylim[1] - W0) / slope) : Qmax; // tangent drawn over the lower half only
+      setAxes(pA, false); pA.opt.hoverY = (v) => v.toFixed(2) + ' meV';
+      pA.draw([
+        { type: 'line', x: [0, Qmax], y: [W0, W0], color: 'muted', dash: [5, 4], width: 1.5, label: 'TO (bare ω_σ)' },
+        { type: 'line', x: [0, Qmax], y: [wB, wB], color: 'c5', dash: [8, 4], label: 'bulk LO, 3D (cf. E.454)' },
+        isFinite(wInf) ? { type: 'line', x: [0, Qmax], y: [wInf, wInf], color: 'phonon', dash: [2, 3], width: 1.5, label: 'plateau √((ħω_T)^2 + C/r_0)' } : null,
+        { type: 'line', x: [0, Qt], y: [W0, W0 + slope * Qt], color: 'muted', dash: [1, 3], width: 1.2, hover: false },
+        { type: 'line', x: Qs, y: wLO, color: 'phonon', label: '2D LO, E.472' },
+        Qst < Qmax ? { type: 'vline', at: Qst, color: 'muted', text: 'Q^* = ε_{env}/r_0' } : null,
+        { type: 'points', x: [0], y: [W0], color: 'phonon', r: 4 },
+        { type: 'text', x: 0.012 * Qmax, y: W0, dy: 13, text: 'LO = TO at Γ', color: 'phonon', size: 11.5 },
+        { type: 'text', x: 0.985 * Qmax, y: wB, dy: -9, align: 'right', text: 'bulk LO', color: 'c5', size: 11.5 },
+        { type: 'text', x: 0.985 * Qmax, y: ylim[0], dy: -10, align: 'right', text: 'in-plane modes, electrostatic', color: 'muted', size: 11 }
+      ], { xlim: [0, Qmax], ylim, xlabel: 'Q (Å^{-1})', ylabel: 'ħω (meV)' });
+      // right panel: squared shift
+      const dmax = Math.max(d3, d2(Qmax), 1e-12) * 1e6; // meV^2
+      const ylm = sticky('flatB' + S1.preset, 0, 1.05 * dmax, () => [0, nice(0, 1.25 * dmax)[1]]);
+      const big = ylm[1] > 2000, fct = (big ? 1e-3 : 1) * 1e6, yl = [0, ylm[1] * (big ? 1e-3 : 1)];
+      setAxes(pB, false); pB.opt.xname = 'Q'; pB.opt.hoverY = (v) => sci(v, 3) + (big ? ' ×10³ meV²' : ' meV²');
+      pB.draw([
+        { type: 'line', x: [0, Qmax], y: [d3 * fct, d3 * fct], color: 'c5', dash: [8, 4], label: '3D: constant (cf. E.454)' },
+        { type: 'line', x: Qs, y: Qs.map((Q) => C * Q / env * fct), color: 'muted', dash: [5, 4], width: 1.5, label: 'r_0 = 0 (no sheet screening)' },
+        { type: 'line', x: Qs, y: Qs.map((Q) => d2(Q) * fct), color: 'phonon', label: '2D: CQ/(ε_{env} + r_0Q)' }
+      ], { xlim: [0, Qmax], ylim: yl, xlabel: 'Q (Å^{-1})', ylabel: big ? '(ħω)^2 − (ħω_T)^2 (10^3 meV^2)' : '(ħω)^2 − (ħω_T)^2 (meV^2)' });
+      ro.set({
+        'C': sci(C, 3) + ' eV²Å',
+        'slope at Γ': sci(slope, 3) + ' meV·Å',
+        'ħω_{LO}(0.1 Å^{-1})': meV(1000 * Math.sqrt(wT * wT + d2(0.1))),
+        'plateau': meV(wInf),
+        'Q^*': isFinite(Qst) ? sci(Qst, 3) + ' Å⁻¹' : '—',
+        'bulk LO': meV(wB)
+      });
+    }
+
+    function drawDoped() {
+      const { C, wT, env, r0 } = par(), W0 = S1.wT, nA = S2.n * 1e-16, m = S2.m, Q0 = S2.Q0, Qmax = 0.1, N = 401;
+      const modes = (Q) => {
+        const eb = env + r0 * Q, wp2 = PL * nA * Q / m, a = eb, b = -(eb * wT * wT + wp2 + C * Q), c = wp2 * wT * wT;
+        const sq = Math.sqrt(Math.max(0, b * b - 4 * a * c)), p2 = (-b + sq) / (2 * a), m2 = p2 > 0 ? c / (a * p2) : 0;
+        return { up: 1000 * Math.sqrt(p2), lo: 1000 * Math.sqrt(Math.max(0, m2)), pl: 1000 * Math.sqrt(wp2 / eb), lo0: 1000 * Math.sqrt(wT * wT + C * Q / eb), eb, wp2 };
+      };
+      const Qs = EPP.linspace(0, Qmax, N), M = Qs.map(modes), M0 = modes(Q0);
+      const top = sticky('dopA' + S1.preset, 0, Math.max(1.2 * W0, 1.05 * M[N - 1].lo0), () => [0, nice(0, Math.max(1.5 * W0, 1.1 * M[N - 1].lo0))[1]])[1], ylim = [0, top];
+      setAxes(pA, false); pA.opt.hoverY = (v) => v.toFixed(2) + ' meV';
+      pA.draw([
+        { type: 'line', x: [0, Qmax], y: [W0, W0], color: 'muted', dash: [5, 4], width: 1.5, label: 'TO (bare ω_σ)' },
+        { type: 'line', x: Qs, y: M.map((o) => o.lo0), color: 'phonon', dash: [6, 4], width: 1.5, label: 'undoped LO (E.472)' },
+        { type: 'line', x: Qs, y: M.map((o) => o.pl), color: 'electron', dash: [6, 4], width: 1.5, label: 'sheet plasmon, uncoupled' },
+        { type: 'line', x: Qs, y: M.map((o) => o.up), color: 'phonon', label: 'L^+ (coupled)' },
+        { type: 'line', x: Qs, y: M.map((o) => o.lo), color: 'electron', label: 'L^− (coupled)' },
+        { type: 'vline', at: Q0, color: 'muted', text: 'spectrum' },
+        { type: 'points', x: [Q0, Q0], y: [M0.up, M0.lo], color: 'ink', r: 3.5 },
+        { type: 'text', x: 0.985 * Qmax, y: 0, dy: -10, align: 'right', text: 'in-plane modes, electrostatic, dynamic W', color: 'muted', size: 11 }
+      ], { xlim: [0, Qmax], ylim, xlabel: 'Q (Å^{-1})', ylabel: 'ħω (meV)' });
+      // right panel: phonon spectral function at Q0 (retarded E.467 with Drude W)
+      const gph = 0.001, gel = 0.005, E = EPP.linspace(0.0005, top / 1000, 800);
+      const A = E.map((e) => {
+        const dr = e * e, di = gel * e, den = dr * dr + di * di;
+        const er = M0.eb - M0.wp2 * dr / den, ei = M0.wp2 * di / den, ed = er * er + ei * ei;
+        const sr = C * Q0 * er / ed, si = -C * Q0 * ei / ed;
+        const Dr = e * e - wT * wT - sr, Di = gph * e - si;
+        return 2 * wT * Di / (Math.PI * (Dr * Dr + Di * Di));
+      });
+      const amax = Math.max(1e-9, ...A);
+      setAxes(pB, false); pB.opt.xname = 'ħω (meV)'; pB.opt.hoverY = (v) => sci(v, 3) + ' eV⁻¹';
+      pB.draw([
+        { type: 'vline', at: M0.lo0, color: 'phonon', text: 'undoped LO' },
+        { type: 'vline', at: M0.pl, color: 'electron', text: 'plasmon', textDy: 16 },
+        { type: 'line', x: E.map((e) => 1000 * e), y: A, color: 'phonon', label: `A_{ph}(Q, ω), Q = ${Q0.toFixed(3)} Å^{-1}` }
+      ], { xlim: [0, top], ylim: [0, nice(0, 1.15 * amax)[1]], xlabel: 'ħω (meV)', ylabel: 'A_{ph} (eV^{-1})' });
+      // crossing of the uncoupled plasmon and the undoped LO; minimum splitting
+      let Qc = NaN;
+      for (let i = 2; i < N; i++) {
+        if ((M[i - 1].pl - M[i - 1].lo0) * (M[i].pl - M[i].lo0) <= 0) {
+          let a = Qs[i - 1], b = Qs[i];
+          for (let it = 0; it < 50; it++) { const c = 0.5 * (a + b), o = modes(c), oa = modes(a); if ((oa.pl - oa.lo0) * (o.pl - o.lo0) <= 0) b = c; else a = c; }
+          Qc = 0.5 * (a + b); break;
+        }
+      }
+      let gap = Infinity;
+      for (let i = 1; i < N; i++) gap = Math.min(gap, M[i].up - M[i].lo);
+      ro.set({
+        'ħω_{pl}(Q) uncoupled': meV(M0.pl),
+        'L^+(Q)': meV(M0.up),
+        'L^−(Q)': meV(M0.lo),
+        'crossing Q_c': isFinite(Qc) ? sci(Qc, 3) + ' Å⁻¹' : '> 0.1 Å⁻¹',
+        'min. L^+ − L^−': isFinite(Qc) ? meV(gap) : '—'
+      });
+    }
+
+    function drawRet() {
+      const { C, wT, env, r0 } = par(), QL = Math.sqrt(env) * wT / HC, k = env * C / (HC * HC);
+      const Qs = []; for (let i = 0; i <= 480; i++) Qs.push(Math.pow(10, -6 + 4 * i / 480));
+      const ues = [], uret = [], gL = [], gT = [], rat = [];
+      for (const Q of Qs) {
+        const d2e = C * Q / (env + r0 * Q); ues.push(1e6 * d2e / (Math.sqrt(wT * wT + d2e) + wT));
+        if (Q > QL) {
+          const A2 = Q * Q - QL * QL; let lo = 0, hi = Math.sqrt(A2);
+          for (let it = 0; it < 60; it++) { const mid = 0.5 * (lo + hi); if (mid * mid - A2 + k * mid / (env + r0 * mid) > 0) hi = mid; else lo = mid; }
+          const beta = 0.5 * (lo + hi), d2 = C * beta / (env + r0 * beta);
+          uret.push(d2 > 0 ? 1e6 * d2 / (Math.sqrt(wT * wT + d2) + wT) : NaN); rat.push(beta / Q); gL.push(NaN); gT.push(NaN);
+        } else {
+          const b = Math.sqrt(QL * QL - Q * Q);
+          uret.push(NaN); rat.push(NaN);
+          gL.push(b > 0 ? 1e6 * C * b * env / ((env * env + r0 * r0 * b * b) * wT) : NaN);
+          gT.push(b > 0 ? 1e6 * C * wT / (HC * HC * b) : NaN);
+        }
+      }
+      const g0 = 1e6 * C / (HC * Math.sqrt(env));
+      const ymax = Math.pow(10, Math.ceil(Math.log10(Math.max(ues[ues.length - 1], 3 * g0, 1)))), ylim = [ymax / 1e5, ymax];
+      pA.opt.logx = true; pA.opt.logy = true; pA.opt.xticks = decTicks(1e-6, 1e-2); pA.opt.hoverY = (v) => sci(v, 3) + ' μeV';
+      pA.draw([
+        { type: 'band', x0: 1e-6, x1: QL, color: 'photon', alpha: 0.07 },
+        { type: 'vline', at: QL, color: 'photon', text: 'light line' },
+        { type: 'line', x: Qs, y: ues, color: 'phonon', dash: [6, 4], width: 1.6, label: 'LO shift, electrostatic (E.472)' },
+        { type: 'line', x: Qs, y: uret, color: 'phonon', label: 'LO shift, finite c (derived)' },
+        { type: 'line', x: Qs, y: gL, color: 'photon', label: 'radiative FWHM, p-pol (LO-like)' },
+        { type: 'line', x: Qs, y: gT, color: 'c5', dash: [6, 3], label: 'radiative FWHM, s-pol (TO-like)' },
+        { type: 'text', x: 1.25e-6, y: ylim[1], dy: 10, text: 'radiative', color: 'photon', size: 11 },
+        { type: 'text', x: 0.8e-2, y: ylim[0], dy: -10, align: 'right', text: 'in-plane modes, finite c (derived)', color: 'muted', size: 11 },
+        C > 0 ? null : { type: 'text', x: 1e-4, y: Math.sqrt(ylim[0] * ylim[1]), align: 'center', text: 'Z^* = 0: no polar coupling', color: 'muted', size: 12 }
+      ], { xlim: [1e-6, 1e-2], ylim, xlabel: 'Q (Å^{-1})', ylabel: 'ħΔω, ħγ (μeV)' });
+      pB.opt.logx = true; pB.opt.logy = false; pB.opt.xticks = decTicks(1e-6, 1e-2); pB.opt.xname = 'Q'; pB.opt.hoverY = (v) => sci(v, 4);
+      pB.draw([
+        { type: 'band', x0: 1e-6, x1: QL, color: 'photon', alpha: 0.07 },
+        { type: 'vline', at: QL, color: 'photon' },
+        { type: 'line', x: [1e-6, 1e-2], y: [1, 1], color: 'muted', dash: [5, 4], width: 1.5, label: 'electrostatic: v_{eff} = v_Q' },
+        { type: 'line', x: Qs, y: rat, color: 'photon', label: 'finite c: v_{eff}/v_Q = β/Q' }
+      ], { xlim: [1e-6, 1e-2], ylim: [0, 1.1], xlabel: 'Q (Å^{-1})', ylabel: 'v_{eff}(Q, ω_T)/v_Q' });
+      const iL = Qs.findIndex((Q) => Q > QL);
+      ro.set({
+        'light line Q_L': sci(QL, 3) + ' Å⁻¹',
+        '2π/Q_L': sci(2 * Math.PI / QL / 1e4, 3) + ' μm',
+        'ħγ_0 (Q = 0)': sci(g0, 3) + ' μeV',
+        'electrostatic shift at Q_L': iL >= 0 ? sci(ues[iL], 3) + ' μeV' : '—'
+      });
+    }
+
+    function draw() {
+      if (!S1 || !S2) return;
+      const tab = S1.tab;
+      c2el.style.display = tab === 'doped' ? '' : 'none';
+      vt.textContent = tab === 'ret' ? '2D LO dispersion · in-plane modes, finite c (derived)' : tab === 'doped' ? '2D LO dispersion · in-plane modes, electrostatic, doped sheet' : '2D LO dispersion · in-plane modes, electrostatic';
+      if (tab === 'doped') drawDoped(); else if (tab === 'ret') drawRet(); else drawFlat();
+    }
+
+    ui1 = EPP.controls(fig.querySelector('.c1'), [
+      { key: 'tab', type: 'seg', label: 'view', options: [['flat', 'undoped'], ['doped', 'doped (W(ω))'], ['ret', 'finite c']], value: 'flat', wide: true },
+      { key: 'preset', type: 'select', label: 'material preset', options: [['hbn', 'hBN monolayer'], ['mos2', 'MoS₂-like (weakly polar)']], value: 'hbn' },
+      { key: 'env', type: 'range', label: 'ε_{env} (substrate, capping)', min: 1, max: 10, step: 0.05, value: 1, fmt: (v) => v.toFixed(2) },
+      { key: 'r0', type: 'range', label: 'r_0 (Å)', min: 0, max: 80, step: 0.5, value: 10, fmt: (v) => v.toFixed(1) + ' Å' },
+      { key: 'Z', type: 'range', label: 'Born charge Z^* (|e|)', min: 0, max: 3.5, step: 0.05, value: 2.7, fmt: (v) => v.toFixed(2) },
+      { key: 'wT', type: 'range', label: 'ħω_T (meV)', min: 20, max: 250, step: 0.5, value: 170, fmt: (v) => v.toFixed(1) + ' meV' }
+    ], (s) => {
+      if (s.preset !== lastPreset) {
+        lastPreset = s.preset; const p = PRE[s.preset];
+        ui1.set('env', p.env, true); ui1.set('r0', p.r0, true); ui1.set('Z', p.Z, true); ui1.set('wT', p.wT, true);
+        if (ui2) { ui2.set('n', p.n, true); ui2.set('m', p.m, true); ui2.set('Q0', p.Q0, true); }
+      }
+      S1 = s; draw();
+    });
+    ui2 = EPP.controls(c2el, [
+      { key: 'n', type: 'range', label: 'carrier density n (cm^{-2})', min: 1e11, max: 1e14, step: 0.01, log: true, value: 1e13, fmt: (v) => sci(v, 2) },
+      { key: 'm', type: 'range', label: 'm^*/m_e', min: 0.05, max: 1, step: 0.01, value: 0.5, fmt: (v) => v.toFixed(2) },
+      { key: 'Q0', type: 'range', label: 'Q for the spectrum (Å^{-1})', min: 0.002, max: 0.1, step: 0.001, value: 0.03, fmt: (v) => v.toFixed(3) }
+    ], (s) => { S2 = s; draw(); });
+    c2el.style.display = 'none';
+    pA.onPointer = (x) => { if (S1 && S1.tab === 'doped' && ui2) ui2.set('Q0', EPP.clamp(Math.round(x * 1000) / 1000, 0.002, 0.1)); };
+  }
+})();
+</script>

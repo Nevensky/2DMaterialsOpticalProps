@@ -1,0 +1,325 @@
+  <figure class="viz" id="viz-x2-continuity">
+    <p class="viz-title">Only the current along $\bq$ carries charge <span class="tag">interactive</span></p>
+    <div class="x2-continuity-cv"></div>
+    <div class="legend x2-continuity-leg"><span class="item" style="color:var(--c-photon)"><span class="sw box"></span><span style="color:var(--fg-2)">charge density $\rho\gt0$</span></span><span class="item" style="color:var(--c-electron)"><span class="sw box"></span><span style="color:var(--fg-2)">$\rho\lt0$</span></span><span class="item" style="color:var(--fg)"><svg width="24" height="10" viewBox="0 0 24 10" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><line x1="1" y1="5" x2="16" y2="5" stroke="currentColor" stroke-width="2"/><path d="M23 5 L15 1.2 L15 8.8 Z" fill="currentColor"/></svg><span style="color:var(--fg-2)">current density $\bj(\br,t)$</span></span></div>
+    <div class="x2-continuity-ctrls"></div>
+    <div class="readout x2-continuity-ro" aria-live="polite"><span>$|\bj^{\mathrm L}|/|\bj|=|\cos\theta|$<b class="x2-continuity-v-L"></b></span><span>charge $|\rho|$ in units of $q|\bj|/\omega$<b class="x2-continuity-v-rho"></b></span><span>light line $\omega/c$<b class="x2-continuity-v-qL"></b></span><span>$(\omega/cq)^2$<b class="x2-continuity-v-x"></b></span><span>transverse/Coulomb energy $R$<b class="x2-continuity-v-R"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> The charge stripes are set by the component of the current along $\bq$ alone: at $\theta=90^\circ$ the current flows along the wavefronts and the stripes vanish. The transverse part couples only to photons, suppressed by $(\omega/cq)^2$ outside the light cone.</p><div class="cap-more"><p><strong>Marks.</strong> In (a), rose and blue stripes: positive and negative charge density, with + and − at the extrema; arrows: current density on a fixed grid of dots; arrow $\bq$: wavevector; dashed bar: one wavelength. In (b), the amplitude $\bj$ splits into $\bj^{\mathrm L}$ (rose) along $\hat\bq$ and $\bj^{\mathrm T}$ (teal) across it.</p><p><strong>Try.</strong> (1) Press $\theta=0^\circ$, then $\theta=90^\circ$: full stripes, then none. (2) Pause: the charge peaks where the current along $\bq$ is largest and grows a quarter wavelength ahead, where the arrows converge. (3) At $\theta=45^\circ$ lower $q$ towards $\omega/c\approx2\times10^{-5}$ Å⁻¹: $R$ grows to order 1, diverges on the light line, and tends to $\tan^2\theta$ far inside the light cone.</p><p><strong>Model.</strong> One Fourier component, $\bj(\br,t)=\mathrm{Re}\big[\bj(\bq,\omega)\,\ee^{\ii(\bq\cdot\br-\omega t)}\big]$, with real amplitude $\bj(\bq,\omega)=|\bj|(\cos\theta\,\hat\bq+\sin\theta\,\mathbf t)$, where $\theta$ is the angle between the current and $\bq$ and $\mathbf t$ the unit vector across $\hat\bq$; <a class="eqref" href="#x2-eq-cont">(X2.1)</a> gives $\rho=q|\bj|\cos\theta/\omega$. $R$ is the size of the transverse energy <a class="eqref" href="#x2-eq-T">(X2.4)</a> relative to the Coulomb energy <a class="eqref" href="#x2-eq-coul">(X2.3)</a> of two equal current waves, $\tan^2\theta\,\omega^2/|\omega^2-c^2q^2|$; outside the light cone the transverse energy is negative, since parallel currents attract. $\hbar c=1973.27$ eV Å; the default <span class="nw">$\hbar\omega=36.2$ meV</span> is the GaAs LO phonon (literature value, illustrative). The polarization current $\partial_t\bP$ of an LO phonon is the case $\theta=0^\circ$, that of a TO phonon $\theta=90^\circ$.</p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-x2-continuity');
+  if (!fig || !window.EPP) return;
+  // outside Section X.2 (the isolated figure test) the links to this section and to other sections have no target: show them as text
+  if (!fig.closest('#x-dictionary')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+  const HBARC = 1973.27;                 // ħc in eV Å (NOTATION §7)
+  const NW = 2.5, PERIOD = 4.5;          // wavelengths drawn in (a); seconds per drawn wavelength
+  const QMIN = 1e-6, QMAX = 1;           // range of the q slider (1/Å)
+  const TAU = 2 * Math.PI, DEG = Math.PI / 180;
+
+  // ---------- physics ----------
+  // One Fourier component with real amplitude j = |j| (cosθ q̂ + sinθ t), q along +x: j(r,t) = j cos(qx − ωt).
+  // Continuity (X2.1): ρ = q̂·j q/ω, so ρ(r,t) = (q|j| cosθ/ω) cos(qx − ωt), in phase with the longitudinal current.
+  // Two equal current waves: Coulomb energy (X2.3) 4π|j|²cos²θ/ω², transverse energy (X2.4) 4π|j|²sin²θ/(ω² − c²q²).
+  function physics(s) {
+    const th = EPP.clamp(Math.round(s.theta), 0, 180);
+    const c = th === 90 ? 0 : Math.cos(th * DEG), sn = (th === 0 || th === 180) ? 0 : Math.sin(th * DEG);
+    const qL = s.hw / 1000 / HBARC;      // light-line wavevector ω/c (1/Å)
+    const r2 = (s.q / qL) * (s.q / qL);  // (cq/ω)²
+    const d = Math.abs(1 - r2);          // |1 − c²q²/ω²|
+    const R = sn === 0 ? 0 : (c === 0 ? Infinity : (sn * sn) / (c * c) / d);
+    return { th, c, s: sn, qL, r2, x: 1 / r2, d, R, onLine: d < 1e-3 };
+  }
+
+  // ---------- formatting ----------
+  const SUP = { '-': '⁻', '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹' };
+  function sci(v, dg = 3) {
+    if (!isFinite(v)) return '∞';
+    if (v === 0) return '0';
+    const a = Math.abs(v);
+    if (a >= 1e-3 && a < 1e4) return String(Number(v.toPrecision(dg))).replace('-', '−');
+    let e = Math.floor(Math.log10(a)), m = v / Math.pow(10, e);
+    if (Math.abs(Number(m.toFixed(dg - 1))) >= 10) { m /= 10; e += 1; }
+    return `${m.toFixed(dg - 1).replace('-', '−')} × 10${String(e).split('').map(ch => SUP[ch]).join('')}`;
+  }
+
+  // ---------- canvas text: runs of [text, {b: bold vector, it: italic symbol, hat: circumflex}] drawn with EPP.drawRich ----------
+  let FU = 'sans-serif', FT = 'serif';
+  const pieceW = (ctx, p, size) => { const o = p[1] || {}; return EPP.measureRich(ctx, p[0], o.size || size, o.it ? FT : FU, { italic: !!o.it, bold: !!o.b }); };
+  const runW = (ctx, run, size) => run.reduce((w, p) => w + pieceW(ctx, p, size), 0);
+  function drawRun(ctx, run, x, y, size, align, color) {   // y is the alphabetic baseline
+    const w = runW(ctx, run, size);
+    let x0 = align === 'center' ? x - w / 2 : (align === 'right' ? x - w : x);
+    ctx.textBaseline = 'alphabetic';
+    for (const p of run) {
+      const o = p[1] || {}, s = o.size || size, pw = pieceW(ctx, p, size);
+      ctx.fillStyle = color;
+      EPP.drawRich(ctx, p[0], x0, y, { size: s, font: o.it ? FT : FU, italic: !!o.it, bold: !!o.b });
+      if (o.hat) {   // the hat of a unit vector, drawn as a stroke: fonts place a combining circumflex unreliably
+        const xm = x0 + 0.45 * pw, yt = y - 0.55 * s;
+        ctx.strokeStyle = color; ctx.lineWidth = Math.max(1.1, 0.085 * s); ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+        ctx.beginPath(); ctx.moveTo(xm - 0.2 * s, yt - 0.05 * s); ctx.lineTo(xm, yt - 0.25 * s); ctx.lineTo(xm + 0.2 * s, yt - 0.05 * s); ctx.stroke();
+      }
+      x0 += pw;
+    }
+    return w;
+  }
+  const RJ = [['j', { b: 1 }]], RJL = [['j^{L}', { b: 1 }]], RJT = [['j^{T}', { b: 1 }]], RQH = [['q', { b: 1, hat: 1 }]];
+  const RQ = [['q', { b: 1 }]], RT = [['t', { b: 1 }]], RTH = [['θ', { it: 1 }]];
+
+  function arrow(ctx, x0, y0, x1, y1, col, lw, head) {
+    const dx = x1 - x0, dy = y1 - y0, L = Math.hypot(dx, dy);
+    if (L < 2.5) return;
+    const ux = dx / L, uy = dy / L, h = Math.min(head, 0.55 * L), wv = 0.42 * h;
+    ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = lw; ctx.lineCap = 'butt'; ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1 - ux * h * 0.8, y1 - uy * h * 0.8); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x1, y1);
+    ctx.lineTo(x1 - ux * h - uy * wv, y1 - uy * h + ux * wv);
+    ctx.lineTo(x1 - ux * h + uy * wv, y1 - uy * h - ux * wv);
+    ctx.closePath(); ctx.fill();
+  }
+
+  // label placer: the first candidate box (fanning out around an anchor) that stays in bounds and clears obstacles and placed labels
+  function placer(bounds) {
+    const obs = [], used = [];
+    const hit = (a, b, g) => a[0] < b[2] + g && a[2] > b[0] - g && a[1] < b[3] + g && a[3] > b[1] - g;
+    const free = (b) => b[0] >= bounds[0] && b[1] >= bounds[1] && b[2] <= bounds[2] && b[3] <= bounds[3] && !obs.some(o => hit(b, o, 0)) && !used.some(o => hit(b, o, 2));
+    return {
+      seg(x0, y0, x1, y1, r) { const n = Math.max(1, Math.ceil(Math.hypot(x1 - x0, y1 - y0) / 4)); for (let i = 0; i <= n; i++) { const x = x0 + (x1 - x0) * i / n, y = y0 + (y1 - y0) * i / n; obs.push([x - r, y - r, x + r, y + r]); } },
+      take(b) { used.push(b); },
+      arc(cx, cy, r, a0, a1, rr) { const n = Math.max(2, Math.ceil(Math.abs(a1 - a0) * r / 4)); for (let i = 0; i <= n; i++) { const a = a0 + (a1 - a0) * i / n, x = cx + r * Math.cos(a), y = cy + r * Math.sin(a); obs.push([x - rr, y - rr, x + rr, y + rr]); } },
+      first(w, h, cands) {   // the first free centre of a list, or null
+        for (const c of cands) { const b = [c[0] - w / 2, c[1] - h / 2, c[0] + w / 2, c[1] + h / 2]; if (free(b)) { used.push(b); return c; } }
+        return null;
+      },
+      near(w, h, ax, ay, r0, a0) {
+        for (const r of [r0, r0 + 5, r0 + 11, r0 + 18]) for (let k = 0; k < 24; k++) {
+          const j = k === 0 ? 0 : (k % 2 ? 1 : -1) * Math.ceil(k / 2), a = a0 + j * TAU / 24, ca = Math.cos(a), sa = Math.sin(a);
+          const ext = Math.min((w / 2 + 1) / Math.max(Math.abs(ca), 1e-6), (h / 2 + 1) / Math.max(Math.abs(sa), 1e-6));
+          const cx = ax + ca * (r + ext), cy = ay + sa * (r + ext), b = [cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2];
+          if (free(b)) { used.push(b); return [cx, cy]; }
+        }
+        const cx = ax + Math.cos(a0) * (r0 + w / 2), cy = ay + Math.sin(a0) * (r0 + h / 2);
+        used.push([cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2]);
+        return [cx, cy];
+      }
+    };
+  }
+
+  // ---------- canvas and layout ----------
+  const host = fig.querySelector('.x2-continuity-cv');
+  const isWide = (w) => w >= 600;
+  const hA = (w) => Math.round(EPP.clamp(0.8 * w, 236, 320));   // panel (a) on narrow screens, about 1.2:1
+  const HB = 262, GAP = 12;                                      // panel (b) under (a) on narrow screens
+  const cv = EPP.canvas(host, { get height() { const w = Math.max(1, host.clientWidth); return isWide(w) ? Math.round(EPP.clamp(0.44 * w, 300, 370)) : hA(w) + GAP + HB; } });
+  cv.canvas.setAttribute('role', 'img');
+
+  // ---------- (a) the current wave and its charge ----------
+  function drawWave(ctx, A, P, t, narrow) {
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted'), cRule = EPP.color('rule');
+    const sf = EPP.rgb('surface'), dark = sf[0] + sf[1] + sf[2] < 330;
+    ctx.textBaseline = 'alphabetic'; ctx.fillStyle = cFg2;
+    const title = narrow ? '(a) current (arrows) and charge (stripes)' : '(a) current density (arrows) and the charge density it builds (stripes)';
+    const tw = EPP.drawRich(ctx, title, A.x + 1, A.y + 13, { size: 11.5, font: FU });
+    const tag = [['θ', { it: 1 }], [` = ${P.th}°`, {}]];
+    if (tw + 24 + runW(ctx, tag, 11.5) <= A.w) drawRun(ctx, tag, A.x + A.w - 1, A.y + 13, 11.5, 'right', cFg2);
+    // stripes: ρ/ρ_max = cosθ cos(qx − ωt), with ρ_max the value at θ = 0; rose positive, blue negative
+    const S = { x: A.x, y: A.y + 22, w: A.w, h: A.h - 22 - 40 };
+    const lam = S.w / NW, ph0 = TAU * t / PERIOD, phase = (x) => TAU * (x - S.x) / lam - ph0;
+    const amax = dark ? 0.5 : 0.4, kP = EPP.rgb('photon'), kE = EPP.rgb('electron');
+    for (let x = S.x; x < S.x + S.w; x += 2) {
+      const v = P.c * Math.cos(phase(x + 1)), a = amax * Math.abs(v);
+      if (a < 0.003) continue;
+      const k = v > 0 ? kP : kE;
+      ctx.fillStyle = `rgba(${k[0]},${k[1]},${k[2]},${a.toFixed(3)})`;
+      ctx.fillRect(x, S.y, Math.min(2, S.x + S.w - x), S.h);
+    }
+    ctx.strokeStyle = cRule; ctx.lineWidth = 1; ctx.strokeRect(S.x + 0.5, S.y + 0.5, S.w - 1, S.h - 1);
+    // + and − at the extrema of ρ, which sit at qx − ωt = mπ
+    if (Math.abs(P.c) > 0.04) {
+      ctx.globalAlpha = EPP.clamp(1.6 * Math.abs(P.c), 0, 1);
+      ctx.font = `600 16px ${FU}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      const m0 = Math.ceil(phase(S.x + 9) / Math.PI), m1 = Math.floor(phase(S.x + S.w - 9) / Math.PI);
+      for (let m = m0; m <= m1; m++) {
+        const x = S.x + lam * (m * Math.PI + ph0) / TAU, pos = (Math.abs(m) % 2 === 0) === (P.c > 0);
+        ctx.fillStyle = EPP.textColor(pos ? 'photon' : 'electron');
+        ctx.fillText(pos ? '+' : '−', x, S.y + 13);
+      }
+      ctx.globalAlpha = 1; ctx.textAlign = 'left';
+    }
+    // current arrows on a fixed grid: direction cosθ q̂ + sinθ t, signed length ∝ cos(qx − ωt)
+    const nc = 10, nr = narrow ? 4 : 5, top = S.y + 26, bot = S.y + S.h - 4;
+    const cs = S.w / nc, rs = (bot - top) / nr, Lm = 0.84 * Math.min(cs, rs);
+    const ux = Math.cos(P.th * DEG), uy = -Math.sin(P.th * DEG);
+    const lw = narrow ? 1.6 : 1.9, hd = narrow ? 6.5 : 8;
+    ctx.fillStyle = EPP.alpha('muted', 0.6);
+    for (let i = 0; i < nc; i++) for (let j = 0; j < nr; j++) { ctx.beginPath(); ctx.arc(S.x + (i + 0.5) * cs, top + (j + 0.5) * rs, 1.3, 0, TAU); ctx.fill(); }
+    for (let i = 0; i < nc; i++) {
+      const x = S.x + (i + 0.5) * cs, l = Lm * Math.cos(phase(x));
+      for (let j = 0; j < nr; j++) {
+        const y = top + (j + 0.5) * rs;
+        arrow(ctx, x - 0.5 * l * ux, y - 0.5 * l * uy, x + 0.5 * l * ux, y + 0.5 * l * uy, cFg, lw, hd);
+      }
+    }
+    // the wavevector q, and one wavelength 2π/q as a dimension line
+    const yb = S.y + S.h + 21;
+    arrow(ctx, S.x + 2, yb, S.x + 46, yb, cFg, 2, 8);
+    drawRun(ctx, RQ, S.x + 52, yb + 5, 14, 'left', cFg);
+    const x1 = S.x + S.w - 1, x0 = x1 - lam, xm = (x0 + x1) / 2;
+    const lab = narrow ? [['2π/', {}], ['q', { it: 1 }]] : [['one wavelength, 2π/', {}], ['q', { it: 1 }]];
+    const lw2 = runW(ctx, lab, 11.5);
+    ctx.strokeStyle = cMut; ctx.lineWidth = 1.2; ctx.setLineDash([4, 3]);
+    ctx.beginPath(); ctx.moveTo(x0, yb); ctx.lineTo(xm - lw2 / 2 - 6, yb); ctx.moveTo(xm + lw2 / 2 + 6, yb); ctx.lineTo(x1, yb); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(x0 + 0.5, yb - 5); ctx.lineTo(x0 + 0.5, yb + 5); ctx.moveTo(x1 - 0.5, yb - 5); ctx.lineTo(x1 - 0.5, yb + 5); ctx.stroke();
+    drawRun(ctx, lab, xm, yb + 4, 11.5, 'center', cFg2);
+  }
+
+  // ---------- (b) the amplitude split into j^L and j^T ----------
+  function drawSplit(ctx, B, P) {
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted');
+    const cL = EPP.color('photon'), cT = EPP.color('c4'), tL = EPP.textColor('photon'), tT = EPP.textColor('c4');
+    drawRun(ctx, [['(b) the amplitude ', {}], ['j', { b: 1 }], [' = ', {}], ['j^{L}', { b: 1 }], [' + ', {}], ['j^{T}', { b: 1 }]], B.x + 1, B.y + 13, 11.5, 'left', cFg2);
+    // the diagram (Rv + 30 above the origin, 28 below), then three lines of text, centred as one group under the title
+    const LH = 18, TXT = 12 + 3 * LH, avail = B.h - 24 - 2;
+    const Rv = Math.max(34, Math.min(B.w / 2 - 34, avail - 58 - TXT));
+    const gy = B.y + 24 + Math.max(0, (avail - (Rv + 58 + TXT)) / 2);
+    const O = [B.x + B.w / 2, gy + Rv + 30];
+    const yN0 = O[1] + 28 + 12 + 10, yN1 = yN0 + LH, yN2 = yN1 + LH;
+    const ca = Math.cos(P.th * DEG), sa = Math.sin(P.th * DEG);
+    const Tp = [O[0] + Rv * ca, O[1] - Rv * sa], FL = [O[0] + Rv * P.c, O[1]], FT = [O[0], O[1] - Rv * P.s];
+    const ax = Rv + 16, ay = Rv + 12;
+    // axes: along q̂ (arrowhead) and across it, along t
+    ctx.strokeStyle = cMut; ctx.lineWidth = 1; ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(O[0] - ax, O[1] + 0.5); ctx.lineTo(O[0] + ax - 6, O[1] + 0.5); ctx.moveTo(O[0] + 0.5, O[1] + 6); ctx.lineTo(O[0] + 0.5, O[1] - ay); ctx.stroke();
+    arrow(ctx, O[0] + ax - 10, O[1] + 0.5, O[0] + ax, O[1] + 0.5, cMut, 1, 7);
+    // dashed projections of the tip of j onto the two axes
+    ctx.setLineDash([3, 3]); ctx.strokeStyle = cMut; ctx.lineWidth = 1.1;
+    ctx.beginPath(); ctx.moveTo(Tp[0], Tp[1]); ctx.lineTo(FL[0], FL[1]); ctx.moveTo(Tp[0], Tp[1]); ctx.lineTo(FT[0], FT[1]); ctx.stroke();
+    ctx.setLineDash([]);
+    // labels first: the angle θ gets its arc only once its label has a place
+    const pl = placer([B.x, B.y + 18, B.x + B.w, yN0 - 13]);
+    pl.seg(O[0] - ax, O[1], O[0] + ax, O[1], 2); pl.seg(O[0], O[1] + 6, O[0], O[1] - ay, 2);
+    pl.seg(O[0], O[1], Tp[0], Tp[1], 3); pl.seg(Tp[0], Tp[1], FL[0], FL[1], 1.5); pl.seg(Tp[0], Tp[1], FT[0], FT[1], 1.5);
+    pl.seg(FL[0], FL[1], FL[0], FL[1], 5); pl.seg(FT[0], FT[1], FT[0], FT[1], 5);   // arrowheads of the parts
+    const box = (run, size) => [runW(ctx, run, size) + 2, size * 1.25];
+    const put = (run, size, color, c) => drawRun(ctx, run, c[0], c[1] + 0.34 * size, size, 'center', color);
+    // axis labels sit at the ends of the axes
+    let [w, h] = box(RQH, 14);
+    let c = [O[0] + ax + 5 + w / 2, O[1]];
+    if (c[0] + w / 2 > B.x + B.w) c = [O[0] + ax - w / 2, O[1] + 15];
+    pl.take([c[0] - w / 2, c[1] - h / 2 - 3, c[0] + w / 2, c[1] + h / 2]); put(RQH, 14, cFg2, c);
+    [w, h] = box(RT, 13.5); c = [O[0], O[1] - ay - 10];
+    pl.take([c[0] - w / 2, c[1] - h / 2, c[0] + w / 2, c[1] + h / 2]); put(RT, 13.5, cFg2, c);
+    // j beyond its tip
+    [w, h] = box(RJ, 15);
+    const pJ = pl.near(w, h, Tp[0], Tp[1], 4, Math.atan2(-sa, ca));
+    // θ on the bisector just outside its arc; a narrow angle gets a wider arc, a very narrow one its label above the line of j
+    let ra = Math.min(0.3 * Rv, 32), pTh = null;
+    if (P.th > 0) {
+      const tw = runW(ctx, RTH, 14) + 2, th = 13, bi = -P.th * DEG / 2, cb = Math.cos(bi), sb = Math.sin(bi);
+      const ext = Math.min(tw / 2 / Math.max(Math.abs(cb), 1e-6), th / 2 / Math.max(Math.abs(sb), 1e-6));
+      const dMax = P.th < 60 ? 0.72 * Rv : ra + 14;   // near 180° the bisector runs along the t axis: no wider arc there
+      for (let d = ra + 8; d <= dMax && !pTh; d += 2) pTh = pl.first(tw, th, [[O[0] + d * cb, O[1] + d * sb]]);
+      if (pTh) ra = Math.max(ra, Math.hypot(pTh[0] - O[0], pTh[1] - O[1]) - ext - 4);
+      else if (P.th < 40) {
+        const cands = [];
+        for (const dd of [12, 18, 24, 30, 36]) for (const r of [ra + 2, ra + 8, ra + 14]) { const an = -(P.th + dd) * DEG; cands.push([O[0] + r * Math.cos(an), O[1] + r * Math.sin(an)]); }
+        pTh = pl.first(tw, th, cands);
+      }
+      if (!pTh) pTh = pl.near(tw, th, O[0] + ra * cb, O[1] + ra * sb, 3, bi);
+      pl.arc(O[0], O[1], ra, 0, -P.th * DEG, 1.5);
+      ctx.strokeStyle = cFg2; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(O[0], O[1], ra, 0, -P.th * DEG, true); ctx.stroke();
+    }
+    // the two parts, then j on top
+    arrow(ctx, O[0], O[1], FL[0], FL[1], cL, 3.8, 11);
+    arrow(ctx, O[0], O[1], FT[0], FT[1], cT, 3.8, 11);
+    arrow(ctx, O[0], O[1], Tp[0], Tp[1], cFg, 2.2, 10);
+    put(RJ, 15, cFg, pJ);
+    if (pTh) put(RTH, 14, cFg2, pTh);
+    // the parts beside their midpoints, or "= 0" at the origin when a part vanishes
+    const zL = Math.abs(P.c) < 1e-9, zT = Math.abs(P.s) < 1e-9;
+    const runL = zL ? [['j^{L}', { b: 1 }], [' = 0', {}]] : RJL, runT = zT ? [['j^{T}', { b: 1 }], [' = 0', {}]] : RJT;
+    [w, h] = box(runL, 14); put(runL, 14, tL, zL ? pl.near(w, h, O[0], O[1], 6, 3 * Math.PI / 4) : pl.near(w, h, O[0] + 0.5 * Rv * P.c, O[1], 4, Math.PI / 2));
+    [w, h] = box(runT, 14); put(runT, 14, tT, zT ? pl.near(w, h, O[0], O[1], 6, -3 * Math.PI / 4 + (ca < 0 ? Math.PI / 2 : 0)) : pl.near(w, h, O[0], O[1] - 0.5 * Rv * P.s, 4, ca >= 0 ? Math.PI : 0));
+    // continuity, and what each part does
+    const xn = Math.max(B.x + 1, O[0] - ax);
+    drawRun(ctx, [['continuity: ', {}], ['ωρ', { it: 1 }], [' = ', {}], ['q', { b: 1 }], ['·', {}], ['j', { b: 1 }], [' = ', {}], ['q', { b: 1 }], ['·', {}], ['j^{L}', { b: 1 }]], xn, yN0, 12, 'left', cFg);
+    drawRun(ctx, [['j^{L}', { b: 1 }], [' along ', {}], ['q', { b: 1, hat: 1 }], [': carries the charge', {}]], xn, yN1, 12, 'left', tL);
+    drawRun(ctx, [['j^{T}', { b: 1 }], [' across ', {}], ['q', { b: 1, hat: 1 }], [': no charge', {}]], xn, yN2, 12, 'left', tT);
+  }
+
+  let cur = null, anim = null;
+  function draw(t) {
+    cv.clear();
+    if (!cur || cv.w < 40) return;
+    FU = EPP.css('--font-ui'); FT = EPP.css('--font-text');
+    const ctx = cv.ctx, W = cv.w, H = cv.h;
+    if (isWide(W)) {
+      const bw = Math.round(EPP.clamp(0.31 * W, 220, 270));
+      drawWave(ctx, { x: 0, y: 0, w: W - bw - 22, h: H }, cur, t, false);
+      drawSplit(ctx, { x: W - bw, y: 0, w: bw, h: H }, cur);
+    } else {
+      const ha = hA(W);
+      drawWave(ctx, { x: 0, y: 0, w: W, h: ha }, cur, t, true);
+      drawSplit(ctx, { x: 0, y: ha + GAP, w: W, h: H - ha - GAP }, cur);
+    }
+  }
+
+  // ---------- readouts ----------
+  const roV = {};
+  ['L', 'rho', 'qL', 'x', 'R'].forEach(k => { roV[k] = fig.querySelector('.x2-continuity-v-' + k); });
+  function readouts(P) {
+    roV.L.textContent = Math.abs(P.c).toFixed(3);
+    roV.rho.textContent = Math.abs(P.c).toFixed(3);          // |ρ| ω/(q|j|) = |q̂·j|/|j| by (X2.1)
+    roV.qL.textContent = `${sci(P.qL)} Å⁻¹`;
+    roV.x.textContent = sci(P.x) + (P.onLine ? ', on the light line' : (P.r2 > 1 ? ', outside the light cone' : ', inside the light cone'));
+    roV.R.textContent = P.s === 0 ? '0' : (P.c === 0 ? 'no Coulomb part' : (P.onLine ? 'on the light line' : sci(P.R)));
+  }
+  const pct = (v) => Math.round(100 * Math.abs(v));
+  function describe(P) {
+    cv.canvas.setAttribute('aria-label', `Panel a: a current-density wave travelling along the wavevector q, drawn as arrows on a grid at θ = ${P.th}° to q; ` +
+      `the arrows grow, vanish and reverse along q. Rose and blue stripes show positive and negative charge density, ${pct(P.c)}% of their value at θ = 0°. ` +
+      `Panel b: the current amplitude j split into its longitudinal part j^L along the unit vector q-hat (${pct(P.c)}% of |j|), which carries the charge, ` +
+      `and its transverse part j^T across it (${pct(P.s)}% of |j|), which carries none.`);
+  }
+
+  // ---------- controls ----------
+  const ctlEl = fig.querySelector('.x2-continuity-ctrls');
+  let llBtn = null;
+  function onChange(s) {
+    cur = physics(s);
+    readouts(cur);
+    describe(cur);
+    if (llBtn) llBtn.disabled = cur.qL < QMIN;
+    if (anim) anim.redraw(); else draw(0);
+  }
+  const ui = EPP.controls(ctlEl, [
+    { key: 'theta', type: 'range', label: 'angle θ between j and q', min: 0, max: 180, step: 1, value: 30, fmt: v => `θ = ${Math.round(v)}°` },
+    { key: 'q', type: 'range', label: 'wavevector q', min: QMIN, max: QMAX, value: 0.1, log: true, step: 'any', fmt: v => `${sci(v)} Å⁻¹` },
+    { key: 'hw', type: 'range', label: 'frequency ħω', min: 1, max: 200, step: 0.1, value: 36.2, fmt: v => `${v.toFixed(1)} meV` }
+  ], onChange);
+  // slider labels with the symbols set as in the text: italic variables, bold vectors
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`, B = (s) => `<strong>${s}</strong>`;
+  const LAB = { theta: `angle ${I('θ')} between ${B('j')} and ${B('q')}`, q: `wavevector ${I('q')}`, hw: `frequency ${I('ħω')}` };
+  Object.keys(LAB).forEach(k => { const sp = ctlEl.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  // one row of buttons: animation, the two pure cases, and q on the light line
+  const row = document.createElement('div');
+  row.className = 'ctrl x2-continuity-row';
+  row.style.cssText = 'grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center';
+  ctlEl.appendChild(row);
+  anim = EPP.anim(fig, (t) => draw(t), { buttonHost: row });
+  const btn = (html, aria, fn) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'btn'; b.innerHTML = html; b.setAttribute('aria-label', aria); b.addEventListener('click', fn); row.appendChild(b); return b; };
+  btn(`along ${B('q')}: ${I('θ')} = 0°`, 'Current along q: set theta to 0 degrees', () => ui.set('theta', 0));
+  btn(`across ${B('q')}: ${I('θ')} = 90°`, 'Current across q: set theta to 90 degrees', () => ui.set('theta', 90));
+  llBtn = btn(`light line: ${I('q')} = ${I('ω')}/${I('c')}`, 'Put q on the light line, q equal to omega over c', () => { if (cur) ui.set('q', cur.qL); });
+  const hint = document.createElement('span');
+  hint.style.cssText = 'font-size:0.82rem;color:var(--muted)';
+  hint.innerHTML = `${I('q')} and ${I('ħω')} set only the readouts; the drawing is schematic`;
+  row.appendChild(hint);
+  cv.onResize(() => anim.redraw());
+})();
+</script>

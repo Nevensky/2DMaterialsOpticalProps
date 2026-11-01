@@ -1,0 +1,276 @@
+  <figure class="viz" id="viz-a5-polar">
+    <p class="viz-title">Lattice screening in a polar insulator <span class="tag">interactive</span></p>
+    <div class="viz-grid two">
+      <div class="a5-polar-re"><div class="legend a5-polar-leg-a">
+        <span class="item" data-s="W" style="color:var(--c-photon)"><span class="sw" style="border-top-width:3px"></span><span style="color:var(--fg-2)">$\mathrm{Re}\,W/v$, total</span></span>
+        <span class="item" data-s="We" style="color:var(--c-electron)"><span class="sw"></span><span style="color:var(--fg-2)">$W^{\rme}/v=1/\varepsilon_\infty$ (nuclei clamped)</span></span>
+        <span class="item" data-s="Wph" style="color:var(--c-phonon)"><span class="sw"></span><span style="color:var(--fg-2)">$\mathrm{Re}\,W^{\ph}/v$</span></span>
+        <span class="item" data-s="fro" style="color:var(--c-4)"><span class="sw dash"></span><span style="color:var(--fg-2)">Fröhlich $\OV|g^{\mathrm{lr}}|^2F^0_{\mathrm{LO}}/v$</span></span>
+      </div></div>
+      <div class="a5-polar-im"><div class="legend a5-polar-leg-b">
+        <span class="item" data-s="loss" style="color:var(--c-photon)"><span class="sw"></span><span style="color:var(--fg-2)">loss $-\mathrm{Im}(1/\varepsilon)$</span></span>
+        <span class="item" data-s="abs" style="color:var(--c-5)"><span class="sw dash"></span><span style="color:var(--fg-2)">infrared absorption $\mathrm{Im}\,\varepsilon$</span></span>
+      </div></div>
+    </div>
+    <div class="a5-polar-ctrls"></div>
+    <div class="readout a5-polar-ro" aria-live="polite"><span>$\hbar\omega_{\mathrm{TO}}$<b class="a5-polar-v-T"></b></span><span>$\hbar\omega_{\mathrm{LO}}$<b class="a5-polar-v-L"></b></span><span>$\varepsilon_\infty$<b class="a5-polar-v-einf"></b></span><span>$\OV$<b class="a5-polar-v-OV"></b></span></div>
+    <div class="readout a5-polar-ro2" aria-live="polite"><span>$\varepsilon_{\mathrm s}$ (LST)<b class="a5-polar-v-es"></b></span><span>$\hbar\omega_{\mathrm p}^{\ion}$<b class="a5-polar-v-wp"></b></span><span>$W^{\rme}/v=1/\varepsilon_\infty$<b class="a5-polar-v-We"></b></span><span>$W(0)/v$<b class="a5-polar-v-W0"></b></span><span>$\OV|g^{\mathrm{lr}}|^2/v(q)$<b class="a5-polar-v-g2"></b></span><span>$|g^{\mathrm{lr}}|\,q$<b class="a5-polar-v-gq"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> Statically the lattice screens more: $W(0)=v/\varepsilon_{\mathrm s}$ lies below $W^{\rme}=v/\varepsilon_\infty$. $W$ vanishes at $\omega_{\mathrm{TO}}$ and has its pole at $\omega_{\mathrm{LO}}$, so the loss peaks at LO while the infrared absorption peaks at TO. The dashed Fröhlich curve lies on $W^{\ph}$: the residue of $W$ at the LO pole is Fröhlich's coupling squared times <span class="nw">$\OV/\hbar$.</span></p><div class="cap-more">
+      <p><strong>Marks.</strong> In (a), each curve is divided by $v(q)=4\pi e^2/q^2$. Rose: the total $W$; blue: $W^{\rme}$; amber: the lattice part $W^{\ph}$; dashed teal: its Fröhlich form. Grey guides mark $\omega_{\mathrm{TO}}$, $\omega_{\mathrm{LO}}$ and $1/\varepsilon_{\mathrm s}$; in the shaded Reststrahlen band between TO and LO even the total $W$ is negative, unless the damping is strong. In (b), on a log scale, rose: the loss $-\mathrm{Im}(1/\varepsilon)$; dashed violet: the absorption $\mathrm{Im}\,\varepsilon$.</p>
+      <p><strong>Try.</strong> Switch to MgO, whose large LO–TO splitting gives <span class="nw">$\varepsilon_{\mathrm s}/\varepsilon_\infty=3.3$:</span> the static $W$ is 70 % below <span class="nw">$W^{\rme}$.</span> Clamp the nuclei to see the flat $W^{\rme}$ of a GW calculation. Raise the damping: the pole and both peaks broaden, while the undamped Fröhlich curve stays sharp.</p>
+      <p><strong>Model.</strong> <a class="eqref" href="#a5-eq-epsw">(A5.6)</a> and <a class="eqref" href="#a5-eq-Wpolar">(A5.7)</a> with a damping rate <span class="nw">$\gamma$,</span> $\varepsilon=\varepsilon_\infty(\omega^2-\omega_{\mathrm{LO}}^2+\ii\gamma\omega)/(\omega^2-\omega_{\mathrm{TO}}^2+\ii\gamma\omega)$; $\varepsilon_{\mathrm s}$ follows from the Lyddane–Sachs–Teller relation. The overlay is <a class="eqref" href="#a5-eq-frohlich">(A5.30)</a>, Fröhlich's coupling squared times the propagator $F^0_{\mathrm{LO}}$ of a free LO phonon, <a class="eqref" href="#a5-eq-F">(A5.26)</a>, without damping. A homogeneous medium at long wavelength with one polar mode: the plotted ratios and coupling readouts do not depend on <span class="nw">$q$.</span> Literature values, illustrative: GaAs, <span class="nw">$\hbar\omega_{\mathrm{TO}}=33.3$ meV,</span> <span class="nw">$\hbar\omega_{\mathrm{LO}}=36.2$ meV,</span> <span class="nw">$\varepsilon_\infty=10.9$,</span> <span class="nw">$\OV=45.2$ Å³;</span> MgO, 49.1 meV, 89.0 meV, 2.96, <span class="nw">18.7 Å³;</span> bulk hBN, in-plane modes, 169.9 meV, 199.6 meV, 4.87, <span class="nw">18.1 Å³</span> per BN pair.</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a5-polar');
+  if (!fig || !window.EPP) return;
+  // outside Section A.5 (the isolated figure test) the caption's equation links have no target: show them as text
+  if (!fig.closest('#a-hedin-baym')) fig.querySelectorAll('figcaption a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+
+  // ---------- model: a homogeneous polar insulator at long wavelength, one polar mode ----------
+  // Energies in meV, E = ħω, damping ħγ. The ratios W/v, W^e/v, W^ph/v are unit-free and do not depend on q.
+  // (A5.6) with damping, in the convention ω² − ω_0² + iγω:  ε = ε_∞ (E² − E_LO² + iγE)/(E² − E_TO² + iγE)
+  const E2 = 14.3996;   // e² (Gaussian) in eV Å
+  const NB = ' ';
+  const MAT = {
+    gaas: { name: 'GaAs', T: 33.3, L: 36.2, einf: 10.9, OV: 45.2 },
+    mgo: { name: 'MgO', T: 49.1, L: 89.0, einf: 2.96, OV: 18.7 },
+    hbn: { name: 'bulk hBN, in-plane modes', T: 169.9, L: 199.6, einf: 4.87, OV: 18.1 }
+  };
+  function constants(m) {
+    const es = m.einf * (m.L / m.T) ** 2;                          // Lyddane–Sachs–Teller, (A5.6)
+    const ie = 1 / m.einf, is = 1 / es, dI = ie - is;
+    return {
+      es, ie, is, dI,
+      wp: Math.sqrt(m.einf * (m.L * m.L - m.T * m.T)),              // ħω_p^ion (meV), from ω_LO² = ω_TO² + (ω_p^ion)²/ε_∞
+      g2v: 0.5 * m.L * dI,                                           // Ω_V|g^lr|²/v(q) = (ħω_LO/2)(1/ε_∞ − 1/ε_s) (meV), (A5.30)
+      gq: 1e3 * Math.sqrt(2 * Math.PI * E2 * (m.L / 1e3) * dI / m.OV) // |g^lr| q = [2πe²ħω_LO(1/ε_∞ − 1/ε_s)/Ω_V]^{1/2} (meV/Å)
+    };
+  }
+  // energies on (0, 2ħω_LO]: a uniform grid plus dense points within ±25ħγ of TO and LO, which resolve the resonances
+  function grid(m, g) {
+    const xmax = 2 * m.L, xs = [];
+    for (let i = 1; i <= 1400; i++) xs.push(xmax * i / 1400);
+    for (const c of [m.T, m.L]) for (let i = -240; i <= 240; i++) { const x = c + 25 * g * i / 240; if (x > 0 && x < xmax) xs.push(x); }
+    xs.sort((a, b) => a - b);
+    return xs.filter((x, i) => i === 0 || x - xs[i - 1] > 1e-9);
+  }
+  function compute(s) {
+    const key = MAT[s.mat] ? s.mat : 'gaas', m = MAT[key], k = constants(m), g = s.gam, clamp = !!s.clamp;
+    const xs = grid(m, g), n = xs.length, T2 = m.T * m.T, L2 = m.L * m.L;
+    const W = new Array(n), We = new Array(n), Wph = new Array(n), Fro = new Array(n), loss = new Array(n), absn = new Array(n);
+    for (let i = 0; i < n; i++) {
+      const E = xs[i], a = T2 - E * E, b = L2 - E * E, gE = g * E;
+      // W/v = 1/ε = (1/ε_∞)(a − iγE)/(b − iγE); with the nuclei clamped (F = 0) only the electrons screen, W = W^e
+      const d = b * b + gE * gE;
+      const re = clamp ? k.ie : k.ie * (a * b + gE * gE) / d, im = clamp ? 0 : k.ie * gE * (a - b) / d;
+      W[i] = re; We[i] = k.ie; Wph[i] = re - k.ie;                   // (A5.7): W^ph/v = 1/ε − 1/ε_∞
+      // Fröhlich form, undamped, (A5.30): Ω_V|g^lr|²F^0_LO/v = (ħω_LO/2)(1/ε_∞ − 1/ε_s) · 2ħω_LO/(E² − E_LO²)
+      Fro[i] = Math.abs(E * E - L2) < 1e-9 ? NaN : k.g2v * 2 * m.L / (E * E - L2);
+      // loss −Im(1/ε) and infrared absorption Im ε = ε_∞ γE(E_LO² − E_TO²)/(a² + γ²E²), both positive for E > 0
+      const ab = m.einf * gE * (L2 - T2) / (a * a + gE * gE);
+      loss[i] = clamp || -im < 1e-7 ? NaN : -im;
+      absn[i] = clamp || ab < 1e-7 ? NaN : ab;
+    }
+    return { key, m, k, g, clamp, fro: !!s.fro, xs, W, We, Wph, Fro, loss, absn };
+  }
+
+  // ---------- canvas text: '$…$' marks math, where letters are italic and digits upright; _x, ^{xy} as in EPP.drawRich ----------
+  const ITAL = /[A-Za-zα-ωℓħ]/;
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const part of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: part.t, m: part.m, it: false }); continue; }
+        let buf = '', it = null;
+        for (const ch of part.t) { const k = ITAL.test(ch); if (it !== null && k !== it) { out.push({ t: buf, m: part.m, it }); buf = ''; } buf += ch; it = k; }
+        if (buf) out.push({ t: buf, m: part.m, it });
+      }
+    });
+    return out;
+  }
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, fam = EPP.css('--font-ui'), rs = runs(s);
+    const font = (r) => `${r.it ? 'italic ' : ''}${r.m ? Math.round(size * 0.72) : size}px ${fam}`;
+    const ws = rs.map(r => { ctx.font = font(r); return ctx.measureText(r.t).width; });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    const xs = [], x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    rs.reduce((xx, r, k) => { xs.push(xx); return xx + ws[k]; }, x0);
+    const dy = (r) => (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0));
+    ctx.textAlign = 'left';
+    // o.halo: a knockout in the panel colour keeps a label legible where a curve or a guide passes under it
+    if (o.halo) {
+      ctx.save(); ctx.strokeStyle = EPP.color('surface'); ctx.lineWidth = 3.5; ctx.lineJoin = 'round'; ctx.setLineDash([]);
+      rs.forEach((r, k) => { ctx.font = font(r); ctx.strokeText(r.t, xs[k], y + dy(r)); });
+      ctx.restore();
+    }
+    if (o.color) ctx.fillStyle = o.color;
+    rs.forEach((r, k) => { ctx.font = font(r); ctx.fillText(r.t, xs[k], y + dy(r)); });
+    return tot;
+  }
+  const tw = (ctx, s, size) => txt(ctx, s, 0, 0, { size, measure: true });
+  // a short note on a chip of the panel colour, so guides and curves behind it do not cut the text; (x, y) is the first baseline, centred
+  function note(ctx, lines, x, y, color) {
+    const wmax = Math.max(...lines.map(s => tw(ctx, s, 11.5))), x0 = x - wmax / 2 - 6, y0 = y - 14, hh = 16 * lines.length + 6;
+    ctx.fillStyle = EPP.alpha('surface', 0.94);
+    ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(x0, y0, wmax + 12, hh, 4); else ctx.rect(x0, y0, wmax + 12, hh); ctx.fill();
+    lines.forEach((s, i) => txt(ctx, s, x, y + 16 * i, { size: 11.5, color, align: 'center' }));
+  }
+  function arrowHead(ctx, x, y, ang, s) {
+    ctx.beginPath(); ctx.moveTo(x, y);
+    ctx.lineTo(x - s * Math.cos(ang - 0.42), y - s * Math.sin(ang - 0.42));
+    ctx.lineTo(x - s * Math.cos(ang + 0.42), y - s * Math.sin(ang + 0.42));
+    ctx.closePath(); ctx.fill();
+  }
+
+  // ---------- panels ----------
+  const MARGIN = { t: 26, l: 56, r: 12, b: 42 };
+  const elA = fig.querySelector('.a5-polar-re'), elB = fig.querySelector('.a5-polar-im');
+  const pA = new EPP.Plot(elA, {
+    xlim: [0, 72.4], ylim: [-0.23, 0.32], aspect: 0.74, minHeight: 240, maxHeight: 360, legend: false, margin: MARGIN,
+    xname: 'ħω', hoverX: v => EPP.fix(v, 1) + ' meV', hoverY: v => EPP.fmt(v, 3),
+    ariaLabel: 'Panel a: real parts of W/v, We/v and Wph/v against the energy ħω'
+  });
+  // log axis: a grid line every decade, labels every second decade
+  const LOGT = [-4, -3, -2, -1, 0, 1, 2, 3, 4].map(e => ({ v: Math.pow(10, e), label: e % 2 ? '' : (e === 0 ? '1' : `10^{${e < 0 ? '−' + (-e) : e}}`) }));
+  const pB = new EPP.Plot(elB, {
+    xlim: [0, 72.4], ylim: [1e-4, 1e4], logy: true, yticks: LOGT, aspect: 0.74, minHeight: 240, maxHeight: 360, legend: false, margin: MARGIN,
+    xname: 'ħω', hoverX: v => EPP.fix(v, 1) + ' meV', hoverY: v => EPP.fmt(v, 3),
+    ariaLabel: 'Panel b: loss and infrared absorption against the energy ħω, logarithmic scale'
+  });
+  // the legends are static markup (MathJax), placed under their plots
+  const legA = elA.querySelector('.a5-polar-leg-a'), legB = elB.querySelector('.a5-polar-leg-b');
+  if (legA) elA.appendChild(legA);
+  if (legB) elB.appendChild(legB);
+  let cur = null;
+
+  // titles, axis labels and annotations are drawn after the plot's own render, with the symbols in italic
+  const hook = (p, extra) => {
+    const base = p.render.bind(p);
+    p.render = () => { base(); if (p.cv.w && p.cv.h && cur) { const ctx = p.ctx; ctx.save(); ctx.textBaseline = 'alphabetic'; extra(p, ctx, p.cv.w, p.cv.h, p.m); ctx.restore(); } };
+  };
+  function frame(p, ctx, w, h, m, long, short, ylab) {
+    const cFg = EPP.color('fg');
+    txt(ctx, tw(ctx, long, 11.5) <= w - 8 ? long : short, 4, 15, { size: 11.5, color: EPP.color('fg2') });
+    txt(ctx, '$ħω$ (meV)', m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    ctx.save(); ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, ylab, 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+  }
+  // ω_TO left of its line and ω_LO right of its line, in the bottom row: the curves cross it only between the two lines
+  function modeLabels(p, ctx, h, m) {
+    const c = EPP.color('muted'), y = h - m.b - 7;
+    txt(ctx, '$ω$_{TO}', p.X(cur.m.T) - 4, y, { size: 11.5, color: c, align: 'right', halo: true });
+    txt(ctx, '$ω$_{LO}', p.X(cur.m.L) + 4, y, { size: 11.5, color: c, halo: true });
+  }
+  hook(pA, (p, ctx, w, h, m) => {
+    frame(p, ctx, w, h, m, '(a) screened interaction, in units of $v$($q$) = 4π$e$^2/$q$^2', '(a) screened interaction / $v$($q$)', 'Re $W$/$v$ and its parts');
+    modeLabels(p, ctx, h, m);
+    const cMut = EPP.color('muted'), cFg2 = EPP.color('fg2');
+    // 1/ε_s under its guide at the left end, where W(0)/v starts on it
+    txt(ctx, '1/$ε$_s', m.l + 6, p.Y(cur.k.is) + 14, { size: 11.5, color: cMut, halo: true });
+    // the Reststrahlen band, in the top row, which is free left of ω_LO: on the band when the word about fits, else beside it with an arrow
+    const xT = p.X(cur.m.T), xL = p.X(cur.m.L), lab = 'Reststrahlen', lw = tw(ctx, lab, 11), yR = m.t + 14;
+    if (xL - xT >= lw - 4) txt(ctx, lab, (xT + xL) / 2, yR, { size: 11, color: cFg2, align: 'center', halo: true });
+    else {
+      txt(ctx, lab, xT - 9, yR, { size: 11, color: cFg2, align: 'right', halo: true });
+      const ya = yR - 4, xe = (xT + xL) / 2 + 2;
+      ctx.strokeStyle = cFg2; ctx.fillStyle = cFg2; ctx.lineWidth = 1.2; ctx.setLineDash([]);
+      ctx.beginPath(); ctx.moveTo(xT - 6, ya); ctx.lineTo(xe - 4, ya); ctx.stroke();
+      arrowHead(ctx, xe, ya, 0, 6);
+    }
+    if (cur.clamp) note(ctx, ['nuclei clamped, $F$ = 0:', '$W$ = $W$^{e} = $v$/$ε$_∞'], p.X(1.5 * cur.m.L), p.Y(-1.25 * cur.k.ie), EPP.textColor('electron'));
+  });
+  hook(pB, (p, ctx, w, h, m) => {
+    frame(p, ctx, w, h, m, '(b) loss and infrared absorption, log scale', '(b) loss and absorption', '−Im(1/$ε$) and Im $ε$');
+    modeLabels(p, ctx, h, m);
+    if (cur.clamp) note(ctx, ['nuclei clamped, $F$ = 0: $ε$ = $ε$_∞ is real,', 'so there is no loss and no absorption'], m.l + (w - m.l - m.r) / 2, p.Y(30), EPP.color('fg2'));
+  });
+
+  // ---------- readouts: the keys are static MathJax in the markup, only the values change ----------
+  const roV = {}, roLast = {};
+  ['T', 'L', 'einf', 'OV', 'es', 'wp', 'We', 'W0', 'g2', 'gq'].forEach(k => { roV[k] = fig.querySelector('.a5-polar-v-' + k); });
+  const setRo = (k, html) => { if (roV[k] && roLast[k] !== html) { roV[k].innerHTML = html; roLast[k] = html; } };
+  const EI = '<i>ε</i><sub>∞</sub>', WE = '<i>W</i><sup>e</sup>/<i>v</i>';
+  const f3 = (v) => EPP.fmt(v, 3);
+
+  function draw() {
+    if (!cur) return;
+    const c = cur, m = c.m, k = c.k, xl = [0, 2 * m.L];
+    const marks = () => [
+      { type: 'band', x0: m.T, x1: m.L, color: 'muted', alpha: 0.13 },
+      { type: 'vline', at: m.T, color: 'muted', width: 1 },
+      { type: 'vline', at: m.L, color: 'muted', width: 1 }
+    ];
+    // W/v on top; with the nuclei clamped it is drawn dashed over the identical W^e/v
+    pA.draw([
+      ...marks(),
+      { type: 'hline', at: k.is, color: 'muted', width: 1.2 },
+      { type: 'line', x: c.xs, y: c.We, color: 'electron', label: 'W^{e}/v' },
+      c.clamp ? null : { type: 'line', x: c.xs, y: c.Wph, color: 'phonon', label: 'Re W^{ph}/v' },
+      c.clamp || !c.fro ? null : { type: 'line', x: c.xs, y: c.Fro, color: 'c4', dash: [6, 4], label: 'Fröhlich form' },
+      { type: 'line', x: c.xs, y: c.W, color: 'photon', width: c.clamp ? 2.2 : 2.6, dash: c.clamp ? [7, 6] : null, label: 'Re W/v' }
+    ], { xlim: xl, ylim: [-2.5 * k.ie, 3.5 * k.ie] });
+    pB.draw([
+      ...marks(),
+      { type: 'line', x: c.xs, y: c.absn, color: 'c5', dash: [7, 3], label: 'Im ε' },
+      { type: 'line', x: c.xs, y: c.loss, color: 'photon', label: '−Im(1/ε)' }
+    ], { xlim: xl });
+
+    // legends: series that are not drawn are dimmed; the total W is dashed when it coincides with W^e
+    const dim = { Wph: c.clamp, fro: c.clamp || !c.fro, loss: c.clamp, abs: c.clamp };
+    fig.querySelectorAll('.legend .item[data-s]').forEach(el => { el.style.opacity = dim[el.dataset.s] ? '0.38' : ''; });
+    const swW = fig.querySelector('.a5-polar-leg-a .item[data-s="W"] .sw');
+    if (swW) { swW.classList.toggle('dash', c.clamp); swW.style.borderTopWidth = c.clamp ? '2.5px' : '3px'; }
+    const cbF = document.getElementById(`${fig.id}-fro`);
+    if (cbF) { cbF.disabled = c.clamp; const box = cbF.closest('.ctrl'); if (box) box.style.opacity = c.clamp ? '0.5' : ''; }
+
+    const T = EPP.fix(m.T, 1), L = EPP.fix(m.L, 1), gt = EPP.fix(c.g, 2);
+    pA.cv.canvas.setAttribute('aria-label', `Panel a: real parts of W/v (total), We/v (electrons only) and Wph/v (the lattice part) against ħω from 0 to ${EPP.fix(2 * m.L, 1)} meV, ` +
+      `for ${m.name} with damping ħγ = ${gt} meV. ` + (c.clamp
+        ? `Nuclei clamped, F = 0: W = We = v/ε∞ = ${f3(k.ie)} v at every energy.`
+        : `W/v starts at 1/εs = ${f3(k.is)} at ħω = 0, below We/v = 1/ε∞ = ${f3(k.ie)}; it vanishes at ħω_TO = ${T} meV, is negative in the Reststrahlen band, ` +
+          `has its pole at ħω_LO = ${L} meV and falls back toward 1/ε∞ above it. Wph/v is negative below ħω_LO and positive above` + (c.fro ? '; the dashed Fröhlich form lies on it.' : '.')));
+    pB.cv.canvas.setAttribute('aria-label', `Panel b, logarithmic scale, ${m.name}: ` + (c.clamp
+      ? 'nuclei clamped, so ε = ε∞ is real and there is neither loss nor absorption.'
+      : `the loss −Im(1/ε) peaks at ħω_LO = ${L} meV and the infrared absorption Im ε peaks at ħω_TO = ${T} meV; both peaks broaden with the damping ħγ = ${gt} meV.`));
+
+    setRo('T', `${T}${NB}meV`);
+    setRo('L', `${L}${NB}meV`);
+    setRo('einf', String(m.einf));
+    setRo('OV', `${EPP.fix(m.OV, 1)}${NB}Å³`);
+    setRo('es', `${EPP.fix(k.es, 2)} (${EPP.fix(k.es / m.einf, 2)}${NB}${EI})`);
+    setRo('wp', `${EPP.fix(k.wp, 1)}${NB}meV`);
+    setRo('We', f3(k.ie));
+    setRo('W0', c.clamp ? `${f3(k.ie)} (nuclei clamped)` : `${f3(k.is)}, ${Math.round(100 * (1 - m.einf / k.es))}${NB}% below ${WE}`);
+    setRo('g2', `${f3(k.g2v)}${NB}meV`);
+    setRo('gq', `${k.gq >= 100 ? k.gq.toFixed(0) : k.gq.toFixed(1)}${NB}meV${NB}Å⁻¹`);
+  }
+
+  // ---------- controls ----------
+  const elCtl = fig.querySelector('.a5-polar-ctrls');
+  EPP.controls(elCtl, [
+    { key: 'mat', type: 'seg', label: 'material', options: [['gaas', 'GaAs'], ['mgo', 'MgO'], ['hbn', 'hBN (in-plane)']], value: 'gaas', wide: true },
+    { key: 'gam', type: 'range', label: 'damping ħγ', min: 0.1, max: 5, value: 0.8, log: true, step: 'any', fmt: v => v.toFixed(2) + ' meV' },
+    { key: 'clamp', type: 'toggle', label: 'clamp the nuclei (F = 0)', value: false },
+    { key: 'fro', type: 'toggle', label: 'show Fröhlich form', value: true }
+  ], (s) => { cur = compute(s); draw(); });
+  // control labels: symbols in italic, labels upright, as in the text
+  const I = (t) => `<i style="font-family:var(--font-text)">${t}</i>`;
+  // a superscript stacked over a subscript (F^0_LO): an inline block sits on the baseline of its last line, the subscript
+  const stack = (sup, sub) => `<span style="display:inline-block;vertical-align:-0.3em;font-size:0.72em;line-height:1;margin-left:1px"><span style="display:block">${sup}</span><span style="display:block">${sub}</span></span>`;
+  const setLab = (sel, html) => { const el = elCtl.querySelector(sel); if (el) el.innerHTML = html; };
+  setLab(`label[for="${fig.id}-gam"] > span`, `damping ${I('ħγ')}`);
+  setLab(`label[for="${fig.id}-clamp"] > span`, `clamp the nuclei (${I('F')}${NB}=${NB}0)`);
+  setLab(`label[for="${fig.id}-fro"] > span`, `show Fröhlich form Ω<sub>V</sub>|${I('g')}<sup>lr</sup>|<sup>2</sup>${I('F')}${stack('0', 'LO')}`);
+  const cbC = document.getElementById(`${fig.id}-clamp`), cbF = document.getElementById(`${fig.id}-fro`);
+  if (cbC) cbC.setAttribute('aria-label', 'clamp the nuclei: phonon propagator F = 0, so W = We');
+  if (cbF) cbF.setAttribute('aria-label', 'show the Fröhlich form of the lattice part, ΩV |g lr|² F0 LO / v');
+  fig.querySelectorAll('.seg button').forEach(b => { b.style.flex = '1 1 auto'; });
+})();
+</script>

@@ -1,0 +1,507 @@
+<section class="chapter" id="x-dictionary" data-num="X.2" data-title="Dictionary between the formalisms">
+  <header class="ch-head">
+    <p class="eyebrow"><span class="num">X.2</span><span>Concept map · notation · diagram glyphs</span></p>
+    <h2>A dictionary between the two formalisms</h2>
+    <p class="lede">Every object in Giustino's electron–phonon theory has an EPP counterpart, a generalization, or no counterpart yet. This section is the lookup table: concepts, symbols and units, and diagram glyphs, side by side.</p>
+  </header>
+
+  <p>The two papers describe the same crystal with different bookkeeping. Giustino's field theory has <span class="t-e">electrons</span>, <span class="t-p">phonons</span> and one interaction, the instantaneous Coulomb potential, which couples to charge densities (<a href="#a-hedin-baym">§A.5</a>). EPP has electrons, bare short-range phonons and one field, the vector potential $\bA$, which couples to currents (<a href="#x-light-cone">§X.1</a>). Three substitutions translate almost everything, and most of the tables below apply them over and over. They are derived in <a href="#x-light-cone">§X.1</a>, <a href="#b-propagator">§B.6</a> and <a href="#b-phonon-se">§B.7</a>; here they are collected for lookup.</p>
+
+  <h3>Three substitutions</h3>
+  <p><strong>Lines.</strong> A Coulomb line $v(\bq)=4\pi/q^2$ (Gaussian units, charges in the vertices) becomes the longitudinal <span class="t-g">photon</span> propagator, which acts on currents instead of charges:</p>
+  <div class="eq">$$D^{0l}_{\mu\nu}(\bq,\omega)=-\frac{4\pi c}{q^2}\,\frac{q_\mu q_\nu}{\omega^2}. \tag{E.374}$$</div>
+  <p>Its electron-screened version is the $ll$ sector of the electron-dressed photon propagator $D^{\rm e}$. With $D^{\rm e}_{11}\equiv W^{\rm e}$ (Eq. E.437), the electrostatic limit reads</p>
+  <div class="eq">$$\lim_{c\to\infty}D^{\rm e}_{\mu\nu}(\bq,\omega)=-\frac{c}{\omega^2}\,q_\mu q_\nu\,W^{\rm e}(\bq,\omega). \tag{E.441}$$</div>
+  <p><strong>Bubbles and vertices.</strong> Charge conservation, $\nabla\cdot\bj=i\omega\rho$, ties every density correlator to the current–current correlator. Giustino's polarization $P$ is therefore the longitudinal projection of EPP's photon self-energy, up to the factor $e^2$ (Giustino's densities count electrons; EPP's $\Pi^{\rm e}_{\rho\rho}$ correlates the charge density $e\rho^{\rm e}$, with $\rho^{\rm e}=\Psi^\dagger\Psi$ a number density, <a href="#z-corrections">§Z.3</a>):</p>
+  <div class="eq">$$\Pi^i_{\rho\rho}(\br,\br',\omega)=-\frac{c}{\omega^2}\sum_{\mu\nu}\partial_\mu\partial'_\nu\,\Pi^i_{jj\mu\nu}(\br,\br',\omega);\qquad i={\rm e,\,ion}. \tag{E.350}$$</div>
+  <p>In $\bq$ space this is $\Pi_{\rho\rho}=-\frac{c}{\omega^2}\,\bq\cdot\Pi_{jj}\cdot\bq$. The same identity turns each density vertex into the longitudinal part of a current vertex, $e\rho_{n\bk,m\bk+\bq}=-\hbar\,\bq\cdot\bj_{n\bk,m\bk+\bq}/(E_{n\bk}-E_{m\bk+\bq})$ (Eq. E.428′; the printed E.428 loses the charge $e$, <a href="#z-corrections">§Z.3</a>).</p>
+  <p><strong>Phonons.</strong> The phonon propagators agree up to a factor $\hbar$. Both are built from the dimensionless $a+a^\dagger$, but Giustino defines the mode-basis propagator as $-i\langle T\cdots\rangle$ (Eq. G.133), while EPP defines $F=-\frac{i}{\hbar}\langle TQQ\rangle$ with $Q=a+a^\dagger$ (Eq. E.251):</p>
+  <div class="eq">$$\mathcal D^{\rm A}_{\bq\nu\nu'}(\omega)=\frac{2\omega_{\bq\nu}}{\omega^2-\omega^2_{\bq\nu}}\,\delta_{\nu\nu'}, \tag{G.132}$$</div>
+  <div class="eq">$$F^0_\sigma(\bq,\omega)=2\,\frac{\omega_\sigma(\bq)}{\hbar}\,\frac{1}{\omega^2-\omega^2_\sigma(\bq)+i\eta}, \tag{E.390}$$</div>
+  <p>so $\mathcal D^{\rm A}_{\bq\nu}=\hbar F_\sigma$ in the mode basis. What dresses them differs. Giustino's phonon self-energy $\Pi^{\rm ph}$ couples point nuclei through $W_{\rm e}$ (Eq. G.121). EPP's phonon emits and reabsorbs an electron-screened photon through Born-charge currents:</p>
+  <div class="eq">$$\Omega^{\rm e}_{\sigma\sigma'}(\bq,\omega)=-\sum_{\alpha\beta}J^*_{\alpha\sigma}(\bq,\omega)\,D^{\rm e}_{\alpha\beta}(\bq,\omega)\,J_{\beta\sigma'}(\bq,\omega). \tag{E.399}$$</div>
+  <p>The displayed EPP equations are in Gaussian units with charge-dimensioned Born charges; Giustino's are SI. The notation table below gives the conversions.</p>
+
+  <div class="callout intuition"><p class="callout-title">Reading a diagram across</p><p>Take a Giustino diagram built from Coulomb lines, such as $W$, $W_{\rm ph}$ or the phonon self-energy. Replace each dashed Coulomb line by a dashed longitudinal-photon line and draw a wavy transverse line beside it. Replace each dot where a Coulomb line meets an electron (a density vertex) by a square (a current vertex). Attach the phonon to the field through a Born-charge current vertex $J$ instead of a bare nuclear charge. Sending $c\to\infty$ deletes the wavy lines again and returns Giustino's diagram, except that the Born charge $Z^*$ stands where the nuclear charge $Z_\kappa$ stood and only the long-range (dipolar) part of the coupling is kept.</p></div>
+
+  <h3>Concept map</h3>
+  <p>Each row places one concept in both papers and says what changes. The filter sorts rows into four classes: <em>same physics</em> in different notation; <em>generalized</em>, where EPP contains Giustino's object as its electrostatic ($c\to\infty$) limit; <em>new in EPP</em>; and <em>missing in EPP</em>. One row carries two labels. The links point to the primer sections that treat the concept.</p>
+
+  <div style="display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:10px 0 4px;font-family:var(--font-ui)">
+    <div class="seg" role="group" aria-label="Filter the concept map" id="x-dictionary-filter">
+      <button type="button" data-f="all" aria-pressed="true">all</button>
+      <button type="button" data-f="same" aria-pressed="false">≡ same physics</button>
+      <button type="button" data-f="gen" aria-pressed="false">⊃ generalized</button>
+      <button type="button" data-f="new" aria-pressed="false">+ new in EPP</button>
+      <button type="button" data-f="missing" aria-pressed="false">− missing in EPP</button>
+    </div>
+    <span class="src" id="x-dictionary-count" aria-live="polite"></span>
+  </div>
+
+  <div class="tbl" id="x-dictionary-concepts">
+  <table style="min-width:720px">
+    <thead><tr><th style="width:19%">Concept</th><th style="width:26%">Giustino 2017 (SI)</th><th style="width:27%">EPP manuscript (Gaussian)</th><th>What changes</th></tr></thead>
+    <tbody>
+      <tr data-cat="gen"><td>Degrees of freedom<br><span class="x-dict-ln">→ <a href="#a-coupling">§A.2</a> · <a href="#b-lagrangian">§B.2</a> · <a href="#b-fields">§B.4</a></span></td>
+        <td>Electrons, phonons, linear $g$ (+ Debye–Waller), §I, Eq. (G.1). Many-body $\hat H$ with Coulomb only, §IV.A, Eqs. (G.62)–(G.69).</td>
+        <td>Bare model, §2, Eq. (E.109). Lagrangian, §4, Eq. (E.134). $H_0+V'$, Eqs. (E.236), (E.237′).</td>
+        <td>Adds the transverse photon field. No explicit $g$ in $V'$: electrons and ions couple only through $\bA$ and the Coulomb term. No Debye–Waller vertex.</td></tr>
+      <tr data-cat="same"><td>Lattice dynamics<br><span class="x-dict-ln">→ <a href="#a-lattice">§A.1</a> · <a href="#b-foundations">§B.1</a></span></td>
+        <td>§III.A, Eqs. (G.12)–(G.22); App. B.</td>
+        <td>§1, Eqs. (E.1)–(E.91).</td>
+        <td>Same harmonic theory. EPP's bare $\omega_\sigma$ must come from short-range (analytic) force constants; the dipole–dipole part is generated by $D$.</td></tr>
+      <tr data-cat="same"><td>Bare e–ph vertex<br><span class="x-dict-ln">→ <a href="#a-coupling">§A.2</a> · <a href="#a-phonon-se">§A.6</a> · <a href="#b-foundations">§B.1</a></span></td>
+        <td>$g^{\rm b}_{\bq\nu}=\Delta_{\bq\nu}V^{\rm en}$, Eq. (G.142); free-electron bare-ion forms, Eqs. (G.57)–(G.58).</td>
+        <td>Rigid-ion $g^0$, §2, Eq. (E.107).</td>
+        <td>Same object. EPP puts $N^{-1/2}$ inside $g$.</td></tr>
+      <tr data-cat="gen"><td>Screened e–ph vertex<br><span class="x-dict-ln">→ <a href="#a-dfpt">§A.3</a> · <a href="#a-phonon-se">§A.6</a> · <a href="#b-frohlich">§B.8</a></span></td>
+        <td>DFPT $g$, Eq. (G.38): static RPA+$xc$, Eqs. (G.53)–(G.56). Dynamic $g=\epsilon_{\rm e}^{-1}g^{\rm b}$, Eq. (G.143).</td>
+        <td>$g^{\rm dyn}=iJ^*D^{\rm e}J^{\rm e}$, Eq. (E.416); $D^{\rm e}$, Eq. (E.388); $\hat\epsilon^{\rm e}$, Eqs. (E.431)–(E.432).</td>
+        <td>Screening becomes a dynamic RPA tensor acting on photon lines; the frequency dependence is kept. Long-range channel only, no $xc$, no local fields.</td></tr>
+      <tr data-cat="same"><td>Coulomb interaction<br><span class="x-dict-ln">→ <a href="#x-light-cone">§X.1</a> · <a href="#b-fields">§B.4</a></span></td>
+        <td>Instantaneous $v(\br,\br')\,\delta(t-t')$, Eqs. (G.64), (G.74).</td>
+        <td>Longitudinal field energy becomes Coulomb, Eq. (E.235′); $D^{0l}$, Eq. (E.374).</td>
+        <td>Same interaction, derived from Gauss's law instead of postulated, and rewritten as a propagator acting on currents.</td></tr>
+      <tr data-cat="new"><td>Transverse photons<br><span class="x-dict-ln">→ <a href="#x-light-cone">§X.1</a> · <a href="#b-fields">§B.4</a></span></td>
+        <td>Absent. Light enters only as a classical field, Eq. (G.200).</td>
+        <td>$\hbar cq$ photons, Eq. (E.214); $D^{0t}$, Eq. (E.261).</td>
+        <td>New: quantized photons that propagate at finite $c$ (retardation in EPP's sense).</td></tr>
+      <tr data-cat="gen"><td>How matter couples to the field<br><span class="x-dict-ln">→ <a href="#b-lagrangian">§B.2</a> · <a href="#b-photon-se">§B.5</a></span></td>
+        <td>Scalar potential and density vertices, Eqs. (G.74)–(G.80).</td>
+        <td>$-\frac1c\bj\cdot\bA$ plus diamagnetic $A^2$ terms, Eqs. (E.186′), (E.237′), (E.273).</td>
+        <td>Current vertices. The $A^2$ terms are required for gauge invariance.</td></tr>
+      <tr data-cat="gen"><td>Polarization (boson self-energy)<br><span class="x-dict-ln">→ <a href="#a-hedin-baym">§A.5</a> · <a href="#b-photon-se">§B.5</a></span></td>
+        <td>$P=\delta\langle\hat n\rangle/\delta V_{\rm tot}$ (electrons and nuclei), Eq. (G.89); $P_{\rm e}=-i\hbar GG\Gamma$, Eq. (G.92).</td>
+        <td>$\Pi_{jj}=\Pi^{\rm e}_{jj}+\Pi^{\rm ion}_{jj}$, Eqs. (E.278), (E.382); $\Pi^{\rm e}$, Eq. (E.383); $\Pi^{\rm ion}$, Eqs. (E.311), (E.385).</td>
+        <td>Current–current correlators, gauge invariant as $\Pi(\omega)-\Pi(0)$. Ions enter as a polarization current, not as a moving density.</td></tr>
+      <tr data-cat="new"><td>Charge conservation (density ↔ current)<br><span class="x-dict-ln">→ <a href="#b-propagator">§B.6</a></span></td>
+        <td>Not needed: density language only.</td>
+        <td>Connection formulas, Eqs. (E.341), (E.344), (E.349), (E.350); vertex form, Eq. (E.428′).</td>
+        <td>Ward identities. $\Pi_{\rho\rho}=-\frac{c}{\omega^2}\bq\cdot\Pi_{jj}\cdot\bq$ maps Giustino's density language onto EPP's longitudinal sector.</td></tr>
+      <tr data-cat="gen"><td>Screened interaction<br><span class="x-dict-ln">→ <a href="#a-hedin-baym">§A.5</a> · <a href="#b-propagator">§B.6</a> · <a href="#b-electrostatic">§B.9</a></span></td>
+        <td>$W=v+vPW$, Eq. (G.90); $W=W_{\rm e}+W_{\rm ph}$, Eqs. (G.104)–(G.105); $W_{\rm ph}$, Eq. (G.110).</td>
+        <td>$D=D^0+D^0\Pi_{jj}D$, Eqs. (E.379)–(E.380); $D^{\rm e}$, Eq. (E.388); $D^{\rm e}_{11}\equiv W^{\rm e}$, Eq. (E.437).</td>
+        <td>The scalar $W$ becomes the $ll$ sector of the $3\times3$ tensor $D$, Eq. (E.441). $W_{\rm ph}$ corresponds to ionic bubbles linked by $D^{\rm e}$, Eq. (E.387).</td></tr>
+      <tr data-cat="same"><td>Phonon propagator<br><span class="x-dict-ln">→ <a href="#a-phonon-se">§A.6</a> · <a href="#b-photon-se">§B.5</a></span></td>
+        <td>$\mathcal D^{\rm A}_{\bq\nu}=2\omega_{\bq\nu}/(\omega^2-\omega^2_{\bq\nu})$, Eqs. (G.132), (G.134).</td>
+        <td>$F_\sigma$, Eqs. (E.256), (E.390).</td>
+        <td>Identical up to $\hbar$: $\mathcal D=\hbar F$. The reference phonons differ: adiabatic DFPT versus bare short-range.</td></tr>
+      <tr data-cat="same"><td>Phonon Dyson equation<br><span class="x-dict-ln">→ <a href="#a-phonon-se">§A.6</a> · <a href="#b-phonon-se">§B.7</a></span></td>
+        <td>$\mathcal D=\mathcal D^{\rm A}+\mathcal D^{\rm A}\Pi^{\rm NA}\mathcal D$, Eq. (G.135); $\tilde\Omega^2=\omega^2+2\omega\Pi^{\rm NA}$, Eq. (G.137).</td>
+        <td>$F=F^0+F^0\Omega^{\rm e}F$, Eq. (E.398); poles of Eq. (E.405).</td>
+        <td>Same form: EPP's $\Omega^{\rm e}$ (an energy) sits where Giustino has $\hbar\Pi^{\rm NA}$. The content differs because the reference phonons differ (adiabatic DFPT versus bare short-range). Both drop off-diagonal mode mixing in practice.</td></tr>
+      <tr data-cat="gen"><td>Phonon self-energy<br><span class="x-dict-ln">→ <a href="#a-phonon-se">§A.6</a> · <a href="#b-phonon-se">§B.7</a> · <a href="#b-frohlich">§B.8</a></span></td>
+        <td>$Z_\kappa Z_{\kappa''}\partial\partial'[W_{\rm e}(\omega)-W_{\rm e}(0)]$, Eqs. (G.121), (G.140); <span style="white-space:nowrap">$g^{\rm b}P_{\rm e}g^{\rm cc}$, Eq. (G.141);</span> Eq. (G.145).</td>
+        <td>$\Omega^{\rm e}=-J^*D^{\rm e}J$, Eq. (E.399); <span style="white-space:nowrap">$\Omega^0$, Eq. (E.401);</span> $\Delta\Omega^{\rm e}=\sum g^{\rm dyn}\chi^0g^{\rm dyn,0}$ (E p. 92).</td>
+        <td>Photon exchange (longitudinal + transverse) replaces Coulomb exchange; Born charges $Z^*$ replace nuclear $Z_\kappa$; long-range channel only. Both keep one bare and one screened vertex.</td></tr>
+      <tr data-cat="same"><td>Adiabatic split and double counting<br><span class="x-dict-ln">→ <a href="#a-phonon-se">§A.6</a> · <a href="#b-foundations">§B.1</a> · <a href="#b-electrostatic">§B.9</a></span></td>
+        <td>$\Pi^{\rm ph}=\Pi^{\rm A}+\Pi^{\rm NA}$, Eq. (G.125); $\chi^0(\omega)-\chi^0(0)$ in Eq. (G.145).</td>
+        <td>Only short-range DFT force constants allowed (E pp. 21–22); static $W^{\rm e}(\bq,0)$ in Eq. (E.454).</td>
+        <td>Same problem, different bookkeeping. Giustino subtracts the static bubble; EPP removes the long-range part from the force constants and regenerates it.</td></tr>
+      <tr data-cat="gen"><td>Fröhlich (long-range) vertex<br><span class="x-dict-ln">→ <a href="#a-polar">§A.4</a> · <a href="#b-foundations">§B.1</a> · <a href="#b-frohlich">§B.8</a></span></td>
+        <td>Eq. (G.7); Verdi–Giustino form, Eq. (G.180).</td>
+        <td>Static, Eq. (E.131′). Bare: Eq. (E.415) → E p.95′ ($c\to\infty$). Screened: Eq. (E.416) → E p.98′. Relation to Verdi–Giustino: Eqs. (E.428a), (E.448a).</td>
+        <td>$\epsilon^\infty\to\hat\epsilon^{\rm e}(\bq,\omega)$, nonadiabatic. TO phonons couple near the light cone; the LO kernel is $c$-independent. The corrected forms carry the basis phase and the factor $e$ that the printed ones lack (<a href="#z-corrections">§Z.3</a>).</td></tr>
+      <tr data-cat="gen"><td>Born charges and $\epsilon^\infty$<br><span class="x-dict-ln">→ <a href="#a-polar">§A.4</a> · <a href="#b-foundations">§B.1</a> · <a href="#b-dielectric">§B.3</a></span></td>
+        <td>DFPT inputs of Eq. (G.180).</td>
+        <td>$Z^*$: Eqs. (E.110)–(E.111), (E.135). $\epsilon^\infty$ regenerated from <span style="white-space:nowrap">$\Pi^{\rm e}$: Eqs.</span> (E.383), (E.431)–(E.432).</td>
+        <td>EPP's $Z^*$ carries the dimension of charge. $\epsilon^\infty$ becomes an output; it is inserted by hand only in §3.</td></tr>
+      <tr data-cat="gen"><td>LO–TO splitting<br><span class="x-dict-ln">→ <a href="#a-polar">§A.4</a> · <a href="#b-dielectric">§B.3</a> · <a href="#b-phonon-se">§B.7</a> · <a href="#b-electrostatic">§B.9</a></span></td>
+        <td>Implicit: $\Pi^{\rm A}$ plus the Gonze–Lee nonanalytic term (cited in §VI.A.3, not printed).</td>
+        <td>Classical, Eqs. (E.159)–(E.165); $q\to0$ at finite $c$ without electrons, Eq. (E.410′); finite $q$ with screening, Eqs. (E.410c)–(E.410f); electrostatic, Eq. (E.454).</td>
+        <td>The splitting is a self-energy from photon exchange. Eq. (E.410′) is not the LO–TO splitting. It differs from Eq. (E.454) in two independent ways: it omits electronic screening (GaAs: 55.6 instead of 35.9 meV), and its order of limits gives the TO modes the LO shift (35.9 instead of 33.3 meV).</td></tr>
+      <tr data-cat="new"><td>Phonon polaritons<br><span class="x-dict-ln">→ <a href="#x-light-cone">§X.1</a> · <a href="#b-propagator">§B.6</a> · <a href="#b-phonon-se">§B.7</a></span></td>
+        <td>Absent. Coupled plasmon–phonon modes are mentioned as "the electronic analog of photon polaritons" (G p. 23).</td>
+        <td>Contained in the transverse sector of $D$ with $\Pi^{\rm ion}$, Eqs. (E.380), (E.385), and in $\Omega^0$ at finite $q$. The draft works out only the electron-free $q\to0$ end point, Eq. (E.410′); the correction adds the screened branches, Eqs. (E.410c), (E.410g), and the crossover $q_c$, Eq. (E.410h).</td>
+        <td>New: TO phonons hybridize with light for $q\lesssim q_c=\sqrt{\epsilon^\infty}\,\omega/c\sim10^{-4}$&nbsp;<span style="white-space:nowrap">Å$^{-1}$</span>.</td></tr>
+      <tr data-cat="gen"><td>Dielectric function<br><span class="x-dict-ln">→ <a href="#a-hedin-baym">§A.5</a> · <a href="#b-dielectric">§B.3</a> · <a href="#b-propagator">§B.6</a></span></td>
+        <td>$\epsilon_{\rm e}=1-vP_{\rm e}$, Eq. (G.95); $\epsilon^{-1}=\delta V_{\rm tot}/\delta\varphi$, Eq. (G.80).</td>
+        <td>Classical $\epsilon(\omega)$, Eqs. (E.158)–(E.159); $\epsilon=1+4\pi c\,\Pi/\omega^2$ (derived from Eqs. E.279, E.334); tensor $\hat\epsilon^{\rm e}$, Eq. (E.432).</td>
+        <td>Electronic and ionic responses add inside one $\Pi_{jj}$. At finite $c$, $\hat\epsilon^{\rm e}$ contains the photon propagator and is not the usual $\epsilon$.</td></tr>
+      <tr data-cat="new"><td>Infrared one-phonon response<br><span class="x-dict-ln">→ <a href="#b-dielectric">§B.3</a> · <a href="#b-photon-se">§B.5</a></span></td>
+        <td>Not computed. Lattice screening enters $W$ only through the longitudinal channel.</td>
+        <td>$\Pi^{\rm ion}_{jj}$, Eq. (E.311): one Lorentz oscillator per polar mode, with strength $j_{\alpha\sigma}j^*_{\beta\sigma}$.</td>
+        <td>New: IR absorption at the TO frequencies comes from the same Born-charge current vertices that produce the LO shift through $\Omega^{\rm e}$.</td></tr>
+      <tr data-cat="missing"><td>Electron self-energy<br><span class="x-dict-ln">→ <a href="#a-electron-se">§A.7</a> · <a href="#a-temperature">§A.8</a></span></td>
+        <td>Fan–Migdal with two screened vertices, Eqs. (G.153), (G.156)–(G.158); Debye–Waller, Eqs. (G.154), (G.159)–(G.161).</td>
+        <td>Not derived.</td>
+        <td>Missing: band renormalization, lifetimes and polarons from photon plus phonon exchange.</td></tr>
+      <tr data-cat="missing"><td>Vertex corrections, $xc$, local fields<br><span class="x-dict-ln">→ <a href="#a-dfpt">§A.3</a> · <a href="#a-hedin-baym">§A.5</a></span></td>
+        <td>Vertex $\Gamma$, Eq. (G.87); $\epsilon^{{\rm H}xc}=1-(v^{\rm C}+f^{xc})\chi^0$, Eq. (G.54); full $\bG\bG'$ matrices.</td>
+        <td>RPA ($\Gamma=1$, no $f^{xc}$); only $\bG=\bG'=0$ from Eq. (E.380) on.</td>
+        <td>Missing: $\bq\cdot\hat\epsilon^{\rm e}\cdot\bq/q^2$ is the head of the RPA matrix, not the macroscopic $\epsilon^\infty$ of DFPT.</td></tr>
+      <tr data-cat="missing"><td>Short-range (deformation-potential) coupling<br><span class="x-dict-ln">→ <a href="#a-coupling">§A.2</a> · <a href="#a-dfpt">§A.3</a> · <a href="#b-lagrangian">§B.2</a></span></td>
+        <td>Deformation potential, Eq. (G.6); full DFPT $g$, Eq. (G.38).</td>
+        <td>Only in the bare model, Eq. (E.107). The field theory moves electrons in the frozen $V_{\rm cr}$, Eq. (E.134).</td>
+        <td>Missing: only the polar channel is extended. Nonpolar coupling has to be added from DFPT by hand.</td></tr>
+      <tr data-cat="missing"><td>Phonon-assisted optics<br><span class="x-dict-ln">→ <a href="#a-applications">§A.9</a></span></td>
+        <td>Hall–Bardeen–Blatt absorption, Eq. (G.200): classical field, velocity vertices.</td>
+        <td>Not worked out; photons are quantized but no electron–phonon–photon second-order process is derived.</td>
+        <td>Missing. In EPP language it is a phonon dressing (self-energy and vertex insertions) of the electron bubble in $\Pi^{\rm e}_{jj}$, beyond the RPA used throughout.</td></tr>
+      <tr data-cat="new"><td>Two-dimensional crystals<br><span class="x-dict-ln">→ <a href="#b-2d">§B.10</a></span></td>
+        <td>Not treated.</td>
+        <td>§8, Eqs. (E.455)–(E.472).</td>
+        <td>Sheet propagator $D^{\rm e}(\mathbf Q,\omega;0,0)$; $W^{\rm 2D}=v_Q/\epsilon_{\rm 2D}$; no LO–TO splitting at $\Gamma$, Eq. (E.472). In-plane modes only.</td></tr>
+      <tr data-cat="gen"><td>Electrostatic limit<br><span class="x-dict-ln">→ <a href="#x-light-cone">§X.1</a> · <a href="#b-electrostatic">§B.9</a></span></td>
+        <td>The whole review lives in this limit.</td>
+        <td>Eqs. (E.433)–(E.454) (bulk), (E.460)–(E.472) (2D).</td>
+        <td>For $c\to\infty$ only the $ll$ sector survives and Giustino-type formulas are recovered.</td></tr>
+      <tr data-cat="missing"><td>Temperature<br><span class="x-dict-ln">→ <a href="#a-temperature">§A.8</a> · <a href="#b-photon-se">§B.5</a></span></td>
+        <td>Matsubara; $n_{\bq\nu}$ and $f$ in Eqs. (G.158), (G.161), (G.170).</td>
+        <td>"$n_B=0$" rule, §4.5.</td>
+        <td>Correct for free bosons and for harmonic phonon and photon self-energies, whose boson parts do not depend on occupation; the electronic $f$ inside $\Pi^{\rm e}$ can still carry $T$. Finite-$T$ electron properties have no EPP counterpart yet.</td></tr>
+      <tr data-cat="new missing"><td>Contact (second-order) terms<br><span class="x-dict-ln">→ <a href="#a-electron-se">§A.7</a> · <a href="#b-photon-se">§B.5</a></span></td>
+        <td>Debye–Waller: Eqs. (G.39)–(G.40), (G.154), (G.159)–(G.161).</td>
+        <td>Diamagnetic $A^2$ terms: Eqs. (E.186′), (E.271′), (E.304′).</td>
+        <td>Analogy only: both are contact terms needed for sum rules. Debye–Waller is absent in EPP; $A^2$ terms are absent in Giustino.</td></tr>
+      <tr data-cat="new"><td>Invariance sum rules<br><span class="x-dict-ln">→ <a href="#a-hedin-baym">§A.5</a> · <a href="#b-photon-se">§B.5</a></span></td>
+        <td>Acoustic sum rule, Eq. (G.120).</td>
+        <td>Gauge invariance (f-sum rule), Eqs. (E.309′), (E.310), (E.311).</td>
+        <td>Translational versus gauge invariance, both enforced by subtracting a static part. The gauge sum rule is new because Giustino has no $\bA$.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Notation and units</h3>
+  <p>The same letter often means different things in the two papers. The table lists the correspondences; the rows marked <em>page symbol</em> give the names this page uses to keep them apart.</p>
+
+  <div class="tbl" id="x-dictionary-notation">
+  <table style="min-width:680px">
+    <thead><tr><th style="width:18%">Quantity</th><th style="width:25%">Giustino</th><th style="width:27%">EPP</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Cell, atom</td><td>$p$; $\kappa$</td><td>$i$; ${\rm a}$ (and ${\rm b}$)</td><td></td></tr>
+      <tr><td>Cartesian index</td><td>$\alpha,\alpha'$</td><td>$\mu,\nu$ (§§1–4); $\alpha,\beta$ also Cartesian in §§5–7</td><td>EPP reuses $\alpha,\beta$ for branches in Eq. (E.287).</td></tr>
+      <tr><td>Phonon branch</td><td>$\nu$</td><td>$\alpha$ (§§1–6), $\sigma$ (from p. 61 and in §7)</td><td>$\sigma$ also labels photon polarization (E.219) and $l/t$ (E.324).</td></tr>
+      <tr><td>Masses</td><td>$M_\kappa$; reference $M_0$</td><td>$m_{\rm a}$; no reference mass</td><td>The $m_0$ in Eq. (E.271′) cancels.</td></tr>
+      <tr><td>Number of cells</td><td>$N_p$</td><td>$N$</td><td></td></tr>
+      <tr><td>Volume</td><td>$\Omega$ = cell volume</td><td>$\Omega_{\rm uc}$ (also $\Omega_0$) = cell; $\Omega=N\Omega_{\rm uc}$ = crystal</td><td>EPP also uses $\tilde\Omega^2$ for the dynamical matrix and $\Omega^{\rm e}$ for the phonon self-energy.</td></tr>
+      <tr><td>Displacement; force constants</td><td>$\Delta\tau_{\kappa\alpha p}$; $C_{\kappa\alpha p,\kappa'\alpha'p'}$</td><td>$Q_{i{\rm a}\mu}$; $k_{i{\rm a}\mu,j{\rm b}\nu}$</td><td></td></tr>
+      <tr><td>Dynamical matrix</td><td>$D^{\rm dm}(\bq)$, Eq. (G.14)</td><td>$\tilde\Omega^2(\bq)$, Eq. (E.15)</td><td>(E.15) equals $D^{\rm dm}(-\bq)$: opposite phase convention.</td></tr>
+      <tr><td>Eigenvectors</td><td>$e_{\kappa\alpha,\nu}(\bq)$</td><td>$e_{{\rm a}\mu\alpha}(\bq)$</td><td>Same normalization.</td></tr>
+      <tr><td>Bands, Bloch states</td><td>$\varepsilon_{n\bk}$; $\psi_{n\bk}=e^{i\bk\cdot\br}u_{n\bk}$</td><td>$E_{n\bk}$; $\phi_{n\bk}=e^{i\bk\cdot\br}u_{n\bk}/\sqrt\Omega$</td><td></td></tr>
+      <tr><td>e–ph term</td><td>$N_p^{-1/2}g_{mn\nu}(\bk,\bq)\,c^\dagger_{m\bk+\bq}c_{n\bk}(a_{\bq\nu}+a^\dagger_{-\bq\nu})$</td><td>$g_{nm\alpha}(\bk,\bq)\,c^\dagger_{n\bk}c_{m\bk-\bq}(\dots)$, $N^{-1/2}$ inside $g$</td><td>$g^{\rm EPP}_{nm}(\bk,\bq)=N^{-1/2}g^{\rm G}_{nm}(\bk-\bq,\bq)$. This page drops $N_p$ in Part A (Eq. G.38 convention).</td></tr>
+      <tr><td>Born charge</td><td>$\bZ^*_\kappa$, dimensionless (units of $e$)</td><td>$Z^*_{{\rm a}\mu\nu}$, dimension of charge</td><td>$Z^*_{\rm EPP}=|e|\,Z^*_{\rm G}$, with Gaussian $|e|=3.7947\ ({\rm eV\,Å})^{1/2}$.</td></tr>
+      <tr><td>Coulomb kernel</td><td>$v^{\rm C}(\bq)=e^2/(\varepsilon_0\Omega q^2)$ (SI, per cell)</td><td>$v(\bq)=4\pi/q^2$ (charges sit in the vertices)</td><td>$e^2/4\pi\varepsilon_0=14.3996$ eV Å; $e^2/\varepsilon_0=180.95$ eV Å.</td></tr>
+      <tr><td>Unit system</td><td>SI throughout</td><td>§3 SI; §4 onward Gaussian (not announced); Eq. (E.131′) mixed</td><td>Gaussian → SI: $e^2\to e^2/4\pi\varepsilon_0$, and $4\pi\to1/\varepsilon_0$ in Poisson's equation.</td></tr>
+      <tr><td>Electron charge</td><td>$-e$ explicit</td><td>$-e$ in §3; signed $e$ from §4</td><td>EPP's $\rho_{\rm e}=\Psi^\dagger\Psi$, Eqs. (E.239), (E.420), is a number density and $e\rho_{\rm e}$ the charge density; the corrected Eq. (E.428′) reads $e\rho=-\hbar\,\bq\cdot\bj/\Delta E$ (<a href="#z-corrections">§Z.3</a>).</td></tr>
+      <tr><td>Fourier conventions</td><td>$f(\omega)=\int dt\,e^{i\omega t}f(t)$; crystal $f(\bG)=\Omega^{-1}\int_{\rm uc}e^{-i\bG\cdot\br}f$</td><td>Same in time (E.255); $f(\bq)=\int d\br\,e^{-i\bq\cdot\br}f(\br)$; crystal kernels via Eq. (E.294)</td><td>Time dependence $e^{-i\omega t}$ and lattice phase $e^{+i\bq\cdot\bR}$ in both.</td></tr>
+      <tr><td>Field relations</td><td>—</td><td>$\bE=\frac{i\omega}{c}\bA$ (gauge $\Phi=0$); $\nabla\cdot\bj=i\omega\rho$, Eqs. (E.334)–(E.335)</td><td>$\epsilon=1+4\pi c\,\Pi/\omega^2$ and $\sigma=-\frac{ic}{\omega}\Pi$ (derived).</td></tr>
+      <tr><td>Screened interaction</td><td>$W$, $W_{\rm e}$, $W_{\rm ph}$</td><td>$D_{11}$; $W^{\rm e}\equiv D^{\rm e}_{11}$, Eq. (E.437)</td><td>The index 1 is the scalar (Coulomb) slot of EPP's $4\times4$ field propagator (§6), not the Cartesian $x$ (<a href="#x-light-cone">§X.1</a>).</td></tr>
+      <tr><td>Electronic polarizability</td><td>$P_{\rm e}$ (G.92); $\chi^0$ (G.51)</td><td>$\Pi^{\rm e}_{\rho\rho}$; $\chi^0_{n\bk,m\bk+\bq}$ (E p. 92)</td><td>$\Pi^{\rm e}_{\rho\rho}=e^2P_{\rm e}$, since Giustino's $\hat n$ counts electrons. EPP's $\chi^0$ is not the plain Lindhard term: it differs by a piece that vanishes only for a complete band set.</td></tr>
+      <tr><td>Mode oscillator strength</td><td>$\bZ^*_\kappa$, $\be_{\kappa\nu}$ inside Eq. (G.180)</td><td>$j_{\alpha\sigma}j^*_{\beta\sigma}$, Eq. (E.295′)</td><td>Gonze–Lee mode oscillator strength, up to $e^2$. The basis phase of (E.295′) is Giustino's $e^{-i(\bq+\bG)\cdot\boldsymbol\tau_\kappa}$.</td></tr>
+      <tr><td>Phonon propagator <span class="x-dict-ren"></span></td><td>$\mathcal D=-\frac{i}{\hbar}\langle T\Delta\tau\Delta\tau\rangle$, Eq. (G.109); mode form $\mathcal D^{\rm A}_{\bq\nu}=-i\langle T\cdots\rangle$ in ladder operators, Eq. (G.133), 1/frequency</td><td>$F=-\frac{i}{\hbar}\langle TQQ\rangle$ with dimensionless $Q$, Eq. (E.251); 1/energy</td><td>Giustino prints $D$. $\mathcal D^{\rm A}_{\bq\nu}=\hbar F_\sigma$.</td></tr>
+      <tr><td>Phonon self-energy <span class="x-dict-ren"></span></td><td>$\Pi^{\rm ph}$: force-constant units (Cartesian), frequency (mode basis)</td><td>$\Omega^{\rm e}_{\sigma\sigma'}$, energy</td><td>Giustino prints $\Pi$. $\Pi^{\rm ph}=\Omega^{\rm e}/\hbar$ in the mode basis.</td></tr>
+      <tr><td>Photon propagator <span class="x-dict-ren"></span></td><td>—</td><td>$D=+\frac{i}{\hbar c}\langle TAA\rangle$, Eqs. (E.257), (E.275); $D^0$, $D^{0l}$, $D^{0t}$, $D^{\rm e}$</td><td>Keeps EPP's name; Giustino's $D$ is renamed instead.</td></tr>
+      <tr><td>Photon self-energy <span class="x-dict-ren"></span></td><td>—</td><td>$\Pi_{jj}=+\frac{i}{\hbar c}\langle Tjj\rangle$ + dia; $\Pi_{\rho\rho}=-\frac{i}{\hbar}\langle T\rho\rho\rangle$, Eq. (E.320), with the electronic charge vertex $e\rho^{\rm e}$</td><td>Always written with the subscript ($\Pi_{jj}$, $\Pi^{\rm e}$, $\Pi^{\rm ion}$) to avoid the clash with $\Pi^{\rm ph}$.</td></tr>
+      <tr><td>"Retardation"</td><td>Frequency dependence of electronic screening, $\epsilon_{\rm e}(\omega)$</td><td>Finite speed of light (plus $\omega$-dependent $\hat\epsilon^{\rm e}$)</td><td>This page always says which one is meant.</td></tr>
+      <tr><td>"Bare"</td><td>$g^{\rm b}$: unscreened nuclear potential; phonons are adiabatic DFPT phonons</td><td>Bare phonons $\omega_\sigma$ (short-range force constants only); bare photon $D^0$; bare vertex $g^{\rm dyn,0}$</td><td>Giustino's $\omega_{\bq\nu}$ for an LO mode contains the long-range shift; EPP's $\omega_\sigma$ does not.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h4>Applying the conversions to one number</h4>
+  <p>Two rules do most of the work. Gaussian charges become SI charges with $e^2\to e^2/4\pi\varepsilon_0$, and EPP's Born charges already contain the electron charge, $Z^*_{\rm EPP}=|e|Z^*_{\rm G}$. The factor $N^{-1/2}$ sits inside EPP's $g$ and outside Giustino's. Both papers compute the long-range (Fröhlich) vertex, so it makes a good test. For a cubic diatomic crystal with Born charges $\pm Z^*$ and reduced mass $\mu$, take the longitudinal mode along $\bq$, keep $\bG=0$ and set the Bloch overlap to one. Giustino's Eq. (G.180) with $N_p$ dropped, and EPP's screened electrostatic vertex in its corrected form (E p.98′, with $\hat\epsilon^{\rm e}\to\epsilon^\infty$; the printed p. 98 vertex lacks the factor $e$, <a href="#z-corrections">§Z.3</a>), reduce to leading order in $q$ (basis phases set to 1) to</p>
+  <div class="eq">$$\begin{aligned}|g^{\rm G}(q)|&amp;=\frac{4\pi}{\Omega}\,\frac{e^2}{4\pi\varepsilon_0}\,\frac{Z^*_{\rm G}}{q\,\epsilon^\infty}\Big(\frac{\hbar}{2\mu\,\omega_{\rm LO}}\Big)^{1/2},\\ \sqrt N\,|g^{\rm dyn}(q)|&amp;=\frac{4\pi}{\Omega_{\rm uc}}\,\frac{|e|\,Z^*_{\rm EPP}}{q\,\epsilon^\infty}\Big(\frac{\hbar}{2\mu\,\omega_\sigma}\Big)^{1/2}.\end{aligned}$$</div>
+  <p>With $|e|Z^*_{\rm EPP}=e^2Z^*_{\rm G}$ and the Gaussian $e^2\equiv e^2/4\pi\varepsilon_0$, the prefactors agree. One real difference remains: the frequency in the zero-point amplitude. Giustino's $\omega_{\bq\nu}$ is the DFPT phonon, which for the LO mode already contains the long-range shift. EPP's $\omega_\sigma$ is the bare short-range phonon, here equal to $\omega_{\rm TO}$. The figure computes both, together with Fröhlich's vertex (Eqs. G.2 and G.7) and EPP's unscreened vertex (E p.95′).</p>
+
+  <figure class="viz" id="viz-x-dictionary-units">
+    <p class="viz-title">One Fröhlich vertex in two notations <span class="tag">interactive</span></p>
+    <div class="pl"></div>
+    <div class="ctrls"></div>
+    <div class="ro"></div>
+    <figcaption><strong>Model.</strong> Cubic diatomic polar crystal, longitudinal mode along $\bq$, $\bG=0$, unit Bloch overlap, static screening $\hat\epsilon^{\rm e}\to\epsilon^\infty$, leading order in $q$ ($q\to0$ eigenvectors, basis phases set to 1; at 0.5 Å$^{-1}$ the phase would change $|g|^2$ by up to about 20% in GaAs, <a href="#z-corrections">§Z.3</a>). For a longitudinal ionic current the photon kernel is $c$-independent (<a href="#b-frohlich">§B.8</a>), so these vertices keep their form at every $q$; finite $c$ matters only for TO modes, below $q_c=\sqrt{\epsilon^\infty}\,\omega_{\rm TO}/c$ (readout). $\hbar\omega_{\rm LO}$ follows from Eq. (E.454) with $W^{\rm e}=4\pi/(q^2\epsilon^\infty)$, which is the Lyddane–Sachs–Teller value. Presets: masses and fcc lattice constants of GaAs, NaCl and MgO, with $\epsilon^\infty$, $\hbar\omega_{\rm TO}$ and the measured $\hbar\omega_{\rm LO}$ (36.2, 32.7 and 89 meV) taken from the literature (illustrative), and $Z^*$ chosen so that Eq. (E.454) reproduces that $\hbar\omega_{\rm LO}$. Lines: Giustino's Eq. (G.180); EPP's screened vertex E p.98′ (the p. 98 vertex with the factor $e$ restored), with the bare $\omega_\sigma$; the same multiplied by the residue $\omega_\sigma/\tilde\omega$ of the dressed $F$ (inside the square root); EPP's unscreened vertex E p.95′; circles: Fröhlich's vertex, Eq. (G.2) with Eq. (G.7). The printed p. 95 and p. 98 vertices have the dimension of energy per charge and cannot be drawn on this axis. <strong>What to notice.</strong> The teal dotted line lies exactly on Giustino's solid line, and Fröhlich's circles sit on both: once each vertex is paired with its own phonon propagator, the two notations give the same coupling. The EPP vertex with the bare $\omega_\sigma$ is larger by $\sqrt{\omega_{\rm LO}/\omega_{\rm TO}}$: 4% for GaAs, 35% for MgO. The unscreened vertex is a further factor $\epsilon^\infty$ above.</figcaption>
+  </figure>
+
+  <details class="derivation"><summary><span>Derivation: why the dressed residue removes the factor $\sqrt{\omega_{\rm LO}/\omega_\sigma}$</span></summary><div class="d-body">
+    <p>This argument is derived on this page; neither paper discusses the normalization. In the electrostatic limit with static screening, $\Omega^{\rm e}_{\sigma\sigma}$ is frequency independent (Eqs. E.452, E.454), and the diagonal Dyson solution (Eq. E.405) becomes</p>
+    $$F_\sigma(\omega)=\frac1\hbar\,\frac{2\omega_\sigma}{\omega^2-\tilde\omega^2},\qquad \tilde\omega^2=\omega_\sigma^2+\frac{2\omega_\sigma\Omega^{\rm e}_{\sigma\sigma}}{\hbar}=\omega_{\rm LO}^2 .$$
+    <p>Rewrite it as the free propagator of a mode at $\tilde\omega$ times a weight:</p>
+    $$F_\sigma(\omega)=\frac{\omega_\sigma}{\tilde\omega}\cdot\frac1\hbar\,\frac{2\tilde\omega}{\omega^2-\tilde\omega^2}.$$
+    <p>Any quantity of the form "vertex × phonon × vertex", such as the phonon-mediated interaction $W_{\rm ph}$ (or a Fan–Migdal self-energy, once EPP derives one), then contains $|g^{\rm dyn}|^2\,\omega_\sigma/\tilde\omega$ times the free propagator at $\tilde\omega$. Since $|g^{\rm dyn}|^2\propto1/\omega_\sigma$, the product scales as $1/\tilde\omega=1/\omega_{\rm LO}$, exactly like $|g^{\rm G}|^2$ multiplied by $\mathcal D^{\rm A}/\hbar$ at $\omega_{\rm LO}$. The physical check is classical: $W_{\rm ph}=W-W_{\rm e}=\frac{v}{(\epsilon^\infty)^2}\,\frac{\omega_p^2}{\omega^2-\omega_{\rm LO}^2}$ for $\epsilon(\omega)=\epsilon^\infty+\omega_p^2/(\omega_{\rm TO}^2-\omega^2)$, and both bookkeepings reproduce it.</p>
+  </div></details>
+
+  <h3>Diagram glyphs</h3>
+  <p>Giustino draws electrons, phonons, Coulomb lines and two kinds of e–ph vertex (his Figs. 1–2). EPP adds three kinds of photon line and separates charge vertices from current vertices (its Figs. 7–14). Below, both sets are drawn in this page's visual language: blue electrons, amber zigzag phonons, rose for the whole electromagnetic field (dashed: longitudinal; wavy: transverse; a wavy line over a dashed one: both polarizations, as in $D^0$; heavy or double: dressed, as in $D^{\rm e}$), dots for charge vertices and squares for current vertices. EPP colours its own figures differently ($D^{0l}$ red, $D^0$ magenta, $D^{\rm e}$ blue).</p>
+
+  <figure class="viz" id="viz-x-dictionary-glyphs">
+    <p class="viz-title">Diagram dictionary <span class="tag">hover, focus or tap</span></p>
+    <div class="viz-grid two">
+      <div class="x-dict-col" data-col="G">
+        <h4 style="margin-top:0">Giustino 2017 · electrostatic</h4>
+        <button type="button" data-g="gG"><span class="gl"></span><span class="tx"><span class="sy">$G$</span><span class="nm">electron propagator</span></span></button>
+        <button type="button" data-g="gD"><span class="gl"></span><span class="tx"><span class="sy">$\mathcal D$</span><span class="nm">phonon propagator</span></span></button>
+        <button type="button" data-g="gv"><span class="gl"></span><span class="tx"><span class="sy">$v$</span><span class="nm">instantaneous Coulomb line</span></span></button>
+        <button type="button" data-g="gW"><span class="gl"></span><span class="tx"><span class="sy">$W_{\rm e}$, $W$</span><span class="nm">screened Coulomb interaction</span></span></button>
+        <button type="button" data-g="gn"><span class="gl"></span><span class="tx"><span class="sy">density vertex</span><span class="nm">Coulomb line on an electron ($\Gamma=\delta\delta$)</span></span></button>
+        <button type="button" data-g="gZ"><span class="gl"></span><span class="tx"><span class="sy">$Z_\kappa\nabla\delta$</span><span class="nm">nuclear point-charge vertex</span></span></button>
+        <button type="button" data-g="gb"><span class="gl"></span><span class="tx"><span class="sy">$g^{\rm b}$</span><span class="nm">bare e–ph vertex (small dot)</span></span></button>
+        <button type="button" data-g="gg"><span class="gl"></span><span class="tx"><span class="sy">$g$</span><span class="nm">screened e–ph vertex (grey disk)</span></span></button>
+      </div>
+      <div class="x-dict-col" data-col="E">
+        <h4 style="margin-top:0">EPP · electrodynamic</h4>
+        <button type="button" data-g="eG"><span class="gl"></span><span class="tx"><span class="sy">electron lines</span><span class="nm">Kohn–Sham, only inside $\chi^0$ bubbles</span></span></button>
+        <button type="button" data-g="eF"><span class="gl"></span><span class="tx"><span class="sy">$F$</span><span class="nm">phonon propagator (bare $\omega_\sigma$)</span></span></button>
+        <button type="button" data-g="e0l"><span class="gl"></span><span class="tx"><span class="sy">$D^{0l}$</span><span class="nm">Coulomb as longitudinal photon</span><span class="lim" hidden>$c\to\infty$: unchanged; $J^*D^{0l}J$ is $c$-independent</span></span></button>
+        <button type="button" data-g="e0t"><span class="gl"></span><span class="tx"><span class="sy">$D^{0t}$</span><span class="nm">transverse photon</span><span class="lim" hidden>$c\to\infty$: vanishes, $\propto1/c$</span></span></button>
+        <button type="button" data-g="e0"><span class="gl"></span><span class="tx"><span class="sy">$D^0=D^{0l}+D^{0t}$</span><span class="nm">vacuum Maxwell propagator</span><span class="lim" hidden>$c\to\infty$: $\to D^{0l}$ (E.442)</span></span></button>
+        <button type="button" data-g="eDe"><span class="gl"></span><span class="tx"><span class="sy">$D^{\rm e}$</span><span class="nm">photon dressed by electrons</span><span class="lim" hidden>$c\to\infty$: $-\frac{c}{\omega^2}q_\mu q_\nu W^{\rm e}$ (E.441)</span></span></button>
+        <button type="button" data-g="erho"><span class="gl"></span><span class="tx"><span class="sy">$\rho$ (dot)</span><span class="nm">charge vertex</span></span></button>
+        <button type="button" data-g="ej"><span class="gl"></span><span class="tx"><span class="sy">$\bj$ (square)</span><span class="nm">current vertex</span><span class="lim" hidden>$c\to\infty$: only $\bq\cdot\bj$ survives, i.e. $e\rho$ (E.428′)</span></span></button>
+        <button type="button" data-g="eJe"><span class="gl"></span><span class="tx"><span class="sy">$J^{\rm e}$ (blue square)</span><span class="nm">dynamical electron current vertex</span><span class="lim" hidden>$c\to\infty$: only $\bq\cdot J^{\rm e}\propto\omega\rho$ survives</span></span></button>
+        <button type="button" data-g="eJ"><span class="gl"></span><span class="tx"><span class="sy">$J$ (teal square)</span><span class="nm">ionic current vertex, Born charges</span><span class="lim" hidden>$c\to\infty$: only $\bq\cdot\bj_\sigma$ couples (E.452)</span></span></button>
+      </div>
+    </div>
+    <div class="ctrls"></div>
+    <div class="x-dict-insp" id="viz-x-dictionary-glyphs-insp" role="status" aria-live="polite">
+      <div data-k="intro"><p><strong>Hover, focus (Tab) or tap a glyph.</strong> Its counterparts in the other column light up and this panel gives the translation. Tap again, or press Esc, to release it.</p></div>
+      <div data-k="gG" hidden><p><strong>Electron propagator $G$</strong> (Eq. G.70) ↔ <strong>electron lines inside bubbles</strong>. In practice both papers use Kohn–Sham states (Giustino's approximation (ii) after Eq. G.144). EPP's electrons appear only inside the electron–hole propagator $\chi^0_{n\bk,m\bk+\bq}$ (E p. 92) or $\Pi^{\rm e,0}_{jj}$ (Eq. E.383). There is no electron Dyson equation, hence no counterpart of $\Sigma^{\rm FM}$.</p></div>
+      <div data-k="gD" hidden><p><strong>Phonon propagator $\mathcal D$</strong> (printed $D$, Eqs. G.109, G.132) ↔ <strong>$F$</strong> (Eqs. E.251, E.390), with $\mathcal D^{\rm A}_{\bq\nu}=\hbar F_\sigma$. The Dyson equations $\mathcal D=\mathcal D^{\rm A}+\mathcal D^{\rm A}\Pi^{\rm NA}\mathcal D$ (G.135) and $F=F^0+F^0\Omega^{\rm e}F$ (E.398) have the same form, with $\Omega^{\rm e}$ in the place of $\hbar\Pi^{\rm NA}$. The reference phonons differ: adiabatic DFPT phonons, long-range part included, versus bare short-range phonons.</p></div>
+      <div data-k="gv" hidden><p><strong>Coulomb line</strong> $v(12)=v(\br_1,\br_2)\,\delta(t_1-t_2)$ (after Eq. G.74), ending on density vertices ↔ <strong>longitudinal photon</strong> ending on current vertices: $D^{0l}_{\mu\nu}=-\frac{c}{\omega^2}\partial_\mu\partial'_\nu v$ (E.364), i.e. $-\frac{4\pi c}{q^2}\frac{q_\mu q_\nu}{\omega^2}$ (E.374). Adding $D^{0t}$ gives the vacuum Maxwell propagator $D^0$ (E.375), whose $c\to\infty$ limit is $D^{0l}$ again (E.442).</p></div>
+      <div data-k="gW" hidden><p><strong>Screened Coulomb interaction</strong> $W_{\rm e}=v+vP_{\rm e}W_{\rm e}$ (G.94) and $W=W_{\rm e}+W_{\rm ph}$ (G.104) ↔ <strong>dressed photon</strong> $D^{\rm e}=D^0+D^0\Pi^{\rm e,0}_{jj}D^{\rm e}$ (E.388) and the full $D=D^0+D^0\Pi_{jj}D$ (E.379). Identification: $D^{\rm e}_{11}\equiv W^{\rm e}$ (E.437), and $\lim_{c\to\infty}D^{\rm e}_{\mu\nu}=-\frac{c}{\omega^2}q_\mu q_\nu W^{\rm e}$ (E.441). EPP's $W^{\rm e}$ is RPA without local fields.</p></div>
+      <div data-k="gn" hidden><p><strong>Density vertex</strong>: a Coulomb line ends on the electron density ($\Gamma=\delta\delta$ in GW/RPA, Eq. G.92) ↔ <strong>charge vertex</strong> $\rho_{n\bk,m\bk+\bq}$ (E.106), the identical object. Charge conservation rewrites it as the longitudinal part of a current vertex, $e\rho_{n\bk,m\bk+\bq}=-\hbar\,\bq\cdot\bj_{n\bk,m\bk+\bq}/(E_{n\bk}-E_{m\bk+\bq})$ (E.428′, which restores the $e$ that the printed E.428 loses), so $\bj$ and $J^{\rm e}$ light up too.</p></div>
+      <div data-k="gZ" hidden><p><strong>Nuclear point-charge vertex</strong> $Z_\kappa\nabla\delta(\br-\boldsymbol\tau^0_{\kappa p})$: a displaced nucleus couples to $W_{\rm e}$ through its bare charge in $\Pi^{\rm ph}$ (G.121) and in $W_{\rm ph}$ (G.110) ↔ <strong>ionic current vertex</strong> $J_{\mu\sigma}=\sqrt{\hbar/(2c\Omega_{\rm uc}\omega_\sigma)}\,\omega\,j_{\mu\sigma}$ (E.392), $j_{\mu\sigma}=\sum_{{\rm a}\alpha}Z^*_{{\rm a}\mu\alpha}e_{{\rm a}\alpha\sigma}(\bq)\,e^{-i\bq\cdot\br^0_{\rm a}}/\sqrt{m_{\rm a}}$ (E p.86a′, the $\bG=0$ form of E.295′). Born charges replace $Z_\kappa$, the basis phase $e^{-i\bq\cdot\br^0_{\rm a}}$ plays the role of Giustino's atomic positions $\boldsymbol\tau_\kappa$, a current ($\propto\omega$) replaces a charge, and only the long-range dipole is kept.</p></div>
+      <div data-k="gb" hidden><p><strong>Bare e–ph vertex</strong> $g^{\rm b}_{\bq\nu}=\Delta_{\bq\nu}V^{\rm en}$ (G.142) ↔ the <strong>composite</strong> $g^{\rm dyn,0}=i\sum_{\alpha\beta}[J^\alpha_{\rm e}]^*D^0_{\alpha\beta}J_{\beta\sigma}$ (E.415): electron current vertex, bare photon, ionic current vertex. For $c\to\infty$ it becomes the Verdi–Giustino vertex with $\epsilon^\infty=1$ and $\bG=0$ (E p.95′), up to the overall sign $e/|e|$ of a diagrammatic vertex (E.428a). It is only the dipolar part of $g^{\rm b}$.</p></div>
+      <div data-k="gg" hidden><p><strong>Screened e–ph vertex</strong> $g=\epsilon_{\rm e}^{-1}g^{\rm b}$ (G.143) ↔ the <strong>composite</strong> $g^{\rm dyn}=i\sum_{\alpha\beta}J^*_{\alpha\sigma}D^{\rm e}_{\alpha\beta}J^\beta_{\rm e}$ (E.416). For $c\to\infty$: the complex conjugate of Verdi–Giustino with $\epsilon^\infty\to\hat\epsilon^{\rm e}(\bq,\omega)$ (E p.98′, E.448a), so Giustino's approximation (iv), $g(\omega)\simeq g(0)$, is not made. Both phonon self-energies keep one bare and one screened vertex: $g^{\rm b}P_{\rm e}g^{\rm cc}$ (G.141) and $g^{\rm dyn}\chi^0g^{\rm dyn,0}$ (E p. 92).</p></div>
+      <div data-k="eG" hidden><p><strong>Electron lines</strong> (free Kohn–Sham states $E_{n\bk}$, $\phi_{n\bk}$) form the bubble $\chi^0_{n\bk,m\bk+\bq}$ (E p. 92) ↔ <strong>$G$</strong> in its Kohn–Sham approximation. EPP's $\chi^0$ is not the plain Lindhard function; it differs by a term that vanishes only for a complete band set.</p></div>
+      <div data-k="eF" hidden><p><strong>$F^0_\sigma=\frac1\hbar\frac{2\omega_\sigma}{\omega^2-\omega_\sigma^2+i\eta}$</strong> (E.390), built on bare short-range phonons ↔ <strong>$\mathcal D^{\rm A}_{\bq\nu}=\frac{2\omega_{\bq\nu}}{\omega^2-\omega^2_{\bq\nu}}$</strong> (G.132), built on adiabatic DFPT phonons. In the electrostatic limit with static screening, the dressed $F$ (E.405) has its LO pole where $\mathcal D^{\rm A}$ has it, at $\tilde\omega=\omega_{\rm LO}$, with weight $\omega_\sigma/\tilde\omega$ (see the derivation above).</p></div>
+      <div data-k="e0l" hidden><p><strong>$D^{0l}_{\mu\nu}=-\frac{4\pi c}{q^2}\frac{q_\mu q_\nu}{\omega^2}$</strong> (E.374) ↔ <strong>$v$</strong>. It is the Coulomb energy of Eq. (E.235′) written as the response of $\bA_l$ to a current. The quantized longitudinal photon of the interaction picture has no dynamics and its propagator vanishes (E.263); both statements are correct.</p></div>
+      <div data-k="e0t" hidden><p><strong>$D^{0t}_{\mu\nu}=-\frac{4\pi c}{q^2}\frac{q^2\delta_{\mu\nu}-q_\mu q_\nu}{\omega^2-c^2q^2+i\eta}$</strong> (E.261, E.372) ↔ <strong>no counterpart</strong>. Giustino has no transverse photons; light enters only as a classical field in phonon-assisted absorption (G.200). $D^{0t}\propto1/c$ vanishes in the electrostatic limit and matters only for $q\lesssim\omega/c$ (<a href="#x-light-cone">§X.1</a>).</p></div>
+      <div data-k="e0" hidden><p><strong>$D^0_{\mu\nu}=\frac{4\pi c}{\omega^2}\,\frac{-q_\mu q_\nu+\frac{\omega^2}{c^2}\delta_{\mu\nu}}{q^2-\frac{\omega^2}{c^2}-i\eta}$</strong> (E.375), the vacuum Maxwell propagator in the temporal gauge ↔ <strong>$v$</strong>, its $c\to\infty$ limit (E.442). Inside $g^{\rm dyn,0}$ (E.415) it plays the role of the bare Coulomb potential of the displaced ions.</p></div>
+      <div data-k="eDe" hidden><p><strong>$D^{\rm e}$</strong>, the photon propagator dressed by electrons only (E.388), with $\hat\epsilon^{\rm e}D^{\rm e}=D^0$ (E.431–E.432) ↔ <strong>$W_{\rm e}$</strong>: $D^{\rm e}_{11}\equiv W^{\rm e}$ (E.437), and for $c\to\infty$, $D^{\rm e}_{\mu\nu}=-\frac{4\pi c}{\omega^2}\frac{q_\mu q_\nu}{\bq\cdot\hat\epsilon^{\rm e}\cdot\bq}$ (E.446). At finite $c$ its transverse part describes light in the electronic medium, which $W_{\rm e}$ cannot.</p></div>
+      <div data-k="erho" hidden><p><strong>Charge vertex</strong> $\rho_{n\bk,m\bk+\bq}=\langle\phi_{n\bk}|e^{-i\bq\cdot\br}|\phi_{m\bk+\bq}\rangle$ (E.106 at $\bG=0$), a matrix element of the number density, so the charge vertex proper is $e\rho$ ↔ <strong>density vertex</strong>, identical. In EPP it appears in the $4\times4$ propagator of §6, before the connection formulas convert it into a current vertex.</p></div>
+      <div data-k="ej" hidden><p><strong>Current vertex</strong> $j^\mu_{n\bk,m\bk+\bq}$ (E.384) ↔ <strong>density vertex</strong>, for the longitudinal part only: $\bq\cdot\bj$ is fixed by $e\rho$ through (E.428′). The transverse part couples to $D^{0t}$ and has no Giustino counterpart. Diamagnetic $A^2$ terms accompany current vertices and keep $\Pi_{jj}$ gauge invariant.</p></div>
+      <div data-k="eJe" hidden><p><strong>Dynamical electron current vertex</strong> $J^\mu_{n\bk,m\bk+\bq}(\omega)=\sqrt{\tfrac{1}{c\Omega}}\,\frac{\hbar\omega}{E_{n\bk}-E_{m\bk+\bq}}\,j^\mu_{n\bk,m\bk+\bq}$ (E.414) ↔ <strong>density vertex</strong>: its longitudinal part is $\omega$ times the charge vertex. It is singular for degenerate transitions; only the product $J\chi^0J^*$ is regular.</p></div>
+      <div data-k="eJ" hidden><p><strong>Ionic current vertex</strong> $J_{\mu\sigma}(\bq,\omega)=\sqrt{\frac{\hbar}{2c\Omega_{\rm uc}\omega_\sigma(\bq)}}\,\omega\,j_{\mu\sigma}(\bq)$ (E.392) ↔ <strong>nuclear point-charge vertex</strong> of Eqs. (G.110), (G.121). The factor $\omega$ is $\dot{\bp}=-i\omega\bp$ for a Born-charge dipole. In the electrostatic limit only $\bq\cdot\bj_\sigma$ couples, which is the Fröhlich numerator $\bq\cdot\bZ^*\cdot\be/\sqrt{M}$ of Eq. (G.180), basis phase included (E p.86a′).</p></div>
+    </div>
+    <figcaption><strong>What to notice.</strong> A Giustino vertex is not one EPP glyph but a composite: select $g^{\rm b}$ and the three factors of $g^{\rm dyn,0}=iJ^{{\rm e}*}D^0J$ (E.415) light up. $D^{0t}$ has no counterpart. Switching on the electrostatic limit fades $D^{0t}$ and reduces $D^0$, $D^{\rm e}$ and the current vertices to their longitudinal parts: the EPP column collapses onto Giustino's, with $Z_\kappa\to Z^*$.</figcaption>
+  </figure>
+
+  <h3>What EPP does not (yet) contain</h3>
+  <p>Five pieces of Part A have no EPP counterpart yet: short-range (deformation-potential) coupling, which must still come from DFPT under EPP's double-counting rule (<a href="#b-foundations">§B.1</a>); electron self-energies; exchange–correlation and local fields; phonon-assisted optics; and out-of-plane dipoles in 2D. The "− missing in EPP" filter of the concept map lists them row by row, and <a href="#z-outlook">§Z.1</a> discusses them.</p>
+
+  <div class="callout caveat"><p class="callout-title">Same word, different meaning</p>
+    <ul>
+      <li><strong>Retardation.</strong> Frequency-dependent screening (Giustino) versus finite speed of light (EPP): <a href="#x-light-cone">§X.1</a>. EPP's "retarded limit $c\to\infty$" means the instantaneous limit.</li>
+      <li><strong>LO–TO splitting.</strong> E.410′ is the $q\to0$ end point of the upper phonon polariton of a crystal without electrons, a shift shared by LO and TO; the readout $\hbar\tilde\omega(q=0)$ above gives about 57.5 meV for the GaAs-like preset, whose $Z^*\approx2.18$ is fixed by the measured splitting (55.6 meV with the literature $Z^*=2.07$). The electrostatic splitting is E.454. The two differ in two independent ways. Electronic screening, which E.410′ leaves out, accounts for 56 against 36 meV: with electrons the same limit gives 35.9 meV (E.410e). The order of limits only decides whether the TO modes share that shift (35.9 meV at $q\to0$, finite $c$) or stay at 33.3 meV ($c\to\infty$ first): <a href="#b-phonon-se">§B.7</a>, <a href="#z-corrections">§Z.3</a>.</li>
+      <li><strong>Longitudinal photon.</strong> $D^{0l}=0$ (E.263) versus the Coulomb propagator (E.374): <a href="#b-propagator">§B.6</a>.</li>
+      <li><strong>Screened vertices.</strong> One bare and one screened in phonon self-energies, two screened in Fan–Migdal: <a href="#a-phonon-se">§A.6</a>, <a href="#a-electron-se">§A.7</a>, <a href="#b-frohlich">§B.8</a>.</li>
+    </ul>
+  </div>
+
+  <div class="callout connect"><p class="callout-title">Using the dictionary in Part B</p><p>Each translation is derived where it first appears: Coulomb as the longitudinal photon in <a href="#b-fields">§B.4</a>, the gauge-invariant $\Pi_{jj}$ in <a href="#b-photon-se">§B.5</a>, the connection formulas and the total propagator $D$ in <a href="#b-propagator">§B.6</a>, $\Omega^{\rm e}$ and the LO–TO shift in <a href="#b-phonon-se">§B.7</a>, the vertices $g^{\rm dyn,0}$ and $g^{\rm dyn}$ in <a href="#b-frohlich">§B.8</a>, and the return to Giustino's formulas in <a href="#b-electrostatic">§B.9</a>. The Hedin–Baym side of every row is in <a href="#a-hedin-baym">§A.5</a> and <a href="#a-phonon-se">§A.6</a>.</p></div>
+</section>
+<script>
+(() => {
+  const sec = document.getElementById('x-dictionary');
+  if (!sec || !window.EPP) return;
+
+  /* ---------- 1. concept map: category chips and filter ---------- */
+  const CAT = { same: ['≡', 'same physics'], gen: ['⊃', 'generalized'], new: ['+', 'new in EPP'], missing: ['−', 'missing in EPP'] };
+  const chipStyle = 'display:inline-block;font-family:var(--font-ui);font-weight:500;font-size:0.72rem;letter-spacing:0.03em;line-height:1.5;padding:0 7px;margin:0 4px 3px 0;border:1px solid var(--rule);border-radius:9px;background:var(--surface-2);color:var(--fg-2);white-space:nowrap';
+  const rows = [...sec.querySelectorAll('#x-dictionary-concepts tbody tr')];
+  const counts = { all: rows.length, same: 0, gen: 0, new: 0, missing: 0 };
+  rows.forEach(r => {
+    const cats = (r.dataset.cat || '').split(/\s+/).filter(Boolean);
+    const td = r.cells[0];
+    const box = document.createElement('div');
+    cats.forEach(c => { counts[c]++; const s = document.createElement('span'); s.style.cssText = chipStyle; s.textContent = CAT[c][0] + ' ' + CAT[c][1]; box.appendChild(s); });
+    td.insertBefore(box, td.firstChild);
+  });
+  sec.querySelectorAll('.x-dict-ln').forEach(s => { s.style.cssText = 'font-family:var(--font-ui);font-weight:400;font-size:0.8rem;color:var(--muted);white-space:normal'; });
+  sec.querySelectorAll('.x-dict-ren').forEach(s => { s.style.cssText = chipStyle + ';margin-left:4px'; s.textContent = 'page symbol'; });
+  const fbtns = [...sec.querySelectorAll('#x-dictionary-filter button')];
+  fbtns.forEach(b => { const n = counts[b.dataset.f]; if (n != null) b.textContent += ' (' + n + ')'; });
+  const countEl = document.getElementById('x-dictionary-count');
+  const applyFilter = (f) => {
+    let shown = 0;
+    rows.forEach(r => { const ok = f === 'all' || (r.dataset.cat || '').split(/\s+/).includes(f); r.hidden = !ok; if (ok) shown++; });
+    fbtns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.f === f)));
+    countEl.textContent = `showing ${shown} of ${rows.length} rows`;
+  };
+  fbtns.forEach(b => b.addEventListener('click', () => applyFilter(b.dataset.f)));
+  applyFilter('all');
+
+  /* ---------- 2. one Fröhlich vertex, two notations ---------- */
+  (() => {
+    const fig = document.getElementById('viz-x-dictionary-units');
+    const E2 = 14.3996;      // e^2/4πε0 = Gaussian e^2, eV Å
+    const E2SI = 180.95;     // e^2/ε0, eV Å
+    const H2 = 4.1803e-3;    // ħ^2/(amu Å^2), eV
+    const HC = 1973.27;      // ħc, eV Å
+    // literature values (illustrative); Z* is fixed so that E.454 reproduces the measured LO
+    const PRE = {
+      GaAs: { m1: 69.723, m2: 74.922, a: 5.653, eps: 10.9, wTO: 33.3, wLO: 36.2 },
+      NaCl: { m1: 22.990, m2: 35.453, a: 5.640, eps: 2.34, wTO: 20.3, wLO: 32.7 },
+      MgO:  { m1: 24.305, m2: 15.999, a: 4.212, eps: 2.96, wTO: 49.1, wLO: 89.0 }
+    };
+    Object.values(PRE).forEach(P => {
+      const mu = P.m1 * P.m2 / (P.m1 + P.m2), Om = Math.pow(P.a, 3) / 4;
+      P.Z = Math.sqrt((P.wLO * P.wLO - P.wTO * P.wTO) * 1e-6 * P.eps * Om * mu / (4 * Math.PI * E2 * H2));   // GaAs 2.18, NaCl 1.13, MgO 1.97
+    });
+    const plot = new EPP.Plot(fig.querySelector('.pl'), {
+      xlabel: 'q (Å^{-1})', ylabel: '|g| (eV)', logx: true, logy: true, xlim: [1e-3, 1], ylim: [1e-2, 1e4],
+      xname: 'q (Å^{-1})', hoverX: v => EPP.fmt(v, 3), hoverY: v => EPP.fmt(v, 4) + ' eV', aspect: 0.56,
+      ariaLabel: 'Log–log plot of the long-range electron–phonon vertex |g| versus q in Giustino and EPP conventions'
+    });
+    const ro = EPP.readout(fig.querySelector('.ro'));
+    const qs = EPP.linspace(-3, 0, 160).map(t => Math.pow(10, t));
+    const qp = EPP.linspace(-2.75, -0.25, 6).map(t => Math.pow(10, t));
+    let last = 'MgO', ui = null;
+    const draw = (s) => {
+      if (s.preset !== last && PRE[s.preset]) {
+        const P = PRE[s.preset]; last = s.preset;
+        ui.set('Z', P.Z, true); ui.set('eps', P.eps, true); ui.set('wTO', P.wTO, true);
+      }
+      const P = PRE[s.preset] || PRE.MgO;
+      const mu = P.m1 * P.m2 / (P.m1 + P.m2), Om = Math.pow(P.a, 3) / 4;
+      const Z = s.Z, eps = s.eps, ETO = s.wTO * 1e-3;                 // eV
+      const Zepp = Math.sqrt(E2) * Z;                                 // (eV Å)^{1/2}
+      const wpSI = Math.sqrt(E2SI * Z * Z * H2 / (Om * mu));          // eV
+      const wpG = Math.sqrt(4 * Math.PI * Zepp * Zepp * H2 / (Om * mu));
+      const ELO = Math.sqrt(ETO * ETO + wpG * wpG / eps);             // Eq. E.454
+      const E410 = Math.sqrt(ETO * ETO + wpG * wpG);                  // Eq. E.410′ (q → 0 at finite c, no electrons)
+      const eps0 = eps * ELO * ELO / (ETO * ETO);                     // LST
+      const pref = 4 * Math.PI / Om * E2 * Z / eps;                   // eV Å^{-2}... times length below
+      const AG = pref * Math.sqrt(H2 / (2 * mu * ELO));               // |g^G| q, eV Å^{-1}
+      const AE = pref * Math.sqrt(H2 / (2 * mu * ETO));               // √N |g^dyn| q
+      const gG = qs.map(q => AG / q), gE = qs.map(q => AE / q);
+      const gR = qs.map(q => AE * Math.sqrt(ETO / ELO) / q), gB = qs.map(q => AE * eps / q);
+      const gF = qp.map(q => Math.sqrt(ELO * 4 * Math.PI * E2 / (2 * Om * q * q) * (1 / eps - 1 / eps0)));
+      const qc = Math.sqrt(eps) * ETO / HC;                           // TO polariton scale √ε∞ ω_TO/c
+      plot.draw([
+        { type: 'line', x: qs, y: gB, color: 'c5', dash: [9, 3, 2, 3], label: 'EPP p. 95′, unscreened (bare ω_σ)' },
+        { type: 'line', x: qs, y: gE, color: 'photon', dash: [7, 4], label: 'EPP p. 98′ (bare ω_σ)' },
+        { type: 'line', x: qs, y: gG, color: 'ink', width: 2.5, label: 'Giustino (G.180), ω_{LO}' },
+        { type: 'line', x: qs, y: gR, color: 'c4', dash: [2, 4], width: 2.5, label: 'EPP × residue ω_σ/ω̃' },
+        { type: 'points', x: qp, y: gF, color: 'muted', r: 5, hollow: true },
+        { type: 'vline', at: s.q, color: 'muted', text: 'readout q' }
+      ]);
+      const leg = fig.querySelector('.legend');
+      if (leg && !leg.querySelector('.x-dict-circ')) leg.insertAdjacentHTML('beforeend', '<span class="item x-dict-circ" style="color:var(--muted)">○ <span style="color:var(--fg-2)">Fröhlich (G.7)</span></span>');
+      const fmtE = v => (v >= 1 ? EPP.fix(v, 2) + ' eV' : EPP.fix(v * 1e3, 1) + ' meV');
+      ro.set({
+        'Z^*_{EPP} = |e|Z^*': EPP.fix(Zepp, 3) + ' √(eV·Å)',
+        'ħω_p (SI | Gaussian)': EPP.fix(wpSI * 1e3, 2) + ' | ' + EPP.fix(wpG * 1e3, 2) + ' meV',
+        'ħω_{LO} (E.454)': EPP.fix(ELO * 1e3, 2) + ' meV',
+        'ħω̃(q=0), no electrons (E.410′)': EPP.fix(E410 * 1e3, 2) + ' meV',
+        'ε^0 (LST)': EPP.fix(eps0, 2),
+        '|g^G|(q)': fmtE(AG / s.q),
+        '√N|g^{dyn}|(q)': fmtE(AE / s.q),
+        'ratio √(ω_{LO}/ω_σ)': EPP.fix(Math.sqrt(ELO / ETO), 3),
+        'μ, Ω': EPP.fix(mu, 2) + ' amu, ' + EPP.fix(Om, 2) + ' Å³',
+        'q_c (TO polaritons)': qc.toExponential(1).replace(/e-(\d+)/, (m, d) => '×10⁻' + [...d].map(c => '⁰¹²³⁴⁵⁶⁷⁸⁹'[+c]).join('')) + ' Å⁻¹'
+      });
+    };
+    ui = EPP.controls(fig.querySelector('.ctrls'), [
+      { key: 'preset', type: 'select', label: 'preset (sets Z^*, ε^∞, ħω_{TO})', options: [['GaAs', 'GaAs-like'], ['NaCl', 'NaCl-like'], ['MgO', 'MgO-like']], value: 'MgO' },
+      { key: 'reset', type: 'button', label: 'reset to preset', onClick: () => { const P = PRE[ui.state.preset] || PRE.MgO; ui.set('Z', P.Z, true); ui.set('eps', P.eps, true); ui.set('wTO', P.wTO, true); } },
+      { key: 'Z', type: 'range', label: 'Born charge Z^* (units of e)', min: 0.2, max: 4, step: 0.001, value: PRE.MgO.Z, fmt: v => v.toFixed(2) },
+      { key: 'eps', type: 'range', label: 'ε^∞', min: 1, max: 15, step: 0.01, value: 2.96, fmt: v => v.toFixed(2) },
+      { key: 'wTO', type: 'range', label: 'bare ħω_σ = ħω_{TO} (meV)', min: 5, max: 200, step: 0.1, value: 49.1, fmt: v => v.toFixed(1) },
+      { key: 'q', type: 'range', label: 'readout q (Å^{-1})', min: 0.001, max: 1, value: 0.05, log: true, step: 0.01, fmt: v => EPP.fmt(v, 2) }
+    ], draw);
+  })();
+
+  /* ---------- 3. diagram dictionary ---------- */
+  (() => {
+    const fig = document.getElementById('viz-x-dictionary-glyphs');
+    const NS = 'http://www.w3.org/2000/svg';
+    const F = (a, b, o = {}) => Object.assign({ t: 'fermion', a, b }, o);
+    const L = (t, a, b, o = {}) => Object.assign({ t, a, b }, o);
+    const V = (at, r = 3.2, color) => ({ t: 'vertex', at, r, color });
+    const elec = [F([6, 31], [52, 31]), F([52, 31], [98, 31])];
+    const G = {
+      gG: { items: [F([8, 20], [96, 20])] },
+      gD: { items: [L('phonon', [8, 20], [96, 20])] },
+      gv: { items: [L('coulomb', [14, 20], [90, 20]), V([14, 20]), V([90, 20])] },
+      gW: { items: [L('screened', [14, 20], [90, 20]), V([14, 20]), V([90, 20])] },
+      gn: { items: [...elec, L('coulomb', [52, 31], [52, 5]), V([52, 31], 3.4)] },
+      gZ: { items: [L('phonon', [6, 20], [50, 20]), L('screened', [50, 20], [98, 20]), V([50, 20], 3.6)] },
+      gb: { items: [...elec, L('phonon', [52, 31], [52, 4]), V([52, 31], 3)] },
+      gg: { items: [...elec, L('phonon', [52, 24], [52, 3]), { t: 'blob', at: [52, 31], r: 7.5, color: 'muted' }] },
+      eG: { items: [F([22, 20], [82, 20], { bend: 0.32 }), F([82, 20], [22, 20], { bend: 0.32 }), V([22, 20], 2.4), V([82, 20], 2.4)] },
+      eF: { items: [L('phonon', [8, 20], [96, 20])] },
+      e0l: { items: [L('coulomb', [14, 20], [90, 20])], sq: [[14, 20], [90, 20]] },
+      e0t: { items: [L('photon', [14, 20], [90, 20])], sq: [[14, 20], [90, 20]] },
+      e0: { items: [L('coulomb', [14, 20], [90, 20]), L('photon', [14, 20], [90, 20])], sq: [[14, 20], [90, 20]] },
+      eDe: { items: [L('screened', [14, 20], [90, 20]), L('photon2', [14, 20], [90, 20], { amp: 4.6, width: 2.4 })], sq: [[14, 20], [90, 20]] },
+      erho: { items: [...elec, L('coulomb', [52, 31], [52, 5]), V([52, 31], 3.4)] },
+      ej: { items: [...elec, L('photon', [52, 31], [52, 4])], sq: [[52, 31]] },
+      eJe: { items: [...elec, L('photon', [52, 31], [52, 4])], sq: [[52, 31, 'electron']] },
+      eJ: { items: [L('phonon', [6, 20], [50, 20]), L('photon', [50, 20], [98, 20])], sq: [[50, 20, 'c4']] }
+    };
+    const PART = {
+      gG: ['eG'], gD: ['eF'], gv: ['e0l', 'e0'], gW: ['eDe'], gn: ['erho', 'ej', 'eJe'], gZ: ['eJ'],
+      gb: ['eJe', 'e0', 'eJ'], gg: ['eJe', 'eDe', 'eJ'],
+      eG: ['gG'], eF: ['gD'], e0l: ['gv'], e0t: [], e0: ['gv', 'gb'], eDe: ['gW', 'gg'], erho: ['gn'], ej: ['gn'], eJe: ['gn', 'gb', 'gg'], eJ: ['gZ', 'gb', 'gg']
+    };
+    const cards = [...fig.querySelectorAll('button[data-g]')];
+    const entries = [...fig.querySelectorAll('.x-dict-insp [data-k]')];
+    const insp = fig.querySelector('.x-dict-insp');
+    insp.style.cssText = 'margin-top:12px;padding:10px 14px;border:1px solid var(--rule);border-radius:6px;background:var(--surface-2);min-height:5.2em;font-size:0.95rem;line-height:1.5;overflow-x:auto';
+    fig.querySelectorAll('.x-dict-col').forEach(c => { c.style.cssText = 'display:grid;gap:6px;align-content:start;min-width:0'; });
+    const base = 'display:grid;grid-template-columns:104px minmax(0,1fr);gap:10px;align-items:center;width:100%;text-align:left;padding:5px 10px;border:1px solid var(--rule);border-radius:6px;background:var(--surface);color:var(--fg);font:inherit;cursor:pointer;transition:opacity .15s,background-color .15s,border-color .15s,box-shadow .15s';
+    cards.forEach(b => {
+      b.style.cssText = base;
+      b.setAttribute('aria-pressed', 'false');
+      b.setAttribute('aria-describedby', insp.id);
+      const tx = b.querySelector('.tx'); tx.style.cssText = 'display:grid;gap:1px;min-width:0';
+      b.querySelector('.sy').style.cssText = 'font-family:var(--font-text);font-size:1.02rem;color:var(--fg)';
+      b.querySelector('.nm').style.cssText = 'font-family:var(--font-ui);font-size:0.8rem;line-height:1.3;color:var(--fg-2)';
+      const lim = b.querySelector('.lim'); if (lim) lim.style.cssText = 'font-family:var(--font-ui);font-size:0.78rem;line-height:1.3;color:var(--fg-2);border-left:2px solid var(--c-photon);padding-left:6px;margin-top:2px';
+      const spec = G[b.dataset.g];
+      const host = b.querySelector('.gl'); host.style.cssText = 'display:block;width:104px;height:40px';
+      const svg = EPP.fd.draw(host, { w: 104, h: 40, label: b.querySelector('.nm').textContent, items: spec.items });
+      svg.setAttribute('aria-hidden', 'true'); svg.setAttribute('focusable', 'false');
+      if (spec.sq) {
+        const add = () => spec.sq.forEach(([x, y, c]) => { const r = document.createElementNS(NS, 'rect'); r.setAttribute('x', x - 4.2); r.setAttribute('y', y - 4.2); r.setAttribute('width', 8.4); r.setAttribute('height', 8.4); r.setAttribute('fill', EPP.color(c || 'ink')); svg.appendChild(r); });
+        add(); EPP.onTheme(add);
+      }
+    });
+    let pinned = null, hover = null, limOn = false;
+    const render = () => {
+      const id = hover || pinned, part = id ? (PART[id] || []) : [];
+      cards.forEach(b => {
+        const g = b.dataset.g, faded = limOn && g === 'e0t';
+        let bc = 'var(--rule)', bg = 'var(--surface)', sh = 'none', op = faded ? 0.38 : 1;
+        if (id) {
+          if (g === id) { bc = 'var(--accent)'; bg = 'var(--hl)'; sh = 'inset 0 0 0 1px var(--accent)'; op = 1; }
+          else if (part.includes(g)) { bc = 'var(--c-photon)'; bg = 'color-mix(in srgb, var(--c-photon) 10%, var(--surface))'; sh = 'inset 0 0 0 1px var(--c-photon)'; op = 1; }
+          else op = faded ? 0.25 : 0.42;
+        }
+        b.style.borderColor = bc; b.style.background = bg; b.style.boxShadow = sh; b.style.opacity = op;
+        b.setAttribute('aria-pressed', String(pinned === g));
+      });
+      const k = id || 'intro';
+      entries.forEach(e => { e.hidden = e.dataset.k !== k; });
+    };
+    cards.forEach(b => {
+      const g = b.dataset.g;
+      b.addEventListener('mouseenter', () => { hover = g; render(); });
+      b.addEventListener('mouseleave', () => { hover = null; render(); });
+      b.addEventListener('focus', () => { hover = g; render(); });
+      b.addEventListener('blur', () => { hover = null; render(); });
+      b.addEventListener('click', () => {
+        pinned = pinned === g ? null : g; render();
+        // stacked (phone) layout: bring the translation panel into view after a tap
+        if (pinned && window.innerWidth < 700) {
+          const r = insp.getBoundingClientRect();
+          if (r.bottom > window.innerHeight || r.top < 0) {
+            let smooth = true; try { smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+            insp.scrollIntoView({ block: 'nearest', behavior: smooth ? 'smooth' : 'auto' });
+          }
+        }
+      });
+      b.addEventListener('keydown', (e) => { if (e.key === 'Escape') { pinned = null; hover = null; b.blur(); render(); } });
+    });
+    EPP.controls(fig.querySelector('.ctrls'), [
+      { key: 'lim', type: 'toggle', label: 'electrostatic limit c → ∞', value: false }
+    ], (s) => {
+      limOn = !!s.lim;
+      fig.querySelectorAll('.lim').forEach(n => { n.hidden = !limOn; });
+      render();
+    });
+    render();
+  })();
+})();
+</script>

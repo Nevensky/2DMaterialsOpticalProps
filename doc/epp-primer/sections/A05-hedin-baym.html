@@ -1,0 +1,496 @@
+<section class="chapter" id="a-hedin-baym" data-num="A.5" data-title="Hedin–Baym: the lattice inside W">
+  <header class="ch-head">
+    <p class="eyebrow"><span class="num">A.5</span><span>Giustino §IV · Eqs. 62–122, Table I</span></p>
+    <h2>Hedin–Baym: the lattice inside $W$</h2>
+    <p class="lede">The $W$ of a GW calculation is the Coulomb interaction screened by electrons around clamped nuclei. Letting the nuclei move adds a phonon-mediated piece, $W_{\rm ph}=W_{\rm e}\mathcal DW_{\rm e}$, whose vertex is the screened gradient of the nuclear potential. Together with a Dyson equation for the phonons, this closes into the Hedin–Baym equations, the exact framework from which Giustino derives the phonon and electron self-energies used in practice (§A.6–§A.8).</p>
+  </header>
+
+  <p>Sections <a href="#a-coupling">A.2</a>–<a href="#a-polar">A.4</a> took the Hamiltonian (G.1) as given and computed its parameters with DFT and DFPT. Giustino §IV asks which exact theory those numbers approximate. The answer is a field theory of electrons and nuclei that interact only through the Coulomb potential, built with Schwinger's functional derivatives exactly as in Hedin's derivation of GW. Units are SI with $\hbar$ explicit. All potentials ($V_{\rm tot}$, $\varphi$, $V_\kappa$) are potential energies of an electron, and densities are counted in units of the electron charge, so $\hat n_{\rm e}\ge0$ while the nuclear density $\hat n_{\rm n}\le0$. Giustino writes both the nuclear density correlator and the phonon Green function as $D$, and the phonon self-energy as $\Pi$. On this page they are $\mathcal D$ and $\Pi^{\rm ph}$, which keeps them apart from EPP's photon propagator $D$ and photon self-energy $\Pi_{jj}$.</p>
+
+  <div class="callout intuition"><p class="callout-title">Physical picture · two screening clouds</p>
+    <p>Place a test charge in a polar crystal. Within a femtosecond the <span class="t-e">electrons</span> rearrange and reduce its field by a factor $\epsilon^\infty$; that reduced interaction is the $W$ of a GW calculation. If the charge stays put for longer than a phonon period, about 0.1 ps, the ions shift too and the field drops further, to $1/\epsilon^0$ of its bare value. A moving charge therefore carries a fast electronic cloud and a slow ionic one. Hedin–Baym theory puts both clouds into one screened interaction and treats the ionic cloud as a propagating quantum object: the <span class="t-p">phonon</span>.</p>
+  </div>
+
+  <h3>One Hamiltonian, one instantaneous interaction</h3>
+  <p>Electrons are indistinguishable fermions with field operators $\hat\psi(\mathbf x)$, $\mathbf x=(\br,\sigma)$. Nuclei in a solid can be labelled individually, so they are treated in first quantization through their displacements $\Delta\hat{\boldsymbol\tau}_{\kappa p}$ from equilibrium positions $\boldsymbol\tau^0_{\kappa p}$, which are external parameters. Phonons appear later as quanta of these displacements. The most general nonrelativistic Hamiltonian is</p>
+  <div class="eq">$$\hat H=\hat T_{\rm e}+\hat T_{\rm n}+\hat U_{\rm ee}+\hat U_{\rm nn}+\hat U_{\rm en}, \tag{G.62}$$</div>
+  <p>with the kinetic energies $\hat T_{\rm e}$, $\hat T_{\rm n}$ and three Coulomb terms,</p>
+  <div class="eq">$$\hat U_{\rm ee}=\frac12\int d\br\int d\br'\,\hat n_{\rm e}(\br)\big[\hat n_{\rm e}(\br')-\delta(\br-\br')\big]v(\br,\br'), \tag{G.64}$$</div>
+  <div class="eq">$$\hat U_{\rm nn}=\frac12\sum_{\kappa'p'\neq\kappa p}Z_\kappa Z_{\kappa'}\,v\big(\boldsymbol\tau^0_{\kappa p}+\Delta\hat{\boldsymbol\tau}_{\kappa p},\,\boldsymbol\tau^0_{\kappa'p'}+\Delta\hat{\boldsymbol\tau}_{\kappa'p'}\big), \tag{G.65}$$</div>
+  <p>and $\hat U_{\rm en}=\int d\br\,d\br'\,\hat n_{\rm e}(\br)\hat n_{\rm n}(\br')v(\br,\br')$ (G Eq. 66), with point nuclei</p>
+  <div class="eq">$$\hat n_{\rm n}(\br)=-\sum_{\kappa p}Z_\kappa\,\delta\big(\br-\boldsymbol\tau^0_{\kappa p}-\Delta\hat{\boldsymbol\tau}_{\kappa p}\big). \tag{G.67}$$</div>
+  <p>Here $v(\br,\br')=e^2/(4\pi\varepsilon_0|\br-\br'|)$, $\hat n_{\rm e}=\sum_\sigma\hat\psi^\dagger\hat\psi$, and $Z_\kappa$ and $M_\kappa$ are the charge (in units of $e$) and mass of nucleus $\kappa$ in unit cell $p$. The $-\delta$ in (G.64) removes the self-interaction of the continuous electron charge, while the distinguishable nuclei in (G.65) are counted pair by pair. There is no vector potential, no current coupling and no photon. In the space-time notation used below, $1\equiv(\br_1\sigma_1t_1)$, $1^+$ is $1$ with $t_1+\eta$ ($\eta\to0^+$) and $\int d(34)\equiv\int d3\,d4$. The interaction is</p>
+  <div class="eq">$$v(12)=v(\br_1,\br_2)\,\delta(t_1-t_2),$$</div>
+  <p>so a charge moved at time $t_1$ is felt everywhere at $t_1$. Every bare interaction line in this section is this one. The screened lines $W_{\rm e}$ and $W$ are not instantaneous, because the screening clouds take time to form.</p>
+
+  <h3>The electron Green function and its self-energy</h3>
+  <p>The central object is the time-ordered Green function in the exact coupled electron–nuclear ground state $|0\rangle$, at zero temperature:</p>
+  <div class="eq">$$G(\mathbf xt,\mathbf x't')=-\frac{i}{\hbar}\langle0|\hat T\hat\psi(\mathbf xt)\hat\psi^\dagger(\mathbf x't')|0\rangle. \tag{G.70}$$</div>
+  <p>To derive its equation of motion, Giustino adds a fictitious scalar potential $\varphi(\br t)$ that couples to the total charge, $\hat H_1(t)=\int d\br\,\hat n(\br)\varphi(\br t)$ with $\hat n=\hat n_{\rm e}+\hat n_{\rm n}$, and sets it to zero at the end. Electrons feel electrons and nuclei through the same $v$, so the potential they move in, and its response to $\varphi$, involve all charges:</p>
+  <div class="eq">$$V_{\rm tot}(1)=\int d2\,v(12)\langle\hat n(2)\rangle+\varphi(1), \tag{G.79}$$</div>
+  <div class="eq">$$\epsilon^{-1}(12)=\delta V_{\rm tot}(1)/\delta\varphi(2). \tag{G.80}$$</div>
+  <p>Equation (G.80) is the most general dielectric response: because $\langle\hat n\rangle$ contains the nuclei, $\epsilon^{-1}$ includes electronic and lattice screening. With the vertex $\Gamma(123)=-\delta G^{-1}(12)/\delta V_{\rm tot}(3)$ (G Eq. 83), the equation of motion takes the Dyson form (G.84), listed in Table I below, with</p>
+  <div class="eq">$$\Sigma(12)=i\hbar\int d(34)\,G(13)\Gamma(324)W(41^+), \tag{G.85}$$</div>
+  <div class="eq">$$W(12)=\int d3\,\epsilon^{-1}(13)v(32)=\int d(3)\,v(13)\epsilon^{-1}(23). \tag{G.86}$$</div>
+  <p>The $\hbar$ in (G.85) appears because $G$ carries $1/\hbar$; with $\hbar=1$ it is the familiar $\Sigma=iGW\Gamma$. The vertex obeys Hedin's integral equation (G.87). The structure is that of GW, with one difference hidden in (G.80): $W$ is screened by the lattice as well as by the electrons.</p>
+
+  <details class="derivation"><summary><span>Derivation: from the equation of motion to $\Sigma=i\hbar G\Gamma W$</span></summary><div class="d-body">
+    <p>The Heisenberg equation for $\hat\psi$ (G Eq. 73) contains $\int d\br'\,v(\br,\br')\hat n(\br't)\hat\psi$ with the <em>total</em> density, so the equation for $G$ acquires a two-particle term $-\frac{i}{\hbar}\int d3\,v(13)\langle\hat T\hat n(3)\hat\psi(1)\hat\psi^\dagger(2)\rangle$ (G Eq. 74). Schwinger's identity, $\delta\langle\hat T\hat a\hat b\rangle/\delta\varphi(3)=-\frac{i}{\hbar}\langle\hat T[\hat n(3)-\langle\hat n(3)\rangle]\hat a\hat b\rangle$ (G Eq. 75), splits it into a mean-field part, which builds the Hartree potential of electrons and nuclei inside $V_{\rm tot}$, and a fluctuation part:</p>
+    <div class="eq">$$\Big[i\hbar\frac{\partial}{\partial t_1}+\frac{\hbar^2}{2m_{\rm e}}\nabla^2(1)-V_{\rm tot}(1)-i\hbar\int d3\,v(1^+3)\frac{\delta}{\delta\varphi(3)}\Big]G(12)=\delta(12). \tag{G.78}$$</div>
+    <p>Now (G Eq. 81)</p>
+    $$\frac{\delta G(12)}{\delta\varphi(3)}=-\int d(45)\,G(14)\,\frac{\delta G^{-1}(45)}{\delta\varphi(3)}\,G(52),$$
+    <p>and the chain rule through $V_{\rm tot}$ (G Eq. 82) with (G.80) and (G.83) gives $\delta G^{-1}(45)/\delta\varphi(3)=-\int d6\,\Gamma(456)\epsilon^{-1}(63)$. The last term of (G.78) becomes</p>
+    $$-i\hbar\int d(456)\,G(14)\Gamma(456)\Big[\int d3\,\epsilon^{-1}(63)v(31^+)\Big]G(52)=-\int d5\,\Sigma(15)G(52),$$
+    <p>and the bracket is $W(61^+)$ by the first form of (G.86). Relabelling gives (G.85). The second form of (G.86), with $\epsilon^{-1}(23)$, is correct as printed: it uses $\delta\langle\hat n(1)\rangle/\delta\varphi(2)=\delta\langle\hat n(2)\rangle/\delta\varphi(1)$, so $W(12)=W(21)$. Inverting (G.84) and differentiating with respect to $V_{\rm tot}$ gives the vertex equation (G.87).</p>
+  </div></details>
+
+  <h3>Screening by everything: $W=v+vPW$</h3>
+  <p>Differentiating (G.79) with the chain rule through $\langle\hat n\rangle$ gives a Dyson equation for $W$ with the polarization propagator</p>
+  <div class="eq">$$P(12)=\frac{\delta\langle\hat n(1)\rangle}{\delta V_{\rm tot}(2)}, \tag{G.89}$$</div>
+  <div class="eq">$$W(12)=v(12)+\int d(34)\,v(13)P(34)W(42). \tag{G.90}$$</div>
+  <p>$P$ is irreducible with respect to $v$ because $V_{\rm tot}$ already contains the Hartree field, and $\epsilon=1-vP$ (G Eq. 91). Since $\hat n=\hat n_{\rm e}+\hat n_{\rm n}$, the polarization splits as $P=P_{\rm e}+P_{\rm n}$, with $P_{\rm n}\equiv\delta\langle\hat n_{\rm n}\rangle/\delta V_{\rm tot}$ (this page's notation). If the nuclei are classical point charges clamped at $\boldsymbol\tau^0_{\kappa p}$, only the electrons respond:</p>
+  <div class="eq">$$P_{\rm e}(12)=\frac{\delta\langle\hat n_{\rm e}(1)\rangle}{\delta V_{\rm tot}(2)}=-i\hbar\sum_{\sigma_1}\int d(34)\,G(13)G(41^+)\Gamma(342), \tag{G.92}$$</div>
+  <div class="eq">$$W_{\rm e}(12)=v(12)+\int d(34)\,v(13)P_{\rm e}(34)W_{\rm e}(42), \tag{G.94}$$</div>
+  <p>with $\langle\hat n_{\rm e}(1)\rangle=-i\hbar\sum_{\sigma_1}G(11^+)$ (G Eq. 93) and $\epsilon_{\rm e}=1-vP_{\rm e}$ (G Eq. 95). Equations (G.84)–(G.87) with $W\to W_{\rm e}$ are Hedin's equations (1965) for electrons in the field of clamped nuclei. With $\Gamma(123)=\delta(12)\delta(13)$ and $G$ replaced by the Kohn–Sham $G_0$, $P_{\rm e}=-i\hbar\sum_\sigma G(12)G(21^+)$ is the RPA $\chi^0$ and $W_{\rm e}$ is the $W$ of a GW or BSE calculation. In a gapped crystal at long wavelength and at phonon frequencies, $W_{\rm e}\simeq v/\epsilon^\infty$.</p>
+
+  <div class="callout connect"><p class="callout-title">Bridge to EPP · your $W$ is $D^{\rm e}_{11}$ (§B.9)</p>
+    <p>EPP reaches $W_{\rm e}$ from the other side. At $c\to\infty$ only the Coulomb part of its electron-dressed photon propagator $D^{\rm e}$ (E.388) survives. Its scalar slot, written $D^{\rm e}_{11}$ (the index 1 labels that scalar, Coulomb slot, not the $x$ component), obeys (G.94) with $P_{\rm e}$ replaced by the RPA bubble without local fields or xc (E.435), and EPP names it $W^{\rm e}\equiv D^{\rm e}_{11}$ (E.437). So the $W$ of a GW code is one projection of EPP's photon propagator. <a href="#x-light-cone">§X.1</a> sets up the correspondence and <a href="#b-electrostatic">§B.9</a> takes the limit step by step.</p>
+  </div>
+
+  <h3>Letting the nuclei move: $W=W_{\rm e}+W_{\rm ph}$</h3>
+  <p>Now treat the electronic part exactly and the nuclear part on top of it. Subtracting (G.94) from (G.90) gives $W=W_{\rm e}+W_{\rm e}P_{\rm n}W$, and since $P_{\rm n}\epsilon^{-1}=\delta\langle\hat n_{\rm n}\rangle/\delta\varphi$,</p>
+  <div class="eq">$$W(12)=W_{\rm e}(12)+\int d(34)\,W_{\rm e}(13)\frac{\delta\langle\hat n_{\rm n}(3)\rangle}{\delta\varphi(4)}v(42). \tag{G.96}$$</div>
+  <p>The remaining step, which Giustino calls "a delicate passage", needs the nuclear response to a probe of all charges. A second probe $J$ that couples only to the nuclei, $\hat H_2(t)=\int d\br\,\hat n_{\rm n}(\br t)J(\br t)$, gives the reciprocity relation $\delta\langle\hat n_{\rm n}(1)\rangle/\delta\varphi(2)=\delta\langle\hat n(2)\rangle/\delta J(1)$ (G Eq. 99): pushing on all charges and watching the nuclei is the same as pushing on the nuclei and watching all charges. When the nuclei move the electrons follow, so the total charge response is the nuclear response screened by $\epsilon_{\rm e}^{-1}$ (G Eq. 100). What is left is the nuclear density–density correlation function</p>
+  <div class="eq">$$\mathcal D(12)=-\frac{i}{\hbar}\big\langle\hat T[\hat n_{\rm n}(1)-\langle\hat n_{\rm n}(1)\rangle][\hat n_{\rm n}(2)-\langle\hat n_{\rm n}(2)\rangle]\big\rangle, \tag{G.103}$$</div>
+  <p>in which the nuclei already interact through $W_{\rm e}$. Assembling the pieces gives the main result of Giustino §IV.B, first derived by Hedin and Lundqvist (1969):</p>
+  <div class="eq">$$W(12)=W_{\rm e}(12)+W_{\rm ph}(12), \tag{G.104}$$</div>
+  <div class="eq">$$W_{\rm ph}(12)=\int d(34)\,W_{\rm e}(13)\,\mathcal D(34)\,W_{\rm e}(24). \tag{G.105}$$</div>
+
+  <details class="derivation"><summary><span>Derivation: from (G.96) to (G.105), and the argument order in (G.100)</span></summary><div class="d-body">
+    <p>By reciprocity (G.99), $\delta\langle\hat n_{\rm n}(3)\rangle/\delta\varphi(4)=\delta\langle\hat n(4)\rangle/\delta J(3)$. The total density changes through the nuclei and through the electrons that respond to the nuclear potential $v\,\delta\langle\hat n_{\rm n}\rangle$. With $\chi_{\rm e}$ the reducible electronic density response,</p>
+    $$\delta\langle\hat n(1)\rangle=\int d3\,\Big[\delta(13)+\int d5\,\chi_{\rm e}(15)v(53)\Big]\delta\langle\hat n_{\rm n}(3)\rangle=\int d3\,\epsilon_{\rm e}^{-1}(31)\,\delta\langle\hat n_{\rm n}(3)\rangle,$$
+    <p>using $\epsilon_{\rm e}^{-1}(31)=\delta(31)+\int d5\,v(35)\chi_{\rm e}(51)$, which is (G.80) restricted to electrons, and the symmetry of $\chi_{\rm e}$ and $v$. With (G.102), $\delta\langle\hat n_{\rm n}(1)\rangle/\delta J(2)=\mathcal D(21)$, this gives $\delta\langle\hat n(4)\rangle/\delta J(3)=\int d5\,\epsilon_{\rm e}^{-1}(54)\mathcal D(35)$. Inserting it into (G.96) and using $\int d4\,\epsilon_{\rm e}^{-1}(54)v(42)=W_{\rm e}(52)$, the first form of (G.86) for electrons,</p>
+    $$W(12)=W_{\rm e}(12)+\int d(35)\,W_{\rm e}(13)\,\mathcal D(35)\,W_{\rm e}(52),$$
+    <p>which is (G.105) after relabelling and $W_{\rm e}(52)=W_{\rm e}(25)$. The argument order $\epsilon_{\rm e}^{-1}(31)$ is what makes the last step work; the printed (G.100) has $\epsilon_{\rm e}^{-1}(13)$. The two agree when $\epsilon_{\rm e}^{-1}$ is symmetric, and the final results (G.104)–(G.105) are correct as printed.</p>
+  </div></details>
+
+  <figure class="viz" id="viz-a-hedin-baym-fd">
+    <p class="viz-title">The lattice inside W: Eqs. (G.104), (G.105), (G.110) <span class="tag">diagram</span></p>
+    <div class="fd">
+      <figure><span id="fd-a-hedin-baym-w"></span><figcaption>total $W$</figcaption></figure>
+      <span class="op">=</span>
+      <figure><span id="fd-a-hedin-baym-we"></span><figcaption>clamped nuclei (GW)</figcaption></figure>
+      <span class="op">+</span>
+      <figure><span id="fd-a-hedin-baym-wph"></span><figcaption>$W_{\rm ph}=W_{\rm e}\mathcal DW_{\rm e}$</figcaption></figure>
+    </div>
+    <div class="fd">
+      <span class="op">$W_{\rm ph}\;=$</span>
+      <figure><span id="fd-a-hedin-baym-g"></span><figcaption>screened vertex $g=\epsilon_{\rm e}^{-1}\nabla V_\kappa$ at both ends</figcaption></figure>
+    </div>
+    <figcaption>Rose double-dashed lines: Coulomb interaction screened by electrons only, $W_{\rm e}$, or by electrons and nuclei, $W$. Heavy amber zigzag: the interacting nuclear propagator, the density correlator $\mathcal D(34)$ of (G.103) in the first row and the displacement correlator $\mathcal D_{\kappa\alpha p,\kappa'\alpha'p'}$ of (G.109) in the second. Dots: internal points 3 and 4, integrated over. Grey disks: the dressed electron–phonon vertex of (G.110). An electron at 2 polarizes the electron gas, the screened field pushes the nuclei, the nuclear charge fluctuation propagates, and it acts on an electron at 1, screened again.</figcaption>
+  </figure>
+
+  <h3>The vertex is a screened gradient of the nuclear potential</h3>
+  <p>Phonons appear when the point-nucleus density (G.67) is expanded in the displacements. With $\delta(\br-\bu)=\delta(\br)-\bu\cdot\nabla\delta(\br)+\frac12\bu\cdot\nabla\nabla\delta(\br)\cdot\bu$ (G Eq. 106),</p>
+  <div class="eq">$$\begin{aligned}\hat n_{\rm n}(\br)=n^0_{\rm n}(\br)&+\sum_{\kappa p}Z_\kappa\Delta\hat{\boldsymbol\tau}_{\kappa p}\cdot\nabla\delta(\br-\boldsymbol\tau^0_{\kappa p})\\&-\frac12\sum_{\kappa p}Z_\kappa\Delta\hat{\boldsymbol\tau}_{\kappa p}\cdot\nabla\nabla\delta(\br-\boldsymbol\tau^0_{\kappa p})\cdot\Delta\hat{\boldsymbol\tau}_{\kappa p}.\end{aligned} \tag{G.107}$$</div>
+  <p>The first term is the static lattice of point charges. The second is a lattice of point dipoles $Z_\kappa\Delta\hat{\boldsymbol\tau}_{\kappa p}$, the seed of polar coupling (<a href="#a-polar">§A.4</a>). The third smears each nucleus over its zero-point motion. Keeping the dipole term in each density fluctuation,</p>
+  <div class="eq">$$\mathcal D(12)=\sum_{\substack{\kappa\alpha p\\ \kappa'\alpha'p'}}Z_\kappa\nabla_{1,\alpha}\delta(\br_1-\boldsymbol\tau^0_{\kappa p})\,\mathcal D_{\kappa\alpha p,\kappa'\alpha'p'}(t_1t_2)\,Z_{\kappa'}\nabla_{2,\alpha'}\delta(\br_2-\boldsymbol\tau^0_{\kappa'p'}), \tag{G.108}$$</div>
+  <p>with the displacement–displacement correlation function, the phonon Green function of this page,</p>
+  <div class="eq">$$\mathcal D_{\kappa\alpha p,\kappa'\alpha'p'}(tt')=-\frac{i}{\hbar}\big\langle\hat T\Delta\hat\tau_{\kappa\alpha p}(t)\Delta\hat\tau_{\kappa'\alpha'p'}(t')\big\rangle. \tag{G.109}$$</div>
+  <p>Inserting (G.108) into (G.105), the delta-function gradients act on $W_{\rm e}=\epsilon_{\rm e}^{-1}v$, and $Z_\kappa v(\br,\boldsymbol\tau)=-V_\kappa(\br-\boldsymbol\tau)$ turns them into gradients of the nuclear potential:</p>
+  <div class="eq">$$\begin{aligned}W_{\rm ph}(12)=\sum_{\substack{\kappa\alpha p\\ \kappa'\alpha'p'}}\int d(34)\,&\epsilon_{\rm e}^{-1}(13)\nabla_{3,\alpha}V_\kappa(\br_3-\boldsymbol\tau^0_{\kappa p})\\&\times\mathcal D_{\kappa\alpha p,\kappa'\alpha'p'}(t_3t_4)\,\epsilon_{\rm e}^{-1}(24)\nabla_{4,\alpha'}V_{\kappa'}(\br_4-\boldsymbol\tau^0_{\kappa'p'}).\end{aligned} \tag{G.110}$$</div>
+  <p>$V_\kappa$ is the bare Coulomb potential of the nucleus, $-Z_\kappa e^2/(4\pi\varepsilon_0r)$, or its ionic pseudopotential. This is the central identification of Giustino §IV: the <span class="t-e">electron</span>–<span class="t-p">phonon</span> vertex is $\epsilon_{\rm e}^{-1}\nabla V_\kappa$, the field of a displaced nucleus screened by the full many-body dielectric matrix. The screening is dynamical, since $\epsilon_{\rm e}^{-1}(13)$ depends on $t_1-t_3$. Hedin and Lundqvist replaced it by its static limit, which is the Born–Oppenheimer approximation for the vertex. Giustino keeps the frequency dependence, following Bardeen and Pines (1955) and Baym (1961), and stresses that the harmonic truncation of (G.107) is the only approximation so far (but see the note on (G.108) at the end of this section).</p>
+  <p>In the mode basis of <a href="#a-phonon-se">§A.6</a> the vertex becomes $g_{\bq\nu}(\br,\omega)=\int d\br'\,\epsilon_{\rm e}^{-1}(\br,\br',\omega)\,g^{\rm b}_{\bq\nu}(\br')$, with the bare coupling $g^{\rm b}_{\bq\nu}=\Delta_{\bq\nu}V^{\rm en}$, the change of the electron–nuclei potential per unit amplitude of phonon $\bq\nu$ (G Eqs. 142–143). The DFPT vertex (G.38) of <a href="#a-dfpt">§A.3</a> is its static RPA+xc approximation. Symbolically $W_{\rm ph}=g\,\mathcal D\,g^*$, with screened vertices at both ends; the phonon self-energy of §A.6 will instead carry one bare and one screened vertex.</p>
+
+  <div class="callout caveat"><p class="callout-title">Subtlety · which "retardation"</p>
+    <p>Here "retardation" means Giustino's frequency-dependent electronic screening; the speed of light is infinite throughout this section, because $v(12)$ is instantaneous. EPP's second meaning, the finite speed of light, is set out in <a href="#x-light-cone">§X.1</a>.</p>
+  </div>
+
+  <h3>A polar insulator: $W_{\rm ph}$ is the Fröhlich interaction</h3>
+  <p>In a homogeneous polar insulator at long wavelength, (G.104) becomes scalar algebra. The electrons give $W_{\rm e}=v/\epsilon^\infty$, flat at phonon frequencies. The lattice adds a pole: $W=v/\epsilon(\omega)$ with $\epsilon(\omega)=\epsilon^\infty(\omega_{\rm LO}^2-\omega^2)/(\omega_{\rm TO}^2-\omega^2)$, the form EPP derives classically (E.159). With the Lyddane–Sachs–Teller relation $\epsilon^0/\epsilon^\infty=\omega_{\rm LO}^2/\omega_{\rm TO}^2$, the difference is</p>
+  <div class="eq">$$\begin{aligned}W_{\rm ph}(\bq,\omega)&=v(\bq)\Big(\frac1{\epsilon^\infty}-\frac1{\epsilon^0}\Big)\frac{\omega_{\rm LO}^2}{\omega^2-\omega_{\rm LO}^2}=\frac1\hbar\,|g(\bq)|^2\,\mathcal D^{\rm A}_{\rm LO}(\omega),\\ |g(\bq)|^2&=v(\bq)\,\frac{\hbar\omega_{\rm LO}}{2}\Big(\frac1{\epsilon^\infty}-\frac1{\epsilon^0}\Big),\qquad v(\bq)=\frac{e^2}{\varepsilon_0\Omega q^2},\end{aligned}$$</div>
+  <p>with $v(\bq)$ per unit cell of volume $\Omega$ and $\mathcal D^{\rm A}_{\rm LO}=2\omega_{\rm LO}/(\omega^2-\omega_{\rm LO}^2)$ the adiabatic LO propagator (G Eq. 132). $|g|^2$ is the square of Fröhlich's vertex (G.7) of §A.4, so the phonon part of the screened interaction is Fröhlich's coupling squared times the LO propagator: the long-wavelength content of (G.110). The model is not printed in Giustino; it follows from (G.104) and the LST relation. The figure evaluates it with damping.</p>
+
+  <figure class="viz" id="viz-a-hedin-baym-polar">
+    <p class="viz-title">Lattice screening in a polar insulator <span class="tag">interactive</span></p>
+    <div class="viz-grid two"><div class="hb-pa"></div><div class="hb-pb"></div></div>
+    <div class="ctrls"></div>
+    <div class="ro"></div>
+    <figcaption><strong>Model.</strong> Homogeneous polar insulator at long wavelength (SI): $W/v=1/\epsilon(\omega)$ with the retarded $\epsilon=\epsilon^\infty(E_{\rm LO}^2-E^2-i\gamma E)/(E_{\rm TO}^2-E^2-i\gamma E)$, $E=\hbar\omega$; $W_{\rm e}/v=1/\epsilon^\infty$; $W_{\rm ph}=W-W_{\rm e}$. Dashed teal: the undamped Fröhlich form $|g|^2\mathcal D^{\rm A}_{\rm LO}/\hbar v$. (a) real parts; grey line: static value $1/\epsilon^0$. (b) loss function $-{\rm Im}\,W/v$ and infrared absorption ${\rm Im}\,\epsilon$, log scale. Presets (literature values, illustrative): GaAs $E_{\rm TO}/E_{\rm LO}=33.3/36.2$ meV, $\epsilon^\infty=10.9$, $\Omega=45.2$ Å$^3$; MgO $49.1/89.0$ meV, $2.96$, $18.7$ Å$^3$; bulk hBN, in-plane modes, $169.9/199.6$ meV, $4.87$, $18.1$ Å$^3$ per BN pair. $\epsilon^0$ follows from LST. <strong>What to notice.</strong> Statically the lattice screens more, $W(0)=v/\epsilon^0\lt W_{\rm e}$. $W$ vanishes at TO and has its pole at LO, so the loss peaks at LO while optical absorption peaks at TO, and $W$ changes sign in between (the Reststrahlen band). The Fröhlich curve lies on top of $W_{\rm ph}$: Fröhlich's constant is the residue of $W$ at the LO pole. Clamping the nuclei leaves the flat $W_{\rm e}$ of GW.</figcaption>
+  </figure>
+
+  <h3>Jellium with mobile ions: where the attraction comes from</h3>
+  <p>In a simple metal the same algebra gives the effective interaction of Bardeen and Pines (1955), the work Giustino follows in keeping the frequency dependence of the screening. Treat the ions as a classical plasma of charge $Ze$, mass $M$ and density $n_{\rm ion}$ inside an electron gas with static dielectric function $\epsilon_{\rm e}(q)$. Their polarization is that of free charges, $vP_{\rm n}=\Omega_p^2/\omega^2$, with $\Omega_p^2=n_{\rm ion}Z^2e^2/(\varepsilon_0M)$, so $\epsilon=\epsilon_{\rm e}(q)-\Omega_p^2/\omega^2$ and</p>
+  <div class="eq">$$W(q,\omega)=\frac{v(q)}{\epsilon_{\rm e}(q)}\,\frac{\omega^2}{\omega^2-\omega_q^2},\qquad W_{\rm ph}(q,\omega)=\frac{v(q)}{\epsilon_{\rm e}(q)}\,\frac{\omega_q^2}{\omega^2-\omega_q^2},\qquad \omega_q^2=\frac{\Omega_p^2}{\epsilon_{\rm e}(q)}.$$</div>
+  <p>Electronic screening turns the ion plasma oscillation into an acoustic phonon, $\omega_q\to\Omega_pq/k_{\rm TF}$ at small $q$, with $k_{\rm TF}$ the Thomas–Fermi wavevector (Bohm–Staver sound; the dispersion and its Kohn anomaly are in <a href="#a-phonon-se">§A.6</a>). Below $\omega_q$ the total interaction is negative: electrons that exchange less energy than a phonon attract each other, because the slow ionic cloud overscreens them. At $\omega\to0$ the ions screen perfectly and $W\to0$. This frequency-dependent attraction, retarded in Giustino's sense because the ions respond late, is the pairing interaction of Eliashberg theory (<a href="#a-applications">§A.9</a>).</p>
+
+  <figure class="viz" id="viz-a-hedin-baym-jellium">
+    <p class="viz-title">Jellium with mobile ions (Bardeen–Pines) <span class="tag">interactive</span></p>
+    <div class="viz-grid two"><div class="hb-ja"></div><div class="hb-jb"></div></div>
+    <div class="ctrls"></div>
+    <div class="ro"></div>
+    <figcaption><strong>Model.</strong> Jellium (SI) with ions as a classical plasma, $\epsilon=\epsilon_{\rm e}(q)-\Omega_p^2/(\omega^2+i\gamma\omega)$, and electronic screening from the static Lindhard function $\epsilon_{\rm e}=1+(k_{\rm TF}/q)^2F(q/2k_{\rm F})$ (G Eq. 60), Thomas–Fermi ($F=1$) or none. $W$ is in units of $W_{\rm TF}=e^2/(\varepsilon_0k_{\rm TF}^2)$, the Thomas–Fermi-screened interaction at $q\to0$. (a) ${\rm Re}\,W$ over $(q,\omega)$, rose for repulsion and teal for attraction, clipped at $\pm2$; dashed: the phonon $\hbar\omega_q$. Click or drag to choose $q$. (b) cut at that $q$. Presets (free-electron values, illustrative): Na $r_s=3.93$, $Z=1$, $M=22.99$ amu; K $4.86$, $1$, $39.10$; Al $2.07$, $3$, $26.98$; Pb $2.30$, $4$, $207.2$. <strong>What to notice.</strong> Above the phonon line the interaction is the electron-screened Coulomb repulsion $W_{\rm e}$; below it the ions overscreen and $W$ turns attractive, at every $q$. Without electronic screening the ions oscillate at $\Omega_p$ for all $q$; screening makes them acoustic, with Bohm–Staver sound velocity $\Omega_p/k_{\rm TF}$.</figcaption>
+  </figure>
+
+  <h3>Phonons are nuclei interacting through $W_{\rm e}$</h3>
+  <p>The phonon propagator needs its own equation of motion. Newton's equation for $\Delta\hat{\boldsymbol\tau}_{\kappa p}$ (G Eq. 112) has the Coulomb force of the electrons and of all other nuclei on its right-hand side, with no Lorentz force and no radiation. A third probe, an external force $\mathbf F_{\kappa p}(t)$ coupled to the displacement, generates $\mathcal D_{\kappa\alpha p,\kappa'\alpha'p'}=\delta\langle\Delta\hat\tau_{\kappa\alpha p}\rangle/\delta F_{\kappa'\alpha'p'}$ (G Eq. 113), and differentiating Newton's equation gives a Dyson-like equation (G Eq. 116). In frequency space, with $f(\omega)=\int dt\,f(t)e^{i\omega t}$,</p>
+  <div class="eq">$$\sum_{\kappa''\alpha''p''}\big[M_\kappa\omega^2\delta_{\kappa\alpha p,\kappa''\alpha''p''}-\Pi^{\rm ph}_{\kappa\alpha p,\kappa''\alpha''p''}(\omega)\big]\mathcal D_{\kappa''\alpha''p'',\kappa'\alpha'p'}(\omega)=\delta_{\kappa\alpha p,\kappa'\alpha'p'}, \tag{G.118}$$</div>
+  <div class="eq">$$\begin{aligned}\Pi^{\rm ph}_{\kappa\alpha p,\kappa'\alpha'p'}(\omega)=\int d\br\,d\br'\,\big[&Z_\kappa\nabla_\alpha\delta(\br-\boldsymbol\tau^0_{\kappa p})W_{\rm e}(\br,\br',\omega)\\&+\delta_{\kappa p,\kappa'p'}\nabla_\alpha\langle\hat n(\br)\rangle v(\br,\br')\big]Z_{\kappa'}\nabla'_{\alpha'}\delta(\br'-\boldsymbol\tau^0_{\kappa'p'}).\end{aligned} \tag{G.119}$$</div>
+  <p>The first term couples two point nuclei through the electron-screened $W_{\rm e}(\omega)$. The second is Baym's "static force", from the equilibrium charge density. Holding the crystal fixed in the laboratory frame imposes the many-body acoustic sum rule</p>
+  <div class="eq">$$\sum_{\kappa'p'}\Pi^{\rm ph}_{\kappa\alpha p,\kappa'\alpha'p'}(\omega=0)=0\quad\text{for any }\alpha,\alpha', \tag{G.120}$$</div>
+  <p>and with it the self-energy takes its compact form:</p>
+  <div class="eq">$$\begin{aligned}\Pi^{\rm ph}_{\kappa\alpha p,\kappa'\alpha'p'}(\omega)=\sum_{\kappa''p''}Z_\kappa Z_{\kappa''}&\frac{\partial^2}{\partial r_\alpha\partial r'_{\alpha'}}\bigg|_{\br=\boldsymbol\tau^0_{\kappa p},\,\br'=\boldsymbol\tau^0_{\kappa''p''}}\\&\times\big[\delta_{\kappa'p',\kappa''p''}W_{\rm e}(\br,\br',\omega)-\delta_{\kappa p,\kappa'p'}W_{\rm e}(\br,\br',0)\big].\end{aligned} \tag{G.121}$$</div>
+  <details class="derivation"><summary><span>Derivation: from (G.119) and (G.120) to (G.121)</span></summary><div class="d-body">
+    <p>Integrate the first term of (G.119) by parts twice. Each $\nabla\delta$ moves onto $W_{\rm e}$ with a minus sign, so the term is $A_{\kappa p,\kappa'p'}(\omega)\equiv Z_\kappa Z_{\kappa'}\,\partial^2W_{\rm e}(\br,\br',\omega)/\partial r_\alpha\partial r'_{\alpha'}$ at $\br=\boldsymbol\tau^0_{\kappa p}$, $\br'=\boldsymbol\tau^0_{\kappa'p'}$ (Cartesian indices implied). The static term is local in the nucleus, $\delta_{\kappa p,\kappa'p'}S_{\kappa p}$, and does not depend on $\omega$. The sum rule (G.120) at $\omega=0$ fixes it: $S_{\kappa p}=-\sum_{\kappa''p''}A_{\kappa p,\kappa''p''}(0)$. Hence</p>
+    $$\Pi^{\rm ph}_{\kappa p,\kappa'p'}(\omega)=A_{\kappa p,\kappa'p'}(\omega)-\delta_{\kappa p,\kappa'p'}\sum_{\kappa''p''}A_{\kappa p,\kappa''p''}(0),$$
+    <p>which is (G.121). On the diagonal, $\kappa'p'=\kappa p$, the first term and the $\kappa''p''=\kappa p$ part of the sum combine into $Z_\kappa^2\partial\partial'[W_{\rm e}(\omega)-W_{\rm e}(0)]$ at coincident points, and the rest of the sum, $-\sum_{\kappa''p''\neq\kappa p}A_{\kappa p,\kappa''p''}(0)$, is the static restoring force from all the other nuclei. The singular bare $v$, a nucleus interacting with itself, cancels in that difference because it does not depend on frequency.</p>
+  </div></details>
+  <p>So the phonon self-energy is the mixed second derivative of the electron-screened interaction between two point nuclei, and its frequency dependence is that of $\epsilon_{\rm e}(\omega)$. The second term of (G.121) is the "self" force constant that enforces the sum rule. At $\omega=0$, (G.121) gives the Born–Oppenheimer force constants of DFPT, dressed by the exact $\epsilon_{\rm e}(0)$; §A.6 starts from this split, $\Pi^{\rm ph}=\Pi^{\rm A}+\Pi^{\rm NA}(\omega)$, and solves (G.118). The quadratic term of (G.107) survives in the mean nuclear density,</p>
+  <div class="eq">$$\langle\hat n_{\rm n}(\br t)\rangle=n^0_{\rm n}(\br)-\frac{i\hbar}{2}\sum_{\kappa p,\alpha\alpha'}Z_\kappa\frac{\partial^2\delta(\br-\boldsymbol\tau^0_{\kappa p})}{\partial r_\alpha\partial r_{\alpha'}}\mathcal D_{\kappa\alpha p,\kappa\alpha'p}(t^+t), \tag{G.122}$$</div>
+  <p>a nucleus smeared by its zero-point motion, since $i\hbar\mathcal D(t^+t)=\langle\Delta\hat\tau_\alpha\Delta\hat\tau_{\alpha'}\rangle$. It enters $V_{\rm tot}$ and produces the Debye–Waller self-energy of <a href="#a-electron-se">§A.7</a>.</p>
+
+  <div class="callout connect"><p class="callout-title">Bridge to EPP · one Dyson equation instead of two (§X.1, §B.7)</p>
+    <p>Giustino needs two coupled Dyson equations, (G.90) for $W$ and (G.118) for $\mathcal D$. EPP needs one, $D=D^0+D^0\Pi_{jj}D$ (E.379), for the propagator of the total electromagnetic field, with current–current self-energies in place of density responses. <a href="#x-light-cone">§X.1</a> maps the two structures term by term, and <a href="#b-phonon-se">§B.7</a> derives the phonon self-energy that replaces (G.121).</p>
+  </div>
+
+  <h3>The Hedin–Baym equations</h3>
+  <p>Equations (G.79), (G.84), (G.85), (G.87), (G.92)–(G.95), (G.110), (G.118), (G.121) and (G.122) close on themselves. Giustino collects them in his Table I and calls them the Hedin–Baym equations: the electronic ones are Hedin's (1965), the nuclear ones Baym's (1961). They hold at zero temperature in the harmonic approximation.</p>
+  <div class="tbl"><table style="min-width:640px">
+    <thead><tr><th style="width:9%">Eq.</th><th style="width:24%">Quantity</th><th>Expression (Giustino Table I, $\mathcal D$ and $\Pi^{\rm ph}$ renamed)</th></tr></thead>
+    <tbody>
+      <tr><td>(93)</td><td>electronic charge density</td><td>$\langle\hat n_{\rm e}(1)\rangle=-i\hbar\sum_{\sigma_1}G(11^+)$</td></tr>
+      <tr><td>(122)</td><td>nuclear charge density</td><td>$\langle\hat n_{\rm n}(\br t)\rangle=n^0_{\rm n}(\br)-\frac{i\hbar}{2}\sum_{\kappa p,\alpha\alpha'}Z_\kappa\frac{\partial^2\delta(\br-\boldsymbol\tau^0_{\kappa p})}{\partial r_\alpha\partial r_{\alpha'}}\mathcal D_{\kappa\alpha p,\kappa\alpha'p}(t^+t)$</td></tr>
+      <tr><td>(79)</td><td>total electrostatic potential</td><td>$V_{\rm tot}(1)=\int d2\,v(12)\big[\langle\hat n_{\rm e}(2)\rangle+\langle\hat n_{\rm n}(2)\rangle\big]$</td></tr>
+      <tr><td>(84)</td><td>equation of motion, electrons</td><td>$\big[i\hbar\partial/\partial t_1+(\hbar^2/2m_{\rm e})\nabla^2(1)-V_{\rm tot}(1)\big]G(12)-\int d3\,\Sigma(13)G(32)=\delta(12)$</td></tr>
+      <tr><td>(118)</td><td>equation of motion, nuclei</td><td>$\sum_{\kappa''\alpha''p''}\big[M_\kappa\omega^2\delta_{\kappa\alpha p,\kappa''\alpha''p''}-\Pi^{\rm ph}_{\kappa\alpha p,\kappa''\alpha''p''}(\omega)\big]\mathcal D_{\kappa''\alpha''p'',\kappa'\alpha'p'}(\omega)=\delta_{\kappa\alpha p,\kappa'\alpha'p'}$</td></tr>
+      <tr><td>(85)</td><td>electron self-energy</td><td>$\Sigma(12)=i\hbar\int d(34)\,G(13)\Gamma(324)\big[W_{\rm e}(41^+)+W_{\rm ph}(41^+)\big]$</td></tr>
+      <tr><td>(94)</td><td>screened Coulomb, electrons</td><td>$W_{\rm e}(12)=v(12)+\int d(34)\,v(13)P_{\rm e}(34)W_{\rm e}(42)$</td></tr>
+      <tr><td>(92)</td><td>electronic polarization</td><td>$P_{\rm e}(12)=-i\hbar\sum_{\sigma_1}\int d(34)\,G(13)G(41^+)\Gamma(342)$</td></tr>
+      <tr><td>(95)</td><td>electronic dielectric matrix</td><td>$\epsilon_{\rm e}(12)=\delta(12)-\int d(3)\,v(13)P_{\rm e}(32)$</td></tr>
+      <tr><td>(87)</td><td>vertex</td><td>$\Gamma(123)=\delta(12)\delta(13)+\int d(4567)\,[\delta\Sigma(12)/\delta G(45)]\,G(46)G(75)\Gamma(673)$</td></tr>
+      <tr><td>(110)</td><td>screened Coulomb, nuclei</td><td>$\begin{aligned}W_{\rm ph}(12)=&\textstyle\sum_{\kappa\alpha p,\kappa'\alpha'p'}\int d(34)\,\epsilon_{\rm e}^{-1}(13)\nabla_{3,\alpha}V_\kappa(\br_3-\boldsymbol\tau^0_{\kappa p})\\&\times\mathcal D_{\kappa\alpha p,\kappa'\alpha'p'}(t_3t_4)\,\epsilon_{\rm e}^{-1}(24)\nabla_{4,\alpha'}V_{\kappa'}(\br_4-\boldsymbol\tau^0_{\kappa'p'})\end{aligned}$</td></tr>
+      <tr><td>(121)</td><td>phonon self-energy</td><td>$\begin{aligned}\Pi^{\rm ph}_{\kappa\alpha p,\kappa'\alpha'p'}(\omega)=&\textstyle\sum_{\kappa''p''}Z_\kappa Z_{\kappa''}(\partial^2/\partial r_\alpha\partial r'_{\alpha'})\\&\times\big[\delta_{\kappa'p',\kappa''p''}W_{\rm e}(\br,\br',\omega)-\delta_{\kappa p,\kappa'p'}W_{\rm e}(\br,\br',0)\big]_{\br=\boldsymbol\tau^0_{\kappa p},\,\br'=\boldsymbol\tau^0_{\kappa''p''}}\end{aligned}$</td></tr>
+    </tbody>
+  </table></div>
+  <p>Three properties matter. The set is nonperturbative: it fixes the exact propagators self-consistently, not order by order in a coupling constant. It does not assume Born–Oppenheimer: $\Pi^{\rm ph}(\omega)$ and the vertex keep their frequency dependence, so the same equations cover insulators, doped semiconductors and metals. And setting $\mathcal D_{\kappa\alpha p,\kappa'\alpha'p'}=0$ removes $W_{\rm ph}$, $\Pi^{\rm ph}$ and the zero-point smearing, which returns Hedin's equations for clamped nuclei. The price is the harmonic approximation; going beyond it (Gillis 1970) is formidable. Table I contains no symbol $g$. The coupling lives in $\epsilon_{\rm e}^{-1}\nabla V_\kappa$ inside (G.110) and in $Z_\kappa\nabla\delta$ contracted with $W_{\rm e}$ in (G.121), which is why Giustino calls the electronic dielectric matrix $\epsilon_{\rm e}(\br,\br',\omega)$ "absolutely central". The map below shows how the equations feed each other.</p>
+
+  <figure class="viz" id="viz-a-hedin-baym-map">
+    <p class="viz-title">Clickable Hedin–Baym map (Table I) <span class="tag">interactive</span></p>
+    <div class="hb-map" style="position:relative;width:100%;max-width:680px;margin:0 auto;aspect-ratio:680/440;">
+      <svg class="hb-edges" style="position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible" aria-hidden="true"></svg>
+      <button type="button" class="hb-node" data-n="Gam" aria-label="vertex Gamma">$\Gamma$</button>
+      <button type="button" class="hb-node" data-n="S" aria-label="electron self-energy Sigma">$\Sigma$</button>
+      <button type="button" class="hb-node" data-n="G" aria-label="electron Green function G">$G$</button>
+      <button type="button" class="hb-node" data-n="Wph" aria-label="phonon part of the screened interaction">$W_{\rm ph}$</button>
+      <button type="button" class="hb-node" data-n="We" aria-label="electron-screened Coulomb interaction">$W_{\rm e}$</button>
+      <button type="button" class="hb-node" data-n="D" aria-label="phonon Green function">$\mathcal D$</button>
+      <button type="button" class="hb-node" data-n="Pe" aria-label="electronic polarization">$P_{\rm e}$</button>
+      <button type="button" class="hb-node" data-n="eps" aria-label="electronic dielectric matrix">$\epsilon_{\rm e}$</button>
+      <button type="button" class="hb-node" data-n="Pi" aria-label="phonon self-energy">$\Pi^{\rm ph}$</button>
+      <button type="button" class="hb-node" data-n="ne" aria-label="electronic charge density">$\langle n_{\rm e}\rangle$</button>
+      <button type="button" class="hb-node" data-n="v" aria-label="bare Coulomb interaction">$v$</button>
+      <button type="button" class="hb-node" data-n="Vt" aria-label="total electrostatic potential">$V_{\rm tot}$</button>
+      <button type="button" class="hb-node" data-n="nn" aria-label="nuclear charge density">$\langle n_{\rm n}\rangle$</button>
+      <button type="button" class="hb-node" data-n="dV" aria-label="gradient of the nuclear potential">$\nabla V_\kappa$</button>
+    </div>
+    <div class="ctrls"></div>
+    <div class="hb-panel" aria-live="polite" style="margin-top:12px;padding-top:10px;border-top:1px solid var(--rule);min-height:190px">
+      <div data-note="clamp" hidden><p><strong>Clamped nuclei.</strong> With $\mathcal D=0$, $W_{\rm ph}$ and $\Pi^{\rm ph}$ drop out and $\langle\hat n_{\rm n}\rangle=n^0_{\rm n}$, a rigid lattice of point charges. What remains is Hedin's pentagon $G\to\Gamma\to P_{\rm e}\to W_{\rm e}\to\Sigma\to G$ (Hedin 1965).</p></div>
+      <div data-note="gw" hidden><p><strong>GW.</strong> $\Gamma(123)=\delta(12)\delta(13)$ cuts the arrows into $\Gamma$: $P_{\rm e}=-i\hbar\sum_\sigma G(12)G(21^+)$ becomes the RPA $\chi^0$ (once $G\to G_0$) and $\Sigma=i\hbar G(W_{\rm e}+W_{\rm ph})$, that is GW plus the Fan–Migdal self-energy of §A.7.</p></div>
+      <div data-note="coul" hidden><p><strong>Instantaneous Coulomb.</strong> $v(12)=v(\br_1,\br_2)\delta(t_1-t_2)$ appears explicitly in $V_{\rm tot}$, $W_{\rm e}$, $\epsilon_{\rm e}$ and the nuclear potential $V_\kappa$ (rose rings and dashed arrows), and through $W_{\rm e}$ in $\Sigma$, $W_{\rm ph}$ and $\Pi^{\rm ph}$ (rose fill). EPP keeps it as the longitudinal photon $D^{0l}$ and adds the transverse photon: $v\to D^0=D^{0l}+D^{0t}$ (E.375, §B.6).</p></div>
+      <div data-k="G" hidden><p><strong>Electron Green function</strong> · G Eqs. 70, 84</p><div class="eq">$$\begin{aligned}&G(\mathbf xt,\mathbf x't')=-\frac{i}{\hbar}\langle0|\hat T\hat\psi(\mathbf xt)\hat\psi^\dagger(\mathbf x't')|0\rangle,\\&\Big[i\hbar\frac{\partial}{\partial t_1}+\frac{\hbar^2}{2m_{\rm e}}\nabla^2(1)-V_{\rm tot}(1)\Big]G(12)-\int d3\,\Sigma(13)G(32)=\delta(12)\end{aligned}$$</div><p>Quasiparticle energies, lifetimes and satellites are its poles and spectral weight. The electron–phonon renormalizations of §A.7 and §A.8 all live here.</p></div>
+      <div data-k="S" hidden><p><strong>Electron self-energy</strong> · G Eq. 85</p><div class="eq">$$\Sigma(12)=i\hbar\int d(34)\,G(13)\Gamma(324)\big[W_{\rm e}(41^+)+W_{\rm ph}(41^+)\big]$$</div><p>The $W_{\rm e}$ term is GW. The $W_{\rm ph}$ term is the Fan–Migdal self-energy (G Eq. 153, §A.7); the Debye–Waller term enters through $\langle\hat n_{\rm n}\rangle$ in $V_{\rm tot}$.</p></div>
+      <div data-k="Gam" hidden><p><strong>Vertex</strong> · G Eqs. 83, 87</p><div class="eq">$$\Gamma(123)=-\frac{\delta G^{-1}(12)}{\delta V_{\rm tot}(3)}=\delta(12)\delta(13)+\int d(4567)\,\frac{\delta\Sigma(12)}{\delta G(45)}G(46)G(75)\Gamma(673)$$</div><p>Keeping only the first term is the GW approximation.</p></div>
+      <div data-k="Pe" hidden><p><strong>Electronic polarization</strong> · G Eq. 92</p><div class="eq">$$P_{\rm e}(12)=-i\hbar\sum_{\sigma_1}\int d(34)\,G(13)G(41^+)\Gamma(342)$$</div><p>With $\Gamma=\delta\delta$ it is the RPA $\chi^0$ of a GW or BSE code, here built from the fully dressed $G$.</p></div>
+      <div data-k="eps" hidden><p><strong>Electronic dielectric matrix</strong> · G Eq. 95</p><div class="eq">$$\epsilon_{\rm e}(12)=\delta(12)-\int d3\,v(13)P_{\rm e}(32)$$</div><p>It screens the nuclear potential in the vertex of $W_{\rm ph}$ and, through $W_{\rm e}$, fixes $\Pi^{\rm ph}$: "absolutely central" in Giustino's words.</p></div>
+      <div data-k="We" hidden><p><strong>Screened Coulomb interaction, electrons</strong> · G Eq. 94</p><div class="eq">$$W_{\rm e}(12)=v(12)+\int d(34)\,v(13)P_{\rm e}(34)W_{\rm e}(42)$$</div><p>The $W$ of GW, at clamped nuclei. In EPP it is $W^{\rm e}\equiv D^{\rm e}_{11}$ (E.437).</p></div>
+      <div data-k="Wph" hidden><p><strong>Screened Coulomb interaction, nuclei</strong> · G Eq. 110</p><div class="eq">$$\begin{aligned}W_{\rm ph}(12)=\sum_{\substack{\kappa\alpha p\\ \kappa'\alpha'p'}}\int d(34)\,&\epsilon_{\rm e}^{-1}(13)\nabla_{3,\alpha}V_\kappa(\br_3-\boldsymbol\tau^0_{\kappa p})\\&\times\mathcal D_{\kappa\alpha p,\kappa'\alpha'p'}(t_3t_4)\,\epsilon_{\rm e}^{-1}(24)\nabla_{4,\alpha'}V_{\kappa'}(\br_4-\boldsymbol\tau^0_{\kappa'p'})\end{aligned}$$</div><p>The screened vertex $\epsilon_{\rm e}^{-1}\nabla V_\kappa$ sits at both ends of the phonon propagator, and $W=W_{\rm e}+W_{\rm ph}$ (G.104).</p></div>
+      <div data-k="D" hidden><p><strong>Phonon Green function</strong> · G Eqs. 109, 118</p><div class="eq">$$\sum_{\kappa''\alpha''p''}\big[M_\kappa\omega^2\delta_{\kappa\alpha p,\kappa''\alpha''p''}-\Pi^{\rm ph}_{\kappa\alpha p,\kappa''\alpha''p''}(\omega)\big]\mathcal D_{\kappa''\alpha''p'',\kappa'\alpha'p'}(\omega)=\delta_{\kappa\alpha p,\kappa'\alpha'p'}$$</div><p>The displacement–displacement correlation function $-\frac{i}{\hbar}\langle\hat T\Delta\hat\tau\,\Delta\hat\tau\rangle$; its poles are the phonons. §A.6 solves this equation.</p></div>
+      <div data-k="Pi" hidden><p><strong>Phonon self-energy</strong> · G Eq. 121</p><div class="eq">$$\begin{aligned}\Pi^{\rm ph}_{\kappa\alpha p,\kappa'\alpha'p'}(\omega)=\sum_{\kappa''p''}Z_\kappa Z_{\kappa''}&\frac{\partial^2}{\partial r_\alpha\partial r'_{\alpha'}}\big[\delta_{\kappa'p',\kappa''p''}W_{\rm e}(\br,\br',\omega)\\&-\delta_{\kappa p,\kappa'p'}W_{\rm e}(\br,\br',0)\big]_{\br=\boldsymbol\tau^0_{\kappa p},\,\br'=\boldsymbol\tau^0_{\kappa''p''}}\end{aligned}$$</div><p>Point nuclei interacting through $W_{\rm e}$. At $\omega=0$ it gives the DFPT force constants; the $W_{\rm e}(0)$ term enforces the acoustic sum rule (G.120).</p></div>
+      <div data-k="ne" hidden><p><strong>Electronic charge density</strong> · G Eq. 93</p><div class="eq">$$\langle\hat n_{\rm e}(1)\rangle=-i\hbar\sum_{\sigma_1}G(11^+)$$</div><p>The density from the equal-time Green function.</p></div>
+      <div data-k="nn" hidden><p><strong>Nuclear charge density</strong> · G Eq. 122</p><div class="eq">$$\langle\hat n_{\rm n}(\br t)\rangle=n^0_{\rm n}(\br)-\frac{i\hbar}{2}\sum_{\kappa p,\alpha\alpha'}Z_\kappa\frac{\partial^2\delta(\br-\boldsymbol\tau^0_{\kappa p})}{\partial r_\alpha\partial r_{\alpha'}}\mathcal D_{\kappa\alpha p,\kappa\alpha'p}(t^+t)$$</div><p>Point charges smeared by zero-point motion; the smearing gives the Debye–Waller self-energy (§A.7).</p></div>
+      <div data-k="Vt" hidden><p><strong>Total electrostatic potential</strong> · G Eq. 79</p><div class="eq">$$V_{\rm tot}(1)=\int d2\,v(12)\big[\langle\hat n_{\rm e}(2)\rangle+\langle\hat n_{\rm n}(2)\rangle\big]$$</div><p>The Hartree potential of electrons and nuclei together, with the probe $\varphi$ set to zero.</p></div>
+      <div data-k="v" hidden><p><strong>Bare Coulomb interaction</strong> · after G Eq. 74</p><div class="eq">$$v(12)=v(\br_1,\br_2)\,\delta(t_1-t_2),\qquad v(\br,\br')=\frac{e^2}{4\pi\varepsilon_0|\br-\br'|}$$</div><p>Instantaneous and longitudinal. In EPP it becomes the longitudinal photon $D^{0l}_{\mu\nu}=-\frac{4\pi c}{q^2}\frac{q_\mu q_\nu}{\omega^2}$ (E.374, Gaussian), joined by the transverse photon $D^{0t}$.</p></div>
+      <div data-k="dV" hidden><p><strong>Bare vertex</strong> · G Eqs. 110, 142</p><div class="eq">$$V_\kappa(\br)=-\frac{Z_\kappa e^2}{4\pi\varepsilon_0|\br|}\ \text{(or a pseudopotential)},\qquad g^{\rm b}_{\bq\nu}(\br)=\Delta_{\bq\nu}V^{\rm en}(\br)$$</div><p>The field of a displaced nucleus before screening. $\epsilon_{\rm e}^{-1}$ turns it into the dressed vertex of $W_{\rm ph}$.</p></div>
+      <p class="hb-io" style="font-family:var(--font-ui);font-size:0.86rem;color:var(--muted);margin:6px 0 0"></p>
+    </div>
+    <figcaption>Each node is one row of Table I plus the two inputs $v$ and $\nabla V_\kappa$; arrows point from ingredients to the quantity built from them, and arrows touching the selected node are drawn dark. Click a node (or Tab to it and press Enter) for its equation. Blue outline: electronic quantities; amber: nuclear ones; rose: the bare Coulomb $v$; dark: $V_{\rm tot}$, which mixes both. <strong>What to notice.</strong> Electrons and nuclei are joined only through $\epsilon_{\rm e}$ and $W_{\rm e}$, which build $W_{\rm ph}$ and $\Pi^{\rm ph}$, and through $W_{\rm ph}$ in $\Sigma$ and $\langle n_{\rm n}\rangle$ in $V_{\rm tot}$; clamping the nuclei leaves Hedin's pentagon. Every rose line in the Coulomb view is the instantaneous $v(12)$, the object EPP replaces by the photon propagator.</figcaption>
+  </figure>
+
+  <div class="callout connect"><p class="callout-title">Bridge to EPP · what gets replaced (§X.1)</p>
+    <p>Every bare Coulomb line in Table I is the instantaneous $v(12)$, coupled to charge densities. EPP keeps it as the longitudinal photon, adds the transverse photon and couples both to currents (<a href="#x-light-cone">§X.1</a>, <a href="#b-fields">§B.4</a>). For $c\to\infty$ it recovers $W=W_{\rm e}+W_{\rm e}\mathcal DW_{\rm e}$, but only for the dipolar, Born-charge part of the vertex, since its Lagrangian has no short-range coupling (<a href="#b-electrostatic">§B.9</a>).</p>
+  </div>
+
+  <div class="callout source"><p class="callout-title">Note on the source · G Eqs. 100, 108 and 127</p>
+    <p><strong>(G.100).</strong> The total-density response should read $\int d3\,\epsilon_{\rm e}^{-1}(31)\,\delta\langle\hat n_{\rm n}(3)\rangle/\delta J(2)$, not $\epsilon_{\rm e}^{-1}(13)$. Only this order turns (G.96) into (G.105) (see the derivation above). The orders coincide for a symmetric $\epsilon_{\rm e}^{-1}$, and (G.104), (G.105), (G.110) are correct as printed. The same caveat applies to the first term of (G.115).</p>
+    <p><strong>(G.108).</strong> The text says the harmonic truncation of (G.107) is the sole approximation, but (G.108) also keeps only the linear term of (G.107) in each density fluctuation. The dropped cross terms are three- and four-displacement correlators, i.e. two-phonon processes, so (G.108) and (G.110) are one-phonon expressions.</p>
+    <p><strong>(G.127).</strong> The identity used in §A.6 to reach the DFPT force constants (G.128) is printed as</p>
+    <div class="eq">$$\frac{\partial\langle\hat n_{\rm e}(\br)\rangle}{\partial\tau^0_{\kappa\alpha p}}=-Z_\kappa\int d\br'\,\big[\epsilon_{\rm e}^{-1}(\br,\br';0)-\delta(\br,\br')\big]\nabla'_\alpha\delta(\br'-\boldsymbol\tau^0_{\kappa p}).$$</div>
+    <p>It should carry $+Z_\kappa$ and $\epsilon_{\rm e}^{-1}(\br',\br;0)$. Check: for perfect screening, $\epsilon_{\rm e}^{-1}\to0$, the electrons must follow the nucleus, $\partial n_{\rm e}/\partial\tau_\alpha=-Z_\kappa\nabla_\alpha\delta(\br-\boldsymbol\tau^0_{\kappa p})$, which the corrected sign gives. With the printed sign, (G.126) would yield $Z_\kappa Z_{\kappa'}\partial\partial'(2v-W_{\rm e})$ instead of (G.121).</p>
+    <p>Giustino also uses the letter $D$ for the nuclear density correlator (G.103), the displacement correlator (G.109), its matrix $\mathbf D(\omega)$ and the dynamical matrix $D^{\rm dm}$; the arguments tell them apart. Strictly, he notes, "phonon Green function" should be reserved for $-(i/\hbar)\langle\hat T\hat a_{\bq\nu}\hat a^\dagger_{\bq'\nu'}\rangle$.</p>
+  </div>
+</section>
+<script>
+(() => {
+  // ---------- diagrams: W = W_e + W_e D W_e, and W_ph = g D g ----------
+  const lab = (x, y, t) => ({ t: 'text', at: [x, y], text: t, size: 12, upright: true, color: 'muted' });
+  EPP.fd.draw(document.getElementById('fd-a-hedin-baym-w'), { w: 116, h: 56, label: 'total screened interaction W', items: [
+    { t: 'screened', a: [18, 30], b: [98, 30], label: 'W', ldist: 18 }, lab(8, 34, '1'), lab(108, 34, '2') ] });
+  EPP.fd.draw(document.getElementById('fd-a-hedin-baym-we'), { w: 116, h: 56, label: 'electron-screened interaction W_e', items: [
+    { t: 'screened', a: [18, 30], b: [98, 30], label: 'W_e', ldist: 18 }, lab(8, 34, '1'), lab(108, 34, '2') ] });
+  EPP.fd.draw(document.getElementById('fd-a-hedin-baym-wph'), { w: 256, h: 62, label: 'phonon part W_e D W_e', items: [
+    { t: 'screened', a: [18, 30], b: [78, 30], label: 'W_e', ldist: 18 },
+    { t: 'phonon2', a: [78, 30], b: [178, 30], label: '𝒟' },
+    { t: 'screened', a: [178, 30], b: [238, 30], label: 'W_e', ldist: 18 },
+    { t: 'vertex', at: [78, 30] }, { t: 'vertex', at: [178, 30] },
+    lab(8, 34, '1'), lab(248, 34, '2'), lab(78, 52, '3'), lab(178, 52, '4') ] });
+  EPP.fd.draw(document.getElementById('fd-a-hedin-baym-g'), { w: 236, h: 62, label: 'W_ph as screened vertex, phonon propagator, screened vertex', items: [
+    { t: 'phonon2', a: [62, 32], b: [174, 32], label: '𝒟' },
+    { t: 'blob', at: [46, 32], r: 15, label: 'g' }, { t: 'blob', at: [190, 32], r: 15, label: 'g' },
+    lab(16, 36, '1'), lab(220, 36, '2') ] });
+})();
+</script>
+<script>
+(() => {
+  // ---------- Viz A: W, W_e, W_ph of a polar insulator ----------
+  const fig = document.getElementById('viz-a-hedin-baym-polar');
+  const MAT = {
+    gaas: { eto: 33.3, elo: 36.2, einf: 10.9, om: 45.2 },
+    mgo: { eto: 49.1, elo: 89.0, einf: 2.96, om: 18.7 },
+    hbn: { eto: 169.9, elo: 199.6, einf: 4.87, om: 18.1 }
+  };
+  const meV = v => v.toFixed(1) + ' meV';
+  const pa = new EPP.Plot(fig.querySelector('.hb-pa'), { xlabel: 'ħω (meV)', ylabel: 'Re W / v', xlim: [0, 72.4], ylim: [-0.25, 0.35], xname: 'ħω', hoverX: meV, hoverY: v => EPP.fmt(v, 3), ariaLabel: 'Real parts of W/v, W_e/v and W_ph/v versus phonon-range frequency' });
+  const pb = new EPP.Plot(fig.querySelector('.hb-pb'), { xlabel: 'ħω (meV)', ylabel: 'Im ε  and  −Im W/v', logy: true, xlim: [0, 72.4], ylim: [1e-4, 1e4], xname: 'ħω', hoverX: meV, hoverY: v => EPP.fmt(v, 3), ariaLabel: 'Loss function and infrared absorption versus frequency, log scale' });
+  const ro = EPP.readout(fig.querySelector('.ro'));
+  function grid(m, g) {
+    const xmax = 2 * m.elo, xs = [];
+    for (let i = 1; i <= 1400; i++) xs.push(xmax * i / 1400);
+    for (const c of [m.eto, m.elo]) for (let i = -240; i <= 240; i++) { const x = c + 25 * g * i / 240; if (x > 0 && x < xmax) xs.push(x); }
+    xs.sort((a, b) => a - b);
+    return xs.filter((x, i) => i === 0 || x - xs[i - 1] > 1e-9);
+  }
+  function draw(s) {
+    const m = MAT[s.mat] || MAT.gaas, g = s.gam, e0 = m.einf * (m.elo / m.eto) ** 2, ie = 1 / m.einf, i0 = 1 / e0;
+    const T2 = m.eto * m.eto, L2 = m.elo * m.elo, g2v = 0.5 * m.elo * (ie - i0);
+    const xs = grid(m, g), reW = [], reWe = [], reWph = [], fro = [], loss = [], absn = [];
+    for (const E of xs) {
+      const a = T2 - E * E, b = L2 - E * E, gE = g * E;
+      const d = b * b + gE * gE;
+      let re = ie * (a * b + gE * gE) / d, im = ie * gE * (a - b) / d;
+      if (s.clamp) { re = ie; im = 0; }
+      reW.push(re); reWe.push(ie); reWph.push(re - ie);
+      fro.push(Math.abs(E * E - L2) < 1e-9 ? NaN : g2v * 2 * m.elo / (E * E - L2));
+      const ab = m.einf * gE * (L2 - T2) / (a * a + gE * gE);
+      loss.push(s.clamp || -im < 1e-7 ? NaN : -im);
+      absn.push(s.clamp || ab < 1e-7 ? NaN : ab);
+    }
+    const xl = [0, 2 * m.elo], yl = [-2.5 * ie, 3.5 * ie];
+    const marks = (ytxt) => [
+      { type: 'band', x0: m.eto, x1: m.elo, color: 'muted', alpha: 0.1 },
+      { type: 'vline', at: m.eto, color: 'muted' },
+      { type: 'vline', at: m.elo, color: 'muted' },
+      { type: 'text', x: m.eto, y: ytxt, dx: -4, align: 'right', text: 'TO', color: 'muted', size: 11 },
+      { type: 'text', x: m.elo, y: ytxt, dx: 4, align: 'left', text: 'LO', color: 'muted', size: 11 }
+    ];
+    pa.draw([
+      ...marks(yl[0] + 0.94 * (yl[1] - yl[0])),
+      s.clamp ? null : { type: 'hline', at: i0, color: 'muted' },
+      s.clamp ? null : { type: 'text', x: 0, y: i0, dx: 6, dy: 9, text: '1/ε^0', color: 'muted', align: 'left', size: 11 },
+      { type: 'line', x: xs, y: reWe, color: 'electron', label: 'W_e/v (clamped nuclei)' },
+      s.clamp ? null : { type: 'line', x: xs, y: reWph, color: 'phonon', label: 'Re W_{ph}/v' },
+      (s.fro && !s.clamp) ? { type: 'line', x: xs, y: fro, color: 'c4', dash: [6, 4], label: 'Fröhlich |g|^2𝒟^A_{LO}/ħv' } : null,
+      { type: 'line', x: xs, y: reW, color: 'photon', label: 'Re W/v (total)' },
+      s.clamp ? { type: 'text', x: 1.06 * m.elo, y: -1.5 * ie, text: '𝒟 = 0: W = W_e', color: 'electron', align: 'left' } : null
+    ], { xlim: xl, ylim: yl });
+    pb.draw([
+      ...marks(2e3),
+      { type: 'line', x: xs, y: absn, color: 'c5', dash: [7, 3], label: 'Im ε (IR absorption)' },
+      { type: 'line', x: xs, y: loss, color: 'photon', label: '−Im W/v (loss)' },
+      s.clamp ? { type: 'text', x: 1.06 * m.elo, y: 3, text: '𝒟 = 0:', color: 'muted', align: 'left' } : null,
+      s.clamp ? { type: 'text', x: 1.06 * m.elo, y: 0.3, text: 'no lattice response', color: 'muted', align: 'left' } : null
+    ], { xlim: xl });
+    const gq = Math.sqrt(180.95 / m.om * (m.elo / 1000) / 2 * (ie - i0)) * 1000;
+    ro.set({ 'ε^0 (LST)': e0.toFixed(2), 'W_e/v = 1/ε^∞': ie.toFixed(3), 'W(0)/v': (s.clamp ? ie : i0).toFixed(3), '|g|^2/v': g2v.toFixed(2) + ' meV', '|g|·q': gq.toFixed(0) + ' meV Å⁻¹' });
+  }
+  EPP.controls(fig.querySelector('.ctrls'), [
+    { key: 'mat', type: 'seg', label: 'material', options: [['gaas', 'GaAs'], ['mgo', 'MgO'], ['hbn', 'hBN (in-plane)']], value: 'gaas' },
+    { key: 'gam', type: 'range', label: 'damping ħγ', min: 0.1, max: 5, value: 0.8, log: true, fmt: v => v.toFixed(2) + ' meV' },
+    { key: 'clamp', type: 'toggle', label: 'clamp the nuclei (phonon propagator = 0)', value: false },
+    { key: 'fro', type: 'toggle', label: 'show Fröhlich form |g|^2𝒟^A_{LO}', value: true }
+  ], draw);
+})();
+</script>
+<script>
+(() => {
+  // ---------- Viz B: Bardeen–Pines interaction in jellium ----------
+  const fig = document.getElementById('viz-a-hedin-baym-jellium');
+  const MET = { na: { rs: 3.93, Z: 1, M: 22.99 }, k: { rs: 4.86, Z: 1, M: 39.10 }, al: { rs: 2.07, Z: 3, M: 26.98 }, pb: { rs: 2.30, Z: 4, M: 207.2 } };
+  const a0 = 0.529177;
+  function prm(m) {
+    const kF = 1.91916 / (m.rs * a0), kTF2 = 4 * kF / (Math.PI * a0), ne = kF ** 3 / (3 * Math.PI ** 2), Oion = m.Z / ne;
+    return { kF, kTF2, kTF: Math.sqrt(kTF2), Ep: Math.sqrt(0.7564 * m.Z * m.Z / (Oion * m.M)) * 1000 };
+  }
+  function epsE(q, p, model) {
+    if (model === 'none') return 1;
+    const r = p.kTF2 / (q * q);
+    if (model === 'tf') return 1 + r;
+    const x = q / (2 * p.kF);
+    const F = Math.abs(x - 1) < 1e-9 ? 0.5 : 0.5 + (1 - x * x) / (4 * x) * Math.log(Math.abs((1 + x) / (1 - x)));
+    return 1 + r * F;
+  }
+  // W/W_TF = we * E(E + iγ) / (E^2 + iγE − Eq^2)
+  function Wc(E, we, Eq, g) {
+    const nr = E * E, ni = g * E, dr = E * E - Eq * Eq, di = g * E, dd = dr * dr + di * di;
+    return [we * (nr * dr + ni * di) / dd, we * (ni * dr - nr * di) / dd];
+  }
+  const meV = v => v.toFixed(1) + ' meV';
+  const pa = new EPP.Plot(fig.querySelector('.hb-ja'), { xlabel: 'q / k_F', ylabel: 'ħω (meV)', xlim: [0.02, 2.5], ylim: [0, 40], margin: { r: 62 }, xname: 'q/k_F', yname: 'ħω', hoverX: v => v.toFixed(2), hoverX2: meV, ariaLabel: 'Map of the real part of the Bardeen-Pines interaction versus wavevector and frequency' });
+  const pb = new EPP.Plot(fig.querySelector('.hb-jb'), { xlabel: 'ħω (meV)', ylabel: 'W / W_{TF}', xlim: [0, 40], ylim: [-3, 3], xname: 'ħω', hoverX: meV, hoverY: v => EPP.fmt(v, 3), ariaLabel: 'Cut of the interaction at fixed wavevector versus frequency' });
+  const ro = EPP.readout(fig.querySelector('.ro'));
+  let ui = null;
+  pa.onPointer = (x, y, type) => { if (ui && (type === 'down' || type === 'move')) ui.set('q', EPP.clamp(x, 0.05, 2.5)); };
+  function draw(s) {
+    const p = prm(MET[s.met] || MET.na), g = s.gam, Ep = p.Ep, ymax = 1.3 * Ep;
+    const nx = 140, ny = 110, z = new Float64Array(nx * ny);
+    for (let i = 0; i < nx; i++) {
+      const Q = 0.02 + (2.5 - 0.02) * i / (nx - 1), q = Q * p.kF, ee = epsE(q, p, s.scr), we = p.kTF2 / (q * q * ee), Eq = Ep / Math.sqrt(ee);
+      for (let j = 0; j < ny; j++) { const E = ymax * j / (ny - 1); z[j * nx + i] = E === 0 ? 0 : Wc(E, we, Eq, g)[0]; }
+    }
+    const Qs = EPP.linspace(0.02, 2.5, 240), Eqs = Qs.map(Q => Ep / Math.sqrt(epsE(Q * p.kF, p, s.scr)));
+    const q = s.q * p.kF, ee = epsE(q, p, s.scr), we = p.kTF2 / (q * q * ee), Eq = Ep / Math.sqrt(ee);
+    pa.draw([
+      { type: 'heatmap', x0: 0.02, x1: 2.5, y0: 0, y1: ymax, nx, ny, z, vmin: -2, vmax: 2, color: 'photon', color2: 'c4', label: 'Re W/W_{TF}', colorbar: 'Re W / W_{TF}', cfmt: v => v.toFixed(1) },
+      { type: 'line', x: Qs, y: Eqs, color: 'ink', dash: [5, 4], width: 1.6, label: 'ħω_q (phonon)' },
+      { type: 'vline', at: s.q, color: 'ink', width: 1.4, text: 'cut' }
+    ], { ylim: [0, ymax] });
+    const xs = [];
+    for (let i = 1; i <= 900; i++) xs.push(ymax * i / 900);
+    for (let i = -200; i <= 200; i++) { const x = Eq + 25 * g * i / 200; if (x > 0 && x < ymax) xs.push(x); }
+    xs.sort((a, b) => a - b);
+    const X = xs.filter((x, i) => i === 0 || x - xs[i - 1] > 1e-9);
+    const rW = [], rWe = [], rWph = [];
+    for (const E of X) { const w = Wc(E, we, Eq, g); rW.push(w[0]); rWe.push(we); rWph.push(w[0] - we); }
+    const sc = s.scr === 'none' ? Math.max(1, we) : 1;
+    pb.draw([
+      { type: 'band', x0: 0, x1: Eq, color: 'c4', alpha: 0.1 },
+      { type: 'vline', at: Eq, color: 'muted' },
+      { type: 'text', x: 0.015 * ymax, y: 2.6 * sc, text: 'W < 0', align: 'left', color: 'c4', size: 11 },
+      { type: 'text', x: Eq, y: -2.6 * sc, dx: 4, text: 'ħω_q', align: 'left', color: 'muted', size: 11 },
+      { type: 'line', x: X, y: rWe, color: 'electron', label: 'W_e (screened Coulomb)' },
+      { type: 'line', x: X, y: rWph, color: 'phonon', label: 'Re W_{ph}' },
+      { type: 'line', x: X, y: rW, color: 'photon', label: 'Re W (total)' }
+    ], { xlim: [0, ymax], ylim: [-3 * sc, 3 * sc] });
+    const vs = s.scr === 'none' ? 'n/a (unscreened)' : ((Ep / 1000 / 6.582119e-16) / (p.kTF * 1e10) / 1000).toFixed(2) + ' km/s';
+    ro.set({ 'ħΩ_p': meV(Ep), 'k_F': p.kF.toFixed(3) + ' Å⁻¹', 'ε_e(q)': ee.toFixed(2), 'ħω_q': meV(Eq), 'Ω_p/k_{TF}': vs });
+  }
+  ui = EPP.controls(fig.querySelector('.ctrls'), [
+    { key: 'met', type: 'seg', label: 'metal (free-electron r_s)', options: [['na', 'Na'], ['k', 'K'], ['al', 'Al'], ['pb', 'Pb']], value: 'na' },
+    { key: 'q', type: 'range', label: 'wavevector q/k_F', min: 0.05, max: 2.5, step: 0.01, value: 0.6, fmt: v => v.toFixed(2) },
+    { key: 'scr', type: 'seg', label: 'electronic screening', options: [['lind', 'Lindhard'], ['tf', 'Thomas–Fermi'], ['none', 'none']], value: 'lind' },
+    { key: 'gam', type: 'range', label: 'damping ħγ', min: 0.1, max: 3, value: 0.4, log: true, fmt: v => v.toFixed(2) + ' meV' }
+  ], draw);
+})();
+</script>
+<script>
+(() => {
+  // ---------- Viz C: clickable Hedin–Baym map ----------
+  const fig = document.getElementById('viz-a-hedin-baym-map');
+  const map = fig.querySelector('.hb-map'), svg = map.querySelector('svg'), panel = fig.querySelector('.hb-panel'), io = fig.querySelector('.hb-io');
+  const NS = 'http://www.w3.org/2000/svg';
+  // layout in a 680 x 440 frame: electronic pentagon left, phonon loop right, densities and V_tot at the bottom
+  const N = { Gam: [160, 60, 'e'], S: [340, 60, 'e'], G: [60, 170, 'e'], Wph: [500, 110, 'p'], We: [300, 190, 'e'], D: [620, 200, 'p'], Pe: [175, 285, 'e'],
+    eps: [390, 300, 'e'], Pi: [510, 300, 'p'], ne: [60, 330, 'e'], v: [290, 360, 'c'], Vt: [160, 410, 'm'], nn: [560, 410, 'p'], dV: [620, 60, 'p'] };
+  const NAME = { G: '<i>G</i>', S: 'Σ', Gam: 'Γ', Pe: '<i>P</i><sub>e</sub>', eps: '<i>ε</i><sub>e</sub>', We: '<i>W</i><sub>e</sub>', Wph: '<i>W</i><sub>ph</sub>', D: '𝒟',
+    Pi: 'Π<sup>ph</sup>', ne: '⟨<i>n</i><sub>e</sub>⟩', nn: '⟨<i>n</i><sub>n</sub>⟩', Vt: '<i>V</i><sub>tot</sub>', v: '<i>v</i>', dV: '∇<i>V</i><sub>κ</sub>' };
+  // directed edges "a is an ingredient of b", with the Table I equation that builds b
+  const E = [['G', 'ne'], ['D', 'nn'], ['ne', 'Vt'], ['nn', 'Vt'], ['v', 'Vt'], ['Vt', 'G'], ['S', 'G'], ['G', 'S'], ['Gam', 'S'], ['We', 'S'], ['Wph', 'S'],
+    ['G', 'Pe'], ['Gam', 'Pe'], ['v', 'We'], ['Pe', 'We'], ['v', 'eps'], ['Pe', 'eps'], ['S', 'Gam'], ['G', 'Gam'], ['eps', 'Wph'], ['D', 'Wph'], ['dV', 'Wph'],
+    ['We', 'Pi'], ['Pi', 'D']];
+  const PH = new Set(['D', 'Pi', 'Wph', 'dV']);
+  const EXPL = new Set(['v', 'Vt', 'We', 'eps', 'dV']), INH = new Set(['S', 'Wph', 'Pi']);
+  const btn = {};
+  map.querySelectorAll('.hb-node').forEach(b => { btn[b.dataset.n] = b; b.addEventListener('click', () => { sel = b.dataset.n; render(); }); });
+  let sel = 'Wph', st = { clamp: false, gw: false, coul: false };
+  const greyN = id => st.clamp && PH.has(id);
+  const live = ([a, b]) => !(greyN(a) || greyN(b) || (st.gw && b === 'Gam'));
+  const hue = k => (k === 'e' ? 'electron' : k === 'p' ? 'phonon' : k === 'c' ? 'photon' : 'ink');
+  function styleNodes() {
+    const W = map.clientWidth || 680, fs = EPP.clamp(W / 680 * 17, 12, 17);
+    // phones: stretch the frame vertically (positions are fractions of the box) so nodes and arrows separate
+    const ar = W < 520 ? '680/640' : '680/440';
+    if (map.style.aspectRatio.replace(/\s/g, '') !== ar) map.style.aspectRatio = ar;
+    for (const id in btn) {
+      const b = btn[id], [x, y, k] = N[id], s = b.style, on = id === sel, col = hue(k);
+      s.position = 'absolute'; s.left = (x / 6.8) + '%'; s.top = (y / 4.4) + '%'; s.transform = 'translate(-50%, -50%)';
+      s.fontFamily = 'var(--font-text)'; s.fontSize = fs + 'px'; s.lineHeight = '1.1'; s.whiteSpace = 'nowrap'; s.cursor = 'pointer';
+      s.padding = (fs * 0.32) + 'px ' + (fs * 0.5) + 'px'; s.minWidth = (fs * 2.2) + 'px'; s.borderRadius = fs + 'px';
+      s.color = EPP.color('ink');
+      s.border = (on ? 2.6 : 1.5) + 'px ' + (st.gw && id === 'Gam' ? 'dashed ' : 'solid ') + EPP.color(col);
+      let bg = EPP.color('surface');
+      if (on) bg = EPP.alpha(col, 0.14);
+      if (st.coul && INH.has(id)) bg = EPP.alpha('photon', 0.18);
+      s.background = bg;
+      const rings = [];
+      if (st.coul && EXPL.has(id)) rings.push('0 0 0 3px ' + EPP.alpha('photon', 0.6));
+      if (on) rings.push('0 0 0 ' + (st.coul && EXPL.has(id) ? 6 : 4) + 'px ' + EPP.alpha(col, 0.28));
+      s.boxShadow = rings.join(', ') || 'none';
+      s.opacity = greyN(id) ? '0.3' : '1';
+      b.setAttribute('aria-pressed', String(on));
+    }
+  }
+  function el(tag, attrs) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); svg.appendChild(e); return e; }
+  function head(x, y, ux, uy, col, op) {
+    const a = Math.atan2(uy, ux), L = 9;
+    el('polygon', { points: [[x, y], [x - L * Math.cos(a - 0.42), y - L * Math.sin(a - 0.42)], [x - L * Math.cos(a + 0.42), y - L * Math.sin(a + 0.42)]].map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' '), fill: col, opacity: op });
+  }
+  function drawEdges() {
+    const W = map.clientWidth, H = map.clientHeight;
+    if (!W || !H) return;
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    const P = {};
+    for (const id in N) { const b = btn[id]; P[id] = { x: N[id][0] / 680 * W, y: N[id][1] / 440 * H, hw: b.offsetWidth / 2 + 4, hh: b.offsetHeight / 2 + 4 }; }
+    const seen = new Set();
+    for (const e of E) {
+      const [a, b] = e, key = [a, b].sort().join('|');
+      if (seen.has(key)) continue;
+      seen.add(key);
+      const rev = E.find(f => f[0] === b && f[1] === a);
+      const fwd = live(e), bwd = rev ? live(rev) : false;
+      const A = P[a], B = P[b], dx = B.x - A.x, dy = B.y - A.y, L = Math.hypot(dx, dy), ux = dx / L, uy = dy / L;
+      const tA = Math.min(A.hw / Math.max(Math.abs(ux), 1e-6), A.hh / Math.max(Math.abs(uy), 1e-6));
+      const tB = Math.min(B.hw / Math.max(Math.abs(ux), 1e-6), B.hh / Math.max(Math.abs(uy), 1e-6));
+      const x1 = A.x + ux * tA, y1 = A.y + uy * tA, x2 = B.x - ux * tB, y2 = B.y - uy * tB;
+      let col = EPP.color('muted'), w = 1.3, op = 0.75, dash = '';
+      if (a === sel || b === sel) { col = EPP.color('ink'); w = 2.2; op = 1; }
+      if (st.coul && (a === 'v' || b === 'v')) { col = EPP.color('photon'); w = 2.4; op = 1; dash = '6 4'; }
+      if (!fwd && !bwd) { col = EPP.color('muted'); op = 0.16; w = 1.2; }
+      const line = el('line', { x1: x1.toFixed(1), y1: y1.toFixed(1), x2: x2.toFixed(1), y2: y2.toFixed(1), stroke: col, 'stroke-width': w, opacity: op, 'stroke-linecap': 'round' });
+      if (dash) line.setAttribute('stroke-dasharray', dash);
+      if (fwd) head(x2, y2, ux, uy, col, op);
+      if (bwd) head(x1, y1, -ux, -uy, col, op);
+      if (!fwd && !bwd) head(x2, y2, ux, uy, col, op);
+    }
+  }
+  function showPanel() {
+    panel.querySelectorAll('[data-k]').forEach(d => { d.hidden = d.dataset.k !== sel; });
+    panel.querySelector('[data-note="clamp"]').hidden = !st.clamp;
+    panel.querySelector('[data-note="gw"]').hidden = !st.gw;
+    panel.querySelector('[data-note="coul"]').hidden = !st.coul;
+    const ins = E.filter(e => e[1] === sel && live(e)).map(e => NAME[e[0]]);
+    const outs = E.filter(e => e[0] === sel && live(e)).map(e => NAME[e[1]]);
+    io.innerHTML = 'Built from: ' + (ins.length ? ins.join(', ') : 'external input') + ' · Feeds: ' + (outs.length ? outs.join(', ') : 'nothing (switched off)');
+  }
+  let raf = 0;
+  function render() { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { styleNodes(); drawEdges(); showPanel(); }); }
+  try { const ro = new ResizeObserver(render); ro.observe(map); Object.values(btn).forEach(b => ro.observe(b)); } catch (e) { window.addEventListener('resize', render); }
+  EPP.onTheme(render);
+  EPP.controls(fig.querySelector('.ctrls'), [
+    { key: 'clamp', type: 'toggle', label: 'clamp the nuclei (phonon propagator = 0): Hedin', value: false },
+    { key: 'gw', type: 'toggle', label: 'GW vertex, Γ = δδ', value: false },
+    { key: 'coul', type: 'toggle', label: 'show the instantaneous Coulomb v(12) = v δ(t_1 − t_2)', value: false }
+  ], s => { st = s; render(); });
+  styleNodes(); showPanel(); render();
+})();
+</script>

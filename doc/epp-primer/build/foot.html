@@ -1,0 +1,42 @@
+<footer class="refs" id="references">
+  <h2>Sources and further reading</h2>
+  <ol>
+    <li>F. Giustino, “Electron-phonon interactions from first principles”, Rev. Mod. Phys. <b>89</b>, 015003 (2017).</li>
+    <li>“Theory of the Electron-Phonon-Photon coupling”, 102-page manuscript (draft v2), the source of Part B.</li>
+    <li>C. Verdi and F. Giustino, “Fröhlich electron-phonon vertex from first principles”, Phys. Rev. Lett. <b>115</b>, 176401 (2015).</li>
+    <li>J. Sjakste, N. Vast, M. Calandra and F. Mauri, Phys. Rev. B <b>92</b>, 054307 (2015).</li>
+    <li>X. Gonze and C. Lee, Phys. Rev. B <b>55</b>, 10355 (1997): Born charges, dielectric tensors and the nonanalytic term of the dynamical matrix.</li>
+    <li>S. Baroni, S. de Gironcoli, A. Dal Corso and P. Giannozzi, Rev. Mod. Phys. <b>73</b>, 515 (2001): density-functional perturbation theory.</li>
+    <li>L. Hedin, Phys. Rev. <b>139</b>, A796 (1965); G. Baym, Ann. Phys. (N.Y.) <b>14</b>, 1 (1961).</li>
+    <li>J. Bardeen and D. Pines, Phys. Rev. <b>99</b>, 1140 (1955); H. Fröhlich, Adv. Phys. <b>3</b>, 325 (1954).</li>
+    <li>K. Huang, Proc. R. Soc. London A <b>208</b>, 352 (1951): phonon polaritons; R. H. Lyddane, R. G. Sachs and E. Teller, Phys. Rev. <b>59</b>, 673 (1941).</li>
+    <li>S. L. Adler, Phys. Rev. <b>126</b>, 413 (1962); N. Wiser, Phys. Rev. <b>129</b>, 62 (1963): microscopic dielectric response.</li>
+    <li>P. B. Allen and V. Heine, J. Phys. C <b>9</b>, 2305 (1976); P. B. Allen and R. C. Dynes, Phys. Rev. B <b>12</b>, 905 (1975).</li>
+    <li>T. Sohier, M. Gibertini, M. Calandra, F. Mauri and N. Marzari, “Breakdown of optical phonons’ splitting in two-dimensional materials”, Nano Lett. <b>17</b>, 3758 (2017).</li>
+    <li>N. S. Rytova, Proc. MSU Phys. Astron. <b>3</b>, 30 (1967); L. V. Keldysh, JETP Lett. <b>29</b>, 658 (1979): screening in thin films.</li>
+  </ol>
+  <p>Literature values that appear in neither source are marked as illustrative where they are used.</p>
+</footer>
+<script>
+(() => {
+  // contents rail: highlight the chapter in view; collapse the mobile contents after a jump
+  const links = [...document.querySelectorAll('.toc a[href^="#"]')];
+  const byId = new Map(links.map(a => [a.getAttribute('href').slice(1), a]));
+  const secs = [...document.querySelectorAll('section.chapter')];
+  let current = null;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) current = e.target.id; });
+    links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  secs.forEach(s => io.observe(s));
+  const det = document.getElementById('toc-details');
+  const mq = matchMedia('(min-width: 1120px)');
+  const sync = () => { if (det) det.open = mq.matches; };
+  sync();
+  try { mq.addEventListener('change', sync); } catch (e) {}
+  links.forEach(a => a.addEventListener('click', () => { if (!mq.matches && det) det.open = false; }));
+  // open the chapter named in the hash
+  const h = location.hash.slice(1);
+  if (h && /^[\w.~-]+$/.test(h)) { const t = document.getElementById(h); if (t) setTimeout(() => t.scrollIntoView(), 50); }
+})();
+</script>

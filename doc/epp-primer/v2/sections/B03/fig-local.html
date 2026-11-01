@@ -1,0 +1,447 @@
+  <figure class="viz" id="viz-b3-local">
+    <p class="viz-title">Local field: what depends on the model and what does not <span class="tag">interactive</span></p>
+    <div class="viz-grid two">
+      <div class="b3-local-left">
+        <div class="b3-local-geo"></div>
+        <div class="b3-local-wave"></div>
+        <div class="legend b3-local-key"><span class="item"><svg width="12" height="16" viewBox="0 0 12 16" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><line x1="6" y1="15" x2="6" y2="6" style="stroke:var(--c-5);stroke-width:1.8;stroke-linecap:round"/><path d="M6 1 L2.4 7 L9.6 7 Z" style="fill:var(--c-5)"/></svg>dipole of a cell</span><span class="item"><svg width="28" height="14" viewBox="0 0 28 14" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><path d="M2 7 H10 M6 3 V11" style="stroke:var(--c-photon);stroke-width:2;stroke-linecap:round"/><path d="M17 7 H25" style="stroke:var(--c-electron);stroke-width:2;stroke-linecap:round"/></svg>charge on the cavity wall</span><span class="item b3-local-key-cm"><svg width="14" height="16" viewBox="0 0 14 16" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><ellipse cx="7" cy="8" rx="4" ry="7" style="fill:var(--c-4);fill-opacity:0.2;stroke:var(--c-4);stroke-width:1"/></svg>electron cloud (Clausius–Mossotti)</span></div>
+      </div>
+      <div class="b3-local-right">
+        <div class="b3-local-lev"></div>
+        <div class="legend b3-local-leg"><span class="item" style="color:var(--muted)"><span class="sw dash"></span><span style="color:var(--fg-2)">$\omega_0$, springs alone</span></span><span class="item" style="color:var(--fg)"><span class="sw"></span><span style="color:var(--fg-2)">$\omega_{\mathrm{TO}}$</span></span><span class="item" style="color:var(--c-phonon)"><span class="sw"></span><span style="color:var(--fg-2)">$\omega_{\mathrm{LO}}$</span></span><span class="item"><svg width="16" height="14" viewBox="0 0 16 14" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><circle cx="8" cy="7" r="5" style="fill:none;stroke:var(--fg-2);stroke-width:1.6"/></svg>measured</span><span class="item" style="color:var(--c-photon)"><span class="sw box"></span><span style="color:var(--fg-2)">unstable: soft TO mode</span></span></div>
+      </div>
+    </div>
+    <div class="b3-local-ctrls"></div>
+    <div class="readout b3-local-ro" aria-live="polite" aria-atomic="true"><span>local-field factor $\zeta$<b class="b3-local-v-zeta"></b></span><span>$\hbar\omega_0$, springs alone<b class="b3-local-v-w0"></b></span><span class="b3-local-zs">Szigeti charge $Z_{\mathrm S}=3Z^*/(\varepsilon_\infty+2)$<b class="b3-local-v-zs"></b></span></div>
+    <div class="readout b3-local-ro2" aria-live="polite" aria-atomic="true"><span>$\hbar\omega_{\mathrm p}^{\mathrm{ion}}$<b class="b3-local-v-wp"></b></span><span>$\hbar\omega_{\mathrm{TO}}$<b class="b3-local-v-to"></b></span><span>$\hbar\omega_{\mathrm{LO}}$<b class="b3-local-v-lo"></b></span><span>$\varepsilon_{\mathrm s}$ (LST)<b class="b3-local-v-es"></b></span><span>$(\hbar\omega_{\mathrm{LO}})^2-(\hbar\omega_{\mathrm{TO}})^2=(\hbar\omega_{\mathrm p}^{\mathrm{ion}})^2/\varepsilon_\infty$<b class="b3-local-v-d2"></b></span></div>
+    <div class="readout b3-local-ro3" aria-live="polite" aria-atomic="true"><span>measured, <span class="b3-local-v-mat">GaAs</span>: $\hbar\omega_{\mathrm{TO}}$, $\hbar\omega_{\mathrm{LO}}$; $\varepsilon_{\mathrm s}$<b class="b3-local-v-meas"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> Switching the local-field model moves only $\omega_0$, the frequency of the springs alone; $\omega_{\mathrm{TO}}$, $\omega_{\mathrm{LO}}$, the difference of their squares and $\varepsilon_{\mathrm s}$ stay where experiment puts them. With the Lorentz field and the <span class="nw">$\varepsilon_\infty=10.9$</span> of GaAs, $\omega_{\mathrm{LO}}$ even lies below <span class="nw">$\omega_0$.</span></p><div class="cap-more">
+      <p><strong>Marks.</strong> (a) A cross-section through a cubic lattice of point dipoles (violet), with the Lorentz sphere around one ion (the amber disc). Rose + and blue − signs: the polarization charge $\bP\cdot\hat{\mathbf n}$ on the cavity wall, with $\hat{\mathbf n}$ pointing into the cavity. At the ion: rose $\bE$, violet $4\pi\bP/3$ ($\bP=\bP^{\mathrm{ion}}$ for Born dipoles) and their sum, ink $\bE^{\mathrm{loc}}$, in a TO wave <span class="nw">($\bE=0$)</span> or an LO wave <span class="nw">($\mathbf D=0$).</span> Teal ellipses: the electron clouds of the Clausius–Mossotti model, which $\bP$ then includes. (b) Hollow markers: measured values; shading: unstable lattice.</p>
+      <p><strong>Try.</strong> (1) Switch models: $\hbar\omega_0$ jumps from 33.3 to 35.5 to <span class="nw">42.1 meV</span> in GaAs, while $\hbar\omega_{\mathrm{TO}}=33.3$ and <span class="nw">$\hbar\omega_{\mathrm{LO}}=35.9$ meV</span> stay. (2) In the Lorentz model raise $Z^*$ toward 3.39: $\omega_{\mathrm{TO}}$ falls to zero, the soft mode of a ferroelectric, and $\varepsilon_{\mathrm s}$ diverges. (3) Choose NaCl <span class="nw">($\varepsilon_\infty=2.34\lt3$):</span> $\omega_{\mathrm{LO}}$ lies above $\omega_0$ in every model, and in the LO wave $\bE^{\mathrm{loc}}$ turns against <span class="nw">$\bP$.</span></p>
+      <p><strong>Model.</strong> <a class="eqref" href="#b3-eq-loc">(B3.13)</a> and <a class="eqref" href="#b3-eq-zeta">(B3.14)</a> with $\zeta=0$, $1/3$ or $1/(\varepsilon_\infty+2)$, $\omega_{\mathrm p}^{\mathrm{ion}}$ from <a class="eqref" href="#b3-eq-pion">(B3.4)</a>, $\varepsilon_{\mathrm s}$ from <a class="eqref" href="#b3-eq-lst">(B3.12)</a>. Each crystal fixes <span class="nw">$\omega_0^2=\omega_{\mathrm{TO}}^2+\zeta(\omega_{\mathrm p}^{\mathrm{ion}})^2$</span> from its measured $\omega_{\mathrm{TO}}$, $Z^*$ and $\varepsilon_\infty$; the sliders then act at fixed $\omega_0$. GaAs and NaCl as in the text; 3C-SiC: $Z^*=2.70$, <span class="nw">$\OV=20.72$ Å³,</span> <span class="nw">$M_{\mathrm r}=8.41$ amu,</span> <span class="nw">$\varepsilon_\infty=6.52$,</span> $\hbar\omega_{\mathrm{TO}}=98.7$ and <span class="nw">$\hbar\omega_{\mathrm{LO}}=120.5$ meV</span> (literature values, illustrative). The Clausius–Mossotti model with Szigeti charges is not in the sources.</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b3-local');
+  if (!fig || !window.EPP) return;
+  // previewed outside Section B.3 (the isolated figure test), the caption's links have no target: keep their text, drop the link
+  if (!fig.closest('#b-dielectric')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+  const TAU = 2 * Math.PI;
+
+  // ---------- model ----------
+  // (ħω_p^ion)² = 4π e² Z*²/(Ω_V M_r) in meV², with e² = 14.3996 eV Å and ħ²/(amu Å²) = 4.1802 meV, so ħω = 64.654 meV √(K[eV/Å²]/M[amu])
+  const HW = 64.654, E2 = 14.3996, CM = 8.06554;
+  const KX = HW * HW * 4 * Math.PI * E2;                  // 7.564×10⁵ meV²: (ħω_p^ion)² = KX Z*²/(Ω_V[Å³] M_r[amu])
+  // literature values, illustrative: meV, dimensionless, Å³, amu; axis limits and the largest Z* that stays on the x axis
+  const MATS = {
+    gaas: { name: 'GaAs', TO: 33.3, LO: 36.2, einf: 10.9, es: 12.9, Z: 2.07, Om: 45.17, Mr: 36.11, xmax: 100, ymax: 60, zmax: 4 },
+    nacl: { name: 'NaCl', TO: 20.33, LO: 32.73, einf: 2.34, es: 5.9, Z: 1.12, Om: 44.85, Mr: 13.95, xmax: 80, ymax: 50, zmax: 2.3 },
+    sic: { name: '3C-SiC', TO: 98.69, LO: 120.51, einf: 6.52, es: 9.72, Z: 2.70, Om: 20.72, Mr: 8.41, xmax: 320, ymax: 180, zmax: 4 }
+  };
+  const zetaOf = (kind, einf) => (kind === 'k' ? 0 : kind === 'lor' ? 1 / 3 : 1 / (einf + 2));
+  const xOf = (m, Z) => Math.sqrt(KX * Z * Z / (m.Om * m.Mr));   // ħω_p^ion (meV) for Born charge Z
+  // (B3.14) at fixed ω_0: ω_0² = ω_TO,meas² + ζ_preset (ω_p^ion,preset)², then ω_TO² = ω_0² − ζ x², ω_LO² = ω_TO² + x²/ε_∞
+  function model(kind, mat, Z, einf, wave) {
+    const m = MATS[mat], zeta = zetaOf(kind, einf), xp = xOf(m, m.Z);
+    const w02 = m.TO * m.TO + zetaOf(kind, m.einf) * xp * xp;
+    const x = xOf(m, Z), to2 = w02 - zeta * x * x, lo2 = to2 + x * x / einf, stable = to2 > 1e-9;
+    return { kind, mat, m, Z, einf, wave, zeta, xp, w02, w0: Math.sqrt(w02), x, to2, lo2, stable,
+      xc: zeta > 0 ? Math.sqrt(w02 / zeta) : Infinity,
+      TO: stable ? Math.sqrt(to2) : NaN, LO: stable && lo2 > 0 ? Math.sqrt(lo2) : NaN,
+      es: stable ? einf * lo2 / to2 : NaN, ZS: 3 * Z / (einf + 2) };
+  }
+  // fields at the central ion, in units of 4π|P|/3 for the dipoles drawn (up = along P):
+  // P = P^ion (point Born dipoles) for ζ = 0 and the Lorentz model; P = total (ions and electron clouds) in Clausius–Mossotti.
+  // TO wave: E = 0. LO wave: D = 0, so E = −4πP^ion/ε_∞ = −4πP_total. E^loc = E + 4πP/3 (B3.13); for ζ = 0 the local field is inside K.
+  function fields(s) {
+    const lo = s.wave === 'LO';
+    if (s.kind === 'k') return { E: lo ? -3 / s.einf : 0, L: null, S: null };
+    if (s.kind === 'lor') return { E: lo ? -3 / s.einf : 0, L: 1, S: 1 - (lo ? 3 / s.einf : 0) };
+    return { E: lo ? -3 : 0, L: 1, S: lo ? -2 : 1 };
+  }
+
+  // ---------- canvas text: parts {t, i: italic symbol (text font), b: bold vector, s: −1 sub / +1 sup, lo/hi: stacked sub and sup} ----------
+  let FAM = { ui: 'sans-serif', tx: 'serif' };
+  const T = (t) => ({ t }), I = (t) => ({ t, i: 1 }), B = (t) => ({ t, b: 1 });
+  const Sb = (t) => ({ t, s: -1 }), Sp = (t) => ({ t, s: 1 }), SS = (lo, hi) => ({ t: '', lo, hi });
+  const pFont = (p, size, small) => { const z = (p.i ? size + 1 : size) * (small ? 0.72 : 1); return `${p.i ? 'italic ' : ''}${p.b ? '700 ' : ''}${z.toFixed(1)}px ${p.i ? FAM.tx : FAM.ui}`; };
+  function pWidth(ctx, p, size) {
+    if (p.lo !== undefined) { ctx.font = pFont({}, size, true); return Math.max(ctx.measureText(p.lo).width, ctx.measureText(p.hi).width); }
+    ctx.font = pFont(p, size, !!p.s); return ctx.measureText(p.t).width;
+  }
+  const pw = (ctx, parts, size) => parts.reduce((w, p) => w + pWidth(ctx, p, size), 0);
+  function pd(ctx, parts, x, y, size, color, align) {
+    const W = pw(ctx, parts, size);
+    let x0 = align === 'center' ? x - W / 2 : (align === 'right' ? x - W : x);
+    ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic'; ctx.fillStyle = color;
+    for (const p of parts) {
+      const wd = pWidth(ctx, p, size);
+      if (p.lo !== undefined) {
+        ctx.font = pFont({}, size, true);
+        ctx.fillText(p.lo, x0, y + size * 0.3); ctx.fillText(p.hi, x0, y - size * 0.42);
+      } else { ctx.font = pFont(p, size, !!p.s); ctx.fillText(p.t, x0, y + (p.s === -1 ? size * 0.28 : (p.s === 1 ? -size * 0.38 : 0))); }
+      x0 += wd;
+    }
+    return W;
+  }
+  const fonts = () => { FAM = { ui: EPP.css('--font-ui') || 'sans-serif', tx: EPP.css('--font-text') || 'serif' }; };
+  // symbols as parts
+  const w0P = [I('ω'), Sb('0')], wTOP = [I('ω'), Sb('TO')], wLOP = [I('ω'), Sb('LO')], hwpP = [I('ħω'), SS('p', 'ion')];
+  const EP = [B('E')], DP = [B('D')], ElocP = [B('E'), Sp('loc')], PionP = [B('P'), Sp('ion')], PtP = [B('P')];
+  const einfP = [I('ε'), Sb('∞')], ZsP = [I('Z'), Sp('*')];
+
+  // ---------- drawing helpers ----------
+  function arrow(ctx, x0, y0, x1, y1, col, lw, head) {
+    const L = Math.hypot(x1 - x0, y1 - y0);
+    ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = lw; ctx.lineCap = 'round'; ctx.setLineDash([]);
+    if (L < 1) return;
+    const hs = Math.min(head, 0.7 * L), a = Math.atan2(y1 - y0, x1 - x0);
+    if (L > hs + 0.5) { ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1 - 0.8 * hs * Math.cos(a), y1 - 0.8 * hs * Math.sin(a)); ctx.stroke(); }
+    ctx.beginPath(); ctx.moveTo(x1, y1);
+    ctx.lineTo(x1 - hs * Math.cos(a - 0.42), y1 - hs * Math.sin(a - 0.42));
+    ctx.lineTo(x1 - hs * Math.cos(a + 0.42), y1 - hs * Math.sin(a + 0.42));
+    ctx.closePath(); ctx.fill();
+  }
+  function rrect(ctx, x, y, w, h, r) { ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(x, y, w, h, r); else ctx.rect(x, y, w, h); }
+  // label placer: each label takes the first candidate box that stays inside lim and clears the boxes placed so far
+  function placer(lim) {
+    const boxes = [];
+    const hit = (b, o) => b[0] < o[2] && b[2] > o[0] && b[1] < o[3] && b[3] > o[1];
+    return {
+      block(x0, y0, x1, y1) { boxes.push([Math.min(x0, x1), Math.min(y0, y1), Math.max(x0, x1), Math.max(y0, y1)]); },
+      // cands: [x, baseline y, align]; returns true when the label was drawn
+      put(ctx, parts, size, color, cands, bg, force) {
+        const W = pw(ctx, parts, size);
+        const boxAt = (c) => { const x0 = c[2] === 'center' ? c[0] - W / 2 : (c[2] === 'right' ? c[0] - W : c[0]); return [x0 - 2, c[1] - size * 0.98, x0 + W + 2, c[1] + size * 0.42]; };
+        let c = cands.find(cc => { const b = boxAt(cc); return b[0] >= lim[0] && b[1] >= lim[1] && b[2] <= lim[2] && b[3] <= lim[3] && !boxes.some(o => hit(b, o)); });
+        if (!c && force) c = cands[0];
+        if (!c) return false;
+        const b = boxAt(c);
+        if (bg) { ctx.fillStyle = EPP.alpha('surface', 0.86); rrect(ctx, b[0], b[1], b[2] - b[0], b[3] - b[1], 3); ctx.fill(); }
+        pd(ctx, parts, c[0], c[1], size, color, c[2]);
+        boxes.push(b);
+        return true;
+      }
+    };
+  }
+  const fitRow = (ctx, alts, size, maxW) => alts.find(a => pw(ctx, a, size) <= maxW) || alts[alts.length - 1];
+
+  // ---------- panel (a): Lorentz's construction ----------
+  const elGeo = fig.querySelector('.b3-local-geo');
+  const cvOpt = { height: 400 };
+  const cv = EPP.canvas(elGeo, cvOpt);
+  cv.canvas.setAttribute('role', 'img');
+  const keyCM = fig.querySelector('.b3-local-key-cm');
+  let cur = null, curves = null;
+  // the height follows the layout, which depends on the width only
+  function ensureH(H) {
+    H = Math.ceil(H);
+    if (cv.h === H) return;
+    cvOpt.height = H; cv.h = H;
+    cv.canvas.height = Math.round(H * cv.dpr); cv.canvas.style.height = H + 'px';
+    cv.ctx.setTransform(cv.dpr, 0, 0, cv.dpr, 0, 0);
+  }
+  // 9 × 9 sites at spacing s; the sphere (radius 2.55 s) runs between the shells at √5 s and √8 s, clear of every dipole
+  function layout(w) {
+    const s = Math.min(36, (w - 12) / 9.3), half = 4.6 * s, cx = w / 2, top = 24, cy = top + half, bot = top + 2 * half;
+    return { s, half, cx, cy, R: 2.55 * s, y1: bot + 17, y2: bot + 35, y3: bot + 53, H: bot + 61 };
+  }
+  function drawGeo() {
+    if (!cur || !cv.w) return;
+    const Lo = layout(cv.w);
+    ensureH(Lo.H);
+    cv.clear();
+    fonts();
+    const ctx = cv.ctx, W = cv.w, { s, cx, cy, R, half } = Lo;
+    const st = cur, k0 = st.kind === 'k', cmM = st.kind === 'cm', noP = st.Z < 0.005;
+    const col = { fg: EPP.color('fg'), fg2: EPP.color('fg2'), muT: EPP.textColor('muted'), surf: EPP.color('surface'),
+      P: EPP.color('c5'), PT: EPP.textColor('c5'), E: EPP.color('photon'), ET: EPP.textColor('photon'), neg: EPP.color('electron'), ph: EPP.color('phonon') };
+    if (keyCM) keyCM.style.display = cmM ? '' : 'none';
+    pd(ctx, [T('(a) the Lorentz sphere around one ion')], 6, 15, 11.5, col.fg2);
+    // the medium outside the sphere is a continuum with polarization P; the sphere is a cavity
+    ctx.fillStyle = EPP.alpha('c5', 0.075);
+    rrect(ctx, cx - half, cy - half, 2 * half, 2 * half, 0.3 * s); ctx.fill();
+    if (!k0) { ctx.fillStyle = col.surf; ctx.beginPath(); ctx.arc(cx, cy, R, 0, TAU); ctx.fill(); }
+    // one point dipole per cell, all along +z; in Clausius–Mossotti every site also carries a polarizable electron cloud
+    const hl = 0.2 * s;
+    for (let i = -4; i <= 4; i++) for (let j = -4; j <= 4; j++) {
+      const X = cx + i * s, Y = cy - j * s, inner = Math.hypot(i, j) * s < R, a = inner && !k0 ? 0.3 : 0.9;
+      if (cmM) {
+        ctx.beginPath(); ctx.ellipse(X, Y, 0.13 * s, 0.25 * s, 0, 0, TAU);
+        ctx.fillStyle = EPP.alpha('c4', 0.2 * a); ctx.fill(); ctx.lineWidth = 1; ctx.strokeStyle = EPP.alpha('c4', 0.8 * a); ctx.stroke();
+      }
+      if (!i && !j) continue;
+      if (noP) { ctx.fillStyle = EPP.alpha('muted', 0.6); ctx.beginPath(); ctx.arc(X, Y, 1.6, 0, TAU); ctx.fill(); }
+      else arrow(ctx, X, Y + hl, X, Y - hl, EPP.alpha('c5', a), 1.8, 5.5);
+    }
+    // the cavity wall: surface charge P·n̂ with n̂ into the cavity, −P cosθ: "−" on the upper arc, "+" on the lower one,
+    // 7 signs per arc at equal steps of sinθ, so their density along the wall goes as |cosθ|
+    const N = 7, g = Math.max(3, 0.11 * s), sg = [];
+    if (!noP) for (let k = 1; k <= N; k++) {
+      const sn = -1 + (2 * k - 1) / N, cs = Math.sqrt(1 - sn * sn);
+      sg.push({ X: cx + R * sn, Y: cy - R * cs, neg: true }, { X: cx + R * sn, Y: cy + R * cs, neg: false });
+    }
+    const gap = (g + 3) / R, angs = sg.map(o => Math.atan2(o.Y - cy, o.X - cx)).sort((a, b) => a - b);
+    ctx.strokeStyle = k0 ? EPP.alpha('muted', 0.6) : col.fg2; ctx.lineWidth = k0 ? 1.2 : 1.6; ctx.setLineDash(k0 ? [4, 4] : []);
+    if (!angs.length) { ctx.beginPath(); ctx.arc(cx, cy, R, 0, TAU); ctx.stroke(); }
+    else angs.forEach((a, n) => { const b = n + 1 < angs.length ? angs[n + 1] : angs[0] + TAU; if (b - a > 2 * gap) { ctx.beginPath(); ctx.arc(cx, cy, R, a + gap, b - gap); ctx.stroke(); } });
+    ctx.setLineDash([]);
+    const pl = placer([1, 20, W - 1, Lo.y1 - 12]);
+    for (const o of sg) {
+      ctx.strokeStyle = k0 ? EPP.alpha('muted', 0.55) : (o.neg ? col.neg : col.E); ctx.lineWidth = 2; ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(o.X - g, o.Y); ctx.lineTo(o.X + g, o.Y);
+      if (!o.neg) { ctx.moveTo(o.X, o.Y - g); ctx.lineTo(o.X, o.Y + g); }
+      ctx.stroke();
+      pl.block(o.X - g - 1, o.Y - g - 1, o.X + g + 1, o.Y + g + 1);
+    }
+    // the fields at the ion, side by side: E (left), E^loc (from the ion), 4πP/3 (right). One unit, 4π|P|/3, is one lattice
+    // spacing; it shrinks only when the longest arrow (E = −4πP, three units) would reach the cavity wall
+    const F = fields(st), xE = cx - 0.5 * s, xL = cx + 0.5 * s, ri = 0.16 * s;
+    const ext = Math.max(Math.abs(F.E), F.L === null ? 0 : Math.abs(F.L), F.S === null ? 0 : Math.abs(F.S));
+    const l = s * Math.min(1, 2.1 / Math.max(ext, 1e-9));
+    const yE = cy - F.E * l, yL = F.L === null ? cy : cy - F.L * l, yS = F.S === null ? cy : cy - F.S * l;
+    if (!noP) {
+      if (Math.abs(yE - cy) > 1) { arrow(ctx, xE, cy, xE, yE, col.E, 2.6, 8); pl.block(xE - 4, cy, xE + 4, yE); }
+      if (F.L !== null) { arrow(ctx, xL, cy, xL, yL, col.P, 2.6, 8); pl.block(xL - 4, cy, xL + 4, yL); }
+      if (F.S !== null && Math.abs(yS - cy) > 1) { arrow(ctx, cx, cy, cx, yS, col.fg, 2.8, 9); pl.block(cx - 4, cy, cx + 4, yS); }
+    }
+    // the ion
+    ctx.fillStyle = col.ph; ctx.beginPath(); ctx.arc(cx, cy, ri, 0, TAU); ctx.fill();
+    ctx.strokeStyle = col.surf; ctx.lineWidth = 1.5; ctx.lineCap = 'round'; ctx.beginPath();
+    ctx.moveTo(cx - 0.5 * ri, cy); ctx.lineTo(cx + 0.5 * ri, cy); ctx.moveTo(cx, cy - 0.5 * ri); ctx.lineTo(cx, cy + 0.5 * ri); ctx.stroke();
+    pl.block(cx - ri - 1, cy - ri - 1, cx + ri + 1, cy + ri + 1);
+    // labels
+    if (k0) {
+      pl.put(ctx, [T('local field')], 11, col.fg2, [[cx, cy - 0.62 * s - 13, 'center']], true, true);
+      pl.put(ctx, [T('already inside '), I('K')], 11, col.fg2, [[cx, cy - 0.62 * s, 'center']], true, true);
+    }
+    if (!noP) {
+      const Pd = cmM ? PtP : PionP, dn = (y) => y > cy;
+      if (Math.abs(yE - cy) > 1) pl.put(ctx, EP, 13, col.ET, [[xE - 6, (cy + yE) / 2 + 5, 'right'], [xE - 6, yE + (dn(yE) ? 0 : 10), 'right'], [xE, dn(yE) ? yE + 17 : yE - 9, 'center'], [xE + 6, (cy + yE) / 2 + 5, 'left']], true, true);
+      else pl.put(ctx, EP.concat([T(' = 0')]), 12, col.ET, [[xE - 2, cy + 5, 'right'], [cx, cy + ri + 18, 'center'], [xE - 2, cy - ri - 6, 'right']], true, true);
+      if (F.L !== null) pl.put(ctx, [T('4π')].concat(Pd, [T('/3')]), 12, col.PT, [[xL + 6, (cy + yL) / 2 + 5, 'left'], [xL + 6, yL + 10, 'left'], [xL, yL - 9, 'center'], [xL + 6, yL - 2, 'left']], true, true);
+      if (F.S !== null) {
+        if (Math.abs(yS - cy) > 1) pl.put(ctx, ElocP, 13, col.fg, dn(yS) ? [[cx, yS + 18, 'center'], [cx + 6, yS + 6, 'left'], [cx - 6, yS + 6, 'right']] : [[cx, yS - 9, 'center'], [cx - 6, yS + 10, 'right'], [cx + 6, yS + 10, 'left']], true, true);
+        else pl.put(ctx, ElocP.concat([T(' = 0')]), 12, col.fg, [[cx, cy + ri + 18, 'center'], [cx, cy - ri - 8, 'center']], true, true);
+      }
+      if (!k0) pl.put(ctx, cmM ? [I('e'), I('Z'), Sb('S')] : [I('e')].concat(ZsP), 12, EPP.textColor('phonon'),
+        [[cx + ri + 3, cy + ri + 11, 'left'], [cx - ri - 3, cy + ri + 11, 'right'], [cx + ri + 3, cy - ri - 4, 'left'], [cx - ri - 3, cy - ri - 4, 'right']], true, false);
+    }
+    // text rows: what the dipoles inside do, the field of the selected wave, and what it does to the mode
+    const maxW = W - 12, P = cmM ? PtP : PionP, lo = st.wave === 'LO', dir = Math.abs(F.S === null ? F.E : F.S) < 1e-9 ? 0 : Math.sign(F.S === null ? F.E : F.S);
+    const wM = lo ? wLOP : wTOP, mode = lo ? 'LO' : 'TO';
+    const r1 = noP ? [[T('a Born charge of zero leaves the ions without dipoles')], [T('no Born charge, no dipoles')]]
+      : k0 ? [[T('the local field is counted inside the spring '), I('K')], [T('local field counted inside '), I('K')]]
+      : cmM ? [[T('teal: polarizable electron clouds; inner fields cancel at the centre')], [T('teal: electron clouds; inner fields cancel at the centre')], [T('teal: electron clouds; inner fields cancel')]]
+        : [[T('lighter dipoles inside the sphere: their fields cancel at the centre (cubic sites)')], [T('inner dipoles (lighter): fields cancel at the centre (cubic sites)')],
+          [T('inner dipoles: fields cancel at the centre (cubic sites)')], [T('inner fields cancel at the centre (cubic sites)')]];
+    let r2, r3;
+    if (noP) {
+      r2 = [ZsP.concat([T(' = 0: no dipoles and no polarization charge')]), ZsP.concat([T(' = 0: no dipoles')])];
+      r3 = [wTOP.concat([T(' = ')], wLOP, [T(' = ')], w0P)];
+    } else if (!st.stable) {
+      r2 = lo ? [[T('LO wave: '), ...DP, T(' = 0 makes '), ...EP, T(' = −4π'), ...P, ...(cmM ? [] : [T('/'), ...einfP])], [T('LO: '), ...EP, T(' = −4π'), ...P, ...(cmM ? [] : [T('/'), ...einfP])]]
+        : [[T('TO wave: '), ...EP, T(' = 0, so '), ...ElocP, T(' = 4π'), ...P, T('/3')], [T('TO: '), ...ElocP, T(' = 4π'), ...P, T('/3')]];
+      r3 = lo ? [[T('lattice unstable: in a TO wave '), ...ElocP, T(' beats the springs')], [T('lattice unstable: soft TO mode, '), ...wTOP, Sp('2'), T(' < 0')], [T('soft TO mode: '), ...wTOP, Sp('2'), T(' < 0')]]
+        : [[...ElocP, T(' along '), ...P, T(' beats the springs: soft TO mode')], [T('soft TO mode: '), ...wTOP, Sp('2'), T(' < 0')]];
+    } else {
+      if (!lo) r2 = k0 ? [[T('TO wave: '), ...EP, T(' = 0, and only the springs act')], [T('TO wave: '), ...EP, T(' = 0')]]
+        : [[T('TO wave: '), ...EP, T(' = 0, so '), ...ElocP, T(' = 4π'), ...P, T('/3')], [T('TO: '), ...EP, T(' = 0, '), ...ElocP, T(' = 4π'), ...P, T('/3')]];
+      else r2 = cmM ? [[T('LO wave: '), ...DP, T(' = 0 makes '), ...EP, T(' = −4π'), ...P], [T('LO: '), ...EP, T(' = −4π'), ...P]]
+        : [[T('LO wave: '), ...DP, T(' = 0 makes '), ...EP, T(' = −4π'), ...P, T('/'), ...einfP], [T('LO: '), ...EP, T(' = −4π'), ...P, T('/'), ...einfP]];
+      const fld = k0 ? EP : ElocP;
+      if (dir === 0) r3 = [[...fld, T(' = 0: '), ...wM, T(' = '), ...w0P, T(', the springs alone')], [...wM, T(' = '), ...w0P]];
+      else r3 = [[...fld, T(dir > 0 ? ' along ' : ' against '), ...P, T(': '), ...wM, T(dir > 0 ? ' lies below ' : ' lies above '), ...w0P],
+        [...fld, T(dir > 0 ? ' along ' : ' against '), ...P, T(': '), ...wM, T(dir > 0 ? ' < ' : ' > '), ...w0P]];
+    }
+    pd(ctx, fitRow(ctx, r1, 11, maxW), cx, Lo.y1, 11, col.muT, 'center');
+    pd(ctx, fitRow(ctx, r2, 11.5, maxW), cx, Lo.y2, 11.5, col.fg2, 'center');
+    pd(ctx, fitRow(ctx, r3, 11.5, maxW), cx, Lo.y3, 11.5, col.fg, 'center');
+    const mdl = k0 ? 'local field inside the spring K (zeta = 0)' : cmM ? 'Clausius–Mossotti model with Szigeti charge' : 'Lorentz field of point Born dipoles (zeta = 1/3)';
+    const rel = noP ? 'With Z* = 0 there are no dipoles.' : (k0 ? `In the ${mode} wave the ion feels only the macroscopic field E` : `In the ${mode} wave the local field E_loc = E + 4πP/3`) +
+      (dir > 0 ? ' points along P, so the mode lies below omega_0.' : dir < 0 ? ' points against P, so the mode lies above omega_0.' : ' vanishes, so the mode sits at omega_0.');
+    cv.canvas.setAttribute('aria-label', `Panel a: cross-section through a cubic lattice of point dipoles, all pointing up, with a circular Lorentz cavity around one ion; negative polarization charge on the upper wall, positive on the lower wall. Model: ${mdl}. ${rel}`);
+  }
+
+  // ---------- panel (b): mode energies against ħω_p^ion at fixed ω_0 ----------
+  const pL = new EPP.Plot(fig.querySelector('.b3-local-lev'), {
+    xlim: [0, 100], ylim: [0, 60], legend: false, xname: 'ħω_p^{ion}',
+    hoverX: (v) => `${EPP.fix(v, 1)} meV (Z* = ${cur ? (v / xOf(cur.m, 1)).toFixed(2) : '—'})`,
+    hoverY: (v) => `${EPP.fix(v, 1)} meV (${Math.round(v * CM)} cm⁻¹)`,
+    aspect: 1.1, minHeight: 280, maxHeight: 440, margin: { l: 50, r: 12, t: 26, b: 44 },
+    ariaLabel: 'Panel b: level diagram at fixed spring frequency omega_0. Horizontal axis: ionic plasma energy in meV, set by the Born charge. Curves: omega_0 (grey dashed), the TO energy (ink) and the LO energy (amber) of the selected local-field model; hollow markers at the measured TO and LO energies; a shaded band where the TO mode is unstable. Click or drag to set the Born charge.'
+  });
+  pL.cv.canvas.style.cursor = 'pointer';
+  const baseRender = pL.render.bind(pL);
+  pL.render = () => {
+    baseRender();
+    const ctx = pL.ctx, w = pL.cv.w, h = pL.cv.h, mg = pL.m;
+    if (!w || !h || !cur || !curves) return;
+    fonts();
+    const st = cur, cFg = EPP.color('fg'), cFg2 = EPP.color('fg2');
+    ctx.save();
+    const t1 = [T('(b) mode energies at fixed '), ...w0P], t2 = [T('; click to set '), ...ZsP];
+    pd(ctx, pw(ctx, t1.concat(t2), 11.5) <= w - 8 ? t1.concat(t2) : t1, 4, 15, 11.5, cFg2);
+    const xl = [T('ionic plasma frequency '), ...hwpP, T(' (meV)')];
+    pd(ctx, pw(ctx, xl, 12.5) <= w - mg.l - mg.r ? xl : hwpP.concat([T(' (meV)')]), mg.l + (w - mg.l - mg.r) / 2, h - 8, 12.5, cFg, 'center');
+    ctx.translate(14, mg.t + (h - mg.t - mg.b) / 2); ctx.rotate(-Math.PI / 2);
+    pd(ctx, [I('ħω'), T(' (meV)')], 0, 0, 12.5, cFg, 'center');
+    ctx.restore();
+    ctx.save(); ctx.beginPath(); ctx.rect(mg.l, mg.t, w - mg.l - mg.r, h - mg.t - mg.b); ctx.clip();
+    const pl = placer([mg.l + 2, mg.t + 2, w - mg.r - 2, h - mg.b - 2]);
+    const X = pL.X(st.x), Y0 = pL.Y(st.w0);
+    // arrows from the spring frequency ω_0 to the two modes, at the current ħω_p^ion
+    if (st.stable && st.Z >= 0.005) {
+      const yT = pL.Y(st.TO), yLo = pL.Y(st.LO);
+      if (Math.abs(yT - Y0) > 12) { arrow(ctx, X - 8, Y0, X - 8, yT, cFg, 1.8, 7); pl.block(X - 12, Y0, X - 4, yT); }
+      if (Math.abs(yLo - Y0) > 12) { arrow(ctx, X + 8, Y0, X + 8, yLo, EPP.color('phonon'), 1.8, 7); pl.block(X + 4, Y0, X + 12, yLo); }
+    }
+    // obstacles for the labels: curves, markers and the current-x line
+    const { xs, to, lo } = curves;
+    for (let i = 0; i < xs.length; i += 2) {
+      const Xi = pL.X(xs[i]);
+      pl.block(Xi - 2, Y0 - 2, Xi + 2, Y0 + 2);
+      if (isFinite(to[i])) { const Yi = pL.Y(to[i]); pl.block(Xi - 2, Yi - 2, Xi + 2, Yi + 2); }
+      if (isFinite(lo[i])) { const Yi = pL.Y(lo[i]); pl.block(Xi - 2, Yi - 2, Xi + 2, Yi + 2); }
+    }
+    const Xp = pL.X(st.xp);
+    for (const v of [st.m.TO, st.m.LO]) pl.block(Xp - 8, pL.Y(v) - 8, Xp + 8, pL.Y(v) + 8);
+    pl.block(X - 1, mg.t, X + 1, h - mg.b);
+    // the unstable band and its label
+    const band = isFinite(st.xc) && st.xc < st.m.xmax;
+    if (band) {
+      const xa = pL.X(st.xc), xb = w - mg.r, cT = EPP.textColor('photon');
+      const L1 = [T('unstable: soft TO mode')], L2a = [T('unstable:')], L2b = [T('soft TO mode')];
+      if (xb - xa >= pw(ctx, L1, 11) + 10) { pd(ctx, L1, (xa + xb) / 2, mg.t + 15, 11, cT, 'center'); pl.block(xa, mg.t, xb, mg.t + 20); }
+      else if (xb - xa >= pw(ctx, L2b, 11) + 10) { pd(ctx, L2a, (xa + xb) / 2, mg.t + 15, 11, cT, 'center'); pd(ctx, L2b, (xa + xb) / 2, mg.t + 29, 11, cT, 'center'); pl.block(xa, mg.t, xb, mg.t + 34); }
+      else if (xb - xa >= 14) {
+        // vertical, reading upward from the bottom of the band
+        const xm = (xa + xb) / 2 + 4, tw = pw(ctx, L1, 11);
+        ctx.save(); ctx.translate(xm, h - mg.b - 8); ctx.rotate(-Math.PI / 2); pd(ctx, L1, 0, 0, 11, cT, 'left'); ctx.restore();
+        pl.block(xm - 10, h - mg.b - 10 - tw, xm + 3, h - mg.b - 6);
+      }
+    }
+    // the current Born charge at the top of its line
+    const zl = ZsP.concat([T(` = ${st.Z.toFixed(2)}`)]);
+    pl.put(ctx, zl, 11, EPP.textColor('muted'), [[X + 5, mg.t + 14, 'left'], [X - 5, mg.t + 14, 'right'], [X + 5, mg.t + 50, 'left'], [X - 5, mg.t + 50, 'right'], [X + 5, h - mg.b - 7, 'left'], [X - 5, h - mg.b - 7, 'right']], true, false);
+    // curve labels next to their curves: around points along the stable range, first on the preferred side
+    // (below the TO curve, above the LO curve), then diagonally, which clears a sloping curve
+    const xe = Math.min(st.xc, st.m.xmax);
+    const along = (arr, below) => {
+      const out = [];
+      for (const f of [0.58, 0.72, 0.44, 0.84, 0.3, 0.93, 0.18]) {
+        const xv = f * xe; let i = 0; while (i < xs.length - 1 && xs[i] < xv) i++;
+        if (!isFinite(arr[i])) continue;
+        const Xi = pL.X(xs[i]), Yi = pL.Y(arr[i]);
+        const bl = [[Xi, Yi + 16, 'center'], [Xi - 5, Yi + 13, 'right'], [Xi + 5, Yi + 14, 'left']];
+        const ab = [[Xi, Yi - 9, 'center'], [Xi + 5, Yi - 7, 'left'], [Xi - 5, Yi - 7, 'right']];
+        out.push(...(below ? bl.concat(ab) : ab.concat(bl)));
+      }
+      return out;
+    };
+    const k0 = st.kind === 'k';
+    pl.put(ctx, k0 ? wTOP.concat([T(' = ')], w0P) : wTOP, 12.5, cFg, along(to, true), true, false);
+    pl.put(ctx, wLOP, 12.5, EPP.textColor('phonon'), along(lo, false), true, false);
+    if (!k0) pl.put(ctx, w0P, 12.5, EPP.textColor('muted'), [[mg.l + 6, Y0 - 8, 'left'], [mg.l + 26, Y0 - 8, 'left'], [w - mg.r - 6, Y0 - 8, 'right'], [w - mg.r - 6, Y0 + 16, 'right'], [(mg.l + w - mg.r) / 2, Y0 - 8, 'center'], [mg.l + 6, Y0 + 16, 'left']], true, false);
+    ctx.restore();
+  };
+  // ħω_p^ion grid, refined near the instability where ω_TO falls as a square root
+  function grid(xmax, xc) {
+    const xs = EPP.linspace(0, xmax, 241);
+    if (isFinite(xc) && xc < xmax) for (const f of [0.95, 0.98, 0.99, 0.995, 0.998, 0.9995, 1]) xs.push(f * xc);
+    return xs.sort((a, b) => a - b);
+  }
+  function drawPlot() {
+    const s = cur, m = s.m, xs = grid(m.xmax, s.xc), to = [], lo = [];
+    for (const x of xs) {
+      const t = s.w02 - s.zeta * x * x;
+      if (x <= s.xc * (1 + 1e-12) && t > -1e-9) { const tt = Math.max(0, t); to.push(Math.sqrt(tt)); lo.push(Math.sqrt(tt + x * x / s.einf)); }
+      else { to.push(NaN); lo.push(NaN); }
+    }
+    curves = { xs, to, lo };
+    const band = isFinite(s.xc) && s.xc < m.xmax, on = s.stable;
+    pL.draw([
+      band ? { type: 'band', x0: s.xc, x1: m.xmax, color: 'photon', alpha: 0.1 } : null,
+      { type: 'line', x: xs, y: xs.map(() => s.w0), color: 'muted', dash: [6, 4], width: 1.6, label: 'ω_0' },
+      { type: 'line', x: xs, y: to, color: 'ink', width: 2.2, label: 'ω_{TO}' },
+      { type: 'line', x: xs, y: lo, color: 'phonon', width: 2.2, label: 'ω_{LO}' },
+      { type: 'vline', at: s.x, color: 'muted', width: 1, dash: [2, 3] },
+      { type: 'points', x: [s.xp], y: [m.TO], color: 'ink', r: 6, hollow: true },
+      { type: 'points', x: [s.xp], y: [m.LO], color: 'phonon', r: 6, hollow: true },
+      on ? { type: 'points', x: [s.x], y: [s.TO], color: 'ink', r: 4 } : null,
+      on ? { type: 'points', x: [s.x], y: [s.LO], color: 'phonon', r: 4 } : null
+    ], { xlim: [0, m.xmax], ylim: [0, m.ymax] });
+  }
+  pL.onPointer = (x, y, type) => {
+    if (type === 'up' || !isFinite(x) || !cur || !ui) return;
+    ui.set('Z', EPP.clamp(Math.round(x / xOf(cur.m, 1) * 100) / 100, 0, cur.m.zmax));
+  };
+
+  // ---------- readouts ----------
+  const roV = {};
+  ['zeta', 'w0', 'zs', 'wp', 'to', 'lo', 'd2', 'es', 'mat', 'meas'].forEach(k => { roV[k] = fig.querySelector('.b3-local-v-' + k); });
+  const zsBox = fig.querySelector('.b3-local-zs');
+  const NB = ' ';
+  const mev = (v) => `${v.toFixed(1)}${NB}meV (${Math.round(v * CM)}${NB}cm⁻¹)`;
+  function readouts() {
+    const s = cur, m = s.m;
+    roV.zeta.innerHTML = s.kind === 'k' ? '0' : s.kind === 'lor' ? '1/3' : `1/(<i style="font-family:var(--font-text)">ε</i><sub>∞</sub>${NB}+${NB}2) = ${s.zeta.toFixed(4)}`;
+    roV.w0.textContent = mev(s.w0);
+    if (zsBox) zsBox.style.display = s.kind === 'cm' ? '' : 'none';
+    roV.zs.textContent = s.ZS.toFixed(2);
+    roV.wp.textContent = mev(s.x);
+    roV.to.innerHTML = s.stable ? mev(s.TO) : `unstable: (<i style="font-family:var(--font-text)">ħω</i><sub>TO</sub>)<sup>2</sup> = −${Math.round(-s.to2)}${NB}meV² &lt; 0`;
+    roV.lo.textContent = s.stable ? mev(s.LO) : '—';
+    roV.d2.textContent = `${(s.x * s.x / s.einf).toFixed(1)}${NB}meV², the same for every ζ`;
+    roV.es.textContent = s.stable ? EPP.fmt(s.es, 3) : 'unstable';
+    roV.mat.textContent = m.name;
+    roV.meas.textContent = `${m.TO.toFixed(1)}, ${m.LO.toFixed(1)}${NB}meV; ${m.es}`;
+  }
+
+  // ---------- controls ----------
+  let ui = null, uiW = null, lastMat = 'gaas', reload = false;
+  const presetTag = (v, key) => { const m = MATS[lastMat]; return Math.abs(v - m[key]) < 0.005 ? ` (${m.name})` : ''; };
+  function onChange() {
+    if (!ui || !uiW) return;
+    const s = ui.state;
+    // choosing a crystal, even the current one, loads its Born charge, its ε_∞ and its axes
+    if ((s.mat !== lastMat || reload) && MATS[s.mat]) {
+      const m = MATS[s.mat];
+      lastMat = s.mat; reload = false;
+      const inp = document.getElementById(`${fig.id}-Z`);
+      if (inp) inp.max = String(m.zmax);
+      ui.set('Z', m.Z, true); ui.set('einf', m.einf, true);
+    }
+    cur = model(s.model, lastMat, EPP.clamp(s.Z, 0, MATS[lastMat].zmax), s.einf, uiW.state.wave);
+    drawPlot();
+    readouts();
+    drawGeo();
+  }
+  ui = EPP.controls(fig.querySelector('.b3-local-ctrls'), [
+    { key: 'model', type: 'seg', label: 'local-field model', options: [['k', 'in K (ζ = 0)'], ['lor', 'Lorentz, EPP (ζ = 1/3)'], ['cm', 'Clausius–Mossotti']], value: 'lor' },
+    { key: 'mat', type: 'seg', label: 'cubic crystal', options: [['gaas', 'GaAs'], ['nacl', 'NaCl'], ['sic', '3C-SiC']], value: 'gaas' },
+    { key: 'Z', type: 'range', label: 'Born charge Z^*', min: 0, max: 4, step: 0.01, value: 2.07, fmt: (v) => v.toFixed(2) + presetTag(v, 'Z') },
+    { key: 'einf', type: 'range', label: 'electronic screening ε_∞', min: 1, max: 15, step: 0.01, value: 10.9, fmt: (v) => v.toFixed(2) }
+  ], onChange);
+  uiW = EPP.controls(fig.querySelector('.b3-local-wave'), [
+    { key: 'wave', type: 'seg', label: 'the wave in (a)', options: [['TO', 'TO wave (E = 0)'], ['LO', 'LO wave (D = 0)']], value: 'LO' }
+  ], onChange);
+  // segmented buttons share their row instead of leaving an empty strip
+  fig.querySelectorAll('.seg button').forEach(b => { b.style.flex = '1 1 auto'; });
+  fig.querySelectorAll(`[id^="${fig.id}-mat-"]`).forEach(b => b.addEventListener('click', () => { reload = true; }));
+  // labels with italic symbols and bold vectors, as in the text
+  const It = (t) => `<i style="font-family:var(--font-text)">${t}</i>`;
+  const html = (id, h) => { const e = document.getElementById(id); if (e) e.innerHTML = h; };
+  html(`${fig.id}-model-k`, `in ${It('K')} (${It('ζ')} = 0)`);
+  html(`${fig.id}-model-lor`, `Lorentz, EPP (${It('ζ')} = 1/3)`);
+  html(`${fig.id}-wave-TO`, 'TO wave (<b>E</b> = 0)');
+  html(`${fig.id}-wave-LO`, 'LO wave (<b>D</b> = 0)');
+  const LAB = { Z: `Born charge ${It('Z')}<sup>*</sup>`, einf: `electronic screening ${It('ε')}<sub>∞</sub>` };
+  Object.keys(LAB).forEach(k => { const sp = fig.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  cv.onResize(drawGeo);
+})();
+</script>

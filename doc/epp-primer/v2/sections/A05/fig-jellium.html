@@ -1,0 +1,369 @@
+  <figure class="viz" id="viz-a5-jellium">
+    <p class="viz-title">Jellium with mobile ions <span class="tag">interactive</span></p>
+    <div class="viz-grid two">
+      <div class="a5-jellium-map"><div class="legend a5-jellium-leg-a">
+        <span class="item" style="color:var(--c-photon)"><span class="sw box" style="opacity:0.75"></span><span style="color:var(--fg-2)">$\mathrm{Re}\,W&gt;0$: repulsion</span></span>
+        <span class="item" style="color:var(--c-4)"><span class="sw box" style="opacity:0.75"></span><span style="color:var(--fg-2)">$\mathrm{Re}\,W&lt;0$: attraction</span></span>
+        <span class="item" style="color:var(--fg)"><span class="sw dash" style="border-top-width:1.6px"></span><span style="color:var(--fg-2)">phonon $\hbar\omega_{\mathrm{LA}}(q)$</span></span>
+        <span class="item" data-s="guides" style="color:var(--fg-2)"><span class="sw dot" style="border-top-width:2px"></span><span style="color:var(--fg-2)">bare ions $\hbar\omega_{\mathrm p}^{\ion}$; sound $\hbar v_{\mathrm s}q$</span></span>
+      </div></div>
+      <div class="a5-jellium-cut"><div class="legend a5-jellium-leg-b">
+        <span class="item" style="color:var(--c-electron)"><span class="sw"></span><span style="color:var(--fg-2)">$W^{\rme}$ (screened by electrons)</span></span>
+        <span class="item" style="color:var(--c-phonon)"><span class="sw"></span><span style="color:var(--fg-2)">$\mathrm{Re}\,W^{\ph}$</span></span>
+        <span class="item" style="color:var(--c-photon)"><span class="sw" style="border-top-width:3px"></span><span style="color:var(--fg-2)">$\mathrm{Re}\,W$ (total)</span></span>
+        <span class="item" data-s="band" style="color:var(--c-4)"><span class="sw box"></span><span style="color:var(--fg-2)">$\mathrm{Re}\,W&lt;0$: attraction</span></span>
+      </div></div>
+    </div>
+    <div class="a5-jellium-ctrls"></div>
+    <div class="readout a5-jellium-ro" aria-live="polite"><span>$Z$, $M$, $\OV$<b class="a5-jellium-v-zm"></b></span><span>$k_{\mathrm F}$, $k_{\mathrm{TF}}$<b class="a5-jellium-v-k"></b></span><span>$\hbar\omega_{\mathrm p}$<b class="a5-jellium-v-wpe"></b></span><span>$\hbar\omega_{\mathrm p}^{\ion}$<b class="a5-jellium-v-wpi"></b></span><span>$v_{\mathrm s}=\omega_{\mathrm p}^{\ion}/k_{\mathrm{TF}}$<b class="a5-jellium-v-vs"></b></span></div>
+    <div class="readout a5-jellium-ro2" aria-live="polite"><span>cut at $q$<b class="a5-jellium-v-q"></b></span><span>$\varepsilon^{\rme}(q)$<b class="a5-jellium-v-eps"></b></span><span>$\hbar\omega_{\mathrm{LA}}(q)$<b class="a5-jellium-v-wla"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> Well above the phonon line $\hbar\omega_{\mathrm{LA}}(q)$, where the ions cannot follow, the interaction is the repulsion $W^{\rme}$ screened by the electrons; below the line the slow ions more than cancel it and $W$ turns attractive, at every $q$. Electronic screening turns the plasma oscillation of the ions into sound.</p><div class="cap-more">
+      <p><strong>Marks.</strong> (a) $\mathrm{Re}\,W$ in units of <span class="nw">$4\pi e^2/k_{\mathrm{TF}}^2$,</span> the screened $W^{\rme}$ at <span class="nw">$q\to0$:</span> rose where it repels, teal where it attracts, saturated beyond <span class="nw">$\pm2$.</span> Dashed: the phonon $\hbar\omega_{\mathrm{LA}}(q)$; dotted: bare ions at $\hbar\omega_{\mathrm p}^{\ion}$ and the sound line <span class="nw">$\hbar v_{\mathrm s}q$;</span> the vertical line and the ring mark the cut drawn in (b). (b) Blue $W^{\rme}$, amber $\mathrm{Re}\,W^{\ph}$, rose the total $\mathrm{Re}\,W$, zero at <span class="nw">$\omega=0$,</span> where the free ions screen completely; teal: <span class="nw">$\mathrm{Re}\,W&lt;0$.</span></p>
+      <p><strong>Try.</strong> Click or drag in (a) to move the cut. Switch the screening off: the ions oscillate at $\omega_{\mathrm p}^{\ion}$ for every <span class="nw">$q$;</span> Thomas–Fermi and Lindhard screening turn this into sound, and Lindhard adds a kink at <span class="nw">$q=2k_{\mathrm F}$,</span> the Kohn anomaly. Choose Pb: its heavy ions have a third of the phonon energy of Al. Raise the damping: at small <span class="nw">$q$,</span> where <span class="nw">$\omega_{\mathrm{LA}}&lt;\gamma$,</span> the attraction disappears.</p>
+      <p><strong>Model.</strong> <a class="eqref" href="#a5-eq-epsjel">(A5.9)</a>–<a class="eqref" href="#a5-eq-bs">(A5.11)</a> with free ions damped at the rate <span class="nw">$\gamma$:</span> $\varepsilon=\varepsilon^{\rme}(q)-(\omega_{\mathrm p}^{\ion})^2/(\omega^2+\ii\gamma\omega)$, so $W=v/\varepsilon=(v/\varepsilon^{\rme})(\omega^2+\ii\gamma\omega)/(\omega^2+\ii\gamma\omega-\omega_{\mathrm{LA}}^2)$, with <span class="nw">$v=4\pi e^2/q^2$,</span> $W^{\rme}=v/\varepsilon^{\rme}$ and <span class="nw">$W^{\ph}=W-W^{\rme}$.</span> The electrons screen statically, valid for <span class="nw">$\omega\ll v_{\mathrm F}q$,</span> with the static Lindhard function of <a href="#a-coupling">Section A.2</a>, its Thomas–Fermi limit <span class="nw">$1+k_{\mathrm{TF}}^2/q^2$,</span> or none. Free-electron metals (illustrative), given by <a class="sym" href="#gl-a2-jel">$r_{\mathrm s}$</a>, $Z$ and $M$: Na 3.93, 1, <span class="nw">22.99 amu;</span> K 4.86, 1, <span class="nw">39.10 amu;</span> Al 2.07, 3, <span class="nw">26.98 amu;</span> Pb 2.30, 4, <span class="nw">207.2 amu.</span> Bardeen–Pines interaction; Bohm–Staver sound.</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a5-jellium');
+  if (!fig || !window.EPP) return;
+  // outside Section A.5 (the isolated figure test) the caption's equation links have no target: show them as text
+  if (!fig.closest('#a-hedin-baym')) fig.querySelectorAll('figcaption a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+
+  // ---------- model: jellium with free, damped ions and static electronic screening, (A5.8)–(A5.11) ----------
+  // Lengths in Å, ħω in meV. Gaussian units: e² = 14.3996 eV Å, ħ²/m_e = 7.61996 eV Å², ħ²/(amu Å²) = 4.1802 meV.
+  const A0 = 0.529177, E2 = 14.3996, HB2_ME = 7.61996, HB2_AMU = 4.1802e-3, HBAR = 6.582119569e-16, NB = ' ';
+  const QMAX = 2.5, VMAX = 2;
+  const MET = {
+    na: { name: 'Na', rs: 3.93, Z: 1, M: 22.99 },
+    k: { name: 'K', rs: 4.86, Z: 1, M: 39.10 },
+    al: { name: 'Al', rs: 2.07, Z: 3, M: 26.98 },
+    pb: { name: 'Pb', rs: 2.30, Z: 4, M: 207.2 }
+  };
+  const SCR = { lind: 'Lindhard', tf: 'Thomas–Fermi', none: 'no electronic' };
+  function metal(m) {
+    const kF = 1.91916 / (m.rs * A0);                                    // k_F = (9π/4)^{1/3}/(r_s a_0) (Å⁻¹)
+    const n0 = kF ** 3 / (3 * Math.PI ** 2);                              // n^e_0 = k_F³/3π² (Å⁻³)
+    const OV = m.Z / n0;                                                  // one ion of charge Ze per Ω_V = Z/n^e_0 (Å³)
+    const kTF2 = 4 * kF / (Math.PI * A0), kTF = Math.sqrt(kTF2);          // k_TF² = 6πn^e_0e²/E_F = 4k_F/(πa_0) (Å⁻²)
+    const Epi = 1e3 * Math.sqrt(4 * Math.PI * m.Z * m.Z * E2 * HB2_AMU / (m.M * OV));  // ħω_p^ion = [4πZ²e²ħ²/(MΩ_V)]^{1/2} (meV), (A5.8)
+    const Ep = Math.sqrt(4 * Math.PI * n0 * E2 * HB2_ME);                 // ħω_p = [4πn^e_0e²ħ²/m_e]^{1/2} (eV), (A5.8)
+    const vs = (Epi * 1e-3 / HBAR) / kTF * 1e-13;                         // v_s = ω_p^ion/k_TF: s⁻¹·Å → km/s, (A5.11)
+    return Object.assign({}, m, { kF, n0, OV, kTF2, kTF, Epi, Ep, vs });
+  }
+  // static electronic dielectric function ε^e(q): Lindhard, its Thomas–Fermi limit 1 + k_TF²/q², or none (ε^e = 1)
+  function epsE(q, p, scr) {
+    if (scr === 'none') return 1;
+    if (!(q > 1e-12)) return Infinity;
+    const r = p.kTF2 / (q * q);
+    if (scr === 'tf') return 1 + r;
+    const x = q / (2 * p.kF);
+    const F = Math.abs(x - 1) < 1e-9 ? 0.5 : 0.5 + (1 - x * x) / (4 * x) * Math.log(Math.abs((1 + x) / (1 - x)));
+    return 1 + r * F;
+  }
+  // W in units of 4πe²/k_TF²: (A5.9)–(A5.10) with damped free ions, ε = ε^e − (ω_p^ion)²/(ω² + iγω), so
+  // W = w_e (E² + iγE)/(E² + iγE − E_LA²) with w_e = W^e/(4πe²/k_TF²) = k_TF²/[q²ε^e(q)]; returns [Re, Im]
+  function Wc(E, we, El, g) {
+    const nr = E * E, ni = g * E, dr = nr - El * El, dd = dr * dr + ni * ni;
+    if (!(dd > 0)) return [we, 0];
+    return [we * (nr * dr + ni * ni) / dd, we * ni * (dr - nr) / dd];
+  }
+  // the cut at q = Q k_F: ε^e, w_e, the phonon energy E_LA = ħω_p^ion/√ε^e, and the top of the attraction:
+  // Re W ∝ E²(E² − E_LA² + ħ²γ²) is negative for E² < E_LA² − ħ²γ² (nowhere when the phonon is overdamped)
+  function cutAt(Q, p, scr, g) {
+    const q = Q * p.kF, ee = epsE(q, p, scr), we = p.kTF2 / (q * q * ee), El = p.Epi / Math.sqrt(ee);
+    return { Q, q, ee, we, El, neg: El > g ? Math.sqrt(El * El - g * g) : 0 };
+  }
+
+  // ---------- map (a): Re W on pixel centres, recomputed only when the metal, the screening or the damping change ----------
+  const NX = 200, NY = 150;
+  const HEAT = { type: 'heatmap', x0: 0, x1: QMAX, y0: 0, y1: 1, nx: NX, ny: NY, z: null, vmin: -VMAX, vmax: VMAX,
+    color: 'photon', color2: 'c4', colorbar: false, label: 'Re W', cfmt: v => EPP.fmt(v, 3) };
+  let heatKey = '';
+  function heat(p, scr, g, ymax) {
+    const key = `${p.name}|${scr}|${g}`;
+    if (key === heatKey) return;
+    const z = new Float64Array(NX * NY);
+    for (let i = 0; i < NX; i++) {
+      const q = QMAX * (i + 0.5) / NX * p.kF, ee = epsE(q, p, scr), we = p.kTF2 / (q * q * ee), El2 = p.Epi * p.Epi / ee;
+      for (let j = 0; j < NY; j++) {
+        const E = ymax * (j + 0.5) / NY, nr = E * E, ni = g * E, dr = nr - El2;
+        z[j * NX + i] = we * (nr * dr + ni * ni) / (dr * dr + ni * ni);
+      }
+    }
+    HEAT.z = z; HEAT.y1 = ymax; heatKey = key;
+  }
+  // energies on [0, 1.3 ħω_p^ion]: a uniform grid plus dense points within ±25ħγ of the pole
+  function grid(ymax, El, g) {
+    const xs = [];
+    for (let i = 0; i <= 1000; i++) xs.push(ymax * i / 1000);
+    for (let i = -300; i <= 300; i++) { const x = El + 25 * g * i / 300; if (x > 0 && x < ymax) xs.push(x); }
+    xs.sort((a, b) => a - b);
+    return xs.filter((x, i) => i === 0 || x - xs[i - 1] > 1e-9);
+  }
+  function niceCeil(v) {
+    if (!(v > 0) || !isFinite(v)) return 1;
+    const mag = Math.pow(10, Math.floor(Math.log10(v))), r = v / mag;
+    return ([1, 1.2, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10].find(s => s >= r - 1e-9) || 10) * mag;
+  }
+
+  const QS = EPP.linspace(0, QMAX, 626), cache = {};
+  let cur = null, ui = null, topNone = 25;
+  function compute(s) {
+    const key = MET[s.met] ? s.met : 'na', p = cache[key] || (cache[key] = metal(MET[key]));
+    const scr = SCR[s.scr] ? s.scr : 'lind', g = s.gam, ymax = 1.3 * p.Epi, cut = cutAt(s.q, p, scr, g);
+    const line = QS.map(Q => p.Epi / Math.sqrt(epsE(Q * p.kF, p, scr)));   // ħω_LA(q); 0 at q = 0 with screening
+    const xs = grid(ymax, cut.El, g), n = xs.length, W = new Array(n), We = new Array(n), Wph = new Array(n);
+    for (let i = 0; i < n; i++) { const w = Wc(xs[i], cut.we, cut.El, g)[0]; W[i] = w; We[i] = cut.we; Wph[i] = w - cut.we; }
+    // (b): fixed range ±3 with screening; without it W^e = v grows as 1/q², and the range follows it in nice steps
+    let Y = 3;
+    if (scr === 'none') {
+      const need = 3 * cut.we;
+      if (need > 0.97 * topNone || need < 0.42 * topNone) topNone = niceCeil(1.15 * need);
+      Y = Math.max(3, topNone);
+    }
+    return { key, p, scr, g, ymax, cut, line, xs, W, We, Wph, Y, Qt: p.kTF / p.kF };
+  }
+  const lineAt = (Q) => cur.p.Epi / Math.sqrt(epsE(Q * cur.p.kF, cur.p, cur.scr));
+
+  // ---------- canvas text: '$…$' marks math, where letters are italic and digits upright; _x, ^{xy} as in EPP.drawRich ----------
+  // a subscript followed at once by a superscript (ω_p^{ion}, k_{TF}^2) is stacked, as in the typeset text
+  const ITAL = /[A-Za-zα-ωℓħ]/;
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const part of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: part.t, m: part.m, it: false }); continue; }
+        let buf = '', it = null;
+        for (const ch of part.t) { const k = ITAL.test(ch); if (it !== null && k !== it) { out.push({ t: buf, m: part.m, it }); buf = ''; } buf += ch; it = k; }
+        if (buf) out.push({ t: buf, m: part.m, it });
+      }
+    });
+    return out;
+  }
+  function layout(ctx, s, size) {
+    const rs = runs(s), fam = EPP.css('--font-ui');
+    const font = (r) => `${r.it ? 'italic ' : ''}${r.m ? Math.round(size * 0.72) : size}px ${fam}`;
+    const ws = rs.map(r => { ctx.font = font(r); return ctx.measureText(r.t).width; });
+    const xs = new Array(rs.length), st = new Array(rs.length).fill(false);
+    let x = 0, k = 0;
+    while (k < rs.length) {
+      if (!rs[k].m) { xs[k] = x; x += ws[k]; k++; continue; }
+      const a = k; while (k < rs.length && rs[k].m === rs[a].m) k++;
+      const b = k; if (k < rs.length && rs[k].m === -rs[a].m) while (k < rs.length && rs[k].m === rs[b].m) k++;
+      let w1 = 0, w2 = 0;
+      for (let j = a; j < b; j++) { xs[j] = x + w1; w1 += ws[j]; st[j] = k > b; }
+      for (let j = b; j < k; j++) { xs[j] = x + w2; w2 += ws[j]; st[j] = true; }
+      x += Math.max(w1, w2);
+    }
+    return { rs, xs, st, tot: x, font };
+  }
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, L = layout(ctx, s, size);
+    if (o.measure) return L.tot;
+    const x0 = o.align === 'center' ? x - L.tot / 2 : (o.align === 'right' ? x - L.tot : x);
+    const dy = (r, k) => (r.m === -1 ? size * (L.st[k] ? 0.34 : 0.28) : (r.m === 1 ? -size * (L.st[k] ? 0.42 : 0.38) : 0));
+    ctx.textAlign = 'left';
+    // o.halo: a knockout in the panel colour keeps a label legible where a curve, a guide or the map passes under it
+    if (o.halo) {
+      ctx.save(); ctx.strokeStyle = EPP.alpha('surface', 0.9); ctx.lineWidth = 3.5; ctx.lineJoin = 'round'; ctx.setLineDash([]);
+      L.rs.forEach((r, k) => { ctx.font = L.font(r); ctx.strokeText(r.t, x0 + L.xs[k], y + dy(r, k)); });
+      ctx.restore();
+    }
+    if (o.color) ctx.fillStyle = o.color;
+    L.rs.forEach((r, k) => { ctx.font = L.font(r); ctx.fillText(r.t, x0 + L.xs[k], y + dy(r, k)); });
+    return L.tot;
+  }
+  const tw = (ctx, s, size) => txt(ctx, s, 0, 0, { size, measure: true });
+  function arrowHead(ctx, x, y, ang, s) {
+    ctx.beginPath(); ctx.moveTo(x, y);
+    ctx.lineTo(x - s * Math.cos(ang - 0.42), y - s * Math.sin(ang - 0.42));
+    ctx.lineTo(x - s * Math.cos(ang + 0.42), y - s * Math.sin(ang + 0.42));
+    ctx.closePath(); ctx.fill();
+  }
+  // a short note on a chip of the panel colour; (x, y) is the first baseline, centred
+  function note(ctx, lines, x, y, color) {
+    const wmax = Math.max(...lines.map(s => tw(ctx, s, 11.5))), x0 = x - wmax / 2 - 6, y0 = y - 14, hh = 16 * lines.length + 6;
+    ctx.fillStyle = EPP.alpha('surface', 0.94);
+    ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(x0, y0, wmax + 12, hh, 4); else ctx.rect(x0, y0, wmax + 12, hh); ctx.fill();
+    lines.forEach((s, i) => txt(ctx, s, x, y + 16 * i, { size: 11.5, color, align: 'center' }));
+  }
+
+  // ---------- panels ----------
+  const elA = fig.querySelector('.a5-jellium-map'), elB = fig.querySelector('.a5-jellium-cut');
+  const OPT = { aspect: 0.8, minHeight: 250, maxHeight: 340, legend: false };
+  const pA = new EPP.Plot(elA, Object.assign({}, OPT, {
+    xlim: [0, QMAX], ylim: [0, 40], margin: { t: 26, l: 56, r: 66, b: 42 },
+    xname: 'q/k_F', yname: 'ħω', hoverX: v => EPP.fix(v, 2), hoverX2: v => EPP.fix(v, 1) + ' meV', hoverY: v => EPP.fix(v, 1) + ' meV',
+    ariaLabel: 'Panel a: map of the real part of W against wavevector and energy'
+  }));
+  const pB = new EPP.Plot(elB, Object.assign({}, OPT, {
+    xlim: [0, 40], ylim: [-3, 3], margin: { t: 26, l: 60, r: 12, b: 42 },
+    xname: 'ħω', hoverX: v => EPP.fix(v, 1) + ' meV', hoverY: v => EPP.fmt(v, 3),
+    ariaLabel: 'Panel b: the interaction at the chosen wavevector against energy'
+  }));
+  // the legends are static markup (MathJax), placed under their plots
+  const legA = elA.querySelector('.a5-jellium-leg-a'), legB = elB.querySelector('.a5-jellium-leg-b');
+  if (legA) elA.appendChild(legA);
+  if (legB) elB.appendChild(legB);
+  const cvA = pA.cv.canvas;
+  cvA.style.cursor = 'ew-resize';
+  cvA.style.touchAction = 'pan-y';   // the cut moves along q only: horizontal drags move it, vertical swipes still scroll the page
+  pA.onPointer = (x, y, type) => { if (ui && (type === 'down' || type === 'move')) ui.set('q', EPP.clamp(Math.round(x * 100) / 100, 0.05, QMAX)); };
+
+  // titles, axis labels and annotations are drawn after the plot's own render, with the symbols in italic
+  const hook = (p, extra) => {
+    const base = p.render.bind(p);
+    p.render = () => { base(); if (p.cv.w && p.cv.h && cur) { const ctx = p.ctx; ctx.save(); ctx.textBaseline = 'alphabetic'; extra(p, ctx, p.cv.w, p.cv.h, p.m); ctx.restore(); } };
+  };
+  function frame(p, ctx, w, h, m, long, short, xlab, ylab) {
+    const cFg = EPP.color('fg');
+    txt(ctx, tw(ctx, long, 11.5) <= w - 8 ? long : short, 4, 15, { size: 11.5, color: EPP.color('fg2') });
+    txt(ctx, xlab, m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    ctx.save(); ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, ylab, 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+  }
+  const UNIT = '4π$e$^2/$k$_{TF}^2';
+  // colour bar of (a) in the right margin, on the map's own ramp: teal (attraction) at the bottom, rose (repulsion) at the top
+  function colorBar(ctx, w, h, m) {
+    const ramp = EPP.ramp('photon', 'c4'), x = w - m.r + 9, bw = 9, top = m.t, bot = h - m.b, n = 96, cM = EPP.color('muted');
+    for (let k = 0; k < n; k++) { const c = ramp((k + 0.5) / n); ctx.fillStyle = `rgb(${c[0]},${c[1]},${c[2]})`; ctx.fillRect(x, bot - (k + 1) * (bot - top) / n, bw, (bot - top) / n + 0.6); }
+    ctx.strokeStyle = EPP.color('rule'); ctx.lineWidth = 1; ctx.setLineDash([]); ctx.strokeRect(x + 0.5, top + 0.5, bw, bot - top - 1);
+    ctx.strokeStyle = cM; ctx.textBaseline = 'middle';
+    [[VMAX, String(VMAX)], [0, '0'], [-VMAX, '−' + VMAX]].forEach(([v, s]) => {
+      const y = bot - (v + VMAX) / (2 * VMAX) * (bot - top);
+      ctx.beginPath(); ctx.moveTo(x + bw, Math.round(y) + 0.5); ctx.lineTo(x + bw + 3, Math.round(y) + 0.5); ctx.stroke();
+      txt(ctx, s, x + bw + 5, EPP.clamp(y, top + 5, bot - 5), { size: 10, color: cM });
+    });
+    ctx.save(); ctx.translate(w - 6, (top + bot) / 2); ctx.rotate(-Math.PI / 2); ctx.textBaseline = 'alphabetic';
+    txt(ctx, `Re $W$ (units of ${UNIT})`, 0, 0, { size: 10.5, color: EPP.color('fg2'), align: 'center' });
+    ctx.restore();
+  }
+  hook(pA, (p, ctx, w, h, m) => {
+    const c = cur, cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), xc = p.X(c.cut.Q);
+    frame(p, ctx, w, h, m, '(a) Re $W$ over $q$ and $ħω$: click or drag to move the cut', '(a) Re $W$: click or drag to move the cut', 'wavevector $q$/$k$_F', '$ħω$ (meV)');
+    colorBar(ctx, w, h, m);
+    // each label takes the first of its candidate places that lies inside the map and is not crossed by the cut line
+    // (if the cut crosses them all, the first place inside the map: the halo keeps the label legible)
+    const place = (s, cands, color) => {
+      const wd = tw(ctx, s, 11.5), x0 = (cd) => (cd.align === 'right' ? cd.x - wd : cd.align === 'center' ? cd.x - wd / 2 : cd.x);
+      const inside = (cd) => x0(cd) >= m.l + 3 && x0(cd) + wd <= w - m.r - 3;
+      const cd = cands.find(cd => inside(cd) && (xc < x0(cd) - 6 || xc > x0(cd) + wd + 6)) || cands.find(inside);
+      if (cd) txt(ctx, s, cd.x, cd.y, { size: 11.5, color, align: cd.align, halo: true });
+    };
+    const yP = p.Y(c.p.Epi);
+    if (c.scr === 'none') {
+      place('$ħω$_{LA} = $ħω$_p^{ion} for every $q$', [{ x: m.l + 6, y: yP + 17, align: 'left' }, { x: w - m.r - 6, y: yP + 17, align: 'right' }], cFg);
+    } else {
+      // the two dotted guides carry their symbols; the legend names them
+      place('$ħω$_p^{ion}', [{ x: m.l + 6, y: yP - 6, align: 'left' }, { x: w - m.r - 6, y: yP - 6, align: 'right' }], cFg2);
+      // the sound line, labelled on its upper-left side (above the phonon line)
+      place('$ħv$_s$q$', [0.8, 0.6, 0.45, 0.9].map(f => ({ x: p.X(f * c.Qt) - 7, y: p.Y(f * c.p.Epi) - 3, align: 'right' })), cFg2);
+      // the phonon line, labelled just below it
+      place('$ħω$_{LA}($q$)', [2.05, 1.2, 1.6, 0.95].map(Q => ({ x: p.X(Q), y: p.Y(lineAt(Q)) + 17, align: 'center' })), cFg);
+    }
+    // the cut: label at its top, and a ring where it crosses the phonon line
+    const right = xc > w - m.r - 40;
+    txt(ctx, 'cut', right ? xc - 5 : xc + 5, m.t + 13, { size: 11.5, color: cFg, align: right ? 'right' : 'left', halo: true });
+    ctx.lineWidth = 1.6; ctx.strokeStyle = cFg; ctx.fillStyle = EPP.color('surface'); ctx.setLineDash([]);
+    ctx.beginPath(); ctx.arc(xc, p.Y(c.cut.El), 4.2, 0, 2 * Math.PI); ctx.fill(); ctx.stroke();
+  });
+  hook(pB, (p, ctx, w, h, m) => {
+    const c = cur, k = c.cut, Qs = EPP.fix(k.Q, 2), cMut = EPP.color('muted'), c4 = EPP.textColor('c4');
+    frame(p, ctx, w, h, m, `(b) cut at $q$ = ${Qs} $k$_F, against the energy $ħω$`, `(b) cut at $q$ = ${Qs} $k$_F`, '$ħω$ (meV)', `Re $W$ (units of ${UNIT})`);
+    txt(ctx, '$ħω$_{LA}', p.X(k.El) + 4, h - m.b - 7, { size: 11.5, color: cMut, halo: true });
+    // the attraction band, labelled in the top row: inside the band when the words fit, else to its right with an arrow
+    const lab = 'Re $W$ < 0', lw = tw(ctx, lab, 11.5), yR = m.t + 15, xN = p.X(k.neg);
+    if (k.neg > 0 && xN - m.l >= lw + 10) txt(ctx, lab, (m.l + xN) / 2, yR, { size: 11.5, color: c4, align: 'center', halo: true });
+    else if (k.neg > 0) {
+      // start right of the pole, where every curve has dropped below the label row
+      const vRow = p.invY(yR + 5);
+      let i0 = c.xs.findIndex((x, i) => x > k.El && c.W[i] < vRow && c.Wph[i] < vRow);
+      const x0 = Math.max(xN + 18, i0 >= 0 ? p.X(c.xs[i0]) + 6 : Infinity);
+      if (x0 + lw <= w - m.r - 4) {
+        txt(ctx, lab, x0, yR, { size: 11.5, color: c4, halo: true });
+        ctx.strokeStyle = c4; ctx.fillStyle = c4; ctx.lineWidth = 1.2; ctx.setLineDash([]);
+        const xe = (m.l + xN) / 2 + 1, ya = yR - 4;
+        ctx.beginPath(); ctx.moveTo(x0 - 4, ya); ctx.lineTo(xe + 5, ya); ctx.stroke();
+        arrowHead(ctx, xe, ya, Math.PI, 6);
+      }
+    } else note(ctx, ['overdamped, $ħγ$ > $ħω$_{LA}:', 'no attraction at this $q$'], m.l + (w - m.l - m.r) / 2, p.Y(-0.55 * c.Y), EPP.color('fg2'));
+  });
+
+  // ---------- readouts: the keys are static MathJax in the markup, only the values change ----------
+  const roV = {}, roLast = {};
+  ['zm', 'k', 'wpe', 'wpi', 'vs', 'q', 'eps', 'wla'].forEach(k => { roV[k] = fig.querySelector('.a5-jellium-v-' + k); });
+  const setRo = (k, html) => { if (roV[k] && roLast[k] !== html) { roV[k].innerHTML = html; roLast[k] = html; } };
+  // a superscript stacked over a subscript (ω_p^ion), as in the typeset readout keys
+  const stack = (sup, sub) => `<span style="display:inline-block;vertical-align:-0.3em;font-size:0.72em;line-height:1;margin-left:1px"><span style="display:block">${sup}</span><span style="display:block">${sub}</span></span>`;
+  const KF = '<i>k</i><sub>F</sub>', HWPI = `<i>ħω</i>${stack('ion', 'p')}`;
+
+  function draw() {
+    if (!cur) return;
+    const c = cur, p = c.p, k = c.cut, none = c.scr === 'none';
+    heat(p, c.scr, c.g, c.ymax);
+    pA.draw([
+      HEAT,
+      none ? null : { type: 'hline', at: p.Epi, color: 'fg2', width: 1.4, dash: [2, 3] },
+      none ? null : { type: 'line', x: [0, c.Qt], y: [0, p.Epi], color: 'fg2', width: 1.4, dash: [2, 3] },
+      { type: 'line', x: QS, y: c.line, color: 'ink', width: 1.7, dash: [6, 4], label: 'ħω_{LA}(q)' },
+      { type: 'vline', at: k.Q, color: 'ink', width: 1.3, dash: [] }
+    ], { ylim: [0, c.ymax] });
+    pB.draw([
+      k.neg > 0 ? { type: 'band', x0: 0, x1: k.neg, color: 'c4', alpha: 0.14 } : null,
+      { type: 'vline', at: k.El, color: 'muted', width: 1 },
+      { type: 'line', x: c.xs, y: c.We, color: 'electron', label: 'W^{e}' },
+      { type: 'line', x: c.xs, y: c.Wph, color: 'phonon', label: 'Re W^{ph}', breakJump: 1e12 },
+      { type: 'line', x: c.xs, y: c.W, color: 'photon', width: 2.6, label: 'Re W', breakJump: 1e12 }
+    ], { xlim: [0, c.ymax], ylim: [-c.Y, c.Y] });
+
+    const leg = fig.querySelector('.a5-jellium-leg-a .item[data-s="guides"]');
+    if (leg) leg.style.opacity = none ? '0.38' : '';
+    const band = fig.querySelector('.a5-jellium-leg-b .item[data-s="band"]');
+    if (band) band.style.opacity = k.neg > 0 ? '' : '0.38';
+
+    const f1 = (v) => EPP.fix(v, 1), Qs = EPP.fix(k.Q, 2), scrName = SCR[c.scr];
+    pA.cv.canvas.setAttribute('aria-label', `Panel a: map of the real part of W against q/kF from 0 to 2.5 and ħω from 0 to ${f1(c.ymax)} meV, for ${p.name} with ${scrName} screening and damping ħγ = ${EPP.fix(c.g, 2)} meV. ` +
+      'W is repulsive above the dashed phonon line ħω_LA(q) and attractive just below it, at every q. ' + (none
+        ? `Without electronic screening the phonon line is flat at ħω_p^ion = ${f1(p.Epi)} meV. `
+        : `The phonon line rises from zero as sound, close to ħ v_s q with v_s = ${f1(p.vs)} km/s, and levels off below the bare-ion energy ħω_p^ion = ${f1(p.Epi)} meV. `) +
+      `The cut is at q = ${Qs} kF, where ħω_LA = ${f1(k.El)} meV. Click or drag to move the cut.`);
+    pB.cv.canvas.setAttribute('aria-label', `Panel b: cut at q = ${Qs} kF. We = ${EPP.fmt(k.we, 3)} in units of 4πe²/kTF² at every energy. Re W is 0 at ħω = 0, ` +
+      (k.neg > 0 ? `negative up to ${f1(k.neg)} meV, ` : 'never negative because the phonon is overdamped, ') +
+      `resonant at ħω_LA = ${f1(k.El)} meV and back near We above it. Re Wph is negative below the resonance and positive above.`);
+
+    setRo('zm', `${p.Z}, ${p.M < 100 ? p.M.toFixed(2) : p.M.toFixed(1)}${NB}amu, ${f1(p.OV)}${NB}Å³`);
+    setRo('k', `${EPP.fix(p.kF, 3)}, ${EPP.fix(p.kTF, 2)}${NB}Å⁻¹`);
+    setRo('wpe', `${p.Ep.toPrecision(3)}${NB}eV`);
+    setRo('wpi', `${f1(p.Epi)}${NB}meV`);
+    setRo('vs', none ? 'not defined (no screening)' : `${f1(p.vs)}${NB}km/s`);
+    setRo('q', `${Qs}${NB}${KF} = ${EPP.fix(k.q, 3)}${NB}Å⁻¹`);
+    setRo('eps', none ? '1 (no screening)' : EPP.fix(k.ee, k.ee < 100 ? 2 : 0));
+    setRo('wla', `${f1(k.El)}${NB}meV` + (none ? ` = ${HWPI}` : ''));
+  }
+
+  // ---------- controls ----------
+  const elCtl = fig.querySelector('.a5-jellium-ctrls');
+  ui = EPP.controls(elCtl, [
+    { key: 'met', type: 'seg', label: 'metal (free-electron r_s)', options: [['na', 'Na'], ['k', 'K'], ['al', 'Al'], ['pb', 'Pb']], value: 'na' },
+    { key: 'q', type: 'range', label: 'wavevector q/k_F', min: 0.05, max: QMAX, step: 0.01, value: 0.6, fmt: v => v.toFixed(2) },
+    { key: 'gam', type: 'range', label: 'damping ħγ', min: 0.1, max: 3, value: 0.4, log: true, step: 'any', fmt: v => v.toFixed(2) + ' meV' },
+    { key: 'scr', type: 'seg', label: 'electronic screening', options: [['lind', 'Lindhard'], ['tf', 'Thomas–Fermi'], ['none', 'none']], value: 'lind' }
+  ], (s) => { cur = compute(s); draw(); });
+  // control labels: symbols in italic, labels upright, as in the text
+  const I = (t) => `<i style="font-family:var(--font-text)">${t}</i>`;
+  const setLab = (el, html) => { if (el) el.innerHTML = html; };
+  setLab(elCtl.querySelector(`label[for="${fig.id}-q"] > span`), `wavevector ${I('q')}/${I('k')}<sub>F</sub>`);
+  setLab(elCtl.querySelector(`label[for="${fig.id}-gam"] > span`), `damping ${I('ħγ')}`);
+  const segBox = (id) => { const b = document.getElementById(id); return b ? b.closest('.ctrl') : null; };
+  const bMet = segBox(`${fig.id}-met-na`);
+  if (bMet) setLab(bMet.querySelector('.lab > span'), `metal (free-electron ${I('r')}<sub>s</sub>)`);
+  const inQ = document.getElementById(`${fig.id}-q`);
+  if (inQ) inQ.setAttribute('aria-label', 'wavevector of the cut, q in units of the Fermi wavevector kF');
+  fig.querySelectorAll('.seg button').forEach(b => { b.style.flex = '1 1 auto'; });
+})();
+</script>

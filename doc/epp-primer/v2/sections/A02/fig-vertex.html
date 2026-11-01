@@ -1,0 +1,479 @@
+  <figure class="viz" id="viz-a2-vertex">
+    <p class="viz-title">The vertices of the Hamiltonian and crystal momentum on the Brillouin zone <span class="tag">interactive</span></p>
+    <div class="a2-vertex-grid">
+      <div class="a2-vertex-a"></div>
+      <div class="a2-vertex-b">
+        <p class="a2-vertex-h">(b) first-order vertex of $\hat H^{\mathrm{e\text{-}ph}}$</p>
+        <div class="a2-vertex-dg a2-vertex-dg-abs"></div>
+        <div class="a2-vertex-dg a2-vertex-dg-emi" hidden></div>
+        <p class="a2-vertex-eq">amplitude $g_{mn\nu}(\bk,\bq)/\sqrt{N_\ell}$ in both readings</p>
+        <div class="a2-vertex-ops"><p class="a2-vertex-eq a2-vertex-op-abs">operator $c^\dagger_{m\bk+\bq}\,c_{n\bk}\,\hat a_{\bq\nu}$: the part $\hat a_{\bq\nu}$ of $\hat\phi_{\bq\nu}$ absorbs a phonon $\bq\nu$</p>
+          <p class="a2-vertex-eq a2-vertex-op-emi a2-vertex-off">operator $c^\dagger_{m\bk+\bq}\,c_{n\bk}\,\hat a^\dagger_{-\bq\nu}$: the part $\hat a^\dagger_{-\bq\nu}$ of $\hat\phi_{\bq\nu}$ emits a phonon $-\bq\nu$</p></div>
+      </div>
+      <div class="a2-vertex-ctl"></div>
+      <div class="a2-vertex-c">
+        <p class="a2-vertex-h">(c) second order: the vertex of $\hat H^{\mathrm{DW}}$ and its loop</p>
+        <div class="a2-vertex-row">
+          <div class="a2-vertex-cell"><div class="a2-vertex-dg a2-vertex-dg-dw"></div><p class="a2-vertex-eq">$g^{\mathrm{DW}}_{mn\nu\nu'}(\bk,\bq,\bq')/N_\ell$</p></div>
+          <div class="a2-vertex-cell"><div class="a2-vertex-dg a2-vertex-dg-loop"></div><p class="a2-vertex-eq">$\bq'=-\bq$, $\nu'=\nu$</p></div>
+        </div>
+        <p class="a2-vertex-eq">The loop is $\langle\hat\phi_{\bq\nu}\hat\phi_{-\bq\nu}\rangle=2n_{\bq\nu}+1$: it shifts $E_{n\bk}$ by <a class="eqref" href="#a2-eq-dw">(A2.20)</a>, also at $T=0$.</p>
+      </div>
+      <div class="readout a2-vertex-ro" aria-live="polite"><span>$\bk$<b class="a2-vertex-v-k"></b></span><span>$\bq$<b class="a2-vertex-v-q"></b></span><span>$\bk+\bq$<b class="a2-vertex-v-kq"></b></span><span>$\bG$<b class="a2-vertex-v-G"></b></span><span>process<b class="a2-vertex-v-p"></b></span><span>final state<b class="a2-vertex-v-f"></b></span></div>
+    </div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> The final state is always $\bk+\bq$. When that sum leaves the hexagon, it is the same state as the folded vector $\bk+\bq-\bG$ inside it: an umklapp process. Absorbing $\bq\nu$ and emitting $-\bq\nu$ give the electron the same crystal momentum.</p><div class="cap-more"><p><strong>Marks.</strong> In (a) blue arrows are electron wavevectors: $\bk$, $\bk+\bq$ (dashed) and the folded $\bk+\bq-\bG$ (light); amber is the phonon's, $\bq$ absorbed or $-\bq$ emitted; dotted is $-\bG$. Dots are reciprocal lattice points, faint hexagons their zones; the tinted one holds $\bk+\bq$. In the diagrams, blue arrowed lines are electrons, amber zigzags phonons, dots vertices. Time runs to the right in (b), where an absorbed phonon enters and an emitted one leaves; each zigzag of (c) is a field $\hat\phi$, which does either.</p><p><strong>Try.</strong> Drag the amber handle, the tip of $\bk+\bq$, toward $\bk$: $\bq$ shortens until the process becomes normal. Drag $\bk$ toward $\Gamma$. Switch absorb and emit: the phonon line and the operator string change, $\bk+\bq$ does not. With (a) focused, the arrow keys move the active tip by 0.05 Å⁻¹; Space switches between $\bk$ and $\bq$.</p><p><strong>Model.</strong> Zone of the hexagonal sheet of Section A.1: $a=2.504$ Å, $\bb_1=(2\pi/a)(1,-1/\sqrt3)$, $\bb_2=(2\pi/a)(0,2/\sqrt3)$. $\bk$ and $\bq$ stay in the first zone; $\bG$ brings $\bk+\bq$ closest to $\Gamma$, as in <a class="eqref" href="#a2-eq-select">(A2.12)</a>. The vertices are terms of <a class="eqref" href="#a2-eq-H">(A2.15)</a> and <a class="eqref" href="#a2-eq-H0">(A2.19)</a>, with $\hat\phi_{\bq\nu}=\hat a_{\bq\nu}+\hat a^\dagger_{-\bq\nu}$. The loop, with $n_{\bq\nu}$ the Bose–Einstein occupation, gives the shift <a class="eqref" href="#a2-eq-dw">(A2.20)</a>, a preview of the Debye–Waller self-energy (Section A.7). Energy conservation is not drawn: the Hamiltonian contains every vertex.</p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a2-vertex');
+  if (!fig || !window.EPP) return;
+  // outside Section A.2 (the isolated figure test) the links to the section's equations have no target: show their text
+  if (!fig.closest('#a-coupling')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+  // layout: zone (a) on the left; (b), the controls and (c) in the right column; readouts below.
+  // On a phone the readouts follow (a) directly, and the absorb/emit switch sits under (b), the diagram it changes.
+  if (!document.getElementById('a2-vertex-css')) {
+    const st = document.createElement('style'); st.id = 'a2-vertex-css';
+    st.textContent = [
+      '#viz-a2-vertex .a2-vertex-grid{display:grid;gap:12px 18px;grid-template-columns:minmax(0,1fr);grid-template-areas:"a" "ro" "b" "ctl" "c"}',
+      '@media (min-width:720px){#viz-a2-vertex .a2-vertex-grid{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);grid-template-areas:"a b" "a ctl" "a c" "ro ro";align-items:start}}',
+      '#viz-a2-vertex .a2-vertex-a{grid-area:a;min-width:0}',
+      '#viz-a2-vertex .a2-vertex-b{grid-area:b;min-width:0}',
+      '#viz-a2-vertex .a2-vertex-c{grid-area:c;min-width:0}',
+      '#viz-a2-vertex .a2-vertex-ro{grid-area:ro;margin-top:0}',
+      '#viz-a2-vertex .a2-vertex-ctl.controls{grid-area:ctl;display:flex;flex-wrap:wrap;gap:8px 18px;align-items:flex-end;margin-top:0}',
+      '#viz-a2-vertex .a2-vertex-h{margin:0 0 4px;max-width:none;font-family:var(--font-ui);font-size:0.86rem;color:var(--fg-2)}',
+      '#viz-a2-vertex .a2-vertex-eq{margin:3px 0 0;max-width:none;font-family:var(--font-ui);font-size:0.84rem;line-height:1.45;color:var(--fg-2)}',
+      '#viz-a2-vertex .a2-vertex-ops{display:grid}',
+      '#viz-a2-vertex .a2-vertex-ops>p{grid-area:1/1}',
+      '#viz-a2-vertex .a2-vertex-ops>.a2-vertex-off{visibility:hidden}',
+      '#viz-a2-vertex .a2-vertex-dg svg{display:block;max-width:100%;height:auto;overflow:visible;margin:0 auto}',
+      '#viz-a2-vertex .a2-vertex-row{display:flex;gap:10px;justify-content:space-around;align-items:flex-start}',
+      '#viz-a2-vertex .a2-vertex-cell{flex:0 1 auto;min-width:0;text-align:center}',
+      '#viz-a2-vertex .a2-vertex-a canvas{cursor:crosshair}'
+    ].join('\n');
+    document.head.appendChild(st);
+  }
+
+  // ---------- the zone of the hexagonal sheet of Section A.1 (wavevectors in 1/Å) ----------
+  const TAU = 2 * Math.PI, S3 = Math.sqrt(3);
+  const A = 2.504, BQ = TAU / A;
+  const b1 = [BQ, -BQ / S3], b2 = [0, 2 * BQ / S3];
+  const KZ = 2 * TAU / (3 * A), MZ = BQ / S3;                 // zone corner K at 4π/3a, edge midpoint M at 2π/(√3 a)
+  const HEX = [0, 1, 2, 3, 4, 5].map(j => [KZ * Math.cos(j * Math.PI / 3), KZ * Math.sin(j * Math.PI / 3)]);
+  const NRM = [1, 3, 5].map(j => [Math.cos(j * Math.PI / 6), Math.sin(j * Math.PI / 6)]);   // edge normals at 30°, 90°, 150°
+  const K0 = [1.339, 0], Q0 = [0.55, 0.45];                   // k at 0.8 of Γ–K; k + q leaves the zone (umklapp)
+  const add = (u, v) => [u[0] + v[0], u[1] + v[1]], sub = (u, v) => [u[0] - v[0], u[1] - v[1]], len = (u) => Math.hypot(u[0], u[1]);
+  const inZone = (p) => NRM.every(n => Math.abs(p[0] * n[0] + p[1] * n[1]) <= MZ + 1e-9);
+  // nearest point of the closed first zone
+  function clampZone(p) {
+    if (inZone(p)) return p;
+    let best = p, bd = Infinity;
+    for (let j = 0; j < 6; j++) {
+      const a = HEX[j], ab = sub(HEX[(j + 1) % 6], a);
+      const t = EPP.clamp(((p[0] - a[0]) * ab[0] + (p[1] - a[1]) * ab[1]) / (ab[0] * ab[0] + ab[1] * ab[1]), 0, 1);
+      const c = [a[0] + t * ab[0], a[1] + t * ab[1]], d = len(sub(p, c));
+      if (d < bd) { bd = d; best = c; }
+    }
+    return best;
+  }
+  // the reciprocal lattice vector G = m1 b1 + m2 b2 (shells up to the second) that brings k' closest to Γ;
+  // G = 0 whenever k' lies in the closed first zone, and the shorter G on a tie
+  function fold(kp) {
+    let best = { m: [0, 0], G: [0, 0], d: len(kp), g: 0 };
+    for (let m1 = -2; m1 <= 2; m1++) for (let m2 = -2; m2 <= 2; m2++) {
+      if (!m1 && !m2) continue;
+      const G = [m1 * b1[0] + m2 * b2[0], m1 * b1[1] + m2 * b2[1]], d = len(sub(kp, G)), g = len(G);
+      if (d < best.d - 1e-7 || (Math.abs(d - best.d) <= 1e-7 && g < best.g - 1e-7)) best = { m: [m1, m2], G, d, g };
+    }
+    return best;
+  }
+
+  // ---------- state ----------
+  let k = K0.slice(), q = Q0.slice(), active = 'k', mode = 'abs', drag = null, focused = false, cur = null;
+  function compute() {
+    const kq = add(k, q), f = fold(kq);
+    cur = { k, q, kq, G: f.G, m: f.m, fk: sub(kq, f.G), umk: !!(f.m[0] || f.m[1]) };
+  }
+  compute();
+
+  // ---------- label parts {t, b: bold vector (UI font), i: italic symbol (text font), sub: subscript} ----------
+  const T = (t) => ({ t }), Bv = (t) => ({ t, b: 1 }), It = (t) => ({ t, i: 1 }), Sb = (t, i, b) => ({ t, sub: 1, i: i ? 1 : 0, b: b ? 1 : 0 });
+  let FAM = { ui: 'sans-serif', tx: 'serif' };
+  const pFont = (p, size) => { const z = (p.i ? size + 1 : size) * (p.sub ? 0.72 : 1); return `${p.i ? 'italic ' : ''}${p.b ? '700 ' : ''}${z.toFixed(1)}px ${p.i ? FAM.tx : FAM.ui}`; };
+  function partsW(ctx, parts, size) { let w = 0; for (const p of parts) { ctx.font = pFont(p, size); w += ctx.measureText(p.t).width; } return w; }
+  function partsDraw(ctx, parts, x, y, size) { ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic'; for (const p of parts) { ctx.font = pFont(p, size); ctx.fillText(p.t, x, y + (p.sub ? size * 0.28 : 0)); x += ctx.measureText(p.t).width; } }
+  const KQ = [Bv('k'), T('+'), Bv('q')], KQG = [Bv('k'), T('+'), Bv('q'), T('−'), Bv('G')];
+
+  // ---------- canvas helpers (as in Figure A1.4's zone panel) ----------
+  function arrow(ctx, x0, y0, x1, y1, o) {
+    const dx = x1 - x0, dy = y1 - y0, L = Math.hypot(dx, dy);
+    if (!(L > 0.6)) return;
+    const ux = dx / L, uy = dy / L, h = Math.min(o.head || 8, L * 0.6), wv = h * 0.42;
+    ctx.strokeStyle = o.col; ctx.fillStyle = o.col; ctx.lineWidth = o.lw || 1.5; ctx.lineCap = 'butt';
+    ctx.setLineDash(o.dash || []);
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1 - ux * h * 0.7, y1 - uy * h * 0.7); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(x1, y1);
+    ctx.lineTo(x1 - ux * h - uy * wv, y1 - uy * h + ux * wv);
+    ctx.lineTo(x1 - ux * h + uy * wv, y1 - uy * h - ux * wv);
+    ctx.closePath(); ctx.fill();
+  }
+  // arrow from P0 to P1 with gaps at both ends (so that heads stop at a handle's rim)
+  function arrowGap(ctx, P0, P1, g0, g1, o) {
+    const dx = P1[0] - P0[0], dy = P1[1] - P0[1], L = Math.hypot(dx, dy);
+    if (L <= g0 + g1 + 2) return;
+    arrow(ctx, P0[0] + dx / L * g0, P0[1] + dy / L * g0, P1[0] - dx / L * g1, P1[1] - dy / L * g1, o);
+  }
+  // label placer: tries candidate centres and takes the first box that stays on the canvas and clears every
+  // placed label and obstacle; when none is free it searches outward and draws a leader line
+  function placer(ctx, W, H) {
+    const boxes = [], labels = [];
+    const hit = (b, o, g) => b[0] < o[2] + g && b[2] > o[0] - g && b[1] < o[3] + g && b[3] > o[1] - g;
+    const free = (b) => b[0] >= 1 && b[1] >= 1 && b[2] <= W - 1 && b[3] <= H - 1 && !boxes.some(o => hit(b, o, 0)) && !labels.some(o => hit(b, o, 3));
+    const api = {
+      block(x0, y0, x1, y1) { boxes.push([Math.min(x0, x1), Math.min(y0, y1), Math.max(x0, x1), Math.max(y0, y1)]); },
+      disc(P, r) { boxes.push([P[0] - r, P[1] - r, P[0] + r, P[1] + r]); },
+      seg(P0, P1, r = 2.5) { const n = Math.max(1, Math.ceil(Math.hypot(P1[0] - P0[0], P1[1] - P0[1]) / 5)); for (let i = 0; i <= n; i++) { const x = P0[0] + (P1[0] - P0[0]) * i / n, y = P0[1] + (P1[1] - P0[1]) * i / n; boxes.push([x - r, y - r, x + r, y + r]); } },
+      size(L) { return [partsW(ctx, L.s, L.size), L.size * 1.35]; },
+      put(L, cands) {
+        const [w, h] = api.size(L);
+        const at = (c) => [c[0] - w / 2 - 2, c[1] - h / 2, c[0] + w / 2 + 2, c[1] + h / 2];
+        let c = cands.find(cc => free(at(cc))) || null, lead = null;
+        if (!c) {
+          const c0 = cands[0];
+          search: for (let rad = 8; rad <= 90; rad += 6) for (let j = 0; j < 24; j++) {
+            const cc = [c0[0] + rad * Math.cos(j * TAU / 24), c0[1] + rad * Math.sin(j * TAU / 24)];
+            if (free(at(cc))) { c = cc; lead = cands.anchor || c0; break search; }
+          }
+        }
+        if (!c) return null;                                  // leave a label out rather than overlap another one
+        const b = at(c); labels.push(b);
+        if (lead) {
+          const dx = lead[0] - c[0], dy = lead[1] - c[1], t = Math.min((w / 2 + 2) / Math.max(Math.abs(dx), 1e-6), (h / 2) / Math.max(Math.abs(dy), 1e-6));
+          if (t < 1) { ctx.strokeStyle = EPP.alpha('muted', 0.8); ctx.lineWidth = 0.9; ctx.setLineDash([]); ctx.beginPath(); ctx.moveTo(c[0] + dx * t, c[1] + dy * t); ctx.lineTo(lead[0] - dx * 0.04, lead[1] - dy * 0.04); ctx.stroke(); }
+        }
+        ctx.fillStyle = EPP.alpha('surface', 0.84);
+        ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(b[0], b[1], b[2] - b[0], b[3] - b[1], 3); else ctx.rect(b[0], b[1], b[2] - b[0], b[3] - b[1]); ctx.fill();
+        ctx.fillStyle = L.color; partsDraw(ctx, L.s, c[0] - w / 2, c[1] + L.size * 0.36, L.size);
+        return c;
+      },
+      // centres beside the segment P0 -> P1, preferred side first (side +1 = screen-left of the direction)
+      along(L, P0, P1, side, ts = [0.5, 0.38, 0.62, 0.27, 0.73], gap = 5) {
+        const [w, h] = api.size(L);
+        const dx = P1[0] - P0[0], dy = P1[1] - P0[1], ln = Math.hypot(dx, dy) || 1, nx = dy / ln, ny = -dx / ln;
+        const ext = Math.abs(nx) * (w / 2 + 2) + Math.abs(ny) * h / 2 + gap, out = [];
+        for (const sd of [side, -side]) for (const t of ts) out.push([P0[0] + dx * t + sd * nx * ext, P0[1] + dy * t + sd * ny * ext]);
+        out.anchor = [P0[0] + dx / 2, P0[1] + dy / 2];
+        return out;
+      },
+      // centres around a point, starting at screen angle ang0 and fanning out
+      around(L, P, r, ang0, gap = 2) {
+        const [w, h] = api.size(L), out = [];
+        for (const rr of [r, r + 6]) for (let j = 0; j < 16; j++) {
+          const kk = j === 0 ? 0 : (j % 2 ? 1 : -1) * Math.ceil(j / 2), th = ang0 + kk * Math.PI / 8;
+          const c = Math.cos(th), s = Math.sin(th);
+          const ext = rr + gap + Math.min((w / 2 + 2) / Math.max(Math.abs(c), 1e-6), (h / 2) / Math.max(Math.abs(s), 1e-6));
+          out.push([P[0] + c * ext, P[1] + s * ext]);
+        }
+        out.anchor = P;
+        return out;
+      }
+    };
+    return api;
+  }
+  const lab = (s, color, size) => ({ s: typeof s === 'string' ? [T(s)] : s, color, size });
+  // side of the segment A -> B that faces away from the point X (+1 = screen-left)
+  const away = (A0, B0, X) => { const dx = B0[0] - A0[0], dy = B0[1] - A0[1], L = Math.hypot(dx, dy) || 1; return ((X[0] - A0[0]) * dy / L - (X[1] - A0[1]) * dx / L) > 0 ? -1 : 1; };
+
+  // ---------- (a) the Brillouin zone ----------
+  const elA = fig.querySelector('.a2-vertex-a');
+  const cv = EPP.canvas(elA, { aspect: 1.04, minHeight: 280, maxHeight: 580 });
+  const cvs = cv.canvas;
+  cvs.style.touchAction = 'none';                              // the only dragged canvas of the figure
+  cvs.setAttribute('tabindex', '0');
+  cvs.setAttribute('role', 'application');
+  cvs.setAttribute('aria-label', 'Brillouin zone with electron wavevector k, phonon wavevector q and their sum. The hexagon is the first zone, the faint hexagons are equivalent zones around the nearest reciprocal lattice points. Drag the handle at the tip of k, or the handle at the tip of k+q, which sets q; or use the arrow keys to move the active tip and Space to switch between k and q. The readouts below report the vectors, the reciprocal lattice vector G and whether the process is normal or umklapp.');
+  let view = { s: 1, x0: 0, y0: 0 };
+  const TOP = 30, BOT = 24, XR = 3.45, YR = 3.02;              // k + q stays inside the doubled hexagon, |x| <= 3.35, |y| <= 2.90 1/Å
+  const layout = (W, H) => { const s = Math.min(W / (2 * XR), (H - TOP - BOT) / (2 * YR)); view = { s, x0: W / 2, y0: TOP + (H - TOP - BOT) / 2 }; };
+  const P = (v) => [view.x0 + v[0] * view.s, view.y0 - v[1] * view.s];
+  const toK = (px, py) => [(px - view.x0) / view.s, -(py - view.y0) / view.s];
+  let RH = 6.5;                                                // handle radius (px), smaller on a phone
+
+  function drawZone() {
+    cv.clear();
+    const ctx = cv.ctx, W = cv.w, H = cv.h;
+    if (W < 60 || !cur) return;
+    FAM = { ui: EPP.css('--font-ui'), tx: EPP.css('--font-text') };
+    layout(W, H);
+    RH = EPP.clamp(0.1 * view.s, 5, 6.5);
+    const { kq, G, fk, umk } = cur, emit = mode === 'emi';
+    const cInk = EPP.color('ink'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted'), cSurf = EPP.color('surface');
+    const cEl = EPP.color('electron'), cPh = EPP.color('phonon'), tEl = EPP.textColor('electron'), tPh = EPP.textColor('phonon');
+    const hexPath = (c, scale = 1) => { ctx.beginPath(); HEX.forEach((h, j) => { const p = P([c[0] + scale * h[0], c[1] + scale * h[1]]); if (j) ctx.lineTo(p[0], p[1]); else ctx.moveTo(p[0], p[1]); }); ctx.closePath(); };
+    // reciprocal lattice points whose zones reach the canvas
+    const lat = [], reach = KZ * view.s + 4;
+    for (let m1 = -3; m1 <= 3; m1++) for (let m2 = -3; m2 <= 3; m2++) {
+      const g = [m1 * b1[0] + m2 * b2[0], m1 * b1[1] + m2 * b2[1]], p = P(g);
+      if (p[0] < -reach || p[0] > W + reach || p[1] < -reach || p[1] > H + reach) continue;
+      lat.push({ m: [m1, m2], g, p });
+    }
+    // equivalent zones (faint), the one holding k + q tinted, then the first zone
+    if (umk) { hexPath(G); ctx.fillStyle = EPP.alpha('electron', 0.075); ctx.fill(); }
+    ctx.lineWidth = 1; ctx.setLineDash([]); ctx.strokeStyle = EPP.alpha('muted', 0.36);
+    for (const L of lat) if (L.m[0] || L.m[1]) { hexPath(L.g); ctx.stroke(); }
+    if (umk) { hexPath(G); ctx.strokeStyle = EPP.alpha('electron', 0.5); ctx.lineWidth = 1.2; ctx.stroke(); }
+    hexPath([0, 0]); ctx.fillStyle = EPP.alpha('ink', 0.035); ctx.fill();
+    ctx.strokeStyle = cFg2; ctx.lineWidth = 1.5; ctx.lineJoin = 'round'; ctx.stroke();
+    // while q is dragged: the hexagon of reachable tips k + q (the zone moved to the tip of k)
+    if (drag && drag.which === 'q') { hexPath(cur.k); ctx.strokeStyle = EPP.alpha('phonon', 0.55); ctx.lineWidth = 1; ctx.setLineDash([4, 4]); ctx.stroke(); ctx.setLineDash([]); }
+    const pl = placer(ctx, W, H);
+    HEX.forEach((h, j) => pl.seg(P(h), P(HEX[(j + 1) % 6]), 1.5));
+    // lattice points; K and M
+    for (const L of lat) {
+      const g0 = !L.m[0] && !L.m[1];
+      ctx.beginPath(); ctx.arc(L.p[0], L.p[1], g0 ? 3.2 : 2.6, 0, TAU); ctx.fillStyle = g0 ? cInk : cMut; ctx.fill();
+      pl.disc(L.p, 4);
+    }
+    const PKc = P(HEX[2]), PMc = P([0, MZ]);
+    ctx.fillStyle = cFg2;
+    for (const p of [PKc, PMc]) { ctx.beginPath(); ctx.arc(p[0], p[1], 2.1, 0, TAU); ctx.fill(); pl.disc(p, 3); }
+    // vectors: k + q (dashed) and, for umklapp, -G (dotted) and the folded k + q - G (light); then k and the phonon arrow
+    const O = P([0, 0]), Pk = P(cur.k), Pkq = P(kq), Pf = P(fk), PG = P(G);
+    arrowGap(ctx, O, Pkq, 0, RH + 1.5, { col: cEl, lw: 2, head: 9, dash: [6, 4] });
+    if (umk) {
+      arrowGap(ctx, O, Pf, 0, 0, { col: EPP.alpha('electron', 0.5), lw: 2.4, head: 9 });
+      arrowGap(ctx, Pkq, Pf, RH + 2.5, 2, { col: cInk, lw: 1.5, head: 8, dash: [2, 3] });
+    }
+    arrowGap(ctx, O, Pk, 0, RH + 1.5, { col: cEl, lw: 2.6, head: 10 });
+    if (!emit) arrowGap(ctx, Pk, Pkq, RH + 1, RH + 1.5, { col: cPh, lw: 2.6, head: 10 });
+    else arrowGap(ctx, Pkq, Pk, RH + 1, RH + 1.5, { col: cPh, lw: 2.6, head: 10 });
+    // handles: amber at the tip of k + q (it sets q), blue at the tip of k; a ring marks the active one
+    const handle = (p, col, act) => {
+      ctx.beginPath(); ctx.arc(p[0], p[1], RH, 0, TAU); ctx.fillStyle = col; ctx.fill();
+      ctx.lineWidth = 1.6; ctx.strokeStyle = cSurf; ctx.stroke();
+      if (act) { ctx.beginPath(); ctx.arc(p[0], p[1], RH + 4, 0, TAU); ctx.lineWidth = 1.5; ctx.strokeStyle = cInk; ctx.setLineDash(focused || drag ? [] : [3, 2.5]); ctx.stroke(); ctx.setLineDash([]); }
+    };
+    handle(Pkq, cPh, active === 'q');
+    handle(Pk, cEl, active === 'k');
+    // header and status rows, on a backing that hides the faint zone lines
+    const strip = (parts, x, y, size, col) => {
+      const w = partsW(ctx, parts, size);
+      ctx.fillStyle = EPP.alpha('surface', 0.88); ctx.fillRect(x - 3, y - size - 2, w + 6, size + 7);
+      ctx.fillStyle = col; partsDraw(ctx, parts, x, y, size);
+      pl.block(x - 3, y - size - 2, x + w + 3, y + 5);
+    };
+    let head = [T('(a) Brillouin zone: drag the tips of '), Bv('k'), T(' and '), ...KQ];
+    if (partsW(ctx, head, 11.5) > W - 14) head = [T('(a) drag the tips of '), Bv('k'), T(' and '), ...KQ];
+    strip(head, 6, 16, 11.5, cFg2);
+    let stat = umk ? [T('umklapp: '), ...KQ, T(' left the zone; '), ...KQG, T(' is the same state')]
+                   : [T('normal process: '), ...KQ, T(' is in the first zone, '), Bv('G'), T(' = 0')];
+    if (partsW(ctx, stat, 11.5) > W - 14) stat = umk ? [T('umklapp: '), ...KQG, T(' is the same state')] : [T('normal process: '), Bv('G'), T(' = 0')];
+    strip(stat, 6, H - 8, 11.5, umk ? tEl : cFg2);
+    // labels: obstacles first, then the vectors, then the fixed points
+    pl.disc(Pk, RH + 4.5); pl.disc(Pkq, RH + 4.5); pl.disc(O, 5);
+    pl.seg(O, Pk, 3); pl.seg(O, Pkq, 3); pl.seg(Pk, Pkq, 3);
+    if (umk) { pl.seg(Pkq, Pf, 2.5); pl.seg(O, Pf, 3); pl.disc(PG, 5); }
+    const lk = len(sub(Pk, O)), lq = len(sub(Pkq, Pk)), lkq = len(sub(Pkq, O));
+    // Γ opposite to the mean direction of the arrows that leave it
+    const dirs = [[cur.k, lk], [kq, lkq]].concat(umk ? [[fk, len(sub(Pf, O))]] : []).filter(d => d[1] > 4).map(d => [d[0][0] / len(d[0]), d[0][1] / len(d[0])]);
+    const mean = dirs.reduce((s, d) => add(s, d), [0, 0]);
+    const angG = len(mean) > 0.2 ? Math.atan2(mean[1], -mean[0]) : 3 * Math.PI / 4;
+    let L = lab('Γ', cFg2, 12.5); pl.put(L, pl.around(L, O, 4, angG));
+    if (lk > 6) { L = lab([Bv('k')], tEl, 14); pl.put(L, pl.along(L, O, Pk, away(O, Pk, Pkq))); }
+    if (lq > 6) {
+      L = lab(emit ? [T('−'), Bv('q')] : [Bv('q')], tPh, 14);
+      pl.put(L, emit ? pl.along(L, Pkq, Pk, away(Pkq, Pk, O)) : pl.along(L, Pk, Pkq, away(Pk, Pkq, O)));
+    }
+    if (lkq > 6) { L = lab(KQ, tEl, 13.5); pl.put(L, pl.along(L, O, Pkq, away(O, Pkq, Pk), [0.62, 0.5, 0.74, 0.38, 0.85])); }
+    if (umk) {
+      L = lab([T('−'), Bv('G')], cInk, 13.5); pl.put(L, pl.along(L, Pkq, Pf, away(Pkq, Pf, O)));
+      L = lab(KQG, tEl, 13.5); pl.put(L, pl.along(L, O, Pf, away(O, Pf, Pkq), [0.62, 0.5, 0.75, 0.38]));
+      L = lab([Bv('G')], cInk, 13.5); pl.put(L, pl.around(L, PG, 4, Math.atan2(-G[1], G[0])));
+    }
+    L = lab('M', cFg2, 12.5); pl.put(L, pl.around(L, PMc, 3, -Math.PI / 2));
+    L = lab('K', cFg2, 12.5); pl.put(L, pl.around(L, PKc, 3, -2 * Math.PI / 3));
+  }
+
+  // ---------- (b), (c): Feynman diagrams drawn with EPP.fd; labels added as SVG text in the primer's notation ----------
+  const NS = 'http://www.w3.org/2000/svg';
+  const TE = 'var(--t-electron)', TP = 'var(--t-phonon)', TM = 'var(--muted)';
+  function svgLabel(g, l) {
+    const size = l.size || 14, te = document.createElementNS(NS, 'text');
+    te.setAttribute('x', l.x); te.setAttribute('y', l.y); te.setAttribute('text-anchor', l.anchor || 'middle');
+    te.setAttribute('style', `fill:${l.fill || 'var(--fg-2)'};font-size:${size}px`);
+    let dy = 0;
+    for (const p of l.parts) {
+      const ts = document.createElementNS(NS, 'tspan'), want = p.sub ? Math.round(size * 0.3) : 0;
+      ts.textContent = p.t;
+      if (want !== dy) { ts.setAttribute('dy', String(want - dy)); dy = want; }
+      const fs = (p.i ? size + 1 : size) * (p.sub ? 0.72 : 1);
+      ts.setAttribute('style', `font-family:${p.i ? 'var(--font-text)' : 'var(--font-ui)'};font-style:${p.i ? 'italic' : 'normal'};font-weight:${p.b ? 700 : 400};font-size:${fs.toFixed(1)}px`);
+      te.appendChild(ts);
+    }
+    g.appendChild(te);
+  }
+  const DG = [];
+  function diagram(sel, spec, labels) {
+    const svg = EPP.fd.draw(fig.querySelector(sel), spec);
+    const d = { svg, labels, key: '' };
+    DG.push(d); relabel(d, true);
+    return d;
+  }
+  // EPP.fd repaints its SVG on a theme change, which removes the labels: add them back
+  function relabel(d, force) {
+    const list = d.labels(), key = list.map(l => l.x + ',' + l.y + ':' + l.parts.map(p => p.t).join('')).join('|');
+    if (!force && key === d.key && d.svg.querySelector('.a2-vertex-lab')) return;
+    d.key = key;
+    d.svg.querySelectorAll('.a2-vertex-lab').forEach(n => n.remove());
+    const g = document.createElementNS(NS, 'g'); g.setAttribute('class', 'a2-vertex-lab');
+    list.forEach(l => svgLabel(g, l));
+    d.svg.appendChild(g);
+  }
+  const nk = [It('n'), Bv('k')], mkq = [It('m'), T(' '), ...KQ];
+  // first-order vertex: the electron goes n k -> m k+q; the phonon line enters from the left (absorbed q ν)
+  // or leaves to the right (emitted -q ν); time runs from left to right
+  const lblB = (emit) => () => {
+    const out = [
+      { x: 69, y: 116, parts: nk, fill: TE }, { x: 180, y: 116, parts: mkq, fill: TE },
+      emit ? { x: 175, y: 60, anchor: 'start', parts: [T('−'), Bv('q'), It('ν')], fill: TP } : { x: 74, y: 60, anchor: 'end', parts: [Bv('q'), It('ν')], fill: TP },
+      { x: 12, y: 134, anchor: 'start', size: 11, parts: [T('time →')], fill: TM }
+    ];
+    if (cur && cur.umk) out.push({ x: 180, y: 134, size: 13, parts: [T('= '), It('m'), T(' '), ...KQG], fill: TE });
+    return out;
+  };
+  const fermions = [{ t: 'fermion', a: [14, 92], b: [125, 92] }, { t: 'fermion', a: [125, 92], b: [236, 92] }];
+  const dAbs = diagram('.a2-vertex-dg-abs', { w: 250, h: 140, label: 'First-order vertex, absorption: an electron line n k comes in from the left, an electron line m k plus q leaves to the right, and a phonon line q nu comes in and ends at the vertex dot.',
+    items: [...fermions, { t: 'phonon', a: [50, 16], b: [125, 92] }, { t: 'vertex', at: [125, 92], r: 3.6 }] }, lblB(false));
+  const dEmi = diagram('.a2-vertex-dg-emi', { w: 250, h: 140, label: 'First-order vertex, emission: an electron line n k comes in from the left, an electron line m k plus q leaves to the right, and a phonon line minus q nu starts at the vertex dot and leaves.',
+    items: [...fermions, { t: 'phonon', a: [125, 92], b: [200, 16] }, { t: 'vertex', at: [125, 92], r: 3.6 }] }, lblB(true));
+  diagram('.a2-vertex-dg-dw', { w: 164, h: 124, label: 'Second-order Debye–Waller vertex: two phonon lines, q nu and q prime nu prime, meet the electron line at one point; the electron goes from n k to m k plus q plus q prime.',
+    items: [{ t: 'fermion', a: [8, 90], b: [82, 90] }, { t: 'fermion', a: [82, 90], b: [156, 90] }, { t: 'phonon', a: [30, 14], b: [82, 90] }, { t: 'phonon', a: [134, 14], b: [82, 90] }, { t: 'vertex', at: [82, 90], r: 3.6 }] },
+    () => [{ x: 45, y: 112, parts: nk, fill: TE }, { x: 120, y: 112, parts: [It('m'), T(' '), ...KQ, T('+'), Bv('q'), T('′')], fill: TE },
+      { x: 40, y: 56, anchor: 'end', parts: [Bv('q'), It('ν')], fill: TP }, { x: 122, y: 56, anchor: 'start', parts: [Bv('q'), T('′'), It('ν'), T('′')], fill: TP }]);
+  diagram('.a2-vertex-dg-loop', { w: 138, h: 124, label: 'The two phonon lines of the Debye–Waller vertex joined into one loop, with q prime equal to minus q and nu prime equal to nu; the electron enters and leaves in n k, and the loop carries the factor 2 n plus 1.',
+    items: [{ t: 'fermion', a: [8, 98], b: [69, 98] }, { t: 'fermion', a: [69, 98], b: [130, 98] }, { t: 'phonon', a: [69, 98], b: [69, 36], bend: 0.5 }, { t: 'phonon', a: [69, 36], b: [69, 98], bend: 0.5 }, { t: 'vertex', at: [69, 98], r: 3.6 }] },
+    () => [{ x: 38, y: 118, parts: nk, fill: TE }, { x: 100, y: 118, parts: nk, fill: TE }, { x: 69, y: 72, parts: [Bv('q'), It('ν')], fill: TP },
+      { x: 69, y: 22, parts: [T('2'), It('n'), Sb('q', 0, 1), Sb('ν', 1), T(' + 1')], fill: TP }]);
+  EPP.onTheme(() => DG.forEach(d => relabel(d, true)));
+
+  // ---------- readouts ----------
+  const roEl = fig.querySelector('.a2-vertex-ro'), roV = {};
+  ['k', 'q', 'kq', 'G', 'p', 'f'].forEach(c => { roV[c] = fig.querySelector('.a2-vertex-v-' + c); });
+  const B = (t) => `<strong>${t}</strong>`, I = (t) => `<i style="font-family:var(--font-text)">${t}</i>`;
+  const fx = (v, d) => EPP.fix(Math.abs(v) < 0.5 * Math.pow(10, -d) ? 0 : v, d);
+  const vec = (v) => `(${fx(v[0], 3)}, ${fx(v[1], 3)}) Å⁻¹`;
+  const lng = (v) => `length ${fx(len(v), 3)} Å⁻¹`;
+  // G = m1 b1 + m2 b2 written out: "b₁ + b₂", "−2b₁ − b₂"
+  function combo(m) {
+    let s = '';
+    [[m[0], 1], [m[1], 2]].forEach(([c, j]) => {
+      if (!c) return;
+      const mag = Math.abs(c), term = `${mag === 1 ? '' : mag}${B('b')}<sub>${j}</sub>`;
+      s += s ? (c < 0 ? ' − ' : ' + ') + term : (c < 0 ? '−' : '') + term;
+    });
+    return s;
+  }
+  const KQh = `${B('k')}+${B('q')}`;
+  function readouts() {
+    const { kq, G, m, fk, umk } = cur;
+    roV.k.innerHTML = `${vec(k)}, ${lng(k)}`;
+    roV.q.innerHTML = `${vec(q)}, ${lng(q)}`;
+    roV.kq.innerHTML = `${vec(kq)}, ${lng(kq)}`;
+    roV.G.innerHTML = umk ? `${combo(m)} = ${vec(G)}, ${lng(G)}` : '0';
+    roV.p.innerHTML = umk ? `umklapp: ${KQh} lies outside the first zone` : `normal process: ${KQh} lies in the first zone, ${B('G')} = 0`;
+    roV.f.innerHTML = umk ? `${I('m')} ${KQh}−${B('G')} = ${vec(fk)}, the same state as ${I('m')} ${KQh}` : `${I('m')} ${KQh} = ${vec(kq)}`;
+  }
+
+  // ---------- redraw ----------
+  let raf = 0, lastU = null;
+  function redraw() {
+    compute();
+    drawZone();
+    readouts();
+    if (cur.umk !== lastU) { lastU = cur.umk; relabel(dAbs); relabel(dEmi); }
+  }
+  const schedule = () => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; redraw(); }); };
+
+  // ---------- pointer: drag a handle; a press elsewhere moves the active tip there ----------
+  const local = (e) => { const r = cvs.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  function hitHandle(px, py) {
+    const hk = P(k), hq = P(add(k, q)), dk = Math.hypot(px - hk[0], py - hk[1]), dq = Math.hypot(px - hq[0], py - hq[1]);
+    if (dk > 22 && dq > 22) return null;
+    if (Math.abs(dk - dq) < 1) return active;
+    return dk < dq ? 'k' : 'q';
+  }
+  function setFrom(which, px, py) {
+    const p = toK(px, py);
+    if (which === 'k') k = clampZone(p); else q = clampZone(sub(p, k));
+  }
+  cvs.addEventListener('pointerdown', (e) => {
+    if (e.button) return;
+    const [x, y] = local(e), h = hitHandle(x, y);
+    drag = { which: h || active, off: [0, 0] };
+    if (h) { const hp = h === 'k' ? P(k) : P(add(k, q)); drag.off = [hp[0] - x, hp[1] - y]; }
+    active = drag.which;
+    if (!h) setFrom(active, x, y);
+    try { cvs.setPointerCapture(e.pointerId); } catch (_) {}
+    roEl.setAttribute('aria-live', 'off');                     // no running commentary while dragging
+    cvs.focus({ preventScroll: true });
+    e.preventDefault();
+    schedule();
+  });
+  cvs.addEventListener('pointermove', (e) => {
+    const [x, y] = local(e);
+    if (drag) { cvs.style.cursor = 'grabbing'; setFrom(drag.which, x + drag.off[0], y + drag.off[1]); schedule(); }
+    else if (e.pointerType === 'mouse') cvs.style.cursor = hitHandle(x, y) ? 'grab' : 'crosshair';
+  });
+  const endDrag = () => { if (!drag) return; drag = null; roEl.setAttribute('aria-live', 'polite'); schedule(); };
+  cvs.addEventListener('pointerup', endDrag); cvs.addEventListener('pointercancel', endDrag);
+  cvs.addEventListener('focus', () => { focused = true; schedule(); });
+  cvs.addEventListener('blur', () => { focused = false; schedule(); });
+  // keyboard: arrows move the active tip by 0.05 1/Å (Shift: 0.25); Space or Enter switches k <-> q;
+  // Tab goes from k to q and then on out of the canvas (Shift+Tab the reverse); the keys k and q pick a tip
+  cvs.addEventListener('keydown', (e) => {
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+    const s = e.shiftKey ? 0.25 : 0.05;
+    const d = { ArrowLeft: [-s, 0], ArrowRight: [s, 0], ArrowUp: [0, s], ArrowDown: [0, -s] }[e.key];
+    if (d) {
+      e.preventDefault();
+      if (active === 'k') k = clampZone(add(k, d)); else q = clampZone(add(q, d));
+      schedule(); return;
+    }
+    if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); active = active === 'k' ? 'q' : 'k'; schedule(); return; }
+    if (e.key === 'Tab') {
+      if (!e.shiftKey && active === 'k') { e.preventDefault(); active = 'q'; schedule(); }
+      else if (e.shiftKey && active === 'q') { e.preventDefault(); active = 'k'; schedule(); }
+      return;
+    }
+    if (e.key === 'k' || e.key === 'K') { active = 'k'; schedule(); }
+    else if (e.key === 'q' || e.key === 'Q') { active = 'q'; schedule(); }
+  });
+
+  // ---------- controls: absorb or emit, and reset ----------
+  const elAbs = fig.querySelector('.a2-vertex-dg-abs'), elEmi = fig.querySelector('.a2-vertex-dg-emi');
+  const opAbs = fig.querySelector('.a2-vertex-op-abs'), opEmi = fig.querySelector('.a2-vertex-op-emi');
+  function onChange(st) {
+    mode = st.mode === 'emi' ? 'emi' : 'abs';
+    elAbs.hidden = mode !== 'abs';
+    elEmi.hidden = mode !== 'emi';
+    // the operator lines share one cell and are hidden with visibility, never display:none, so that the
+    // lazy MathJax of the published page typesets both while they are on screen
+    opAbs.classList.toggle('a2-vertex-off', mode !== 'abs');
+    opEmi.classList.toggle('a2-vertex-off', mode !== 'emi');
+    redraw();
+  }
+  const ui = EPP.controls(fig.querySelector('.a2-vertex-ctl'), [
+    { key: 'mode', type: 'seg', label: 'phonon line', options: [['abs', 'absorb qν'], ['emi', 'emit −qν']], value: 'abs' },
+    { key: 'reset', type: 'button', label: 'Reset', onClick: () => { k = K0.slice(); q = Q0.slice(); active = 'k'; ui.set('mode', 'abs', true); } }
+  ], onChange);
+  // the vectors in the button labels in bold, the branch index in italic
+  { const bA = document.getElementById(`${fig.id}-mode-abs`), bE = document.getElementById(`${fig.id}-mode-emi`);
+    if (bA) bA.innerHTML = `absorb ${B('q')}${I('ν')}`; if (bE) bE.innerHTML = `emit −${B('q')}${I('ν')}`; }
+  cv.onResize(() => { if (cur) drawZone(); });
+  redraw();
+})();
+</script>

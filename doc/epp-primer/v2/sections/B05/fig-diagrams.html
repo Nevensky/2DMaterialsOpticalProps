@@ -1,0 +1,341 @@
+  <figure class="viz" id="viz-b5-diagrams">
+    <p class="viz-title">Dressing the photon: the Dyson series and the four pieces of the self-energy <span class="tag">interactive</span></p>
+    <div class="b5-diagrams-body">
+      <p class="b5-diagrams-rh">(a) The Dyson equation <a class="eqref" href="#b5-eq-dyson"></a>: the dressed line $D$ from the free line $D^0$ and the self-energy $\Pi$</p>
+      <div class="b5-diagrams-eq" role="img" aria-label="Row a, the Dyson equation: the dressed photon line D, a double wavy line, equals the free line D zero, a single wavy line, plus D zero followed by the self-energy disk Pi and then the dressed line D.">
+        <span class="b5-diagrams-lhs" data-d="D"></span>
+        <span class="b5-diagrams-op">=</span><span class="b5-diagrams-tm" data-d="D0"></span>
+        <span class="b5-diagrams-op">+</span><span class="b5-diagrams-tm" data-d="D0PiD"></span>
+      </div>
+      <p class="b5-diagrams-rh">(b) The same equation iterated: $D^0$ interrupted by $\Pi$ any number of times</p>
+      <div class="b5-diagrams-eq" role="img" aria-label="Row b, the chain: D equals D zero, plus D zero Pi D zero, plus D zero Pi D zero Pi D zero, and so on. Every term is the free line interrupted by the same self-energy disk.">
+        <span class="b5-diagrams-lhs" data-d="bD"></span>
+        <span class="b5-diagrams-op">=</span><span class="b5-diagrams-tm" data-d="bD0"></span>
+        <span class="b5-diagrams-op">+</span><span class="b5-diagrams-tm" data-d="b1"></span>
+        <span class="b5-diagrams-op">+</span><span class="b5-diagrams-tm" data-d="b2"></span>
+        <span class="b5-diagrams-op">+</span><span class="b5-diagrams-tm b5-diagrams-dots">⋯</span>
+      </div>
+      <p class="b5-diagrams-rh">(c) The four pieces of $\Pi$ <a class="eqref" href="#b5-eq-Pidef"></a>, two for each kind of charge; click a box to highlight it</p>
+      <div class="b5-diagrams-eq b5-diagrams-pieces" role="group" aria-label="Row c, the four pieces of the self-energy Pi. Each box is a button that highlights its piece and shows its formula below the row.">
+        <span class="b5-diagrams-lhs" data-d="Pi"></span>
+        <span class="b5-diagrams-op">=</span>
+        <span class="b5-diagrams-tm b5-diagrams-grp" data-g="e">
+          <span class="b5-diagrams-gh">$\Pi^{\mathrm e}$: electrons</span>
+          <span class="b5-diagrams-pair">
+            <button type="button" class="b5-diagrams-box" data-k="ebub" aria-pressed="false" aria-label="Electronic bubble, Pi e para: current–current bubble. Two photon stubs end on two blue squares, the electron current vertices, joined by an electron loop with the states n k and m k plus q."><span data-d="ebub"></span><span class="b5-diagrams-cap">$\Pi^{\mathrm{e,para}}$: current–current bubble</span></button>
+            <span class="b5-diagrams-op">+</span>
+            <button type="button" class="b5-diagrams-box" data-k="econ" aria-pressed="false" aria-label="Electronic contact term, Pi e dia: contact term. Two photon lines meet at a black dot, from which a closed electron loop, the electron density, hangs; weight e squared n e over m e."><span data-d="econ"></span><span class="b5-diagrams-cap">$\Pi^{\mathrm{e,dia}}$: contact term</span></button>
+          </span>
+        </span>
+        <span class="b5-diagrams-op">+</span>
+        <span class="b5-diagrams-tm b5-diagrams-grp" data-g="ion">
+          <span class="b5-diagrams-gh">$\Pi^{\ion}$: ions</span>
+          <span class="b5-diagrams-pair">
+            <button type="button" class="b5-diagrams-box" data-k="ibub" aria-pressed="false" aria-label="Ionic bubble, Pi ion para: vertex, phonon line, vertex. Two photon stubs end on two teal squares, the ionic current vertices j alpha nu and j star beta nu, joined by the free phonon line F zero nu, a zigzag."><span data-d="ibub"></span><span class="b5-diagrams-cap">$\Pi^{\mathrm{ion,para}}$: vertex, phonon line, vertex</span></button>
+            <span class="b5-diagrams-op">+</span>
+            <button type="button" class="b5-diagrams-box" data-k="icon" aria-pressed="false" aria-label="Ionic contact term, Pi ion dia: contact term at the atoms. Two photon lines meet at an amber ring, an atom, with no phonon line; weight e squared Z star Z star transpose over M kappa."><span data-d="icon"></span><span class="b5-diagrams-cap">$\Pi^{\mathrm{ion,dia}}$: contact term at the atoms</span></button>
+          </span>
+        </span>
+      </div>
+      <div class="b5-diagrams-ro" role="status" aria-live="polite" aria-atomic="true">
+        <div data-k="none" hidden><p>No piece highlighted. Choose one with the highlight buttons below, or click its box in (c), to see its formula.</p></div>
+        <div data-k="ebub" hidden><p><strong>Electronic bubble.</strong> $\Pi^{\mathrm{e,para}}_{\alpha\beta}=\frac{\ii}{\hbar c}\int\dd t\,\ee^{\ii\omega t}\langle\mathcal T\hat j^{\mathrm{para}}_\alpha\hat j^{\mathrm{para}}_\beta\rangle$, a sum over pairs of states <a class="eqref" href="#b5-eq-Pipara"></a>; it carries the restoring force of the electrons, the band gaps.</p></div>
+        <div data-k="econ" hidden><p><strong>Electronic contact term.</strong> $\Pi^{\mathrm{e,dia}}_{\alpha\beta}=-\frac{e^2}{m_{\mathrm e}c}\,n^{\mathrm e}(\br)\,\delta_{\alpha\beta}\,\delta(\br-\br')$ <a class="eqref" href="#b5-eq-Pidef"></a>: the inertia of free electrons. For a uniform density, $4\pi c\,\Pi^{\mathrm{e,dia}}=-\omega_{\mathrm p}^2$, with $\hbar\omega_{\mathrm p}=16.6$ eV for the valence electrons of silicon.</p></div>
+        <div data-k="ibub" hidden><p><strong>Ionic bubble.</strong> $\Pi^{\mathrm{ion,para}}_{\alpha\beta}=-\frac{\hbar}{c\OV}\sum_\nu\frac{\omega_{\bq\nu}}{2}F^0_\nu\,j_{\alpha\nu}j^*_{\beta\nu}$ <a class="eqref" href="#b5-eq-Piionpara"></a>: a photon turns into a phonon at one current vertex and back into a photon at the other; exact for harmonic phonons.</p></div>
+        <div data-k="icon" hidden><p><strong>Ionic contact term.</strong> $\Pi^{\mathrm{ion,dia}}_{\alpha\beta}=-\frac{e^2}{c\OV}\sum_{\kappa\gamma}Z^*_{\kappa,\alpha\gamma}Z^*_{\kappa,\beta\gamma}/M_\kappa$ on the diagonal, $\bG=\bG'$ <a class="eqref" href="#b5-eq-Piiondia"></a>: the inertia of ions with their springs cut. Multiplied by $-4\pi c$ it gives the squared ionic plasma frequency, with $\hbar\omega^{\ion}_{\mathrm p}=44.6$ meV in GaAs, against about 16 eV for its valence electrons.</p></div>
+      </div>
+      <div class="b5-diagrams-d" hidden>
+        <p class="b5-diagrams-rh">(d) Electrons first <a class="eqref" href="#b5-eq-dysonDe"></a>: $D^{\mathrm e}$ collects the electronic insertions, and the ions dress $D^{\mathrm e}$</p>
+        <div class="b5-diagrams-eq" role="img" aria-label="Row d, first line: D e, the photon line dressed by the electrons only, a double wavy line labelled D e, equals D zero plus D zero followed by the electronic self-energy Pi e, a blue disk, and then D e.">
+          <span class="b5-diagrams-lhs" data-d="De"></span>
+          <span class="b5-diagrams-op">=</span><span class="b5-diagrams-tm" data-d="dD0"></span>
+          <span class="b5-diagrams-op">+</span><span class="b5-diagrams-tm" data-d="D0PieDe"></span>
+        </div>
+        <div class="b5-diagrams-eq" role="img" aria-label="Row d, second line: D equals D e plus D e followed by the ionic self-energy Pi ion, an amber disk, and then D. Only the ionic pieces sit between dressed lines.">
+          <span class="b5-diagrams-lhs" data-d="dD"></span>
+          <span class="b5-diagrams-op">=</span><span class="b5-diagrams-tm" data-d="dDe"></span>
+          <span class="b5-diagrams-op">+</span><span class="b5-diagrams-tm" data-d="DePiD"></span>
+        </div>
+      </div>
+    </div>
+    <div class="b5-diagrams-ctrls"></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> Every term of the series is the free photon line interrupted by the same self-energy, and the self-energy itself has only four pieces: each kind of charge contributes a bubble with two current vertices and a contact term with two photon lines at one point.</p><div class="cap-more">
+      <p><strong>Marks.</strong> Single wavy line: the free line $D^0$, here transverse, $D^0=D^{0\mathrm T}$ <a class="eqref" href="#b5-eq-D0T"></a>; double wavy line: a dressed line, $D$, or $D^{\mathrm e}$ when only the electrons dress it; zigzag: the free phonon line $F^0_\nu$ <a class="eqref" href="#b5-eq-F0"></a>; arrowed lines: electrons in the states $n\bk$ and $m\,\bk+\bq$, closed into a density loop at the dot; squares: current vertices, $-\frac1c\hat\bj\cdot\hat\bA$, blue for electrons and teal for ions; dot and amber ring: the contact vertices of the electrons and of an atom; disks: the self-energy $\Pi$, blue for its electronic part $\Pi^{\mathrm e}$, amber for its ionic part $\Pi^{\ion}$. The outlined box is the highlighted piece.</p>
+      <p><strong>Try.</strong> Select each piece, with the buttons or by clicking its box, and read its formula under (c). Turn on “electrons first”: the electronic insertions collapse into $D^{\mathrm e}$, and only the ionic pieces remain between dressed lines; this is the starting point of <a href="#b-phonon-se">Section B.7</a>.</p>
+      <p><strong>Model.</strong> The Dyson equation <a class="eqref" href="#b5-eq-dyson"></a>, the four pieces <a class="eqref" href="#b5-eq-Pidef"></a> and the regrouping <a class="eqref" href="#b5-eq-dysonDe"></a>, with the Coulomb term set aside, as in the section. The ionic pair is exact for harmonic phonons and point dipoles; the electronic bubble neglects the electron–hole attraction (no excitons). The diagrams follow the EPP manuscript, which also draws them with the longitudinal (Coulomb) line.</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b5-diagrams');
+  if (!fig || !window.EPP) return;
+  const NS = 'http://www.w3.org/2000/svg';
+  const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
+  const fx = (v) => (+v).toFixed(2);
+
+  // A figure test page holds this figure without Section B.5: links with no target keep only their text,
+  // and an equation reference shows its tag. Inside the section the page resolves them after this script runs.
+  if (!fig.closest('#b-photon-se')) {
+    const TAGS = { 'b5-eq-dyson': 'B5.11', 'b5-eq-Pidef': 'B5.12', 'b5-eq-dysonDe': 'B5.13', 'b5-eq-D0T': 'B5.6', 'b5-eq-F0': 'B5.4',
+      'b5-eq-Pipara': 'B5.18', 'b5-eq-Piionpara': 'B5.23', 'b5-eq-Piiondia': 'B5.24' };
+    fig.querySelectorAll('a[href^="#"]').forEach(a => {
+      const id = a.getAttribute('href').slice(1);
+      if (document.getElementById(id)) return;
+      const sp = document.createElement('span');
+      if (a.classList.contains('eqref')) sp.textContent = '(' + (TAGS[id] || id) + ')'; else sp.innerHTML = a.innerHTML;
+      a.replaceWith(sp);
+    });
+  }
+
+  // ---------- style: inline sheet, every selector inside this figure ----------
+  if (!document.getElementById('b5-diagrams-css')) {
+    const st = document.createElement('style'); st.id = 'b5-diagrams-css';
+    const F = '#viz-b5-diagrams ';
+    st.textContent = [
+      F + '[hidden]{display:none!important}',
+      F + '.b5-diagrams-body{display:grid;grid-template-columns:minmax(0,1fr);gap:2px}',
+      F + '.b5-diagrams-rh{margin:12px 0 2px;max-width:none;font-family:var(--font-ui);font-size:0.86rem;font-weight:600;line-height:1.35;color:var(--fg-2)}',
+      F + '.b5-diagrams-body > .b5-diagrams-rh:first-child{margin-top:0}',
+      // one equation per row: one line when it fits, else lhs | sign | term, so each sign stays with its term
+      F + '.b5-diagrams-eq{display:flex;flex-wrap:nowrap;align-items:center;justify-content:center;gap:4px 8px;min-width:0}',
+      F + '.b5-diagrams-eq[data-mode="grid"]{display:grid;grid-template-columns:auto auto minmax(0,max-content);justify-content:center;justify-items:start;align-items:center}',
+      F + '.b5-diagrams-eq[data-mode="grid"] > .b5-diagrams-lhs{grid-column:1}',
+      F + '.b5-diagrams-eq[data-mode="grid"] > .b5-diagrams-op{grid-column:2}',
+      F + '.b5-diagrams-eq[data-mode="grid"] > .b5-diagrams-tm{grid-column:3}',
+      F + '.b5-diagrams-eq.b5-diagrams-pieces{align-items:flex-start}',
+      F + '.b5-diagrams-eq.b5-diagrams-pieces[data-mode="grid"]{align-items:start;justify-items:stretch;column-gap:6px}',
+      F + '.b5-diagrams-lhs,' + F + '.b5-diagrams-tm{min-width:0}',
+      F + '.b5-diagrams-op,' + F + '.b5-diagrams-dots{flex:none;font-family:var(--font-text);font-size:1.3rem;line-height:1;color:var(--muted);text-align:center}',
+      F + '[data-d] > svg{display:block;overflow:visible;max-width:100%;height:auto}',
+      F + '.b5-diagrams-grp{display:grid;grid-template-columns:minmax(0,1fr);min-width:0}',
+      F + '.b5-diagrams-gh{display:block;margin:0 3px 4px;padding:0 0 2px;border-bottom:2px solid var(--c-electron);font-family:var(--font-ui);font-size:0.8rem;font-weight:600;line-height:1.5;white-space:nowrap;color:var(--fg-2);text-align:center}',
+      F + '.b5-diagrams-grp[data-g="ion"] > .b5-diagrams-gh{border-bottom-color:var(--c-phonon)}',
+      F + '.b5-diagrams-pair{display:flex;align-items:flex-start;justify-content:center;gap:4px;min-width:0}',
+      F + '.b5-diagrams-box{display:grid;justify-items:center;align-content:start;gap:3px;min-width:0;margin:0;padding:5px 2px 6px;border:1.5px solid transparent;border-radius:6px;background:transparent;color:inherit;font:inherit;text-align:center;cursor:pointer}',
+      F + '.b5-diagrams-box:hover{border-color:var(--rule)}',
+      F + '.b5-diagrams-box[aria-pressed="true"]{border-color:var(--accent);background:var(--hl)}',
+      F + '.b5-diagrams-pieces[data-hl] .b5-diagrams-box[aria-pressed="false"]{opacity:0.42}',
+      F + '.b5-diagrams-pieces[data-hl] .b5-diagrams-box[aria-pressed="false"]:hover{opacity:0.7}',
+      F + '.b5-diagrams-box:focus{outline:none}',
+      F + '.b5-diagrams-box:focus-visible{outline:2px solid var(--accent);outline-offset:1px}',
+      F + '.b5-diagrams-cap{display:block;font-family:var(--font-ui);font-size:0.8rem;line-height:1.3;color:var(--fg-2)}',
+      F + '.b5-diagrams-ro{margin:6px 0 2px;padding:8px 12px;border:1px solid var(--rule);border-radius:var(--radius);background:var(--surface-2);font-size:0.95rem;line-height:1.5;min-height:3.6em;overflow-x:auto}',
+      F + '.b5-diagrams-ro p{margin:0;max-width:none}',
+      F + '.b5-diagrams-d{display:grid;grid-template-columns:minmax(0,1fr);gap:2px}',
+      '@media (prefers-reduced-motion: no-preference){' + F + '.b5-diagrams-box{transition:opacity .15s,background-color .15s,border-color .15s}}'
+    ].join('\n');
+    document.head.appendChild(st);
+  }
+
+  // ---------- labels as SVG text ----------
+  // Markup: letters are italic (math); [..] is a bold vector (upright); |..| is upright; @..@ is the UI font;
+  // _x, _{..}, ^x, ^{..} are scripts, and a subscript right after a superscript is stacked under it.
+  function parse(s) {
+    const atoms = [], st = { b: false, u: false, w: false };
+    let cur = null;
+    const add = (ch, lev) => {
+      const greek = /[α-ω]/.test(ch), latin = /[A-Za-z]/.test(ch);
+      const it = !st.w && !st.u && (greek || (latin && !st.b));
+      if (!cur || cur.lev !== lev) { cur = { lev, runs: [] }; atoms.push(cur); }
+      const L = cur.runs[cur.runs.length - 1];
+      if (L && L.it === it && L.b === st.b && L.w === st.w) L.t += ch; else cur.runs.push({ t: ch, it, b: st.b, w: st.w });
+    };
+    const run = (str, lev) => {
+      for (let k = 0; k < str.length;) {
+        const ch = str[k];
+        if (ch === '[') { st.b = true; k++; }
+        else if (ch === ']') { st.b = false; k++; }
+        else if (ch === '|') { st.u = !st.u; k++; }
+        else if (ch === '@') { st.w = !st.w; k++; }
+        else if ((ch === '_' || ch === '^') && k + 1 < str.length) {
+          let g;
+          if (str[k + 1] === '{') { let e = str.indexOf('}', k + 2); if (e < 0) e = str.length; g = str.slice(k + 2, e); k = e + 1; }
+          else { g = str[k + 1]; k += 2; }
+          const keep = Object.assign({}, st);
+          cur = null; run(g, ch === '_' ? -1 : 1); cur = null;
+          Object.assign(st, keep);
+        } else { add(ch, lev); k++; }
+      }
+    };
+    run(String(s), 0);
+    return atoms;
+  }
+  const mctx = document.createElement('canvas').getContext('2d');
+  let FAM = { tx: 'serif', ui: 'sans-serif' };
+  const fontOf = (r, sz) => `${r.it ? 'italic ' : ''}${r.b ? '700 ' : ''}${sz.toFixed(2)}px ${r.w ? FAM.ui : FAM.tx}`;
+  function place(atoms, size) {
+    let x = 0, prev = null;
+    for (const a of atoms) {
+      a.sz = a.lev ? size * 0.72 : size;
+      a.w = 0;
+      for (const r of a.runs) { mctx.font = fontOf(r, a.sz); r.w = mctx.measureText(r.t).width; a.w += r.w; }
+      const lastRun = prev && !prev.lev ? prev.runs[prev.runs.length - 1] : null;
+      const ic = lastRun && lastRun.it ? (a.lev === 1 ? 0.1 : a.lev === -1 ? -0.03 : 0) * size : (!a.lev && prev && prev.lev ? 0.06 * size : 0);
+      if (a.lev && prev && prev.lev === -a.lev && !prev.stacked) { a.x0 = prev.x0; a.stacked = true; x = Math.max(prev.x0 + prev.w, a.x0 + a.w); }
+      else { a.x0 = x + ic; x += a.w + ic; }
+      prev = a;
+    }
+    return x;
+  }
+  // text whose middle (horizontally, or its start/end) and cap-height middle (vertically) sit at (x, y)
+  function rich(parent, x, y, s, o = {}) {
+    const size = o.size || 14, atoms = parse(s), W = place(atoms, size), col = o.color || EPP.color('fg');
+    const x0 = o.anchor === 'start' ? x : o.anchor === 'end' ? x - W : x - W / 2, base = y + 0.34 * size;
+    const t = mk('text', { x: fx(x0), y: fx(base), fill: col }, parent);
+    for (const a of atoms) {
+      const dy = a.lev === -1 ? size * 0.3 : a.lev === 1 ? -size * 0.4 : 0;
+      let xx = x0 + a.x0;
+      for (const r of a.runs) {
+        const ts = mk('tspan', { x: fx(xx), y: fx(base + dy), 'font-size': a.sz.toFixed(2), 'font-family': r.w ? FAM.ui : FAM.tx, 'font-style': r.it ? 'italic' : 'normal', 'font-weight': r.b ? '700' : '400' }, t);
+        ts.textContent = r.t;
+        xx += r.w;
+      }
+    }
+    return W;
+  }
+
+  // ---------- the diagrams: EPP.fd items, plus squares, rings and labels drawn on top ----------
+  // Rows a, b, d: viewBox height 50, line at y = 25, labels above it. Row c: viewBox 150 x 92, photon stubs at y = 46.
+  const Y = 25, H = 50, LY = 10, YS = 46;
+  const ph = (a, b) => ({ t: 'photon', a, b });
+  // a dressed line: a heavy wavy stroke with a thin stroke of the background along its middle, i.e. a double wavy line
+  const dr = (a, b) => [{ t: 'photon2', a, b, width: 5.4, amp: 3.2 }, { t: 'photon', a, b, color: 'surface', width: 2, amp: 3.2 }];
+  const fe = (a, b, bend) => ({ t: 'fermion', a, b, bend });
+  const blob = (x, y, r, color) => ({ t: 'blob', at: [x, y], r, color });
+  // a line from the edge of a ring of radius r at c to the point p
+  const fromRing = (c, p, r) => { const dx = p[0] - c[0], dy = p[1] - c[1], L = Math.hypot(dx, dy); return [c[0] + dx * r / L, c[1] + dy * r / L]; };
+  const RC = [75, 44], RR = 6.8;
+  const DG = {
+    // (a)
+    D: { w: 80, h: H, items: dr([6, Y], [74, Y]), lab: [['D', 40, LY, 'photon']] },
+    D0: { w: 80, h: H, items: [ph([6, Y], [74, Y])], lab: [['D^0', 40, LY, 'photon']] },
+    D0PiD: { w: 196, h: H, items: [ph([6, Y], [98, Y]), ...dr([98, Y], [190, Y]), blob(98, Y, 15, 'ink')],
+      lab: [['D^0', 44.5, LY, 'photon'], ['D', 151.5, LY, 'photon'], ['Π', 98, Y, 'ink', 15]] },
+    // (b): small disks; the visible pieces of line have equal lengths
+    bD: { w: 64, h: H, items: dr([6, Y], [58, Y]), lab: [['D', 32, LY, 'photon']] },
+    bD0: { w: 64, h: H, items: [ph([6, Y], [58, Y])], lab: [['D^0', 32, LY, 'photon']] },
+    b1: { w: 134, h: H, items: [ph([6, Y], [67, Y]), ph([67, Y], [128, Y]), blob(67, Y, 11, 'ink')],
+      lab: [['D^0', 31, LY, 'photon'], ['D^0', 103, LY, 'photon'], ['Π', 67, Y, 'ink', 12.5]] },
+    b2: { w: 188, h: H, items: [ph([6, Y], [61, Y]), ph([61, Y], [127, Y]), ph([127, Y], [182, Y]), blob(61, Y, 11, 'ink'), blob(127, Y, 11, 'ink')],
+      lab: [['D^0', 28, LY, 'photon'], ['D^0', 94, LY, 'photon'], ['D^0', 160, LY, 'photon'], ['Π', 61, Y, 'ink', 12.5], ['Π', 127, Y, 'ink', 12.5]] },
+    // (c)
+    Pi: { w: 30, h: 30, items: [blob(15, 15, 13, 'ink')], lab: [['Π', 15, 15, 'ink', 15]] },
+    // electron loop: m k+q runs from the right vertex to the left one (upper arc), n k back (lower arc), as the
+    // vertex at the left holds c†_{nk} c_{mk+q} (equation b5-eq-Pipara)
+    ebub: { w: 150, h: 92, items: [ph([4, YS], [40, YS]), ph([110, YS], [146, YS]), fe([110, YS], [40, YS], -0.33), fe([40, YS], [110, YS], -0.33)],
+      sq: [[40, YS, 'electron'], [110, YS, 'electron']],
+      lab: [['m [k]+[q]', 75, 10, 'electron', 15], ['n[k]', 75, 82, 'electron', 15]] },
+    econ: { w: 150, h: 92, items: [ph([75, 44], [10, 8]), ph([75, 44], [140, 8]), fe([75, 44], [75, 84], 0.5), fe([75, 84], [75, 44], 0.5), { t: 'vertex', at: [75, 44], r: 3.8 }],
+      lab: [['e^2n_{|e|}/m_{|e|}', 124, 79, 'fg2', 15]] },
+    ibub: { w: 150, h: 92, items: [ph([4, YS], [38, YS]), ph([112, YS], [146, YS]), { t: 'phonon', a: [38, YS], b: [112, YS] }],
+      sq: [[38, YS, 'c4'], [112, YS, 'c4']],
+      lab: [['F^0_ν', 75, 27, 'phonon', 15], ['j_{αν}', 38, 66, 'c4', 15], ['j^*_{βν}', 112, 66, 'c4', 15]] },
+    icon: { w: 150, h: 92, items: [ph(fromRing(RC, [10, 8], RR), [10, 8]), ph(fromRing(RC, [140, 8], RR), [140, 8])],
+      ring: [RC],
+      lab: [['e^2[Z]^*_κ[Z]^{*@T@}_κ/M_κ', 75, 70, 'fg2', 15]] },
+    // (d)
+    De: { w: 80, h: H, items: dr([6, Y], [74, Y]), lab: [['D^{|e|}', 40, LY, 'photon']] },
+    dD0: { w: 80, h: H, items: [ph([6, Y], [74, Y])], lab: [['D^0', 40, LY, 'photon']] },
+    D0PieDe: { w: 196, h: H, items: [ph([6, Y], [98, Y]), ...dr([98, Y], [190, Y]), blob(98, Y, 16, 'electron')],
+      lab: [['D^0', 44, LY, 'photon'], ['D^{|e|}', 152, LY, 'photon'], ['Π^{|e|}', 98, Y, 'electron', 14]] },
+    dD: { w: 80, h: H, items: dr([6, Y], [74, Y]), lab: [['D', 40, LY, 'photon']] },
+    dDe: { w: 80, h: H, items: dr([6, Y], [74, Y]), lab: [['D^{|e|}', 40, LY, 'photon']] },
+    DePiD: { w: 196, h: H, items: [...dr([6, Y], [98, Y]), ...dr([98, Y], [190, Y]), blob(98, Y, 16, 'phonon')],
+      lab: [['D^{|e|}', 44, LY, 'photon'], ['D', 152, LY, 'photon'], ['Π^{|ion|}', 98, Y, 'phonon', 13]] }
+  };
+  const drawn = [];
+  fig.querySelectorAll('[data-d]').forEach(host => {
+    const d = DG[host.dataset.d];
+    if (!d) return;
+    const svg = EPP.fd.draw(host, { w: d.w, h: d.h, items: d.items });
+    svg.removeAttribute('role'); svg.removeAttribute('aria-label');
+    svg.setAttribute('aria-hidden', 'true'); svg.setAttribute('focusable', 'false');
+    drawn.push([svg, d]);
+  });
+  // EPP.fd repaints a diagram (and drops what was added) when the theme changes; this callback is registered after
+  // those repaints, so it runs after them and adds the squares, rings and labels again in the new colours.
+  const textCol = (c) => (c === 'ink' ? EPP.color('fg') : c === 'fg2' ? EPP.color('fg2') : EPP.textColor(c));
+  function decorate() {
+    FAM = { tx: EPP.css('--font-text') || 'serif', ui: EPP.css('--font-ui') || 'sans-serif' };
+    drawn.forEach(([svg, d]) => {
+      svg.querySelectorAll('g.b5-diagrams-deco').forEach(n => n.remove());
+      const g = mk('g', { class: 'b5-diagrams-deco' }, svg);
+      (d.ring || []).forEach(([x, y]) => mk('circle', { cx: x, cy: y, r: 5.6, fill: 'none', stroke: EPP.color('phonon'), 'stroke-width': 2.4 }, g));
+      (d.sq || []).forEach(([x, y, c]) => mk('rect', { x: fx(x - 4.2), y: fx(y - 4.2), width: 8.4, height: 8.4, fill: EPP.color(c) }, g));
+      (d.lab || []).forEach(([s, x, y, c, size]) => rich(g, x, y, s, { color: textCol(c), size: size || 14 }));
+    });
+  }
+  decorate();
+  EPP.onTheme(decorate);
+
+  // ---------- layout ----------
+  const body = fig.querySelector('.b5-diagrams-body');
+  const rowC = fig.querySelector('.b5-diagrams-pieces');
+  const eqRows = [...fig.querySelectorAll('.b5-diagrams-eq')].filter(r => r !== rowC);
+  const GAP = 8, CGAP = 6, PGAP = 4, BOXX = 2 * (2 + 1.5), BOXTOP = 1.5 + 5, SW = 144;
+  const cLhs = rowC.querySelector(':scope > .b5-diagrams-lhs');
+  const cOps = [...rowC.querySelectorAll(':scope > .b5-diagrams-op')];
+  const pOps = [...rowC.querySelectorAll('.b5-diagrams-pair > .b5-diagrams-op')];
+  const heads = [...rowC.querySelectorAll('.b5-diagrams-gh')];
+  const boxSvgs = [...rowC.querySelectorAll('.b5-diagrams-box svg')], caps = [...rowC.querySelectorAll('.b5-diagrams-cap')];
+  const wOf = (el) => el.getBoundingClientRect().width;
+  const natW = (el) => { const d = el.dataset.d && DG[el.dataset.d]; return d ? d.w : wOf(el); };
+  function layout() {
+    const W = body.clientWidth;
+    if (!W) return;
+    // rows a, b, d: one line if the natural widths fit
+    eqRows.forEach(r => {
+      if (!r.offsetParent) return;
+      const kids = [...r.children];
+      const need = kids.reduce((s, k) => s + natW(k), 0) + GAP * (kids.length - 1);
+      const mode = need <= W ? 'line' : 'grid';
+      if (r.dataset.mode !== mode) r.dataset.mode = mode;
+    });
+    // row c: one line with boxes of 144 px, else two lines (electrons, ions) with boxes that fill the third column
+    const lhsW = natW(cLhs), opW = Math.max(...cOps.map(wOf), ...pOps.map(wOf));
+    const lineNeed = lhsW + 2 * opW + 2 * (2 * (SW + BOXX) + opW + 2 * PGAP) + 4 * GAP;
+    let sw = SW, mode = 'line';
+    if (lineNeed > W) {
+      mode = 'grid';
+      const col3 = W - lhsW - opW - 2 * CGAP;
+      sw = EPP.clamp(Math.floor((col3 - opW - 2 * PGAP) / 2 - BOXX), 64, 150);
+    }
+    if (rowC.dataset.mode !== mode) rowC.dataset.mode = mode;
+    boxSvgs.forEach(s => { s.style.width = sw + 'px'; });
+    caps.forEach(c => { c.style.width = sw + 'px'; });
+    // align the signs and the Π disk with the photon stubs of the boxes: a sign of the row with the group after it
+    // (its one-line heading, 4 px of margin, then the box border and padding), a sign inside a group with its boxes
+    const inBox = BOXTOP + sw * YS / 150;
+    const axis = (grp) => { const h = grp && grp.querySelector('.b5-diagrams-gh'); return (h ? h.getBoundingClientRect().height + 4 : 0) + inBox; };
+    const set = (el, top) => { const v = Math.max(0, top).toFixed(1) + 'px'; if (el.style.marginTop !== v) el.style.marginTop = v; };
+    set(cLhs, axis(heads[0].parentElement) - cLhs.getBoundingClientRect().height / 2);
+    cOps.forEach(o => set(o, axis(o.nextElementSibling) - o.getBoundingClientRect().height / 2));
+    pOps.forEach(o => set(o, inBox - o.getBoundingClientRect().height / 2));
+  }
+  let raf = 0;
+  const relayout = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(layout); };
+  try { new ResizeObserver(relayout).observe(body); } catch (e) { window.addEventListener('resize', relayout); }
+  EPP.onTheme(relayout);
+
+  // ---------- state: highlighted piece, electrons first ----------
+  const boxes = [...rowC.querySelectorAll('.b5-diagrams-box')];
+  const entries = [...fig.querySelectorAll('.b5-diagrams-ro > [data-k]')];
+  const rowD = fig.querySelector('.b5-diagrams-d');
+  function update(s) {
+    const hl = s.hl || 'none';
+    boxes.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.k === hl)));
+    rowC.toggleAttribute('data-hl', hl !== 'none');
+    entries.forEach(e => { e.hidden = e.dataset.k !== hl; });
+    rowD.hidden = !s.ef;
+    layout();
+  }
+  const ui = EPP.controls(fig.querySelector('.b5-diagrams-ctrls'), [
+    { key: 'hl', type: 'seg', label: 'highlight', options: [['none', 'none'], ['ebub', 'electronic bubble'], ['econ', 'electronic contact'], ['ibub', 'ionic bubble'], ['icon', 'ionic contact']], value: 'ibub' },
+    { key: 'ef', type: 'toggle', label: 'electrons first', value: false }
+  ], update);
+  boxes.forEach(b => b.addEventListener('click', () => ui.set('hl', ui.state.hl === b.dataset.k ? 'none' : b.dataset.k)));
+  const seg = fig.querySelector('.b5-diagrams-ctrls .seg');
+  if (seg) seg.setAttribute('aria-label', 'highlight a piece of the self-energy');
+  update(ui.state);
+})();
+</script>

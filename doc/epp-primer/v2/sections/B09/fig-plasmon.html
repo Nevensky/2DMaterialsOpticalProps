@@ -1,0 +1,402 @@
+  <figure class="viz" id="viz-b9-plasmon">
+    <p class="viz-title">LO-phonon–plasmon modes: dynamic against static screening <span class="tag">interactive</span></p>
+    <div class="viz-grid two">
+      <div class="b9-plasmon-a"><div class="legend b9-plasmon-lega">
+        <span class="item" style="color:var(--c-phonon)"><span class="sw"></span><span style="color:var(--fg-2)">$\mathrm L_+$, $\mathrm L_-$: dynamic, $q\to0$</span></span>
+        <span class="item" style="color:var(--c-electron)"><span class="sw dot"></span><span style="color:var(--fg-2)">plasmon $\bar\omega_{\mathrm p}$</span></span>
+        <span class="item" style="color:var(--c-4)"><span class="sw dash"></span><span style="color:var(--fg-2)">static, adiabatic <a class="eqref" href="#b9-eq-tf">(B9.19)</a>, at $q$</span></span>
+        <span class="item" style="color:var(--muted)"><span class="sw dash" style="border-top-width:1.5px"></span><span style="color:var(--fg-2)">$\omega_{\mathrm{TO}}$ and $\omega_{\mathrm{LO}}$, undoped</span></span>
+        <span class="item" style="color:var(--fg)"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><circle cx="6" cy="6" r="4.3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span style="color:var(--fg-2)">resonance $\bar\omega_{\mathrm p}=\omega_{\mathrm{LO}}$</span></span>
+      </div></div>
+      <div class="b9-plasmon-b"><div class="legend b9-plasmon-legb">
+        <span class="item" style="color:var(--muted)"><span class="sw dot"></span><span style="color:var(--fg-2)">$\mathrm L_\pm$, $q\to0$</span></span>
+        <span class="item" style="color:var(--c-4)"><span class="sw dash"></span><span style="color:var(--fg-2)">static at $q$</span></span>
+        <span class="item" style="color:var(--c-electron)"><span class="sw" style="border-top-width:1.5px"></span><span style="color:var(--fg-2)">edges of the particle–hole continuum</span></span>
+      </div></div>
+    </div>
+    <div class="b9-plasmon-ctrls"></div>
+    <div class="readout b9-plasmon-ro" aria-live="polite"><span>$n_{\mathrm c}$<b class="b9-plasmon-v-n"></b></span><span>$\hbar\bar\omega_{\mathrm p}$<b class="b9-plasmon-v-wp"></b></span><span>$\hbar\omega_{\mathrm L+}$, $\hbar\omega_{\mathrm L-}$<b class="b9-plasmon-v-lpm"></b></span><span>static $\hbar\bar\omega$ at $q$<b class="b9-plasmon-v-st"></b></span><span>$\omega_{\mathrm{LO}}/qv_{\mathrm F}$<b class="b9-plasmon-v-ad"></b></span><span>$k_{\mathrm{TF}}/\sqrt{\varepsilon_\infty}$<b class="b9-plasmon-v-tf"></b></span><span>resonance $\bar\omega_{\mathrm p}=\omega_{\mathrm{LO}}$ at<b class="b9-plasmon-v-res"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> Static screening only slides the LO mode down to <span class="nw">$\omega_{\mathrm{TO}}$.</span> Dynamic screening gives two modes, <span class="nw">$\mathrm L_+$ and $\mathrm L_-$,</span> that anticross where the plasmon meets <span class="nw">$\omega_{\mathrm{LO}}$;</span> the lattice weight passes from $\mathrm L_+$ to $\mathrm L_-$ as the density grows.</p><div class="cap-more">
+      <p><strong>Marks.</strong> (a) Amber: $\mathrm L_\pm$ from <a class="eqref" href="#b9-eq-Lpm">(B9.18)</a>, Drude carriers at <span class="nw">$q\to0$;</span> dotted blue: the plasmon <span class="nw">$\bar\omega_{\mathrm p}$;</span> dashed teal: the adiabatic result <a class="eqref" href="#b9-eq-tf">(B9.19)</a> at the chosen <span class="nw">$q$,</span> with the static Lindhard function; grey: $\omega_{\mathrm{TO}}$ and the undoped <span class="nw">$\omega_{\mathrm{LO}}$;</span> circle: the resonance <span class="nw">$\bar\omega_{\mathrm p}=\omega_{\mathrm{LO}}$;</span> dots: the modes at the cursor. (b) The chosen spectral function at <span class="nw">$q$,</span> log scale, broadened for display; dotted: $\mathrm L_\pm$ at <span class="nw">$q\to0$;</span> blue: edges of the particle–hole continuum.</p>
+      <p><strong>Try.</strong> Drag across a panel to move the density. Raise $q$ until <span class="nw">$\omega_{\mathrm{LO}}/qv_{\mathrm F}\ll1$:</span> the ridges move onto the static curve and the plasmon dissolves in the particle–hole continuum, where the static step is right. Show the phonon spectral function and cross the resonance. Switch to GaN: the same physics at ten times the density.</p>
+      <p><strong>Model.</strong> One parabolic band at <span class="nw">$T=0$,</span> <span class="nw">$\bar\omega_{\mathrm p}^2=4\pi n_{\mathrm c}e^2/\varepsilon_\infty m^*$;</span> the LO mode of a cubic polar crystal, <a class="eqref" href="#b9-eq-tot">(B9.16)</a>, with <span class="nw">$(\omega^{\mathrm{ion}}_{\mathrm p})^2=\varepsilon_\infty(\omega^2_{\mathrm{LO}}-\omega^2_{\mathrm{TO}})$</span> from the undoped crystal; the full Lindhard function in (b). The loss function <span class="nw">$-\mathrm{Im}\,1/\varepsilon$</span> is the spectral weight of the total screened interaction $W=v/\varepsilon$ of <a href="#a-hedin-baym">Section A.5</a>; the phonon spectral function <span class="nw">$-\mathrm{Im}\,F_\nu$</span> comes from the LO-phonon propagator with the self-energy <a class="eqref" href="#b9-eq-piph">(B9.8)</a>: same poles, different weights. Display damping: <span class="nw">$\hbar\gamma_{\mathrm e}=2.5$ meV</span> for the carriers, <span class="nw">$\hbar\gamma_{\mathrm{ph}}=0.8$ meV</span> for the phonon. GaAs: <span class="nw">$\hbar\omega_{\mathrm{TO}}=33.3$</span> and <span class="nw">$\hbar\omega_{\mathrm{LO}}=36.2$ meV,</span> <span class="nw">$\varepsilon_\infty=10.9$,</span> <span class="nw">$m^*=0.067\,m_{\mathrm e}$;</span> GaN (modes polarized across the optic axis): <span class="nw">69.3 and 91.9 meV,</span> 5.35, <span class="nw">$0.20\,m_{\mathrm e}$</span> (literature values, illustrative). No measured data are plotted.</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b9-plasmon');
+  if (!fig || !window.EPP) return;
+  // previewed outside Section B.9 (the isolated figure test), links into the page have no target: keep their text
+  if (!fig.closest('#b-electrostatic')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+
+  // ---------- physics (Gaussian units; energies in meV, lengths in Å) ----------
+  const E2 = 14.3996, H2M = 7.61996;         // e² (eV Å) and ħ²/m_e (eV Å²)
+  const MAT = {                              // literature values, illustrative; GaN: the E₁ modes
+    GaAs: { T: 33.3, L: 36.2, ei: 10.9, ms: 0.067, ymax: 70, lg: 18 },
+    GaN: { T: 69.3, L: 91.9, ei: 5.35, ms: 0.20, ymax: 150, lg: 19 }
+  };
+  const GE = 2.5, GPH = 0.8;                 // display broadenings ħγ_e and ħγ_ph (meV)
+  const X0 = 16, X1 = 20;                    // log10 of n_c in cm⁻³
+  const NX = 140, NY = 220;                  // heat-map grid
+
+  // carriers in one parabolic band at T = 0: k_F, E_F, ħv_F, the plasma frequency screened by ε_∞, k_TF²
+  function carriers(lg, ms, ei) {
+    const n = Math.pow(10, lg - 24);                       // Å⁻³
+    const kF = Math.cbrt(3 * Math.PI * Math.PI * n);       // Å⁻¹
+    const EF = 0.5 * H2M * kF * kF / ms;                   // eV
+    return {
+      n, kF, EF,
+      vF: 1e3 * H2M * kF / ms,                             // ħv_F (meV Å)
+      wp2: 1e6 * 4 * Math.PI * E2 * H2M * n / (ei * ms),   // (ħω_p)² = 4π n_c e² ħ²/(ε_∞ m*) (meV²)
+      kTF2: 6 * Math.PI * n * E2 / EF                      // k_TF² = 6π n_c e²/E_F (Å⁻²)
+    };
+  }
+  // (B9.18): ω²_{L±} = ½(ω²_LO + ω_p²) ± ½√((ω²_LO + ω_p²)² − 4ω_p²ω²_TO); the lower root from the product of the roots
+  function modes(wp2, p) {
+    const S = p.L * p.L + wp2, D = Math.sqrt(Math.max(0, S * S - 4 * wp2 * p.T * p.T)), up2 = 0.5 * (S + D);
+    return { up: Math.sqrt(up2), lo: Math.sqrt(wp2 * p.T * p.T / up2) };
+  }
+  // static Lindhard factor: F₀(z) = ½ + (1 − z²)/(4z) ln|(1 + z)/(1 − z)|, F₀ → 1 for z → 0, F₀(1) = ½
+  const F0 = (z) => (Math.abs(z - 1) < 1e-9 ? 0.5 : 0.5 + (1 - z * z) / (4 * z) * Math.log(Math.abs((1 + z) / (1 - z))));
+  // (B9.19) with the static Lindhard function: ω̄² = ω²_TO + (ω^ion_p)²/ε^e(q, 0), ε^e(q, 0) = ε_∞ + (k_TF²/q²) F₀(q/2k_F)
+  function staticMode(c, p, q, wi2) {
+    const es = p.ei + c.kTF2 / (q * q) * F0(q / (2 * c.kF));
+    return Math.sqrt(p.T * p.T + wi2 / es);
+  }
+  // full T = 0 Lindhard function: ε^e = ε_∞ + (k_TF²/q²) F(z, u), z = q/2k_F, u = (ω + iγ_e)/qv_F = ur + i ui;
+  // F = ½ + (1/8z){[1 − (z − u)²] ln[(z − u + 1)/(z − u − 1)] + [1 − (z + u)²] ln[(z + u + 1)/(z + u − 1)]},
+  // principal logarithms; for |u| ≫ 1 + z the expansion F ≃ −1/(3u²) − (1/5 + z²/3)/u⁴. Returns [Re F, Im F].
+  function lind(z, ur, ui) {
+    if (Math.hypot(ur, ui) > 40 * (1 + z)) {
+      const u2r = ur * ur - ui * ui, u2i = 2 * ur * ui, m2 = u2r * u2r + u2i * u2i;
+      const ar = u2r / m2, ai = -u2i / m2, br = ar * ar - ai * ai, bi = 2 * ar * ai, c4 = 0.2 + z * z / 3;
+      return [-ar / 3 - c4 * br, -ai / 3 - c4 * bi];
+    }
+    let sr = 0, si = 0;
+    for (let s = -1; s <= 1; s += 2) {
+      const wr = z + s * ur, wi = s * ui;
+      const Lr = 0.5 * Math.log(((wr + 1) * (wr + 1) + wi * wi) / ((wr - 1) * (wr - 1) + wi * wi));
+      const Li = Math.atan2(wi, wr + 1) - Math.atan2(wi, wr - 1);
+      const pr = 1 - (wr * wr - wi * wi), pi = -2 * wr * wi;
+      sr += pr * Lr - pi * Li; si += pr * Li + pi * Lr;
+    }
+    return [0.5 + sr / (8 * z), si / (8 * z)];
+  }
+  // log10 of the loss function −Im 1/ε, with the total ε = ε^e(q, ω) + (ω^ion_p)²/(ω²_TO − ω² − iγ_ph ω) of (B9.16),
+  // or of the phonon spectral function −Im F_ν = −Im 2ħω_TO/[(ħω)² − (ħω_TO)² − (ħω^ion_p)²/ε^e(q, ω) + iħγ_ph ħω] (meV⁻¹)
+  function heat(p, ms, q, qty, wi2) {
+    const z = new Float64Array(NX * NY);
+    for (let i = 0; i < NX; i++) {
+      const c = carriers(X0 + (X1 - X0) * i / (NX - 1), ms, p.ei);
+      const zz = q / (2 * c.kF), A = c.kTF2 / (q * q), qv = q * c.vF;
+      for (let j = 0; j < NY; j++) {
+        const w = p.ymax * j / (NY - 1), f = lind(zz, w / qv, GE / qv);
+        const er = p.ei + A * f[0], eim = A * f[1];
+        let val;
+        if (qty === 'loss') {
+          const dr = p.T * p.T - w * w, di = -GPH * w, dm = dr * dr + di * di;
+          const tr = er + wi2 * dr / dm, ti = eim - wi2 * di / dm;
+          val = ti / (tr * tr + ti * ti);
+        } else {
+          const em = er * er + eim * eim, sr = wi2 * er / em, si = -wi2 * eim / em;
+          const ar = w * w - p.T * p.T - sr, ai = GPH * w - si;
+          val = 2 * p.T * ai / (ar * ar + ai * ai);
+        }
+        z[j * NX + i] = val > 1e-12 && isFinite(val) ? Math.log10(val) : -12;
+      }
+    }
+    return z;
+  }
+  // density at which ω_p = ω_LO, as log10 of n_c in cm⁻³
+  const lgRes = (p, ms) => 24 + Math.log10(p.L * p.L * p.ei * ms / (1e6 * 4 * Math.PI * E2 * H2M));
+  // density at which the plasmon reaches the energy y (meV)
+  const lgOfWp = (y, p, ms) => 24 + Math.log10(y * y * p.ei * ms / (1e6 * 4 * Math.PI * E2 * H2M));
+
+  // ---------- formatting ----------
+  const SUP = { '−': '⁻', '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹' };
+  const sup = (e) => String(e < 0 ? '−' + (-e) : e).split('').map(ch => SUP[ch] || ch).join('');
+  function nfmt(lg) {
+    let e = Math.floor(lg + 1e-9), m = Number(Math.pow(10, lg - e).toFixed(1));
+    if (m >= 10) { m = 1; e += 1; }
+    return `${m.toFixed(1)}×10${sup(e)} cm⁻³`;
+  }
+  const qfmt = (v) => (v < 0.01 ? v.toFixed(4) : v.toFixed(3)) + ' Å⁻¹';
+  const mev = (v) => EPP.fix(v, 1) + ' meV';
+
+  // ---------- canvas text: '$…$' marks math, where letters are italic and digits upright; _x, ^x as in EPP.drawRich ----------
+  let FAM = { ui: 'sans-serif', tx: 'serif' };
+  const ITAL = /[A-Za-zα-ωħ]/;
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const part of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: part.t, m: part.m, it: false }); continue; }
+        let buf = '', it = null;
+        for (const ch of part.t) {
+          const k = ITAL.test(ch);
+          if (it !== null && k !== it) { out.push({ t: buf, m: part.m, it }); buf = ''; }
+          buf += ch; it = k;
+        }
+        if (buf) out.push({ t: buf, m: part.m, it });
+      }
+    });
+    return out;
+  }
+  const fontOf = (r, size) => { const z = (r.it ? size + 0.5 : size) * (r.m ? 0.72 : 1); return `${r.it ? 'italic ' : ''}${z.toFixed(1)}px ${r.it ? FAM.tx : FAM.ui}`; };
+  // o: {size, align, color, halo (a ring of the surface colour, for text over curves and the map), measure}
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, rs = runs(s);
+    const ws = rs.map(r => { ctx.font = fontOf(r, size); return ctx.measureText(r.t).width; });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    const x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    const dy = (r) => (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0));
+    ctx.save(); ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    const pass = (stroke) => { let xx = x0; rs.forEach((r, k) => { ctx.font = fontOf(r, size); if (stroke) ctx.strokeText(r.t, xx, y + dy(r)); else ctx.fillText(r.t, xx, y + dy(r)); xx += ws[k]; }); };
+    if (o.halo) { ctx.strokeStyle = EPP.color('surface'); ctx.lineWidth = 3; ctx.lineJoin = 'round'; pass(true); }
+    ctx.fillStyle = o.color || EPP.color('fg'); pass(false);
+    ctx.restore();
+    return tot;
+  }
+  const tw = (ctx, s, size) => txt(ctx, s, 0, 0, { size, measure: true });
+  const fit = (ctx, list, size, wmax) => list.find(s => tw(ctx, s, size) <= wmax) || list[list.length - 1];
+
+  // ---------- label placement: the first candidate whose box stays in the frame, off every curve and off earlier labels ----------
+  function segHit(ax, ay, bx, by, b) {
+    if (Math.max(ax, bx) < b[0] || Math.min(ax, bx) > b[2] || Math.max(ay, by) < b[1] || Math.min(ay, by) > b[3]) return false;
+    let t0 = 0, t1 = 1;
+    const dx = bx - ax, dy = by - ay;
+    const clip = (p, q) => { if (p === 0) return q >= 0; const r = q / p; if (p < 0) { if (r > t1) return false; if (r > t0) t0 = r; } else { if (r < t0) return false; if (r < t1) t1 = r; } return true; };
+    return clip(-dx, ax - b[0]) && clip(dx, b[2] - ax) && clip(-dy, ay - b[1]) && clip(dy, b[3] - ay) && t0 <= t1;
+  }
+  // polylines in px from data arrays (NaN lifts the pen)
+  function polys(P, xs, ys) {
+    const out = []; let cur = null;
+    xs.forEach((x, i) => { const y = ys[i]; if (!isFinite(y)) { cur = null; return; } const pt = [P.X(x), EPP.clamp(P.Y(y), -1e4, 1e4)]; if (cur) cur.push(pt); else { cur = [pt]; out.push(cur); } });
+    return out;
+  }
+  function placer(P, lines, boxes) {
+    const m = P.m, fx0 = m.l, fy0 = m.t, fx1 = P.cv.w - m.r, fy1 = P.cv.h - m.b, placed = boxes.slice();
+    const hit = (b) => { const g = [b[0] - 1, b[1] - 1, b[2] + 1, b[3] + 1]; return lines.some(pl => { for (let i = 1; i < pl.length; i++) if (segHit(pl[i - 1][0], pl[i - 1][1], pl[i][0], pl[i][1], g)) return true; return false; }); };
+    // texts: variants, longest first; cands(w) -> [[x of the left end, baseline], ...]; test(box) -> extra condition
+    return (texts, size, color, cands, test) => {
+      for (const s of texts) {
+        const w = tw(P.ctx, s, size);
+        for (const [xl, base] of cands(w)) {
+          const b = [xl - 2, base - size * 0.95, xl + w + 2, base + size * 0.34];
+          if (b[0] < fx0 + 1 || b[2] > fx1 - 1 || b[1] < fy0 + 1 || b[3] > fy1 - 1) continue;
+          if (placed.some(o => b[0] < o[2] + 2 && b[2] > o[0] - 2 && b[1] < o[3] + 2 && b[3] > o[1] - 2)) continue;
+          if (hit(b) || (test && !test(b))) continue;
+          placed.push(b); txt(P.ctx, s, xl, base, { size, color, halo: true });
+          return b;
+        }
+      }
+      return null;
+    };
+  }
+
+  // ---------- panels ----------
+  const elA = fig.querySelector('.b9-plasmon-a'), elB = fig.querySelector('.b9-plasmon-b');
+  const legA = elA.querySelector('.legend'), legB = elB.querySelector('.legend');
+  const XT = [16, 17, 18, 19, 20].map(e => ({ v: e, label: `10^{${e}}` }));
+  // both panels: same size and margins, so that their density axes line up when they are stacked
+  const OPT = { legend: false, aspect: 0.8, minHeight: 270, maxHeight: 330, margin: { l: 50, r: 58, t: 26, b: 42 },
+    xlim: [X0, X1], ylim: [0, 70], xticks: XT, xname: 'n_c', hoverX: nfmt };
+  const pA = new EPP.Plot(elA, Object.assign({}, OPT, { hoverY: mev,
+    ariaLabel: 'Panel a: energies of the coupled LO-phonon–plasmon modes against carrier density, dynamic and static screening' }));
+  const pB = new EPP.Plot(elB, Object.assign({}, OPT, { yname: 'ħω', hoverX2: mev,
+    ariaLabel: 'Panel b: heat map of the loss function or of the phonon spectral function against carrier density and energy' }));
+  elA.appendChild(legA); elB.appendChild(legB);   // the legends (static MathJax) go under their plots
+  [pA, pB].forEach(P => { P.cv.canvas.style.cursor = 'ew-resize'; });
+  const $v = (k) => fig.querySelector('.b9-plasmon-v-' + k);
+  const RO = { n: $v('n'), wp: $v('wp'), lpm: $v('lpm'), st: $v('st'), ad: $v('ad'), tf: $v('tf'), res: $v('res') };
+  let S = null, C = null;   // current state, cached curves and map
+
+  function axisTitles(P) {
+    const ctx = P.ctx, w = P.cv.w, h = P.cv.h, m = P.m, cFg = EPP.color('fg');
+    txt(ctx, fit(ctx, ['carrier density $n$_c (cm^{−3})', '$n$_c (cm^{−3})'], 12.5, w - m.l - 4), m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    ctx.save(); ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, '$ħω$ (meV)', 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+  }
+  const at = (ys, lg) => { const xs = C.xs, f = (lg - xs[0]) / (xs[xs.length - 1] - xs[0]) * (xs.length - 1), i = EPP.clamp(Math.floor(f), 0, xs.length - 2), t = f - i; return ys[i] + (ys[i + 1] - ys[i]) * t; };
+
+  // panel (a): titles, the TO and LO guides in the right margin, direct labels on the curves
+  const baseA = pA.render.bind(pA);
+  pA.render = () => {
+    baseA();
+    const P = pA, ctx = P.ctx, w = P.cv.w, h = P.cv.h, m = P.m;
+    if (!w || !h || !C) return;
+    FAM = { ui: EPP.css('--font-ui'), tx: EPP.css('--font-text') };
+    axisTitles(P);
+    txt(ctx, fit(ctx, ['(a) mode energies: dynamic at $q$ → 0, static at $q$', '(a) dynamic and static mode energies', '(a) mode energies'], 11.5, w - 8), 4, 16, { size: 11.5, color: EPP.color('fg2') });
+    const p = C.p, cMut = EPP.textColor('muted');
+    // guide labels just right of the frame, pushed apart when the two lines are close
+    let yL = P.Y(p.L) + 4, yT = P.Y(p.T) + 4;
+    const gap = 12 - (yT - yL);
+    if (gap > 0) { yL -= gap / 2; yT += gap / 2; }
+    txt(ctx, '$ω$_{LO}', w - m.r + 5, yL, { size: 11.5, color: cMut });
+    txt(ctx, '$ω$_{TO}', w - m.r + 5, yT, { size: 11.5, color: cMut });
+    // obstacles: every curve, the guides and the resonance circle
+    const lines = [].concat(polys(P, C.xs, C.up), polys(P, C.xs, C.lo), polys(P, C.xs, C.pl), polys(P, C.xs, C.sm),
+      [[[m.l, P.Y(p.T)], [w - m.r, P.Y(p.T)]], [[m.l, P.Y(p.L)], [w - m.r, P.Y(p.L)]]]);
+    const boxes = C.res > X0 && C.res < X1 ? [[P.X(C.res) - 6, P.Y(p.L) - 6, P.X(C.res) + 6, P.Y(p.L) + 6]] : [];
+    const put = placer(P, lines, boxes);
+    const lgAt = (px) => P.invX(px);
+    const span = (ys, xl, wd) => { const a = P.Y(at(ys, lgAt(xl))), b = P.Y(at(ys, lgAt(xl + wd))); return [Math.min(a, b), Math.max(a, b)]; };
+    // L₊ above its curve at low density, L₋ below its curve at high density
+    put(['L_+'], 13, EPP.textColor('phonon'), (wd) => [16.06, 16.3, 16.6, 17, 17.4].flatMap(lg => { const xl = P.X(lg), s = span(C.up, xl, wd); return [[xl, s[0] - 6], [xl, s[0] - 13]]; }));
+    put(['L_−'], 13, EPP.textColor('phonon'), (wd) => [19.94, 19.6, 19.25, 18.9, 18.5].flatMap(lg => { const xl = P.X(lg) - wd; const s = span(C.lo, xl, wd); return [[xl, s[1] + 15], [xl, s[0] - 6]]; }));
+    // the plasmon: to the right of its curve, high up where it is alone
+    put(['$ω$_p'], 12.5, EPP.textColor('electron'), () => [0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2].flatMap(f => {
+      const y = f * p.ymax, lg = lgOfWp(y, p, C.ms);
+      return lg > X0 && lg < X1 ? [[P.X(lg) + 6, P.Y(y) + 4], [P.X(lg) + 6, P.Y(y) + 12]] : [];
+    }));
+    // the static curve: below it, else above it
+    put(['static at $q$', 'static'], 11.5, EPP.textColor('c4'), (wd) => [16.08, 16.5, 17, 17.5, 18.4, 18.9, 19.3].flatMap(lg => {
+      const xl = P.X(lg), s = span(C.sm, xl, wd); return [[xl, s[1] + 14], [xl, s[0] - 5], [xl, s[1] + 21], [xl, s[0] - 12], [xl, s[1] + 28]];
+    }));
+  };
+
+  // panel (b): titles, colour-bar label, the continuum label
+  const baseB = pB.render.bind(pB);
+  pB.render = () => {
+    baseB();
+    const P = pB, ctx = P.ctx, w = P.cv.w, h = P.cv.h, m = P.m;
+    if (!w || !h || !C) return;
+    FAM = { ui: EPP.css('--font-ui'), tx: EPP.css('--font-text') };
+    axisTitles(P);
+    const loss = C.qty === 'loss';
+    const title = loss ? ['(b) loss function −Im 1/$ε$ at $q$', '(b) loss function at $q$', '(b) loss function']
+      : ['(b) phonon spectral function −Im $F_ν$ at $q$', '(b) phonon spectral function at $q$', '(b) phonon spectral function'];
+    txt(ctx, fit(ctx, title, 11.5, w - 8), 4, 16, { size: 11.5, color: EPP.color('fg2') });
+    ctx.save(); ctx.translate(w - 7, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    const cb = loss ? ['−Im 1/$ε$, log scale', '−Im 1/$ε$ (log)'] : ['−Im $F_ν$ (meV^{−1}), log scale', '−Im $F_ν$ (meV^{−1})'];
+    txt(ctx, fit(ctx, cb, 10.5, h - m.t - m.b - 34), 0, 0, { size: 10.5, color: EPP.color('muted'), align: 'center' });
+    ctx.restore();
+    // the particle–hole continuum, labelled inside its band where it has room
+    const lines = [].concat(polys(P, C.xs, C.up), polys(P, C.xs, C.lo), polys(P, C.xs, C.sm), polys(P, C.xs, C.eh1), polys(P, C.xs, C.eh0));
+    const put = placer(P, lines, []);
+    const fy1 = h - m.b;
+    const inBand = (b) => {
+      for (const px of [b[0], b[2]]) {
+        const lg = P.invX(px), top = P.Y(at(C.eh1, lg)), lo0 = at(C.eh0, lg), bot = isFinite(lo0) ? P.Y(lo0) : fy1;
+        if (!(b[1] > top + 1 && b[3] < bot - 1)) return false;
+      }
+      return true;
+    };
+    const lgs = [19.95, 19.7, 19.4, 19.1, 18.8, 18.5, 18.2, 17.9, 17.6, 17.3, 17, 16.7, 16.4];
+    put(['particle–hole continuum', 'particle–hole', 'e–h pairs'], 11, EPP.textColor('electron'), (wd) => lgs.flatMap(lg => {
+      const xr = P.X(lg), xl = xr - wd, top = Math.max(P.Y(at(C.eh1, lg)), P.Y(at(C.eh1, P.invX(xl))));
+      const lo0 = at(C.eh0, P.invX(xl)), bot = isFinite(lo0) ? Math.min(fy1, P.Y(lo0)) : fy1;
+      return [[xl, bot - 5], [xl, (top + bot) / 2 + 4], [xl, top + 14]];
+    }), inBand);
+  };
+
+  function compute(st) {
+    const p = MAT[st.mat], ms = st.ms, q = st.q, wi2 = p.ei * (p.L * p.L - p.T * p.T);   // (ħω^ion_p)², (B9.11)
+    const key = [st.mat, ms, q, st.qty].join('|');
+    if (!C || C.key !== key) {
+      const xs = EPP.linspace(X0, X1, 241), up = [], lo = [], pl = [], sm = [], eh0 = [], eh1 = [];
+      const Eq = 1e3 * 0.5 * H2M * q * q / ms;                // ħ²q²/2m* (meV)
+      for (const lg of xs) {
+        const c = carriers(lg, ms, p.ei), md = modes(c.wp2, p), qv = q * c.vF;
+        up.push(md.up); lo.push(md.lo); pl.push(Math.sqrt(c.wp2)); sm.push(staticMode(c, p, q, wi2));
+        // the continuum: max(0, ħ²q²/2m* − ħqv_F) < ħω < ħ²q²/2m* + ħqv_F; its lower edge falls with density and ends on the axis
+        const lo0 = Eq - qv, prev = eh0.length ? eh0[eh0.length - 1] : NaN;
+        eh1.push(Eq + qv); eh0.push(lo0 > 0 ? lo0 : (prev > 0 ? 0 : NaN));
+      }
+      C = { key, p, ms, q, qty: st.qty, wi2, xs, up, lo, pl, sm, eh0, eh1, res: lgRes(p, ms),
+        heat: { type: 'heatmap', x0: X0, x1: X1, y0: 0, y1: p.ymax, nx: NX, ny: NY, z: heat(p, ms, q, st.qty, wi2), vmin: -3, vmax: 0,
+          color: st.qty === 'loss' ? 'photon' : 'phonon', colorbar: true, label: st.qty === 'loss' ? '−Im 1/ε' : '−Im F_ν (meV^{−1})',
+          cfmt: v => (v === 0 ? '1' : Number.isInteger(v) ? `10^{${v < 0 ? '−' + (-v) : v}}` : EPP.fmt(Math.pow(10, v), 2)) } };
+    }
+    return C;
+  }
+
+  function draw() {
+    if (!S) return;
+    const c = compute(S), p = c.p, lg = S.lg, ym = p.ymax;
+    const cr = carriers(lg, c.ms, p.ei), md = modes(cr.wp2, p), wp = Math.sqrt(cr.wp2), st = staticMode(cr, p, c.q, c.wi2);
+    const hasRes = c.res > X0 && c.res < X1;
+    pA.draw([
+      { type: 'hline', at: p.T, color: 'muted', width: 1.1 },
+      { type: 'hline', at: p.L, color: 'muted', width: 1.1 },
+      { type: 'line', x: c.xs, y: c.pl, color: 'electron', width: 2, dash: [2, 3], label: 'plasmon ω̄_p' },
+      { type: 'line', x: c.xs, y: c.sm, color: 'c4', width: 2, dash: [7, 4], label: 'static at q' },
+      { type: 'line', x: c.xs, y: c.up, color: 'phonon', width: 2.2, label: 'L_+' },
+      { type: 'line', x: c.xs, y: c.lo, color: 'phonon', width: 2.2, label: 'L_−' },
+      hasRes ? { type: 'points', x: [c.res], y: [p.L], color: 'ink', r: 4.6, hollow: true } : null,
+      { type: 'vline', at: lg, color: 'ink', width: 1, dash: [3, 3] },
+      { type: 'points', x: [lg], y: [wp], color: 'electron', r: 3 },
+      { type: 'points', x: [lg], y: [st], color: 'c4', r: 3.2 },
+      { type: 'points', x: [lg, lg], y: [md.up, md.lo], color: 'phonon', r: 3.8 }
+    ], { ylim: [0, ym] });
+    pB.draw([
+      c.heat,
+      { type: 'line', x: c.xs, y: c.eh1, color: 'electron', width: 1.3, hover: false },
+      { type: 'line', x: c.xs, y: c.eh0, color: 'electron', width: 1.3, hover: false },
+      { type: 'line', x: c.xs, y: c.up, color: 'muted', width: 1.2, dash: [1.5, 3.5], hover: false },
+      { type: 'line', x: c.xs, y: c.lo, color: 'muted', width: 1.2, dash: [1.5, 3.5], hover: false },
+      { type: 'line', x: c.xs, y: c.sm, color: 'c4', width: 1.7, dash: [7, 4], hover: false },
+      { type: 'vline', at: lg, color: 'ink', width: 1, dash: [3, 3] }
+    ], { ylim: [0, ym] });
+    // readouts (keys are static MathJax in the markup)
+    const ad = p.L / (c.q * cr.vF), ktf = Math.sqrt(cr.kTF2 / p.ei);
+    RO.n.textContent = nfmt(lg);
+    RO.wp.textContent = mev(wp);
+    RO.lpm.textContent = `${EPP.fix(md.up, 1)}, ${EPP.fix(md.lo, 1)} meV`;
+    RO.st.textContent = mev(st);
+    RO.ad.textContent = EPP.fmt(ad, 2);
+    RO.tf.textContent = EPP.fix(ktf, ktf < 0.1 ? 3 : 2) + ' Å⁻¹';
+    RO.res.textContent = nfmt(c.res);
+    const plain = (s) => s.replace(/ /g, ' ').replace(/×10([⁻⁰¹²³⁴⁵⁶⁷⁸⁹]+)/g, (x, e) => ' times 10 to the ' + e.split('').map(ch => '−0123456789'['⁻⁰¹²³⁴⁵⁶⁷⁸⁹'.indexOf(ch)]).join('')).replace('cm⁻³', 'per cubic centimetre');
+    const qs = `q = ${c.q < 0.01 ? c.q.toFixed(4) : c.q.toFixed(3)} per ångström`;
+    pA.cv.canvas.setAttribute('aria-label', `Panel a, ${S.mat}: mode energies against carrier density from 10^16 to 10^20 per cubic centimetre, energy axis 0 to ${ym} meV. ` +
+      `Coupled modes L+ and L− at q → 0 (amber), plasmon ω̄_p (dotted), static adiabatic mode at ${qs} (dashed teal), guides at ω_TO = ${p.T} and ω_LO = ${p.L} meV. ` +
+      `At n_c = ${plain(nfmt(lg))}: L+ ${EPP.fix(md.up, 1)} meV, L− ${EPP.fix(md.lo, 1)} meV, ω̄_p ${EPP.fix(wp, 1)} meV, static ${EPP.fix(st, 1)} meV. ` +
+      `The plasmon meets ω_LO at ${plain(nfmt(c.res))}. Click or drag to set the density.`);
+    pB.cv.canvas.setAttribute('aria-label', `Panel b, ${S.mat}: heat map of the ${c.qty === 'loss' ? 'loss function −Im 1/ε' : 'phonon spectral function −Im F_ν'} at ${qs}, ` +
+      `against carrier density and energy, logarithmic colour scale from 0.001 to 1, with the L± curves at q → 0 (dotted), the static curve (dashed) and the edges of the particle–hole continuum (blue). ` +
+      `ω_LO/qv_F = ${EPP.fmt(ad, 2)} at the cursor, ${plain(nfmt(lg))}. Click or drag to set the density.`);
+  }
+
+  // ---------- controls ----------
+  const elCtl = fig.querySelector('.b9-plasmon-ctrls');
+  let prevMat = 'GaAs';
+  const ui = EPP.controls(elCtl, [
+    { key: 'mat', type: 'seg', label: 'material', options: [['GaAs', 'GaAs'], ['GaN', 'GaN']], value: 'GaAs' },
+    { key: 'lg', type: 'range', label: 'carrier density n_c', min: X0, max: X1, step: 0.01, value: 18, fmt: nfmt },
+    { key: 'q', type: 'range', label: 'wavevector q', min: 1e-3, max: 0.1, log: true, step: 0.01, value: 3e-3, fmt: qfmt },
+    { key: 'ms', type: 'range', label: 'effective mass m^*/m_e', min: 0.02, max: 1, step: 0.001, value: 0.067, fmt: v => v.toFixed(3) },
+    { key: 'qty', type: 'seg', label: 'panel (b) shows', options: [['loss', 'loss function'], ['ph', 'phonon spectral function']], value: 'loss' }
+  ], (s) => {
+    // a new material resets the effective mass and the density cursor
+    if (s.mat !== prevMat) { ui.set('ms', MAT[s.mat].ms, true); ui.set('lg', MAT[s.mat].lg, true); prevMat = s.mat; }
+    S = s; draw();
+  });
+  ui.el.style.gridTemplateColumns = 'repeat(auto-fill, minmax(min(100%, 230px), 1fr))';
+  // control labels: the symbols in italic, like the readout keys
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const LAB = { lg: `carrier density ${I('n')}<sub>c</sub>`, q: `wavevector ${I('q')}`, ms: `effective mass ${I('m')}*/${I('m')}<sub>e</sub>` };
+  Object.keys(LAB).forEach(k => { const sp = elCtl.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  // with three columns the long segmented control shares the second row with the mass slider
+  const qtyBox = (document.getElementById(`${fig.id}-qty-loss`) || elCtl).closest('.ctrl');
+  const fitQty = () => {
+    if (!qtyBox) return;
+    const n = getComputedStyle(elCtl).gridTemplateColumns.split(' ').filter(Boolean).length || 1;
+    const v = n >= 3 ? 'span 2' : '1 / -1';
+    if (qtyBox.style.gridColumn !== v) qtyBox.style.gridColumn = v;
+  };
+  fitQty();
+  try { new ResizeObserver(() => requestAnimationFrame(fitQty)).observe(elCtl); } catch (e) { window.addEventListener('resize', fitQty); }
+  S = ui.state; draw();
+
+  // click or drag on either panel sets the density (snapped to the slider step)
+  const pick = (x, y, type) => { if (type === 'up') return; ui.set('lg', EPP.clamp(Math.round(x * 100) / 100, X0, X1)); };
+  pA.onPointer = pick; pB.onPointer = pick;
+})();
+</script>

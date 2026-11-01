@@ -1,0 +1,454 @@
+  <figure class="viz" id="viz-b4-coulomb">
+    <p class="viz-title">Where the field energy of two charges sits <span class="tag">interactive</span></p>
+    <div class="viz-grid two">
+      <div style="min-width:0">
+        <p class="b4-coulomb-hd" style="margin:0 0 6px;font-family:var(--font-ui);font-size:0.86rem;font-weight:600;color:var(--fg-2)">(a) Energy density in the plane of the two charges</p>
+        <div class="b4-coulomb-map"></div>
+        <div class="legend b4-coulomb-leg1">
+          <span class="item"><svg width="22" height="14" viewBox="0 0 22 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><path d="M1 11 Q11 1 21 11" style="fill:none;stroke:var(--fg);stroke-opacity:0.55;stroke-width:1.3"/></svg>field line of $\bE=\bE_1+\bE_2$</span>
+          <span class="item"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="vertical-align:-3px;margin-right:5px"><circle cx="8" cy="8" r="6.5" style="fill:none;stroke:var(--fg-2);stroke-width:1.3;stroke-dasharray:3 2.4"/></svg>$\bE_1\perp\bE_2$: the cross term changes sign</span>
+          <span class="item"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="vertical-align:-3px;margin-right:5px"><circle cx="8" cy="8" r="6" style="fill:var(--surface);stroke:var(--fg);stroke-width:1.3"/></svg>cloud, radius $w$</span>
+        </div>
+      </div>
+      <div style="min-width:0">
+        <p class="b4-coulomb-hd" style="margin:0 0 6px;font-family:var(--font-ui);font-size:0.86rem;font-weight:600;color:var(--fg-2)">(b) Interaction energy against separation</p>
+        <div class="b4-coulomb-plot"></div>
+        <div class="legend b4-coulomb-leg2">
+          <span class="item" style="color:var(--c-photon)"><span class="sw"></span><span style="color:var(--fg-2)">$U_{12}$, Gaussian clouds</span></span>
+          <span class="item" style="color:var(--muted)"><span class="sw dash"></span><span style="color:var(--fg-2)">Coulomb's law $Q_1Q_2e^2/d$</span></span>
+          <span class="item" style="color:var(--muted)"><span class="sw box"></span><span style="color:var(--fg-2)">$d&lt;2w$: the clouds overlap</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="b4-coulomb-ctrls"></div>
+    <div class="readout b4-coulomb-ro" aria-live="polite"><span>$U_{12}$<b class="b4-coulomb-v-u12"></b></span><span>Coulomb's law $Q_1Q_2e^2/d$<b class="b4-coulomb-v-cl"></b></span><span>self-energies $U_1,\ U_2$<b class="b4-coulomb-v-self"></b></span><span>field energy $U_1+U_2+U_{12}$<b class="b4-coulomb-v-tot"></b></span></div>
+    <div class="readout b4-coulomb-ro2" aria-live="polite"><span>cross term integrated numerically, $\int\dd^3r\,\bE_1\cdot\bE_2/4\pi$: inside the sphere<b class="b4-coulomb-v-in"></b></span><span>outside<b class="b4-coulomb-v-out"></b></span><span>all space<b class="b4-coulomb-v-all"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> The interaction energy of two charges is the cross term $\bE_1\cdot\bE_2/4\pi$ of their field energy, spread through space. For opposite charges it is positive in the region between them, yet its integral, <span class="nw">$U_{12}\approx-e^2/d$,</span> is negative: the saving sits in the large region outside the dashed circle, where the two fields partly cancel.</p><div class="cap-more">
+      <p><strong>Marks.</strong> In (a) the colour is the energy density chosen under “map”; for the cross term rose is positive and blue negative. Grey lines are field lines of the total field, with arrows along <span class="nw">$\bE$.</span> The dashed circle, a sphere in space, has the segment between the centres as diameter, so from each of its points the centres are seen at a right angle (Thales): there <span class="nw">$\bE_1\perp\bE_2$.</span> In (b) the dot marks the current <span class="nw">$d$.</span></p>
+      <p><strong>Try.</strong> Set <span class="nw">$Q_2=+1$:</span> the colours swap and $U_{12}$ turns positive. Shrink <span class="nw">$w$:</span> the self-energies grow as <span class="nw">$1/w$,</span> while $U_{12}$ keeps Coulomb's value. Bring the clouds closer than about <span class="nw">$2w$,</span> or drag in (b): they overlap, and $|U_{12}|$ falls below Coulomb's law.</p>
+      <p><strong>Model.</strong> Gaussian clouds of charge $Q_1e$ and $Q_2e$ <span class="nw">($Q_1=+1$),</span> centred at <span class="nw">$z=\mp d/2$,</span> each with density <span class="nw">$\propto\ee^{-r^2/2w^2}$</span> at distance $r$ from its centre; their fields follow from Gauss's law <span class="nw">($e^2=14.3996$ eV Å).</span> The field energy $\frac1{8\pi}\int\dd^3r\,E^2$ is <span class="nw">$U_1+U_2+U_{12}$,</span> with <span class="nw">$U_1=Q_1^2e^2/2\sqrt\pi\,w$,</span> likewise <span class="nw">$U_2$,</span> and <span class="nw">$U_{12}=Q_1Q_2e^2\,\mathrm{erf}(d/2w)/d$.</span> For point charges the parts of the cross term inside and outside the sphere are $(2-\pi)/4$ and $(2+\pi)/4$ of <span class="nw">$Q_1Q_2e^2/d$.</span> A static field is longitudinal, so this is $H^{\mathrm L}$ of <a class="eqref" href="#b4-eq-coulomb">(B4.20)</a> for two classical charges, self terms included; the section removes them.</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b4-coulomb');
+  if (!fig || !window.EPP) return;
+  // ---------- constants: Gaussian units, lengths in Å, energies in eV ----------
+  const E2 = 14.3996, SQPI = Math.sqrt(Math.PI), S2P = Math.sqrt(2 / Math.PI), FOURPI = 4 * Math.PI, TAU = 2 * Math.PI;
+  const XL = 8, ZL = 10;                     // map (a): x in [−8, 8] Å, z in [−10, 10] Å, aspect 4:5
+  const Q1 = 1;                              // charge of cloud 1 in units of e, fixed
+  const DMAX = 12, YL = 15;                  // plot (b): d in [0, 12] Å, energy in [−15, 15] eV
+  // colour scales in eV/Å³: the cross term on a signed log scale (linear below V0, saturating at VMAX), the total on a log scale
+  const V0 = 1e-5, VMAX = 1, TMIN = 1e-5, TMAX = 10;
+  const LV = Math.log10(1 + VMAX / V0), LT0 = Math.log10(TMIN), LT = Math.log10(TMAX) - LT0;
+
+  // ---------- physics ----------
+  // erf with relative error below 1.2e-7 (Chebyshev fit of erfc, Numerical Recipes)
+  function erf(x) {
+    const z = Math.abs(x), t = 1 / (1 + 0.5 * z);
+    const r = t * Math.exp(-z * z - 1.26551223 + t * (1.00002368 + t * (0.37409196 + t * (0.09678418 + t * (-0.18628806 + t * (0.27886807 + t * (-1.13520398 + t * (1.48851587 + t * (-0.82215223 + t * 0.17087277)))))))));
+    return x >= 0 ? 1 - r : r - 1;
+  }
+  // A Gaussian cloud ρ_i = Q_i e (2πw²)^(−3/2) exp(−|r − r_i|²/2w²) has, by Gauss's law, the radial field
+  // E_i = Q_i e h(r_i) (r − r_i), with h(r) = g(r/w)/r³ and g(u) = erf(u/√2) − √(2/π) u e^(−u²/2) the charge fraction inside r.
+  // Below u = 0.6 the series g/u³ = √(2/π)(1/3 − u²/10 + u⁴/56 − u⁶/432 + u⁸/4224 − u¹⁰/49920) avoids the cancellation and
+  // keeps h finite at r = 0.
+  function hfun(r, w) {
+    const u = r / w;
+    if (u < 0.6) { const u2 = u * u; return S2P * (1 / 3 - u2 * (1 / 10 - u2 * (1 / 56 - u2 * (1 / 432 - u2 * (1 / 4224 - u2 / 49920))))) / (w * w * w); }
+    const g = u > 9 ? 1 : erf(u / Math.SQRT2) - S2P * u * Math.exp(-0.5 * u * u);
+    return g / (r * r * r);
+  }
+  // energies (eV): self-energy U_i = Q_i² e²/(2√π w); interaction U_12 = Q_1 Q_2 e² erf(d/2w)/d, → Q_1 Q_2 e²/(√π w) at d = 0
+  const Uself = (Q, w) => Q * Q * E2 / (2 * SQPI * w);
+  const U12 = (Q2, d, w) => (d < 1e-9 ? Q1 * Q2 * E2 / (SQPI * w) : Q1 * Q2 * E2 * erf(d / (2 * w)) / d);
+  // cross term E_1·E_2/4π at (x, z) in the plane y = 0 (eV/Å³), with the exact h: used by the numerical integral.
+  // With the centres at z_1 = −d/2 and z_2 = +d/2 on the z axis, E_1·E_2/4π = Q_1 Q_2 e² h_1 h_2 (r − r_1)·(r − r_2)/4π.
+  function crossExact(x, z, s) {
+    const a1 = z + s.d / 2, a2 = z - s.d / 2;
+    return Q1 * s.Q2 * E2 * hfun(Math.hypot(x, a1), s.w) * hfun(Math.hypot(x, a2), s.w) * (x * x + a1 * a2) / FOURPI;
+  }
+  // fast h for the map and the field lines: h̃(s) = g(u)/u³ is smooth in s = u², so it is tabulated in s and h(r) = h̃(r²/w²)/w³;
+  // linear interpolation on 8192 points is good to 2e-6; beyond u = 9 the cloud acts as a point charge, h̃ = s^(−3/2)
+  const SMAX = 81, NT = 8192, TI = NT / SMAX, HT = new Float64Array(NT + 2);
+  for (let k = 0; k < NT + 2; k++) HT[k] = hfun(Math.sqrt(k / TI), 1);
+  const hs = (q) => { if (q >= SMAX) return 1 / (q * Math.sqrt(q)); const x = q * TI, i = x | 0; return HT[i] + (x - i) * (HT[i + 1] - HT[i]); };
+  // total field E/e at (x, z) in Å⁻², and the squared distances to the two centres
+  function field(x, z, s) {
+    const a1 = z + s.d / 2, a2 = z - s.d / 2, xs = x * x, q1 = xs + a1 * a1, q2 = xs + a2 * a2;
+    const b1 = Q1 * hs(q1 * s.w2i) * s.w3i, b2 = s.Q2 * hs(q2 * s.w2i) * s.w3i;
+    return [(b1 + b2) * x, b1 * a1 + b2 * a2, q1, q2];
+  }
+
+  // ---------- numerical integral of the cross term, split at the sphere on which E_1 ⊥ E_2 ----------
+  // Two-centre quadrature: Becke weights p_1 + p_2 = 1 share space between the centres; around each centre, spherical
+  // coordinates (r, c = cos of the angle to the other centre). A ray from centre i crosses the sphere (diameter d,
+  // through both centres) at r = d c, so each ray splits into an inside and an outside segment, each smooth.
+  function gauss(n) {
+    const x = [], w = [];
+    for (let i = 0; i < n; i++) {
+      let z = Math.cos(Math.PI * (i + 0.75) / (n + 0.5)), pp = 1;
+      for (let it = 0; it < 60; it++) {
+        let p1 = 1, p2 = 0;
+        for (let j = 0; j < n; j++) { const p3 = p2; p2 = p1; p1 = ((2 * j + 1) * z * p2 - j * p3) / (j + 1); }
+        pp = n * (z * p1 - p2) / (z * z - 1);
+        const dz = p1 / pp; z -= dz; if (Math.abs(dz) < 1e-15) break;
+      }
+      x.push(0.5 * (1 + z)); w.push(1 / ((1 - z * z) * pp * pp));   // nodes and weights on [0, 1]
+    }
+    return { x, w };
+  }
+  const GR = gauss(32), GC = gauss(16);
+  const becke = (mu) => { let f = mu; for (let k = 0; k < 3; k++) f = 1.5 * f - 0.5 * f * f * f; return 0.5 * (1 - f); };
+  function integrate(s) {
+    const d = s.d, z1 = -d / 2, z2 = d / 2, Rs = Math.max(s.w, 0.5 * d);
+    let inside = 0, outside = 0;
+    for (let i = 0; i < 2; i++) {
+      const zc = i ? z2 : z1, dir = i ? -1 : 1;
+      const f = (r, c, sn) => {
+        const x = r * sn, z = zc + dir * r * c, p = becke((Math.hypot(x, z - z1) - Math.hypot(x, z - z2)) / d);
+        return TAU * r * r * (i ? 1 - p : p) * crossExact(x, z, s);
+      };
+      for (const half of [-1, 1]) for (let a = 0; a < GC.x.length; a++) {
+        const c = half * GC.x[a], wc = GC.w[a], sn = Math.sqrt(Math.max(0, 1 - c * c)), rs = c > 0 ? d * c : 0;
+        for (let k = 0; k < GR.x.length; k++) {
+          const u = GR.x[k], wk = GR.w[k] * wc;
+          if (rs > 0) inside += wk * 2 * rs * u * f(rs * u * u, c, sn);                 // r = rs u², u in [0, 1]
+          const r = rs + Rs * u * u / (1 - u), dr = Rs * u * (2 - u) / ((1 - u) * (1 - u)); // r in [rs, ∞)
+          outside += wk * dr * f(r, c, sn);
+        }
+      }
+    }
+    return { inside, outside };
+  }
+
+  // ---------- field lines: RK4 along E/|E| ----------
+  // Steps of 0.02–0.12 Å, shorter near a centre; stop(x, z) returns a nonzero code to end a line (9: the frame). A line
+  // also ends (−1) where the field vanishes or turns back between two steps: at a null point inside the clouds.
+  function trace(x, z, sgn, s, stop) {
+    const pts = [x, z];
+    let end = 0, px = 0, pz = 0;
+    for (let k = 0; k < 900 && !end; k++) {
+      const F1 = field(x, z, s), n1 = Math.hypot(F1[0], F1[1]);
+      if (!(n1 > 1e-12)) { end = -1; break; }
+      const h = sgn * EPP.clamp(0.3 * Math.sqrt(Math.min(F1[2], F1[3])), 0.02, 0.12), k1x = F1[0] / n1, k1z = F1[1] / n1;
+      if (k1x * px + k1z * pz < 0) { end = -1; break; }
+      px = k1x; pz = k1z;
+      const F2 = field(x + 0.5 * h * k1x, z + 0.5 * h * k1z, s), n2 = Math.hypot(F2[0], F2[1]), k2x = F2[0] / n2, k2z = F2[1] / n2;
+      const F3 = field(x + 0.5 * h * k2x, z + 0.5 * h * k2z, s), n3 = Math.hypot(F3[0], F3[1]), k3x = F3[0] / n3, k3z = F3[1] / n3;
+      const F4 = field(x + h * k3x, z + h * k3z, s), n4 = Math.hypot(F4[0], F4[1]);
+      if (!(n2 > 1e-12 && n3 > 1e-12 && n4 > 1e-12)) { end = -1; break; }
+      x += h * (k1x + 2 * k2x + 2 * k3x + F4[0] / n4) / 6; z += h * (k1z + 2 * k2z + 2 * k3z + F4[1] / n4) / 6;
+      pts.push(x, z);
+      end = Math.abs(x) > XL + 0.05 || Math.abs(z) > ZL + 0.05 ? 9 : stop(x, z);
+    }
+    return { pts, end };
+  }
+  // Lines start on a ring of radius max(w, 0.25 Å) around each charge, 10 per unit of charge. Those of a positive charge follow
+  // +E, those of a negative charge −E; a line of a negative charge that ends on a positive one repeats a line already drawn and
+  // is dropped. When the clouds overlap, each ring would lie inside the other cloud; the lines then start on a circle around
+  // both clouds and are traced both ways, from the overlapping clouds out to the frame or back to them.
+  const OVL = 1.8;
+  function fieldLines(s) {
+    const out = [], rs = Math.max(s.w, 0.25), qs = [Q1, s.Q2], zs = [-s.d / 2, s.d / 2];
+    if (s.d >= OVL * rs) {
+      const rq = 0.64 * rs * rs;
+      const stop = (x, z) => (x * x + (z - zs[0]) * (z - zs[0]) < rq ? 1 : (x * x + (z - zs[1]) * (z - zs[1]) < rq ? 2 : 0));
+      for (let i = 0; i < 2; i++) {
+        const n = 10 * Math.abs(qs[i]), sgn = Math.sign(qs[i]);
+        for (let k = 0; k < n; k++) {
+          const th = (k + 0.5) * TAU / n, L = trace(rs * Math.sin(th), zs[i] + rs * Math.cos(th), sgn, s, stop);
+          if (sgn < 0 && (L.end === 1 || L.end === 2) && qs[L.end - 1] > 0) continue;
+          if (L.pts.length >= 6) out.push({ pts: L.pts, sgn });
+        }
+      }
+    } else {
+      const R0 = s.d / 2 + 1.5 * rs, Ro = s.d / 2 + 2.2 * rs, rq = R0 * R0, n = Math.max(16, 10 * Math.abs(Q1 + s.Q2));
+      const stop = (x, z) => (x * x + z * z < rq ? 3 : 0);
+      for (let k = 0; k < n; k++) {
+        const th = (k + 0.5) * TAU / n, sx = Math.sin(th), cz = Math.cos(th), x = Ro * sx, z = Ro * cz, F = field(x, z, s);
+        const back = trace(x, z, -1, s, stop);
+        if (F[0] * sx + F[1] * cz < 0 && back.end !== 9) continue;   // an inward line that comes from the clouds is drawn from its outward end
+        const fwd = trace(x, z, 1, s, stop), pts = [];
+        for (let m = back.pts.length - 2; m >= 2; m -= 2) pts.push(back.pts[m], back.pts[m + 1]);
+        for (const v of fwd.pts) pts.push(v);
+        if (pts.length >= 6) out.push({ pts, sgn: 1 });
+      }
+    }
+    return out;
+  }
+
+  // ---------- canvas text ----------
+  // '$...$' is math: letters italic in the text font, digits and signs upright; '[x]' is a bold upright vector;
+  // _x, _{...}, ^x, ^{...} are sub- and superscripts. A script written outside '$' stays upright: '$E$^2'.
+  const ITAL = /[A-Za-zα-ωħℓ]/;
+  let FT = '', FU = '';
+  function runs(str) {
+    const out = [], mode = { math: false, bold: false };
+    const push = (ch, lvl) => {
+      const it = mode.math && !mode.bold && ITAL.test(ch), L = out[out.length - 1];
+      if (L && L.lvl === lvl && L.it === it && L.b === mode.bold) L.t += ch; else out.push({ t: ch, lvl, it, b: mode.bold });
+    };
+    const walk = (t, lvl) => {
+      for (let k = 0; k < t.length;) {
+        const ch = t[k];
+        if (ch === '$') { mode.math = !mode.math; k++; }
+        else if (ch === '[') { mode.bold = true; k++; }
+        else if (ch === ']') { mode.bold = false; k++; }
+        else if ((ch === '_' || ch === '^') && k + 1 < t.length) {
+          let g;
+          if (t[k + 1] === '{') { let e = t.indexOf('}', k + 2); if (e < 0) e = t.length; g = t.slice(k + 2, e); k = e + 1; }
+          else { g = t[k + 1]; k += 2; }
+          const keep = { math: mode.math, bold: mode.bold };
+          walk(g, ch === '_' ? -1 : 1);
+          mode.math = keep.math; mode.bold = keep.bold;
+        } else { push(ch, lvl); k++; }
+      }
+    };
+    walk(String(str), 0);
+    return out;
+  }
+  const runFont = (r, size) => { const sz = r.lvl ? Math.round(size * 0.72) : size; return r.it ? `italic ${sz + 1}px ${FT}` : `${r.b ? '700 ' : ''}${sz}px ${FU}`; };
+  function rich(ctx, str, x, y, o = {}) {
+    FT = EPP.css('--font-text'); FU = EPP.css('--font-ui');
+    const size = o.size || 11.5, rs = runs(str);
+    const ws = rs.map((r, k) => { ctx.font = runFont(r, size); const nx = rs[k + 1]; return ctx.measureText(r.t).width + (r.it && nx && !nx.it && nx.lvl !== -1 ? 0.1 * size : 0); });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    let x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    if (o.plate) { ctx.fillStyle = EPP.alpha('surface', 0.86); ctx.fillRect(x0 - 3, y - 0.95 * size, tot + 6, 1.32 * size); }
+    if (o.color) ctx.fillStyle = o.color;
+    const ta = ctx.textAlign; ctx.textAlign = 'left';
+    rs.forEach((r, k) => { ctx.font = runFont(r, size); ctx.fillText(r.t, x0, y + (r.lvl === -1 ? size * 0.28 : (r.lvl === 1 ? -size * 0.38 : 0))); x0 += ws[k]; });
+    ctx.textAlign = ta;
+    return tot;
+  }
+
+  // ---------- state ----------
+  let st = null, lines = null, linesKey = '', intg = null;
+  const roV = {};
+  ['u12', 'cl', 'self', 'tot', 'in', 'out', 'all'].forEach(k => { roV[k] = fig.querySelector('.b4-coulomb-v-' + k); });
+  const fx = (v, d = 3) => EPP.fix(Math.abs(v) < 0.5 * Math.pow(10, -d) ? 0 : v, d);
+  const sg = (v, d = 3) => (v > 0.5 * Math.pow(10, -d) ? '+' : '') + fx(v, d);
+
+  // ---------- (a) the map ----------
+  const M = { l: 40, r: 74, t: 10, b: 38 };
+  const elMap = fig.querySelector('.b4-coulomb-map');
+  // the height follows the width so that the inner frame keeps the 4:5 aspect of the map (equal scales on x and z)
+  const cvM = EPP.canvas(elMap, { get height() { const W = elMap.clientWidth || 320; return Math.round(EPP.clamp(M.t + M.b + 1.25 * (W - M.l - M.r), 260, 560)); } });
+  cvM.canvas.setAttribute('role', 'img');
+  const off = document.createElement('canvas');
+  function frame() {
+    const W = cvM.w, H = cvM.h;
+    let bw = W - M.l - M.r, bh = H - M.t - M.b;
+    if (bh > 1.25 * bw) bh = 1.25 * bw; else bw = bh / 1.25;
+    const X0 = M.l + Math.max(0, (W - M.l - M.r - bw) / 2);
+    return { X0, Y0: M.t, bw, bh, k: bw / (2 * XL) };
+  }
+  // heat maps, one sample per pixel of nx × ny, mirror-symmetric in x; one function per map keeps each loop monomorphic
+  let img = null;
+  function fillCross(D, nx, ny, LUT) {
+    const dx = 2 * XL / nx, dz = 2 * ZL / ny, z1 = -st.d / 2, z2 = st.d / 2, w2i = st.w2i, w3i = st.w3i, K = Q1 * st.Q2 * E2 / FOURPI;
+    for (let j = 0; j < ny; j++) {
+      const z = ZL - (j + 0.5) * dz, a1 = z - z1, a2 = z - z2, a1s = a1 * a1, a2s = a2 * a2, a12 = a1 * a2, row = 4 * j * nx;
+      for (let i = nx / 2; i < nx; i++) {
+        const x = -XL + (i + 0.5) * dx, xs = x * x, v = K * hs((xs + a1s) * w2i) * hs((xs + a2s) * w2i) * w3i * w3i * (xs + a12);
+        const t = 0.5 + (v < 0 ? -0.5 : 0.5) * Math.min(1, Math.log10(1 + Math.abs(v) / V0) / LV);
+        const q = 3 * Math.round(255 * t), p1 = row + 4 * i, p2 = row + 4 * (nx - 1 - i);
+        D[p1] = D[p2] = LUT[q]; D[p1 + 1] = D[p2 + 1] = LUT[q + 1]; D[p1 + 2] = D[p2 + 2] = LUT[q + 2]; D[p1 + 3] = D[p2 + 3] = 255;
+      }
+    }
+  }
+  function fillTotal(D, nx, ny, LUT) {
+    const dx = 2 * XL / nx, dz = 2 * ZL / ny, z1 = -st.d / 2, z2 = st.d / 2, w2i = st.w2i, w3i = st.w3i, K = E2 / (2 * FOURPI);
+    for (let j = 0; j < ny; j++) {
+      const z = ZL - (j + 0.5) * dz, a1 = z - z1, a2 = z - z2, a1s = a1 * a1, a2s = a2 * a2, row = 4 * j * nx;
+      for (let i = nx / 2; i < nx; i++) {
+        const x = -XL + (i + 0.5) * dx, xs = x * x, b1 = Q1 * hs((xs + a1s) * w2i) * w3i, b2 = st.Q2 * hs((xs + a2s) * w2i) * w3i;
+        const ex = (b1 + b2) * x, ez = b1 * a1 + b2 * a2, v = K * (ex * ex + ez * ez);
+        const t = v > 0 ? Math.min(1, Math.max(0, (Math.log10(v) - LT0) / LT)) : 0;
+        const q = 3 * Math.round(255 * t), p1 = row + 4 * i, p2 = row + 4 * (nx - 1 - i);
+        D[p1] = D[p2] = LUT[q]; D[p1 + 1] = D[p2 + 1] = LUT[q + 1]; D[p1 + 2] = D[p2 + 2] = LUT[q + 2]; D[p1 + 3] = D[p2 + 3] = 255;
+      }
+    }
+  }
+  function drawMap() {
+    cvM.clear();
+    if (!st || cvM.w < 60) return;
+    const ctx = cvM.ctx, W = cvM.w, H = cvM.h, F = frame(), { X0, Y0, bw, bh, k } = F;
+    const PX = (x) => X0 + (x + XL) * k, PY = (z) => Y0 + (ZL - z) * k;
+    const total = st.map === 'total';
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted'), cRule = EPP.color('rule');
+    // colour table: diverging (photon > 0, electron < 0) for the cross term, sequential photon for the total
+    const ramp = total ? EPP.ramp('photon') : EPP.ramp('photon', 'electron');
+    const LUT = new Uint8ClampedArray(3 * 256);
+    for (let j = 0; j < 256; j++) { const c = ramp(j / 255); LUT[3 * j] = c[0]; LUT[3 * j + 1] = c[1]; LUT[3 * j + 2] = c[2]; }
+    const tOf = (v) => (total ? (v > 0 ? EPP.clamp((Math.log10(v) - LT0) / LT, 0, 1) : 0)
+      : 0.5 + 0.5 * Math.sign(v) * Math.min(1, Math.log10(1 + Math.abs(v) / V0) / LV));
+    // heat map at about one sample per CSS pixel; the map is mirror-symmetric in x
+    const nx = 2 * Math.max(40, Math.min(170, Math.round(bw / 2))), ny = Math.max(100, Math.min(425, Math.round(bh)));
+    if (off.width !== nx || off.height !== ny || !img) { off.width = nx; off.height = ny; img = off.getContext('2d').createImageData(nx, ny); }
+    (total ? fillTotal : fillCross)(img.data, nx, ny, LUT);
+    off.getContext('2d').putImageData(img, 0, 0);
+    ctx.imageSmoothingEnabled = true;
+    ctx.drawImage(off, X0, Y0, bw, bh);
+    ctx.save(); ctx.beginPath(); ctx.rect(X0, Y0, bw, bh); ctx.clip();
+    // field lines, with an arrowhead half-way along each (pointing along +E)
+    const cLine = EPP.alpha('fg', 0.55);
+    ctx.strokeStyle = cLine; ctx.fillStyle = cLine; ctx.lineWidth = 1.1; ctx.lineJoin = 'round'; ctx.setLineDash([]);
+    for (const L of lines) {
+      const p = L.pts, n = p.length / 2;
+      ctx.beginPath(); ctx.moveTo(PX(p[0]), PY(p[1]));
+      for (let m = 1; m < n; m++) ctx.lineTo(PX(p[2 * m]), PY(p[2 * m + 1]));
+      ctx.stroke();
+      let len = 0; for (let m = 1; m < n; m++) len += Math.hypot(p[2 * m] - p[2 * m - 2], p[2 * m + 1] - p[2 * m - 1]);
+      let acc = 0, m = 1;
+      for (; m < n; m++) { acc += Math.hypot(p[2 * m] - p[2 * m - 2], p[2 * m + 1] - p[2 * m - 1]); if (acc >= 0.5 * len) break; }
+      if (m >= n || len * k < 24) continue;
+      const ax = PX(p[2 * m]), ay = PY(p[2 * m + 1]), bx = PX(p[2 * m - 2]), by = PY(p[2 * m - 1]);
+      let ux = (ax - bx) * L.sgn, uy = (ay - by) * L.sgn; const un = Math.hypot(ux, uy) || 1; ux /= un; uy /= un;
+      ctx.beginPath(); ctx.moveTo(ax + 3.5 * ux, ay + 3.5 * uy); ctx.lineTo(ax - 3 * ux - 3 * uy, ay - 3 * uy + 3 * ux); ctx.lineTo(ax - 3 * ux + 3 * uy, ay - 3 * uy - 3 * ux); ctx.closePath(); ctx.fill();
+    }
+    // the sphere on which E_1 ⊥ E_2: diameter from one centre to the other (Thales)
+    ctx.strokeStyle = cFg2; ctx.lineWidth = 1.3; ctx.setLineDash([5, 4]);
+    ctx.beginPath(); ctx.arc(PX(0), PY(0), 0.5 * st.d * k, 0, TAU); ctx.stroke(); ctx.setLineDash([]);
+    // dimension line d, right of the charges
+    const rDisc = Math.max(3.5, st.w * k), xd = PX(0) + Math.max(rDisc, 5) + 12, y1 = PY(-st.d / 2), y2 = PY(st.d / 2);
+    ctx.strokeStyle = cFg2; ctx.fillStyle = cFg2; ctx.lineWidth = 1.1;
+    ctx.beginPath(); ctx.moveTo(xd, y1); ctx.lineTo(xd, y2); ctx.moveTo(xd - 4, y1); ctx.lineTo(xd + 4, y1); ctx.moveTo(xd - 4, y2); ctx.lineTo(xd + 4, y2); ctx.stroke();
+    if (y1 - y2 > 22) for (const [yy, s] of [[y1, 1], [y2, -1]]) { ctx.beginPath(); ctx.moveTo(xd, yy); ctx.lineTo(xd - 3, yy - 6 * s); ctx.lineTo(xd + 3, yy - 6 * s); ctx.closePath(); ctx.fill(); }
+    // the two clouds: discs of radius w (at least 3.5 px), with the sign
+    const zs = [-st.d / 2, st.d / 2], qs = [Q1, st.Q2];
+    for (let i = 0; i < 2; i++) {
+      const cx = PX(0), cy = PY(zs[i]);
+      ctx.fillStyle = EPP.alpha('surface', 0.5); ctx.strokeStyle = cFg; ctx.lineWidth = 1.4;
+      ctx.beginPath(); ctx.arc(cx, cy, rDisc, 0, TAU); ctx.fill(); ctx.stroke();
+      if (rDisc >= 6.5) {
+        const a = Math.min(0.55 * rDisc, 6); ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo(cx - a, cy); ctx.lineTo(cx + a, cy);
+        if (qs[i] > 0) { ctx.moveTo(cx, cy - a); ctx.lineTo(cx, cy + a); }
+        ctx.stroke();
+      }
+    }
+    ctx.restore();
+    // labels: Q_1 and Q_2 left of their discs (pushed apart when the discs are close), d beside its line
+    ctx.textBaseline = 'alphabetic';
+    let ly1 = y1 + 4, ly2 = y2 + 4;
+    if (ly1 - ly2 < 17) { const p = (17 - (ly1 - ly2)) / 2; ly1 += p; ly2 -= p; }
+    const qtxt = (i) => `$Q_${i + 1}$ = ${qs[i] > 0 ? '+' : '−'}${Math.abs(qs[i])}`;
+    rich(ctx, qtxt(0), PX(0) - rDisc - 7, ly1, { size: 12, align: 'right', color: cFg, plate: true });
+    rich(ctx, qtxt(1), PX(0) - rDisc - 7, ly2, { size: 12, align: 'right', color: cFg, plate: true });
+    rich(ctx, `$d$ = ${st.d.toFixed(1)} Å`, xd + 7, 0.5 * (y1 + y2) + 4, { size: 12, color: cFg2, plate: true });
+    // frame, ticks and axis titles
+    ctx.strokeStyle = cRule; ctx.lineWidth = 1; ctx.strokeRect(X0 + 0.5, Y0 + 0.5, bw - 1, bh - 1);
+    ctx.fillStyle = cMut; ctx.strokeStyle = cMut;
+    for (const x of [-8, -4, 0, 4, 8]) { const X = PX(x); ctx.beginPath(); ctx.moveTo(X, Y0 + bh); ctx.lineTo(X, Y0 + bh + 4); ctx.stroke(); rich(ctx, String(x).replace('-', '−'), X, Y0 + bh + 15, { size: 11, align: 'center', color: cMut }); }
+    for (const z of [-10, -5, 0, 5, 10]) { const Y = PY(z); ctx.beginPath(); ctx.moveTo(X0 - 4, Y); ctx.lineTo(X0, Y); ctx.stroke(); rich(ctx, String(z).replace('-', '−'), X0 - 6, Y + 4, { size: 11, align: 'right', color: cMut }); }
+    rich(ctx, '$x$ (Å)', X0 + bw / 2, Y0 + bh + 32, { size: 12.5, align: 'center', color: cFg });
+    ctx.save(); ctx.translate(13, Y0 + bh / 2); ctx.rotate(-Math.PI / 2); rich(ctx, '$z$ (Å)', 0, 0, { size: 12.5, align: 'center', color: cFg }); ctx.restore();
+    // colour bar with its ticks
+    const cbx = X0 + bw + 10, cbw = 10, N = 96;
+    for (let j = 0; j < N; j++) { const q = 3 * Math.round(255 * (j + 0.5) / N); ctx.fillStyle = `rgb(${LUT[q]},${LUT[q + 1]},${LUT[q + 2]})`; ctx.fillRect(cbx, Y0 + bh - (j + 1) * bh / N, cbw, bh / N + 0.6); }
+    ctx.strokeStyle = cRule; ctx.strokeRect(cbx + 0.5, Y0 + 0.5, cbw - 1, bh - 1);
+    const ticks = total ? [[10, '10'], [1, '1'], [0.1, '10^{−1}'], [1e-2, '10^{−2}'], [1e-3, '10^{−3}'], [1e-4, '10^{−4}'], [1e-5, '10^{−5}']]
+      : [[1, '1'], [1e-2, '10^{−2}'], [1e-4, '10^{−4}'], [0, '0'], [-1e-4, '−10^{−4}'], [-1e-2, '−10^{−2}'], [-1, '−1']];
+    ctx.strokeStyle = cMut;
+    for (const [v, s] of ticks) {
+      const Y = Y0 + bh - tOf(v) * bh;
+      ctx.beginPath(); ctx.moveTo(cbx + cbw, Y); ctx.lineTo(cbx + cbw + 3, Y); ctx.stroke();
+      rich(ctx, s, cbx + cbw + 5, Y + 3.5, { size: 10, color: cMut });
+    }
+    ctx.save(); ctx.translate(X0 + bw + 70, Y0 + bh / 2); ctx.rotate(-Math.PI / 2);
+    rich(ctx, total ? 'total $E$^2/8π (eV/Å^3)' : 'cross term [E]_1·[E]_2/4π (eV/Å^3)', 0, 0, { size: 11, align: 'center', color: cFg2 });
+    ctx.restore();
+  }
+
+  // ---------- (b) the interaction energy against d ----------
+  function decorate(plot, axis) {
+    const base = plot.render.bind(plot);
+    plot.render = () => {
+      base();
+      const ctx = plot.ctx, w = plot.cv.w, h = plot.cv.h, m = plot.m;
+      if (!w || !h) return;
+      const cFg = EPP.css('--fg');
+      ctx.save(); ctx.textBaseline = 'alphabetic';
+      rich(ctx, axis.x, m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, align: 'center', color: cFg });
+      ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+      rich(ctx, axis.y, 0, 0, { size: 12.5, align: 'center', color: cFg });
+      ctx.restore();
+      if (plot.b4Edge) {
+        // the current U_12 is off the scale: a triangle at the edge points to it
+        const X = plot.X(plot.b4Edge.x), up = plot.b4Edge.up, Y = up ? m.t + 2 : h - m.b - 2, s = up ? 1 : -1;
+        ctx.fillStyle = EPP.color('photon'); ctx.beginPath(); ctx.moveTo(X, Y); ctx.lineTo(X - 5, Y + 8 * s); ctx.lineTo(X + 5, Y + 8 * s); ctx.closePath(); ctx.fill();
+      }
+    };
+  }
+  const pB = new EPP.Plot(fig.querySelector('.b4-coulomb-plot'), {
+    xlim: [0, DMAX], ylim: [-YL, YL], xticks: [0, 2, 4, 6, 8, 10, 12], yticks: [-15, -10, -5, 0, 5, 10, 15],
+    aspect: 0.86, minHeight: 250, maxHeight: 380, legend: false, xname: 'd',
+    hoverX: (v) => `${EPP.fix(v, 2)} Å`, hoverY: (v) => `${EPP.fix(v, 3)} eV`, margin: { l: 50, r: 14, t: 12, b: 44 },
+    ariaLabel: 'Panel b: interaction energy U12 of the two clouds against their separation d from 0 to 12 Å, between −15 and 15 eV, with Coulomb’s law Q1 Q2 e²/d dashed; a dot marks the current separation. Click or drag to set d.'
+  });
+  decorate(pB, { x: 'separation $d$ (Å)', y: 'interaction energy (eV)' });
+  const DS = EPP.linspace(0, DMAX, 361), DC = EPP.linspace(0.4, DMAX, 300);
+  function drawPlot() {
+    if (!st) return;
+    const u = U12(st.Q2, st.d, st.w), inRange = Math.abs(u) <= YL;
+    pB.b4Edge = inRange ? null : { x: st.d, up: u > 0 };
+    pB.draw([
+      { type: 'band', x0: 0, x1: 2 * st.w, color: 'muted', alpha: 0.13 },
+      { type: 'line', x: DC, y: DC.map(d => Q1 * st.Q2 * E2 / d), color: 'muted', width: 1.5, dash: [6, 4], label: 'Coulomb’s law' },
+      { type: 'line', x: DS, y: DS.map(d => U12(st.Q2, d, st.w)), color: 'photon', width: 2.2, label: 'U_{12}' },
+      { type: 'vline', at: st.d, color: 'muted', width: 1, dash: [3, 3] },
+      inRange ? { type: 'points', x: [st.d], y: [u], color: 'photon', r: 5 } : null
+    ]);
+  }
+  pB.onPointer = (x, y, type) => { if (type === 'up' || !isFinite(x)) return; ui.set('d', EPP.clamp(Math.round(x * 10) / 10, 1, DMAX)); };
+
+  // ---------- readouts and descriptions ----------
+  function readouts() {
+    const u = U12(st.Q2, st.d, st.w), u1 = Uself(Q1, st.w), u2 = Uself(st.Q2, st.w);
+    roV.u12.textContent = `${fx(u)} eV`;
+    roV.cl.textContent = `${fx(Q1 * st.Q2 * E2 / st.d)} eV`;
+    roV.self.textContent = `${fx(u1)}, ${fx(u2)} eV`;
+    roV.tot.textContent = `${fx(u1 + u2 + u)} eV`;
+    roV.in.textContent = `${sg(intg.inside)} eV`;
+    roV.out.textContent = `${sg(intg.outside)} eV`;
+    roV.all.textContent = `${fx(intg.inside + intg.outside)} eV`;
+    const opp = st.Q2 < 0, q2 = (st.Q2 > 0 ? '+' : '−') + Math.abs(st.Q2);
+    cvM.canvas.setAttribute('aria-label', `Panel a: map of the ${st.map === 'total' ? 'total field energy density E²/8π, on a logarithmic colour scale' : 'cross-term energy density E1·E2/4π, on a signed logarithmic colour scale'}, ` +
+      `in the plane of two Gaussian clouds of charge +1 e at z = ${fx(-st.d / 2, 1)} Å and ${q2} e at z = ${fx(st.d / 2, 1)} Å, width ${fx(st.w, 2)} Å. ` +
+      (st.map === 'total' ? 'The density peaks around each cloud. ' : `The cross term is ${opp ? 'positive' : 'negative'} inside the dashed circle whose diameter joins the two centres, and ${opp ? 'negative' : 'positive'} outside it. `) +
+      `Grey field lines of the total field run ${opp ? 'from the positive to the negative charge' : 'outwards from both charges'}. The cross term integrates to ${fx(u)} eV.`);
+  }
+
+  // ---------- controls ----------
+  function onChange(s) {
+    const t0 = performance.now();
+    st = { d: EPP.clamp(+s.d, 1, DMAX), w: EPP.clamp(+s.w, 0.2, 1.5), Q2: +s.Q2, map: s.map };
+    st.w2i = 1 / (st.w * st.w); st.w3i = st.w2i / st.w;
+    const key = `${st.d}|${st.w}|${st.Q2}`;
+    if (key !== linesKey) { lines = fieldLines(st); intg = integrate(st); linesKey = key; }
+    drawMap(); drawPlot(); readouts();
+    fig.dataset.redrawMs = (performance.now() - t0).toFixed(2);
+  }
+  const elC = fig.querySelector('.b4-coulomb-ctrls');
+  const ui = EPP.controls(elC, [
+    { key: 'd', type: 'range', label: 'separation d', min: 1, max: DMAX, step: 0.1, value: 4, fmt: (v) => `${(+v).toFixed(1)} Å` },
+    { key: 'w', type: 'range', label: 'cloud width w', min: 0.2, max: 1.5, step: 0.01, value: 0.5, fmt: (v) => `${(+v).toFixed(2)} Å` },
+    { key: 'Q2', type: 'seg', label: 'charge Q_2 (Q_1 = +1), units of e', options: [['-2', '−2'], ['-1', '−1'], ['1', '+1'], ['2', '+2']], value: '-1' },
+    { key: 'map', type: 'seg', label: 'map', options: [['cross', 'cross term E_1·E_2/4π'], ['total', 'total E^2/8π']], value: 'cross', wide: true }
+  ], onChange);
+  // labels with italic variables and bold vectors
+  const I = (t) => `<i style="font-family:var(--font-text)">${t}</i>`;
+  const relabel = (sel, html) => { const sp = elC.querySelector(sel); if (sp) sp.innerHTML = html; };
+  relabel(`label[for="${fig.id}-d"] > span`, `separation ${I('d')}`);
+  relabel(`label[for="${fig.id}-w"] > span`, `cloud width ${I('w')}`);
+  const segLab = elC.querySelectorAll('.ctrl .lab > span');
+  if (segLab[0]) segLab[0].innerHTML = `charge ${I('Q')}<sub>2</sub> in units of ${I('e')} (${I('Q')}<sub>1</sub> = +1)`;
+  relabel(`#${fig.id}-map-cross`, 'cross term <b>E</b><sub>1</sub>·<b>E</b><sub>2</sub>/4π');
+  relabel(`#${fig.id}-map-total`, `total ${I('E')}<sup>2</sup>/8π`);
+  cvM.onResize(drawMap);
+  // tested alone, outside Section B.4, an equation link has no target: show its number as plain text
+  if (!fig.closest('#b-fields')) fig.querySelectorAll('a.eqref').forEach(a => { if (!document.getElementById((a.getAttribute('href') || '').slice(1))) { const sp = document.createElement('span'); sp.textContent = a.textContent; a.replaceWith(sp); } });
+})();
+</script>
