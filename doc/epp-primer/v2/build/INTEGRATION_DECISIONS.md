@@ -33,7 +33,7 @@ The same symbol with **different meanings** in different sections is allowed onl
 | $k_{\mathrm{TF}}$, jellium $\varepsilon^{\mathrm e}(q)$, $\varepsilon^{\mathrm e}(q,\omega)$ | `gl-a2-eps`, `gl-a2-epsw` | |
 | $F_{\mathrm L}(x)$, $v_{\mathrm F}$, $V^{\mathrm{scr}}_\kappa$, $n^{\mathrm{ind}}$ | `gl-a2-FL`, `gl-a2-vF`, `gl-a2-scr` | |
 | $\nabla$, $\partial_\alpha$ | `gl-a2-nabla` | |
-| $\eta$ (positive infinitesimal) | `gl-a3-eta` (A.3 splits it out of `gl-a3-chi0` into its own entry) | A.1's local $\eta$ (shift eigenvalue) stays as it is |
+| $\eta$ (positive infinitesimal) | `gl-a3-chi0`, which defines it with $\chi^0(\bq,\omega)$ | A.1's local $\eta$ (shift eigenvalue) stays as it is |
 | $\OVSC$ | `gl-a3-OVSC` | |
 | $c$ (speed of light) | `gl-a4-c` (A.4 creates this entry, separate from the light-cone entry) | |
 | $\bE$, $A_0$ | `gl-a4-E` | B.2's `gl-b2-A` keeps $\bA$ and the temporal gauge |
