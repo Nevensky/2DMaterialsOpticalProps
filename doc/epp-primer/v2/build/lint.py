@@ -7,6 +7,10 @@ Checks the main text of every fragment, that is everything outside the footnotes
 the glossary box, source callouts, <span class="gl-src"> and <script>:
   - source-only symbols (Giustino/EPP notation) that belong in footnotes only;
   - italic labels and italic exponentials ({\\rm ...}, e^{i...}, ^{ion} ...);
+  - the old forms of the electron linewidth (NOTATION §12.3): a bare \\Gamma with an electron subscript
+    (\\Gamma_{n\\bk}, \\Gamma_k), the review's \\Gamma^{\\rm ZP} (with or without a subscript) or v1's \\Gamma(T), instead of
+    \\Gamma^{\\tau}_{n\\bk}, and, in A.7 and A.8, y as the imaginary part of the pole (\\ii y, |y|, y = Im Sigma,
+    y <= 0); the zone centre \\Gamma stays legal;
   - footnote markers whose target is missing, and footnotes never referenced;
   - glossary entries with a missing data-first anchor.
 With --inventory it also writes the symbol inventory: every distinct symbol in reading order with
@@ -72,6 +76,59 @@ ITALIC = [
 SCRIPT_RESERVED = [
     (r'D\^\{?dm|Δτ|N_p\b|M_0\b|Ω\^2|Ω_\{?uc', 'source-only symbol in a figure string'),
     (r'σ(?![_]?\{?xx|_\{?αβ)', 'sigma is reserved for the conductivity (use u_rms for an rms displacement)'),
+    (r'Γ(?:_|\(|\^\{?ZP)', 'electron linewidth written as a bare Γ: write Γ^{τ} (Γ alone is the zone centre)'),
+]
+
+# The electron linewidth is \Gamma^{\tau}_{n\bk} (NOTATION §12.3); \Gamma alone is the zone centre.
+GAMMA = re.compile(r'\\Gamma(?![A-Za-z])')
+def _script(tex, i):
+    """The ^ or _ script that starts at tex[i] (spaces skipped): (kind, body, end), or None."""
+    j = i
+    while j < len(tex) and tex[j].isspace(): j += 1
+    if j >= len(tex) or tex[j] not in '^_': return None
+    kind = tex[j]; j += 1
+    while j < len(tex) and tex[j].isspace(): j += 1
+    if j >= len(tex): return None
+    if tex[j] == '{':
+        depth = 0
+        for k in range(j, len(tex)):
+            depth += {'{': 1, '}': -1}.get(tex[k], 0)
+            if depth == 0: return kind, tex[j + 1:k], k + 1
+        return kind, tex[j + 1:], len(tex)
+    m = re.match(r'\\[A-Za-z]+', tex[j:])
+    return (kind, m.group(0), j + len(m.group(0))) if m else (kind, tex[j], j + 1)
+def _electron_sub(sub):
+    """A subscript that names an electron state: \\bk or \\mathbf k, or a plain k (\\Gamma_k, \\Gamma_{nk}), with or
+    without a band index. Upright labels (\\mathrm{...}) and other commands are not read as a k."""
+    if re.search(r'\\bk(?![A-Za-z])|\\mathbf\s*\{?\s*k(?![A-Za-z])', sub): return True
+    s = re.sub(r'\\(?:mathrm|text|operatorname|mathsf)\s*\{[^{}]*\}|\{\\rm\s[^{}]*\}', ' ', sub)
+    return 'k' in re.sub(r'\\[A-Za-z]+', ' ', s)
+def bare_linewidths(tex):
+    """Each \\Gamma that is an electron linewidth without the superscript \\tau: a subscript that names an electron state
+    (\\Gamma_{n\\bk}, \\Gamma_{nn\\bk}, \\Gamma_{\\bk}, \\Gamma_k), the review's zero-point label with or without a subscript
+    (\\Gamma^{\\mathrm{ZP}}, \\Gamma^{\\mathrm{ZP}}_{n\\bk}), or a temperature argument (\\Gamma(T), the form of primer v1).
+    The zone centre (\\Gamma alone, or with any other script) and \\Gamma^{\\tau}_{n\\bk}, \\Gamma_{n\\bk}^{\\tau},
+    \\Gamma^{\\tau}(T) pass."""
+    out = []
+    for m in GAMMA.finditer(tex):
+        sup = sub = None; end = m.end()
+        for _ in range(2):
+            r = _script(tex, end)
+            if not r: break
+            kind, body, end = r
+            if kind == '^': sup = body
+            else: sub = body
+        if sup is not None and re.search(r'\\tau(?![A-Za-z])|τ', sup): continue
+        temp = re.match(r'(?:\s|\\[,;:!])*\(\s*T(?![A-Za-z])', tex[end:])
+        if not ((sup is not None and 'ZP' in sup) or temp or (sub is not None and _electron_sub(sub))): continue
+        out.append(tex[m.start():end + (temp.end() if temp else 0)])
+    return out
+# y as the imaginary part of the pole z = E^qp + i y (A.7, A.8 only; y stays a coordinate or a dummy variable elsewhere)
+POLE_Y = [
+    (r'(?:\\ii|\\mathrm\s*\{?\s*i\s*\}?)\s*(?:\\[,;:!]\s*)*y(?![A-Za-z])', 'i y'),
+    (r'\|\s*y\s*\|', '|y|'),
+    (r'(?<![A-Za-z\\])y\s*=\s*\\mathrm\s*\{?\s*Im', 'y = Im'),
+    (r'(?<![A-Za-z\\])y\s*\\(?:le|leq)(?![A-Za-z])', 'y <= 0'),
 ]
 
 def sentence_at(text, pos):
@@ -121,6 +178,11 @@ def main():
                 if re.search(pat, tex): problems.append((name, f'line {line}', f'source notation in main text: {msg}  [{tex.strip()[:70]}]'))
             for pat, msg in ITALIC:
                 if re.search(pat, tex): problems.append((name, f'line {line}', f'{msg}  [{tex.strip()[:70]}]'))
+            for g in bare_linewidths(tex):
+                problems.append((name, f'line {line}', f'electron linewidth written as a bare \\Gamma: use \\Gamma^{{\\tau}}_{{n\\bk}}, \\Gamma^{{\\tau}}_{{n\\bk}}(T), \\Gamma^{{\\tau}}_{{n\\bk}}(T=0) (\\Gamma alone is the zone centre)  [{g[:70]}]'))
+            if name.startswith(('A07', 'A08')):
+                for pat, form in POLE_Y:
+                    if re.search(pat, tex): problems.append((name, f'line {line}', f'y as the imaginary part of the pole ({form}): write z = E^qp - i\\Gamma^{{\\tau}}_{{n\\bk}} with \\Gamma^{{\\tau}}_{{n\\bk}} >= 0  [{tex.strip()[:70]}]'))
         if inv_out:
             for m in MATH.finditer(main_text):
                 tex = m.group(1) or m.group(2)

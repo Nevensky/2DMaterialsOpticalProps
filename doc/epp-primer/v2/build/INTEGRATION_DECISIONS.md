@@ -51,6 +51,7 @@ The same symbol with **different meanings** in different sections is allowed onl
 | $E^{\mathrm{qp}}_{n\bk}$, $E_\bk$, $\omega_0$ (Einstein phonon of the models) | earliest entry, A.6 or A.7 | |
 | Matsubara frequencies $\omega^{\mathrm F}_p$, $\omega^{\mathrm B}_p$ | `gl-a7-Matsubara` | |
 | $\Sigma^{\mathrm{ep}}$ | A.7's entry | |
+| $\Gamma^{\tau}_{n\bk}$ (electron linewidth) | `gl-a7-Gammatau`, defined at (A7.17) | see §8. A.7 is where the primer first holds $\mathrm{Im}\,\Sigma$ at its value at $E^{\mathrm{qp}}_{n\bk}$; before (A7.17), A.7 and `viz-a7-processes` keep $\mathrm{Im}\,\Sigma$ at the band or probe energy (the golden rule of (A7.9)), and the where-list of (A7.17) ties the two. A.8 links the entry |
 | $n_{\mathrm c}$ (density of free carriers in a doped semiconductor) | A.9's entry | B.8 renames its carrier density $n_{\mathrm e}$ to $n_{\mathrm c}$. $n_{\mathrm e}$ is the total electron number density (NOTATION §6) |
 | $\sigma_{\alpha\beta}$ (conductivity) | A.9's entry | X.1 links it |
 | $\be_\lambda$ (light polarization) | A.9's entry | B.4 keeps an entry for the triad $\be_1,\be_2,\be_3(\bq)=\hat\bq$ and links A.9 |
@@ -77,6 +78,7 @@ The same symbol with **different meanings** in different sections is allowed onl
 | B.8 | carrier density $n_{\mathrm e}$ | $n_{\mathrm c}$ | §2 |
 | A.3, figures of A.3 and A.5 | $r_s$ | $r_{\mathrm s}$ | §2 |
 | A.8 | $\langle u_{\kappa\alpha}u_{\kappa\beta}\rangle$ | $\langle\hat u_{\kappa\alpha}\hat u_{\kappa\beta}\rangle$ | as A.3 and (A1.28) |
+| A.8 (text, figures, notes, glossary), A.7 from (A7.17) on | $z=E^{\mathrm{qp}}_{n\bk}+\ii y$ with $y=\mathrm{Im}\,\Sigma^{\mathrm{ep}}_{n\bk}(E^{\mathrm{qp}}_{n\bk}/\hbar)\le0$; the linewidth as a number written $\vert\mathrm{Im}\,\Sigma\vert$ | $z=E^{\mathrm{qp}}_{n\bk}-\ii\Gamma^{\tau}_{n\bk}$, $\Gamma^{\tau}_{n\bk}=-y\ge0$; $\Gamma^{\tau}_{n\bk}$, $\Gamma^{\tau}_{n\bk}(T)$, $Z^{\mathrm{qp}}_{n\bk}\Gamma^{\tau}_{n\bk}$, $\tau_{n\bk}=\hbar/2\Gamma^{\tau}_{n\bk}$ | the reader found $y$ confusing; $\Gamma$ alone is the zone centre (§8) |
 
 ## 4. Numbers and conventions
 
@@ -122,3 +124,33 @@ Applied by script and by hand after the section reviews: every rename above, the
 ## 7. Densities
 
 $n_{\mathrm e}$ is replaced by $n^{\mathrm e}$ (electron part of the number density, B.2, B.4–B.6), $n_0$ (mean density: A.6's electron gas, B.5's $\bar n_{\mathrm e}$), $n_{\mathrm c}$ (B.8's carriers) and $n^{\mathrm{2D}}_{\mathrm c}$ (doped sheets in A.6 and B.10). The full rule is NOTATION §12.7.
+
+## 8. Electron linewidth and the DFPT dielectric matrix
+
+Decided with the user; binding for the whole primer and for the Giustino converter.
+
+- **Electron linewidth.** $\Gamma^{\tau}_{n\bk}\equiv-\mathrm{Im}\,\Sigma^{\mathrm{ep}}_{n\bk}(E^{\mathrm{qp}}_{n\bk}/\hbar)=\vert\mathrm{Im}\,\Sigma^{\mathrm{ep}}_{n\bk}(E^{\mathrm{qp}}_{n\bk}/\hbar)\vert\ge0$,
+  with the retarded self-energy ($\mathrm{Im}\,\Sigma\le0$ for every state). It is the half width at half maximum of the
+  quasiparticle peak in meV, before the factor $Z^{\mathrm{qp}}_{n\bk}$: the Lorentzian (A7.17) has half width
+  $Z^{\mathrm{qp}}_{n\bk}\Gamma^{\tau}_{n\bk}$, and the full width is $2\Gamma^{\tau}_{n\bk}$. The retarded pole is
+  $E^{\mathrm{qp}}_{n\bk}-\ii\Gamma^{\tau}_{n\bk}$ (A8.2), so $y=-\Gamma^{\tau}_{n\bk}$ and the letter $y$ is no longer a
+  physics symbol. $1/\tau_{n\bk}=2\Gamma^{\tau}_{n\bk}/\hbar$ (A8.13): the amplitude decays as
+  $\ee^{-\Gamma^{\tau}_{n\bk}t/\hbar}$, the probability as $\ee^{-t/\tau_{n\bk}}$. Temperature: $\Gamma^{\tau}_{n\bk}(T)$, with
+  the zero-point value $\Gamma^{\tau}_{n\bk}(T=0)$. Giustino's time-ordered pole is $E^{\mathrm{qp}}_{n\bk}\mp\ii\Gamma^{\tau}_{n\bk}$
+  (upper sign for an added electron, lower for a hole): his signed $\Gamma_{n\bk}=\mp\Gamma^{\tau}_{n\bk}$, his
+  $\vert\Gamma_{n\bk}\vert=\Gamma^{\tau}_{n\bk}$, his $\tau_{n\bk}=\hbar/2\Gamma^{\tau}_{n\bk}$ and his
+  $\Gamma^{\mathrm{ZP}}_{n\bk}=\Gamma^{\tau}_{n\bk}(T=0)$. The superscript $\tau$ separates it from the zone centre $\Gamma$:
+  the electron linewidth is never a bare $\Gamma_{n\bk}$. Phonon linewidths stay $\gamma_{\bq\nu}$ (A.6), the damping
+  $\gamma$ of oscillator models stays, and $\eta$ stays the positive infinitesimal of retarded functions.
+- **Number or function.** $\Gamma^{\tau}_{n\bk}$ is written where the linewidth is meant as a number: the half width at
+  the pole or on shell, $\tau=\hbar/2\Gamma^{\tau}$, $\Gamma^{\tau}_{n\bk}(T)$, the Lorentzian with $\mathrm{Im}\,\Sigma$
+  held at $E^{\mathrm{qp}}_{n\bk}$. $\mathrm{Im}\,\Sigma$ stays where the function of frequency is meant: (A7.9), (A7.15),
+  (A7.23), the cumulative integral of $\alpha^2F$, curves of $\mathrm{Im}\,\Sigma$ against energy, and the golden-rule
+  reading of (A7.9) at the band energy before (A7.17). `build/lint.py` flags a bare $\Gamma$ with an electron subscript,
+  the review's $\Gamma^{\mathrm{ZP}}$, v1's $\Gamma(T)$, and $y$ as the imaginary part of the pole in A.7 and A.8. The source map of X.2 has a row for $E^{\mathrm{qp}}_{n\bk}$,
+  $\Gamma^{\tau}_{n\bk}$ and $\tau_{n\bk}$ with the review's signed $\Gamma_{n\mathbf k}$.
+- **The DFPT dielectric matrix.** $\varepsilon^{\mathrm e}_{\mathrm{RPA+xc}}$ is the explicit name of the test-electron
+  matrix $1-(v+f^{\mathrm{xc}})\chi^0$ (Giustino's $\epsilon^{\mathrm{Hxc}}$). It is used only where that matrix must be told
+  apart from the exact many-body $\varepsilon^{\mathrm e}=1-v\chi^{\mathrm{irr,e}}$ of A.5; elsewhere, as in A.3 (A3.13,
+  A3.17), it is written $\varepsilon^{\mathrm e}$. It extends $\varepsilon^{\mathrm e}_{\mathrm{RPA}}=1-v\chi^0$ (A3.17): a
+  subscript names the approximation. NOTATION §12.1 records it in the $\varepsilon^{\mathrm e}$ row.

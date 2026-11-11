@@ -74,7 +74,7 @@ $\mu$ is reserved for the chemical potential and is never a Cartesian index. $i$
 | $\Omega_{\mathrm V}$, $\Omega_{\mathrm S}$ | volume of the unit cell (3D); area of the unit cell (2D) | |
 | $\Omega_{\mathrm V}^{\mathrm{SC}}=N_\ell\Omega_{\mathrm V}$, $\Omega_{\mathrm S}^{\mathrm{SC}}=N_\ell\Omega_{\mathrm S}$ | supercell volume and area = the whole crystal under BvK | |
 | $\Omega_{\mathrm{BZ}}=(2\pi)^3/\Omega_{\mathrm V}$ | Brillouin-zone volume; $(2\pi)^2/\Omega_{\mathrm S}$ in 2D | |
-| $\Gamma$, $\mathrm M$, $\mathrm K$, … | special points of the Brillouin zone, upright ($\Gamma$ is $\bq=0$) | not a mass $M$ or a spring $K$ |
+| $\Gamma$, $\mathrm M$, $\mathrm K$, … | special points of the Brillouin zone, upright ($\Gamma$ is $\bq=0$) | not a mass $M$ or a spring $K$; the electron linewidth is $\Gamma^{\tau}_{n\bk}$ (§12.3), never a bare $\Gamma_{n\bk}$ |
 
 Lattice sums: $\sum_{\ell}\mathrm e^{\mathrm i\bq\cdot\bR_\ell}=N_\ell\sum_{\bG}\delta_{\bq,\bG}$ and
 $\sum_{\bq\in\mathrm{BZ}}\mathrm e^{\mathrm i\bq\cdot\bR_\ell}=N_\ell\,\delta_{\ell,0}$.
@@ -269,6 +269,7 @@ Current vertices of electrons and ions are written $\mathbf J^{\mathrm e}$ and $
 - source-only symbols in the main text (outside footnotes and source maps): `\Delta\tau`, `C_{\kappa`, `D^{\rm dm}`, `N_p`, `M_0`,
   `l_{\bq\nu}`, `\varepsilon_{n`, `\Omega^2`, `\Omega_{\rm uc}`, `Q_{ia`, `m_a`, `\mu` as a Cartesian index;
 - italic labels: `^{\rm `, `_{\rm ` (use `\mathrm`), `e^{i`, `e^{-i`, `e^{\ii` (use `\ee^{\ii`), `^{ion}`, `^{ph}`, `^{e}`;
+- the old forms of the electron linewidth: a bare `\Gamma` with an electron subscript (`\Gamma_{n\bk}`, `\Gamma_k`), the review's `\Gamma^{\mathrm{ZP}}` (with or without a subscript) or v1's `\Gamma(T)`, instead of `\Gamma^{\tau}_{n\bk}`, `\Gamma^{\tau}_{n\bk}(T)`, `\Gamma^{\tau}_{n\bk}(T=0)`; also `Γ_`, `Γ(`, `Γ^{ZP}` in figure strings, and in A.7 and A.8 `y` as the imaginary part of the pole (`\ii y`, `|y|`, `y=\mathrm{Im}`, `y\le`); the zone centre `\Gamma` stays legal;
 - a symbol inventory (first use in reading order) for the naive-reader check, plus glossary entries never used and symbols with no glossary entry.
 
 ---
@@ -298,11 +299,11 @@ at its first use and link it, `<a class="sym" href="#gl-a2-g">$g$</a>`, instead 
 | $v(\br-\br')=e^2/\vert\br-\br'\vert$, $v(\bq)=4\pi e^2/q^2$ | bare Coulomb interaction energy (Gaussian), per unit volume in $\bq$ space | A.3 `gl-a3-v` |
 | $\chi^0$ | independent-particle (Kohn–Sham) density response, $\delta n/\delta V$ at fixed $V^{\mathrm H}+V^{\mathrm{xc}}$ | A.3 `gl-a3-chi0` |
 | $f^{\mathrm{xc}}=\delta V^{\mathrm{xc}}/\delta n$ | exchange–correlation kernel | A.3 `gl-a3-fxc` |
-| $\varepsilon^{\mathrm e}$ | electronic dielectric function; in DFPT the test-electron form $1-(v+f^{\mathrm{xc}})\chi^0$; RPA $1-v\chi^0$ | A.3 `gl-a3-eps` |
+| $\varepsilon^{\mathrm e}$ | electronic dielectric function; in DFPT the test-electron form $1-(v+f^{\mathrm{xc}})\chi^0$ (G: $\epsilon^{\mathrm{Hxc}}$), written $\varepsilon^{\mathrm e}_{\mathrm{RPA+xc}}$ only where it must be told apart from the exact many-body $\varepsilon^{\mathrm e}=1-v\chi^{\mathrm{irr,e}}$ of A.5, elsewhere $\varepsilon^{\mathrm e}$ (A3.13, A3.17); RPA $\varepsilon^{\mathrm e}_{\mathrm{RPA}}=1-v\chi^0$ (A3.17). A subscript names the approximation | A.3 `gl-a3-eps` |
 | $\Delta n$, $\Delta V^{\mathrm{KS}}$, $\Delta\psi$ | first-order changes in DFPT (always with the perturbation named) | A.3 `gl-a3-Delta` |
 
 $\eta$ is the positive infinitesimal of retarded functions from A.2 on (A.1 uses it once, locally, for a shift eigenvalue).
-A non-bold $\tau$, with or without labels ($\tau$, $\tau_{n\bk}$), is a lifetime; the bold $\btau_\kappa$ is a position.
+A non-bold $\tau$, with or without labels ($\tau$, $\tau_{n\bk}$), is a lifetime, and the superscript $\tau$ of the linewidth $\Gamma^{\tau}_{n\bk}$ (§12.3) refers to it; the bold $\btau_\kappa$ is a position.
 
 ### 12.2 Polar crystals (home A.4)
 
@@ -326,15 +327,16 @@ A non-bold $\tau$, with or without labels ($\tau$, $\tau_{n\bk}$), is a lifetime
 | $\chi$ | full (reducible) density response, $\chi=\chi^{\mathrm{irr}}+\chi^{\mathrm{irr}}v\chi$ | A.5 `gl-a5-chi` |
 | $\varepsilon=1-v\chi^{\mathrm{irr}}$, $\varepsilon^{-1}=1+v\chi$ | test-charge dielectric function (electrons only: $\varepsilon^{\mathrm e}$) | A.5 `gl-a5-eps` |
 | $W=\varepsilon^{-1}v$; $W^{\mathrm e}$, $W^{\mathrm{ph}}$; $W=W^{\mathrm e}+W^{\mathrm{ph}}$ | screened interaction; screened by electrons only (nuclei clamped); the part added by the moving nuclei | A.5 `gl-a5-W` |
-| $\Lambda$ | vertex function of Hedin's equations ($\Gamma$ is the zone centre) | A.5 `gl-a5-Lambda` |
+| $\Lambda$ | vertex function of Hedin's equations ($\Gamma$ is the zone centre; the electron linewidth is $\Gamma^{\tau}_{n\bk}$) | A.5 `gl-a5-Lambda` |
 | $F_{\nu\nu'}(\bq,\omega)$, $F^0$ | phonon propagator built from $\phi_{\bq\nu}$, units 1/energy: $F_{\nu\nu'}(\bq,t)=-\frac{\ii}{\hbar}\langle\mathcal T\,\phi_{\bq\nu}(t)\,\phi^\dagger_{\bq\nu'}(0)\rangle$, free retarded $F^0_\nu(\bq,\omega)=\frac1\hbar\,\frac{2\omega_{\bq\nu}}{(\omega+\ii\eta)^2-\omega^2_{\bq\nu}}$ | A.5 `gl-a5-F` |
 | $\Pi^{\mathrm{ph}}_{\nu\nu'}(\bq,\omega)$; $\Pi^{\mathrm{ph,A}}$, $\Pi^{\mathrm{ph,NA}}$ | phonon self-energy (energy units) with $F=F^0+F^0\Pi^{\mathrm{ph}}F$; adiabatic and nonadiabatic parts | A.6 `gl-a6-Piph` |
 | $\gamma_{\bq\nu}$ | phonon linewidth (state FWHM or HWHM explicitly); $\gamma$ alone in an oscillator model is a damping rate. As a summed Cartesian index $\gamma$ appears only as a subscript | A.6 `gl-a6-gamma` |
 | $\Sigma^{\mathrm{FM}}$, $\Sigma^{\mathrm{DW}}$ | Fan–Migdal and Debye–Waller self-energies | A.7 `gl-a7-SigmaFM` |
 | $\mathcal A_{n\bk}(\omega)$ | spectral function (calligraphic: $\bA$ is the vector potential) | A.7 `gl-a7-A` |
 | $Z^{\mathrm{qp}}_{n\bk}$ | quasiparticle weight (renormalization factor) | A.7 `gl-a7-Zqp` |
+| $\Gamma^{\tau}_{n\bk}=-\mathrm{Im}\,\Sigma^{\mathrm{ep}}_{n\bk}(E^{\mathrm{qp}}_{n\bk}/\hbar)\ge0$ | electron linewidth (meV), with the retarded self-energy ($\mathrm{Im}\,\Sigma\le0$ for every state): the half width at half maximum (HWHM) of the quasiparticle peak before the factor $Z^{\mathrm{qp}}_{n\bk}$, so the Lorentzian (A7.17) has half width $Z^{\mathrm{qp}}_{n\bk}\Gamma^{\tau}_{n\bk}$; full width $2\Gamma^{\tau}_{n\bk}$. Retarded pole $E^{\mathrm{qp}}_{n\bk}-\ii\Gamma^{\tau}_{n\bk}$ (A8.2); $\tau_{n\bk}=\hbar/2\Gamma^{\tau}_{n\bk}$, amplitude $\propto\ee^{-\Gamma^{\tau}_{n\bk}t/\hbar}$, probability $\propto\ee^{-t/\tau_{n\bk}}$ (A8.13). $\Gamma^{\tau}_{n\bk}(T)$ at temperature $T$, zero-point value $\Gamma^{\tau}_{n\bk}(T=0)$. The superscript $\tau$ separates it from the zone centre $\Gamma$: never a bare $\Gamma_{n\bk}$. G: signed, time-ordered $\Gamma_{n\bk}=\mp\Gamma^{\tau}_{n\bk}$ (upper sign for an added electron, lower for a hole), pole $\tilde E_{n\bk}=E^{\mathrm{qp}}_{n\bk}\mp\ii\Gamma^{\tau}_{n\bk}$, $\Gamma^{\mathrm{ZP}}_{n\bk}=\Gamma^{\tau}_{n\bk}(T=0)$. Phonon linewidths stay $\gamma_{\bq\nu}$, the oscillator damping $\gamma$, and $\eta$ the infinitesimal of §8 | A.7 `gl-a7-Gammatau` (defined at (A7.17)) |
 | $\alpha^2F(\omega)$, $\lambda_{\mathrm{ep}}$ | Eliashberg spectral function; mass-enhancement (coupling) parameter | A.7 `gl-a7-a2F` |
-| $\tau_{n\bk}$, $1/\tau_{n\bk}=2\,\mathrm{Im}\Sigma/\hbar$ | lifetime and scattering rate (sign convention stated where used) | A.8 `gl-a8-tau` |
+| $\tau_{n\bk}$, $1/\tau_{n\bk}=2\Gamma^{\tau}_{n\bk}/\hbar$ | lifetime and scattering rate, $-2\,\mathrm{Im}\,\Sigma^{\mathrm{ep}}_{n\bk}/\hbar$ for the retarded self-energy | A.8 `gl-a8-tau` |
 | $\Delta E^{\mathrm{ZPR}}$ | zero-point renormalization of a band energy or gap | A.8 `gl-a8-ZPR` |
 | $\mu_{\mathrm{mob}}$ | carrier mobility ($\mu$ alone is the chemical potential) | A.9 `gl-a9-mob` |
 | $T_{\mathrm c}$, $\mu^*$, $\omega_{\log}$, $\Delta$ | superconducting critical temperature; Coulomb pseudopotential (traditional name, unrelated to $\mu$); logarithmic average frequency; gap | A.9 `gl-a9-Tc` |

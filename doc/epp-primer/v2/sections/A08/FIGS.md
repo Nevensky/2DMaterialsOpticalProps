@@ -70,8 +70,8 @@ its continuation above the threshold. Work in dimensionless variables:
   x_lin = y + Z^qp α_F Re S(y, y).
 - Band-edge check values (k = 0, in meV): GaAs −2.58 (on shell), −2.50 (self-consistent), −2.49 (linearized),
   Z = 0.966; GaN −40.9, −34.8, −33.4, Z = 0.818; MgO −153.5, −104.2, −82.4, Z = 0.537.
-- Above the threshold, GaAs at E_k = 2ħω_LO: half width |Im Σ| on shell = α_F ħω_LO · arcosh(√2)/√2 = 1.61 meV,
-  τ = ħ/(2|Im Σ|) = 204 fs (equals the T = 0 value of the `lo` figure).
+- Above the threshold, GaAs at E_k = 2ħω_LO: half width on shell Γ^τ_k = −Im Σ_k(E_k/ħ) = α_F ħω_LO · arcosh(√2)/√2 = 1.61 meV,
+  τ_k = ħ/(2Γ^τ_k) = 204 fs (equals the T = 0 value of the `lo` figure).
 
 **What to draw.** Two panels in `viz-grid two`, stacked on phones.
 - (a) "Graphical solution at the chosen k". x axis: ħω/ħω_LO from −2.5 to 3 (label `ħω / ħω_{LO}`); y axis: energy in
@@ -88,8 +88,8 @@ its continuation above the threshold. Work in dimensionless variables:
 - (b) "Dispersion of the dressed band". x axis: k/q_pol from 0 to 1.6; y axis: energy/ħω_LO from −2 to 2.6, fixed.
   - Bare band y = s² (`muted`, dashed), label `E_k`.
   - On-shell dispersion y + α_F Re S(y, y) (`electron`, dashed), label `on shell`.
-  - Self-consistent dispersion x*(y) (`electron`, solid), label `off shell`, with a shaded band of ± half width
-    α_F|Im S(x*, y)| around it where that is nonzero (`electron-t`).
+  - Self-consistent dispersion x*(y) (`electron`, solid), label `off shell`, with a shaded band of ± its linewidth
+    Γ^τ_k = α_F|Im S(x*, y)| (A8.2) around it where that is nonzero (`electron-t`); legend `off shell ± Γ^τ_k`.
   - Linearized dispersion y + Z^qp α_F Re S(y, y) (`c4`, dotted) when the toggle is on.
   - Horizontal line at 1 (`phonon`), label `ħω_{LO}`.
   - Cursor: vertical line at the chosen k and markers on the three curves. Click or drag in this panel sets k.
@@ -101,7 +101,7 @@ its continuation above the threshold. Work in dimensionless variables:
 
 **Readouts.** $\alpha_{\mathrm F}$; $E_{\bk}$ (meV); on shell $\mathrm{Re}\,\Sigma_{\bk}(E_{\bk}/\hbar)$ (meV); off shell
 $E^{\mathrm{qp}}-E_{\bk}$ (meV); linearized $Z^{\mathrm{qp}}\,\mathrm{Re}\,\Sigma_{\bk}$ (meV); $Z^{\mathrm{qp}}$;
-half width $|\mathrm{Im}\,\Sigma_{\bk}(E_{\bk}/\hbar)|$ (meV); lifetime $\tau=\hbar/2|\mathrm{Im}\,\Sigma|$ (fs, "∞ below
+on-shell half width $\Gamma^{\tau}_{\bk}=-\mathrm{Im}\,\Sigma_{\bk}(E_{\bk}/\hbar)$ (meV); lifetime $\tau_{\bk}=\hbar/2\Gamma^{\tau}_{\bk}$ (fs, "∞ below
 the threshold"). Energies in meV are the dimensionless values times ħω_LO of the material.
 
 **Initial state.** GaN, E_k = 0 (band edge), toggle on: the three markers are visibly distinct (−0.44, −0.38,
@@ -114,10 +114,10 @@ the threshold"). Energies in meV are the dimensionless values times ħω_LO of t
   electron can emit a real LO phonon.
 - *Marks.* Solid and dashed curves in (a): Re Σ_k and Im Σ_k; thin line: ħω − E_k; hollow marker: on shell;
   filled marker: self-consistent solution; square and dotted tangent: linearized solution; vertical line: the
-  emission threshold. In (b): bare band, on-shell and self-consistent dispersions, the shaded half width, the cursor.
+  emission threshold. In (b): bare band, on-shell and self-consistent dispersions, the shaded linewidth ±Γ^τ_k, the cursor.
 - *Try.* Switch to MgO and watch the three markers part. Move k towards E_k = ħω_LO: the curve steepens near the
   threshold, Z^qp drops towards 0 and the dressed band flattens below the threshold. Move above it in GaAs:
-  at E_k = 2ħω_LO the half width is 1.6 meV and τ = 204 fs.
+  at E_k = 2ħω_LO the on-shell Γ^τ_k is 1.6 meV and τ_k = 204 fs.
 - *Model.* (A8.3) and (A8.4) with their continuation above the threshold, solved with (A8.2); empty band, T = 0,
   one dispersionless LO phonon; parameters of the table (literature values, illustrative). Cite with
   `a8-eq-gfr`, `a8-eq-sigfr`, `a8-eq-bw`.
@@ -141,11 +141,11 @@ the threshold"). Energies in meV are the dimensionless values times ħω_LO of t
 **Physics.**
 - Gap: E^qp_g(T) = E_g − |ΔE^ZPR_g| coth(ħω_0/2k_BT), with coth → 1 at T = 0 (`a8-eq-varshni`).
 - Asymptote: E_g − |ΔE^ZPR_g| · 2k_BT/ħω_0. Plateau edge: T = ħω_0/(3k_B), where coth(3/2) = 1.105.
-- Half width (one-phonon model, lifetime subsection): |Im Σ(T)| = |Im Σ(0)| coth(ħω_0/2k_BT); lifetime
-  τ = ħ/(2|Im Σ|) = 658.212 meV fs / (2|Im Σ|[meV]) (`a8-eq-taudef`).
+- Half width (one-phonon model, lifetime subsection): Γ^τ(T) = Γ^τ(T = 0) coth(ħω_0/2k_BT); lifetime
+  τ = ħ/(2Γ^τ) = 658.212 meV fs / (2Γ^τ[meV]) (`a8-eq-taudef`).
 - Presets (all ZPR as positive magnitudes):
 
-| preset | E_g (eV) | ZPR (meV) | ħω_0 (meV) | \|Im Σ(0)\| (meV) | T_max (K) | y range (eV) |
+| preset | E_g (eV) | ZPR (meV) | ħω_0 (meV) | Γ^τ(T = 0) (meV) | T_max (K) | y range (eV) |
 |---|---|---|---|---|---|---|
 | Toy, ħω_0 = 50 meV (matches the printed curves) | 1.00 | 100 | 50 | 50 | 500 | 0.75–1.05 |
 | Toy, ħω_0 = 100 meV (as captioned) | 1.00 | 100 | 100 | 50 | 500 | 0.75–1.05 |
@@ -157,7 +157,7 @@ the threshold"). Energies in meV are the dimensionless values times ħω_LO of t
   Check values: toy 50 meV: E^qp_g(500 K) = 0.809 eV, asymptote 0.828 eV, slope −0.345 meV/K, plateau edge 193 K;
   toy 100 meV: 0.878 eV and 0.914 eV at 500 K; diamond GW: 7.102 eV at 0 K, 7.092 at 300 K, 7.029 at 500 K, 6.951 at
   650 K, slope −0.866 meV/K, plateau edge 484 K; diamond LDA: 7.33 eV at 0 K, 7.234 at 650 K; Si: 1.170 eV at 0 K,
-  1.115 eV at 300 K, slope −0.345 meV/K, plateau edge 116 K; |Im Σ| = 50 meV → τ = 6.58 fs.
+  1.115 eV at 300 K, slope −0.345 meV/K, plateau edge 116 K; Γ^τ = 50 meV → τ = 6.58 fs.
 
 **What to draw.** Two panels in `viz-grid two`.
 - (a) gap: x axis T (K) from 0 to T_max of the preset; y axis E^qp_g (eV), limits fixed per preset (table), expanded
@@ -165,8 +165,8 @@ the threshold"). Energies in meV are the dimensionless values times ħω_LO of t
   `plateau`); horizontal line at E_g (`muted`, text `E_g`); asymptote (`ink`, dashed, label `high-T asymptote`);
   the curve E^qp_g(T) (`electron`, label `E^{qp}_g(T)`); a double arrow at T ≈ 0.08 T_max from E_g down to
   E^qp_g(0), text `|ΔE^{ZPR}_g|`; temperature cursor (vertical dashed line and point).
-- (b) seg-selectable: half width |Im Σ(T)| (meV) with a horizontal line at |Im Σ(0)| (text `|Im Σ(0)|`), or lifetime
-  τ(T) (fs) with a horizontal line at ħ/2|Im Σ(0)| (text with its value); cursor as in (a). y limits fixed for the
+- (b) seg-selectable: half width Γ^τ(T) (meV) with a horizontal line at Γ^τ(T = 0) (text `Γ^τ(T = 0)` with its value), or lifetime
+  τ(T) (fs) with a horizontal line at ħ/2Γ^τ(T = 0) (text with its value); cursor as in (a). y limits fixed for the
   current preset and width.
 - Clicking either panel moves the temperature cursor T*.
 
@@ -174,12 +174,12 @@ the threshold"). Energies in meV are the dimensionless values times ħω_LO of t
 1. preset, select (table; label "preset"), wide.
 2. `|ΔE^{ZPR}_g|`, range 0–700 meV, step 1.
 3. `ħω_0`, range 10–200 meV, step 1.
-4. `|Im Σ(0)|` (half width at T = 0), range 1–100 meV, step 1.
+4. `Γ^{τ}(T = 0)` (half width at T = 0), range 1–100 meV, step 1.
 5. right panel, seg: "half width" | "lifetime".
 Moving a slider away from a preset's values switches the select to "custom" (as in v1).
 
 **Readouts.** $E_{\mathrm g}$; $E^{\mathrm{qp}}_{\mathrm g}(0)$; $E^{\mathrm{qp}}_{\mathrm g}(T^*)$ with T* in K;
-high-T slope (meV/K); plateau edge $\hbar\omega_0/3\kB$ (K); $|\mathrm{Im}\,\Sigma(T^*)|$ (meV); $\tau(T^*)$ (fs).
+high-T slope (meV/K); plateau edge $\hbar\omega_0/3\kB$ (K); $\Gamma^{\tau}(T^*)$ (meV); $\tau(T^*)$ (fs).
 
 **Initial state.** Preset "Toy, ħω_0 = 50 meV", T* = 300 K, right panel "half width".
 
@@ -194,14 +194,14 @@ high-T slope (meV/K); plateau edge $\hbar\omega_0/3\kB$ (K); $|\mathrm{Im}\,\Sig
 - *Model.* (A8.12) (`a8-eq-varshni`), the one-phonon half width of the lifetime subsection and τ from (A8.13)
   (`a8-eq-taudef`). Toy parameters from the review's Fig. 3. Diamond: E_g = 7.73 eV and ħω_0 = 125 meV from a
   one-oscillator fit to the review's Fig. 13, ZPR 628 meV with GW coupling or 0.40 eV read off its LDA curve. Si:
-  literature values, illustrative. |Im Σ(0)| outside the toy presets is illustrative.
+  literature values, illustrative. Γ^τ(T = 0) outside the toy presets is illustrative.
 
 **What must change from v1.**
 - id `viz-a-temperature-varshni` → `viz-a8-varshni`; classes `pv-*` → `a8-varshni-*`; script wrapped as in the
   common rules (v1 used one shared script for three figures; split out this figure's code).
 - Notation in labels, readouts, aria-labels and option strings: `E_g^{cn}` → `E_g`; `E_g(T)` → `E^{qp}_g(T)`;
-  `ZPR`, `|ΔE_g^{ZP}|` → `|ΔE^{ZPR}_g|`; `Γ`, `Γ^{ZP}`, `Γ(T)` → `|Im Σ|`, `|Im Σ(0)|`, `|Im Σ(T)|`;
-  `τ = ħ/2Γ` → `τ = ħ/2|Im Σ|`; `n(ħω_0/k_BT)` → `n_B(ω_0)`; `ħω_0/3k_B` keeps its form with `k_B` upright.
+  `ZPR`, `|ΔE_g^{ZP}|` → `|ΔE^{ZPR}_g|`; `Γ`, `Γ^{ZP}`, `Γ(T)` → `Γ^{τ}`, `Γ^{τ}(T = 0)`, `Γ^{τ}(T)`
+  (the superscript τ keeps the linewidth apart from the zone centre Γ); `τ = ħ/2Γ` → `τ = ħ/2Γ^{τ}`; `n(ħω_0/k_BT)` → `n_B(ω_0)`; `ħω_0/3k_B` keeps its form with `k_B` upright.
 - Remove the curve label "E_g(T), Eq. (G.168)" and every source equation number in strings.
 - Remove the `T_max` slider (fixed per preset) and the "inverse Varshni" sign toggle (the section discusses the
   inverse effect in words): 7 controls → 5.
@@ -265,7 +265,7 @@ below in `viz-grid two` (stacked on phones); controls after all panels.
 3. cursor `E_k / ħω_{LO}`, range 0.05–5, step 0.01.
 
 **Readouts.** $\alpha_{\mathrm F}$; $2\alpha_{\mathrm F}\omega_{\mathrm{LO}}$ (ps⁻¹); $n_{\mathrm B}(\omega_{\mathrm{LO}})$
-at T; $E_{\bk}$ (meV); $1/\tau$ (ps⁻¹); $\tau$ (fs); $\hbar/\tau=2|\mathrm{Im}\,\Sigma|$ (meV); mean free path $v\tau$ (nm).
+at T; $E_{\bk}$ (meV); $1/\tau$ (ps⁻¹); $\tau$ (fs); $\hbar/\tau=2\Gamma^{\tau}$ (meV); mean free path $v\tau$ (nm).
 
 **Initial state.** GaAs, T = 300 K, cursor 1.5 (above the threshold; τ = 129 fs).
 
