@@ -1,0 +1,337 @@
+  <figure class="viz" id="viz-b7-limits">
+    <p class="viz-title">Order of limits: phonon polaritons, LO and TO <span class="tag">interactive</span></p>
+    <div class="viz-grid side">
+      <div class="b7-limits-pa"><div class="legend b7-limits-lega">
+        <span class="item" style="color:var(--c-phonon)"><span class="sw"></span><span style="color:var(--fg-2)">LO, longitudinal</span></span>
+        <span class="item" style="color:var(--c-5)"><span class="sw"></span><span style="color:var(--fg-2)">upper polariton $\omega_{\mathrm{UP}}$</span></span>
+        <span class="item" style="color:var(--c-4)"><span class="sw dash"></span><span style="color:var(--fg-2)">lower polariton $\omega_{\mathrm{LP}}$</span></span>
+        <span class="item" style="color:var(--c-photon)"><span class="sw dot"></span><span style="color:var(--fg-2)">light line $cq/\sqrt{\varepsilon_\infty}$</span></span>
+      </div></div>
+      <div class="b7-limits-pb"><div class="legend b7-limits-legb">
+        <span class="item" style="color:var(--c-5)"><span class="sw"></span><span style="color:var(--fg-2)">$Z^{\ph}_{\mathrm{UP}}$, upper polariton</span></span>
+        <span class="item" style="color:var(--c-4)"><span class="sw dash"></span><span style="color:var(--fg-2)">$Z^{\ph}_{\mathrm{LP}}$, lower polariton</span></span>
+      </div></div>
+    </div>
+    <div class="b7-limits-ctrls"></div>
+    <div class="readout b7-limits-ro" aria-live="polite"><span>$\hbar\omega^{\ion}_{\mathrm p}$<b class="b7-limits-v-wp"></b></span><span>static $\Pi^{\ph,0}$ <a class="eqref" href="#b7-eq-pi0"></a><b class="b7-limits-v-pi"></b></span><span>no electrons, $q\to0$ <a class="eqref" href="#b7-eq-410"></a><b class="b7-limits-v-e410"></b></span><span>$\hbar\omega_{\mathrm{LO}}$ <a class="eqref" href="#b7-eq-limq"></a><b class="b7-limits-v-lo"></b></span><span>$q_{\mathrm{light}}$ <a class="eqref" href="#b7-eq-qc"></a>, $q_{\mathrm{light}}a/2\pi$<b class="b7-limits-v-qc"></b></span></div>
+    <div class="readout b7-limits-ro2" aria-live="polite"><span>cursor $q$, $q/q_{\mathrm{light}}$<b class="b7-limits-v-q"></b></span><span>$\hbar\omega_{\mathrm{UP}}$, $\hbar\omega_{\mathrm{LP}}$<b class="b7-limits-v-w"></b></span><span>$Z^{\ph}_{\mathrm{UP}}$, $Z^{\ph}_{\mathrm{LP}}$<b class="b7-limits-v-z"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> Left of $q_{\mathrm{light}}$ the transverse optical phonon has become the upper polariton, at the LO frequency; right of it, TO and LO are the electrostatic pair. The order of the limits $q\to0$ and $c\to\infty$ decides which you get; the electrons set the size of the shift.</p><div class="cap-more">
+      <p><strong>Marks.</strong> In (a): amber, LO; violet and dashed teal, the upper and lower polaritons; dotted rose, the light line; thin grey, <span class="nw">$\omega_{\mathrm{TO}}$;</span> dotted horizontal, the electron-free value <span class="nw"><a class="eqref" href="#b7-eq-410"></a>;</span> right-edge tick, the measured LO. Dashed vertical: $q_{\mathrm{light}}$ (also read out as <span class="nw">$q_{\mathrm{light}}a/2\pi$,</span> with $a$ the lattice constant). Blue vertical: the cursor, with dots on the two polaritons. In (b) the two weights add up to 1.</p>
+      <p><strong>Try.</strong> Switch the electrons off: the $q\to0$ modes climb to the dotted line (GaAs: <span class="nw">55.6 meV).</span> Raise the speed of light: $q_{\mathrm{light}}$ slides off the left edge, leaving flat TO and LO lines, the limit $c\to\infty$ of Part A. Drag the cursor across <span class="nw">$q_{\mathrm{light}}$:</span> the phonon weight passes from one branch to the other.</p>
+      <p><strong>Model.</strong> A cubic crystal with two atoms per cell: transverse modes from <a class="eqref" href="#b7-eq-branches"></a>, weights <a class="eqref" href="#b7-eq-weight"></a>, limits <a class="eqref" href="#b7-eq-410"></a>, <a class="eqref" href="#b7-eq-limq"></a> and <a class="eqref" href="#b7-eq-limc"></a>, crossover <a class="eqref" href="#b7-eq-qc"></a>. The electrons are a constant $\varepsilon_\infty$, as below the gap of an insulator (<span class="nw">$\varepsilon_\infty=1$</span> when off). Only macroscopic fields enter, so the bare optical frequency is <span class="nw">$\omega_{\mathrm{TO}}$.</span> There is no damping. The speed of light factor multiplies $c$ everywhere. Presets (illustrative literature values) of $\hbar\omega_{\mathrm{TO}}$, $\hbar\omega^{\ion}_{\mathrm p}$ and <span class="nw">$\varepsilon_\infty$:</span> GaAs 33.3, <span class="nw">44.6 meV,</span> 10.9; NaCl 20.3, <span class="nw">38.9 meV,</span> 2.34; hBN in plane, treated as isotropic, 169.9, <span class="nw">224.4 meV,</span> 4.87.</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b7-limits');
+  if (!fig || !window.EPP) return;
+
+  // ---------- physics: cubic crystal, two atoms per cell; energies in meV, wavevectors in 1/Å ----------
+  // Born charge Z*, cell volume Omega_V (Å³; a³/4 for the two cubic crystals), reduced mass M_r (amu), ε_∞, ħω_TO and the
+  // measured ħω_LO (meV), lattice constant a (Å): literature values, illustrative, as in the text of Sections B.7 and B.8
+  const mr = (m1, m2) => m1 * m2 / (m1 + m2);
+  const PRE = {
+    GaAs: { Z: 2.07, Om: Math.pow(5.653, 3) / 4, Mr: mr(69.723, 74.9216), ei: 10.9, T: 33.3, Lm: 36.2, a: 5.653, name: 'GaAs' },
+    NaCl: { Z: 1.12, Om: Math.pow(5.64, 3) / 4, Mr: mr(22.990, 35.453), ei: 2.34, T: 20.3, Lm: 32.7, a: 5.64, name: 'NaCl' },
+    hBN: { Z: 2.71, Om: 18.08, Mr: mr(10.811, 14.007), ei: 4.87, T: 169.9, Lm: 199.6, a: 2.504, name: 'hBN, in plane' }
+  };
+  // ħc in meV Å; (ħω_p^ion)² = 4πe² Z*² ħ²/(Omega_V M_r), with 4πe² = 180.95 eV Å and ħ²/(amu Å²) = 4.1802 meV: in meV²
+  const HC = 1.97327e6, KZ = 180.95 * 4.1802e3;
+  const QMIN = 1e-7, QMAX = 1e-2, NQ = 361;
+  const qs = []; for (let i = 0; i < NQ; i++) qs.push(QMIN * Math.pow(QMAX / QMIN, i / (NQ - 1)));
+
+  // st: {mat, el (electrons on), sc (speed of light factor: c -> sc·c in every formula)}
+  function model(st) {
+    const P = PRE[st.mat] || PRE.GaAs;
+    const wp2 = KZ * P.Z * P.Z / (P.Om * P.Mr);    // unscreened (ħω_p^ion)², meV²
+    const e = st.el ? P.ei : 1;                      // ε_∞ in D^e, or 1 without electrons
+    const T2 = P.T * P.T, L2 = T2 + wp2 / e;         // ω_LO² = ω_TO² + (ω_p^ion)²/ε_∞, flat in q
+    const E410 = Math.sqrt(T2 + wp2);                // electron-free q -> 0 value (B7.13)
+    return { P, wp2, e, T2, L2, EL: Math.sqrt(L2), E410, Pi0: wp2 / (2 * P.T), s: st.sc,
+      qc: Math.sqrt(e) * P.T / (st.sc * HC),         // crossover (B7.22)
+      ymax: Math.ceil(1.16 * E410 / 5) * 5 };        // fixed per preset: GaAs 65, NaCl 55, hBN 330 meV
+  }
+  // the two transverse modes: roots of (B7.17), ε_∞ω⁴ − (ε_∞ω_LO² + c²q²)ω² + c²q²ω_TO² = 0, and their phonon weights (B7.18)
+  function trans(m, q) {
+    const cq = m.s * HC * q, cq2 = cq * cq;
+    const b = m.e * m.L2 + cq2;
+    const disc = Math.sqrt(Math.max(0, b * b - 4 * m.e * cq2 * m.T2));
+    const up2 = (b + disc) / (2 * m.e);
+    const lp2 = cq2 * m.T2 / (m.e * up2);            // product of the roots: stable as q -> 0
+    // Z = [1 + (ω_p^ion)² c²q²/(ε_∞ω² − c²q²)²]^(-1); on a root ε_∞ω² − c²q² = (ω_p^ion)²ω²/(ω² − ω_TO²), so at the upper root
+    const X = cq2 * Math.pow(up2 - m.T2, 2) / (m.wp2 * up2 * up2);
+    return { up: Math.sqrt(up2), lp: Math.sqrt(lp2), Zup: 1 / (1 + X), Zlp: X / (1 + X), cq };   // Z_UP + Z_LP = 1
+  }
+  function curves(m) {
+    const n = qs.length, se = Math.sqrt(m.e);
+    const c = { up: new Array(n), lp: new Array(n), zu: new Array(n), zl: new Array(n), light: new Array(n), lo: new Array(n) };
+    for (let i = 0; i < n; i++) {
+      const r = trans(m, qs[i]);
+      c.up[i] = r.up; c.lp[i] = r.lp; c.zu[i] = r.Zup; c.zl[i] = r.Zlp; c.light[i] = r.cq / se; c.lo[i] = m.EL;
+    }
+    return c;
+  }
+
+  // ---------- formatting ----------
+  const nb = '\u00a0';
+  const supD = (k) => String(k).split('').map(ch => (ch === '-' ? '⁻' : ('⁰¹²³⁴⁵⁶⁷⁸⁹'['0123456789'.indexOf(ch)] || ch))).join('');
+  // mantissa with d significant digits and exponent, carried when the mantissa rounds to 10
+  const mant = (v, d) => { let k = Math.floor(Math.log10(v)), mt = v / Math.pow(10, k); if (Number(mt.toFixed(d - 1)) >= 10) { mt /= 10; k += 1; } return [mt.toFixed(d - 1), k]; };
+  const sciH = (v, d) => { if (!(v > 0) || !isFinite(v)) return '—'; const [mt, k] = mant(v, d); return `${mt}×10<sup>${String(k).replace('-', '−')}</sup>`; };
+  const sciU = (v, d) => { if (!(v > 0) || !isFinite(v)) return '—'; const [mt, k] = mant(v, d); return `${mt}×10${supD(k)}`; };
+  const sciS = (v, d) => { if (!(v > 0) || !isFinite(v)) return 'undefined'; const [mt, k] = mant(v, d); return `${mt} times 10 to the ${k < 0 ? 'minus ' + (-k) : k}`; };
+  const mevH = (v) => (v < 1e3 ? EPP.fix(v, 2) + nb + 'meV' : v < 1e6 ? (v / 1e3).toPrecision(3) + nb + 'eV' : sciH(v / 1e3, 3) + nb + 'eV');
+  const mevS = (v) => (v < 1e3 ? EPP.fix(v, 2) + ' meV' : v < 1e6 ? (v / 1e3).toPrecision(3) + ' eV' : sciS(v / 1e3, 3) + ' eV');
+  const zH = (z) => (z === 0 || z >= 5e-4 ? z.toFixed(3) : sciH(z, 2));
+  const ratioH = (r) => (r >= 0.01 && r < 1e3 ? r.toPrecision(3) : sciH(r, 2));
+  const ratioS = (r) => (r >= 0.01 && r < 1e3 ? r.toPrecision(3) : sciS(r, 2));
+  const scFmt = (v) => { if (v < 99.5) return '×' + (v < 9.95 ? v.toFixed(1) : v.toFixed(0)); const [mt, k] = mant(v, 2); return '×' + mt + '·10' + supD(k); };
+  const scSpoken = (v) => (v < 99.5 ? (v < 9.95 ? v.toFixed(1) : v.toFixed(0)) : sciS(v, 2));
+  const qFmt = (v) => sciU(v, 3) + ' Å⁻¹';
+
+  // ---------- canvas text: '$...$' marks math, whose letters are italic; _x, ^x as in EPP.drawRich ----------
+  const ITAL = /[A-Za-zα-ωħ]/;
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const part of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: part.t, m: part.m, it: false }); continue; }
+        let buf = '', it = null;
+        for (const ch of part.t) { const k = ITAL.test(ch); if (it !== null && k !== it) { out.push({ t: buf, m: part.m, it }); buf = ''; } buf += ch; it = k; }
+        if (buf) out.push({ t: buf, m: part.m, it });
+      }
+    });
+    return out;
+  }
+  // o: {size, color, align, halo (a colour: a thin outline that keeps a label legible across lines), measure}
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, fam = EPP.css('--font-ui'), rs = runs(s);
+    const font = (r) => `${r.it ? 'italic ' : ''}${r.m ? Math.round(size * 0.72) : size}px ${fam}`;
+    const ws = rs.map(r => { ctx.font = font(r); return ctx.measureText(r.t).width; });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    const x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    const dy = (r) => (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0));
+    ctx.textAlign = 'left';
+    if (o.halo) {
+      ctx.lineWidth = 3.5; ctx.lineJoin = 'round'; ctx.strokeStyle = o.halo; ctx.setLineDash([]);
+      let xx = x0; rs.forEach((r, k) => { ctx.font = font(r); ctx.strokeText(r.t, xx, y + dy(r)); xx += ws[k]; });
+    }
+    if (o.color) ctx.fillStyle = o.color;
+    let xx = x0; rs.forEach((r, k) => { ctx.font = font(r); ctx.fillText(r.t, xx, y + dy(r)); xx += ws[k]; });
+    return tot;
+  }
+  const tw = (ctx, s, size) => txt(ctx, s, 0, 0, { size, measure: true });
+
+  // ---------- plots ----------
+  const elA = fig.querySelector('.b7-limits-pa'), elB = fig.querySelector('.b7-limits-pb');
+  const legA = fig.querySelector('.b7-limits-lega'), legB = fig.querySelector('.b7-limits-legb');
+  const decade = (e) => ({ v: Math.pow(10, e), label: '10^{' + String(e).replace('-', '−') + '}' });
+  const hoverQ = (v) => sciH(v, 3) + nb + 'Å<sup>−1</sup>';
+  // side by side (the breakpoint of .viz-grid.side) the two panels share one height; stacked on a phone, (b) is shorter
+  let side = false; try { side = matchMedia('(min-width: 720px)').matches; } catch (e) {}
+  const plotA = new EPP.Plot(elA, {
+    xlim: [QMIN, QMAX], ylim: [0, 65], logx: true, legend: false, height: side ? 300 : 290,
+    margin: { l: 52, r: 16, t: 26, b: 44 }, xticks: [-7, -6, -5, -4, -3, -2].map(decade),
+    xname: 'q', hoverX: hoverQ, hoverY: (v) => mevH(v),
+    ariaLabel: 'Panel a: energies of the LO mode and of the two transverse phonon polaritons against the wavevector, on a logarithmic axis'
+  });
+  const plotB = new EPP.Plot(elB, {
+    xlim: [QMIN, QMAX], ylim: [0, 1.06], logx: true, legend: false, height: side ? 300 : 230,
+    margin: { l: 52, r: 14, t: 26, b: 44 }, xticks: [-7, -5, -3].map(decade), yticks: [0, 0.25, 0.5, 0.75, 1],
+    xname: 'q', hoverX: hoverQ, hoverY: (v) => zH(v),
+    ariaLabel: 'Panel b: phonon weight of the upper and lower polaritons against the wavevector, on a logarithmic axis'
+  });
+  elA.appendChild(legA); elB.appendChild(legB);   // the legends (static markup, MathJax) go under the canvases
+  let cur = null;
+
+  // ---------- label placement: the first candidate position whose box no curve and no earlier label crosses ----------
+  function labeler(ctx, plot, curves) {
+    const boxes = [];
+    // screen coordinates of the curves, once per render
+    const XS = qs.map(q => plot.X(q)), YS = curves.map(ys => ys.map(v => (isFinite(v) ? EPP.clamp(plot.Y(v), -1e4, 1e4) : null)));
+    // a curve crosses a box when the bounding box of one of its segments (between grid points) overlaps it
+    const crosses = (b, Ys) => {
+      for (let i = 1; i < XS.length; i++) {
+        const Y = Ys[i], pY = Ys[i - 1];
+        if (Y !== null && pY !== null && XS[i] >= b.x0 && XS[i - 1] <= b.x1 && Math.max(Y, pY) >= b.y0 && Math.min(Y, pY) <= b.y1) return true;
+      }
+      return false;
+    };
+    const clear = (b) => !boxes.some(o => b.x0 < o.x1 && b.x1 > o.x0 && b.y0 < o.y1 && b.y1 > o.y0);
+    const free = (b) => clear(b) && !YS.some(Ys => crosses(b, Ys));
+    return {
+      block: (b) => { boxes.push(b); },
+      // cands: [{x, y (baseline), align}]; opt.valid(box): a candidate must also pass this test. Without a free candidate:
+      // opt.optional draws nothing; otherwise the first candidate clear of other labels is used (a curve under a haloed
+      // label is the lesser evil), else the first one
+      put(s, cands, style, opt = {}) {
+        const size = style.size || 11.5, wd = tw(ctx, s, size);
+        const box = (c) => { const x0 = c.align === 'right' ? c.x - wd : c.x; return { x0: x0 - 2, x1: x0 + wd + 2, y0: c.y - size + 1, y1: c.y + 4 }; };
+        const ok = opt.valid ? cands.filter(k => opt.valid(box(k))) : cands;
+        let c = ok.find(k => free(box(k)));
+        if (!c) { if (opt.optional || !ok.length) return null; c = ok.find(k => clear(box(k))) || ok[0]; }
+        boxes.push(box(c));
+        txt(ctx, s, c.x, c.y, Object.assign({}, style, { align: c.align || 'left' }));
+        return c;
+      }
+    };
+  }
+  const dotBoxes = (L, X, Ys) => Ys.forEach(Y => L.block({ x0: X - 6, x1: X + 6, y0: Y - 6, y1: Y + 6 }));
+
+  // labels, axis titles and the measured-LO tick are drawn after the layers, in the primer's notation
+  const baseA = plotA.render.bind(plotA);
+  plotA.render = () => {
+    baseA();
+    const ctx = plotA.ctx, w = plotA.cv.w, h = plotA.cv.h, m = plotA.m;
+    if (!w || !h || !cur) return;
+    const M = cur.m, halo = EPP.color('surface'), cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted');
+    const xL = m.l + 6, xR = w - m.r - 6, pw = w - m.l - m.r, Y = (v) => plotA.Y(v);
+    const yT = Y(M.P.T), yL = Y(M.EL), yE = Y(M.E410), yM = Y(M.P.Lm), Xq = plotA.X(cur.q);
+    ctx.save();
+    ctx.textBaseline = 'alphabetic';
+    const t1 = '(a) mode energies: click or drag to move the cursor', t2 = '(a) mode energies';
+    txt(ctx, tw(ctx, t1, 11.5) <= w - 8 ? t1 : t2, 4, 15, { color: cFg2 });
+    // the measured LO frequency: a tick across the right edge of the frame
+    ctx.strokeStyle = cMut; ctx.lineWidth = 2.5; ctx.setLineDash([]); ctx.lineCap = 'butt';
+    ctx.beginPath(); ctx.moveTo(w - m.r - 10, yM); ctx.lineTo(w - m.r + 7, yM); ctx.stroke();
+    const L = labeler(ctx, plotA, [cur.c.up, cur.c.lp, cur.c.light]);
+    dotBoxes(L, Xq, [Y(cur.r.up), Y(cur.r.lp)]);
+    // below the right end of the TO line, the lower polariton reaching it; above the tick, the measured LO
+    L.put('$ω$_{LP} → $ω$_{TO}', [{ x: xR, y: yT + 14, align: 'right' }], { color: EPP.textColor('c4'), halo });
+    L.put('measured LO', [{ x: w - m.r - 14, y: yM - 5, align: 'right' }], { color: cMut, halo });
+    // the LO line: near its left end the upper polariton, where that lies on it (the upper branch rises with q, so it is
+    // enough that it is still on the line under the end of the label); else the LO mode alone, where nothing crosses
+    const onLO = (b) => Math.abs(Y(trans(M, plotA.invX(b.x1)).up) - yL) < 2;
+    if (!L.put('$ω$_{UP} → $ω$_{LO}', [0, 0.12, 0.24].map(f => ({ x: xL + f * pw, y: yL - 6 })), { color: EPP.textColor('c5'), halo }, { optional: true, valid: onLO }))
+      L.put('LO', [0, 0.15, 0.3, 0.45, 0.6].map(f => ({ x: xL + f * pw, y: yL - 6 })), { color: EPP.textColor('phonon'), halo });
+    // the TO line itself, below its left end, unless a branch crosses there (the right-hand label names it too)
+    L.put('$ω$_{TO}', [{ x: xL, y: yT + 14 }], { color: cMut, halo }, { optional: true });
+    // the electron-free value (B7.13): above its line, else below it (the LO line lies on it when the electrons are off)
+    L.put('no electrons, $q$ → 0', [{ x: xL, y: yE - 6 }, { x: xR, y: yE - 6, align: 'right' }, { x: xL, y: yE + 14 }, { x: xR, y: yE + 14, align: 'right' },
+      ...[0.15, 0.3, 0.45].map(f => ({ x: xL + f * pw, y: yE - 6 }))], { color: cFg2, halo });
+    if (cur.qcIn) {
+      const X = plotA.X(M.qc), yb = h - m.b - 6, yt = m.t + 14;
+      L.put('$q$_c', [{ x: X + 5, y: yb }, { x: X - 5, y: yb, align: 'right' }, { x: X - 5, y: yt, align: 'right' }, { x: X + 5, y: yt }], { color: cMut, halo });
+    }
+    txt(ctx, 'wavevector $q$ (Å⁻¹)', m.l + pw / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, '$ħω$ (meV)', 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+  };
+  const baseB = plotB.render.bind(plotB);
+  plotB.render = () => {
+    baseB();
+    const ctx = plotB.ctx, w = plotB.cv.w, h = plotB.cv.h, m = plotB.m;
+    if (!w || !h || !cur) return;
+    const M = cur.m, halo = EPP.color('surface'), cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted');
+    const xL = m.l + 6, xR = w - m.r - 6, pw = w - m.l - m.r, Y = (v) => plotB.Y(v), Xq = plotB.X(cur.q);
+    ctx.save();
+    ctx.textBaseline = 'alphabetic';
+    const t1 = '(b) phonon weight of the polaritons', t2 = '(b) phonon weight';
+    txt(ctx, tw(ctx, t1, 11.5) <= w - 8 ? t1 : t2, 4, 15, { color: cFg2 });
+    const L = labeler(ctx, plotB, [cur.c.zu, cur.c.zl]);
+    dotBoxes(L, Xq, [Y(cur.r.Zup), Y(cur.r.Zlp)]);
+    // at each edge, where no curve crosses: the branch with most of the phonon weight is phonon-like, the other photon-like
+    const lw = tw(ctx, 'phonon-like', 11.5);
+    [[xL, 'left', xL + lw / 2], [xR, 'right', xR - lw / 2]].forEach(([x, align, xc]) => {
+      const up = trans(M, plotB.invX(xc)).Zup > 0.5;
+      L.put('phonon-like', [{ x, y: Y(0.9) + 4, align }], { color: EPP.textColor(up ? 'c5' : 'c4'), halo }, { optional: true });
+      L.put('photon-like', [{ x, y: Y(0.1) + 4, align }], { color: EPP.textColor(up ? 'c4' : 'c5'), halo }, { optional: true });
+    });
+    if (cur.qcIn) {
+      const X = plotB.X(M.qc), yb = h - m.b - 6, yt = m.t + 14;
+      L.put('$q$_c', [{ x: X + 5, y: yt }, { x: X - 5, y: yt, align: 'right' }, { x: X + 5, y: yb }, { x: X - 5, y: yb, align: 'right' }], { color: cMut, halo });
+    }
+    txt(ctx, 'wavevector $q$ (Å⁻¹)', m.l + pw / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, 'phonon weight $Z$^{ph}', 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+  };
+
+  function draw() {
+    const { m, c, q, r } = cur;
+    const qcLine = cur.qcIn ? { type: 'vline', at: m.qc, color: 'muted', width: 1 } : null;
+    const cursor = { type: 'vline', at: q, color: 'accent', width: 1.3, dash: [] };
+    plotA.draw([
+      { type: 'hline', at: m.P.T, color: 'muted', width: 1, dash: [] },
+      { type: 'hline', at: m.E410, color: 'ink', width: 1.5, dash: [1.5, 3] },
+      qcLine,
+      { type: 'line', x: qs, y: c.light, color: 'photon', dash: [2, 3], width: 1.5, label: 'light line', hover: false, breakJump: Infinity },
+      // the LO line is drawn wide, so that it shows around the upper polariton where the two coincide
+      { type: 'line', x: qs, y: c.lo, color: 'phonon', width: 4, label: 'LO ω_{LO}' },
+      { type: 'line', x: qs, y: c.lp, color: 'c4', dash: [7, 4], label: 'lower polariton ω_{LP}' },
+      { type: 'line', x: qs, y: c.up, color: 'c5', label: 'upper polariton ω_{UP}', breakJump: Infinity },
+      cursor,
+      { type: 'points', x: [q], y: [r.lp], color: 'c4', r: 4 },
+      { type: 'points', x: [q], y: [r.up], color: 'c5', r: 4 }
+    ], { ylim: [0, m.ymax] });
+    plotB.draw([
+      qcLine,
+      { type: 'line', x: qs, y: c.zl, color: 'c4', dash: [7, 4], label: 'Z^{ph}_{LP}' },
+      { type: 'line', x: qs, y: c.zu, color: 'c5', label: 'Z^{ph}_{UP}' },
+      cursor,
+      { type: 'points', x: [q], y: [r.Zlp], color: 'c4', r: 4 },
+      { type: 'points', x: [q], y: [r.Zup], color: 'c5', r: 4 }
+    ]);
+  }
+
+  // ---------- readouts ----------
+  const $v = (k) => fig.querySelector('.b7-limits-v-' + k);
+  const RO = { wp: $v('wp'), pi: $v('pi'), e410: $v('e410'), lo: $v('lo'), qc: $v('qc'), q: $v('q'), w: $v('w'), z: $v('z') };
+  function readouts() {
+    const { m, q, r } = cur, frac = m.qc * m.P.a / (2 * Math.PI);
+    RO.wp.textContent = mevH(Math.sqrt(m.wp2));
+    RO.pi.textContent = mevH(m.Pi0);
+    RO.e410.textContent = mevH(m.E410);
+    RO.lo.textContent = mevH(m.EL);
+    RO.qc.innerHTML = `${sciH(m.qc, 3)}${nb}Å<sup>−1</sup>, ${sciH(frac, 2)}`;
+    RO.q.innerHTML = `${sciH(q, 3)}${nb}Å<sup>−1</sup>, ${ratioH(q / m.qc)}`;
+    RO.w.innerHTML = `${mevH(r.up)}, ${mevH(r.lp)}`;
+    RO.z.innerHTML = `${zH(r.Zup)}, ${zH(r.Zlp)}`;
+    const el = m.e > 1 ? 'electrons on' : 'electrons off', light = m.s < 1.005 ? 'the real speed of light' : `the speed of light times ${scSpoken(m.s)}`;
+    plotA.cv.canvas.setAttribute('aria-label', `Panel a: mode energies against the wavevector q on a logarithmic axis from 10 to the minus 7 to 10 to the minus 2 per ångström, ${m.P.name}, ${el}, ${light}. ` +
+      `The LO mode is flat at ${mevS(m.EL)}; the TO frequency is ${mevS(m.P.T)}; the electron-free value is ${mevS(m.E410)}; the measured LO frequency is ${mevS(m.P.Lm)}. ` +
+      `The crossover q_light is ${sciS(m.qc, 3)} per ångström${cur.qcIn ? '' : ', outside the frame'}. ` +
+      `At the cursor, q = ${sciS(q, 3)} per ångström, the upper polariton is at ${mevS(r.up)} and the lower polariton at ${mevS(r.lp)}.`);
+    plotB.cv.canvas.setAttribute('aria-label', `Panel b: phonon weight of the two polaritons against q. ` +
+      `The phonon-like branch is the ${trans(m, QMIN).Zup > 0.5 ? 'upper' : 'lower'} polariton at the left edge and the ${trans(m, QMAX).Zup > 0.5 ? 'upper' : 'lower'} polariton at the right edge. ` +
+      `At the cursor the upper polariton has weight ${EPP.fix(r.Zup, 3)} and the lower one ${EPP.fix(r.Zlp, 3)}.`);
+  }
+
+  // ---------- controls ----------
+  const q0 = model({ mat: 'GaAs', el: true, sc: 1 }).qc;     // the cursor starts at q_c of GaAs, 5.57×10⁻⁵ Å⁻¹
+  let lastMat = 'GaAs';
+  function update(st) {
+    // a new crystal moves the cursor to its own q_c at the real speed of light
+    if (st.mat !== lastMat) { lastMat = st.mat; ui.set('q', EPP.clamp(model({ mat: st.mat, el: st.el, sc: 1 }).qc, QMIN, QMAX), true); }
+    const m = model(st), q = EPP.clamp(st.q, QMIN, QMAX);
+    cur = { m, q, r: trans(m, q), c: curves(m), qcIn: m.qc > QMIN && m.qc < QMAX };
+    draw(); readouts();
+    // spoken values for the two log sliders
+    const iq = document.getElementById(`${fig.id}-q`), isc = document.getElementById(`${fig.id}-sc`);
+    if (iq) iq.setAttribute('aria-valuetext', `${sciS(q, 3)} per ångström, ${ratioS(q / m.qc)} times q_light`);
+    if (isc) isc.setAttribute('aria-valuetext', m.s < 1.005 ? '1, the real speed of light' : `${scSpoken(m.s)} times the real speed of light`);
+  }
+  const elCtl = fig.querySelector('.b7-limits-ctrls');
+  const ui = EPP.controls(elCtl, [
+    { key: 'mat', type: 'seg', label: 'crystal (illustrative)', options: [['GaAs', 'GaAs'], ['NaCl', 'NaCl'], ['hBN', 'hBN ∥']], value: 'GaAs' },
+    { key: 'el', type: 'toggle', label: 'electrons on (ε_∞ in D^e)', value: true },
+    { key: 'sc', type: 'range', label: 'speed of light factor', min: 1, max: 1e6, log: true, step: 'any', value: 1, fmt: scFmt },
+    { key: 'q', type: 'range', label: 'cursor wavevector q', min: QMIN, max: QMAX, log: true, step: 'any', value: q0, fmt: qFmt, wide: true }
+  ], update);
+  // control labels: symbols in italic, labels upright, as in the text
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const LAB = { el: `electrons on (${I('ε')}<sub>∞</sub> in ${I('D')}<sup>e</sup>)`, q: `cursor wavevector ${I('q')}` };
+  Object.keys(LAB).forEach(k => { const s = elCtl.querySelector(`label[for="${fig.id}-${k}"] > span`); if (s) s.innerHTML = LAB[k]; });
+  const bHBN = document.getElementById(`${fig.id}-mat-hBN`);
+  if (bHBN) bHBN.setAttribute('aria-label', 'hBN, in plane');
+  // click or drag in either panel moves the cursor
+  plotA.onPointer = plotB.onPointer = (x, y, type) => { if (type !== 'up' && isFinite(x)) ui.set('q', EPP.clamp(x, QMIN, QMAX)); };
+  update(ui.state);
+
+  // previewed outside Section B.7 (the figure test), the cited equations are absent: show their numbers as text
+  const TAGS = { 'b7-eq-pi0': 'B7.12', 'b7-eq-410': 'B7.13', 'b7-eq-branches': 'B7.17', 'b7-eq-weight': 'B7.18', 'b7-eq-limq': 'B7.20', 'b7-eq-limc': 'B7.21', 'b7-eq-qc': 'B7.22' };
+  if (!fig.closest('#b-phonon-se')) fig.querySelectorAll('a.eqref').forEach(a => { const id = (a.getAttribute('href') || '').slice(1), s = document.createElement('span'); s.textContent = '(' + (TAGS[id] || id) + ')'; a.replaceWith(s); });
+})();
+</script>

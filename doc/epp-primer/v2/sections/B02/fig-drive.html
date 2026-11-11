@@ -1,0 +1,401 @@
+  <figure class="viz" id="viz-b2-drive">
+    <p class="viz-title">Driven ions and electrons: amplitude and phase <span class="tag">interactive</span></p>
+    <div class="viz-grid two">
+      <div><div class="b2-drive-h" style="font-family:var(--font-ui);font-size:0.82rem;font-weight:600;line-height:1.35;color:var(--fg-2);margin:0 0 4px">(a) Displacement amplitude $|\xi|$</div><div class="b2-drive-amp"></div></div>
+      <div><div class="b2-drive-h" style="font-family:var(--font-ui);font-size:0.82rem;font-weight:600;line-height:1.35;color:var(--fg-2);margin:0 0 4px">(b) Phase lag $\varphi$ of $P_x$ behind $E$</div><div class="b2-drive-ph"></div></div>
+    </div>
+    <div class="legend b2-drive-leg"><span class="item" style="color:var(--c-phonon)"><span class="sw"></span><span style="color:var(--fg-2)">ion pair</span></span><span class="item" style="color:var(--c-electron)"><span class="sw"></span><span style="color:var(--fg-2)">bound electron</span></span><span class="item" style="color:var(--c-5)"><span class="sw dash"></span><span style="color:var(--fg-2)">free carrier</span></span><span class="item" style="color:var(--muted)"><span class="sw dot"></span><span style="color:var(--fg-2)">drive frequency</span></span></div>
+    <div class="b2-drive-h" style="font-family:var(--font-ui);font-size:0.82rem;font-weight:600;line-height:1.35;color:var(--fg-2);margin:14px 0 4px">(c) Two drive periods: field, polarization and current of the <span class="b2-drive-spn">ion pair</span></div>
+    <div class="b2-drive-time"></div>
+    <div class="legend b2-drive-leg2"><span class="item" style="color:var(--c-photon)"><span class="sw"></span><span style="color:var(--fg-2)">$E(t)/E_0$</span></span><span class="item b2-drive-legP" style="color:var(--c-phonon)"><span class="sw"></span><span style="color:var(--fg-2)">$P_x(t)/|P_x|_{\max}$</span></span><span class="item" style="color:var(--c-4)"><span class="sw dash"></span><span style="color:var(--fg-2)">$j_x(t)/|j_x|_{\max}$, with $j_x=\dot P_x$</span></span></div>
+    <div class="b2-drive-ctrls"></div>
+    <div class="readout b2-drive-ro" aria-live="polite"><span>$\hbar\omega$<b class="b2-drive-v-hw"></b></span><span>$|\xi|$, <span class="b2-drive-v-sp">ion pair</span><b class="b2-drive-v-xi"></b></span><span>$P_x$ lags $E$ by<b class="b2-drive-v-lag"></b></span><span>$j_x=\dot P_x$ leads $E$ by<b class="b2-drive-v-lead"></b></span></div>
+    <div class="readout b2-drive-ro2" aria-live="polite"><span>$4\pi P_x/E$<b class="b2-drive-v-eps"></b></span><span>$|j_x|$<b class="b2-drive-v-j"></b></span><span>$\langle j_xE\rangle$<b class="b2-drive-v-pow"></b></span><span class="b2-drive-warn" style="color:var(--t-photon)" hidden>ion pair: |<i style="font-family:var(--font-text)">u</i><sub>rel</sub>| &gt; 10% of the bond, beyond the harmonic model</span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> At the ionic resonance the displacement lags the field by exactly 90°, so the polarization current $j_x=\dot P_x$ is in phase with <span class="nw">$E$:</span> the field does work on the lattice. At phonon frequencies the bound electrons follow the field with no lag: that instantaneous response is $\varepsilon_\infty$.</p><div class="cap-more"><p><strong>Marks.</strong> $|\xi|$: amplitude of $u_{\mathrm{rel}}$ for the ion pair, of one electron's displacement otherwise. An electron's dipole points against its displacement, so (b) and (c) show the phase of <span class="nw">$P_x$.</span> Dotted line and dots: the drive. Grey lines in (a): Ga–As bond length, zero-point amplitude of the ion pair. In (c) the traces are scaled to their maxima; the arrow spans <span class="nw">$\varphi$.</span></p><p><strong>Try.</strong> (1) Drag across <span class="nw">33.3 meV</span> in (a) or (b): the lag jumps from 0° to 180° within a few <span class="nw">$\hbar\gamma$.</span> (2) Lower <span class="nw">$\hbar\gamma$:</span> the peak grows as <span class="nw">$\omega_0/\gamma$.</span> (3) Select the free carrier: its lag is 135° at <span class="nw">3.5 meV,</span> nears 90° (resistive) only for <span class="nw">$\omega\ll\gamma$,</span> below the plotted range, and 180° (inductive) for <span class="nw">$\omega\gg\gamma$.</span></p><p><strong>Model.</strong> <a class="eqref" href="#b2-eq-rel">(B2.18)</a>–<a class="eqref" href="#b2-eq-xi">(B2.19)</a> for a GaAs-like ion pair: <span class="nw">$Z^*=2.07$,</span> <span class="nw">$M_{\mathrm r}=36.1$ amu,</span> <span class="nw">$\OV=45.2$ Å³,</span> <span class="nw">$\hbar\omega_0=\hbar\omega_{\mathrm{TO}}=33.3$ meV,</span> <span class="nw">$\hbar\gamma=0.31$ meV</span> (literature values, illustrative). The same form, with charge <span class="nw">$-e$,</span> for a harmonically bound electron (resonance <span class="nw">4.97 eV,</span> <span class="nw">$\hbar\gamma=0.5$ eV,</span> eight per cell, giving <span class="nw">$\varepsilon_\infty=10.9$)</span> and a free carrier (GaAs conduction-band mass <span class="nw">$0.067\,m_{\mathrm e}$,</span> <span class="nw">$\hbar\gamma=3.5$ meV,</span> <span class="nw">$10^{17}$ cm⁻³);</span> damping added by hand. For the ions $E$ is the macroscopic field, without the local field of <a href="#b-dielectric">Section B.3</a>, as in <a href="#b-photon-se">Sections B.5</a>–<a href="#b-phonon-se">B.7</a>. Readouts in SI units; <span class="nw">$4\pi P_x/E$</span> <span class="nw">($P_x/\varepsilon_0E$</span> in SI, $\varepsilon_0$ the vacuum permittivity) is the contribution to <span class="nw">$\varepsilon$.</span></p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b2-drive');
+  if (!fig || !window.EPP) return;
+  // previewed outside Section B.2 (the isolated figure test), the caption's links have no target: keep their text, drop the link
+  if (!fig.closest('#b-lagrangian')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+  const C = EPP.C, TAU = 2 * Math.PI, DEG = 180 / Math.PI;
+
+  // ---------- model ----------
+  // Each charge is a driven damped oscillator, u(t) = Re[ξ e^{−iωt}] with ξ = (q eE0/m) / (ω0² − ω² − iγω);
+  // for the ion pair this is (B2.19), with q = Z* and m = M_r. Here q is the size of the charge in units of e: an electron
+  // (charge −e) moves by −ξ, and its dipole is +q e ξ, like that of the ion pair. So P_x = n q e ξ for all three, and P_x lags
+  // E by φ = arg ξ = arg(ω0² − ω² + iγω), between 0° and 180°.
+  // Units: ħω, ħω0, ħγ in eV; eE0 in eV/Å (e × 1 kV/cm = 1e-5 eV/Å); the mass through ħ²/m in eV Å², so that ξ is in Å.
+  const H2AMU = 4.18015e-3, H2ME = 7.61996, E2 = 14.3996;   // ħ²/(amu Å²) in eV, ħ²/m_e in eV Å², e² (Gaussian) in eV Å
+  const HBAR = 6.582119569e-16, QE = 1.602176634e-19;       // eV s, C
+  const OMV = 45.17, ZS = 2.07, MR = 36.11, BOND = 2.448;   // GaAs-like: cell volume (Å³), Z*, M_r (amu), Ga–As bond (Å)
+  const SP = {
+    ion: { name: 'ion pair', col: 'phonon', css: '--c-phonon', q: ZS, h2m: H2AMU / MR, n: 1 / OMV },
+    bound: { name: 'bound electron', col: 'electron', css: '--c-electron', q: 1, h2m: H2ME, w0: 4.97, g: 0.5, n: 8 / OMV },
+    free: { name: 'free carrier', col: 'c5', css: '--c-5', q: 1, h2m: H2ME / 0.067, w0: 0, g: 3.5e-3, n: 1e-7 } // 10^17 cm⁻³ = 10⁻⁷ Å⁻³
+  };
+  const KEYS = ['ion', 'bound', 'free'];
+  // complex amplitude ξ (Å) of species k at the drive energy W (eV); slider state st: ħω0, ħγ in meV, E0 in kV/cm
+  function xi(k, W, st) {
+    const s = SP[k], w0 = k === 'ion' ? st.w0 * 1e-3 : s.w0, g = k === 'ion' ? st.gam * 1e-3 : s.g;
+    return C.div([s.q * st.E0 * 1e-5 * s.h2m, 0], [w0 * w0 - W * W, -g * W]);
+  }
+  const lagOf = (z) => Math.atan2(z[1], z[0]) * DEG;
+  // what the readouts need, for species k at the drive
+  function atDrive(k, st) {
+    const s = SP[k], W = st.w * 1e-3, z = xi(k, W, st), A = C.abs(z), phi = lagOf(z);
+    const eps = C.scale(z, 4 * Math.PI * s.n * s.q * E2 / (st.E0 * 1e-5)); // 4πP_x/E = 4π n q e ξ/E0 (Gaussian) = P_x/ε0E (SI)
+    const P = s.n * 1e30 * s.q * QE * A * 1e-10;                           // |P_x|, C/m²
+    const J = (W / HBAR) * P;                                              // |j_x| = ω|P_x|, A/m²
+    const pow = 0.5 * J * st.E0 * 1e5 * Math.sin(phi / DEG);               // ⟨j_x E⟩ = ½ ω |P_x| E0 sin φ, W/m³
+    return { z, A, phi, eps, J: J * 1e-4, pow: pow * 1e-6 };               // A/cm², W/cm³
+  }
+  const zeroPoint = (st) => Math.sqrt(H2AMU / (2 * MR * st.w0 * 1e-3)); // (ħ/2M_r ω0)^{1/2}, Å
+
+  // samples on a log axis from 1 meV to 20 eV; the ion resonance, as narrow as 0.05 meV, gets a dense cluster of its own
+  const XL = [1, 2e4], NB = 400;
+  const BASE = EPP.linspace(0, 1, NB).map(f => XL[0] * Math.pow(XL[1] / XL[0], f));
+  function curves(st) {
+    const xs = BASE.slice();
+    for (let j = -40; j <= 40; j++) { const v = st.w0 + st.gam * Math.sinh(0.15 * j); if (v > XL[0] && v < XL[1]) xs.push(v); }
+    xs.sort((a, b) => a - b);
+    const out = { xs };
+    for (const k of KEYS) {
+      const a = new Array(xs.length), p = new Array(xs.length);
+      for (let i = 0; i < xs.length; i++) { const z = xi(k, xs[i] * 1e-3, st); a[i] = EPP.clamp(C.abs(z), 1e-12, 1e8); p[i] = lagOf(z); }
+      out[k] = { a, p };
+    }
+    return out;
+  }
+  // abscissa where a sampled monotonic curve crosses the value v (log interpolation in x)
+  function xAt(xs, ys, v) {
+    for (let i = 1; i < xs.length; i++) if ((ys[i - 1] - v) * (ys[i] - v) <= 0 && ys[i] !== ys[i - 1]) {
+      const f = (v - ys[i - 1]) / (ys[i] - ys[i - 1]);
+      return xs[i - 1] * Math.pow(xs[i] / xs[i - 1], f);
+    }
+    return NaN;
+  }
+
+  // ---------- formatting ----------
+  const fmtW = (v) => (v >= 999.5 ? EPP.fmt(v / 1000, 3) + ' eV' : EPP.fmt(v, 3) + ' meV');
+  const fH = (v, d = 3) => EPP.fmt(v, d).replace(/-/g, '−').replace(/\^([−\d]+)/, '<sup>$1</sup>');
+  const fA = (v) => EPP.fmt(v, 3).replace(/-/g, '−').replace('×10^', ' times 10 to the '); // for aria-labels
+  const fDeg = (v) => { const r = Math.round(v * 10) / 10; return (Math.abs(r) < 0.05 ? '0.0' : EPP.fix(r, 1)) + '°'; };
+  const fCx = (c) => {
+    const m = Math.hypot(c[0], c[1]), re = Math.abs(c[0]) < 1e-6 * m ? 0 : c[0], im = Math.abs(c[1]) < 1e-6 * m ? 0 : c[1];
+    return fH(re) + (im < 0 ? ' − ' : ' + ') + fH(Math.abs(im)) + 'i';
+  };
+
+  // ---------- canvas text: '$..$' = italic symbol in the text font; sub- and superscripts as in EPP.drawRich;
+  // a combining dot (U+0307) after a letter puts a time-derivative dot over it ----------
+  const DOT = '̇';
+  const parse = (s) => s.split(/(\$[^$]*\$)/).filter(Boolean).map(t => (t[0] === '$' ? [t.slice(1, -1), true] : [t, false]));
+  const pOpt = (p, size) => (p[1] ? { size: size + 1, font: EPP.css('--font-text'), italic: true } : { size, font: EPP.css('--font-ui') });
+  const rtW = (ctx, s, size) => parse(s).reduce((w, p) => { const o = pOpt(p, size); return w + EPP.measureRich(ctx, p[0].replace(DOT, ''), o.size, o.font, o); }, 0);
+  function rt(ctx, s, x, y, size, align) {
+    const tot = rtW(ctx, s, size);
+    let x0 = align === 'center' ? x - tot / 2 : align === 'right' ? x - tot : x;
+    for (const p of parse(s)) {
+      const o = pOpt(p, size), k = p[0].indexOf(DOT);
+      if (k < 0) { x0 += EPP.drawRich(ctx, p[0], x0, y, o); continue; }
+      const a = p[0].slice(0, k), b = p[0].slice(k + 1);
+      const wa = EPP.drawRich(ctx, a, x0, y, o), wl = EPP.measureRich(ctx, a.slice(-1), o.size, o.font, o);
+      ctx.beginPath(); ctx.arc(x0 + wa - 0.5 * wl + 0.2 * o.size, y - 0.9 * o.size, 0.085 * o.size, 0, TAU); ctx.fill();
+      x0 += wa + EPP.drawRich(ctx, b, x0 + wa, y, o);
+    }
+    return tot;
+  }
+  // a label on a translucent plate filling the box b = [x0, y0, x1, y1]
+  function plate(ctx, s, b, size, col) {
+    ctx.fillStyle = EPP.alpha('surface', 0.86);
+    ctx.fillRect(b[0], b[1], b[2] - b[0], b[3] - b[1]);
+    ctx.fillStyle = col; ctx.textBaseline = 'alphabetic';
+    rt(ctx, s, b[0] + 2, (b[1] + b[3]) / 2 + 0.36 * size, size, 'left');
+  }
+  function axes(plot, xl, yl) {
+    const ctx = plot.ctx, w = plot.cv.w, h = plot.cv.h, m = plot.m;
+    ctx.save(); ctx.fillStyle = EPP.color('fg'); ctx.textBaseline = 'alphabetic';
+    rt(ctx, xl, m.l + (w - m.l - m.r) / 2, h - 8, 12.5, 'center');
+    ctx.translate(15, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    rt(ctx, yl, 0, 0, 12.5, 'center');
+    ctx.restore();
+  }
+
+  // ---------- label placement: the first candidate box that stays in the frame and clears every curve,
+  // every label already placed and every blocked strip wins ----------
+  // per pixel column, the vertical extent of a sampled curve
+  function envelope(plot, xs, ys) {
+    const n = Math.ceil(plot.cv.w) + 2, lo = new Float32Array(n).fill(Infinity), hi = new Float32Array(n).fill(-Infinity), H = plot.cv.h;
+    let x0 = null, y0 = null;
+    for (let i = 0; i < xs.length; i++) {
+      if (!isFinite(ys[i])) { x0 = null; continue; }
+      const x1 = plot.X(xs[i]), y1 = EPP.clamp(plot.Y(ys[i]), -60, H + 60);
+      if (x0 !== null) {
+        const a = Math.max(0, Math.floor(Math.min(x0, x1))), b = Math.min(n - 1, Math.ceil(Math.max(x0, x1)));
+        for (let c = a; c <= b; c++) {
+          const t0 = x1 === x0 ? 0 : EPP.clamp((c - x0) / (x1 - x0), 0, 1), t1 = x1 === x0 ? 1 : EPP.clamp((c + 1 - x0) / (x1 - x0), 0, 1);
+          const ya = y0 + (y1 - y0) * t0, yb = y0 + (y1 - y0) * t1;
+          lo[c] = Math.min(lo[c], ya, yb); hi[c] = Math.max(hi[c], ya, yb);
+        }
+      }
+      x0 = x1; y0 = y1;
+    }
+    return { lo, hi };
+  }
+  function placer(plot, envs) {
+    const m = plot.m, W = plot.cv.w, H = plot.cv.h, boxes = [], PAD = 2.5;
+    const inside = (b) => b[0] >= m.l + 2 && b[2] <= W - m.r - 2 && b[1] >= m.t + 2 && b[3] <= H - m.b - 2;
+    const onCurve = (b) => envs.some(e => {
+      for (let c = Math.max(0, Math.floor(b[0] - PAD)); c <= Math.min(e.lo.length - 1, Math.ceil(b[2] + PAD)); c++)
+        if (e.lo[c] <= b[3] + PAD && e.hi[c] >= b[1] - PAD) return true;
+      return false;
+    });
+    const onBox = (b) => boxes.some(o => b[0] < o[2] + 4 && b[2] > o[0] - 4 && b[1] < o[3] + 2 && b[3] > o[1] - 2);
+    return {
+      block(b) { boxes.push(b); },
+      // cands: {px, py, align: 'left'|'center'|'right', vpos: 'above'|'below'|'middle'}
+      put(w, h, cands) {
+        for (const c of cands) {
+          const x0 = c.align === 'left' ? c.px : c.align === 'right' ? c.px - w : c.px - w / 2;
+          const y0 = c.vpos === 'above' ? c.py - h : c.vpos === 'below' ? c.py : c.py - h / 2;
+          const b = [x0, y0, x0 + w, y0 + h];
+          if (inside(b) && !onCurve(b) && !onBox(b)) { boxes.push(b); return b; }
+        }
+        return null;
+      }
+    };
+  }
+  // candidates beside a curve: at each abscissa (data), on each side in the order given, centred or flush left or right
+  function along(plot, xs, yOf, sides) {
+    const out = [];
+    for (const g of [4, 9]) for (const x of xs) {
+      if (!(x > plot.xlim[0] && x < plot.xlim[1])) continue;
+      const px = plot.X(x), py = plot.Y(yOf(x));
+      if (!isFinite(py)) continue;
+      for (const sd of sides) for (const al of ['center', 'left', 'right']) out.push({ px, py: sd === 'above' ? py - g : py + g, align: al, vpos: sd });
+    }
+    return out;
+  }
+  // candidates along a horizontal line: flush with its left or right end, or centred anywhere along it (a sweep in 6 px
+  // steps from the middle outwards); above the line, then below
+  function onLine(plot, at, order) {
+    const m = plot.m, W = plot.cv.w, Y = plot.Y(at), mid = (m.l + W - m.r) / 2, out = [];
+    for (const [vpos, dy] of [['above', -2], ['below', 3]]) for (const k of order) {
+      if (k === 'left') out.push({ px: m.l + 6, py: Y + dy, align: 'left', vpos });
+      else if (k === 'right') out.push({ px: W - m.r - 6, py: Y + dy, align: 'right', vpos });
+      else for (let d = 0; d < mid - m.l; d += 6) for (const x of d ? [mid + d, mid - d] : [mid]) out.push({ px: x, py: Y + dy, align: 'center', vpos });
+    }
+    return out;
+  }
+  // texts: [[text, size], ...] tried in order, the first that fits is kept
+  function putText(P, ctx, list, texts, col, cands) {
+    for (const [s, size] of texts) {
+      const b = P.put(rtW(ctx, s, size) + 4, size + 5, cands);
+      if (b) { list.push({ s, b, size, col }); return b; }
+    }
+    return null;
+  }
+
+  // ---------- panels ----------
+  const elA = fig.querySelector('.b2-drive-amp'), elB = fig.querySelector('.b2-drive-ph'), elC = fig.querySelector('.b2-drive-time');
+  const XT = [[1, '1'], [10, '10'], [100, '100'], [1e3, '10^3'], [1e4, '10^4']].map(([v, label]) => ({ v, label }));
+  const YT = [];
+  for (let e = -7; e <= 3; e++) YT.push({ v: Math.pow(10, e), label: e % 2 ? '' : (e === 0 ? '1' : `10^{${e < 0 ? '−' + (-e) : e}}`) });
+  const M = { l: 58, r: 12, t: 10, b: 44 };
+  const pA = new EPP.Plot(elA, {
+    logx: true, logy: true, xlim: XL, ylim: [1e-7, 1e3], xticks: XT, yticks: YT, aspect: 0.8, minHeight: 250, maxHeight: 330,
+    legend: false, margin: M, xname: 'ħω', hoverX: fmtW, hoverY: v => fH(v) + ' Å',
+    ariaLabel: 'Panel a: displacement amplitude of the ion pair, a bound electron and a free carrier against the drive energy'
+  });
+  const pB = new EPP.Plot(elB, {
+    logx: true, xlim: XL, ylim: [0, 180], xticks: XT, yticks: [0, 45, 90, 135, 180].map(v => ({ v, label: v + '°' })),
+    aspect: 0.8, minHeight: 250, maxHeight: 330, legend: false, margin: M, xname: 'ħω', hoverX: fmtW, hoverY: fDeg,
+    ariaLabel: 'Panel b: phase lag of the polarization behind the field against the drive energy'
+  });
+  const pC = new EPP.Plot(elC, {
+    xlim: [0, 2], ylim: [-1.3, 1.7], xticks: [0, 0.5, 1, 1.5, 2].map(v => ({ v, label: String(v) })),
+    yticks: [[-1, '−1'], [0, '0'], [1, '1']].map(([v, label]) => ({ v, label })), aspect: 0.27, minHeight: 210, maxHeight: 250,
+    legend: false, margin: M, xname: 't', hoverX: v => EPP.fix(v, 2) + ' periods', hoverY: v => EPP.fix(v, 2),
+    ariaLabel: 'Panel c: two drive periods of the field, the polarization and the current of the selected species'
+  });
+  const TS = EPP.linspace(0, 2, 241);
+  const $ = (c) => fig.querySelector('.b2-drive-' + c);
+  const RO = {};
+  ['hw', 'sp', 'xi', 'lag', 'lead', 'eps', 'j', 'pow'].forEach(k => { RO[k] = $('v-' + k); });
+  let st = null, cur = null, ui = null;
+
+  // (a): reference lines, curves, dots at the drive; labels placed in the render hook
+  function labelsA(ctx) {
+    const list = [], m = pA.m, W = pA.cv.w;
+    const P = placer(pA, KEYS.map(k => envelope(pA, cur.xs, cur[k].a)));
+    const zp = zeroPoint(st);
+    putText(P, ctx, list, [['Ga–As bond length', 11], ['bond length', 11]], 'muted', onLine(pA, BOND, ['left', 'right', 'sweep']));
+    putText(P, ctx, list, [['zero-point amplitude of the ion pair', 11], ['zero-point amplitude', 11], ['zero point', 10]], 'muted', onLine(pA, zp, ['left', 'right', 'sweep']));
+    for (const at of [BOND, zp]) { const Y = pA.Y(at); P.block([m.l, Y - 1, W - m.r, Y + 1]); }
+    const amp = (k) => (x) => C.abs(xi(k, x * 1e-3, st));
+    const w0 = st.w0;
+    putText(P, ctx, list, [['ion pair', 11.5]], 'phonon', along(pA, [3.5, 2.5, 5, 1.8, 7], amp('ion'), ['below', 'above'])
+      .concat(along(pA, [w0 * 2.2, w0 * 3.5, w0 * 5.5, w0 * 8], amp('ion'), ['above', 'below'])));
+    putText(P, ctx, list, [['bound electron', 11.5]], 'electron', along(pA, [400, 250, 650, 160, 1000, 3.5, 2.5], amp('bound'), ['above', 'below']));
+    putText(P, ctx, list, [['free carrier', 11.5]], 'c5', along(pA, [70, 50, 100, 140, 35, 200, 300, 500, 25], amp('free'), ['above', 'below']));
+    return list;
+  }
+  // (b): the 90° line and its meaning, then the three curves
+  function labelsB(ctx) {
+    const list = [], m = pB.m, W = pB.cv.w;
+    const P = placer(pB, KEYS.map(k => envelope(pB, cur.xs, cur[k].p)));
+    const inPhase = '$P' + DOT + '_x$ in phase with $E$';
+    putText(P, ctx, list, [[inPhase, 11], [inPhase, 10]], 'muted', onLine(pB, 90, ['right', 'sweep', 'left']));
+    { const Y = pB.Y(90); P.block([m.l, Y - 1, W - m.r, Y + 1]); }
+    const y0 = pB.Y(0), y180 = pB.Y(180);
+    putText(P, ctx, list, [['$P_x$ follows $E$', 11]], 'muted', [m.l + 6, pB.X(2), pB.X(3), pB.X(6)].map((px, i) => ({ px, py: y0 - 6, align: i ? 'center' : 'left', vpos: 'above' })));
+    putText(P, ctx, list, [['$P_x$ opposes $E$', 11]], 'muted', [600, 350, 1200, 200, 2500].map(x => ({ px: pB.X(x), py: y180 + 6, align: 'center', vpos: 'below' })));
+    const beside = (k) => {
+      const out = [];
+      for (const ph of [55, 40, 70]) { const x = xAt(cur.xs, cur[k].p, ph); if (isFinite(x)) out.push({ px: pB.X(x) - 6, py: pB.Y(ph), align: 'right', vpos: 'middle' }); }
+      for (const ph of [125, 140, 110]) { const x = xAt(cur.xs, cur[k].p, ph); if (isFinite(x)) out.push({ px: pB.X(x) + 6, py: pB.Y(ph), align: 'left', vpos: 'middle' }); }
+      return out;
+    };
+    putText(P, ctx, list, [['ion pair', 11.5]], 'phonon', beside('ion'));
+    putText(P, ctx, list, [['bound electron', 11.5]], 'electron', beside('bound'));
+    const ph = (k) => (x) => lagOf(xi(k, x * 1e-3, st));
+    putText(P, ctx, list, [['free carrier', 11.5]], 'c5', along(pB, [15, 20, 12, 25, 9, 1.6, 2.2], ph('free'), ['below', 'above']));
+    return list;
+  }
+  const hookA = pA.render.bind(pA);
+  pA.render = () => {
+    hookA();
+    if (!cur || !pA.cv.w) return;
+    const ctx = pA.ctx;
+    axes(pA, 'drive $ħω$ (meV)', '$|ξ|$ (Å)');
+    ctx.save(); for (const L of labelsA(ctx)) plate(ctx, L.s, L.b, L.size, EPP.textColor(L.col)); ctx.restore();
+  };
+  const hookB = pB.render.bind(pB);
+  pB.render = () => {
+    hookB();
+    if (!cur || !pB.cv.w) return;
+    const ctx = pB.ctx;
+    axes(pB, 'drive $ħω$ (meV)', 'phase lag $φ$');
+    ctx.save(); for (const L of labelsB(ctx)) plate(ctx, L.s, L.b, L.size, EPP.textColor(L.col)); ctx.restore();
+  };
+  // (c): the lag φ drawn between the field maximum at t = 1 and the next maximum of P_x
+  let lagC = 0;
+  const hookC = pC.render.bind(pC);
+  pC.render = () => {
+    hookC();
+    if (!st || !pC.cv.w) return;
+    const ctx = pC.ctx, sp = SP[st.sp];
+    axes(pC, 'time $t$ (drive periods)', 'scaled');
+    const X1 = pC.X(1), X2 = pC.X(1 + lagC / 360), Yp = pC.Y(1), YA = pC.Y(1.24);
+    ctx.save();
+    ctx.strokeStyle = EPP.color('muted'); ctx.lineWidth = 1; ctx.setLineDash([2, 3]);
+    ctx.beginPath(); ctx.moveTo(X1, Yp - 4); ctx.lineTo(X1, YA + 3); if (X2 - X1 > 3) { ctx.moveTo(X2, Yp - 4); ctx.lineTo(X2, YA + 3); } ctx.stroke();
+    ctx.setLineDash([]);
+    const cF = EPP.color('fg2');
+    if (X2 - X1 >= 14) {
+      ctx.strokeStyle = cF; ctx.fillStyle = cF; ctx.lineWidth = 1.3;
+      ctx.beginPath(); ctx.moveTo(X1 + 1, YA); ctx.lineTo(X2 - 1, YA); ctx.stroke();
+      for (const [x, s] of [[X1, 1], [X2, -1]]) { ctx.beginPath(); ctx.moveTo(x, YA); ctx.lineTo(x + 7 * s, YA - 3.5); ctx.lineTo(x + 7 * s, YA + 3.5); ctx.closePath(); ctx.fill(); }
+    }
+    for (const [x, c] of [[X1, 'photon'], [X2, sp.col]]) { ctx.fillStyle = EPP.color(c); ctx.beginPath(); ctx.arc(x, Yp, 3.6, 0, TAU); ctx.fill(); }
+    const s = `$φ$ = ${fDeg(lagC)}`, tw = rtW(ctx, s, 11.5);
+    ctx.fillStyle = EPP.color('fg2'); ctx.textBaseline = 'alphabetic';
+    if (X2 - X1 >= tw + 4) rt(ctx, s, (X1 + X2) / 2, YA - 7, 11.5, 'center');
+    else rt(ctx, s, Math.max(X1, X2) + 8, YA + 4, 11.5, 'left');
+    ctx.restore();
+  };
+
+  function describe(dI, dB, dF, d) {
+    const peak = C.abs(xi('ion', st.w0 * 1e-3, st)), stat = C.abs(xi('ion', 1e-6, st)), w = fmtW(st.w).replace(' ', ' ');
+    pA.cv.canvas.setAttribute('aria-label', `Panel a: displacement amplitude against the drive energy, 1 meV to 20 eV, both axes logarithmic. ` +
+      `Ion pair: ${fA(stat)} Å when static, peak ${fA(peak)} Å at ${EPP.fix(st.w0, 1)} meV. Bound electron: resonance at 4.97 eV. ` +
+      `Free carrier: falls as one over the frequency squared. At the drive, ${w}: ion pair ${fA(dI.A)} Å, bound electron ${fA(dB.A)} Å, free carrier ${fA(dF.A)} Å.`);
+    pB.cv.canvas.setAttribute('aria-label', `Panel b: phase lag of the polarization behind the field, 0 to 180 degrees, against the drive energy. ` +
+      `At the drive, ${w}: ion pair ${fDeg(dI.phi)}, bound electron ${fDeg(dB.phi)}, free carrier ${fDeg(dF.phi)}.`);
+    pC.cv.canvas.setAttribute('aria-label', `Panel c: two drive periods of the field, the polarization and the current of the ${SP[st.sp].name}, each scaled to its maximum. ` +
+      `The polarization lags the field by ${fDeg(d.phi)}; the current ${d.phi > 90.05 ? 'lags the field by ' + fDeg(d.phi - 90) : 'leads the field by ' + fDeg(90 - d.phi)}.`);
+  }
+
+  function draw() {
+    if (!st) return;
+    cur = curves(st);
+    const W = st.w, dI = atDrive('ion', st), dB = atDrive('bound', st), dF = atDrive('free', st), D = { ion: dI, bound: dB, free: dF };
+    const zp = zeroPoint(st);
+    pA.draw([
+      { type: 'hline', at: BOND, color: 'muted', dash: [2, 3] },
+      { type: 'hline', at: zp, color: 'muted', dash: [6, 4] },
+      { type: 'vline', at: W, color: 'muted', dash: [2, 3] },
+      { type: 'line', x: cur.xs, y: cur.free.a, color: 'c5', dash: [6, 4], label: 'free carrier', breakJump: Infinity },
+      { type: 'line', x: cur.xs, y: cur.bound.a, color: 'electron', label: 'bound electron', breakJump: Infinity },
+      { type: 'line', x: cur.xs, y: cur.ion.a, color: 'phonon', label: 'ion pair', breakJump: Infinity },
+      ...KEYS.map(k => ({ type: 'points', x: [W], y: [D[k].A], color: SP[k].col, r: 3.6 }))
+    ]);
+    pB.draw([
+      { type: 'hline', at: 90, color: 'muted', dash: [6, 4] },
+      { type: 'vline', at: W, color: 'muted', dash: [2, 3] },
+      { type: 'line', x: cur.xs, y: cur.free.p, color: 'c5', dash: [6, 4], label: 'free carrier' },
+      { type: 'line', x: cur.xs, y: cur.bound.p, color: 'electron', label: 'bound electron' },
+      { type: 'line', x: cur.xs, y: cur.ion.p, color: 'phonon', label: 'ion pair' },
+      ...KEYS.map(k => ({ type: 'points', x: [W], y: [D[k].phi], color: SP[k].col, r: 3.6 }))
+    ]);
+    // (c): E = cos ωt, P_x ∝ cos(ωt − φ), j_x = Ṗ_x ∝ −sin(ωt − φ), each scaled to its maximum; t in drive periods
+    const k = st.sp, d = D[k], ph = d.phi / DEG;
+    lagC = d.phi;
+    pC.draw([
+      { type: 'line', x: TS, y: TS.map(t => Math.cos(TAU * t)), color: 'photon', width: 2.6, label: 'E(t)/E_0' },
+      { type: 'line', x: TS, y: TS.map(t => Math.cos(TAU * t - ph)), color: SP[k].col, label: 'P_x(t)/|P_x|_{max}' },
+      { type: 'line', x: TS, y: TS.map(t => -Math.sin(TAU * t - ph)), color: 'c4', dash: [6, 4], label: 'j_x(t)/|j_x|_{max}' }
+    ]);
+    $('spn').textContent = SP[k].name;
+    $('legP').style.color = `var(${SP[k].css})`;
+    // readouts, SI units
+    RO.hw.textContent = fmtW(W);
+    RO.sp.textContent = SP[k].name;
+    RO.xi.innerHTML = fH(d.A) + ' Å';
+    RO.lag.textContent = fDeg(d.phi);
+    const lead = 90 - d.phi;                                    // above 90° of lag the current lags the field too
+    RO.lead.textContent = lead < -0.05 ? `${fDeg(lead)} (a lag of ${fDeg(-lead)})` : fDeg(lead);
+    RO.eps.innerHTML = fCx(d.eps);
+    RO.j.innerHTML = fH(d.J) + ' A/cm²';
+    RO.pow.innerHTML = fH(d.pow) + ' W/cm³';
+    $('warn').hidden = !(dI.A > 0.1 * BOND);
+    describe(dI, dB, dF, d);
+  }
+
+  // ---------- controls ----------
+  ui = EPP.controls(fig.querySelector('.b2-drive-ctrls'), [
+    { key: 'w', type: 'range', label: 'drive ħω', min: XL[0], max: XL[1], value: 33.3, log: true, fmt: fmtW },
+    { key: 'E0', type: 'range', label: 'field amplitude E_0', min: 1, max: 1000, value: 100, log: true, fmt: v => EPP.fmt(v, 3) + ' kV/cm' },
+    { key: 'w0', type: 'range', label: 'short-range resonance ħω_0', min: 10, max: 60, step: 0.1, value: 33.3, fmt: v => v.toFixed(1) + ' meV' },
+    { key: 'gam', type: 'range', label: 'ion damping ħγ', min: 0.05, max: 5, value: 0.31, log: true, fmt: v => EPP.fmt(v, 2) + ' meV' },
+    { key: 'sp', type: 'seg', label: 'time trace for', options: [['ion', 'ion pair'], ['bound', 'bound electron'], ['free', 'free carrier']], value: 'ion' }
+  ], (s) => { st = s; draw(); });
+  // slider labels: the symbols in italic, as in the readouts; the four sliders in two columns, the drive pair first
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const LAB = { w: `drive ${I('ħω')}`, E0: `field amplitude ${I('E')}<sub>0</sub>`, w0: `short-range resonance ${I('ħω')}<sub>0</sub>`, gam: `ion damping ${I('ħγ')}` };
+  Object.keys(LAB).forEach(k => { const sp = fig.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  ui.el.style.gridTemplateColumns = 'repeat(auto-fill, minmax(min(100%, 300px), 1fr))';
+
+  // a click or drag in (a) or (b) sets the drive; a click next to the ion resonance lands on it. A touch that turns into a
+  // scroll is cancelled by the browser, so on touch screens only a tap or a sideways drag counts.
+  function wire(plot) {
+    let touch = false, moved = false, cancelled = false;
+    plot.holder.addEventListener('pointerdown', (e) => { touch = e.pointerType === 'touch'; moved = false; cancelled = false; }, true);
+    plot.holder.addEventListener('pointercancel', () => { cancelled = true; }, true);
+    plot.onPointer = (x, y, type, d) => {
+      if (!st || !d) return;
+      if (type === 'move') moved = true;
+      const act = type === 'down' ? !touch : type === 'move' ? true : (touch && !cancelled && !moved);
+      if (!act || !isFinite(x)) return;
+      let v = EPP.clamp(x, XL[0], XL[1]);
+      if (Math.abs(d.px - plot.X(st.w0)) <= 6) v = st.w0;
+      ui.set('w', v);
+    };
+  }
+  wire(pA); wire(pB);
+})();
+</script>

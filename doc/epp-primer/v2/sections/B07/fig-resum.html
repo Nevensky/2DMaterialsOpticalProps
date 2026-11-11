@@ -1,0 +1,205 @@
+  <figure class="viz" id="viz-b7-resum">
+    <p class="viz-title">Why the whole series is needed: truncated series against the Dyson sum <span class="tag">interactive</span></p>
+    <div class="b7-resum-plot"><div class="legend b7-resum-leg">
+      <span class="item" style="color:var(--c-phonon)"><span class="sw"></span><span style="color:var(--fg-2)">Dyson sum $F$</span></span>
+      <span class="item" style="color:var(--c-5)"><span class="sw"></span><span style="color:var(--fg-2)">truncated series $F_N$, <span class="nw">$N$ = <span class="b7-resum-legN">4</span></span></span></span>
+      <span class="item" style="color:var(--muted)"><span class="sw dash"></span><span style="color:var(--fg-2)">free phonon line $F^0$</span></span>
+      <span class="item" style="color:var(--muted)"><span class="sw box"></span><span style="color:var(--fg-2)">series diverges, $|F^0\Pi^{\ph}|\gt1$</span></span>
+    </div></div>
+    <div class="b7-resum-ctrls"></div>
+    <div class="readout b7-resum-ro" aria-live="polite"><span>bare pole $\hbar\omega_{\mathrm{TO}}$<b class="b7-resum-v-T"></b></span><span>Dyson pole $\hbar\bar\omega$<b class="b7-resum-v-E"></b></span><span>static $\Pi^{\ph}$<b class="b7-resum-v-Pi"></b></span><span>window $|F^0\Pi^{\ph}|\gt1$<b class="b7-resum-v-win"></b></span><span>maximum of $-\mathrm{Im}\,F_N/\pi$ at<b class="b7-resum-v-max"></b></span><span>$|F^0\Pi^{\ph}|$ at the Dyson pole<b class="b7-resum-v-abs"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> However many exchanges are kept, the truncated series peaks at the bare frequency <span class="nw">$\omega_{\mathrm{TO}}$.</span> Only the Dyson sum moves the mode, to <span class="nw">$\bar\omega$,</span> on the edge of the shaded window where the series diverges.</p><div class="cap-more"><p><strong>Marks.</strong> Every curve is $-\mathrm{Im}\,F/\pi$ against the energy <span class="nw">$\hbar\omega$;</span> a peak is a mode. Dashed grey: the free phonon line <span class="nw">$F^0$.</span> Amber: the Dyson sum <span class="nw">$F$.</span> Violet: the truncated series <span class="nw">$F_N$,</span> clipped by the frame (the readout gives its maximum). Shading: <span class="nw">$|F^0\Pi^{\ph}|\gt1$.</span> Vertical lines: the bare $\omega_{\mathrm{TO}}$ and the dressed pole <span class="nw">$\bar\omega$.</span></p><p><strong>Try.</strong> Raise <span class="nw">$N$:</span> the violet structure at $\omega_{\mathrm{TO}}$ sharpens and changes sign but never moves; at large $N$ it leaves the frame inside the window and settles onto the amber curve outside it. Switch the electrons off: the self-energy grows by the factor <span class="nw">$\varepsilon_\infty$,</span> and the window covers every frequency below the pole (GaAs: 0 to <span class="nw">55.6 meV).</span> Shrink <span class="nw">$\hbar\gamma$:</span> the upper edge of the window closes in on the pole, where $|F^0\Pi^{\ph}|$ approaches 1.</p><p><strong>Model.</strong> One polar optical branch at <span class="nw">$\bq\to0$,</span> its index dropped. The free line <a class="eqref" href="#b5-eq-F0"></a> carries a damping $\gamma$ added by hand (the theory has none in an insulator): $F^0=2\hbar\omega_{\mathrm{TO}}/[(\hbar\omega)^2-(\hbar\omega_{\mathrm{TO}})^2+\ii\,\hbar\gamma\,\hbar\omega]$ in meV⁻¹. The self-energy is constant: <span class="nw">$(\hbar\omega^{\ion}_{\mathrm p})^2/(2\hbar\omega_{\mathrm{TO}})$</span> without electrons <a class="eqref" href="#b7-eq-pi0"></a>, $\varepsilon_\infty$ times smaller with them <a class="eqref" href="#b7-eq-limq"></a>. $F_N$ is the series <a class="eqref" href="#b7-eq-series"></a> cut after $N$ exchanges, $F$ its sum <a class="eqref" href="#b7-eq-diag"></a>, with the pole <a class="eqref" href="#b7-eq-pole"></a>. Presets (illustrative literature values) of $\hbar\omega_{\mathrm{TO}}$, $\hbar\omega^{\ion}_{\mathrm p}$ and <span class="nw">$\varepsilon_\infty$:</span> GaAs 33.3, <span class="nw">44.6 meV,</span> 10.9; NaCl 20.3, <span class="nw">38.9 meV,</span> 2.34; hBN in plane, treated as isotropic, 169.9, <span class="nw">224.4 meV,</span> 4.87.</p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b7-resum');
+  if (!fig || !window.EPP) return;
+
+  // ---------- physics: one polar branch at q -> 0; energies in meV, propagators in 1/meV ----------
+  // Born charge Z*, cell volume Omega_V (Å³; a³/4 for the two cubic crystals), reduced mass M_r of the two atoms (amu),
+  // ε_∞, ħω_TO (meV): literature values, illustrative, as in the text of Sections B.7 and B.8
+  const mr = (m1, m2) => m1 * m2 / (m1 + m2);
+  const PRE = {
+    GaAs: { Z: 2.07, Om: Math.pow(5.653, 3) / 4, Mr: mr(69.723, 74.9216), ei: 10.9, T: 33.3, name: 'GaAs' },
+    NaCl: { Z: 1.12, Om: Math.pow(5.64, 3) / 4, Mr: mr(22.990, 35.453), ei: 2.34, T: 20.3, name: 'NaCl' },
+    hBN: { Z: 2.71, Om: 18.08, Mr: mr(10.811, 14.007), ei: 4.87, T: 169.9, name: 'hBN, in plane' }
+  };
+  // (ħω_p^ion)² = 4πe² Z*² ħ²/(Omega_V M_r), with 4πe² = 180.95 eV Å and ħ²/(amu Å²) = 4.1802 meV: in meV²
+  const KZ = 180.95 * 4.1802e3;
+  function model(st) {
+    const P = PRE[st.mat] || PRE.GaAs, T = P.T, G = st.G, N = Math.round(st.N);
+    const wp2 = KZ * P.Z * P.Z / (P.Om * P.Mr);
+    // constant self-energy: the vacuum value (B7.12) without electrons, divided by ε_∞ with them (B7.20)
+    const Pi = wp2 / (2 * T * (st.el ? P.ei : 1));
+    const En = Math.sqrt(T * T + 2 * T * Pi);       // Dyson pole (B7.10)
+    const D = En - T;
+    // fixed limits: x from the preset and the electrons only, y from the Dyson peak height p = 2ω_TO/(πγ ω̄)
+    return { P, T, G, N, wp2, Pi, En, el: st.el, x0: Math.max(0.3, T - 1.6 * D), x1: En + 1.2 * D, p: 2 * T / (Math.PI * G * En) };
+  }
+  // the series diverges where |F^0 Π| > 1, that is (E² − T²)² + γ²E² < (2TΠ)²: a quadratic in u = E²
+  function divWindow(m) {
+    const { T, G, Pi } = m, b = T * T - G * G / 2, d = 4 * T * T * Pi * Pi - T * T * G * G + G * G * G * G / 4;
+    if (!(d > 0)) return null;
+    const s = Math.sqrt(d);
+    return b + s > 0 ? [b - s > 0 ? Math.sqrt(b - s) : 0, Math.sqrt(b + s)] : null;
+  }
+  // energy grid: uniform, plus fine sampling (γ/20) within 12γ of the bare and the dressed pole
+  function grid(m) {
+    const xs = EPP.linspace(m.x0, m.x1, 1201);
+    for (const c of [m.T, m.En]) for (let i = -240; i <= 240; i++) { const x = c + i * m.G / 20; if (x > m.x0 && x < m.x1) xs.push(x); }
+    xs.sort((u, v) => u - v);
+    const out = [xs[0]];
+    for (let i = 1; i < xs.length; i++) if (xs[i] - out[out.length - 1] > 1e-9) out.push(xs[i]);
+    return out;
+  }
+  function curves(m) {
+    const { T, G, Pi, N } = m, xs = grid(m), n = xs.length;
+    const A0 = new Array(n), AN = new Array(n), AF = new Array(n);
+    let imax = 0;
+    for (let i = 0; i < n; i++) {
+      const E = xs[i], dr = E * E - T * T, di = G * E, d2 = dr * dr + di * di;
+      const fr = 2 * T * dr / d2, fi = -2 * T * di / d2;           // F^0 = 2T/(E² − T² + iγE)
+      const xr = fr * Pi, xi = fi * Pi;                             // F^0 Π
+      let sr = 1, si = 0, pr = 1, pi = 0;                           // Σ_{k=0}^{N} (F^0 Π)^k
+      for (let k = 1; k <= N; k++) { const t = pr * xr - pi * xi; pi = pr * xi + pi * xr; pr = t; sr += pr; si += pi; }
+      const ni = fr * si + fi * sr;                                 // Im F_N, F_N = F^0 Σ (Π F^0)^k
+      const ur = 1 - xr, ui = -xi, u2 = ur * ur + ui * ui;
+      const ei = (fi * ur - fr * ui) / u2;                          // Im F, F = F^0/(1 − F^0 Π)
+      A0[i] = -fi / Math.PI; AN[i] = -ni / Math.PI; AF[i] = -ei / Math.PI;
+      if (AN[i] > AN[imax]) imax = i;
+    }
+    return { xs, A0, AN, AF, xmax: xs[imax], ymax: AN[imax] };
+  }
+
+  // ---------- canvas text: '$...$' marks math, whose letters are italic; _x, ^x as in EPP.drawRich ----------
+  const ITAL = /[A-Za-zα-ωħ]/;
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const part of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: part.t, m: part.m, it: false }); continue; }
+        let buf = '', it = null;
+        for (const ch of part.t) { const k = ITAL.test(ch); if (it !== null && k !== it) { out.push({ t: buf, m: part.m, it }); buf = ''; } buf += ch; it = k; }
+        if (buf) out.push({ t: buf, m: part.m, it });
+      }
+    });
+    return out;
+  }
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, fam = EPP.css('--font-ui'), rs = runs(s);
+    const font = (r) => `${r.it ? 'italic ' : ''}${r.m ? Math.round(size * 0.72) : size}px ${fam}`;
+    const ws = rs.map(r => { ctx.font = font(r); return ctx.measureText(r.t).width; });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    let x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    if (o.color) ctx.fillStyle = o.color;
+    ctx.textAlign = 'left';
+    rs.forEach((r, k) => { ctx.font = font(r); ctx.fillText(r.t, x0, y + (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0))); x0 += ws[k]; });
+    return tot;
+  }
+  const tw = (ctx, s, size) => txt(ctx, s, 0, 0, { size, measure: true });
+
+  // ---------- plot ----------
+  const elPlot = fig.querySelector('.b7-resum-plot'), elLeg = fig.querySelector('.b7-resum-leg');
+  const plot = new EPP.Plot(elPlot, {
+    xlim: [29, 39], ylim: [-1, 1.5], aspect: 0.5, minHeight: 250, maxHeight: 420, legend: false,
+    margin: { l: 58, r: 14, t: 26, b: 44 }, xname: 'ħω', hoverX: v => EPP.fix(v, 2) + ' meV', hoverY: v => EPP.fmt(v, 3) + ' meV⁻¹',
+    ariaLabel: 'Minus the imaginary part of the phonon propagator over pi against the energy: the free phonon line, the Dyson sum and the truncated series'
+  });
+  elPlot.appendChild(elLeg);       // the legend (static markup, MathJax) goes under the canvas
+  let cur = null, curv = null, win = null;
+  // axis titles, and the labels of the two vertical lines in the top margin, so no spike can hide them
+  const baseRender = plot.render.bind(plot);
+  plot.render = () => {
+    const w = plot.cv.w, h = plot.cv.h, m = plot.m;
+    // tick density from the current size, so a phone gets enough ticks and a wide screen not too many
+    if (w && h) {
+      plot.opt.xticks = EPP.niceTicks(plot.xlim[0], plot.xlim[1], Math.max(4, Math.round((w - m.l - m.r) / 80)));
+      plot.opt.yticks = EPP.niceTicks(plot.ylim[0], plot.ylim[1], Math.max(4, Math.round((h - m.t - m.b) / 50)));
+    }
+    baseRender();
+    const ctx = plot.ctx;
+    if (!w || !h || !cur) return;
+    const cFg = EPP.color('fg');
+    ctx.save();
+    ctx.textBaseline = 'alphabetic';
+    txt(ctx, '$ħω$ (meV)', m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    const L = [{ s: 'bare $ω$_{TO}', x: plot.X(cur.T), c: EPP.textColor('muted') }, { s: 'Dyson pole', x: plot.X(cur.En), c: EPP.textColor('phonon') }];
+    L.forEach(l => { l.w = tw(ctx, l.s, 11.5); l.a = l.x - l.w / 2; });
+    const gap = 10, over = L[0].a + L[0].w + gap - L[1].a;
+    if (over > 0) { L[0].a -= over / 2; L[1].a += over / 2; }
+    L[0].a = Math.max(2, L[0].a); L[1].a = Math.min(w - 2 - L[1].w, Math.max(L[1].a, L[0].a + L[0].w + gap));
+    L.forEach(l => txt(ctx, l.s, l.a, m.t - 8, { size: 11.5, color: l.c }));
+    ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, '−Im $F$/π (meV⁻¹)', 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+  };
+
+  function draw() {
+    const m = cur, c = curv;
+    plot.draw([
+      win ? { type: 'band', x0: win[0], x1: win[1], color: 'muted', alpha: 0.13 } : null,
+      { type: 'vline', at: m.T, color: 'muted' },
+      { type: 'vline', at: m.En, color: 'phonon' },
+      { type: 'line', x: c.xs, y: c.A0, color: 'muted', dash: [5, 4], width: 1.5, label: 'free phonon line F^0' },
+      // the truncated series runs far outside the frame near ω_TO: no pen lifts, the frame clips it
+      { type: 'line', x: c.xs, y: c.AN, color: 'c5', width: 1.8, label: 'truncated F_N, N = ' + m.N, breakJump: Infinity },
+      { type: 'line', x: c.xs, y: c.AF, color: 'phonon', width: 2, label: 'Dyson sum F' }
+    ], { xlim: [m.x0, m.x1], ylim: [-0.7 * m.p, 1.3 * m.p] });
+  }
+
+  // ---------- readouts ----------
+  const $v = (k) => fig.querySelector('.b7-resum-v-' + k);
+  const RO = { T: $v('T'), E: $v('E'), Pi: $v('Pi'), win: $v('win'), max: $v('max'), abs: $v('abs') };
+  const legN = fig.querySelector('.b7-resum-legN'), nb = '\u00a0';
+  const mev = (v, d) => EPP.fix(v, d) + nb + 'meV';
+  // a height in 1/meV, in scientific notation as HTML once it is large: 1.8×10<sup>4</sup>
+  const sci = (v) => {
+    if (!isFinite(v)) return '—';
+    if (Math.abs(v) < 1e3) return EPP.fmt(v, 3);
+    const k = Math.floor(Math.log10(Math.abs(v))), mt = v / Math.pow(10, k);
+    return `${mt.toFixed(1)}×10<sup>${k}</sup>`;
+  };
+  const spoken = (v) => (Math.abs(v) < 1e3 ? EPP.fmt(v, 3) : `${(v / Math.pow(10, Math.floor(Math.log10(Math.abs(v))))).toFixed(1)} times 10 to the power ${Math.floor(Math.log10(Math.abs(v)))}`);
+  function readouts() {
+    const m = cur, w = win;
+    const absPole = 2 * m.T * m.Pi / Math.hypot(m.En * m.En - m.T * m.T, m.G * m.En);   // |F^0 Π| at ω̄, below 1 by the damping
+    const winTxt = w ? `${w[0] > 0 ? EPP.fix(w[0], 2) : '0'}–${mev(w[1], 2)}` : 'none';
+    RO.T.textContent = mev(m.T, 1);
+    RO.E.textContent = mev(m.En, 2);
+    RO.Pi.textContent = mev(m.Pi, 2);
+    RO.win.textContent = winTxt;
+    RO.max.innerHTML = `${mev(curv.xmax, 2)}, height ${sci(curv.ymax)}${nb}meV⁻¹`;
+    RO.abs.textContent = EPP.fix(absPole, 3);
+    legN.textContent = String(m.N);
+    plot.cv.canvas.setAttribute('aria-label', `Minus the imaginary part of the phonon propagator over pi against the energy, ${m.P.name}, electrons ${m.el ? 'on' : 'off'}, broadening ${m.G.toFixed(2)} meV. ` +
+      `The truncated series with N = ${m.N} exchanges peaks at ${EPP.fix(curv.xmax, 2)} meV, at the bare frequency ${EPP.fix(m.T, 1)} meV, with a height of ${spoken(curv.ymax)} per meV${curv.ymax > 1.3 * m.p ? ', outside the frame' : ''}. ` +
+      `The Dyson sum peaks at ${EPP.fix(m.En, 2)} meV, on the upper edge of the shaded window, ${winTxt.replace(/\u00a0/g, ' ')}, where the series diverges.`);
+  }
+
+  function update(st) {
+    cur = model(st); win = divWindow(cur); curv = curves(cur);
+    draw(); readouts();
+  }
+
+  // ---------- controls ----------
+  const elCtl = fig.querySelector('.b7-resum-ctrls');
+  const ui = EPP.controls(elCtl, [
+    { key: 'mat', type: 'seg', label: 'crystal (illustrative)', options: [['GaAs', 'GaAs'], ['NaCl', 'NaCl'], ['hBN', 'hBN ∥']], value: 'GaAs' },
+    { key: 'el', type: 'toggle', label: 'electrons on (ε_∞ in D^e)', value: true },
+    { key: 'N', type: 'range', label: 'truncation order N', min: 0, max: 20, step: 1, value: 4, fmt: v => String(Math.round(v)) },
+    { key: 'G', type: 'range', label: 'broadening ħγ', min: 0.1, max: 2, step: 0.05, value: 0.5, fmt: v => v.toFixed(2) + ' meV' }
+  ], update);
+  // control labels: symbols in italic, labels upright, as in the text
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const LAB = { el: `electrons on (${I('ε')}<sub>∞</sub> in ${I('D')}<sup>e</sup>)`, N: `truncation order ${I('N')}`, G: `broadening ${I('ħγ')}` };
+  Object.keys(LAB).forEach(k => { const sp = elCtl.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  const bHBN = document.getElementById(`${fig.id}-mat-hBN`);
+  if (bHBN) bHBN.setAttribute('aria-label', 'hBN, in plane');
+  update(ui.state);
+
+  // previewed outside Section B.7 (the figure test), the cited equations are absent: show their numbers as text
+  const TAGS = { 'b5-eq-F0': 'B5.4', 'b7-eq-pi0': 'B7.12', 'b7-eq-limq': 'B7.20', 'b7-eq-series': 'B7.6', 'b7-eq-diag': 'B7.9', 'b7-eq-pole': 'B7.10' };
+  if (!fig.closest('#b-phonon-se')) fig.querySelectorAll('a.eqref').forEach(a => { const id = (a.getAttribute('href') || '').slice(1), s = document.createElement('span'); s.textContent = '(' + (TAGS[id] || id) + ')'; a.replaceWith(s); });
+})();
+</script>

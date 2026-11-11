@@ -1,0 +1,497 @@
+<section class="chapter" id="b-dielectric" data-num="B.3" data-title="The polar crystal as a dielectric">
+  <header class="ch-head">
+    <p class="eyebrow"><span class="num">B.3</span><span>EPP §4.2 · Eqs. 144–165</span></p>
+    <h2>The polar crystal as a dielectric</h2>
+    <p class="lede">Drive the ions of a diatomic crystal with a uniform field and the Lagrangian of B.2 returns a Lorentz oscillator. Its dielectric function has poles at the TO and zeros at the LO frequency. The Reststrahlen band, the Lyddane–Sachs–Teller relation and the lattice part of the screened interaction $W$ all follow from that one function.</p>
+  </header>
+
+  <p>In <a href="#b-lagrangian">§B.2</a> the electron–phonon–photon Lagrangian (E.134) gave every ion a harmonic equation of motion, driven by the electric field through its Born charge: $m_a\ddot Q_{ia\mu}+\sum_{jb\nu}k_{ia\mu,jb\nu}Q_{jb\nu}=\sum_\nu Z^*_{a\nu\mu}E_\nu(\bR_i^0)$ (E.143). Before quantizing anything, EPP §4.2.1 tests this equation on the textbook case: a diatomic polar crystal at long wavelength. EPP §4.2.1 is classical (no $\hbar$) and written in Gaussian units. $Z^*$ carries the dimension of charge, $Z^*_{\rm EPP}=|e|\,Z^*_{\rm G}$. Here $\mathbf D$ is the electric displacement, not the photon propagator $D$ of <a href="#b-photon-se">§B.5</a>–<a href="#b-phonon-se">§B.7</a>.</p>
+
+  <h3>Two masses, one spring, one field</h3>
+  <p>At $|\bq|\ll 1/a$ neighbouring cells move in phase, $Q_{ja\mu}\approx Q_{ia\mu}$. Every short-range spring between the two sublattices then adds into one effective spring $k_\mu$, and the crystal behaves like one diatomic molecule per cell, repeated in lockstep. With diagonal Born charges and force constants (exact for cubic sites) the three Cartesian directions decouple, and the nearest-neighbour equations (E.144)–(E.145) reduce to</p>
+  <div class="eq">$$ m_a\ddot Q_{a\mu}=-k_\mu\left(Q_{a\mu}-Q_{b\mu}\right)+Z^*_{a\mu}E_\mu,\qquad m_b\ddot Q_{b\mu}=-k_\mu\left(Q_{b\mu}-Q_{a\mu}\right)+Z^*_{b\mu}E_\mu . $$</div>
+  <p>The equal and opposite spring constants come from the acoustic sum rule and the symmetry of the force-constant matrix, applied to the lattice-summed constants. A harmonic drive $[Q_{a\mu},Q_{b\mu}]=[A,B]\,e^{-i\omega t}$ (E.146) turns this into a $2\times2$ linear system with determinant</p>
+  <div class="eq">$$ \det = m_am_b\,\omega^2\left[\omega^2-\omega^2_{\mu{\rm O}}\right]. \tag{E.148}$$</div>
+  <p>Its zeros are the normal modes. Three acoustic modes have $\omega=0$ and both atoms moving together. Three <em>bare</em> optical modes have $\omega^2_{\mu\rm O}=k_\mu/M$, with $M=m_am_b/(m_a+m_b)$, and the atoms moving against each other with the centre of mass at rest ($A:B=1:-m_a/m_b$). "Bare" is the paper's word: $\omega_{\rm O}$ is set by short-range springs only and has not yet felt the macroscopic field that its own dipoles create.</p>
+
+  <h3>A Lorentz oscillator with an ionic plasma frequency</h3>
+  <p>The polarization is the dipole per cell over the cell volume, $P_\mu=(Z^*_{a\mu}Q_{a\mu}+Z^*_{b\mu}Q_{b\mu})/\Omega_{\rm uc}$. In a diatomic crystal the two Born charges are equal and opposite, $Z^*_\mu\equiv Z^*_{a\mu}=-Z^*_{b\mu}$, and the driven response becomes</p>
+  <div class="eq">$$ P_\mu=-\frac{\left[Z^*_\mu\right]^2}{\Omega_{\rm uc}M}\,\frac{1}{\omega^2-\omega^2_{\mu\rm O}}\,E_\mu . \tag{E.150}$$</div>
+  <p>The acoustic pole has dropped out. A rigid translation of a neutral cell carries no dipole, so the field drives only the relative coordinate, and what is left is a Lorentz oscillator resonant at the bare frequency.</p>
+  <p>The macroscopic $E$ is an average over the cell. A given dipole feels that average plus the field of its near neighbours, which the average smears out. For sites of cubic symmetry this local field is $E_\mu\to E^*_\mu=E_\mu+\frac{4\pi}{3}P_\mu$ (Lorentz, E.151). Inserting it into (E.150) gives</p>
+  <div class="eq">$$ P_\mu=-\frac{\omega^2_{p\mu}}{4\pi}\,\frac{1}{\omega^2-\omega^2_{\mu\rm O}}\left(E_\mu+\frac{4\pi}{3}P_\mu\right), \tag{E.152}$$</div>
+  <p>where the paper introduces the <strong>ionic plasmon frequency</strong></p>
+  <div class="eq">$$ \omega^2_{p\mu}=\frac{4\pi\left[Z^*_\mu\right]^2}{\Omega_{\rm uc}M}. $$</div>
+  <p>This is exactly a plasma frequency $4\pi ne^2/m$ for a gas of charges $Z^*$ with mass $M$ and density $1/\Omega_{\rm uc}$. In SI units with dimensionless $Z^*$ it reads $\omega_p^2=Z^{*2}e^2/(\varepsilon_0\Omega_{\rm uc}M)$, or $\omega_p^2\,[\mathrm{cm^{-2}}]=4.92\times10^{7}\,Z^{*2}/(\Omega_{\rm uc}[\text{Å}^3]\,M[\mathrm u])$. For NaCl ($Z^*\approx1.12$, $\Omega_{\rm uc}=44.9$ Å$^3$, $M=13.9$ u; literature values, illustrative) this gives $\omega_p\approx314\ \mathrm{cm^{-1}}\approx39$ meV, the same scale as the phonons themselves. Solving (E.152) for $P$ moves the resonance down to $\omega^2_{\mu\rm O}-\frac13\omega^2_{p\mu}$ (E.153): the local field reinforces the displacement and softens the restoring force.</p>
+
+  <details class="derivation"><summary>Derivation: from the driven two-mass problem to (E.150)</summary><div class="d-body">
+    <p>With $e^{-i\omega t}$ the reduced equations become</p>
+    $$\begin{bmatrix}k_\mu-\omega^2m_a&-k_\mu\\-k_\mu&k_\mu-\omega^2m_b\end{bmatrix}\begin{bmatrix}A\\B\end{bmatrix}=\begin{bmatrix}Z^*_{a\mu}\\Z^*_{b\mu}\end{bmatrix}E_\mu ,$$
+    <p>with $\det=(k-\omega^2m_a)(k-\omega^2m_b)-k^2=m_am_b\omega^4-k\omega^2(m_a+m_b)$, which is (E.148). Inverting,</p>
+    $$\begin{bmatrix}A\\B\end{bmatrix}=\frac{E_\mu}{\det}\begin{bmatrix}(Z^*_{a\mu}+Z^*_{b\mu})k_\mu-m_b\omega^2Z^*_{a\mu}\\(Z^*_{a\mu}+Z^*_{b\mu})k_\mu-m_a\omega^2Z^*_{b\mu}\end{bmatrix}, \tag{E.147}$$
+    $$P_\mu=\frac{E_\mu}{\Omega_{\rm uc}\det}\left\{\left(Z^*_{a\mu}+Z^*_{b\mu}\right)^2k_\mu-\omega^2\left[m_a\left(Z^*_{b\mu}\right)^2+m_b\left(Z^*_{a\mu}\right)^2\right]\right\}e^{-i\omega t}. \tag{E.149}$$
+    <p>For $Z^*_{b\mu}=-Z^*_{a\mu}$ the curly bracket is $-\omega^2(m_a+m_b)Z^{*2}_\mu$. Its $\omega^2$ cancels the acoustic factor $\omega^2$ in $\det$, and $(m_a+m_b)/(m_am_b)=1/M$ gives (E.150). If the charges did not sum to zero, a term $(Z^*_a+Z^*_b)^2k/(\Omega_{\rm uc}\det)\propto1/\omega^2$ would survive at low frequency: a free-charge (Drude-like) response that an insulator cannot have. This is why the charge-neutrality sum rule $\sum_\kappa Z^*_\kappa=0$ must hold.</p>
+  </div></details>
+
+  <h3>Adding the electrons: $\epsilon(\omega)$</h3>
+  <p>Macroscopic electrodynamics closes the loop. With $P_\mu=\chi_\mu E_\mu$ (E.154) and $D_\mu=\epsilon_\mu(\omega)E_\mu=E_\mu+4\pi P_\mu$ (E.155), the lattice alone gives $\epsilon_\mu(\omega)=1-\omega^2_{p\mu}/(\omega^2-\omega^2_{\mu\rm O}+\frac13\omega^2_{p\mu})$ (E.157). The valence electrons are then added by hand:</p>
+  <div class="eq">$$ \epsilon_\mu(\omega)=\epsilon_\infty-\frac{\omega^2_{p\mu}}{\omega^2-\omega^2_{\mu\rm O}+\frac13\omega^2_{p\mu}} . \tag{E.158}$$</div>
+  <p>The justification is that independent polarizable subsystems add their susceptibilities, $\epsilon_{12}=\epsilon_1+\epsilon_2-1$. In RPA language, $W=v+v(\chi^0_1+\chi^0_2)W$, so $\epsilon_{12}=1-v(\chi^0_1+\chi^0_2)$. A constant $\epsilon_\infty$ means the electrons follow the ions instantaneously, i.e. no retardation in Giustino's sense (no frequency dependence of the electronic screening on phonon time scales). The paper calls this step ad hoc and promises that the diagrammatic theory will generate $\epsilon_\infty$ from the electronic photon self-energy (<a href="#b-photon-se">§B.5</a>, <a href="#b-electrostatic">§B.9</a>). Written with its zero and its pole, (E.158) becomes</p>
+  <div class="eq">$$ \epsilon_\mu(\omega)=\epsilon_\infty\,\frac{\omega^2-\tilde\omega^2_{{\rm LO}\mu}}{\omega^2-\tilde\omega^2_{{\rm TO}\mu}}, \tag{E.159}$$</div>
+  <div class="eq">$$ \begin{aligned} \tilde\omega^2_{{\rm LO}\mu}&=\omega^2_{\mu\rm O}+\left[\frac{1}{\epsilon_\infty}-\frac13\right]\omega^2_{p\mu},\\ \tilde\omega^2_{{\rm TO}\mu}&=\omega^2_{\mu\rm O}-\frac13\,\omega^2_{p\mu}. \end{aligned} \tag{E.160}$$</div>
+
+  <details class="derivation"><summary>Derivation: from the local field to (E.157) and the factorized form (E.159)–(E.160)</summary><div class="d-body">
+    <p>Multiply (E.152) by $\omega^2-\omega_{\rm O}^2$ and collect $P$: $P\,(\omega^2-\omega_{\rm O}^2+\tfrac13\omega_p^2)=-\tfrac{\omega_p^2}{4\pi}E$, which is (E.153). With $P=(\epsilon-1)E/4\pi$ (E.156) this is $\epsilon-1=-\omega_p^2/(\omega^2-\omega_{\rm O}^2+\tfrac13\omega_p^2)$, i.e. (E.157). Replacing $1\to\epsilon_\infty$ and writing $\tilde\omega_{\rm TO}^2=\omega_{\rm O}^2-\tfrac13\omega_p^2$,</p>
+    $$\epsilon_\infty-\frac{\omega_p^2}{\omega^2-\tilde\omega_{\rm TO}^2}=\epsilon_\infty\,\frac{\omega^2-\left(\tilde\omega_{\rm TO}^2+\omega_p^2/\epsilon_\infty\right)}{\omega^2-\tilde\omega_{\rm TO}^2},$$
+    <p>so $\tilde\omega_{\rm LO}^2=\tilde\omega_{\rm TO}^2+\omega_p^2/\epsilon_\infty=\omega_{\rm O}^2+(1/\epsilon_\infty-1/3)\,\omega_p^2$, which is (E.160). The pole of $\epsilon$ is the pole of the oscillator. The zero is where the electronic and ionic polarizations cancel the vacuum term in $\mathbf D$.</p>
+  </div></details>
+
+  <h3>Zeros are LO, poles are TO</h3>
+  <p>Picture a longitudinal optical wave first. The ions oscillate along $\bq$, so $\bP\parallel\bq$ and $\nabla\cdot\bP\neq0$. Sheets of bound charge $\rho_{\rm b}=-\nabla\cdot\bP$ form at the nodes of $\bP$ and produce a macroscopic field that opposes the displacement. That field is an extra restoring force, so the longitudinal mode is stiffer. In a transverse wave $\bP\perp\bq$, $\nabla\cdot\bP=0$, no bound charge forms, and in the electrostatic limit there is no macroscopic field at all.</p>
+  <p>Formally, with no free charge $\nabla\cdot\mathbf D=0$, and in electrostatics $\nabla\times\bE=0$. For a plane wave $e^{i\bq\cdot\br}$ these read $\epsilon\,\bq\cdot\bE=0$ and $\bq\times\bE=0$. A longitudinal field ($\bE\parallel\bq$) survives the first condition only if $\epsilon(\omega)=0$ (E.161), and then</p>
+  <div class="eq">$$ D_\mu=\epsilon_\mu(\omega)E_\mu=E_\mu+4\pi P_\mu=0, \tag{E.163}$$</div>
+  <div class="eq">$$ E_\mu=-4\pi P_\mu . \tag{E.164}$$</div>
+  <p>The zeros of $\epsilon$ are therefore the dressed LO phonons: longitudinal electromagnetic modes in which the polarization sustains its own field. Once $\epsilon_\infty$ is in, $P$ in (E.163)–(E.164) is the total polarization. The electrons screen the field of the ions, so the ionic part alone gives $E=-4\pi P_{\rm ion}/\epsilon_\infty$. A transverse field must vanish, $\bE=0$, and a finite $\bP$ with $\bE=0$ requires $\epsilon\to\infty$. The poles of $\epsilon$ are the TO phonons, with $\mathbf D=4\pi\bP\neq0$ and $\nabla\cdot\mathbf D=0$ guaranteed by transversality. A mode with $Z^*=0$ has $\omega_p=0$ and is not shifted at all.</p>
+
+  <figure class="viz" id="viz-b-dielectric-lt">
+    <p class="viz-title">Why the LO mode carries a field and the TO mode does not <span class="tag">static</span></p>
+    <div class="b-dielectric-ltwrap" style="overflow-x:auto;overflow-y:hidden;max-width:100%">
+    <svg class="b-dielectric-ltsvg" viewBox="0 0 440 322" role="img" aria-labelledby="b-dielectric-svg-t" style="display:block;width:100%;min-width:420px;max-width:580px;height:auto;margin:0 auto">
+<title id="b-dielectric-svg-t">Longitudinal and transverse optical modes on a chain of positive and negative ions: in the LO mode the polarization creates bound charge and a field E = -4 pi P; in the TO mode there is no bound charge and E = 0.</title>
+<defs>
+<marker id="b-dielectric-ah-p" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--c-phonon)"/></marker>
+<marker id="b-dielectric-ah-v" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--c-5)"/></marker>
+<marker id="b-dielectric-ah-g" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--c-photon)"/></marker>
+<marker id="b-dielectric-ah-m" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--muted)"/></marker>
+</defs>
+<text x="10.0" y="20.0" text-anchor="start" style="fill:var(--fg);font-family:var(--font-ui);font-size:15px;font-weight:600">LO: &#949;(&#969;&#771;<tspan baseline-shift="sub" style="font-size:10.5px">LO</tspan>) = 0  &#8658;  D = 0,  E = &#8722;4&#960;P</text>
+<line x1="376.0" y1="34.0" x2="418.0" y2="34.0" style="stroke:var(--muted);stroke-width:1.4;stroke-linecap:round" marker-end="url(#b-dielectric-ah-m)"/>
+<text x="370.0" y="38.0" text-anchor="end" style="fill:var(--muted);font-family:var(--font-ui);font-size:13.5px;font-style:italic">q</text>
+<line x1="30" y1="66" x2="418" y2="66" style="stroke:var(--rule);stroke-width:1"/>
+<rect x="123.0" y="42" width="10" height="48" rx="3" style="fill:var(--c-photon);opacity:0.14"/>
+<text x="128.0" y="37.0" text-anchor="middle" style="fill:var(--t-photon);font-family:var(--font-ui);font-size:12.5px">+&#961;<tspan baseline-shift="sub" style="font-size:10px">b</tspan></text>
+<rect x="315.0" y="42" width="10" height="48" rx="3" style="fill:var(--c-photon);opacity:0.14"/>
+<text x="320.0" y="37.0" text-anchor="middle" style="fill:var(--t-photon);font-family:var(--font-ui);font-size:12.5px">&#8722;&#961;<tspan baseline-shift="sub" style="font-size:10px">b</tspan></text>
+<circle cx="44.0" cy="66.0" r="7.5" style="fill:var(--fg-2)"/>
+<text x="44.0" y="70.0" text-anchor="middle" style="fill:var(--surface);font-family:var(--font-ui);font-size:12px;font-weight:600">+</text>
+<line x1="37.1" y1="52.0" x2="50.9" y2="52.0" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<circle cx="68.0" cy="66.0" r="7.5" style="fill:var(--surface);stroke:var(--fg-2);stroke-width:1.4"/>
+<text x="68.0" y="70.0" text-anchor="middle" style="fill:var(--fg-2);font-family:var(--font-ui);font-size:13px;font-weight:600">&#8722;</text>
+<line x1="73.5" y1="80.0" x2="62.5" y2="80.0" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<circle cx="92.0" cy="66.0" r="7.5" style="fill:var(--fg-2)"/>
+<text x="92.0" y="70.0" text-anchor="middle" style="fill:var(--surface);font-family:var(--font-ui);font-size:12px;font-weight:600">+</text>
+<line x1="89.1" y1="52.0" x2="94.9" y2="52.0" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<circle cx="116.0" cy="66.0" r="7.5" style="fill:var(--surface);stroke:var(--fg-2);stroke-width:1.4"/>
+<text x="116.0" y="70.0" text-anchor="middle" style="fill:var(--fg-2);font-family:var(--font-ui);font-size:13px;font-weight:600">&#8722;</text>
+<line x1="118.3" y1="80.0" x2="113.7" y2="80.0" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<circle cx="140.0" cy="66.0" r="7.5" style="fill:var(--fg-2)"/>
+<text x="140.0" y="70.0" text-anchor="middle" style="fill:var(--surface);font-family:var(--font-ui);font-size:12px;font-weight:600">+</text>
+<line x1="142.9" y1="52.0" x2="137.1" y2="52.0" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<circle cx="164.0" cy="66.0" r="7.5" style="fill:var(--surface);stroke:var(--fg-2);stroke-width:1.4"/>
+<text x="164.0" y="70.0" text-anchor="middle" style="fill:var(--fg-2);font-family:var(--font-ui);font-size:13px;font-weight:600">&#8722;</text>
+<line x1="161.7" y1="80.0" x2="166.3" y2="80.0" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<circle cx="188.0" cy="66.0" r="7.5" style="fill:var(--fg-2)"/>
+<text x="188.0" y="70.0" text-anchor="middle" style="fill:var(--surface);font-family:var(--font-ui);font-size:12px;font-weight:600">+</text>
+<line x1="194.9" y1="52.0" x2="181.1" y2="52.0" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<circle cx="212.0" cy="66.0" r="7.5" style="fill:var(--surface);stroke:var(--fg-2);stroke-width:1.4"/>
+<text x="212.0" y="70.0" text-anchor="middle" style="fill:var(--fg-2);font-family:var(--font-ui);font-size:13px;font-weight:600">&#8722;</text>
+<line x1="206.5" y1="80.0" x2="217.5" y2="80.0" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<circle cx="236.0" cy="66.0" r="7.5" style="fill:var(--fg-2)"/>
+<text x="236.0" y="70.0" text-anchor="middle" style="fill:var(--surface);font-family:var(--font-ui);font-size:12px;font-weight:600">+</text>
+<line x1="242.9" y1="52.0" x2="229.1" y2="52.0" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<circle cx="260.0" cy="66.0" r="7.5" style="fill:var(--surface);stroke:var(--fg-2);stroke-width:1.4"/>
+<text x="260.0" y="70.0" text-anchor="middle" style="fill:var(--fg-2);font-family:var(--font-ui);font-size:13px;font-weight:600">&#8722;</text>
+<line x1="254.5" y1="80.0" x2="265.5" y2="80.0" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<circle cx="284.0" cy="66.0" r="7.5" style="fill:var(--fg-2)"/>
+<text x="284.0" y="70.0" text-anchor="middle" style="fill:var(--surface);font-family:var(--font-ui);font-size:12px;font-weight:600">+</text>
+<line x1="286.9" y1="52.0" x2="281.1" y2="52.0" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<circle cx="308.0" cy="66.0" r="7.5" style="fill:var(--surface);stroke:var(--fg-2);stroke-width:1.4"/>
+<text x="308.0" y="70.0" text-anchor="middle" style="fill:var(--fg-2);font-family:var(--font-ui);font-size:13px;font-weight:600">&#8722;</text>
+<line x1="305.7" y1="80.0" x2="310.3" y2="80.0" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<circle cx="332.0" cy="66.0" r="7.5" style="fill:var(--fg-2)"/>
+<text x="332.0" y="70.0" text-anchor="middle" style="fill:var(--surface);font-family:var(--font-ui);font-size:12px;font-weight:600">+</text>
+<line x1="329.1" y1="52.0" x2="334.9" y2="52.0" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<circle cx="356.0" cy="66.0" r="7.5" style="fill:var(--surface);stroke:var(--fg-2);stroke-width:1.4"/>
+<text x="356.0" y="70.0" text-anchor="middle" style="fill:var(--fg-2);font-family:var(--font-ui);font-size:13px;font-weight:600">&#8722;</text>
+<line x1="358.3" y1="80.0" x2="353.7" y2="80.0" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<circle cx="380.0" cy="66.0" r="7.5" style="fill:var(--fg-2)"/>
+<text x="380.0" y="70.0" text-anchor="middle" style="fill:var(--surface);font-family:var(--font-ui);font-size:12px;font-weight:600">+</text>
+<line x1="373.1" y1="52.0" x2="386.9" y2="52.0" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<circle cx="404.0" cy="66.0" r="7.5" style="fill:var(--surface);stroke:var(--fg-2);stroke-width:1.4"/>
+<text x="404.0" y="70.0" text-anchor="middle" style="fill:var(--fg-2);font-family:var(--font-ui);font-size:13px;font-weight:600">&#8722;</text>
+<line x1="409.5" y1="80.0" x2="398.5" y2="80.0" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<text x="14.0" y="108.0" text-anchor="start" style="fill:var(--c-5);font-family:var(--font-ui);font-size:15px;font-weight:600;font-style:italic">P</text>
+<line x1="46.3" y1="104.0" x2="65.7" y2="104.0" style="stroke:var(--c-5);stroke-width:2.2;stroke-linecap:round" marker-end="url(#b-dielectric-ah-v)"/>
+<line x1="100.0" y1="104.0" x2="108.0" y2="104.0" style="stroke:var(--c-5);stroke-width:2.2;stroke-linecap:round" marker-end="url(#b-dielectric-ah-v)"/>
+<line x1="156.0" y1="104.0" x2="148.0" y2="104.0" style="stroke:var(--c-5);stroke-width:2.2;stroke-linecap:round" marker-end="url(#b-dielectric-ah-v)"/>
+<line x1="209.7" y1="104.0" x2="190.3" y2="104.0" style="stroke:var(--c-5);stroke-width:2.2;stroke-linecap:round" marker-end="url(#b-dielectric-ah-v)"/>
+<line x1="257.7" y1="104.0" x2="238.3" y2="104.0" style="stroke:var(--c-5);stroke-width:2.2;stroke-linecap:round" marker-end="url(#b-dielectric-ah-v)"/>
+<line x1="300.0" y1="104.0" x2="292.0" y2="104.0" style="stroke:var(--c-5);stroke-width:2.2;stroke-linecap:round" marker-end="url(#b-dielectric-ah-v)"/>
+<line x1="340.0" y1="104.0" x2="348.0" y2="104.0" style="stroke:var(--c-5);stroke-width:2.2;stroke-linecap:round" marker-end="url(#b-dielectric-ah-v)"/>
+<line x1="382.3" y1="104.0" x2="401.7" y2="104.0" style="stroke:var(--c-5);stroke-width:2.2;stroke-linecap:round" marker-end="url(#b-dielectric-ah-v)"/>
+<text x="14.0" y="138.0" text-anchor="start" style="fill:var(--t-photon);font-family:var(--font-ui);font-size:15px;font-weight:600;font-style:italic">E</text>
+<line x1="65.7" y1="134.0" x2="46.3" y2="134.0" style="stroke:var(--c-photon);stroke-width:2.2;stroke-linecap:round" marker-end="url(#b-dielectric-ah-g)"/>
+<line x1="108.0" y1="134.0" x2="100.0" y2="134.0" style="stroke:var(--c-photon);stroke-width:2.2;stroke-linecap:round" marker-end="url(#b-dielectric-ah-g)"/>
+<line x1="148.0" y1="134.0" x2="156.0" y2="134.0" style="stroke:var(--c-photon);stroke-width:2.2;stroke-linecap:round" marker-end="url(#b-dielectric-ah-g)"/>
+<line x1="190.3" y1="134.0" x2="209.7" y2="134.0" style="stroke:var(--c-photon);stroke-width:2.2;stroke-linecap:round" marker-end="url(#b-dielectric-ah-g)"/>
+<line x1="238.3" y1="134.0" x2="257.7" y2="134.0" style="stroke:var(--c-photon);stroke-width:2.2;stroke-linecap:round" marker-end="url(#b-dielectric-ah-g)"/>
+<line x1="292.0" y1="134.0" x2="300.0" y2="134.0" style="stroke:var(--c-photon);stroke-width:2.2;stroke-linecap:round" marker-end="url(#b-dielectric-ah-g)"/>
+<line x1="348.0" y1="134.0" x2="340.0" y2="134.0" style="stroke:var(--c-photon);stroke-width:2.2;stroke-linecap:round" marker-end="url(#b-dielectric-ah-g)"/>
+<line x1="401.7" y1="134.0" x2="382.3" y2="134.0" style="stroke:var(--c-photon);stroke-width:2.2;stroke-linecap:round" marker-end="url(#b-dielectric-ah-g)"/>
+<line x1="10" y1="170" x2="430" y2="170" style="stroke:var(--rule);stroke-width:1"/>
+<text x="10.0" y="190.0" text-anchor="start" style="fill:var(--fg);font-family:var(--font-ui);font-size:15px;font-weight:600">TO: &#949;(&#969;&#771;<tspan baseline-shift="sub" style="font-size:10.5px">TO</tspan>) &#8594; &#8734;  &#8658;  E = 0,  D = 4&#960;P</text>
+<line x1="376.0" y1="204.0" x2="418.0" y2="204.0" style="stroke:var(--muted);stroke-width:1.4;stroke-linecap:round" marker-end="url(#b-dielectric-ah-m)"/>
+<text x="370.0" y="208.0" text-anchor="end" style="fill:var(--muted);font-family:var(--font-ui);font-size:13.5px;font-style:italic">q</text>
+<line x1="30" y1="236" x2="418" y2="236" style="stroke:var(--rule);stroke-width:1"/>
+<circle cx="44.0" cy="236.0" r="7.5" style="fill:var(--fg-2)"/>
+<text x="44.0" y="240.0" text-anchor="middle" style="fill:var(--surface);font-family:var(--font-ui);font-size:12px;font-weight:600">+</text>
+<line x1="44.0" y1="227.0" x2="44.0" y2="212.2" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<circle cx="68.0" cy="236.0" r="7.5" style="fill:var(--surface);stroke:var(--fg-2);stroke-width:1.4"/>
+<text x="68.0" y="240.0" text-anchor="middle" style="fill:var(--fg-2);font-family:var(--font-ui);font-size:13px;font-weight:600">&#8722;</text>
+<line x1="68.0" y1="245.0" x2="68.0" y2="256.8" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<circle cx="92.0" cy="236.0" r="7.5" style="fill:var(--fg-2)"/>
+<text x="92.0" y="240.0" text-anchor="middle" style="fill:var(--surface);font-family:var(--font-ui);font-size:12px;font-weight:600">+</text>
+<line x1="92.0" y1="227.0" x2="92.0" y2="220.9" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<circle cx="116.0" cy="236.0" r="7.5" style="fill:var(--surface);stroke:var(--fg-2);stroke-width:1.4"/>
+<text x="116.0" y="240.0" text-anchor="middle" style="fill:var(--fg-2);font-family:var(--font-ui);font-size:13px;font-weight:600">&#8722;</text>
+<line x1="116.0" y1="245.0" x2="116.0" y2="249.9" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<circle cx="140.0" cy="236.0" r="7.5" style="fill:var(--fg-2)"/>
+<text x="140.0" y="240.0" text-anchor="middle" style="fill:var(--surface);font-family:var(--font-ui);font-size:12px;font-weight:600">+</text>
+<line x1="140.0" y1="245.0" x2="140.0" y2="251.1" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<circle cx="164.0" cy="236.0" r="7.5" style="fill:var(--surface);stroke:var(--fg-2);stroke-width:1.4"/>
+<text x="164.0" y="240.0" text-anchor="middle" style="fill:var(--fg-2);font-family:var(--font-ui);font-size:13px;font-weight:600">&#8722;</text>
+<line x1="164.0" y1="227.0" x2="164.0" y2="222.1" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<circle cx="188.0" cy="236.0" r="7.5" style="fill:var(--fg-2)"/>
+<text x="188.0" y="240.0" text-anchor="middle" style="fill:var(--surface);font-family:var(--font-ui);font-size:12px;font-weight:600">+</text>
+<line x1="188.0" y1="245.0" x2="188.0" y2="259.8" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<circle cx="212.0" cy="236.0" r="7.5" style="fill:var(--surface);stroke:var(--fg-2);stroke-width:1.4"/>
+<text x="212.0" y="240.0" text-anchor="middle" style="fill:var(--fg-2);font-family:var(--font-ui);font-size:13px;font-weight:600">&#8722;</text>
+<line x1="212.0" y1="227.0" x2="212.0" y2="215.2" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<circle cx="236.0" cy="236.0" r="7.5" style="fill:var(--fg-2)"/>
+<text x="236.0" y="240.0" text-anchor="middle" style="fill:var(--surface);font-family:var(--font-ui);font-size:12px;font-weight:600">+</text>
+<line x1="236.0" y1="245.0" x2="236.0" y2="259.8" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<circle cx="260.0" cy="236.0" r="7.5" style="fill:var(--surface);stroke:var(--fg-2);stroke-width:1.4"/>
+<text x="260.0" y="240.0" text-anchor="middle" style="fill:var(--fg-2);font-family:var(--font-ui);font-size:13px;font-weight:600">&#8722;</text>
+<line x1="260.0" y1="227.0" x2="260.0" y2="215.2" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<circle cx="284.0" cy="236.0" r="7.5" style="fill:var(--fg-2)"/>
+<text x="284.0" y="240.0" text-anchor="middle" style="fill:var(--surface);font-family:var(--font-ui);font-size:12px;font-weight:600">+</text>
+<line x1="284.0" y1="245.0" x2="284.0" y2="251.1" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<circle cx="308.0" cy="236.0" r="7.5" style="fill:var(--surface);stroke:var(--fg-2);stroke-width:1.4"/>
+<text x="308.0" y="240.0" text-anchor="middle" style="fill:var(--fg-2);font-family:var(--font-ui);font-size:13px;font-weight:600">&#8722;</text>
+<line x1="308.0" y1="227.0" x2="308.0" y2="222.1" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<circle cx="332.0" cy="236.0" r="7.5" style="fill:var(--fg-2)"/>
+<text x="332.0" y="240.0" text-anchor="middle" style="fill:var(--surface);font-family:var(--font-ui);font-size:12px;font-weight:600">+</text>
+<line x1="332.0" y1="227.0" x2="332.0" y2="220.9" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<circle cx="356.0" cy="236.0" r="7.5" style="fill:var(--surface);stroke:var(--fg-2);stroke-width:1.4"/>
+<text x="356.0" y="240.0" text-anchor="middle" style="fill:var(--fg-2);font-family:var(--font-ui);font-size:13px;font-weight:600">&#8722;</text>
+<line x1="356.0" y1="245.0" x2="356.0" y2="249.9" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<circle cx="380.0" cy="236.0" r="7.5" style="fill:var(--fg-2)"/>
+<text x="380.0" y="240.0" text-anchor="middle" style="fill:var(--surface);font-family:var(--font-ui);font-size:12px;font-weight:600">+</text>
+<line x1="380.0" y1="227.0" x2="380.0" y2="212.2" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<circle cx="404.0" cy="236.0" r="7.5" style="fill:var(--surface);stroke:var(--fg-2);stroke-width:1.4"/>
+<text x="404.0" y="240.0" text-anchor="middle" style="fill:var(--fg-2);font-family:var(--font-ui);font-size:13px;font-weight:600">&#8722;</text>
+<line x1="404.0" y1="245.0" x2="404.0" y2="256.8" style="stroke:var(--c-phonon);stroke-width:1.8;stroke-linecap:round" marker-end="url(#b-dielectric-ah-p)"/>
+<text x="14.0" y="278.0" text-anchor="start" style="fill:var(--c-5);font-family:var(--font-ui);font-size:15px;font-weight:600;font-style:italic">P</text>
+<line x1="56.0" y1="282.3" x2="56.0" y2="265.7" style="stroke:var(--c-5);stroke-width:2.2;stroke-linecap:round" marker-end="url(#b-dielectric-ah-v)"/>
+<line x1="104.0" y1="277.4" x2="104.0" y2="270.6" style="stroke:var(--c-5);stroke-width:2.2;stroke-linecap:round" marker-end="url(#b-dielectric-ah-v)"/>
+<line x1="152.0" y1="270.6" x2="152.0" y2="277.4" style="stroke:var(--c-5);stroke-width:2.2;stroke-linecap:round" marker-end="url(#b-dielectric-ah-v)"/>
+<line x1="200.0" y1="265.7" x2="200.0" y2="282.3" style="stroke:var(--c-5);stroke-width:2.2;stroke-linecap:round" marker-end="url(#b-dielectric-ah-v)"/>
+<line x1="248.0" y1="265.7" x2="248.0" y2="282.3" style="stroke:var(--c-5);stroke-width:2.2;stroke-linecap:round" marker-end="url(#b-dielectric-ah-v)"/>
+<line x1="296.0" y1="270.6" x2="296.0" y2="277.4" style="stroke:var(--c-5);stroke-width:2.2;stroke-linecap:round" marker-end="url(#b-dielectric-ah-v)"/>
+<line x1="344.0" y1="277.4" x2="344.0" y2="270.6" style="stroke:var(--c-5);stroke-width:2.2;stroke-linecap:round" marker-end="url(#b-dielectric-ah-v)"/>
+<line x1="392.0" y1="282.3" x2="392.0" y2="265.7" style="stroke:var(--c-5);stroke-width:2.2;stroke-linecap:round" marker-end="url(#b-dielectric-ah-v)"/>
+<text x="14.0" y="308.0" text-anchor="start" style="fill:var(--t-photon);font-family:var(--font-ui);font-size:15px;font-weight:600;font-style:italic">E</text>
+<text x="44.0" y="308.0" text-anchor="start" style="fill:var(--t-photon);font-family:var(--font-ui);font-size:12.5px">E = 0:  &#8711;&#183;P = 0, no bound charge, no macroscopic field</text>
+</svg>
+    </div>
+    <figcaption>One wavelength of the optical mode on a chain of cations (filled, +) and anions (open, −), with $\bq$ along the chain. <span class="t-p">Amber</span> arrows: ion displacements. <span style="color:var(--c-5)">Violet</span>: cell polarization $\bP$. <span class="t-g">Rose</span>: macroscopic field. <strong>Top (LO):</strong> $\bP\parallel\bq$ piles up bound charge $\pm\rho_{\rm b}=-\nabla\cdot\bP$ at its nodes. The resulting field is $\bE=-4\pi\bP$ (E.164), antiparallel to $\bP$ everywhere, so it pulls every ion back (drawn for $\epsilon_\infty=1$; electrons reduce it to $-4\pi\bP/\epsilon_\infty$). <strong>Bottom (TO):</strong> $\bP\perp\bq$ is divergence-free, so $\bE=0$ and $\mathbf D=4\pi\bP$. The electrostatic picture assumes $cq\gg\omega$.</figcaption>
+  </figure>
+
+  <h3>Lyddane–Sachs–Teller, and what is model independent</h3>
+  <p>At $\omega\to0$, (E.159) gives the Lyddane–Sachs–Teller (LST) relation</p>
+  <div class="eq">$$ \frac{\epsilon_\mu(0)}{\epsilon_\infty}=\frac{\tilde\omega^2_{{\rm LO}\mu}}{\tilde\omega^2_{{\rm TO}\mu}} . \tag{E.165}$$</div>
+  <p>The static dielectric constant exceeds the electronic one by the squared ratio of LO to TO frequencies. In NaCl, $\epsilon(0)=2.34\times(264/164)^2=6.06$, close to the measured 5.9 (literature values, illustrative). Subtracting the two lines of (E.160) gives a second exact statement, not written in the paper but immediate:</p>
+  <div class="eq">$$ \tilde\omega^2_{\rm LO}-\tilde\omega^2_{\rm TO}=\frac{\omega_p^2}{\epsilon_\infty}=\frac{4\pi Z^{*2}}{\epsilon_\infty\,\Omega_{\rm uc}M}. $$</div>
+  <p>The local-field term cancels. This difference of squares is the observable splitting, and it is exactly what the Gonze–Lee non-analytic term adds to the longitudinal mode of a cubic diatomic crystal. The positions of $\tilde\omega_{\rm TO}$ and $\tilde\omega_{\rm LO}$ relative to the bare $\omega_{\rm O}$ depend on the local-field model, and $\omega_{\rm O}$ itself cannot be measured.</p>
+  <p>The author argues that "LO–TO splitting" is a misnomer and prefers "LO shift": the LO mode is the dipole-active phonon dressed by its own macroscopic field. In (E.160) both frequencies move away from $\omega_{\rm O}$, so the clean form of the argument is this. The TO frequency is the analytic one, which already contains the short-range and local-field physics. The LO frequency is the TO frequency plus the dressing by the macroscopic longitudinal field, $\omega_p^2/\epsilon_\infty$ in $\omega^2$.</p>
+
+  <div class="callout connect"><p class="callout-title">Bridge to Giustino: LO–TO splitting</p>
+    <p>Giustino does not derive the LO–TO splitting. In §VI.A.3 he only notes that his treatment of the long-range vertex is analogous to the way DFPT codes compute the splitting (Gonze and Lee, 1997): a non-analytic term of the dynamical matrix, $\propto(\bq\cdot\bZ^*_\kappa)(\bq\cdot\bZ^*_{\kappa'})/(\bq\cdot\boldsymbol\epsilon^\infty\cdot\bq)$, with the same kernel as the Verdi–Giustino vertex (see <a href="#a-polar">§A.4</a>). For an isotropic diatomic crystal that term adds exactly $\omega_p^2/\epsilon_\infty$ to the longitudinal $\omega^2$, the model-independent difference above. In DFPT the analytic part already gives $\omega_{\rm TO}$, so DFPT's "bare" frequency is the TO, not the paper's $\omega_{\rm O}$. EPP re-derives the shift as a photon-mediated phonon self-energy in <a href="#b-phonon-se">§B.7</a> and recovers the Gonze–Lee form for $c\to\infty$ in <a href="#b-electrostatic">§B.9</a>.</p>
+  </div>
+
+  <div class="callout caveat"><p class="callout-title">Subtlety: the local field and the bare frequency</p>
+    <p>Three warnings about (E.151)–(E.160). All three are built into the lab below.</p>
+    <ul>
+      <li><strong>Born charges already contain the local field.</strong> EPP takes $Z^*=\Omega_{\rm uc}\,\delta P/\delta R$ (E.110) from DFT, where it is computed at zero macroscopic field and already includes the electronic and local-field response. In a Clausius–Mossotti model the charge that feels the Lorentz field is the Szigeti charge $Z_s=3Z^*/(\epsilon_\infty+2)$, so applying (E.151) with $Z^*$ double counts. The factor $4\pi/3$ also holds only for cubic sites.</li>
+      <li><strong>$\tilde\omega_{\rm LO}<\omega_{\rm O}$ when $\epsilon_\infty>3$.</strong> Keeping the vacuum factor $\frac13\omega_p^2$ after inserting $\epsilon_\infty$ makes the bracket in (E.160) negative for GaAs, SiC or hBN, so the "shifted" LO sits below the bare mode. A consistent Clausius–Mossotti treatment (not in the paper), with $\omega_p$ still built from the Born charge, gives $\tilde\omega_{\rm TO}^2=\omega_{\rm O}^2-\omega_p^2/(\epsilon_\infty+2)$ and still $\tilde\omega_{\rm LO}^2=\tilde\omega_{\rm TO}^2+\omega_p^2/\epsilon_\infty$. It keeps $\tilde\omega_{\rm LO}>\omega_{\rm O}$ and reduces to (E.160) at $\epsilon_\infty=1$.</li>
+      <li><strong>Cochran instability.</strong> If $\omega_p^2>3\omega_{\rm O}^2$ then $\tilde\omega_{\rm TO}^2<0$. The dipolar local field beats the short-range spring and the lattice polarizes spontaneously, a ferroelectric soft mode (Cochran's picture, not in the paper). Approaching it, $\tilde\omega_{\rm TO}\to0$ and LST sends $\epsilon(0)\to\infty$.</li>
+    </ul>
+    <p>The Dyson-equation route of <a href="#b-photon-se">§B.5</a>–<a href="#b-phonon-se">§B.7</a> has no local field. There, away from the light cone, the TO frequency equals the bare $\omega_\sigma$ of the short-range force constants, and the photon propagator supplies only the macroscopic field. That is the "none" setting of the lab.</p>
+  </div>
+
+  <h3>The Reststrahlen lab</h3>
+  <p>The lab evaluates (E.158)–(E.160) with a retarded damping, $\omega^2\to\omega^2+i\gamma\omega$. The time dependence is $e^{-i\omega t}$, so ${\rm Im}\,\epsilon>0$ means absorption. Four panels show the same $\epsilon(\omega)$: ${\rm Re}$ and ${\rm Im}\,\epsilon$, the normal-incidence reflectance $R=|(\sqrt\epsilon-1)/(\sqrt\epsilon+1)|^2$, the loss function $-{\rm Im}\,1/\epsilon$, and $W/v=1/\epsilon$ split into electronic and lattice parts (derived below). In spectroscopic mode you set $\omega_{\rm TO}$, $\omega_{\rm LO}$ and $\epsilon_\infty$ directly. In microscopic mode you build them from $Z^*$, $\Omega_{\rm uc}$, $M$, $\omega_{\rm O}$ and a local-field model.</p>
+
+  <figure class="viz" id="viz-b-dielectric-lab">
+    <p class="viz-title">Reststrahlen lab: ε(ω), reflectance, loss function and W <span class="tag">interactive</span></p>
+    <div class="viz-grid two"><div class="b-dielectric-p-eps"></div><div class="b-dielectric-p-R"></div></div>
+    <div class="viz-grid two" style="margin-top:14px"><div class="b-dielectric-p-loss"></div><div class="b-dielectric-p-W"></div></div>
+    <div class="b-dielectric-c-common"></div>
+    <div class="b-dielectric-g-spec"><div class="b-dielectric-c-spec"></div></div>
+    <div class="b-dielectric-g-micro" hidden><div class="b-dielectric-c-micro"></div></div>
+    <div class="viz-grid side" style="margin-top:16px"><div class="b-dielectric-p-level"></div><div><div class="callout caveat b-dielectric-warn" style="margin:0;font-size:0.88rem" aria-live="polite"></div></div></div>
+    <div class="b-dielectric-ro"></div>
+    <figcaption><strong>Model.</strong> Spectroscopic mode: (E.159) with one damping $\gamma$. Microscopic mode: $\epsilon=\epsilon_\infty-\omega_p^2/(\omega^2-\omega_{\rm O}^2+s\,\omega_p^2+i\gamma\omega)$ with $\omega_p$ built from the Born charge (E.152) and local-field factor $s=0$ (none), $1/3$ (EPP's Lorentz field, E.151) or $1/(\epsilon_\infty+2)$ (Clausius–Mossotti with the Szigeti charge, not in the paper). A preset loaded in microscopic mode sets $\omega_{\rm O}$ so that $\tilde\omega_{\rm TO}$ matches experiment for the current model. The level diagram plots $\tilde\omega_{\rm TO}$ and $\tilde\omega_{\rm LO}$ against $\omega_p$ at fixed $\omega_{\rm O}$ (in spectroscopic mode, $\omega_p$ from LST and $\omega_{\rm O}$ inferred). Presets (literature values, illustrative; cm$^{-1}$): GaAs 269/292, $\epsilon_\infty=10.9$; NaCl 164/264, 2.34; 3C-SiC 796/972, 6.52; hBN in-plane 1370/1610, 4.87; $Z^*=2.07$, 1.12, 2.70, 2.71 $|e|$. Hover for $\omega$ in cm$^{-1}$ and meV. <strong>What to notice.</strong> ${\rm Im}\,\epsilon$ peaks at TO, while the loss function and $W$ peak at LO; $R\approx1$ in the band between them where $\epsilon<0$. Switching the local-field model in microscopic mode moves both dressed frequencies but leaves $\tilde\omega_{\rm LO}^2-\tilde\omega_{\rm TO}^2=\omega_p^2/\epsilon_\infty$ unchanged, and the spectra in spectroscopic mode do not depend on it at all.</figcaption>
+  </figure>
+
+  <h3>The lattice inside $W$</h3>
+  <p>For a homogeneous polar insulator at long wavelength the screened Coulomb interaction is $W(\omega)=v/\epsilon(\omega)$, with $v=4\pi e^2/q^2$. Splitting off the electronic part with (E.159), and using LST in the last step,</p>
+  <div class="eq">$$ \begin{aligned} \frac{W(\omega)}{v}=\frac{1}{\epsilon(\omega)}&=\underbrace{\frac{1}{\epsilon_\infty}}_{W_{\rm e}/v}+\frac{W_{\rm ph}(\omega)}{v},\\ \frac{W_{\rm ph}(\omega)}{v}&=\frac{1}{\epsilon_\infty}\,\frac{\tilde\omega_{\rm LO}^2-\tilde\omega_{\rm TO}^2}{\omega^2-\tilde\omega_{\rm LO}^2}\\ &=\left(\frac{1}{\epsilon_\infty}-\frac{1}{\epsilon(0)}\right)\frac{\tilde\omega_{\rm LO}^2}{\omega^2-\tilde\omega_{\rm LO}^2}. \end{aligned}$$</div>
+  <p>The lattice part has its pole at $\tilde\omega_{\rm LO}$, not at $\tilde\omega_{\rm TO}$. $W$ is the longitudinal (Coulomb) propagator, so its poles are the zeros of $\epsilon$, and the TO frequency appears in $W$ only as a zero. At $\omega\to0$ the ions screen too and $W\to v/\epsilon(0)$. Far above $\tilde\omega_{\rm LO}$ the ions cannot follow and $W\to v/\epsilon_\infty$. Panel (d) of the lab draws exactly this decomposition.</p>
+
+  <div class="callout connect"><p class="callout-title">Bridge to Giustino: this is his lattice contribution to $W$</p>
+    <p>The lattice term above is the polar, long-wavelength case of Giustino's $W=W_{\rm e}+W_{\rm ph}$ (G Eqs. 104–105) with $W_{\rm e}=v/\epsilon_\infty$: Fröhlich's $|g|^2$ times the LO propagator, worked out in <a href="#a-hedin-baym">§A.5</a> and, in Born-charge form, in <a href="#a-polar">§A.4</a>. Giustino also describes the alternative of Botti and Marques (§IX.A.1): skip the split and build $W$ directly from a Lyddane–Sachs–Teller total dielectric function, which is the $1/\epsilon(\omega)$ of panel (d). In EPP the same object returns as the longitudinal sector of the photon propagator, with $\epsilon_\infty$ no longer put in by hand (<a href="#b-propagator">§B.6</a>, <a href="#b-electrostatic">§B.9</a>).</p>
+  </div>
+
+  <div class="callout intuition"><p class="callout-title">Physical picture: optics sees TO, Coulomb sees LO</p>
+    <p>A transverse light wave probes the poles of $\epsilon$: infrared absorption peaks at $\omega_{\rm TO}$, and the crystal reflects between TO and LO. Longitudinal probes see the zeros: an electron passing through (EELS), Fröhlich scattering of a carrier and the screening of an exciton all go through $1/\epsilon$, which has its pole at $\omega_{\rm LO}$. For BSE work this is the practical message. When exciton binding energies are comparable to $\hbar\omega_{\rm LO}$, the relevant screening lies between $\epsilon_\infty$ and $\epsilon(0)$, and $W_{\rm ph}$ tells you how much.</p>
+  </div>
+
+  <div class="callout caveat"><p class="callout-title">Subtlety: this is electrostatics</p>
+    <p>The L/T classification used $\nabla\times\bE=0$, which holds for $cq\gg\omega$: no retardation in EPP's sense (finite speed of light), i.e. $c\to\infty$. With Faraday's law the transverse modes hybridize with photons through $c^2q^2=\omega^2\epsilon(\omega)$ and become phonon polaritons, confined to $q\lesssim\sqrt{\epsilon(0)}\,\omega_{\rm TO}/c$, the same scale as the light-cone wave vector $q_c=\sqrt{\epsilon_\infty}\,\omega/c$ of <a href="#x-light-cone">§X.1</a> and $10^{-5}$–$10^{-4}$ of the Brillouin zone. The Lagrangian (E.134) already contains the transverse field. <a href="#b-fields">§B.4</a> quantizes it, <a href="#b-propagator">§B.6</a> finds the polaritons, and <a href="#b-phonon-se">§B.7</a> shows that the order of the limits $q\to0$ and $c\to\infty$ matters.</p>
+  </div>
+
+  <div class="callout source"><p class="callout-title">Notes on the source (EPP §4.2.1)</p>
+    <p>An index typo on p. 30 and several loose statements in EPP §4.2.1 (the range of validity of the Lorentz field, "three LO + TO phonons" from the zeros of $\epsilon$, a TO that "remained where it is" despite (E.160)) are listed in <a href="#z-errata">Z.2</a>. One matters here: $Z^*_{a\mu}=-Z^*_{b\mu}$ is not an approximation read off Fig. 5. For a diatomic crystal it is exact, by charge neutrality, and it is what removes the $\omega=0$ pole from (E.149).</p>
+  </div>
+</section>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b-dielectric-lab');
+  if (!fig || !window.EPP) return;
+  const C = EPP.C;
+  const MEV = 0.1239841984;   // meV per cm^-1
+  const KWP = 4.92064e7;      // omega_p^2 [cm^-2] = KWP * Z*^2 / (Omega_uc [A^3] * M [u])  (SI: Z^2 e^2 / (eps0 Omega M))
+  // literature values (illustrative): cm^-1, Born charge in |e|, cell volume in A^3, reduced mass in u
+  // GaAs TO 268.6 cm^-1 = 33.3 meV (shown rounded as 269 cm^-1), the page-wide preset
+  const MATS = {
+    gaas: { name: 'GaAs', TO: 268.6, LO: 292, einf: 10.9, g: 2.5, Z: 2.07, Om: 45.16, mu: 36.12 },
+    nacl: { name: 'NaCl', TO: 164, LO: 264, einf: 2.34, g: 8, Z: 1.12, Om: 44.85, mu: 13.95 },
+    sic: { name: '3C-SiC', TO: 796, LO: 972, einf: 6.52, g: 5, Z: 2.70, Om: 20.72, mu: 8.41 },
+    hbn: { name: 'hBN', TO: 1370, LO: 1610, einf: 4.87, g: 5, Z: 2.71, Om: 18.08, mu: 6.10 }
+  };
+  const q = (s) => fig.querySelector(s);
+  const cmMeV = (v) => (isFinite(v) ? `${Math.round(v)} cm⁻¹ · ${(v * MEV).toFixed(1)} meV` : '—');
+  const hov = (v) => `${v.toFixed(0)} cm⁻¹ (${(v * MEV).toFixed(1)} meV)`;
+  const niceCeil = (v) => { const p = Math.pow(10, Math.floor(Math.log10(v))) / 5; return Math.ceil(v / p - 1e-9) * p; };
+  const base = { xlabel: 'ω (cm^{−1})', xname: 'ω', hoverX: hov, aspect: 0.66, xlim: [0, 400], ylim: [0, 1] };
+  const pE = new EPP.Plot(q('.b-dielectric-p-eps'), Object.assign({}, base, { ylabel: '(a)  ε(ω)', ariaLabel: 'Real and imaginary parts of the dielectric function versus frequency' }));
+  const pR = new EPP.Plot(q('.b-dielectric-p-R'), Object.assign({}, base, { ylabel: '(b)  reflectance R', ylim: [0, 1.04], ariaLabel: 'Normal-incidence reflectance versus frequency' }));
+  const pL = new EPP.Plot(q('.b-dielectric-p-loss'), Object.assign({}, base, { ylabel: '(c)  −Im 1/ε(ω)', ariaLabel: 'Loss function versus frequency' }));
+  const pW = new EPP.Plot(q('.b-dielectric-p-W'), Object.assign({}, base, { ylabel: '(d)  W/v = 1/ε', ariaLabel: 'Screened interaction divided by bare Coulomb, split into electronic and lattice parts' }));
+  const pV = new EPP.Plot(q('.b-dielectric-p-level'), { xlabel: 'ionic plasma frequency ω_p (cm^{−1})', ylabel: 'mode frequency (cm^{−1})', xname: 'ω_p', hoverX: hov, hoverY: (v) => `${Math.round(v)} cm⁻¹`, aspect: 0.62, xlim: [0, 1], ylim: [0, 1], ariaLabel: 'Level diagram: dressed TO and LO frequencies versus ionic plasma frequency at fixed bare frequency' });
+  const warnEl = q('.b-dielectric-warn');
+  const ro = EPP.readout(q('.b-dielectric-ro'));
+  const gSpec = q('.b-dielectric-g-spec'), gMicro = q('.b-dielectric-g-micro');
+  const S = {};
+  const sOf = (lf, einf) => (lf === 'lorentz' ? 1 / 3 : lf === 'cm' ? 1 / (einf + 2) : 0);
+
+  function model() {
+    const c = S.c, einf = c.einf, s = sOf(c.lf, einf);
+    let TO2, LO2, wp2, wO2, Z, clamped = false;
+    if (c.mode === 'spec') {
+      const TO = S.s.TO; let LO = S.s.LO;
+      if (LO <= TO * 1.002) { LO = TO * 1.002; clamped = true; }
+      TO2 = TO * TO; LO2 = LO * LO; wp2 = einf * (LO2 - TO2); wO2 = TO2 + s * wp2;
+      const m = MATS[c.mat]; Z = Math.sqrt(wp2 * m.Om * m.mu / KWP);
+    } else {
+      const mi = S.m; Z = mi.Z;
+      wp2 = KWP * Z * Z / (mi.Om * mi.mu); wO2 = mi.wO * mi.wO;
+      TO2 = wO2 - s * wp2; LO2 = TO2 + wp2 / einf;
+    }
+    const stable = TO2 > 1e-6;
+    return {
+      mode: c.mode, lf: c.lf, einf, g: c.gam, s, TO2, LO2, wp2, wO2, Z, clamped, stable,
+      TO: stable ? Math.sqrt(TO2) : NaN, LO: LO2 > 0 ? Math.sqrt(LO2) : NaN,
+      wp: Math.sqrt(wp2), wO: Math.sqrt(wO2), eps0: stable ? einf * LO2 / TO2 : NaN
+    };
+  }
+  // retarded single-oscillator dielectric function, e^{-i w t}: eps_inf - wp^2/(w^2 - wTO^2 + i g w)
+  const epsAt = (w, m) => C.sub([m.einf, 0], C.div([m.wp2, 0], [w * w - m.TO2, m.g * w]));
+
+  // stable axis limits: keep them fixed while sliders move, rescale only when a feature leaves the window
+  let force = true, X = 0, XP = 0, YP = 0;
+  const ref = {};
+  const stab = (key, v, lo, hi, f) => { if (f || !(ref[key] > 0) || v > hi * ref[key] || v < lo * ref[key]) ref[key] = v; return ref[key]; };
+
+  function grid(xmax, m) {
+    const xs = EPP.linspace(0, xmax, 640);
+    if (m.stable) for (const w0 of [m.TO, m.LO]) {
+      const h = Math.max(8 * m.g, xmax * 0.006);
+      for (let k = 0; k <= 160; k++) { const x = w0 - h + 2 * h * k / 160; if (x > 0 && x < xmax) xs.push(x); }
+    }
+    return xs.sort((a, b) => a - b);
+  }
+
+  function warnings(m) {
+    const w = [], wt = (s) => `ω&#771;<sub>${s}</sub>`;
+    if (!m.stable) w.push(`<strong>Cochran instability.</strong> s·ω<sub>p</sub><sup>2</sup> &gt; ω<sub>O</sub><sup>2</sup> makes ${wt('TO')}<sup>2</sup> &lt; 0: the dipolar local field beats the short-range spring and the lattice polarizes spontaneously (ferroelectric soft mode). There is no harmonic spectrum to plot.`);
+    else if (m.s > 0 && m.TO < 0.4 * m.wO) w.push(`<strong>Soft mode.</strong> The local field has pulled ${wt('TO')} down to ${Math.round(m.TO)} cm⁻¹, and LST gives ε(0) = ${EPP.fmt(m.eps0, 3)}.`);
+    if (m.lf === 'lorentz' && m.einf > 3 && m.wp2 > 0) w.push(`<strong>${wt('LO')} &lt; ω<sub>O</sub>.</strong> With ε<sub>∞</sub> = ${m.einf.toFixed(2)} &gt; 3, Eq. (E.160) puts the "shifted" LO below the bare mode, because the vacuum factor ω<sub>p</sub><sup>2</sup>/3 is kept after ε<sub>∞</sub> is inserted.`);
+    if (m.lf === 'lorentz') w.push(`<strong>Lorentz field with Born charges.</strong> Z* already contains local-field effects; the consistent Clausius–Mossotti choice uses the Szigeti charge 3Z*/(ε<sub>∞</sub>+2).`);
+    if (m.lf === 'cm') w.push(`<strong>Clausius–Mossotti</strong> (not in the paper): s = 1/(ε<sub>∞</sub>+2), so ${wt('LO')} &gt; ω<sub>O</sub> for every ε<sub>∞</sub>.`);
+    if (m.lf === 'off') w.push(`<strong>No local field:</strong> ${wt('TO')} = ω<sub>O</sub>. This is the situation of the Dyson route (§B.5–B.7), where bare phonons come from short-range force constants.`);
+    if (S.c.mat === 'hbn' && m.lf !== 'off') w.push(`<strong>hBN is uniaxial:</strong> the isotropic Lorentz factor 4π/3 assumes cubic sites.`);
+    if (m.clamped) w.push(`<strong>ω<sub>LO</sub> ≤ ω<sub>TO</sub> is unphysical</strong> (LST would need ε(0) &lt; ε<sub>∞</sub>); ω<sub>LO</sub> is clamped just above ω<sub>TO</sub>.`);
+    if (m.mode === 'spec') w.push(`In spectroscopic mode the spectra do not depend on the local-field model. Only the inferred bare ω<sub>O</sub> in the level diagram does.`);
+    return w;
+  }
+
+  function draw() {
+    if (!S.c || !S.s || !S.m) return;
+    const m = model(), f = force; force = false;
+    const key = m.stable ? m.LO : m.wO;
+    if (f || !X || key > 0.9 * X || key < 0.33 * X) X = niceCeil(1.55 * key);
+    const xs = grid(X, m), n = xs.length;
+    const re = new Array(n), im = new Array(n), R = new Array(n), loss = new Array(n), Wt = new Array(n), Wph = new Array(n);
+    let lmax = 0;
+    if (m.stable) for (let i = 0; i < n; i++) {
+      const e = epsAt(xs[i], m), sq = C.sqrt(e), r = C.div(C.sub(sq, [1, 0]), C.add(sq, [1, 0])), inv = C.inv(e);
+      re[i] = e[0]; im[i] = e[1]; R[i] = r[0] * r[0] + r[1] * r[1]; loss[i] = -inv[1]; Wt[i] = inv[0]; Wph[i] = inv[0] - 1 / m.einf;
+      if (loss[i] > lmax) lmax = loss[i];
+    }
+    const er = stab('e', m.stable ? Math.max(m.eps0, m.einf + 1) : m.einf + 1, 0.55, 1.5, f);
+    const lr = stab('l', lmax > 0 ? lmax : 1, 0.35, 1.0, f);
+    const wr = stab('w', 1 / m.einf, 0.6, 1.5, f);
+    const ylE = [-2.5 * er, 3.5 * er], ylL = [0, 1.15 * lr], ylW = [-1.8 * wr, 2.4 * wr];
+    const marks = m.stable ? [
+      { type: 'band', x0: m.TO, x1: m.LO, color: 'phonon', alpha: 0.11 },
+      { type: 'vline', at: m.TO, color: 'muted', text: 'TO' },
+      { type: 'vline', at: m.LO, color: 'muted', text: 'LO', textDy: 15 }
+    ] : [];
+    const unstable = (yl) => (m.stable ? null : { type: 'text', x: X / 2, y: (yl[0] + yl[1]) / 2, text: 'lattice unstable: ω̃_{TO}^2 < 0', align: 'center', color: 'photon', size: 13 });
+    const line = (y, o) => (m.stable ? Object.assign({ type: 'line', x: xs, y }, o) : null);
+    pE.draw([
+      ...marks,
+      { type: 'hline', at: m.einf, color: 'muted', dash: [2, 3], text: 'ε_∞', textAt: 'right' },
+      line(re, { color: 'ink', label: 'Re ε' }),
+      line(im, { color: 'photon', dash: [6, 4], label: 'Im ε' }),
+      m.stable ? { type: 'points', x: [0], y: [m.eps0], color: 'ink', r: 3.5 } : null,
+      m.stable ? { type: 'text', x: 0, y: m.eps0, text: 'ε(0)', dx: 7, dy: -9, color: 'ink', size: 11 } : null,
+      unstable(ylE)
+    ], { xlim: [0, X], ylim: ylE });
+    pR.draw([
+      m.stable ? Object.assign({}, marks[0], { label: 'Reststrahlen band (ε < 0)' }) : null, ...marks.slice(1),
+      line(R, { color: 'photon', label: 'R' }),
+      unstable([0, 1.04])
+    ], { xlim: [0, X] });
+    pL.draw([
+      ...marks,
+      line(loss, { color: 'c5', label: '−Im 1/ε (EELS)' }),
+      unstable(ylL)
+    ], { xlim: [0, X], ylim: ylL });
+    pW.draw([
+      ...marks,
+      m.stable ? { type: 'hline', at: 1 / m.eps0, color: 'muted', dash: [2, 3] } : null,
+      m.stable ? { type: 'text', x: 0.015 * X, y: 1 / m.eps0, dy: 9, text: '1/ε(0)', color: 'muted', size: 11 } : null,
+      { type: 'line', x: [0, X], y: [1 / m.einf, 1 / m.einf], color: 'electron', dash: [6, 4], label: 'W_e/v = 1/ε_∞', hover: false },
+      line(Wph, { color: 'phonon', label: 'Re W_{ph}/v (lattice)' }),
+      line(Wt, { color: 'photon', label: 'Re W/v (total)' }),
+      unstable(ylW)
+    ], { xlim: [0, X], ylim: ylW });
+
+    // level diagram: dressed TO / LO versus omega_p at fixed bare omega_O
+    const wO = m.wO, wp = m.wp, need = Math.max(1.9 * wO, 1.35 * wp);
+    if (f || !XP || wp > 0.92 * XP || need < 0.45 * XP) XP = niceCeil(need);
+    const xp = EPP.linspace(0, XP, 320);
+    const toC = xp.map((p) => { const t = wO * wO - m.s * p * p; return t > 0 ? Math.sqrt(t) : NaN; });
+    const loC = xp.map((p) => { const t = wO * wO - m.s * p * p + p * p / m.einf; return t > 0 ? Math.sqrt(t) : NaN; });
+    let ytop = Math.max(wO, isFinite(m.LO) ? m.LO : 0);
+    loC.forEach((v) => { if (isFinite(v) && v > ytop) ytop = v; });
+    if (f || !YP || ytop > 0.95 * YP || ytop < 0.45 * YP) YP = niceCeil(1.22 * ytop);
+    const xc = m.s > 0 ? wO / Math.sqrt(m.s) : Infinity;
+    const big = 0.025 * YP;
+    pV.draw([
+      xc < XP ? { type: 'band', x0: xc, x1: XP, color: 'photon', alpha: 0.09 } : null,
+      xc < XP ? { type: 'text', x: XP, y: 0.5 * YP, dx: -5, text: 'unstable', align: 'right', color: 'photon', size: 11 } : null,
+      { type: 'line', x: [0, XP], y: [wO, wO], color: 'muted', dash: [5, 4], label: 'bare ω_O', hover: false },
+      { type: 'line', x: xp, y: toC, color: 'ink', label: 'ω̃_{TO}' },
+      { type: 'line', x: xp, y: loC, color: 'phonon', label: 'ω̃_{LO}' },
+      { type: 'vline', at: wp, color: 'muted', text: m.mode === 'spec' ? 'ω_p (LST)' : 'ω_p' },
+      m.stable && Math.abs(m.LO - wO) > big ? { type: 'arrow', x0: wp, y0: wO, x1: wp, y1: m.LO, color: 'phonon', width: 1.6 } : null,
+      m.stable && Math.abs(m.TO - wO) > big ? { type: 'arrow', x0: wp, y0: wO, x1: wp, y1: m.TO, color: 'ink', width: 1.6 } : null,
+      { type: 'points', x: [wp, wp], y: [m.stable ? m.TO : NaN, m.stable ? m.LO : NaN], color: 'ink', r: 3.5 }
+    ], { xlim: [0, XP], ylim: [0, YP] });
+
+    const items = warnings(m);
+    warnEl.innerHTML = '<p class="callout-title">Model check</p><ul style="margin:0;padding-left:1.1em">' + items.map((x) => `<li>${x}</li>`).join('') + '</ul>';
+
+    const mat = MATS[S.c.mat];
+    const d2 = Math.round(m.wp2 / m.einf);
+    if (m.mode === 'spec') {
+      ro.set({
+        'ω_{TO}': cmMeV(m.TO), 'ω_{LO}': cmMeV(m.LO),
+        'ε(0) (LST)': EPP.fmt(m.eps0, 3),
+        'ω_p (LST)': cmMeV(m.wp),
+        'ω_{LO}^2 − ω_{TO}^2 = ω_p^2/ε_∞': `${d2} cm⁻²`,
+        'implied Z^*': `${m.Z.toFixed(2)} |e| (Ω<sub>uc</sub>, M of ${mat.name})`,
+        '1/ε_∞ − 1/ε(0)': EPP.fmt(1 / m.einf - 1 / m.eps0, 3),
+        'inferred bare ω_O': cmMeV(m.wO)
+      });
+    } else {
+      ro.set({
+        'ω_p': cmMeV(m.wp),
+        'ω̃_{TO}': m.stable ? cmMeV(m.TO) : 'unstable', 'ω̃_{LO}': m.stable ? cmMeV(m.LO) : '—',
+        'ω̃_{LO} − ω̃_{TO}': m.stable ? `${(m.LO - m.TO).toFixed(1)} cm⁻¹` : '—',
+        'ω̃_{LO}^2 − ω̃_{TO}^2 = ω_p^2/ε_∞': `${d2} cm⁻²`,
+        'ε(0)': m.stable ? EPP.fmt(m.eps0, 3) : '—',
+        '1/ε_∞ − 1/ε(0)': m.stable ? EPP.fmt(1 / m.einf - 1 / m.eps0, 3) : '—',
+        [`measured TO / LO (${mat.name})`]: `${Math.round(mat.TO)} / ${mat.LO} cm⁻¹`
+      });
+    }
+  }
+
+  function setRange(ui, key, min, max, step, v) {
+    const inp = ui.el.querySelector(`input[id$="-${key}"]`);
+    if (inp) { inp.min = min; inp.max = max; inp.step = step; }
+    ui.set(key, EPP.clamp(v, min, max), true);
+  }
+  let lastMat = null, lastMode = null;
+  function applyPreset(k) {
+    const p = MATS[k], s = sOf(S.c.lf, p.einf);
+    uiC.set('einf', p.einf, true); uiC.set('gam', p.g, true);
+    setRange(uiS, 'TO', Math.round(0.5 * p.TO), Math.round(1.6 * p.TO), 0.1, p.TO);
+    setRange(uiS, 'LO', Math.round(0.5 * p.TO), Math.round(1.8 * p.LO), 1, p.LO);
+    const wp2 = KWP * p.Z * p.Z / (p.Om * p.mu), wO = Math.sqrt(p.TO * p.TO + s * wp2);
+    uiM.set('Z', p.Z, true); uiM.set('Om', p.Om, true); uiM.set('mu', p.mu, true);
+    setRange(uiM, 'wO', Math.round(0.35 * wO), Math.round(2.2 * wO), 0.1, wO);
+    force = true;
+  }
+  function onCommon() {
+    if (!S.c || !uiS || !uiM) return;
+    if (S.c.mat !== lastMat) { lastMat = S.c.mat; applyPreset(lastMat); }
+    if (S.c.mode !== lastMode) { lastMode = S.c.mode; gSpec.hidden = lastMode !== 'spec'; gMicro.hidden = lastMode !== 'micro'; force = true; }
+    draw();
+  }
+  let uiS = null, uiM = null;
+  const uiC = EPP.controls(q('.b-dielectric-c-common'), [
+    { key: 'mode', type: 'seg', label: 'parameters', options: [['spec', 'spectroscopic'], ['micro', 'microscopic']], value: 'spec' },
+    { key: 'mat', type: 'select', label: 'preset', options: [['gaas', 'GaAs'], ['nacl', 'NaCl'], ['sic', '3C-SiC'], ['hbn', 'hBN (in-plane)']], value: 'nacl' },
+    { key: 'lf', type: 'seg', label: 'local field', options: [['off', 'none'], ['lorentz', 'Lorentz 4π/3'], ['cm', 'Clausius–Mossotti']], value: 'lorentz' },
+    { key: 'einf', type: 'range', label: 'electronic ε_∞', min: 1, max: 15, step: 0.01, value: 2.34, fmt: (v) => v.toFixed(2) },
+    { key: 'gam', type: 'range', label: 'damping γ (cm^{−1})', min: 1, max: 20, step: 0.1, value: 8, fmt: (v) => v.toFixed(1) }
+  ], (s) => { S.c = s; onCommon(); });
+  uiS = EPP.controls(q('.b-dielectric-c-spec'), [
+    { key: 'TO', type: 'range', label: 'ω_{TO}', min: 80, max: 270, step: 1, value: 164, fmt: cmMeV },
+    { key: 'LO', type: 'range', label: 'ω_{LO}', min: 80, max: 480, step: 1, value: 264, fmt: cmMeV }
+  ], (s) => { S.s = s; draw(); });
+  uiM = EPP.controls(q('.b-dielectric-c-micro'), [
+    { key: 'Z', type: 'range', label: 'Born charge Z^* (|e|)', min: 0, max: 4, step: 0.01, value: 1.12, fmt: (v) => v.toFixed(2) },
+    { key: 'Om', type: 'range', label: 'cell volume Ω_{uc} (Å^3)', min: 10, max: 80, step: 0.1, value: 44.85, fmt: (v) => v.toFixed(1) },
+    { key: 'mu', type: 'range', label: 'reduced mass M (u)', min: 2, max: 60, step: 0.05, value: 13.95, fmt: (v) => v.toFixed(2) },
+    { key: 'wO', type: 'range', label: 'bare ω_O', min: 80, max: 500, step: 1, value: 242, fmt: cmMeV }
+  ], (s) => { S.m = s; draw(); });
+  S.c = uiC.state; S.s = uiS.state; S.m = uiM.state;
+  onCommon();
+})();
+</script>

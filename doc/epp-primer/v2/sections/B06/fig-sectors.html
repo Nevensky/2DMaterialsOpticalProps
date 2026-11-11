@@ -1,0 +1,440 @@
+  <figure class="viz" id="viz-b6-sectors">
+    <p class="viz-title">From four sectors to one tensor <span class="tag">interactive</span></p>
+    <div class="b6-sectors-grid"></div>
+    <div class="b6-sectors-ctrls"></div>
+    <div class="readout b6-sectors-ro" aria-live="polite" aria-atomic="true">
+      <span data-step="1">objects<b>scalar + row + column + 3 × 3 (cannot be added)</b></span>
+      <span data-step="2" hidden>four 3 × 3 blocks<b>$D^{\mathrm L}$, $D^{\mathrm{LT}}$, $D^{\mathrm{TL}}$, $D^{\mathrm T}$ (they add up to $D$)</b></span>
+      <span data-step="3" hidden>order $n$<b>$D^0(\Pi D^0)^n$, a geometric series</b></span>
+    </div>
+    <div class="b6-sectors-dia">
+      <div class="b6-sectors-step" data-step="1">
+        <p class="b6-sectors-head">Step 1 · the four sectors at lowest order, <a class="eqref" href="#b6-eq-lowest">(B6.5)</a></p>
+        <div class="fd b6-sectors-row"><span class="b6-sectors-rl">(a) $D_{\rho\rho}=$</span><span data-ch="v"></span><span class="op">+</span><span data-ch="v,i:rr,v" data-sep></span><span class="op" data-sep>+</span><span data-ch="v,e:rr,v" data-sep></span><span data-ch="v,P:rr,v" data-mrg hidden></span><span class="op">+ …</span><span class="b6-sectors-kind" data-kind>scalar · length²</span></div>
+        <div class="fd b6-sectors-row"><span class="b6-sectors-rl">(b) $D_{\rho\beta}=$</span><span data-ch="v,i:rj,T" data-sep></span><span class="op" data-sep>+</span><span data-ch="v,e:rj,T" data-sep></span><span data-ch="v,P:rj,T" data-mrg hidden></span><span class="op">+ …</span><span class="b6-sectors-kind" data-kind>row of 3 · length × time</span></div>
+        <div class="fd b6-sectors-row"><span class="b6-sectors-rl">(c) $D_{\alpha\rho}=$</span><span data-ch="T,i:jr,v" data-sep></span><span class="op" data-sep>+</span><span data-ch="T,e:jr,v" data-sep></span><span data-ch="T,P:jr,v" data-mrg hidden></span><span class="op">+ …</span><span class="b6-sectors-kind" data-kind>column of 3 · length²</span></div>
+        <div class="fd b6-sectors-row"><span class="b6-sectors-rl">(d) $D^{\mathrm T}_{\alpha\beta}=$</span><span data-ch="T"></span><span class="op">+</span><span data-ch="T,i:jj,T" data-sep></span><span class="op" data-sep>+</span><span data-ch="T,e:jj,T" data-sep></span><span data-ch="T,P:jj,T" data-mrg hidden></span><span class="op">+ …</span><span class="b6-sectors-kind" data-kind>3 × 3 · length × time</span></div>
+        <p class="b6-sectors-note">Coulomb lines $v/e^2$ end on charge vertices (dots), photon lines $D^{0\mathrm T}$ on current vertices (squares). The four rows are a scalar, a row, a column and a $3\times3$ block, so they cannot be added.</p>
+      </div>
+      <div class="b6-sectors-step" data-step="2" hidden>
+        <p class="b6-sectors-head">Step 2 · every charge vertex becomes a current vertex, and $v/e^2\to D^{0\mathrm L}$, <a class="eqref" href="#b6-eq-sectors">(B6.9)</a>–<a class="eqref" href="#b6-eq-lowest3">(B6.11)</a></p>
+        <div class="fd b6-sectors-row"><span class="b6-sectors-rl">(a) $D^{\mathrm L}\hat q_\alpha\hat q_\beta=$</span><span data-ch="L"></span><span class="op">+</span><span data-ch="L,i:jj,L" data-sep></span><span class="op" data-sep>+</span><span data-ch="L,e:jj,L" data-sep></span><span data-ch="L,P:jj,L" data-mrg hidden></span><span class="op">+ …</span><span class="b6-sectors-fac">factor $-\tfrac{c}{\omega^2}q_\alpha q_\beta$ on $D_{\rho\rho}$</span></div>
+        <div class="fd b6-sectors-row"><span class="b6-sectors-rl">(b) $\hat q_\alpha D^{\mathrm{LT}}_\beta=$</span><span data-ch="L,i:jj,T" data-sep></span><span class="op" data-sep>+</span><span data-ch="L,e:jj,T" data-sep></span><span data-ch="L,P:jj,T" data-mrg hidden></span><span class="op">+ …</span><span class="b6-sectors-fac">factor $-\tfrac{c}{\omega}q_\alpha$ on $D_{\rho\beta}$</span></div>
+        <div class="fd b6-sectors-row"><span class="b6-sectors-rl">(c) $D^{\mathrm{TL}}_\alpha\hat q_\beta=$</span><span data-ch="T,i:jj,L" data-sep></span><span class="op" data-sep>+</span><span data-ch="T,e:jj,L" data-sep></span><span data-ch="T,P:jj,L" data-mrg hidden></span><span class="op">+ …</span><span class="b6-sectors-fac">factor $\tfrac{1}{\omega}q_\beta$ on $D_{\alpha\rho}$</span></div>
+        <div class="fd b6-sectors-row"><span class="b6-sectors-rl">(d) $D^{\mathrm T}_{\alpha\beta}=$</span><span data-ch="T"></span><span class="op">+</span><span data-ch="T,i:jj,T" data-sep></span><span class="op" data-sep>+</span><span data-ch="T,e:jj,T" data-sep></span><span data-ch="T,P:jj,T" data-mrg hidden></span><span class="op">+ …</span><span class="b6-sectors-fac">factor $1$ on $D^{\mathrm T}_{\alpha\beta}$</span></div>
+        <p class="b6-sectors-kindline" data-kind>all blocks: 3 × 3 · length × time</p>
+        <div class="fd b6-sectors-row b6-sectors-sum"><span class="b6-sectors-rl">(e) $D_{\alpha\beta}=$</span><span data-ch="0"></span><span class="op">+</span><span data-ch="0,i:jj,0" data-sep></span><span class="op" data-sep>+</span><span data-ch="0,e:jj,0" data-sep></span><span data-ch="0,P:jj,0" data-mrg hidden></span><span class="op">+ …</span></div>
+        <p class="b6-sectors-note">The connection formulas <a class="eqref" href="#b6-eq-connection">(B6.7)</a> make every bubble a current–current bubble; the factors $\bq/\omega$ and $-c\bq/\omega$ they leave at its former charge vertices, left and right, together with the boxed factors of <a class="eqref" href="#b6-eq-sectors">(B6.9)</a>, turn each Coulomb line between charges into the line $D^{0\mathrm L}$ between currents, <a class="eqref" href="#b6-eq-D0L">(B6.10)</a>. All four rows are now $3\times3$ tensors and add line by line, $D^{0\mathrm L}+D^{0\mathrm T}=D^0$: row (e) is <a class="eqref" href="#b6-eq-lowest3">(B6.11)</a>.</p>
+      </div>
+      <div class="b6-sectors-step" data-step="3" hidden>
+        <p class="b6-sectors-head">Step 3 · the same at every order: the Dyson equation <a class="eqref" href="#b6-eq-dysonD">(B6.14)</a></p>
+        <div class="fd b6-sectors-row"><span class="b6-sectors-rl">(a) next order:</span><span class="b6-sectors-cell" data-sep><span data-ch="v,e:rr,v,i:rr,v"></span><span class="b6-sectors-sc">in $D_{\rho\rho}$</span></span><span class="b6-sectors-cell" data-mrg hidden><span data-ch="v,P:rr,v,P:rr,v"></span><span class="b6-sectors-sc">in $D_{\rho\rho}$</span></span><span class="op">,</span><span class="b6-sectors-cell" data-sep><span data-ch="v,e:rj,T,i:jr,v"></span><span class="b6-sectors-sc">in $D_{\rho\rho}$</span></span><span class="b6-sectors-cell" data-mrg hidden><span data-ch="v,P:rj,T,P:jr,v"></span><span class="b6-sectors-sc">in $D_{\rho\rho}$</span></span><span class="op">,</span><span class="b6-sectors-cell" data-sep><span data-ch="v,e:rr,v,i:rj,T"></span><span class="b6-sectors-sc">in $D_{\rho\beta}$</span></span><span class="b6-sectors-cell" data-mrg hidden><span data-ch="v,P:rr,v,P:rj,T"></span><span class="b6-sectors-sc">in $D_{\rho\beta}$</span></span><span class="op">, …</span></div>
+        <div class="fd b6-sectors-row"><span class="b6-sectors-rl">(b) after the rule:</span><span class="b6-sectors-cell" data-sep><span data-ch="L,e:jj,L,i:jj,L"></span><span class="b6-sectors-sc">in $D^{\mathrm L}$</span></span><span class="b6-sectors-cell" data-mrg hidden><span data-ch="L,P:jj,L,P:jj,L"></span><span class="b6-sectors-sc">in $D^{\mathrm L}$</span></span><span class="op">+</span><span class="b6-sectors-cell" data-sep><span data-ch="L,e:jj,T,i:jj,L"></span><span class="b6-sectors-sc">in $D^{\mathrm L}$</span></span><span class="b6-sectors-cell" data-mrg hidden><span data-ch="L,P:jj,T,P:jj,L"></span><span class="b6-sectors-sc">in $D^{\mathrm L}$</span></span><span class="op">+</span><span class="b6-sectors-cell" data-sep><span data-ch="L,e:jj,L,i:jj,T"></span><span class="b6-sectors-sc">in $D^{\mathrm{LT}}$</span></span><span class="b6-sectors-cell" data-mrg hidden><span data-ch="L,P:jj,L,P:jj,T"></span><span class="b6-sectors-sc">in $D^{\mathrm{LT}}$</span></span><span class="op">+ …</span></div>
+        <p class="b6-sectors-kindline" data-kind>all blocks: 3 × 3 · length × time</p>
+        <div class="fd b6-sectors-row"><span class="b6-sectors-rl">(c) summed:</span><span data-ch="0,P:jj,0,P:jj,0"></span></div>
+        <div class="fd b6-sectors-row b6-sectors-sum"><span class="b6-sectors-rl">(d) Dyson:</span><span class="b6-sectors-eqn"><span data-ch="D"></span><span class="op">=</span><span data-ch="0"></span><span class="op">+</span><span data-ch="0,P:jj,D"></span></span></div>
+        <p class="b6-sectors-note">At second order a sector mixes both kinds of line and both kinds of vertex (a), and diagrams of different sectors cannot be added. After the rule they share one tensor rank and add (b). Summing over the kind of each line gives $D^0$, and over the species of each bubble $\Pi=\Pi^{\mathrm e}+\Pi^{\ion}$ (c). The term of order $n$ is $D^0(\Pi D^0)^n$, and the geometric series is the Dyson equation (d).</p>
+      </div>
+    </div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> The $4\times4$ bookkeeping has an empty longitudinal slot, <span class="nw">$\lambda=3$,</span> and its scalar slot $\rho$ does the longitudinal job through Coulomb's law. The conversion moves one into the other; only then do the four sectors add, line by line and order by order, into one Dyson equation.</p><div class="cap-more">
+      <p><strong>Marks.</strong> Grids: rose from strong to pale, the Coulomb corner and the entry 33, the mixed row and column, the transverse block; hatched grey, empty cells. The indices 1, 2, 3 label the triad <span class="nw">$\be_1,\be_2,\be_3=\hat\bq$.</span> The arrows move the row index $\rho$ to 3 with the factor $-cq/\omega$ (a scalar potential becomes a longitudinal vector potential), the column index $\rho$ to 3 with $q/\omega$ (a charge becomes a longitudinal current), and the corner with their product, <a class="eqref" href="#b6-eq-sectors">(B6.9)</a>. Diagrams: dashed rose, $v/e^2$ between charge vertices (dots) or $D^{0\mathrm L}$ between current vertices (squares); wavy, <span class="nw">$D^{0\mathrm T}$;</span> wavy over dashed, <span class="nw">$D^0$;</span> heavy wavy over double dashes, the dressed <span class="nw">$D$.</span> Bubbles: blue <span class="nw">$\Pi^{\mathrm e}$,</span> amber <span class="nw">$\Pi^{\ion}$,</span> grey <span class="nw">$\Pi$.</span></p>
+      <p><strong>Try.</strong> Step from 1 to 2: the $\rho$ row and column move into slot 3, and every dot turns into a square. In step 3, three diagrams from different sectors become terms of one series. Untick “separately” to merge $\Pi^{\mathrm e}+\Pi^{\ion}$ into <span class="nw">$\Pi$.</span></p>
+      <p><strong>Model.</strong> The sectors <a class="eqref" href="#b6-eq-four">(B6.3)</a> at lowest order <a class="eqref" href="#b6-eq-lowest">(B6.5)</a>, the connection formulas <a class="eqref" href="#b6-eq-connection">(B6.7)</a>, the conversion <a class="eqref" href="#b6-eq-sectors">(B6.9)</a> and the longitudinal line <a class="eqref" href="#b6-eq-D0L">(B6.10)</a>, which give <a class="eqref" href="#b6-eq-lowest3">(B6.11)</a> and the Dyson equation <a class="eqref" href="#b6-eq-dysonD">(B6.14)</a>. Homogeneous medium in $(\bq,\omega)$ space; random-phase approximation, with no mixed electron–ion bubbles. Diagrams after the EPP manuscript.</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b6-sectors');
+  if (!fig || !window.EPP) return;
+  const NS = 'http://www.w3.org/2000/svg';
+  const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
+  const C = (n) => EPP.color(n);
+  const f1 = (v) => (+v).toFixed(1);
+  const smooth = (a, b, x) => { const t = EPP.clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
+  const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+  // ---------- layout of the HTML parts (fragments carry no style sheet) ----------
+  const ST = {
+    dia: 'margin-top:12px;padding-top:8px;border-top:1px solid var(--rule)',
+    head: 'margin:4px 0 6px;max-width:none;font-family:var(--font-ui);font-size:0.86rem;font-weight:600;line-height:1.4;color:var(--fg-2)',
+    row: 'justify-content:flex-start;align-items:center;gap:2px 8px;margin:0;padding:3px 0',
+    rl: 'flex:0 0 auto;min-width:7.6em;font-size:0.98rem;color:var(--fg)',
+    kind: 'margin-left:auto;font-family:var(--font-ui);font-size:0.78rem;color:var(--muted);border:1px solid var(--rule);border-radius:10px;padding:1px 8px;white-space:nowrap',
+    fac: 'margin-left:auto;font-family:var(--font-ui);font-size:0.86rem;color:var(--t-photon);border:1px solid var(--c-photon);border-radius:4px;padding:1px 8px;white-space:nowrap',
+    kindline: 'margin:2px 0 4px;max-width:none;text-align:right;font-family:var(--font-ui);font-size:0.78rem;color:var(--muted)',
+    sum: 'margin-top:4px;padding-top:6px;border-top:1px solid var(--rule);border-radius:0',
+    cell: 'display:inline-grid;justify-items:center;gap:0',
+    eqn: 'display:inline-flex;align-items:center;gap:2px 8px;flex-wrap:nowrap',
+    sc: 'font-family:var(--font-ui);font-size:0.78rem;line-height:1.2;color:var(--muted)',
+    note: 'margin:6px 0 2px;max-width:none;font-family:var(--font-ui);font-size:0.86rem;line-height:1.45;color:var(--fg-2)'
+  };
+  for (const k in ST) fig.querySelectorAll('.b6-sectors-' + k).forEach(el => { el.style.cssText += ';' + ST[k]; });
+
+  // ---------- labels as SVG text ----------
+  // Markup: letters are italic (math); |..| is upright; [..] is a bold upright vector; @..@ is a word in the UI font;
+  // _x, _{..}, ^x, ^{..} are scripts, and a subscript right after a superscript is stacked under it.
+  function parse(s) {
+    const atoms = [], st = { b: false, u: false, w: false };
+    let cur = null;
+    const add = (ch, lev) => {
+      const greek = /[α-ω]/.test(ch), latin = /[A-Za-z]/.test(ch);
+      const it = !st.w && !st.u && !st.b && (greek || latin);
+      if (!cur || cur.lev !== lev) { cur = { lev, runs: [] }; atoms.push(cur); }
+      const L = cur.runs[cur.runs.length - 1];
+      if (L && L.it === it && L.b === st.b && L.w === st.w) L.t += ch; else cur.runs.push({ t: ch, it, b: st.b, w: st.w });
+    };
+    const run = (str, lev) => {
+      for (let k = 0; k < str.length;) {
+        const ch = str[k];
+        if (ch === '[') { st.b = true; k++; }
+        else if (ch === ']') { st.b = false; k++; }
+        else if (ch === '|') { st.u = !st.u; k++; }
+        else if (ch === '@') { st.w = !st.w; k++; }
+        else if ((ch === '_' || ch === '^') && k + 1 < str.length) {
+          let g;
+          if (str[k + 1] === '{') { let e = str.indexOf('}', k + 2); if (e < 0) e = str.length; g = str.slice(k + 2, e); k = e + 1; }
+          else { g = str[k + 1]; k += 2; }
+          const keep = Object.assign({}, st);
+          cur = null; run(g, ch === '_' ? -1 : 1); cur = null;
+          Object.assign(st, keep);
+        } else { add(ch, lev); k++; }
+      }
+    };
+    run(String(s), 0);
+    return atoms;
+  }
+  const mctx = document.createElement('canvas').getContext('2d');
+  let F = { tx: 'serif', ui: 'sans-serif' };
+  const fontOf = (r, sz) => `${r.it ? 'italic ' : ''}${r.b ? '700 ' : ''}${sz.toFixed(2)}px ${r.w ? F.ui : F.tx}`;
+  function place(atoms, size) {
+    let x = 0, prev = null;
+    for (const a of atoms) {
+      a.sz = a.lev ? size * 0.72 : size;
+      a.w = 0;
+      // r.w flags a word in the UI font; the measured width goes to r.ww
+      for (const r of a.runs) { mctx.font = fontOf(r, a.sz); r.ww = mctx.measureText(r.t).width; a.w += r.ww; }
+      const lastRun = prev && !prev.lev ? prev.runs[prev.runs.length - 1] : null;
+      const ic = lastRun && lastRun.it ? (a.lev === 1 ? 0.1 : a.lev === -1 ? -0.03 : 0) * size : (!a.lev && prev && prev.lev ? 0.06 * size : 0);
+      if (a.lev && prev && prev.lev === -a.lev && !prev.stacked) { a.x0 = prev.x0; a.stacked = true; x = Math.max(prev.x0 + prev.w, a.x0 + a.w); }
+      else { a.x0 = x + ic; x += a.w + ic; }
+      prev = a;
+    }
+    return x;
+  }
+  const measure = (s, size) => place(parse(s), size);
+  // o: size, anchor ('start' | 'middle' | 'end'), color, opacity, halo (a surface-coloured outline drawn under the
+  // whole label, so it never covers a neighbouring glyph), rotate (degrees about x, y)
+  function rich(parent, x, y, s, o = {}) {
+    const size = o.size || 14, atoms = parse(s), W = place(atoms, size);
+    const x0 = o.anchor === 'middle' ? x - W / 2 : o.anchor === 'end' ? x - W : x;
+    const one = (extra) => {
+      const at = Object.assign({ x: f1(x0), y: f1(y), fill: o.color || C('fg') }, extra);
+      if (o.rotate) at.transform = `rotate(${o.rotate} ${f1(x)} ${f1(y)})`;
+      if (o.opacity != null) at.opacity = o.opacity;
+      const t = mk('text', at, parent);
+      for (const a of atoms) {
+        const dy = a.lev === -1 ? size * 0.3 : a.lev === 1 ? -size * 0.4 : 0;
+        let xx = x0 + a.x0;
+        for (const r of a.runs) {
+          const ts = mk('tspan', { x: xx.toFixed(2), y: (y + dy).toFixed(2), 'font-size': a.sz.toFixed(2), 'font-family': r.w ? F.ui : F.tx, 'font-style': r.it ? 'italic' : 'normal', 'font-weight': r.b ? '700' : '400' }, t);
+          ts.textContent = r.t;
+          xx += r.ww;
+        }
+      }
+    };
+    if (o.halo) one({ fill: C('surface'), stroke: C('surface'), 'stroke-width': 4, 'stroke-linejoin': 'round', 'aria-hidden': 'true' });
+    one({});
+    return W;
+  }
+
+  // ---------- the two grids ----------
+  // pieces as [first row, first column, rows, columns]; the 4 × 4 matrix has rows and columns ρ, 1, 2, 3 (index 0 = ρ),
+  // the 3 × 3 tensor rows and columns 1, 2, 3 (index 0 = 1)
+  const PA = { corner: [0, 0, 1, 1], row: [0, 1, 1, 2], col: [1, 0, 2, 1], block: [1, 1, 2, 2] };
+  const PB = { L: [2, 2, 1, 1], LT: [2, 0, 1, 2], TL: [0, 2, 2, 1], block: [0, 0, 2, 2] };
+  const LAB = { corner: 'D_{ρρ}', row: 'D_{ρβ}', col: 'D_{αρ}', block: 'D^{|T|}_{αβ}', L: 'D^{|L|}', LT: 'D^{|LT|}', TL: 'D^{|TL|}', blockB: 'D^{|T|}' };
+  // photon colour at two strengths, Coulomb corner and transverse block; the mixed row and column in between
+  const FILL = { corner: 0.46, row: 0.27, col: 0.27, block: 0.12, L: 0.46, LT: 0.27, TL: 0.27, blockB: 0.12 };
+  const MOVE = [['block', 'block'], ['col', 'TL'], ['row', 'LT'], ['corner', 'L']];
+  const IDXA = ['ρ', '1', '2', '3'], IDXB = ['1', '2', '3'];
+  const FAC = { row: '×(−cq/ω)', col: '×(q/ω)', corner: '×(−cq^2/ω^2)' };
+  const ARIA = {
+    1: 'The 4 by 4 matrix of sectors, rows and columns labelled rho, 1, 2, 3. The Coulomb corner D rho rho, the row D rho beta, the column D alpha rho and the transverse block D T alpha beta are filled in rose; every cell in row 3 or column 3 is hatched: empty, no free longitudinal photon. A triad shows the polarization vectors e1, e2 and e3 = q-hat. Beside it, an empty, faded 3 by 3 grid.',
+    2: 'The 4 by 4 matrix of sectors, with row 3 and column 3 hatched and empty. Arrows carry its scalar slot into the 3 by 3 tensor: row rho into row 3 with the factor minus c q over omega, column rho into column 3 with the factor q over omega, and the corner into entry 33 with minus c q squared over omega squared. The 3 by 3 grid holds D T in the block of rows and columns 1 and 2, D LT in entries 31 and 32, D TL in entries 13 and 23, and D L in entry 33.'
+  };
+  ARIA[3] = ARIA[2] + ' It is the dressed propagator D, which obeys D = D0 + D0 Pi D.';
+
+  const gridHost = fig.querySelector('.b6-sectors-grid');
+  let step = 1, trans = null, anim = null;
+
+  function layout(W) {
+    const g = { W };
+    g.wide = W >= 560;
+    if (g.wide) {
+      // [margin][corner-arrow channel][4 × 4][its row labels][gap with the row arrow][row labels][3 × 3][margin]
+      const G = Math.round(EPP.clamp(W * 0.16, 112, 150));
+      const fixed = 10 + 18 + 22 + G + 22 + 14;
+      let tw = 116, s = (W - fixed - tw) / 7;
+      if (s < 52) { tw = 0; s = (W - fixed) / 7; }
+      s = Math.floor(EPP.clamp(s, 38, 62));
+      const off = Math.max(0, Math.floor((W - fixed - tw - 7 * s) / 2));
+      g.s = s; g.G = G;
+      g.Ax = off + 10 + tw + 18; g.Ay = 64; g.Abot = g.Ay + 4 * s; g.Ar = g.Ax + 4 * s;
+      g.Bx = g.Ar + 22 + G + 22; g.By = g.Ay + s; g.Bbot = g.By + 3 * s; g.Br = g.Bx + 3 * s;
+      g.colA = 'top'; g.rowB = 'left';
+      g.H = g.Abot + 46;
+      if (tw) g.triad = { x: off + 10, y: g.Ay + 0.25 * s, w: tw - 16, h: 3.5 * s, mode: 'side' };
+      else { g.triad = { x: g.Ax - 18, y: g.H + 2, w: W - g.Ax, h: 62, mode: 'band' }; g.H += 66; }
+    } else {
+      // the 3 × 3 sits under the columns 1, 2, 3 of the 4 × 4; row arrow and its label on the right, corner arrow on the left
+      const fixed = 8 + 18 + 22 + 30 + 6;
+      const s = Math.floor(EPP.clamp((W - fixed) / 4, 36, 58));
+      const off = Math.max(0, Math.floor((W - fixed - 4 * s) / 2));
+      g.s = s;
+      g.Ax = off + 8 + 18; g.Ay = 30; g.Abot = g.Ay + 4 * s; g.Ar = g.Ax + 4 * s;
+      g.Bx = g.Ax + s; g.By = g.Abot + 74; g.Bbot = g.By + 3 * s; g.Br = g.Bx + 3 * s;
+      g.colA = 'bottom'; g.rowB = 'right';
+      g.H = g.Bbot + 62;
+      g.triad = { x: g.Ax - 18, y: g.H + 2, w: W - g.Ax + 18, h: 62, mode: 'band' };
+      g.H += 66;
+    }
+    return g;
+  }
+  const rectOf = (x0, y0, s, p) => [x0 + p[1] * s, y0 + p[0] * s, p[3] * s, p[2] * s];
+
+  // an arrow along the points P, with rounded corners and a head at the end
+  function arrow(parent, P, col, o = {}) {
+    const r = o.r || 9, hd = o.head || 8, n = P.length;
+    const end = P[n - 1], pre = P[n - 2], L = Math.hypot(end[0] - pre[0], end[1] - pre[1]) || 1;
+    const ux = (end[0] - pre[0]) / L, uy = (end[1] - pre[1]) / L;
+    const tip = [end[0] - ux * hd * 0.7, end[1] - uy * hd * 0.7];
+    let d = `M${f1(P[0][0])} ${f1(P[0][1])}`;
+    for (let i = 1; i < n - 1; i++) {
+      const a = P[i - 1], b = P[i], c = P[i + 1];
+      const l1 = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1, l2 = Math.hypot(c[0] - b[0], c[1] - b[1]) || 1, rr = Math.min(r, l1 / 2, l2 / 2);
+      const p1 = [b[0] - (b[0] - a[0]) / l1 * rr, b[1] - (b[1] - a[1]) / l1 * rr], p2 = [b[0] + (c[0] - b[0]) / l2 * rr, b[1] + (c[1] - b[1]) / l2 * rr];
+      d += ` L${f1(p1[0])} ${f1(p1[1])} Q${f1(b[0])} ${f1(b[1])} ${f1(p2[0])} ${f1(p2[1])}`;
+    }
+    d += ` L${f1(tip[0])} ${f1(tip[1])}`;
+    mk('path', { d, fill: 'none', stroke: col, 'stroke-width': o.w || 1.7, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, parent);
+    const wv = hd * 0.45;
+    mk('path', { d: `M${f1(end[0])} ${f1(end[1])} L${f1(end[0] - ux * hd - uy * wv)} ${f1(end[1] - uy * hd + ux * wv)} L${f1(end[0] - ux * hd + uy * wv)} ${f1(end[1] - uy * hd - ux * wv)} Z`, fill: col }, parent);
+  }
+
+  // the polarization triad: e3 = q-hat to the right, e1 up, e2 toward the viewer (drawn down-left), right-handed
+  function triad(parent, box) {
+    const col = C('fg2'), band = box.mode === 'band';
+    const La = band ? 24 : 28, ox = box.x + (band ? 14 : 16), oy = box.y + (band ? 34 : 38);
+    arrow(parent, [[ox, oy], [ox + La, oy]], col, { w: 1.5, head: 6.5 });
+    arrow(parent, [[ox, oy], [ox, oy - 0.92 * La]], col, { w: 1.5, head: 6.5 });
+    arrow(parent, [[ox, oy], [ox - 0.5 * La, oy + 0.5 * La]], col, { w: 1.5, head: 6.5 });
+    mk('circle', { cx: f1(ox), cy: f1(oy), r: 2, fill: col }, parent);
+    const sz = 14, c = C('fg');
+    rich(parent, ox + 7, oy - 0.92 * La + 7, '[e]_1', { size: sz, color: c });
+    rich(parent, ox - 0.5 * La + 9, oy + 0.5 * La + 9, '[e]_2', { size: sz, color: c });
+    // e3 = q-hat; the hat over the bold q is drawn as a small chevron
+    const x3 = ox + La + 6, y3 = oy + 4.5, w0 = rich(parent, x3, y3, '[e]_3 = ', { size: sz, color: c });
+    const wq = rich(parent, x3 + w0, y3, '[q]', { size: sz, color: c });
+    const hx = x3 + w0 + wq * 0.5, hy = y3 - sz * 0.66;
+    mk('path', { d: `M${f1(hx - 3.2)} ${f1(hy + 1.7)} L${f1(hx)} ${f1(hy - 1.5)} L${f1(hx + 3.2)} ${f1(hy + 1.7)}`, fill: 'none', stroke: c, 'stroke-width': 1.15, 'stroke-linejoin': 'round' }, parent);
+    // what the three indices mean
+    const L1 = 'λ@ = 1, 2: transverse@', L2 = 'λ@ = 3: longitudinal@';
+    const lx = band ? x3 + w0 + wq + 22 : box.x + 2, ly = band ? oy - 7 : oy + 0.5 * La + 32;
+    let ls = 12;
+    const room = band ? box.x + box.w - lx : box.w;
+    while (ls > 10 && Math.max(measure(L1, ls), measure(L2, ls)) > room) ls -= 0.5;
+    rich(parent, lx, ly, L1, { size: ls, color: C('muted') });
+    rich(parent, lx, ly + ls + 4, L2, { size: ls, color: C('muted') });
+  }
+
+  // timeline of the conversion, in fractions of its duration: the 3 × 3 frame fades in, then the pieces move one at a
+  // time, each arrow appearing just before its piece (the transverse block has no arrow: its factor is 1)
+  const TL = { block: [0.04, 0.24], row: [0.30, 0.50], col: [0.56, 0.76], corner: [0.82, 1.0] };
+  const AT = { row: 0.25, col: 0.51, corner: 0.77 };
+
+  // p: progress of the conversion animation in [0, 1]; null draws the settled state of the current step
+  function render(p) {
+    if (!gridHost.clientWidth) return;
+    const W = Math.max(280, Math.floor(gridHost.clientWidth));
+    F = { tx: EPP.css('--font-text') || 'serif', ui: EPP.css('--font-ui') || 'sans-serif' };
+    const g = layout(W), s = g.s;
+    const moving = p != null && p < 1;
+    const prog = (k) => (moving ? EPP.clamp((p - TL[k][0]) / (TL[k][1] - TL[k][0]), 0, 1) : (step >= 2 ? 1 : 0));
+    gridHost.innerHTML = '';
+    const svg = mk('svg', { viewBox: `0 0 ${W} ${g.H}`, width: W, height: g.H, role: 'img', 'aria-label': ARIA[step] }, gridHost);
+    svg.style.cssText = 'display:block;max-width:100%;height:auto;overflow:visible';
+    const defs = mk('defs', {}, svg);
+    const pat = mk('pattern', { id: 'viz-b6-sectors-hatch', width: 6, height: 6, patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)' }, defs);
+    mk('rect', { width: 6, height: 6, fill: C('surface') }, pat);
+    mk('line', { x1: 1, y1: 0, x2: 1, y2: 6, stroke: C('muted'), 'stroke-width': 1.2, 'stroke-opacity': 0.6 }, pat);
+    const cPh = C('photon'), cPhT = C('photon-t'), cInk = C('fg'), cRule = C('rule'), cFg2 = C('fg2');
+    const lw = (v) => ({ stroke: cRule, 'stroke-width': v });
+    const labSz = s >= 50 ? 15 : 13.5, idxSz = 14;
+    const pieceLabel = (parent, x, y, w, h, t, op) => rich(parent, x + w / 2, y + h / 2 + labSz * 0.3, t, { size: labSz, anchor: 'middle', color: cInk, opacity: op });
+
+    // ----- the 4 × 4 matrix: hatched empty slot 3, rose pieces, a firmer line around the scalar slot ρ and the empty slot -----
+    const gA = mk('g', {}, svg);
+    for (let r = 0; r < 4; r++) for (let c = 0; c < 4; c++) if (r === 3 || c === 3) mk('rect', { x: g.Ax + c * s, y: g.Ay + r * s, width: s, height: s, fill: 'url(#viz-b6-sectors-hatch)' }, gA);
+    for (const k of ['corner', 'row', 'col', 'block']) { const [x, y, w, h] = rectOf(g.Ax, g.Ay, s, PA[k]); mk('rect', { x, y, width: w, height: h, fill: cPh, 'fill-opacity': FILL[k] }, gA); }
+    for (let i = 1; i < 4; i++) {
+      const strong = i === 1 || i === 3;
+      mk('line', Object.assign({ x1: g.Ax + i * s, y1: g.Ay, x2: g.Ax + i * s, y2: g.Abot }, lw(strong ? 1.4 : 0.8)), gA);
+      mk('line', Object.assign({ x1: g.Ax, y1: g.Ay + i * s, x2: g.Ar, y2: g.Ay + i * s }, lw(strong ? 1.4 : 0.8)), gA);
+    }
+    mk('rect', { x: g.Ax, y: g.Ay, width: 4 * s, height: 4 * s, fill: 'none', stroke: cInk, 'stroke-width': 1.5, rx: 2 }, gA);
+    for (const k of ['corner', 'row', 'col', 'block']) { const [x, y, w, h] = rectOf(g.Ax, g.Ay, s, PA[k]); pieceLabel(gA, x, y, w, h, LAB[k]); }
+    {
+      // one note across the hatched row 3
+      const t1 = '@empty: no free longitudinal photon@', sz = 11.5, y3 = g.Ay + 3.5 * s, cx = g.Ax + 2 * s;
+      const lines = measure(t1, sz) > 4 * s - 12 ? ['@empty: no free@', '@longitudinal photon@'] : [t1];
+      const bw = Math.max(...lines.map(t => measure(t, sz))) + 10, bh = lines.length * 14 + 5;
+      mk('rect', { x: f1(cx - bw / 2), y: f1(y3 - bh / 2), width: f1(bw), height: f1(bh), rx: 4, fill: C('surface'), 'fill-opacity': 0.92, stroke: cRule, 'stroke-width': 0.8 }, gA);
+      lines.forEach((t, i) => rich(gA, cx, y3 - bh / 2 + 13 + i * 14, t, { size: sz, anchor: 'middle', color: cFg2 }));
+    }
+    // index labels: rows on the right (facing the 3 × 3 tensor), columns on top (wide) or at the bottom (phone)
+    IDXA.forEach((t, i) => {
+      rich(gA, g.Ar + 11, g.Ay + (i + 0.5) * s + 5, t, { size: idxSz, anchor: 'middle', color: cFg2 });
+      rich(gA, g.Ax + (i + 0.5) * s, g.colA === 'top' ? g.Ay - 8 : g.Abot + 17, t, { size: idxSz, anchor: 'middle', color: cFg2 });
+    });
+
+    // ----- the 3 × 3 tensor: faded in step 1; its pieces appear as they land -----
+    const fadeB = step === 1 ? 0.32 : (moving ? 0.32 + 0.68 * smooth(0, 0.08, p) : 1);
+    const gB = mk('g', { opacity: fadeB.toFixed(2) }, svg);
+    const landed = MOVE.filter(([a]) => prog(a) >= 1);
+    for (const [a, b] of landed) { const [x, y, w, h] = rectOf(g.Bx, g.By, s, PB[b]); mk('rect', { x, y, width: w, height: h, fill: cPh, 'fill-opacity': FILL[b === 'block' ? 'blockB' : b] }, gB); }
+    for (let i = 1; i < 3; i++) {
+      const strong = i === 2;
+      mk('line', Object.assign({ x1: g.Bx + i * s, y1: g.By, x2: g.Bx + i * s, y2: g.Bbot }, lw(strong ? 1.4 : 0.8)), gB);
+      mk('line', Object.assign({ x1: g.Bx, y1: g.By + i * s, x2: g.Br, y2: g.By + i * s }, lw(strong ? 1.4 : 0.8)), gB);
+    }
+    mk('rect', { x: g.Bx, y: g.By, width: 3 * s, height: 3 * s, fill: 'none', stroke: cInk, 'stroke-width': 1.5, rx: 2 }, gB);
+    for (const [, b] of landed) { const [x, y, w, h] = rectOf(g.Bx, g.By, s, PB[b]); pieceLabel(gB, x, y, w, h, LAB[b === 'block' ? 'blockB' : b]); }
+    IDXB.forEach((t, i) => {
+      rich(gB, g.rowB === 'left' ? g.Bx - 11 : g.Br + 11, g.By + (i + 0.5) * s + 5, t, { size: idxSz, anchor: 'middle', color: cFg2 });
+      rich(gB, g.Bx + (i + 0.5) * s, g.By - 8, t, { size: idxSz, anchor: 'middle', color: cFg2 });
+    });
+
+    // ----- titles and the triad -----
+    const tA = '@4 × 4 sectors (Coulomb gauge)@', tB = step === 3 ? 'D@ = @D^0@ + @D^0ΠD' : '@3 × 3 tensor (temporal gauge)@';
+    const oB = { size: step === 3 ? 15 : 12.5, anchor: 'middle', color: step === 3 ? cInk : cFg2 };
+    if (g.wide) {
+      rich(svg, g.Ax + 2 * s, g.Abot + 38, tA, { size: 12.5, anchor: 'middle', color: cFg2 });
+      rich(gB, g.Bx + 1.5 * s, g.Abot + 38, tB, oB);
+    } else {
+      rich(svg, g.Ax + 2 * s, 17, tA, { size: 12.5, anchor: 'middle', color: cFg2 });
+      rich(gB, g.Bx + 1.5 * s, g.Bbot + 58, tB, oB);
+    }
+    triad(mk('g', {}, svg), g.triad);
+
+    // ----- arrows with the conversion factors (B6.9): the left index ρ → 3 (row), the right index ρ → 3 (column), both for the corner -----
+    const aop = (k) => (step === 1 ? 0 : (moving ? smooth(AT[k], AT[k] + 0.06, p) : 1));
+    const fs = 13.5, yRho = g.Ay + 0.5 * s, y3B = g.By + 2.5 * s, x3B = g.Bx + 2.5 * s;
+    const ARR = g.wide ? {
+      // row: from the row label ρ of the 4 × 4, down the gap, to the row label 3 of the 3 × 3
+      row: { P: [[g.Ar + 21, yRho], [g.Ar + 33, yRho], [g.Ar + 33, y3B], [g.Bx - 22, y3B]], lab: [g.Ar + 40, (yRho + y3B) / 2 + 5, 'start'] },
+      // column: over the top, from the column label ρ to the column label 3
+      col: { P: [[g.Ax + 0.5 * s, g.Ay - 22], [g.Ax + 0.5 * s, g.Ay - 36], [x3B, g.Ay - 36], [x3B, g.By - 23]], lab: [(g.Ar + g.Bx) / 2, g.Ay - 42, 'middle'] },
+      // corner: around the left side and under both grids, into the entry 33
+      corner: { P: [[g.Ax - 1, yRho], [g.Ax - 13, yRho], [g.Ax - 13, g.Abot + 18], [x3B, g.Abot + 18], [x3B, g.Bbot + 1]], lab: [(g.Ar + g.Bx) / 2, g.Abot + 36, 'middle'] }
+    } : {
+      row: { P: [[g.Ar + 21, yRho], [g.Ar + 31, yRho], [g.Ar + 31, y3B], [g.Br + 21, y3B]], lab: [g.Ar + 44, (yRho + y3B) / 2, 'middle', -90] },
+      col: { P: [[g.Ax + 0.5 * s, g.Abot + 22], [g.Ax + 0.5 * s, g.Abot + 31], [x3B, g.Abot + 31], [x3B, g.By - 23]], lab: [(g.Ax + 0.5 * s + x3B) / 2, g.Abot + 49, 'middle'] },
+      corner: { P: [[g.Ax - 1, yRho], [g.Ax - 13, yRho], [g.Ax - 13, g.Bbot + 18], [x3B, g.Bbot + 18], [x3B, g.Bbot + 1]], lab: [(g.Ax - 13 + x3B) / 2, g.Bbot + 36, 'middle'] }
+    };
+    for (const k of ['row', 'col', 'corner']) {
+      const op = aop(k);
+      if (op <= 0.01) continue;
+      const gR = mk('g', { opacity: op.toFixed(2) }, svg), A = ARR[k];
+      arrow(gR, A.P, cPh);
+      rich(gR, A.lab[0], A.lab[1], FAC[k], { size: fs, anchor: A.lab[2], color: cPhT, halo: true, rotate: A.lab[3] });
+    }
+
+    // ----- the moving piece: a card that slides from its slot in the 4 × 4 to its slot in the 3 × 3, renamed on the way -----
+    if (moving) {
+      const gG = mk('g', {}, svg);
+      for (const [a, b] of MOVE) {
+        const u = prog(a);
+        if (u <= 0 || u >= 1) continue;
+        const e = ease(u), [x0, y0, w, h] = rectOf(g.Ax, g.Ay, s, PA[a]), [x1, y1] = rectOf(g.Bx, g.By, s, PB[b]);
+        const x = x0 + (x1 - x0) * e, y = y0 + (y1 - y0) * e;
+        mk('rect', { x: f1(x), y: f1(y), width: w, height: h, rx: 2, fill: C('surface') }, gG);
+        mk('rect', { x: f1(x), y: f1(y), width: w, height: h, rx: 2, fill: cPh, 'fill-opacity': FILL[a], stroke: cPh, 'stroke-width': 1.3 }, gG);
+        const q0 = 1 - smooth(0.3, 0.45, u), q1 = smooth(0.45, 0.6, u);
+        if (q0 > 0.01) pieceLabel(gG, x, y, w, h, LAB[a], q0.toFixed(2));
+        if (q1 > 0.01) pieceLabel(gG, x, y, w, h, LAB[b === 'block' ? 'blockB' : b], q1.toFixed(2));
+      }
+    }
+  }
+
+  // ---------- the diagrams: chains of lines and bubbles, with dots (charge vertices) and squares (current vertices) ----------
+  const LL = 36, RB = 17, HH = 48, YY = 30, PAD = 4;
+  const SPEC = { e: ['Π^e', 'electron', 'electronic bubble Pi e'], i: ['Π^{ion}', 'phonon', 'ionic bubble Pi ion'], P: ['Π', 'muted', 'bubble Pi'] };
+  const LINE = {
+    v: (a, b) => [{ t: 'coulomb', a, b, label: 'v/e^2' }],
+    T: (a, b) => [{ t: 'photon', a, b, label: 'D^{0T}' }],
+    L: (a, b) => [{ t: 'coulomb', a, b, label: 'D^{0L}' }],
+    0: (a, b) => [{ t: 'coulomb', a, b }, { t: 'photon', a, b, label: 'D^0' }],
+    D: (a, b) => [{ t: 'screened', a, b }, { t: 'photon2', a, b, label: 'D', amp: 4.2 }]
+  };
+  const LNAME = { v: 'Coulomb line v over e squared', T: 'transverse line D0T', L: 'longitudinal line D0L', 0: 'free line D0', D: 'dressed line D' };
+  function chain(host, spec) {
+    const lines = [], blobs = [], dots = [], sq = [], names = [];
+    let x = PAD;
+    for (const tk of spec.split(',')) {
+      if (LINE[tk]) { lines.push(...LINE[tk]([x, YY], [x + LL, YY])); names.push(LNAME[tk]); x += LL; continue; }
+      const [sp, vv] = tk.split(':'), S = SPEC[sp];
+      blobs.push({ t: 'blob', at: [x + RB, YY], r: RB, label: S[0], color: S[1] });
+      [[x, vv[0]], [x + 2 * RB, vv[1]]].forEach(([px, k]) => { if (k === 'r') dots.push({ t: 'vertex', at: [px, YY], r: 3.5, color: 'ink' }); else sq.push(px); });
+      names.push(`${S[2]} with a ${vv[0] === 'r' ? 'charge' : 'current'} vertex and a ${vv[1] === 'r' ? 'charge' : 'current'} vertex`);
+      x += 2 * RB;
+    }
+    const svg = EPP.fd.draw(host, { w: x + PAD, h: HH, label: names.join(', then '), items: [...lines, ...blobs, ...dots] });
+    svg.style.overflow = 'visible';
+    // after each repaint of the diagram (which clears the SVG): squares for the current vertices, and the bubble labels
+    // upright, as in the text (the class of the diagram labels sets them in italic)
+    const post = () => {
+      svg.querySelectorAll('text.fd-lab[font-style="normal"]').forEach(t => { t.style.fontStyle = 'normal'; });
+      sq.forEach(px => mk('rect', { x: px - 4.2, y: YY - 4.2, width: 8.4, height: 8.4, fill: C('ink') }, svg));
+    };
+    post(); EPP.onTheme(post);
+  }
+  fig.querySelectorAll('[data-ch]').forEach(el => { el.style.display = 'inline-block'; chain(el, el.dataset.ch); });
+
+  // ---------- state ----------
+  const DUR = 2.6;
+  // the diagrams and step-3 cells carry an inline display, which would override the hidden attribute on a page without
+  // a [hidden] rule: hide them explicitly, or the merged Π would appear beside Π^e and Π^ion and count the bubbles twice
+  const vis = (el, on) => { el.hidden = !on; if (el.dataset.d0 == null) el.dataset.d0 = el.style.display; el.style.display = on ? el.dataset.d0 : 'none'; };
+  function apply(st) {
+    const ns = +st.step || 1, from = step;
+    step = ns;
+    fig.querySelectorAll('.b6-sectors-step').forEach(el => { el.hidden = +el.dataset.step !== ns; });
+    fig.querySelectorAll('.b6-sectors-ro [data-step]').forEach(el => { el.hidden = +el.dataset.step !== ns; });
+    fig.querySelectorAll('[data-kind]').forEach(el => vis(el, !!st.kinds));
+    fig.querySelectorAll('[data-sep]').forEach(el => vis(el, !!st.sep));
+    fig.querySelectorAll('[data-mrg]').forEach(el => vis(el, !st.sep));
+    if (from === 1 && ns >= 2 && !EPP.reducedMotion && anim) { trans = { t0: anim.t }; anim.play(); render(0); return; }
+    if (ns === 1 && trans) { trans = null; anim.pause(); }
+    if (!trans) render(null);
+  }
+  const ctl = EPP.controls(fig.querySelector('.b6-sectors-ctrls'), [
+    { key: 'step', type: 'seg', label: 'step', options: [['1', '1 · four sectors'], ['2', '2 · convert'], ['3', '3 · Dyson']], value: '1', wide: true },
+    { key: 'kinds', type: 'toggle', label: 'show kinds and units', value: true },
+    { key: 'sep', type: 'toggle', label: 'electron and ion bubbles separately', value: true }
+  ], apply);
+  // one calm animation of the conversion, driven by EPP.anim (no button: it runs once per change to step 2 or 3)
+  anim = EPP.anim(gridHost, (t) => {
+    if (!trans) return;
+    const p = (t - trans.t0) / DUR;
+    if (p >= 1) { trans = null; anim.pause(); render(null); return; }
+    render(Math.max(0, p));
+  }, { autoplay: false });
+  let lastW = 0;
+  try { new ResizeObserver(() => { const w = Math.floor(gridHost.clientWidth); if (w && w !== lastW) { lastW = w; if (!trans) render(null); } }).observe(gridHost); } catch (e) {}
+  EPP.onTheme(() => { if (!trans) render(null); });
+  render(null);
+
+  // previewed outside Section B.6 (the figure test), the equation links have no target: keep their text, drop the link
+  if (!fig.closest('#b-propagator')) fig.querySelectorAll('a.eqref').forEach(a => { if (!document.getElementById((a.getAttribute('href') || '').slice(1))) { const sp = document.createElement('span'); sp.textContent = a.textContent; a.replaceWith(sp); } });
+})();
+</script>

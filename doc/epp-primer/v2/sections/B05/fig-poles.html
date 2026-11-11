@@ -1,0 +1,262 @@
+  <figure class="viz" id="viz-b5-poles">
+    <p class="viz-title">Free boson lines: where the poles sit, and why temperature drops out <span class="tag">interactive</span></p>
+    <div class="b5-poles-line"></div>
+    <div class="b5-poles-plane"></div>
+    <div class="legend b5-poles-leg"><span class="item" style="color:var(--fg)"><svg width="30" height="14" viewBox="0 0 30 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><line x1="1" y1="7" x2="29" y2="7" stroke="currentColor" stroke-width="2"/><circle cx="15" cy="7" r="3.2" fill="currentColor"/></svg><span style="color:var(--fg-2)">retarded $F^0$: line and poles</span></span><span class="item" style="color:var(--c-phonon)"><svg width="30" height="14" viewBox="0 0 30 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><line x1="1" y1="7" x2="29" y2="7" stroke="currentColor" stroke-width="2" stroke-dasharray="6 4"/><circle cx="15" cy="7" r="5.2" fill="currentColor" fill-opacity="0.14" stroke="currentColor" stroke-width="1.6"/></svg><span style="color:var(--fg-2)">time-ordered $F^{\mathcal T}$ at $T$: line and poles</span></span><span class="item" style="color:var(--c-phonon)"><span class="sw dot" style="border-top-width:1.6px"></span><span style="color:var(--fg-2)">level $-(1+2n_{\mathrm B})$</span></span><span class="item b5-poles-leg-re" style="color:var(--muted)"><span class="sw" style="border-top-width:1.4px"></span><span style="color:var(--fg-2)">$\mathrm{Re}\,F$, both lines</span></span></div>
+    <div class="b5-poles-ctrls"></div>
+    <div class="readout b5-poles-ro" aria-live="polite"><span>$\kB T/\hbar\omega_0$<b class="b5-poles-v-kt"></b></span><span>$n_{\mathrm B}(\omega_0)$<b class="b5-poles-v-n"></b></span><span>$1+2n_{\mathrm B}$<b class="b5-poles-v-c1"></b></span><span>$\coth(\hbar\omega_0/2\kB T)$<b class="b5-poles-v-c2"></b></span><span>$\hbar\eta$<b class="b5-poles-v-eta"></b></span></div>
+    <div class="readout b5-poles-ro2" aria-live="polite"><span>peak of $\mathrm{Im}\,F$ at $+\omega_0$, in units of $1/\hbar\eta$:</span><span>retarded<b class="b5-poles-v-pr"></b></span><span>time-ordered<b class="b5-poles-v-pt"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> The solid retarded line does not move when $T$ changes, and its imaginary part is odd in $\omega$. At $T=0$ the dashed time-ordered line lies on it at positive frequencies and has the opposite sign at negative ones; heating deepens both dashed peaks to $-(1+2n_{\mathrm B})$. Only the imaginary part knows the temperature.</p><div class="cap-more">
+      <p><strong>Marks.</strong> Solid: $F^0$ <a class="eqref" href="#b5-eq-F0"></a>; dashed: $F^{\mathcal T}$ <a class="eqref" href="#b5-eq-FT"></a>; dotted: the level $-(1+2n_{\mathrm B})$; thin: $\mathrm{Re}\,F$, the same for both lines at every $T$. In (b) dots mark the poles of $F^0$ and rings those of $F^{\mathcal T}$, with areas proportional to the weights $1+n_{\mathrm B}$ and $n_{\mathrm B}$. The shaded upper half plane holds no pole of a retarded function.</p>
+      <p><strong>Try.</strong> Set $T=0$: the dashed curve covers the solid one for $\omega\gt0$ and is its mirror image in sign for $\omega\lt0$, and only one ring is left above the axis. At <span class="nw">600 K</span> the dashed peaks reach $-3.21$, while the solid curve and the real part stay put. Raise $\hbar\omega_0$ at fixed $T$: $n_{\mathrm B}$ falls and the dashed line returns to its $T=0$ form.</p>
+      <p><strong>Model.</strong> One harmonic mode, the labels $\bq\nu$ dropped: $\omega_0=\omega_{\bq\nu}$, $n_{\mathrm B}=n_{\bq\nu}$. The infinitesimal $\eta$ is kept finite as a broadening: <a class="eqref" href="#b5-eq-F0"></a> is drawn with its denominator to first order in $\eta$, $\omega^2-\omega_0^2+2\ii\eta\omega$, and the $\ii\eta$ of <a class="eqref" href="#b5-eq-FT"></a>, short for $2\ii\eta\omega_0$, becomes $2\ii\eta|\omega|$, so the lines agree exactly where the equations say they do. Ordinates are in units of $1/\hbar\eta$; in (b) the distance $\eta$ is exaggerated. Default mode: the TO phonon of GaAs, <span class="nw">33.3 meV</span> (literature value).</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b5-poles');
+  if (!fig || !window.EPP) return;
+  // outside Section B.5 (the isolated figure test) the caption's equation links have no target: show the tags as text
+  const TAGS = { 'b5-eq-FT': 'B5.2', 'b5-eq-F0': 'B5.4' };
+  if (!fig.closest('#b-photon-se')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    const id = a.getAttribute('href').slice(1);
+    if (document.getElementById(id)) return;
+    const s = document.createElement('span'); s.textContent = TAGS[id] ? `(${TAGS[id]})` : a.textContent; a.replaceWith(s);
+  });
+
+  // ---------- model ----------
+  // One harmonic mode, ω_0 = ω_qν, n = n_B(ω_0). Energies in meV; x = ω/ω_0 and g = η/ω_0 (= ħη/ħω_0).
+  // Ordinates y = ħη F (F has units of 1/energy), so the retarded peaks have height 1.
+  // Retarded line (B5.4), denominator to first order in η:  ħη F^0 = 2g / (x² − 1 + 2i g x)
+  // Time-ordered line (B5.2), its iη (short for 2iηω_0) taken as 2iη|ω|:
+  //   ħη F^T = (1 + n) 2g / (x² − 1 + 2i g|x|) − n 2g / (x² − 1 − 2i g|x|)
+  // Hence Re F^T = Re F^0 at every T, Im F^T = (1 + 2n) sgn(x) Im F^0, and F^T = F^0 for x > 0 at T = 0, exactly.
+  const KB = 0.0861733;                                   // k_B in meV/K
+  const XL = [-2.5, 2.5], YL = [-6.5, 1.8];
+  const NX = 2001, K1 = 1400;                             // x_k = −2.5 + k/400 hits x = ±1 exactly (k = 600, 1400)
+  const xs = Array.from({ length: NX }, (_, k) => XL[0] + k / 400);
+  function lines(g, n) {
+    const imR = new Array(NX), imT = new Array(NX), re = new Array(NX);
+    for (let k = 0; k < NX; k++) {
+      const x = xs[k], a = x * x - 1, b = 2 * g * x, D = a * a + b * b;   // D > 0 for g > 0
+      re[k] = 2 * g * a / D;
+      imR[k] = -2 * g * b / D;
+      imT[k] = -(1 + 2 * n) * 2 * g * Math.abs(b) / D;
+    }
+    return { imR, imT, re };
+  }
+  function model(s) {
+    const E0 = s.E0, T = s.T, g = s.g, kT = KB * T;
+    const n = T > 0 ? 1 / Math.expm1(E0 / kT) : 0;
+    const coth = T > 0 ? 1 / Math.tanh(E0 / (2 * kT)) : 1;
+    return { E0, T, g, kT, n, coth, re: !!s.re, L: lines(g, n) };
+  }
+
+  // ---------- formatting ----------
+  const fx = (v, d) => (Math.abs(v) < 0.5 * Math.pow(10, -d) ? (0).toFixed(d) : EPP.fix(v, d));
+  const SUP = { '-': '⁻', '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹' };
+  const sci = (v) => { let e = Math.floor(Math.log10(v)), m = v / Math.pow(10, e); if (m >= 9.95) { m /= 10; e += 1; } return `${m.toFixed(1)}×10${String(e).split('').map(ch => SUP[ch]).join('')}`; };
+  const nfmt = (v) => (v === 0 ? '0' : (v < 1e-3 ? sci(v) : fx(v, 3)));
+
+  // ---------- canvas text: '$...$' marks math, where letters are italic and digits upright; _x, ^x as in EPP.drawRich ----------
+  const ITAL = /[A-Za-zα-ωℓħ]/;
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const part of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: part.t, m: part.m, it: false }); continue; }
+        let buf = '', it = null;
+        for (const ch of part.t) {
+          const k = ITAL.test(ch);
+          if (it !== null && k !== it) { out.push({ t: buf, m: part.m, it }); buf = ''; }
+          buf += ch; it = k;
+        }
+        if (buf) out.push({ t: buf, m: part.m, it });
+      }
+    });
+    return out;
+  }
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, fam = EPP.css('--font-ui'), rs = runs(s);
+    const font = (r) => `${r.it ? 'italic ' : ''}${r.m ? Math.round(size * 0.72) : size}px ${fam}`;
+    const ws = rs.map(r => { ctx.font = font(r); return ctx.measureText(r.t).width; });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    let x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    if (o.color) ctx.fillStyle = o.color;
+    ctx.textAlign = 'left';
+    rs.forEach((r, k) => { ctx.font = font(r); ctx.fillText(r.t, x0, y + (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0))); x0 += ws[k]; });
+    return tot;
+  }
+  const tw = (ctx, s, size) => txt(ctx, s, 0, 0, { size, measure: true });
+  function arrow(ctx, x0, y0, x1, y1, col, lw, head) {
+    const L = Math.hypot(x1 - x0, y1 - y0), hs = Math.min(head, 0.6 * L), a = Math.atan2(y1 - y0, x1 - x0);
+    ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = lw; ctx.lineCap = 'butt'; ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1 - 0.8 * hs * Math.cos(a), y1 - 0.8 * hs * Math.sin(a)); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x1, y1);
+    ctx.lineTo(x1 - hs * Math.cos(a - 0.42), y1 - hs * Math.sin(a - 0.42));
+    ctx.lineTo(x1 - hs * Math.cos(a + 0.42), y1 - hs * Math.sin(a + 0.42));
+    ctx.closePath(); ctx.fill();
+  }
+
+  // ---------- panel (a): the two lines on the real axis ----------
+  // (b) uses the same left and right margins, so that the poles sit straight below the peaks
+  const M = { l: 58, r: 14, t: 26, b: 44 };
+  let cur = null;
+  const pA = new EPP.Plot(fig.querySelector('.b5-poles-line'), {
+    xlim: XL, ylim: YL, legend: false, margin: M, aspect: 0.42, minHeight: 262, maxHeight: 340,
+    xticks: [-2, -1, 0, 1, 2].map(v => ({ v, label: '' })), yticks: [-6, -5, -4, -3, -2, -1, 0, 1],
+    xname: 'ω/ω_0', hoverX: v => fx(v, 2), hoverY: v => fx(v, 3),
+    ariaLabel: 'Panel a: imaginary parts of the retarded and time-ordered free phonon lines against frequency, in units of one over the broadening'
+  });
+  const XT = [{ v: -2, s: '−2$ω$_0' }, { v: -1, s: '−$ω$_0' }, { v: 0, s: '0' }, { v: 1, s: '$ω$_0' }, { v: 2, s: '2$ω$_0' }];
+  const baseRender = pA.render.bind(pA);
+  pA.render = () => {
+    baseRender();
+    const ctx = pA.ctx, w = pA.cv.w, h = pA.cv.h, m = pA.m;
+    if (!w || !h || !cur) return;
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMuted = EPP.color('muted'), cPhT = EPP.textColor('phonon');
+    const lv = -(1 + 2 * cur.n);
+    ctx.save();
+    ctx.textBaseline = 'alphabetic';
+    txt(ctx, '(a) the two lines on the real frequency axis', 4, 15, { size: 11.5, color: cFg2 });
+    // tick labels on the alphabetic baseline, as in (b), so that the subscript of ω_0 sits below the line
+    XT.forEach(t => txt(ctx, t.s, pA.X(t.v), h - m.b + 16, { size: 11, color: cMuted, align: 'center' }));
+    ctx.textBaseline = 'top';
+    // the shading label sits left of the peak at −ω_0 (clear of its flanks), on two lines when one does not fit
+    const off = Math.max(8, pA.X(-1 + 1.6 * cur.g) - pA.X(-1) + 4);
+    const xa = pA.X(XL[0]) + 4, xb = pA.X(-1) - off, xn = (xa + xb) / 2;
+    if (tw(ctx, 'negative frequencies', 11) <= xb - xa) txt(ctx, 'negative frequencies', xn, m.t + 5, { size: 11, color: cMuted, align: 'center' });
+    else { txt(ctx, 'negative', xn, m.t + 5, { size: 11, color: cMuted, align: 'center' }); txt(ctx, 'frequencies', xn, m.t + 18, { size: 11, color: cMuted, align: 'center' }); }
+    // direct labels at −ω_0, where the two lines point in opposite directions, kept clear of the peak's flanks
+    ctx.textBaseline = 'middle';
+    txt(ctx, 'retarded', pA.X(-1) + off, pA.Y(1), { size: 11.5, color: cFg });
+    const below = pA.Y(lv) + 20 <= h - m.b;
+    ctx.textBaseline = below ? 'top' : 'bottom';
+    txt(ctx, 'time-ordered', pA.X(-1) - off, pA.Y(lv) + (below ? 4 : -4), { size: 11.5, color: cPhT, align: 'right' });
+    // the dotted level, labelled at the right end (short form when the long one would reach the peak at +ω_0)
+    ctx.textBaseline = 'bottom';
+    const xr = w - m.r - 5, long = `−(1 + 2$n$_B) = ${fx(lv, 2)}`;
+    txt(ctx, xr - tw(ctx, long, 11) > pA.X(1) + 14 ? long : '−(1 + 2$n$_B)', xr, pA.Y(lv) - 3, { size: 11, color: cPhT, align: 'right' });
+    ctx.textBaseline = 'alphabetic';
+    txt(ctx, 'frequency $ω$', m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, `${cur.re ? 'Im $F$ and Re $F$' : 'Im $F$'} (units of 1/$ħη$)`, 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+  };
+  function drawA() {
+    const c = cur;
+    pA.draw([
+      { type: 'band', x0: XL[0], x1: 0, color: 'muted', alpha: 0.07 },
+      { type: 'vline', at: -1, color: 'muted', width: 1, dash: [4, 4] },
+      { type: 'vline', at: 1, color: 'muted', width: 1, dash: [4, 4] },
+      { type: 'hline', at: -(1 + 2 * c.n), color: 'phonon', width: 1.3, dash: [2, 3] },
+      c.re ? { type: 'line', x: xs, y: c.L.re, color: 'muted', width: 1.3, label: 'Re, both lines' } : null,
+      { type: 'line', x: xs, y: c.L.imR, color: 'ink', width: 2, label: 'Im, retarded' },
+      { type: 'line', x: xs, y: c.L.imT, color: 'phonon', width: 2.2, dash: [7, 4], label: 'Im, time-ordered' }
+    ]);
+    pA.cv.canvas.setAttribute('aria-label', `Panel a: imaginary parts of the free phonon lines against frequency, in units of one over the broadening. ` +
+      `Retarded: peak −1 at +omega_0 and +1 at −omega_0, at every temperature. Time-ordered at ${c.T} K: peaks ${fx(-(1 + 2 * c.n), 2)} at both ±omega_0.` +
+      (c.re ? ' The real part, one curve for both lines, is shown thin.' : ''));
+  }
+
+  // ---------- panel (b): the complex frequency plane (schematic in Im ω) ----------
+  const cvB = EPP.canvas(fig.querySelector('.b5-poles-plane'), { height: 166 });
+  cvB.canvas.setAttribute('role', 'img');
+  function drawPlane() {
+    cvB.clear();
+    if (!cur) return;
+    const ctx = cvB.ctx, w = cvB.w;
+    const L = M.l, R = w - M.r, X = (x) => L + (x - XL[0]) / (XL[1] - XL[0]) * (R - L), X0 = X(0);
+    const yF = 22, y0 = 90, d = 30, yB = 142, R0 = 9, RD = 3.2;   // frame top, real axis, η on screen, frame bottom, ring scale, dot radius
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMuted = EPP.color('muted'), cRule = EPP.color('rule'), cGrid = EPP.color('grid');
+    const cPh = EPP.color('phonon'), cPhT = EPP.textColor('phonon');
+    const n = cur.n, rA = R0 * Math.sqrt(1 + n), rB = R0 * Math.sqrt(n);   // ring areas ∝ weights 1 + n and n
+    ctx.save();
+    ctx.fillStyle = EPP.alpha('muted', 0.09); ctx.fillRect(L, yF, R - L, y0 - yF);
+    ctx.strokeStyle = cRule; ctx.lineWidth = 1; ctx.setLineDash([]); ctx.strokeRect(L + 0.5, yF + 0.5, R - L - 1, yB - yF - 1);
+    // guides: Re ω = ±ω_0 (continuing those of (a)) and Im ω = ±η
+    ctx.strokeStyle = cMuted; ctx.setLineDash([4, 4]); ctx.beginPath();
+    [-1, 1].forEach(x => { const xx = Math.round(X(x)) + 0.5; ctx.moveTo(xx, yF + 1); ctx.lineTo(xx, yB - 1); });
+    ctx.stroke();
+    ctx.strokeStyle = cGrid; ctx.setLineDash([2, 3]); ctx.beginPath();
+    [y0 - d, y0 + d].forEach(y => { ctx.moveTo(L + 1, y + 0.5); ctx.lineTo(R - 1, y + 0.5); });
+    ctx.stroke(); ctx.setLineDash([]);
+    // axes, with ticks at ±iη and at the multiples of ω_0
+    arrow(ctx, L + 1, y0, R - 3, y0, cFg, 1.4, 7);
+    arrow(ctx, X0, yB - 1, X0, yF + 26, cFg, 1.4, 7);
+    ctx.strokeStyle = cFg; ctx.lineWidth = 1.2; ctx.beginPath();
+    [y0 - d, y0 + d].forEach(y => { ctx.moveTo(X0 - 4, y); ctx.lineTo(X0 + 4, y); });
+    [-2, -1, 1, 2].forEach(x => { ctx.moveTo(X(x), y0 - 4); ctx.lineTo(X(x), y0 + 4); });
+    ctx.stroke();
+    ctx.strokeStyle = cRule; ctx.beginPath();
+    [-2, -1, 0, 1, 2].forEach(x => { ctx.moveTo(X(x), yB); ctx.lineTo(X(x), yB + 4); });
+    ctx.stroke();
+    // poles: (1 + n) term at +ω_0 − iη and −ω_0 + iη; n term at +ω_0 + iη and −ω_0 − iη; retarded at ±ω_0 − iη
+    const poles = [
+      { x: 1, y: y0 + d, r: rA, side: 1, A: true }, { x: -1, y: y0 - d, r: rA, side: -1, A: true },
+      { x: 1, y: y0 - d, r: rB, side: 1, A: false }, { x: -1, y: y0 + d, r: rB, side: -1, A: false }
+    ].filter(p => p.r >= 0.75);
+    ctx.fillStyle = EPP.alpha('phonon', 0.14);
+    poles.forEach(p => { ctx.beginPath(); ctx.arc(X(p.x), p.y, p.r, 0, 2 * Math.PI); ctx.fill(); });
+    ctx.strokeStyle = cPh; ctx.lineWidth = 1.8;
+    poles.forEach(p => { ctx.beginPath(); ctx.arc(X(p.x), p.y, p.r, 0, 2 * Math.PI); ctx.stroke(); });
+    ctx.fillStyle = cFg;
+    [-1, 1].forEach(x => { ctx.beginPath(); ctx.arc(X(x), y0 + d, RD, 0, 2 * Math.PI); ctx.fill(); });
+    // weights beside the rings, outside the pair (values only when every label fits in the frame)
+    ctx.textBaseline = 'alphabetic';
+    const labs = poles.filter(p => p.A || n >= 0.01).map(p => ({ p, off: Math.max(p.r, RD) + 5,
+      long: p.A ? `1 + $n$_B = ${fx(1 + n, 2)}` : `$n$_B = ${fx(n, 2)}`, short: p.A ? '1 + $n$_B' : '$n$_B' }));
+    const useLong = labs.every(o => (o.p.side > 0 ? X(o.p.x) + o.off + tw(ctx, o.long, 11) <= R - 4 : X(o.p.x) - o.off - tw(ctx, o.long, 11) >= L + 4));
+    labs.forEach(o => txt(ctx, useLong ? o.long : o.short, X(o.p.x) + o.p.side * o.off, o.p.y + 4, { size: 11, color: cPhT, align: o.p.side > 0 ? 'left' : 'right' }));
+    // text
+    txt(ctx, '(b) the poles in the complex frequency plane', 4, 14, { size: 11.5, color: cFg2 });
+    const uhp = 'upper half plane: no poles of a retarded function';
+    txt(ctx, tw(ctx, uhp, 11) <= 0.8 * (R - L) ? uhp : 'no poles of a retarded function', X0, yF + 14, { size: 11, color: cMuted, align: 'center' });
+    txt(ctx, 'Im $ω$', X0 + 7, yF + 33, { size: 11.5, color: cFg });
+    txt(ctx, 'real $ω$', R - 6, y0 - 7, { size: 11.5, color: cFg, align: 'right' });
+    txt(ctx, 'i$η$', X0 - 7, y0 - d + 4, { size: 11, color: cMuted, align: 'right' });
+    txt(ctx, '−i$η$', X0 - 7, y0 + d + 4, { size: 11, color: cMuted, align: 'right' });
+    XT.forEach(t => txt(ctx, t.s, X(t.v), yB + 16, { size: 11, color: cMuted, align: 'center' }));
+    ctx.restore();
+    cvB.canvas.setAttribute('aria-label', `Panel b: complex frequency plane, the distance eta from the real axis exaggerated. ` +
+      `Retarded line: poles at plus and minus omega_0 just below the real axis. Time-ordered line at ${cur.T} K: weight ${fx(1 + n, 2)} below the axis at +omega_0 and above it at −omega_0` +
+      (n >= 0.01 ? `, thermal weight ${fx(n, 2)} above the axis at +omega_0 and below it at −omega_0.` : '; no thermal poles.'));
+  }
+  cvB.onResize(drawPlane);
+
+  // ---------- readouts ----------
+  const V = {};
+  ['kt', 'n', 'c1', 'c2', 'eta', 'pr', 'pt'].forEach(k => { V[k] = fig.querySelector('.b5-poles-v-' + k); });
+  const legRe = fig.querySelector('.b5-poles-leg-re');
+  function readouts() {
+    const c = cur;
+    V.kt.textContent = fx(c.kT / c.E0, 3);
+    V.n.textContent = nfmt(c.n);
+    V.c1.textContent = fx(1 + 2 * c.n, 3);
+    V.c2.textContent = fx(c.coth, 3);
+    V.eta.textContent = `${fx(c.g * c.E0, 2)} meV`;
+    V.pr.textContent = fx(c.L.imR[K1], 3);
+    V.pt.textContent = fx(c.L.imT[K1], 3);
+    if (legRe) legRe.style.display = c.re ? '' : 'none';
+  }
+
+  // ---------- controls ----------
+  function onChange(s) {
+    cur = model(s);
+    drawA(); drawPlane(); readouts();
+  }
+  const elCtl = fig.querySelector('.b5-poles-ctrls');
+  const ui = EPP.controls(elCtl, [
+    { key: 'T', type: 'range', label: 'temperature T', min: 0, max: 1000, step: 10, value: 300, fmt: v => `${v.toFixed(0)} K` },
+    { key: 'E0', type: 'range', label: 'mode energy ħω_0', min: 30, max: 200, step: 0.1, value: 33.3, fmt: v => `${v.toFixed(1)} meV` },
+    { key: 'g', type: 'range', label: 'broadening ħη/ħω_0', min: 0.02, max: 0.15, step: 0.005, value: 0.05, fmt: v => v.toFixed(3) },
+    { key: 're', type: 'toggle', label: 'show the real part', value: false }
+  ], onChange);
+  cur = model(ui.state);
+  // slider labels: the symbols in italic, like the readout keys
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const LAB = { T: `temperature ${I('T')}`, E0: `mode energy ${I('ħω')}<sub>0</sub>`, g: `broadening ${I('ħη')}/${I('ħω')}<sub>0</sub>` };
+  Object.keys(LAB).forEach(k => { const sp = elCtl.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+})();
+</script>

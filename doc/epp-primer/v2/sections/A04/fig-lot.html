@@ -1,0 +1,488 @@
+  <figure class="viz" id="viz-a4-lot">
+    <p class="viz-title">The modes at Γ depend on the direction of approach <span class="tag">interactive</span></p>
+    <div class="viz-grid side">
+      <div class="a4-lot-a" style="display:flex;flex-wrap:wrap;gap:8px;align-items:stretch;min-width:0">
+        <div class="a4-lot-geo" style="flex:100 1 270px;min-width:0"></div>
+        <div class="a4-lot-cards" role="group" aria-label="The three optical modes at Γ for the chosen direction" aria-live="polite" style="flex:1 1 164px;min-width:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(94px,1fr));grid-auto-rows:1fr;gap:6px"></div>
+      </div>
+      <div class="a4-lot-b"><div class="legend a4-lot-leg"><span class="item" style="color:var(--c-phonon)"><span class="sw" style="border-top-width:3px"></span><span style="color:var(--fg-2)">upper mode</span></span><span class="item" style="color:var(--c-4)"><span class="sw" style="border-top-width:3px"></span><span style="color:var(--fg-2)">lower mode</span></span><span class="item" style="color:var(--c-5)"><span class="sw dash" style="border-top-width:2px"></span><span style="color:var(--fg-2)">mode along $y$</span></span><span class="item" style="color:var(--muted)"><span class="sw dash" style="border-top-width:1.2px"></span><span style="color:var(--fg-2)">TO and LO at $\theta=0$ and $90^\circ$</span></span></div></div>
+    </div>
+    <div class="a4-lot-ctrls"></div>
+    <div class="readout a4-lot-ro" aria-live="polite"><span>angle between $\bn$ and $\hat\bq$, upper mode<b class="a4-lot-v-ang"></b></span><span>$\hat\bq\cdot\boldsymbol\varepsilon_\infty\cdot\hat\bq$<b class="a4-lot-v-eps"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> In GaAs the LO frequency is the same whichever way $\bq$ approaches <span class="nw">$\Gamma$;</span> only its pattern turns with <span class="nw">$\hat\bq$.</span> In bulk hBN the frequencies themselves move, from 103 to <span class="nw">97 meV</span> and from 170 to <span class="nw">200 meV,</span> as $\hat\bq$ tilts from the axis into the layers.</p><div class="cap-more">
+      <p><strong>Marks.</strong> (a) Bold arrow: <span class="nw">$\hat\bq$,</span> at $\theta$ from <span class="nw">$z$,</span> the c axis of hBN; circle: wavevectors of one small length (heavier quarter: the range of <span class="nw">$\theta$).</span> Double arrows: directions $\bn$ of relative motion in the upper (amber) and lower (teal) modes; ⊙: the mode along <span class="nw">$y$;</span> amber arc: angle between $\bn$ and <span class="nw">$\hat\bq$.</span> Cards: the two atoms move oppositely, the lighter one farther (⊙, ⊗: out of, into the page); bar: <span class="nw">$(\hat\bq\cdot\bn)^2$,</span> 0 for TO, 1 for LO.</p>
+      <p><strong>Try.</strong> Sweep $\theta$ in hBN (slider, Play, arrow keys, or drag in (a) or (b)): the upper mode turns from transverse to longitudinal. GaAs: flat lines. $\Phi^{\mathrm{dd}}$ off: every splitting disappears.</p>
+      <p><strong>Model.</strong> Steps 2–3 of the derivation of <a class="eqref" href="#a4-eq-lot">(A4.8)</a> with tensors: motion along $\bn$ adds to $\omega^2$ the quadratic form $(4\pi e^2/\OV M_{\mathrm r})\,(\hat\bq\cdot\mathbf Z^*_1\cdot\bn)^2/(\hat\bq\cdot\boldsymbol\varepsilon_\infty\cdot\hat\bq)$ of <a class="eqref" href="#a4-eq-dd">(A4.7)</a>, with <span class="nw">$\mathbf Z^*_2=-\mathbf Z^*_1$;</span> with the TO terms, a 3×3 eigenvalue problem for <span class="nw">$\bn$.</span> GaAs: the values of the text. Bulk hBN, one BN pair per cell (Caldwell et al., 2014): TO <span class="nw">169.9 meV</span> in the layers, <span class="nw">96.7 meV</span> along the axis; $(\boldsymbol\varepsilon_\infty)_{xx}=4.87$, <span class="nw">$(\boldsymbol\varepsilon_\infty)_{zz}=2.95$;</span> <span class="nw">$\OV=18.08$ Å³,</span> <span class="nw">$M_{\mathrm r}=6.10$ amu;</span> $Z^*_{1,xx}=2.79$, $Z^*_{1,zz}=0.730$ fitted to the measured LO values, 199.6 and <span class="nw">102.9 meV.</span> Literature values, illustrative; electrostatic limit, $q\gg q_{\mathrm{light}}(\omega_{\mathrm{LO}})$ <a class="eqref" href="#a4-eq-qc">(A4.19)</a>.</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a4-lot');
+  if (!fig || !window.EPP) return;
+  // outside Section A.4 (the isolated figure test) the caption's links to the section have no target: show them as text
+  if (!fig.closest('#a-polar')) fig.querySelectorAll('figcaption a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+  const RAD = Math.PI / 180, TAU = 2 * Math.PI;
+
+  // ---------- model: two atoms per cell, optical block at q -> 0, q̂ = (sin θ, 0, cos θ) with θ measured from the axis z ----------
+  // Gaussian units in eV, Å, amu: 4πe^2/(Ω_V M_r) is in eV Å^-2 amu^-1, the unit of ω^2, and ħω [meV] = 64.654 √ω^2
+  const E4 = 180.95, HW = 64.654, CM = 8.06554;            // 4πe^2 (eV Å); meV per √(eV Å^-2 amu^-1); cm^-1 per meV
+  const w2 = (meV) => (meV / HW) * (meV / HW);
+  // Born charge of atom 1 from a measured LO–TO pair along a principal axis, inverting the cubic-like shift of (A4.8):
+  // ω_LO^2 − ω_TO^2 = 4πe^2 Z^2 / (Ω_V M_r ε), with ε the component of ε∞ along that axis
+  const fitZ = (lo, to, eps, OV, Mr) => Math.sqrt((w2(lo) - w2(to)) * OV * Mr * eps / E4);
+  // literature values, illustrative. GaAs as in the text. Bulk hBN, two-atom model per BN pair: TO and LO 1370 and 1610 cm^-1 in the
+  // layers, 780 and 830 cm^-1 along the axis, ε∞ 4.87 and 2.95 (Caldwell et al., Nat. Commun. 5, 5221 (2014));
+  // Ω_V = (√3/2) a^2 c / 2 = 18.08 Å^3 (a = 2.504 Å, c = 6.661 Å); M_r = 10.81 × 14.01 / 24.82 = 6.10 amu
+  const H = { tx: 1370 / CM, tz: 780 / CM, lx: 1610 / CM, lz: 830 / CM, ex: 4.87, ez: 2.95, OV: 18.08, Mr: 6.10 };
+  const CR = {
+    gaas: { name: 'GaAs', tx: 33.3, tz: 33.3, Zx: 2.07, Zz: 2.07, ex: 10.9, ez: 10.9, OV: 45.16, Mr: 36.11,
+      atoms: ['Ga', 'As'], M: [69.72, 74.92], ylim: [30, 40], yticks: [30, 32, 34, 36, 38, 40], axis: ['$z$, [001] axis', '$z$'] },
+    hbn: { name: 'bulk hBN', tx: H.tx, tz: H.tz, Zx: fitZ(H.lx, H.tx, H.ex, H.OV, H.Mr), Zz: fitZ(H.lz, H.tz, H.ez, H.OV, H.Mr),
+      ex: H.ex, ez: H.ez, OV: H.OV, Mr: H.Mr, atoms: ['B', 'N'], M: [10.81, 14.01], ylim: [90, 210], yticks: [90, 120, 150, 180, 210],
+      axis: ['$z$, c axis (normal to the layers)', '$z$, c axis', '$z$'] }
+  };
+  // ω^2 n_α = Σ_β [ω_TO,α^2 δ_αβ + (4πe^2/Ω_V M_r) s_α s_β / (q̂·ε∞·q̂)] n_β with s_α = Σ_γ q̂_γ Z*_1,γα: (A4.7) in the optical
+  // eigenvectors e_1 = √(M_2/M_c) n, e_2 = −√(M_1/M_c) n. s_y = 0, so the y mode stays at the TO frequency in the layers and the
+  // x–z block is 2×2. Its upper eigenvector n is signed so that n·q̂ ≥ 0; the lower one is n turned clockwise by 90°.
+  function modes(c, th, dd) {
+    const qx = Math.sin(th * RAD), qz = Math.cos(th * RAD);
+    const den = c.ex * qx * qx + c.ez * qz * qz;                     // q̂·ε∞·q̂
+    const k = dd ? E4 / (c.OV * c.Mr * den) : 0;
+    const sx = qx * c.Zx, sz = qz * c.Zz;
+    const a = w2(c.tx) + k * sx * sx, b = k * sx * sz, d = w2(c.tz) + k * sz * sz;
+    const m = 0.5 * (a + d), r = Math.hypot(0.5 * (a - d), b), degen = r <= 1e-9 * m;
+    let nx = qx, nz = qz;                                            // degenerate block: every direction is a mode; show q̂ and its normal
+    if (!degen) {
+      const l = m + r;
+      nx = b; nz = l - a;                                            // the better conditioned of (b, l − a) and (l − d, b)
+      if (Math.hypot(l - d, b) > Math.hypot(nx, nz)) { nx = l - d; nz = b; }
+      const nn = Math.hypot(nx, nz); nx /= nn; nz /= nn;
+      const dq = nx * qx + nz * qz;
+      if (dq < -1e-12 || (Math.abs(dq) <= 1e-12 && nx < 0)) { nx = -nx; nz = -nz; }
+    }
+    const cu = EPP.clamp(nx * qx + nz * qz, -1, 1);
+    return {
+      th, den, degen, ang: Math.acos(Math.abs(cu)) / RAD,
+      up: { hw: HW * Math.sqrt(m + r), n: [nx, nz], L: cu * cu },
+      lo: { hw: HW * Math.sqrt(Math.max(0, m - r)), n: [nz, -nx], L: 1 - cu * cu },
+      y: { hw: c.tx, n: null, L: 0 }
+    };
+  }
+  const TH = EPP.linspace(0, 90, 181);
+  const cache = {};
+  function curves(key, dd) {
+    const id = key + (dd ? '+' : '-');
+    if (!cache[id]) {
+      const c = CR[key], out = { up: [], lo: [], y: [] };
+      for (const t of TH) { const M = modes(c, t, dd); out.up.push(M.up.hw); out.lo.push(M.lo.hw); out.y.push(M.y.hw); }
+      const same = (p, q) => p.every((v, i) => Math.abs(v - q[i]) < 0.01);
+      out.upY = same(out.up, out.y); out.loY = same(out.lo, out.y);
+      cache[id] = out;
+    }
+    return cache[id];
+  }
+  // dashed guides: the TO and LO values reached along the axis (θ = 0) and in the layers (θ = 90°), with the place of their labels
+  function guides(key) {
+    const c = CR[key], g0 = modes(c, 0, true), g9 = modes(c, 90, true);
+    if (key === 'gaas') return [{ v: g0.up.hw, s: 'LO', at: 'right', side: -1 }, { v: g0.lo.hw, s: 'TO', at: 'right', side: 1 }];
+    return [{ v: g9.up.hw, s: 'LO', at: 'left', side: -1 }, { v: g0.up.hw, s: 'TO', at: 'right', side: 1 },
+      { v: g0.lo.hw, s: 'LO', at: 'right', side: -1 }, { v: g9.lo.hw, s: 'TO', at: 'left', side: 1 }];
+  }
+  function compute(st) {
+    const key = CR[st.cr] ? st.cr : 'hbn', th = EPP.clamp(Math.round(st.th), 0, 90), dd = !!st.dd;
+    return Object.assign(modes(CR[key], th, dd), { key, dd, cv: curves(key, dd) });
+  }
+
+  // ---------- canvas text: '$..$' italic symbol (text font), '*..*' bold vector (UI font); _ and ^ as in EPP.drawRich ----------
+  let fUI = 'sans-serif', fTX = 'serif';
+  const fonts = () => { fUI = EPP.css('--font-ui') || fUI; fTX = EPP.css('--font-text') || fTX; };
+  const parse = s => String(s).split(/(\$[^$]*\$|\*[^*]*\*)/).filter(Boolean).map(t => (t[0] === '$' ? [t.slice(1, -1), 'i'] : t[0] === '*' ? [t.slice(1, -1), 'b'] : [t, '']));
+  const pOpt = (p, size) => (p[1] === 'i' ? { size: size + 1, font: fTX, italic: true } : { size, font: fUI, bold: p[1] === 'b' });
+  const rtW = (ctx, s, size) => parse(s).reduce((w, p) => { const o = pOpt(p, size); return w + EPP.measureRich(ctx, p[0], o.size, o.font, o); }, 0);
+  function rt(ctx, s, x, y, size, color, align) {
+    const tot = rtW(ctx, s, size);
+    let x0 = align === 'center' ? x - tot / 2 : align === 'right' ? x - tot : x;
+    ctx.fillStyle = color; ctx.textBaseline = 'alphabetic';
+    for (const p of parse(s)) { const o = pOpt(p, size); x0 += EPP.drawRich(ctx, p[0], x0, y, o); }
+    return tot;
+  }
+  const fit = (ctx, list, size, avail) => list.find(s => rtW(ctx, s, size) <= avail) || list[list.length - 1];
+  const fan = (a0, n, step) => { const out = [a0]; for (let k = 1; k <= n; k++) out.push(a0 + k * step, a0 - k * step); return out; };
+  // label placer: the first candidate centre whose box stays inside, clears the placed boxes and every sampled line point;
+  // soft points (guides) are avoided on a first pass and given up on a second, before a label is left out
+  function placer(ctx, x0, y0, x1, y1) {
+    const pts = [], soft = [], boxes = [];
+    const hit = (b, o) => b[0] < o[2] + 2 && b[2] > o[0] - 2 && b[1] < o[3] + 2 && b[3] > o[1] - 2;
+    const on = (b, list) => list.some(p => p[0] > b[0] - 2.5 && p[0] < b[2] + 2.5 && p[1] > b[1] - 2.5 && p[1] < b[3] + 2.5);
+    const free = (b, useSoft) => b[0] >= x0 && b[1] >= y0 && b[2] <= x1 && b[3] <= y1 && !boxes.some(o => hit(b, o)) && !on(b, pts) && !(useSoft && on(b, soft));
+    const sample = (A, B, out) => { const n = Math.max(1, Math.ceil(Math.hypot(B[0] - A[0], B[1] - A[1]) / 3)); for (let i = 0; i <= n; i++) out.push([A[0] + (B[0] - A[0]) * i / n, A[1] + (B[1] - A[1]) * i / n]); };
+    const api = {
+      seg(A, B) { sample(A, B, pts); },
+      softSeg(A, B) { sample(A, B, soft); },
+      line(list) { for (let i = 1; i < list.length; i++) api.seg(list[i - 1], list[i]); },
+      arc(Cc, r, a0, a1) { const n = Math.max(2, Math.ceil(Math.abs(a1 - a0) * RAD * r / 3)); for (let i = 0; i <= n; i++) { const a = (a0 + (a1 - a0) * i / n) * RAD; pts.push([Cc[0] + r * Math.sin(a), Cc[1] - r * Math.cos(a)]); } },
+      block(bx0, by0, bx1, by1) { boxes.push([Math.min(bx0, bx1), Math.min(by0, by1), Math.max(bx0, bx1), Math.max(by0, by1)]); },
+      // centres whose box edge lies gap px from the anchor A, along each direction a (degrees from +z toward +x; screen up is +z)
+      ring(A, angs, w, h, gap) { return angs.map(a => { const sx = Math.sin(a * RAD), sy = -Math.cos(a * RAD), e = Math.abs(sx) * w / 2 + Math.abs(sy) * h / 2; return [A[0] + sx * (gap + e), A[1] + sy * (gap + e)]; }); },
+      put(s, size, color, cands, bg) {
+        const w = rtW(ctx, s, size) + 4, h = size * 1.3, list = typeof cands === 'function' ? cands(w, h) : cands;
+        for (const us of soft.length ? [true, false] : [true]) for (const c of list) {
+          const b = [c[0] - w / 2, c[1] - h / 2, c[0] + w / 2, c[1] + h / 2];
+          if (!free(b, us)) continue;
+          boxes.push(b);
+          if (bg) { ctx.fillStyle = EPP.alpha('surface', 0.86); ctx.fillRect(b[0], b[1], b[2] - b[0], b[3] - b[1]); }
+          rt(ctx, s, c[0], c[1] + size * 0.36, size, color, 'center');
+          return c;
+        }
+        return null;
+      }
+    };
+    return api;
+  }
+  function head(ctx, tip, ux, uy, hs, col) {
+    const wv = 0.46 * hs;
+    ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(tip[0], tip[1]);
+    ctx.lineTo(tip[0] - ux * hs - uy * wv, tip[1] - uy * hs + ux * wv); ctx.lineTo(tip[0] - ux * hs + uy * wv, tip[1] - uy * hs - ux * wv);
+    ctx.closePath(); ctx.fill();
+  }
+  // line A -> B with a head at B, and at A too when both
+  function arrow(ctx, A, B, col, lw, hs, both, dash) {
+    const dx = B[0] - A[0], dy = B[1] - A[1], L = Math.hypot(dx, dy);
+    if (L < 1) return;
+    hs = Math.min(hs, both ? 0.45 * L : 0.6 * L);
+    const ux = dx / L, uy = dy / L, a0 = both ? [A[0] + ux * hs * 0.8, A[1] + uy * hs * 0.8] : A, b0 = [B[0] - ux * hs * 0.8, B[1] - uy * hs * 0.8];
+    ctx.strokeStyle = col; ctx.lineWidth = lw; ctx.lineCap = 'butt'; ctx.setLineDash(dash || []);
+    ctx.beginPath(); ctx.moveTo(a0[0], a0[1]); ctx.lineTo(b0[0], b0[1]); ctx.stroke(); ctx.setLineDash([]);
+    head(ctx, B, ux, uy, hs, col); if (both) head(ctx, A, -ux, -uy, hs, col);
+  }
+  // motion normal to the page: ⊙ toward the reader, ⊗ away
+  function odot(ctx, x, y, r, col, cSurf) {
+    ctx.fillStyle = cSurf; ctx.beginPath(); ctx.arc(x, y, r + 2, 0, TAU); ctx.fill();
+    ctx.strokeStyle = col; ctx.lineWidth = 1.8; ctx.setLineDash([]); ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.stroke();
+    ctx.fillStyle = col; ctx.beginPath(); ctx.arc(x, y, Math.max(1.6, 0.34 * r), 0, TAU); ctx.fill();
+  }
+  function otimes(ctx, x, y, r, col, cSurf) {
+    ctx.fillStyle = cSurf; ctx.beginPath(); ctx.arc(x, y, r + 2, 0, TAU); ctx.fill();
+    ctx.strokeStyle = col; ctx.lineWidth = 1.8; ctx.setLineDash([]); ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.stroke();
+    const e = 0.62 * r; ctx.lineWidth = 1.6; ctx.beginPath();
+    ctx.moveTo(x - e, y - e); ctx.lineTo(x + e, y + e); ctx.moveTo(x + e, y - e); ctx.lineTo(x - e, y + e); ctx.stroke();
+  }
+  const I = (t) => `<i style="font-family:var(--font-text)">${t}</i>`, Bd = (t) => `<strong>${t}</strong>`;
+  const f1 = (v) => EPP.fix(v, 1), NB = ' ';
+
+  let cur = null, anim = null, thA = 45, dir = 1, G = null;
+
+  // ---------- (a) directions in the x–z plane ----------
+  const elA = fig.querySelector('.a4-lot-a'), elGeo = fig.querySelector('.a4-lot-geo');
+  // beside the cards (wide (a)) the panel matches their column; stacked above them it follows its own width
+  const geoOpt = { get height() { const w = elGeo.clientWidth || 300; return elA.clientWidth >= 442 ? 412 : Math.round(EPP.clamp(1.02 * w, 290, 380)); } };
+  const cvA = EPP.canvas(elGeo, geoOpt);
+  const cvs = cvA.canvas;
+  cvs.style.touchAction = 'none';
+  cvs.style.cursor = 'grab';
+  cvs.setAttribute('tabindex', '0');
+  cvs.setAttribute('role', 'slider');
+  cvs.setAttribute('aria-valuemin', '0');
+  cvs.setAttribute('aria-valuemax', '90');
+  cvs.setAttribute('aria-label', 'Direction of approach to Γ: the angle θ between q̂ and the axis z. The panel shows q̂ and, through Γ, the directions of relative motion of the two optical modes polarized in the x–z plane, with the mode along y as a circled dot. Drag in the panel or use the arrow keys (Page Up and Page Down: 10 degrees) to change θ.');
+
+  function drawGeo() {
+    const cv = cvA, ctx = cv.ctx, W = cv.w, Hh = cv.h;
+    cv.clear();
+    if (!cur || W < 80 || Hh < 140) return;
+    fonts();
+    const c = cur, cr = CR[c.key], th = c.th;
+    const cFg2 = EPP.color('fg2'), cMut = EPP.color('muted'), cInk = EPP.color('ink'), cSurf = EPP.color('surface');
+    const cUp = EPP.color('phonon'), cLo = EPP.color('c4'), cY = EPP.color('c5');
+    const tUp = EPP.textColor('phonon'), tLo = EPP.textColor('c4');
+    const title = fit(ctx, ['(a) directions at Γ, in the $x$–$z$ plane', '(a) directions at Γ'], 11.5, W - 8);
+    rt(ctx, title, 4, 15, 11.5, cFg2, 'left');
+    // geometry: Γ at (cx, cy), circle of radius R; room above for the axis label and below for a note
+    const top = 22, padX = 30, above = 32, below = 26;
+    const R = Math.max(46, Math.min((W - 2 * padX) / 2, (Hh - top - above - below) / 2, 150));
+    const cx = W / 2, cy = top + above + R + Math.max(0, (Hh - top - above - below - 2 * R) / 2), O = [cx, cy];
+    G = { cx, cy, R };
+    const P = (ang, r) => [cx + r * Math.sin(ang * RAD), cy - r * Math.cos(ang * RAD)];   // ang in degrees from +z toward +x
+    const pl = placer(ctx, 2, 2, W - 2, Hh - 2);
+    pl.block(0, 0, 8 + rtW(ctx, title, 11.5), 21);
+    // axes
+    const zt = [cx, cy - R - 16], zb = [cx, cy + R + 8], xr = [cx + R + 16, cy], xl = [cx - R - 8, cy];
+    arrow(ctx, zb, zt, cMut, 1.1, 7); arrow(ctx, xl, xr, cMut, 1.1, 7);
+    pl.seg(zb, zt); pl.seg(xl, xr);
+    // circle of wavevectors of one small length; the quarter 0 ≤ θ ≤ 90° that θ spans is drawn heavier
+    ctx.strokeStyle = EPP.alpha('muted', 0.75); ctx.lineWidth = 1; ctx.setLineDash([3, 4]);
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, TAU); ctx.stroke(); ctx.setLineDash([]);
+    ctx.strokeStyle = EPP.alpha('muted', 0.45); ctx.lineWidth = 4; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.arc(cx, cy, R, -Math.PI / 2, 0); ctx.stroke(); ctx.lineCap = 'butt';
+    pl.arc(O, R, 0, 90);
+    // θ: arc from the axis to q̂
+    const rT = 0.24 * R;
+    if (th > 0.5) {
+      ctx.strokeStyle = cFg2; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(cx, cy, rT, -Math.PI / 2, -Math.PI / 2 + th * RAD); ctx.stroke();
+      pl.arc(O, rT, 0, th);
+    }
+    // q̂ to the circle, under the mode arrows (an LO arrow lies along it)
+    const tipQ = P(th, R);
+    arrow(ctx, O, tipQ, cInk, 2.4, 11);
+    pl.seg(O, tipQ);
+    // directions n of the two modes polarized in the x–z plane: double arrows through Γ, the lower mode first
+    const Ln = 0.66 * R, angOf = (n) => Math.atan2(n[0], n[1]) / RAD, aUp = angOf(c.up.n), aLo = angOf(c.lo.n);
+    ctx.globalAlpha = c.degen ? 0.45 : 1;
+    arrow(ctx, P(aLo + 180, Ln), P(aLo, Ln), cLo, 3.2, 10, true);
+    arrow(ctx, P(aUp + 180, Ln), P(aUp, Ln), cUp, 3.2, 10, true);
+    ctx.globalAlpha = 1;
+    pl.seg(P(aLo + 180, Ln), P(aLo, Ln)); pl.seg(P(aUp + 180, Ln), P(aUp, Ln));
+    // the angle between n of the upper mode and q̂
+    const rA = 0.47 * R, showAng = !c.degen && c.ang > 0.5;
+    if (showAng) {
+      ctx.strokeStyle = tUp; ctx.lineWidth = 1.4; ctx.beginPath();
+      ctx.arc(cx, cy, rA, -Math.PI / 2 + th * RAD, -Math.PI / 2 + aUp * RAD, aUp < th); ctx.stroke();
+      pl.arc(O, rA, th, aUp);
+    }
+    // the mode along y, normal to the page
+    odot(ctx, cx, cy, 6.5, cY, cSurf);
+    pl.block(cx - 9, cy - 9, cx + 9, cy + 9);
+    // labels, most important first
+    pl.put('*q̂*', 14, cInk, (w, h) => pl.ring(tipQ, fan(th, 7, 22.5), w, h, 6), true);   // the tip lies on the circle: keep 6 px clear of it
+    const ends = (a) => [P(a, Ln), P(a + 180, Ln)];
+    const near = (a, w, h) => ends(a).flatMap((E, j) => pl.ring(E, fan(a + 180 * j, 4, 22.5), w, h, 4));
+    pl.put(W < 300 ? 'upper' : 'upper mode', 11.5, tUp, (w, h) => near(aUp, w, h), true);
+    pl.put(W < 300 ? 'lower' : 'lower mode', 11.5, tLo, (w, h) => near(aLo, w, h), true);
+    if (showAng) {
+      const mid = (th + aUp) / 2;
+      pl.put(`${Math.round(c.ang)}°`, 11, tUp, (w, h) => pl.ring(P(mid, rA), fan(mid, 2, 12), w, h, 3)
+        .concat(pl.ring(P(mid, rA), fan(mid + 180, 2, 12), w, h, 3), pl.ring(P(aUp, rA), fan(aUp + 90 * Math.sign(aUp - th), 3, 30), w, h, 4)), true);
+    }
+    if (th > 0.5) pl.put('$θ$', 12.5, cFg2, (w, h) => [rT, rT + 8, rT + 16, 0.5 * R, 0.62 * R, 0.74 * R].map(r => pl.ring(P(th / 2, r), [th / 2], w, h, 3)[0])
+      .concat(pl.ring(P(0, rT + 4), [-90, -60], w, h, 3), pl.ring(P(0, 0.5 * R), [-90, -60], w, h, 3)), true);
+    pl.put('Γ', 12.5, cFg2, (w, h) => [14, 20, 28, 36].flatMap(g => pl.ring(O, [225, 135, 315, 45, 202, 158, 248, 112, 292, 68, 338, 22], w, h, g)), true);
+    for (const s of cr.axis) if (pl.put(s, 11.5, cMut, (w, h) => pl.ring(zt, [0, 30, -30, 60, -60, 90, -90], w, h, 3), true)) break;
+    pl.put('$x$', 12.5, cMut, (w, h) => pl.ring(xr, [90, 150, 30, 180, 0], w, h, 3), true);
+    if (c.degen) rt(ctx, fit(ctx, ['without Φ^{dd} the three modes are degenerate: every direction is a mode', 'degenerate: every direction is a mode', 'degenerate'], 11, W - 8), W / 2, Hh - 8, 11, cFg2, 'center');
+    cvs.setAttribute('aria-valuenow', String(th));
+    cvs.setAttribute('aria-valuetext', `${th} degrees; ${cr.name}; upper mode ${f1(c.up.hw)} meV, lower mode ${f1(c.lo.hw)} meV, mode along y ${f1(c.y.hw)} meV` +
+      (c.degen ? ', all degenerate' : `; the upper mode moves at ${f1(c.ang)} degrees from q̂`));
+  }
+
+  // ---------- the three mode cards: the two atoms moving against each other, the energy, the longitudinal character ----------
+  const MODES = [
+    { key: 'up', col: 'phonon', cvar: '--c-phonon', tvar: '--t-phonon', name: 'upper mode' },
+    { key: 'y', col: 'c5', cvar: '--c-5', tvar: '--t-5', name: `mode along ${I('y')}` },
+    { key: 'lo', col: 'c4', cvar: '--c-4', tvar: '--t-4', name: 'lower mode' }
+  ];
+  const elCards = fig.querySelector('.a4-lot-cards');
+  const cards = MODES.map(m => {
+    const el = document.createElement('div');
+    el.className = 'a4-lot-card';
+    el.style.cssText = 'display:flex;flex-direction:column;justify-content:space-between;gap:2px;min-width:0;border:1px solid var(--rule);border-radius:6px;padding:5px 7px 7px;font-family:var(--font-ui);font-size:0.78rem;line-height:1.3;color:var(--fg-2)';
+    const row = 'display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;column-gap:6px';
+    el.innerHTML = `<div><div style="font-weight:600;color:var(${m.tvar})">${m.name}</div><div class="a4-lot-en" style="font-family:var(--font-mono);font-size:0.74rem;color:var(--fg);white-space:nowrap"></div></div>` +
+      `<div class="a4-lot-sk"></div>` +
+      `<div style="${row}"><span class="a4-lot-ch" style="white-space:nowrap"></span><span class="a4-lot-tg" style="color:var(--muted)"></span></div>` +
+      `<div style="position:relative;height:6px;border-radius:3px;overflow:hidden;background:color-mix(in srgb, var(--muted) 22%, transparent)"><div class="a4-lot-fill" style="position:absolute;left:0;top:0;bottom:0;width:0;background:var(${m.cvar})"></div></div>`;
+    elCards.appendChild(el);
+    const cv = EPP.canvas(el.querySelector('.a4-lot-sk'), { height: 58 });
+    cv.canvas.setAttribute('aria-hidden', 'true');
+    const q = (s) => el.querySelector(s);
+    const cd = { m, el, cv, en: q('.a4-lot-en'), ch: q('.a4-lot-ch'), tg: q('.a4-lot-tg'), fill: q('.a4-lot-fill') };
+    cv.onResize(() => drawSketch(cd));
+    return cd;
+  });
+  // atom 1 (B, Ga) at the left moves along +n by M_2/M_1 times the move of atom 2 (N, As) along −n: ξ_κ = e_κ/√M_κ
+  function drawSketch(cd) {
+    const cv = cd.cv, ctx = cv.ctx, W = cv.w, Hh = cv.h;
+    cv.clear();
+    if (!cur || W < 40) return;
+    fonts();
+    const cr = CR[cur.key], md = cur[cd.m.key], col = EPP.color(cd.m.col), cSurf = EPP.color('surface'), cMut = EPP.color('muted'), cFg2 = EPP.color('fg2');
+    const r = EPP.clamp(0.07 * W, 6.5, 9), xa = 0.19 * W, xb = 0.81 * W, yc = Hh / 2;
+    if (cd.m.key === 'y') { odot(ctx, xa + r + 10, yc, 5, col, cSurf); otimes(ctx, xb - r - 10, yc, 5, col, cSurf); }
+    else {
+      // reach of the longer arrow (atom 1), limited by the half gap between the atoms when it points inward, by the edge when
+      // it points outward, and by the height; atom 2 mirrors it
+      const ux = md.n[0], uy = -md.n[1];
+      let reach = r + 20;
+      if (Math.abs(ux) > 1e-6) reach = Math.min(reach, (ux > 0 ? (xb - xa) / 2 - 3 : xa - 2) / Math.abs(ux));
+      if (Math.abs(uy) > 1e-6) reach = Math.min(reach, (Hh / 2 - 2) / Math.abs(uy));
+      const L1 = Math.max(6, reach - r), L2 = L1 * cr.M[0] / cr.M[1];
+      ctx.globalAlpha = cur.degen ? 0.45 : 1;
+      arrow(ctx, [xa, yc], [xa + (r + L1) * ux, yc + (r + L1) * uy], col, 2.4, 7);
+      arrow(ctx, [xb, yc], [xb - (r + L2) * ux, yc - (r + L2) * uy], col, 2.4, 7);
+      ctx.globalAlpha = 1;
+    }
+    cr.atoms.forEach((el, j) => {
+      const x = j ? xb : xa;
+      ctx.fillStyle = cSurf; ctx.beginPath(); ctx.arc(x, yc, r, 0, TAU); ctx.fill();
+      ctx.strokeStyle = cMut; ctx.lineWidth = 1.3; ctx.stroke();
+      let fs = Math.min(11, 1.15 * r); ctx.font = `600 ${fs}px ${fUI}`;
+      while (fs > 6.5 && ctx.measureText(el).width > 1.6 * r) { fs -= 0.5; ctx.font = `600 ${fs}px ${fUI}`; }
+      ctx.fillStyle = cFg2; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(el, x, yc + 0.5);
+      ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    });
+  }
+  function drawCards() {
+    const c = cur;
+    for (const cd of cards) {
+      const md = c[cd.m.key], isY = cd.m.key === 'y';
+      cd.en.textContent = `${f1(md.hw)}${NB}meV`;
+      if (c.degen && !isY) { cd.ch.textContent = 'any direction'; cd.tg.textContent = 'degenerate'; cd.fill.style.width = '0%'; }
+      else {
+        cd.ch.innerHTML = `(${Bd('q̂')}·${Bd('n')})<sup>2</sup> = <span style="font-family:var(--font-mono);font-size:0.74rem;color:var(--fg)">${EPP.fix(md.L, 2)}</span>`;
+        cd.tg.textContent = c.degen ? 'degenerate' : (md.L >= 0.995 ? 'LO' : md.L <= 0.005 ? 'TO' : 'mixed');
+        cd.fill.style.width = (100 * md.L).toFixed(1) + '%';
+      }
+      drawSketch(cd);
+    }
+  }
+
+  // ---------- (b) the mode energies against θ ----------
+  const elB = fig.querySelector('.a4-lot-b'), elLeg = fig.querySelector('.a4-lot-leg');
+  const pB = new EPP.Plot(elB, {
+    xlim: [0, 90], ylim: CR.hbn.ylim, yticks: CR.hbn.yticks, legend: false, aspect: 1.1, minHeight: 300, maxHeight: 350,
+    xticks: [0, 15, 30, 45, 60, 75, 90].map(v => ({ v, label: v + '°' })), margin: { l: 50, r: 10, t: 26, b: 42 },
+    xname: 'θ', hoverX: v => Math.round(v) + '°', hoverY: v => f1(v) + ' meV',
+    ariaLabel: 'Panel b: energies of the three optical modes at Γ against the angle θ between q̂ and the axis'
+  });
+  if (elLeg) elB.appendChild(elLeg);          // the legend (static markup with MathJax) sits under the plot
+  const baseRender = pB.render.bind(pB);
+  pB.render = () => { baseRender(); if (cur) overlayB(); };
+  function overlayB() {
+    const ctx = pB.ctx, W = pB.cv.w, Hh = pB.cv.h, m = pB.m;
+    if (!W || !Hh) return;
+    fonts();
+    const c = cur, cv = c.cv, cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted');
+    ctx.save();
+    rt(ctx, fit(ctx, ['(b) energies at Γ against $θ$', '(b) energies at Γ'], 11.5, W - 8), 4, 15, 11.5, cFg2, 'left');
+    rt(ctx, fit(ctx, ['angle $θ$ between *q̂* and the axis', '$θ$ from the axis'], 12.5, W - 16), m.l + (W - m.l - m.r) / 2, Hh - 8, 12.5, cFg, 'center');
+    ctx.translate(14, m.t + (Hh - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    rt(ctx, '$ħω$ (meV)', 0, 0, 12.5, cFg, 'center');
+    ctx.restore();
+    const pl = placer(ctx, m.l + 2, m.t + 2, W - m.r - 2, Hh - m.b - 2);
+    const C = { up: TH.map((t, i) => [pB.X(t), pB.Y(cv.up[i])]), lo: TH.map((t, i) => [pB.X(t), pB.Y(cv.lo[i])]), y: TH.map((t, i) => [pB.X(t), pB.Y(cv.y[i])]) };
+    Object.values(C).forEach(L => pl.line(L));
+    const Xc = pB.X(c.th), gd = guides(c.key);
+    [c.up.hw, c.lo.hw, c.y.hw].forEach(v => { const Y = pB.Y(v); pl.block(Xc - 5, Y - 5, Xc + 5, Y + 5); });
+    gd.forEach(g => pl.softSeg([m.l, pB.Y(g.v)], [W - m.r, pB.Y(g.v)]));
+    // labels of the dashed guides, beside the end where a curve reaches them
+    for (const g of gd) {
+      const s = `${g.s} ${f1(g.v)}`, w = rtW(ctx, s, 11) + 4, h = 14.3;
+      const x = g.at === 'left' ? m.l + 5 + w / 2 : W - m.r - 5 - w / 2, y = pB.Y(g.v) + g.side * (h / 2 + 3.5);
+      pl.block(x - w / 2, y - h / 2, x + w / 2, y + h / 2);
+      ctx.fillStyle = EPP.alpha('surface', 0.86); ctx.fillRect(x - w / 2, y - h / 2, w, h);
+      rt(ctx, s, x, y + 11 * 0.36, 11, cMut, 'center');
+    }
+    // direct labels: above or below a point of their curve, nearer to it than to any other distinct curve
+    const yAt = (L, x) => { const f = EPP.clamp((x - L[0][0]) / (L[L.length - 1][0] - L[0][0]), 0, 1) * (L.length - 1), i = Math.min(L.length - 2, Math.floor(f)); return L[i][1] + (L[i + 1][1] - L[i][1]) * (f - i); };
+    const own = (key, p) => { const y0 = yAt(C[key], p[0]), d = Math.abs(y0 - p[1]); return Object.keys(C).every(k => { if (k === key) return true; const yk = yAt(C[k], p[0]); return Math.abs(yk - y0) < 1.5 || Math.abs(yk - p[1]) > d + 0.5; }); };
+    const cands = (key, degs, sides) => (w, h) => {
+      const out = [];
+      for (const sd of sides) for (const off of [3, 8, 13]) for (const d of degs) for (const dx of [0, -1, 1]) {
+        const Pt = C[key][Math.round(d * 2)], q = [Pt[0] + dx * (w / 2 + 2), Pt[1] + sd * (h / 2 + off)];
+        if (own(key, q)) out.push(q);
+      }
+      return out;
+    };
+    const tY = EPP.textColor('c5'), tUp = EPP.textColor('phonon'), tLo = EPP.textColor('c4');
+    const allSame = c.degen, L = [];
+    if (allSame) L.push(['lo', ['all three modes'], cFg2, [30, 50, 15], [1, -1]]);
+    else {
+      L.push(['up', cv.upY ? ['upper, along $y$', 'upper'] : ['upper'], tUp, c.key === 'gaas' ? [26, 14, 42, 58] : [52, 64, 40, 76, 28], c.key === 'gaas' ? [-1, 1] : [1, -1]]);
+      L.push(['lo', cv.loY ? ['lower, along $y$', 'lower'] : ['lower'], tLo, c.key === 'gaas' ? [26, 14, 42, 58] : [22, 30, 14, 40, 52], c.key === 'gaas' ? [1, -1] : [-1, 1]]);
+      if (!cv.upY && !cv.loY) L.push(['y', ['along $y$'], tY, [26, 34, 18, 42, 50], [1, -1]]);
+    }
+    for (const [key, texts, col, degs, sides] of L) for (const s of texts) if (pl.put(s, 11.5, col, cands(key, degs, sides), true)) break;
+  }
+  function drawB() {
+    const c = cur, cr = CR[c.key], cv = c.cv;
+    pB.opt.yticks = cr.yticks;
+    pB.draw([
+      ...guides(c.key).map(g => ({ type: 'hline', at: g.v, color: 'muted', width: 1, dash: [4, 4] })),
+      { type: 'vline', at: c.th, color: 'muted', width: 1, dash: [] },
+      { type: 'line', x: TH, y: cv.lo, color: 'c4', width: 2.6, label: 'lower mode' },
+      { type: 'line', x: TH, y: cv.up, color: 'phonon', width: 2.6, label: 'upper mode' },
+      { type: 'line', x: TH, y: cv.y, color: 'c5', width: 2, dash: [6, 4], label: 'mode along y' },
+      { type: 'points', x: [c.th], y: [c.lo.hw], color: 'c4', r: 4.2 },
+      { type: 'points', x: [c.th], y: [c.up.hw], color: 'phonon', r: 4.2 },
+      { type: 'points', x: [c.th], y: [c.y.hw], color: 'c5', r: 3.4 }
+    ], { ylim: cr.ylim });
+  }
+
+  // ---------- readouts ----------
+  const ro = { ang: fig.querySelector('.a4-lot-v-ang'), eps: fig.querySelector('.a4-lot-v-eps') };
+  function readouts() {
+    const c = cur, cr = CR[c.key];
+    ro.ang.textContent = c.degen ? `—${NB}(degenerate)` : `${f1(c.ang)}°` + (c.ang < 0.05 ? `${NB}(LO)` : c.ang > 89.95 ? `${NB}(TO)` : '');
+    ro.eps.textContent = EPP.fix(c.den, 2);
+    pB.cv.canvas.setAttribute('aria-label', `Panel b: energies of the three optical modes of ${cr.name} at Γ against θ from 0 to 90 degrees` +
+      (c.dd ? '' : ', without the dipole–dipole force constants') + `. At θ = ${c.th} degrees: upper mode ${f1(c.up.hw)} meV, mode along y ${f1(c.y.hw)} meV, lower mode ${f1(c.lo.hw)} meV.`);
+  }
+
+  function update(st) {
+    if (Math.round(st.th) !== Math.round(thA)) thA = Math.round(st.th);
+    cur = compute(st);
+    drawGeo(); drawCards(); drawB(); readouts();
+  }
+
+  // ---------- controls ----------
+  const elCtl = fig.querySelector('.a4-lot-ctrls');
+  const ui = EPP.controls(elCtl, [
+    { key: 'cr', type: 'select', label: 'crystal', options: [['gaas', 'GaAs (cubic)'], ['hbn', 'bulk hBN (uniaxial)']], value: 'hbn' },
+    { key: 'th', type: 'range', label: 'direction θ of q̂ from the axis', min: 0, max: 90, step: 1, value: 45, fmt: v => Math.round(v) + '°' },
+    { key: 'dd', type: 'toggle', label: 'long-range force constants Φ^{dd}', value: true }
+  ], update);
+  { const sp = elCtl.querySelector(`label[for="${fig.id}-th"] > span`); if (sp) sp.innerHTML = `direction ${I('θ')} of ${Bd('q̂')} from the axis`; }
+  // a slow sweep of θ between 0 and 90° (starts paused; EPP.anim pauses it offscreen and under reduced motion)
+  const host = document.createElement('div');
+  host.className = 'ctrl';
+  host.style.justifyItems = 'start';
+  host.innerHTML = `<span class="lab"><span>sweep ${I('θ')}</span></span>`;
+  const bTh = elCtl.querySelector(`#${fig.id}-th`);
+  if (bTh && bTh.closest('.ctrl')) bTh.closest('.ctrl').after(host); else elCtl.appendChild(host);
+  anim = EPP.anim(fig, (t, dt) => {
+    if (!(dt > 0)) return;
+    thA += dir * 15 * dt;
+    if (thA >= 90) { thA = 90; dir = -1; } else if (thA <= 0) { thA = 0; dir = 1; }
+    const th = Math.round(thA);
+    if (th !== Math.round(ui.state.th)) ui.set('th', th);
+  }, { buttonHost: host, autoplay: false });
+  anim.button.style.minWidth = '6em';
+  const setTh = (th) => { th = EPP.clamp(Math.round(th), 0, 90); thA = th; ui.set('th', th); };
+  const stop = () => { if (anim && anim.running) anim.pause(); };
+
+  // drag in (a): the angle between the pointer direction and the axis (the other quadrants fold onto 0–90° by symmetry)
+  const local = (e) => { const r = cvs.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  let dragging = false;
+  function fromPointer(px, py) {
+    if (!G) return;
+    const dx = px - G.cx, dz = G.cy - py;
+    if (Math.hypot(dx, dz) < 4) return;
+    setTh(Math.atan2(Math.abs(dx), Math.abs(dz)) / RAD);
+  }
+  cvs.addEventListener('pointerdown', (e) => {
+    if (!G) return;
+    dragging = true; stop();
+    try { cvs.setPointerCapture(e.pointerId); } catch (_) {}
+    try { cvs.focus({ preventScroll: true }); } catch (_) {}
+    cvs.style.cursor = 'grabbing';
+    fromPointer(...local(e));
+    e.preventDefault();
+  });
+  cvs.addEventListener('pointermove', (e) => { if (dragging) fromPointer(...local(e)); });
+  const endDrag = () => { dragging = false; cvs.style.cursor = 'grab'; };
+  cvs.addEventListener('pointerup', endDrag);
+  cvs.addEventListener('pointercancel', endDrag);
+  cvs.addEventListener('keydown', (e) => {
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+    const th = Math.round(ui.state.th), step = { ArrowRight: 1, ArrowUp: 1, ArrowLeft: -1, ArrowDown: -1, PageUp: 10, PageDown: -10 }[e.key];
+    let v;
+    if (step !== undefined) v = th + step; else if (e.key === 'Home') v = 0; else if (e.key === 'End') v = 90; else return;
+    e.preventDefault(); stop(); setTh(v);
+  });
+  // a click or drag in (b) sets θ
+  pB.onPointer = (x, y, type) => { if (type === 'up') return; stop(); setTh(x); };
+  cvA.onResize(() => { if (cur) drawGeo(); });
+})();
+</script>

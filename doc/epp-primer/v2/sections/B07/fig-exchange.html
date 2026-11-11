@@ -1,0 +1,396 @@
+  <figure class="viz" id="viz-b7-exchange">
+    <p class="viz-title">Photon exchange dresses the phonon <span class="tag">interactive</span></p>
+    <div class="viz-grid two b7-exchange-top" style="align-items:center">
+      <div class="b7-exchange-a">
+        <div class="b7-exchange-h" style="font-family:var(--font-ui);font-size:0.82rem;font-weight:600;line-height:1.35;color:var(--fg-2);margin:0 0 4px">(a) The loop, read physically</div>
+        <div class="b7-exchange-loop"></div>
+      </div>
+      <ul class="b7-exchange-key" aria-label="Key to the diagram marks" style="list-style:none;margin:0;padding:0;display:grid;gap:5px;font-family:var(--font-ui);font-size:0.84rem;line-height:1.35;color:var(--fg-2)">
+        <li style="display:flex;align-items:center;gap:8px"><span class="b7-exchange-g" data-g="phonon" style="flex:0 0 104px;display:flex;justify-content:flex-end"></span><span>phonon line: free $F^0$, dressed $F$</span></li>
+        <li style="display:flex;align-items:center;gap:8px"><span class="b7-exchange-g" data-g="field" style="flex:0 0 104px;display:flex;justify-content:flex-end"></span><span>field line: free $D^0$, dressed by the electrons $D^{\rme}$, full $D$</span></li>
+        <li style="display:flex;align-items:center;gap:8px"><span class="b7-exchange-g" data-g="bubble" style="flex:0 0 104px;display:flex;justify-content:flex-end"></span><span>bubbles: ionic $\Pi^{\ion}$, electronic $\Pi^{\rme}$</span></li>
+        <li style="display:flex;align-items:center;gap:8px"><span class="b7-exchange-g" data-g="sum" style="flex:0 0 104px;display:flex;justify-content:flex-end"></span><span>$\Pi^{\mathrm{ion,scr}}$, all chains that begin and end on an ionic bubble; phonon self-energy $\Pi^{\ph}$</span></li>
+        <li style="display:flex;align-items:center;gap:8px"><span class="b7-exchange-g" data-g="vertex" style="flex:0 0 104px;display:flex;justify-content:flex-end"></span><span>vertex, where a phonon line meets a field line: $J$ or $J^*$</span></li>
+      </ul>
+    </div>
+    <div class="b7-exchange-h" style="font-family:var(--font-ui);font-size:0.82rem;font-weight:600;line-height:1.35;color:var(--fg-2);margin:14px 0 0">(b) The three steps, as moves on diagrams</div>
+    <div class="b7-exchange-row" data-step="1" role="group" aria-label="Step 1: resum the electrons into the field line">
+      <div class="b7-exchange-rh"><span>Step 1 · resum the electrons</span><span class="b7-exchange-rq"><a class="eqref" href="#b7-eq-regroup"></a>, <a class="eqref" href="#b7-eq-scr"></a></span></div>
+      <div class="b7-exchange-line" data-line="1a"></div>
+      <div class="b7-exchange-line" data-line="1d"></div>
+      <div class="b7-exchange-line" data-line="1c"></div>
+      <div class="b7-exchange-line" data-line="1e"><span class="b7-exchange-lead">inset, the line dressed by the electrons, <a class="eqref" href="#b5-eq-dysonDe"></a>:</span></div>
+    </div>
+    <div class="b7-exchange-row" data-step="2" role="group" aria-label="Step 2: open the ionic bubble">
+      <div class="b7-exchange-rh"><span>Step 2 · open the ionic bubble</span><span class="b7-exchange-rq"><a class="eqref" href="#b7-eq-Piion"></a></span></div>
+      <div class="b7-exchange-line" data-line="2"></div>
+    </div>
+    <div class="b7-exchange-row" data-step="3" role="group" aria-label="Step 3: a Dyson equation for phonons">
+      <div class="b7-exchange-rh"><span>Step 3 · a Dyson equation for phonons</span><span class="b7-exchange-rq"><a class="eqref" href="#b7-eq-piph"></a>, <a class="eqref" href="#b7-eq-series"></a>, <a class="eqref" href="#b7-eq-dysonF"></a></span></div>
+      <div class="b7-exchange-line" data-line="3a"></div>
+      <div class="b7-exchange-line" data-line="3b"></div>
+      <div class="b7-exchange-line" data-line="3c"></div>
+    </div>
+    <div class="b7-exchange-ctrls"></div>
+    <div class="readout b7-exchange-ro" aria-live="polite">
+      <span class="b7-exchange-v" data-n="0" style="display:none"><span>term, step 1<b>$\Pi^{\ion}$</b></span><span>steps 2 and 3<b>$=-J\,F^0J^*$</b></span><span>signs<b>1 bubble: $(-1)^1$; no bracket; total $-1$</b></span></span>
+      <span class="b7-exchange-v" data-n="1" style="display:contents"><span>term, step 1<b>$\Pi^{\ion}D^{\rme}\Pi^{\ion}$</b></span><span>steps 2 and 3<b>$=-J\,F^0\Pi^{\ph}F^0\,J^*$</b></span><span>signs<b>2 bubbles: $(-1)^2$; 1 bracket $J^*D^{\rme}J=-\Pi^{\ph}$: $(-1)^1$; total $-1$</b></span></span>
+      <span class="b7-exchange-v" data-n="2" style="display:none"><span>term, step 1<b>$\Pi^{\ion}D^{\rme}\Pi^{\ion}D^{\rme}\Pi^{\ion}$</b></span><span>steps 2 and 3<b>$=-J\,F^0\Pi^{\ph}F^0\Pi^{\ph}F^0\,J^*$</b></span><span>signs<b>3 bubbles: $(-1)^3$; 2 brackets $J^*D^{\rme}J=-\Pi^{\ph}$: $(-1)^2$; total $-1$</b></span></span>
+      <span class="b7-exchange-v" data-n="3" style="display:none"><span>term, step 1<b>$\Pi^{\ion}D^{\rme}\Pi^{\ion}D^{\rme}\Pi^{\ion}D^{\rme}\Pi^{\ion}$</b></span><span>steps 2 and 3<b>$=-J\,F^0\Pi^{\ph}F^0\Pi^{\ph}F^0\Pi^{\ph}F^0\,J^*$</b></span><span>signs<b>4 bubbles: $(-1)^4$; 3 brackets $J^*D^{\rme}J=-\Pi^{\ph}$: $(-1)^3$; total $-1$</b></span></span>
+    </div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> The diagrams that dress light with matter (<a href="#b-propagator">Section B.6</a>) also dress the lattice with light. Grouping the electron bubbles into $D^{\rme}$ and opening each ionic bubble turns every chain into a phonon line interrupted by photon exchanges, and each exchange $J^*D^{\rme}J$ is minus the phonon self-energy.</p><div class="cap-more">
+      <p><strong>Marks.</strong> Zigzag: phonon (thin $F^0$, heavy $F$). Wavy: field (thin $D^0$; heavy rose $D^{\rme}$; heavy and uncoloured, $D$, the full field). Amber blob: ionic bubble $\Pi^{\ion}$; blue blob: electronic bubble $\Pi^{\rme}$; amber capsule: $\Pi^{\mathrm{ion,scr}}$; rose blob: $\Pi^{\ph}$. Teal dots: vertices $J$ (the phonon makes a current) and $J^*$ (the field drives the phonon). Brackets under the photon exchanges: $J^*D^{\rme}J=-\Pi^{\ph}$, so a term with $N$ exchanges carries $(-1)^N$ in front. Panel (a) reads from left to right, cause before effect; the formulas are products of matrices and read from right to left, so they write $J^*$ first.</p>
+      <p><strong>Try.</strong> Step through 1, 2 and 3. Move $N$: the same term lights up in rows 1 and 3, and the readout counts its signs. Show the electron bubbles inside $D^{\rme}$. Play runs a pulse through the loop of (a).</p>
+      <p><strong>Model.</strong> Equations <a class="eqref" href="#b7-eq-regroup"></a>, <a class="eqref" href="#b7-eq-scr"></a>, <a class="eqref" href="#b7-eq-Piion"></a>, <a class="eqref" href="#b7-eq-piph"></a>, <a class="eqref" href="#b7-eq-series"></a> and <a class="eqref" href="#b7-eq-dysonF"></a>, with the Dyson equation <a class="eqref" href="#b5-eq-dysonDe"></a> of $D^{\rme}$ in the inset; nothing is computed. Redrawn after the diagrams of the EPP manuscript, with the electron bubbles in the random-phase approximation and only macroscopic fields.</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b7-exchange');
+  if (!fig || !window.EPP) return;
+  const css = (el, o) => { Object.assign(el.style, o); return el; };
+  const RM = EPP.reducedMotion;
+
+  // ---------- static layout of the rows ----------
+  fig.querySelectorAll('.b7-exchange-row').forEach(r => css(r, { border: '1px solid var(--grid)', borderRadius: '6px', padding: '6px 8px 4px', marginTop: '8px', transition: RM ? 'none' : 'opacity 0.25s, border-color 0.25s' }));
+  fig.querySelectorAll('.b7-exchange-rh').forEach(h => css(h, { display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: '2px 12px', fontFamily: 'var(--font-ui)', fontSize: '0.84rem', fontWeight: '600', color: 'var(--fg)', margin: '0 0 2px' }));
+  fig.querySelectorAll('.b7-exchange-rq').forEach(q => css(q, { fontWeight: '400', color: 'var(--muted)' }));
+  fig.querySelectorAll('.b7-exchange-line').forEach(l => css(l, { display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', gap: '2px 0', margin: '2px 0' }));
+  fig.querySelectorAll('.b7-exchange-lead').forEach(l => css(l, { flex: '1 1 100%', fontFamily: 'var(--font-ui)', fontSize: '0.8rem', color: 'var(--muted)', margin: '2px 0 0 3px' }));
+  const LINE = (k) => fig.querySelector(`.b7-exchange-line[data-line="${k}"]`);
+
+  // ---------- diagram builder on EPP.fd ----------
+  // tokens: {L:type, lab, len, color} line; {B:color, lab, r} blob; {P:label} capsule (screened correlator);
+  // {V:label} vertex (no advance); {K:'['|']'} bracket; {U:[i, j], lab} bracket under vertices i..j (V order)
+  const LW = 32, LZ = 30, R = 14, VR = 3.8, PAD = 3;
+  function chain(toks, o) {
+    const yc = o.yc, L = [], P = [], B = [], V = [], T = [], vx = [];
+    let x = PAD;
+    const pl = (a, b, c, w, bend) => P.push({ t: 'plain', a, b, color: c, width: w, bend: bend || 0 });
+    for (const k of toks) {
+      if (k.L) {
+        const len = k.len ?? (k.L.startsWith('photon') ? LW : LZ);
+        L.push({ t: k.L, a: [x, yc], b: [x + len, yc], label: k.lab, color: k.color });
+        x += len;
+      } else if (k.B) {
+        const r = k.r ?? R;
+        B.push({ t: 'blob', at: [x + r, yc], r, label: k.lab, color: k.B });
+        x += 2 * r;
+      } else if (k.P) {
+        const w = k.w ?? 58, r = k.r ?? R, c = 'phonon';
+        pl([x + r, yc - r], [x + w - r, yc - r], c, 1.6); pl([x + r, yc + r], [x + w - r, yc + r], c, 1.6);
+        pl([x + r, yc + r], [x + r, yc - r], c, 1.6, 0.5); pl([x + w - r, yc - r], [x + w - r, yc + r], c, 1.6, 0.5);
+        if (k.P !== true) T.push({ t: 'text', at: [x + w / 2, yc + 5], text: k.P, color: 'phonon-t', size: 14, upright: true });
+        x += w;
+      } else if (k.V) {
+        V.push({ t: 'vertex', at: [x, yc], r: VR, color: 'c4' }); vx.push(x);
+        if (k.V !== true) T.push({ t: 'text', at: [x, yc + 21], text: k.V, color: 'c4-t', size: 14 });
+      } else if (k.K) {
+        // tall enough to enclose the line label above and the vertex labels below
+        const hh = 24, x0 = k.K === '[' ? x + 2 : x + 10, s = k.K === '[' ? 1 : -1;
+        pl([x0, yc - hh], [x0, yc + hh], 'muted', 1.4); pl([x0, yc - hh], [x0 + 4 * s, yc - hh], 'muted', 1.4); pl([x0, yc + hh], [x0 + 4 * s, yc + hh], 'muted', 1.4);
+        x += 12;
+      }
+    }
+    for (const k of toks) if (k.U) {
+      const a = vx[k.U[0]], b = vx[k.U[1]], y = yc + 31;
+      pl([a, y - 4], [a, y], 'muted', 1.1); pl([a, y], [b, y], 'muted', 1.1); pl([b, y], [b, y - 4], 'muted', 1.1);
+      T.push({ t: 'text', at: [(a + b) / 2, y + 15], text: k.lab, color: 'fg2', size: 14, upright: true });
+    }
+    return { w: Math.ceil(x + PAD), h: o.h, yc, items: [...L, ...P, ...B, ...V, ...T], label: o.label };
+  }
+  // a flex item (padding identical for operators and diagrams, so their centre lines agree)
+  function item(line) {
+    const t = document.createElement('span');
+    t.className = 'b7-exchange-t';
+    css(t, { display: 'inline-flex', alignItems: 'flex-start', padding: '2px 3px', borderRadius: '6px', flex: '0 0 auto', maxWidth: '100%' });
+    line.appendChild(t);
+    return t;
+  }
+  function op(host, s, yc) {
+    const e = document.createElement('span');
+    e.className = 'b7-exchange-op'; e.textContent = s;
+    css(e, { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', height: `${2 * yc}px`, minWidth: '12px', padding: '0 3px', fontFamily: 'var(--font-text)', fontSize: '1.15rem', lineHeight: '1', color: 'var(--fg-2)', whiteSpace: 'nowrap' });
+    host.appendChild(e);
+    return e;
+  }
+  function term(line, d, o = {}) {
+    const t = item(line), s = o.scale || 1;
+    if (o.sign) op(t, o.sign, d.yc * s);
+    const svg = EPP.fd.draw(t, d);
+    if (s !== 1) { svg.setAttribute('width', (d.w * s).toFixed(1)); svg.setAttribute('height', (d.h * s).toFixed(1)); }
+    css(svg, { display: 'block', flex: '0 0 auto', overflow: 'visible', maxWidth: '100%', height: 'auto' });
+    if (o.n !== undefined) t.dataset.n = String(o.n);
+    return t;
+  }
+  const sym = (line, s, yc) => { const t = item(line); op(t, s, yc); return t; };
+
+  // vertical frames: yc = height of the line centre, h = diagram height
+  const Y1 = { yc: 24, h: 48 }, Y2 = { yc: 26, h: 52 }, Y3 = { yc: 24, h: 74 };
+  const De = (len) => ({ L: 'photon2', lab: 'D^e', len });
+  const D0 = (len) => ({ L: 'photon', lab: 'D^0', len });
+  const PIion = { B: 'phonon', lab: 'Π^{ion}' }, PIe = { B: 'electron', lab: 'Π^e' }, PIph = { B: 'photon', lab: 'Π^{ph}' };
+  const SCR = { P: 'Π^{ion,scr}' };
+  const F0 = (len) => ({ L: 'phonon', lab: 'F^0', len }), Fd = (len) => ({ L: 'phonon2', lab: 'F', len });
+  const say = { De: 'heavy rose field line D^e', D0: 'thin field line D^0', ion: 'amber ionic bubble Π^ion', el: 'blue electronic bubble Π^e' };
+  const lst = (a) => a.join(', ');
+
+  // Step 1, line a: D = D^e + D^e Π D^e + D^e Π D^e Π D^e + … = D^e + D^e Π^{ion,scr} D^e
+  const l1a = LINE('1a');
+  term(l1a, chain([{ L: 'photon2', lab: 'D', color: 'ink', len: 34 }], { ...Y1, label: 'D, the full field propagator: heavy black wavy line' }));
+  sym(l1a, '=', Y1.yc);
+  const firstDe = term(l1a, chain([De(34)], { ...Y1, label: say.De }));
+  term(l1a, chain([De(), PIion, De()], { ...Y1, label: lst([say.De, say.ion, say.De]) }), { sign: '+' });
+  term(l1a, chain([De(), PIion, De(), PIion, De()], { ...Y1, label: 'two ionic bubbles joined by heavy rose field lines D^e' }), { sign: '+' });
+  sym(l1a, '+ …', Y1.yc);
+  sym(l1a, '=', Y1.yc);
+  term(l1a, chain([De(34)], { ...Y1, label: say.De }));
+  term(l1a, chain([De(), SCR, De()], { ...Y1, label: 'heavy rose field line, amber capsule Π^ion,scr, heavy rose field line' }), { sign: '+' });
+
+  // Step 1, sub-row: every D^e is a sum over electron bubbles (shown by the electrons toggle)
+  const SUB = 0.86, l1d = LINE('1d');
+  css(l1d, { display: 'none', marginLeft: '10px', paddingLeft: '6px', borderLeft: '2px solid var(--accent)' });
+  term(l1d, chain([De(34)], { ...Y1, label: say.De }), { scale: SUB });
+  sym(l1d, '=', Y1.yc * SUB);
+  term(l1d, chain([D0(34)], { ...Y1, label: say.D0 }), { scale: SUB });
+  term(l1d, chain([D0(), PIe, D0()], { ...Y1, label: lst([say.D0, say.el, say.D0]) }), { sign: '+', scale: SUB });
+  term(l1d, chain([D0(), PIe, D0(), PIe, D0()], { ...Y1, label: 'two electronic bubbles joined by thin field lines D^0' }), { sign: '+', scale: SUB });
+  sym(l1d, '+ …', Y1.yc * SUB);
+
+  // Step 1, line c: Π^{ion,scr} = Π + Π D^e Π + … ; the term with N lines D^e carries data-n = N
+  const l1c = LINE('1c');
+  term(l1c, chain([SCR], { ...Y1, label: 'amber capsule Π^ion,scr' }));
+  sym(l1c, '=', Y1.yc);
+  for (let n = 0; n <= 3; n++) {
+    const tk = [PIion]; for (let i = 0; i < n; i++) tk.push(De(), PIion);
+    term(l1c, chain(tk, { ...Y1, label: n ? `${n + 1} ionic bubbles joined by ${n} heavy rose field line${n > 1 ? 's' : ''} D^e` : 'one ionic bubble' }), { sign: n ? '+' : '', n });
+  }
+  sym(l1c, '+ …', Y1.yc);
+
+  // Step 1, inset: D^e = D^0 + D^0 Π^e D^e
+  const INS = 0.86, l1e = LINE('1e');
+  term(l1e, chain([De(34)], { ...Y1, label: say.De }), { scale: INS });
+  sym(l1e, '=', Y1.yc * INS);
+  term(l1e, chain([D0(34)], { ...Y1, label: say.D0 }), { scale: INS });
+  term(l1e, chain([D0(), PIe, De()], { ...Y1, label: lst([say.D0, say.el, say.De]) }), { sign: '+', scale: INS });
+
+  // Step 2: Π^{ion} = −[J F^0 J^*]
+  const l2 = LINE('2');
+  term(l2, chain([PIion], { ...Y2, label: 'amber ionic bubble Π^ion' }));
+  sym(l2, '=', Y2.yc);
+  term(l2, chain([{ K: '[' }, { V: 'J' }, F0(56), { V: 'J^*' }, { K: ']' }], { ...Y2, label: 'minus, in brackets: vertex J, thin phonon line F^0, vertex J*' }), { sign: '−' });
+
+  // Step 3, line a: Π^{ion,scr} = −[J F J^*]
+  const l3a = LINE('3a');
+  term(l3a, chain([SCR], { ...Y2, label: 'amber capsule Π^ion,scr' }));
+  sym(l3a, '=', Y2.yc);
+  term(l3a, chain([{ K: '[' }, { V: 'J' }, Fd(56), { V: 'J^*' }, { K: ']' }], { ...Y2, label: 'minus, in brackets: vertex J, heavy phonon line F, vertex J*' }), { sign: '−' });
+
+  // Step 3, line b: the phonon series; each J^* D^e J (bracket below) is −Π^{ph}, so term N carries (−1)^N
+  const l3b = LINE('3b');
+  term(l3b, chain([Fd(34)], { ...Y1, label: 'heavy phonon line F' }));
+  sym(l3b, '=', Y3.yc);
+  for (let n = 0; n <= 3; n++) {
+    const tk = [F0(n ? LZ : 34)];
+    for (let i = 0; i < n; i++) tk.push({ V: 'J^*' }, De(36), { V: 'J' }, F0());
+    for (let i = 0; i < n; i++) tk.push({ U: [2 * i, 2 * i + 1], lab: '−Π^{ph}' });
+    const lab = n ? `thin phonon lines F^0 interrupted by ${n} photon exchange${n > 1 ? 's' : ''}: vertex J*, heavy rose field line D^e, vertex J; each exchange bracketed as minus Π^ph` : 'thin phonon line F^0';
+    // the frame is tall only where brackets hang below the line (same centre line either way)
+    term(l3b, chain(tk, { ...(n ? Y3 : Y1), label: lab }), { sign: n === 0 ? '' : (n % 2 ? '−' : '+'), n });
+  }
+  sym(l3b, '+ …', Y3.yc);
+
+  // Step 3, line c: boxed F = F^0 + F^0 Π^{ph} F, with Π^{ph} = −[J^* D^e J]
+  const l3c = LINE('3c');
+  css(l3c, { alignItems: 'center', gap: '4px 8px', marginTop: '4px' });
+  const box = document.createElement('div');
+  css(box, { display: 'inline-flex', flexWrap: 'wrap', alignItems: 'flex-start', border: '1.5px solid var(--fg-2)', borderRadius: '6px', padding: '1px 3px', maxWidth: '100%' });
+  box.setAttribute('role', 'group'); box.setAttribute('aria-label', 'Result, boxed: the Dyson equation of the phonons');
+  l3c.appendChild(box);
+  term(box, chain([Fd(34)], { ...Y2, label: 'heavy phonon line F' }));
+  sym(box, '=', Y2.yc);
+  term(box, chain([F0(34)], { ...Y2, label: 'thin phonon line F^0' }));
+  term(box, chain([F0(), PIph, Fd()], { ...Y2, label: 'thin phonon line F^0, rose blob Π^ph, heavy phonon line F' }), { sign: '+' });
+  const grp = document.createElement('div');
+  css(grp, { display: 'inline-flex', flexWrap: 'wrap', alignItems: 'flex-start', maxWidth: '100%' });
+  l3c.appendChild(grp);
+  const w = document.createElement('span');
+  w.textContent = 'with';
+  css(w, { display: 'inline-flex', alignItems: 'center', height: `${2 * Y2.yc + 4}px`, padding: '0 4px 0 0', fontFamily: 'var(--font-ui)', fontSize: '0.84rem', color: 'var(--muted)' });
+  grp.appendChild(w);
+  term(grp, chain([PIph], { ...Y2, label: 'rose blob Π^ph' }));
+  sym(grp, '=', Y2.yc);
+  term(grp, chain([{ K: '[' }, { V: 'J^*' }, De(44), { V: 'J' }, { K: ']' }], { ...Y2, label: 'minus, in brackets: vertex J*, heavy rose field line D^e, vertex J' }), { sign: '−' });
+
+  // ---------- key glyphs ----------
+  const G = {
+    phonon: { w: 66, items: [{ t: 'phonon', a: [2, 9], b: [30, 9] }, { t: 'phonon2', a: [36, 9], b: [64, 9] }] },
+    field: { w: 102, items: [{ t: 'photon', a: [2, 9], b: [30, 9] }, { t: 'photon2', a: [36, 9], b: [64, 9] }, { t: 'photon2', a: [70, 9], b: [98, 9], color: 'ink' }] },
+    bubble: { w: 44, items: [{ t: 'blob', at: [11, 9], r: 8, color: 'phonon' }, { t: 'blob', at: [33, 9], r: 8, color: 'electron' }] },
+    sum: { w: 56, items: [{ t: 'plain', a: [10, 1.5], b: [22, 1.5], color: 'phonon', width: 1.5 }, { t: 'plain', a: [10, 16.5], b: [22, 16.5], color: 'phonon', width: 1.5 },
+      { t: 'plain', a: [10, 16.5], b: [10, 1.5], bend: 0.5, color: 'phonon', width: 1.5 }, { t: 'plain', a: [22, 1.5], b: [22, 16.5], bend: 0.5, color: 'phonon', width: 1.5 },
+      { t: 'blob', at: [44, 9], r: 8, color: 'photon' }] },
+    vertex: { w: 44, items: [{ t: 'phonon', a: [2, 9], b: [22, 9] }, { t: 'photon', a: [22, 9], b: [42, 9] }, { t: 'vertex', at: [22, 9], r: VR, color: 'c4' }] }
+  };
+  fig.querySelectorAll('.b7-exchange-g').forEach(el => {
+    const g = G[el.dataset.g]; if (!g) return;
+    const svg = EPP.fd.draw(el, { w: g.w, h: 18, items: g.items, label: 'key glyph' });
+    svg.setAttribute('aria-hidden', 'true'); svg.removeAttribute('role');
+    css(svg, { display: 'block', overflow: 'visible' });
+  });
+  // The page rule "svg text.fd-lab {italic; 14px}" outranks SVG attributes, so labels drawn upright
+  // (Π^{ion}, Π^{ph}, the capsule, −Π^{ph}) and the requested sizes are restored as inline styles,
+  // after every repaint (this callback is registered after all EPP.fd diagrams, so it runs last).
+  const fixLabels = () => fig.querySelectorAll('svg text.fd-lab').forEach(t => {
+    if (t.getAttribute('font-style') === 'normal') t.style.fontStyle = 'normal';
+    if (t.hasAttribute('font-size')) t.style.fontSize = t.getAttribute('font-size') + 'px';
+    else if (t.getAttribute('font-style') === 'normal') t.style.fontSize = '12.5px'; // blob label: fits inside r = 14
+    t.querySelectorAll('tspan').forEach(s => { if (s.textContent === '*') s.style.fontSize = '80%'; }); // J^*: a legible star
+  });
+  fixLabels();
+  EPP.onTheme(fixLabels);
+
+  // ---------- panel (a): the loop, read physically (own SVG: it carries the pulse) ----------
+  const NS = 'http://www.w3.org/2000/svg';
+  const sv = (tag, at, parent) => { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); if (parent) parent.appendChild(e); return e; };
+  const mctx = document.createElement('canvas').getContext('2d');
+  const mw = (t, size, it, fam) => { mctx.font = `${it ? 'italic ' : ''}${size}px ${fam}`; return mctx.measureText(t).width; };
+  // label from parts {t, i: italic, s: 'sub'|'sup'}; a subscript right after a superscript is stacked under it
+  function label(g, x, y, parts, o) {
+    const size = o.size, fam = o.fam || EPP.css('--font-text');
+    const te = sv('text', { x, y, 'text-anchor': o.anchor || 'middle', 'font-family': fam, 'font-size': size, fill: o.fill }, g);
+    let off = 0, supW = 0, prevSup = false;
+    for (const p of parts) {
+      const ts = sv('tspan', { 'font-style': p.i ? 'italic' : 'normal' }, te);
+      ts.textContent = p.t;
+      const fs = p.s ? (p.t === '*' ? 0.92 : 0.72) * size : size, target = p.s === 'sup' ? -0.36 * size : (p.s === 'sub' ? 0.27 * size : 0);
+      if (p.s) ts.setAttribute('font-size', fs.toFixed(1));
+      if (target !== off) { ts.setAttribute('dy', (target - off).toFixed(2)); off = target; }
+      if (p.s === 'sub' && prevSup) ts.setAttribute('dx', (-supW).toFixed(2));
+      prevSup = p.s === 'sup'; supW = prevSup ? mw(p.t, fs, p.i, fam) : 0;
+    }
+    return te;
+  }
+  const zig = (x0, x1, y, amp = 3.6, wl = 7) => {
+    const n = Math.max(2, Math.round((x1 - x0) / wl)); let d = `M${x0} ${y}`;
+    for (let i = 1; i < 2 * n; i++) d += ` L${(x0 + (x1 - x0) * i / (2 * n)).toFixed(2)} ${(y + (i % 2 ? amp : -amp)).toFixed(2)}`;
+    return d + ` L${x1} ${y}`;
+  };
+  const wave = (x0, x1, y, amp = 3.6, wl = 9) => {
+    const n = Math.max(2, Math.round((x1 - x0) / wl)), m = 160; let d = '';
+    for (let i = 0; i <= m; i++) { const s = i / m; d += `${i ? ' L' : 'M'}${(x0 + (x1 - x0) * s).toFixed(2)} ${(y + amp * Math.sin(2 * Math.PI * n * s)).toFixed(2)}`; }
+    return d;
+  };
+  const aPanel = fig.querySelector('.b7-exchange-a'), loop = fig.querySelector('.b7-exchange-loop');
+  const svgA = sv('svg', { viewBox: '0 0 340 134', role: 'img', 'aria-label': 'Panel a, the loop read physically. A thin phonon line of branch ν′ ends at a vertex J, where the phonon makes a current. A heavy wavy field line D^e, longitudinal and transverse and screened by the electrons drawn as small clouds along it, runs to a vertex J*, where the field drives the lattice, and a thin phonon line of branch ν leaves. A brace marks vertex, field line, vertex as minus the phonon self-energy Π^ph with indices ν ν′.' });
+  css(svgA, { display: 'block', width: '100%', maxWidth: '400px', height: 'auto', margin: '0 auto', overflow: 'visible' });
+  loop.appendChild(svgA);
+  const YC = 62, XL = 22, XJ = 88, XS = 252, XR = 318, ELX = [124, 156, 188, 220];
+  let A = null, animT = 0;
+  function paintA() {
+    svgA.textContent = '';
+    const cPh = EPP.color('phonon'), cGa = EPP.color('photon'), c4 = EPP.color('c4'), muted = EPP.color('muted');
+    const ui = EPP.css('--font-ui');
+    const ells = ELX.map(x => ({ x, el: sv('ellipse', { cx: x, cy: YC, rx: 10, ry: 7.5, fill: EPP.alpha('electron', 0.16), stroke: EPP.color('electron'), 'stroke-width': 1.1 }, svgA) }));
+    const path = (d, c, w) => sv('path', { d, fill: 'none', stroke: c, 'stroke-width': w, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, svgA);
+    path(zig(XL, XJ, YC), cPh, 1.8);
+    path(wave(XJ, XS, YC), cGa, 3.2);
+    path(zig(XS, XR, YC), cPh, 1.8);
+    const pulse = sv('g', { visibility: 'hidden' }, svgA);
+    const glow = sv('circle', { cx: XL, cy: YC, r: 8.5 }, pulse), core = sv('circle', { cx: XL, cy: YC, r: 4.2 }, pulse);
+    const verts = [XJ, XS].map(x => ({ x, el: sv('circle', { cx: x, cy: YC, r: 4.6, fill: c4 }, svgA) }));
+    const tPh = EPP.textColor('phonon'), tGa = EPP.textColor('photon'), t4 = EPP.textColor('c4'), fg = EPP.color('fg');
+    label(svgA, 10, YC + 5, [{ t: 'ν′', i: 1 }], { size: 15, fill: tPh });
+    label(svgA, 330, YC + 5, [{ t: 'ν', i: 1 }], { size: 15, fill: tPh });
+    label(svgA, (XL + XJ) / 2 - 4, YC - 12, [{ t: 'F', i: 1 }, { t: '0', s: 'sup' }], { size: 14, fill: tPh });
+    label(svgA, (XS + XR) / 2 + 4, YC - 12, [{ t: 'F', i: 1 }, { t: '0', s: 'sup' }], { size: 14, fill: tPh });
+    label(svgA, XJ, YC - 13, [{ t: 'J', i: 1 }, { t: 'βν′', s: 'sub', i: 1 }], { size: 14, fill: t4 });
+    label(svgA, XS, YC - 13, [{ t: 'J', i: 1 }, { t: '*', s: 'sup' }, { t: 'αν', s: 'sub', i: 1 }], { size: 14, fill: t4 });
+    label(svgA, (XJ + XS) / 2, YC - 16, [{ t: 'D', i: 1 }, { t: 'e', s: 'sup' }, { t: 'αβ', s: 'sub', i: 1 }], { size: 15, fill: tGa });
+    label(svgA, (XJ + XS) / 2, 16, [{ t: 'field, longitudinal + transverse,' }], { size: 10.5, fam: ui, fill: muted });
+    label(svgA, (XJ + XS) / 2, 29, [{ t: 'screened by the electrons' }], { size: 10.5, fam: ui, fill: muted });
+    label(svgA, XJ, YC + 23, [{ t: 'current' }], { size: 10.5, fam: ui, fill: muted });
+    label(svgA, XS, YC + 23, [{ t: 'drives the lattice' }], { size: 10.5, fam: ui, fill: muted });
+    const yb = YC + 33, r = 6, mid = (XJ + XS) / 2;
+    path(`M${XJ} ${yb} Q${XJ} ${yb + r} ${XJ + r} ${yb + r} L${mid - r} ${yb + r} Q${mid} ${yb + r} ${mid} ${yb + 2 * r} Q${mid} ${yb + r} ${mid + r} ${yb + r} L${XS - r} ${yb + r} Q${XS} ${yb + r} ${XS} ${yb}`, muted, 1.2);
+    label(svgA, mid, yb + 2 * r + 19, [{ t: '−Π' }, { t: 'ph', s: 'sup' }, { t: 'νν′', s: 'sub', i: 1 }], { size: 15, fill: fg });
+    A = { pulse, glow, core, verts, ells };
+    frameA(animT);
+  }
+  // pulse: phonon ν′ (amber) → current → field (rose) → force → phonon ν (amber); vertices swell, clouds polarize as it passes
+  const TRAVEL = 4.8, PERIOD = 6.6;
+  function frameA(t) {
+    animT = t;
+    if (!A) return;
+    const ph = t % PERIOD, on = t > 0 && ph < TRAVEL, x = XL + (XR - XL) * Math.min(1, ph / TRAVEL);
+    A.pulse.setAttribute('visibility', on ? 'visible' : 'hidden');
+    if (on) {
+      const c = x > XJ && x < XS ? 'photon' : 'phonon';
+      A.core.setAttribute('cx', x.toFixed(2)); A.glow.setAttribute('cx', x.toFixed(2));
+      A.core.setAttribute('fill', EPP.color(c)); A.glow.setAttribute('fill', EPP.alpha(c, 0.28));
+    }
+    for (const v of A.verts) { const d = on ? Math.abs(x - v.x) : 99; v.el.setAttribute('r', (4.6 + 2.4 * Math.max(0, 1 - d / 10)).toFixed(2)); }
+    for (const e of A.ells) {
+      const k = on ? Math.max(0, 1 - Math.abs(x - e.x) / 24) : 0;
+      e.el.setAttribute('rx', (10 + 2.5 * k).toFixed(2)); e.el.setAttribute('fill', EPP.alpha('electron', (0.16 + 0.26 * k).toFixed(3)));
+    }
+  }
+  paintA();
+  EPP.onTheme(paintA);
+
+  // ---------- controls ----------
+  const elCtl = fig.querySelector('.b7-exchange-ctrls');
+  const rows = [...fig.querySelectorAll('.b7-exchange-row')];
+  const termsN = [...fig.querySelectorAll('.b7-exchange-t[data-n]')];
+  const vars = [...fig.querySelectorAll('.b7-exchange-v')];
+  function update(s) {
+    const step = s.step, N = Math.round(s.N);
+    rows.forEach(r => {
+      const sel = step !== 'all' && r.dataset.step === step;
+      css(r, { borderColor: sel ? 'var(--accent)' : 'var(--grid)', opacity: step !== 'all' && !sel ? '0.35' : '1' });
+    });
+    termsN.forEach(t => { const on = +t.dataset.n === N; css(t, { background: on ? 'var(--hl)' : 'transparent', boxShadow: on ? '0 0 0 1.5px var(--accent)' : 'none' }); });
+    vars.forEach(v => { v.style.display = +v.dataset.n === N ? 'contents' : 'none'; });
+    l1d.style.display = s.el ? 'flex' : 'none';
+    css(firstDe, { outline: s.el ? '1.5px dashed var(--accent)' : 'none', outlineOffset: '-1px' });
+  }
+  const ui = EPP.controls(elCtl, [
+    { key: 'step', type: 'seg', label: 'step', options: [['1', '1 · electrons'], ['2', '2 · ionic bubble'], ['3', '3 · phonon series'], ['all', 'all']], value: 'all' },
+    { key: 'N', type: 'range', label: 'dressed photon lines N', min: 0, max: 3, step: 1, value: 1, fmt: v => (Math.round(v) === 1 ? '1 line' : `${Math.round(v)} lines`) },
+    { key: 'el', type: 'toggle', label: 'show the electron bubbles inside D^e', value: false }
+  ], update);
+  update(ui.state);
+  // labels with italic symbols, like the readout
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const LAB = { N: `dressed photon lines ${I('N')}`, el: `show the electron bubbles inside ${I('D')}<sup>e</sup>` };
+  Object.keys(LAB).forEach(k => { const sp = elCtl.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  // arrow keys move through the steps
+  const seg = elCtl.querySelector('.seg');
+  if (seg) seg.addEventListener('keydown', (e) => {
+    const keys = { ArrowLeft: -1, ArrowUp: -1, ArrowRight: 1, ArrowDown: 1, Home: -9, End: 9 };
+    if (!(e.key in keys)) return;
+    const btns = [...seg.querySelectorAll('button')], i = btns.indexOf(document.activeElement);
+    if (i < 0) return;
+    const d = keys[e.key], j = d === -9 ? 0 : d === 9 ? btns.length - 1 : (i + d + btns.length) % btns.length;
+    btns[j].focus(); btns[j].click(); e.preventDefault();
+  });
+  // Play/Pause of the pulse in (a)
+  const host = document.createElement('div');
+  host.className = 'ctrl';
+  host.innerHTML = '<span class="lab"><span>pulse in (a)</span></span>';
+  elCtl.appendChild(host);
+  host.querySelector('.lab').style.marginBottom = '2px';
+  const anim = EPP.anim(aPanel, (t) => frameA(t), { buttonHost: host });
+  anim.button.style.justifySelf = 'start';
+
+  // previewed outside Section B.7 (the figure test), links to other parts of the page have no target: show their text
+  const TAGS = { 'b7-eq-regroup': 'B7.1', 'b7-eq-scr': 'B7.2', 'b7-eq-Piion': 'B7.4', 'b7-eq-piph': 'B7.5', 'b7-eq-series': 'B7.6', 'b7-eq-dysonF': 'B7.7', 'b5-eq-dysonDe': 'B5.13' };
+  if (!fig.closest('#b-phonon-se')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    const id = (a.getAttribute('href') || '').slice(1);
+    if (!id || document.getElementById(id)) return;
+    const s = document.createElement('span');
+    s.textContent = a.classList.contains('eqref') ? '(' + (TAGS[id] || id) + ')' : a.textContent;
+    a.replaceWith(s);
+  });
+})();
+</script>

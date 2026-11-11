@@ -1,0 +1,470 @@
+  <figure class="viz" id="viz-a2-overlap">
+    <p class="viz-title"><span>Why $k$ goes to $k+q$: a frozen wave in a chain and the overlap that selects the final state</span> <span class="tag">interactive</span></p>
+    <div class="a2-overlap-chain"></div>
+    <div class="viz-grid two a2-overlap-grid" style="margin-top:12px">
+      <div class="a2-overlap-sum"></div>
+      <div class="a2-overlap-bandbox">
+        <div class="a2-overlap-band"></div>
+        <div class="legend a2-overlap-leg">
+          <span class="item"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><circle cx="7" cy="7" r="3.4" fill="none" stroke-width="1.5" style="stroke:var(--c-electron)"/></svg>allowed $k$</span>
+          <span class="item"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><circle cx="7" cy="7" r="4.6" style="fill:var(--c-electron)"/></svg>initial $k$</span>
+          <span class="item"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="vertical-align:-3px;margin-right:5px"><circle cx="8" cy="8" r="6.4" fill="none" stroke-width="1.7" style="stroke:var(--fg)"/></svg>target $k+q$</span>
+          <span class="item"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><rect x="2" y="2" width="10" height="10" fill="none" stroke-width="1.7" style="stroke:var(--fg)"/></svg>chosen $k'$</span>
+        </div>
+      </div>
+    </div>
+    <div class="a2-overlap-ctrls"></div>
+    <div class="readout a2-overlap-ro" aria-live="polite" aria-atomic="true"><span>$\hbar\omega_q$<b class="a2-overlap-v-hw"></b></span><span>$(\hbar/2M\omega_q)^{1/2}$<b class="a2-overlap-v-zp"></b></span><span>process<b class="a2-overlap-v-proc"></b></span><span>$(k+q-k')a$ mod $2\pi$<b class="a2-overlap-v-ph"></b></span></div>
+    <div class="readout a2-overlap-ro2" aria-live="polite" aria-atomic="true"><span>$|\sum_\ell I_\ell|/12|I_0|$<b class="a2-overlap-v-sum"></b></span><span>$|\langle\psi_{k'}|\partial_qV|\psi_k\rangle|$<b class="a2-overlap-v-M"></b></span><span>$|g|$<b class="a2-overlap-v-g"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> The integrand repeats from cell to cell, turned by the phase $(k+q-k')a$. The 12 cell integrals $I_\ell$ add up only for $k'=k+q$ and cancel for every other $k'$, so (c) has a single bar; when $k+q$ leaves the zone, that bar sits at the folded wavevector.</p><div class="cap-more"><p><strong>Marks.</strong> Amber: displaced atoms (drawn ×12) and $\mathrm{Re}\,\Delta V$ (true size); grey: rest positions and static wells; blue: Bloch states and band. Violet: the integrand (dashed: real part, which for $k'=k+q$ is odd about each atom and adds nothing; filled: imaginary part), the phase of each $I_\ell$ (arrows in (b)), the hands $I_\ell/|I_0|$ and the bars. Thick arrow: <span class="nw">$\sum_\ell I_\ell/12|I_0|$;</span> ×$n$ counts coinciding hands. Dashed arrow <span class="nw">$-G$:</span> the fold back into the zone.</p><p><strong>Try.</strong> Untick “$k'$ follows $k+q$” and step <span class="nw">$k'$:</span> the hands fan out and cancel. Move $k$ to <span class="nw">$5\pi/6a$:</span> $k+q$ folds back to $-2\pi/3a$ (umklapp), and the bar follows. Compare $q=\pi/6a$ with <span class="nw">$q=\pi/a$:</span> the zero-point amplitude shrinks as $\omega_q$ grows. A click in (c) or (d) also picks <span class="nw">$k'$.</span></p><p><strong>Model.</strong> The carbon-like chain of <a class="figref" href="#viz-a1-waves">Figure A1.3</a> <span class="nw">($M=12.01$ amu</span>, <span class="nw">$a=1.42$ Å</span>, <span class="nw">$K=20$ eV/Å²</span>, illustrative) on a ring of $N_\ell=12$ cells, without <span class="nw">$q=0$,</span> a rigid translation. Each atom carries a rigid-ion well <span class="nw">$-(10\ \mathrm{eV})\,\ee^{-x^2/2(0.40\,\text{Å})^2}$,</span> <a class="eqref" href="#a2-eq-rigid">(A2.8)</a>, and an orbital <span class="nw">$\ee^{-x^2/2(0.50\,\text{Å})^2}$</span> (model values). The figure evaluates <a class="eqref" href="#a2-eq-wave">(A2.10)</a>–<a class="eqref" href="#a2-eq-select">(A2.12)</a> and <span class="nw">$|g|=(\hbar/2M\omega_q)^{1/2}|\langle\psi_{k+q}|\partial_qV|\psi_k\rangle|$,</span> <a class="eqref" href="#a2-eq-anatomy">(A2.17)</a>, with $\xi$ the zero-point amplitude of <a class="eqref" href="#a1-eq-u">(A1.27)</a> without its <span class="nw">$N_\ell^{-1/2}$:</span> $\Delta V$ is the change per unit phonon field, <a class="eqref" href="#a2-eq-dV">(A2.14)</a>. The band $E_k=-(5.0\ \mathrm{eV})\cos ka$ is for orientation only, and energy conservation is not imposed (Sections A.7, A.9).</p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a2-overlap');
+  if (!fig || !window.EPP) return;
+  // outside Section A.2 (the isolated figure test) the caption's links to equations and figures have no target: show their text
+  if (!fig.closest('#a-coupling')) fig.querySelectorAll('figcaption a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+  const C = EPP.C, TAU = 2 * Math.PI;
+  // ---------- model: lengths in Å, energies in eV, masses in amu ----------
+  const N = 12, A = 1.42, LR = N * A;                         // cells on the Born–von Kármán ring, spacing, ring length
+  const MASS = 12.01, KSP = 20, HW = 64.654, ZPC = 2.0901;    // chain of Figure A1.3: ħω[meV] = 64.654 √(K/M); ħ/2Mω = 2.0901 Å²/(M ħω[meV])
+  const VA = 10, WV = 0.40, SO = 0.50, TB = 5.0;              // well depth and rms width, orbital width, half band width
+  const NP = 80, NX = N * NP, DX = A / NP, EXAG = 12;         // grid points per cell; drawing exaggeration of displacements
+  const KU = TAU / LR;                                        // grid step of k and q, 2π/(N_ℓ a) = 0.3687 Å⁻¹
+  const SQ = [-5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6];          // q = 0, a rigid translation, is left out
+  const SK = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6];
+  const fold = (s) => ((s + 5) % N + N) % N - 5;              // into the zone −π/a < k ≤ π/a
+  // grid: cell ℓ = [(ℓ − 1/2)a, (ℓ + 1/2)a) holds points ℓ·NP … ℓ·NP + NP − 1, atom ℓ at its centre
+  const xs = Float64Array.from({ length: NX }, (_, i) => -A / 2 + (i + 0.5) * DX);
+  const wrap = (d) => d - LR * Math.round(d / LR);            // periodic distance on the ring
+  const ORB = [], GRAD = [], VST = new Float64Array(NX);
+  for (let l = 0; l < N; l++) {
+    const o = new Float64Array(NX), g = new Float64Array(NX);
+    for (let i = 0; i < NX; i++) {
+      const d = wrap(xs[i] - l * A), e = Math.exp(-d * d / (2 * WV * WV));
+      o[i] = Math.exp(-d * d / (2 * SO * SO));                // orbital on atom ℓ
+      g[i] = -VA * d / (WV * WV) * e;                         // ∂V/∂u_ℓ = −V_κ'(x − ℓa), rigid ion (A2.8)
+      VST[i] -= VA * e;                                       // static potential Σ_ℓ V_κ(x − ℓa)
+    }
+    ORB.push(o); GRAD.push(g);
+  }
+  // Bloch sums ψ_k ∝ Σ_ℓ e^{ikℓa} φ(x − ℓa), normalized on the ring; ∂_qV = Σ_ℓ e^{iqℓa} ∂V/∂u_ℓ, (A2.10)
+  const blochSum = (s, F, norm) => {
+    const re = new Float64Array(NX), im = new Float64Array(NX);
+    for (let l = 0; l < N; l++) { const th = TAU * s * l / N, c = Math.cos(th), sn = Math.sin(th), f = F[l]; for (let i = 0; i < NX; i++) { re[i] += c * f[i]; im[i] += sn * f[i]; } }
+    if (norm) { let n2 = 0; for (let i = 0; i < NX; i++) n2 += re[i] * re[i] + im[i] * im[i]; const r = 1 / Math.sqrt(n2 * DX); for (let i = 0; i < NX; i++) { re[i] *= r; im[i] *= r; } }
+    return { re, im };
+  };
+  const PSI = {}, DQV = {};
+  SK.forEach(s => { PSI[s] = blochSum(s, ORB, true); });
+  SQ.forEach(s => { DQV[s] = blochSum(s, GRAD, false); });
+  const ZERO = 1e-9;                                          // below this, a matrix element or a cell integral is shown as 0
+
+  function compute(sq, sk, skp) {
+    const hw = 2 * HW * Math.sqrt(KSP / MASS) * Math.abs(Math.sin(Math.PI * sq / N)); // (A1.10), meV
+    const zp = Math.sqrt(ZPC / (MASS * hw));                  // zero-point amplitude, Å
+    const u = SK.map((_, l) => zp * Math.cos(TAU * sq * l / N)); // Re u_ℓ = Re[ξ e^{iqℓa}], ξ = zero-point amplitude
+    const dv = DQV[sq], pk = PSI[sk], pp = PSI[skp];
+    const dV = new Float64Array(NX);
+    for (let i = 0; i < NX; i++) dV[i] = zp * dv.re[i];       // Re ΔV = Re[ξ ∂_qV]
+    // ∂_qV ψ_k, then the overlap with every ψ_{k'} (bars) and the integrand for the chosen k'
+    const pr = new Float64Array(NX), pm = new Float64Array(NX);
+    for (let i = 0; i < NX; i++) { pr[i] = dv.re[i] * pk.re[i] - dv.im[i] * pk.im[i]; pm[i] = dv.re[i] * pk.im[i] + dv.im[i] * pk.re[i]; }
+    const bars = SK.map(s => { const p = PSI[s]; let r = 0, m = 0; for (let i = 0; i < NX; i++) { r += p.re[i] * pr[i] + p.im[i] * pm[i]; m += p.re[i] * pm[i] - p.im[i] * pr[i]; } const v = Math.hypot(r, m) * DX; return v < ZERO ? 0 : v; });
+    const Ire = new Float64Array(NX), Iim = new Float64Array(NX), cells = [];
+    let Mr = 0, Mm = 0;
+    for (let l = 0; l < N; l++) {
+      let r = 0, m = 0;
+      for (let j = 0; j < NP; j++) { const i = l * NP + j, a = pp.re[i] * pr[i] + pp.im[i] * pm[i], b = pp.re[i] * pm[i] - pp.im[i] * pr[i]; Ire[i] = a; Iim[i] = b; r += a; m += b; }
+      cells.push([r * DX, m * DX]); Mr += r * DX; Mm += m * DX;
+    }
+    const c0 = C.abs(cells[0]), Mabs = Math.hypot(Mr, Mm);
+    const su = sk + sq, sf = fold(su), G = (su - sf) / N;     // k + q, its folded label, and G in units of 2π/a
+    return { sq, sk, skp, hw, zp, u, dV, pk, pp, Ire, Iim, cells, c0: c0 < ZERO ? 0 : c0, M: Mabs < ZERO ? 0 : Mabs, sum: c0 < ZERO ? null : Math.hypot(Mr, Mm) / (N * c0), bars, su, sf, G, match: skp === sf };
+  }
+
+  // ---------- formatting ----------
+  const gcd = (x, y) => (y ? gcd(y, x % y) : x);
+  // s · π/6 written as a fraction of π, with or without the 1/a: π/2a, −2π/3a, π, 0
+  function piFrac(s, den0, unit) {
+    if (s === 0) return '0';
+    const g = gcd(Math.abs(s), den0), nu = Math.abs(s) / g, de = den0 / g;
+    return `${s < 0 ? '−' : ''}${nu === 1 ? '' : nu}π${de === 1 ? (unit ? '/' + unit : '') : '/' + de + unit}`;
+  }
+  const kFrac = (s) => piFrac(s, 6, 'a');                    // s · 2π/(12a) = (s/6) π/a
+  const kFmt = (s) => `${kFrac(s)} · ${EPP.fix(s * KU, 3)} Å⁻¹`;
+  const phFrac = (m) => { const r = ((m % N) + N) % N, mm = r > 6 ? r - N : r; return piFrac(mm, 6, ''); }; // (k+q−k')a = 2πm/12, reduced to (−π, π]
+  const Iv = (t) => `<i style="font-family:var(--font-text)">${t}</i>`;
+
+  // ---------- canvas text: '$...$' marks math, where letters are italic; _x, ^x as in EPP.drawRich ----------
+  const ITAL = /[A-Za-zα-ωℓħ]/;
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const part of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: part.t, m: part.m, it: false }); continue; }
+        let buf = '', it = null;
+        for (const ch of part.t) { const k = ITAL.test(ch); if (it !== null && k !== it) { out.push({ t: buf, m: part.m, it }); buf = ''; } buf += ch; it = k; }
+        if (buf) out.push({ t: buf, m: part.m, it });
+      }
+    });
+    return out;
+  }
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, fam = EPP.css('--font-ui'), rs = runs(s);
+    const font = (r) => `${r.it ? 'italic ' : ''}${o.bold && !r.m ? '700 ' : ''}${r.m ? Math.round(size * 0.72) : size}px ${fam}`;
+    const ws = rs.map(r => { ctx.font = font(r); return ctx.measureText(r.t).width; });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    let x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    if (o.color) ctx.fillStyle = o.color;
+    ctx.textAlign = 'left';
+    rs.forEach((r, k) => { ctx.font = font(r); ctx.fillText(r.t, x0, y + (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0))); x0 += ws[k]; });
+    return tot;
+  }
+  const tw = (ctx, s, size, bold) => txt(ctx, s, 0, 0, { size, bold, measure: true });
+  // a row of coloured label pieces [[text, colour, swatch?], ...]; swatch: 'solid' | 'dash' | 'fill'
+  function pieces(ctx, list, x, y, size) {
+    list.forEach(([s, col, sw, swCol], j) => {
+      if (sw && j) x += 12;
+      if (sw) {
+        ctx.save(); ctx.strokeStyle = swCol || col; ctx.fillStyle = swCol || col; ctx.lineWidth = 2;
+        if (sw === 'fill') { ctx.globalAlpha = 0.45; ctx.fillRect(x, y - 8, 16, 8); ctx.globalAlpha = 1; ctx.lineWidth = 1.3; ctx.beginPath(); ctx.moveTo(x, y - 8); ctx.lineTo(x + 16, y - 8); ctx.stroke(); }
+        else { ctx.setLineDash(sw === 'dash' ? [4, 3] : []); ctx.beginPath(); ctx.moveTo(x, y - 4); ctx.lineTo(x + 16, y - 4); ctx.stroke(); }
+        ctx.restore(); x += 20;
+      }
+      x += txt(ctx, s, x, y, { size, color: col });
+    });
+    return x;
+  }
+  const piecesW = (ctx, list, size) => list.reduce((w, p, j) => w + (p[2] ? (j ? 32 : 20) : 0) + tw(ctx, p[0], size), 0);
+  function arrow(ctx, x0, y0, x1, y1, col, lw, head, dash) {
+    const L = Math.hypot(x1 - x0, y1 - y0);
+    ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = lw; ctx.lineCap = 'round';
+    if (L < 1.5) { ctx.beginPath(); ctx.arc(x0, y0, lw * 0.9, 0, TAU); ctx.fill(); return; }
+    const hs = Math.min(head, 0.6 * L), a = Math.atan2(y1 - y0, x1 - x0);
+    ctx.setLineDash(dash || []);
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1 - 0.8 * hs * Math.cos(a), y1 - 0.8 * hs * Math.sin(a)); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(x1, y1);
+    ctx.lineTo(x1 - hs * Math.cos(a - 0.42), y1 - hs * Math.sin(a - 0.42));
+    ctx.lineTo(x1 - hs * Math.cos(a + 0.42), y1 - hs * Math.sin(a + 0.42));
+    ctx.closePath(); ctx.fill();
+  }
+
+  // ---------- panels ----------
+  const cvA = EPP.canvas(fig.querySelector('.a2-overlap-chain'), { height: 460 });
+  const cvC = EPP.canvas(fig.querySelector('.a2-overlap-sum'), { height: 270 });
+  [cvA, cvC].forEach(c => c.canvas.setAttribute('role', 'img'));
+  const elBand = fig.querySelector('.a2-overlap-band');
+  const roV = {};
+  ['hw', 'zp', 'proc', 'ph', 'sum', 'M', 'g'].forEach(k => { roV[k] = fig.querySelector('.a2-overlap-v-' + k); });
+  let cur = null;
+
+  // (a) and (b): one canvas, five strips over the same 12 cells
+  function drawChain() {
+    const cv = cvA, ctx = cv.ctx, w = cv.w, h = cv.h;
+    cv.clear();
+    if (!cur || w < 60) return;
+    const narrow = w < 560, padL = 40, padR = 8, xa = -A / 2, xb = LR - A / 2;
+    const X = (x) => padL + (x - xa) / (xb - xa) * (w - padL - padR);
+    const cellW = (w - padL - padR) / N;
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted'), cGrid = EPP.color('grid'), cRule = EPP.color('rule');
+    const cPh = EPP.color('phonon'), cPhT = EPP.textColor('phonon'), cEl = EPP.color('electron'), cElT = EPP.textColor('electron'), c5 = EPP.color('c5'), c5T = EPP.textColor('c5');
+    const R = { hA: 14, yIdx: 33, yAt: 47, lV: 72, V: [77, 123], lD: 142, D: [147, 205], hB: 231, lP: 251, P: [256, 310], lI: 330, arr: [335, 351], I: [353, 423] };
+    const Ys = (band, lo, hi) => (v) => band[1] - (v - lo) / (hi - lo) * (band[1] - band[0]);
+    const YV = Ys(R.V, -10.8, -3.4), YD = Ys(R.D, -1, 1), YP = Ys(R.P, -0.4, 0.4), YI = Ys(R.I, -1.2, 1.2);
+    // cell boundaries through every strip
+    ctx.strokeStyle = cGrid; ctx.lineWidth = 1;
+    ctx.beginPath();
+    for (let l = 0; l <= N; l++) { const xx = Math.round(X(-A / 2 + l * A)) + 0.5; ctx.moveTo(xx, R.yIdx + 5); ctx.lineTo(xx, R.I[1]); }
+    ctx.stroke();
+    // strip frames, zero lines and tick labels
+    const strip = (band, Y, ticks, fmt) => {
+      ctx.strokeStyle = cRule; ctx.lineWidth = 1; ctx.strokeRect(padL + 0.5, band[0] + 0.5, w - padL - padR - 1, band[1] - band[0] - 1);
+      ctx.textBaseline = 'middle';
+      ticks.forEach(t => { const yy = Y(t); if (t === 0) { ctx.beginPath(); ctx.moveTo(padL, Math.round(yy) + 0.5); ctx.lineTo(w - padR, Math.round(yy) + 0.5); ctx.stroke(); } txt(ctx, fmt(t), padL - 5, yy, { size: 10, color: cMut, align: 'right' }); });
+      ctx.textBaseline = 'alphabetic';
+    };
+    const tf = (t) => String(t).replace('-', '−');
+    strip(R.V, YV, [-5, -10], tf); strip(R.D, YD, [-1, 0, 1], tf); strip(R.P, YP, [-0.3, 0, 0.3], tf); strip(R.I, YI, [-1, 0, 1], tf);
+    const line = (Y, arr, col, lw, dash, alpha) => {
+      ctx.save(); ctx.strokeStyle = col; ctx.lineWidth = lw; ctx.setLineDash(dash || []); ctx.globalAlpha = alpha ?? 1; ctx.lineJoin = 'round';
+      ctx.beginPath(); for (let i = 0; i < NX; i++) { const px = X(xs[i]), py = Y(arr[i]); if (i) ctx.lineTo(px, py); else ctx.moveTo(px, py); } ctx.stroke(); ctx.restore();
+    };
+    const { u, dV, pk, pp, Ire, Iim, cells, c0 } = cur;
+    // headers
+    ctx.textBaseline = 'alphabetic';
+    const hA = narrow ? '(a) frozen wave, displacements ×12' : '(a) frozen wave: atoms displaced (drawn ×12), and the potential change it creates';
+    txt(ctx, tw(ctx, hA, 11.5) <= w ? hA : '(a) frozen wave, ×12', 0, R.hA, { size: 11.5, color: cFg2 });
+    const hB = narrow ? '(b) the overlap, cell by cell' : '(b) the overlap $⟨ψ_{k′}|∂_qV|ψ_k⟩$, cell by cell: $I_ℓ$ is the integral over cell $ℓ$';
+    txt(ctx, tw(ctx, hB, 11.5) <= w ? hB : '(b) the overlap, cell by cell', 0, R.hB, { size: 11.5, color: cFg2 });
+    // atoms: rest positions (grey) and displaced positions (amber), cell indices above
+    txt(ctx, 'cell $ℓ$', padL - 5, R.yIdx, { size: 10, color: cMut, align: 'right' });
+    for (let l = 0; l < N; l++) txt(ctx, String(l), X(l * A), R.yIdx, { size: 9.5, color: cMut, align: 'center' });
+    ctx.strokeStyle = cRule; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(padL, R.yAt + 0.5); ctx.lineTo(w - padR, R.yAt + 0.5); ctx.stroke();
+    const rA = narrow ? 3.4 : 4.6;
+    for (let l = 0; l < N; l++) { ctx.fillStyle = cMut; ctx.beginPath(); ctx.arc(X(l * A), R.yAt, 2, 0, TAU); ctx.fill(); }
+    ctx.save(); ctx.beginPath(); ctx.rect(padL, R.yAt - 8, w - padL - padR, 16); ctx.clip();   // the ring is cut open: an atom leaving one edge re-enters at the other
+    for (let l = 0; l < N; l++) for (const img of [-LR, 0, LR]) { ctx.fillStyle = cPh; ctx.beginPath(); ctx.arc(X(l * A + EXAG * u[l] + img), R.yAt, rA, 0, TAU); ctx.fill(); }
+    ctx.restore();
+    // V strip: static wells and the wells moved with the atoms
+    ctx.save(); ctx.beginPath(); ctx.rect(padL, R.V[0], w - padL - padR, R.V[1] - R.V[0]); ctx.clip();
+    ctx.fillStyle = EPP.alpha('muted', 0.16); ctx.beginPath(); ctx.moveTo(X(xs[0]), R.V[1]);
+    for (let i = 0; i < NX; i++) ctx.lineTo(X(xs[i]), YV(VST[i]));
+    ctx.lineTo(X(xs[NX - 1]), R.V[1]); ctx.closePath(); ctx.fill();
+    ctx.restore();
+    line(YV, VST, cMut, 1.2);
+    pieces(ctx, narrow ? [['static wells $V$($x$) (eV)', cFg2, 'fill', cMut]] : [['potential energy of the chain at rest, $V$($x$) = $Σ_ℓ$ $V_κ$($x$ − $ℓa$) (eV)', cFg2, 'fill', cMut]], padL, R.lV, 11);
+    // ΔV strip
+    line(YD, dV, cPh, 2.3);
+    const labD = [['Re $ΔV$($x$), $ΔV$ = $ξ$ $∂_qV$', cPhT, 'solid', cPh], [narrow ? ' (eV)' : ' (eV), with $ξ$ the zero-point amplitude (not exaggerated)', cFg2]];
+    pieces(ctx, piecesW(ctx, labD, 11) <= w - padL ? labD : [['Re $ΔV$($x$) (eV)', cPhT, 'solid', cPh]], padL, R.lD, 11);
+    // ψ strip
+    line(YP, pk.re, cEl, 1.8);
+    line(YP, pp.re, cEl, 1.8, [5, 3]);
+    pieces(ctx, [['Re $ψ_k$', cElT, 'solid', cEl], ['Re $ψ^*_{k′}$', cElT, 'dash', cEl], ['   (Å^{−1/2})', cFg2]], padL, R.lP, 11);
+    // integrand strip: imaginary part filled, real part as a line; one arrow per cell for the phase of I_ℓ
+    ctx.save(); ctx.beginPath(); ctx.rect(padL, R.I[0], w - padL - padR, R.I[1] - R.I[0]); ctx.clip();
+    ctx.fillStyle = EPP.alpha('c5', 0.5); ctx.beginPath(); ctx.moveTo(X(xs[0]), YI(0));
+    for (let i = 0; i < NX; i++) ctx.lineTo(X(xs[i]), YI(Iim[i]));
+    ctx.lineTo(X(xs[NX - 1]), YI(0)); ctx.closePath(); ctx.fill();
+    line(YI, Ire, c5, 0.9, [3, 2.5], 0.55);
+    line(YI, Iim, c5, 1.8);
+    ctx.restore();
+    const labI = narrow ? [['$ψ^*_{k′}∂_qVψ_k$ (eV Å^{−2}): ', cFg2], ['Re', c5T, 'dash', c5], ['Im', c5T, 'fill', c5]]
+      : [['integrand $ψ^*_{k′}$ $∂_qV$ $ψ_k$ (eV Å^{−2}): ', cFg2], ['real part', c5T, 'dash', c5], ['imaginary part', c5T, 'fill', c5], ['    arrows: phase of $I_ℓ$', c5T]];
+    pieces(ctx, labI, padL, R.lI, 11);
+    const yAr = (R.arr[0] + R.arr[1]) / 2, La = Math.min(0.62 * cellW, 15);
+    for (let l = 0; l < N; l++) {
+      const xc = X(l * A), c = cells[l], a = C.abs(c);
+      if (c0 === 0) break;
+      if (a < ZERO) { ctx.fillStyle = c5; ctx.beginPath(); ctx.arc(xc, yAr, 1.8, 0, TAU); ctx.fill(); continue; }
+      const ux = c[0] / a, uy = -c[1] / a;
+      arrow(ctx, xc - 0.5 * La * ux, yAr - 0.5 * La * uy, xc + 0.5 * La * ux, yAr + 0.5 * La * uy, c5, 1.6, 5.5);
+    }
+    // x axis
+    const yAx = R.I[1];
+    ctx.strokeStyle = cRule; ctx.lineWidth = 1; ctx.textBaseline = 'top';
+    for (let t = 0; t <= 16; t += 2) { const xx = Math.round(X(t)) + 0.5; ctx.beginPath(); ctx.moveTo(xx, yAx); ctx.lineTo(xx, yAx + 4); ctx.stroke(); txt(ctx, String(t), xx, yAx + 6, { size: 10.5, color: cMut, align: 'center' }); }
+    ctx.textBaseline = 'alphabetic';
+    txt(ctx, 'position along the chain $x$ (Å)', padL + (w - padL - padR) / 2, h - 6, { size: 12, color: cFg, align: 'center' });
+    if (c0 === 0) { const nt = narrow ? 'every $I_ℓ$ = 0: odd about each atom' : 'every $I_ℓ$ = 0: the integrand is odd about each atom'; txt(ctx, nt, padL + (w - padL - padR) / 2, R.arr[1] - 3, { size: 10.5, color: c5T, align: 'center' }); }
+    cv.canvas.setAttribute('aria-label', `Panels a and b: a ring of 12 cells cut open. (a) Atoms displaced by the frozen wave of wavevector q = ${kFrac(cur.sq)} (displacements drawn 12 times larger), the static and moved potential wells, and the potential change ΔV. (b) The Bloch states for k = ${kFrac(cur.sk)} and k′ = ${kFrac(cur.skp)} and the integrand of their overlap with ∂qV; the cell integrals turn by ${phFrac(cur.sk + cur.sq - cur.skp)} from one cell to the next.`);
+  }
+
+  // (c): the 12 cell integrals as hands on a dial, their sum, and the overlap for all 12 final states
+  let barHit = null;
+  function drawSum() {
+    const cv = cvC, ctx = cv.ctx, w = cv.w, h = cv.h;
+    cv.clear(); barHit = null;
+    if (!cur || w < 60) return;
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted'), cGrid = EPP.color('grid'), cRule = EPP.color('rule');
+    const c5 = EPP.color('c5'), c5T = EPP.textColor('c5'), cInk = EPP.color('ink');
+    ctx.textBaseline = 'alphabetic';
+    txt(ctx, '(c) sum over the 12 cells', 0, 14, { size: 11.5, color: cFg2 });
+    // dial
+    const Rd = EPP.clamp(Math.min(0.17 * w, (h - 108) / 2), 36, 64);
+    const cx = Rd + 16, cy = 38 + Rd + 12;
+    ctx.strokeStyle = cGrid; ctx.lineWidth = 1; ctx.beginPath();
+    ctx.moveTo(cx - 1.12 * Rd, cy); ctx.lineTo(cx + 1.12 * Rd, cy); ctx.moveTo(cx, cy + 1.12 * Rd); ctx.lineTo(cx, cy - 1.12 * Rd); ctx.stroke();
+    ctx.strokeStyle = cMut; ctx.beginPath(); ctx.arc(cx, cy, Rd, 0, TAU); ctx.stroke();
+    txt(ctx, 'Re', cx + Rd + 4, cy + 14, { size: 10, color: cMut });
+    txt(ctx, 'Im', cx - 14, cy - 1.12 * Rd + 8, { size: 10, color: cMut, align: 'right' });
+    const { cells, c0 } = cur;
+    if (c0 === 0) {
+      txt(ctx, 'all $I_ℓ$ = 0', cx, cy - 8, { size: 11, color: c5T, align: 'center' });
+      txt(ctx, '(symmetry)', cx, cy + 8, { size: 10.5, color: cMut, align: 'center' });
+    } else {
+      // the turn from cell 0 to cell 1
+      const th0 = Math.atan2(cells[0][1], cells[0][0]), th1 = Math.atan2(cells[1][1], cells[1][0]);
+      let dth = th1 - th0; while (dth <= -Math.PI) dth += TAU; while (dth > Math.PI + 1e-9) dth -= TAU;
+      // sum / 12|c0|, drawn under the hands
+      const S = cells.reduce((a, c) => C.add(a, c), [0, 0]), sx = S[0] / (N * c0), sy = S[1] / (N * c0);
+      if (Math.hypot(sx, sy) > 0.02) arrow(ctx, cx, cy, cx + 0.8 * Rd * sx, cy - 0.8 * Rd * sy, cInk, 4, 11);
+      else { ctx.fillStyle = cInk; ctx.beginPath(); ctx.arc(cx, cy, 3.6, 0, TAU); ctx.fill(); }
+      const cnt = new Map();
+      for (const c of cells) { const key = Math.round(((Math.atan2(c[1], c[0]) % TAU) + TAU) % TAU * 1e5) % Math.round(TAU * 1e5); cnt.set(key, (cnt.get(key) || 0) + 1); }
+      for (const [key, n] of cnt) {
+        const th = key / 1e5, ct = Math.cos(th), st = Math.sin(th);
+        arrow(ctx, cx, cy, cx + 0.96 * Rd * ct, cy - 0.96 * Rd * st, c5, 1.6, 6);
+        if (n > 1) txt(ctx, '×' + n, cx + (Rd + 11) * ct, cy - (Rd + 9) * st + 3.5, { size: 10.5, color: c5T, align: 'center' });
+      }
+      if (Math.abs(dth) > 1e-6) {
+        const rr = 0.3 * Rd; ctx.strokeStyle = c5T; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(cx, cy, rr, -th0, -(th0 + dth), dth > 0); ctx.stroke();
+        const te = th0 + dth, hx = cx + rr * Math.cos(te), hy = cy - rr * Math.sin(te), tg = te + Math.sign(dth) * Math.PI / 2;
+        arrow(ctx, hx - 5 * Math.cos(tg), hy + 5 * Math.sin(tg), hx, hy, c5T, 1.2, 5);
+      }
+    }
+    const sumTxt = cur.sum === null ? '—' : EPP.fix(cur.sum, 2).replace('−', '');
+    txt(ctx, `$|Σ I_ℓ|$/12$|I_0|$ = ${sumTxt}`, cx, cy + Rd + 35, { size: 11, color: cFg, align: 'center' });
+    // bars: |⟨ψ_k'|∂_qV|ψ_k⟩| for the 12 final states
+    const bx0 = Math.max(cx + Rd + 44, 2 * Rd + 70), bx1 = w - 4, by0 = 44, by1 = h - 52, ymax = 5;
+    const BY = (v) => by1 - v / ymax * (by1 - by0), slot = (bx1 - bx0) / N, SX = (j) => bx0 + (j + 0.5) * slot;
+    txt(ctx, '$|⟨ψ_{k′}|∂_qV|ψ_k⟩|$ (eV/Å)', bx0 - 22, by0 - 16, { size: 10.5, color: cFg2 });
+    ctx.textBaseline = 'middle';
+    for (let t = 0; t <= ymax; t++) { const yy = Math.round(BY(t)) + 0.5; ctx.strokeStyle = t ? cGrid : cRule; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(bx0, yy); ctx.lineTo(bx1, yy); ctx.stroke(); txt(ctx, String(t), bx0 - 5, yy, { size: 10, color: cMut, align: 'right' }); }
+    ctx.textBaseline = 'alphabetic';
+    const jSel = SK.indexOf(cur.skp), jTgt = SK.indexOf(cur.sf);
+    ctx.fillStyle = EPP.alpha('ink', 0.06); ctx.fillRect(SX(jSel) - slot / 2, by0, slot, by1 - by0);
+    SK.forEach((s, j) => {
+      const v = cur.bars[j], bw = Math.max(3, 0.62 * slot);
+      if (v > 0) { ctx.fillStyle = EPP.alpha('c5', 0.85); ctx.fillRect(SX(j) - bw / 2, BY(v), bw, by1 - BY(v)); }
+      else { ctx.strokeStyle = cMut; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(SX(j) - bw / 2, by1 - 1); ctx.lineTo(SX(j) + bw / 2, by1 - 1); ctx.stroke(); }
+    });
+    if (cur.bars[jTgt] > 0) txt(ctx, EPP.fix(cur.bars[jTgt], 2), SX(jTgt), BY(cur.bars[jTgt]) - 4, { size: 10, color: c5T, align: 'center' });
+    // markers under the axis: ring = target k + q, square = chosen k'
+    const ym = by1 + 10;
+    ctx.strokeStyle = cInk; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(SX(jTgt), ym, 5.2, 0, TAU); ctx.stroke();
+    ctx.strokeRect(SX(jSel) - 3.4, ym - 3.4, 6.8, 6.8);
+    ctx.textBaseline = 'top';
+    [[-3, '−π/2$a$'], [0, '0'], [3, 'π/2$a$'], [6, 'π/$a$']].forEach(([s, lab]) => txt(ctx, lab, SX(SK.indexOf(s)), ym + 8, { size: 10, color: cMut, align: 'center' }));
+    ctx.textBaseline = 'alphabetic';
+    txt(ctx, 'final state $k′$', (bx0 + bx1) / 2, h - 4, { size: 11, color: cFg, align: 'center' });
+    barHit = { x0: bx0, x1: bx1, y0: by0 - 4, y1: h };
+    cv.canvas.setAttribute('aria-label', `Panel c: the 12 cell integrals I_l as hands on a dial; their sum divided by 12|I_0| is ${sumTxt}. Bar chart of the overlap magnitude for the 12 final states k′: nonzero only at k′ = k + q = ${kFrac(cur.sf)}${cur.bars[jTgt] > 0 ? ', ' + EPP.fix(cur.bars[jTgt], 2) + ' eV/Å' : ', where it is also zero by symmetry'}. The chosen k′ is ${kFrac(cur.skp)}.`);
+  }
+  cvC.canvas.addEventListener('pointerdown', (e) => {
+    if (!barHit) return;
+    const r = cvC.canvas.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+    if (x < barHit.x0 || x > barHit.x1 || y < barHit.y0 || y > barHit.y1) return;
+    const j = EPP.clamp(Math.floor((x - barHit.x0) / ((barHit.x1 - barHit.x0) / N)), 0, N - 1);
+    ui.set('kp', SK[j]);
+  });
+
+  // (d): the band, the allowed k, and the transition k → k + q (folded back by G for umklapp)
+  const XT = [-2, -1, 0, 1, 2], XTL = ['−2π/$a$', '−π/$a$', '0', 'π/$a$', '2π/$a$'];
+  const Eb = (x) => -TB * Math.cos(Math.PI * x);              // x = ka/π
+  const pB = new EPP.Plot(elBand, {
+    xlim: [-2, 2], ylim: [-8, 8.5], legend: false, hover: false, aspect: 0.66, minHeight: 246, maxHeight: 300,
+    xticks: XT.map(v => ({ v, label: '' })), yticks: [-5, 0, 5], margin: { t: 24, l: 46, b: 42, r: 20 },
+    ariaLabel: 'Panel d: tight-binding band'
+  });
+  const baseRender = pB.render.bind(pB);
+  pB.render = () => {
+    baseRender();
+    const ctx = pB.ctx, w = pB.cv.w, h = pB.cv.h, m = pB.m;
+    if (!w || !h || !cur) return;
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted'), cEl = EPP.color('electron'), cPh = EPP.color('phonon'), cPhT = EPP.textColor('phonon'), cInk = EPP.color('ink');
+    ctx.save();
+    ctx.textBaseline = 'top';
+    XT.forEach((v, j) => txt(ctx, XTL[j], pB.X(v), h - m.b + 6, { size: 11, color: cMut, align: 'center' }));
+    ctx.textBaseline = 'alphabetic';
+    txt(ctx, 'electron wavevector $k$', m.l + (w - m.l - m.r) / 2, h - 7, { size: 12, color: cFg, align: 'center' });
+    txt(ctx, '(d) band and the transition', 4 - 0, 14, { size: 11.5, color: cFg2 });
+    ctx.save(); ctx.translate(13, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2); txt(ctx, '$E_k$ (eV)', 0, 0, { size: 12, color: cFg, align: 'center' }); ctx.restore();
+    // geometry of the transition
+    const xk = cur.sk / 6, xu = cur.su / 6, xf = cur.sf / 6, xp = cur.skp / 6;
+    const P = (x) => [pB.X(x), pB.Y(Eb(x))];
+    const Pk = P(xk), Pu = P(xu), Pf = P(xf), Pp = P(xp);
+    // cubic Bézier helpers: point and pixel-length trimming at both ends
+    const cub = (P0, P1, P2, P3) => (t) => { const u = 1 - t; return [u * u * u * P0[0] + 3 * u * u * t * P1[0] + 3 * u * t * t * P2[0] + t * t * t * P3[0], u * u * u * P0[1] + 3 * u * u * t * P1[1] + 3 * u * t * t * P2[1] + t * t * t * P3[1]]; };
+    const trimT = (f, end, r) => { const P0 = f(end ? 1 : 0); let t = end ? 1 : 0; for (let s = 0; s < 400; s++) { t += end ? -0.0025 : 0.0025; const Q = f(t); if (Math.hypot(Q[0] - P0[0], Q[1] - P0[1]) >= r) break; } return t; };
+    const path = (f, ta, tb, n) => { ctx.beginPath(); for (let s = 0; s <= n; s++) { const Q = f(ta + (tb - ta) * s / n); if (s) ctx.lineTo(Q[0], Q[1]); else ctx.moveTo(Q[0], Q[1]); } ctx.stroke(); };
+    const yTop = pB.Y(8.5), yBot = pB.Y(-8);
+    // a label on a translucent surface patch, so that it stays readable where it crosses a line
+    const patch = (x0, y0, wd, ht) => { ctx.fillStyle = EPP.alpha('surface', 0.86); ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(x0, y0, wd, ht, 3); else ctx.rect(x0, y0, wd, ht); ctx.fill(); };
+    // q: a bridge from k up, across and down onto the unfolded k + q (a horizontal shift by q),
+    // its flat part clear of the band between the two points
+    let Emax = -TB; for (let j = 0; j <= 48; j++) Emax = Math.max(Emax, Eb(xk + (xu - xk) * j / 48));
+    const top = Math.max(yTop + 18, Math.min(pB.Y(Emax) - 30, Math.min(Pk[1], Pu[1]) - 34));
+    const fq = cub(Pk, [Pk[0], top - 10], [Pu[0], top - 10], Pu);
+    const ta = trimT(fq, false, 7), tb = trimT(fq, true, 10);
+    ctx.strokeStyle = cPh; ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.setLineDash([]);
+    path(fq, ta, tb, 60);
+    const Qe = fq(tb), Qb = fq(tb - 0.06);
+    arrow(ctx, Qb[0], Qb[1], Qe[0], Qe[1], cPh, 2, 9);
+    // the chain is one-dimensional: the wavevectors q and G are numbers, italic as in Figure A1.3
+    const apex = fq(0.5), wq = EPP.measureRich(ctx, 'q', 13.5, null, { italic: true });
+    patch(apex[0] - wq / 2 - 3, apex[1] - 19, wq + 6, 15);
+    ctx.fillStyle = cPhT; ctx.textBaseline = 'alphabetic';
+    EPP.drawRich(ctx, 'q', apex[0], apex[1] - 7, { size: 13.5, align: 'center', italic: true });
+    // umklapp: dashed ring at the unfolded point, and the fold-back −G as a U below the band level
+    if (cur.G !== 0) {
+      ctx.strokeStyle = EPP.alpha('ink', 0.6); ctx.lineWidth = 1.4; ctx.setLineDash([3, 2]); ctx.beginPath(); ctx.arc(Pu[0], Pu[1], 6.5, 0, TAU); ctx.stroke(); ctx.setLineDash([]);
+      const low = Math.min(yBot - 34, Pu[1] + 40);
+      const fg = cub(Pu, [Pu[0], low + 10], [Pf[0], low + 10], Pf);
+      const ga = trimT(fg, false, 8), gb = trimT(fg, true, 10);
+      ctx.strokeStyle = cInk; ctx.lineWidth = 1.5; ctx.setLineDash([5, 4]);
+      path(fg, ga, gb, 70); ctx.setLineDash([]);
+      const E2 = fg(gb), B2 = fg(gb - 0.05); arrow(ctx, B2[0], B2[1], E2[0], E2[1], cInk, 1.5, 9);
+      const mid = fg(0.5), wm = EPP.measureRich(ctx, '−', 13.5), wl = wm + EPP.measureRich(ctx, 'G', 13.5, null, { italic: true });
+      const lab = 'umklapp', wu = tw(ctx, lab, 11), gap = 8, x0 = mid[0] - (wl + gap + wu) / 2;
+      patch(x0 - 3, mid[1] + 2, wl + gap + wu + 6, 17);
+      ctx.fillStyle = cInk; ctx.textBaseline = 'top';
+      EPP.drawRich(ctx, '−', x0, mid[1] + 4, { size: 13.5 }); EPP.drawRich(ctx, 'G', x0 + wm, mid[1] + 4, { size: 13.5, italic: true });
+      ctx.textBaseline = 'alphabetic';
+      txt(ctx, lab, x0 + wl + gap, mid[1] + 15, { size: 11, color: cFg2 });
+    }
+    // zone label in a top corner of the zone that the q bridge does not cross
+    { const span = [Math.min(Pk[0], Pu[0]) - 12, Math.max(Pk[0], Pu[0]) + 12], wz = tw(ctx, 'first zone', 10), hi = top < yTop + 40;
+      const cands = [[pB.X(-1) + 5, 'left'], [pB.X(1) - 5, 'right']];
+      for (const [xz, al] of cands) { const x0 = al === 'left' ? xz : xz - wz; if (!hi || x0 + wz < span[0] || x0 > span[1]) { txt(ctx, 'first zone', xz, yTop + 13, { size: 10, color: cMut, align: al }); break; } } }
+    // markers: initial k (filled), target k + q (ring), chosen k' (square)
+    ctx.strokeStyle = cInk; ctx.lineWidth = 1.8; ctx.beginPath(); ctx.arc(Pf[0], Pf[1], 8, 0, TAU); ctx.stroke();
+    ctx.strokeRect(Pp[0] - 5.5, Pp[1] - 5.5, 11, 11);
+    ctx.fillStyle = cEl; ctx.beginPath(); ctx.arc(Pk[0], Pk[1], 5, 0, TAU); ctx.fill();
+    ctx.restore();
+    pB.cv.canvas.setAttribute('aria-label', `Panel d: tight-binding band E_k = −5 eV cos ka with the 12 allowed k. The electron starts at k = ${kFrac(cur.sk)} and the arrow q = ${kFrac(cur.sq)} takes it to k + q = ${kFrac(cur.su)}${cur.G !== 0 ? `, outside the first zone, which is folded back by G = ${cur.G > 0 ? '' : '−'}2π/a to ${kFrac(cur.sf)} (umklapp)` : ' (normal process)'}. The chosen final state is k′ = ${kFrac(cur.skp)}.`);
+  };
+  pB.onPointer = (x, y, type, d) => {
+    if (type !== 'down' || !d || !cur) return;
+    let best = 16, pick = null;
+    for (let s = -12; s <= 12; s++) { const dist = Math.hypot(pB.X(s / 6) - d.px, pB.Y(Eb(s / 6)) - d.py); if (dist < best) { best = dist; pick = s; } }
+    if (pick !== null) ui.set('kp', fold(pick));
+  };
+  function drawBand() {
+    const zx = EPP.linspace(-1, 1, 161), lx = EPP.linspace(-2, -1, 81), rx = EPP.linspace(1, 2, 81);
+    const kx = SK.map(s => s / 6);
+    pB.draw([
+      { type: 'band', x0: -1, x1: 1, color: 'ink', alpha: 0.045 },
+      { type: 'vline', at: -1, color: 'muted', width: 1, dash: [3, 3] },
+      { type: 'vline', at: 1, color: 'muted', width: 1, dash: [3, 3] },
+      { type: 'line', x: lx, y: lx.map(Eb), color: 'electron', width: 1.6, dash: [5, 4], opacity: 0.4 },
+      { type: 'line', x: rx, y: rx.map(Eb), color: 'electron', width: 1.6, dash: [5, 4], opacity: 0.4 },
+      { type: 'line', x: zx, y: zx.map(Eb), color: 'electron', width: 2 },
+      { type: 'points', x: kx, y: kx.map(Eb), color: 'electron', r: 3.4, hollow: true }
+    ]);
+  }
+
+  // ---------- readouts ----------
+  function readouts() {
+    const c = cur;
+    roV.hw.textContent = `${EPP.fix(c.hw, 1)} meV`;
+    roV.zp.textContent = `${EPP.fix(c.zp, 4)} Å`;
+    roV.proc.innerHTML = c.G === 0 ? `normal (${Iv('G')} = 0)` : `umklapp, ${Iv('G')} = ${c.G > 0 ? '' : '−'}2π/${Iv('a')}`;
+    roV.ph.textContent = phFrac(c.sk + c.sq - c.skp);
+    roV.sum.textContent = c.sum === null ? '— (every cell gives 0)' : EPP.fix(c.sum, 3).replace('−', '');
+    roV.M.textContent = c.M === 0 ? '0' : `${EPP.fix(c.M, 3)} eV/Å`;
+    roV.g.textContent = !c.match ? '0 (wavevectors do not match)' : (c.M === 0 ? '0 (forbidden by symmetry)' : `${EPP.fix(1000 * c.zp * c.M, 1)} meV`);
+  }
+  function drawAll() { drawChain(); drawSum(); drawBand(); readouts(); }
+
+  // ---------- controls ----------
+  let lastKp = null;
+  function onChange(s) {
+    const sq = SQ[EPP.clamp(Math.round(s.q), 0, SQ.length - 1)], sk = Math.round(s.k);
+    let skp = Math.round(s.kp);
+    if (lastKp !== null && skp !== lastKp && s.follow) ui.set('follow', false, true);   // moving k' by hand ends "follows"
+    if (ui.state.follow) { skp = fold(sk + sq); if (Math.round(ui.state.kp) !== skp) ui.set('kp', skp, true); }
+    lastKp = skp;
+    cur = compute(sq, sk, skp);
+    drawAll();
+  }
+  const ui = EPP.controls(fig.querySelector('.a2-overlap-ctrls'), [
+    { key: 'q', type: 'range', label: 'phonon q', min: 0, max: SQ.length - 1, step: 1, value: SQ.indexOf(3), fmt: v => kFmt(SQ[EPP.clamp(Math.round(v), 0, SQ.length - 1)]) },
+    { key: 'k', type: 'range', label: 'electron k', min: -5, max: 6, step: 1, value: 2, fmt: v => kFmt(Math.round(v)) },
+    { key: 'kp', type: 'range', label: 'final state k′', min: -5, max: 6, step: 1, value: 5, fmt: v => kFmt(Math.round(v)) },
+    { key: 'follow', type: 'toggle', label: 'k′ follows k + q', value: true }
+  ], onChange);
+  const LAB = { q: `phonon ${Iv('q')}`, k: `electron ${Iv('k')}`, kp: `final state ${Iv('k′')}`, follow: `${Iv('k′')} follows ${Iv('k')} + ${Iv('q')}` };
+  Object.keys(LAB).forEach(k => { const sp = fig.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  cur = compute(3, 2, 5); lastKp = 5;
+  cvA.onResize(drawChain);
+  cvC.onResize(drawSum);
+})();
+</script>

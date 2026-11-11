@@ -1,0 +1,1230 @@
+<title>Electron–Phonon–Photon Brief</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&family=IBM+Plex+Sans+Condensed:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Math&text=%F0%9D%92%9F%E2%84%92%E2%84%8B%F0%9D%92%A2%F0%9D%92%AB&display=swap">
+<style>
+/* Layout: long-form lecture notes. Sticky contents rail on wide screens, one reading column
+   (~68ch text) whose figures run the full column width. Three particle hues encode
+   electron / phonon / photon everywhere: text, plots and Feynman diagrams. */
+:root {
+  --bg: #f4f6f9;
+  --surface: #ffffff;
+  --surface-2: #eaeef4;
+  --fg: #151b29;
+  --fg-2: #2c3446;
+  --muted: #5a6477;
+  --rule: #d3d9e3;
+  --grid: #e1e6ee;
+  /* plot/diagram marks: validated categorical order electron, phonon, photon, c4, c5 (light, on --surface) */
+  --c-electron: #2350c8;
+  --c-phonon: #c26a00;
+  --c-photon: #b5306c;
+  --c-4: #0b8aa3;
+  --c-5: #6d45c4;
+  /* text variants of the particle hues (prose, labels): higher contrast than the marks */
+  --t-electron: #2350c8;
+  --t-phonon: #92500a;
+  --t-photon: #a1295f;
+  --t-4: #076a80;
+  --accent: var(--c-electron);
+  --hl: rgba(35, 80, 200, 0.08);
+  --font-text: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", "Noto Sans Math", "STIX Two Math", "Cambria Math", serif;
+  --font-ui: "IBM Plex Sans Condensed", "Arial Narrow", "Helvetica Neue", Arial, "Noto Sans Math", "STIX Two Math", "Cambria Math", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --step--1: 0.8125rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.25rem;
+  --step-2: 1.5625rem;
+  --step-3: 2.0rem;
+  --step-4: 2.75rem;
+  --radius: 6px;
+  --col: 820px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1119; --surface: #141a26; --surface-2: #1a2131; --fg: #e3e8f1; --fg-2: #c3cad8;
+    --muted: #96a0b3; --rule: #2a3346; --grid: #222a3a;
+    --c-electron: #6688f2; --c-phonon: #c67c18; --c-photon: #d95e94; --c-4: #169fb6; --c-5: #9372ee;
+    --t-electron: #93adff; --t-phonon: #f0aa4f; --t-photon: #f286b5; --t-4: #5cc8dc;
+    --hl: rgba(134, 166, 255, 0.10);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1119; --surface: #141a26; --surface-2: #1a2131; --fg: #e3e8f1; --fg-2: #c3cad8;
+  --muted: #96a0b3; --rule: #2a3346; --grid: #222a3a;
+  --c-electron: #6688f2; --c-phonon: #c67c18; --c-photon: #d95e94; --c-4: #169fb6; --c-5: #9372ee;
+    --t-electron: #93adff; --t-phonon: #f0aa4f; --t-photon: #f286b5; --t-4: #5cc8dc;
+  --hl: rgba(134, 166, 255, 0.10);
+  color-scheme: dark;
+}
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-text); font-size: var(--step-0); line-height: 1.62;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-underline-offset: 2px; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+
+.page {
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: 0 48px;
+  max-width: 1180px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 64px;
+}
+@media (min-width: 1120px) {
+  .page { grid-template-columns: 230px minmax(0, var(--col)); justify-content: center; }
+}
+main { min-width: 0; }
+
+/* ---------- contents rail ---------- */
+.toc { font-family: var(--font-ui); font-size: 0.9rem; line-height: 1.35; }
+.toc-inner { padding-block: 24px; }
+@media (min-width: 1120px) {
+  .toc-inner { position: sticky; top: env(safe-area-inset-top, 0px); max-height: 100vh; overflow-y: auto; padding-top: 40px; }
+  .toc details > summary { pointer-events: none; }
+  .toc details > summary::marker, .toc details > summary::-webkit-details-marker { display: none; content: ""; }
+}
+.toc summary { cursor: pointer; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; font-size: 0.75rem; color: var(--muted); list-style: none; }
+.toc summary::-webkit-details-marker { display: none; }
+@media (max-width: 1119px) {
+  .toc { border-bottom: 1px solid var(--rule); }
+  .toc summary::before { content: "▸ "; }
+  .toc details[open] summary::before { content: "▾ "; }
+}
+.toc ol { list-style: none; margin: 0; padding: 0; }
+.toc .toc-part { margin-top: 14px; }
+.toc .toc-part > span { display: block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.toc a { display: grid; grid-template-columns: 2.6em 1fr; gap: 4px; padding: 3px 6px; margin-left: -6px; border-radius: 4px; color: var(--fg-2); text-decoration: none; }
+.toc a:hover { background: var(--hl); color: var(--fg); }
+.toc a.active { background: var(--hl); color: var(--accent); }
+.toc a .n { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); padding-top: 1px; }
+
+/* ---------- hero ---------- */
+.hero { padding-block: 48px 24px; }
+.hero .kicker { font-family: var(--font-ui); font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; }
+.hero h1 { font-size: clamp(2.1rem, 6vw, var(--step-4)); line-height: 1.08; font-weight: 600; letter-spacing: -0.015em; margin: 0 0 16px; text-wrap: balance; }
+.hero h1 .e { color: var(--t-electron); } .hero h1 .p { color: var(--t-phonon); } .hero h1 .g { color: var(--t-photon); }
+.hero .lede { font-size: var(--step-1); line-height: 1.5; color: var(--fg-2); max-width: 62ch; margin: 0 0 20px; }
+.hero .sources { font-family: var(--font-ui); font-size: 0.9rem; color: var(--muted); display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; }
+
+/* hero figure and roadmap */
+.hero-vertex { display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 720px) { .hero-vertex { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.hv-panel { margin: 0; display: grid; gap: 6px; align-content: start; min-width: 0; }
+.hv-panel .fd { margin: 0; padding: 4px; min-height: 190px; }
+.hv-panel figcaption { font-size: 0.92rem; line-height: 1.5; color: var(--fg-2); }
+.hv-ctrls { margin-top: 4px; }
+.hero-road { display: grid; gap: 10px; grid-template-columns: minmax(0, 1fr); margin: 22px 0 18px; }
+@media (min-width: 720px) { .hero-road { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.road { display: grid; gap: 4px; align-content: start; padding: 12px 14px; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--surface); text-decoration: none; color: var(--fg); }
+.road:hover { border-color: var(--accent); }
+.road-k { font-family: var(--font-ui); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.road-t { font-weight: 600; font-size: 1.05rem; line-height: 1.3; }
+.road-d { font-size: 0.9rem; line-height: 1.45; color: var(--fg-2); }
+
+/* reading paths */
+.paths { display: grid; gap: 10px; grid-template-columns: minmax(0, 1fr); margin: 0 0 18px; }
+@media (min-width: 720px) { .paths { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.path { border-top: 2px solid var(--rule); padding-top: 8px; min-width: 0; }
+.path-t { font-family: var(--font-ui); font-weight: 600; font-size: 0.92rem; margin: 0 0 2px; }
+.path-d { font-size: 0.88rem; color: var(--fg-2); margin: 0 0 6px; line-height: 1.45; }
+.path ol { margin: 0; padding-left: 1.2em; font-size: 0.88rem; line-height: 1.45; }
+.path li { margin-bottom: 2px; }
+.hero h2.sub { font-family: var(--font-ui); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 22px 0 10px; }
+/* ---------- parts & chapters ---------- */
+.part-head { margin-top: 72px; padding-top: 28px; border-top: 2px solid var(--fg); }
+.part-head .part-label { font-family: var(--font-ui); font-weight: 600; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; }
+.part-head h2 { font-size: var(--step-3); line-height: 1.15; margin: 0 0 12px; font-weight: 600; text-wrap: balance; }
+.part-head p { max-width: 66ch; color: var(--fg-2); margin: 0 0 12px; }
+
+.chapter { margin-top: 64px; scroll-margin-top: 16px; }
+.ch-head { margin-bottom: 18px; }
+.ch-head .eyebrow { font-family: var(--font-ui); font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; display: flex; flex-wrap: wrap; gap: 4px 12px; }
+.ch-head .eyebrow .num { font-family: var(--font-mono); letter-spacing: 0; color: var(--accent); font-weight: 500; }
+.ch-head h2 { font-size: var(--step-2); line-height: 1.2; font-weight: 600; margin: 0 0 8px; text-wrap: balance; letter-spacing: -0.005em; }
+.ch-head .lede { font-size: 1.12rem; color: var(--fg-2); margin: 0; max-width: 66ch; font-style: italic; }
+.chapter h3 { font-size: var(--step-1); font-weight: 600; margin: 32px 0 8px; line-height: 1.3; text-wrap: balance; }
+.chapter h4 { font-family: var(--font-ui); font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin: 22px 0 6px; font-weight: 600; }
+.chapter p, .chapter li { max-width: 68ch; }
+.chapter p { margin: 0 0 14px; }
+.chapter ul, .chapter ol { padding-left: 1.3em; margin: 0 0 14px; }
+.chapter li { margin-bottom: 4px; }
+strong { font-weight: 600; }
+.t-e { color: var(--t-electron); } .t-p { color: var(--t-phonon); } .t-g { color: var(--t-photon); }
+
+/* display math */
+.eq { overflow-x: auto; overflow-y: hidden; margin: 6px 0 16px; padding: 2px 0; max-width: 100%; }
+mjx-container[display="true"] { margin: 0.6em 0 !important; }
+mjx-container { color: var(--fg); }
+.eq mjx-container[display="true"] { margin: 0.2em 0 !important; }
+
+/* callouts */
+.callout { border-left: 3px solid var(--rule); background: var(--surface); padding: 12px 16px; margin: 18px 0; border-radius: 0 var(--radius) var(--radius) 0; max-width: 100%; overflow-x: auto; }
+.callout > :last-child { margin-bottom: 0; }
+.callout .callout-title { font-family: var(--font-ui); font-weight: 600; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 6px; color: var(--muted); }
+.callout.intuition { border-left-color: var(--c-4); }
+.callout.intuition .callout-title { color: var(--t-4); }
+.callout.connect { border-left-color: var(--c-photon); background: linear-gradient(90deg, color-mix(in srgb, var(--c-photon) 7%, var(--surface)), var(--surface) 60%); }
+.callout.connect .callout-title { color: var(--t-photon); }
+.callout.caveat { border-left-color: var(--c-phonon); }
+.callout.caveat .callout-title { color: var(--t-phonon); }
+.callout.source { border-left-color: var(--muted); font-size: 0.95rem; }
+
+/* derivations */
+details.derivation { border: 1px solid var(--rule); border-radius: var(--radius); margin: 16px 0; background: var(--surface); max-width: 100%; }
+details.derivation > summary { cursor: pointer; padding: 10px 14px; font-family: var(--font-ui); font-weight: 500; font-size: 0.95rem; color: var(--fg-2); list-style: none; display: flex; gap: 8px; align-items: baseline; }
+details.derivation > summary::-webkit-details-marker { display: none; }
+details.derivation > summary::before { content: "+"; font-family: var(--font-mono); color: var(--accent); width: 1em; }
+details.derivation[open] > summary::before { content: "−"; }
+details.derivation > .d-body { padding: 0 16px 12px; border-top: 1px solid var(--rule); overflow-x: auto; }
+details.derivation > .d-body > :first-child { margin-top: 12px; }
+
+/* figures & interactives */
+figure.viz { margin: 24px 0 28px; background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius); padding: 14px 14px 12px; }
+figure.viz .viz-title { max-width: none; font-family: var(--font-ui); font-weight: 600; font-size: 0.95rem; margin: 0 0 10px; color: var(--fg); display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; align-items: baseline; }
+figure.viz .viz-title .tag { font-weight: 500; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.viz-grid { display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 720px) { .viz-grid.two { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .viz-grid.side { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); } }
+.plot { position: relative; width: 100%; min-width: 0; }
+.plot canvas { display: block; width: 100%; touch-action: pan-y; }
+.plot .tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; padding: 4px 7px; font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.35; color: var(--fg); white-space: nowrap; box-shadow: 0 2px 8px rgba(0,0,0,0.08); z-index: 2; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-family: var(--font-ui); font-size: 0.82rem; color: var(--fg-2); margin-top: 6px; }
+.legend .sw { display: inline-block; width: 22px; height: 0; border-top: 2.5px solid currentColor; vertical-align: middle; margin-right: 6px; }
+.legend .sw.dash { border-top-style: dashed; }
+.legend .sw.dot { border-top-style: dotted; }
+.legend .sw.box { height: 10px; border: none; border-radius: 2px; opacity: 0.35; background: currentColor; }
+.legend span.item { white-space: nowrap; }
+figure.viz figcaption { font-size: 0.92rem; line-height: 1.5; color: var(--fg-2); margin-top: 10px; max-width: none; }
+figure.viz figcaption strong { color: var(--fg); }
+
+.controls { display: grid; gap: 10px 18px; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); margin-top: 12px; font-family: var(--font-ui); font-size: 0.88rem; }
+.ctrl { display: grid; gap: 2px; min-width: 0; }
+.ctrl label, .ctrl .lab { display: flex; justify-content: space-between; gap: 8px; color: var(--fg-2); }
+.ctrl output { font-family: var(--font-mono); font-size: 0.78rem; color: var(--fg); white-space: nowrap; }
+.ctrl input[type="range"] { width: 100%; accent-color: var(--accent); margin: 2px 0; }
+.ctrl select { font: inherit; padding: 4px 6px; border: 1px solid var(--rule); border-radius: 4px; background: var(--surface); color: var(--fg); }
+.ctrl.toggle label { justify-content: flex-start; align-items: center; gap: 8px; cursor: pointer; }
+.ctrl.toggle input { accent-color: var(--accent); width: 16px; height: 16px; }
+.seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--rule); border-radius: 5px; overflow: hidden; }
+.seg button { font: inherit; font-size: 0.82rem; border: 0; background: transparent; color: var(--fg-2); padding: 4px 10px; cursor: pointer; border-right: 1px solid var(--rule); }
+.seg button:last-child { border-right: 0; }
+@media (max-width: 560px) { .seg { display: flex; } .seg button { flex: 1 1 auto; text-align: center; box-shadow: 0 1px 0 var(--rule); } }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--surface); }
+.btn { font-family: var(--font-ui); font-size: 0.85rem; border: 1px solid var(--rule); background: var(--surface); color: var(--fg); border-radius: 5px; padding: 4px 12px; cursor: pointer; }
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.controls > .btn { justify-self: start; align-self: end; }
+.readout { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 10px; font-family: var(--font-ui); font-size: 0.85rem; color: var(--muted); }
+.readout b { font-family: var(--font-mono); font-weight: 500; color: var(--fg); font-size: 0.8rem; margin-left: 4px; }
+
+/* Feynman diagrams */
+.fd { display: flex; flex-wrap: wrap; gap: 16px 28px; align-items: center; justify-content: center; margin: 18px 0; padding: 12px; overflow-x: auto; }
+.fd figure { margin: 0; display: grid; justify-items: center; gap: 4px; }
+.fd figcaption { font-family: var(--font-ui); font-size: 0.82rem; color: var(--muted); text-align: center; max-width: 22ch; }
+.fd svg { overflow: visible; max-width: 100%; height: auto; }
+.fd .op { font-size: 1.4rem; color: var(--muted); font-family: var(--font-text); }
+svg text.fd-lab { font-family: var(--font-text); font-style: italic; font-size: 14px; }
+
+/* tables */
+.tbl { overflow-x: auto; margin: 16px 0 20px; border: 1px solid var(--rule); border-radius: var(--radius);
+  /* scroll-shadow cue: a soft edge appears on whichever side has hidden columns */
+  background:
+    linear-gradient(to right, var(--surface) 30%, transparent) left / 28px 100% no-repeat local,
+    linear-gradient(to left, var(--surface) 30%, transparent) right / 28px 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, color-mix(in srgb, var(--fg) 22%, transparent), transparent) left / 12px 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, color-mix(in srgb, var(--fg) 22%, transparent), transparent) right / 12px 100% no-repeat scroll,
+    var(--surface); }
+@media (max-width: 719px) {
+  .tbl th:first-child, .tbl td:first-child { position: sticky; left: 0; z-index: 1; background: var(--surface); box-shadow: 1px 0 0 var(--rule); }
+  .tbl th:first-child { background: var(--surface-2); }
+}
+.tbl table { border-collapse: collapse; width: 100%; font-size: 0.92rem; min-width: 560px; }
+.tbl th, .tbl td { text-align: left; vertical-align: top; padding: 8px 12px; border-bottom: 1px solid var(--rule); }
+.tbl th { font-family: var(--font-ui); font-weight: 600; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); background: var(--surface-2); }
+.tbl tr:last-child td { border-bottom: 0; }
+.tbl td:first-child { font-weight: 600; }
+
+.src { font-family: var(--font-ui); font-size: 0.8rem; color: var(--muted); white-space: nowrap; }
+.legend-strip { display: flex; flex-wrap: wrap; gap: 8px 22px; font-family: var(--font-ui); font-size: 0.88rem; color: var(--fg-2); align-items: center; margin: 14px 0 0; }
+.legend-strip svg { vertical-align: middle; margin-right: 6px; }
+
+footer.refs { margin-top: 80px; padding-top: 20px; border-top: 1px solid var(--rule); font-size: 0.92rem; color: var(--fg-2); }
+footer.refs h2 { font-size: var(--step-1); }
+footer.refs ol { padding-left: 1.4em; }
+footer.refs li { margin-bottom: 6px; max-width: 80ch; }
+.theme-toggle { position: fixed; right: max(12px, calc(env(safe-area-inset-right, 0px) + 12px)); bottom: max(12px, calc(env(safe-area-inset-bottom, 0px) + 12px)); z-index: 5; }
+@media print { .toc, .controls, .theme-toggle { display: none; } }
+</style>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true,
+    tags: 'none',
+    macros: {
+      bk: '\\mathbf{k}', bq: '\\mathbf{q}', br: '\\mathbf{r}', bR: '\\mathbf{R}', bG: '\\mathbf{G}',
+      bA: '\\mathbf{A}', bE: '\\mathbf{E}', bB: '\\mathbf{B}', bj: '\\mathbf{j}', bJ: '\\mathbf{J}', bP: '\\mathbf{P}',
+      bQ: '\\mathbf{Q}', bu: '\\mathbf{u}', be: '\\mathbf{e}', bp: '\\mathbf{p}', bZ: '\\mathbf{Z}',
+      dd: '\\mathrm{d}', ii: '\\mathrm{i}', Tr: '\\operatorname{Tr}',
+      ket: ['\\left|#1\\right\\rangle', 1], bra: ['\\left\\langle#1\\right|', 1],
+      braket: ['\\left\\langle#1\\middle|#2\\right\\rangle', 2],
+      mel: ['\\left\\langle#1\\middle|#2\\middle|#3\\right\\rangle', 3],
+      hc: '\\mathrm{h.c.}'
+    }
+  },
+  loader: { load: ['ui/lazy'] },
+  svg: { fontCache: 'global' },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'canvas', 'svg', 'output', 'select'] }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js" async></script>
+
+<script>
+/* EPP helper library: theme-aware canvas plots, controls, animation loop,
+   Feynman-diagram SVG builder, small numerics. Exposed as window.EPP. */
+(function () {
+  'use strict';
+  const EPP = {};
+  const root = document.documentElement;
+
+  // ---------- theme ----------
+  const cssCache = {};
+  EPP.css = (name) => getComputedStyle(root).getPropertyValue(name).trim();
+  const NAMED = { electron: '--c-electron', phonon: '--c-phonon', photon: '--c-photon', c4: '--c-4', c5: '--c-5',
+    'electron-t': '--t-electron', 'phonon-t': '--t-phonon', 'photon-t': '--t-photon', 'c4-t': '--t-4',
+    ink: '--fg', fg: '--fg', fg2: '--fg-2', muted: '--muted', grid: '--grid', rule: '--rule', accent: '--accent',
+    surface: '--surface', surface2: '--surface-2', bg: '--bg' };
+  EPP.color = (c) => {
+    if (!c) return EPP.css('--fg');
+    if (NAMED[c]) return EPP.css(NAMED[c]);
+    if (c.startsWith('--')) return EPP.css(c);
+    return c;
+  };
+  // text color for an annotation drawn next to a mark of color c: the hue's text variant, else secondary ink
+  EPP.textColor = (c) => (c && NAMED[c + '-t']) ? EPP.css(NAMED[c + '-t']) : (c && (c === 'muted' || c === 'ink' || c === 'fg' || c === 'fg2') ? EPP.color(c) : (c && !NAMED[c] ? EPP.color(c) : EPP.css('--fg-2')));
+  EPP.alpha = (c, a) => {
+    const col = EPP.color(c);
+    if (col.startsWith('#')) {
+      let h = col.slice(1);
+      if (h.length === 3) h = h.split('').map(x => x + x).join('');
+      const n = parseInt(h, 16);
+      return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`;
+    }
+    const m = col.match(/rgba?\(([^)]+)\)/);
+    if (m) { const p = m[1].split(',').map(s => s.trim()); return `rgba(${p[0]},${p[1]},${p[2]},${a})`; }
+    return col;
+  };
+  // parse any CSS color to [r,g,b] via a 1px canvas (cached per string)
+  const rgbCache = new Map();
+  const pc = document.createElement('canvas'); pc.width = pc.height = 1; const pctx = pc.getContext('2d', { willReadFrequently: true });
+  EPP.rgb = (c) => { const col = EPP.color(c); if (rgbCache.has(col)) return rgbCache.get(col); pctx.clearRect(0, 0, 1, 1); pctx.fillStyle = '#000'; pctx.fillStyle = col; pctx.fillRect(0, 0, 1, 1); const d = pctx.getImageData(0, 0, 1, 1).data; const out = [d[0], d[1], d[2]]; rgbCache.set(col, out); return out; };
+  const mix = (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t].map(Math.round);
+  // ramp(color, color2?, gamma) -> t in [0,1] -> [r,g,b]. Sequential: surface -> color -> deeper toward --fg.
+  // Diverging (color2 given): color2 at 0, surface-gray at 0.5, color at 1.
+  EPP.ramp = (color, color2, gamma = 1) => {
+    const s = EPP.rgb('--surface'), c = EPP.rgb(color), f = EPP.rgb('--fg');
+    if (color2) { const c2 = EPP.rgb(color2), mid = mix(s, EPP.rgb('--muted'), 0.18); return (t) => { t = EPP.clamp(t, 0, 1); return t < 0.5 ? mix(c2, mid, Math.pow(t / 0.5, 1 / gamma)) : mix(mid, c, Math.pow((t - 0.5) / 0.5, gamma)); }; }
+    return (t) => { t = Math.pow(EPP.clamp(t, 0, 1), gamma); return t < 0.82 ? mix(s, c, t / 0.82) : mix(c, f, (t - 0.82) / 0.18 * 0.38); };
+  };
+  const themeCbs = new Set();
+  EPP.onTheme = (cb) => { themeCbs.add(cb); return () => themeCbs.delete(cb); };
+  const fireTheme = () => { rgbCache.clear(); themeCbs.forEach(cb => { try { cb(); } catch (e) { console.error(e); } }); };
+  try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', fireTheme); } catch (e) {}
+  new MutationObserver(fireTheme).observe(root, { attributes: true, attributeFilter: ['data-theme', 'class', 'style'] });
+  try { document.fonts.ready.then(fireTheme); } catch (e) {}
+  EPP.reducedMotion = (() => { try { return matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; } })();
+
+  // ---------- numerics ----------
+  EPP.linspace = (a, b, n) => { const out = new Array(n); for (let i = 0; i < n; i++) out[i] = a + (b - a) * i / (n - 1); return out; };
+  EPP.clamp = (x, a, b) => Math.min(b, Math.max(a, x));
+  EPP.const = {
+    hbar_eVs: 6.582119569e-16, kB_eV: 8.617333262e-5, c_ms: 2.99792458e8, e_C: 1.602176634e-19,
+    me_kg: 9.1093837015e-31, amu_kg: 1.66053906660e-27, eps0: 8.8541878128e-12, a0_A: 0.529177210903,
+    Ry_eV: 13.605693122994, Ha_eV: 27.211386245988,
+    meV_per_cm1: 0.1239841984, // 1 cm^-1 = 0.12398 meV
+    THz_per_meV: 0.2417989242 // 1 meV = 0.2418 THz (frequency nu, not omega)
+  };
+  // Bose-Einstein occupation, E and kT in the same units (or E in eV, T in K via boseT)
+  EPP.bose = (E, kT) => (kT <= 0 ? 0 : 1 / Math.expm1(E / kT));
+  EPP.boseT = (E_eV, T_K) => EPP.bose(E_eV, EPP.const.kB_eV * T_K);
+  EPP.fermi = (E, mu, kT) => (kT <= 0 ? (E < mu ? 1 : (E === mu ? 0.5 : 0)) : 1 / (1 + Math.exp((E - mu) / kT)));
+  EPP.fmt = (v, d = 3) => {
+    if (!isFinite(v)) return v > 0 ? '∞' : (v < 0 ? '−∞' : '—');
+    const a = Math.abs(v);
+    let s;
+    if (a !== 0 && (a < 1e-3 || a >= 1e5)) s = v.toExponential(Math.max(0, d - 1)).replace('e', '×10^').replace('+', '');
+    else s = Number(v.toPrecision(d)).toString();
+    return s.replace('-', '−');
+  };
+  EPP.fix = (v, d = 2) => (isFinite(v) ? v.toFixed(d).replace('-', '−') : '—');
+
+  // minimal complex numbers [re, im]
+  const C = EPP.C = {
+    c: (re, im = 0) => [re, im],
+    add: (a, b) => [a[0] + b[0], a[1] + b[1]],
+    sub: (a, b) => [a[0] - b[0], a[1] - b[1]],
+    mul: (a, b) => [a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0]],
+    scale: (a, s) => [a[0] * s, a[1] * s],
+    div: (a, b) => { const d = b[0] * b[0] + b[1] * b[1]; return [(a[0] * b[0] + a[1] * b[1]) / d, (a[1] * b[0] - a[0] * b[1]) / d]; },
+    abs: (a) => Math.hypot(a[0], a[1]),
+    arg: (a) => Math.atan2(a[1], a[0]),
+    conj: (a) => [a[0], -a[1]],
+    inv: (a) => C.div([1, 0], a),
+    // principal sqrt with branch cut on negative real axis
+    sqrt: (a) => { const r = Math.hypot(a[0], a[1]); const re = Math.sqrt(Math.max(0, (r + a[0]) / 2)); let im = Math.sqrt(Math.max(0, (r - a[0]) / 2)); if (a[1] < 0) im = -im; return [re, im]; },
+    exp: (a) => { const e = Math.exp(a[0]); return [e * Math.cos(a[1]), e * Math.sin(a[1])]; },
+    log: (a) => [Math.log(Math.hypot(a[0], a[1])), Math.atan2(a[1], a[0])]
+  };
+
+  // eigen-decomposition of a real symmetric 2x2 [[a,b],[b,d]] -> {vals:[l1<=l2], vecs:[[x,y],[x,y]]}
+  EPP.eigSym2 = (a, b, d) => {
+    const tr = a + d, det = a * d - b * b, disc = Math.sqrt(Math.max(0, tr * tr / 4 - det));
+    const l1 = tr / 2 - disc, l2 = tr / 2 + disc;
+    const vec = (l) => { let x, y; if (Math.abs(b) > 1e-14) { x = b; y = l - a; } else { x = (Math.abs(l - a) < Math.abs(l - d)) ? 1 : 0; y = 1 - x; } const n = Math.hypot(x, y) || 1; return [x / n, y / n]; };
+    return { vals: [l1, l2], vecs: [vec(l1), vec(l2)] };
+  };
+  // Hermitian 2x2 [[a, b],[b*, d]] with a,d real, b complex [re,im] -> eigenvalues and complex eigenvectors
+  EPP.eigHerm2 = (a, d, b) => {
+    const tr = a + d, bb = b[0] * b[0] + b[1] * b[1];
+    const disc = Math.sqrt(Math.max(0, (a - d) * (a - d) / 4 + bb));
+    const vals = [tr / 2 - disc, tr / 2 + disc];
+    const vecs = vals.map(l => {
+      // (a-l) x + b y = 0  -> x = b, y = l - a (complex), fallback for b=0
+      let x, y;
+      if (bb > 1e-28) { x = [b[0], b[1]]; y = [l - a, 0]; } else { const first = Math.abs(l - a) < Math.abs(l - d); x = [first ? 1 : 0, 0]; y = [first ? 0 : 1, 0]; }
+      const n = Math.sqrt(x[0] * x[0] + x[1] * x[1] + y[0] * y[0] + y[1] * y[1]) || 1;
+      return [[x[0] / n, x[1] / n], [y[0] / n, y[1] / n]];
+    });
+    return { vals, vecs };
+  };
+  // Jacobi eigenvalue algorithm for a real symmetric n x n matrix (array of arrays). Returns ascending.
+  EPP.jacobi = (A0, maxSweeps = 60) => {
+    const n = A0.length, A = A0.map(r => r.slice()), V = A0.map((r, i) => r.map((_, j) => (i === j ? 1 : 0)));
+    for (let s = 0; s < maxSweeps; s++) {
+      let off = 0;
+      for (let p = 0; p < n; p++) for (let q = p + 1; q < n; q++) off += A[p][q] * A[p][q];
+      if (off < 1e-22) break;
+      for (let p = 0; p < n; p++) for (let q = p + 1; q < n; q++) {
+        if (Math.abs(A[p][q]) < 1e-300) continue;
+        const th = (A[q][q] - A[p][p]) / (2 * A[p][q]);
+        const t = Math.sign(th || 1) / (Math.abs(th) + Math.sqrt(th * th + 1));
+        const c = 1 / Math.sqrt(t * t + 1), sn = t * c;
+        for (let k = 0; k < n; k++) { const akp = A[k][p], akq = A[k][q]; A[k][p] = c * akp - sn * akq; A[k][q] = sn * akp + c * akq; }
+        for (let k = 0; k < n; k++) { const apk = A[p][k], aqk = A[q][k]; A[p][k] = c * apk - sn * aqk; A[q][k] = sn * apk + c * aqk; }
+        for (let k = 0; k < n; k++) { const vkp = V[k][p], vkq = V[k][q]; V[k][p] = c * vkp - sn * vkq; V[k][q] = sn * vkp + c * vkq; }
+      }
+    }
+    const idx = [...Array(n).keys()].sort((i, j) => A[i][i] - A[j][j]);
+    return { vals: idx.map(i => A[i][i]), vecs: idx.map(i => V.map(r => r[i])) };
+  };
+  // simple bisection root finder on [a,b]
+  EPP.bisect = (f, a, b, tol = 1e-10, maxIt = 200) => {
+    let fa = f(a), fb = f(b);
+    if (!isFinite(fa) || !isFinite(fb) || fa * fb > 0) return NaN;
+    for (let i = 0; i < maxIt; i++) { const m = 0.5 * (a + b), fm = f(m); if (fa * fm <= 0) { b = m; fb = fm; } else { a = m; fa = fm; } if (Math.abs(b - a) < tol) break; }
+    return 0.5 * (a + b);
+  };
+  // trapezoid integration of samples y on grid x
+  EPP.trapz = (x, y) => { let s = 0; for (let i = 1; i < x.length; i++) s += 0.5 * (y[i] + y[i - 1]) * (x[i] - x[i - 1]); return s; };
+
+  // ---------- rich text: a_b, a_{bc}, a^b, a^{bc} ----------
+  function parseRich(s) {
+    const out = []; let i = 0, buf = '';
+    const flush = () => { if (buf) { out.push({ t: buf, m: 0 }); buf = ''; } };
+    while (i < s.length) {
+      const ch = s[i];
+      if ((ch === '_' || ch === '^') && i + 1 < s.length) {
+        flush();
+        let j = i + 1, txt;
+        if (s[j] === '{') { const k = s.indexOf('}', j); txt = s.slice(j + 1, k < 0 ? s.length : k); i = (k < 0 ? s.length : k + 1); }
+        else { txt = s[j]; i = j + 1; }
+        out.push({ t: txt, m: ch === '_' ? -1 : 1 });
+      } else { buf += ch; i++; }
+    }
+    flush();
+    return out;
+  }
+  EPP.parseRich = parseRich;
+  // draw rich text on canvas; returns width
+  EPP.drawRich = (ctx, s, x, y, opt = {}) => {
+    const size = opt.size || 12, fam = opt.font || EPP.css('--font-ui'), style = opt.italic ? 'italic ' : '';
+    const parts = parseRich(String(s));
+    const widths = parts.map(p => { ctx.font = `${style}${p.m ? Math.round(size * 0.72) : size}px ${fam}`; return ctx.measureText(p.t).width; });
+    const total = widths.reduce((a, b) => a + b, 0);
+    let x0 = x;
+    const align = opt.align || 'left';
+    if (align === 'center') x0 = x - total / 2; else if (align === 'right') x0 = x - total;
+    const save = ctx.textAlign; ctx.textAlign = 'left';
+    parts.forEach((p, k) => {
+      ctx.font = `${style}${p.m ? Math.round(size * 0.72) : size}px ${fam}`;
+      const dy = p.m === -1 ? size * 0.28 : (p.m === 1 ? -size * 0.38 : 0);
+      ctx.fillText(p.t, x0, y + dy);
+      x0 += widths[k];
+    });
+    ctx.textAlign = save;
+    return total;
+  };
+  EPP.measureRich = (ctx, s, size = 12, fam) => {
+    fam = fam || EPP.css('--font-ui');
+    return parseRich(String(s)).reduce((w, p) => { ctx.font = `${p.m ? Math.round(size * 0.72) : size}px ${fam}`; return w + ctx.measureText(p.t).width; }, 0);
+  };
+  // rich text -> HTML (for legends/readouts)
+  EPP.richHTML = (s) => parseRich(String(s)).map(p => {
+    const t = p.t.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+    return p.m === -1 ? `<sub>${t}</sub>` : p.m === 1 ? `<sup>${t}</sup>` : t;
+  }).join('');
+
+  // ---------- nice ticks ----------
+  function niceTicks(a, b, target = 6) {
+    if (!(isFinite(a) && isFinite(b)) || a === b) return [a];
+    const lo = Math.min(a, b), hi = Math.max(a, b);
+    const raw = (hi - lo) / target, mag = Math.pow(10, Math.floor(Math.log10(raw))), r = raw / mag;
+    const step = (r < 1.5 ? 1 : r < 3 ? 2 : r < 7 ? 5 : 10) * mag;
+    const out = []; for (let v = Math.ceil(lo / step - 1e-9) * step; v <= hi + step * 1e-9; v += step) out.push(Math.abs(v) < step * 1e-9 ? 0 : v);
+    return out;
+  }
+  EPP.niceTicks = niceTicks;
+  const tickLabel = (v) => { const a = Math.abs(v); if (a === 0) return '0'; if (a >= 1e4 || a < 1e-3) return v.toExponential(0).replace('-', '−'); return String(Number(v.toPrecision(4))).replace('-', '−'); };
+
+  // ---------- responsive canvas ----------
+  EPP.canvas = (container, opt = {}) => {
+    const el = typeof container === 'string' ? document.querySelector(container) : container;
+    el.classList.add('plot');
+    const cv = document.createElement('canvas');
+    el.appendChild(cv);
+    const ctx = cv.getContext('2d');
+    const self = { el, canvas: cv, ctx, w: 0, h: 0, dpr: 1, _cbs: [] };
+    const aspect = opt.aspect || 0.6, minH = opt.minHeight || 180, maxH = opt.maxHeight || 520;
+    const resize = () => {
+      const w = Math.max(1, el.clientWidth);
+      const h = opt.height ? opt.height : Math.round(EPP.clamp(w * aspect, minH, maxH));
+      const dpr = Math.min(3, window.devicePixelRatio || 1);
+      if (w === self.w && h === self.h && dpr === self.dpr) return false;
+      self.w = w; self.h = h; self.dpr = dpr;
+      cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+      cv.style.height = h + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      return true;
+    };
+    self.onResize = (cb) => { self._cbs.push(cb); };
+    self.clear = () => { ctx.setTransform(self.dpr, 0, 0, self.dpr, 0, 0); ctx.clearRect(0, 0, self.w, self.h); };
+    resize();
+    let raf = 0;
+    const ro = new ResizeObserver(() => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { if (resize()) self._cbs.forEach(cb => cb()); }); });
+    ro.observe(el);
+    EPP.onTheme(() => self._cbs.forEach(cb => cb()));
+    return self;
+  };
+
+  // ---------- Plot ----------
+  // new EPP.Plot(el, {xlabel, ylabel, xlim, ylim, aspect, height, legend, hover, xfmt, yfmt, margin})
+  // plot.draw(layers) ; layers: {type:'line'|'fill'|'points'|'hline'|'vline'|'band'|'hband'|'text'|'arrow'|'segments', ...}
+  class Plot {
+    constructor(container, opt = {}) {
+      this.opt = Object.assign({ aspect: 0.58, legend: true, hover: true, grid: true }, opt);
+      const el = typeof container === 'string' ? document.querySelector(container) : container;
+      this.wrap = el;
+      this.holder = document.createElement('div');
+      el.appendChild(this.holder);
+      this.cv = EPP.canvas(this.holder, { aspect: this.opt.aspect, height: this.opt.height, minHeight: this.opt.minHeight || 200, maxHeight: this.opt.maxHeight || 460 });
+      this.ctx = this.cv.ctx;
+      this.layers = [];
+      this.xlim = opt.xlim || [0, 1]; this.ylim = opt.ylim || [0, 1];
+      if (this.opt.legend) { this.legendEl = document.createElement('div'); this.legendEl.className = 'legend'; el.appendChild(this.legendEl); }
+      this.tip = document.createElement('div'); this.tip.className = 'tip'; this.tip.hidden = true; this.holder.appendChild(this.tip);
+      this.cv.onResize(() => this.render());
+      this._hoverX = null;
+      const cvs = this.cv.canvas;
+      const toData = (e) => { const r = cvs.getBoundingClientRect(); const px = e.clientX - r.left, py = e.clientY - r.top; return { px, py, x: this.invX(px), y: this.invY(py) }; };
+      this._dragging = false;
+      cvs.addEventListener('pointerdown', (e) => { const d = toData(e); if (this.onPointer) { this._dragging = true; try { cvs.setPointerCapture(e.pointerId); } catch (_) {} this.onPointer(d.x, d.y, 'down', d); } });
+      cvs.addEventListener('pointermove', (e) => {
+        const d = toData(e);
+        if (this._dragging && this.onPointer) this.onPointer(d.x, d.y, 'move', d);
+        if (this.opt.hover && e.pointerType !== 'touch') { const inside = d.px >= this.m.l && d.px <= this.cv.w - this.m.r && d.py >= this.m.t && d.py <= this.cv.h - this.m.b; this._hoverX = inside || (d.px >= this.m.l && d.px <= this.cv.w - this.m.r) ? d.x : null; this._hoverY = inside ? d.y : null; this.render(); }
+      });
+      const end = (e) => { if (this._dragging && this.onPointer) { const d = toData(e); this.onPointer(d.x, d.y, 'up', d); } this._dragging = false; };
+      cvs.addEventListener('pointerup', end); cvs.addEventListener('pointercancel', end);
+      cvs.addEventListener('pointerleave', () => { this._hoverX = null; this.tip.hidden = true; this.render(); });
+      if (this.opt.onPointer) this.onPointer = this.opt.onPointer;
+      if (this.opt.ariaLabel) { cvs.setAttribute('role', 'img'); cvs.setAttribute('aria-label', this.opt.ariaLabel); }
+    }
+    get m() {
+      const mm = this.opt.margin || {};
+      return { l: mm.l ?? (this.opt.ylabel ? 58 : 44), r: mm.r ?? 14, t: mm.t ?? 12, b: mm.b ?? (this.opt.xlabel ? 44 : 28) };
+    }
+    X(x) { const m = this.m, [a, b] = this.xlim; if (this.opt.logx) return m.l + (Math.log10(x) - Math.log10(a)) / (Math.log10(b) - Math.log10(a)) * (this.cv.w - m.l - m.r); return m.l + (x - a) / (b - a) * (this.cv.w - m.l - m.r); }
+    Y(y) { const m = this.m, [a, b] = this.ylim; if (this.opt.logy) return this.cv.h - m.b - (Math.log10(y) - Math.log10(a)) / (Math.log10(b) - Math.log10(a)) * (this.cv.h - m.t - m.b); return this.cv.h - m.b - (y - a) / (b - a) * (this.cv.h - m.t - m.b); }
+    invX(px) { const m = this.m, [a, b] = this.xlim, f = (px - m.l) / (this.cv.w - m.l - m.r); return this.opt.logx ? Math.pow(10, Math.log10(a) + f * (Math.log10(b) - Math.log10(a))) : a + f * (b - a); }
+    invY(py) { const m = this.m, [a, b] = this.ylim, f = (this.cv.h - m.b - py) / (this.cv.h - m.t - m.b); return this.opt.logy ? Math.pow(10, Math.log10(a) + f * (Math.log10(b) - Math.log10(a))) : a + f * (b - a); }
+    setLimits({ xlim, ylim, xlabel, ylabel } = {}) { if (xlim) this.xlim = xlim; if (ylim) this.ylim = ylim; if (xlabel !== undefined) this.opt.xlabel = xlabel; if (ylabel !== undefined) this.opt.ylabel = ylabel; }
+    draw(layers, lim) { if (lim) this.setLimits(lim); this.layers = layers.filter(Boolean); this.render(); this.renderLegend(); }
+    renderLegend() {
+      if (!this.legendEl) return;
+      const items = this.layers.filter(L => L.label && !L.nolegend && L.type !== 'heatmap');
+      this.legendEl.innerHTML = items.map(L => {
+        const col = EPP.color(L.color);
+        const cls = L.type === 'fill' || L.type === 'band' || L.type === 'hband' ? 'box' : (L.dash ? (L.dash[0] <= 2 ? 'dot' : 'dash') : '');
+        return `<span class="item" style="color:${col}"><span class="sw ${cls}"></span><span style="color:var(--fg-2)">${EPP.richHTML(L.label)}</span></span>`;
+      }).join('');
+      this.legendEl.hidden = items.length === 0;
+    }
+    render() {
+      const ctx = this.ctx, w = this.cv.w, h = this.cv.h, m = this.m, o = this.opt;
+      if (!w || !h) return;
+      this.cv.clear();
+      const fUI = EPP.css('--font-ui'), cGrid = EPP.css('--grid'), cMuted = EPP.css('--muted'), cFg = EPP.css('--fg'), cRule = EPP.css('--rule');
+      const [xa, xb] = this.xlim, [ya, yb] = this.ylim;
+      // ticks + grid
+      const xt = o.xticks || (o.logx ? this._logTicks(xa, xb) : niceTicks(xa, xb, Math.max(3, Math.round((w - m.l - m.r) / 90))));
+      const yt = o.yticks || (o.logy ? this._logTicks(ya, yb) : niceTicks(ya, yb, Math.max(3, Math.round((h - m.t - m.b) / 55))));
+      ctx.lineWidth = 1; ctx.font = `11px ${fUI}`; ctx.fillStyle = cMuted;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+      xt.forEach(t => { const v = typeof t === 'object' ? t.v : t, lab = typeof t === 'object' ? t.label : (o.xfmt ? o.xfmt(v) : tickLabel(v)); const X = this.X(v); if (X < m.l - 0.5 || X > w - m.r + 0.5) return; if (o.grid) { ctx.strokeStyle = cGrid; ctx.beginPath(); ctx.moveTo(Math.round(X) + 0.5, m.t); ctx.lineTo(Math.round(X) + 0.5, h - m.b); ctx.stroke(); } EPP.drawRich(ctx, lab, X, h - m.b + 6, { size: 11, align: 'center', font: fUI }); });
+      ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+      yt.forEach(t => { const v = typeof t === 'object' ? t.v : t, lab = typeof t === 'object' ? t.label : (o.yfmt ? o.yfmt(v) : tickLabel(v)); const Y = this.Y(v); if (Y < m.t - 0.5 || Y > h - m.b + 0.5) return; if (o.grid) { ctx.strokeStyle = cGrid; ctx.beginPath(); ctx.moveTo(m.l, Math.round(Y) + 0.5); ctx.lineTo(w - m.r, Math.round(Y) + 0.5); ctx.stroke(); } EPP.drawRich(ctx, lab, m.l - 6, Y, { size: 11, align: 'right', font: fUI }); });
+      // zero lines
+      ctx.strokeStyle = cRule; ctx.lineWidth = 1;
+      if (ya < 0 && yb > 0 && !o.logy) { const Y = Math.round(this.Y(0)) + 0.5; ctx.beginPath(); ctx.moveTo(m.l, Y); ctx.lineTo(w - m.r, Y); ctx.stroke(); }
+      if (xa < 0 && xb > 0 && !o.logx) { const X = Math.round(this.X(0)) + 0.5; ctx.beginPath(); ctx.moveTo(X, m.t); ctx.lineTo(X, h - m.b); ctx.stroke(); }
+      // frame
+      ctx.strokeStyle = cRule; ctx.strokeRect(m.l + 0.5, m.t + 0.5, w - m.l - m.r - 1, h - m.t - m.b - 1);
+      // axis labels
+      ctx.fillStyle = cFg; ctx.textBaseline = 'alphabetic';
+      if (o.xlabel) EPP.drawRich(ctx, o.xlabel, m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, align: 'center', font: fUI });
+      if (o.ylabel) { ctx.save(); ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2); EPP.drawRich(ctx, o.ylabel, 0, 0, { size: 12.5, align: 'center', font: fUI }); ctx.restore(); }
+      // layers (clipped)
+      ctx.save(); ctx.beginPath(); ctx.rect(m.l, m.t, w - m.l - m.r, h - m.t - m.b); ctx.clip();
+      for (const L of this.layers) this._layer(L, false);
+      ctx.restore();
+      for (const L of this.layers) if (L.type === 'text' || L.type === 'label') this._layer(L, true);
+      // colorbars for heatmaps (drawn in the right margin; give margin.r >= 54)
+      for (const L of this.layers) if (L.type === 'heatmap' && L.colorbar !== false && m.r >= 40) {
+        const ramp = EPP.ramp(L.color || 'electron', L.color2, L.gamma || 1), x = w - m.r + 10, bw = 9, top = m.t, bot = h - m.b, n = 64;
+        for (let k = 0; k < n; k++) { const c = ramp(k / (n - 1)); ctx.fillStyle = `rgb(${c[0]},${c[1]},${c[2]})`; const y1 = bot - (k + 1) * (bot - top) / n; ctx.fillRect(x, y1, bw, (bot - top) / n + 0.6); }
+        ctx.strokeStyle = cRule; ctx.strokeRect(x + 0.5, top + 0.5, bw, bot - top - 1);
+        ctx.fillStyle = cMuted; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+        const f = L.cfmt || ((v) => EPP.fmt(v, 2));
+        EPP.drawRich(ctx, f(L.vmax), x + bw + 3, top + 5, { size: 10 }); EPP.drawRich(ctx, f(L.vmin), x + bw + 3, bot - 5, { size: 10 });
+        if (L.colorbar && typeof L.colorbar === 'string') { ctx.save(); ctx.translate(w - 6, (top + bot) / 2); ctx.rotate(-Math.PI / 2); ctx.textAlign = 'center'; EPP.drawRich(ctx, L.colorbar, 0, 0, { size: 10.5 }); ctx.restore(); }
+      }
+      // hover
+      this._drawHover();
+    }
+    _logTicks(a, b) { const out = []; for (let e = Math.floor(Math.log10(a)); e <= Math.ceil(Math.log10(b)); e++) { const v = Math.pow(10, e); if (v >= a * 0.999 && v <= b * 1.001) out.push({ v, label: e >= -2 && e <= 3 ? String(v) : `10^{${e}}` }); } return out; }
+    _layer(L, unclipped) {
+      const ctx = this.ctx, m = this.m, w = this.cv.w, h = this.cv.h;
+      const col = EPP.color(L.color || 'ink');
+      ctx.setLineDash(L.dash || []);
+      ctx.lineWidth = L.width || 2; ctx.strokeStyle = col; ctx.fillStyle = col; ctx.globalAlpha = L.opacity ?? 1;
+      const t = L.type;
+      if (t === 'line') {
+        const x = L.x, y = L.y, ylo = this.ylim[0], yhi = this.ylim[1], span = Math.abs(yhi - ylo);
+        const jump = L.breakJump ?? 3 * span;
+        ctx.beginPath(); let pen = false, prev = null;
+        for (let i = 0; i < x.length; i++) {
+          const yi = y[i];
+          if (!isFinite(yi) || !isFinite(x[i]) || (prev !== null && Math.abs(yi - prev) > jump)) { pen = false; prev = isFinite(yi) ? yi : null; if (!isFinite(yi)) continue; }
+          const X = this.X(x[i]); let Y = this.Y(yi); Y = EPP.clamp(Y, -1e4, 1e4);
+          if (!pen) { ctx.moveTo(X, Y); pen = true; } else ctx.lineTo(X, Y);
+          prev = yi;
+        }
+        ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.stroke();
+      } else if (t === 'heatmap') {
+        // L.z: row-major, j over y (y0 -> y1), i over x (x0 -> x1), length nx*ny
+        const sig = [EPP.css('--surface'), col, EPP.css('--fg'), L.vmin, L.vmax, L.color2 || ''].join('|');
+        if (!L._img || L._sig !== sig || L._z !== L.z) {
+          const oc = document.createElement('canvas'); oc.width = L.nx; oc.height = L.ny;
+          const g = oc.getContext('2d'), im = g.createImageData(L.nx, L.ny);
+          const ramp = EPP.ramp(L.color || 'electron', L.color2, L.gamma || 1);
+          const lo = L.vmin, hi = L.vmax, div = !!L.color2;
+          for (let j = 0; j < L.ny; j++) for (let i = 0; i < L.nx; i++) {
+            const v = L.z[j * L.nx + i]; let tt;
+            if (!isFinite(v)) tt = div ? 0.5 : 0; else tt = EPP.clamp((v - lo) / (hi - lo), 0, 1);
+            const c = ramp(tt), k = ((L.ny - 1 - j) * L.nx + i) * 4;
+            im.data[k] = c[0]; im.data[k + 1] = c[1]; im.data[k + 2] = c[2]; im.data[k + 3] = 255;
+          }
+          g.putImageData(im, 0, 0); L._img = oc; L._sig = sig; L._z = L.z;
+        }
+        ctx.imageSmoothingEnabled = L.smooth !== false;
+        const X0 = this.X(L.x0), X1 = this.X(L.x1), Y0 = this.Y(L.y0), Y1 = this.Y(L.y1);
+        ctx.drawImage(L._img, Math.min(X0, X1), Math.min(Y0, Y1), Math.abs(X1 - X0), Math.abs(Y1 - Y0));
+      } else if (t === 'segments') { // L.segs: [[x0,y0,x1,y1],...]
+        ctx.beginPath(); for (const s of L.segs) { ctx.moveTo(this.X(s[0]), this.Y(s[1])); ctx.lineTo(this.X(s[2]), this.Y(s[3])); } ctx.stroke();
+      } else if (t === 'fill') {
+        ctx.globalAlpha = L.alpha ?? 0.18; ctx.beginPath();
+        const x = L.x, y1 = L.y1, y2 = L.y2 || L.x.map(() => (L.base ?? 0));
+        let started = false;
+        for (let i = 0; i < x.length; i++) { if (!isFinite(y1[i])) continue; const X = this.X(x[i]), Y = EPP.clamp(this.Y(y1[i]), -1e4, 1e4); if (!started) { ctx.moveTo(X, Y); started = true; } else ctx.lineTo(X, Y); }
+        for (let i = x.length - 1; i >= 0; i--) { if (!isFinite(y2[i])) continue; ctx.lineTo(this.X(x[i]), EPP.clamp(this.Y(y2[i]), -1e4, 1e4)); }
+        ctx.closePath(); ctx.fill();
+      } else if (t === 'points') {
+        const r = L.r || 3.5;
+        for (let i = 0; i < L.x.length; i++) { if (!isFinite(L.y[i])) continue; ctx.beginPath(); ctx.arc(this.X(L.x[i]), this.Y(L.y[i]), r, 0, 2 * Math.PI); if (L.hollow) { ctx.lineWidth = 1.6; ctx.stroke(); } else ctx.fill(); }
+      } else if (t === 'hline' || t === 'vline') {
+        ctx.lineWidth = L.width || 1.2; if (!L.dash) ctx.setLineDash([5, 4]);
+        ctx.beginPath();
+        if (t === 'hline') { const Y = this.Y(L.at); ctx.moveTo(m.l, Y); ctx.lineTo(w - m.r, Y); } else { const X = this.X(L.at); ctx.moveTo(X, m.t); ctx.lineTo(X, h - m.b); }
+        ctx.stroke(); ctx.setLineDash([]);
+        if (L.text) { ctx.fillStyle = EPP.textColor(L.color); ctx.font = `11px ${EPP.css('--font-ui')}`; if (t === 'hline') { ctx.textBaseline = 'bottom'; EPP.drawRich(ctx, L.text, (L.textAt === 'left' ? m.l + 6 : w - m.r - 6), this.Y(L.at) - 3, { size: 11, align: L.textAt === 'left' ? 'left' : 'right' }); } else { ctx.textBaseline = 'top'; EPP.drawRich(ctx, L.text, this.X(L.at) + 4, m.t + 4 + (L.textDy || 0), { size: 11 }); } }
+      } else if (t === 'band' || t === 'hband') {
+        ctx.globalAlpha = L.alpha ?? 0.12;
+        if (t === 'band') { const X0 = this.X(L.x0), X1 = this.X(L.x1); ctx.fillRect(Math.min(X0, X1), m.t, Math.abs(X1 - X0), h - m.t - m.b); }
+        else { const Y0 = this.Y(L.y0), Y1 = this.Y(L.y1); ctx.fillRect(m.l, Math.min(Y0, Y1), w - m.l - m.r, Math.abs(Y1 - Y0)); }
+        ctx.globalAlpha = 1;
+        if (L.text) { ctx.fillStyle = EPP.textColor(L.color); ctx.textBaseline = 'top'; if (t === 'band') EPP.drawRich(ctx, L.text, (this.X(L.x0) + this.X(L.x1)) / 2, m.t + 4, { size: 11, align: 'center' }); else EPP.drawRich(ctx, L.text, w - m.r - 6, Math.min(this.Y(L.y0), this.Y(L.y1)) + 3, { size: 11, align: 'right' }); }
+      } else if ((t === 'text' || t === 'label') && unclipped) {
+        ctx.globalAlpha = L.opacity ?? 1; ctx.textBaseline = L.baseline || 'middle'; ctx.fillStyle = EPP.textColor(L.color || 'fg2');
+        const X = this.X(L.x) + (L.dx || 0), Y = this.Y(L.y) + (L.dy || 0);
+        EPP.drawRich(ctx, L.text, X, Y, { size: L.size || 12, align: L.align || 'left', italic: L.italic });
+      } else if (t === 'arrow') {
+        const X0 = this.X(L.x0), Y0 = this.Y(L.y0), X1 = this.X(L.x1), Y1 = this.Y(L.y1);
+        ctx.lineWidth = L.width || 1.6; ctx.beginPath(); ctx.moveTo(X0, Y0); ctx.lineTo(X1, Y1); ctx.stroke();
+        const a = Math.atan2(Y1 - Y0, X1 - X0), s = L.head || 8; ctx.setLineDash([]);
+        ctx.beginPath(); ctx.moveTo(X1, Y1); ctx.lineTo(X1 - s * Math.cos(a - 0.4), Y1 - s * Math.sin(a - 0.4)); ctx.lineTo(X1 - s * Math.cos(a + 0.4), Y1 - s * Math.sin(a + 0.4)); ctx.closePath(); ctx.fill();
+      }
+      ctx.globalAlpha = 1; ctx.setLineDash([]);
+    }
+    _drawHover() {
+      const x = this._hoverX;
+      if (x === null || x === undefined) { this.tip.hidden = true; return; }
+      const lines = this.layers.filter(L => L.type === 'line' && L.label && L.hover !== false);
+      const heats = this.layers.filter(L => L.type === 'heatmap' && L.hover !== false);
+      if (!lines.length && !(heats.length && this._hoverY != null)) { this.tip.hidden = true; return; }
+      const ctx = this.ctx, m = this.m, X = this.X(x);
+      ctx.strokeStyle = EPP.css('--muted'); ctx.lineWidth = 1; ctx.setLineDash([2, 3]);
+      ctx.beginPath(); ctx.moveTo(X, m.t); ctx.lineTo(X, this.cv.h - m.b); ctx.stroke(); ctx.setLineDash([]);
+      const xf = this.opt.hoverX || ((v) => EPP.fmt(v, 3));
+      const yf = this.opt.hoverY || ((v) => EPP.fmt(v, 4));
+      const rows = [`<span style="color:var(--muted)">${EPP.richHTML(this.opt.xname || 'x')} = ${xf(x)}</span>`];
+      for (const L of lines) {
+        // nearest sample by x (assumes monotonic x)
+        const xs = L.x; let lo = 0, hi = xs.length - 1; const asc = xs[hi] >= xs[0];
+        while (hi - lo > 1) { const mid = (lo + hi) >> 1; if ((xs[mid] < x) === asc) lo = mid; else hi = mid; }
+        const i = Math.abs(xs[lo] - x) < Math.abs(xs[hi] - x) ? lo : hi;
+        const y = L.y[i];
+        if (!isFinite(y) || Math.abs(xs[i] - x) > Math.abs(this.xlim[1] - this.xlim[0]) * 0.03) continue;
+        const Y = this.Y(y);
+        if (Y >= m.t && Y <= this.cv.h - m.b) { ctx.fillStyle = EPP.color(L.color); ctx.beginPath(); ctx.arc(this.X(xs[i]), Y, 3.5, 0, 2 * Math.PI); ctx.fill(); }
+        rows.push(`<span style="color:${EPP.color(L.color)}">■</span> ${EPP.richHTML(L.label)}: ${yf(y)}`);
+      }
+      if (this._hoverY != null) for (const L of heats) {
+        const i = Math.round((x - L.x0) / (L.x1 - L.x0) * (L.nx - 1)), j = Math.round((this._hoverY - L.y0) / (L.y1 - L.y0) * (L.ny - 1));
+        if (i >= 0 && i < L.nx && j >= 0 && j < L.ny) { const yf2 = this.opt.hoverX2 || ((v) => EPP.fmt(v, 3)); rows.push(`<span style="color:var(--muted)">${EPP.richHTML(this.opt.yname || 'y')} = ${yf2(this._hoverY)}</span>`); rows.push(`${EPP.richHTML(L.label || 'value')}: ${(L.cfmt || ((v) => EPP.fmt(v, 3)))(L.z[j * L.nx + i])}`); }
+      }
+      if (rows.length <= 1) { this.tip.hidden = true; return; }
+      this.tip.innerHTML = rows.join('<br>');
+      this.tip.hidden = false;
+      const tw = this.tip.offsetWidth, left = X + 12 + tw > this.cv.w ? X - 12 - tw : X + 12;
+      this.tip.style.left = Math.max(0, left) + 'px'; this.tip.style.top = (m.t + 4) + 'px';
+    }
+  }
+  EPP.Plot = Plot;
+  EPP.sample = (f, a, b, n = 400) => { const x = EPP.linspace(a, b, n); return { x, y: x.map(f) }; };
+
+  // ---------- controls ----------
+  // EPP.controls(el, specs, onChange) ; spec: {key, type:'range'|'select'|'toggle'|'seg'|'button', label, min, max, step, value, fmt, options:[[value,label],...], onClick}
+  EPP.controls = (container, specs, onChange) => {
+    const el = typeof container === 'string' ? document.querySelector(container) : container;
+    el.classList.add('controls');
+    const fig = el.closest('figure, section, div[id]');
+    const base = (fig && fig.id) ? fig.id : ('c' + Math.random().toString(36).slice(2, 7));
+    const state = {}, setters = {};
+    let scheduled = false;
+    const fire = () => { if (scheduled) return; scheduled = true; requestAnimationFrame(() => { scheduled = false; onChange && onChange(state); }); };
+    specs.forEach(s => {
+      const id = `${base}-${s.key}`;
+      const box = document.createElement('div'); box.className = 'ctrl' + (s.type === 'toggle' ? ' toggle' : '');
+      const longSeg = s.type === 'seg' && s.options.reduce((n, o) => n + String(o[1]).length + 3, 0) > 30;
+      if (s.wide || longSeg) box.style.gridColumn = '1 / -1';
+      if (s.type === 'range') {
+        const fmt = s.fmt || ((v) => String(v));
+        box.innerHTML = `<label for="${id}"><span>${EPP.richHTML(s.label)}</span><output for="${id}"></output></label><input type="range" id="${id}" min="${s.min}" max="${s.max}" step="${s.step ?? 'any'}" value="${s.value}">`;
+        const inp = box.querySelector('input'), out = box.querySelector('output');
+        const map = s.log ? { to: (v) => Math.pow(10, v), from: (v) => Math.log10(v) } : null;
+        if (map) { inp.min = Math.log10(s.min); inp.max = Math.log10(s.max); inp.step = s.step ?? 'any'; inp.value = Math.log10(s.value); }
+        const read = () => { const v = parseFloat(inp.value); state[s.key] = map ? map.to(v) : v; out.textContent = fmt(state[s.key]); };
+        inp.addEventListener('input', () => { read(); fire(); });
+        setters[s.key] = (v) => { inp.value = map ? Math.log10(v) : v; read(); };
+        read();
+      } else if (s.type === 'select') {
+        box.innerHTML = `<label for="${id}"><span>${EPP.richHTML(s.label)}</span></label><select id="${id}">${s.options.map(o => `<option value="${o[0]}">${o[1]}</option>`).join('')}</select>`;
+        const sel = box.querySelector('select'); sel.value = s.value ?? s.options[0][0];
+        const read = () => { state[s.key] = sel.value; };
+        sel.addEventListener('change', () => { read(); fire(); });
+        setters[s.key] = (v) => { sel.value = v; read(); };
+        read();
+      } else if (s.type === 'toggle') {
+        box.innerHTML = `<label for="${id}"><input type="checkbox" id="${id}" ${s.value ? 'checked' : ''}><span>${EPP.richHTML(s.label)}</span></label>`;
+        const cb = box.querySelector('input');
+        const read = () => { state[s.key] = cb.checked; };
+        cb.addEventListener('change', () => { read(); fire(); });
+        setters[s.key] = (v) => { cb.checked = !!v; read(); };
+        read();
+      } else if (s.type === 'seg') {
+        box.innerHTML = `<span class="lab"><span>${EPP.richHTML(s.label)}</span></span><div class="seg" role="group" aria-label="${s.label.replace(/[_^{}]/g, '')}">${s.options.map(o => `<button type="button" id="${id}-${o[0]}" data-v="${o[0]}" aria-pressed="false">${EPP.richHTML(o[1])}</button>`).join('')}</div>`;
+        const btns = [...box.querySelectorAll('button')];
+        const setv = (v) => { state[s.key] = v; btns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === String(v)))); };
+        btns.forEach(b => b.addEventListener('click', () => { setv(b.dataset.v); fire(); }));
+        setters[s.key] = setv; setv(s.value ?? s.options[0][0]);
+      } else if (s.type === 'button') {
+        box.innerHTML = `<span class="lab"><span>&nbsp;</span></span><button type="button" class="btn" id="${id}">${EPP.richHTML(s.label)}</button>`;
+        box.querySelector('button').addEventListener('click', () => { s.onClick && s.onClick(state); fire(); });
+      }
+      el.appendChild(box);
+    });
+    const api = { state, set: (k, v, silent) => { setters[k] && setters[k](v); if (!silent) fire(); }, refresh: () => onChange && onChange(state), el };
+    // initial draw after fonts/layout
+    requestAnimationFrame(() => onChange && onChange(state));
+    return api;
+  };
+  // readout: EPP.readout(el).set({ 'ω_LO': '45 meV', ... })
+  EPP.readout = (container) => {
+    const el = typeof container === 'string' ? document.querySelector(container) : container;
+    el.classList.add('readout'); el.setAttribute('aria-live', 'polite');
+    return { set: (obj) => { el.innerHTML = Object.entries(obj).map(([k, v]) => `<span>${EPP.richHTML(k)}<b>${v}</b></span>`).join(''); } };
+  };
+
+  // ---------- animation ----------
+  // EPP.anim(figureEl, frame(t, dt), {buttonHost}) -> {play, pause, toggle, running}. Pauses offscreen; starts paused under reduced motion.
+  EPP.anim = (host, frame, opt = {}) => {
+    const el = typeof host === 'string' ? document.querySelector(host) : host;
+    let running = false, visible = true, raf = 0, last = 0, t = 0;
+    const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'btn';
+    const label = () => { btn.textContent = running ? 'Pause' : 'Play'; btn.setAttribute('aria-pressed', String(running)); };
+    const loop = (ts) => { if (!running || !visible) { raf = 0; return; } const dt = last ? Math.min(0.05, (ts - last) / 1000) : 0; last = ts; t += dt; frame(t, dt); raf = requestAnimationFrame(loop); };
+    const kick = () => { if (running && visible && !raf) { last = 0; raf = requestAnimationFrame(loop); } };
+    const api = {
+      play() { running = true; label(); kick(); }, pause() { running = false; label(); },
+      toggle() { running ? api.pause() : api.play(); }, get running() { return running; }, get t() { return t; },
+      redraw() { frame(t, 0); }, button: btn
+    };
+    btn.addEventListener('click', api.toggle);
+    if (opt.buttonHost) { const bh = typeof opt.buttonHost === 'string' ? el.querySelector(opt.buttonHost) : opt.buttonHost; bh.appendChild(btn); }
+    try { new IntersectionObserver((ents) => { visible = ents[0].isIntersecting; kick(); }).observe(el); } catch (e) {}
+    label();
+    requestAnimationFrame(() => { frame(0, 0); if (!EPP.reducedMotion && opt.autoplay !== false) api.play(); });
+    return api;
+  };
+
+  // ---------- Feynman diagrams (SVG) ----------
+  // EPP.fd.draw(el, {w, h, items:[...], label}) ; item types:
+  //   {t:'fermion'|'fermion2'|'phonon'|'phonon2'|'photon'|'photon2'|'coulomb'|'screened', a:[x,y], b:[x,y], bend:0, arrow:true, label, lpos:'+'|'-', ldist}
+  //   {t:'vertex', at:[x,y], r}   {t:'blob', at:[x,y], r, label}   {t:'text', at:[x,y], text, color, size, anchor}
+  const NS = 'http://www.w3.org/2000/svg';
+  function curvePoints(a, b, bend, n) {
+    const pts = []; const dx = b[0] - a[0], dy = b[1] - a[1], L = Math.hypot(dx, dy);
+    if (!bend) { for (let i = 0; i <= n; i++) { const s = i / n; pts.push([a[0] + dx * s, a[1] + dy * s, dx / L, dy / L]); } return pts; }
+    // circular arc through a, b with sagitta = bend * L (positive bulges to the screen-left of a->b: up for a left-to-right line)
+    const sag = bend * L, R = (L * L / 4 + sag * sag) / (2 * Math.abs(sag));
+    const mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2, nx = dy / L, ny = -dx / L; // screen-left normal (y down)
+    const sgn = Math.sign(sag), d = R - Math.abs(sag);
+    const cx = mx - sgn * nx * d, cy = my - sgn * ny * d;
+    let t0 = Math.atan2(a[1] - cy, a[0] - cx), t1 = Math.atan2(b[1] - cy, b[0] - cx);
+    // choose the arc passing through the sagitta point
+    const px = mx + sgn * nx * Math.abs(sag), py = my + sgn * ny * Math.abs(sag), tp = Math.atan2(py - cy, px - cx);
+    const norm = (x) => { while (x < 0) x += 2 * Math.PI; while (x >= 2 * Math.PI) x -= 2 * Math.PI; return x; };
+    let span = norm(t1 - t0); const tpRel = norm(tp - t0);
+    if (tpRel > span) span = span - 2 * Math.PI;
+    for (let i = 0; i <= n; i++) { const th = t0 + span * i / n; const x = cx + R * Math.cos(th), y = cy + R * Math.sin(th); const tx = -Math.sin(th) * Math.sign(span), ty = Math.cos(th) * Math.sign(span); pts.push([x, y, tx, ty]); }
+    return pts;
+  }
+  const pathFrom = (pts) => 'M' + pts.map(p => p[0].toFixed(2) + ' ' + p[1].toFixed(2)).join(' L');
+  function offsetPath(pts, f) { return pts.map((p, i) => { const s = i / (pts.length - 1); const o = f(s); return [p[0] - p[3] * o, p[1] + p[2] * o, p[2], p[3]]; }); }
+  function arcLen(pts) { let L = 0; for (let i = 1; i < pts.length; i++) L += Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]); return L; }
+  function svgEl(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+  function richSVG(textEl, s) {
+    parseRich(String(s)).forEach(p => {
+      const ts = svgEl('tspan', {}, textEl); ts.textContent = p.t;
+      if (p.m) { ts.setAttribute('font-size', '72%'); ts.setAttribute('baseline-shift', p.m === -1 ? 'sub' : 'super'); ts.setAttribute('font-style', 'normal'); }
+    });
+  }
+  EPP.fd = {
+    draw(container, spec) {
+      const el = typeof container === 'string' ? document.querySelector(container) : container;
+      const w = spec.w || 200, h = spec.h || 100;
+      const svg = svgEl('svg', { viewBox: `${spec.x0 || 0} ${spec.y0 || 0} ${w} ${h}`, width: w, height: h, role: 'img', 'aria-label': spec.label || 'Feynman diagram' });
+      const paint = () => {
+        svg.innerHTML = '';
+        const col = { fermion: EPP.color('electron'), phonon: EPP.color('phonon'), photon: EPP.color('photon'), ink: EPP.color('ink'), muted: EPP.color('muted') };
+        const tcol = { fermion: EPP.color('electron-t'), phonon: EPP.color('phonon-t'), photon: EPP.color('photon-t') };
+        for (const it of spec.items) {
+          const t = it.t;
+          if (['fermion', 'fermion2', 'phonon', 'phonon2', 'photon', 'photon2', 'coulomb', 'screened', 'plain'].includes(t)) {
+            const kind = t.replace('2', '');
+            const c = it.color ? EPP.color(it.color) : (kind === 'fermion' ? col.fermion : kind === 'phonon' ? col.phonon : (kind === 'photon' || kind === 'coulomb' || kind === 'screened') ? col.photon : col.ink);
+            const base = curvePoints(it.a, it.b, it.bend || 0, 120);
+            const L = arcLen(base);
+            // dressed lines: double for fermions/Coulomb, heavier stroke for wavy/zigzag lines
+            const dressed = t.endsWith('2') || kind === 'screened';
+            const dbl = dressed && (kind === 'fermion' || kind === 'screened' || kind === 'plain');
+            const strokes = dbl ? [-2.2, 2.2] : [0];
+            for (const off of strokes) {
+              let pts = off ? offsetPath(base, () => off) : base;
+              let d, attrs = { fill: 'none', stroke: c, 'stroke-width': it.width || (dressed && !dbl ? 3.2 : 1.8), 'stroke-linecap': 'round', 'stroke-linejoin': 'round' };
+              if (kind === 'photon') { const nw = Math.max(2, Math.round(L / (it.wl || 9))); pts = offsetPath(pts, s => (it.amp || 3.6) * Math.sin(2 * Math.PI * nw * s)); d = pathFrom(pts); }
+              else if (kind === 'phonon') { const nz = Math.max(2, Math.round(L / (it.wl || 7))); const zig = curvePoints(it.a, it.b, it.bend || 0, nz * 2); const zz = (off ? offsetPath(zig, () => off) : zig).map((p, i) => { const o = (i === 0 || i === zig.length - 1) ? 0 : (i % 2 ? 1 : -1) * (it.amp || 3.6); return [p[0] - p[3] * o, p[1] + p[2] * o]; }); d = 'M' + zz.map(p => p[0].toFixed(2) + ' ' + p[1].toFixed(2)).join(' L'); }
+              else { d = pathFrom(pts); if (kind === 'coulomb' || kind === 'screened') attrs['stroke-dasharray'] = '5 4'; }
+              attrs.d = d; svgEl('path', attrs, svg);
+            }
+            if (kind === 'fermion' && it.arrow !== false) {
+              const mid = base[Math.floor(base.length / 2)], ang = Math.atan2(mid[3], mid[2]) * 180 / Math.PI;
+              const g = svgEl('g', { transform: `translate(${mid[0]},${mid[1]}) rotate(${ang})` }, svg);
+              svgEl('path', { d: 'M5 0 L-4 -4.5 L-2 0 L-4 4.5 Z', fill: c }, g);
+            }
+            if (it.label) {
+              // label on the screen-left of the direction a->b by default (above a left-to-right line); lpos:'right' (or '+') puts it on the other side
+              const mid = base[Math.floor(base.length / 2)], dist = it.ldist ?? (dressed ? 14 : 12), sgn = (it.lpos === '+' || it.lpos === 'right') ? -1 : 1;
+              const lx = mid[0] + mid[3] * dist * sgn, ly = mid[1] - mid[2] * dist * sgn;
+              const lc = it.color ? EPP.color(it.color) : (kind === 'fermion' ? tcol.fermion : kind === 'phonon' ? tcol.phonon : (kind === 'photon' || kind === 'coulomb' || kind === 'screened') ? tcol.photon : col.ink);
+              const te = svgEl('text', { x: lx, y: ly + 4, 'text-anchor': 'middle', class: 'fd-lab', fill: lc }, svg); richSVG(te, it.label);
+            }
+          } else if (t === 'vertex') {
+            svgEl('circle', { cx: it.at[0], cy: it.at[1], r: it.r || 3, fill: it.color ? EPP.color(it.color) : col.ink }, svg);
+          } else if (t === 'blob') {
+            const c = it.color ? EPP.color(it.color) : col.ink;
+            svgEl('circle', { cx: it.at[0], cy: it.at[1], r: it.r || 14, fill: EPP.color('surface') }, svg); // opaque base hides lines underneath
+            svgEl('circle', { cx: it.at[0], cy: it.at[1], r: it.r || 14, fill: EPP.alpha(it.color || 'ink', 0.12), stroke: c, 'stroke-width': 1.6 }, svg);
+            if (it.label) { const te = svgEl('text', { x: it.at[0], y: it.at[1] + 5, 'text-anchor': 'middle', class: 'fd-lab', fill: c, 'font-style': 'normal' }, svg); richSVG(te, it.label); }
+          } else if (t === 'text') {
+            const te = svgEl('text', { x: it.at[0], y: it.at[1], 'text-anchor': it.anchor || 'middle', class: 'fd-lab', fill: it.color ? EPP.color(it.color) : col.ink, 'font-size': it.size || 14 }, svg);
+            if (it.upright) te.setAttribute('font-style', 'normal');
+            richSVG(te, it.text);
+          }
+        }
+      };
+      paint();
+      EPP.onTheme(paint);
+      el.appendChild(svg);
+      return svg;
+    }
+  };
+
+  // ---------- small DOM helpers ----------
+  EPP.$ = (sel, rootEl = document) => rootEl.querySelector(sel);
+  EPP.$$ = (sel, rootEl = document) => [...rootEl.querySelectorAll(sel)];
+  window.EPP = EPP;
+})();
+
+</script>
+<div class="summary-page">
+<main id="main">
+<style>
+/* Executive summary: one centred reading column with the primer's side gutter. Tokens only. */
+.summary-page {
+  box-sizing: content-box;
+  max-width: 760px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-bottom: max(56px, env(safe-area-inset-bottom, 0px));
+}
+.summary-page .hero { padding-block: 44px 4px; }
+.summary-page .hero .lede { margin-bottom: 14px; }
+.brief-primer { font-family: var(--font-ui); font-size: 0.95rem; line-height: 1.45; color: var(--fg-2); margin: 0; }
+.summary-page .chapter { margin-top: 48px; }
+.summary-page .ch-head { margin-bottom: 10px; }
+.summary-page .ch-head h2 { margin-bottom: 4px; }
+.summary-page .intro { color: var(--fg-2); }
+.summary-page figure.viz { margin-top: 14px; }
+.summary-page .legend-strip { margin-top: 8px; }
+
+/* take-aways: numbered, because each step uses the one before */
+ol.takeaways { list-style: none; counter-reset: tk; padding: 0; margin: 8px 0 0; }
+.chapter ol.takeaways > li { counter-increment: tk; position: relative; max-width: none; margin: 0; padding: 16px 0 14px 46px; border-top: 1px solid var(--rule); }
+ol.takeaways > li::before {
+  content: counter(tk); position: absolute; left: 0; top: 16px; width: 30px; height: 30px; box-sizing: border-box;
+  border: 1.5px solid var(--accent); border-radius: 50%; display: grid; place-items: center;
+  font-family: var(--font-mono); font-size: 0.88rem; font-weight: 500; color: var(--accent);
+}
+.tk-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 10px; margin: 2px 0 6px; }
+.tk-title { font-weight: 600; font-size: 1.12rem; line-height: 1.32; }
+.tk-part { font-family: var(--font-ui); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.chapter ol.takeaways p { margin: 0 0 8px; }
+.chapter ol.takeaways .eq { margin: 4px 0 10px; }
+.chapter p.more { font-family: var(--font-ui); font-size: 0.86rem; line-height: 1.5; color: var(--muted); margin: 6px 0 0; }
+p.more a { white-space: nowrap; }
+@media (max-width: 560px) {
+  .chapter ol.takeaways > li { padding-left: 0; }
+  ol.takeaways > li::before { position: static; float: left; margin: 0 10px 2px 0; width: 26px; height: 26px; font-size: 0.8rem; }
+  .tk-head { min-height: 26px; }
+  ol.takeaways > li > :not(.tk-head) { clear: left; }
+}
+
+/* verdict table and closing */
+.summary-page .tbl table { min-width: 600px; }
+.summary-page .tbl td:first-child { width: 22%; }
+.summary-page .tbl td:nth-child(2) { width: 32%; }
+@media (max-width: 640px) {
+  .summary-page .tbl table { min-width: 0; }
+  .summary-page .tbl thead { display: none; }
+  .summary-page .tbl tr { display: block; padding: 10px 12px; border-bottom: 1px solid var(--rule); }
+  .summary-page .tbl tbody tr:last-child { border-bottom: 0; }
+  .summary-page .tbl td, .summary-page .tbl td:first-child, .summary-page .tbl td:nth-child(2) { display: block; width: auto; padding: 2px 0; border: 0; position: static; box-shadow: none; background: none; }
+  .summary-page .tbl td:nth-child(2)::before, .summary-page .tbl td:nth-child(3)::before { display: block; font-family: var(--font-ui); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+  .summary-page .tbl td:nth-child(2)::before { content: "Electrostatic (Part A)"; }
+  .summary-page .tbl td:nth-child(3)::before { content: "What EPP changes"; }
+}
+@media (max-width: 420px) { .summary-page .eq { font-size: 0.93em; } }
+.chapter ul.open > li { margin-bottom: 8px; }
+.brief-foot { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule); font-size: 0.92rem; color: var(--fg-2); }
+.brief-foot p { margin: 0 0 8px; max-width: 72ch; }
+</style>
+
+<header class="hero" id="top">
+  <p class="kicker">Executive summary · Electron–Phonon–Photon Primer</p>
+  <h1><span class="e">Electrons</span>, <span class="p">phonons</span> and <span class="g">photons</span>: the short version</h1>
+  <p class="lede">Giustino's 2017 review builds first-principles electron–phonon theory on one instantaneous Coulomb interaction, folded into screened parameters. The EPP formalism keeps the whole electromagnetic field and, as $c\to\infty$, returns Giustino's long-range (polar) formulas: the RPA $W$, plus the Gonze–Lee LO–TO term and Verdi–Giustino vertex that DFPT adds by hand, now derived. Bottom line: EPP changes the numbers only inside the light cone (polaritons, infrared response, radiative widths) or where dynamical screening matters (doped polar semiconductors); transport and zero-point renormalization stay electrostatic.</p>
+  <p class="brief-primer">Full primer, with derivations and interactive figures: <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm" target="_blank" rel="noopener">Electron–Phonon–Photon Primer</a>.</p>
+</header>
+
+<section class="chapter" id="brief-picture">
+  <header class="ch-head"><h2>The idea in one picture</h2></header>
+  <p class="intro">The same electron–phonon vertex in both theories. Toggle the speed of light: the photon line $D^{\rm e}$ collapses to the screened Coulomb line $W^{\rm e}$.</p>
+  <figure class="viz" id="viz-brief-vertex">
+    <p class="viz-title">One vertex, two pictures <span class="tag">interactive</span></p>
+    <div class="hero-vertex">
+      <figure class="hv-panel">
+        <div class="fd hv-fd" id="brief-fd-g"></div>
+        <figcaption><strong>Giustino 2017.</strong> An electron scatters from $n\bk$ to $m\,\bk{+}\bq$ by absorbing a phonon $\bq\nu$ or emitting a phonon $-\bq\nu$. The vertex $g_{mn\nu}(\bk,\bq)$ is a number computed with DFPT. All Coulomb physics, the Fröhlich field of polar crystals included, is folded into it.</figcaption>
+      </figure>
+      <figure class="hv-panel">
+        <div class="fd hv-fd" id="brief-fd-epp"></div>
+        <figcaption id="brief-epp-cap"></figcaption>
+      </figure>
+    </div>
+    <div class="hv-ctrls"></div>
+  </figure>
+  <div class="legend-strip" id="brief-legend" aria-label="Line conventions used in the diagrams"></div>
+</section>
+
+<section class="chapter" id="brief-takeaways">
+  <header class="ch-head"><h2>Seven things to take away</h2></header>
+  <p class="intro">Tags such as (G.53) and (E.454) number equations in Giustino's review and the EPP manuscript.</p>
+  <ol class="takeaways">
+    <li>
+      <p class="tk-head"><span class="tk-title">Giustino folds every Coulomb effect into three sets of numbers.</span><span class="tk-part">Part A</span></p>
+      <p>Eq. (1) of the review has no electron–electron or ion–ion interaction and no photons: the electron–electron Coulomb energy sits in the band energies $\varepsilon_{n\bk}$, the screened ion–ion forces in the phonon frequencies $\omega_{\bq\nu}$, and the electron–ion interaction in the coupling $g_{mn\nu}(\bk,\bq)$. DFPT computes $g$ as the bare electron–ion perturbation screened by a static dielectric matrix, your GW or BSE $\epsilon=1-v\chi^0$ plus $f^{xc}$:</p>
+      <div class="eq">$$\partial v^{\rm KS}=(\epsilon^{{\rm H}xc})^{-1}\,\partial v^{\rm en}\tag{G.53}$$</div>
+      <p>Static screening is the adiabatic approximation; the frequency dependence it drops is what Giustino calls retardation.</p>
+      <p class="more">Read more: <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#a-coupling" target="_blank" rel="noopener">§A.2 Eq. (1) and g</a> · <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#a-dfpt" target="_blank" rel="noopener">§A.3 DFPT</a></p>
+    </li>
+    <li>
+      <p class="tk-head"><span class="tk-title">The lattice is a second channel of the screened interaction.</span><span class="tk-part">Part A</span></p>
+      <p>With clamped nuclei, Hedin's equations give $W_{\rm e}=v+vP_{\rm e}W_{\rm e}$, the $W$ of GW and BSE. Moving nuclei add a phonon-mediated term ($\mathcal D$ the nuclear density correlator) whose vertices are dynamically screened nuclear-potential gradients, $\epsilon_{\rm e}^{-1}\nabla V_\kappa$:</p>
+      <div class="eq">$$W=W_{\rm e}+\underbrace{W_{\rm e}\,\mathcal D\,W_{\rm e}}_{W_{\rm ph}}\tag{G.104–105}$$</div>
+      <p>In a polar insulator at long wavelength $W_{\rm ph}$ is Fröhlich's coupling squared times the LO propagator, with a screened vertex at each end. The phonon self-energy (G.141) is different: one bare and one screened vertex around the irreducible bubble $P_{\rm e}$, because screening both ends would double count; EPP has the same structure (item 6).</p>
+      <p class="more">Read more: <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#a-hedin-baym" target="_blank" rel="noopener">§A.5 Hedin–Baym</a> · <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#a-phonon-se" target="_blank" rel="noopener">§A.6 phonon self-energy</a></p>
+    </li>
+    <li>
+      <p class="tk-head"><span class="tk-title">Coulomb is the longitudinal photon, and the light cone is tiny.</span><span class="tk-part">Bridge</span></p>
+      <p>In the temporal gauge the longitudinal field has no dynamics of its own; by Gauss's law its energy is the instantaneous Coulomb energy of electrons and ionic bound charges. Charge conservation turns every density vertex into a current vertex and $v$ into $D^{0l}$, so the free propagator is the vacuum Maxwell propagator (Gaussian units, $P^L=\hat\bq\hat\bq$, $P^T=1-P^L$):</p>
+      <div class="eq">$$D^0=\underbrace{-\frac{4\pi c}{\omega^2}\,P^L}_{D^{0l}}+\underbrace{\frac{4\pi}{c}\,\frac{P^T}{q^2-\omega^2/c^2}}_{D^{0t}}$$</div>
+      <p>The Coulomb part has no light cone. The transverse part matters only for $q\lesssim q_c=\sqrt{\epsilon_\infty}\,\omega/c$: $10^{-5}$–$10^{-4}$ Å$^{-1}$ for phonons, about $10^{-3}$ Å$^{-1}$ for a 2 eV exciton in vacuum, against a Brillouin zone of about 1 Å$^{-1}$.</p>
+      <p class="more">Read more: <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#x-light-cone" target="_blank" rel="noopener">§X.1 the light cone</a> · <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#b-fields" target="_blank" rel="noopener">§B.4 quantized fields</a></p>
+    </li>
+    <li>
+      <p class="tk-head"><span class="tk-title">One Dyson equation for light and matter, with $W$ as its longitudinal corner.</span><span class="tk-part">Part B</span></p>
+      <p>All matter enters through one current–current self-energy, $\Pi_{jj}=\Pi^{\rm e}+\Pi^{\rm ion}$, and the field obeys a single $3\times3$ Dyson equation:</p>
+      <div class="eq">$$D=D^0+D^0\,\Pi_{jj}\,D\tag{E.379}$$</div>
+      <p>Giustino's Dyson equations for $W_{\rm e}$ and $W$ are its longitudinal sector: at $c\to\infty$ the electron-dressed photon reduces to $D^{\rm e}\to-\frac{c}{\omega^2}\bq\bq\,W^{\rm e}$ (E.441), with $W^{\rm e}$ the RPA $W$ without local fields. Your $\chi^0$, times $e^2$ (EPP's Gaussian $v=4\pi/q^2$ carries no charge), is the longitudinal projection of the electronic $\Pi_{jj}$.</p>
+      <p class="more">Read more: <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#b-photon-se" target="_blank" rel="noopener">§B.5 photon self-energy</a> · <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#b-electrostatic" target="_blank" rel="noopener">§B.9 electrostatic limit</a></p>
+    </li>
+    <li>
+      <p class="tk-head"><span class="tk-title">Phonons dressed by photons give the LO–TO splitting and phonon polaritons.</span><span class="tk-part">Part B</span></p>
+      <p>From the lattice side, the same series is Giustino's phonon Dyson equation (G.135) with photons; its self-energy (E.399) exchanges one electron-screened photon between two Born-charge current vertices. With $c\to\infty$ taken first and the electrons screening the field, only the longitudinal sector survives: the shift (E.454) is the electrostatic LO–TO splitting, valid for $q\gg q_c$, the Gonze–Lee term of DFPT, now derived. For a cubic diatomic crystal ($Z^*$ in units of $|e|$, $\Omega_{\rm uc}$ the cell volume, $\mu$ the reduced mass) it reads</p>
+      <div class="eq">$$\omega_{\rm LO}^2=\omega_{\rm TO}^2+\frac{\omega_p^2}{\epsilon_\infty},\qquad \omega_p^2=\frac{4\pi e^2Z^{*2}}{\Omega_{\rm uc}\,\mu}$$</div>
+      <p>(E.410) is the zone-centre polariton point of an electron-free crystal, where all polar modes share one unscreened frequency; it differs from (E.454) by electronic screening and by the order of limits. In GaAs screening alone takes it from 55.6 to 35.9 meV, and the order of limits moves only the TO modes: 35.9 meV inside the light cone, on the upper polariton with the LO, and 33.3 meV outside (<a href="#brief-polariton">figure below</a>).</p>
+      <p class="more">Read more: <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#b-phonon-se" target="_blank" rel="noopener">§B.7 phonon self-energy</a> · <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#b-electrostatic" target="_blank" rel="noopener">§B.9 electrostatic limit</a></p>
+    </li>
+    <li>
+      <p class="tk-head"><span class="tk-title">The Fröhlich vertex is derived, and it becomes dynamical.</span><span class="tk-part">Part B</span></p>
+      <p>Opening the electron loop inside $\Omega^{\rm e}$ yields an electron–phonon vertex nobody put in by hand, a photon exchanged between ionic and electronic currents:</p>
+      <div class="eq">$$g^{\rm dyn}(\bk,\bq,\omega)=i\,J^{*}D^{\rm e}J^{\rm e}\tag{E.416}$$</div>
+      <p>The LO channel is pure Coulomb at every $q$; TO phonons couple to electrons only near the light cone. At $c\to\infty$ the vertex reduces to the $\bG=0$ Verdi–Giustino long-range vertex with $\epsilon^\infty$ replaced by the dynamical $\hat\epsilon^{\rm e}(\bq,\omega)$ (complex conjugated, for real $\hat\epsilon^{\rm e}$): nonadiabatic screening, which matters with free carriers. The electron-induced part of the phonon self-energy, $\Delta\Omega^{\rm e}$, pairs it with a bare vertex around the irreducible electronic bubble (EPP's electron–hole propagator, not the Lindhard $\chi^0$ of item 4): Giustino's bare-times-screened structure (item 2).</p>
+      <p class="more">Read more: <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#b-frohlich" target="_blank" rel="noopener">§B.8 Fröhlich vertex</a> · <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#a-polar" target="_blank" rel="noopener">§A.4 polar materials</a></p>
+    </li>
+    <li>
+      <p class="tk-head"><span class="tk-title">In 2D there is no LO–TO splitting at Γ for in-plane modes.</span><span class="tk-part">Part B</span></p>
+      <p>The in-plane polar modes of a sheet feel the strictly two-dimensional screened interaction $W^{\rm e,2D}=v_Q/\epsilon^{\rm e}_{\rm 2D}$ with $v_Q=2\pi/Q$, which cancels only one of the dipole vertex's two powers of $Q$, so the LO shift grows linearly from zero. For a gapped layer $\epsilon^{\rm e}_{\rm 2D}=\epsilon_{\rm env}+r_0Q$, the Rytova–Keldysh form of 2D BSE ($r_0=2\pi\alpha_{\rm 2D}$; papers that write $\epsilon_{\rm env}(1+r_0'Q)$ use $r_0'=r_0/\epsilon_{\rm env}$). The LO branch of a diatomic sheet follows, with $C=2\pi e^2Z^{*2}\hbar^2/(S_{\rm uc}\,\mu)$ ($S_{\rm uc}$ the cell area; $Z^*$ and $\mu$ as in item 5),</p>
+      <div class="eq">$$(\hbar\tilde\omega_{\rm LO})^2=(\hbar\omega_{\rm T})^2+\frac{C\,Q}{\epsilon_{\rm env}+r_0Q}$$</div>
+      <p>The environment sets the initial slope, $r_0$ alone sets the plateau $(\hbar\omega_{\rm T})^2+C/r_0$, and the knee sits at $Q^*=\epsilon_{\rm env}/r_0$. So your BSE workflow's $r_0$, plus $Z^*$ and the mode eigenvector, gives the LO dispersion.</p>
+      <p class="more">Read more: <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#b-2d" target="_blank" rel="noopener">§B.10 2D crystals</a></p>
+    </li>
+  </ol>
+</section>
+
+<section class="chapter" id="brief-polariton">
+  <header class="ch-head"><h2>From polaritons to LO and TO</h2></header>
+  <p class="intro">Items 3 and 5 in one plot: the polar modes of GaAs on a logarithmic $q$ axis, as the speed of light is turned up.</p>
+  <figure class="viz" id="viz-brief-polariton">
+    <p class="viz-title">GaAs: phonon polaritons, LO and TO <span class="tag">interactive</span></p>
+    <div class="brief-pa"></div>
+    <div class="brief-ctrls"></div>
+    <div class="brief-ro"></div>
+    <figcaption><strong>Model.</strong> Cubic diatomic crystal, electrons as a constant $\epsilon_\infty$ (<a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#b-phonon-se" target="_blank" rel="noopener">§B.7</a>), GaAs values $\hbar\omega_{\rm TO}=33.3$ meV, $\hbar\omega_{\rm LO}=36.2$ meV, $\epsilon_\infty=10.9$. The slider rescales $c\to\lambda c$. <strong>What to notice.</strong> Below $q_c$ the upper polariton starts on the LO line and the lower branch is light-like; the TO phonon appears only for $q\gg q_c$. Raise $\lambda$ and $q_c$ moves off the plot, leaving the flat TO–LO pair of DFPT and (E.454). Raman and transport sample the shaded region.</figcaption>
+  </figure>
+</section>
+
+<section class="chapter" id="brief-verdict">
+  <header class="ch-head"><h2>Where the electromagnetic field changes the answer</h2></header>
+  <p class="intro">Two kinds of retardation sort the observables: a finite speed of light, which acts only inside the light cone, and frequency-dependent electronic screening, which acts wherever $\hat\epsilon^{\rm e}(\bq,\omega)$ has structure near phonon frequencies (EPP keeps it in the vertex). Outside both windows the electrostatic theory suffices.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Observable</th><th>Electrostatic (Part A)</th><th>What EPP changes</th></tr></thead>
+    <tbody>
+      <tr><td>Mobility, lifetimes, zero-point renormalization</td><td>Sufficient. Carriers scatter at $q\approx0.02$ Å$^{-1}$ (GaAs, 300 K), far outside the cone, and the LO Fröhlich kernel is longitudinal; its adiabatic divergence is cured by keeping $\hbar\omega$ in the denominators.</td><td>Nothing measurable from finite $c$: there the transverse field is $10^{-6}$–$10^{-4}$ of Coulomb.</td></tr>
+      <tr><td>Bulk LO–TO splitting</td><td>Added by hand (Gonze–Lee term with $Z^*$ and $\epsilon^\infty$).</td><td>Derived as a phonon self-energy (E.454); inside the cone the TO modes join the LO on the upper polariton.</td></tr>
+      <tr><td>Infrared $\epsilon(\omega)$, Reststrahlen band</td><td>Absent: light couples to electrons only, and the refractive index is an input.</td><td>$\Pi^{\rm ion}$ gives one Lorentz oscillator per polar mode, so $\epsilon(\omega)$ and one-phonon infrared absorption become outputs.</td></tr>
+      <tr><td>Phonon polaritons</td><td>Absent.</td><td>Transverse poles of $D$, confined to the light cone (Huang's branches).</td></tr>
+      <tr><td>Doped polar semiconductors</td><td>Plasmon–phonon modes expected from the nonadiabatic self-energy, but not evaluated.</td><td>Coupled LO-phonon–plasmon modes $L_\pm$ from the dynamical $W^{\rm e}(\bq,\omega)$ (E.453), already at $c\to\infty$.</td></tr>
+      <tr><td>Polar 2D crystals</td><td>Not treated.</td><td>No in-plane LO–TO splitting at Γ; LO dispersion set by $r_0$ (item 7). Inside the cone the modes radiate, with widths of order 40 μeV for freestanding hBN.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="more">Full table: <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#z-outlook" target="_blank" rel="noopener">§Z.1 what EPP adds</a></p>
+</section>
+
+<section class="chapter" id="brief-open">
+  <header class="ch-head"><h2>What is still open</h2></header>
+  <ul class="open">
+    <li><strong>Short-range coupling.</strong> The crystal potential is frozen at equilibrium, so deformation-potential coupling (acoustic and non-polar optical phonons) is absent.</li>
+    <li><strong>Electron self-energies.</strong> No Fan–Migdal or Debye–Waller counterpart yet, hence no temperature-dependent gaps or lifetimes.</li>
+    <li><strong>Excitons.</strong> $\Pi^{\rm e}$ is the RPA bubble, without local fields, $f^{xc}$ or an electron–hole ladder. The BSE response in its place, minus its $(\bG=0)$ exchange (already the longitudinal photon), would give exciton polaritons.</li>
+    <li><strong>Anisotropic polaritons.</strong> L–T mixing off the principal axes is treated only formally, so the hyperbolic phonon polaritons of hBN remain to be done.</li>
+  </ul>
+  <p class="more">Read more: <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#z-outlook" target="_blank" rel="noopener">§Z.1 what is still open</a></p>
+</section>
+
+<footer class="brief-foot">
+  <p><strong>Sources.</strong> F. Giustino, “Electron-phonon interactions from first principles”, Rev. Mod. Phys. <b>89</b>, 015003 (2017); “Theory of the Electron-Phonon-Photon coupling”, manuscript draft v2. Material parameters not printed in either source are illustrative literature values.</p>
+  <p>Notes on the sources and corrections to the draft: primer appendices <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#z-errata" target="_blank" rel="noopener">§Z.2</a> and <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#z-corrections" target="_blank" rel="noopener">§Z.3</a>.</p>
+</footer>
+
+<script>
+(() => {
+  if (!window.EPP) return;
+  const PRIMER = 'https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#';
+  const link = (id, txt) => `<a href="${PRIMER}${id}" target="_blank" rel="noopener">${txt}</a>`;
+
+  // ---------- "One vertex, two pictures" (after the primer's hero figure) ----------
+  const leg = document.getElementById('brief-legend');
+  const items = [
+    ['fermion', 'electron'], ['phonon', 'phonon'],
+    ['photon2', 'screened photon D^e (longitudinal + transverse)'], ['screened', 'screened Coulomb W^e (its c → ∞ limit)']
+  ];
+  items.forEach(([t, lab]) => {
+    const span = document.createElement('span');
+    EPP.fd.draw(span, { w: 40, h: 14, label: lab, items: [{ t, a: [3, 7], b: [37, 7], arrow: t === 'fermion', amp: 2.6, wl: 7 }] });
+    span.appendChild(document.createTextNode(lab.replace(/\^e/, 'ᵉ')));
+    leg.appendChild(span);
+  });
+
+  EPP.fd.draw(document.getElementById('brief-fd-g'), { w: 260, h: 180, label: 'Electron-phonon vertex g', items: [
+    { t: 'fermion', a: [20, 60], b: [130, 60], label: 'nk' },
+    { t: 'fermion', a: [130, 60], b: [240, 60], label: 'm k+q' },
+    { t: 'phonon', a: [130, 60], b: [130, 160], label: 'qν', lpos: 'right' },
+    { t: 'blob', at: [130, 60], r: 13, label: 'g', color: 'muted' },
+  ]});
+
+  const host = document.getElementById('brief-fd-epp'), cap = document.getElementById('brief-epp-cap');
+  const caps = {
+    full: '<strong>EPP.</strong> No electron–phonon term appears in the EPP Lagrangian. The electron couples to the field through its current vertex $J^{\\rm e}$, the phonon through the ions\' Born-charge current vertex $J$. The screened photon $D^{\\rm e}$ carries the interaction, longitudinal and transverse parts together. The result is a frequency-dependent vertex $g^{\\rm dyn}=iJ^{*}D^{\\rm e}J^{\\rm e}$ (' + link('b-frohlich', '§B.8') + ').',
+    static: '<strong>EPP with $c\\to\\infty$.</strong> Only the longitudinal (Coulomb) part of the photon survives, $D^{\\rm e}\\to-\\frac{c}{\\omega^2}\\bq\\bq\\,W^{\\rm e}$. The vertex reduces to the $\\bG=0$ Verdi–Giustino long-range vertex, complex conjugated for real $\\hat\\epsilon^{\\rm e}$, with $\\epsilon^\\infty$ replaced by the dynamical RPA tensor $\\hat\\epsilon^{\\rm e}(\\bq,\\omega)$ (' + link('b-frohlich', '§B.8') + '). Taken to this limit, EPP\'s phonon self-energy returns Giustino\'s long-range formulas, the RPA $W$ and the Gonze–Lee LO–TO term (' + link('b-electrostatic', '§B.9') + ').'
+  };
+  let mode = 'full';
+  const drawVertex = () => {
+    host.innerHTML = '';
+    const ph = mode === 'full' ? 'photon2' : 'screened';
+    EPP.fd.draw(host, { w: 260, h: 180, label: mode === 'full' ? 'EPP vertex: photon exchange' : 'EPP vertex in the electrostatic limit', items: [
+      { t: 'fermion', a: [20, 40], b: [110, 40], label: 'nk' },
+      { t: 'fermion', a: [110, 40], b: [240, 40], label: 'm k+q' },
+      { t: ph, a: [110, 40], b: [110, 120], label: mode === 'full' ? 'D^e' : 'W^e', lpos: 'right', wl: 10 },
+      { t: 'phonon', a: [110, 120], b: [230, 160], label: 'σ', lpos: 'right' },
+      { t: 'vertex', at: [110, 40], r: 4.5, color: 'electron' },
+      { t: 'vertex', at: [110, 120], r: 4.5, color: 'phonon' },
+      { t: 'text', at: [96, 32], text: 'J^e', anchor: 'end', size: 13, color: 'electron-t' },
+      { t: 'text', at: [96, 136], text: 'J', anchor: 'end', size: 13, color: 'phonon-t' },
+    ]});
+    cap.innerHTML = caps[mode];
+    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([cap]).catch(() => {});
+  };
+  EPP.controls(document.querySelector('#viz-brief-vertex .hv-ctrls'), [
+    { key: 'mode', type: 'seg', label: 'Speed of light', options: [['full', 'finite c (full EPP)'], ['static', 'c → ∞ (electrostatic limit)']], value: 'full' }
+  ], (st) => { if (st.mode !== mode || !host.firstChild) { mode = st.mode; drawVertex(); } });
+  drawVertex();
+
+  // ---------- GaAs: from polaritons to LO and TO ----------
+  const fig = document.getElementById('viz-brief-polariton');
+  const HC = 1973.27e3;                        // ħc in meV·Å
+  const T = 33.3, L = 36.2, EI = 10.9, A = 5.653; // GaAs, literature values (illustrative); A = lattice constant in Å
+  const T2 = T * T, L2 = L * L, WP2 = EI * (L2 - T2); // unscreened (ħω_p)^2 in meV^2, fixed by the measured splitting
+  const QMIN = 1e-7, QMAX = 1e-1, NQ = 421;
+  const qs = []; for (let i = 0; i < NQ; i++) qs.push(QMIN * Math.pow(QMAX / QMIN, i / (NQ - 1)));
+  const qfmt = (v) => EPP.fmt(v, 2).replace('×10^', 'e') + ' Å⁻¹';
+  const sci = (v, d) => { if (!isFinite(v) || v <= 0) return 'n/a'; const k = Math.floor(Math.log10(v)); const mnt = v / Math.pow(10, k); return (k >= -2 && k <= 3) ? String(Number(v.toPrecision(d))) : mnt.toFixed(d - 1) + '×10<sup>' + String(k).replace('-', '−') + '</sup>'; };
+  const plot = new EPP.Plot(fig.querySelector('.brief-pa'), {
+    xlabel: 'q (Å^{-1})', ylabel: 'ħω (meV)', logx: true,
+    xticks: [-7, -6, -5, -4, -3, -2, -1].map(e => ({ v: Math.pow(10, e), label: '10^{' + e + '}' })),
+    xlim: [QMIN, QMAX], ylim: [0, 48], aspect: 0.56, minHeight: 250,
+    xname: 'q', hoverX: qfmt, hoverY: (v) => EPP.fix(v, 2) + ' meV',
+    ariaLabel: 'Transverse phonon-polariton branches, LO line and light line of GaAs versus wave vector on a logarithmic axis'
+  });
+  const ro = EPP.readout(fig.querySelector('.brief-ro'));
+
+  // transverse poles: (ω² − ω_TO²)(ε∞ω² − c²q²) = ω_p²ω², i.e. Huang's c²q² = ω²ε(ω); energies in meV and the phonon weight of ω_+
+  function trans(lam, q) {
+    const cq = lam * HC * q, cq2 = cq * cq;
+    const B = EI * L2 + cq2;
+    const disc = Math.sqrt(Math.max(0, B * B - 4 * EI * cq2 * T2));
+    const sp = (B + disc) / (2 * EI);
+    const sm = cq2 * T2 / (EI * sp);             // product of the roots, stable at small q
+    const X = cq2 * Math.pow(sp - T2, 2) / (WP2 * sp * sp);
+    return { wp: Math.sqrt(sp), wm: Math.sqrt(sm), Zp: 1 / (1 + X), cq };
+  }
+
+  const supD = (k) => String(k).split('').map(ch => '⁰¹²³⁴⁵⁶⁷⁸⁹'['0123456789'.indexOf(ch)] || ch).join('');
+  const lamFmt = (v) => { if (v < 100) return '×' + (v < 10 ? v.toFixed(1) : v.toFixed(0)); const k = Math.floor(Math.log10(v) + 1e-9); return '×' + (v / Math.pow(10, k)).toFixed(1) + '·10' + supD(k); };
+
+  EPP.controls(fig.querySelector('.brief-ctrls'), [
+    { key: 'lam', type: 'range', label: 'speed of light c → λc', min: 1, max: 1e3, log: true, step: 0.01, value: 1, fmt: lamFmt, wide: true }
+  ], (st) => {
+    try {
+      const lam = st.lam || 1;
+      const wp = [], wm = [], light = [], LO = [];
+      for (const q of qs) { const r = trans(lam, q); wp.push(r.wp); wm.push(r.wm); light.push(r.cq / Math.sqrt(EI)); LO.push(L); }
+      const qc = Math.sqrt(EI) * T / (lam * HC);
+      const vis = qc > QMIN && qc < QMAX;
+      const xl = 2.2e-7, pol = trans(lam, xl).Zp > 0.5;   // at the label position, is the upper branch the phonon-like one?
+      plot.draw([
+        { type: 'band', x0: 1e-2, x1: QMAX, color: 'muted', alpha: 0.1 },
+        { type: 'text', x: QMAX, y: 48, dx: -5, dy: 5, baseline: 'top', align: 'right', text: fig.clientWidth < 520 ? 'Raman' : 'Raman, transport', color: 'muted', size: 11 },
+        { type: 'line', x: qs, y: light, color: 'photon', dash: [2, 3], width: 1.5, label: 'light line cq/√ε_∞', hover: false },
+        { type: 'hline', at: T, color: 'muted' },
+        vis ? { type: 'vline', at: qc, color: 'muted' } : null,
+        vis ? { type: 'text', x: qc, y: 3, dx: 5, align: 'left', text: 'q_c', color: 'muted' } : null,
+        { type: 'line', x: qs, y: LO, color: 'phonon', width: 4, label: 'LO (longitudinal)' },
+        { type: 'line', x: qs, y: wp, color: 'c5', label: 'upper polariton ω_+' },
+        { type: 'line', x: qs, y: wm, color: 'c4', dash: [7, 4], label: 'lower polariton ω_–' },
+        pol ? { type: 'text', x: xl, y: L, dy: -10, text: 'ω_+ → ω_{LO}', color: 'c5' } : { type: 'text', x: xl, y: L, dy: -10, text: 'LO', color: 'phonon' },
+        { type: 'text', x: 7e-3, y: T, dy: 11, text: 'ω_– → ω_{TO}', color: 'c4', align: 'right' }
+      ]);
+      ro.set({
+        'q_c = √ε_∞ ω_{TO}/λc': sci(qc, 2) + ' Å<sup>−1</sup>',
+        'q_c in units of 2π/a': sci(qc / (2 * Math.PI / A), 1),
+        'Raman/transport q (0.01 Å^{−1}) ÷ q_c': sci(1e-2 / qc, 2)
+      });
+    } catch (err) { console.error(err); }
+  });
+})();
+</script>
+
+</main>
+</div>

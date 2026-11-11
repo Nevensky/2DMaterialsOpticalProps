@@ -1,0 +1,412 @@
+<div class="part-head" id="part-a" data-part-title="Part A · Electron–phonon theory">
+  <p class="part-label">Part A</p>
+  <h2>Electron–phonon interactions from first principles</h2>
+  <p>Part A follows F. Giustino, “Electron-phonon interactions from first principles,” <em>Rev. Mod. Phys.</em> <strong>89</strong>, 015003 (2017), cited below as Giustino, with his equations tagged (G.n). The review is organized around one object, the canonical electron–phonon Hamiltonian of his Eq. (1), displayed and read term by term in <a href="#a-coupling">§A.2</a>.</p>
+  <p>Its parameters are the band energies $\varepsilon_{n\bk}$, the phonon energies $\hbar\omega_{\bq\nu}$ and the coupling matrix elements $g_{mn\nu}(\bk,\bq)$, plus the second-order $g^{\rm DW}$. Part A builds the lattice that defines $\omega_{\bq\nu}$ (<a href="#a-lattice">A.1</a>), reads the coupling term (<a href="#a-coupling">A.2</a>), shows how density-functional perturbation theory computes $g$ as a statically screened vertex (<a href="#a-dfpt">A.3</a>) and what polar crystals add (<a href="#a-polar">A.4</a>). It then rebuilds the theory from many-body perturbation theory, where the phonons appear as a second contribution to the screened interaction $W$ and the parameters of Eq. (G.1) acquire precise definitions (<a href="#a-hedin-baym">A.5</a>). With that machinery it dresses phonons (<a href="#a-phonon-se">A.6</a>) and electrons (<a href="#a-electron-se">A.7</a>) with self-energies, and it ends with what is measured: temperature-dependent gaps and lifetimes, transport and superconductivity (<a href="#a-temperature">A.8</a>, <a href="#a-applications">A.9</a>).</p>
+  <p>One thread runs through all of it. Every interaction in Part A is the instantaneous, longitudinal Coulomb interaction $v(\br-\br')\,\delta(t-t')$, screened by the electrons and, through the phonons, by the ions. There is no vector potential and no photon: light enters only as an external classical field that drives electronic transitions (Giustino §IX.B, Eq. G.200). The <a href="#part-x">Bridge</a> asks what changes when that Coulomb line becomes the longitudinal part of the full photon propagator, whose transverse part travels at the finite speed of light, and <a href="#part-b">Part B</a> develops the resulting electron–phonon–photon theory.</p>
+</div>
+<section class="chapter" id="a-lattice" data-num="A.1" data-title="Lattice dynamics and phonons">
+  <header class="ch-head">
+    <p class="eyebrow"><span class="num">A.1</span><span>Giustino §III.A, App. B · EPP §1</span></p>
+    <h2>Lattice dynamics and phonons</h2>
+    <p class="lede">How force constants become a dynamical matrix, how its eigenvectors become normal modes, and how quantizing those modes gives phonons whose zero-point amplitude is a few hundredths of an ångström. This is the phonon line of Eq. (G.1) and the displacement operator from which every coupling on this page is built.</p>
+  </header>
+
+  <h3>Two approximations: slow nuclei, parabolic wells</h3>
+  <p>Nuclei are heavier than electrons by factors from about 1800 (hydrogen) to about $3.8\times10^5$ (lead). In the Born–Oppenheimer picture the electrons adjust instantaneously and stay in their ground state, so the nuclei move on a potential-energy surface $U(\{\boldsymbol\tau_{\kappa p}\})$: the total energy of the electrons plus classical nuclei clamped at positions $\boldsymbol\tau_{\kappa p}$, a standard output of every DFT code. Giustino works in a Born–von Kármán (BvK) supercell of $N_p$ unit cells with lattice vectors $\bR_p$. Nucleus $\kappa$ of cell $p$ sits at $\boldsymbol\tau_{\kappa p}=\bR_p+\boldsymbol\tau_\kappa$, and the $N_p$ allowed wavevectors $\bq$ form a uniform grid with (Giustino App. A)</p>
+  <div class="eq">$$\sum_{\bq}\exp(i\bq\cdot\bR_p)=N_p\,\delta_{p0},\qquad \sum_{p}\exp(i\bq\cdot\bR_p)=N_p\,\delta_{\bq\mathbf 0}. \tag{G.A1}$$</div>
+  <p>The harmonic approximation keeps $U$ to second order in the displacements $\Delta\tau_{\kappa\alpha p}$ from equilibrium. The linear term vanishes because the forces are zero there, and the second derivatives define the interatomic force constants:</p>
+  <div class="eq">$$U=U_0+\frac12\sum_{\substack{\kappa\alpha p\\ \kappa'\alpha'p'}}\frac{\partial^2U}{\partial\tau_{\kappa\alpha p}\,\partial\tau_{\kappa'\alpha'p'}}\,\Delta\tau_{\kappa\alpha p}\,\Delta\tau_{\kappa'\alpha'p'}, \tag{G.12}$$</div>
+  <div class="eq">$$C_{\kappa\alpha p,\kappa'\alpha'p'}=\partial^2U/\partial\tau_{\kappa\alpha p}\,\partial\tau_{\kappa'\alpha'p'}. \tag{G.13}$$</div>
+  <p>$C$ is real and symmetric, depends only on $\bR_{p'}-\bR_p$, and obeys the <strong>acoustic sum rule</strong></p>
+  <div class="eq">$$\sum_{\kappa'p'}C_{\kappa\alpha p,\kappa'\alpha'p'}=0\qquad\text{for all }\kappa,\alpha,p,\alpha',$$</div>
+  <p>because a rigid translation of the whole crystal costs no energy. Section III.A uses it only implicitly, when the zero-frequency modes are discarded; its many-body form returns as Eq. (G.120) in <a href="#a-hedin-baym">§A.5</a>. Treating the nuclei as quantum particles gives the lattice Hamiltonian</p>
+  <div class="eq">$$\hat H_{\rm p}=\frac12\sum_{\substack{\kappa\alpha p\\ \kappa'\alpha'p'}}C_{\kappa\alpha p,\kappa'\alpha'p'}\,\Delta\tau_{\kappa\alpha p}\,\Delta\tau_{\kappa'\alpha'p'}-\sum_{\kappa\alpha p}\frac{\hbar^2}{2M_\kappa}\frac{\partial^2}{\partial\tau^2_{\kappa\alpha p}}, \tag{G.19}$$</div>
+  <p>which, as Giustino stresses, rests on (i) the harmonic truncation of (G.12) and (ii) the Born–Oppenheimer adiabatic approximation, since $C$ is computed with the electrons in their ground state for each frozen configuration. This section needs no electromagnetic units. Numbers are in eV, Å, amu and meV, and a spring $K$ (eV/Å²) on a mass $M$ (amu) vibrates at $\hbar\omega=64.654\,\text{meV}\times\sqrt{K/M}$.</p>
+
+  <div class="callout caveat"><p class="callout-title">What the two approximations hide</p>
+    <p>Born–Oppenheimer force constants already contain the static screening of the ion–ion interaction by the electrons: DFT phonons are dressed by the electrons at $\omega=0$. When the electrons cannot follow (doped graphene, Kohn anomalies) nonadiabatic corrections appear, the subject of <a href="#a-phonon-se">§A.6</a>. The harmonic expansion fails for light atoms such as H, near soft-mode or charge-density-wave instabilities, and at high temperature when displacements approach a tenth of a bond length.</p>
+    <p>In polar crystals the force constants also carry a long-range dipole–dipole tail $\propto|\bR_p|^{-3}$. Its Fourier transform is non-analytic at $\bq\to0$, which is the LO–TO splitting of <a href="#a-polar">§A.4</a>. The short-range chain used below cannot show it.</p>
+  </div>
+
+  <h3>From force constants to the dynamical matrix</h3>
+  <p>A crystal of $N_p$ cells has $3MN_p$ coupled coordinates, but translational invariance makes $C$ depend only on cell differences, so lattice plane waves $e^{i\bq\cdot\bR_p}$ decouple different $\bq$. Dividing by $\sqrt{M_\kappa M_{\kappa'}}$ then turns Newton's generalized eigenproblem into a standard Hermitian one. Giustino follows the convention of Maradudin and Vosko:</p>
+  <div class="eq">$$D^{\rm dm}_{\kappa\alpha,\kappa'\alpha'}(\bq)=(M_\kappa M_{\kappa'})^{-1/2}\sum_p C_{\kappa\alpha0,\kappa'\alpha'p}\exp(i\bq\cdot\bR_p), \tag{G.14}$$</div>
+  <div class="eq">$$\sum_{\kappa'\alpha'}D^{\rm dm}_{\kappa\alpha,\kappa'\alpha'}(\bq)\,e_{\kappa'\alpha',\nu}(\bq)=\omega^2_{\bq\nu}\,e_{\kappa\alpha,\nu}(\bq). \tag{G.15}$$</div>
+  <p>For each $\bq$ this is a $3M\times3M$ problem. Its eigenvalues $\omega^2_{\bq\nu}$ are the squared frequencies of independent classical oscillators, real because $D^{\rm dm}$ is Hermitian and non-negative for a stable lattice. Hermiticity also makes the polarization vectors complete and orthonormal,</p>
+  <div class="eq">$$\sum_\nu e^*_{\kappa'\alpha',\nu}(\bq)\,e_{\kappa\alpha,\nu}(\bq)=\delta_{\kappa\kappa'}\delta_{\alpha\alpha'}, \tag{G.16}$$</div>
+  <div class="eq">$$\sum_{\kappa\alpha}e^*_{\kappa\alpha,\nu}(\bq)\,e_{\kappa\alpha,\nu'}(\bq)=\delta_{\nu\nu'}, \tag{G.17}$$</div>
+  <p>and because $C$ is real, $D^{\rm dm}(-\bq)=D^{\rm dm}(\bq)^*$, which permits the phase choice</p>
+  <div class="eq">$$\omega^2_{-\bq\nu}=\omega^2_{\bq\nu},\qquad e_{\kappa\alpha,\nu}(-\bq)=e^*_{\kappa\alpha,\nu}(\bq). \tag{G.18}$$</div>
+  <p>The eigenvectors are mass-weighted: atom $\kappa$ moves with an amplitude proportional to $e_{\kappa\alpha,\nu}(\bq)/\sqrt{M_\kappa}$. Of the $3M$ branches, three are <strong>acoustic</strong>. The sum rule forces $\omega\to0$ as $\bq\to0$, where all atoms of a cell move together, $e_\kappa\propto\sqrt{M_\kappa}$. The other $3M-3$ are <strong>optical</strong>: at $\bq=0$ the sublattices move against each other with the centre of mass fixed, $\sum_\kappa\sqrt{M_\kappa}\,e_\kappa=0$. In a polar crystal that antiphase motion carries an oscillating dipole, which is the hook for the Fröhlich coupling of <a href="#a-polar">§A.4</a> and for the photons of Part B.</p>
+
+  <details class="derivation"><summary>Derivation: why lattice plane waves decouple, from (G.12) to (G.15)</summary><div class="d-body">
+    <p>From (G.19) the classical equation of motion is $M_\kappa\Delta\ddot\tau_{\kappa\alpha p}=-\sum_{\kappa'\alpha'p'}C_{\kappa\alpha p,\kappa'\alpha'p'}\Delta\tau_{\kappa'\alpha'p'}$. Insert the trial solution $\Delta\tau_{\kappa\alpha p}(t)=M_\kappa^{-1/2}\,e_{\kappa\alpha}\,e^{i(\bq\cdot\bR_p-\omega t)}$ and use translational invariance, $C_{\kappa\alpha p,\kappa'\alpha'p'}=C_{\kappa\alpha0,\kappa'\alpha',p'-p}$. Relabelling $\bR_{p'}-\bR_p\to\bR_{p''}$ gives</p>
+    <div class="eq">$$\omega^2 M_\kappa^{1/2}\,e_{\kappa\alpha}\,e^{i\bq\cdot\bR_p}=\sum_{\kappa'\alpha'p''}C_{\kappa\alpha0,\kappa'\alpha'p''}\,M_{\kappa'}^{-1/2}\,e_{\kappa'\alpha'}\,e^{i\bq\cdot(\bR_p+\bR_{p''})}.$$</div>
+    <p>The factor $e^{i\bq\cdot\bR_p}$ cancels, and dividing by $M_\kappa^{1/2}$ leaves (G.15) with $D^{\rm dm}$ of (G.14). The cell index has disappeared: there is one $3M\times3M$ problem per $\bq$, $N_p$ of them in all. Note that the phase $e^{+i\bq\cdot\bR_p}$ in (G.14) belongs to the cell of the second atom. That is what a displacement pattern $\propto e^{+i\bq\cdot\bR_p}$, as in (G.20) below, requires. The EPP manuscript's Eq. (E.15) uses the opposite assignment (see the end of this section).</p>
+  </div></details>
+
+  <h3>A worked example: the diatomic chain</h3>
+  <p>Take one dimension and two atoms per cell: mass $M_1$ at the cell origin, mass $M_2$ inside the cell, an intracell spring $K_1$, and an intercell spring $K_2$ that ties atom 2 of cell $p$ to atom 1 of cell $p+1$. Seen from atom 1 of cell 0, the nonzero force constants are $C_{10,10}=K_1+K_2$ (fixed by the sum rule), $C_{10,20}=-K_1$ and $C_{10,2(-1)}=-K_2$, because the $K_2$ partner of atom 1 sits in cell $-1$, at $R_p=-a$. Equation (G.14) then gives</p>
+  <div class="eq">$$D^{\rm dm}(q)=\begin{pmatrix}\dfrac{K_1+K_2}{M_1} & -\dfrac{K_1+K_2\,e^{-iqa}}{\sqrt{M_1M_2}}\\[3mm] -\dfrac{K_1+K_2\,e^{iqa}}{\sqrt{M_1M_2}} & \dfrac{K_1+K_2}{M_2}\end{pmatrix},$$</div>
+  <div class="eq">$$\begin{gathered}\omega^2_\pm(q)=\frac{A+C}{2}\pm\sqrt{\Big(\frac{A-C}{2}\Big)^2+|B|^2},\\ A=D^{\rm dm}_{11},\quad C=D^{\rm dm}_{22},\quad |B|^2=\big|D^{\rm dm}_{12}\big|^2=\frac{K_1^2+K_2^2+2K_1K_2\cos qa}{M_1M_2}.\end{gathered}$$</div>
+  <p>Three limits carry most of the physics. At $q=0$, $\omega_-=0$ and $\omega_+^2=(K_1+K_2)(1/M_1+1/M_2)$. For small $q$ the acoustic branch is linear, $\omega_-\simeq v_s|q|$ with $v_s=a\,\{K_1K_2/[(K_1+K_2)(M_1+M_2)]\}^{1/2}$. At the zone edge $q=\pi/a$, $|B|=|K_1-K_2|/\sqrt{M_1M_2}$. With equal springs $D^{\rm dm}$ becomes diagonal, the branches sit at $\sqrt{2K/M_1}$ and $\sqrt{2K/M_2}$, and only one sublattice moves in each: the heavy one in the acoustic mode, the light one in the optical mode. With equal masses they sit at $\sqrt{2K_1/M}$ and $\sqrt{2K_2/M}$. A gap opens whenever the two atoms differ in mass or in bonding. When they do not, the two branches are one monatomic branch folded into a doubled cell.</p>
+
+  <details class="derivation"><summary>Derivation: eigenvectors, phase convention and sound velocity</summary><div class="d-body">
+    <p>For an eigenvalue $\lambda$ of $D^{\rm dm}(q)$, the first row of $(D^{\rm dm}-\lambda)\,e=0$ gives $e\propto(D^{\rm dm}_{12},\ \lambda-D^{\rm dm}_{11})$. The figure normalizes this vector and multiplies it by the phase that makes $e_1$ real and positive (if $e_1=0$, $e_2$ is made real and positive instead). Since $D^{\rm dm}(-q)=D^{\rm dm}(q)^*$, this gauge satisfies $e(-q)=e(q)^*$, which is (G.18). At $q=0$ it gives $e_-\propto(\sqrt{M_1},\sqrt{M_2})$ and $e_+\propto(\sqrt{M_2},-\sqrt{M_1})$, so that the physical displacements of the optical mode obey $M_1u_1=-M_2u_2$.</p>
+    <p>The product of the eigenvalues is $\det D^{\rm dm}=2K_1K_2(1-\cos qa)/(M_1M_2)$. Dividing by $\omega_+^2(0)$ gives $\omega_-^2\simeq K_1K_2\,q^2a^2/[(K_1+K_2)(M_1+M_2)]$, the sound velocity quoted above. With $K$ in eV/Å² and $M$ in amu, $\omega^2$ comes out in eV Å⁻² amu⁻¹, and $\hbar\omega=64.654\,\text{meV}\times\sqrt{\omega^2}$ because $\hbar^2/(\text{amu}\cdot\text{Å}^2)=4.1803$ meV.</p>
+  </div></details>
+
+  <h3>Quantization: phonons and the zero-point length</h3>
+  <p>Each normal mode is a harmonic oscillator, so quantization is the ladder-operator construction of a single oscillator applied mode by mode. Giustino's Appendix B does it with care, because a complex normal coordinate at $\bq$ and its partner at $-\bq$ describe the same pair of real oscillators (details below). The result is</p>
+  <div class="eq">$$\Delta\tau_{\kappa\alpha p}=\left(\frac{M_0}{N_pM_\kappa}\right)^{1/2}\sum_{\bq\nu}e^{i\bq\cdot\bR_p}\,e_{\kappa\alpha,\nu}(\bq)\,l_{\bq\nu}\left(\hat a_{\bq\nu}+\hat a^\dagger_{-\bq\nu}\right), \tag{G.20}$$</div>
+  <div class="eq">$$l_{\bq\nu}=[\hbar/(2M_0\omega_{\bq\nu})]^{1/2}, \tag{G.21}$$</div>
+  <div class="eq">$$\hat H_{\rm p}=\sum_{\bq\nu}\hbar\omega_{\bq\nu}\left(\hat a^\dagger_{\bq\nu}\hat a_{\bq\nu}+1/2\right). \tag{G.22}$$</div>
+  <p>Here $M_0$ is an arbitrary reference mass, typically the proton mass, introduced only so that $l_{\bq\nu}$ is a length. It cancels in every physical quantity, since $(M_0/M_\kappa)^{1/2}l_{\bq\nu}=[\hbar/(2M_\kappa\omega_{\bq\nu})]^{1/2}$. Equation (G.22) is the phonon line of (G.1): $3MN_p$ independent oscillators, of which the three $\bq=0$ translations have $\omega=0$ and an undefined $l_{\bq\nu}$; they are skipped in every sum that contains $l_{\bq\nu}$. The commutators $[\hat a_{\bq\nu},\hat a^\dagger_{\bq'\nu'}]=\delta_{\nu\nu'}\delta_{\bq\bq'}$ make phonons bosons.</p>
+  <p>The combination $\hat a_{\bq\nu}+\hat a^\dagger_{-\bq\nu}$ deserves a second look. A displacement wave $\propto e^{i\bq\cdot\bR_p}$ either absorbs a phonon of momentum $\bq$ or emits one of momentum $-\bq$; both transfer $\bq$ to whatever the displacement acts on. This is the operator that multiplies $g_{mn\nu}(\bk,\bq)$ in (G.1), and $(M_0/M_\kappa)^{1/2}l_{\bq\nu}\,e_{\kappa\alpha,\nu}(\bq)$ is the length that multiplies the potential gradient inside $g$ (<a href="#a-coupling">§A.2</a>).</p>
+  <p>Thermal averages need only the occupation $n_{\bq\nu}$ of each mode,</p>
+  <div class="eq">$$\big\langle(\hat a_{\bq\nu}+\hat a^\dagger_{-\bq\nu})(\hat a_{-\bq\nu}+\hat a^\dagger_{\bq\nu})\big\rangle=2n_{\bq\nu}+1=\coth\frac{\hbar\omega_{\bq\nu}}{2k_BT},$$</div>
+  <p>Inserted in the square of (G.20), the thermal average keeps only the pairs $\bq'=-\bq$, $\nu'=\nu$, and with (G.18) gives the mean-square displacement</p>
+  <div class="eq">$$\big\langle\Delta\tau^2_{\kappa\alpha p}\big\rangle=\frac1{N_p}\sum_{\bq\nu}\frac{\hbar}{2M_\kappa\omega_{\bq\nu}}\,\big|e_{\kappa\alpha,\nu}(\bq)\big|^2\coth\frac{\hbar\omega_{\bq\nu}}{2k_BT}.$$</div>
+  <p>Each mode contributes $1/N_p$ times its squared zero-point amplitude, enhanced by the coth: a plateau for $k_BT\ll\hbar\omega$ and the classical $k_BT/(M_\kappa\omega^2)$ for $k_BT\gg\hbar\omega$. In numbers, $\hbar/(2M\omega)=2.0901\,\text{Å}^2/(M[\text{amu}]\cdot\hbar\omega[\text{meV}])$. An Si optical phonon (28.09 amu, about 64 meV) gives an amplitude of 0.034 Å and a graphene optical phonon (12.01 amu, about 196 meV) 0.030 Å, against bond lengths of 1.4 to 2.5 Å (phonon energies are literature values, illustrative). This smallness is what justifies both the harmonic expansion and the linear coupling of (G.1).</p>
+
+  <details class="derivation"><summary>Derivation: Giustino's Appendix B in a few lines</summary><div class="d-body">
+    <p>Define complex normal coordinates</p>
+    <div class="eq">$$z_{\bq\nu}=N_p^{-1/2}\sum_{\kappa\alpha p}e^{-i\bq\cdot\bR_p}(M_\kappa/M_0)^{1/2}e^*_{\kappa\alpha,\nu}(\bq)\,\Delta\tau_{\kappa\alpha p}. \tag{G.B1}$$</div>
+    <p>With (G.18) they obey</p>
+    <div class="eq">$$z_{-\bq\nu}=z^*_{\bq\nu}, \tag{G.B2}$$</div>
+    <p>and (G.16), (G.A1) invert (G.B1) into</p>
+    <div class="eq">$$\Delta\tau_{\kappa\alpha p}=N_p^{-1/2}(M_0/M_\kappa)^{1/2}\sum_{\bq\nu}e^{i\bq\cdot\bR_p}e_{\kappa\alpha,\nu}(\bq)\,z_{\bq\nu}. \tag{G.B3}$$</div>
+    <p>Because of (G.B2), $z_{\bq\nu}$ and $z_{-\bq\nu}$ are not independent. Giustino splits the grid into the set $\mathcal A$ of inversion-invariant points ($-\bq=\bq+\bG$, such as Γ and the zone-face centres), where $z_{\bq\nu}$ is real, and the sets $\mathcal B$ and $\mathcal C=-\mathcal B$ of pairs. Writing $z_{\bq\nu}=x_{\bq\nu}+iy_{\bq\nu}$ for $\bq\in\mathcal B$ leaves exactly $3MN_p$ real coordinates, and (G.19) becomes a sum of real oscillators. Real ladder operators are kept on $\mathcal A$ (G.B13), and circular combinations assign a definite momentum to each quantum on $\mathcal B$ and $\mathcal C$:</p>
+    <div class="eq">$$\hat a_{\bq\nu}=(\hat a_{\bq\nu,x}+i\hat a_{\bq\nu,y})/\sqrt2\qquad\text{for }\bq\text{ in }\mathcal B,\mathcal C. \tag{G.B14}$$</div>
+    <p>In this basis</p>
+    <div class="eq">$$z_{\bq\nu}=l_{\bq\nu}\left(\hat a_{\bq\nu}+\hat a^\dagger_{-\bq\nu}\right), \tag{G.B15}$$</div>
+    <p>and inserting (G.B15) into (G.B3) gives (G.20). The EPP manuscript takes the compact complex route instead: its (E.72) pairs $a_{\bk\alpha}$ with $a^+_{-\bk\alpha}$ from the start, and the anomalous terms $a_{\bk\alpha}a_{-\bk\alpha}$ and $a^+_{-\bk\alpha}a^+_{\bk\alpha}$ cancel in the Hamiltonian because $\omega_\alpha(-\bk)=\omega_\alpha(\bk)$.</p>
+  </div></details>
+
+  <div class="callout intuition"><p class="callout-title">Physical picture: a phonon is not an oscillating atom</p>
+    <p>In a state with a definite number of phonons $n_{\bq\nu}$ the mean displacement vanishes, $\langle\Delta\tau\rangle=0$; only the fluctuations $\langle\Delta\tau^2\rangle\propto2n_{\bq\nu}+1$ survive. The classical running wave animated below is the mean displacement in a coherent state, which is a superposition of many phonon numbers. Zero-point motion is not a bookkeeping constant: it is what the Fan–Migdal and Debye–Waller self-energies of <a href="#a-electron-se">§A.7</a> turn into the zero-point renormalization of band gaps (<a href="#a-temperature">§A.8</a>).</p>
+  </div>
+
+  <figure class="viz" id="viz-a-lattice-chain">
+    <p class="viz-title">Diatomic chain lab: dispersion, normal mode and zero-point motion <span class="tag">interactive</span></p>
+    <div class="viz-grid two"><div class="a-lattice-disp"></div><div class="a-lattice-rms"></div></div>
+    <div class="a-lattice-chain"></div>
+    <div class="a-lattice-ctrls"></div>
+    <div class="a-lattice-ro"></div>
+    <div class="a-lattice-ro2"></div>
+    <figcaption><strong>Model.</strong> Linear chain with two atoms per cell and nearest-neighbour springs $K_1$ (intracell) and $K_2$ (intercell); $D^{\rm dm}(q)$ from (G.14) in Giustino's phase convention, eigenvectors gauged with $e_1$ real and positive. <strong>Left:</strong> $\hbar\omega_\pm(q)$; click or drag to choose $q$ and the branch nearest to the pointer. Hollow dots mark the 12 allowed $q$ of a 12-cell BvK supercell (the two end dots are the same point, $q=\pm\pi/a$); the shaded band is the zone-edge gap. <strong>Right:</strong> the amplitude of each atom in the selected mode, $\sigma_\kappa=(M_0/M_\kappa)^{1/2}l_{q\nu}|e_{\kappa,\nu}(q)|\sqrt{2n_{q\nu}+1}$, that is $[\hbar/(2M_\kappa\omega_{q\nu})]^{1/2}|e_{\kappa,\nu}(q)|$ times $\coth^{1/2}(\hbar\omega_{q\nu}/2k_BT)$. The dotted curves are the classical limit $\sigma_\kappa^2\to k_BT|e_{\kappa,\nu}|^2/(M_\kappa\omega^2)$. As $q\to0$ on the acoustic branch $\sigma_\kappa$ grows without bound, which is why the $\omega=0$ modes are excluded. <strong>Bottom:</strong> the mode as a running wave, $u_\kappa\propto M_\kappa^{-1/2}{\rm Re}[e_{\kappa,\nu}\,e^{i(qR_p-\omega t)}]$, amplitudes exaggerated and time in units of the mode period; heavier atoms are drawn larger, stiffer springs thicker (12 cells, 6 on narrow screens). <strong>Readout:</strong> $l_{q\nu}$ uses $M_0$ = proton mass. The $K_1$-bond value is $\sqrt{\langle(u_2-u_1)^2\rangle}$ within one cell, summed over both branches and averaged over $q$; the absolute displacement of an infinite 1D chain diverges through its long-wavelength acoustic modes, a bond length does not. <strong>Presets:</strong> hBN-like (10.81 and 14.01 amu, $K$ = 21.07 eV/Å², optical Γ phonon 169.9 meV) and GaAs-like (69.72 and 74.92 amu, $K$ = 4.79 eV/Å², 33.3 meV) are 1D models tuned to the TO-phonon energy at Γ of the real crystals (literature values, illustrative), not to their full dispersions. <strong>What to notice.</strong> The zone-edge gap opens as soon as $M_1\neq M_2$ or $K_1\neq K_2$. Near Γ the acoustic mode moves the cell rigidly while the optical mode keeps the centre of mass fixed; at $q=\pi/a$ with equal springs only one sublattice moves in each branch. The amplitude stays on its zero-point plateau up to $T\approx\hbar\omega/3k_B$ (about 650 K for the stiff, light hBN-like chain). In optical modes the lighter atom has the larger amplitude; in acoustic modes it is the heavier one, and the two become equal only as $q\to0$.</figcaption>
+  </figure>
+
+  <h3>The same lattice in the EPP manuscript</h3>
+  <p>Section 1 of the EPP manuscript derives the same theory in what it calls three steps: a lattice Fourier transform (E Eqs. 7–17), a mass scaling followed by a unitary rotation onto the polarization vectors (E Eqs. 18–45), and quantization with ladder operators (E Eqs. 46–91). Its force constants come from a pair potential with the electronic degrees of freedom frozen. The notation differs: cell $i$, atom ${\rm a}$ with physical mass $m_{\rm a}$ and no reference mass, Cartesian index $\mu$, branch $\alpha$, and a phonon wavevector called $\bk$ in §1 and $\bq$ from §2 on. Its dynamical matrix and its mass-scaled form are</p>
+  <div class="eq">$$\Omega^2_{{\rm a}\mu{\rm b}\nu}(\bk)=\sum_{\boldsymbol\delta}e^{i\bk\boldsymbol\delta}\,k_{{\rm a}\mu{\rm b}\nu}(\boldsymbol\delta), \tag{E.15}$$</div>
+  <div class="eq">$$\tilde\Omega^2_{{\rm a}\mu{\rm b}\nu}(\bk)=\frac{1}{\sqrt{m_{\rm a}m_{\rm b}}}\,\Omega^2_{{\rm a}\mu{\rm b}\nu}(\bk), \tag{E.24}$$</div>
+  <p>where $k$ is the elastic (force-constant) matrix and $\boldsymbol\delta=\bR^0_i-\bR^0_j$ points from the cell $j$ of atom ${\rm b}$ to the cell $i$ of atom ${\rm a}$ (E Eq. 16). The $\Omega^2$ of (E.15) has the units of a force constant; only $\tilde\Omega^2$ is a squared frequency, and neither has anything to do with the cell volume $\Omega$ used elsewhere on this page. The manuscript illustrates the unitary step with the matrix $\tilde\Omega^2=\left[\begin{smallmatrix}3&2\\2&3\end{smallmatrix}\right]$, whose eigenpairs are</p>
+  <div class="eq">$$\omega_1^2=1,\ \ \mathbf e_1=\frac1{\sqrt2}\begin{bmatrix}1\\-1\end{bmatrix};\qquad \omega_2^2=5,\ \ \mathbf e_2=\frac1{\sqrt2}\begin{bmatrix}1\\1\end{bmatrix}. \tag{E.30}$$</div>
+  <p>The manuscript calls this matrix hypothetical and attaches no model to it. Our reading: in units of eV Å⁻² amu⁻¹ it is exactly the zone-edge ($qa=\pi$) dynamical matrix of the chain above with $M_1=M_2=1$ amu, $K_1=0.5$ eV/Å² and $K_2=2.5$ eV/Å², which is how the third preset of the figure reproduces it. The soft mode $\mathbf e_1$ stretches only the weak intracell spring, the stiff mode $\mathbf e_2$ only the intercell one. Quantization with ladder operators (E.72–E.78) then gives the displacement operator (E.83), which is Giustino's (G.20) with $M_0$ cancelled, while (E.78) is (G.22); <a href="#b-foundations">§B.1</a> displays it and follows EPP's three steps in detail.</p>
+
+  <div class="callout connect"><p class="callout-title">Bridge to EPP: same phonons, different role</p>
+    <p>The algebra is identical, but the two papers feed it different force constants. Giustino's are Born–Oppenheimer derivatives of the DFT total energy, long-range dipole–dipole tail included. EPP's bare phonons may contain only the short-range (analytic) part, because photon exchange regenerates the rest, LO–TO splitting included: this is the double-counting rule of <a href="#b-foundations">§B.1</a>. The same three-step recipe later quantizes the transverse photon field (<a href="#b-fields">§B.4</a>).</p>
+    <p>Dictionary: Giustino's cell $p$, atom $\kappa$, Cartesian $\alpha$ and branch $\nu$ are EPP's $i$, ${\rm a}$, $\mu$ and $\alpha$, so $\alpha$ is Cartesian in one paper and a branch label in the other. To avoid a later clash with EPP's photon propagator $D$, this page writes Giustino's phonon Green function as $\mathcal D$ (from <a href="#a-hedin-baym">§A.5</a>); the dynamical matrix keeps its superscript, $D^{\rm dm}$.</p>
+  </div>
+
+  <div class="callout source"><p class="callout-title">Note on the source: phase convention and on-site term in EPP §1</p>
+    <p>With $\boldsymbol\delta=\bR^0_i-\bR^0_j$ as defined, the printed (E.15) equals Giustino's $D^{\rm dm}(-\bq)=D^{\rm dm}(\bq)^*$. On p. 9 the manuscript diagonalizes the potential energy using a claimed symmetry $\tilde\Omega^2_{{\rm b}\nu{\rm a}\mu}(\bk)=\tilde\Omega^2_{{\rm a}\mu{\rm b}\nu}(\bk)$, but the matrix is only Hermitian. The step holds where $\tilde\Omega^2$ is real (at Γ and at the other time-reversal-invariant points, such as the zone edge of the chain, which is why (E.30) is unaffected); elsewhere it needs $e^{-i\bk\boldsymbol\delta}$ in (E.15). Frequencies do not change, but eigenvectors of the printed matrix are the complex conjugates of those that solve the equations of motion with the $e^{+i\bk\bR^0_i}$ pattern of (E.83). The figure uses Giustino's convention, $D^{\rm dm}_{12}=-(K_1+K_2e^{-iqa})/\sqrt{M_1M_2}$.</p>
+    <p>Two smaller points. (E.4) gives the elastic matrix of a pair potential only for $i{\rm a}\neq j{\rm b}$; the on-site block, $k_{i{\rm a}\mu,i{\rm a}\nu}=-\sum_{j{\rm b}\neq i{\rm a}}k_{i{\rm a}\mu,j{\rm b}\nu}$, follows from the acoustic sum rule, which §1 never states. And (E.78) is said to describe $3\times N\times s$ oscillators, but the three $\bk=0$ acoustic modes have $\omega=0$ and must be left out of (E.72) and (E.83), as Giustino does. The manuscript also calls $\omega^2_\alpha(-\bk)=\omega^2_\alpha(\bk)$ an "isotropy property"; it follows from the reality of the force constants, i.e. time reversal.</p>
+  </div>
+</section>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a-lattice-chain');
+  if (!fig || !window.EPP) return;
+  // Units: K in eV/Å^2, M in amu -> omega^2 in eV Å^-2 amu^-1; hbar*omega[meV] = HW*sqrt(omega^2)
+  const HW = 64.654, L2 = 2.0901, KB = 0.0861733, M0 = 1.007276, CM = 8.06554;
+  const PRESETS = {
+    hbn: { M1: 10.81, M2: 14.01, K1: 21.07, K2: 21.07, q: 0.1, br: '1' },
+    gaas: { M1: 69.72, M2: 74.92, K1: 4.79, K2: 4.79, q: 0.1, br: '1' },
+    epp: { M1: 1, M2: 1, K1: 0.5, K2: 2.5, q: 1, br: '0' }
+  };
+  // dynamical matrix (G.14), Giustino convention: D12 = -(K1 + K2 e^{-iqa})/sqrt(M1 M2)
+  function dyn(p, qa) {
+    const s = Math.sqrt(p.M1 * p.M2);
+    return { A: (p.K1 + p.K2) / p.M1, C: (p.K1 + p.K2) / p.M2, B: [-(p.K1 + p.K2 * Math.cos(qa)) / s, p.K2 * Math.sin(qa) / s] };
+  }
+  const cmul = (a, b) => [a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0]];
+  // Hermitian 2x2 eigenproblem with gauge: first component real positive (else second), satisfies e(-q) = e(q)*
+  function eig(D) {
+    const { A, C, B } = D, bb = B[0] * B[0] + B[1] * B[1];
+    const m = 0.5 * (A + C), r = Math.sqrt(0.25 * (A - C) * (A - C) + bb);
+    const vals = [m - r, m + r];
+    const vecs = vals.map((l, k) => {
+      let x, y;
+      const n1 = bb + (l - A) * (l - A), n2 = (l - C) * (l - C) + bb;
+      if (n1 >= n2 && n1 > 1e-24) { x = [B[0], B[1]]; y = [l - A, 0]; }
+      else if (n2 > 1e-24) { x = [l - C, 0]; y = [B[0], -B[1]]; }
+      else { x = [k ? 0 : 1, 0]; y = [k ? 1 : 0, 0]; }
+      const n = Math.sqrt(x[0] * x[0] + x[1] * x[1] + y[0] * y[0] + y[1] * y[1]) || 1;
+      x = [x[0] / n, x[1] / n]; y = [y[0] / n, y[1] / n];
+      const ax = Math.hypot(x[0], x[1]), ay = Math.hypot(y[0], y[1]);
+      const ph = ax > 1e-9 ? [x[0] / ax, -x[1] / ax] : [y[0] / (ay || 1), -y[1] / (ay || 1)];
+      return [cmul(x, ph), cmul(y, ph)];
+    });
+    return { vals, vecs };
+  }
+  function w2pm(p, qa) {
+    const A = (p.K1 + p.K2) / p.M1, C = (p.K1 + p.K2) / p.M2;
+    const bb = (p.K1 * p.K1 + p.K2 * p.K2 + 2 * p.K1 * p.K2 * Math.cos(qa)) / (p.M1 * p.M2);
+    const m = 0.5 * (A + C), r = Math.sqrt(0.25 * (A - C) * (A - C) + Math.max(0, bb));
+    return [Math.max(0, m - r), m + r];
+  }
+  const cothf = (hw, T) => (T <= 0 ? 1 : 1 / Math.tanh(hw / (2 * KB * T)));
+  // single-mode rms amplitude (Å): sqrt(hbar/(2 M omega) |e|^2 coth)
+  const sigma = (M, e2, hw, T) => Math.sqrt(L2 / (M * hw) * e2 * cothf(hw, T));
+  // BZ-averaged rms stretch of the intracell (K1) bond, both branches
+  function bondRms(p, T) {
+    const nq = 400; let s = 0;
+    const r1 = 1 / Math.sqrt(p.M1), r2 = 1 / Math.sqrt(p.M2);
+    for (let i = 0; i < nq; i++) {
+      const E = eig(dyn(p, -Math.PI + (i + 0.5) * 2 * Math.PI / nq));
+      for (let b = 0; b < 2; b++) {
+        const w2 = E.vals[b]; if (!(w2 > 1e-12)) continue;
+        const hw = HW * Math.sqrt(w2), e = E.vecs[b];
+        const dr = e[1][0] * r2 - e[0][0] * r1, di = e[1][1] * r2 - e[0][1] * r1;
+        s += L2 / hw * (dr * dr + di * di) * cothf(hw, T);
+      }
+    }
+    return Math.sqrt(s / nq);
+  }
+  function niceCeil(v) {
+    if (!(v > 0) || !isFinite(v)) return 1;
+    const mag = Math.pow(10, Math.floor(Math.log10(v))), r = v / mag;
+    const st = [1, 1.2, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10].find(s => s >= r - 1e-9) || 10;
+    return st * mag;
+  }
+  // sticky autoscale: only rescale when the curve leaves the frame or shrinks a lot
+  const sticky = (top, need) => ((need > top * 0.97 || need < top * 0.42) ? niceCeil(need * 1.15) : top);
+  const cfmt = (c) => { const a = Math.hypot(c[0], c[1]); if (Math.abs(c[1]) < 5e-5) return EPP.fix(c[0], 3); return EPP.fix(a, 3) + '∠' + EPP.fix(Math.atan2(c[1], c[0]) * 180 / Math.PI, 0) + '°'; };
+  const zfmt = (c) => EPP.fix(c[0], 3) + (c[1] < 0 ? ' − ' : ' + ') + EPP.fix(Math.abs(c[1]), 3) + 'i';
+
+  const elCtl = fig.querySelector('.a-lattice-ctrls');
+  const pD = new EPP.Plot(fig.querySelector('.a-lattice-disp'), {
+    xlabel: 'wavevector q', ylabel: 'ħω (meV)', xlim: [-1, 1], ylim: [0, 200], xname: 'qa/π',
+    xticks: [{ v: -1, label: '−π/a' }, { v: -0.5, label: '−π/2a' }, { v: 0, label: '0' }, { v: 0.5, label: 'π/2a' }, { v: 1, label: 'π/a' }],
+    hoverX: v => EPP.fix(v, 3), hoverY: v => EPP.fix(v, 1) + ' meV',
+    ariaLabel: 'Phonon dispersion of the diatomic chain: acoustic and optical branches versus wavevector'
+  });
+  const pR = new EPP.Plot(fig.querySelector('.a-lattice-rms'), {
+    xlabel: 'temperature T (K)', ylabel: 'mode amplitude σ_κ (Å)', xlim: [0, 1000], ylim: [0, 0.05], xname: 'T',
+    hoverX: v => EPP.fix(v, 0) + ' K', hoverY: v => EPP.fix(v, 4) + ' Å', yfmt: v => String(Number(v.toPrecision(3))),
+    ariaLabel: 'Thermal amplitude of each atom in the selected mode versus temperature, with the classical limit'
+  });
+  const cv = EPP.canvas(fig.querySelector('.a-lattice-chain'), { height: 214 });
+  cv.canvas.setAttribute('role', 'img');
+  cv.canvas.setAttribute('aria-label', 'Animated diatomic chain showing the selected normal mode as a running wave');
+  const ro = EPP.readout(fig.querySelector('.a-lattice-ro'));
+  const ro2 = EPP.readout(fig.querySelector('.a-lattice-ro2'));
+  const qs = EPP.linspace(-1, 1, 321), bvk = EPP.linspace(-1, 1, 13), Ts = EPP.linspace(0, 1000, 201);
+  let cur = null, yTopD = 200, yTopR = 0.05, lastPreset = 'hbn', anim = null;
+
+  function compute(s) {
+    const p = { M1: s.M1, M2: s.M2, K1: s.K1, K2: s.K2 };
+    const qa = Math.PI * s.q, br = +s.br;
+    const D = dyn(p, qa), E = eig(D);
+    const w2 = Math.max(0, E.vals[br]), hw = HW * Math.sqrt(w2);
+    return { p, qa, qn: s.q, br, D, E, w2, hw, e: E.vecs[br], T: s.T };
+  }
+
+  function draw() {
+    if (!cur) return;
+    const { p, qn, br, hw, e, T, D, E } = cur;
+    // (a) dispersion
+    const ac = [], op = [];
+    for (const x of qs) { const w = w2pm(p, Math.PI * x); ac.push(HW * Math.sqrt(w[0])); op.push(HW * Math.sqrt(w[1])); }
+    const zb = w2pm(p, Math.PI).map(v => HW * Math.sqrt(v));
+    yTopD = sticky(yTopD, Math.max.apply(null, op));
+    const bac = bvk.map(x => HW * Math.sqrt(w2pm(p, Math.PI * x)[0])), bop = bvk.map(x => HW * Math.sqrt(w2pm(p, Math.PI * x)[1]));
+    const gap = zb[1] - zb[0];
+    const iL = Math.round(0.75 * (qs.length - 1)); // qa/π = +0.5: label beside the curve, on its convex side
+    pD.draw([
+      gap > 0.004 * yTopD ? { type: 'hband', y0: zb[0], y1: zb[1], color: 'phonon', alpha: 0.12 } : null,
+      gap > 0.07 * yTopD ? { type: 'text', x: -0.5, y: (zb[0] + zb[1]) / 2, text: 'gap at q = π/a', color: 'phonon', align: 'center', size: 11 } : null,
+      { type: 'line', x: qs, y: ac, color: 'phonon', label: 'acoustic ω_−' },
+      { type: 'line', x: qs, y: op, color: 'phonon', dash: [7, 4], label: 'optical ω_+' },
+      { type: 'points', x: bvk, y: bac, color: 'phonon', r: 2.6, hollow: true },
+      { type: 'points', x: bvk, y: bop, color: 'phonon', r: 2.6, hollow: true },
+      { type: 'vline', at: qn, color: 'muted', width: 1 },
+      { type: 'points', x: [qn], y: [hw], color: 'ink', r: 5 },
+      { type: 'text', x: 0.5, y: ac[iL], dx: 7, dy: ac[iL] < 0.12 * yTopD ? -10 : 12, text: 'acoustic', color: 'phonon', align: 'left', size: 11.5 },
+      { type: 'text', x: 0.5, y: op[iL], dx: 7, dy: -12, text: 'optical', color: 'phonon', align: 'left', size: 11.5 }
+    ], { ylim: [0, yTopD] });
+    // (b) rms amplitude vs T for the selected mode
+    const e1 = e[0][0] * e[0][0] + e[0][1] * e[0][1], e2 = e[1][0] * e[1][0] + e[1][1] * e[1][1];
+    let s1T = NaN, s2T = NaN;
+    if (hw < 0.05) {
+      pR.draw([{ type: 'text', x: 500, y: yTopR * 0.55, text: 'ω = 0: rigid translation, l_{qν} undefined', align: 'center', color: 'muted' }], { ylim: [0, yTopR] });
+    } else {
+      const s1 = Ts.map(t => sigma(p.M1, e1, hw, t)), s2 = Ts.map(t => sigma(p.M2, e2, hw, t));
+      const c1 = Ts.map(t => Math.sqrt(KB * t * 1e-3 * e1 / (p.M1 * cur.w2))), c2 = Ts.map(t => Math.sqrt(KB * t * 1e-3 * e2 / (p.M2 * cur.w2)));
+      yTopR = sticky(yTopR, Math.max(s1[s1.length - 1], s2[s2.length - 1]));
+      s1T = sigma(p.M1, e1, hw, T); s2T = sigma(p.M2, e2, hw, T);
+      const Tstar = hw / (3 * KB);
+      pR.draw([
+        { type: 'line', x: Ts, y: c1, color: 'muted', dash: [2, 3], width: 1.4, label: 'classical limit', hover: false },
+        { type: 'line', x: Ts, y: c2, color: 'muted', dash: [2, 3], width: 1.4, hover: false },
+        Tstar < 1000 ? { type: 'vline', at: Tstar, color: 'phonon', dash: [5, 4], text: 'ħω/3k_B', textDy: 0 } : null,
+        { type: 'vline', at: T, color: 'muted', width: 1 },
+        { type: 'line', x: Ts, y: s1, color: 'c5', label: 'atom 1 (M_1)' },
+        { type: 'line', x: Ts, y: s2, color: 'c4', dash: [6, 3], label: 'atom 2 (M_2)' },
+        { type: 'points', x: [T, T], y: [s1T, s2T], color: 'ink', r: 3.5 }
+      ], { ylim: [0, yTopR] });
+    }
+    // readouts
+    const l = hw >= 0.05 ? Math.sqrt(L2 / (M0 * hw)) : Infinity;
+    ro.set({
+      'ħω_{qν}': hw >= 0.05 ? `${EPP.fix(hw, 1)} meV (${EPP.fix(hw * CM, 0)} cm⁻¹)` : '0 (rigid translation)',
+      'e_{1}, e_{2}': `${cfmt(e[0])}, ${cfmt(e[1])}`,
+      'l_{qν}': isFinite(l) ? `${EPP.fix(l, 4)} Å` : 'undefined',
+      'σ_1, σ_2 at T': isFinite(s1T) ? `${EPP.fix(s1T, 4)}, ${EPP.fix(s2T, 4)} Å` : '—',
+      'zone-edge gap': `${EPP.fix(gap, 1)} meV`,
+      'K_1-bond rms, all modes': `${EPP.fix(bondRms(p, T), 4)} Å`
+    });
+    ro2.set({
+      'D^{dm}_{11}': EPP.fix(D.A, 3),
+      'D^{dm}_{12}': zfmt(D.B),
+      'D^{dm}_{22}': EPP.fix(D.C, 3),
+      'ω^2_{−}, ω^2_{+}': `${EPP.fix(Math.max(0, E.vals[0]), 3)}, ${EPP.fix(E.vals[1], 3)}`,
+      'units of D^{dm}, ω^2': 'eV Å⁻² amu⁻¹'
+    });
+  }
+
+  function spring(ctx, xa, xb, y, lw, col) {
+    const L = xb - xa;
+    // a compressed spring gets fewer, thinner coils so that it never renders as a solid block
+    ctx.strokeStyle = col; ctx.lineWidth = Math.min(lw, Math.max(1, L / 7)); ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    ctx.beginPath();
+    if (L < 6) { ctx.moveTo(xa, y); ctx.lineTo(xb, y); ctx.stroke(); return; }
+    // coil count varies continuously with length (no jumps during the animation); sin(pi s) tapers both ends
+    const lead = 0.12 * L, body = L - 2 * lead, coils = EPP.clamp(body / 6.5, 1, 4), amp = 3.2, ns = Math.max(12, Math.ceil(body));
+    ctx.moveTo(xa, y); ctx.lineTo(xa + lead, y);
+    for (let j = 1; j <= ns; j++) { const s = j / ns; ctx.lineTo(xa + lead + body * s, y - amp * Math.sin(2 * Math.PI * coils * s) * Math.sin(Math.PI * s)); }
+    ctx.lineTo(xb, y); ctx.stroke();
+  }
+
+  function drawChain(t) {
+    cv.clear();
+    if (!cur) return;
+    const ctx = cv.ctx, w = cv.w, h = cv.h, fUI = EPP.css('--font-ui');
+    const ncell = w < 520 ? 6 : 12, padX = 10, cellW = (w - 2 * padX) / ncell;
+    const yC = 60, yS = h - 42, stemA = 28;
+    const { p, e, qn, hw, br } = cur;
+    const r1 = 1 / Math.sqrt(p.M1), r2 = 1 / Math.sqrt(p.M2);
+    const d = [[e[0][0] * r1, e[0][1] * r1], [e[1][0] * r2, e[1][1] * r2]];
+    const dmax = Math.max(Math.hypot(d[0][0], d[0][1]), Math.hypot(d[1][0], d[1][1])) || 1;
+    const phi = 2 * Math.PI * t / 2.6;
+    const Mmax = Math.max(p.M1, p.M2), rmax = Math.max(3.5, Math.min(cellW * 0.1, 8));
+    const rad = [rmax * (0.5 + 0.5 * Math.cbrt(p.M1 / Mmax)), rmax * (0.5 + 0.5 * Math.cbrt(p.M2 / Mmax))];
+    // keep neighbouring atoms (half a cell apart) from touching: |u| <= 1, so a bond shrinks by at most 2*amp
+    const amp = Math.max(2, Math.min(cellW * 0.13, 12, (0.5 * cellW - rad[0] - rad[1] - 7) / 2));
+    const col = [EPP.color('c5'), EPP.color('c4')], cMuted = EPP.color('muted'), cRule = EPP.css('--rule'), cFg2 = EPP.css('--fg-2');
+    const x0 = (pp, k) => padX + cellW * (pp + 0.25 + 0.5 * k);
+    const disp = (pp, k) => { const ph = Math.PI * qn * pp - phi; return (d[k][0] * Math.cos(ph) - d[k][1] * Math.sin(ph)) / dmax; };
+    const atoms = [];
+    for (let pp = -1; pp <= ncell; pp++) for (let k = 0; k < 2; k++) atoms.push({ pp, k, x0: x0(pp, k), u: disp(pp, k) });
+    const lw = K => EPP.clamp(0.8 + 0.55 * Math.log2(1 + K), 0.9, 3.2);
+    ctx.save(); ctx.beginPath(); ctx.rect(0, 0, w, h); ctx.clip();
+    // equilibrium ticks
+    ctx.strokeStyle = cRule; ctx.lineWidth = 1;
+    for (const A of atoms) { ctx.beginPath(); ctx.moveTo(A.x0, yC - 13); ctx.lineTo(A.x0, yC - 9); ctx.stroke(); }
+    // springs: K1 inside a cell (atom 1 -> atom 2), K2 between cells (atom 2 -> next atom 1)
+    for (let i = 0; i < atoms.length - 1; i++) {
+      const A = atoms[i], B = atoms[i + 1];
+      spring(ctx, A.x0 + amp * A.u + rad[A.k], B.x0 + amp * B.u - rad[B.k], yC, lw(A.k === 0 ? p.K1 : p.K2), cMuted);
+    }
+    for (const A of atoms) {
+      ctx.fillStyle = col[A.k]; ctx.beginPath(); ctx.arc(A.x0 + amp * A.u, yC, rad[A.k], 0, 2 * Math.PI); ctx.fill();
+    }
+    // transverse representation of the same displacements
+    ctx.strokeStyle = cRule; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(0, yS); ctx.lineTo(w, yS); ctx.stroke();
+    for (const A of atoms) {
+      const yy = yS - stemA * A.u;
+      ctx.strokeStyle = EPP.alpha(A.k ? 'c4' : 'c5', 0.7); ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(A.x0, yS); ctx.lineTo(A.x0, yy); ctx.stroke();
+      ctx.fillStyle = col[A.k]; ctx.beginPath(); ctx.arc(A.x0, yy, 3.2, 0, 2 * Math.PI); ctx.fill();
+    }
+    ctx.restore();
+    // labels
+    ctx.textBaseline = 'alphabetic'; ctx.fillStyle = cMuted;
+    const head = w < 520 ? 'longitudinal motion (exaggerated)' : 'longitudinal motion along the chain (exaggerated)';
+    EPP.drawRich(ctx, head, padX, 16, { size: 11, font: fUI });
+    ctx.fillStyle = cFg2;
+    const tag = (br ? 'optical' : 'acoustic') + (hw < 0.05 ? ' · ω = 0, rigid translation' : ` · ħω = ${EPP.fix(hw, 1)} meV`);
+    // on narrow canvases the mode tag goes on its own line instead of colliding with the heading
+    const tagRow = padX + EPP.measureRich(ctx, head, 11, fUI) + 14 + EPP.measureRich(ctx, tag, 11, fUI) > w - padX ? 31 : 16;
+    EPP.drawRich(ctx, tag, w - padX, tagRow, { size: 11, font: fUI, align: 'right' });
+    ctx.fillStyle = cMuted;
+    const yK = yC + 24, xa = x0(0, 0), xb = x0(0, 1), xc = x0(1, 0);
+    EPP.drawRich(ctx, 'K_1', 0.5 * (xa + xb), yK, { size: 11, font: fUI, align: 'center' });
+    EPP.drawRich(ctx, 'K_2', 0.5 * (xb + xc), yK, { size: 11, font: fUI, align: 'center' });
+    const yB = yC + 34;
+    ctx.strokeStyle = cMuted; ctx.lineWidth = 1; ctx.beginPath();
+    ctx.moveTo(xa, yB - 4); ctx.lineTo(xa, yB); ctx.lineTo(xc, yB); ctx.lineTo(xc, yB - 4); ctx.stroke();
+    EPP.drawRich(ctx, 'a', 0.5 * (xa + xc), yB + 13, { size: 11.5, font: fUI, align: 'center', italic: true });
+    const yL = yS - stemA - 10;
+    EPP.drawRich(ctx, 'same displacements u_κ(R_p, t) drawn transversely', padX, yL, { size: 11, font: fUI });
+    // species key
+    const kx = w - padX;
+    ctx.textAlign = 'left';
+    const w2t = EPP.measureRich(ctx, 'atom 2', 11, fUI), w1t = EPP.measureRich(ctx, 'atom 1', 11, fUI);
+    if (w > 430) {
+      let x = kx - w2t; EPP.drawRich(ctx, 'atom 2', x, yL, { size: 11, font: fUI });
+      ctx.fillStyle = col[1]; ctx.beginPath(); ctx.arc(x - 8, yL - 4, 4, 0, 2 * Math.PI); ctx.fill();
+      x = x - 18 - w1t; ctx.fillStyle = cMuted; EPP.drawRich(ctx, 'atom 1', x, yL, { size: 11, font: fUI });
+      ctx.fillStyle = col[0]; ctx.beginPath(); ctx.arc(x - 8, yL - 4, 4, 0, 2 * Math.PI); ctx.fill();
+    }
+  }
+
+  function onChange(s) {
+    if (s.preset !== lastPreset && PRESETS[s.preset]) {
+      const P = PRESETS[s.preset];
+      ['M1', 'M2', 'K1', 'K2', 'q', 'br'].forEach(k => ui.set(k, P[k], true));
+      lastPreset = s.preset;
+    } else if (PRESETS[s.preset]) {
+      const P = PRESETS[s.preset];
+      if (['M1', 'M2', 'K1', 'K2'].some(k => Math.abs(s[k] - P[k]) > 1e-6 * P[k])) { ui.set('preset', 'custom', true); lastPreset = 'custom'; }
+    } else lastPreset = s.preset;
+    cur = compute(ui.state);
+    draw();
+    if (anim) anim.redraw();
+  }
+
+  const mfmt = v => (v < 10 ? v.toFixed(2) : v.toFixed(1)) + ' amu';
+  const kfmt = v => v.toFixed(2);
+  const ui = EPP.controls(elCtl, [
+    { key: 'preset', type: 'select', label: 'preset', options: [['hbn', 'hBN-like chain'], ['gaas', 'GaAs-like chain'], ['epp', 'EPP worked example (E.30)'], ['custom', 'custom']], value: 'hbn' },
+    { key: 'M1', type: 'range', label: 'mass M_1', min: 1, max: 200, value: 10.81, log: true, step: 'any', fmt: mfmt },
+    { key: 'M2', type: 'range', label: 'mass M_2', min: 1, max: 200, value: 14.01, log: true, step: 'any', fmt: mfmt },
+    { key: 'K1', type: 'range', label: 'intracell spring K_1 (eV/Å^2)', min: 0.1, max: 30, value: 21.07, log: true, step: 'any', fmt: kfmt },
+    { key: 'K2', type: 'range', label: 'intercell spring K_2 (eV/Å^2)', min: 0.1, max: 30, value: 21.07, log: true, step: 'any', fmt: kfmt },
+    { key: 'q', type: 'range', label: 'wavevector qa/π', min: -1, max: 1, step: 0.005, value: 0.1, fmt: v => (v > 0 ? '+' : '') + v.toFixed(3) },
+    { key: 'br', type: 'seg', label: 'branch', options: [['0', 'acoustic'], ['1', 'optical']], value: '1' },
+    { key: 'T', type: 'range', label: 'temperature T', min: 0, max: 1000, step: 5, value: 300, fmt: v => v.toFixed(0) + ' K' }
+  ], onChange);
+  cur = compute(ui.state);
+
+  pD.onPointer = (x, y, type) => {
+    if (!cur) return;
+    const qn = EPP.clamp(Math.round(x * 200) / 200, -1, 1);
+    if (type === 'down') {
+      const w = w2pm(cur.p, Math.PI * qn).map(v => HW * Math.sqrt(v));
+      ui.set('br', Math.abs(y - w[0]) <= Math.abs(y - w[1]) ? '0' : '1', true);
+    }
+    ui.set('q', qn);
+  };
+
+  const host = document.createElement('div');
+  host.className = 'ctrl';
+  host.innerHTML = '<span class="lab"><span>animation</span></span>';
+  elCtl.appendChild(host);
+  anim = EPP.anim(fig, (t) => drawChain(t), { buttonHost: host });
+  cv.onResize(() => anim.redraw());
+})();
+</script>

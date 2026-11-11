@@ -1,0 +1,382 @@
+<section class="chapter" id="a-dfpt" data-num="A.3" data-title="DFPT: the vertex is screened">
+  <header class="ch-head">
+    <p class="eyebrow"><span class="num">A.3</span><span>Giustino §III.B.2–B.5 · Eqs. 23–61</span></p>
+    <h2>DFPT: the vertex is screened</h2>
+    <p class="lede">When an ion moves, the electrons move with it. Density-functional perturbation theory computes the self-consistent result one wavevector at a time, and the answer is the bare electron–ion perturbation screened by a static dielectric matrix: the same $\epsilon=1-v\chi^0$ that a GW or BSE code builds, plus exchange and correlation.</p>
+  </header>
+
+  <p>Displace sublattice $\kappa$ by a small wave, $\Delta\tau_{\kappa\alpha p}\propto e^{i\bq\cdot\bR_p}$. Each ion carries its bare potential along, and that change alone, $\partial V^{\rm en}$, would scatter <span class="t-e">electrons</span> far too strongly (Nordheim's model, <a href="#a-coupling">§A.2</a>). But the electrons respond: charge flows toward the regions the ions have made more attractive, and the Hartree and exchange–correlation potential of the induced charge cancels most of the bare change. What an electron finally feels, and what enters $g_{mn\nu}(\bk,\bq)$, is the self-consistent remainder. Giustino §III.B builds it from Kohn–Sham theory and condenses it into one line, $\partial v^{\rm KS}=(\epsilon^{{\rm H}xc})^{-1}\partial v^{\rm en}$ (G.53). As in all of Part A, units are SI and every $V$ or $v$ is the potential energy of an electron of charge $-e$.</p>
+
+  <h3>A self-consistent potential, one wavevector at a time</h3>
+  <p>The electrons obey the Kohn–Sham equation with $\hat H^{\rm KS}=-\hbar^2\nabla^2/2m_e+V^{\rm KS}$ (G.23), whose potential has three parts:</p>
+  <div class="eq">$$ V^{\rm KS}=V^{\rm en}+V^{\rm H}+V^{xc}. \tag{G.24}$$</div>
+  <p>$V^{\rm en}$ sums ionic potentials with the Coulomb tail $-(e^2/4\pi\epsilon_0)Z_\kappa/|\br|$ (G.25–26), $V^{\rm H}$ is the instantaneous Coulomb potential of the density (G.27) and $V^{xc}=\delta E^{xc}/\delta n$ (G.28). There is no vector potential anywhere: the electrons see the nuclei only through electrostatics. To first order in the displacements,</p>
+  <div class="eq">$$ V^{\rm KS}(\{\boldsymbol\tau_{\kappa p}\})=V^{\rm KS}(\{\boldsymbol\tau^0_{\kappa p}\})+\sum_{\kappa\alpha p}\frac{\partial V^{\rm KS}}{\partial\tau_{\kappa\alpha p}}\Delta\tau_{\kappa\alpha p}, \tag{G.31}$$</div>
+  <p>where the derivative is the self-consistent one: $V^{\rm H}$ and $V^{xc}$ change because the density changes. For a displacement wave with phases $e^{i\bq\cdot\bR_p}$ the summed response is $e^{i\bq\cdot\br}$ times a lattice-periodic function,</p>
+  <div class="eq">$$ \partial_{\kappa\alpha,\bq}v^{\rm KS}=\sum_p e^{-i\bq\cdot(\br-\bR_p)}\,\frac{\partial V^{\rm KS}}{\partial\tau_{\kappa\alpha}}\bigg|_{\br-\bR_p}, \tag{G.35}$$</div>
+  <p>which, weighted by the normal-mode amplitudes, becomes the $\Delta_{\bq\nu}v^{\rm KS}$ of (G.34) and the matrix element (G.38) of <a href="#a-coupling">§A.2</a>. Linear response does not mix wavevectors, so each $\bq$ is a separate calculation in one unit cell. Frozen phonons instead take finite differences (G.41) in a supercell commensurate with $\bq$, impractically large at long wavelengths; Giustino puts the DFPT saving at a factor proportional to $N_p^2$, typically more than $10^3$.</p>
+  <p>DFPT splits the perturbation like the potential,</p>
+  <div class="eq">$$\partial_{\kappa\alpha,\bq}v^{\rm KS}=\partial_{\kappa\alpha,\bq}v^{\rm en}+\partial_{\kappa\alpha,\bq}v^{\rm H}+\partial_{\kappa\alpha,\bq}v^{xc}. \tag{G.42}$$</div>
+  <p>The bare part is known in closed form in reciprocal space,</p>
+  <div class="eq">$$\partial_{\kappa\alpha,\bq}v^{\rm en}(\bG)=-i(\bq+\bG)_\alpha\,V_\kappa(\bq+\bG)\,e^{-i(\bq+\bG)\cdot\boldsymbol\tau_\kappa}, \tag{G.43}$$</div>
+  <p>a gradient (moving the ion by $\boldsymbol\tau$ shifts $V_\kappa(\br-\boldsymbol\tau)$) times a structure factor, with $f(\bG)=\Omega^{-1}\int_{\rm uc}d\br\,e^{-i\bG\cdot\br}f(\br)$. For a Coulomb ion $V_\kappa(\bq)\propto1/q^2$, so the $\bG=0$ term grows as $1/q$: it is the long-range field of a displaced charge, and only the displacement component along $\bq+\bG$ couples. The induced parts are linear in the induced density $\partial_{\kappa\alpha,\bq}n$,</p>
+  <div class="eq">$$\begin{align}
+  \partial_{\kappa\alpha,\bq}v^{\rm H}(\bG)&=\Omega\,v^{\rm C}(\bq+\bG)\,\partial_{\kappa\alpha,\bq}n(\bG), \tag{G.44}\\
+  \partial_{\kappa\alpha,\bq}v^{xc}(\bG)&=\Omega\sum_{\bG'}f^{xc}(\bq+\bG,\bq+\bG')\,\partial_{\kappa\alpha,\bq}n(\bG'), \tag{G.45}
+  \end{align}$$</div>
+  <p>with $v^{\rm C}(\bq)=e^2/(\epsilon_0\Omega q^2)$ the Coulomb kernel per cell and $f^{xc}=\delta^2E^{xc}/\delta n(\br)\delta n(\br')$ the xc kernel (G.46), local in the LDA.</p>
+
+  <h3>The Sternheimer equation</h3>
+  <p>The induced density needs the first-order change of the occupied orbitals. Translational symmetry fixes its form, $\partial u_{v\bk,\bq}e^{i\bq\cdot\br}$ with $\partial u$ lattice periodic, and first-order perturbation theory written as a linear system, rather than as a sum over states, is the Sternheimer equation:</p>
+  <div class="eq">$$(\hat H^{\rm KS}_{\bk+\bq}-\varepsilon_{v\bk})\,\partial u_{v\bk,\bq}=-\partial_{\kappa\alpha,\bq}v^{\rm KS}\,u_{v\bk}, \tag{G.47}$$</div>
+  <p>with $\hat H^{\rm KS}_{\bk+\bq}=e^{-i(\bk+\bq)\cdot\br}\hat H^{\rm KS}e^{i(\bk+\bq)\cdot\br}$. Only occupied states $v$ appear. There is no sum over empty bands, which Giustino names as the principal advantage over standard perturbation theory. (At $\bq=0$ the first-order eigenvalue shift $\langle u_{v\bk}|\partial_{\kappa\alpha,0}v|u_{v\bk}\rangle_{\rm uc}u_{v\bk}$ joins the right-hand side; the projectors below cancel it except in metals.) The operator on the left is ill conditioned whenever an occupied state at $\bk+\bq$ lies close to $\varepsilon_{v\bk}$, and singular at an exact degeneracy. Those directions are harmless, because rotating occupied states into each other leaves the density unchanged. Giannozzi et al. (1991) therefore keep only the component in the unoccupied manifold, $\partial\tilde u=(1-\hat P^{\rm occ}_{\bk+\bq})\partial u$:</p>
+  <div class="eq">$$(\hat H^{\rm KS}_{\bk+\bq}-\varepsilon_{v\bk})\,\partial\tilde u_{v\bk,\bq}=-(1-\hat P^{\rm occ}_{\bk+\bq})\,\partial_{\kappa\alpha,\bq}v^{\rm KS}\,u_{v\bk}. \tag{G.48}$$</div>
+  <p>Since $\hat P^{\rm occ}_{\bk+\bq}\partial\tilde u=0$, adding $\alpha\hat P^{\rm occ}_{\bk+\bq}$ to the operator leaves the solution unchanged but, with $\alpha$ larger than the valence bandwidth, removes every small eigenvalue. The density response is then</p>
+  <div class="eq">$$\partial n_{\kappa\alpha,\bq}(\br)=2N_p^{-1}\sum_{v\bk}u^*_{v\bk}\,\partial\tilde u_{v\bk,\bq}, \tag{G.49}$$</div>
+  <p>where the explicit 2 comes from time-reversal symmetry and the spin factor is already inside the $\bk$ sum. Closing the loop through (G.44) and (G.45) gives a cycle much like a ground-state SCF calculation:</p>
+
+  <ol id="a-dfpt-loop" aria-label="The DFPT self-consistency loop" style="list-style:none;margin:14px 0 18px;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;font-family:var(--font-ui);font-size:0.86rem;line-height:1.45;max-width:none;">
+    <li style="margin:0;max-width:none;border:1px solid var(--rule);border-radius:6px;background:var(--surface);padding:8px 10px;"><b style="color:var(--t-phonon);font-weight:600;">1 · start</b><br>bare ionic perturbation, $\partial v^{\rm KS}=\partial v^{\rm en}$ <span style="color:var(--muted)">(G.43)</span></li>
+    <li style="margin:0;max-width:none;border:1px solid var(--rule);border-radius:6px;background:var(--surface);padding:8px 10px;"><b style="color:var(--t-electron);font-weight:600;">2 · Sternheimer</b><br>solve for $\partial\tilde u_{v\bk,\bq}$, every occupied $v$ and every $\bk$ <span style="color:var(--muted)">(G.48)</span></li>
+    <li style="margin:0;max-width:none;border:1px solid var(--rule);border-radius:6px;background:var(--surface);padding:8px 10px;"><b style="color:var(--t-electron);font-weight:600;">3 · response</b><br>induced density $\partial n_{\kappa\alpha,\bq}$ <span style="color:var(--muted)">(G.49)</span></li>
+    <li style="margin:0;max-width:none;border:1px solid var(--rule);border-radius:6px;background:var(--surface);padding:8px 10px;"><b style="color:var(--t-photon);font-weight:600;">4 · Hartree + xc</b><br>$\partial v^{\rm H}$ and $\partial v^{xc}$ from $\partial n$ <span style="color:var(--muted)">(G.44–45)</span></li>
+    <li style="margin:0;max-width:none;border:1px solid var(--rule);border-radius:6px;background:var(--surface);padding:8px 10px;"><b style="color:var(--fg);font-weight:600;">5 · update</b><br>new $\partial v^{\rm KS}$ <span style="color:var(--muted)">(G.42)</span>; mix and return to 2 until $\partial n$ stops changing</li>
+  </ol>
+
+  <p>The converged $\partial v^{\rm KS}$ also yields the force constants (G.13) of <a href="#a-lattice">§A.1</a>, so every DFPT phonon code "already contains all the information necessary" for $g_{mn\nu}(\bk,\bq)$ (Giustino).</p>
+
+  <h3>The loop sums a geometric series</h3>
+  <p>To see what the loop computes, Giustino expands $\partial\tilde u$ over all Kohn–Sham states, occupied and empty, and inserts it into (G.48) and (G.49). The induced density is linear in the total perturbation,</p>
+  <div class="eq">$$\partial_{\kappa\alpha,\bq}n(\br)=\int_{\rm uc}d\br'\,\chi^0_{\bq}(\br,\br')\,\partial_{\kappa\alpha,\bq}v^{\rm KS}(\br'), \tag{G.50}$$</div>
+  <div class="eq">$$\begin{aligned}\chi^0_{\bq}(\br,\br')=N_p^{-1}\sum_{mn\bk}&\frac{f_{n\bk}-f_{m\bk+\bq}}{\varepsilon_{n\bk}-\varepsilon_{m\bk+\bq}}\\ &\times u^*_{n\bk}(\br)\,u_{m\bk+\bq}(\br)\,u^*_{m\bk+\bq}(\br')\,u_{n\bk}(\br').\end{aligned} \tag{G.51}$$</div>
+  <p>This is the independent-particle polarizability of Adler and Wiser, the $\chi^0$ that a GW or BSE code assembles from a sum over empty bands, here at $\omega=0$. Writing (G.50) symbolically as $\partial n=\chi^0\partial v^{\rm KS}$, the three pieces of (G.42) combine into a self-consistency condition and its solution:</p>
+  <div class="eq">$$\begin{align}
+  \partial v^{\rm KS}&=\partial v^{\rm en}+(v^{\rm C}+f^{xc})\chi^0\,\partial v^{\rm KS}, \tag{G.52}\\
+  \partial v^{\rm KS}&=(\epsilon^{{\rm H}xc})^{-1}\partial v^{\rm en}, \tag{G.53}\\
+  \epsilon^{{\rm H}xc}&=1-(v^{\rm C}+f^{xc})\chi^0. \tag{G.54}
+  \end{align}$$</div>
+  <p>Iterating (G.52) from $\partial v^{\rm KS}=\partial v^{\rm en}$, without mixing, generates the Neumann series of $(\epsilon^{{\rm H}xc})^{-1}$. With $K\equiv v^{\rm C}+f^{xc}$,</p>
+  <div class="eq">$$\partial v^{\rm KS}=\big[\,1+K\chi^0+K\chi^0K\chi^0+K\chi^0K\chi^0K\chi^0+\cdots\big]\,\partial v^{\rm en}.$$</div>
+  <p>Each power adds one bubble $\chi^0$ and one interaction line $K$. Read as diagrams, the dressed vertex is the bare vertex followed by a chain of bubbles:</p>
+
+  <div class="fd" style="gap:12px 12px;">
+    <figure><div id="a-dfpt-fd-dressed"></div><figcaption>dressed $g$</figcaption></figure>
+    <span class="op">=</span>
+    <figure><div id="a-dfpt-fd-bare"></div><figcaption>bare $g^{\rm b}$</figcaption></figure>
+    <span class="op">+</span>
+    <figure><div id="a-dfpt-fd-one"></div><figcaption>one bubble</figcaption></figure>
+    <span class="op">+</span>
+    <figure><div id="a-dfpt-fd-two"></div><figcaption>two bubbles</figcaption></figure>
+    <span class="op">+ ⋯</span>
+  </div>
+  <p class="src" style="white-space:normal;margin-top:-6px;">Zigzag: <span class="t-p">phonon</span> $\bq\nu$. Solid lines: Kohn–Sham <span class="t-e">electrons</span>; a closed pair is the bubble $\chi^0$ of (G.51). Dashed: $K=v^{\rm C}+f^{xc}$. Giustino's Fig. 1(d) draws the same resummation in Dyson form, $g=g^{\rm b}+vGG\Gamma g$, with the many-body polarization $P=GG\Gamma$ in place of $\chi^0$ (Giustino §V.A.3; <a href="#a-phonon-se">§A.6</a>).</p>
+
+  <div class="callout intuition"><p class="callout-title">Physical picture · rounds of response</p><p>Each term is one round of response: the bare field induces a density, the Hartree and xc potential of that density induces more, and so on. In a metal at long wavelength every round overcorrects, $|K\chi^0|\simeq(k_{\rm TF}/q)^2\gg1$, so the terms alternate in sign and grow. Yet the resummed answer $1/\epsilon$ is tiny, because the Fermi sea neutralizes a slowly varying perturbation almost perfectly. (G.53) is still the right answer, but the literal series diverges, and an algorithm has to reach it another way.</p></div>
+
+  <p>The usual way is mixing. With linear mixing (standard practice, not spelled out by Giustino) each cycle updates</p>
+  <div class="eq">$$\partial v_{n+1}=(1-\beta)\,\partial v_n+\beta\big[\partial v^{\rm en}+K\chi^0\,\partial v_n\big],$$</div>
+  <p>whose fixed point is (G.53) for any $\beta$. The error shrinks by $r=1-\beta\epsilon^{{\rm H}xc}$ per cycle, so the loop converges only if $0&lt;\beta\epsilon&lt;2$, and at $\beta=1$ the iterates are exactly the partial sums of the series. In jellium each Fourier component decouples and $v^{\rm C}\chi^0=-(k_{\rm TF}/q)^2F(q/2k_{\rm F})$, so the loop reduces to numbers. At long wavelength $\epsilon\to(k_{\rm TF}/q)^2$, and any fixed $\beta$ fails at small enough $q$: the induced charge overshoots back and forth, the "charge sloshing" familiar from ground-state SCF cycles in metals. Kerker's preconditioner (1981; literature, not in Giustino) uses $\beta(q)=\beta_0q^2/(q^2+q_0^2)$ with $q_0\approx k_{\rm TF}$. For Thomas–Fermi screening this makes $\beta\epsilon=\beta_0$ exactly; with the Lindhard function $\beta\epsilon$ stays between about $\beta_0/2$ and $\beta_0$ at every $q$, so any $\beta_0&lt;2$ converges.</p>
+
+  <figure class="viz" id="viz-a-dfpt-scf">
+    <p class="viz-title">The SCF loop as a geometric series <span class="tag">interactive</span></p>
+    <div class="viz-grid two"><div class="plotA"></div><div class="plotB"></div></div>
+    <div class="ctrls"></div>
+    <div class="ro"></div>
+    <figcaption><strong>Model.</strong> One Fourier component of the DFPT loop in jellium, without local fields or umklapp: $v^{\rm C}\chi^0=-(k_{\rm TF}/q)^2F(q/2k_{\rm F})$ from (G.59)–(G.60), with $(k_{\rm TF}/k_{\rm F})^2=0.663\,r_s$. The xc toggle multiplies it by $1-q^2/4k_{\rm F}^2$, which is the exchange-only LDA kernel $f_x=-\pi/k_{\rm F}^2$ in atomic units: a toy, meaningful only for $q\ll2k_{\rm F}$. Iterates follow the linear-mixing update above from $\partial v_0=\partial v^{\rm en}$; Kerker uses $q_0=k_{\rm TF}$ and $\beta_0=\beta$. Left: $|\partial v_n/\partial v^{\rm en}|$ on a log axis (filled points positive, hollow negative) and the exact fixed point $1/\epsilon$. Right: the contraction factor $r(q)=1-\beta(q)\epsilon(q)$ for both schemes; the loop converges inside the band $|r|&lt;1$, and an arrow marks the current $r$ when it lies below the axis. "Cycles to $10^{-6}$" counts cycles until the error is below $10^{-6}$ of the fixed point. The default $r_s=3.93$ is Na-like (literature value). <strong>What to notice.</strong> At the default $\beta=0.15$ plain mixing converges at $q=0.5k_{\rm F}$ with $r&lt;0$: the iterate alternates in sign (filled and hollow points) and settles onto $1/\epsilon$. Raise $\beta$ above the stable value in the readout to watch it diverge. Plain mixing with $\beta=1$, which sums the bare series, diverges wherever $\epsilon&gt;2$, which in a metal means every long wavelength; lowering $\beta$ only pushes the failure to smaller $q$, while Kerker keeps $\beta\epsilon$ within a factor of two of $\beta_0$ at every $q$. The xc toggle raises $1/\epsilon$ slightly: a test electron is screened less than a test charge.</figcaption>
+  </figure>
+
+  <h3>Test electron, test charge, and your $\epsilon=1-v\chi^0$</h3>
+  <p>Giustino calls $\epsilon^{{\rm H}xc}$ the "test-electron" dielectric matrix, a name hinting that the density redistribution arises both from classical electrostatics ($v^{\rm C}\chi^0$) and from quantum exchange and correlation ($f^{xc}\chi^0$). The particle that feels the screened potential is itself an electron, so it also feels the xc potential of the induced density. Neglecting $f^{xc}$ gives the "test-charge" matrix, the random-phase approximation of Pines and Bohm (1952),</p>
+  <div class="eq">$$\epsilon^{\rm H}=1-v^{\rm C}\chi^0, \tag{G.55}$$</div>
+  <p>which in a plane-wave basis reads</p>
+  <div class="eq">$$\epsilon^{\rm H}_{\bG\bG'}(\bq)=\delta_{\bG\bG'}-\Omega^2\sum_{\bG''}\chi^0_{\bG''\bG'}(\bq)\,v^{\rm C}(\bq+\bG)\,\delta_{\bG\bG''}. \tag{G.56}$$</div>
+  <p>Its off-diagonal elements are the crystal local-field effects. Together with (G.38), Eq. (G.53) says that the DFPT matrix element is the bare electron–nucleus vertex screened at the "RPA + $xc$" level. For a reader who computes $\chi^0$ for 2D materials, the dictionary is short:</p>
+  <ul>
+    <li><strong>Same matrix.</strong> (G.56) is the $\epsilon_{\bG\bG'}(\bq,\omega=0)$ of a GW or BSE code, local fields included. The static $W=\epsilon^{-1}v$ of a BSE kernel uses exactly this object.</li>
+    <li><strong>Different operand.</strong> $W$ screens the electron–electron interaction; DFPT screens the electron–ion perturbation, $g=\epsilon^{-1}g^{\rm b}$ in the notation of Giustino §V.A. The phonon self-energy contains one such screened vertex and the Fan–Migdal electron self-energy two (<a href="#a-phonon-se">§A.6</a>, <a href="#a-electron-se">§A.7</a>).</li>
+    <li><strong>Test electron.</strong> DFPT keeps $f^{xc}$; the usual GW $W$ is the test-charge RPA.</li>
+    <li><strong>No inversion.</strong> DFPT never forms or inverts $\epsilon$. The loop solves (G.52) iteratively, one $\bq$ at a time, without empty states.</li>
+    <li><strong>Two dimensions.</strong> A monolayer needs the same truncated Coulomb kernel in DFPT as in GW (implemented by Sohier, Calandra and Mauri, 2017; literature, not in either paper). For a semiconducting sheet the static screening takes the Rytova–Keldysh form $\epsilon_{\rm 2D}(q)\simeq1+r_0q$ familiar from 2D BSE (standard result, not printed in either paper). It tends to 1 as $q\to0$, so long-wavelength perturbations are barely screened, whereas in bulk $\epsilon\to\epsilon^\infty$ or $(k_{\rm TF}/q)^2$. Together with the 2D Coulomb kernel, which goes as $1/q$ instead of $1/q^2$, this shapes the 2D phonon results of <a href="#b-2d">§B.10</a>, where the same $r_0$ appears.</li>
+  </ul>
+
+  <div class="callout caveat"><p class="callout-title">Subtlety · what the labels mean</p><p>"Test charge" in (G.55) is shorthand for RPA. With xc present, a classical test charge would feel $\partial v^{\rm en}+v^{\rm C}\partial n$ with $\partial n$ computed including $f^{xc}$, that is $\epsilon^{-1}=1+v^{\rm C}\chi^0[1-(v^{\rm C}+f^{xc})\chi^0]^{-1}$ (standard linear-response result, not written by Giustino), which equals $(\epsilon^{\rm H})^{-1}$ only when $f^{xc}=0$. Separately, static density response is a ground-state property: with the exact functional, DFPT would give the exact static response and force constants. Using $\partial v^{\rm KS}$ as the vertex for quasiparticles is a further approximation, which Giustino makes explicit in §V.A (approximation (iii): the many-body dielectric matrix is replaced by its DFT "RPA + $xc$" counterpart; <a href="#a-phonon-se">§A.6</a>).</p></div>
+
+  <h3>Jellium: Bardeen recovered</h3>
+  <p>Free electrons make (G.51) analytic. With $\varepsilon_{n\bk}=\hbar^2(\bk+\bG_n)^2/2m_e-\varepsilon_{\rm F}$ in the extended-zone scheme the polarizability is diagonal,</p>
+  <div class="eq">$$\chi^0_{\bG\bG'}(\bq)=-\frac{m_ek_{\rm F}}{\pi^2\hbar^2\Omega}\,F(|\bq+\bG|/2k_{\rm F})\,\delta_{\bG\bG'}, \tag{G.59}$$</div>
+  <p>with $F$ the Lindhard function of (G.4) and $m_ek_{\rm F}/\pi^2\hbar^2$ the density of states per volume at $\varepsilon_{\rm F}$, both spins. Inserted in (G.56) without xc, it gives the Lindhard dielectric matrix,</p>
+  <div class="eq">$$\epsilon_{\bG\bG'}(\bq)=\delta_{\bG\bG'}\Big[1+\frac{k^2_{\rm TF}}{|\bq+\bG|^2}F(|\bq+\bG|/2k_{\rm F})\Big], \tag{G.60}$$</div>
+  <p>with $k_{\rm TF}=[4m_ee^2k_{\rm F}/(4\pi\epsilon_0\pi\hbar^2)]^{1/2}$. Screening the bare one-atom matrix element with its diagonal element, following (G.53), gives Bardeen's 1937 result (cf. G.61, with $N_p$ removed as explained in <a href="#a-coupling">§A.2</a>):</p>
+  <div class="eq">$$g_{mn\nu}(\bk,\bq)=-i\Big(\frac{\hbar}{2M_\kappa\omega_{\bq\nu}}\Big)^{1/2}\bq\cdot\mathbf e_{\kappa\nu}(\bq)\,\frac{V_\kappa(\bq)}{\epsilon(q)}.$$</div>
+  <p>Its long-wavelength limit, $V_\kappa/\epsilon\to-\tfrac23\varepsilon_{\rm F}$, is derived and plotted in <a href="#a-coupling">§A.2</a>. Here we look at the same screening in real space: displacing one ion along $z$ creates the bare dipole field $-\partial_zV_\kappa$, and screening multiplies each of its Fourier components by $1/\epsilon(q)$.</p>
+
+  <details class="derivation"><summary>Derivation: the screened dipole field in real space</summary><div class="d-body">
+    <p>Use the continuum Fourier transform $V_\kappa(\bq)=-Ze^2/(\epsilon_0q^2)$; Giustino's $\Omega^{-1}$ normalization cancels in the ratio below. Displacing the ion by $\tau$ along $z$ changes the potential by $-\tau\,\partial_zV_\kappa$, whose Fourier components $-iq_zV_\kappa(\bq)$ are the $\bG=0$ term of (G.43). In jellium (G.53) divides each by $\epsilon(q)$, so the screened perturbation is $-\partial_z$ of the screened ion potential</p>
+    <div class="eq">$$V^{\rm scr}(r)=\int\!\frac{d\bq}{(2\pi)^3}\,\frac{V_\kappa(\bq)}{\epsilon(q)}\,e^{i\bq\cdot\br}=-\frac{Ze^2}{4\pi\epsilon_0}\,\frac{2}{\pi r}\int_0^\infty\!dq\,\frac{\sin qr}{q\,\epsilon(q)}.$$</div>
+    <p>For $\epsilon=1$ this is $-Ze^2/4\pi\epsilon_0r$. Along the displacement axis $\partial v/\partial\tau_z=-dV^{\rm scr}/dr$. Dividing by the bare value $-Ze^2/(4\pi\epsilon_0r^2)$ and writing $1/\epsilon=1+(1/\epsilon-1)$ gives the surviving fraction</p>
+    <div class="eq">$$S(r)=1+\frac{2}{\pi}\int_0^\infty\!dq\,\Big[\frac{1}{\epsilon(q)}-1\Big]\Big[\frac{\sin qr}{q}-r\cos qr\Big].$$</div>
+    <p>Thomas–Fermi screening, $\epsilon=1+k_{\rm TF}^2/q^2$, gives $S=(1+k_{\rm TF}r)\,e^{-k_{\rm TF}r}$ in closed form. For the Lindhard function the figure integrates numerically (trapezoid rule, $q\le12k_{\rm F}$). With the toy xc kernel, $1/\epsilon-1\to+k_{\rm TF}^2/3q^2$ at large $q$, a slowly decaying tail. The code subtracts $(k_{\rm TF}^2/3)/(q^2+4k_{\rm F}^2)$, which has the same tail, and integrates that term analytically.</p>
+  </div></details>
+
+  <figure class="viz" id="viz-a-dfpt-cloud">
+    <p class="viz-title">What a displaced ion looks like to an electron <span class="tag">interactive</span></p>
+    <div class="viz-grid two"><div class="plotA"></div><div class="plotB"></div></div>
+    <div class="ctrls"></div>
+    <div class="ro"></div>
+    <figcaption><strong>Model.</strong> A point ion of valence $Z$ (Coulomb $V_\kappa$, G.26) in jellium, displaced along $z$, with static diagonal screening (G.53, G.60). Left: $1/\epsilon(q)$ for Thomas–Fermi ($F=1$), Lindhard RPA (test charge, G.55) and Lindhard with the toy exchange kernel of the previous figure (test electron, G.54). Right: $S(r)$, the screened perturbation divided by the bare dipole field $Ze^2/(4\pi\epsilon_0r^2)$ along the displacement axis (derivation above); "zoom" magnifies the tail. Presets: Al ($r_s=2.07$, $Z=3$), Na (3.93, 1), K (4.86, 1), with $r_s$ from the literature (illustrative). The readout evaluates $|\partial v/\partial\tau|=S\,Ze^2/(4\pi\epsilon_0r^2)$ at the Wigner–Seitz radius $r_{\rm WS}=Z^{1/3}r_sa_0$. <strong>What to notice.</strong> The bare field of a displaced ion reaches every electron in the crystal; the screened one is cut off within about $1/k_{\rm TF}$, and in RPA only 8–14% of it survives at the Wigner–Seitz radius of the three presets. What remains at long range are Friedel ripples of period $\pi/k_{\rm F}$, which come from the kink of $F$ at $2k_{\rm F}$ and are absent in Thomas–Fermi. The toy xc kernel makes the field at $r_{\rm WS}$ two to three times larger in Na and K and barely changes it in Al; the difference comes from $q\gtrsim k_{\rm F}$, where a local kernel is least reliable.</figcaption>
+  </figure>
+
+  <h3>Static means adiabatic</h3>
+  <p>"So far we considered only the screening of static perturbations," Giustino stresses: $\partial v^{\rm en}$ was taken to be frequency independent. Physically the phonons are treated as quasistatic perturbations, "so that at each set of instantaneous atomic positions during a vibration cycle, the electrons have enough time to readjust and reach their ground state", which is the adiabatic approximation of Born and Oppenheimer. In the diagrams above, every bubble is $\chi^0$ at $\omega=0$ rather than at the <span class="t-p">phonon</span> frequency. That is accurate when $\hbar\omega_{\bq\nu}$ is small against the electronic excitations that build $\chi^0$ (the gap of an insulator, or $\hbar qv_{\rm F}$ for intraband transitions in a metal), and it fails otherwise. Bardeen and Pines (1955) already screened the vertex with $\epsilon(q,\omega_{\bq\nu})$ (G.5, <a href="#a-coupling">§A.2</a>), but the first ab initio calculations of these effects came only much later (Lazzeri and Mauri, 2006, cited by Giustino; the doped-graphene case returns in his §VII and in <a href="#a-phonon-se">§A.6</a>). "Retardation" in Giustino's sense means exactly this frequency dependence of the screening. His formal framework is §IV (<a href="#a-hedin-baym">§A.5</a>), and <a href="#a-phonon-se">§A.6</a> splits the phonon self-energy into the adiabatic part that DFPT computes and a nonadiabatic remainder built from $\chi^0(\omega)-\chi^0(0)$.</p>
+
+  <div class="callout connect"><p class="callout-title">Bridge to EPP · the same chain, kept dynamic</p><p>EPP resums the same bubble chain for its photon propagator, $D^{\rm e}=D^0+D^0\Pi^{\rm e,0}_{jj}D^{\rm e}$ (EPP §7, Eq. (E.388)), and its screened electron–phonon vertex has $D^{\rm e}$ where the bare one has $D^0$ (Eqs. (E.415)–(E.416), <a href="#b-frohlich">§B.8</a>). Three things differ from DFPT. The screening is dynamic: the dielectric tensor $\hat\epsilon^{\rm e}(\bq,\omega)$ (Eqs. (E.431)–(E.432)) keeps the frequency dependence that DFPT drops and acts on transverse as well as longitudinal photons, so in EPP "retardation" also means the finite speed of light (<a href="#x-light-cone">§X.1</a>). It is RPA without $f^{xc}$ and without crystal local fields (no $\bG,\bG'$ dependence from Eq. (E.380) on). For $c\to\infty$ its longitudinal projection becomes the scalar RPA function $1-v\Pi^{\rm e,0}_{\rho\rho}$, which at $\omega=0$ is (G.55) without local fields (<a href="#b-electrostatic">§B.9</a>). And EPP cannot take DFPT force constants as they come: which part of them may be combined with photon exchange is its double-counting rule, set out in <a href="#b-foundations">§B.1</a>.</p></div>
+
+  <h3>Second order: the Debye–Waller matrix element</h3>
+  <p>Expanding $V^{\rm KS}$ to first order while expanding the energy (G.12) to second order is "somewhat inconsistent" (Allen and Heine, 1976; Allen, 1978), so the Hamiltonian (G.1) also carries the second-order term (G.39), with</p>
+  <div class="eq">$$g^{\rm DW}_{mn\nu\nu'}(\bk,\bq,\bq')=\tfrac12\langle u_{m\bk+\bq+\bq'}|\Delta_{\bq\nu}\Delta_{\bq'\nu'}v^{\rm KS}|u_{n\bk}\rangle_{\rm uc}. \tag{G.40}$$</div>
+  <p>It needs the second derivative of the self-consistent potential, hence second-order Sternheimer equations (Gonze, 1995). Because these are involved, practical implementations express $g^{\rm DW}$ through products of the first-order $g_{mn\nu}(\bk,\bq)$, following Allen and Heine (1976) and Allen and Cardona (1981). According to Giustino, all recent DFPT calculations of electron–phonon effects use this approach (Giustino §IX.A.1; <a href="#a-electron-se">§A.7</a>, <a href="#a-temperature">§A.8</a>).</p>
+
+  <div class="callout source"><p class="callout-title">Note on the source · notation in §III.B</p><p>Notational slips in (G.55), (G.56) and (G.60), the $\Omega$ normalization of $\chi^0_{\bG\bG'}$ that (G.56) implies, and the name "screening length" for $k_{\rm TF}$ are listed in <a href="#z-errata">Z.2</a>; none changes the equations as displayed here. Two smaller points: (G.49) writes $\partial n_{\kappa\alpha,\bq}$ for the $\partial_{\kappa\alpha,\bq}n$ of (G.44)–(G.45), and $V_\kappa(\bq+\bG)$ in (G.43) needs an all-space integral with the $\Omega^{-1}$ prefactor. (G.57), (G.58) and (G.61) carry $N_p$ inside the square root; see <a href="#a-coupling">§A.2</a>.</p></div>
+</section>
+<script>
+(() => {
+  const sec = document.getElementById('a-dfpt');
+  if (!sec || !window.EPP) return;
+  // Lindhard function F(x), x = q/2kF (G.4)
+  const F = (x) => {
+    if (x < 1e-4) return 1 - x * x / 3;
+    if (Math.abs(x - 1) < 1e-9) return 0.5;
+    return 0.5 + (1 - x * x) / (4 * x) * Math.log(Math.abs((1 + x) / (1 - x)));
+  };
+  const a0 = 0.529177, E2 = 14.3996; // Å; e^2/4πε0 in eV Å
+  const TF2 = (rs) => 4 * rs / (Math.PI * 1.91916); // (k_TF/k_F)^2 = 4/(π kF a0)
+  // K χ0 for one Fourier component at x = q/kF (RPA, or toy exchange-only LDA kernel)
+  const kchi = (x, rs, xc) => { const a = -TF2(rs) / (x * x) * F(x / 2); return xc ? a * (1 - x * x / 4) : a; };
+
+  // ---------- diagrams: dressed vertex = bare vertex + bubble chain ----------
+  const draw = (id, spec) => { const el = document.getElementById(id); if (el) EPP.fd.draw(el, spec); };
+  const legs = (x, lab, off = 2) => [
+    { t: 'fermion', a: [x + 40, 100], b: [x + off, 55 + off], label: lab ? 'k' : null, ldist: 11 },
+    { t: 'fermion', a: [x + off, 55 - off], b: [x + 40, 10], label: lab ? 'k+q' : null, ldist: 15 },
+  ];
+  const bubble = (x0, x1) => [
+    { t: 'fermion', a: [x0, 55], b: [x1, 55], bend: 0.48 },
+    { t: 'fermion', a: [x1, 55], b: [x0, 55], bend: 0.48 },
+    { t: 'text', at: [(x0 + x1) / 2, 60], text: 'χ^0', size: 13, color: 'electron-t' },
+    { t: 'vertex', at: [x0, 55], r: 2.6 }, { t: 'vertex', at: [x1, 55], r: 2.6 },
+  ];
+  draw('a-dfpt-fd-dressed', { w: 104, h: 110, label: 'Dressed electron-phonon vertex g', items: [
+    { t: 'phonon', a: [4, 55], b: [44, 55], label: 'qν' },
+    ...legs(56, true, 8.5),
+    { t: 'blob', at: [56, 55], r: 12, label: 'g', color: 'ink' },
+  ]});
+  draw('a-dfpt-fd-bare', { w: 100, h: 110, label: 'Bare electron-phonon vertex g^b', items: [
+    { t: 'phonon', a: [4, 55], b: [52, 55], label: 'qν' },
+    ...legs(52, false),
+    { t: 'vertex', at: [52, 55], r: 3.4 },
+    { t: 'text', at: [40, 80], text: 'g^b', size: 13 },
+  ]});
+  draw('a-dfpt-fd-one', { w: 170, h: 110, label: 'Bare vertex followed by one bubble and one interaction line', items: [
+    { t: 'phonon', a: [4, 55], b: [38, 55] },
+    ...bubble(38, 84),
+    { t: 'coulomb', a: [84, 55], b: [122, 55], label: 'K' },
+    ...legs(122, false),
+    { t: 'vertex', at: [122, 55], r: 2.6 },
+  ]});
+  draw('a-dfpt-fd-two', { w: 254, h: 110, label: 'Bare vertex followed by two bubbles and two interaction lines', items: [
+    { t: 'phonon', a: [4, 55], b: [38, 55] },
+    ...bubble(38, 84),
+    { t: 'coulomb', a: [84, 55], b: [122, 55], label: 'K' },
+    ...bubble(122, 168),
+    { t: 'coulomb', a: [168, 55], b: [206, 55], label: 'K' },
+    ...legs(206, false),
+    { t: 'vertex', at: [206, 55], r: 2.6 },
+  ]});
+
+  // ---------- Figure 1: the SCF loop as a geometric series ----------
+  const f1 = document.getElementById('viz-a-dfpt-scf');
+  if (f1) {
+    const NIT = 40, YMAX = 1e2, YMIN = 1e-4;
+    const pA = new EPP.Plot(f1.querySelector('.plotA'), {
+      xlabel: 'SCF cycle n', ylabel: '|∂v_n / ∂v^{en}|', xlim: [0, NIT], ylim: [YMIN, YMAX], logy: true, aspect: 0.74,
+      xname: 'n', hoverX: (v) => String(Math.round(v)), hoverY: (v) => EPP.fmt(v, 4),
+      ariaLabel: 'Magnitude of the SCF iterate of the screened perturbation versus cycle number on a log axis, with the exact fixed point one over epsilon',
+    });
+    const pB = new EPP.Plot(f1.querySelector('.plotB'), {
+      xlabel: 'q / k_F', ylabel: 'r = 1 − β(q) ε(q)', xlim: [0, 3], ylim: [-3, 1.2], aspect: 0.74,
+      xname: 'q/k_F', hoverX: (v) => EPP.fix(v, 2), hoverY: (v) => EPP.fix(v, 3),
+      ariaLabel: 'Contraction factor r versus q over kF for plain and Kerker mixing, with the convergence band |r| < 1',
+    });
+    const ro1 = EPP.readout(f1.querySelector('.ro'));
+    const xs = EPP.linspace(0.02, 3, 400);
+    const draw1 = (s) => {
+      const x = s.q, rs = s.rs, xc = !!s.xc, ker = s.mix === 'kerker';
+      const q02 = TF2(rs);
+      const betaOf = (xq) => (ker ? s.beta * xq * xq / (xq * xq + q02) : s.beta);
+      const eps = 1 - kchi(x, rs, xc), b = betaOf(x), r = 1 - b * eps, vstar = 1 / eps;
+      // iterates δv_n / δv_en = 1/ε + r^n (1 − 1/ε)  (closed form of the mixing recursion from δv_0 = δv_en)
+      const nn = [], yy = [], pos = { x: [], y: [] }, neg = { x: [], y: [] };
+      let firstOut = -1;
+      for (let n = 0; n <= NIT; n++) {
+        const val = vstar + Math.pow(r, n) * (1 - vstar), a = Math.abs(val);
+        nn.push(n);
+        if (!isFinite(a) || a > YMAX * 1.5) { yy.push(NaN); if (firstOut < 0) firstOut = n; continue; }
+        if (a < YMIN) { yy.push(NaN); continue; }
+        yy.push(a);
+        (val >= 0 ? pos : neg).x.push(n); (val >= 0 ? pos : neg).y.push(a);
+      }
+      const LA = [
+        { type: 'hline', at: vstar, color: 'photon', dash: [6, 4], width: 1.6, text: '1/ε = ' + EPP.fmt(vstar, 3), textAt: 'right', label: 'exact fixed point 1/ε (G.53)' },
+        { type: 'line', x: nn, y: yy, color: 'electron', width: 1.4, label: 'SCF iterate', breakJump: Infinity },
+        { type: 'points', x: pos.x, y: pos.y, color: 'electron', r: 3.2 },
+        { type: 'points', x: neg.x, y: neg.y, color: 'electron', r: 3.2, hollow: true },
+      ];
+      if (Math.abs(r) >= 1) LA.push({ type: 'text', x: firstOut >= 0 ? Math.min(Math.max(firstOut + 0.6, 2), 22) : 2, y: 30, text: 'diverges: |r| = ' + EPP.fmt(Math.abs(r), 3), color: 'ink', size: 12 });
+      else LA.push({ type: 'text', x: 39, y: 30, text: 'converges: |r| = ' + EPP.fmt(Math.abs(r), 3), color: 'ink', size: 12, align: 'right' });
+      pA.draw(LA);
+
+      const rP = xs.map((xq) => Math.max(-60, 1 - s.beta * (1 - kchi(xq, rs, xc))));
+      const rK = xs.map((xq) => Math.max(-60, 1 - s.beta * xq * xq / (xq * xq + q02) * (1 - kchi(xq, rs, xc))));
+      const curCol = ker ? 'c5' : 'electron';
+      const LB = [
+        { type: 'hband', y0: -1, y1: 1, color: 'c4', alpha: 0.1 },
+        { type: 'text', x: 2.95, y: -0.8, text: 'converges: |r| < 1', color: 'c4', size: 11.5, align: 'right' },
+        { type: 'line', x: xs, y: rP, color: 'electron', label: 'plain mixing', dash: ker ? [6, 4] : null, breakJump: Infinity },
+        { type: 'line', x: xs, y: rK, color: 'c5', label: 'Kerker', dash: ker ? null : [6, 4], breakJump: Infinity },
+        { type: 'vline', at: x, color: 'muted', text: 'q' },
+        { type: 'text', x: 2.95, y: -1.3, text: 'r < −1: charge sloshing', color: 'electron', size: 11.5, align: 'right' },
+      ];
+      // current r: a point if on scale, otherwise an arrow pointing down with its value
+      if (r >= -3) LB.push({ type: 'points', x: [x], y: [r], color: curCol, r: 4.5 });
+      else LB.push(
+        { type: 'arrow', x0: x, y0: -2.25, x1: x, y1: -2.95, color: curCol, width: 2 },
+        { type: 'text', x: 2.95, y: -2.7, text: 'r at q = ' + EPP.fmt(r, 3) + ' (off scale)', color: curCol, size: 11.5, align: 'right' },
+      );
+      pB.draw(LB);
+
+      let conv;
+      if (Math.abs(r) < 1) {
+        const e0 = Math.abs(eps - 1);
+        conv = e0 < 1e-6 ? '0' : (Math.abs(r) < 1e-12 ? '1' : String(Math.max(1, Math.ceil(Math.log(1e-6 / e0) / Math.log(Math.abs(r))))));
+      } else conv = 'never (diverges)';
+      const bmax = ker ? 2 * (x * x + q02) / (x * x * eps) : 2 / eps;
+      ro1.set({
+        'ε(q)': EPP.fmt(eps, 4),
+        '1/ε': EPP.fmt(vstar, 3),
+        'β(q)': EPP.fmt(b, 3),
+        'r': EPP.fmt(r, 3),
+        'cycles to 10^{−6}': conv,
+        [ker ? 'stable for β_0 <' : 'stable for β <']: EPP.fmt(bmax, 3),
+      });
+    };
+    EPP.controls(f1.querySelector('.ctrls'), [
+      { key: 'q', type: 'range', label: 'phonon wavevector q/k_F', min: 0.05, max: 3, step: 0.01, value: 0.5, fmt: (v) => v.toFixed(2) },
+      { key: 'rs', type: 'range', label: 'electron density r_s', min: 1, max: 6, step: 0.01, value: 3.93, fmt: (v) => v.toFixed(2) + (Math.abs(v - 3.93) < 0.006 ? ' (Na)' : '') },
+      { key: 'beta', type: 'range', label: 'mixing β (Kerker: β_0)', min: 0.05, max: 1.5, step: 0.01, value: 0.15, fmt: (v) => v.toFixed(2) },
+      { key: 'mix', type: 'seg', label: 'mixing scheme', options: [['plain', 'plain'], ['kerker', 'Kerker']], value: 'plain' },
+      { key: 'xc', type: 'toggle', label: 'toy xc kernel f_x (test electron)', value: false },
+    ], draw1);
+  }
+
+  // ---------- Figure 2: bare vs screened perturbation of a displaced ion ----------
+  const f2 = document.getElementById('viz-a-dfpt-cloud');
+  if (f2) {
+    const RMAX = 10;
+    const pL = new EPP.Plot(f2.querySelector('.plotA'), {
+      xlabel: 'q / k_F', ylabel: '1 / ε(q)', xlim: [0, 3], ylim: [0, 1.15], aspect: 0.74,
+      xname: 'q/k_F', hoverX: (v) => EPP.fix(v, 2), hoverY: (v) => EPP.fix(v, 3),
+      ariaLabel: 'Inverse static dielectric function versus q over kF: Thomas-Fermi, Lindhard RPA and Lindhard with a toy exchange kernel',
+    });
+    const pR = new EPP.Plot(f2.querySelector('.plotB'), {
+      xlabel: 'distance from the ion r (Å)', ylabel: 'S(r) = screened / bare', xlim: [0, RMAX], ylim: [-0.25, 1.1], aspect: 0.74,
+      xname: 'r (Å)', hoverX: (v) => EPP.fix(v, 2), hoverY: (v) => EPP.fix(v, 3),
+      ariaLabel: 'Screened dipole perturbation of a displaced ion relative to the bare one versus distance',
+    });
+    const ro2 = EPP.readout(f2.querySelector('.ro'));
+    const qx = EPP.linspace(0.005, 3, 500);
+    const rr = EPP.linspace(0.02, RMAX, 240);
+    const cache = new Map();
+    // S(r) = 1 + (2/π) ∫ dq [1/ε(q) − 1][sin(qr)/q − r cos(qr)]  (trapezoid with a rotation recurrence)
+    const Sprof = (rs, xc) => {
+      const key = rs.toFixed(3) + (xc ? 'x' : 'r');
+      if (cache.has(key)) return cache.get(key);
+      const kF = 1.91916 / (rs * a0), kT2 = 4 * kF / (Math.PI * a0);
+      const N = 3000, dq = 12 * kF / (N - 1);
+      const c = xc ? kT2 / 3 : 0, kap = 2 * kF; // toy-xc tail c/(q^2+κ^2) handled analytically
+      const h = new Float64Array(N);
+      for (let j = 1; j < N; j++) {
+        const q = j * dq; let a = kT2 / (q * q) * F(q / (2 * kF));
+        if (xc) a *= 1 - q * q / (4 * kF * kF);
+        h[j] = 1 / (1 + a) - 1 - (c ? c / (q * q + kap * kap) : 0);
+      }
+      const out = new Float64Array(rr.length);
+      for (let i = 0; i < rr.length; i++) {
+        const r = rr[i], cs = Math.cos(dq * r), sn = Math.sin(dq * r);
+        let s = sn, co = cs, sum = 0;
+        for (let j = 1; j < N; j++) {
+          const q = j * dq, w = j === N - 1 ? 0.5 : 1;
+          sum += w * h[j] * (s / q - r * co);
+          const s2 = s * cs + co * sn; co = co * cs - s * sn; s = s2;
+        }
+        let I = sum * dq;
+        if (c) I += c * Math.PI / (2 * kap * kap) * (1 - Math.exp(-kap * r) * (1 + kap * r));
+        out[i] = 1 + 2 / Math.PI * I;
+      }
+      if (cache.size > 60) cache.clear();
+      cache.set(key, out);
+      return out;
+    };
+    const interp = (arr, r) => { if (r <= rr[0]) return arr[0]; let i = 0; while (i < rr.length - 2 && rr[i + 1] < r) i++; const t = (r - rr[i]) / (rr[i + 1] - rr[i]); return arr[i] + t * (arr[i + 1] - arr[i]); };
+    const PRE = { Al: [2.07, '3'], Na: [3.93, '1'], K: [4.86, '1'] };
+    let lastPre = 'Na', ui2 = null;
+    const draw2 = (s) => {
+      const rs = s.rs, Z = +s.Z || 1;
+      const kF = 1.91916 / (rs * a0), kTF = Math.sqrt(4 * kF / (Math.PI * a0)), eF = Math.pow(1.91916 / rs, 2) * 13.6057;
+      const t2 = TF2(rs);
+      const iTF = qx.map((x) => 1 / (1 + t2 / (x * x)));
+      const iR = qx.map((x) => 1 / (1 - kchi(x, rs, false)));
+      const iX = qx.map((x) => 1 / (1 - kchi(x, rs, true)));
+      pL.draw([
+        { type: 'vline', at: 2, color: 'muted', text: '2k_F' },
+        { type: 'line', x: qx, y: iTF, color: 'muted', dash: [2, 3], label: 'Thomas–Fermi' },
+        { type: 'line', x: qx, y: iR, color: 'electron', label: 'test charge: Lindhard RPA (G.55)' },
+        { type: 'line', x: qx, y: iX, color: 'c5', dash: [6, 4], label: 'test electron: toy xc (G.54)' },
+      ]);
+      const SR = Sprof(rs, false), SX = Sprof(rs, true);
+      const STF = rr.map((r) => (1 + kTF * r) * Math.exp(-kTF * r));
+      const rws = Math.cbrt(Z) * rs * a0;
+      const zoom = s.view === 'zoom';
+      pR.draw([
+        { type: 'hline', at: 1, color: 'ink', dash: [5, 4], text: 'bare ion: S = 1', textAt: 'right' },
+        { type: 'vline', at: rws, color: 'muted', text: 'r_{WS}', textDy: 16 },
+        { type: 'line', x: rr, y: STF, color: 'muted', dash: [2, 3], label: 'Thomas–Fermi' },
+        { type: 'line', x: rr, y: Array.from(SR), color: 'electron', label: 'test charge (RPA)' },
+        { type: 'line', x: rr, y: Array.from(SX), color: 'c5', dash: [6, 4], label: 'test electron (toy xc)' },
+        zoom ? { type: 'text', x: RMAX - 0.2, y: 0.17, text: 'Friedel period π/k_F = ' + EPP.fix(Math.PI / kF, 2) + ' Å', color: 'muted', size: 11.5, align: 'right' } : null,
+      ], { ylim: zoom ? [-0.2, 0.2] : [-0.25, 1.1] });
+      const bare = Z * E2 / (rws * rws);
+      ro2.set({
+        'k_F': EPP.fix(kF, 2) + ' Å<sup>−1</sup>',
+        'ε_F': EPP.fix(eF, 2) + ' eV',
+        '1/k_{TF}': EPP.fix(1 / kTF, 2) + ' Å',
+        'π/k_F': EPP.fix(Math.PI / kF, 2) + ' Å',
+        '|∂v/∂τ| at r_{WS} = ': EPP.fix(rws, 2) + ' Å: bare ' + EPP.fix(bare, 2) + ', RPA ' + EPP.fix(Math.abs(interp(SR, rws)) * bare, 2) + ', toy xc ' + EPP.fix(Math.abs(interp(SX, rws)) * bare, 2) + ' eV/Å',
+      });
+    };
+    ui2 = EPP.controls(f2.querySelector('.ctrls'), [
+      { key: 'pre', type: 'seg', label: 'simple metal', options: [['Al', 'Al'], ['Na', 'Na'], ['K', 'K'], ['custom', 'custom']], value: 'Na' },
+      { key: 'rs', type: 'range', label: 'electron density r_s', min: 1, max: 6, step: 0.01, value: 3.93, fmt: (v) => v.toFixed(2) },
+      { key: 'Z', type: 'seg', label: 'ionic valence Z', options: [['1', '1'], ['2', '2'], ['3', '3']], value: '1' },
+      { key: 'view', type: 'seg', label: 'S(r) axis', options: [['full', 'full'], ['zoom', 'zoom on tail']], value: 'full' },
+    ], (s) => {
+      if (ui2) {
+        const p = PRE[s.pre];
+        if (s.pre !== lastPre && p) { ui2.set('rs', p[0], true); ui2.set('Z', p[1], true); }
+        else if (p && (Math.abs(s.rs - p[0]) > 1e-6 || s.Z !== p[1])) ui2.set('pre', 'custom', true);
+        lastPre = ui2.state.pre;
+      }
+      draw2(s);
+    });
+  }
+})();
+</script>

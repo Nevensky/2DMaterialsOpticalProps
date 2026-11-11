@@ -1,0 +1,440 @@
+  <figure class="viz" id="viz-b2-lorentz">
+    <p class="viz-title">An electron moved by the vector potential alone <span class="tag">interactive</span></p>
+    <div class="b2-lorentz-h" style="font-family:var(--font-ui);font-size:0.82rem;font-weight:600;line-height:1.35;color:var(--fg-2);margin:0 0 4px">(a) The path in the $x$–$y$ plane and the momenta of the electron at time $t$</div>
+    <div class="b2-lorentz-path"></div>
+    <div class="b2-lorentz-h" style="font-family:var(--font-ui);font-size:0.82rem;font-weight:600;line-height:1.35;color:var(--fg-2);margin:14px 0 4px">(b) Kinetic and canonical momentum components against time</div>
+    <div class="b2-lorentz-mom"></div>
+    <div class="legend b2-lorentz-leg"><span class="item" style="color:var(--c-electron)"><span class="sw"></span><span style="color:var(--fg-2)">$m_{\mathrm e}v_x$</span></span><span class="item" style="color:var(--c-electron)"><span class="sw dash"></span><span style="color:var(--fg-2)">$p_x$</span></span><span class="item" style="color:var(--c-4)"><span class="sw"></span><span style="color:var(--fg-2)">$m_{\mathrm e}v_y$</span></span><span class="item" style="color:var(--c-4)"><span class="sw dot"></span><span style="color:var(--fg-2)">$p_y$</span></span></div>
+    <div class="b2-lorentz-time"></div>
+    <div class="b2-lorentz-ctrls"></div>
+    <div class="readout b2-lorentz-ro" aria-live="polite"><span>$\hbar\omega_{\mathrm c}$<b class="b2-lorentz-v-hwc"></b></span><span>$\omega/\omega_{\mathrm c}$<b class="b2-lorentz-v-ratio"></b></span><span>$t$<b class="b2-lorentz-v-t"></b></span><span>farthest from the start<b class="b2-lorentz-v-r"></b></span><span>peak $v/c$<b class="b2-lorentz-v-vc"></b></span></div>
+    <div class="readout b2-lorentz-ro2" aria-live="polite"><span>at $t$, in units of $eE_0/\omega$:</span><span>$m_{\mathrm e}\mathbf v$<b class="b2-lorentz-v-mv"></b></span><span>$-(e/c)\bA$<b class="b2-lorentz-v-fa"></b></span><span>$\mathbf p$<b class="b2-lorentz-v-p"></b></span><span>conserved<b class="b2-lorentz-v-cons"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> The kinetic momentum $m_{\mathrm e}\mathbf v$ and the canonical momentum $\mathbf p=m_{\mathrm e}\mathbf v-\frac ec\bA$ differ. $p_y$ never changes, because $\bA$ does not depend on <span class="nw">$y$;</span> with <span class="nw">$B=0$,</span> $p_x$ is constant too, and $m_{\mathrm e}\mathbf v$ equals $\frac ec\bA(t)$ at every instant.</p><div class="cap-more"><p><strong>Marks.</strong> One electron, so the label $s$ is dropped. In (a) its momenta share one scale (arrow at the bottom left): $m_{\mathrm e}\mathbf v$ (blue), the term $-\frac ec\bA$ at the electron (rose) and their sum $\mathbf p$ (dashed); dotted lines complete the parallelogram. Faint line: the path over six drive periods <span class="nw">$2\pi/\omega$;</span> solid: the part travelled; ring: the start. ⊙ marks <span class="nw">$\bB$,</span> out of the page; top left, the uniform field <span class="nw">$\bE(t)$.</span> In (b), solid lines are kinetic and broken lines canonical components.</p><p><strong>Try.</strong> (1) Set <span class="nw">$B=0$:</span> the path is a segment along <span class="nw">$x$,</span> $\mathbf p$ stays zero, and $m_{\mathrm e}v_x$ oscillates as <span class="nw">$-\sin\omega t$.</span> (2) Set <span class="nw">$B=4.3$ T</span> at <span class="nw">$\hbar\omega=0.5$ meV,</span> where <span class="nw">$\omega=\omega_{\mathrm c}$:</span> the orbit spirals outward (cyclotron resonance), and $p_y$ still stays zero. (3) Raise $\hbar\omega$ to <span class="nw">2 meV:</span> the path shrinks to a few nanometres. Click the path or drag in (b) to move in time.</p><p><strong>Model.</strong> A free electron <span class="nw">($V^{\mathrm{en}}_0=0$)</span> starts at rest at the origin in <span class="nw">$\bA=-\frac{cE_0}\omega\sin(\omega t)\,\hat{\mathbf x}+Bx\,\hat{\mathbf y}$.</span> By <a class="eqref" href="#b2-eq-gauge">(B2.2)</a> its change in time gives $\bE=E_0\cos(\omega t)\,\hat{\mathbf x}$ and its change with $x$ gives <span class="nw">$\bB=B\hat{\mathbf z}$;</span> this form, one of many with <span class="nw">$A_0=0$,</span> makes the Lagrangian independent of <span class="nw">$y$.</span> The path solves <a class="eqref" href="#b2-eq-lorentz">(B2.16)</a> by fourth-order Runge–Kutta, and $\mathbf p$ is <a class="eqref" href="#b2-eq-ps">(B2.15)</a>. With <span class="nw">$E_0=1$ kV/cm</span> (the motion is linear in $E_0$), speeds stay below 1% of $c$ (at most <span class="nw">$v/c=7\times10^{-3}$),</span> so the nonrelativistic Lagrangian holds.</p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b2-lorentz');
+  if (!fig || !window.EPP) return;
+  // previewed outside Section B.2 (the isolated figure test), the caption's links have no target: keep their text, drop the link
+  if (!fig.closest('#b-lagrangian')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+  // ---------- physics ----------
+  // Gaussian A = -(cE0/ω) sin(ωt) x̂ + B x ŷ, i.e. A_SI = A/c = -(E0/ω) sin(ωt) x̂ + B x ŷ (B in tesla): E = E0 cos(ωt) x̂, B = B ẑ.
+  // Lorentz equation (B2.16) with V0 = 0 for the charge -e (SI): dv_x/dt = -(e/m) E0 cos ωt - ω_c v_y, dv_y/dt = ω_c v_x, ω_c = eB/m.
+  // Canonical momentum (B2.15), SI form p = m v - e A_SI: p_x = m v_x + (eE0/ω) sin ωt, p_y = m v_y - eB x.
+  // Integrated in dimensionless form: phase θ = ωt, lengths in L0 = eE0/(m ω²), velocities in u0 = eE0/(m ω), momenta in eE0/ω,
+  // r = ω_c/ω:  X'' = -cos θ - r Y',  Y'' = r X';  the field term -(e/c)A at the electron is (sin θ, -r X), and p = m v + (sin θ, -r X).
+  const QE = 1.602176634e-19, ME = 9.1093837015e-31, HBAR = 1.054571817e-34, CL = 2.99792458e8;
+  const E0 = 1e5;                                   // V/m, i.e. 1 kV/cm
+  const HWC = HBAR * QE / ME / (1e-3 * QE);         // ħω_c per tesla in meV (0.11577)
+  const NPER = 6, SPP = 1200, NS = NPER * SPP, DEC = 4; // six drive periods, RK4 steps per period, decimation for (b)
+  const SEC = 2, HOLD = 0.8, T_INIT = 2.55;          // animation: seconds per drive period, pause at the end; initial time
+  const TAU = 2 * Math.PI;
+
+  function compute(B, hw) {
+    const w = hw * 1e-3 * QE / HBAR, r = (QE * B / ME) / w;
+    const L0 = QE * E0 / (ME * w * w) * 1e9, U0 = QE * E0 / (ME * w), Tps = TAU / w * 1e12;
+    const X = new Float64Array(NS + 1), Y = new Float64Array(NS + 1), VX = new Float64Array(NS + 1), VY = new Float64Array(NS + 1);
+    const h = TAU / SPP, h2 = h / 2, h6 = h / 6;
+    let x = 0, y = 0, u = 0, v = 0;
+    for (let i = 0; i <= NS; i++) {
+      X[i] = x; Y[i] = y; VX[i] = u; VY[i] = v;
+      if (i === NS) break;
+      // RK4 for (x, y, u, v)' = (u, v, -cos θ - r v, r u); the fields are uniform, so the force does not depend on x, y
+      const t = i * h, c0 = -Math.cos(t), c1 = -Math.cos(t + h2), c2 = -Math.cos(t + h);
+      const a1 = c0 - r * v, b1 = r * u;
+      const u2 = u + h2 * a1, v2 = v + h2 * b1, a2 = c1 - r * v2, b2 = r * u2;
+      const u3 = u + h2 * a2, v3 = v + h2 * b2, a3 = c1 - r * v3, b3 = r * u3;
+      const u4 = u + h * a3, v4 = v + h * b3, a4 = c2 - r * v4, b4 = r * u4;
+      x += h6 * (u + 2 * u2 + 2 * u3 + u4); y += h6 * (v + 2 * v2 + 2 * v3 + v4);
+      u += h6 * (a1 + 2 * a2 + 2 * a3 + a4); v += h6 * (b1 + 2 * b2 + 2 * b3 + b4);
+    }
+    const FX = new Float64Array(NS + 1), FY = new Float64Array(NS + 1), PX = new Float64Array(NS + 1), PY = new Float64Array(NS + 1);
+    let x0 = 0, x1 = 0, y0 = 0, y1 = 0, pext = 0, ym = 0, vm = 0, rm = 0;
+    for (let i = 0; i <= NS; i++) {
+      FX[i] = Math.sin(i * h); FY[i] = -r * X[i]; PX[i] = VX[i] + FX[i]; PY[i] = VY[i] + FY[i];
+      const xn = X[i] * L0, yn = Y[i] * L0;
+      if (xn < x0) x0 = xn; if (xn > x1) x1 = xn; if (yn < y0) y0 = yn; if (yn > y1) y1 = yn;
+      const sp = Math.sqrt(VX[i] * VX[i] + VY[i] * VY[i]);
+      vm = Math.max(vm, sp); rm = Math.max(rm, Math.sqrt(xn * xn + yn * yn));
+      pext = Math.max(pext, sp, Math.sqrt(FX[i] * FX[i] + FY[i] * FY[i]), Math.sqrt(PX[i] * PX[i] + PY[i] * PY[i]));
+      ym = Math.max(ym, Math.abs(VX[i]), Math.abs(VY[i]), Math.abs(PX[i]), Math.abs(PY[i]));
+    }
+    const nd = NS / DEC + 1, TT = new Float64Array(nd), D = [new Float64Array(nd), new Float64Array(nd), new Float64Array(nd), new Float64Array(nd)];
+    for (let j = 0; j < nd; j++) { const i = j * DEC; TT[j] = i / SPP; D[0][j] = VX[i]; D[1][j] = VY[i]; D[2][j] = PX[i]; D[3][j] = Math.abs(PY[i]) < 1e-12 ? 0 : PY[i]; }
+    return { B, hw, r, L0, U0, Tps, X, Y, VX, VY, FX, FY, PX, PY, bb: [x0, x1, y0, y1], pext: pext || 1, ym, vc: vm * U0 / CL, rm, TT, D };
+  }
+
+  // ---------- formatting and canvas text ----------
+  const fx = (v, d) => EPP.fix(Math.abs(v) < 0.5 * Math.pow(10, -d) ? 0 : v, d);
+  const pair = (a, b) => `(${fx(a, 2)}, ${fx(b, 2)})`;
+  const sci = (v) => { if (!(v > 0)) return '0'; const e = Math.floor(Math.log10(v)), m = v / Math.pow(10, e); return `${m.toFixed(1)} × 10<sup>${e < 0 ? '−' + (-e) : e}</sup>`; };
+  const lenTxt = (nm) => (nm >= 1000 ? `${EPP.fmt(nm / 1000, 3)} μm` : `${EPP.fmt(nm, nm < 10 ? 2 : 3)} nm`);
+  const niceStep = (v) => { const m = Math.pow(10, Math.floor(Math.log10(v))), f = v / m; return (f < 1.5 ? 1 : f < 3.5 ? 2 : f < 7.5 ? 5 : 10) * m; };
+  function niceCeil(v) {
+    if (!(v > 0) || !isFinite(v)) return 1;
+    const mag = Math.pow(10, Math.floor(Math.log10(v))), q = v / mag;
+    return ([1, 1.2, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10].find(s => s >= q - 1e-9) || 10) * mag;
+  }
+  // '$..$' = italic symbol in the text font, '*..*' = bold vector; sub- and superscripts follow EPP.drawRich
+  const parse = s => s.split(/(\$[^$]*\$|\*[^*]*\*)/).filter(Boolean).map(t => (t[0] === '$' ? [t.slice(1, -1), 'i'] : t[0] === '*' ? [t.slice(1, -1), 'b'] : [t, '']));
+  const pOpt = (p, size) => (p[1] === 'i' ? { size: /^[_^]/.test(p[0]) ? size : size + 1, font: EPP.css('--font-text'), italic: true } : { size, font: EPP.css('--font-ui'), bold: p[1] === 'b' });
+  const rtW = (ctx, s, size) => parse(s).reduce((w, p) => { const o = pOpt(p, size); return w + EPP.measureRich(ctx, p[0], o.size, o.font, o); }, 0);
+  const rt = (ctx, s, x, y, size, align) => {
+    const tot = rtW(ctx, s, size);
+    let x0 = align === 'center' ? x - tot / 2 : align === 'right' ? x - tot : x;
+    for (const p of parse(s)) { const o = pOpt(p, size); x0 += EPP.drawRich(ctx, p[0], x0, y, o); }
+    return tot;
+  };
+  // a label on a translucent plate, centred at (cx, cy)
+  function plate(ctx, s, cx, cy, size, col) {
+    const w = rtW(ctx, s, size), bw = w + 6, bh = size + 7;
+    ctx.fillStyle = EPP.alpha('surface', 0.84);
+    ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(cx - bw / 2, cy - bh / 2, bw, bh, 3); else ctx.rect(cx - bw / 2, cy - bh / 2, bw, bh); ctx.fill();
+    ctx.fillStyle = col; ctx.textBaseline = 'alphabetic'; rt(ctx, s, cx - w / 2, cy + size * 0.36, size);
+  }
+  function arrow(ctx, x0, y0, x1, y1, col, lw, head, dash) {
+    const L = Math.hypot(x1 - x0, y1 - y0);
+    if (L < 1) return;
+    const hs = Math.min(head, 0.55 * L), a = Math.atan2(y1 - y0, x1 - x0);
+    const xs = x1 - 0.8 * hs * Math.cos(a), ys = y1 - 0.8 * hs * Math.sin(a);
+    ctx.lineCap = 'round';
+    // a halo in the surface colour keeps the arrow clear of the path and the grid underneath
+    ctx.strokeStyle = EPP.alpha('surface', 0.9); ctx.lineWidth = lw + 3; ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(xs, ys); ctx.stroke();
+    ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = lw; ctx.setLineDash(dash || []);
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(xs, ys); ctx.stroke(); ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(x1, y1);
+    ctx.lineTo(x1 - hs * Math.cos(a - 0.42), y1 - hs * Math.sin(a - 0.42));
+    ctx.lineTo(x1 - hs * Math.cos(a + 0.42), y1 - hs * Math.sin(a + 0.42));
+    ctx.closePath(); ctx.fill();
+  }
+  // label placer: first candidate around an anchor that stays on the canvas and clears placed labels and obstacle points
+  function placer(W, H) {
+    const boxes = [], pts = [];
+    const hit = (b, o, g) => b[0] < o[2] + g && b[2] > o[0] - g && b[1] < o[3] + g && b[3] > o[1] - g;
+    const free = (b) => b[0] >= 2 && b[1] >= 2 && b[2] <= W - 2 && b[3] <= H - 2 && !boxes.some(o => hit(b, o, 3)) &&
+      !pts.some(p => p[0] > b[0] - p[2] && p[0] < b[2] + p[2] && p[1] > b[1] - p[2] && p[1] < b[3] + p[2]);
+    const offs = [0, 0.45, -0.45, 0.9, -0.9, 1.35, -1.35, 1.8, -1.8, 2.3, -2.3, Math.PI];
+    return {
+      seg(x0, y0, x1, y1, rr = 2.5) { const n = Math.max(1, Math.ceil(Math.hypot(x1 - x0, y1 - y0) / 4)); for (let j = 0; j <= n; j++) pts.push([x0 + (x1 - x0) * j / n, y0 + (y1 - y0) * j / n, rr]); },
+      disc(x, y, rr) { pts.push([x, y, rr]); },
+      block(x0, y0, x1, y1) { boxes.push([x0, y0, x1, y1]); },
+      put(w, h, ax, ay, dir, gap = 4) {
+        for (const rr of [gap, gap + 9, gap + 20]) for (const o of offs) {
+          const a = dir + o, ca = Math.cos(a), sa = Math.sin(a);
+          const ext = Math.min((w / 2) / Math.max(Math.abs(ca), 1e-6), (h / 2) / Math.max(Math.abs(sa), 1e-6));
+          const cx = ax + ca * (ext + rr), cy = ay + sa * (ext + rr), b = [cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2];
+          if (free(b)) { boxes.push(b); return [cx, cy]; }
+        }
+        return null;
+      }
+    };
+  }
+
+  // ---------- panels ----------
+  const elA = fig.querySelector('.b2-lorentz-path'), elB = fig.querySelector('.b2-lorentz-mom');
+  const cvA = EPP.canvas(elA, { aspect: 1, minHeight: 280, maxHeight: 380 });
+  cvA.canvas.setAttribute('role', 'img');
+  const pB = new EPP.Plot(elB, {
+    xlim: [0, NPER], ylim: [-2, 2], aspect: 0.38, minHeight: 236, maxHeight: 290, legend: false,
+    margin: { l: 58, r: 14, t: 12, b: 44 }, xticks: [0, 1, 2, 3, 4, 5, 6], xname: 't',
+    hoverX: v => `${fx(v, 2)} periods`, hoverY: v => fx(v, 2),
+    ariaLabel: 'Panel b: the x and y components of the kinetic momentum m_e v and of the canonical momentum p over six drive periods, in units of e E0 over omega, with a vertical line at the current time'
+  });
+  const $v = (k) => fig.querySelector('.b2-lorentz-v-' + k);
+  const roV = {}; ['hwc', 'ratio', 't', 'r', 'vc', 'mv', 'fa', 'p', 'cons'].forEach(k => { roV[k] = $v(k); });
+  let cur = null, tau = T_INIT, hold = 0, anim = null, geo = null, labs = null, layersB = null;
+  const idx = () => EPP.clamp(Math.round(tau * SPP), 0, NS);
+
+  // geometry of (a), fixed for one parameter set and one canvas size: the view is fitted to the whole path
+  const TOPB = 30, BOTB = 30, SIDE = 8;
+  function geometry(W, H) {
+    if (geo && geo.W === W && geo.H === H && geo.c === cur) return geo;
+    const c = cur, [x0, x1, y0, y1] = c.bb;
+    const ax0 = SIDE, ax1 = W - SIDE, ay0 = TOPB, ay1 = H - BOTB, aw = ax1 - ax0, ah = ay1 - ay0;
+    const sx = x1 - x0, sy = y1 - y0, mg = 0.1 * Math.max(sx, sy, 1e-9);
+    const k = Math.min(aw / (sx + 2 * mg), ah / (sy + 2 * mg));
+    const ox = (ax0 + ax1) / 2 - k * (x0 + x1) / 2, oy = (ay0 + ay1) / 2 + k * (y0 + y1) / 2;
+    const PXs = new Float32Array(NS + 1), PYs = new Float32Array(NS + 1);
+    for (let i = 0; i <= NS; i++) { PXs[i] = ox + k * c.X[i] * c.L0; PYs[i] = oy - k * c.Y[i] * c.L0; }
+    const kp = 0.4 * Math.min(aw, ah) / c.pext;             // px per momentum unit eE0/ω
+    const g = niceStep(Math.max(aw, ah) / k / 6);            // grid step, nm
+    let bar = g; for (const f of [1, 2, 5, 10]) { bar = g * f; if (bar * k >= 34) break; }
+    let pu = 1; for (const f of [1, 2, 5, 10, 20, 50]) { pu = f; if (f * kp >= 24) break; }
+    if (kp > 150) pu = 0.5;
+    geo = { W, H, c, k, ox, oy, PXs, PYs, kp, g, bar, pu, area: [ax0, ay0, ax1, ay1] };
+    return geo;
+  }
+
+  function drawA() {
+    const cv = cvA, ctx = cv.ctx, W = cv.w, H = cv.h;
+    cv.clear();
+    if (!cur || W < 60) return;
+    const G = geometry(W, H), c = cur, i = idx(), [ax0, ay0, ax1, ay1] = G.area;
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted'), cEl = EPP.color('electron'), cPh = EPP.color('photon');
+    const X = (xn) => G.ox + G.k * xn, Y = (yn) => G.oy - G.k * yn;
+    ctx.save(); ctx.beginPath(); ctx.rect(0, 0, W, H); ctx.clip();
+    // grid, aligned with the origin
+    ctx.strokeStyle = EPP.color('grid'); ctx.lineWidth = 1; ctx.beginPath();
+    for (let n = Math.ceil(((ax0 - G.ox) / G.k) / G.g); G.ox + n * G.g * G.k <= ax1; n++) { const px = Math.round(G.ox + n * G.g * G.k) + 0.5; ctx.moveTo(px, ay0); ctx.lineTo(px, ay1); }
+    for (let n = Math.ceil(((G.oy - ay1) / G.k) / G.g); G.oy - n * G.g * G.k >= ay0; n++) { const py = Math.round(G.oy - n * G.g * G.k) + 0.5; ctx.moveTo(ax0, py); ctx.lineTo(ax1, py); }
+    ctx.stroke();
+    // the magnetic field: a sparse pattern of ⊙, out of the page
+    if (c.B > 0) {
+      const sp = 46, rr = 4.2;
+      ctx.lineWidth = 1; ctx.strokeStyle = EPP.alpha('muted', 0.42); ctx.fillStyle = EPP.alpha('muted', 0.55);
+      for (let yy = ay0 + sp / 2; yy < ay1; yy += sp) for (let xx = ax0 + sp / 2 + 11; xx < ax1; xx += sp) {
+        ctx.beginPath(); ctx.arc(xx, yy, rr, 0, TAU); ctx.stroke(); ctx.beginPath(); ctx.arc(xx, yy, 1.2, 0, TAU); ctx.fill();
+      }
+    }
+    // axes through the origin, where the electron starts
+    const Ox = X(0), Oy = Y(0);
+    ctx.strokeStyle = EPP.alpha('muted', 0.6); ctx.lineWidth = 1; ctx.beginPath();
+    ctx.moveTo(ax0, Math.round(Oy) + 0.5); ctx.lineTo(ax1, Math.round(Oy) + 0.5); ctx.moveTo(Math.round(Ox) + 0.5, ay0); ctx.lineTo(Math.round(Ox) + 0.5, ay1); ctx.stroke();
+    ctx.fillStyle = cMut; ctx.textBaseline = 'alphabetic';
+    rt(ctx, '$x$', ax1 - 9, Oy - 5, 12.5, 'center');
+    rt(ctx, '$y$', Ox + 8, ay0 + 11, 12.5, 'left');
+    // the whole path (faint) and the part travelled
+    ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    ctx.strokeStyle = EPP.alpha('electron', 0.4); ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(G.PXs[0], G.PYs[0]);
+    for (let j = 1; j <= NS; j++) ctx.lineTo(G.PXs[j], G.PYs[j]);
+    ctx.stroke();
+    if (i > 0) { ctx.strokeStyle = cEl; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(G.PXs[0], G.PYs[0]); for (let j = 1; j <= i; j++) ctx.lineTo(G.PXs[j], G.PYs[j]); ctx.stroke(); }
+    ctx.strokeStyle = cFg2; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(Ox, Oy, 4.5, 0, TAU); ctx.stroke();
+    // the three momenta at the electron, on one scale; dotted lines complete the parallelogram p = m_e v + (-(e/c)A)
+    const ex = G.PXs[i], ey = G.PYs[i], kp = G.kp;
+    const mv = [c.VX[i], c.VY[i]], fa = [c.FX[i], c.FY[i]], pp = [c.PX[i], c.PY[i]];
+    const tip = (m) => [ex + kp * m[0], ey - kp * m[1]];
+    const Tm = tip(mv), Tf = tip(fa), Tp = tip(pp);
+    const len = (T) => Math.hypot(T[0] - ex, T[1] - ey);
+    const pl = placer(W, H);
+    const show = [len(Tm) >= 6, len(Tf) >= 6, len(Tp) >= 6];
+    if (show[0] && show[1]) {
+      ctx.strokeStyle = EPP.alpha('muted', 0.85); ctx.lineWidth = 1; ctx.setLineDash([2, 3]); ctx.beginPath();
+      ctx.moveTo(Tm[0], Tm[1]); ctx.lineTo(Tp[0], Tp[1]); ctx.moveTo(Tf[0], Tf[1]); ctx.lineTo(Tp[0], Tp[1]); ctx.stroke(); ctx.setLineDash([]);
+    }
+    if (show[1]) { arrow(ctx, ex, ey, Tf[0], Tf[1], cPh, 1.9, 8); pl.seg(ex, ey, Tf[0], Tf[1]); }
+    if (show[0]) { arrow(ctx, ex, ey, Tm[0], Tm[1], cEl, 2.6, 9); pl.seg(ex, ey, Tm[0], Tm[1]); }
+    if (show[2]) { arrow(ctx, ex, ey, Tp[0], Tp[1], cFg, 1.9, 8, [5, 3]); pl.seg(ex, ey, Tp[0], Tp[1]); }
+    ctx.fillStyle = cEl; ctx.strokeStyle = EPP.color('surface'); ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(ex, ey, 5.5, 0, TAU); ctx.fill(); ctx.stroke();
+    pl.disc(ex, ey, 7); pl.disc(Ox, Oy, 6);
+    ctx.restore();
+    // top band: the uniform field E(t) = E0 cos(ωt) along x; the key for B
+    ctx.textBaseline = 'alphabetic';
+    const yb = 17, sE = '*E*($t$)', wE = rtW(ctx, sE, 12.5), Lb = 26, xa = 10 + wE + 10, xc = xa + Lb;
+    ctx.fillStyle = EPP.textColor('photon'); rt(ctx, sE, 10, yb + 4.5, 12.5);
+    ctx.strokeStyle = cMut; ctx.lineWidth = 1; ctx.beginPath();
+    ctx.moveTo(xa, yb); ctx.lineTo(xa + 2 * Lb, yb); ctx.moveTo(xa, yb - 3); ctx.lineTo(xa, yb + 3); ctx.moveTo(xc, yb - 4); ctx.lineTo(xc, yb + 4); ctx.moveTo(xa + 2 * Lb, yb - 3); ctx.lineTo(xa + 2 * Lb, yb + 3); ctx.stroke();
+    const cth = Math.cos(TAU * i / SPP);
+    if (Math.abs(cth) * Lb >= 3) arrow(ctx, xc, yb, xc + Lb * cth, yb, cPh, 2.4, 7); else { ctx.fillStyle = cPh; ctx.beginPath(); ctx.arc(xc, yb, 2.4, 0, TAU); ctx.fill(); }
+    pl.block(0, 0, xa + 2 * Lb + 6, TOPB - 2);
+    ctx.fillStyle = cFg2;
+    if (c.B > 0) {
+      let sB = '*B*, out of the page', wB = rtW(ctx, sB, 12);
+      if (W - 10 - wB - 18 < xa + 2 * Lb + 14) { sB = '*B*, out of page'; wB = rtW(ctx, sB, 12); }
+      rt(ctx, sB, W - 10, yb + 4.5, 12, 'right');
+      const gx = W - 10 - wB - 10;
+      ctx.strokeStyle = cMut; ctx.lineWidth = 1.1; ctx.beginPath(); ctx.arc(gx, yb, 4.2, 0, TAU); ctx.stroke();
+      ctx.fillStyle = cMut; ctx.beginPath(); ctx.arc(gx, yb, 1.3, 0, TAU); ctx.fill();
+      pl.block(gx - 7, 0, W, TOPB - 2);
+    } else { const wB = rt(ctx, '$B$ = 0', W - 10, yb + 4.5, 12, 'right'); pl.block(W - 14 - wB, 0, W, TOPB - 2); }
+    // bottom band: the momentum scale (an arrow of pu eE0/ω) and the length scale
+    const yS = H - 13, Lp = G.pu * kp;
+    arrow(ctx, 10, yS - 4, 10 + Lp, yS - 4, cFg2, 1.6, 7);
+    ctx.fillStyle = cFg2;
+    const sP = (G.pu === 1 ? '' : EPP.fmt(G.pu, 2) + ' ') + '$eE$_0/$ω$', wP = rt(ctx, sP, 10 + Lp + 6, yS, 11.5);
+    const Ll = G.bar * G.k, xr = W - 10, sL = lenTxt(G.bar);
+    ctx.strokeStyle = cFg2; ctx.lineWidth = 1.5; ctx.beginPath();
+    ctx.moveTo(xr - Ll, yS - 4); ctx.lineTo(xr, yS - 4); ctx.moveTo(xr - Ll, yS - 8); ctx.lineTo(xr - Ll, yS); ctx.moveTo(xr, yS - 8); ctx.lineTo(xr, yS); ctx.stroke();
+    ctx.fillStyle = cFg2; const wL = rt(ctx, sL, xr - Ll - 6, yS, 11.5, 'right');
+    pl.block(0, H - BOTB + 4, 10 + Lp + 10 + wP, H); pl.block(xr - Ll - 10 - wL, H - BOTB + 4, W, H);
+    // labels at the arrow tips: p first, then m_e v, then the field term
+    const items = [[show[2], '*p*', Tp, EPP.color('fg')], [show[0], '$m$_e*v*', Tm, EPP.textColor('electron')], [show[1], '−($e$/$c$)*A*', Tf, EPP.textColor('photon')]];
+    for (const [on, s, T, col] of items) {
+      if (!on) continue;
+      const w = rtW(ctx, s, 12.5) + 6, h = 19, at = pl.put(w, h, T[0], T[1], Math.atan2(T[1] - ey, T[0] - ex));
+      if (at) plate(ctx, s, at[0], at[1], 12.5, col);
+    }
+    if (!show[2]) {
+      const s = i === 0 ? 'at rest: all momenta 0' : (c.B === 0 ? '*p* = 0' : '*p* ≈ 0'), w = rtW(ctx, s, 12.5) + 6;
+      const at = pl.put(w, 19, ex, ey, -Math.PI / 2, 6);
+      if (at) plate(ctx, s, at[0], at[1], 12.5, cFg);
+    }
+  }
+
+  // ---------- (b): momentum components against time ----------
+  const SER = [
+    { k: 0, s: '$m$_e$v_x$', col: 'electron', dash: null },
+    { k: 1, s: '$m$_e$v_y$', col: 'c4', dash: null },
+    { k: 2, s: '$p_x$', col: 'electron', dash: [7, 4] },
+    { k: 3, s: '$p_y$', col: 'c4', dash: [2.5, 3.5] }
+  ];
+  const HOVER = ['m_ev_x', 'm_ev_y', 'p_x', 'p_y'];
+  function buildB() {
+    const c = cur, ym = niceCeil(1.08 * Math.max(c.ym, 0.05));
+    layersB = SER.map(S => ({ type: 'line', x: c.TT, y: c.D[S.k], color: S.col, width: 2, dash: S.dash || undefined, label: HOVER[S.k] }));
+    labs = null;
+    pB.draw(layersB, { ylim: [-ym, ym] });
+  }
+  function timeB() { if (layersB) pB.render(); }
+  // direct labels: for each curve, the spot beside it with the most room from the other curves (fixed per parameter set and size).
+  // The solid teal curve is labelled first and always, since teal must carry a dash or a label; the others only where they fit.
+  // Each curve is reduced to its pixel extent [lo, hi] in 3 px columns (a segment counts in the columns of both its ends).
+  function curveLabels() {
+    const ctx = pB.ctx, m = pB.m, w = pB.cv.w, h = pB.cv.h, c = cur, n = c.TT.length, placed = [], out = [];
+    const pw = w - m.l - m.r, ph = h - m.t - m.b, ya = pB.ylim[0], yb = pB.ylim[1], CW = 3, nc = Math.ceil(pw / CW) + 1;
+    const colOf = (px) => EPP.clamp(Math.floor((px - m.l) / CW), 0, nc - 1);
+    const Yp = (v) => h - m.b - (v - ya) / (yb - ya) * ph;
+    const env = SER.map(S => {
+      const lo = new Float64Array(nc).fill(Infinity), hi = new Float64Array(nc).fill(-Infinity), y = c.D[S.k];
+      const add = (q, Y) => { if (Y < lo[q]) lo[q] = Y; if (Y > hi[q]) hi[q] = Y; };
+      let pq = 0, pY = 0;
+      for (let j = 0; j < n; j++) {
+        const q = colOf(m.l + c.TT[j] / NPER * pw), Y = Yp(y[j]);
+        add(q, Y);
+        if (j > 0 && q !== pq) { add(q, pY); add(pq, Y); }
+        pq = q; pY = Y;
+      }
+      return { lo, hi };
+    });
+    const dist = (E, b) => {
+      let d = Infinity;
+      for (let q = colOf(b[0]), q1 = colOf(b[2]); q <= q1; q++) {
+        if (E.lo[q] === Infinity) continue;
+        const dd = E.hi[q] < b[1] ? b[1] - E.hi[q] : (E.lo[q] > b[3] ? E.lo[q] - b[3] : -1);
+        if (dd < d) d = dd;
+      }
+      return d;
+    };
+    for (const k of [1, 3, 0, 2]) {
+      const S = SER[k], bw = rtW(ctx, S.s, 11.5) + 6, bh = 16, y = c.D[S.k];
+      let best = null;
+      for (let xp = m.l + 0.05 * pw; xp <= m.l + 0.95 * pw; xp += 5) {
+        const yp = Yp(y[Math.round((xp - m.l) / pw * (n - 1))]);
+        for (const gap of [3, 10]) for (const sd of [-1, 1]) {
+          const cy = yp + sd * (bh / 2 + gap), b = [xp - bw / 2, cy - bh / 2, xp + bw / 2, cy + bh / 2];
+          if (b[0] < m.l + 3 || b[2] > w - m.r - 3 || b[1] < m.t + 2 || b[3] > h - m.b - 2) continue;
+          if (placed.some(o => b[0] < o[2] + 6 && b[2] > o[0] - 6 && b[1] < o[3] + 3 && b[3] > o[1] - 3)) continue;
+          if (dist(env[k], b) < 0) continue;                       // never cover its own curve
+          let oth = Infinity, cross = 0;
+          for (let k2 = 0; k2 < SER.length; k2++) { if (k2 === k) continue; const d = dist(env[k2], b); if (d < 0) cross++; oth = Math.min(oth, d); }
+          // keep clear of the time marker as it stands when the labels are placed (the opening view, or the time of a slider change)
+          const xT = m.l + idx() / SPP / NPER * pw, nearT = b[0] - 8 < xT && xT < b[2] + 8 ? 8 : 0;
+          const score = (cross ? -10 * cross : Math.min(oth, 40)) - nearT - 0.1 * Math.abs((xp - m.l) / pw - 0.5) - 0.1 * gap;
+          if (!best || score > best.score) best = { score, b, x: xp, y: cy };
+        }
+      }
+      if (best && (best.score > 1 || k === 1)) { placed.push(best.b); out.push({ S, x: best.x, y: best.y }); }
+    }
+    return out;
+  }
+  const baseRender = pB.render.bind(pB);
+  pB.render = () => {
+    baseRender();
+    const ctx = pB.ctx, w = pB.cv.w, h = pB.cv.h, m = pB.m;
+    if (!w || !h || !cur) return;
+    ctx.save();
+    ctx.fillStyle = EPP.color('fg'); ctx.textBaseline = 'alphabetic';
+    rt(ctx, 'time $t$ (drive periods)', m.l + (w - m.l - m.r) / 2, h - 8, 12.5, 'center');
+    ctx.translate(15, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    rt(ctx, 'momentum ($eE$_0/$ω$)', 0, 0, 12.5, 'center');
+    ctx.restore();
+    const key = `${w}x${h}`;
+    if (!labs || labs.key !== key) labs = { key, list: curveLabels() };
+    for (const L of labs.list) plate(ctx, L.S.s, L.x, L.y, 11.5, EPP.textColor(L.S.col));
+    // the current time, drawn over the labels: a vertical line and the four values
+    const i = idx(), X = pB.X(i / SPP), vals = [cur.VX[i], cur.VY[i], cur.PX[i], cur.PY[i]];
+    ctx.strokeStyle = EPP.color('muted'); ctx.lineWidth = 1.2; ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(Math.round(X) + 0.5, m.t); ctx.lineTo(Math.round(X) + 0.5, h - m.b); ctx.stroke();
+    vals.forEach((v, k) => {
+      const Y = pB.Y(v);
+      if (Y < m.t || Y > h - m.b) return;
+      ctx.fillStyle = EPP.color(SER[k].col); ctx.strokeStyle = EPP.color('surface'); ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.arc(X, Y, 3.8, 0, TAU); ctx.fill(); ctx.stroke();
+    });
+  };
+  pB.onPointer = (x, y, type) => { if (type === 'up' || !cur) return; setTime(EPP.clamp(x, 0, NPER)); };
+
+  // ---------- readouts and the accessible description ----------
+  function readouts() {
+    const c = cur, i = idx(), tt = i / SPP;
+    roV.hwc.textContent = `${fx(HWC * c.B, 3)} meV`;
+    roV.ratio.textContent = c.B > 0 ? fx(1 / c.r, 2) : '∞ (no magnetic field)';
+    roV.t.textContent = `${fx(tt, 2)} periods = ${EPP.fmt(tt * c.Tps, 3)} ps`;
+    roV.r.textContent = lenTxt(c.rm);
+    roV.vc.innerHTML = sci(c.vc);
+    roV.mv.textContent = pair(c.VX[i], c.VY[i]);
+    roV.fa.textContent = pair(c.FX[i], c.FY[i]);
+    roV.p.textContent = pair(c.PX[i], c.PY[i]);
+    const I = (s, sub) => `<i style="font-family:var(--font-text)">${s}</i><sub><i style="font-family:var(--font-text)">${sub}</i></sub>`;
+    roV.cons.innerHTML = c.B > 0 ? `${I('p', 'y')} only` : `${I('p', 'x')} and ${I('p', 'y')}`;
+  }
+  function describe() {
+    const c = cur, i = idx(), q = (a, b) => `(${fx(a, 2)}, ${fx(b, 2)})`;
+    cvA.canvas.setAttribute('aria-label', `Panel a: path of a free electron in the x–y plane over six drive periods, B = ${fx(c.B, 2)} T, drive ${fx(c.hw, 2)} meV; ` +
+      `x from ${fx(c.bb[0], 1)} to ${fx(c.bb[1], 1)} nm, y from ${fx(c.bb[2], 1)} to ${fx(c.bb[3], 1)} nm. At t = ${fx(i / SPP, 2)} periods the electron is at ${q(c.X[i] * c.L0, c.Y[i] * c.L0)} nm; ` +
+      `in units of e E0 over omega, kinetic momentum ${q(c.VX[i], c.VY[i])}, field term minus e over c times A ${q(c.FX[i], c.FY[i])}, canonical momentum ${q(c.PX[i], c.PY[i])}.`);
+  }
+  function drawTime() { if (!cur) return; drawA(); timeB(); readouts(); if (!anim || !anim.running) describe(); }
+  function setTime(v) { tau = v; hold = 0; ui.set('t', tau, true); drawTime(); }
+
+  // ---------- controls ----------
+  let lastKey = '';
+  function onChange(s) {
+    const key = `${s.B.toFixed(3)}|${s.hw.toFixed(5)}`;
+    if (key !== lastKey) {
+      lastKey = key;
+      cur = compute(s.B, s.hw); geo = null;
+      if (anim && anim.running) { tau = 0; hold = 0; ui.set('t', 0, true); }
+      buildB();
+    } else { tau = s.t; hold = 0; }
+    drawTime();
+  }
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const ui = EPP.controls(fig.querySelector('.b2-lorentz-ctrls'), [
+    { key: 'B', type: 'range', label: 'magnetic field B', min: 0, max: 5, step: 0.05, value: 2, fmt: v => `${v.toFixed(2)} T` },
+    { key: 'hw', type: 'range', label: 'drive ħω', min: 0.1, max: 2, log: true, step: 'any', value: 0.5, fmt: v => `${v.toFixed(2)} meV` },
+    { key: 't', type: 'range', label: 'time t', min: 0, max: NPER, step: 0.01, value: T_INIT, fmt: v => `${v.toFixed(2)} periods` }
+  ], onChange);
+  const LAB = { B: `magnetic field ${I('B')}`, hw: `drive ${I('ħω')}`, t: `time ${I('t')}` };
+  Object.keys(LAB).forEach(k => { const sp = fig.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  // the time slider and Play form one row under (b); the field and the drive stay below
+  const elTime = fig.querySelector('.b2-lorentz-time');
+  elTime.classList.add('controls');
+  elTime.style.cssText = 'display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px 18px';
+  const inT = document.getElementById(`${fig.id}-t`), bT = inT ? inT.closest('.ctrl') : null;
+  if (bT) { bT.style.flex = '1 1 240px'; elTime.appendChild(bT); }
+  // take the slider's time at once: while the animation runs, its next frame would otherwise overwrite the slider first
+  if (inT) inT.addEventListener('input', () => { tau = ui.state.t; hold = 0; });
+  const host = document.createElement('div');
+  host.className = 'ctrl'; host.style.flex = '0 0 auto';
+  host.innerHTML = '<span class="lab"><span>animation</span></span>';
+  elTime.appendChild(host);
+
+  cur = compute(2, 0.5); lastKey = `${(2).toFixed(3)}|${(0.5).toFixed(5)}`; buildB();
+  anim = EPP.anim(fig, (t, dt) => {
+    if (dt > 0 && cur) {
+      if (tau >= NPER) { hold += dt; if (hold >= HOLD) { tau = 0; hold = 0; } }
+      else tau = Math.min(NPER, tau + dt / SEC);
+      ui.set('t', tau, true);
+    }
+    drawTime();
+  }, { buttonHost: host, autoplay: false });
+  anim.button.addEventListener('click', () => { if (anim.running && tau >= NPER - 1e-9) { tau = 0; hold = 0; } if (!anim.running) describe(); });
+  // click near the path in (a) to move the electron to the nearest point of it
+  const nearest = (e) => {
+    if (!geo) return -1;
+    const r = cvA.canvas.getBoundingClientRect(), px = e.clientX - r.left, py = e.clientY - r.top;
+    let best = -1, bd = 22 * 22;
+    for (let j = 0; j <= NS; j += 2) { const dx = geo.PXs[j] - px, dy = geo.PYs[j] - py, d = dx * dx + dy * dy; if (d < bd) { bd = d; best = j; } }
+    return best;
+  };
+  cvA.canvas.addEventListener('pointerdown', (e) => { const j = nearest(e); if (j >= 0) setTime(j / SPP); });
+  cvA.canvas.addEventListener('pointermove', (e) => { if (e.pointerType !== 'touch') cvA.canvas.style.cursor = nearest(e) >= 0 ? 'pointer' : 'default'; });
+  cvA.onResize(() => drawA());
+})();
+</script>

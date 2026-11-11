@@ -1,0 +1,395 @@
+  <figure class="viz" id="viz-b1-cell">
+    <p class="viz-title">Same crystal, two choices of cell <span class="tag">interactive</span></p>
+    <div class="b1-cell-chain"></div>
+    <div class="legend b1-cell-leg1">
+      <span class="item"><svg width="10" height="16" viewBox="0 0 10 16" aria-hidden="true" style="vertical-align:-3px;margin-right:5px"><rect x="2" y="1" width="6" height="14" rx="3" style="fill:var(--c-4)"/></svg>Ga plane</span>
+      <span class="item"><svg width="10" height="16" viewBox="0 0 10 16" aria-hidden="true" style="vertical-align:-3px;margin-right:5px"><rect x="2" y="1" width="6" height="14" rx="3" style="fill:var(--c-5)"/></svg>As plane</span>
+      <span class="item b1-cell-k1"><svg width="24" height="12" viewBox="0 0 24 12" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><line x1="2" y1="6" x2="22" y2="6" style="stroke:var(--muted);stroke-width:1.6"/></svg>1 bond along [111], $K_{\mathrm{nn}}$</span>
+      <span class="item b1-cell-k1"><svg width="24" height="12" viewBox="0 0 24 12" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><path d="M2 2.5 H22 M2 6 H22 M2 9.5 H22" style="stroke:var(--muted);stroke-width:1.1"/></svg>3 inclined bonds, $K_{\mathrm{nn}}/3$</span>
+      <span class="item b1-cell-k2" hidden><svg width="24" height="12" viewBox="0 0 24 12" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><line x1="2" y1="6" x2="22" y2="6" style="stroke:var(--muted);stroke-width:1.6"/></svg>equal springs $2K_{\mathrm{nn}}/3$ on both sides</span>
+      <span class="item"><svg width="34" height="14" viewBox="0 0 34 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><rect x="1" y="1" width="14" height="12" rx="3" style="fill:var(--fg);fill-opacity:0.045;stroke:var(--muted);stroke-opacity:0.6;stroke-width:1"/><rect x="19" y="1" width="14" height="12" rx="3" style="fill:var(--fg);fill-opacity:0.09;stroke:var(--fg-2);stroke-width:1.4"/></svg>cells of the chosen kind, cell 0 bold</span>
+      <span class="item"><svg width="22" height="14" viewBox="0 0 22 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><rect x="1" y="1" width="20" height="12" rx="3" style="fill:none;stroke:var(--muted);stroke-width:1.2;stroke-dasharray:3 2"/></svg>cell 0 of the other choice</span>
+    </div>
+    <div class="viz-grid two" style="margin-top:10px">
+      <div class="b1-cell-dials"></div>
+      <div class="b1-cell-plot"><div class="legend b1-cell-leg2">
+        <span class="item" style="color:var(--c-phonon)"><span class="sw"></span><span style="color:var(--fg-2)">LO</span></span>
+        <span class="item" style="color:var(--c-5)"><span class="sw"></span><span style="color:var(--fg-2)">LA</span></span>
+        <span class="item" style="color:var(--muted)"><span class="sw"></span><span style="color:var(--fg-2)">with basis phase, <a class="eqref" href="#b1-eq-polar">(B1.13)</a></span></span>
+        <span class="item" style="color:var(--muted)"><span class="sw dash"></span><span style="color:var(--fg-2)">without basis phase</span></span>
+      </div></div>
+    </div>
+    <div class="b1-cell-ctrls"></div>
+    <div class="readout b1-cell-ro" aria-live="polite" aria-atomic="true"><span>$\btau_{\mathrm{As}}$ along [111]<b class="b1-cell-v-tau"></b></span><span>$\bq\cdot\btau_{\mathrm{As}}$<b class="b1-cell-v-qt"></b></span><span>$\bq\cdot\bR_{\ell_0}$<b class="b1-cell-v-qr"></b></span><span>$\hbar\omega_{\mathrm{LO}},\ \hbar\omega_{\mathrm{LA}}$<b class="b1-cell-v-hw"></b></span></div>
+    <div class="readout b1-cell-ro2" aria-live="polite" aria-atomic="true"><span>$q\,|g^{\mathrm{lr}}_{\mathrm{LO}}|$ with / without<b class="b1-cell-v-glo"></b></span><span>ratio of $|g^{\mathrm{lr}}_{\mathrm{LO}}|^2$ without / with<b class="b1-cell-v-r"></b></span><span>$q\,|g^{\mathrm{lr}}_{\mathrm{LA}}|$ with / without<b class="b1-cell-v-gla"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> The solid curves do not move when the cell changes; the dashed ones do, by about 20% in $|g^{\mathrm{lr}}_{\mathrm{LO}}|^2$ at <span class="nw">0.5 Å⁻¹,</span> up for one cell and down for the other. On the dials, the As component of the eigenvector turns with the cell; its product with the basis phase does not.</p><div class="cap-more"><p><strong>Marks.</strong> (a) Planes edge-on, to scale; cell corners $\bR_\ell$ on the Ga planes; $\bR_{\ell_0}$ joins the As planes the two choices put in cell 0. (b) Components along [111] at the cursor, Ga real and positive; rim: modulus 1; faint hand: the other choice.</p><p><strong>Try.</strong> (1) At <span class="nw">0.5 Å⁻¹</span> switch the cell: dashed LO jumps between 0.0314 and <span class="nw">0.0253 eV Å⁻¹;</span> solid LO stays at 0.0287. (2) Move $q$ toward 0: the LA curves fall as <span class="nw">$\sqrt q$,</span> so <span class="nw">$|g^{\mathrm{lr}}|^2\propto1/q$,</span> a piezoelectric scaling. (3) In the centrosymmetric toy, solid LA almost vanishes, dashed LA does not, and both cells give the same curves.</p><p><strong>Model.</strong> <a class="eqref" href="#b1-eq-polar">(B1.13)</a> at $\bG=0$ for plane-wave electrons, per unit phonon field: $q\,|g^{\mathrm{lr}}|$ is $\frac{4\pi e^2}{\OV\varepsilon_\infty}\big(\frac{\hbar}{2\omega_{\bq\nu}}\big)^{1/2}$ times <span class="nw">$\big|\sum_\kappa Z^*_\kappa e_\kappa M_\kappa^{-1/2}\ee^{-\ii\bq\cdot\btau_\kappa}\big|$;</span> dashed curves set the phase to 1. The invariance is <a class="eqref" href="#b1-eq-cell">(B1.15)</a>. Eigenvectors from <a class="eqref" href="#a1-eq-dyn">(A1.18)</a> for longitudinal [111] waves of zincblende GaAs: central springs <span class="nw">$K_{\mathrm{nn}}=7.185$ eV/Å²</span> to nearest neighbours (fitted to <span class="nw">$\hbar\omega_{\mathrm{TO}}=33.3$ meV)</span> and <span class="nw">$K_{\mathrm{nnn}}=0.451$ eV/Å²</span> to next-nearest ones (fitted to the [100] sound velocity); <span class="nw">$M_{\mathrm{Ga}}=69.72$,</span> <span class="nw">$M_{\mathrm{As}}=74.92$ amu,</span> <span class="nw">$Z^*_{\mathrm{Ga}}=-Z^*_{\mathrm{As}}=2.07$,</span> <span class="nw">$\varepsilon_\infty=10.9$,</span> <span class="nw">$\OV=45.2$ Å³</span> (literature values, illustrative). Without long-range forces, LO starts at the TO energy. Solid GaAs LA: the internal-strain dipole of <a class="eqref" href="#b1-eq-acsum">(B1.18)</a>, which the electrons' response, carried by dynamical quadrupoles, largely cancels in the real crystal.</p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b1-cell');
+  if (!fig || !window.EPP) return;
+  // outside Section B.1 (the isolated figure test) the links to equations and sections have no target: show their text
+  if (!fig.closest('#b-foundations')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+  const Cx = EPP.C, TAU = 2 * Math.PI, DEG = 180 / Math.PI;
+
+  // ---------- physics: longitudinal waves along [111] of zincblende GaAs as a chain of (111) planes; eV, Å, amu ----------
+  const A0 = 5.653, CP = A0 / Math.sqrt(3);                  // lattice constant a; period a/√3 = 3.2638 Å
+  const DL = Math.sqrt(3) * A0 / 4;                           // As plane 2.4478 Å above a Ga plane (one bond along [111])
+  const KNN = 7.185, KNNN = 0.451;                            // central springs K_nn, K_nnn (eV/Å²)
+  const MGA = 69.72, MAS = 74.92, ZS = 2.07;                  // M_Ga, M_As (amu); Z*_Ga = +2.07, Z*_As = −2.07 (dimensionless)
+  const FPE2 = 180.951, OV = 45.2, EPSI = 10.9;               // 4πe² (eV Å), Ω_V (Å³), ε∞
+  const PRE = FPE2 / OV / EPSI;                               // 4πe²/(Ω_V ε∞), eV/Å²
+  const ZP = 2.0901, HW = 64.654;                             // ħ/(2Mω) = 2.0901 Å²/(M[amu] ħω[meV]); ħω = 64.654 meV × √(ω² in eV Å⁻² amu⁻¹)
+  const QMAX = 0.9, NQ = 300, QS = EPP.linspace(0.003, QMAX, NQ);
+  // Ga at the cell corner. Cell 'A': As above Ga (τ_As = +2.448 Å), bonded to Ga(ℓ) by the single bond (plane force constant K_nn)
+  // and to Ga(ℓ+1) by three inclined bonds (K_nn/3). Cell 'B': the As plane below (τ_As = −0.816 Å), the same crystal.
+  // Toy: equal springs 2K_nn/3, As plane midway (τ_As = ±1.632 Å). Like planes: 2K_nnn.
+  function geom(chain, cell) {
+    const cs = chain === 'cs';
+    const kL = cs ? 2 * KNN / 3 : KNN, kS = cs ? 2 * KNN / 3 : KNN / 3, tA = cs ? CP / 2 : DL;
+    return cell === 'A'
+      ? { cs, cell, tA, tau: tA, kIn: kL, kOut: kS, s: -1, kN: 2 * KNNN }
+      : { cs, cell, tA, tau: tA - CP, kIn: kS, kOut: kL, s: 1, kN: 2 * KNNN };
+  }
+  // Dynamical matrix (A1.18), phase e^{iq·R} on the partner's cell: Φ_{Ga,As}(q) = −(K_in + K_out e^{i s q a/√3}), s = −1 (A), +1 (B).
+  // Returns [LA, LO]: ħω (meV), components e_Ga (real, ≥ 0) and e_As, the product e_As e^{−iq·τ_As}, and q|g^lr| with (gw) and without (gn) the basis phase.
+  function modes(q, g) {
+    const on = g.kIn + g.kOut + 2 * g.kN * (1 - Math.cos(q * CP)), sm = 1 / Math.sqrt(MGA * MAS), ph = g.s * q * CP;
+    const b = [-(g.kIn + g.kOut * Math.cos(ph)) * sm, -g.kOut * Math.sin(ph) * sm];
+    const { vals, vecs } = EPP.eigHerm2(on / MGA, on / MAS, b);
+    const bp = [Math.cos(q * g.tau), -Math.sin(q * g.tau)];  // e^{−iq·τ_As}; τ_Ga = 0
+    return vals.map((l, k) => {
+      let eG = vecs[k][0], eA = vecs[k][1];
+      const a = Cx.abs(eG);
+      if (a > 1e-12) { const u = [eG[0] / a, -eG[1] / a]; eG = [a, 0]; eA = Cx.mul(eA, u); }
+      const hw = HW * Math.sqrt(Math.max(l, 1e-12)), f = PRE * Math.sqrt(ZP / hw);   // (ħ/2ω)^{1/2} in Å amu^{1/2}
+      const tG = Cx.scale(eG, ZS / Math.sqrt(MGA)), tAs = Cx.scale(eA, -ZS / Math.sqrt(MAS));
+      return { hw, eG, eA, pA: Cx.mul(eA, bp), gw: f * Cx.abs(Cx.add(tG, Cx.mul(tAs, bp))), gn: f * Cx.abs(Cx.add(tG, tAs)) };
+    });
+  }
+
+  // ---------- canvas text: parts {t, i: italic symbol (text font), b: bold, v: level} ----------
+  // levels: 0 base, 1 superscript, −1 subscript, 2 subscript inside a superscript, −2 subscript of a subscript
+  let FAM = { ui: 'sans-serif', tx: 'serif' };
+  const fams = () => { FAM = { ui: EPP.css('--font-ui') || 'sans-serif', tx: EPP.css('--font-text') || 'serif' }; };
+  const LV = { 0: [1, 0], 1: [0.72, -0.38], '-1': [0.72, 0.28], 2: [0.6, -0.2], '-2': [0.6, 0.46] };
+  const pFont = (p, size) => `${p.i ? 'italic ' : ''}${p.b ? '700 ' : ''}${(size * LV[p.v || 0][0] * (p.i ? 1.08 : 1)).toFixed(1)}px ${p.i ? FAM.tx : FAM.ui}`;
+  function tw(ctx, parts, size) { let w = 0; for (const p of parts) { ctx.font = pFont(p, size); w += ctx.measureText(p.t).width; } return w; }
+  function tx(ctx, parts, x, y, o = {}) {
+    const size = o.size || 11.5, w = tw(ctx, parts, size);
+    let x0 = o.align === 'center' ? x - w / 2 : (o.align === 'right' ? x - w : x);
+    ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    if (o.color) ctx.fillStyle = o.color;
+    for (const p of parts) { ctx.font = pFont(p, size); ctx.fillText(p.t, x0, y + size * LV[p.v || 0][1]); x0 += ctx.measureText(p.t).width; }
+    return w;
+  }
+  // the same on a rounded halo of the surface colour, for labels that sit on lines
+  function htx(ctx, parts, x, y, o = {}) {
+    const size = o.size || 11.5, w = tw(ctx, parts, size), x0 = o.align === 'center' ? x - w / 2 : (o.align === 'right' ? x - w : x);
+    ctx.fillStyle = EPP.alpha('surface', 0.9); rrect(ctx, x0 - 3, y - size * 0.95, w + 6, size * 1.35, 3); ctx.fill();
+    return tx(ctx, parts, x, y, o);
+  }
+  const T = (t, v = 0) => ({ t, v }), I = (t, v = 0) => ({ t, i: 1, v }), B = (t, v = 0) => ({ t, b: 1, v }), BI = (t, v = 0) => ({ t, b: 1, i: 1, v });
+  const TAU_AS = [BI('τ'), T('As', -1)];
+  const RL0 = [B('R'), I('ℓ', -1), T('0', -2)];
+  const RL = (l) => [B('R'), T(l < 0 ? '−' + (-l) : String(l), -1)];
+  const EK = (k) => [I('e'), T(k, -1)];
+  const PROD = [I('e'), I('κ', -1), T(' e'), T('−i', 1), B('q', 1), T('·', 1), BI('τ', 1), I('κ', 2)];
+  function arrow(ctx, x0, y0, x1, y1, o) {
+    const dx = x1 - x0, dy = y1 - y0, L = Math.hypot(dx, dy);
+    if (!(L > 0.6)) return;
+    const ux = dx / L, uy = dy / L, h = Math.min(o.head || 7, L * 0.6), wv = h * 0.42;
+    ctx.strokeStyle = o.col; ctx.fillStyle = o.col; ctx.lineWidth = o.lw || 1.5; ctx.lineCap = 'round';
+    ctx.setLineDash(o.dash || []);
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1 - ux * h * 0.7, y1 - uy * h * 0.7); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(x1, y1);
+    ctx.lineTo(x1 - ux * h - uy * wv, y1 - uy * h + ux * wv);
+    ctx.lineTo(x1 - ux * h + uy * wv, y1 - uy * h - ux * wv);
+    ctx.closePath(); ctx.fill();
+  }
+  const rrect = (ctx, x, y, w, h, r) => { ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(x, y, w, h, r); else ctx.rect(x, y, w, h); };
+
+  // ---------- formatting ----------
+  const sg = (v, d) => (Math.abs(v) < 0.5 * Math.pow(10, -d) ? (0).toFixed(d) : (v < 0 ? '−' : '+') + Math.abs(v).toFixed(d));
+  const angD = (c) => { let d = Math.atan2(c[1], c[0]) * DEG; if (d <= -179.95) d = 180; return Math.abs(d) < 0.05 ? 0 : d; };
+  const angS = (c) => { const d = angD(c); return d === 0 ? '0°' : (d < 0 ? '−' : '') + Math.abs(d).toFixed(1) + '°'; };
+  const pol = (c) => Cx.abs(c).toFixed(3) + '∠' + angS(c);
+  const f4 = (v) => v.toFixed(4);
+  const NB = '\u00a0';                                     // no-break space between a number and its unit
+
+  // ---------- panels ----------
+  const cvC = EPP.canvas(fig.querySelector('.b1-cell-chain'), { height: 194 });
+  cvC.canvas.setAttribute('role', 'img');
+  const cvD = EPP.canvas(fig.querySelector('.b1-cell-dials'), { height: 330 });
+  cvD.canvas.setAttribute('role', 'img');
+  const elPlot = fig.querySelector('.b1-cell-plot');
+  const plot = new EPP.Plot(elPlot, {
+    xlim: [0, QMAX], ylim: [0, 0.045], xname: 'q', legend: false, height: 330, margin: { l: 58, r: 12, t: 26, b: 44 },
+    hoverX: v => v.toFixed(2) + ' Å⁻¹', hoverY: v => v.toFixed(4) + ' eV Å⁻¹',
+    ariaLabel: 'Panel c: long-range vertex q times |g lr| of the LO and LA modes against q along [111], with and without the basis phase, for the chosen cell. Click or drag to move the cursor q; a click on a curve also selects its mode for the dials.'
+  });
+  const elLeg = elPlot.querySelector('.b1-cell-leg2');
+  if (elLeg) elPlot.appendChild(elLeg);                     // static legend (MathJax) under the plot
+  const $v = (k) => fig.querySelector('.b1-cell-v-' + k);
+  const roV = { tau: $v('tau'), qt: $v('qt'), qr: $v('qr'), hw: $v('hw'), glo: $v('glo'), r: $v('r'), gla: $v('gla') };
+  let cur = null, curves = null;
+
+  function compute(st) {
+    const g = geom(st.chain, st.cell), gO = geom(st.chain, st.cell === 'A' ? 'B' : 'A');
+    const q = EPP.clamp(Math.round(st.q * 100) / 100, 0.01, QMAX);
+    const m = modes(q, g), mO = modes(q, gO), k = st.mode === 'LA' ? 0 : 1;
+    return { st, g, gO, q, m, mO, k };
+  }
+  function curveSet(g) {
+    const R = QS.map(q => modes(q, g));
+    const pick = (k, key) => R.map(r => (isFinite(r[k][key]) ? r[k][key] : NaN));
+    return { low: pick(1, 'gw'), lon: pick(1, 'gn'), law: pick(0, 'gw'), lan: pick(0, 'gn') };
+  }
+
+  // ---------- (a) the chain ----------
+  function drawChain() {
+    const cv = cvC, ctx = cv.ctx, W = cv.w, H = cv.h;
+    cv.clear();
+    if (!cur || W < 60) return;
+    fams();
+    const { g, gO, st } = cur, pad = 8, narrow = W < 560;
+    const XL = narrow ? -4.3 : -4.7, XR = narrow ? 6.2 : 8.4;
+    const s = (W - 2 * pad) / (XR - XL), X = (x) => pad + (x - XL) * s;
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted');
+    // header: what is drawn, and the choice of cell
+    const title = [T(narrow ? '(a) planes along [111], to scale' : '(a) the crystal: (111) planes along [111], drawn to scale')];
+    const tag = [T('cells: As ' + (st.cell === 'A' ? 'above' : 'below') + ' Ga, '), ...TAU_AS, T(' = ' + sg(g.tau, 3) + ' Å')];
+    tx(ctx, title, pad, 15, { size: 11.5, color: cFg2 });
+    const one = pad + tw(ctx, title, 11.5) + 16 + tw(ctx, tag, 11.5) <= W - pad;
+    tx(ctx, tag, one ? W - pad : pad, one ? 15 : 31, { size: 11.5, color: cFg, align: one ? 'right' : 'left' });
+    // rows: R_ℓ0 above the cells; element labels, planes and τ_As inside them; the axis with R_ℓ below
+    const need = 150, top = (one ? 15 : 31) + 8, y0 = top + Math.max(0, Math.min(10, (H - top - need) / 2));
+    const yRL = y0 + 11, yR = y0 + 18, yTop = y0 + 27;
+    const yLab = yTop + 13, yB0 = yTop + 18, yB1 = yB0 + 36, yMid = (yB0 + yB1) / 2;
+    const yTauL = yB1 + 16, yTau = yB1 + 23, yBot = yB1 + 32;
+    const yAx = yBot + 13, yTk = yAx + 18;
+    // planes: the same for both choices
+    const planes = [];
+    for (let l = -3; l <= 4; l++) { planes.push({ x: l * CP, k: 'Ga' }); planes.push({ x: l * CP + g.tA, k: 'As' }); }
+    planes.sort((p1, p2) => p1.x - p2.x);
+    const vis = planes.filter(p => X(p.x) > pad + 3 && X(p.x) < W - pad - 3);
+    // cells of the chosen kind: one Ga and one As plane each; edges at the midpoints of the gaps between cells
+    const half = (CP - Math.abs(g.tau)) / 2, lo = Math.min(0, g.tau) - half, hi = Math.max(0, g.tau) + half;
+    const loO = Math.min(0, gO.tau) - (CP - Math.abs(gO.tau)) / 2, hiO = loO + CP;
+    ctx.save(); ctx.beginPath(); ctx.rect(pad, 0, W - 2 * pad, H); ctx.clip();
+    for (let l = -3; l <= 4; l++) {
+      const x0 = X(l * CP + lo) + 2, x1 = X(l * CP + hi) - 2;
+      if (x1 < 0 || x0 > W) continue;
+      rrect(ctx, x0, yTop, x1 - x0, yBot - yTop, 5);
+      ctx.fillStyle = EPP.alpha('fg', l === 0 ? 0.09 : 0.045); ctx.fill();
+      ctx.strokeStyle = l === 0 ? cFg2 : EPP.alpha('muted', 0.55); ctx.lineWidth = l === 0 ? 1.4 : 1; ctx.stroke();
+    }
+    // cell 0 of the other choice, dashed and slightly taller
+    rrect(ctx, X(loO) + 1, yTop - 4, X(hiO) - X(loO) - 2, yBot - yTop + 8, 6);
+    ctx.setLineDash([4, 3]); ctx.strokeStyle = cMut; ctx.lineWidth = 1.2; ctx.stroke(); ctx.setLineDash([]);
+    // bonds between neighbouring planes
+    const bw = narrow ? 5 : 6;
+    ctx.strokeStyle = cMut;
+    for (let j = 0; j + 1 < planes.length; j++) {
+      const p1 = planes[j], p2 = planes[j + 1], xa = X(p1.x) + bw / 2 + 1.5, xb = X(p2.x) - bw / 2 - 1.5;
+      if (xb < pad || xa > W - pad) continue;
+      const triple = !g.cs && p2.x - p1.x < CP / 2;           // the short gap of GaAs: three inclined bonds
+      ctx.beginPath();
+      if (triple) { ctx.lineWidth = 1.1; for (const d of [-3.5, 0, 3.5]) { ctx.moveTo(xa, yMid + d); ctx.lineTo(xb, yMid + d); } }
+      else { ctx.lineWidth = 1.6; ctx.moveTo(xa, yMid); ctx.lineTo(xb, yMid); }
+      ctx.stroke();
+    }
+    // planes as bars, with their element
+    for (const p of planes) {
+      const xc = X(p.x);
+      if (xc < -bw || xc > W + bw) continue;
+      rrect(ctx, xc - bw / 2, yB0, bw, yB1 - yB0, bw / 2);
+      ctx.fillStyle = EPP.color(p.k === 'Ga' ? 'c4' : 'c5'); ctx.fill();
+    }
+    ctx.restore();
+    for (const p of vis) tx(ctx, [T(p.k)], X(p.x), yLab, { size: 10.5, color: EPP.textColor(p.k === 'Ga' ? 'c4' : 'c5'), align: 'center' });
+    // τ_As in cell 0, from the corner to its As plane (labels on a halo: arrow midpoints fall on box edges)
+    const x0 = X(0), xA = X(g.tau), xAO = X(gO.tau), cAr = cFg;
+    arrow(ctx, x0, yTau, xA, yTau, { col: cAr, lw: 1.6, head: 7 });
+    ctx.strokeStyle = cAr; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(x0, yTau - 4); ctx.lineTo(x0, yTau + 4); ctx.stroke();
+    htx(ctx, TAU_AS, (x0 + xA) / 2, yTauL, { size: 12.5, color: cAr, align: 'center' });
+    // R_ℓ0, above the cells: from the As plane of the other choice's cell 0 to the As plane of this cell 0
+    arrow(ctx, xAO, yR, xA, yR, { col: cFg2, lw: 1.4, head: 7 });
+    ctx.strokeStyle = cFg2; ctx.lineWidth = 1.1; ctx.beginPath(); ctx.moveTo(xAO, yR - 4); ctx.lineTo(xAO, yR + 4); ctx.stroke();
+    const rl0 = [...RL0, T(' = ' + (g.tau > gO.tau ? '+' : '−')), I('a'), T('/√3')];
+    htx(ctx, rl0, (xAO + xA) / 2, yRL, { size: 12, color: cFg2, align: 'center' });
+    // axis along [111] with the cell corners R_ℓ
+    const lab = [T('[111]')], lw = tw(ctx, lab, 11), xEnd = W - pad - lw - 5;
+    arrow(ctx, pad, yAx, xEnd, yAx, { col: cMut, lw: 1, head: 6 });
+    tx(ctx, lab, W - pad, yAx + 4, { size: 11, color: cMut, align: 'right' });
+    for (let l = -2; l <= 3; l++) {
+      const xt = X(l * CP);
+      if (xt < pad + 12 || xt > xEnd - 14) continue;
+      ctx.strokeStyle = cMut; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(xt, yAx - 4); ctx.lineTo(xt, yAx + 4); ctx.stroke();
+      tx(ctx, RL(l), xt, yTk, { size: 11.5, color: l === 0 ? cFg : cFg2, align: 'center' });
+    }
+    // the period, between R_1 and R_2 when both are on the axis, else between R_0 and R_1
+    const lp = X(2 * CP) < xEnd - 14 ? 1 : 0, xm = X((lp + 0.5) * CP);
+    const per = narrow ? [I('a'), T('/√3')] : [I('a'), T('/√3 = 3.264 Å')];
+    if (tw(ctx, per, 10.5) < CP * s - 40) tx(ctx, per, xm, yTk, { size: 10.5, color: cMut, align: 'center' });
+    cv.canvas.setAttribute('aria-label', `Panel a: chain of Ga and As (111) planes along [111], drawn to scale${g.cs ? ' (centrosymmetric toy, As plane midway)' : ', with gaps of 2.448 and 0.816 angstrom'}. ` +
+      `Shaded boxes group each Ga plane with the As plane ${st.cell === 'A' ? 'above' : 'below'} it; cell corners R_l sit on the Ga planes. ` +
+      `In cell 0 the arrow tau_As runs from the corner to its As plane, ${sg(g.tau, 3)} angstrom. A dashed box marks cell 0 of the other choice, and the arrow R_l0 = ${g.tau > gO.tau ? '+' : '−'}a/√3 joins the two As planes.`);
+  }
+
+  // ---------- (b) phasor dials ----------
+  function drawDials() {
+    const cv = cvD, ctx = cv.ctx, W = cv.w, H = cv.h;
+    cv.clear();
+    if (!cur || W < 60) return;
+    fams();
+    const { m, mO, k, q, st } = cur, md = m[k], mdO = mO[k];
+    const pad = 8, cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted'), cGrid = EPP.color('grid');
+    const cPh = EPP.color('phonon'), cPhT = EPP.textColor('phonon');
+    const name = st.mode === 'LA' ? 'LA' : 'LO', cMode = EPP.textColor(st.mode === 'LA' ? 'c5' : 'phonon');
+    const head = [T('(b) the ')], w1 = tx(ctx, head, pad, 15, { size: 11.5, color: cFg2 });
+    const w2 = tx(ctx, [T(name)], pad + w1, 15, { size: 11.5, color: cMode });
+    tx(ctx, [T(' mode at '), I('q'), T(' = ' + q.toFixed(2) + ' Å'), T('−1', 1)], pad + w1 + w2, 15, { size: 11.5, color: cFg2 });
+    // two rows of two dials: the eigenvector components, then their products with the basis phase
+    const rowH = (H - 26) / 2, cx = [W / 4, 3 * W / 4];
+    const R = EPP.clamp(Math.min((W / 2 - 44) / 2.5, (rowH - 62) / 2.3), 22, 46);
+    const PRODK = (k) => [I('e'), T(k, -1), T(' e'), T('−i', 1), B('q', 1), T('·', 1), BI('τ', 1), T(k, 2)];
+    const rows = [
+      { head: [T('eigenvector components '), I('e'), I('κ', -1)], v: [md.eG, md.eA], ghost: mdO.eA, sym: EK,
+        note: [[T('chosen real and positive')], [T('other choice: ∠' + angS(mdO.eA))]] },
+      { head: [T('with the basis phase: '), ...PROD], v: [md.eG, md.pA], ghost: mdO.pA, sym: PRODK,
+        note: [[T('the same, since '), BI('τ'), T('Ga', -1), T(' = 0')], [T('other choice: ∠' + angS(mdO.pA))]] }
+    ];
+    rows.forEach((row, r) => {
+      const yh = 26 + r * rowH + 14, cy = yh + 10 + 1.15 * R;
+      tx(ctx, row.head, pad, yh, { size: 11.5, color: cFg });
+      for (let a = 0; a < 2; a++) {
+        const X0 = cx[a], c = row.v[a], el = a ? 'As' : 'Ga';
+        ctx.strokeStyle = cGrid; ctx.lineWidth = 1; ctx.setLineDash([]); ctx.beginPath();
+        ctx.moveTo(X0 - 1.15 * R, cy); ctx.lineTo(X0 + 1.15 * R, cy); ctx.moveTo(X0, cy + 1.15 * R); ctx.lineTo(X0, cy - 1.15 * R); ctx.stroke();
+        tx(ctx, [T('Re')], X0 + 1.15 * R + 3, cy + 3.5, { size: 9.5, color: cMut });
+        tx(ctx, [T('Im')], X0 + 4, cy - 1.15 * R + 4, { size: 9.5, color: cMut });
+        ctx.strokeStyle = EPP.color(a ? 'c5' : 'c4'); ctx.lineWidth = 1.8; ctx.beginPath(); ctx.arc(X0, cy, R, 0, TAU); ctx.stroke();
+        tx(ctx, [T(el)], X0 - 0.78 * R, cy - 0.78 * R, { size: 12.5, color: EPP.textColor(a ? 'c5' : 'c4'), align: 'right' });
+        if (a) {
+          // the other choice of cell, faint; the arc marks the angle of the current hand
+          arrow(ctx, X0, cy, X0 + R * row.ghost[0], cy - R * row.ghost[1], { col: EPP.alpha('phonon', 0.38), lw: 2, head: 8 });
+          const ph = Math.atan2(c[1], c[0]);
+          if (Cx.abs(c) > 0.12 && Math.abs(ph) > 0.06) { ctx.strokeStyle = cPhT; ctx.lineWidth = 1.1; ctx.beginPath(); ctx.arc(X0, cy, 0.3 * R, 0, -ph, ph > 0); ctx.stroke(); }
+        }
+        arrow(ctx, X0, cy, X0 + R * c[0], cy - R * c[1], { col: cPh, lw: 2.5, head: 9 });
+        const yv = cy + 1.15 * R + 14, val = [...row.sym(el), T(' = ' + pol(c))];
+        tx(ctx, tw(ctx, val, 11) <= W / 2 - 6 ? val : [T(pol(c))], X0, yv, { size: 11, color: cFg2, align: 'center' });
+        tx(ctx, row.note[a], X0, yv + 13, { size: 10, color: cMut, align: 'center' });
+      }
+    });
+    cv.canvas.setAttribute('aria-label', `Panel b: phasor dials for the ${name} mode at q = ${q.toFixed(2)} per angstrom. Eigenvector components: e_Ga = ${pol(md.eG)}, e_As = ${pol(md.eA)} ` +
+      `(other choice of cell: ${pol(mdO.eA)}). With the basis phase: Ga ${pol(md.eG)}, As ${pol(md.pA)} (other choice: ${pol(mdO.pA)}, the same).`);
+  }
+
+  // ---------- (c) the vertex against q ----------
+  let labs = null;
+  const baseRender = plot.render.bind(plot);
+  plot.render = () => {
+    baseRender();
+    const ctx = plot.ctx, w = plot.cv.w, h = plot.cv.h, mm = plot.m;
+    if (!w || !h) return;
+    fams();
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2');
+    ctx.save();
+    tx(ctx, [T('(c) long-range vertex against '), I('q')], 4, 15, { size: 11.5, color: cFg2 });
+    tx(ctx, [I('q'), T(' along [111] (Å'), T('−1', 1), T(')')], mm.l + (w - mm.l - mm.r) / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    if (cur) { const xq = plot.X(cur.q), left = xq + 14 > w - mm.r; tx(ctx, [I('q')], left ? xq - 4 : xq + 4, mm.t + 13, { size: 12, color: EPP.color('muted'), align: left ? 'right' : 'left' }); }
+    if (labs) for (const L of labs) tx(ctx, [T(L.t)], plot.X(L.x) + (L.dx || 0), plot.Y(L.y) + L.dy, { size: 12, color: EPP.textColor(L.c), align: 'center' });
+    ctx.translate(15, mm.t + (h - mm.t - mm.b) / 2); ctx.rotate(-Math.PI / 2);
+    tx(ctx, [I('q'), T(' |'), I('g'), T('lr', 1), T('|  (eV Å'), T('−1', 1), T(')')], 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+  };
+  function drawPlot() {
+    const { q, m } = cur, C = curves;
+    // curve labels where the two branches are well apart: LO above its curves, LA above its curves, at small q
+    const iL = QS.findIndex(x => x >= 0.07), iA = QS.findIndex(x => x >= 0.2);
+    labs = [{ t: 'LO', x: QS[iL], y: Math.max(C.low[iL], C.lon[iL]), dy: -10, c: 'phonon' },
+      { t: 'LA', x: QS[iA], y: Math.max(C.law[iA], C.lan[iA]), dx: -13, dy: -5, c: 'c5' }];   // upper left of the rising curve
+    plot.draw([
+      { type: 'line', x: QS, y: C.low, color: 'phonon', label: 'LO, with basis phase' },
+      { type: 'line', x: QS, y: C.lon, color: 'phonon', dash: [6, 4], label: 'LO, without' },
+      { type: 'line', x: QS, y: C.law, color: 'c5', label: 'LA, with basis phase' },
+      { type: 'line', x: QS, y: C.lan, color: 'c5', dash: [6, 4], label: 'LA, without' },
+      { type: 'vline', at: q, color: 'muted', width: 1 },
+      { type: 'points', x: [q], y: [m[1].gw], color: 'phonon', r: 4 },
+      { type: 'points', x: [q], y: [m[1].gn], color: 'phonon', r: 3.6, hollow: true },
+      { type: 'points', x: [q], y: [m[0].gw], color: 'c5', r: 4 },
+      { type: 'points', x: [q], y: [m[0].gn], color: 'c5', r: 3.6, hollow: true }
+    ]);
+  }
+
+  function readouts() {
+    const { g, q, m } = cur, LA = m[0], LO = m[1], r = (LO.gn / LO.gw) ** 2;
+    roV.tau.textContent = sg(g.tau, 3) + NB + 'Å';
+    roV.qt.textContent = sg(q * g.tau, 2) + NB + 'rad';
+    const qr = q * (g.tau - cur.gO.tau);                      // R_ℓ0 = τ_As(this choice) − τ_As(other choice)
+    roV.qr.textContent = sg(qr, 2) + NB + 'rad' + NB + '=' + NB + sg(qr * DEG, 1) + '°';
+    roV.hw.textContent = LO.hw.toFixed(2) + ',' + NB + LA.hw.toFixed(2) + NB + 'meV';
+    roV.glo.textContent = f4(LO.gw) + NB + '/' + NB + f4(LO.gn) + NB + 'eV' + NB + 'Å⁻¹';
+    roV.r.textContent = r.toFixed(3) + NB + '(' + sg(100 * (r - 1), 1) + '%)';
+    roV.gla.textContent = f4(LA.gw) + NB + '/' + NB + f4(LA.gn) + NB + 'eV' + NB + 'Å⁻¹';
+  }
+
+  // ---------- controls ----------
+  let lastKey = '';
+  function onChange(st) {
+    const key = st.chain + st.cell;
+    cur = compute(st);
+    if (key !== lastKey) { curves = curveSet(cur.g); lastKey = key; relabel(st.chain); }
+    drawChain(); drawDials(); drawPlot(); readouts();
+  }
+  const ui = EPP.controls(fig.querySelector('.b1-cell-ctrls'), [
+    { key: 'chain', type: 'seg', label: 'chain', options: [['gaas', 'GaAs [111]-like'], ['cs', 'centrosymmetric toy']], value: 'gaas' },
+    { key: 'cell', type: 'seg', label: 'cell, As position along [111]', options: [['A', 'As above Ga (+2.448 Å)'], ['B', 'As below Ga (−0.816 Å)']], value: 'A' },
+    { key: 'q', type: 'range', label: 'cursor q along [111]', min: 0.01, max: QMAX, step: 0.01, value: 0.5, fmt: v => v.toFixed(2) + ' Å⁻¹' },
+    { key: 'mode', type: 'seg', label: 'mode on the dials', options: [['LO', 'LO'], ['LA', 'LA']], value: 'LO' }
+  ], onChange);
+  const elCtl = ui.el;
+  const I_ = (t) => `<i style="font-family:var(--font-text)">${t}</i>`;
+  const TAU_H = '<b style="font-family:var(--font-text);font-style:italic">τ</b><sub>As</sub>';
+  const byId = (k) => document.getElementById(`${fig.id}-${k}`);
+  { const sp = elCtl.querySelector(`label[for="${fig.id}-q"] > span`); if (sp) sp.innerHTML = `cursor ${I_('q')} along [111]`; }
+  { const b = byId('cell-A'), sp = b && b.closest('.ctrl').querySelector('.lab > span'); if (sp) sp.innerHTML = `cell, ${TAU_H} along [111]`; }
+  function relabel(chain) {
+    const t = chain === 'cs' ? ['+1.632', '−1.632'] : ['+2.448', '−0.816'];
+    const a = byId('cell-A'), b = byId('cell-B');
+    if (a) a.innerHTML = `As above Ga, <span class="nw">${t[0]} Å</span>`;
+    if (b) b.innerHTML = `As below Ga, <span class="nw">${t[1]} Å</span>`;
+    fig.querySelectorAll('.b1-cell-k1').forEach(e => { e.hidden = chain === 'cs'; });
+    fig.querySelectorAll('.b1-cell-k2').forEach(e => { e.hidden = chain !== 'cs'; });
+  }
+  // two rows: chain and cell; then the cursor and the dial mode
+  elCtl.style.display = 'flex'; elCtl.style.flexWrap = 'wrap'; elCtl.style.alignItems = 'flex-start';
+  [['chain-gaas', '1 1 250px'], ['cell-A', '2 1 330px'], ['q', '3 1 240px'], ['mode-LO', '1 1 140px']].forEach(([k, f]) => {
+    const e = byId(k), box = e && e.closest('.ctrl');
+    if (!box) return;
+    box.style.flex = f; box.style.gridColumn = ''; box.style.minWidth = '0';
+    box.querySelectorAll('.seg button').forEach(bb => { bb.style.flex = '1 1 auto'; });
+  });
+
+  // click or drag on (c) moves the cursor; a press near a curve also picks its mode for the dials
+  plot.onPointer = (x, y, type, d) => {
+    if (!cur || type === 'up') return;
+    const q = Math.round(EPP.clamp(x, 0.01, QMAX) * 100) / 100;
+    if (type === 'down' && d) {
+      const r = modes(q, cur.g);
+      let best = 12, pick = null;
+      [['LA', r[0]], ['LO', r[1]]].forEach(([kk, mm]) => [mm.gw, mm.gn].forEach(v => { const dist = Math.abs(plot.Y(v) - d.py); if (dist < best) { best = dist; pick = kk; } }));
+      if (pick && pick !== ui.state.mode) ui.set('mode', pick, true);
+    }
+    ui.set('q', q);
+  };
+  cvC.onResize(drawChain);
+  cvD.onResize(drawDials);
+})();
+</script>

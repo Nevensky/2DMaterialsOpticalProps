@@ -1,0 +1,516 @@
+  <figure class="viz" id="viz-a3-cloud">
+    <p class="viz-title">What a displaced ion looks like to an electron <span class="tag">interactive</span></p>
+    <div class="viz-grid side">
+      <div class="a3-cloud-map"></div>
+      <div class="a3-cloud-side" style="display:grid;gap:10px;align-content:start;min-width:0">
+        <div class="a3-cloud-mapctl"></div>
+        <div class="legend a3-cloud-key" style="display:grid;gap:7px;margin-top:2px">
+          <span class="item" style="white-space:normal"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" style="vertical-align:-4px;margin-right:6px"><circle cx="9" cy="13" r="4" style="fill:var(--c-phonon)"/><path d="M9 8.6V3.4" style="stroke:var(--c-phonon)" stroke-width="1.8"/><path d="M6.2 4.6L9 0.8L11.8 4.6Z" style="fill:var(--c-phonon)"/></svg>the ion, of charge $Z_\kappa e$, moves along $\bu$</span>
+          <span class="item" style="white-space:normal"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" style="vertical-align:-4px;margin-right:6px"><circle cx="9" cy="9" r="7" fill="none" style="stroke:var(--fg)" stroke-width="1.2" stroke-dasharray="3 2.4"/></svg>circles at $r=1/k_{\mathrm{TF}}$ and $r=R_{\mathrm{WS}}$</span>
+          <span class="item" style="white-space:normal"><span aria-hidden="true" style="display:inline-block;width:16px;height:11px;border-radius:2px;margin-right:7px;vertical-align:-1px;background:var(--c-electron)"></span>an electron's potential energy is lowered, or electrons gather</span>
+          <span class="item" style="white-space:normal"><span aria-hidden="true" style="display:inline-block;width:16px;height:11px;border-radius:2px;margin-right:7px;vertical-align:-1px;background:var(--c-photon)"></span>raised, or electrons are missing</span>
+          <span class="item" style="white-space:normal;color:var(--muted)">Point at or tap the map to read a value.</span>
+        </div>
+      </div>
+    </div>
+    <div class="viz-grid two" style="margin-top:14px"><div class="a3-cloud-s"></div><div class="a3-cloud-p"></div></div>
+    <div class="legend a3-cloud-leg"><span class="item" data-m="tf" style="color:var(--muted)"><span class="sw dot"></span><span style="color:var(--fg-2)">Thomas–Fermi</span></span><span class="item" data-m="rpa" style="color:var(--c-electron)"><span class="sw"></span><span style="color:var(--fg-2)">Lindhard (RPA)</span></span><span class="item" data-m="x" style="color:var(--c-5)"><span class="sw dash"></span><span style="color:var(--fg-2)">Lindhard + exchange</span></span><span class="item" style="color:var(--muted)"><span class="sw dash" style="width:16px;border-top-width:1.5px"></span><span style="color:var(--fg-2)">$r=1/k_{\mathrm{TF}}$ and $r=R_{\mathrm{WS}}$</span></span></div>
+    <div class="a3-cloud-ctrls"></div>
+    <div class="readout a3-cloud-ro" aria-live="polite"><span>$k_{\mathrm F}$<b class="a3-cloud-v-kf"></b></span><span>$k_{\mathrm{TF}}$<b class="a3-cloud-v-ktf"></b></span><span>$1/k_{\mathrm{TF}}$<b class="a3-cloud-v-ltf"></b></span><span>$E_{\mathrm F}$<b class="a3-cloud-v-ef"></b></span><span>$\pi/k_{\mathrm F}$<b class="a3-cloud-v-pf"></b></span><span>$R_{\mathrm{WS}}$<b class="a3-cloud-v-rws"></b></span></div>
+    <div class="readout a3-cloud-ro2" aria-live="polite"><span>field along $\bu$ at $R_{\mathrm{WS}}$<b class="a3-cloud-v-field"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> The bare field of the displaced ion (map set to bare) fills the panel. The screened field fades within a few screening lengths <span class="nw">$1/k_{\mathrm{TF}}$:</span> at $R_{\mathrm{WS}}$ only <span class="nw">8–14 %</span> of it survives in the three metals (RPA); beyond, only weak Friedel ripples of period $\pi/k_{\mathrm F}$ remain.</p><div class="cap-more">
+      <p><strong>Marks.</strong> Map (a) is the plane through the ion that contains its displacement $\bu$ (amber arrow); dashed circles mark the screening length $1/k_{\mathrm{TF}}$ and the Wigner–Seitz radius <span class="nw">$R_{\mathrm{WS}}$.</span> Blue: an electron's potential energy is lowered <span class="nw">($\Delta V\lt0$)</span> or electrons gather <span class="nw">($\Delta n\gt0$);</span> rose: the opposite. Both potentials share one compressed (asinh) scale, per unit displacement. In (b) and (c) the selected model is thick, the dot marks $S(R_{\mathrm{WS}})$ and the bar the Friedel period.</p>
+      <p><strong>Try.</strong> Switch the map between bare and screened. Choose Thomas–Fermi: the Friedel rings leave the map, because the local rule has no kink at <span class="nw">$2k_{\mathrm F}$.</span> Choose Lindhard + exchange: the field surviving at $R_{\mathrm{WS}}$ doubles in Na, nearly triples in K and barely changes in Al; the difference comes from <span class="nw">$q\gtrsim k_{\mathrm F}$,</span> where the toy kernel is least reliable. Raise <span class="nw">$r_{\mathrm s}$,</span> which dilutes the gas: the screening length $1/k_{\mathrm{TF}}\propto r_{\mathrm s}^{1/2}$ grows.</p>
+      <p><strong>Model.</strong> A point ion of valence $Z_\kappa$ in jellium, with static screening diagonal in $q$: <span data-eq="a3-eq-tf">(A3.1)</span>; the free-electron response $\chi^0$ and dielectric function of <span data-eq="a3-eq-lindhard">(A3.18)</span>–<span data-eq="a3-eq-epsj">(A3.19)</span>; and <span data-eq="a3-eq-scf">(A3.13)</span> with the exchange kernel <span class="nw">$f^{\mathrm{xc}}=-\pi e^2/k_{\mathrm F}^2$.</span> Numerically, $S(r)=1+\frac2\pi\int_0^\infty\dd q\,\big[1/\varepsilon^{\mathrm e}(q)-1\big]$ <span class="nw">$\times\big[\sin(qr)/q-r\cos qr\big]$;</span> the maps are $\Delta V^{\mathrm{KS}}=-(Z_\kappa e^2/r^2)\,S(r)\cos\theta$ (bare: <span class="nw">$S=1$;</span> $\theta$ measured from <span class="nw">$\bu$)</span> and <span class="nw">$\Delta n=-\partial_zn^{\mathrm{ind}}$,</span> with <span class="nw">$n^{\mathrm{ind}}=\chi^0V^{\mathrm{scr}}_\kappa$.</span> Each curve in (c) has area 1, and for Thomas–Fermi and RPA $S(r)$ is 1 minus its area up to $r$ (Gauss's theorem); with exchange, $S$ also contains the cloud's exchange potential. <span class="nw">$r_{\mathrm s}=2.07$,</span> 3.93 and 4.86 for Al, Na and K (literature values, illustrative).</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a3-cloud');
+  if (!fig || !window.EPP) return;
+
+  // ---------- equation numbers: plain text in the markup, made into a.eqref links once the section's equations are on the page ----------
+  const linkEqs = () => fig.querySelectorAll('span[data-eq]').forEach((sp) => {
+    const t = document.getElementById(sp.dataset.eq);
+    if (!t) return;
+    const m = (t.textContent || '').match(/\\tag\{([^}]*)\}/);
+    const a = document.createElement('a');
+    a.className = 'eqref'; a.href = '#' + sp.dataset.eq; a.textContent = m ? `(${m[1]})` : sp.textContent;
+    sp.replaceWith(a);
+  });
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', linkEqs); else linkEqs();
+
+  // ---------- physics: a point ion of valence Z_κ in jellium, displaced along +z; static screening, diagonal in q ----------
+  const A0 = 0.529177, E2 = 14.3996, RY = 13.6057;   // Bohr radius (Å); e^2 (Gaussian) in eV Å; rydberg (eV)
+  const RMAX = 10, NR = 301, DR = RMAX / (NR - 1);    // radial grid, 0..10 Å
+  const NQ = 1600, QM = 12;                           // trapezoid grid in q, up to 12 k_F
+  const RCLIP = 0.15;                                 // the map is clipped at r < 0.15 Å, under the ion
+  const V0 = 0.05, VMAX = 15, N0 = 1e-3, NMAX = 3;    // asinh colour scales: eV/Å (both potentials), Å^-4 (Δn)
+  const PI = Math.PI;
+  // Lindhard function F_L(x), x = q/2k_F (A3.18)
+  const FL = (x) => {
+    if (x < 1e-4) return 1 - x * x / 3;
+    if (Math.abs(x - 1) < 1e-9) return 0.5;
+    return 0.5 + (1 - x * x) / (4 * x) * Math.log(Math.abs((1 + x) / (1 - x)));
+  };
+  // free-electron numbers: k_F = 1.91916/(r_{\mathrm s} a_0), k_TF^2 = 4πe^2 N_F = 4k_F/(π a_0), E_F = (k_F a_0)^2 Ry
+  const gas = (rs) => {
+    const kF = 1.91916 / (rs * A0), kTF2 = 4 * kF / (PI * A0);
+    return { rs, kF, kTF2, kTF: Math.sqrt(kTF2), EF: Math.pow(1.91916 / rs, 2) * RY };
+  };
+  const RG = Array.from({ length: NR }, (_, i) => i * DR);
+
+  // Radial profiles per unit valence, for the three models, on the grid RG:
+  //   S(r)          surviving fraction of the bare field along the axis,
+  //                 S = 1 + (2/π) ∫ dq [1/ε(q) − 1][sin(qr)/q − r cos(qr)];
+  //   P(r)          4πr^2 n^ind(r)/Z_κ, with n^ind(r) = (1/2π^2 r) ∫ dq q sin(qr) n^ind(q);
+  //   D(r)          ∂_r n^ind / Z_κ = −(1/2π^2 r^2) ∫ dq q n^ind(q) [sin(qr) − qr cos(qr)].
+  // n^ind(q) = χ^0 V^scr_κ = Z_κ a/ε with a = (k_TF/q)^2 F_L; ε = 1 + a (RPA, A3.19) or 1 + a(1 − q^2/4k_F^2)
+  // (test electron, A3.13 with f^xc = −πe^2/k_F^2). Slow tails are subtracted and added back in closed form:
+  //   exchange, 1/ε − 1 → +k_TF^2/3q^2: subtract c/(q^2 + κ0^2), whose S-integral is c π/(2κ0^2)[1 − e^{−κ0 r}(1 + κ0 r)];
+  //   both, n^ind(q)/Z_κ → C4/q^4: subtract C4/(q^2 + κ0^2)^2, whose transform is C4 e^{−κ0 r}/(8π κ0); κ0 = 2k_F.
+  const cache = new Map();
+  function profiles(rs) {
+    const key = rs.toFixed(3);
+    if (cache.has(key)) return cache.get(key);
+    const g = gas(rs), { kF, kTF, kTF2 } = g;
+    const dq = QM * kF / (NQ - 1), kap0 = 2 * kF, cX = kTF2 / 3, C4 = 4 * kTF2 * kF * kF / 3;
+    const out = { g, dq, kap0, cX, S: {}, P: {}, D: {}, h: {} };
+    // Thomas–Fermi in closed form (A3.1): S = (1 + k r)e^{−kr}, P = k^2 r e^{−kr}, D = −k^2 (1 + k r) e^{−kr}/(4π r^2)
+    {
+      const S = new Float64Array(NR), P = new Float64Array(NR), D = new Float64Array(NR);
+      for (let i = 0; i < NR; i++) {
+        const r = Math.max(RG[i], 1e-3), e = Math.exp(-kTF * r);
+        S[i] = (1 + kTF * r) * e; P[i] = kTF2 * r * e; D[i] = -kTF2 * (1 + kTF * r) * e / (4 * PI * r * r);
+      }
+      S[0] = 1; P[0] = 0;
+      out.S.tf = S; out.P.tf = P; out.D.tf = D;
+    }
+    for (const m of ['rpa', 'x']) {
+      const xc = m === 'x', hS = new Float64Array(NQ), hN = new Float64Array(NQ), qv = new Float64Array(NQ);
+      for (let j = 1; j < NQ; j++) {
+        const q = j * dq, x = q / (2 * kF), a = kTF2 / (q * q) * FL(x);
+        const eps = 1 + (xc ? a * (1 - x * x) : a);
+        const k2 = q * q + kap0 * kap0;
+        hS[j] = 1 / eps - 1 - (xc ? cX / k2 : 0);
+        hN[j] = q * (a / eps - C4 / (k2 * k2));
+        qv[j] = q;
+      }
+      hS[NQ - 1] *= 0.5; hN[NQ - 1] *= 0.5;   // trapezoid end weight; the q = 0 end contributes nothing
+      const S = new Float64Array(NR), P = new Float64Array(NR), D = new Float64Array(NR);
+      for (let i = 1; i < NR; i++) {
+        const r = RG[i], c1 = Math.cos(dq * r), s1 = Math.sin(dq * r);
+        let sn = s1, cs = c1, IS = 0, IN = 0, ID = 0;
+        for (let j = 1; j < NQ; j++) {                        // sin(qr), cos(qr) by a rotation recurrence
+          const q = qv[j];
+          IS += hS[j] * (sn / q - r * cs);
+          IN += hN[j] * sn;
+          ID += hN[j] * (sn - q * r * cs);
+          const t = sn * c1 + cs * s1; cs = cs * c1 - sn * s1; sn = t;
+        }
+        IS *= dq; IN *= dq; ID *= dq;
+        if (xc) IS += cX * PI / (2 * kap0 * kap0) * (1 - Math.exp(-kap0 * r) * (1 + kap0 * r));
+        S[i] = 1 + 2 / PI * IS;
+        const ek = Math.exp(-kap0 * r);
+        P[i] = 4 * PI * r * r * (C4 * ek / (8 * PI * kap0) + IN / (2 * PI * PI * r));
+        D[i] = -C4 * ek / (8 * PI) - ID / (2 * PI * PI * r * r);
+      }
+      S[0] = 1; P[0] = 0; D[0] = -C4 / (8 * PI);
+      out.S[m] = S; out.P[m] = P; out.D[m] = D; out.h[m] = { hS, qv };
+    }
+    if (cache.size > 40) cache.delete(cache.keys().next().value);
+    cache.set(key, out);
+    return out;
+  }
+  // S at one radius (the readout at R_WS), on a finer q grid: 8000 points up to 16 k_F
+  function S1(pr, m, r) {
+    const { kF, kTF, kTF2 } = pr.g;
+    if (m === 'tf') return (1 + kTF * r) * Math.exp(-kTF * r);
+    const n = 8000, dq = 16 * kF / (n - 1), xc = m === 'x', k0 = pr.kap0;
+    let I = 0;
+    for (let j = 1; j < n; j++) {
+      const q = j * dq, x = q / (2 * kF), a = kTF2 / (q * q) * FL(x), eps = 1 + (xc ? a * (1 - x * x) : a);
+      const h = 1 / eps - 1 - (xc ? pr.cX / (q * q + k0 * k0) : 0);
+      I += (j === n - 1 ? 0.5 : 1) * h * (Math.sin(q * r) / q - r * Math.cos(q * r));
+    }
+    I *= dq;
+    if (xc) I += pr.cX * PI / (2 * k0 * k0) * (1 - Math.exp(-k0 * r) * (1 + k0 * r));
+    return 1 + 2 / PI * I;
+  }
+  const lerp = (A, r) => { const u = r / DR; if (u >= NR - 1) return A[NR - 1]; const i = Math.floor(u), t = u - i; return A[i] + t * (A[i + 1] - A[i]); };
+
+  // the three maps, per unit displacement along +z, with θ measured from +z:
+  //   ΔV^en = −(Z_κ e^2/r^2) cos θ,  ΔV^KS = −(Z_κ e^2/r^2) S(r) cos θ  (eV/Å),  Δn = −∂_z n^ind = −(∂_r n^ind) cos θ  (Å^-4)
+  let cur = null;
+  function field(x, z) {
+    const r = Math.hypot(x, z), rc = Math.max(r, RCLIP), c = r > 0 ? z / r : 0, Z = cur.Z, m = cur.model, g = cur.pr.g;
+    if (cur.map === 'dn') {
+      if (m === 'tf') { const e = Math.exp(-g.kTF * rc); return Z * g.kTF2 * (1 + g.kTF * rc) * e / (4 * PI * rc * rc) * c; }
+      return -Z * lerp(cur.pr.D[m], rc) * c;
+    }
+    const bare = -Z * E2 * c / (rc * rc);
+    if (cur.map === 'bare') return bare;
+    if (m === 'tf') return bare * (1 + g.kTF * rc) * Math.exp(-g.kTF * rc);
+    return bare * lerp(cur.pr.S[m], rc);
+  }
+  // compressed colour coordinate: t in [−1, 1]; u in [0, 1] with blue (u = 0) where ΔV < 0 or Δn > 0
+  const cmp = (v, v0, vm) => EPP.clamp(Math.sign(v) * Math.asinh(Math.abs(v) / v0) / Math.asinh(vm / v0), -1, 1);
+  const tOf = (v, map) => (map === 'dn' ? cmp(v, N0, NMAX) : cmp(v, V0, VMAX));
+  const uOfT = (t, map) => (map === 'dn' ? 0.5 - 0.5 * t : 0.5 + 0.5 * t);
+
+  // ---------- canvas text: '$…$' marks math (letters italic, digits upright), '#…#' a bold vector; _x, ^{xy} as in EPP.drawRich ----------
+  const ITAL = /[A-Za-zα-ωℓħ]/;
+  function runs(s) {
+    const segs = []; let buf = '', mth = false, bld = false;
+    for (const ch of String(s)) {
+      if (ch === '$' || ch === '#') { if (buf) segs.push({ t: buf, mth, bld }); buf = ''; if (ch === '$') mth = !mth; else bld = !bld; }
+      else buf += ch;
+    }
+    if (buf) segs.push({ t: buf, mth, bld });
+    const out = [];
+    for (const sg of segs) for (const p of EPP.parseRich(sg.t)) {
+      if (!sg.mth) { out.push({ t: p.t, m: p.m, it: false, b: sg.bld && !p.m }); continue; }
+      let b2 = '', it = null;
+      for (const ch of p.t) { const k = ITAL.test(ch); if (it !== null && k !== it) { out.push({ t: b2, m: p.m, it, b: false }); b2 = ''; } b2 += ch; it = k; }
+      if (b2) out.push({ t: b2, m: p.m, it, b: false });
+    }
+    return out;
+  }
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, fam = EPP.css('--font-ui'), rs = runs(s);
+    const font = (r) => `${r.it ? 'italic ' : ''}${r.b ? '700 ' : ''}${r.m ? Math.round(size * 0.72) : size}px ${fam}`;
+    const ws = rs.map((r) => { ctx.font = font(r); return ctx.measureText(r.t).width; });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    let x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    if (o.color) ctx.fillStyle = o.color;
+    ctx.textAlign = 'left';
+    rs.forEach((r, k) => { ctx.font = font(r); ctx.fillText(r.t, x0, y + (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0))); x0 += ws[k]; });
+    return tot;
+  }
+  const tw = (ctx, s, size) => txt(ctx, s, 0, 0, { size, measure: true });
+  const rrect = (ctx, x, y, w, h, r) => { ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(x, y, w, h, r); else ctx.rect(x, y, w, h); };
+  // text on a translucent chip of the surface colour, so it reads over curves and colours; (x, y) is the baseline anchor
+  function chip(ctx, s, x, y, o = {}) {
+    const size = o.size || 11, w = tw(ctx, s, size);
+    const x0 = o.align === 'center' ? x - w / 2 : (o.align === 'right' ? x - w : x);
+    ctx.fillStyle = EPP.alpha('surface', o.alpha ?? 0.84);
+    rrect(ctx, x0 - 3, y - size * 1.02, w + 6, size * 1.42, 3); ctx.fill();
+    txt(ctx, s, x0, y, { size, color: o.color });
+    return [x0 - 3, x0 + w + 3];
+  }
+  function arrowHead(ctx, x, y, ang, s) {
+    ctx.beginPath(); ctx.moveTo(x, y);
+    ctx.lineTo(x - s * Math.cos(ang - 0.42), y - s * Math.sin(ang - 0.42));
+    ctx.lineTo(x - s * Math.cos(ang + 0.42), y - s * Math.sin(ang + 0.42));
+    ctx.closePath(); ctx.fill();
+  }
+  // numbers: 3 significant digits, upright superscript exponent for small values
+  function num(v) {
+    const a = Math.abs(v);
+    if (!isFinite(v)) return '—';
+    if (a === 0) return '0';
+    let s;
+    if (a >= 100) s = v.toFixed(0); else if (a >= 10) s = v.toFixed(1); else if (a >= 1) s = v.toFixed(2); else if (a >= 0.01) s = v.toFixed(3);
+    else { const e = Math.floor(Math.log10(a)), mnt = v / Math.pow(10, e); s = `${mnt.toFixed(1)}×10^{${e}}`; }
+    return s.replace(/-/g, '−');
+  }
+
+  // ---------- what each map shows ----------
+  const MAPS = {
+    scr: { tag: 'screened Δ$V$^{KS} (eV/Å)', sym: 'Δ$V$^{KS}', unit: 'eV/Å', words: 'screened potential change ΔV^KS', ticks: [10, 1, 0.1] },
+    bare: { tag: 'bare Δ$V$^{en} (eV/Å)', sym: 'Δ$V$^{en}', unit: 'eV/Å', words: 'bare potential change ΔV^en', ticks: [10, 1, 0.1] },
+    dn: { tag: 'induced Δ$n$ (Å^{−4})', sym: 'Δ$n$', unit: 'Å^{−4}', words: 'induced density change Δn', ticks: [1, 0.1, 0.01] }
+  };
+  const MODELS = {
+    tf: { name: 'Thomas–Fermi', color: 'muted', dash: [2, 3] },
+    rpa: { name: 'Lindhard (RPA)', color: 'electron', dash: null },
+    x: { name: 'Lindhard + exchange', color: 'c5', dash: [6, 4] }
+  };
+
+  // ---------- (a) the map ----------
+  const cvM = EPP.canvas(fig.querySelector('.a3-cloud-map'), { aspect: 0.9, minHeight: 380, maxHeight: 470 });
+  cvM.canvas.setAttribute('role', 'img');
+  const NG = 220, img = document.createElement('canvas');
+  img.width = img.height = NG;
+  const ictx = img.getContext('2d'), idata = ictx.createImageData(NG, NG);
+  let LUT = null, lutSig = '', imgSig = '', box = null, probe = null;
+  function lut() {
+    const sig = ['--surface', '--muted', '--c-electron', '--c-photon'].map(EPP.css).join('|');
+    if (sig !== lutSig || !LUT) {
+      const ramp = EPP.ramp('photon', 'electron');   // u = 0: electron colour (blue), 0.5: neutral, 1: photon colour (rose)
+      LUT = new Uint8ClampedArray(3 * 256);
+      for (let k = 0; k < 256; k++) { const c = ramp(k / 255); LUT[3 * k] = c[0]; LUT[3 * k + 1] = c[1]; LUT[3 * k + 2] = c[2]; }
+      lutSig = sig;
+    }
+    return LUT;
+  }
+  function renderMap() {
+    const L = lut(), sig = [cur.rs, cur.Z, cur.model, cur.map, lutSig].join('|');
+    if (sig === imgSig) return;
+    imgSig = sig;
+    // every map is even in x and odd in z: compute the quadrant x > 0, z > 0 and mirror it
+    // (a sign change of the value is the colour index k -> 255 - k)
+    const d = idata.data, h = 12 / NG, half = NG / 2, map = cur.map;
+    const put = (i, j, k) => { const o = 4 * (j * NG + i), c = 3 * k; d[o] = L[c]; d[o + 1] = L[c + 1]; d[o + 2] = L[c + 2]; d[o + 3] = 255; };
+    for (let j = 0; j < half; j++) {
+      const z = 6 - (j + 0.5) * h;
+      for (let i = half; i < NG; i++) {
+        const k = Math.round(255 * uOfT(tOf(field(-6 + (i + 0.5) * h, z), map), map));
+        put(i, j, k); put(NG - 1 - i, j, k); put(i, NG - 1 - j, 255 - k); put(NG - 1 - i, NG - 1 - j, 255 - k);
+      }
+    }
+    ictx.putImageData(idata, 0, 0);
+  }
+
+  function drawMap() {
+    const cv = cvM, ctx = cv.ctx, W = cv.w, H = cv.h;
+    cv.clear();
+    if (!cur || W < 80) return;
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted'), cRule = EPP.color('rule');
+    const MP = MAPS[cur.map], g = cur.pr.g;
+    ctx.textBaseline = 'alphabetic';
+    // header: panel title, then the quantity shown (on the same row when it fits)
+    const title = '(a) the displaced ion and its cloud';
+    txt(ctx, title, 2, 14, { size: 11.5, color: cFg2 });
+    const one = tw(ctx, title, 11.5) + 18 + tw(ctx, MP.tag, 11.5) <= W - 4;
+    txt(ctx, MP.tag, one ? W - 2 : 2, one ? 14 : 31, { size: 11.5, color: cFg, align: one ? 'right' : 'left' });
+    // layout: square map; colour bar at the right when wide, under the map when narrow
+    const wideBar = W >= 440;
+    const mT = one ? 24 : 41, mL = 38, mR = wideBar ? 70 : 8, mB = wideBar ? 40 : 74;
+    const D = Math.max(60, Math.floor(Math.min(W - mL - mR, H - mT - mB)));
+    const x0 = mL + Math.max(0, Math.floor((W - mL - mR - D) / 2)), y0 = mT, s = D / 12;
+    const X = (x) => x0 + (x + 6) * s, Y = (z) => y0 + (6 - z) * s;
+    box = { x0, y0, D, s };
+    renderMap();
+    ctx.imageSmoothingEnabled = true;
+    ctx.drawImage(img, x0, y0, D, D);
+    ctx.strokeStyle = cRule; ctx.lineWidth = 1; ctx.strokeRect(x0 + 0.5, y0 + 0.5, D - 1, D - 1);
+    // ticks and axis labels
+    ctx.fillStyle = cMut; ctx.strokeStyle = cRule;
+    for (let v = -6; v <= 6; v += 2) {
+      const px = Math.round(X(v)) + 0.5, py = Math.round(Y(v)) + 0.5;
+      ctx.beginPath(); ctx.moveTo(px, y0 + D); ctx.lineTo(px, y0 + D + 4); ctx.moveTo(x0 - 4, py); ctx.lineTo(x0, py); ctx.stroke();
+      const lab = v < 0 ? '−' + (-v) : String(v);
+      txt(ctx, lab, px, y0 + D + 15, { size: 10.5, color: cMut, align: 'center' });
+      txt(ctx, lab, x0 - 6, py + 3.5, { size: 10.5, color: cMut, align: 'right' });
+    }
+    txt(ctx, '$x$ (Å)', x0 + D / 2, y0 + D + 31, { size: 12, color: cFg, align: 'center' });
+    ctx.save(); ctx.translate(11, y0 + D / 2); ctx.rotate(-PI / 2); txt(ctx, '$z$ (Å)', 0, 0, { size: 12, color: cFg, align: 'center' }); ctx.restore();
+    // the two dashed circles, with a light halo so they read on every colour
+    ctx.save(); ctx.beginPath(); ctx.rect(x0, y0, D, D); ctx.clip();
+    const ring = (r, dash) => {
+      ctx.setLineDash([]); ctx.lineWidth = 3; ctx.strokeStyle = EPP.alpha('surface', 0.45);
+      ctx.beginPath(); ctx.arc(X(0), Y(0), r * s, 0, 2 * PI); ctx.stroke();
+      ctx.setLineDash(dash); ctx.lineWidth = 1.3; ctx.strokeStyle = cFg;
+      ctx.beginPath(); ctx.arc(X(0), Y(0), r * s, 0, 2 * PI); ctx.stroke();
+    };
+    ring(1 / g.kTF, [3, 3]); ring(cur.RWS, [6, 4]);
+    ctx.setLineDash([]);
+    ctx.restore();
+    // the ion and its displacement
+    const rI = EPP.clamp(0.16 * s + 2, 5, 8), L = EPP.clamp(1.1 * s, 26, 40), xc = X(0), yc = Y(0);
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = EPP.alpha('surface', 0.8); ctx.lineWidth = 5;
+    ctx.beginPath(); ctx.moveTo(xc, yc - rI); ctx.lineTo(xc, yc - L + 6); ctx.stroke();
+    ctx.fillStyle = EPP.alpha('surface', 0.8); arrowHead(ctx, xc, yc - L - 1.5, -PI / 2, 12);
+    ctx.strokeStyle = EPP.color('phonon'); ctx.lineWidth = 2.2;
+    ctx.beginPath(); ctx.moveTo(xc, yc - rI); ctx.lineTo(xc, yc - L + 6); ctx.stroke();
+    ctx.fillStyle = EPP.color('phonon'); arrowHead(ctx, xc, yc - L, -PI / 2, 9);
+    ctx.beginPath(); ctx.arc(xc, yc, rI, 0, 2 * PI); ctx.fill();
+    ctx.strokeStyle = EPP.alpha('surface', 0.9); ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.lineCap = 'butt';
+    chip(ctx, '#u#', xc + 7, yc - L + 11, { size: 14, color: EPP.textColor('phonon') });
+    // circle labels on the nodal plane z = 0, where every map is neutral
+    chip(ctx, '1/$k$_{TF}', X(-1 / g.kTF) - 4, yc + 4, { size: 11, color: cFg, align: 'right' });
+    chip(ctx, '$R$_{WS}', X(cur.RWS) + 4, yc + 4, { size: 11, color: cFg });
+    // colour bar, with ticks in physical units
+    const Lt = lut(), map = cur.map, tks = [];
+    MP.ticks.forEach((v) => { tks.push(v, -v); });
+    tks.push(0);
+    const col = (t) => { const k = 3 * Math.round(255 * uOfT(t, map)); return `rgb(${Lt[k]},${Lt[k + 1]},${Lt[k + 2]})`; };
+    const lab = (v) => (v === 0 ? '0' : (v < 0 ? '−' : '') + String(Math.abs(v)));
+    if (wideBar) {
+      const bx = x0 + D + 12, bw = 10;
+      for (let py = 0; py < D; py += 2) { ctx.fillStyle = col(1 - 2 * (py + 1) / D); ctx.fillRect(bx, y0 + py, bw, 2.6); }
+      ctx.strokeStyle = cRule; ctx.lineWidth = 1; ctx.strokeRect(bx + 0.5, y0 + 0.5, bw - 1, D - 1);
+      tks.forEach((v) => {
+        const py = y0 + (1 - tOf(v, map)) / 2 * D;
+        ctx.strokeStyle = cMut; ctx.beginPath(); ctx.moveTo(bx + bw, py); ctx.lineTo(bx + bw + 3, py); ctx.stroke();
+        txt(ctx, lab(v), bx + bw + 6, py + 3.5, { size: 10.5, color: cMut });
+      });
+    } else {
+      const by = y0 + D + 42, bh = 8;
+      for (let px = 0; px < D; px += 2) { ctx.fillStyle = col(2 * (px + 1) / D - 1); ctx.fillRect(x0 + px, by, 2.6, bh); }
+      ctx.strokeStyle = cRule; ctx.lineWidth = 1; ctx.strokeRect(x0 + 0.5, by + 0.5, D - 1, bh - 1);
+      tks.forEach((v) => {
+        const px = x0 + (1 + tOf(v, map)) / 2 * D;
+        ctx.strokeStyle = cMut; ctx.beginPath(); ctx.moveTo(px, by + bh); ctx.lineTo(px, by + bh + 3); ctx.stroke();
+        txt(ctx, lab(v), px, by + bh + 14, { size: 10, color: cMut, align: 'center' });
+      });
+    }
+    // value under the pointer
+    if (probe) {
+      const v = field(probe.x, probe.z), r = Math.hypot(probe.x, probe.z), px = X(probe.x), py = Y(probe.z);
+      ctx.strokeStyle = cFg; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.arc(px, py, 4.5, 0, 2 * PI); ctx.stroke();
+      const th = Math.round(Math.acos(EPP.clamp(r > 0 ? probe.z / r : 1, -1, 1)) * 180 / PI);
+      const t = r < RCLIP ? 'inside the ion: not shown' : `$r$ = ${r.toFixed(2)} Å, $θ$ = ${th}°: ${MP.sym} = ${num(v)} ${MP.unit}`;
+      chip(ctx, t, x0 + 6, y0 + 17, { size: 11, color: cFg, alpha: 0.9 });
+    }
+    cv.canvas.setAttribute('aria-label', `Panel a: map of the ${MP.words} in the x–z plane through an ion of valence ${cur.Z} displaced along +z, ` +
+      `${cur.map === 'bare' ? 'no screening' : MODELS[cur.model].name + ' screening'}, r_s = ${cur.rs.toFixed(2)}. ` +
+      `${cur.map === 'dn' ? 'Electrons gather ahead of the ion (blue, top) and are missing behind it (rose, bottom).' : 'The potential energy is lowered ahead of the ion (blue, top) and raised behind it (rose, bottom).'} ` +
+      `Dashed circles at 1/k_TF = ${(1 / g.kTF).toFixed(2)} Å and R_WS = ${cur.RWS.toFixed(2)} Å.`);
+  }
+  // pointer: read the map value (hover with a mouse or pen, tap on a touch screen)
+  const mapPt = (e) => {
+    if (!box) return null;
+    const rc = cvM.canvas.getBoundingClientRect(), px = e.clientX - rc.left, py = e.clientY - rc.top;
+    if (px < box.x0 || px > box.x0 + box.D || py < box.y0 || py > box.y0 + box.D) return null;
+    return { x: (px - box.x0) / box.s - 6, z: 6 - (py - box.y0) / box.s };
+  };
+  cvM.canvas.addEventListener('pointermove', (e) => { if (e.pointerType === 'touch') return; probe = mapPt(e); drawMap(); });
+  cvM.canvas.addEventListener('pointerdown', (e) => { probe = mapPt(e); drawMap(); });
+  cvM.canvas.addEventListener('pointerleave', (e) => { if (e.pointerType === 'touch') return; probe = null; drawMap(); });
+  cvM.onResize(drawMap);
+
+  // ---------- (b) S(r) and (c) the radial distribution of the cloud ----------
+  const RG6 = RG.filter((r) => r <= 6 + 1e-9);
+  const pS = new EPP.Plot(fig.querySelector('.a3-cloud-s'), {
+    xlim: [0, 10], ylim: [-0.25, 1.1], aspect: 0.74, minHeight: 230, maxHeight: 330, legend: false,
+    yticks: [-0.2, 0, 0.2, 0.4, 0.6, 0.8, 1], margin: { t: 24, l: 50, r: 12, b: 42 },
+    xname: 'r (Å)', hoverX: (v) => EPP.fix(v, 2), hoverY: (v) => EPP.fix(v, 3),
+    ariaLabel: 'Panel b: fraction S of the bare field that survives along the displacement axis, against the distance r from the ion, for three screening models'
+  });
+  const pP = new EPP.Plot(fig.querySelector('.a3-cloud-p'), {
+    xlim: [0, 6], ylim: [-0.35, 1.3], aspect: 0.74, minHeight: 230, maxHeight: 330, legend: false,
+    yticks: [-0.25, 0, 0.25, 0.5, 0.75, 1, 1.25], margin: { t: 24, l: 50, r: 12, b: 42 },
+    xname: 'r (Å)', hoverX: (v) => EPP.fix(v, 2), hoverY: (v) => EPP.fix(v, 3) + ' Å⁻¹',
+    ariaLabel: 'Panel c: radial distribution of the induced electrons around the static ion, 4 pi r squared n_ind over Z, for three screening models'
+  });
+  // italic axis labels and annotations are drawn after the plot's own render
+  const hook = (p, extra) => { const base = p.render.bind(p); p.render = () => { base(); if (p.cv.w && p.cv.h && cur) extra(p, p.ctx, p.cv.w, p.cv.h, p.m); }; };
+  function axes(p, ctx, w, h, m, title, short, ylab) {
+    const cFg = EPP.color('fg');
+    ctx.textBaseline = 'alphabetic';
+    txt(ctx, tw(ctx, title, 11.5) <= w - 6 ? title : short, 2, 14, { size: 11.5, color: EPP.color('fg2') });
+    txt(ctx, '$r$ (Å)', m.l + (w - m.l - m.r) / 2, h - 7, { size: 12, color: cFg, align: 'center' });
+    ctx.save(); ctx.translate(13, m.t + (h - m.t - m.b) / 2); ctx.rotate(-PI / 2); txt(ctx, ylab, 0, 0, { size: 12, color: cFg, align: 'center' }); ctx.restore();
+  }
+  // labels of the two vertical lines, in a bottom row (a second row when they would touch;
+  // left of its line when the dot of S(R_WS) sits in that row)
+  function vlabels(p, ctx, yRow, leftR) {
+    const g = cur.pr.g, y1 = p.Y(yRow), c = EPP.color('fg2'), a = chip(ctx, '1/$k$_{TF}', p.X(1 / g.kTF) + 3, y1, { size: 10.5, color: c });
+    const wr = tw(ctx, '$R$_{WS}', 10.5);
+    if (leftR && p.X(cur.RWS) - 3 - wr > a[1] + 4) { chip(ctx, '$R$_{WS}', p.X(cur.RWS) - 3, y1, { size: 10.5, color: c, align: 'right' }); return; }
+    const xr = p.X(cur.RWS) + 3;
+    chip(ctx, '$R$_{WS}', xr, xr < a[1] + 4 || xr + wr > p.cv.w - p.m.r ? y1 - 15 : y1, { size: 10.5, color: c });
+  }
+  hook(pS, (p, ctx, w, h, m) => {
+    axes(p, ctx, w, h, m, '(b) field that survives along the displacement axis', '(b) field surviving along the axis', '$S$($r$)');
+    chip(ctx, 'bare ion: $S$ = 1', w - m.r - 4, p.Y(1) - 4, { size: 10.5, color: EPP.color('fg2'), align: 'right' });
+    vlabels(p, ctx, -0.205, cur.SR < -0.1);
+    // the Friedel period as a scale bar, in the free band above the tail
+    const g = cur.pr.g, per = PI / g.kF, x2 = 9.75, x1 = x2 - per, yb = p.Y(0.78), X1 = p.X(x1), X2 = p.X(x2);
+    ctx.strokeStyle = EPP.color('fg2'); ctx.fillStyle = EPP.color('fg2'); ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.moveTo(X1 + 4, yb); ctx.lineTo(X2 - 4, yb); ctx.stroke();
+    arrowHead(ctx, X1, yb, PI, 6); arrowHead(ctx, X2, yb, 0, 6);
+    ctx.beginPath(); ctx.moveTo(X1, yb - 4); ctx.lineTo(X1, yb + 4); ctx.moveTo(X2, yb - 4); ctx.lineTo(X2, yb + 4); ctx.stroke();
+    chip(ctx, `Friedel period π/$k$_F = ${per.toFixed(2)} Å`, X2, yb - 6, { size: 10.5, color: EPP.color('fg2'), align: 'right' });
+    // S at R_WS for the selected model: label in the free band above the tail, with a leader to the dot
+    const sv = cur.SR, col = EPP.textColor(MODELS[cur.model].color), lx = p.X(cur.RWS + 0.45), ly = p.Y(0.45);
+    ctx.strokeStyle = col; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(p.X(cur.RWS) + 3, p.Y(sv) - 4); ctx.lineTo(lx, ly + 4); ctx.stroke();
+    chip(ctx, `$S$($R$_{WS}) = ${sv.toFixed(3)}`, lx + 2, ly, { size: 10.5, color: col });
+  });
+  hook(pP, (p, ctx, w, h, m) => {
+    axes(p, ctx, w, h, m, '(c) where the screening electrons sit', '(c) where the screening electrons sit', '4π$r$^2$n$^{ind}/$Z_κ$ (Å^{−1})');
+    chip(ctx, 'area = 1: the cloud holds the ion’s charge', w - m.r - 4, p.Y(1.3) + 15, { size: 10.5, color: EPP.color('fg2'), align: 'right' });
+    vlabels(p, ctx, -0.29);
+  });
+
+  function drawPlots() {
+    const pr = cur.pr, g = pr.g, sel = cur.model, order = ['tf', 'rpa', 'x'].filter((k) => k !== sel).concat([sel]);
+    const ln = (k, x, y) => ({ type: 'line', x, y, color: MODELS[k].color, dash: MODELS[k].dash || undefined, width: k === sel ? 3 : 1.6, label: MODELS[k].name });
+    pS.draw([
+      { type: 'hline', at: 1, color: 'ink', dash: [5, 4], width: 1.2 },
+      { type: 'vline', at: 1 / g.kTF, color: 'muted', dash: [3, 3], width: 1 },
+      { type: 'vline', at: cur.RWS, color: 'muted', dash: [6, 4], width: 1 },
+      ...order.map((k) => ln(k, RG, Array.from(pr.S[k]))),
+      { type: 'points', x: [cur.RWS], y: [cur.SR], color: MODELS[sel].color === 'muted' ? 'fg2' : MODELS[sel].color, r: 4.5 }
+    ]);
+    const n6 = RG6.length, Psel = Array.from(pr.P[sel].subarray(0, n6));
+    pP.draw([
+      { type: 'fill', x: RG6, y1: Psel, base: 0, color: MODELS[sel].color, alpha: 0.13 },
+      { type: 'vline', at: 1 / g.kTF, color: 'muted', dash: [3, 3], width: 1 },
+      { type: 'vline', at: cur.RWS, color: 'muted', dash: [6, 4], width: 1 },
+      ...order.map((k) => ln(k, RG6, Array.from(pr.P[k].subarray(0, n6))))
+    ]);
+    pS.cv.canvas.setAttribute('aria-label', `Panel b: fraction S of the bare field that survives along the displacement axis against r, for Thomas–Fermi, Lindhard (RPA) and Lindhard plus exchange screening; selected: ${MODELS[sel].name}, S(R_WS) = ${cur.SR.toFixed(3)} at R_WS = ${cur.RWS.toFixed(2)} Å; Friedel period ${(PI / g.kF).toFixed(2)} Å.`);
+    pP.cv.canvas.setAttribute('aria-label', `Panel c: radial distribution 4 pi r squared n_ind / Z of the electrons that screen the static ion, for the three models; each curve has area 1; selected: ${MODELS[sel].name}.`);
+  }
+
+  // ---------- readouts: the keys are static MathJax in the markup, only the values change ----------
+  const roV = {};
+  ['kf', 'ktf', 'ltf', 'ef', 'pf', 'rws', 'field'].forEach((k) => { roV[k] = fig.querySelector('.a3-cloud-v-' + k); });
+  const NB = '\u00a0';
+  function readouts() {
+    const g = cur.pr.g, bare = cur.Z * E2 / (cur.RWS * cur.RWS), f2 = (v) => (Math.abs(v) >= 10 ? v.toFixed(1) : v.toFixed(2)).replace('-', '−');
+    roV.kf.textContent = `${g.kF.toFixed(3)}${NB}Å⁻¹`;
+    roV.ktf.textContent = `${g.kTF.toFixed(3)}${NB}Å⁻¹`;
+    roV.ltf.textContent = `${(1 / g.kTF).toFixed(3)}${NB}Å`;
+    roV.ef.textContent = `${g.EF.toFixed(2)}${NB}eV`;
+    roV.pf.textContent = `${(PI / g.kF).toFixed(2)}${NB}Å`;
+    roV.rws.textContent = `${cur.RWS.toFixed(2)}${NB}Å`;
+    roV.field.textContent = `bare ${f2(bare)}${NB}eV/Å, screened ${f2(cur.SR * bare)}${NB}eV/Å (${Math.round(100 * cur.SR)}${NB}%)`;
+  }
+
+  // ---------- controls ----------
+  const PRE = { Al: [2.07, '3'], Na: [3.93, '1'], K: [4.86, '1'] };
+  let lastMetal = 'Na', ui = null;
+  function update() {
+    const s = ui.state, rs = EPP.clamp(+s.rs, 1.5, 6), Z = +s.Z || 1;
+    const pr = profiles(rs), RWS = Math.cbrt(Z) * rs * A0;
+    cur = { rs, Z, model: s.model, map: s.map, pr, RWS, SR: S1(pr, s.model, RWS) };
+    drawMap(); drawPlots(); readouts();
+    fig.querySelectorAll('.a3-cloud-leg .item[data-m]').forEach((el) => {
+      const on = el.dataset.m === cur.model;
+      el.style.fontWeight = on ? '600' : '';
+      const sw = el.querySelector('.sw'); if (sw) sw.style.borderTopWidth = on ? '3.5px' : '';
+    });
+  }
+  const elCtl = fig.querySelector('.a3-cloud-ctrls');
+  ui = EPP.controls(elCtl, [
+    { key: 'metal', type: 'seg', label: 'simple metal', options: [['Al', 'Al'], ['Na', 'Na'], ['K', 'K'], ['custom', 'custom']], value: 'Na' },
+    { key: 'rs', type: 'range', label: 'density parameter r_{\mathrm s}', min: 1.5, max: 6, step: 0.01, value: 3.93, fmt: (v) => v.toFixed(2) },
+    { key: 'Z', type: 'seg', label: 'ionic valence Z_κ', options: [['1', '1'], ['2', '2'], ['3', '3']], value: '1' },
+    { key: 'model', type: 'seg', label: 'screening model', options: [['tf', 'Thomas–Fermi'], ['rpa', 'Lindhard (RPA)'], ['x', 'Lindhard + exchange']], value: 'rpa' },
+    { key: 'map', type: 'seg', label: 'map (a) shows', options: [['scr', 'screened ΔV^{KS}'], ['bare', 'bare ΔV^{en}'], ['dn', 'induced Δn']], value: 'scr' }
+  ], (s) => {
+    const p = PRE[s.metal];
+    if (s.metal !== lastMetal && p) { ui.set('rs', p[0], true); ui.set('Z', p[1], true); }
+    else if (p && (Math.abs(s.rs - p[0]) > 1e-6 || s.Z !== p[1])) ui.set('metal', 'custom', true);
+    lastMetal = ui.state.metal;
+    update();
+  });
+  // symbols in the control labels in italic, labels upright, as in the text
+  const I = (t) => `<i style="font-family:var(--font-text)">${t}</i>`;
+  const setLab = (sel, html) => { const el = elCtl.querySelector(sel); if (el) el.innerHTML = html; };
+  setLab(`label[for="${fig.id}-rs"] > span`, `density parameter ${I('r')}<sub>${I('s')}</sub>`);
+  const zLab = elCtl.querySelector(`#${fig.id}-Z-1`)?.closest('.ctrl')?.querySelector('.lab > span');
+  if (zLab) zLab.innerHTML = `ionic valence ${I('Z')}<sub>${I('κ')}</sub>`;
+  setLab(`#${fig.id}-map-scr`, `screened Δ${I('V')}<sup>KS</sup>`);
+  setLab(`#${fig.id}-map-bare`, `bare Δ${I('V')}<sup>en</sup>`);
+  setLab(`#${fig.id}-map-dn`, `induced Δ${I('n')}`);
+  // the map switch sits next to the map (under it on a phone)
+  const mapBox = elCtl.querySelector(`#${fig.id}-map-scr`)?.closest('.ctrl');
+  const elMapCtl = fig.querySelector('.a3-cloud-mapctl');
+  if (mapBox && elMapCtl) {
+    elMapCtl.classList.add('controls');
+    elMapCtl.style.cssText = 'grid-template-columns:minmax(0,1fr);margin-top:0';
+    mapBox.style.gridColumn = '';
+    elMapCtl.appendChild(mapBox);
+  }
+  // segmented buttons fill their row evenly
+  fig.querySelectorAll('.seg button').forEach((b) => { b.style.flex = '1 1 auto'; });
+})();
+</script>

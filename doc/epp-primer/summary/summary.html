@@ -1,0 +1,307 @@
+<style>
+/* Executive summary: one centred reading column with the primer's side gutter. Tokens only. */
+.summary-page {
+  box-sizing: content-box;
+  max-width: 760px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-bottom: max(56px, env(safe-area-inset-bottom, 0px));
+}
+.summary-page .hero { padding-block: 44px 4px; }
+.summary-page .hero .lede { margin-bottom: 14px; }
+.brief-primer { font-family: var(--font-ui); font-size: 0.95rem; line-height: 1.45; color: var(--fg-2); margin: 0; }
+.summary-page .chapter { margin-top: 48px; }
+.summary-page .ch-head { margin-bottom: 10px; }
+.summary-page .ch-head h2 { margin-bottom: 4px; }
+.summary-page .intro { color: var(--fg-2); }
+.summary-page figure.viz { margin-top: 14px; }
+.summary-page .legend-strip { margin-top: 8px; }
+
+/* take-aways: numbered, because each step uses the one before */
+ol.takeaways { list-style: none; counter-reset: tk; padding: 0; margin: 8px 0 0; }
+.chapter ol.takeaways > li { counter-increment: tk; position: relative; max-width: none; margin: 0; padding: 16px 0 14px 46px; border-top: 1px solid var(--rule); }
+ol.takeaways > li::before {
+  content: counter(tk); position: absolute; left: 0; top: 16px; width: 30px; height: 30px; box-sizing: border-box;
+  border: 1.5px solid var(--accent); border-radius: 50%; display: grid; place-items: center;
+  font-family: var(--font-mono); font-size: 0.88rem; font-weight: 500; color: var(--accent);
+}
+.tk-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 10px; margin: 2px 0 6px; }
+.tk-title { font-weight: 600; font-size: 1.12rem; line-height: 1.32; }
+.tk-part { font-family: var(--font-ui); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.chapter ol.takeaways p { margin: 0 0 8px; }
+.chapter ol.takeaways .eq { margin: 4px 0 10px; }
+.chapter p.more { font-family: var(--font-ui); font-size: 0.86rem; line-height: 1.5; color: var(--muted); margin: 6px 0 0; }
+p.more a { white-space: nowrap; }
+@media (max-width: 560px) {
+  .chapter ol.takeaways > li { padding-left: 0; }
+  ol.takeaways > li::before { position: static; float: left; margin: 0 10px 2px 0; width: 26px; height: 26px; font-size: 0.8rem; }
+  .tk-head { min-height: 26px; }
+  ol.takeaways > li > :not(.tk-head) { clear: left; }
+}
+
+/* verdict table and closing */
+.summary-page .tbl table { min-width: 600px; }
+.summary-page .tbl td:first-child { width: 22%; }
+.summary-page .tbl td:nth-child(2) { width: 32%; }
+@media (max-width: 640px) {
+  .summary-page .tbl table { min-width: 0; }
+  .summary-page .tbl thead { display: none; }
+  .summary-page .tbl tr { display: block; padding: 10px 12px; border-bottom: 1px solid var(--rule); }
+  .summary-page .tbl tbody tr:last-child { border-bottom: 0; }
+  .summary-page .tbl td, .summary-page .tbl td:first-child, .summary-page .tbl td:nth-child(2) { display: block; width: auto; padding: 2px 0; border: 0; position: static; box-shadow: none; background: none; }
+  .summary-page .tbl td:nth-child(2)::before, .summary-page .tbl td:nth-child(3)::before { display: block; font-family: var(--font-ui); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+  .summary-page .tbl td:nth-child(2)::before { content: "Electrostatic (Part A)"; }
+  .summary-page .tbl td:nth-child(3)::before { content: "What EPP changes"; }
+}
+@media (max-width: 420px) { .summary-page .eq { font-size: 0.93em; } }
+.chapter ul.open > li { margin-bottom: 8px; }
+.brief-foot { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule); font-size: 0.92rem; color: var(--fg-2); }
+.brief-foot p { margin: 0 0 8px; max-width: 72ch; }
+</style>
+
+<header class="hero" id="top">
+  <p class="kicker">Executive summary · Electron–Phonon–Photon Primer</p>
+  <h1><span class="e">Electrons</span>, <span class="p">phonons</span> and <span class="g">photons</span>: the short version</h1>
+  <p class="lede">Giustino's 2017 review builds first-principles electron–phonon theory on one instantaneous Coulomb interaction, folded into screened parameters. The EPP formalism keeps the whole electromagnetic field and, as $c\to\infty$, returns Giustino's long-range (polar) formulas: the RPA $W$, plus the Gonze–Lee LO–TO term and Verdi–Giustino vertex that DFPT adds by hand, now derived. Bottom line: EPP changes the numbers only inside the light cone (polaritons, infrared response, radiative widths) or where dynamical screening matters (doped polar semiconductors); transport and zero-point renormalization stay electrostatic.</p>
+  <p class="brief-primer">Full primer, with derivations and interactive figures: <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm" target="_blank" rel="noopener">Electron–Phonon–Photon Primer</a>.</p>
+</header>
+
+<section class="chapter" id="brief-picture">
+  <header class="ch-head"><h2>The idea in one picture</h2></header>
+  <p class="intro">The same electron–phonon vertex in both theories. Toggle the speed of light: the photon line $D^{\rm e}$ collapses to the screened Coulomb line $W^{\rm e}$.</p>
+  <figure class="viz" id="viz-brief-vertex">
+    <p class="viz-title">One vertex, two pictures <span class="tag">interactive</span></p>
+    <div class="hero-vertex">
+      <figure class="hv-panel">
+        <div class="fd hv-fd" id="brief-fd-g"></div>
+        <figcaption><strong>Giustino 2017.</strong> An electron scatters from $n\bk$ to $m\,\bk{+}\bq$ by absorbing a phonon $\bq\nu$ or emitting a phonon $-\bq\nu$. The vertex $g_{mn\nu}(\bk,\bq)$ is a number computed with DFPT. All Coulomb physics, the Fröhlich field of polar crystals included, is folded into it.</figcaption>
+      </figure>
+      <figure class="hv-panel">
+        <div class="fd hv-fd" id="brief-fd-epp"></div>
+        <figcaption id="brief-epp-cap"></figcaption>
+      </figure>
+    </div>
+    <div class="hv-ctrls"></div>
+  </figure>
+  <div class="legend-strip" id="brief-legend" aria-label="Line conventions used in the diagrams"></div>
+</section>
+
+<section class="chapter" id="brief-takeaways">
+  <header class="ch-head"><h2>Seven things to take away</h2></header>
+  <p class="intro">Tags such as (G.53) and (E.454) number equations in Giustino's review and the EPP manuscript.</p>
+  <ol class="takeaways">
+    <li>
+      <p class="tk-head"><span class="tk-title">Giustino folds every Coulomb effect into three sets of numbers.</span><span class="tk-part">Part A</span></p>
+      <p>Eq. (1) of the review has no electron–electron or ion–ion interaction and no photons: the electron–electron Coulomb energy sits in the band energies $\varepsilon_{n\bk}$, the screened ion–ion forces in the phonon frequencies $\omega_{\bq\nu}$, and the electron–ion interaction in the coupling $g_{mn\nu}(\bk,\bq)$. DFPT computes $g$ as the bare electron–ion perturbation screened by a static dielectric matrix, your GW or BSE $\epsilon=1-v\chi^0$ plus $f^{xc}$:</p>
+      <div class="eq">$$\partial v^{\rm KS}=(\epsilon^{{\rm H}xc})^{-1}\,\partial v^{\rm en}\tag{G.53}$$</div>
+      <p>Static screening is the adiabatic approximation; the frequency dependence it drops is what Giustino calls retardation.</p>
+      <p class="more">Read more: <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#a-coupling" target="_blank" rel="noopener">§A.2 Eq. (1) and g</a> · <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#a-dfpt" target="_blank" rel="noopener">§A.3 DFPT</a></p>
+    </li>
+    <li>
+      <p class="tk-head"><span class="tk-title">The lattice is a second channel of the screened interaction.</span><span class="tk-part">Part A</span></p>
+      <p>With clamped nuclei, Hedin's equations give $W_{\rm e}=v+vP_{\rm e}W_{\rm e}$, the $W$ of GW and BSE. Moving nuclei add a phonon-mediated term ($\mathcal D$ the nuclear density correlator) whose vertices are dynamically screened nuclear-potential gradients, $\epsilon_{\rm e}^{-1}\nabla V_\kappa$:</p>
+      <div class="eq">$$W=W_{\rm e}+\underbrace{W_{\rm e}\,\mathcal D\,W_{\rm e}}_{W_{\rm ph}}\tag{G.104–105}$$</div>
+      <p>In a polar insulator at long wavelength $W_{\rm ph}$ is Fröhlich's coupling squared times the LO propagator, with a screened vertex at each end. The phonon self-energy (G.141) is different: one bare and one screened vertex around the irreducible bubble $P_{\rm e}$, because screening both ends would double count; EPP has the same structure (item 6).</p>
+      <p class="more">Read more: <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#a-hedin-baym" target="_blank" rel="noopener">§A.5 Hedin–Baym</a> · <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#a-phonon-se" target="_blank" rel="noopener">§A.6 phonon self-energy</a></p>
+    </li>
+    <li>
+      <p class="tk-head"><span class="tk-title">Coulomb is the longitudinal photon, and the light cone is tiny.</span><span class="tk-part">Bridge</span></p>
+      <p>In the temporal gauge the longitudinal field has no dynamics of its own; by Gauss's law its energy is the instantaneous Coulomb energy of electrons and ionic bound charges. Charge conservation turns every density vertex into a current vertex and $v$ into $D^{0l}$, so the free propagator is the vacuum Maxwell propagator (Gaussian units, $P^L=\hat\bq\hat\bq$, $P^T=1-P^L$):</p>
+      <div class="eq">$$D^0=\underbrace{-\frac{4\pi c}{\omega^2}\,P^L}_{D^{0l}}+\underbrace{\frac{4\pi}{c}\,\frac{P^T}{q^2-\omega^2/c^2}}_{D^{0t}}$$</div>
+      <p>The Coulomb part has no light cone. The transverse part matters only for $q\lesssim q_c=\sqrt{\epsilon_\infty}\,\omega/c$: $10^{-5}$–$10^{-4}$ Å$^{-1}$ for phonons, about $10^{-3}$ Å$^{-1}$ for a 2 eV exciton in vacuum, against a Brillouin zone of about 1 Å$^{-1}$.</p>
+      <p class="more">Read more: <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#x-light-cone" target="_blank" rel="noopener">§X.1 the light cone</a> · <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#b-fields" target="_blank" rel="noopener">§B.4 quantized fields</a></p>
+    </li>
+    <li>
+      <p class="tk-head"><span class="tk-title">One Dyson equation for light and matter, with $W$ as its longitudinal corner.</span><span class="tk-part">Part B</span></p>
+      <p>All matter enters through one current–current self-energy, $\Pi_{jj}=\Pi^{\rm e}+\Pi^{\rm ion}$, and the field obeys a single $3\times3$ Dyson equation:</p>
+      <div class="eq">$$D=D^0+D^0\,\Pi_{jj}\,D\tag{E.379}$$</div>
+      <p>Giustino's Dyson equations for $W_{\rm e}$ and $W$ are its longitudinal sector: at $c\to\infty$ the electron-dressed photon reduces to $D^{\rm e}\to-\frac{c}{\omega^2}\bq\bq\,W^{\rm e}$ (E.441), with $W^{\rm e}$ the RPA $W$ without local fields. Your $\chi^0$, times $e^2$ (EPP's Gaussian $v=4\pi/q^2$ carries no charge), is the longitudinal projection of the electronic $\Pi_{jj}$.</p>
+      <p class="more">Read more: <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#b-photon-se" target="_blank" rel="noopener">§B.5 photon self-energy</a> · <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#b-electrostatic" target="_blank" rel="noopener">§B.9 electrostatic limit</a></p>
+    </li>
+    <li>
+      <p class="tk-head"><span class="tk-title">Phonons dressed by photons give the LO–TO splitting and phonon polaritons.</span><span class="tk-part">Part B</span></p>
+      <p>From the lattice side, the same series is Giustino's phonon Dyson equation (G.135) with photons; its self-energy (E.399) exchanges one electron-screened photon between two Born-charge current vertices. With $c\to\infty$ taken first and the electrons screening the field, only the longitudinal sector survives: the shift (E.454) is the electrostatic LO–TO splitting, valid for $q\gg q_c$, the Gonze–Lee term of DFPT, now derived. For a cubic diatomic crystal ($Z^*$ in units of $|e|$, $\Omega_{\rm uc}$ the cell volume, $\mu$ the reduced mass) it reads</p>
+      <div class="eq">$$\omega_{\rm LO}^2=\omega_{\rm TO}^2+\frac{\omega_p^2}{\epsilon_\infty},\qquad \omega_p^2=\frac{4\pi e^2Z^{*2}}{\Omega_{\rm uc}\,\mu}$$</div>
+      <p>(E.410) is the zone-centre polariton point of an electron-free crystal, where all polar modes share one unscreened frequency; it differs from (E.454) by electronic screening and by the order of limits. In GaAs screening alone takes it from 55.6 to 35.9 meV, and the order of limits moves only the TO modes: 35.9 meV inside the light cone, on the upper polariton with the LO, and 33.3 meV outside (<a href="#brief-polariton">figure below</a>).</p>
+      <p class="more">Read more: <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#b-phonon-se" target="_blank" rel="noopener">§B.7 phonon self-energy</a> · <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#b-electrostatic" target="_blank" rel="noopener">§B.9 electrostatic limit</a></p>
+    </li>
+    <li>
+      <p class="tk-head"><span class="tk-title">The Fröhlich vertex is derived, and it becomes dynamical.</span><span class="tk-part">Part B</span></p>
+      <p>Opening the electron loop inside $\Omega^{\rm e}$ yields an electron–phonon vertex nobody put in by hand, a photon exchanged between ionic and electronic currents:</p>
+      <div class="eq">$$g^{\rm dyn}(\bk,\bq,\omega)=i\,J^{*}D^{\rm e}J^{\rm e}\tag{E.416}$$</div>
+      <p>The LO channel is pure Coulomb at every $q$; TO phonons couple to electrons only near the light cone. At $c\to\infty$ the vertex reduces to the $\bG=0$ Verdi–Giustino long-range vertex with $\epsilon^\infty$ replaced by the dynamical $\hat\epsilon^{\rm e}(\bq,\omega)$ (complex conjugated, for real $\hat\epsilon^{\rm e}$): nonadiabatic screening, which matters with free carriers. The electron-induced part of the phonon self-energy, $\Delta\Omega^{\rm e}$, pairs it with a bare vertex around the irreducible electronic bubble (EPP's electron–hole propagator, not the Lindhard $\chi^0$ of item 4): Giustino's bare-times-screened structure (item 2).</p>
+      <p class="more">Read more: <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#b-frohlich" target="_blank" rel="noopener">§B.8 Fröhlich vertex</a> · <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#a-polar" target="_blank" rel="noopener">§A.4 polar materials</a></p>
+    </li>
+    <li>
+      <p class="tk-head"><span class="tk-title">In 2D there is no LO–TO splitting at Γ for in-plane modes.</span><span class="tk-part">Part B</span></p>
+      <p>The in-plane polar modes of a sheet feel the strictly two-dimensional screened interaction $W^{\rm e,2D}=v_Q/\epsilon^{\rm e}_{\rm 2D}$ with $v_Q=2\pi/Q$, which cancels only one of the dipole vertex's two powers of $Q$, so the LO shift grows linearly from zero. For a gapped layer $\epsilon^{\rm e}_{\rm 2D}=\epsilon_{\rm env}+r_0Q$, the Rytova–Keldysh form of 2D BSE ($r_0=2\pi\alpha_{\rm 2D}$; papers that write $\epsilon_{\rm env}(1+r_0'Q)$ use $r_0'=r_0/\epsilon_{\rm env}$). The LO branch of a diatomic sheet follows, with $C=2\pi e^2Z^{*2}\hbar^2/(S_{\rm uc}\,\mu)$ ($S_{\rm uc}$ the cell area; $Z^*$ and $\mu$ as in item 5),</p>
+      <div class="eq">$$(\hbar\tilde\omega_{\rm LO})^2=(\hbar\omega_{\rm T})^2+\frac{C\,Q}{\epsilon_{\rm env}+r_0Q}$$</div>
+      <p>The environment sets the initial slope, $r_0$ alone sets the plateau $(\hbar\omega_{\rm T})^2+C/r_0$, and the knee sits at $Q^*=\epsilon_{\rm env}/r_0$. So your BSE workflow's $r_0$, plus $Z^*$ and the mode eigenvector, gives the LO dispersion.</p>
+      <p class="more">Read more: <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#b-2d" target="_blank" rel="noopener">§B.10 2D crystals</a></p>
+    </li>
+  </ol>
+</section>
+
+<section class="chapter" id="brief-polariton">
+  <header class="ch-head"><h2>From polaritons to LO and TO</h2></header>
+  <p class="intro">Items 3 and 5 in one plot: the polar modes of GaAs on a logarithmic $q$ axis, as the speed of light is turned up.</p>
+  <figure class="viz" id="viz-brief-polariton">
+    <p class="viz-title">GaAs: phonon polaritons, LO and TO <span class="tag">interactive</span></p>
+    <div class="brief-pa"></div>
+    <div class="brief-ctrls"></div>
+    <div class="brief-ro"></div>
+    <figcaption><strong>Model.</strong> Cubic diatomic crystal, electrons as a constant $\epsilon_\infty$ (<a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#b-phonon-se" target="_blank" rel="noopener">§B.7</a>), GaAs values $\hbar\omega_{\rm TO}=33.3$ meV, $\hbar\omega_{\rm LO}=36.2$ meV, $\epsilon_\infty=10.9$. The slider rescales $c\to\lambda c$. <strong>What to notice.</strong> Below $q_c$ the upper polariton starts on the LO line and the lower branch is light-like; the TO phonon appears only for $q\gg q_c$. Raise $\lambda$ and $q_c$ moves off the plot, leaving the flat TO–LO pair of DFPT and (E.454). Raman and transport sample the shaded region.</figcaption>
+  </figure>
+</section>
+
+<section class="chapter" id="brief-verdict">
+  <header class="ch-head"><h2>Where the electromagnetic field changes the answer</h2></header>
+  <p class="intro">Two kinds of retardation sort the observables: a finite speed of light, which acts only inside the light cone, and frequency-dependent electronic screening, which acts wherever $\hat\epsilon^{\rm e}(\bq,\omega)$ has structure near phonon frequencies (EPP keeps it in the vertex). Outside both windows the electrostatic theory suffices.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Observable</th><th>Electrostatic (Part A)</th><th>What EPP changes</th></tr></thead>
+    <tbody>
+      <tr><td>Mobility, lifetimes, zero-point renormalization</td><td>Sufficient. Carriers scatter at $q\approx0.02$ Å$^{-1}$ (GaAs, 300 K), far outside the cone, and the LO Fröhlich kernel is longitudinal; its adiabatic divergence is cured by keeping $\hbar\omega$ in the denominators.</td><td>Nothing measurable from finite $c$: there the transverse field is $10^{-6}$–$10^{-4}$ of Coulomb.</td></tr>
+      <tr><td>Bulk LO–TO splitting</td><td>Added by hand (Gonze–Lee term with $Z^*$ and $\epsilon^\infty$).</td><td>Derived as a phonon self-energy (E.454); inside the cone the TO modes join the LO on the upper polariton.</td></tr>
+      <tr><td>Infrared $\epsilon(\omega)$, Reststrahlen band</td><td>Absent: light couples to electrons only, and the refractive index is an input.</td><td>$\Pi^{\rm ion}$ gives one Lorentz oscillator per polar mode, so $\epsilon(\omega)$ and one-phonon infrared absorption become outputs.</td></tr>
+      <tr><td>Phonon polaritons</td><td>Absent.</td><td>Transverse poles of $D$, confined to the light cone (Huang's branches).</td></tr>
+      <tr><td>Doped polar semiconductors</td><td>Plasmon–phonon modes expected from the nonadiabatic self-energy, but not evaluated.</td><td>Coupled LO-phonon–plasmon modes $L_\pm$ from the dynamical $W^{\rm e}(\bq,\omega)$ (E.453), already at $c\to\infty$.</td></tr>
+      <tr><td>Polar 2D crystals</td><td>Not treated.</td><td>No in-plane LO–TO splitting at Γ; LO dispersion set by $r_0$ (item 7). Inside the cone the modes radiate, with widths of order 40 μeV for freestanding hBN.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="more">Full table: <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#z-outlook" target="_blank" rel="noopener">§Z.1 what EPP adds</a></p>
+</section>
+
+<section class="chapter" id="brief-open">
+  <header class="ch-head"><h2>What is still open</h2></header>
+  <ul class="open">
+    <li><strong>Short-range coupling.</strong> The crystal potential is frozen at equilibrium, so deformation-potential coupling (acoustic and non-polar optical phonons) is absent.</li>
+    <li><strong>Electron self-energies.</strong> No Fan–Migdal or Debye–Waller counterpart yet, hence no temperature-dependent gaps or lifetimes.</li>
+    <li><strong>Excitons.</strong> $\Pi^{\rm e}$ is the RPA bubble, without local fields, $f^{xc}$ or an electron–hole ladder. The BSE response in its place, minus its $(\bG=0)$ exchange (already the longitudinal photon), would give exciton polaritons.</li>
+    <li><strong>Anisotropic polaritons.</strong> L–T mixing off the principal axes is treated only formally, so the hyperbolic phonon polaritons of hBN remain to be done.</li>
+  </ul>
+  <p class="more">Read more: <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#z-outlook" target="_blank" rel="noopener">§Z.1 what is still open</a></p>
+</section>
+
+<footer class="brief-foot">
+  <p><strong>Sources.</strong> F. Giustino, “Electron-phonon interactions from first principles”, Rev. Mod. Phys. <b>89</b>, 015003 (2017); “Theory of the Electron-Phonon-Photon coupling”, manuscript draft v2. Material parameters not printed in either source are illustrative literature values.</p>
+  <p>Notes on the sources and corrections to the draft: primer appendices <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#z-errata" target="_blank" rel="noopener">§Z.2</a> and <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#z-corrections" target="_blank" rel="noopener">§Z.3</a>.</p>
+</footer>
+
+<script>
+(() => {
+  if (!window.EPP) return;
+  const PRIMER = 'https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#';
+  const link = (id, txt) => `<a href="${PRIMER}${id}" target="_blank" rel="noopener">${txt}</a>`;
+
+  // ---------- "One vertex, two pictures" (after the primer's hero figure) ----------
+  const leg = document.getElementById('brief-legend');
+  const items = [
+    ['fermion', 'electron'], ['phonon', 'phonon'],
+    ['photon2', 'screened photon D^e (longitudinal + transverse)'], ['screened', 'screened Coulomb W^e (its c → ∞ limit)']
+  ];
+  items.forEach(([t, lab]) => {
+    const span = document.createElement('span');
+    EPP.fd.draw(span, { w: 40, h: 14, label: lab, items: [{ t, a: [3, 7], b: [37, 7], arrow: t === 'fermion', amp: 2.6, wl: 7 }] });
+    span.appendChild(document.createTextNode(lab.replace(/\^e/, 'ᵉ')));
+    leg.appendChild(span);
+  });
+
+  EPP.fd.draw(document.getElementById('brief-fd-g'), { w: 260, h: 180, label: 'Electron-phonon vertex g', items: [
+    { t: 'fermion', a: [20, 60], b: [130, 60], label: 'nk' },
+    { t: 'fermion', a: [130, 60], b: [240, 60], label: 'm k+q' },
+    { t: 'phonon', a: [130, 60], b: [130, 160], label: 'qν', lpos: 'right' },
+    { t: 'blob', at: [130, 60], r: 13, label: 'g', color: 'muted' },
+  ]});
+
+  const host = document.getElementById('brief-fd-epp'), cap = document.getElementById('brief-epp-cap');
+  const caps = {
+    full: '<strong>EPP.</strong> No electron–phonon term appears in the EPP Lagrangian. The electron couples to the field through its current vertex $J^{\\rm e}$, the phonon through the ions\' Born-charge current vertex $J$. The screened photon $D^{\\rm e}$ carries the interaction, longitudinal and transverse parts together. The result is a frequency-dependent vertex $g^{\\rm dyn}=iJ^{*}D^{\\rm e}J^{\\rm e}$ (' + link('b-frohlich', '§B.8') + ').',
+    static: '<strong>EPP with $c\\to\\infty$.</strong> Only the longitudinal (Coulomb) part of the photon survives, $D^{\\rm e}\\to-\\frac{c}{\\omega^2}\\bq\\bq\\,W^{\\rm e}$. The vertex reduces to the $\\bG=0$ Verdi–Giustino long-range vertex, complex conjugated for real $\\hat\\epsilon^{\\rm e}$, with $\\epsilon^\\infty$ replaced by the dynamical RPA tensor $\\hat\\epsilon^{\\rm e}(\\bq,\\omega)$ (' + link('b-frohlich', '§B.8') + '). Taken to this limit, EPP\'s phonon self-energy returns Giustino\'s long-range formulas, the RPA $W$ and the Gonze–Lee LO–TO term (' + link('b-electrostatic', '§B.9') + ').'
+  };
+  let mode = 'full';
+  const drawVertex = () => {
+    host.innerHTML = '';
+    const ph = mode === 'full' ? 'photon2' : 'screened';
+    EPP.fd.draw(host, { w: 260, h: 180, label: mode === 'full' ? 'EPP vertex: photon exchange' : 'EPP vertex in the electrostatic limit', items: [
+      { t: 'fermion', a: [20, 40], b: [110, 40], label: 'nk' },
+      { t: 'fermion', a: [110, 40], b: [240, 40], label: 'm k+q' },
+      { t: ph, a: [110, 40], b: [110, 120], label: mode === 'full' ? 'D^e' : 'W^e', lpos: 'right', wl: 10 },
+      { t: 'phonon', a: [110, 120], b: [230, 160], label: 'σ', lpos: 'right' },
+      { t: 'vertex', at: [110, 40], r: 4.5, color: 'electron' },
+      { t: 'vertex', at: [110, 120], r: 4.5, color: 'phonon' },
+      { t: 'text', at: [96, 32], text: 'J^e', anchor: 'end', size: 13, color: 'electron-t' },
+      { t: 'text', at: [96, 136], text: 'J', anchor: 'end', size: 13, color: 'phonon-t' },
+    ]});
+    cap.innerHTML = caps[mode];
+    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([cap]).catch(() => {});
+  };
+  EPP.controls(document.querySelector('#viz-brief-vertex .hv-ctrls'), [
+    { key: 'mode', type: 'seg', label: 'Speed of light', options: [['full', 'finite c (full EPP)'], ['static', 'c → ∞ (electrostatic limit)']], value: 'full' }
+  ], (st) => { if (st.mode !== mode || !host.firstChild) { mode = st.mode; drawVertex(); } });
+  drawVertex();
+
+  // ---------- GaAs: from polaritons to LO and TO ----------
+  const fig = document.getElementById('viz-brief-polariton');
+  const HC = 1973.27e3;                        // ħc in meV·Å
+  const T = 33.3, L = 36.2, EI = 10.9, A = 5.653; // GaAs, literature values (illustrative); A = lattice constant in Å
+  const T2 = T * T, L2 = L * L, WP2 = EI * (L2 - T2); // unscreened (ħω_p)^2 in meV^2, fixed by the measured splitting
+  const QMIN = 1e-7, QMAX = 1e-1, NQ = 421;
+  const qs = []; for (let i = 0; i < NQ; i++) qs.push(QMIN * Math.pow(QMAX / QMIN, i / (NQ - 1)));
+  const qfmt = (v) => EPP.fmt(v, 2).replace('×10^', 'e') + ' Å⁻¹';
+  const sci = (v, d) => { if (!isFinite(v) || v <= 0) return 'n/a'; const k = Math.floor(Math.log10(v)); const mnt = v / Math.pow(10, k); return (k >= -2 && k <= 3) ? String(Number(v.toPrecision(d))) : mnt.toFixed(d - 1) + '×10<sup>' + String(k).replace('-', '−') + '</sup>'; };
+  const plot = new EPP.Plot(fig.querySelector('.brief-pa'), {
+    xlabel: 'q (Å^{-1})', ylabel: 'ħω (meV)', logx: true,
+    xticks: [-7, -6, -5, -4, -3, -2, -1].map(e => ({ v: Math.pow(10, e), label: '10^{' + e + '}' })),
+    xlim: [QMIN, QMAX], ylim: [0, 48], aspect: 0.56, minHeight: 250,
+    xname: 'q', hoverX: qfmt, hoverY: (v) => EPP.fix(v, 2) + ' meV',
+    ariaLabel: 'Transverse phonon-polariton branches, LO line and light line of GaAs versus wave vector on a logarithmic axis'
+  });
+  const ro = EPP.readout(fig.querySelector('.brief-ro'));
+
+  // transverse poles: (ω² − ω_TO²)(ε∞ω² − c²q²) = ω_p²ω², i.e. Huang's c²q² = ω²ε(ω); energies in meV and the phonon weight of ω_+
+  function trans(lam, q) {
+    const cq = lam * HC * q, cq2 = cq * cq;
+    const B = EI * L2 + cq2;
+    const disc = Math.sqrt(Math.max(0, B * B - 4 * EI * cq2 * T2));
+    const sp = (B + disc) / (2 * EI);
+    const sm = cq2 * T2 / (EI * sp);             // product of the roots, stable at small q
+    const X = cq2 * Math.pow(sp - T2, 2) / (WP2 * sp * sp);
+    return { wp: Math.sqrt(sp), wm: Math.sqrt(sm), Zp: 1 / (1 + X), cq };
+  }
+
+  const supD = (k) => String(k).split('').map(ch => '⁰¹²³⁴⁵⁶⁷⁸⁹'['0123456789'.indexOf(ch)] || ch).join('');
+  const lamFmt = (v) => { if (v < 100) return '×' + (v < 10 ? v.toFixed(1) : v.toFixed(0)); const k = Math.floor(Math.log10(v) + 1e-9); return '×' + (v / Math.pow(10, k)).toFixed(1) + '·10' + supD(k); };
+
+  EPP.controls(fig.querySelector('.brief-ctrls'), [
+    { key: 'lam', type: 'range', label: 'speed of light c → λc', min: 1, max: 1e3, log: true, step: 0.01, value: 1, fmt: lamFmt, wide: true }
+  ], (st) => {
+    try {
+      const lam = st.lam || 1;
+      const wp = [], wm = [], light = [], LO = [];
+      for (const q of qs) { const r = trans(lam, q); wp.push(r.wp); wm.push(r.wm); light.push(r.cq / Math.sqrt(EI)); LO.push(L); }
+      const qc = Math.sqrt(EI) * T / (lam * HC);
+      const vis = qc > QMIN && qc < QMAX;
+      const xl = 2.2e-7, pol = trans(lam, xl).Zp > 0.5;   // at the label position, is the upper branch the phonon-like one?
+      plot.draw([
+        { type: 'band', x0: 1e-2, x1: QMAX, color: 'muted', alpha: 0.1 },
+        { type: 'text', x: QMAX, y: 48, dx: -5, dy: 5, baseline: 'top', align: 'right', text: fig.clientWidth < 520 ? 'Raman' : 'Raman, transport', color: 'muted', size: 11 },
+        { type: 'line', x: qs, y: light, color: 'photon', dash: [2, 3], width: 1.5, label: 'light line cq/√ε_∞', hover: false },
+        { type: 'hline', at: T, color: 'muted' },
+        vis ? { type: 'vline', at: qc, color: 'muted' } : null,
+        vis ? { type: 'text', x: qc, y: 3, dx: 5, align: 'left', text: 'q_c', color: 'muted' } : null,
+        { type: 'line', x: qs, y: LO, color: 'phonon', width: 4, label: 'LO (longitudinal)' },
+        { type: 'line', x: qs, y: wp, color: 'c5', label: 'upper polariton ω_+' },
+        { type: 'line', x: qs, y: wm, color: 'c4', dash: [7, 4], label: 'lower polariton ω_–' },
+        pol ? { type: 'text', x: xl, y: L, dy: -10, text: 'ω_+ → ω_{LO}', color: 'c5' } : { type: 'text', x: xl, y: L, dy: -10, text: 'LO', color: 'phonon' },
+        { type: 'text', x: 7e-3, y: T, dy: 11, text: 'ω_– → ω_{TO}', color: 'c4', align: 'right' }
+      ]);
+      ro.set({
+        'q_c = √ε_∞ ω_{TO}/λc': sci(qc, 2) + ' Å<sup>−1</sup>',
+        'q_c in units of 2π/a': sci(qc / (2 * Math.PI / A), 1),
+        'Raman/transport q (0.01 Å^{−1}) ÷ q_c': sci(1e-2 / qc, 2)
+      });
+    } catch (err) { console.error(err); }
+  });
+})();
+</script>

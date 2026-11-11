@@ -1,0 +1,294 @@
+<section class="chapter" id="a-electron-se" data-num="A.7" data-title="Electron self-energy: FM, DW, kinks">
+  <header class="ch-head">
+    <p class="eyebrow"><span class="num">A.7</span><span>Giustino §V.B.1–2, §V.B.5–6, §VIII · Eqs. 147–174, 186–192</span></p>
+    <h2>Electron self-energy: Fan–Migdal, Debye–Waller, kinks and satellites</h2>
+    <p class="lede">An electron in a crystal drags a cloud of displaced ions and sees a crystal potential blurred by zero-point motion. Here these two pictures become the Fan–Migdal and Debye–Waller self-energies. You will see why Fan–Migdal carries two screened vertices, and how it produces ARPES kinks, mass enhancement and polaron satellites.</p>
+  </header>
+
+  <h3>Clamped nuclei as the reference</h3>
+  <p>DFT and <i>GW</i> band structures are computed for nuclei frozen at their equilibrium positions. Giustino takes this as the zeroth order. Setting the displacement correlation function to zero in the Hedin–Baym equations of <a href="#a-hedin-baym">§A.5</a> leaves Hedin's equations at clamped nuclei (G Eqs. 147–150). Their Green's function is $G^{\rm cn}$, and their self-energy $\Sigma^{\rm cn}_{\rm e}=i\hbar G^{\rm cn}\Gamma^{\rm cn}W^{\rm cn}_{\rm e}$ (G Eq. 150) is the familiar <i>GW</i> world. Everything that the moving nuclei add is then collected in one self-energy:</p>
+  <div class="eq">$$ G(12)=G^{\rm cn}(12)+\int d(34)\,G^{\rm cn}(13)\,\Sigma^{\rm ep}(34)\,G(42), \tag{G.151}$$</div>
+  <div class="eq">$$ \Sigma^{\rm ep}=\Sigma^{\rm FM}+\Sigma^{\rm DW}+\Sigma^{\rm dGW}, \tag{G.152}$$</div>
+  <div class="eq">$$ \begin{align} \Sigma^{\rm FM}(12)&=i\hbar\int d(34)\,G(13)\,\Gamma(324)\,W_{\rm ph}(41^+), \tag{G.153}\\ \Sigma^{\rm DW}(12)&=\int d3\,v(13)\big[\langle\hat n(3)\rangle-\langle\hat n^{\rm cn}(3)\rangle\big]\,\delta(12), \tag{G.154}\\ \Sigma^{\rm dGW}(12)&=\Sigma_{\rm e}(12)-\Sigma^{\rm cn}_{\rm e}(12). \tag{G.155}\end{align}$$</div>
+  <p>Here $1\equiv(\br_1,t_1)$, $v$ is the bare Coulomb interaction, $\hat n$ the total electron-plus-nuclear density (in units of the electron charge), $\Gamma$ Hedin's vertex, and $W=W_{\rm e}+W_{\rm ph}$ the screened interaction split into electronic and phonon parts. This is not an approximation: (G.151)–(G.155) regroup the Hedin–Baym equations exactly, within the harmonic approximation. <strong>Fan–Migdal</strong> is $W_{\rm ph}$ inserted into Hedin's $\Sigma=i\hbar G\Gamma W$, a dynamic term. <strong>Debye–Waller</strong> is the change of the self-consistent electrostatic potential $V_{\rm tot}$ because the nuclear charge is smeared around its equilibrium position, a static term. <strong>dGW</strong> is the change of the electronic <i>GW</i> self-energy because $G$, the density and $W_{\rm e}$ are modified by the coupling; it has never been investigated and is dropped here. We write Giustino's $D$ (his nuclear density correlator and his phonon propagator) as $\mathcal D$, to keep $D$ free for EPP's photon propagator. All equations are SI, as in the review; $\Sigma$ is an energy written as a function of the angular frequency $\omega$.</p>
+
+  <details class="derivation"><summary>Why (G.152) is exact</summary><div class="d-body">
+    <p>Invert the equation of motion of the full electron Green's function (G Eq. 84), with $\Sigma=i\hbar G\Gamma(W_{\rm e}+W_{\rm ph})$ (G Eq. 85), and do the same for the clamped problem (G Eq. 147). Subtracting the two gives, in operator notation,</p>
+    $$ G^{-1}=G^{{\rm cn},-1}-\big(V_{\rm tot}-V^{\rm cn}_{\rm tot}\big)\delta-\big(\Sigma_{\rm e}-\Sigma^{\rm cn}_{\rm e}\big)-i\hbar G\Gamma W_{\rm ph},\qquad \Sigma_{\rm e}\equiv i\hbar G\Gamma W_{\rm e}. $$
+    <p>The potentials are $V_{\rm tot}(1)=\int d2\,v(12)\langle\hat n(2)\rangle$ (G Eq. 79, external field switched off) and $V^{\rm cn}_{\rm tot}(1)=\int d2\,v(12)\langle\hat n^{\rm cn}(2)\rangle$ (G Eq. 148). Their difference is exactly (G.154). The last two terms are (G.155) and (G.153). Multiplying by $G^{\rm cn}$ on the left and $G$ on the right turns $G^{-1}=G^{{\rm cn},-1}-\Sigma^{\rm ep}$ into the Dyson equation (G.151).</p>
+  </div></details>
+
+  <div class="fd" id="fd-a-electron-se-decomp">
+    <figure><div id="fd-a-electron-se-fm1"></div><figcaption>$\Sigma^{\rm FM}$: dressed $G$, dressed phonon $\mathcal D$, screened vertices (disks) at both ends</figcaption></figure>
+    <span class="op">+</span>
+    <figure><div id="fd-a-electron-se-dw"></div><figcaption>$\Sigma^{\rm DW}$: equal-time phonon loop on one second-order vertex</figcaption></figure>
+    <span class="op">+</span>
+    <figure><div id="fd-a-electron-se-dgw"></div><figcaption>$\Sigma^{\rm dGW}$: change of the electronic <i>GW</i> self-energy</figcaption></figure>
+  </div>
+  <p class="src" style="text-align:center;white-space:normal">After Giustino Fig. 2(b)–(e), with the vertex $\Gamma$ omitted ($\Gamma=1$ in practice).</p>
+
+  <div class="callout intuition"><p class="callout-title">Physical picture</p><p>In <i>GW</i>, the correlation part of $\Sigma$ describes how an added carrier polarizes the other electrons, which then act back on it. Fan–Migdal is the same story with the lattice as the polarizable medium: the added carrier pushes the ions, and their displacement field pulls back on the carrier. In a polar crystal this is literally the Fröhlich polaron of <a href="#a-polar">§A.4</a>. Debye–Waller needs no dynamics at all. Each nucleus is a fuzzy charge cloud of mean-square radius $\langle u^2\rangle$, and the electron simply sees the averaged, slightly washed-out potential.</p></div>
+
+  <h3>Fan–Migdal is <i>GW</i> with two screened vertices</h3>
+  <p>The phonon-mediated interaction of <a href="#a-hedin-baym">§A.5</a> is $W_{\rm ph}=W_{\rm e}\mathcal DW_{\rm e}$ (G Eq. 105), with $\mathcal D(34)$ the density–density correlation function of the nuclei (G Eq. 103; Giustino prints $D$). To first order in the displacements (G Eq. 110) it becomes, schematically, $W_{\rm ph}=\epsilon_{\rm e}^{-1}\nabla V_\kappa\;\mathcal D\;\epsilon_{\rm e}^{-1}\nabla V_{\kappa'}$, with the displacement correlator $\mathcal D_{\kappa\alpha p,\kappa'\alpha'p'}$ (G Eq. 109), the phonon propagator. Each end of the phonon line carries the bare nuclear-potential gradient screened by the full electronic $\epsilon_{\rm e}^{-1}$: the screened coupling $g=\epsilon_{\rm e}^{-1}g^{\rm b}$ (G Eqs. 143–144). Inserting this into (G.153) and expanding $\mathcal D$ in normal modes gives</p>
+  <div class="eq">$$ \begin{aligned} \Sigma^{\rm FM}(12)=i\sum_{\nu\nu'}\int\frac{d\omega}{2\pi}\frac{d\bq}{\Omega_{\rm BZ}}\,d(34)\,e^{-i\omega(t_4-t_1^+)}\,G(13)\,\Gamma(324)\\ \times\, g^{\rm cc}_{\bq\nu}(\br_4,\omega)\,\mathcal D_{\bq\nu\nu'}(\omega)\,g_{\bq\nu'}(\br_1,\omega). \end{aligned} \tag{G.156}$$</div>
+  <p>Symbolically $\Sigma^{\rm FM}=g^2\mathcal DG\Gamma$, and <strong>both</strong> $g$ and $g^{\rm cc}$ are screened. The phonon self-energy of <a href="#a-phonon-se">§A.6</a> has one bare and one screened vertex (G Eq. 141): there the electron bubble between the two vertices supplies the screening chain, and it may be absorbed into one end only. In $\Sigma^{\rm FM}$ no bubble sits between the ends. Each end of the internal phonon line attaches directly to the propagating electron and needs its own screening chain, hence the $\epsilon_{\rm e}^{-1}$ on both sides of $W_{\rm ph}$. Conveniently, the screened DFPT matrix element of <a href="#a-dfpt">§A.3</a> is then the right object at both vertices.</p>
+
+  <div class="fd" id="fd-a-electron-se-compare">
+    <figure><div id="fd-a-electron-se-pi"></div><figcaption>$\Pi^{\rm ph}$ (§A.6, G Eq. 141): one bare vertex $g^{\rm b}$ (dot), one screened $g$ (disk)</figcaption></figure>
+    <span class="op">vs</span>
+    <figure><div id="fd-a-electron-se-fm2"></div><figcaption>$\Sigma^{\rm FM}$ (G Eq. 156): two screened vertices</figcaption></figure>
+  </div>
+
+  <h3>The working formula, at finite temperature and retarded</h3>
+  <p>To make (G.156) computable Giustino makes five approximations: (i) $\Gamma(123)=\delta(13)\delta(23)$, the <i>GW</i>-type vertex; (ii) Kohn–Sham $G$ at clamped nuclei; (iii) the adiabatic phonon propagator $\mathcal D^{\rm A}$ (G Eq. 134); (iv) RPA+$xc$ screening of the vertex, as in DFPT; and (v) a frequency-independent coupling, $g_{\bq\nu}(\br,\omega)\simeq g_{\bq\nu}(\br,0)$. Closing the frequency contour in the upper half-plane then gives the Kohn–Sham matrix elements</p>
+  <div class="eq">$$ \begin{aligned} \Sigma^{\rm FM}_{nn'\bk}(\omega)=\frac{1}{\hbar}\sum_{m\nu}\int\frac{d\bq}{\Omega_{\rm BZ}}\,&g^*_{mn\nu}(\bk,\bq)\,g_{mn'\nu}(\bk,\bq)\\ \times\bigg[&\frac{1-f_{m\bk+\bq}}{\omega-\varepsilon_{m\bk+\bq}/\hbar-\omega_{\bq\nu}+i\eta}+\frac{f_{m\bk+\bq}}{\omega-\varepsilon_{m\bk+\bq}/\hbar+\omega_{\bq\nu}-i\eta}\bigg]. \end{aligned} \tag{G.157}$$</div>
+  <p>Here $g$ is the matrix element of G Eq. (38): an energy, independent of $N_p$, with the BZ integral normalized as an average; $\eta\to0^+$. The first term is an intermediate state with an empty band state plus an emitted phonon. The second is an occupied state, a hole, plus a phonon. Equation (G.157) holds at $T=0$ and is time-ordered. At finite temperature (Matsubara sums, then continuation to the real axis) the bracket becomes</p>
+  <div class="eq">$$ \left[\frac{1-f_{m\bk+\bq}}{\cdots+i\eta}+\frac{f_{m\bk+\bq}}{\cdots-i\eta}\right]\;\to\;\left[\frac{1-f_{m\bk+\bq}+n_{\bq\nu}}{\cdots+i\eta}+\frac{f_{m\bk+\bq}+n_{\bq\nu}}{\cdots+i\eta}\right], \tag{G.158}$$</div>
+  <p>with Fermi–Dirac $f$ and Bose–Einstein $n$. For an electron above $E_F$, $1-f+n$ weights phonon emission (spontaneous plus stimulated) and $f+n$ absorption. For a hole at $T=0$ only the $f$ term is resonant: the hole emits a phonon by moving to an occupied state closer to $E_F$. The second $i\eta$ has changed sign: (G.158) is the <em>retarded</em> self-energy, with all poles below the real axis and ${\rm Im}\,\Sigma\le0$ for every state. Only this form gives a positive spectral function. Evaluated at the band energy, its imaginary part gives the golden-rule rate $1/\tau=2|{\rm Im}\,\Sigma|/\hbar$ used for lifetimes in <a href="#a-temperature">§A.8</a>.</p>
+
+  <div class="callout caveat"><p class="callout-title">Approximations hiding in (G.157)</p><p><strong>"Retarded" has a third meaning here:</strong> the causal analytic structure of $G$ and $\Sigma$. It is neither EPP's finite speed of light nor Giustino's frequency-dependent electronic screening (his §IV); approximation (v) discards the latter at the vertex. <strong>Migdal level.</strong> The self-energy is built from bare propagators, so diagrams beyond the Migdal approximation are omitted (Giustino §V.B.6). <strong>Adiabatic phonons.</strong> By (iii), the nonadiabatic phonon shifts and widths of <a href="#a-phonon-se">§A.6</a> do not feed back.</p></div>
+
+  <h3>Debye–Waller: the crystal potential, blurred</h3>
+  <p>Each nucleus jitters with a mean-square amplitude proportional to $(2n_{\bq\nu}+1)\hbar/2M\omega_{\bq\nu}$. Expanding $\langle\hat n\rangle$ in (G.154) to second order in these displacements gives a tadpole, a phonon line that starts and ends at the same time:</p>
+  <div class="eq">$$ \Sigma^{\rm DW}(12)=\delta(12)\,\frac{i\hbar}{2}\sum_{\substack{\kappa\alpha p\\ \kappa'\alpha'p'}}\frac{\partial^2V_{\rm tot}(1)}{\partial\tau^0_{\kappa\alpha p}\,\partial\tau^0_{\kappa'\alpha'p'}}\,\mathcal D_{\kappa\alpha p,\kappa'\alpha'p'}(t_1^+,t_1). \tag{G.159}$$</div>
+  <p>Here $\tau^0_{\kappa\alpha p}$ is the equilibrium coordinate $\alpha$ of atom $\kappa$ in cell $p$, and the equal-time propagator is just the mean-square displacement divided by $i\hbar$, $\langle\Delta\hat\tau\Delta\hat\tau'\rangle/i\hbar$. Deriving (G.159) needs one extra assumption, that electron operators and displacements are uncorrelated (Gillis 1970). With (vi) $\mathcal D\to\mathcal D^{\rm A}$ and (vii) $V_{\rm tot}\to V^{\rm KS}$,</p>
+  <div class="eq">$$ \begin{align} \Sigma^{\rm DW}_{nn'\bk}&=\sum_\nu\int\frac{d\bq}{\Omega_{\rm BZ}}\,g^{\rm DW}_{nn'\nu\nu}(\bk,\bq,-\bq), \tag{G.160}\\ g^{\rm DW}_{nn'\nu\nu}(\bk,\bq,-\bq)&\;\to\;g^{\rm DW}_{nn'\nu\nu}(\bk,\bq,-\bq)\,(2n_{\bq\nu}+1). \tag{G.161}\end{align}$$</div>
+  <p>The replacement (G.161) is the finite-temperature form; $2n+1=\coth(\hbar\omega/2k_BT)$ counts zero-point plus thermal motion. The second-order matrix element is that of the Debye–Waller Hamiltonian, with $\Delta_{\bq\nu}v^{\rm KS}$ the phonon-induced change of the Kohn–Sham potential of <a href="#a-coupling">§A.2</a>:</p>
+  <div class="eq">$$ g^{\rm DW}_{mn\nu\nu'}(\bk,\bq,\bq')=\tfrac12\big\langle u_{m\bk+\bq+\bq'}\big|\Delta_{\bq\nu}\Delta_{\bq'\nu'}v^{\rm KS}\big|u_{n\bk}\big\rangle_{\rm uc}. \tag{G.40}$$</div>
+  <p>Combining the two (Giustino §VIII) shows what kind of object this is:</p>
+  <div class="eq">$$ \Sigma^{\rm DW}_{nn\bk}=\langle u_{n\bk}|V_{\rm DW}|u_{n\bk}\rangle_{\rm uc},\qquad V_{\rm DW}(\br)=\Omega_{\rm BZ}^{-1}\sum_\nu\int d\bq\,\big(n_{\bq\nu}+\tfrac12\big)\,\Delta_{\bq\nu}\Delta_{-\bq\nu}v^{\rm KS}(\br). \tag{G.190}$$</div>
+  <p>$V_{\rm DW}$ is a static, local, real potential. It has no frequency dependence, so it produces no kink, and no imaginary part, so it gives no lifetime. In the homogeneous electron gas it is a $\bk$-independent constant. In real crystals it varies smoothly within a band but very differently between bands. This is why kink analyses in metals drop it, while band-gap renormalization cannot (<a href="#a-temperature">§A.8</a>). Fan–Migdal at second order in $g$ and Debye–Waller at first order in $g^{\rm DW}$ are of the same order in $\langle u^2\rangle$, and they partly cancel.</p>
+
+  <h3>Spectral function, quasiparticle weight and the kink</h3>
+  <p>If $\Sigma^{\rm ep}$ only shifts the poles of $G$ slightly, the renormalized energies follow from the Brillouin–Wigner (BW) condition</p>
+  <div class="eq">$$ E_{n\bk}=\varepsilon_{n\bk}+{\rm Re}\,\Sigma^{\rm ep}_{n\bk}(\tilde E_{n\bk}/\hbar), \tag{G.164}$$</div>
+  <p>with broadening $\Gamma_{n\bk}={\rm Im}\,\Sigma^{\rm ep}_{n\bk}(\tilde E_{n\bk}/\hbar)$ (G Eq. 165) and $\tilde E=E+i\Gamma$. Rayleigh–Schrödinger (RS) perturbation theory evaluates $\Sigma$ at the bare energy instead. When electronic energy scales are comparable to phonon energies, as in metals and doped or narrow-gap semiconductors, no single pole is adequate and one needs the full spectral function:</p>
+  <div class="eq">$$ A(\bk,\omega)=\sum_n\frac{-(1/\pi)\,{\rm Im}\,\Sigma^{\rm ep}_{nn\bk}(\omega)}{\big[\hbar\omega-\varepsilon_{n\bk}-{\rm Re}\,\Sigma^{\rm ep}_{nn\bk}(\omega)\big]^2+\big[{\rm Im}\,\Sigma^{\rm ep}_{nn\bk}(\omega)\big]^2}, \tag{G.172}$$</div>
+  <div class="eq">$$ Z_{n\bk}=\Big[1-\hbar^{-1}\,\partial{\rm Re}\,\Sigma^{\rm ep}_{nn\bk}(\omega)/\partial\omega\big|_{\omega=E_{n\bk}/\hbar}\Big]^{-1}. \tag{G.174}$$</div>
+  <p>Linearizing (G.172) near each pole gives Lorentzians of weight $Z$ and half-width $Z|{\rm Im}\,\Sigma|$ (G Eq. 173), with the same $Z$ you know from <i>GW</i>. Differentiating (G.164) along $\bk$, and neglecting the explicit $\bk$ dependence of $\Sigma$, gives the velocity renormalization $\mathbf V_{n\bk}=Z_{n\bk}\mathbf v_{n\bk}=\mathbf v_{n\bk}/(1+\lambda_{n\bk})$, with</p>
+  <div class="eq">$$ \lambda_{n\bk}=Z^{-1}_{n\bk}-1=-\hbar^{-1}\,\partial{\rm Re}\,\Sigma_{nn\bk}(\omega)/\partial\omega\big|_{\omega=E_{n\bk}/\hbar}. \tag{G.189}$$</div>
+  <p>For a parabolic band whose Fermi wave vector is fixed by Luttinger's theorem, this is a mass enhancement $m_{\rm ep}=m^*(1+\lambda)$.</p>
+
+  <figure class="viz" id="viz-a-electron-se-kink">
+    <p class="viz-title">Kinks and satellites: a band coupled to an Einstein phonon <span class="tag">interactive</span></p>
+    <div class="viz-grid side"><div class="pk-map"></div><div class="pk-sig"></div></div>
+    <div class="pk-ctrl"></div>
+    <div class="pk-ro"></div>
+    <figcaption><strong>Model (after Giustino Fig. 4).</strong> A band $\varepsilon_k=-\varepsilon_F+\hbar^2k^2/2m^*$ ($m^*=0.1\,m_e$) couples with a constant matrix element to one dispersionless phonon, $\hbar\omega_0=100$ meV. Intermediate states run from the band bottom to a cutoff $\varepsilon_c=5$ eV above $E_F$ (our reading of Giustino's cutoff). $\Sigma$ is (G.157)+(G.158) at $T=0$, retarded, in closed form, with $|g|^2N_F=\lambda\hbar\omega_0/2$ ($N_F$ per spin; no Debye–Waller, as in the paper). The "3D" density of states $\propto\sqrt{\varepsilon+\varepsilon_F}$ mimics Giustino's band; "2D" (constant) is the Engelsberg–Schrieffer model he cites. His panels (a) and (b) are $\varepsilon_F/\hbar\omega_0=10$ and 2. As in the paper, $\Sigma(0)$ is shifted to 0 (Luttinger) and $A$ of (G.172) is clipped at 3 eV$^{-1}$. <strong>Left:</strong> $A(k,E)$ with the bare band, the BW solutions of (G.164) and the RS estimate; the default window zooms on $E_F$, and "full band" shows the whole occupied band. <strong>Right:</strong> ${\rm Re}\,\Sigma$, ${\rm Im}\,\Sigma$ and the line $E-\varepsilon_k$ for the cursor $k$ (drag on the map); the crossings are the BW roots. <strong>What to notice.</strong> For $\varepsilon_F=10\hbar\omega_0$ the band flattens by $Z\approx1/(1+\lambda)$ within $\hbar\omega_0$ of $E_F$, stays sharp there, and snaps back to the bare band, broadened, below $-\hbar\omega_0$. Where the slope of ${\rm Re}\,\Sigma$ exceeds 1 (roughly $\lambda\hbar\omega_0/4\eta>1$) BW has three roots: the S-shaped kink. For $\varepsilon_F=2\hbar\omega_0$ (3D) the quasiparticle band is heavier, and a broad polaron satellite appears about $1.7\hbar\omega_0$ below its bottom that the BW curve does not follow.</figcaption>
+  </figure>
+
+  <div class="callout intuition"><p class="callout-title">Why the kink sits at $-\hbar\omega_0$</p><p>At $T=0$ a hole at energy $E<0$ can decay by emitting a real phonon only if an occupied state exists at $E+\hbar\omega_0$, that is, only if $|E|>\hbar\omega_0$. Inside the window $|E|<\hbar\omega_0$ the hole is dressed by virtual phonons: heavy, with weight $Z$, but long-lived. Outside it, emission opens, ${\rm Im}\,\Sigma$ jumps to $-\pi\lambda\hbar\omega_0/2$ (constant density of states), and ${\rm Re}\,\Sigma$ decays, so the band returns to its bare dispersion with a large width. The kink is the boundary between the two regimes. Graphene shows it between 150 and 200 meV, weakly because $\lambda\sim0.1$ (Giustino §VIII).</p></div>
+
+  <h3>The Eliashberg function and the mass-enhancement parameter</h3>
+  <p>For ARPES, Giustino rewrites (G.157)+(G.158) in spectral form, with all electron energies measured from $E_F$:</p>
+  <div class="eq">$$ \begin{aligned} \Sigma^{\rm FM}_{nn\bk}(\omega,T)=\int_{-\infty}^{+\infty}\!d\varepsilon\int_0^\infty\! d\varepsilon'\,\alpha^2F_{n\bk}(\varepsilon,\varepsilon')\bigg[&\frac{1-f(\varepsilon/k_BT)+n(\varepsilon'/k_BT)}{\hbar\omega-\varepsilon-\varepsilon'+i\hbar\eta}\\ +&\frac{f(\varepsilon/k_BT)+n(\varepsilon'/k_BT)}{\hbar\omega-\varepsilon+\varepsilon'+i\hbar\eta}\bigg], \end{aligned} \tag{G.186}$$</div>
+  <div class="eq">$$ \alpha^2F_{n\bk}(\varepsilon,\varepsilon')=\sum_{m\nu}\int\frac{d\bq}{\Omega_{\rm BZ}}\,|g_{mn\nu}(\bk,\bq)|^2\,\delta(\varepsilon-\varepsilon_{m\bk+\bq})\,\delta(\varepsilon'-\hbar\omega_{\bq\nu}). \tag{G.187}$$</div>
+  <p>The Eliashberg function $\alpha^2F$ is positive, temperature independent and contains all the material-specific information. It is proportional to the rate at which state $|n\bk\rangle$ scatters into states at energy $\varepsilon$ by emitting or absorbing a phonon of energy $\varepsilon'$. With an isotropic average, particle–hole symmetry and phonon energies neglected next to electron energies, $|{\rm Im}\,\Sigma|$ at $T=0$ becomes the cumulative integral $\pi\int_0^{|E|}d\varepsilon'\,\alpha^2F(\varepsilon')$ (from G Eq. 188). That is a step at $\hbar\omega_{\rm ph}$ for an Einstein mode, as in the Be(0001) surface state with an onset at 40–80 meV (Giustino Fig. 11). The Eliashberg coupling $\lambda=2\int d\varepsilon'\,\alpha^2F(\varepsilon')/\varepsilon'$, which Giustino prints as Eq. (206) with the isotropic Fermi-surface $\alpha^2F$ of his superconductivity section (<a href="#a-applications">§A.9</a>), is the slope $-\partial_E{\rm Re}\,\Sigma|_{E_F}$ of (G.189) under the same assumptions. In the model above, $\alpha^2F$ at $E_F$ is the Einstein spectrum $(\lambda\hbar\omega_0/2)\,\delta(\varepsilon'-\hbar\omega_0)$, so the slider sets this $\lambda$; the readout $\lambda_{\rm eff}$ deviates slightly because the band is finite and lacks particle–hole symmetry.</p>
+  <p>The same $\lambda$ enhances the low-temperature electronic heat capacity, which follows from Grimvall's entropy formula (G Eq. 191) with $\Sigma^{\rm FM}\simeq-\lambda\hbar\omega$:</p>
+  <div class="eq">$$ C_{\rm e}=T\frac{\partial S_{\rm e}}{\partial T}=\frac{2}{3}\pi^2k_B^2N_F(1+\lambda_{n\bk})\,T, \tag{G.192}$$</div>
+  <p>where the prefactor implies $N_F$ per spin. The enhancement holds only for $k_BT\ll\hbar\omega_{\rm ph}$; at high temperature it disappears. The same $\lambda$ controls superconducting $T_c$ (<a href="#a-applications">§A.9</a>).</p>
+
+  <div class="callout caveat"><p class="callout-title">Reading $\lambda$ off ARPES</p><p>Estimating $\lambda$ from the ratio of band velocities above and below the kink requires the unknown bare velocity, fitted with <i>ad hoc</i> models; near van Hove singularities this overestimates $\lambda$ significantly (Giustino §VIII). Without particle–hole symmetry, as in doped graphene, ${\rm Re}\,\Sigma$ tends to a linear asymptote instead of decaying.</p></div>
+
+  <h3>Beyond Dyson: the cumulant and polaron satellites</h3>
+  <p>The Dyson equation with the one-phonon self-energy (G.157) never has two phonons present at the same time. It can therefore produce at most one satellite per phonon mode, and in the single-level model below that satellite sits too far from the quasiparticle. This is the same failure you know from plasmon satellites in <i>GW</i>. The cure is also the same, the cumulant expansion (Giustino §V.B.6, unnumbered):</p>
+  <div class="eq">$$ G_{n\bk}(t)=\frac{i}{\hbar}\exp\!\Big[-i\frac{\varepsilon_{n\bk}}{\hbar}t+C_{n\bk}(t)\Big]. $$</div>
+  <p>The cumulant $C$ is obtained from a low-order self-energy such as Fan–Migdal, and the exponential generates the higher-order diagrams automatically. Verdi, Caruso and Giustino (2017) used it to reproduce the polaron satellites measured by ARPES in $n$-doped TiO$_2$.</p>
+
+  <details class="derivation"><summary>Cumulant for one level and one phonon</summary><div class="d-body">
+    <p>Take an occupied level $\varepsilon_0$ and let the hole created in it at $t=0$ couple with constant $g$ to a dispersionless phonon $\hbar\omega_0$ (Langreth's core-hole problem, an independent-boson model). Define the Huang–Rhys factor $S=|g|^2/(\hbar\omega_0)^2$. The Fan–Migdal self-energy (G.157), occupied term only and retarded, is $\Sigma(E)=|g|^2/(E-\varepsilon_0+\hbar\omega_0+i\eta)$. Dyson's $G=[E-\varepsilon_0-\Sigma]^{-1}$ then has exactly two poles, at $x_\pm=E-\varepsilon_0=\tfrac{\hbar\omega_0}{2}\big(-1\pm\sqrt{1+4S}\big)$, with weights $Z_\pm=\big[1+S(\hbar\omega_0)^2/(x_\pm+\hbar\omega_0)^2\big]^{-1}$ that sum to 1.</p>
+    <p>Matching the cumulant to the same second-order term gives, for the hole branch ($t&lt;0$), $C(t)=S\big(e^{i\omega_0t}-1-i\omega_0t\big)$. Exponentiating,</p>
+    $$ e^{C(t)}=e^{-S}\,e^{-iS\omega_0t}\sum_{n\ge0}\frac{S^n}{n!}\,e^{in\omega_0t}\quad\Rightarrow\quad A(E)=\sum_{n\ge0}e^{-S}\frac{S^n}{n!}\,\delta\big(E-\varepsilon_0-S\hbar\omega_0+n\hbar\omega_0\big). $$
+    <p>The quasiparticle sits at $\varepsilon_0+S\hbar\omega_0$, closer to $E_F$, with weight $e^{-S}$. Replicas follow at exact multiples of $\hbar\omega_0$ with Poisson (Franck–Condon) weights. For this model the second-order cumulant is exact (Langreth 1970). Both methods agree to first order in $S$: $x_+\simeq S\hbar\omega_0$ and $Z_+\simeq e^{-S}\simeq1-S$.</p>
+  </div></details>
+
+  <figure class="viz" id="viz-a-electron-se-cumulant">
+    <p class="viz-title">Dyson versus cumulant for a single level <span class="tag">interactive</span></p>
+    <div class="pc-plot"></div>
+    <div class="pc-ctrl"></div>
+    <div class="pc-ro"></div>
+    <figcaption><strong>Model.</strong> A hole in one level $\varepsilon_0$ (as seen in ARPES) coupled to one dispersionless phonon with Huang–Rhys factor $S=|g|^2/(\hbar\omega_0)^2$; formulas in the derivation above. Each peak is broadened by a Lorentzian of half-width $\eta$, and the vertical axis is $\pi\eta A$, so an isolated peak has height equal to its weight. Markers show the exact weights: Dyson poles $Z_\pm$ and cumulant replicas $e^{-S}S^n/n!$. <strong>What to notice.</strong> At small $S$ both give the same quasiparticle shift $S\hbar\omega_0$. As $S$ grows, Dyson produces one satellite at $\hbar\omega_0\sqrt{1+4S}$ from the quasiparticle, too far away, and keeps too much weight in the quasiparticle ($Z_+$ instead of $e^{-S}$). The cumulant moves weight into a ladder of replicas spaced by exactly $\hbar\omega_0$. This is the GW versus GW+C story for plasmons.</figcaption>
+  </figure>
+
+  <p>The cumulant is also where first-principles work meets the older model-Hamiltonian literature (Giustino §V.B.6). Choosing $\varepsilon_{n\bk}$, $\omega_{\bq\nu}$ and $g$ by hand in G Eq. (1), usually with tight-binding bands, Einstein phonons and coupling linear in the displacements, gives the Fröhlich, Holstein and Su–Schrieffer–Heeger models and their Hubbard-type extensions; the single-level model above is the simplest of them. Such models can be solved beyond the approximations of (G.157), nonperturbatively, by Lang–Firsov transformations, path integrals, exact diagonalization or variational and quantum Monte Carlo. They map out the polaron questions a Dyson-level calculation cannot answer: weak versus strong coupling, large versus small polarons, bandlike versus hopping transport. Giustino notes that the cumulant is closely related to Berciu's momentum-average approximation for the Holstein polaron, and in 2017 he judged that the study of polarons with <i>ab initio</i> many-body techniques was "yet to begin". EPP does not reach this far, since it derives no electron self-energy (<a href="#z-outlook">§Z.1</a>).</p>
+
+  <div class="callout source"><p class="callout-title">Note on the source</p><p>The prefactor $i/\hbar$ of the cumulant formula belongs to the hole branch ($t&lt;0$), appropriate for ARPES; for electrons it is $-i/\hbar$. The Fig. 4 caption calls the cutoff both $\varepsilon_{\rm max}$ and $\varepsilon_c$ and does not say whether $N_F$ counts both spins, so $|g|^2=\hbar\omega_0/N_F$ means $\lambda=2$ or $\lambda=1$; our default $\lambda=1.2$ sits between.</p></div>
+
+  <div class="callout connect"><p class="callout-title">Bridge to EPP: the missing piece</p><p>EPP derives no electron self-energy. It dresses photons with $\Pi_{jj}$ (<a href="#b-photon-se">§B.5</a>, <a href="#b-propagator">§B.6</a>) and phonons with $\Omega^{\rm e}$ (<a href="#b-phonon-se">§B.7</a>), and finds its electrodynamic Fröhlich vertices inside the phonon self-energy (<a href="#b-frohlich">§B.8</a>). The natural analogue of (G.153) is an electron exchanging the total photon propagator $D$, dressed by electrons and ions, through current vertices. For $c\to\infty$ its longitudinal part reduces to $W_{\rm e}$ plus the polar part of $W_{\rm ph}$: <i>GW</i> plus the Fröhlich part of Fan–Migdal. The transverse part adds current–current terms of order $(v/c)^2$ and polariton effects inside the light cone, $q\lesssim q_c=\sqrt{\epsilon^\infty}\,\omega/c$ (<a href="#x-light-cone">§X.1</a>). Such a theory would keep frequency-dependent vertices, relaxing approximation (v), but it would lack short-range deformation-potential coupling (absent from EPP's Lagrangian) and Debye–Waller (no second-order vertex; the $A^2$ term is only an analogy). EPP's "$n_B=0$" rule (EPP §4.5, <a href="#b-photon-se">§B.5</a>) does not carry over, since (G.158) needs both $n$ and $f$. See <a href="#x-dictionary">§X.2</a> and <a href="#z-outlook">§Z.1</a>.</p></div>
+</section>
+<script>
+(() => {
+  const C = EPP.C;
+  // ---------------- Feynman diagrams ----------------
+  const D = (id, spec) => { const el = document.getElementById(id); if (el) EPP.fd.draw(el, spec); };
+  const fmItems = [
+    { t: 'fermion', a: [6, 84], b: [42, 84], arrow: false },
+    { t: 'fermion2', a: [42, 84], b: [156, 84], label: 'G', lpos: 'right' },
+    { t: 'fermion', a: [156, 84], b: [192, 84], arrow: false },
+    { t: 'phonon2', a: [42, 84], b: [156, 84], bend: 0.42, label: 'qν' },
+    { t: 'blob', at: [42, 84], r: 7, color: 'muted' },
+    { t: 'blob', at: [156, 84], r: 7, color: 'muted' },
+    { t: 'text', at: [30, 108], text: 'g' }, { t: 'text', at: [168, 108], text: 'g' }
+  ];
+  D('fd-a-electron-se-fm1', { w: 198, h: 116, label: 'Fan–Migdal self-energy: dressed electron line with a dressed phonon arc and screened vertices at both ends', items: fmItems });
+  D('fd-a-electron-se-fm2', { w: 198, h: 116, label: 'Fan–Migdal self-energy with two screened vertices', items: fmItems });
+  D('fd-a-electron-se-dw', { w: 150, h: 120, label: 'Debye–Waller self-energy: phonon loop attached at one point', items: [
+    { t: 'fermion2', a: [6, 92], b: [75, 92] },
+    { t: 'fermion2', a: [75, 92], b: [144, 92] },
+    { t: 'phonon2', a: [75, 85], b: [75, 23], bend: 0.5 },
+    { t: 'phonon2', a: [75, 23], b: [75, 85], bend: 0.5, label: 'qν', ldist: 16 },
+    { t: 'blob', at: [75, 92], r: 7, color: 'muted' },
+    { t: 'text', at: [75, 116], text: 'g^{DW}' }
+  ]});
+  D('fd-a-electron-se-dgw', { w: 262, h: 108, label: 'dGW self-energy: GW with interacting quantities minus GW at clamped nuclei', items: [
+    { t: 'fermion2', a: [6, 80], b: [118, 80], label: 'G', lpos: 'right' },
+    { t: 'screened', a: [24, 80], b: [100, 80], bend: 0.45, label: 'W_e' },
+    { t: 'vertex', at: [24, 80] }, { t: 'vertex', at: [100, 80] },
+    { t: 'plain', a: [125, 80], b: [137, 80], color: 'muted', width: 1.8 },
+    { t: 'fermion', a: [144, 80], b: [256, 80], label: 'G^{cn}', lpos: 'right' },
+    { t: 'screened', a: [162, 80], b: [238, 80], bend: 0.45, label: 'W_e^{cn}', width: 1.1 },
+    { t: 'vertex', at: [162, 80] }, { t: 'vertex', at: [238, 80] }
+  ]});
+  D('fd-a-electron-se-pi', { w: 236, h: 110, label: 'Phonon self-energy bubble with one bare and one screened vertex', items: [
+    { t: 'phonon', a: [6, 52], b: [62, 52], label: 'qν' },
+    { t: 'fermion', a: [62, 52], b: [174, 52], bend: 0.36 },
+    { t: 'fermion', a: [174, 52], b: [62, 52], bend: 0.36 },
+    { t: 'phonon', a: [174, 52], b: [230, 52], label: 'qν' },
+    { t: 'vertex', at: [62, 52], r: 3.5 },
+    { t: 'blob', at: [174, 52], r: 7, color: 'muted' },
+    { t: 'text', at: [44, 82], text: 'g^{b}' }, { t: 'text', at: [192, 82], text: 'g' }
+  ]});
+
+  // ---------------- Kink / satellite model ----------------
+  const W0 = 0.1, EC = 5.0, MSTAR = 0.1, H2M = 3.80998; // eV, eV, m_e, eV A^2
+  // I(a;U) = int_0^U sqrt(u)/(a-u) du for Im a > 0 (principal branches are continuous on the path)
+  function I3(a, U) {
+    const sa = C.sqrt(a), sU = Math.sqrt(U);
+    const r = C.div([sa[0] + sU, sa[1]], [sa[0] - sU, sa[1]]);
+    return C.add([-2 * sU, 0], C.mul(sa, C.log(r)));
+  }
+  // retarded T=0 Fan-Migdal self-energy (G.157+158), eV; z = E + i eta
+  function sigmaRaw(E, p) {
+    const pre = p.lam * W0 / 2;
+    if (p.dim === '2') {
+      const lg = (a) => [0.5 * Math.log((E - a) * (E - a) + p.eta * p.eta), Math.atan2(p.eta, E - a)];
+      const A = lg(W0), B = lg(W0 + EC), Cc = lg(-W0 - p.eF), Dd = lg(-W0);
+      return [pre * (A[0] - B[0] + Cc[0] - Dd[0]), pre * (A[1] - B[1] + Cc[1] - Dd[1])];
+    }
+    const q = pre / Math.sqrt(p.eF);
+    const occ = I3([E + W0 + p.eF, p.eta], p.eF);
+    const emp = C.sub(I3([E - W0 + p.eF, p.eta], p.eF + EC), I3([E - W0 + p.eF, p.eta], p.eF));
+    return [q * (occ[0] + emp[0]), q * (occ[1] + emp[1])];
+  }
+  const fig = document.getElementById('viz-a-electron-se-kink');
+  const map = new EPP.Plot(fig.querySelector('.pk-map'), { xlabel: 'k (Å^{-1})', ylabel: 'E − E_F (eV)', height: 400, margin: { l: 58, r: 62, t: 12, b: 44 }, xname: 'k (Å^{-1})', yname: 'E (eV)', hoverX: v => v.toFixed(4), ariaLabel: 'Electron spectral function map with bare, Brillouin–Wigner and Rayleigh–Schrödinger bands' });
+  const side = new EPP.Plot(fig.querySelector('.pk-sig'), { xlabel: 'Σ (meV)', ylabel: 'E − E_F (eV)', height: 400, margin: { l: 58, r: 12, t: 12, b: 44 }, hover: false, xlim: [-450, 350], ariaLabel: 'Real and imaginary parts of the self-energy versus energy, with the line E minus epsilon_k' });
+  const ro = EPP.readout(fig.querySelector('.pk-ro'));
+  let st = null, kF = 0.16;
+  map.onPointer = (x) => { if (ui) ui.set('kc', EPP.clamp(x / kF, 0, 1.5)); };
+  function draw() {
+    if (!st) return;
+    const p = { lam: st.lam, eF: st.eF * W0, eta: st.eta / 1000, dim: st.dim };
+    kF = Math.sqrt(p.eF * MSTAR / H2M);
+    const s0 = sigmaRaw(0, p)[0];
+    const sig = (E) => { const s = sigmaRaw(E, p); return [s[0] - s0, s[1]]; };
+    const epsk = (k) => -p.eF + H2M * k * k / MSTAR;
+    const kOfEps = (e) => Math.sqrt(Math.max(0, (e + p.eF) * MSTAR / H2M));
+    let Elo, Ehi = 2 * W0, k0, k1;
+    if (st.view === 'zoom') { Elo = Math.max(-p.eF - 3 * W0, -5 * W0); k0 = kOfEps(-5.5 * W0); k1 = Math.max(kOfEps(2.5 * W0), k0 + 0.02); }
+    else { Elo = -p.eF - 3 * W0; k0 = 0; k1 = 1.5 * kF; }
+    // spectral function map
+    const nx = 180, ny = 230, z = new Float64Array(nx * ny);
+    for (let j = 0; j < ny; j++) {
+      const E = Elo + (Ehi - Elo) * j / (ny - 1), s = sig(E), gi = p.eta - s[1];
+      for (let i = 0; i < nx; i++) { const k = k0 + (k1 - k0) * i / (nx - 1), d = E - epsk(k) - s[0]; z[j * nx + i] = gi / Math.PI / (d * d + gi * gi); }
+    }
+    // fine energy grid: BW curve k(E), slope of Re Sigma
+    const nE = 700, Eg = new Array(nE), sRe = new Array(nE), sIm = new Array(nE), kBW = new Array(nE);
+    let maxSlope = -Infinity;
+    for (let j = 0; j < nE; j++) {
+      const E = Elo + (Ehi - Elo) * j / (nE - 1), s = sig(E);
+      Eg[j] = E; sRe[j] = s[0]; sIm[j] = s[1];
+      const arg = (E - s[0] + p.eF) * MSTAR / H2M; kBW[j] = arg >= 0 ? Math.sqrt(arg) : NaN;
+      if (j > 0) maxSlope = Math.max(maxSlope, (sRe[j] - sRe[j - 1]) / (Eg[j] - Eg[j - 1]));
+    }
+    // bare band and RS
+    const nk = 220, ks = EPP.linspace(k0, k1, nk), bare = ks.map(epsk), rs = ks.map(k => { const e = epsk(k); return e + sig(e)[0]; });
+    // BW roots at the cursor
+    const kc = st.kc * kF, ekc = epsk(kc), h = (E) => E - ekc - sig(E)[0];
+    const roots = [];
+    for (let j = 1; j < nE; j++) { const a = Eg[j] - ekc - sRe[j], b = Eg[j - 1] - ekc - sRe[j - 1]; if (a === 0 || a * b < 0) { const r = EPP.bisect(h, Eg[j - 1], Eg[j], 1e-7); if (isFinite(r)) roots.push(r); } }
+    const lab = (y, t, c) => ({ type: 'hline', at: y, color: c, text: t, textAt: 'left', dash: [5, 4], width: 1.1 });
+    map.draw([
+      { type: 'heatmap', x0: k0, x1: k1, y0: Elo, y1: Ehi, nx, ny, z, vmin: 0, vmax: 3, color: 'ink', gamma: 0.75, label: 'A(k,E)', colorbar: 'A (eV^{-1}), clipped at 3', cfmt: v => EPP.fix(v, 2) },
+      lab(0, 'E_F', 'muted'), lab(-W0, '−ħω_0', 'phonon'), lab(W0, '+ħω_0', 'phonon'),
+      { type: 'line', x: ks, y: bare, color: 'electron', dash: [7, 5], width: 1.6, label: 'bare band ε_k', hover: false },
+      { type: 'line', x: kBW, y: Eg, color: 'electron', width: 2, label: 'Brillouin–Wigner (G.164)', hover: false },
+      { type: 'line', x: ks, y: rs, color: 'c4', dash: [2, 3], width: 2, label: 'Rayleigh–Schrödinger', hover: false },
+      { type: 'vline', at: kc, color: 'muted', width: 1, dash: [3, 3] },
+      { type: 'points', x: roots.map(() => kc), y: roots, color: 'electron', r: 4, hollow: true }
+    ], { xlim: [k0, k1], ylim: [Elo, Ehi] });
+    const lineX = Eg.map(E => 1000 * (E - ekc));
+    side.draw([
+      lab(0, 'E_F', 'muted'), lab(-W0, '−ħω_0', 'phonon'), lab(W0, '+ħω_0', 'phonon'),
+      { type: 'line', x: sRe.map(v => 1000 * v), y: Eg, color: 'ink', width: 2, label: 'Re Σ' },
+      { type: 'line', x: sIm.map(v => 1000 * v), y: Eg, color: 'c5', width: 2, dash: [6, 4], label: 'Im Σ' },
+      { type: 'line', x: lineX, y: Eg, color: 'muted', width: 1.4, dash: [2, 3], label: 'E − ε_k (cursor k)' },
+      { type: 'points', x: roots.map(r => 1000 * sig(r)[0]), y: roots, color: 'electron', r: 4, hollow: true }
+    ], { ylim: [Elo, Ehi] });
+    // derived numbers
+    const dE = 1e-5, lamEff = -(sig(dE)[0] - sig(-dE)[0]) / (2 * dE), Z = 1 / (1 + lamEff);
+    ro.set({
+      'k_F': kF.toFixed(3) + ' Å⁻¹',
+      'λ_{eff} = −∂ReΣ/∂E at E_F': EPP.fix(lamEff, 3),
+      'Z(k_F)': EPP.fix(Z, 3),
+      'm_{ep}/m^*': EPP.fix(1 + lamEff, 2),
+      'max ∂ReΣ/∂E': EPP.fix(maxSlope, 2) + (maxSlope > 1 ? ' (BW multivalued)' : ''),
+      'BW roots at cursor': String(roots.length)
+    });
+  }
+  const ui = EPP.controls(fig.querySelector('.pk-ctrl'), [
+    { key: 'eF', type: 'range', label: 'ε_F / ħω_0', min: 0.5, max: 15, step: 0.5, value: 10, fmt: v => v.toFixed(1) + ' (' + (100 * v).toFixed(0) + ' meV)' },
+    { key: 'lam', type: 'range', label: 'coupling λ', min: 0, max: 2, step: 0.05, value: 1.2, fmt: v => v.toFixed(2) },
+    { key: 'eta', type: 'range', label: 'broadening η (meV)', min: 5, max: 40, step: 1, value: 20, fmt: v => v.toFixed(0) + ' meV' },
+    { key: 'kc', type: 'range', label: 'cursor k/k_F', min: 0, max: 1.5, step: 0.005, value: 0.875, fmt: v => v.toFixed(3) },
+    { key: 'dim', type: 'seg', label: 'density of states', options: [['3', '3D, √ε'], ['2', '2D, constant']], value: '3' },
+    { key: 'view', type: 'seg', label: 'energy window', options: [['full', 'full band'], ['zoom', 'zoom on E_F']], value: 'zoom' }
+  ], s => { st = s; draw(); });
+
+  // ---------------- Dyson vs cumulant ----------------
+  const fig2 = document.getElementById('viz-a-electron-se-cumulant');
+  const pc = new EPP.Plot(fig2.querySelector('.pc-plot'), { xlabel: '(E − ε_0)/ħω_0', ylabel: 'πη A(E)', xlim: [-9, 5], ylim: [0, 1.08], aspect: 0.48, minHeight: 250, xname: '(E−ε_0)/ħω_0', hoverX: v => v.toFixed(2), hoverY: v => v.toFixed(3), ariaLabel: 'Spectral function of a single level from Dyson and cumulant approaches' });
+  const ro2 = EPP.readout(fig2.querySelector('.pc-ro'));
+  EPP.controls(fig2.querySelector('.pc-ctrl'), [
+    { key: 'S', type: 'range', label: 'Huang–Rhys factor S', min: 0, max: 4, step: 0.05, value: 1, fmt: v => v.toFixed(2) },
+    { key: 'w0', type: 'range', label: 'phonon ħω_0 (meV)', min: 20, max: 200, step: 5, value: 100, fmt: v => v.toFixed(0) + ' meV' },
+    { key: 'eta', type: 'range', label: 'broadening η (meV)', min: 5, max: 40, step: 1, value: 12, fmt: v => v.toFixed(0) + ' meV' }
+  ], s => {
+    const S = s.S, w0 = s.w0, er = s.eta / s.w0; // reduced units of hbar*omega_0
+    const xs = EPP.linspace(-9, 5, 1401);
+    const dys = xs.map(x => { const sg = C.div([S, 0], [x + 1, er]); const g = C.inv([x - sg[0], er - sg[1]]); return -er * g[1]; });
+    const nmax = Math.max(8, Math.ceil(S + 8 * Math.sqrt(S + 0.5) + 6));
+    const wn = []; let w = Math.exp(-S); for (let n = 0; n <= nmax; n++) { wn.push(w); w *= S / (n + 1); }
+    const cum = xs.map(x => { let y = 0; for (let n = 0; n <= nmax; n++) { const d = x - S + n; y += wn[n] * er * er / (d * d + er * er); } return y; });
+    const r = Math.sqrt(1 + 4 * S), xp = 0.5 * (-1 + r), xm = 0.5 * (-1 - r);
+    const Zp = 1 / (1 + S / ((xp + 1) * (xp + 1))), Zm = S > 1e-9 ? 1 / (1 + S / ((xm + 1) * (xm + 1))) : 0;
+    const cx = [], cy = []; wn.forEach((v, n) => { if (v > 2e-3 && S - n > -9) { cx.push(S - n); cy.push(v); } });
+    const layers = [
+      { type: 'vline', at: 0, color: 'muted', text: 'bare level ε_0', width: 1 },
+      { type: 'line', x: xs, y: cum, color: 'electron', width: 2, label: 'cumulant (exact for this model)' },
+      { type: 'line', x: xs, y: dys, color: 'c4', width: 2, dash: [6, 4], label: 'Dyson with Fan–Migdal Σ' },
+      { type: 'points', x: cx, y: cy, color: 'electron', r: 3.5, hollow: true },
+      { type: 'points', x: Zm > 1e-6 ? [xp, xm] : [xp], y: Zm > 1e-6 ? [Zp, Zm] : [Zp], color: 'c4', r: 4 }
+    ];
+    if (Zm > 0.03) layers.push({ type: 'text', x: xm - 0.22, y: 0.75 * Zm, text: 'Dyson satellite', color: 'c4', align: 'right', size: 11 });
+    pc.draw(layers);
+    ro2.set({
+      'Z_{QP} Dyson': EPP.fix(Zp, 3), 'Z_{QP} cumulant (e^{−S})': EPP.fix(Math.exp(-S), 3),
+      'QP shift Dyson': (xp * w0).toFixed(1) + ' meV', 'QP shift cumulant (Sħω_0)': (S * w0).toFixed(1) + ' meV',
+      'QP–satellite gap Dyson': S > 1e-9 ? (r * w0).toFixed(0) + ' meV' : 'no satellite', 'QP–satellite gap cumulant': S > 1e-9 ? w0.toFixed(0) + ' meV' : 'no satellite'
+    });
+  });
+})();
+</script>
