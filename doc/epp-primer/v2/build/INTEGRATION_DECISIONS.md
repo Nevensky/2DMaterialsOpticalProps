@@ -125,7 +125,7 @@ Applied by script and by hand after the section reviews: every rename above, the
 
 $n_{\mathrm e}$ is replaced by $n^{\mathrm e}$ (electron part of the number density, B.2, B.4–B.6), $n_0$ (mean density: A.6's electron gas, B.5's $\bar n_{\mathrm e}$), $n_{\mathrm c}$ (B.8's carriers) and $n^{\mathrm{2D}}_{\mathrm c}$ (doped sheets in A.6 and B.10). The full rule is NOTATION §12.7.
 
-## 8. Electron linewidth and the DFPT dielectric matrix
+## 8. Electron linewidth and the electronic dielectric matrices
 
 Decided with the user; binding for the whole primer and for the Giustino converter.
 
@@ -149,8 +149,18 @@ Decided with the user; binding for the whole primer and for the Giustino convert
   reading of (A7.9) at the band energy before (A7.17). `build/lint.py` flags a bare $\Gamma$ with an electron subscript,
   the review's $\Gamma^{\mathrm{ZP}}$, v1's $\Gamma(T)$, and $y$ as the imaginary part of the pole in A.7 and A.8. The source map of X.2 has a row for $E^{\mathrm{qp}}_{n\bk}$,
   $\Gamma^{\tau}_{n\bk}$ and $\tau_{n\bk}$ with the review's signed $\Gamma_{n\mathbf k}$.
-- **The DFPT dielectric matrix.** $\varepsilon^{\mathrm e}_{\mathrm{RPA+xc}}$ is the explicit name of the test-electron
-  matrix $1-(v+f^{\mathrm{xc}})\chi^0$ (Giustino's $\epsilon^{\mathrm{Hxc}}$). It is used only where that matrix must be told
-  apart from the exact many-body $\varepsilon^{\mathrm e}=1-v\chi^{\mathrm{irr,e}}$ of A.5; elsewhere, as in A.3 (A3.13,
-  A3.17), it is written $\varepsilon^{\mathrm e}$. It extends $\varepsilon^{\mathrm e}_{\mathrm{RPA}}=1-v\chi^0$ (A3.17): a
-  subscript names the approximation. NOTATION §12.1 records it in the $\varepsilon^{\mathrm e}$ row.
+- **The electronic dielectric matrices.** One rule for both approximations: a subscript names the approximation.
+  $\varepsilon^{\mathrm e}_{\mathrm{RPA+xc}}$ is the explicit name of DFPT's test-electron matrix $1-(v+f^{\mathrm{xc}})\chi^0$
+  (Giustino's $\epsilon^{\mathrm{Hxc}}$, Eqs. 53–54), $\varepsilon^{\mathrm e}_{\mathrm{RPA}}$ that of the RPA matrix
+  $1-v\chi^0$ (Giustino's $\epsilon^{\mathrm H}$, Eqs. 55–56); the exact many-body $\varepsilon^{\mathrm e}=1-v\chi^{\mathrm{irr,e}}$
+  of A.5 has no subscript. The subscript is written where two forms meet, on the form that is not the passage's own:
+  $\varepsilon^{\mathrm e}_{\mathrm{RPA}}$ beside DFPT's $\varepsilon^{\mathrm e}$ in A.3 from (A3.17) on and in the box
+  "Screening as a sum of bubbles" of B.1; $\varepsilon^{\mathrm e}_{\mathrm{RPA+xc}}$ beside the exact $\varepsilon^{\mathrm e}$
+  in A.5 (after (A5.29)), in A.7 (approximation 4 of the working formula, in place of the exact $\varepsilon^{\mathrm e}$
+  of (A7.5)) and in A.9 (after (A9.21)), and beside the RPA's $\varepsilon^{\mathrm e}$ in B.8 ("The same count in
+  Part A") and in the screened-vertex glyph of `viz-x2-glyphs`. A passage that works at one level writes plain
+  $\varepsilon^{\mathrm e}$ and names the level in words: A.3 for DFPT, the test electron or RPA+xc of (A3.13), B.8 and
+  B.9 for the RPA ("in the random-phase approximation"); before (A3.17), and in the jellium passages of A.2, A.5 and
+  A.6, the Thomas–Fermi and Lindhard forms are named in words in the same way. The glossary entry `gl-a3-eps` states
+  the rule for the reader. NOTATION §12.1 records the rule in the $\varepsilon^{\mathrm e}$ row; the source map of X.2 has a row for the review's
+  $\epsilon^{\mathrm{Hxc}}$ and $\epsilon^{\mathrm H}$.
