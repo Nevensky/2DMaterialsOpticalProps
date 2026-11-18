@@ -1,6 +1,6 @@
 # Optics beyond RPA: excitons, local fields, xc and phonon-assisted absorption
 
-Labels: **[est]** established literature; **[derived]** worked out here from EPP's equations, not printed in EPP; **[proposal]** suggested extension; **[spec]** speculation. Notation and units are those of primer v2 ([§C.0](https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#c-conventions)): Gaussian units with $e>0$, $\hbar$ and $c$ explicit, so the Coulomb interaction $v=4\pi e^2/q^2$ and the screened $W$ carry $e^2$. "G" is Giustino's review, "E" the EPP draft; (A$n$.$m$) and (B$n$.$m$) are equations of primer v2.
+Labels: **[est]** established literature; **[derived]** worked out here from EPP's equations, not printed in EPP; **[proposal]** suggested extension; **[spec]** speculation. Notation and units follow the [conventions](https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#c-conventions) of primer v2: Gaussian units with $e>0$, $\hbar$ and $c$ explicit, so the Coulomb interaction $v=4\pi e^2/q^2$ and the screened $W$ carry $e^2$. "G" is Giustino's review, "E" the EPP draft; (A$n$.$m$) and (B$n$.$m$) are equations of primer v2.
 
 ## 1. What is missing in EPP
 

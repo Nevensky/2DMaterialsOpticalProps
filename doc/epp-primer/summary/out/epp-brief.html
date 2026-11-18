@@ -5,6 +5,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&family=IBM+Plex+Sans+Condensed:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Math&text=%F0%9D%92%9F%E2%84%92%E2%84%8B%F0%9D%92%A2%F0%9D%92%AB&display=swap">
 <style>
+[hidden] { display: none !important; }
+.notes li, .callout.source p { overflow-x: auto; overflow-y: hidden; }
 /* Layout: long-form lecture notes. Sticky contents rail on wide screens, one reading column
    (~68ch text) whose figures run the full column width. Three particle hues encode
    electron / phonon / photon everywhere: text, plots and Feynman diagrams. */
@@ -28,6 +30,7 @@
   --t-phonon: #92500a;
   --t-photon: #a1295f;
   --t-4: #076a80;
+  --t-5: #5a37a8;
   --accent: var(--c-electron);
   --hl: rgba(35, 80, 200, 0.08);
   --font-text: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", "Noto Sans Math", "STIX Two Math", "Cambria Math", serif;
@@ -47,7 +50,7 @@
     --bg: #0d1119; --surface: #141a26; --surface-2: #1a2131; --fg: #e3e8f1; --fg-2: #c3cad8;
     --muted: #96a0b3; --rule: #2a3346; --grid: #222a3a;
     --c-electron: #6688f2; --c-phonon: #c67c18; --c-photon: #d95e94; --c-4: #169fb6; --c-5: #9372ee;
-    --t-electron: #93adff; --t-phonon: #f0aa4f; --t-photon: #f286b5; --t-4: #5cc8dc;
+    --t-electron: #93adff; --t-phonon: #f0aa4f; --t-photon: #f286b5; --t-4: #5cc8dc; --t-5: #b9a2ff;
     --hl: rgba(134, 166, 255, 0.10);
     color-scheme: dark;
   }
@@ -56,7 +59,7 @@
   --bg: #0d1119; --surface: #141a26; --surface-2: #1a2131; --fg: #e3e8f1; --fg-2: #c3cad8;
   --muted: #96a0b3; --rule: #2a3346; --grid: #222a3a;
   --c-electron: #6688f2; --c-phonon: #c67c18; --c-photon: #d95e94; --c-4: #169fb6; --c-5: #9372ee;
-    --t-electron: #93adff; --t-phonon: #f0aa4f; --t-photon: #f286b5; --t-4: #5cc8dc;
+    --t-electron: #93adff; --t-phonon: #f0aa4f; --t-photon: #f286b5; --t-4: #5cc8dc; --t-5: #b9a2ff;
   --hl: rgba(134, 166, 255, 0.10);
   color-scheme: dark;
 }
@@ -162,9 +165,19 @@ strong { font-weight: 600; }
 .t-e { color: var(--t-electron); } .t-p { color: var(--t-phonon); } .t-g { color: var(--t-photon); }
 
 /* display math */
-.eq { overflow-x: auto; overflow-y: hidden; margin: 6px 0 16px; padding: 2px 0; max-width: 100%; }
+.eq { overflow-x: auto; overflow-y: hidden; margin: 6px 0 16px; padding: 2px 0; max-width: 100%;
+  /* scroll cue: a soft edge shows on the side where the formula continues */
+  background:
+    linear-gradient(to right, var(--eqbg, var(--bg)) 30%, transparent) left / 24px 100% no-repeat local,
+    linear-gradient(to left, var(--eqbg, var(--bg)) 30%, transparent) right / 24px 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, color-mix(in srgb, var(--fg) 25%, transparent), transparent) left / 10px 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, color-mix(in srgb, var(--fg) 25%, transparent), transparent) right / 10px 100% no-repeat scroll; }
+.d-body, .b-body, .callout, figure.viz, .pop { --eqbg: var(--surface); }
+@media (max-width: 560px) { .eq mjx-container[display="true"] { font-size: 88%; } }
 mjx-container[display="true"] { margin: 0.6em 0 !important; }
 mjx-container { color: var(--fg); }
+mjx-container:not(:has(> svg)) > mjx-assistive-mml { display: none !important; }
+main { overflow-x: clip; overflow-clip-margin: 8px; }
 .eq mjx-container[display="true"] { margin: 0.2em 0 !important; }
 
 /* callouts */
@@ -181,9 +194,9 @@ mjx-container { color: var(--fg); }
 
 /* derivations */
 details.derivation { border: 1px solid var(--rule); border-radius: var(--radius); margin: 16px 0; background: var(--surface); max-width: 100%; }
-details.derivation > summary { cursor: pointer; padding: 10px 14px; font-family: var(--font-ui); font-weight: 500; font-size: 0.95rem; color: var(--fg-2); list-style: none; display: flex; gap: 8px; align-items: baseline; }
+details.derivation > summary { cursor: pointer; padding: 10px 14px 10px 34px; font-family: var(--font-ui); font-weight: 500; font-size: 0.95rem; color: var(--fg-2); list-style: none; display: block; position: relative; }
 details.derivation > summary::-webkit-details-marker { display: none; }
-details.derivation > summary::before { content: "+"; font-family: var(--font-mono); color: var(--accent); width: 1em; }
+details.derivation > summary::before { content: "+"; font-family: var(--font-mono); color: var(--accent); position: absolute; left: 14px; top: 10px; }
 details.derivation[open] > summary::before { content: "−"; }
 details.derivation > .d-body { padding: 0 16px 12px; border-top: 1px solid var(--rule); overflow-x: auto; }
 details.derivation > .d-body > :first-child { margin-top: 12px; }
@@ -219,6 +232,7 @@ figure.viz figcaption strong { color: var(--fg); }
 .seg button:last-child { border-right: 0; }
 @media (max-width: 560px) { .seg { display: flex; } .seg button { flex: 1 1 auto; text-align: center; box-shadow: 0 1px 0 var(--rule); } }
 .seg button[aria-pressed="true"] { background: var(--accent); color: var(--surface); }
+.seg button:focus-visible { outline: 2px solid currentColor; outline-offset: -4px; }
 .btn { font-family: var(--font-ui); font-size: 0.85rem; border: 1px solid var(--rule); background: var(--surface); color: var(--fg); border-radius: 5px; padding: 4px 12px; cursor: pointer; }
 .btn:hover { border-color: var(--accent); color: var(--accent); }
 .controls > .btn { justify-self: start; align-self: end; }
@@ -231,7 +245,9 @@ figure.viz figcaption strong { color: var(--fg); }
 .fd figcaption { font-family: var(--font-ui); font-size: 0.82rem; color: var(--muted); text-align: center; max-width: 22ch; }
 .fd svg { overflow: visible; max-width: 100%; height: auto; }
 .fd .op { font-size: 1.4rem; color: var(--muted); font-family: var(--font-text); }
-svg text.fd-lab { font-family: var(--font-text); font-style: italic; font-size: 14px; }
+svg text.fd-lab { font-family: var(--font-text); }
+svg text.fd-lab:not([font-style]) { font-style: italic; }
+svg text.fd-lab:not([font-size]) { font-size: 14px; }
 
 /* tables */
 .tbl { overflow-x: auto; margin: 16px 0 20px; border: 1px solid var(--rule); border-radius: var(--radius);
@@ -248,7 +264,7 @@ svg text.fd-lab { font-family: var(--font-text); font-style: italic; font-size: 
 }
 .tbl table { border-collapse: collapse; width: 100%; font-size: 0.92rem; min-width: 560px; }
 .tbl th, .tbl td { text-align: left; vertical-align: top; padding: 8px 12px; border-bottom: 1px solid var(--rule); }
-.tbl th { font-family: var(--font-ui); font-weight: 600; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); background: var(--surface-2); }
+.tbl th { font-family: var(--font-ui); font-weight: 600; font-size: 0.82rem; color: var(--muted); background: var(--surface-2); }
 .tbl tr:last-child td { border-bottom: 0; }
 .tbl td:first-child { font-weight: 600; }
 
@@ -262,6 +278,83 @@ footer.refs ol { padding-left: 1.4em; }
 footer.refs li { margin-bottom: 6px; max-width: 80ch; }
 .theme-toggle { position: fixed; right: max(12px, calc(env(safe-area-inset-right, 0px) + 12px)); bottom: max(12px, calc(env(safe-area-inset-bottom, 0px) + 12px)); z-index: 5; }
 @media print { .toc, .controls, .theme-toggle { display: none; } }
+
+/* ---------- v2 reading aids: where-keys, steps, background boxes, footnotes, glossary ---------- */
+dl.where { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 3px 14px; margin: -4px 0 18px; padding: 8px 12px; border-left: 2px solid var(--rule); font-size: 0.93rem; color: var(--fg-2); max-width: 68ch; }
+dl.where::before { content: "where"; grid-column: 1 / -1; font-family: var(--font-ui); font-weight: 600; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+dl.where dt { white-space: nowrap; } dl.where dd { margin: 0; }
+ol.steps { counter-reset: step; list-style: none; padding-left: 0; margin: 14px 0 18px; }
+ol.steps > li { counter-increment: step; position: relative; padding-left: 2.3em; margin-bottom: 14px; max-width: none; }
+ol.steps > li > p, ol.steps > li > .why { max-width: 68ch; }
+ol.steps > li::before { content: counter(step); position: absolute; left: 0; top: 0.15em; width: 1.55em; height: 1.55em; border-radius: 50%; background: var(--surface-2); color: var(--accent); font-family: var(--font-mono); font-size: 0.78rem; display: grid; place-items: center; }
+ol.steps > li > .eq { margin: 4px 0 6px; }
+.why { display: block; font-size: 0.92rem; color: var(--fg-2); margin: 2px 0 0; padding-left: 10px; border-left: 2px solid color-mix(in srgb, var(--c-4) 55%, transparent); }
+.why::before { content: "why "; font-family: var(--font-ui); font-weight: 600; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--t-4); margin-right: 4px; }
+details.background { border: 1px solid var(--rule); border-left: 3px solid var(--c-5); border-radius: 0 var(--radius) var(--radius) 0; margin: 16px 0; background: var(--surface); max-width: 100%; }
+details.background > summary { cursor: pointer; padding: 10px 14px; font-family: var(--font-ui); font-size: 0.95rem; color: var(--fg-2); list-style: none; display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; }
+details.background > summary::-webkit-details-marker { display: none; }
+details.background > summary::before { content: "Background"; font-weight: 600; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--t-5); }
+details.background > summary .skip { margin-left: auto; font-size: 0.8rem; color: var(--muted); }
+details.background[open] > summary .skip { display: none; }
+details.background > .b-body { padding: 0 16px 12px; border-top: 1px solid var(--rule); overflow-x: auto; }
+details.background > .b-body > :first-child { margin-top: 12px; }
+sup.fn { font-size: 0.72em; line-height: 0; margin-left: 1px; vertical-align: super; }
+sup.fn a { font-family: var(--font-ui); font-weight: 600; text-decoration: none; color: var(--accent); padding: 0 2px; border-radius: 3px; }
+sup.fn a:hover, sup.fn a[aria-expanded="true"] { background: var(--hl); }
+a.sym { color: inherit; text-decoration: none; cursor: help; }
+a.sym mjx-container > svg { border-bottom: 1.5px dotted color-mix(in srgb, var(--accent) 80%, transparent); padding-bottom: 1px; }
+a.sym:focus-visible mjx-container > svg { border-bottom-style: solid; }
+section.chapter .notes { margin-top: 36px; padding-top: 14px; border-top: 1px solid var(--rule); }
+section.chapter .notes h4 { margin-top: 0; }
+ol.footnotes { font-size: 0.9rem; color: var(--fg-2); padding-left: 1.7em; margin: 6px 0 18px; }
+ol.footnotes > li { margin-bottom: 7px; max-width: 74ch; scroll-margin-top: 80px; }
+ol.footnotes > li:target { background: var(--hl); border-radius: 3px; }
+details.glossary-box { margin: 18px 0; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--surface); }
+details.glossary-box > summary { cursor: pointer; padding: 10px 14px; font-family: var(--font-ui); font-weight: 500; font-size: 0.95rem; color: var(--fg-2); }
+details.glossary-box > dl { padding: 4px 16px 14px; margin: 0; }
+dl.glossary { display: grid; grid-template-columns: minmax(4.5em, max-content) minmax(0, 1fr); gap: 8px 16px; font-size: 0.93rem; }
+dl.glossary dt { font-weight: 400; white-space: nowrap; scroll-margin-top: 80px; }
+dl.glossary dd { margin: 0; color: var(--fg-2); }
+.gl-src { display: block; font-size: 0.83rem; color: var(--muted); }
+.pop { position: absolute; z-index: 40; box-sizing: border-box; width: max-content; max-width: min(400px, calc(100vw - 24px)); background: var(--surface); color: var(--fg); border: 1px solid var(--rule); border-radius: var(--radius); box-shadow: 0 8px 28px rgba(0, 0, 0, 0.16); padding: 10px 13px 11px; font-family: var(--font-text); font-size: 0.92rem; line-height: 1.5; }
+.pop .pop-k { font-family: var(--font-ui); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0 0 4px; }
+.pop .pop-sym { font-size: 1.05rem; margin-bottom: 2px; }
+.pop .pop-go { display: block; margin-top: 6px; font-family: var(--font-ui); font-size: 0.8rem; }
+.gl-btn { position: fixed; right: max(14px, calc(env(safe-area-inset-right, 0px) + 14px)); bottom: max(14px, calc(env(safe-area-inset-bottom, 0px) + 14px)); z-index: 30; font-family: var(--font-ui); font-size: 0.88rem; font-weight: 600; padding: 8px 15px; border-radius: 999px; border: 1px solid var(--rule); background: var(--surface); color: var(--fg); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.14); cursor: pointer; }
+.gl-btn:hover { border-color: var(--accent); color: var(--accent); }
+.gl-panel { position: fixed; z-index: 35; top: 0; right: 0; bottom: 0; width: min(460px, 100vw); background: var(--surface); border-left: 1px solid var(--rule); box-shadow: -10px 0 32px rgba(0, 0, 0, 0.18); display: flex; flex-direction: column; transform: translateX(105%); transition: transform 0.18s ease; padding-top: env(safe-area-inset-top, 0px); padding-right: env(safe-area-inset-right, 0px); visibility: hidden; }
+.gl-panel.open { transform: none; visibility: visible; }
+@media (prefers-reduced-motion: reduce) { .gl-panel { transition: none; } }
+.gl-panel > header { padding: 14px 16px 10px; border-bottom: 1px solid var(--rule); display: grid; gap: 8px; }
+.gl-panel > header .gl-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.gl-panel > header h2 { font-family: var(--font-ui); font-size: 1rem; font-weight: 600; margin: 0; }
+.gl-panel > header p { margin: 0; font-size: 0.85rem; color: var(--muted); }
+.gl-panel input[type="search"] { font: inherit; font-family: var(--font-ui); font-size: 0.92rem; padding: 6px 9px; border: 1px solid var(--rule); border-radius: 5px; background: var(--bg); color: var(--fg); width: 100%; box-sizing: border-box; }
+.gl-list { overflow-y: auto; padding: 4px 16px calc(24px + env(safe-area-inset-bottom, 0px)); }
+.gl-item { display: grid; grid-template-columns: minmax(4.2em, max-content) minmax(0, 1fr); gap: 2px 14px; padding: 9px 0; border-bottom: 1px solid var(--grid); font-size: 0.92rem; }
+.gl-item .gl-d { color: var(--fg-2); }
+.gl-item .gl-go { font-family: var(--font-ui); font-size: 0.8rem; }
+.gl-none { font-family: var(--font-ui); font-size: 0.9rem; color: var(--muted); padding: 12px 0; margin: 0; }
+.gl-sec { font-family: var(--font-ui); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); padding: 14px 0 2px; }
+.conv-grid { display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 720px) { .conv-grid.two { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.viz-title .fig-n { font-family: var(--font-ui); font-weight: 600; color: var(--muted); margin-right: 0.6em; letter-spacing: 0.02em; }
+figure.viz .viz-title { justify-content: flex-start; }
+figure.viz .viz-title .tag { margin-left: auto; }
+.kbd-hint { font-family: var(--font-ui); font-size: 0.85rem; color: var(--muted); }
+.anat { display: grid; justify-items: center; gap: 6px; margin: 10px 0 18px; }
+@media print { .gl-btn, .gl-panel, .pop { display: none; } }
+@media (max-width: 719px) { .tbl table { min-width: 0 !important; } }
+.nw { white-space: nowrap; }
+html { scroll-padding-bottom: 60px; }
+.chapter a[href^="#viz-"] { white-space: nowrap; }
+figure.viz figcaption .cap-key { margin: 0 0 6px; color: var(--fg); }
+figure.viz figcaption .cap-more p { margin: 0 0 8px; }
+figure.viz figcaption details.cap-details > summary { cursor: pointer; font-family: var(--font-ui); font-size: 0.85rem; font-weight: 500; color: var(--accent); margin: 2px 0 6px; }
+@media (max-width: 719px) { .gl-btn { padding: 6px 12px; font-size: 0.8rem; transition: transform 0.2s ease, opacity 0.2s ease; } .gl-btn.away { transform: translateY(140%); opacity: 0; pointer-events: none; } }
+@media (prefers-reduced-motion: reduce) { .gl-btn { transition: none; } }
+.hero ul.how { margin: 0 0 14px; padding-left: 1.2em; max-width: 66ch; color: var(--fg-2); font-size: 1rem; }
+.hero ul.how li { margin-bottom: 4px; }
 </style>
 <script>
 window.MathJax = {
@@ -278,12 +371,16 @@ window.MathJax = {
       ket: ['\\left|#1\\right\\rangle', 1], bra: ['\\left\\langle#1\\right|', 1],
       braket: ['\\left\\langle#1\\middle|#2\\right\\rangle', 2],
       mel: ['\\left\\langle#1\\middle|#2\\middle|#3\\right\\rangle', 3],
-      hc: '\\mathrm{h.c.}'
+      hc: '\\mathrm{h.c.}',
+      ee: '\\mathrm{e}', btau: '\\boldsymbol{\\tau}', ba: '\\mathbf{a}', bb: '\\mathbf{b}', bF: '\\mathbf{F}', bn: '\\mathbf{n}', bd: '\\mathbf{d}', bU: '\\mathbf{U}',
+      OV: '\\Omega_{\\mathrm{V}}', OS: '\\Omega_{\\mathrm{S}}', OVSC: '\\Omega_{\\mathrm{V}}^{\\mathrm{SC}}', OSSC: '\\Omega_{\\mathrm{S}}^{\\mathrm{SC}}', OBZ: '\\Omega_{\\mathrm{BZ}}',
+      rme: '\\mathrm{e}', ion: '\\mathrm{ion}', ph: '\\mathrm{ph}', SC: '\\mathrm{SC}', kB: 'k_{\\mathrm{B}}', tPhi: '\\tilde{\\Phi}'
     }
   },
   loader: { load: ['ui/lazy'] },
-  svg: { fontCache: 'global' },
-  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'canvas', 'svg', 'output', 'select'] }
+  // phones: left-aligned displays reserve the tag width once instead of twice (centred layout)
+  svg: { fontCache: 'global', displayAlign: (window.innerWidth < 560 ? 'left' : 'center'), displayIndent: '0' },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'canvas', 'svg', 'output', 'select'], menuOptions: { settings: { inTabOrder: false } } }
 };
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js" async></script>
@@ -300,7 +397,7 @@ window.MathJax = {
   const cssCache = {};
   EPP.css = (name) => getComputedStyle(root).getPropertyValue(name).trim();
   const NAMED = { electron: '--c-electron', phonon: '--c-phonon', photon: '--c-photon', c4: '--c-4', c5: '--c-5',
-    'electron-t': '--t-electron', 'phonon-t': '--t-phonon', 'photon-t': '--t-photon', 'c4-t': '--t-4',
+    'electron-t': '--t-electron', 'phonon-t': '--t-phonon', 'photon-t': '--t-photon', 'c4-t': '--t-4', 'c5-t': '--t-5',
     ink: '--fg', fg: '--fg', fg2: '--fg-2', muted: '--muted', grid: '--grid', rule: '--rule', accent: '--accent',
     surface: '--surface', surface2: '--surface-2', bg: '--bg' };
   EPP.color = (c) => {
@@ -426,6 +523,55 @@ window.MathJax = {
     const idx = [...Array(n).keys()].sort((i, j) => A[i][i] - A[j][j]);
     return { vals: idx.map(i => A[i][i]), vecs: idx.map(i => V.map(r => r[i])) };
   };
+  // ---------- v2 numerics ----------
+  // Hermitian n x n eigenproblem by cyclic complex Jacobi rotations. re, im: arrays of rows (im antisymmetric).
+  // Returns ascending eigenvalues and eigenvectors vecs[k] = { re: [...], im: [...] }.
+  EPP.eigHerm = (re0, im0, maxSweeps = 60) => {
+    const n = re0.length;
+    const Ar = re0.map(r => r.slice()), Ai = im0.map(r => r.slice());
+    const Vr = Ar.map((_, i) => Ar.map((__, j) => (i === j ? 1 : 0))), Vi = Ar.map(() => new Array(n).fill(0));
+    for (let sw = 0; sw < maxSweeps; sw++) {
+      let off = 0, dg = 0;
+      for (let p = 0; p < n; p++) { dg += Ar[p][p] * Ar[p][p]; for (let q = p + 1; q < n; q++) off += Ar[p][q] * Ar[p][q] + Ai[p][q] * Ai[p][q]; }
+      if (off <= 1e-28 * (dg + 1e-300)) break;
+      for (let p = 0; p < n - 1; p++) for (let q = p + 1; q < n; q++) {
+        const xr = Ar[p][q], xi = Ai[p][q], r = Math.hypot(xr, xi);
+        if (r < 1e-300) continue;
+        // phase step: D = diag(1 at p, e^{-i phi} at q); A <- D^dagger A D makes A_pq = r real
+        const cr = xr / r, ci = -xi / r;
+        for (let k = 0; k < n; k++) { const a = Ar[k][q], b = Ai[k][q]; Ar[k][q] = a * cr - b * ci; Ai[k][q] = a * ci + b * cr; }
+        for (let k = 0; k < n; k++) { const a = Ar[q][k], b = Ai[q][k]; Ar[q][k] = a * cr + b * ci; Ai[q][k] = -a * ci + b * cr; }
+        for (let k = 0; k < n; k++) { const a = Vr[k][q], b = Vi[k][q]; Vr[k][q] = a * cr - b * ci; Vi[k][q] = a * ci + b * cr; }
+        Ar[p][q] = Ar[q][p] = r; Ai[p][q] = Ai[q][p] = 0; Ai[q][q] = 0;
+        // real Jacobi rotation in the (p, q) plane that zeroes A_pq
+        const th = (Ar[q][q] - Ar[p][p]) / (2 * r);
+        const t = Math.sign(th || 1) / (Math.abs(th) + Math.sqrt(th * th + 1));
+        const c = 1 / Math.sqrt(t * t + 1), sn = t * c;
+        for (let k = 0; k < n; k++) {
+          const ar = Ar[k][p], ai = Ai[k][p], br = Ar[k][q], bi = Ai[k][q];
+          Ar[k][p] = c * ar - sn * br; Ai[k][p] = c * ai - sn * bi; Ar[k][q] = sn * ar + c * br; Ai[k][q] = sn * ai + c * bi;
+        }
+        for (let k = 0; k < n; k++) {
+          const ar = Ar[p][k], ai = Ai[p][k], br = Ar[q][k], bi = Ai[q][k];
+          Ar[p][k] = c * ar - sn * br; Ai[p][k] = c * ai - sn * bi; Ar[q][k] = sn * ar + c * br; Ai[q][k] = sn * ai + c * bi;
+        }
+        for (let k = 0; k < n; k++) {
+          const ar = Vr[k][p], ai = Vi[k][p], br = Vr[k][q], bi = Vi[k][q];
+          Vr[k][p] = c * ar - sn * br; Vi[k][p] = c * ai - sn * bi; Vr[k][q] = sn * ar + c * br; Vi[k][q] = sn * ai + c * bi;
+        }
+        Ar[p][q] = Ar[q][p] = 0; Ai[p][q] = Ai[q][p] = 0; Ai[p][p] = 0; Ai[q][q] = 0;
+      }
+    }
+    const idx = [...Array(n).keys()].sort((i, j) => Ar[i][i] - Ar[j][j]);
+    return { vals: idx.map(i => Ar[i][i]), vecs: idx.map(i => ({ re: Vr.map(r => r[i]), im: Vi.map(r => r[i]) })) };
+  };
+  // global phase gauge for display: the largest component becomes real and positive
+  EPP.fixPhase = (v) => {
+    let k = 0, m = -1;
+    for (let i = 0; i < v.re.length; i++) { const a = v.re[i] * v.re[i] + v.im[i] * v.im[i]; if (a > m + 1e-12) { m = a; k = i; } }
+    const a = Math.sqrt(m) || 1, cr = v.re[k] / a, ci = -v.im[k] / a;
+    return { re: v.re.map((x, i) => x * cr - v.im[i] * ci), im: v.re.map((x, i) => x * ci + v.im[i] * cr) };
+  };
   // simple bisection root finder on [a,b]
   EPP.bisect = (f, a, b, tol = 1e-10, maxIt = 200) => {
     let fa = f(a), fb = f(b);
@@ -457,15 +603,17 @@ window.MathJax = {
   // draw rich text on canvas; returns width
   EPP.drawRich = (ctx, s, x, y, opt = {}) => {
     const size = opt.size || 12, fam = opt.font || EPP.css('--font-ui'), style = opt.italic ? 'italic ' : '';
+    // opt.bold: bold base text (vector symbols); sub- and superscripts stay regular
+    const fontOf = (p) => `${style}${opt.bold && !p.m ? '700 ' : ''}${p.m ? Math.round(size * 0.72) : size}px ${fam}`;
     const parts = parseRich(String(s));
-    const widths = parts.map(p => { ctx.font = `${style}${p.m ? Math.round(size * 0.72) : size}px ${fam}`; return ctx.measureText(p.t).width; });
+    const widths = parts.map(p => { ctx.font = fontOf(p); return ctx.measureText(p.t).width; });
     const total = widths.reduce((a, b) => a + b, 0);
     let x0 = x;
     const align = opt.align || 'left';
     if (align === 'center') x0 = x - total / 2; else if (align === 'right') x0 = x - total;
     const save = ctx.textAlign; ctx.textAlign = 'left';
     parts.forEach((p, k) => {
-      ctx.font = `${style}${p.m ? Math.round(size * 0.72) : size}px ${fam}`;
+      ctx.font = fontOf(p);
       const dy = p.m === -1 ? size * 0.28 : (p.m === 1 ? -size * 0.38 : 0);
       ctx.fillText(p.t, x0, y + dy);
       x0 += widths[k];
@@ -473,9 +621,10 @@ window.MathJax = {
     ctx.textAlign = save;
     return total;
   };
-  EPP.measureRich = (ctx, s, size = 12, fam) => {
+  EPP.measureRich = (ctx, s, size = 12, fam, opt = {}) => {
     fam = fam || EPP.css('--font-ui');
-    return parseRich(String(s)).reduce((w, p) => { ctx.font = `${p.m ? Math.round(size * 0.72) : size}px ${fam}`; return w + ctx.measureText(p.t).width; }, 0);
+    const style = opt.italic ? 'italic ' : '';
+    return parseRich(String(s)).reduce((w, p) => { ctx.font = `${style}${opt.bold && !p.m ? '700 ' : ''}${p.m ? Math.round(size * 0.72) : size}px ${fam}`; return w + ctx.measureText(p.t).width; }, 0);
   };
   // rich text -> HTML (for legends/readouts)
   EPP.richHTML = (s) => parseRich(String(s)).map(p => {
@@ -685,7 +834,7 @@ window.MathJax = {
       } else if ((t === 'text' || t === 'label') && unclipped) {
         ctx.globalAlpha = L.opacity ?? 1; ctx.textBaseline = L.baseline || 'middle'; ctx.fillStyle = EPP.textColor(L.color || 'fg2');
         const X = this.X(L.x) + (L.dx || 0), Y = this.Y(L.y) + (L.dy || 0);
-        EPP.drawRich(ctx, L.text, X, Y, { size: L.size || 12, align: L.align || 'left', italic: L.italic });
+        EPP.drawRich(ctx, L.text, X, Y, { size: L.size || 12, align: L.align || 'left', italic: L.italic, bold: L.bold });
       } else if (t === 'arrow') {
         const X0 = this.X(L.x0), Y0 = this.Y(L.y0), X1 = this.X(L.x1), Y1 = this.Y(L.y1);
         ctx.lineWidth = L.width || 1.6; ctx.beginPath(); ctx.moveTo(X0, Y0); ctx.lineTo(X1, Y1); ctx.stroke();
@@ -752,7 +901,7 @@ window.MathJax = {
         const inp = box.querySelector('input'), out = box.querySelector('output');
         const map = s.log ? { to: (v) => Math.pow(10, v), from: (v) => Math.log10(v) } : null;
         if (map) { inp.min = Math.log10(s.min); inp.max = Math.log10(s.max); inp.step = s.step ?? 'any'; inp.value = Math.log10(s.value); }
-        const read = () => { const v = parseFloat(inp.value); state[s.key] = map ? map.to(v) : v; out.textContent = fmt(state[s.key]); };
+        const read = () => { const v = parseFloat(inp.value); state[s.key] = map ? map.to(v) : v; out.textContent = fmt(state[s.key]); inp.setAttribute('aria-valuetext', out.textContent); };
         inp.addEventListener('input', () => { read(); fire(); });
         setters[s.key] = (v) => { inp.value = map ? Math.log10(v) : v; read(); };
         read();
@@ -800,7 +949,13 @@ window.MathJax = {
     const el = typeof host === 'string' ? document.querySelector(host) : host;
     let running = false, visible = true, raf = 0, last = 0, t = 0;
     const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'btn';
-    const label = () => { btn.textContent = running ? 'Pause' : 'Play'; btn.setAttribute('aria-pressed', String(running)); };
+    const label = () => {
+      btn.textContent = running ? 'Pause' : 'Play';
+      const f = el.closest ? el.closest('figure') : null;
+      btn.setAttribute('aria-label', (running ? 'Pause' : 'Play') + ' animation' + (f && f.dataset.fig ? ', Figure ' + f.dataset.fig : ''));
+      // live readouts would be read out continuously while the animation runs
+      if (el.querySelectorAll) el.querySelectorAll('[aria-live]').forEach(r => r.setAttribute('aria-live', running ? 'off' : 'polite'));
+    };
     const loop = (ts) => { if (!running || !visible) { raf = 0; return; } const dt = last ? Math.min(0.05, (ts - last) / 1000) : 0; last = ts; t += dt; frame(t, dt); raf = requestAnimationFrame(loop); };
     const kick = () => { if (running && visible && !raf) { last = 0; raf = requestAnimationFrame(loop); } };
     const api = {
@@ -812,7 +967,7 @@ window.MathJax = {
     if (opt.buttonHost) { const bh = typeof opt.buttonHost === 'string' ? el.querySelector(opt.buttonHost) : opt.buttonHost; bh.appendChild(btn); }
     try { new IntersectionObserver((ents) => { visible = ents[0].isIntersecting; kick(); }).observe(el); } catch (e) {}
     label();
-    requestAnimationFrame(() => { frame(0, 0); if (!EPP.reducedMotion && opt.autoplay !== false) api.play(); });
+    requestAnimationFrame(() => { frame(0, 0); label(); if (!EPP.reducedMotion && opt.autoplay !== false) api.play(); });
     return api;
   };
 
@@ -919,7 +1074,8 @@ window.MathJax = {
 <div class="summary-page">
 <main id="main">
 <style>
-/* Executive summary: one centred reading column with the primer's side gutter. Tokens only. */
+/* Executive summary: one centred reading column with the primer's side gutter. Tokens, base styles and the
+   MathJax macros come from primer v2's head; this block adds the brief's own classes and overrides. */
 .summary-page {
   box-sizing: content-box;
   max-width: 760px;
@@ -937,6 +1093,9 @@ window.MathJax = {
 .summary-page .intro { color: var(--fg-2); }
 .summary-page figure.viz { margin-top: 14px; }
 .summary-page .legend-strip { margin-top: 8px; }
+.summary-page .legend-strip mjx-container svg { margin-right: 0; }   /* v2's 6px gap is for the line glyphs, not for math */
+.summary-page .legend-strip > span { padding-left: 46px; text-indent: -46px; }   /* a label that wraps continues after its 40px line glyph */
+.brief-cap { display: grid; } .brief-cap > span { grid-area: 1 / 1; }   /* both vertex captions share one cell, so the toggle below stays put */
 
 /* take-aways: numbered, because each step uses the one before */
 ol.takeaways { list-style: none; counter-reset: tk; padding: 0; margin: 8px 0 0; }
@@ -970,32 +1129,32 @@ p.more a { white-space: nowrap; }
   .summary-page .tbl tr { display: block; padding: 10px 12px; border-bottom: 1px solid var(--rule); }
   .summary-page .tbl tbody tr:last-child { border-bottom: 0; }
   .summary-page .tbl td, .summary-page .tbl td:first-child, .summary-page .tbl td:nth-child(2) { display: block; width: auto; padding: 2px 0; border: 0; position: static; box-shadow: none; background: none; }
-  .summary-page .tbl td:nth-child(2)::before, .summary-page .tbl td:nth-child(3)::before { display: block; font-family: var(--font-ui); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+  .summary-page .tbl td:nth-child(2)::before, .summary-page .tbl td:nth-child(3)::before { display: block; font-family: var(--font-ui); font-size: 0.82rem; font-weight: 600; color: var(--muted); margin-top: 4px; }   /* as v2's table header */
   .summary-page .tbl td:nth-child(2)::before { content: "Electrostatic (Part A)"; }
   .summary-page .tbl td:nth-child(3)::before { content: "What EPP changes"; }
 }
-@media (max-width: 420px) { .summary-page .eq { font-size: 0.93em; } }
 .chapter ul.open > li { margin-bottom: 8px; }
 .brief-foot { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule); font-size: 0.92rem; color: var(--fg-2); }
 .brief-foot p { margin: 0 0 8px; max-width: 72ch; }
+.brief-foot a { white-space: nowrap; }
 </style>
 
 <header class="hero" id="top">
-  <p class="kicker">Executive summary · Electron–Phonon–Photon Primer</p>
+  <p class="kicker">Executive summary · Electron–phonon–photon primer, second edition</p>
   <h1><span class="e">Electrons</span>, <span class="p">phonons</span> and <span class="g">photons</span>: the short version</h1>
-  <p class="lede">Giustino's 2017 review builds first-principles electron–phonon theory on one instantaneous Coulomb interaction, folded into screened parameters. The EPP formalism keeps the whole electromagnetic field and, as $c\to\infty$, returns Giustino's long-range (polar) formulas: the RPA $W$, plus the Gonze–Lee LO–TO term and Verdi–Giustino vertex that DFPT adds by hand, now derived. Bottom line: EPP changes the numbers only inside the light cone (polaritons, infrared response, radiative widths) or where dynamical screening matters (doped polar semiconductors); transport and zero-point renormalization stay electrostatic.</p>
-  <p class="brief-primer">Full primer, with derivations and interactive figures: <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm" target="_blank" rel="noopener">Electron–Phonon–Photon Primer</a>.</p>
+  <p class="lede">Giustino's 2017 review builds first-principles electron–phonon theory on one instantaneous Coulomb interaction, folded into screened parameters. The EPP formalism keeps the whole electromagnetic field and, as <span class="nw">$c\to\infty$,</span> returns Giustino's long-range (polar) formulas: the RPA <span class="nw">$W$,</span> plus the Gonze–Lee LO–⁠TO term and Verdi–Giustino vertex that DFPT adds by hand, now derived. Bottom line: EPP changes the numbers only inside the light cone (polaritons, infrared response, radiative widths) or where dynamical screening matters (doped polar semiconductors); transport and zero-point renormalization stay electrostatic.</p>
+  <p class="brief-primer">Full primer, with derivations and interactive figures: <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid" target="_blank" rel="noopener">Electron–Phonon–Photon Primer, second edition (v2)</a> · Open topics: <a href="https://claude.ai/artifact/GQKN1yfSi84qrpYRnHoHKm" target="_blank" rel="noopener">EPP Research Roadmap</a></p>
 </header>
 
 <section class="chapter" id="brief-picture">
   <header class="ch-head"><h2>The idea in one picture</h2></header>
-  <p class="intro">The same electron–phonon vertex in both theories. Toggle the speed of light: the photon line $D^{\rm e}$ collapses to the screened Coulomb line $W^{\rm e}$.</p>
+  <p class="intro">The same electron–phonon vertex in both theories. Toggle the speed of light: the photon line <span class="nw">$D^{\rme}$,</span> dressed by the electrons, collapses to the screened Coulomb line <span class="nw">$W^{\rme}$.</span></p>
   <figure class="viz" id="viz-brief-vertex">
     <p class="viz-title">One vertex, two pictures <span class="tag">interactive</span></p>
     <div class="hero-vertex">
       <figure class="hv-panel">
         <div class="fd hv-fd" id="brief-fd-g"></div>
-        <figcaption><strong>Giustino 2017.</strong> An electron scatters from $n\bk$ to $m\,\bk{+}\bq$ by absorbing a phonon $\bq\nu$ or emitting a phonon $-\bq\nu$. The vertex $g_{mn\nu}(\bk,\bq)$ is a number computed with DFPT. All Coulomb physics, the Fröhlich field of polar crystals included, is folded into it.</figcaption>
+        <figcaption><strong>Giustino 2017.</strong> An electron scatters from $n\bk$ to $m\,\bk+\bq$ by absorbing a phonon $\bq\nu$ or emitting a phonon <span class="nw">$-\bq\nu$.</span> The vertex $g_{mn\nu}(\bk,\bq)$ is a number computed with DFPT. All Coulomb physics, the Fröhlich field of polar crystals included, is folded into it.</figcaption>
       </figure>
       <figure class="hv-panel">
         <div class="fd hv-fd" id="brief-fd-epp"></div>
@@ -1009,56 +1168,56 @@ p.more a { white-space: nowrap; }
 
 <section class="chapter" id="brief-takeaways">
   <header class="ch-head"><h2>Seven things to take away</h2></header>
-  <p class="intro">Tags such as (G.53) and (E.454) number equations in Giustino's review and the EPP manuscript.</p>
+  <p class="intro">Tags such as (G.53) and (E.454) number equations in Giustino's review and the EPP manuscript. Symbols and Gaussian units follow the primer's <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#c-conventions" target="_blank" rel="noopener">conventions</a>.</p>
   <ol class="takeaways">
     <li>
       <p class="tk-head"><span class="tk-title">Giustino folds every Coulomb effect into three sets of numbers.</span><span class="tk-part">Part A</span></p>
-      <p>Eq. (1) of the review has no electron–electron or ion–ion interaction and no photons: the electron–electron Coulomb energy sits in the band energies $\varepsilon_{n\bk}$, the screened ion–ion forces in the phonon frequencies $\omega_{\bq\nu}$, and the electron–ion interaction in the coupling $g_{mn\nu}(\bk,\bq)$. DFPT computes $g$ as the bare electron–ion perturbation screened by a static dielectric matrix, your GW or BSE $\epsilon=1-v\chi^0$ plus $f^{xc}$:</p>
-      <div class="eq">$$\partial v^{\rm KS}=(\epsilon^{{\rm H}xc})^{-1}\,\partial v^{\rm en}\tag{G.53}$$</div>
-      <p>Static screening is the adiabatic approximation; the frequency dependence it drops is what Giustino calls retardation.</p>
-      <p class="more">Read more: <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#a-coupling" target="_blank" rel="noopener">§A.2 Eq. (1) and g</a> · <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#a-dfpt" target="_blank" rel="noopener">§A.3 DFPT</a></p>
+      <p>Eq. (1) of the review has no electron–electron or ion–ion interaction and no photons: the electron–electron Coulomb energy sits in the band energies <span class="nw">$E_{n\bk}$,</span> the screened ion–ion forces in the phonon frequencies <span class="nw">$\omega_{\bq\nu}$,</span> and the electron–ion interaction in the coupling <span class="nw">$g_{mn\nu}(\bk,\bq)$.</span> DFPT computes $g$ as the bare electron–ion perturbation screened by a static test-electron dielectric matrix, <span class="nw">$\varepsilon^{\rme}=1-(v+f^{\mathrm{xc}})\chi^0$,</span> which is your GW or BSE $\varepsilon^{\rme}_{\mathrm{RPA}}=1-v\chi^0$ plus <span class="nw">$f^{\mathrm{xc}}$:</span></p>
+      <div class="eq">$$\Delta V^{\mathrm{KS}}=(\varepsilon^{\rme})^{-1}\,\Delta V^{\mathrm{en}}\tag{G.53}$$</div>
+      <p>Static screening is the adiabatic approximation; the frequency dependence it drops, dynamical screening, is what Giustino calls retardation.</p>
+      <p class="more">Read more: <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#a-coupling" target="_blank" rel="noopener">§A.2 Eq. (1) and $g$</a> · <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#a-dfpt" target="_blank" rel="noopener">§A.3 DFPT</a></p>
     </li>
     <li>
       <p class="tk-head"><span class="tk-title">The lattice is a second channel of the screened interaction.</span><span class="tk-part">Part A</span></p>
-      <p>With clamped nuclei, Hedin's equations give $W_{\rm e}=v+vP_{\rm e}W_{\rm e}$, the $W$ of GW and BSE. Moving nuclei add a phonon-mediated term ($\mathcal D$ the nuclear density correlator) whose vertices are dynamically screened nuclear-potential gradients, $\epsilon_{\rm e}^{-1}\nabla V_\kappa$:</p>
-      <div class="eq">$$W=W_{\rm e}+\underbrace{W_{\rm e}\,\mathcal D\,W_{\rm e}}_{W_{\rm ph}}\tag{G.104–105}$$</div>
-      <p>In a polar insulator at long wavelength $W_{\rm ph}$ is Fröhlich's coupling squared times the LO propagator, with a screened vertex at each end. The phonon self-energy (G.141) is different: one bare and one screened vertex around the irreducible bubble $P_{\rm e}$, because screening both ends would double count; EPP has the same structure (item 6).</p>
-      <p class="more">Read more: <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#a-hedin-baym" target="_blank" rel="noopener">§A.5 Hedin–Baym</a> · <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#a-phonon-se" target="_blank" rel="noopener">§A.6 phonon self-energy</a></p>
+      <p>With clamped nuclei, Hedin's equations give <span class="nw">$W^{\rme}=v+v\chi^{\mathrm{irr,e}}W^{\rme}$,</span> the $W$ of GW and BSE. Moving nuclei add a phonon-mediated term <span class="nw">($\chi^{\ion}$</span> the nuclear density correlator) whose vertices are dynamically screened nuclear-potential gradients, $\mathcal V_{\bq\nu}=(\varepsilon^{\rme})^{-1}\Delta_{\bq\nu}V^{\mathrm{en}}$ (exact <span class="nw">$\varepsilon^{\rme}$):</span></p>
+      <div class="eq">$$W=W^{\rme}+\underbrace{W^{\rme}\chi^{\ion}W^{\rme}}_{W^{\ph}}\tag{G.104–105}$$</div>
+      <p>In a polar insulator at long wavelength $W^{\ph}$ is Fröhlich's coupling squared times the LO propagator, with a screened vertex at each end. The phonon self-energy (G.141) is different: one bare and one screened vertex around the irreducible bubble <span class="nw">$\chi^{\mathrm{irr,e}}$,</span> because screening both ends would double count; EPP has the same structure (item 6).</p>
+      <p class="more">Read more: <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#a-hedin-baym" target="_blank" rel="noopener">§A.5 Hedin–Baym</a> · <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#a-phonon-se" target="_blank" rel="noopener">§A.6 phonon self-energy</a></p>
     </li>
     <li>
       <p class="tk-head"><span class="tk-title">Coulomb is the longitudinal photon, and the light cone is tiny.</span><span class="tk-part">Bridge</span></p>
-      <p>In the temporal gauge the longitudinal field has no dynamics of its own; by Gauss's law its energy is the instantaneous Coulomb energy of electrons and ionic bound charges. Charge conservation turns every density vertex into a current vertex and $v$ into $D^{0l}$, so the free propagator is the vacuum Maxwell propagator (Gaussian units, $P^L=\hat\bq\hat\bq$, $P^T=1-P^L$):</p>
-      <div class="eq">$$D^0=\underbrace{-\frac{4\pi c}{\omega^2}\,P^L}_{D^{0l}}+\underbrace{\frac{4\pi}{c}\,\frac{P^T}{q^2-\omega^2/c^2}}_{D^{0t}}$$</div>
-      <p>The Coulomb part has no light cone. The transverse part matters only for $q\lesssim q_c=\sqrt{\epsilon_\infty}\,\omega/c$: $10^{-5}$–$10^{-4}$ Å$^{-1}$ for phonons, about $10^{-3}$ Å$^{-1}$ for a 2 eV exciton in vacuum, against a Brillouin zone of about 1 Å$^{-1}$.</p>
-      <p class="more">Read more: <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#x-light-cone" target="_blank" rel="noopener">§X.1 the light cone</a> · <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#b-fields" target="_blank" rel="noopener">§B.4 quantized fields</a></p>
+      <p>In the temporal gauge the longitudinal field has no dynamics of its own; by Gauss's law its energy is the instantaneous Coulomb energy of electrons and ionic bound charges. Charge conservation turns every charge vertex into a current vertex and $v/e^2$ into <span class="nw">$D^{0\mathrm L}$,</span> so the free propagator is the vacuum Maxwell propagator <span class="nw">($\hat q_\alpha\hat q_\beta$</span> and $\delta_{\alpha\beta}-\hat q_\alpha\hat q_\beta$ are the longitudinal and transverse projectors):</p>
+      <div class="eq">$$\begin{gathered}D^0_{\alpha\beta}=D^{0\mathrm L}\,\hat q_\alpha\hat q_\beta+D^{0\mathrm T}\big(\delta_{\alpha\beta}-\hat q_\alpha\hat q_\beta\big),\\ D^{0\mathrm L}=-\frac{4\pi c}{(\omega+\ii\eta)^2},\\ D^{0\mathrm T}=-\frac{4\pi c}{(\omega+\ii\eta)^2-c^2q^2}\end{gathered}$$</div>
+      <p>The Coulomb part has no light cone. The transverse part matters only for <span class="nw">$q\lesssim q_{\mathrm{light}}(\omega)=\sqrt{\varepsilon_\infty}\,\omega/c$:</span> <span class="nw">$10^{-5}$–$10^{-4}$ Å⁻¹</span> for phonons, about <span class="nw">$10^{-3}$ Å⁻¹</span> for a 2 eV exciton in vacuum, against a Brillouin zone of about 1 Å⁻¹.</p>
+      <p class="more">Read more: <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#x-light-cone" target="_blank" rel="noopener">§X.1 the light cone</a> · <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-fields" target="_blank" rel="noopener">§B.4 quantized fields</a></p>
     </li>
     <li>
       <p class="tk-head"><span class="tk-title">One Dyson equation for light and matter, with $W$ as its longitudinal corner.</span><span class="tk-part">Part B</span></p>
-      <p>All matter enters through one current–current self-energy, $\Pi_{jj}=\Pi^{\rm e}+\Pi^{\rm ion}$, and the field obeys a single $3\times3$ Dyson equation:</p>
-      <div class="eq">$$D=D^0+D^0\,\Pi_{jj}\,D\tag{E.379}$$</div>
-      <p>Giustino's Dyson equations for $W_{\rm e}$ and $W$ are its longitudinal sector: at $c\to\infty$ the electron-dressed photon reduces to $D^{\rm e}\to-\frac{c}{\omega^2}\bq\bq\,W^{\rm e}$ (E.441), with $W^{\rm e}$ the RPA $W$ without local fields. Your $\chi^0$, times $e^2$ (EPP's Gaussian $v=4\pi/q^2$ carries no charge), is the longitudinal projection of the electronic $\Pi_{jj}$.</p>
-      <p class="more">Read more: <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#b-photon-se" target="_blank" rel="noopener">§B.5 photon self-energy</a> · <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#b-electrostatic" target="_blank" rel="noopener">§B.9 electrostatic limit</a></p>
+      <p>All matter enters through one current–current self-energy, <span class="nw">$\Pi=\Pi^{\rme}+\Pi^{\ion}$,</span> and the field obeys a single $3\times3$ Dyson equation:</p>
+      <div class="eq">$$D=D^0+D^0\,\Pi\,D\tag{E.379}$$</div>
+      <p>Giustino's Dyson equations for $W^{\rme}$ and $W$ are its longitudinal sector: for large <span class="nw">$c$,</span> $D^{\rme}_{\alpha\beta}\simeq-\frac{c}{e^2\omega^2}\,q_\alpha q_\beta\,W^{\rme}$ (E.441), with $W^{\rme}$ the RPA $W$ without local fields. Your $\chi^0$ in charge units, <span class="nw">$e^2\chi^0=-\frac{c}{\omega^2}\,\bq\cdot\Pi^{\rme}\cdot\bq$,</span> is the longitudinal projection of the electronic <span class="nw">$\Pi^{\rme}$.</span></p>
+      <p class="more">Read more: <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-photon-se" target="_blank" rel="noopener">§B.5 photon self-energy</a> · <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-propagator" target="_blank" rel="noopener">§B.6 total propagator</a> · <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-electrostatic" target="_blank" rel="noopener">§B.9 electrostatic limit</a></p>
     </li>
     <li>
-      <p class="tk-head"><span class="tk-title">Phonons dressed by photons give the LO–TO splitting and phonon polaritons.</span><span class="tk-part">Part B</span></p>
-      <p>From the lattice side, the same series is Giustino's phonon Dyson equation (G.135) with photons; its self-energy (E.399) exchanges one electron-screened photon between two Born-charge current vertices. With $c\to\infty$ taken first and the electrons screening the field, only the longitudinal sector survives: the shift (E.454) is the electrostatic LO–TO splitting, valid for $q\gg q_c$, the Gonze–Lee term of DFPT, now derived. For a cubic diatomic crystal ($Z^*$ in units of $|e|$, $\Omega_{\rm uc}$ the cell volume, $\mu$ the reduced mass) it reads</p>
-      <div class="eq">$$\omega_{\rm LO}^2=\omega_{\rm TO}^2+\frac{\omega_p^2}{\epsilon_\infty},\qquad \omega_p^2=\frac{4\pi e^2Z^{*2}}{\Omega_{\rm uc}\,\mu}$$</div>
-      <p>(E.410) is the zone-centre polariton point of an electron-free crystal, where all polar modes share one unscreened frequency; it differs from (E.454) by electronic screening and by the order of limits. In GaAs screening alone takes it from 55.6 to 35.9 meV, and the order of limits moves only the TO modes: 35.9 meV inside the light cone, on the upper polariton with the LO, and 33.3 meV outside (<a href="#brief-polariton">figure below</a>).</p>
-      <p class="more">Read more: <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#b-phonon-se" target="_blank" rel="noopener">§B.7 phonon self-energy</a> · <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#b-electrostatic" target="_blank" rel="noopener">§B.9 electrostatic limit</a></p>
+      <p class="tk-head"><span class="tk-title">Phonons dressed by photons give the LO–⁠TO splitting and phonon polaritons.</span><span class="tk-part">Part B</span></p>
+      <p>From the lattice side, the same series is Giustino's phonon Dyson equation (G.135) with photons; its self-energy $\Pi^{\ph}$ (E.399) exchanges one electron-dressed photon between two Born-charge current vertices. With $c\to\infty$ taken first and the electrons screening the field, only the longitudinal sector survives: the shift (E.454) is the electrostatic LO–⁠TO splitting, valid for <span class="nw">$q\gg q_{\mathrm{light}}(\omega_{\mathrm{TO}})$,</span> the Gonze–Lee term of DFPT, now derived. For a cubic two-atom crystal <span class="nw">($Z^*$</span> the dimensionless Born charge, $\OV$ the cell volume, $M_{\mathrm r}$ the reduced mass) it reads</p>
+      <div class="eq">$$\begin{gathered}\omega_{\mathrm{LO}}^2=\omega_{\mathrm{TO}}^2+\frac{(\omega^{\ion}_{\mathrm p})^2}{\varepsilon_\infty},\\ (\omega^{\ion}_{\mathrm p})^2=\frac{4\pi e^2Z^{*2}}{\OV M_{\mathrm r}}\end{gathered}$$</div>
+      <p>(E.410) is the zone-centre polariton point of an electron-free crystal, where all polar modes share one unscreened frequency; it differs from (E.454) by electronic screening and by the order of limits. In GaAs screening alone takes it from 55.6 to 35.9 meV (measured LO: 36.2 meV), and the order of limits moves only the TO modes: 35.9 meV inside the light cone, on the upper polariton with the LO, and 33.3 meV outside (<a href="#viz-brief-polariton">figure below</a>).</p>
+      <p class="more">Read more: <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-phonon-se" target="_blank" rel="noopener">§B.7 phonon self-energy</a> · <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-electrostatic" target="_blank" rel="noopener">§B.9 electrostatic limit</a></p>
     </li>
     <li>
       <p class="tk-head"><span class="tk-title">The Fröhlich vertex is derived, and it becomes dynamical.</span><span class="tk-part">Part B</span></p>
-      <p>Opening the electron loop inside $\Omega^{\rm e}$ yields an electron–phonon vertex nobody put in by hand, a photon exchanged between ionic and electronic currents:</p>
-      <div class="eq">$$g^{\rm dyn}(\bk,\bq,\omega)=i\,J^{*}D^{\rm e}J^{\rm e}\tag{E.416}$$</div>
-      <p>The LO channel is pure Coulomb at every $q$; TO phonons couple to electrons only near the light cone. At $c\to\infty$ the vertex reduces to the $\bG=0$ Verdi–Giustino long-range vertex with $\epsilon^\infty$ replaced by the dynamical $\hat\epsilon^{\rm e}(\bq,\omega)$ (complex conjugated, for real $\hat\epsilon^{\rm e}$): nonadiabatic screening, which matters with free carriers. The electron-induced part of the phonon self-energy, $\Delta\Omega^{\rm e}$, pairs it with a bare vertex around the irreducible electronic bubble (EPP's electron–hole propagator, not the Lindhard $\chi^0$ of item 4): Giustino's bare-times-screened structure (item 2).</p>
-      <p class="more">Read more: <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#b-frohlich" target="_blank" rel="noopener">§B.8 Fröhlich vertex</a> · <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#a-polar" target="_blank" rel="noopener">§A.4 polar materials</a></p>
+      <p>Opening the electron bubble inside $\Pi^{\ph}$ yields an electron–phonon vertex nobody put in by hand, a photon exchanged between the ionic and electronic current vertices $\bJ_\nu$ and <span class="nw">$\bJ^{\,n\bk,m\bk+\bq}$:</span></p>
+      <div class="eq">$$g^{\mathrm{dyn}}_{mn\nu}(\bk,\bq,\omega)=\ii\,\bJ_\nu^*\cdot D^{\rme}\cdot\bJ^{\,n\bk,m\bk+\bq}\tag{E.416}$$</div>
+      <p>The LO channel is pure Coulomb at every <span class="nw">$q$;</span> TO phonons couple to electrons only near the light cone. At $c\to\infty$ the vertex reduces to the $\bG=0$ term of the Verdi–Giustino vertex <span class="nw">$g^{\mathrm{lr}}$,</span> with $\varepsilon_\infty$ replaced by the dynamical RPA $\varepsilon^{\rme}(\bq,\omega)$ (complex conjugated, for real <span class="nw">$\varepsilon^{\rme}$):</span> nonadiabatic screening, which matters with free carriers. The electron-induced part of the phonon self-energy, <span class="nw">$\Delta\Pi^{\ph}$,</span> pairs it with the bare vertex $g^{\mathrm{dyn},0}$ around one electron–hole bubble (its pair factor, EPP's electron–hole propagator, is not a term of the $\chi^0$ of item 4): Giustino's bare-times-screened structure (item 2).</p>
+      <p class="more">Read more: <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-frohlich" target="_blank" rel="noopener">§B.8 Fröhlich vertex</a> · <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#a-polar" target="_blank" rel="noopener">§A.4 polar crystals</a></p>
     </li>
     <li>
-      <p class="tk-head"><span class="tk-title">In 2D there is no LO–TO splitting at Γ for in-plane modes.</span><span class="tk-part">Part B</span></p>
-      <p>The in-plane polar modes of a sheet feel the strictly two-dimensional screened interaction $W^{\rm e,2D}=v_Q/\epsilon^{\rm e}_{\rm 2D}$ with $v_Q=2\pi/Q$, which cancels only one of the dipole vertex's two powers of $Q$, so the LO shift grows linearly from zero. For a gapped layer $\epsilon^{\rm e}_{\rm 2D}=\epsilon_{\rm env}+r_0Q$, the Rytova–Keldysh form of 2D BSE ($r_0=2\pi\alpha_{\rm 2D}$; papers that write $\epsilon_{\rm env}(1+r_0'Q)$ use $r_0'=r_0/\epsilon_{\rm env}$). The LO branch of a diatomic sheet follows, with $C=2\pi e^2Z^{*2}\hbar^2/(S_{\rm uc}\,\mu)$ ($S_{\rm uc}$ the cell area; $Z^*$ and $\mu$ as in item 5),</p>
-      <div class="eq">$$(\hbar\tilde\omega_{\rm LO})^2=(\hbar\omega_{\rm T})^2+\frac{C\,Q}{\epsilon_{\rm env}+r_0Q}$$</div>
-      <p>The environment sets the initial slope, $r_0$ alone sets the plateau $(\hbar\omega_{\rm T})^2+C/r_0$, and the knee sits at $Q^*=\epsilon_{\rm env}/r_0$. So your BSE workflow's $r_0$, plus $Z^*$ and the mode eigenvector, gives the LO dispersion.</p>
-      <p class="more">Read more: <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#b-2d" target="_blank" rel="noopener">§B.10 2D crystals</a></p>
+      <p class="tk-head"><span class="tk-title">In 2D there is no LO–⁠TO splitting at Γ for in-plane modes.</span><span class="tk-part">Part B</span></p>
+      <p>The in-plane polar modes of a sheet feel the strictly two-dimensional screened interaction $W^{\mathrm{e,2D}}=v^{\mathrm{2D}}/\varepsilon^{\mathrm{2D}}$ with <span class="nw">$v^{\mathrm{2D}}=2\pi e^2/Q_\parallel$,</span> which cancels only one of the dipole vertex's two powers of the in-plane wavevector <span class="nw">$Q_\parallel$,</span> so the LO shift grows linearly from zero. For a gapped layer <span class="nw">$\varepsilon^{\mathrm{2D}}=\varepsilon_{\mathrm{env}}+r_0Q_\parallel$,</span> the Rytova–Keldysh form of 2D BSE <span class="nw">($r_0=2\pi\chi^{\mathrm{2D}}$,</span> with $\chi^{\mathrm{2D}}$ the sheet polarizability; papers that write $\varepsilon_{\mathrm{env}}(1+r_0'Q_\parallel)$ use <span class="nw">$r_0'=r_0/\varepsilon_{\mathrm{env}}$).</span> The LO branch of a two-atom sheet follows <span class="nw">($\OS$</span> the cell area; $Z^*$ and $M_{\mathrm r}$ as in item 5):</p>
+      <div class="eq">$$\begin{gathered}\omega_{\mathrm{LO}}^2(Q_\parallel)=\omega_{\mathrm{TO}}^2\\ +\frac{2\pi e^2Z^{*2}}{\OS M_{\mathrm r}}\,\frac{Q_\parallel}{\varepsilon_{\mathrm{env}}+r_0Q_\parallel}\end{gathered}$$</div>
+      <p>The environment sets the initial slope, $r_0$ alone sets the plateau, <span class="nw">$\omega_{\mathrm{LO}}^2=\omega_{\mathrm{TO}}^2+2\pi e^2Z^{*2}/(\OS M_{\mathrm r}r_0)$,</span> and the knee sits at <span class="nw">$Q_\parallel=\varepsilon_{\mathrm{env}}/r_0$.</span> So your BSE workflow's <span class="nw">$r_0$,</span> plus $Z^*$ and the mode eigenvector, gives the LO dispersion.</p>
+      <p class="more">Read more: <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-2d" target="_blank" rel="noopener">§B.10 2D crystals</a></p>
     </li>
   </ol>
 </section>
@@ -1068,93 +1227,150 @@ p.more a { white-space: nowrap; }
   <p class="intro">Items 3 and 5 in one plot: the polar modes of GaAs on a logarithmic $q$ axis, as the speed of light is turned up.</p>
   <figure class="viz" id="viz-brief-polariton">
     <p class="viz-title">GaAs: phonon polaritons, LO and TO <span class="tag">interactive</span></p>
-    <div class="brief-pa"></div>
+    <div class="brief-pa"><div class="legend brief-leg">
+      <span class="item" style="color:var(--c-phonon)"><span class="sw"></span><span style="color:var(--fg-2)">LO, longitudinal</span></span>
+      <span class="item" style="color:var(--c-5)"><span class="sw"></span><span style="color:var(--fg-2)">upper polariton $\omega_{\mathrm{UP}}$</span></span>
+      <span class="item" style="color:var(--c-4)"><span class="sw dash"></span><span style="color:var(--fg-2)">lower polariton $\omega_{\mathrm{LP}}$</span></span>
+      <span class="item" style="color:var(--c-photon)"><span class="sw dot"></span><span style="color:var(--fg-2)">light line $cq/\sqrt{\varepsilon_\infty}$</span></span>
+    </div></div>
     <div class="brief-ctrls"></div>
-    <div class="brief-ro"></div>
-    <figcaption><strong>Model.</strong> Cubic diatomic crystal, electrons as a constant $\epsilon_\infty$ (<a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#b-phonon-se" target="_blank" rel="noopener">§B.7</a>), GaAs values $\hbar\omega_{\rm TO}=33.3$ meV, $\hbar\omega_{\rm LO}=36.2$ meV, $\epsilon_\infty=10.9$. The slider rescales $c\to\lambda c$. <strong>What to notice.</strong> Below $q_c$ the upper polariton starts on the LO line and the lower branch is light-like; the TO phonon appears only for $q\gg q_c$. Raise $\lambda$ and $q_c$ moves off the plot, leaving the flat TO–LO pair of DFPT and (E.454). Raman and transport sample the shaded region.</figcaption>
+    <div class="readout brief-ro" aria-live="polite" aria-atomic="true"><span>$q_{\mathrm{light}}(\omega_{\mathrm{TO}})$<b class="brief-v-ql"></b></span><span>$q_{\mathrm{light}}a/2\pi$ (lattice constant <span class="nw">$a$)</span><b class="brief-v-qa"></b></span><span>Raman, transport: $q/q_{\mathrm{light}}$ at <span class="nw">$q=0.01$ Å⁻¹</span><b class="brief-v-qr"></b></span></div>
+    <figcaption><strong>Model.</strong> Cubic two-atom crystal, electrons as a constant $\varepsilon_\infty$ (<a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-phonon-se" target="_blank" rel="noopener">§B.7</a>), GaAs values <span class="nw">$\hbar\omega_{\mathrm{TO}}=33.3$ meV</span>, <span class="nw">$\hbar\omega^{\ion}_{\mathrm p}=44.6$ meV</span> and <span class="nw">$\varepsilon_\infty=10.9$,</span> so <span class="nw">$\hbar\omega_{\mathrm{LO}}=35.9$ meV</span> (measured: 36.2 meV). The slider scales $c$ by a factor of 1 to 1000. <strong>What to notice.</strong> Below $q_{\mathrm{light}}(\omega_{\mathrm{TO}})=\sqrt{\varepsilon_\infty}\,\omega_{\mathrm{TO}}/c$ the upper polariton starts on the LO line and the lower branch is light-like; the TO phonon appears only for <span class="nw">$q\gg q_{\mathrm{light}}(\omega_{\mathrm{TO}})$.</span> Raise the factor and $q_{\mathrm{light}}(\omega_{\mathrm{TO}})$ moves off the plot, leaving the flat TO–LO pair of DFPT and (E.454). Raman and transport sample the shaded region.</figcaption>
   </figure>
 </section>
 
 <section class="chapter" id="brief-verdict">
   <header class="ch-head"><h2>Where the electromagnetic field changes the answer</h2></header>
-  <p class="intro">Two kinds of retardation sort the observables: a finite speed of light, which acts only inside the light cone, and frequency-dependent electronic screening, which acts wherever $\hat\epsilon^{\rm e}(\bq,\omega)$ has structure near phonon frequencies (EPP keeps it in the vertex). Outside both windows the electrostatic theory suffices.</p>
+  <p class="intro">Two delays sort the observables; the review calls the first retardation, the EPP manuscript the second. Dynamical screening, the frequency dependence of <span class="nw">$\varepsilon^{\rme}(\bq,\omega)$,</span> acts wherever $\varepsilon^{\rme}$ has structure near phonon frequencies (EPP keeps it in the vertex). A finite speed of light acts only inside the light cone. Outside both windows the electrostatic theory suffices.</p>
   <div class="tbl"><table>
     <thead><tr><th>Observable</th><th>Electrostatic (Part A)</th><th>What EPP changes</th></tr></thead>
     <tbody>
-      <tr><td>Mobility, lifetimes, zero-point renormalization</td><td>Sufficient. Carriers scatter at $q\approx0.02$ Å$^{-1}$ (GaAs, 300 K), far outside the cone, and the LO Fröhlich kernel is longitudinal; its adiabatic divergence is cured by keeping $\hbar\omega$ in the denominators.</td><td>Nothing measurable from finite $c$: there the transverse field is $10^{-6}$–$10^{-4}$ of Coulomb.</td></tr>
-      <tr><td>Bulk LO–TO splitting</td><td>Added by hand (Gonze–Lee term with $Z^*$ and $\epsilon^\infty$).</td><td>Derived as a phonon self-energy (E.454); inside the cone the TO modes join the LO on the upper polariton.</td></tr>
-      <tr><td>Infrared $\epsilon(\omega)$, Reststrahlen band</td><td>Absent: light couples to electrons only, and the refractive index is an input.</td><td>$\Pi^{\rm ion}$ gives one Lorentz oscillator per polar mode, so $\epsilon(\omega)$ and one-phonon infrared absorption become outputs.</td></tr>
-      <tr><td>Phonon polaritons</td><td>Absent.</td><td>Transverse poles of $D$, confined to the light cone (Huang's branches).</td></tr>
-      <tr><td>Doped polar semiconductors</td><td>Plasmon–phonon modes expected from the nonadiabatic self-energy, but not evaluated.</td><td>Coupled LO-phonon–plasmon modes $L_\pm$ from the dynamical $W^{\rm e}(\bq,\omega)$ (E.453), already at $c\to\infty$.</td></tr>
-      <tr><td>Polar 2D crystals</td><td>Not treated.</td><td>No in-plane LO–TO splitting at Γ; LO dispersion set by $r_0$ (item 7). Inside the cone the modes radiate, with widths of order 40 μeV for freestanding hBN.</td></tr>
+      <tr><td>Mobility, lifetimes, zero-point renormalization</td><td>Sufficient. Carriers scatter at <span class="nw">$q\approx0.02$ Å⁻¹</span> (GaAs, 300 K), far outside the cone, and the LO Fröhlich kernel is longitudinal; its adiabatic divergence is cured by keeping $\hbar\omega$ in the denominators.</td><td>Nothing measurable from finite <span class="nw">$c$:</span> there the transverse field is about $10^{-5}$ of Coulomb.</td></tr>
+      <tr><td>Bulk LO–⁠TO splitting</td><td>Added by hand (Gonze–Lee term with $\mathbf Z^*_\kappa$ and <span class="nw">$\boldsymbol\varepsilon_\infty$).</span></td><td>Derived as a phonon self-energy (E.454); inside the cone the TO modes join the LO on the upper polariton.</td></tr>
+      <tr><td>Infrared <span class="nw">$\varepsilon(\omega)$,</span> Reststrahlen band</td><td>Absent: light couples to electrons only, and the refractive index is an input.</td><td>$\Pi^{\ion}$ gives one Lorentz oscillator per polar mode, so $\varepsilon(\omega)$ and one-phonon infrared absorption become outputs.</td></tr>
+      <tr><td>Phonon polaritons</td><td>Absent.</td><td>Transverse poles of <span class="nw">$D$,</span> confined to the light cone (Huang's branches).</td></tr>
+      <tr><td>Doped polar semiconductors</td><td>Plasmon–phonon modes expected from the nonadiabatic self-energy, but not evaluated.</td><td>Coupled LO-phonon–plasmon modes $\mathrm L_\pm$ from the dynamical $W^{\rme}(\bq,\omega)$ in (E.453), already at <span class="nw">$c\to\infty$.</span></td></tr>
+      <tr><td>Polar 2D crystals</td><td>Not treated.</td><td>No in-plane LO–⁠TO splitting at Γ; LO dispersion set by $\varepsilon_{\mathrm{env}}$ and $r_0$ (item 7). Inside the cone the modes radiate, with a full width of 42 μeV at Γ for freestanding hBN (<a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b10-light" target="_blank" rel="noopener">§B.10</a>).</td></tr>
     </tbody>
   </table></div>
-  <p class="more">Full table: <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#z-outlook" target="_blank" rel="noopener">§Z.1 what EPP adds</a></p>
+  <p class="more">Full table: <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#x2-map" target="_blank" rel="noopener">§X.2 concept map</a></p>
 </section>
 
 <section class="chapter" id="brief-open">
   <header class="ch-head"><h2>What is still open</h2></header>
   <ul class="open">
-    <li><strong>Short-range coupling.</strong> The crystal potential is frozen at equilibrium, so deformation-potential coupling (acoustic and non-polar optical phonons) is absent.</li>
-    <li><strong>Electron self-energies.</strong> No Fan–Migdal or Debye–Waller counterpart yet, hence no temperature-dependent gaps or lifetimes.</li>
-    <li><strong>Excitons.</strong> $\Pi^{\rm e}$ is the RPA bubble, without local fields, $f^{xc}$ or an electron–hole ladder. The BSE response in its place, minus its $(\bG=0)$ exchange (already the longitudinal photon), would give exciton polaritons.</li>
-    <li><strong>Anisotropic polaritons.</strong> L–T mixing off the principal axes is treated only formally, so the hyperbolic phonon polaritons of hBN remain to be done.</li>
+    <li><strong>Optics beyond RPA.</strong> $\Pi^{\rme}$ is an RPA bubble without local fields, $f^{\mathrm{xc}}$ or an electron–hole ladder: no excitons, no phonon-assisted absorption.</li>
+    <li><strong>2D beyond in-plane modes.</strong> One planar, freestanding, electrostatic sheet (<a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-2d" target="_blank" rel="noopener">§B.10</a> adds $\varepsilon_{\mathrm{env}}$ and finite <span class="nw">$c$):</span> no out-of-plane dipoles, atomic heights or multilayers.</li>
+    <li><strong>Anisotropy and hBN.</strong> Tensor equations, isotropic evaluation: no L–⁠T mixing or hyperbolic phonon polaritons at finite <span class="nw">$c$.</span></li>
+    <li><strong>Electron self-energies.</strong> No Fan–Migdal or Debye–Waller counterpart: no band renormalization, lifetimes or polarons.</li>
+    <li><strong>Short-range coupling.</strong> A frozen crystal potential and Born dipoles only: no deformation potentials, no quadrupoles.</li>
+    <li><strong>Ordered phases.</strong> A normal-state theory, without anomalous propagators: no pairing.</li>
+    <li><strong>Plasmon–phonon hybrids.</strong> (E.453) contains them; the manuscript screens statically (E.454). Models: <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b9-dynamic" target="_blank" rel="noopener">§B.9</a>, <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b10-doped" target="_blank" rel="noopener">§B.10</a>; first principles: Lihm and Park, Phys. Rev. Lett. <b>133</b>, 116402 (2024).</li>
   </ul>
-  <p class="more">Read more: <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#z-outlook" target="_blank" rel="noopener">§Z.1 what is still open</a></p>
+  <p class="more">Read more: <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#x2-missing" target="_blank" rel="noopener">§X.2 what EPP does not contain yet</a> · <a href="https://claude.ai/artifact/GQKN1yfSi84qrpYRnHoHKm" target="_blank" rel="noopener">research roadmap, seven open topics</a></p>
 </section>
 
 <footer class="brief-foot">
   <p><strong>Sources.</strong> F. Giustino, “Electron-phonon interactions from first principles”, Rev. Mod. Phys. <b>89</b>, 015003 (2017); “Theory of the Electron-Phonon-Photon coupling”, manuscript draft v2. Material parameters not printed in either source are illustrative literature values.</p>
-  <p>Notes on the sources and corrections to the draft: primer appendices <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#z-errata" target="_blank" rel="noopener">§Z.2</a> and <a href="https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#z-corrections" target="_blank" rel="noopener">§Z.3</a>.</p>
+  <p>Source symbols and equation numbers: <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#x2-srcmap" target="_blank" rel="noopener">§X.2 source map</a>. Corrections to the draft, stated in Part B footnotes: the basis phase of the Born dipoles (<a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#fn-b1-polar" target="_blank" rel="noopener">§B.1</a>, <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#fn-b2-site" target="_blank" rel="noopener">§B.2</a>, <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#fn-b5-jion" target="_blank" rel="noopener">§B.5</a>), the reading of E.410 (<a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#fn-b7-410" target="_blank" rel="noopener">§B.7</a>) and the factor $e$ in the continuity equation (<a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#fn-b6-efactor" target="_blank" rel="noopener">§B.6</a>, <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#fn-b8-continuity" target="_blank" rel="noopener">§B.8</a>).</p>
 </footer>
 
 <script>
 (() => {
   if (!window.EPP) return;
-  const PRIMER = 'https://claude.ai/artifact/1rhCWMDXJka5tRNDSvEHTm#';
+  const PRIMER = 'https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#';
   const link = (id, txt) => `<a href="${PRIMER}${id}" target="_blank" rel="noopener">${txt}</a>`;
+  const NS = 'http://www.w3.org/2000/svg';
 
-  // ---------- "One vertex, two pictures" (after the primer's hero figure) ----------
+  // ---------- diagram labels in the primer's notation: italic symbols, bold upright vectors, upright labels ----------
+  // a part is {t, i: italic, b: bold (a vector), l: level, -1 subscript, 1 superscript}
+  const It = (t, l) => ({ t, i: 1, l }), Bv = (t, l) => ({ t, b: 1, l }), Up = (t, l) => ({ t, l });
+  const NK = [It('n'), Bv('k')], MKQ = [It('m'), Up(' '), Bv('k'), Up('+'), Bv('q')], QNU = [Bv('q'), It('ν')];
+  const TE = 'var(--t-electron)', TP = 'var(--t-phonon)', TG = 'var(--t-photon)', T4 = 'var(--t-4)', TM = 'var(--muted)';
+  function svgLabel(g, l) {
+    const size = l.size || 14, te = document.createElementNS(NS, 'text');
+    te.setAttribute('x', l.x); te.setAttribute('y', l.y); te.setAttribute('text-anchor', l.anchor || 'middle');
+    te.setAttribute('style', `fill:${l.fill};font-family:var(--font-text);font-size:${size}px`);
+    let dy = 0;
+    for (const p of l.parts) {
+      const ts = document.createElementNS(NS, 'tspan'), lv = p.l || 0, want = lv < 0 ? size * 0.3 : (lv > 0 ? -size * 0.42 : 0);
+      ts.textContent = p.t;
+      if (Math.abs(want - dy) > 0.01) { ts.setAttribute('dy', (want - dy).toFixed(2)); dy = want; }
+      ts.setAttribute('style', `font-style:${p.i ? 'italic' : 'normal'};font-weight:${p.b ? 700 : 400};font-size:${(lv ? 0.72 * size : size).toFixed(1)}px`);
+      te.appendChild(ts);
+    }
+    g.appendChild(te);
+  }
+  // EPP.fd repaints a diagram on every theme change, which removes these labels: add them back after the repaint
+  const LABELS = new Map();
+  function paintLabels(svg) {
+    if (!svg.isConnected) { LABELS.delete(svg); return; }
+    svg.querySelectorAll('g.brief-lab').forEach(n => n.remove());
+    const g = document.createElementNS(NS, 'g');
+    g.setAttribute('class', 'brief-lab'); g.setAttribute('aria-hidden', 'true');
+    LABELS.get(svg).forEach(l => svgLabel(g, l));
+    svg.appendChild(g);
+  }
+  const labelled = (svg, list) => { LABELS.set(svg, list); paintLabels(svg); return svg; };
+  EPP.onTheme(() => setTimeout(() => [...LABELS.keys()].forEach(paintLabels), 0));
+
+  // ---------- "One vertex, two pictures" ----------
   const leg = document.getElementById('brief-legend');
-  const items = [
+  [
     ['fermion', 'electron'], ['phonon', 'phonon'],
-    ['photon2', 'screened photon D^e (longitudinal + transverse)'], ['screened', 'screened Coulomb W^e (its c → ∞ limit)']
-  ];
-  items.forEach(([t, lab]) => {
+    ['photon2', 'photon line $D^{\\rme}$ dressed by the electrons (longitudinal + transverse)'],
+    ['screened', 'screened Coulomb line $W^{\\rme}$ (its $c\\to\\infty$ limit)']
+  ].forEach(([t, html]) => {
     const span = document.createElement('span');
-    EPP.fd.draw(span, { w: 40, h: 14, label: lab, items: [{ t, a: [3, 7], b: [37, 7], arrow: t === 'fermion', amp: 2.6, wl: 7 }] });
-    span.appendChild(document.createTextNode(lab.replace(/\^e/, 'ᵉ')));
+    const svg = EPP.fd.draw(span, { w: 40, h: 14, items: [{ t, a: [3, 7], b: [37, 7], arrow: t === 'fermion', amp: 2.6, wl: 7 }] });
+    svg.removeAttribute('role'); svg.removeAttribute('aria-label'); svg.setAttribute('aria-hidden', 'true');
+    span.insertAdjacentHTML('beforeend', html);
     leg.appendChild(span);
   });
 
-  EPP.fd.draw(document.getElementById('brief-fd-g'), { w: 260, h: 180, label: 'Electron-phonon vertex g', items: [
-    { t: 'fermion', a: [20, 60], b: [130, 60], label: 'nk' },
-    { t: 'fermion', a: [130, 60], b: [240, 60], label: 'm k+q' },
-    { t: 'phonon', a: [130, 60], b: [130, 160], label: 'qν', lpos: 'right' },
-    { t: 'blob', at: [130, 60], r: 13, label: 'g', color: 'muted' },
-  ]});
+  labelled(EPP.fd.draw(document.getElementById('brief-fd-g'), { w: 260, h: 180,
+    label: 'Part A vertex: an electron line n k comes in, an electron line m k plus q goes out, and a phonon line q nu meets them at the screened vertex g, a grey disk', items: [
+      { t: 'fermion', a: [20, 60], b: [130, 60] },
+      { t: 'fermion', a: [130, 60], b: [240, 60] },
+      { t: 'phonon', a: [130, 60], b: [130, 160] },
+      { t: 'blob', at: [130, 60], r: 13, color: 'muted' }
+    ] }), [
+    { x: 75, y: 52, parts: NK, fill: TE }, { x: 185, y: 52, parts: MKQ, fill: TE },
+    { x: 141, y: 114, anchor: 'start', parts: QNU, fill: TP },
+    { x: 130, y: 65, parts: [It('g')], fill: TM, size: 15 }
+  ]);
 
   const host = document.getElementById('brief-fd-epp'), cap = document.getElementById('brief-epp-cap');
   const caps = {
-    full: '<strong>EPP.</strong> No electron–phonon term appears in the EPP Lagrangian. The electron couples to the field through its current vertex $J^{\\rm e}$, the phonon through the ions\' Born-charge current vertex $J$. The screened photon $D^{\\rm e}$ carries the interaction, longitudinal and transverse parts together. The result is a frequency-dependent vertex $g^{\\rm dyn}=iJ^{*}D^{\\rm e}J^{\\rm e}$ (' + link('b-frohlich', '§B.8') + ').',
-    static: '<strong>EPP with $c\\to\\infty$.</strong> Only the longitudinal (Coulomb) part of the photon survives, $D^{\\rm e}\\to-\\frac{c}{\\omega^2}\\bq\\bq\\,W^{\\rm e}$. The vertex reduces to the $\\bG=0$ Verdi–Giustino long-range vertex, complex conjugated for real $\\hat\\epsilon^{\\rm e}$, with $\\epsilon^\\infty$ replaced by the dynamical RPA tensor $\\hat\\epsilon^{\\rm e}(\\bq,\\omega)$ (' + link('b-frohlich', '§B.8') + '). Taken to this limit, EPP\'s phonon self-energy returns Giustino\'s long-range formulas, the RPA $W$ and the Gonze–Lee LO–TO term (' + link('b-electrostatic', '§B.9') + ').'
+    full: '<strong>EPP.</strong> No electron–phonon term appears in the EPP Lagrangian. The electron couples to the field through its current vertex $\\bJ^{\\,n\\bk,m\\bk+\\bq}$, the phonon through the ions\' Born-charge current vertex $\\bJ_\\nu$. The dressed photon line $D^{\\rme}$ carries the interaction, longitudinal and transverse parts together. The result is a frequency-dependent vertex $g^{\\mathrm{dyn}}_{mn\\nu}=\\ii\\,\\bJ_\\nu^*\\cdot D^{\\rme}\\cdot\\bJ^{\\,n\\bk,m\\bk+\\bq}$ (' + link('b-frohlich', '§B.8') + ').',
+    static: '<strong>EPP with $c\\to\\infty$.</strong> Only the longitudinal (Coulomb) part of the photon line survives, $D^{\\rme}_{\\alpha\\beta}\\simeq-\\frac{c}{e^2\\omega^2}\\,q_\\alpha q_\\beta\\,W^{\\rme}$. The vertex reduces to the $\\bG=0$ term of the Verdi–Giustino long-range vertex $g^{\\mathrm{lr}}$, complex conjugated for real $\\varepsilon^{\\rme}$, with $\\varepsilon_\\infty$ replaced by the dynamical RPA $\\varepsilon^{\\rme}(\\bq,\\omega)$ (' + link('b-frohlich', '§B.8') + '). Taken to this limit, EPP\'s phonon self-energy returns Giustino\'s long-range formulas, the RPA $W^{\\rme}$ and the Gonze–Lee LO–TO term (' + link('b-electrostatic', '§B.9') + ').'
   };
+  // the builder's typeset() never sees these captions: a formula keeps the punctuation that closes it, LO–TO stays whole
+  const nw = (s) => s.replace(/\(?\$[^$]+\$(?:\)[.,;:]?|[.,;:])/g, (m) => '<span class="nw">' + m + '</span>').replace(/LO–TO/g, 'LO–\u2060TO');
+  // both captions are typeset once, in one grid cell; the toggle only changes which one is visible
+  cap.classList.add('brief-cap');
+  cap.innerHTML = Object.keys(caps).map((k) => `<span data-mode="${k}">${nw(caps[k])}</span>`).join('');
   let mode = 'full';
   const drawVertex = () => {
     host.innerHTML = '';
-    const ph = mode === 'full' ? 'photon2' : 'screened';
-    EPP.fd.draw(host, { w: 260, h: 180, label: mode === 'full' ? 'EPP vertex: photon exchange' : 'EPP vertex in the electrostatic limit', items: [
-      { t: 'fermion', a: [20, 40], b: [110, 40], label: 'nk' },
-      { t: 'fermion', a: [110, 40], b: [240, 40], label: 'm k+q' },
-      { t: ph, a: [110, 40], b: [110, 120], label: mode === 'full' ? 'D^e' : 'W^e', lpos: 'right', wl: 10 },
-      { t: 'phonon', a: [110, 120], b: [230, 160], label: 'σ', lpos: 'right' },
-      { t: 'vertex', at: [110, 40], r: 4.5, color: 'electron' },
-      { t: 'vertex', at: [110, 120], r: 4.5, color: 'phonon' },
-      { t: 'text', at: [96, 32], text: 'J^e', anchor: 'end', size: 13, color: 'electron-t' },
-      { t: 'text', at: [96, 136], text: 'J', anchor: 'end', size: 13, color: 'phonon-t' },
-    ]});
-    cap.innerHTML = caps[mode];
-    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([cap]).catch(() => {});
+    const full = mode === 'full';
+    labelled(EPP.fd.draw(host, { w: 260, h: 180,
+      label: full ? 'EPP vertex: the electron lines n k and m k plus q meet the photon line D e, dressed by the electrons, at the electron current vertex; the photon line ends on the ionic current vertex J nu of the phonon q nu'
+        : 'EPP vertex in the electrostatic limit: the screened Coulomb line W e joins the electron current vertex and the ionic current vertex J nu of the phonon q nu', items: [
+        { t: 'fermion', a: [20, 40], b: [110, 40] },
+        { t: 'fermion', a: [110, 40], b: [240, 40] },
+        { t: full ? 'photon2' : 'screened', a: [110, 40], b: [110, 120], wl: 10 },
+        { t: 'phonon', a: [110, 120], b: [230, 160] },
+        { t: 'vertex', at: [110, 40], r: 4.5, color: 'electron' },
+        { t: 'vertex', at: [110, 120], r: 4.5, color: 'c4' }
+      ] }), [
+      { x: 62, y: 32, parts: NK, fill: TE }, { x: 175, y: 32, parts: MKQ, fill: TE },
+      { x: 124, y: 85, anchor: 'start', parts: [It(full ? 'D' : 'W'), Up('e', 1)], fill: TG },
+      { x: 103, y: 62, anchor: 'end', size: 13, parts: [Bv('J'), It('n', 1), Bv('k', 1), Up(',', 1), It('m', 1), Bv('k', 1), Up('+', 1), Bv('q', 1)], fill: TE },
+      { x: 99, y: 136, anchor: 'end', size: 13, parts: [Bv('J'), It('ν', -1)], fill: T4 },
+      { x: 166, y: 162, parts: QNU, fill: TP }
+    ]);
+    cap.querySelectorAll('[data-mode]').forEach((el) => { el.style.visibility = el.dataset.mode === mode ? '' : 'hidden'; });
   };
   EPP.controls(document.querySelector('#viz-brief-vertex .hv-ctrls'), [
     { key: 'mode', type: 'seg', label: 'Speed of light', options: [['full', 'finite c (full EPP)'], ['static', 'c → ∞ (electrostatic limit)']], value: 'full' }
@@ -1163,23 +1379,62 @@ p.more a { white-space: nowrap; }
 
   // ---------- GaAs: from polaritons to LO and TO ----------
   const fig = document.getElementById('viz-brief-polariton');
-  const HC = 1973.27e3;                        // ħc in meV·Å
-  const T = 33.3, L = 36.2, EI = 10.9, A = 5.653; // GaAs, literature values (illustrative); A = lattice constant in Å
-  const T2 = T * T, L2 = L * L, WP2 = EI * (L2 - T2); // unscreened (ħω_p)^2 in meV^2, fixed by the measured splitting
+  const HC = 1973.27e3;                            // ħc in meV·Å
+  // GaAs, literature values (illustrative) as in §B.7: ħω_TO (meV), ε_∞, lattice constant a (Å), Born charge Z*, reduced mass M_r (amu)
+  const T = 33.3, EI = 10.9, A = 5.653, ZS = 2.07, MR = 36.11;
+  // unscreened (ħω_p^ion)² = 4πe²Z*²ħ²/(Ω_V M_r), Ω_V = a³/4, in meV² (4πe² = 180.95 eV Å, ħ²/(amu Å²) = 4.1802 meV): 1987, ħω_p^ion = 44.6 meV
+  const WP2 = 180.95 * 4.1802e3 * ZS * ZS / (Math.pow(A, 3) / 4 * MR);
+  const T2 = T * T, L2 = T2 + WP2 / EI, L = Math.sqrt(L2);   // ħω_LO = 35.9 meV by (B9.11); measured 36.2 meV
   const QMIN = 1e-7, QMAX = 1e-1, NQ = 421;
   const qs = []; for (let i = 0; i < NQ; i++) qs.push(QMIN * Math.pow(QMAX / QMIN, i / (NQ - 1)));
-  const qfmt = (v) => EPP.fmt(v, 2).replace('×10^', 'e') + ' Å⁻¹';
-  const sci = (v, d) => { if (!isFinite(v) || v <= 0) return 'n/a'; const k = Math.floor(Math.log10(v)); const mnt = v / Math.pow(10, k); return (k >= -2 && k <= 3) ? String(Number(v.toPrecision(d))) : mnt.toFixed(d - 1) + '×10<sup>' + String(k).replace('-', '−') + '</sup>'; };
-  const plot = new EPP.Plot(fig.querySelector('.brief-pa'), {
-    xlabel: 'q (Å^{-1})', ylabel: 'ħω (meV)', logx: true,
-    xticks: [-7, -6, -5, -4, -3, -2, -1].map(e => ({ v: Math.pow(10, e), label: '10^{' + e + '}' })),
-    xlim: [QMIN, QMAX], ylim: [0, 48], aspect: 0.56, minHeight: 250,
-    xname: 'q', hoverX: qfmt, hoverY: (v) => EPP.fix(v, 2) + ' meV',
-    ariaLabel: 'Transverse phonon-polariton branches, LO line and light line of GaAs versus wave vector on a logarithmic axis'
-  });
-  const ro = EPP.readout(fig.querySelector('.brief-ro'));
+  // d significant digits; a mantissa that rounds to 10 carries into the exponent
+  const sci = (v, d) => { if (!isFinite(v) || v <= 0) return 'n/a'; let k = Math.floor(Math.log10(v)), mnt = Number((v / Math.pow(10, k)).toFixed(d - 1)); if (mnt >= 10) { mnt /= 10; k += 1; } return (k >= -2 && k <= 3) ? String(Number(v.toPrecision(d))) : mnt.toFixed(d - 1) + '×10<sup>' + String(k).replace('-', '−') + '</sup>'; };
+  const qfmt = (v) => sci(v, 2) + ' Å<sup>−1</sup>';
 
-  // transverse poles: (ω² − ω_TO²)(ε∞ω² − c²q²) = ω_p²ω², i.e. Huang's c²q² = ω²ε(ω); energies in meV and the phonon weight of ω_+
+  // canvas text in the primer's notation: '$...$' marks math, whose letters are italic; _x, ^x as in EPP.drawRich
+  const ITAL = /[A-Za-zα-ωħ]/;
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const part of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: part.t, m: part.m, it: false }); continue; }
+        let buf = '', it = null;
+        for (const ch of part.t) { const k = ITAL.test(ch); if (it !== null && k !== it) { out.push({ t: buf, m: part.m, it }); buf = ''; } buf += ch; it = k; }
+        if (buf) out.push({ t: buf, m: part.m, it });
+      }
+    });
+    return out;
+  }
+  // o: {size, color, align, halo (a colour: a thin outline that keeps a label legible across lines)}
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, fam = EPP.css('--font-ui'), rs = runs(s);
+    const font = (r) => `${r.it ? 'italic ' : ''}${r.m ? Math.round(size * 0.72) : size}px ${fam}`;
+    const ws = rs.map(r => { ctx.font = font(r); return ctx.measureText(r.t).width; });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    const x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    const dy = (r) => (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0));
+    ctx.textAlign = 'left';
+    if (o.halo) {
+      ctx.lineWidth = 3.5; ctx.lineJoin = 'round'; ctx.strokeStyle = o.halo; ctx.setLineDash([]);
+      let xx = x0; rs.forEach((r, k) => { ctx.font = font(r); ctx.strokeText(r.t, xx, y + dy(r)); xx += ws[k]; });
+    }
+    if (o.color) ctx.fillStyle = o.color;
+    let xx = x0; rs.forEach((r, k) => { ctx.font = font(r); ctx.fillText(r.t, xx, y + dy(r)); xx += ws[k]; });
+    return tot;
+  }
+
+  const pa = fig.querySelector('.brief-pa');
+  const decade = (e) => ({ v: Math.pow(10, e), label: '10^{' + String(e).replace('-', '−') + '}' });
+  const plot = new EPP.Plot(pa, {
+    logx: true, legend: false, xticks: [-7, -6, -5, -4, -3, -2, -1].map(decade),
+    xlim: [QMIN, QMAX], ylim: [0, 48], aspect: 0.56, minHeight: 250, margin: { l: 52, r: 14, t: 12, b: 44 },
+    xname: 'q', hoverX: qfmt, hoverY: (v) => EPP.fix(v, 2) + ' meV',
+    ariaLabel: 'GaAs: the two transverse phonon-polariton branches, the LO line and the light line against the wavevector q, on a logarithmic axis from 10 to the minus 7 to 10 to the minus 1 per ångström'
+  });
+  pa.appendChild(fig.querySelector('.brief-leg'));   // the legend (static markup, MathJax) goes under the canvas
+  const $v = (k) => fig.querySelector('.brief-v-' + k);
+
+  // transverse poles: (ω² − ω_TO²)(ε_∞ω² − c²q²) = (ω_p^ion)²ω², i.e. Huang's c²q² = ω²ε(ω); energies in meV and the phonon weight of ω_UP
   function trans(lam, q) {
     const cq = lam * HC * q, cq2 = cq * cq;
     const B = EI * L2 + cq2;
@@ -1190,37 +1445,53 @@ p.more a { white-space: nowrap; }
     return { wp: Math.sqrt(sp), wm: Math.sqrt(sm), Zp: 1 / (1 + X), cq };
   }
 
+  // labels and axis titles are drawn after the layers, in the primer's notation
+  let cur = null;
+  const baseRender = plot.render.bind(plot);
+  plot.render = () => {
+    baseRender();
+    const ctx = plot.ctx, w = plot.cv.w, h = plot.cv.h, m = plot.m;
+    if (!w || !h || !cur) return;
+    const halo = EPP.color('surface'), cMut = EPP.color('muted'), cFg = EPP.color('fg');
+    ctx.save();
+    ctx.textBaseline = 'alphabetic';
+    txt(ctx, w < 520 ? 'Raman' : 'Raman, transport', w - m.r - 5, m.t + 14, { size: 11, color: cMut, align: 'right' });
+    if (cur.vis) txt(ctx, '$q$_{light}', plot.X(cur.qc) + 5, plot.Y(3) + 4, { color: cMut, halo });
+    const xl = plot.X(2.2e-7), yl = plot.Y(L) - 7;
+    if (cur.pol) txt(ctx, '$ω$_{UP} → $ω$_{LO}', xl, yl, { color: EPP.textColor('c5'), halo });
+    else txt(ctx, 'LO', xl, yl, { color: EPP.textColor('phonon'), halo });
+    txt(ctx, '$ω$_{LP} → $ω$_{TO}', plot.X(7e-3), plot.Y(T) + 15, { color: EPP.textColor('c4'), halo, align: 'right' });
+    txt(ctx, 'wavevector $q$ (Å⁻¹)', m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, '$ħω$ (meV)', 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+  };
+
   const supD = (k) => String(k).split('').map(ch => '⁰¹²³⁴⁵⁶⁷⁸⁹'['0123456789'.indexOf(ch)] || ch).join('');
   const lamFmt = (v) => { if (v < 100) return '×' + (v < 10 ? v.toFixed(1) : v.toFixed(0)); const k = Math.floor(Math.log10(v) + 1e-9); return '×' + (v / Math.pow(10, k)).toFixed(1) + '·10' + supD(k); };
 
   EPP.controls(fig.querySelector('.brief-ctrls'), [
-    { key: 'lam', type: 'range', label: 'speed of light c → λc', min: 1, max: 1e3, log: true, step: 0.01, value: 1, fmt: lamFmt, wide: true }
+    { key: 'lam', type: 'range', label: 'speed of light factor', min: 1, max: 1e3, log: true, step: 0.01, value: 1, fmt: lamFmt, wide: true }
   ], (st) => {
     try {
       const lam = st.lam || 1;
       const wp = [], wm = [], light = [], LO = [];
       for (const q of qs) { const r = trans(lam, q); wp.push(r.wp); wm.push(r.wm); light.push(r.cq / Math.sqrt(EI)); LO.push(L); }
-      const qc = Math.sqrt(EI) * T / (lam * HC);
-      const vis = qc > QMIN && qc < QMAX;
-      const xl = 2.2e-7, pol = trans(lam, xl).Zp > 0.5;   // at the label position, is the upper branch the phonon-like one?
+      const qc = Math.sqrt(EI) * T / (lam * HC);   // q_light(ω_TO) at the scaled speed of light
+      // at the label position, is the upper branch the phonon-like one?
+      cur = { qc, vis: qc > QMIN && qc < QMAX, pol: trans(lam, 2.2e-7).Zp > 0.5 };
       plot.draw([
         { type: 'band', x0: 1e-2, x1: QMAX, color: 'muted', alpha: 0.1 },
-        { type: 'text', x: QMAX, y: 48, dx: -5, dy: 5, baseline: 'top', align: 'right', text: fig.clientWidth < 520 ? 'Raman' : 'Raman, transport', color: 'muted', size: 11 },
-        { type: 'line', x: qs, y: light, color: 'photon', dash: [2, 3], width: 1.5, label: 'light line cq/√ε_∞', hover: false },
+        { type: 'line', x: qs, y: light, color: 'photon', dash: [2, 3], width: 1.5, label: 'light line', hover: false },
         { type: 'hline', at: T, color: 'muted' },
-        vis ? { type: 'vline', at: qc, color: 'muted' } : null,
-        vis ? { type: 'text', x: qc, y: 3, dx: 5, align: 'left', text: 'q_c', color: 'muted' } : null,
-        { type: 'line', x: qs, y: LO, color: 'phonon', width: 4, label: 'LO (longitudinal)' },
-        { type: 'line', x: qs, y: wp, color: 'c5', label: 'upper polariton ω_+' },
-        { type: 'line', x: qs, y: wm, color: 'c4', dash: [7, 4], label: 'lower polariton ω_–' },
-        pol ? { type: 'text', x: xl, y: L, dy: -10, text: 'ω_+ → ω_{LO}', color: 'c5' } : { type: 'text', x: xl, y: L, dy: -10, text: 'LO', color: 'phonon' },
-        { type: 'text', x: 7e-3, y: T, dy: 11, text: 'ω_– → ω_{TO}', color: 'c4', align: 'right' }
+        cur.vis ? { type: 'vline', at: qc, color: 'muted' } : null,
+        { type: 'line', x: qs, y: LO, color: 'phonon', width: 4, label: 'LO ω_{LO}' },
+        { type: 'line', x: qs, y: wp, color: 'c5', label: 'upper polariton ω_{UP}' },
+        { type: 'line', x: qs, y: wm, color: 'c4', dash: [7, 4], label: 'lower polariton ω_{LP}' }
       ]);
-      ro.set({
-        'q_c = √ε_∞ ω_{TO}/λc': sci(qc, 2) + ' Å<sup>−1</sup>',
-        'q_c in units of 2π/a': sci(qc / (2 * Math.PI / A), 1),
-        'Raman/transport q (0.01 Å^{−1}) ÷ q_c': sci(1e-2 / qc, 2)
-      });
+      $v('ql').innerHTML = sci(qc, 2) + ' Å<sup>−1</sup>';
+      $v('qa').innerHTML = sci(qc / (2 * Math.PI / A), 1);
+      $v('qr').innerHTML = sci(1e-2 / qc, 2);
     } catch (err) { console.error(err); }
   });
 })();
