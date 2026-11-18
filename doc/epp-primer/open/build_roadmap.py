@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Build the research roadmap of the open EPP topics.
 
-head.html (retitled "EPP Research Roadmap"; fonts, tokens, CSS and the MathJax config with lazy loading kept
-as they are) + lib.js inlined exactly as build/assemble.py does + roadmap.html, wrapped in
-<div class="roadmap-page"> (no contents rail). Same structure as summary/build_summary.py.
+Primer v2's v2/build/head.html (retitled "EPP Research Roadmap"; fonts, tokens, CSS and the MathJax config with
+the v2 macros and lazy loading kept as they are) + v2/build/lib.js inlined exactly as v2/build/assemble.py does
++ roadmap.html, wrapped in <div class="roadmap-page"> (no contents rail). The page uses the notation of primer v2
+(v2/NOTATION.md); rules the v2 head lacks or that the page overrides live in roadmap.html's own <style> block.
 
 Typesetting: typeset() adds no-break spaces and word joiners to the prose at build time; roadmap.html stays plain.
 
@@ -13,7 +14,7 @@ import os, re, sys
 
 H = os.path.dirname(os.path.abspath(__file__))   # open/
 S = os.path.dirname(H)                           # doc/epp-primer/
-B = os.path.join(S, 'build')
+B = os.path.join(S, 'v2', 'build')               # primer v2: head.html (v2 macros, tokens, CSS) and lib.js
 out = sys.argv[1] if len(sys.argv) > 1 else os.path.join(H, 'out', 'epp-roadmap.html')
 
 def read(p):
@@ -23,14 +24,20 @@ def read(p):
 head = read(os.path.join(B, 'head.html'))
 head, n = re.subn(r'<title>.*?</title>', '<title>EPP Research Roadmap</title>', head, count=1, flags=re.S)
 if n != 1:
-    sys.exit('build_roadmap: no <title> found in build/head.html')
+    sys.exit('build_roadmap: no <title> found in v2/build/head.html')
+# The v2 head always typesets the primer's glossary panel and popovers (lazyAlwaysTypeset). This page has neither, and
+# MathJax 3.2.2's lazy extension throws on an empty container list, so no formula would be typeset: drop the option.
+head, n = re.subn(r",\s*lazyAlwaysTypeset:\s*\[[^\]]*\]", '', head, count=1)
+if n != 1:
+    sys.exit('build_roadmap: lazyAlwaysTypeset not found in v2/build/head.html; check the MathJax options')
 lib = read(os.path.join(B, 'lib.js'))
 body = read(os.path.join(H, 'roadmap.html'))
 
 # Line-break hygiene, applied to prose only (style/script blocks, tags and TeX are stashed first):
 # a no-break space between a number and its unit (a nowrap span when the number is inline math), a word joiner after the en dash of
-# numeric and equation ranges and of LO–TO / L–T, and nowrap spans around math ranges, "$x$-word" and "word-$x$".
-UNIT = r'(?:eV|meV|μeV|Å[⁻¹²³]*|K|cm[⁻¹²³]+(?:/Vs)?|nm|μm|C/m²|u|weeks?|days?|months?)(?!\w)'
+# numeric and equation ranges and of LO–TO / L–T, nowrap spans around math ranges, "$x$-word", "word-$x$" and a formula with the
+# punctuation that closes it, and a no-break space in "topic 7" and "step 2".
+UNIT = r'(?:eV|meV|μeV|Å[⁻¹²³]*|K|cm[⁻¹²³]+(?:/Vs)?|nm|μm|C/m²|amu|u|weeks?|days?|months?)(?!\w)'
 WJ = '\u2060'
 def typeset(html):
     keep = []
@@ -48,6 +55,9 @@ def typeset(html):
     s = s.replace('LO–TO', 'LO–' + WJ + 'TO')
     s = re.sub(r'\bL–T\b', 'L–' + WJ + 'T', s)
     s = re.sub(r'“?\x02\d+\x03-[A-Za-z]+|[A-Za-z]+-\x02\d+\x03', lambda m: '<span class="nw">' + m.group(0) + '</span>', s)
+    # a formula keeps the bracket or punctuation that closes it, and "topic 7", "steps 1" stay on one line
+    s = re.sub(r'\(?\x02\d+\x03(?:\)[.,;:]?|[.,;:])', lambda m: '<span class="nw">' + m.group(0) + '</span>', s)
+    s = re.sub(r'\b(topics?|steps?) (?=\d)', '\\1\u00a0', s)
     return re.sub(r'[\x00\x02](\d+)[\x01\x03]', lambda m: keep[int(m.group(1))], s)
 
 doc = (head + '\n<script>\n' + lib + '\n</script>\n'
