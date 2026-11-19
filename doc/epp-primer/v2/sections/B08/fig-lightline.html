@@ -23,7 +23,7 @@
     MgO: { einf: 2.96, es: 9.8, wLO: 89.0, wTO: 49.1, OV: 18.7, Z: 1.98, Mr: 9.65 },
     NaCl: { einf: 2.34, es: 5.9, wLO: 32.7, wTO: 20.3, OV: 44.9, Z: 1.12, Mr: 13.9 }
   };
-  // fixed axes: (a) q in Å⁻¹ or q/q_c, |𝒦| dimensionless; (b) q in Å⁻¹, |g| in eV. Grid band of (a) in Å⁻¹.
+  // fixed axes: (a) q in Å⁻¹ or q/q_light, |𝒦| dimensionless; (b) q in Å⁻¹, |g| in eV. Grid band of (a) in Å⁻¹.
   const QA = [1e-8, 1], QN = [1e-3, 1e3], KY = [1e-6, 1e4], QB = [1e-6, 1], GY = [1e-2, 1e6], GRID = [1e-3, 1];
   const logspace = (a, b, n) => EPP.linspace(Math.log10(a), Math.log10(b), n).map(v => Math.pow(10, v));
   const BASE = { a: logspace(QA[0], QA[1], 480), n: logspace(QN[0], QN[1], 420) }, QBX = logspace(QB[0], QB[1], 160);
@@ -40,7 +40,7 @@
   function compute(s) {
     const m = MAT[s.mat] || MAT.GaAs, e = m.einf, se = Math.sqrt(e), loss = s.loss, cf = s.c, norm = s.axis === 'n';
     const qv = m.wTO / 1000 / (HC * cf);              // ω_TO/c (Å⁻¹), with c → (factor)·c
-    const qc = se * qv;                               // q_c = √ε∞ ω_TO/c
+    const qc = se * qv;                               // q_light(ω_TO) = √ε∞ ω_TO/c
     const qLO = se * m.wLO / 1000 / (HC * cf);        // light cone of the LO phonon, √ε∞ ω_LO/c
     const xl = norm ? QN : QA;
     const toU = norm ? (x => x * se) : (x => x / qv), fromU = norm ? (u => u / se) : (u => u * qv);
@@ -81,7 +81,7 @@
   const lfmt = (v) => String(Number(v.toPrecision(2)));
 
   // ---- canvas text: '$..$' marks math, whose letters (Latin, Greek, ħ) are italic in the text font;
-  //      _x, _{..}, ^x as in EPP.drawRich, so a subscript written outside '$' stays upright: '$q$_c' ----
+  //      _x, _{..}, ^x as in EPP.drawRich, so a subscript written outside '$' stays upright: '$q$_{light}' ----
   const ITAL = /[A-Za-zα-ωħ]/;
   let FT = '', FU = '';
   function runs(s) {
@@ -241,9 +241,9 @@
     const covs = [coverage(P, c.xs, c.K0T, 2.5), coverage(P, c.xs, c.KT, 2.5), coverage(P, two, [1, 1], 4), coverage(P, two, [c.KL, c.KL], 4)];
     const XW = P.X(c.xW), XC = P.X(c.xC), inX = (X) => X >= m.l + 1 && X <= W - m.r - 1;
     const vls = [XW, XC].filter(inX), items = [];
-    if (inX(XC)) items.push({ texts: ['$q$_c'], size: 12, color: 'photon', own: XC, cands: beside(P, XC, [1, -1]) });
+    if (inX(XC)) items.push({ texts: ['$q$_{light}'], size: 12, color: 'photon', own: XC, cands: beside(P, XC, [1, -1]) });
     if (inX(XW)) items.push({ texts: ['$ω$/$c$'], size: 12, color: 'muted', own: XW, cands: beside(P, XW, [-1, 1]) });
-    if (!c.norm && !inX(XC)) items.push({ texts: [`← $q$_c = ${sci(c.qc, 2)} Å^{−1}`, '← $q$_c'], size: 11, color: 'photon', cands: leftEdge(P) });
+    if (!c.norm && !inX(XC)) items.push({ texts: [`← $q$_{light} = ${sci(c.qc, 2)} Å^{−1}`, '← $q$_{light}'], size: 11, color: 'photon', cands: leftEdge(P) });
     else if (!c.norm && !inX(XW)) items.push({ texts: ['← $ω$/$c$'], size: 11, color: 'muted', cands: leftEdge(P) });
     if (!c.norm) {
       const X0 = P.X(GRID[0]), X1 = P.X(GRID[1]);
@@ -321,7 +321,7 @@
     if (!PA.cv.w || !PA.cv.h || !cur) return;
     const c = cur;
     frame(PA, [`(a) LO and TO kernels of ${c.mat}, $ω$ = $ω$_{TO}`, `(a) kernels of ${c.mat}, $ω$ = $ω$_{TO}`, '(a) kernels'],
-      c.norm ? '$q$/$q$_c' : 'wavevector $q$ (Å^{−1})', ['|𝒦|, in units of the Coulomb value', '|𝒦| (Coulomb value = 1)', '|𝒦|'], layoutA);
+      c.norm ? '$q$/$q$_{light}' : 'wavevector $q$ (Å^{−1})', ['|𝒦|, in units of the Coulomb value', '|𝒦| (Coulomb value = 1)', '|𝒦|'], layoutA);
     const x = PA._hoverX;
     if (!PA.tip.hidden && x > 0) {
       const u = c.toU(x), q = c.norm ? x * c.qc : x;

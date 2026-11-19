@@ -11,6 +11,8 @@ the glossary box, source callouts, <span class="gl-src"> and <script>:
     (\\Gamma_{n\\bk}, \\Gamma_k), the review's \\Gamma^{\\rm ZP} (with or without a subscript) or v1's \\Gamma(T), instead of
     \\Gamma^{\\tau}_{n\\bk}, and, in A.7 and A.8, y as the imaginary part of the pole (\\ii y, |y|, y = Im Sigma,
     y <= 0); the zone centre \\Gamma stays legal;
+  - the retired names of the light-cone wavevector, q_c and q_lc (INTEGRATION_DECISIONS §3), anywhere in a fragment,
+    footnotes and glossary included, and in figure strings: write q_{\\mathrm{light}}(\\omega) with its argument;
   - footnote markers whose target is missing, and footnotes never referenced;
   - glossary entries with a missing data-first anchor.
 With --inventory it also writes the symbol inventory: every distinct symbol in reading order with
@@ -73,7 +75,11 @@ ITALIC = [
     (r'[\^_]\{(ion|ph|e|para|dia|SC|KS|xc|dd|sr|lr|FM|DW|qp|NA|irr|ZPR|mob|abs|2D|en|H|el|ep|L|T|LT|TL|LO|TO|F|ph,A|ph,NA)\}', 'italic label: use \\mathrm{...} or the v2 macro'),
 ]
 
+# Retired primer names of the light-cone wavevector (no source uses them): checked in all math of a fragment.
+RETIRED_QC = re.compile(r'(?<![A-Za-z\\])q_(?:\{\s*(?:\\(?:rm|mathrm)\s*\{?\s*)?l?c\s*\}?\s*\}|l?c(?![A-Za-z]))')
+
 SCRIPT_RESERVED = [
+    (r'\$q\$_\{?l?c\b|(?<![A-Za-z_])q_\{?l?c(?![A-Za-z])', 'retired light-cone symbol q_c or q_lc: label it $q$_{light} (INTEGRATION_DECISIONS §3)'),
     (r'D\^\{?dm|Δτ|N_p\b|M_0\b|Ω\^2|Ω_\{?uc', 'source-only symbol in a figure string'),
     (r'σ(?![_]?\{?xx|_\{?αβ)', 'sigma is reserved for the conductivity (use u_rms for an rms displacement)'),
     (r'Γ(?:_|\(|\^\{?ZP)', 'electron linewidth written as a bare Γ: write Γ^{τ} (Γ alone is the zone centre)'),
@@ -169,6 +175,11 @@ def main():
             for lit in re.findall(r"'(?:[^'\\\n]|\\.)*'|\"(?:[^\"\\\n]|\\.)*\"|`[^`]*`", sc):
                 for pat, msg in SCRIPT_RESERVED:
                     if re.search(pat, lit): problems.append((name, 'script string', f'{msg}  [{lit[:60]}]'))
+        no_script = re.sub(r'<script\b.*?</script>', ' ', raw, flags=re.S)
+        for m in MATH.finditer(no_script):
+            tex = m.group(1) or m.group(2)
+            if RETIRED_QC.search(tex):
+                problems.append((name, f'line {no_script.count(chr(10), 0, m.start()) + 1}', f'retired light-cone symbol q_c or q_lc: write q_{{\\mathrm{{light}}}}(\\omega) with its argument (INTEGRATION_DECISIONS §3)  [{tex.strip()[:70]}]'))
         main_text = strip_blocks(raw)
         plain = html.unescape(re.sub(r'<[^>]+>', ' ', main_text))
         for m in MATH.finditer(main_text):

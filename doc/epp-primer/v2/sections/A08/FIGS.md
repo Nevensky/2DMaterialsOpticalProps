@@ -24,7 +24,7 @@ section's note on (A8.3)):
 
 Compute α_F = (1/ε∞ − 1/ε_s) · (m*/m_e)^{1/2} · (Ry/ħω_LO)^{1/2}; q_pol = (m*/m_e · ħω_LO[eV] / 3.80998)^{1/2} Å⁻¹
 (GaAs 0.02523, GaN 0.06949, MgO 0.09042 Å⁻¹); q_D = (6π²/Ω_V)^{1/3} (GaAs 1.0942, GaN 1.0902, MgO 1.4685 Å⁻¹);
-q_lc = √ε∞ · ħω_LO[eV] / 1973.27 Å⁻¹ (GaAs 6.057×10⁻⁵, GaN 1.078×10⁻⁴, MgO 7.760×10⁻⁵ Å⁻¹).
+q_light(ω_LO) = √ε∞ · ħω_LO[eV] / 1973.27 Å⁻¹ (GaAs 6.057×10⁻⁵, GaN 1.078×10⁻⁴, MgO 7.760×10⁻⁵ Å⁻¹).
 All numbers quoted below were checked numerically by the section author.
 
 ---
@@ -303,7 +303,7 @@ at T; $E_{\bk}$ (meV); $1/\tau$ (ps⁻¹); $\tau$ (fs); $\hbar/\tau=2\Gamma^{\ta
   resolves q ≲ q_pol (N_1 ≳ q_D/q_pol); the adiabatic shift grows linearly with N_1 without limit.
 - Where the contributions come from: per logarithmic interval of q, the adiabatic integrand grows as 1/q, the
   nonadiabatic one peaks at q_pol and vanishes below it.
-- The light cone q < q_lc lies 400 to 1200 times below q_pol: finite c is not what cures the divergence.
+- The light cone q < q_light(ω_LO) lies 400 to 1200 times below q_pol: finite c is not what cures the divergence.
 
 **Include position.** In h3 `a8-catastrophe`, after the paragraph that ends "…A uniform grid of N_1 points along
 each direction resolves wavevectors down to about q_min = q_D/N_1. Figure A8.4 follows both prescriptions as the grid
@@ -316,11 +316,11 @@ is refined." The closed forms (A8.17) follow the figure.
 - Contribution per logarithmic interval, in units of α_Fħω_LO, zero for q > q_D:
   nonadiabatic (2/π) q q_pol/(q² + q_pol²); adiabatic (2/π) q_pol/q. Both filled between q_min and q_D.
 - Derived readouts: converged nonadiabatic shift −α_Fħω_LO (2/π) arctan(q_D/q_pol); N_1 for 90% of it
-  q_D/(q_pol tan(0.1 arctan(q_D/q_pol))); light cone resolved at N_1 = q_D/q_lc; adiabatic shift cut at q_lc
-  −α_Fħω_LO (2/π) q_pol (1/q_lc − 1/q_D); share of the nonadiabatic shift from q < q_lc:
-  arctan(q_lc/q_pol)/arctan(q_D/q_pol).
+  q_D/(q_pol tan(0.1 arctan(q_D/q_pol))); light cone resolved at N_1 = q_D/q_light(ω_LO); adiabatic shift cut at q_light(ω_LO)
+  −α_Fħω_LO (2/π) q_pol (1/q_light(ω_LO) − 1/q_D); share of the nonadiabatic shift from q < q_light(ω_LO):
+  arctan(q_light(ω_LO)/q_pol)/arctan(q_D/q_pol).
 - Check values: GaAs α_Fħω_LO = 2.58 meV, converged −2.55 meV, N_1(90%) = 278, ΔE^A_c = −3.76 meV at N_1 = 100 and
-  −37.9 meV at 1000, light cone resolved at N_1 = 1.8×10⁴, adiabatic cut at q_lc −0.685 eV, share 1.6×10⁻³;
+  −37.9 meV at 1000, light cone resolved at N_1 = 1.8×10⁴, adiabatic cut at q_light(ω_LO) −0.685 eV, share 1.6×10⁻³;
   GaN 40.9 meV, −39.2 meV, 103, cut −16.8 eV, share 1.0×10⁻³; MgO 153.5 meV, −147.5 meV, 107, cut −114 eV,
   share 5.7×10⁻⁴.
 
@@ -333,18 +333,18 @@ is refined." The closed forms (A8.17) follow the figure.
 - (b) contribution per ln q against q: x log from 10⁻⁶ to 3 Å⁻¹ (label `q (Å^{-1})`), y linear 0 to 0.5 (label
   `|dΔE/d ln q| / α_Fħω_{LO}`); the adiabatic curve leaves the frame at small q (that is the divergence; clip it).
   Fills between q_min and q_D (adiabatic `c5`, alpha 0.10; nonadiabatic `electron`, alpha 0.22); both curves; vertical
-  lines at q_pol (`phonon`), q_min (`muted`, dashed), q_D (`muted`); when the toggle is on, a band 10⁻⁶ < q < q_lc
-  (`photon`, alpha 0.16, text `light cone`) and a line at q_lc.
+  lines at q_pol (`phonon`), q_min (`muted`, dashed), q_D (`muted`); when the toggle is on, a band 10⁻⁶ < q < q_light(ω_LO)
+  (`photon`, alpha 0.16, text `light cone`) and a line at q_light(ω_LO).
 
 **Controls (3).**
 1. material, seg: GaAs | GaN | MgO.
 2. `N_1`, range 4–1000, logarithmic.
-3. toggle: "mark the light cone q < q_lc".
+3. toggle: "mark the light cone q < q_light(ω_LO)".
 
 **Readouts.** $\alpha_{\mathrm F}$ (with "outside weak coupling" when > 1); $q_{\mathrm{pol}}$ (Å⁻¹) and
-$1/q_{\mathrm{pol}}$ (Å); $q_{\mathrm{lc}}$ (Å⁻¹); $\Delta E^{\mathrm{NA}}_{\mathrm c}(N_1)$ and
+$1/q_{\mathrm{pol}}$ (Å); $q_{\mathrm{light}}(\omega_{\mathrm{LO}})$ (Å⁻¹); $\Delta E^{\mathrm{NA}}_{\mathrm c}(N_1)$ and
 $\Delta E^{\mathrm A}_{\mathrm c}(N_1)$ (meV); converged nonadiabatic shift (meV); $N_1$ for 90%; $N_1$ that resolves the
-light cone; adiabatic shift cut at $q_{\mathrm{lc}}$ (eV); share of the nonadiabatic shift from $q\lt q_{\mathrm{lc}}$ (%).
+light cone; adiabatic shift cut at $q_{\mathrm{light}}(\omega_{\mathrm{LO}})$ (eV); share of the nonadiabatic shift from $q\lt q_{\mathrm{light}}(\omega_{\mathrm{LO}})$ (%).
 
 **Initial state.** GaAs, N_1 = 200, light cone on: the nonadiabatic curve is near its plateau (86%), the adiabatic
 one already three times larger and still rising.
@@ -366,7 +366,7 @@ one already three times larger and still rising.
 
 **What must change from v1.**
 - id `viz-a-temperature-frohlich` → `viz-a8-catastrophe`; classes `pf-*` → `a8-catastrophe-*`; own script.
-- Notation: `N_q` → `N_1` (in v2 N_q is the number of wavevectors of the grid); `q_p` → `q_{pol}`; `q_c` → `q_{lc}`;
+- Notation: `N_q` → `N_1` (in v2 N_q is the number of wavevectors of the grid); `q_p` → `q_{pol}`; `q_c` → `q_{light}(ω_{LO})`;
   `α` → `α_F`; readout keys `ΔE^{NA}(N_q)`, `ΔE^{A}(N_q)` → `ΔE^{NA}_c(N_1)`, `ΔE^{A}_c(N_1)`; curve label
   "adiabatic AH (G.167)" → "adiabatic (Allen–Heine)"; y label `|ΔE_{CBM}|` → `|ΔE_c|`.
 - Rewrite the caption in the four-part structure (v1 cites G.166/G.167 and EPP §7.2 in source form).

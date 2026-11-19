@@ -18136,7 +18136,7 @@ window.MathJax = {
     const aF = (1 / p.ei - 1 / p.es) * Math.sqrt(p.m * RY / p.hw);   // α_F
     const qp = Math.sqrt(p.m * hwE / H2M);                            // q_pol (Å⁻¹): ħ²q_pol²/2m* = ħω_LO
     const qD = Math.cbrt(6 * Math.PI * Math.PI / p.Om);               // q_D (Å⁻¹)
-    const qlc = Math.sqrt(p.ei) * hwE / HBARC;                         // q_lc = √ε_∞ ω_LO/c (Å⁻¹)
+    const qlc = Math.sqrt(p.ei) * hwE / HBARC;                         // q_light(ω_LO) = √ε_∞ ω_LO/c (Å⁻¹)
     const aw = aF * p.hw, A0 = Math.atan(qD / qp);                     // α_F ħω_LO (meV)
     const NA = (N) => aw * C2 * (A0 - Math.atan(qD / (N * qp)));
     const AD = (N) => aw * C2 * qp * (N - 1) / qD;
@@ -18149,9 +18149,9 @@ window.MathJax = {
       conv: aw * C2 * A0,                          // converged nonadiabatic shift, q_min → 0
       N90: qD / (qp * Math.tan(0.1 * A0)),         // N_1 for 90% of it
       Nres: qD / qp,                               // the grid with q_min = q_pol
-      Nlc: qD / qlc,                               // the grid with q_min = q_lc
-      Alc: aw * C2 * qp * (1 / qlc - 1 / qD),      // adiabatic shift with the cutoff at q_lc
-      share: Math.atan(qlc / qp) / A0              // share of the converged nonadiabatic shift from q < q_lc
+      Nlc: qD / qlc,                               // the grid with q_min = q_light(ω_LO)
+      Alc: aw * C2 * qp * (1 / qlc - 1 / qD),      // adiabatic shift with the cutoff at q_light(ω_LO)
+      share: Math.atan(qlc / qp) / A0              // share of the converged nonadiabatic shift from q < q_light(ω_LO)
     });
   }
 
@@ -18351,7 +18351,7 @@ window.MathJax = {
     frameText(P, 'phonon wavevector $q$ (Å^{−1})', '|dΔ$E$_c/d ln $q$| / $α$_F$ħω$_{LO}',
       ['(b) where the shift comes from: drag to move $q$_{min}', '(b) where the shift comes from: drag $q$_{min}', '(b) where the shift comes from']);
     const vl = [{ k: 'qmin', x: c.qmin, t: '$q$_{min}', col: 'muted' }, { k: 'qp', x: M.qp, t: '$q$_{pol}', col: 'phonon' }, { k: 'qd', x: M.qD, t: '$q$_D', col: 'muted' }];
-    if (c.lc) vl.push({ k: 'qlc', x: M.qlc, t: '$q$_{lc}', col: 'photon' });
+    if (c.lc) vl.push({ k: 'qlc', x: M.qlc, t: '$q$_{light}', col: 'photon' });
     const Xs = vl.map(o => P.X(o.x)), Xm = P.X(c.qmin), ya = fA(c.qmin), yn = M.fNA(c.qmin);
     const boxes = [[Xm - 7, P.Y(yn) - 7, Xm + 7, P.Y(yn) + 7]];
     if (ya <= 0.5) boxes.push([Xm - 7, P.Y(ya) - 7, Xm + 7, P.Y(ya) + 7]);
@@ -18550,7 +18550,7 @@ window.MathJax = {
   </div>
   <p>The review lists four remedies: principal-value integration with the phonon frequencies kept (Fan, 1951); analytic integration of the region near $\bq=0$ (Nery and Allen, 2016); the Brillouin–Wigner form, with the infinitesimal $\hbar\eta$ replaced by the physical linewidth $\Gamma^{\tau}_{n\bk}$; and full spectral functions (Kawai and coworkers, 2014; Antonius and coworkers, 2015). All of them keep $\hbar\omega_{\bq\nu}$, or a physical width, where the adiabatic formula has a vanishing denominator.<sup class="fn"><a href="#fn-a8-remedies">18</a></sup></p>
   <p>The Fröhlich part of a ZPR is not small. Botti and Marques (2013) computed the screened interaction including the screening by the lattice, with a model dielectric function built from the Lyddane–Sachs–Teller relation, and found ZPRs above 1 eV for LiF, LiCl, NaCl and MgO; the review notes that this amounts to a Fan–Migdal calculation with only the long-range polar coupling. Nery and Allen (2016) found a Fröhlich contribution of 45 meV to the 150 meV ZPR of the gap of GaN. For the conduction-band minimum of GaN, the one-band model of this section gives $-\alpha_{\mathrm F}\hbar\omega_{\mathrm{LO}}\approx-41$ meV, of the same size.<sup class="fn"><a href="#fn-a8-botti">19</a></sup></p>
-  <p>The finite speed of light plays no part in the cure. Part A treats the Coulomb interaction as instantaneous, and Part B replaces it by the full electromagnetic field, whose transverse part matters only within the light cone of Section A.4, at wavevectors $q\lesssim q_{\mathrm{light}}(\omega_{\mathrm{LO}})=\sqrt{\varepsilon_\infty}\,\omega_{\mathrm{LO}}/c$, where light in the crystal has the frequency of the LO phonon. (Section A.4 calls this wavevector $q_{\mathrm{light}}(\omega_{\mathrm{LO}})$; here the label c marks the conduction band.) In GaAs, $q_{\mathrm{light}}(\omega_{\mathrm{LO}})=6.1\times10^{-5}$ Å⁻¹, about 400 times smaller than $q_{\mathrm{pol}}$ (400 to 1200 times in the three materials of <a class="figref" href="#viz-a8-catastrophe"></a>). The light cone holds about $10^{-3}$ of the converged nonadiabatic shift, and the adiabatic integral cut off at $q_{\mathrm{light}}(\omega_{\mathrm{LO}})$ instead of $q_{\mathrm{min}}$ would still give $-0.69$ eV in GaAs, 270 times the converged value. The divergence is cured by the phonon energy, at $q\approx q_{\mathrm{pol}}$, far outside the light cone. Moreover, the LO coupling that drives it is longitudinal, and the longitudinal, Coulomb part of the field does not depend on $c$ (<a href="#x-light-cone">Section X.1</a>). The word "retardation" adds to the confusion: in the review it means the frequency dependence of the electronic screening, in the EPP manuscript the finite speed of light.<sup class="fn"><a href="#fn-a8-retard">20</a></sup></p>
+  <p>The finite speed of light plays no part in the cure. Part A treats the Coulomb interaction as instantaneous, and Part B replaces it by the full electromagnetic field, whose transverse part matters only within the light cone of Section A.4, at wavevectors $q\lesssim q_{\mathrm{light}}(\omega_{\mathrm{LO}})=\sqrt{\varepsilon_\infty}\,\omega_{\mathrm{LO}}/c$, where light in the crystal has the frequency of the LO phonon. In GaAs, $q_{\mathrm{light}}(\omega_{\mathrm{LO}})=6.1\times10^{-5}$ Å⁻¹, about 400 times smaller than $q_{\mathrm{pol}}$ (400 to 1200 times in the three materials of <a class="figref" href="#viz-a8-catastrophe"></a>). The light cone holds about $10^{-3}$ of the converged nonadiabatic shift, and the adiabatic integral cut off at $q_{\mathrm{light}}(\omega_{\mathrm{LO}})$ instead of $q_{\mathrm{min}}$ would still give $-0.69$ eV in GaAs, 270 times the converged value. The divergence is cured by the phonon energy, at $q\approx q_{\mathrm{pol}}$, far outside the light cone. Moreover, the LO coupling that drives it is longitudinal, and the longitudinal, Coulomb part of the field does not depend on $c$ (<a href="#x-light-cone">Section X.1</a>). The word "retardation" adds to the confusion: in the review it means the frequency dependence of the electronic screening, in the EPP manuscript the finite speed of light.<sup class="fn"><a href="#fn-a8-retard">20</a></sup></p>
 
   <h3 id="a8-nonpert">Beyond perturbation theory: frozen phonons, special displacements and molecular dynamics</h3>
   <p>Another route avoids matrix elements and perturbation theory altogether. Freeze the atoms in a distorted configuration in a supercell, compute the band energies with density-functional theory, and average over configurations drawn from the vibrational state. To see what this computes, expand an energy level to second order in the displacements, as in the derivation box of the Debye–Waller subsection, and average over the harmonic phonon state with occupations $n_{\bq\nu}$. The linear terms average to zero, and the quadratic ones give<sup class="fn"><a href="#fn-a8-frozen">21</a></sup></p>
@@ -18608,7 +18608,7 @@ window.MathJax = {
       <li id="fn-a8-catastrophe">Giustino, p. 43 (no equation number): near band extrema "the integrand in the adiabatic Fan–Migdal self-energy goes as $q^{-4}$ for $q\to0$, while the volume element goes only as $d\bq=4\pi q^2dq$"; Poncé et al. (2015). The closed forms <a class="eqref" href="#a8-eq-catastrophe"></a> are ours, for the model of this section.</li>
       <li id="fn-a8-remedies">Giustino, p. 43: principal-value integration "without neglecting phonon frequencies, and then taking the limit $\omega_{\bq\nu}\to0$ so as to recover the adiabatic approximation" (Fan, 1951, Sec. IV); Nery and Allen (2016); his Eq. (166), in which "the infinitesimal $\eta$ should be replaced by the finite physical linewidth $\Gamma_{n\bk}$" (his $|\Gamma_{n\bk}|$ is our $\Gamma^{\tau}_{n\bk}$; his $\eta$ is a rate, as in $\omega+i\eta$ of his Eq. 157, so in the energy denominators the linewidth replaces $\hbar\eta$); spectral functions (Kawai et al., 2014; Antonius et al., 2015).</li>
       <li id="fn-a8-botti">Botti and Marques (2013) and Nery and Allen (2016), both in Giustino §IX.A.1, pp. 43–44. The GaN value of the model uses the parameters of note 3.</li>
-      <li id="fn-a8-retard">The review uses "retardation" for the frequency dependence of the electronic screening, following Bardeen and Pines (its pp. 4, 12, 18); the EPP manuscript uses it for the finite speed of light, whose limit $c\to\infty$ is the instantaneous interaction. $q_{\mathrm c}$ contains $c$ and reads the same in SI units.</li>
+      <li id="fn-a8-retard">The review uses "retardation" for the frequency dependence of the electronic screening, following Bardeen and Pines (its pp. 4, 12, 18); the EPP manuscript uses it for the finite speed of light, whose limit $c\to\infty$ is the instantaneous interaction. $q_{\mathrm{light}}(\omega_{\mathrm{LO}})$ contains $c$ and reads the same in SI units.</li>
       <li id="fn-a8-frozen">Giustino's Eq. (199), $\langle\varepsilon_{n\bk}\rangle_{\{n_{\bq\nu}\}}=\varepsilon_{n\bk}+\sum_\nu\int\frac{\dd\bq}{\Omega_{\rm BZ}}(n_{\bq\nu}+\frac12)\frac{\partial\varepsilon_{n\bk}}{\partial n_{\bq\nu}}$, with the formal definition $\partial/\partial n_{\bq\nu}\equiv\Delta_{\bq\nu}\Delta_{-\bq\nu}$; it was the starting point of Allen and Cardona (1981).</li>
       <li id="fn-a8-methods">All in Giustino §IX.A.2: Patrick and Giustino (2013); Monserrat (2016b); Zacharias and Giustino (2016), whose "optimum" configuration becomes exact in the limit of large supercells; Lloyd-Williams and Monserrat (2015); Brooks' theorem (Allen and Hui, 1980; King-Smith et al., 1989); anharmonic studies (Monserrat, Drummond and Needs, 2013; Monserrat et al., 2014; Engel, Monserrat and Needs, 2015); path-integral molecular dynamics (Della Sala et al., 2004; Ramírez, Herrero and Hernández, 2006; Ramírez et al., 2008); classical molecular dynamics (Franceschetti, 2007); Williams–Lax spectra (his Eq. 201). The name "special displacement method" comes from later work by Zacharias and Giustino (2020), outside the review.</li>
       <li id="fn-a8-beyond">Giustino §XII: the Allen–Heine renormalization scales as $\epsilon_\infty^{-2}$, and the adiabatic phonon frequencies contain the screening through a term in $\epsilon_\infty^{-1/2}$. GW corrections raise the ZPR of diamond by 40% (Antonius et al., 2014) and that of Si by a comparable amount (Monserrat, 2016a), but those of LiF, MgO and TiO₂ by only about 5%. His example posits a semiconductor "for which DFT underestimates the electronic permittivity by 20%", whereas the preceding argument implies that DFT overestimates it; the estimates of 40% and 10% hold either way. Low-temperature subtleties: Allen and Nery (2017), cited on his p. 30.</li>
@@ -20701,7 +20701,7 @@ window.MathJax = {
     <li><strong>The pattern moves faster than light</strong>, $cq\ll\omega$: the wavelength is longer than that of light at the same frequency. Then $\bE^{\mathrm T}\to-4\pi\bP^{\mathrm T}$, the same as the longitudinal field. At $\bq\to0$ a uniform polarization produces the same field whatever its direction.</li>
   </ul>
   <p>The electrons of an insulator add their own polarization. They divide the longitudinal field by the electronic dielectric constant <a class="sym" href="#gl-a4-epsinf">$\varepsilon_\infty$</a> and slow light to $c/\sqrt{\varepsilon_\infty}$, so the transverse resonance moves to $cq=\sqrt{\varepsilon_\infty}\,\omega$. Well below the resonance, $cq\ll\sqrt{\varepsilon_\infty}\,\omega$, the transverse field is divided by $\varepsilon_\infty$ too. Well above it the transverse field hardly changes while the longitudinal one shrinks, so their ratio grows by $\varepsilon_\infty$, to $5\times10^{-6}$ at $q=0.025$ Å⁻¹ in GaAs (shown in <a class="eqref" href="#x1-eq-iso"></a> below).</p>
-  <p>The resonance sits at the wavevector of light of frequency $\omega$ in the medium, $q_{\mathrm{light}}=\sqrt{\varepsilon_\infty}\,\omega/c$ ($\omega/c$ without the electrons). The wavevectors below it, where the wave pattern outruns light, form the light cone of <a href="#a-polar">Section A.4</a>. That section met its radius at the LO frequency <a class="sym" href="#gl-a4-wLO">$\omega_{\mathrm{LO}}$</a>, as <a class="sym" href="#gl-a4-qc">$q_{\mathrm c}$</a>$\,=q_{\mathrm{light}}(\omega_{\mathrm{LO}})$; here the frequency is free, and <a href="#x1-cone">the size of the light cone</a> below explains the name and measures it. <a class="figref" href="#viz-x1-polwave"></a> draws both waves and their fields as $q$ crosses $q_{\mathrm{light}}$.</p>
+  <p>The resonance sits at the wavevector of light of frequency $\omega$ in the medium, $q_{\mathrm{light}}=\sqrt{\varepsilon_\infty}\,\omega/c$ ($\omega/c$ without the electrons). The wavevectors below it, where the wave pattern outruns light, form the light cone of <a href="#a-polar">Section A.4</a>. That section met its radius at the LO frequency <a class="sym" href="#gl-a4-wLO">$\omega_{\mathrm{LO}}$</a>, as <a class="sym" href="#gl-a4-qc">$q_{\mathrm{light}}(\omega_{\mathrm{LO}})$</a>; here the frequency is free, and <a href="#x1-cone">the size of the light cone</a> below explains the name and measures it. <a class="figref" href="#viz-x1-polwave"></a> draws both waves and their fields as $q$ crosses $q_{\mathrm{light}}$.</p>
 
   <!-- from sections/X01/fig-polwave.html -->
   <figure class="viz" id="viz-x1-polwave">
@@ -34974,7 +34974,7 @@ window.MathJax = {
       ...[0.15, 0.3, 0.45].map(f => ({ x: xL + f * pw, y: yE - 6 }))], { color: cFg2, halo });
     if (cur.qcIn) {
       const X = plotA.X(M.qc), yb = h - m.b - 6, yt = m.t + 14;
-      L.put('$q$_c', [{ x: X + 5, y: yb }, { x: X - 5, y: yb, align: 'right' }, { x: X - 5, y: yt, align: 'right' }, { x: X + 5, y: yt }], { color: cMut, halo });
+      L.put('$q$_{light}', [{ x: X + 5, y: yb }, { x: X - 5, y: yb, align: 'right' }, { x: X - 5, y: yt, align: 'right' }, { x: X + 5, y: yt }], { color: cMut, halo });
     }
     txt(ctx, 'wavevector $q$ (Å⁻¹)', m.l + pw / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
     ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
@@ -35003,7 +35003,7 @@ window.MathJax = {
     });
     if (cur.qcIn) {
       const X = plotB.X(M.qc), yb = h - m.b - 6, yt = m.t + 14;
-      L.put('$q$_c', [{ x: X + 5, y: yt }, { x: X - 5, y: yt, align: 'right' }, { x: X + 5, y: yb }, { x: X - 5, y: yb, align: 'right' }], { color: cMut, halo });
+      L.put('$q$_{light}', [{ x: X + 5, y: yt }, { x: X - 5, y: yt, align: 'right' }, { x: X + 5, y: yb }, { x: X - 5, y: yb, align: 'right' }], { color: cMut, halo });
     }
     txt(ctx, 'wavevector $q$ (Å⁻¹)', m.l + pw / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
     ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
@@ -35062,10 +35062,10 @@ window.MathJax = {
   }
 
   // ---------- controls ----------
-  const q0 = model({ mat: 'GaAs', el: true, sc: 1 }).qc;     // the cursor starts at q_c of GaAs, 5.57×10⁻⁵ Å⁻¹
+  const q0 = model({ mat: 'GaAs', el: true, sc: 1 }).qc;     // the cursor starts at q_light(ω_TO) of GaAs, 5.57×10⁻⁵ Å⁻¹
   let lastMat = 'GaAs';
   function update(st) {
-    // a new crystal moves the cursor to its own q_c at the real speed of light
+    // a new crystal moves the cursor to its own q_light(ω_TO) at the real speed of light
     if (st.mat !== lastMat) { lastMat = st.mat; ui.set('q', EPP.clamp(model({ mat: st.mat, el: st.el, sc: 1 }).qc, QMIN, QMAX), true); }
     const m = model(st), q = EPP.clamp(st.q, QMIN, QMAX);
     cur = { m, q, r: trans(m, q), c: curves(m), qcIn: m.qc > QMIN && m.qc < QMAX };
@@ -35173,7 +35173,7 @@ window.MathJax = {
       <li id="fn-b7-model">The manuscript evaluates only the electron-free point $\bq=0$. The constant-$\varepsilon_\infty$ model and Eqs. <a class="eqref" href="#b7-eq-De"></a>–<a class="eqref" href="#b7-eq-qc"></a> are added here; they follow from its Eqs. (381), (388), (392), (399) and (405) with the electronic bubble replaced by its small-$\omega$ form for an insulator, and with $\varepsilon_\infty=1$ <a class="eqref" href="#b7-eq-poleq"></a> is the electron-free pole condition at finite $\bq$ that its Eqs. (381), (392) and (406) imply. In SI units the propagator <a class="eqref" href="#b7-eq-De"></a> carries $\varepsilon_0^{-1}$ in place of $4\pi c$, the electronic self-energy is $\varepsilon_0(\varepsilon_\infty-1)\omega^2$, and $4\pi/\OV$ in <a class="eqref" href="#b7-eq-poleq"></a> becomes $1/(\varepsilon_0\OV)$.</li>
       <li id="fn-b7-huang">K. Huang, Proc. R. Soc. A 208, 352 (1951); also M. Born and K. Huang, <em>Dynamical Theory of Crystal Lattices</em> (Oxford, 1954). The manuscript does not discuss polaritons in §7; its Eq. (410) is their end point.</li>
       <li id="fn-b7-limits">EPP Eq. (454), derived in its §7.3 for $c\to\infty$ with the static screened Coulomb interaction $W^{\rm e}(\bq,0)$, is <a class="eqref" href="#b7-eq-limc"></a> once $W^{\rm e}(\bq,0)=4\pi/(\bq\cdot\epsilon_\infty\cdot\bq)$ is inserted (charges sit in its vertices, not in $W^{\rm e}$). X. Gonze and C. Lee, Phys. Rev. B 55, 10355 (1997), give the non-analytic term that DFPT codes such as Quantum ESPRESSO add to the dynamical matrix before diagonalizing it; projected on a bare mode it is <a class="eqref" href="#b7-eq-limc"></a>. The review cites Gonze and Lee in its §VI.A.3.</li>
-      <li id="fn-b7-raman">Backscattering of 514 nm light in GaAs, with a refractive index of about 4.2, transfers $q=2nk_0\approx1.0\times10^{-2}$ Å$^{-1}$, about 180 $q_{\rm c}$. Phonon polaritons were first observed by near-forward Raman scattering in GaP (C. H. Henry and J. J. Hopfield, Phys. Rev. Lett. 15, 964, 1965). Literature, illustrative.</li>
+      <li id="fn-b7-raman">Backscattering of 514 nm light in GaAs, with a refractive index of about 4.2, transfers $q=2nk_0\approx1.0\times10^{-2}$ Å$^{-1}$, about 180 $q_{\mathrm{light}}(\omega_{\mathrm{TO}})$. Phonon polaritons were first observed by near-forward Raman scattering in GaP (C. H. Henry and J. J. Hopfield, Phys. Rev. Lett. 15, 964, 1965). Literature, illustrative.</li>
     </ol>
   </div>
 
@@ -35186,7 +35186,7 @@ window.MathJax = {
       <dt id="gl-b7-wbar" data-first="b7-diag">$\bar\omega_{\bq\nu}$</dt><dd>frequency of the dressed mode that grows out of the bare mode $\bq\nu$: a pole of the dressed phonon propagator, solving <a class="eqref" href="#b7-eq-pole"></a> self-consistently. <span class="gl-src">EPP: $\tilde\omega_\sigma(\bq)$ (Eqs. 407, 410). Giustino: $\tilde\Omega_{\bq\nu}$ (Eq. 137).</span></dd>
       <dt id="gl-b7-jLT" data-first="b7-finiteq">$\bj_\nu$; $|\hat\bq\cdot\bj_\nu|^2$, $|\hat\bq\times\bj_\nu|^2$</dt><dd>current vector of mode $\bq\nu$, with components $j_{\alpha\nu}(\bq)$; the squares of its parts along and across $\hat\bq$ (charge² per mass). The first couples to the longitudinal (Coulomb) field, the second to the transverse photons.</dd>
       <dt id="gl-b7-Zph" data-first="b7-finiteq">$Z^{\ph}_{\mathrm{UP}}$, $Z^{\ph}_{\mathrm{LP}}$</dt><dd>phonon weight of a polariton: residue of the dressed phonon propagator at its pole, in the variable $\omega^2$, relative to that of the bare phonon <a class="eqref" href="#b7-eq-weight"></a>; $Z^{\ph}_{\mathrm{UP}}+Z^{\ph}_{\mathrm{LP}}=1$. The phonon analogue of the quasiparticle weight $Z^{\mathrm{qp}}$ of Section A.7; not the share of energy in the lattice.</dd>
-      <dt id="gl-b7-qc" data-first="b7-crossover">$q_{\mathrm{light}}$</dt><dd>crossover wavevector $\sqrt{\varepsilon_\infty}\,\omega_{\mathrm{TO}}/c$, the in-crystal light-line wavevector $q_{\mathrm{light}}(\omega)$ of Section A.4 at $\omega=\omega_{\mathrm{TO}}$ (A.4's $q_{\mathrm c}$ is its value at $\omega_{\mathrm{LO}}$, 9% larger in GaAs) <a class="eqref" href="#b7-eq-qc"></a>, where the light line in the electronic background crosses the TO frequency: polaritons for $q\lesssim q_{\mathrm{light}}$, electrostatic LO and TO for $q\gg q_{\mathrm{light}}$; $5.6\times10^{-5}$ Å⁻¹ in GaAs (Å⁻¹).</dd>
+      <dt id="gl-b7-qc" data-first="b7-crossover">$q_{\mathrm{light}}$</dt><dd>crossover wavevector $\sqrt{\varepsilon_\infty}\,\omega_{\mathrm{TO}}/c$, the in-crystal light-line wavevector $q_{\mathrm{light}}(\omega)$ of Section A.4 at $\omega=\omega_{\mathrm{TO}}$ (A.4 quotes its value at $\omega_{\mathrm{LO}}$, $q_{\mathrm{light}}(\omega_{\mathrm{LO}})$, 9% larger in GaAs) <a class="eqref" href="#b7-eq-qc"></a>, where the light line in the electronic background crosses the TO frequency: polaritons for $q\lesssim q_{\mathrm{light}}$, electrostatic LO and TO for $q\gg q_{\mathrm{light}}$; $5.6\times10^{-5}$ Å⁻¹ in GaAs (Å⁻¹).</dd>
     </dl>
   </details>
 </section>
@@ -36729,7 +36729,7 @@ window.MathJax = {
     MgO: { einf: 2.96, es: 9.8, wLO: 89.0, wTO: 49.1, OV: 18.7, Z: 1.98, Mr: 9.65 },
     NaCl: { einf: 2.34, es: 5.9, wLO: 32.7, wTO: 20.3, OV: 44.9, Z: 1.12, Mr: 13.9 }
   };
-  // fixed axes: (a) q in Å⁻¹ or q/q_c, |𝒦| dimensionless; (b) q in Å⁻¹, |g| in eV. Grid band of (a) in Å⁻¹.
+  // fixed axes: (a) q in Å⁻¹ or q/q_light, |𝒦| dimensionless; (b) q in Å⁻¹, |g| in eV. Grid band of (a) in Å⁻¹.
   const QA = [1e-8, 1], QN = [1e-3, 1e3], KY = [1e-6, 1e4], QB = [1e-6, 1], GY = [1e-2, 1e6], GRID = [1e-3, 1];
   const logspace = (a, b, n) => EPP.linspace(Math.log10(a), Math.log10(b), n).map(v => Math.pow(10, v));
   const BASE = { a: logspace(QA[0], QA[1], 480), n: logspace(QN[0], QN[1], 420) }, QBX = logspace(QB[0], QB[1], 160);
@@ -36746,7 +36746,7 @@ window.MathJax = {
   function compute(s) {
     const m = MAT[s.mat] || MAT.GaAs, e = m.einf, se = Math.sqrt(e), loss = s.loss, cf = s.c, norm = s.axis === 'n';
     const qv = m.wTO / 1000 / (HC * cf);              // ω_TO/c (Å⁻¹), with c → (factor)·c
-    const qc = se * qv;                               // q_c = √ε∞ ω_TO/c
+    const qc = se * qv;                               // q_light(ω_TO) = √ε∞ ω_TO/c
     const qLO = se * m.wLO / 1000 / (HC * cf);        // light cone of the LO phonon, √ε∞ ω_LO/c
     const xl = norm ? QN : QA;
     const toU = norm ? (x => x * se) : (x => x / qv), fromU = norm ? (u => u / se) : (u => u * qv);
@@ -36787,7 +36787,7 @@ window.MathJax = {
   const lfmt = (v) => String(Number(v.toPrecision(2)));
 
   // ---- canvas text: '$..$' marks math, whose letters (Latin, Greek, ħ) are italic in the text font;
-  //      _x, _{..}, ^x as in EPP.drawRich, so a subscript written outside '$' stays upright: '$q$_c' ----
+  //      _x, _{..}, ^x as in EPP.drawRich, so a subscript written outside '$' stays upright: '$q$_{light}' ----
   const ITAL = /[A-Za-zα-ωħ]/;
   let FT = '', FU = '';
   function runs(s) {
@@ -36947,9 +36947,9 @@ window.MathJax = {
     const covs = [coverage(P, c.xs, c.K0T, 2.5), coverage(P, c.xs, c.KT, 2.5), coverage(P, two, [1, 1], 4), coverage(P, two, [c.KL, c.KL], 4)];
     const XW = P.X(c.xW), XC = P.X(c.xC), inX = (X) => X >= m.l + 1 && X <= W - m.r - 1;
     const vls = [XW, XC].filter(inX), items = [];
-    if (inX(XC)) items.push({ texts: ['$q$_c'], size: 12, color: 'photon', own: XC, cands: beside(P, XC, [1, -1]) });
+    if (inX(XC)) items.push({ texts: ['$q$_{light}'], size: 12, color: 'photon', own: XC, cands: beside(P, XC, [1, -1]) });
     if (inX(XW)) items.push({ texts: ['$ω$/$c$'], size: 12, color: 'muted', own: XW, cands: beside(P, XW, [-1, 1]) });
-    if (!c.norm && !inX(XC)) items.push({ texts: [`← $q$_c = ${sci(c.qc, 2)} Å^{−1}`, '← $q$_c'], size: 11, color: 'photon', cands: leftEdge(P) });
+    if (!c.norm && !inX(XC)) items.push({ texts: [`← $q$_{light} = ${sci(c.qc, 2)} Å^{−1}`, '← $q$_{light}'], size: 11, color: 'photon', cands: leftEdge(P) });
     else if (!c.norm && !inX(XW)) items.push({ texts: ['← $ω$/$c$'], size: 11, color: 'muted', cands: leftEdge(P) });
     if (!c.norm) {
       const X0 = P.X(GRID[0]), X1 = P.X(GRID[1]);
@@ -37027,7 +37027,7 @@ window.MathJax = {
     if (!PA.cv.w || !PA.cv.h || !cur) return;
     const c = cur;
     frame(PA, [`(a) LO and TO kernels of ${c.mat}, $ω$ = $ω$_{TO}`, `(a) kernels of ${c.mat}, $ω$ = $ω$_{TO}`, '(a) kernels'],
-      c.norm ? '$q$/$q$_c' : 'wavevector $q$ (Å^{−1})', ['|𝒦|, in units of the Coulomb value', '|𝒦| (Coulomb value = 1)', '|𝒦|'], layoutA);
+      c.norm ? '$q$/$q$_{light}' : 'wavevector $q$ (Å^{−1})', ['|𝒦|, in units of the Coulomb value', '|𝒦| (Coulomb value = 1)', '|𝒦|'], layoutA);
     const x = PA._hoverX;
     if (!PA.tip.hidden && x > 0) {
       const u = c.toU(x), q = c.norm ? x * c.qc : x;

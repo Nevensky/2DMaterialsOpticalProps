@@ -9,7 +9,7 @@ Common rules (from `v2/build/BUILDER_GUIDE.md` §5 and NOTATION):
 - v2 notation only, in canvas text (`EPP.drawRich`), readouts (MathJax `$…$` in HTML), legends and aria-labels.
   Never write source symbols: no `Ω_uc`, `Ω^e`, `σ` as a branch index, `ε` written `\epsilon`, `Π_jj`, `χ^0` for the
   pair factor, `λ_c`, `m_a`, `e_{aνσ}`, `r^0_a`, `F(q,ω)` for the Lindhard function (F is the phonon propagator).
-- Labels: upright for words (`ω_{LO}`, `ε_∞`, `k_{TF}`, `v_F`, `q_c` with upright c), bold vectors (`{bold:true}`),
+- Labels: upright for words (`ω_{LO}`, `ε_∞`, `k_{TF}`, `v_F`, `q_{light}` with upright light), bold vectors (`{bold:true}`),
   italic variables. Phonon branch index is ν; Cartesian indices α, β (γ, δ inner); bands n, m.
 - Colours read at draw time with `EPP.color(...)`. Suggested roles: photon lines and TO curves `photon`; LO curves `c5`;
   ionic vertices and ionic currents `c4`; electronic vertices, electron lines and carriers `electron`; phonon lines
@@ -184,7 +184,7 @@ $\partial_t\rho=\omega_{\mathrm{tr}}\rho_0\sin(\cdot)$. Work in reduced units (w
 no material data are needed. Coupling readout (from `b8-eq-ratio`, `b8-eq-corollary`): an LO ionic current couples to
 $\hat\bq\cdot\mathbf j=\omega_{\mathrm{tr}}\rho/q$ with weight $\mathcal K_{\mathrm{LO}}$, independent of $j_\perp$; a TO
 ionic current couples to $\mathbf t\cdot\mathbf j=j_\perp$ with weight $\mathcal K_{\mathrm{TO}}$, which is negligible
-unless $q\lesssim q_{\mathrm c}$.
+unless $q\lesssim q_{\mathrm{light}}$.
 
 **What to draw.** One `EPP.canvas` (aspect about 0.6, min height 240 px). Axes: $\hat\bq$ horizontal (label
 "$\hat{\mathbf q}$", bold), $\mathbf t$ vertical (label "$\mathbf t$", bold); about two wavelengths across. Background:
@@ -202,7 +202,7 @@ motion, then show $t=0$).
 
 **Readouts.** $j_\parallel=\omega_{\mathrm{tr}}\rho/q$ ("fixed by continuity"); $j_\perp$ ("free"); "charge piled up per
 half period: set by $j_\parallel$ only"; "LO couples to: the charge ρ (Coulomb, every q)"; "TO couples to: $j_\perp$
-(light, only for $q\lesssim q_{\mathrm c}$)".
+(light, only for $q\lesssim q_{\mathrm{light}}$)".
 
 **Initial state.** $j_\perp=0$, upward transition, animation running (paused under reduced motion): stripes drift to
 the right with horizontal arrows that point forward on positive crests and backward on negative ones.
@@ -293,8 +293,8 @@ readout "ħω_{pl}/√ε_∞" (use ω_p). Rename id and classes (`b8-dynamic-…
 
 **What the reader must learn.** The LO kernel is flat at every $q$ (the Coulomb line knows no $c$), so the Fröhlich
 $1/q$ runs straight through the light cone. The TO kernel equals the LO one deep inside the cone, peaks at the light
-line $q_{\mathrm c}=\sqrt{\varepsilon_\infty}\,\omega/c$ and falls as $(q_{\mathrm c}/q)^2$ outside; making $c$ larger pushes
-$q_{\mathrm c}$ to zero and decouples TO phonons. The cone is 4–5 orders of magnitude below the zone boundary.
+line $q_{\mathrm{light}}=\sqrt{\varepsilon_\infty}\,\omega/c$ and falls as $(q_{\mathrm{light}}/q)^2$ outside; making $c$ larger pushes
+$q_{\mathrm{light}}$ to zero and decouples TO phonons. The cone is 4–5 orders of magnitude below the zone boundary.
 
 **Include position.** Section `b8-lightline`, after the bullet list that reads (B8.19), before the caveat "When the LO–TO
 split is clean". Sentence just before: "Figure B8.5 plots both kernels, bare and screened, and the LO vertex itself
@@ -302,7 +302,7 @@ across the light line."
 
 **Physics.** `b8-eq-ratio` (B8.19): $\mathcal K^0_{\mathrm{LO}}=1$, $\mathcal K^0_{\mathrm{TO}}=\omega^2/(\omega^2-c^2q^2)$;
 with a constant electronic dielectric constant, $\mathcal K_{\mathrm{LO}}=1/\varepsilon$,
-$\mathcal K_{\mathrm{TO}}=\varepsilon^{-1}[1-q^2/q_{\mathrm c}^2]^{-1}$, $q_{\mathrm c}=\sqrt\varepsilon\,\omega/c$. Regularize the light-line
+$\mathcal K_{\mathrm{TO}}=\varepsilon^{-1}[1-q^2/q_{\mathrm{light}}^2]^{-1}$, $q_{\mathrm{light}}=\sqrt\varepsilon\,\omega/c$. Regularize the light-line
 pole with a small loss: $\varepsilon=\varepsilon_\infty+\ii\varepsilon_2$ ($\varepsilon_2$ is the absorptive part of
 NOTATION §12.3), so $|\mathcal K_{\mathrm{TO}}|=1/|\varepsilon_\infty+\ii\varepsilon_2-(q/q_{\mathrm{vac}})^2|$ with
 $q_{\mathrm{vac}}=\omega/c$, $|\mathcal K_{\mathrm{LO}}|=1/|\varepsilon_\infty+\ii\varepsilon_2|$; for the bare TO kernel use
@@ -313,26 +313,26 @@ screened $|g^{\mathrm{dyn}}|=\frac{4\pi e^2}{\OV}\frac{Z^*}{\varepsilon_\infty q
 bare $=\varepsilon_\infty$ times that (`b8-eq-bare`), and Fröhlich's
 $\frac1q\big[\frac{4\pi e^2}{\OV}\frac{\hbar\omega_{\mathrm{LO}}}{2}(\frac1{\varepsilon_\infty}-\frac1{\varepsilon_{\mathrm s}})\big]^{1/2}$
 (`a4-eq-frohlich`). v2 convention: no $\sqrt{N_\ell}$ anywhere (v1's "$\sqrt N|g|$" is simply $|g|$ here). Check values
-(GaAs, $q=0.1$ Å⁻¹): screened 304.0 meV, bare 3314 meV, Fröhlich 321.0 meV; $q_{\mathrm c}=5.571\times10^{-5}$ Å⁻¹,
-$\omega_{\mathrm{TO}}/c=1.688\times10^{-5}$ Å⁻¹. MgO: $q_{\mathrm c}=4.28\times10^{-5}$ Å⁻¹, screened 3193 meV at 0.1 Å⁻¹;
+(GaAs, $q=0.1$ Å⁻¹): screened 304.0 meV, bare 3314 meV, Fröhlich 321.0 meV; $q_{\mathrm{light}}=5.571\times10^{-5}$ Å⁻¹,
+$\omega_{\mathrm{TO}}/c=1.688\times10^{-5}$ Å⁻¹. MgO: $q_{\mathrm{light}}=4.28\times10^{-5}$ Å⁻¹, screened 3193 meV at 0.1 Å⁻¹;
 NaCl: $1.57\times10^{-5}$ Å⁻¹, 1308 meV.
 
 **What to draw.** Two `EPP.Plot` panels in a `viz-grid two` (stacked on phones), both log–log.
-- (a) kernels: x = $q$ (Å⁻¹), fixed $10^{-8}$–1 (or $q/q_{\mathrm c}$, $10^{-3}$–$10^3$, by the axis control); y =
+- (a) kernels: x = $q$ (Å⁻¹), fixed $10^{-8}$–1 (or $q/q_{\mathrm{light}}$, $10^{-3}$–$10^3$, by the axis control); y =
   $|\mathcal K|$ (dimensionless, "normalized to the Coulomb value"), fixed $10^{-6}$–$10^4$. Curves: LO bare (`c5` dashed,
   flat at 1), LO screened (`c5` solid, flat at $1/\varepsilon_\infty$), TO bare (`photon` dashed), TO screened (`photon`
-  solid). Vertical lines at $\omega/c$ (`muted`, label "ω/c") and $q_{\mathrm c}$ (`photon`, label "q_c" with upright c).
+  solid). Vertical lines at $\omega/c$ (`muted`, label "ω/c") and $q_{\mathrm{light}}$ (`photon`, label "q_{light}" with upright light).
   A faint band from $10^{-3}$ to 1 Å⁻¹ labelled "wavevector grids" (only in the absolute-q mode).
 - (b) LO vertex: x = $q$ (Å⁻¹), fixed $10^{-6}$–1; y = $|g|$ (eV), fixed $10^{-2}$–$10^6$. Curves: bare
   $|g^{\mathrm{dyn},0}|$ (`c5` dashed), screened $|g^{\mathrm{dyn}}|$ (`c5` solid, label "Verdi–Giustino"), Fröhlich (`muted`
-  dotted). A faint `photon` band from $10^{-6}$ to $q_{\mathrm c}$ labelled "light cone" when it is wide enough.
+  dotted). A faint `photon` band from $10^{-6}$ to $q_{\mathrm{light}}$ labelled "light cone" when it is wide enough.
 
 **Controls.** `select` "material": GaAs (default), MgO, NaCl. `range` (log) "speed of light ×": 1–$10^6$, default 1
 (label it in words, e.g. "speed of light (× real value)"; do not use λ, the photon polarization index). `range` (log)
 "loss $\varepsilon_2/\varepsilon_\infty$": $10^{-3}$–0.1, default 0.01 (do not call it γ, a damping rate in v2). `seg` "panel
-(a) axis": [q (Å⁻¹)] · [q/q_c].
+(a) axis": [q (Å⁻¹)] · [q/q_{light}].
 
-**Readouts.** $q_{\mathrm c}=\sqrt{\varepsilon_\infty}\,\omega_{\mathrm{TO}}/c$ (Å⁻¹); $|\mathcal K_{\mathrm{TO}}/\mathcal K_{\mathrm{LO}}|$
+**Readouts.** $q_{\mathrm{light}}=\sqrt{\varepsilon_\infty}\,\omega_{\mathrm{TO}}/c$ (Å⁻¹); $|\mathcal K_{\mathrm{TO}}/\mathcal K_{\mathrm{LO}}|$
 at $q=10^{-3}$ Å⁻¹; $|g^{\mathrm{dyn}}|$ at $q=0.1$ Å⁻¹ (meV); Fröhlich at 0.1 Å⁻¹ (meV); $|g^{\mathrm{dyn},0}/g^{\mathrm{dyn}}|=\varepsilon_\infty$.
 
 **Initial state.** GaAs, real speed of light, loss 0.01, absolute-$q$ axis: the TO peak sits at $5.6\times10^{-5}$ Å⁻¹,
@@ -340,12 +340,12 @@ far left of the grid band, and the LO lines are flat.
 
 **Caption key points.**
 - What to notice: the LO kernel is flat, so the Coulomb channel never feels the finite speed of light and the Fröhlich
-  $1/q$ in (b) runs straight through the light cone; the TO kernel matches LO inside the cone, peaks at $q_{\mathrm c}$
-  and falls as $(q_{\mathrm c}/q)^2$.
+  $1/q$ in (b) runs straight through the light cone; the TO kernel matches LO inside the cone, peaks at $q_{\mathrm{light}}$
+  and falls as $(q_{\mathrm{light}}/q)^2$.
 - Marks: dashed = free line $D^0$ (bare vertex), solid = dressed line $D^{\mathrm e}$ (screened vertex); `c5` LO, `photon`
   TO; the two vertical lines; the grid band; in (b) bare, screened and Fröhlich.
-- Try: raise the speed of light by $10^4$ and watch $q_{\mathrm c}$ move left and the TO kernel vanish at every grid
-  wavevector; switch the axis to $q/q_{\mathrm c}$ to see the universal resonance shape; lower the loss to sharpen the peak.
+- Try: raise the speed of light by $10^4$ and watch $q_{\mathrm{light}}$ move left and the TO kernel vanish at every grid
+  wavevector; switch the axis to $q/q_{\mathrm{light}}$ to see the universal resonance shape; lower the loss to sharpen the peak.
 - Model: `b8-eq-ratio` with a constant $\varepsilon_\infty$ plus a small loss; (b) from `b8-eq-static` and `b8-eq-bare` at
   leading order in $q$, $\omega_{\mathrm{LO}}$ in the zero-point amplitude; Fröhlich from `a4-eq-frohlich`; the TO vertex has
   no universal form, since it needs transverse current matrix elements. Parameters from the table (literature values,
@@ -354,6 +354,6 @@ far left of the grid band, and the LO lines are flat.
 **What changes from v1.** v1 uses source notation throughout: "λ_c" for the speed-of-light factor (λ is the photon
 polarization index in v2), "γ" for the loss tangent, "ε^e = ε^∞(1+iγ)", "$\sqrt N|g|$" (v2's $g$ has no $N$ inside: plot
 $|g|$), "G Eq. 7", "E p.95′/p.98′", "K" for the kernels (use $\mathcal K$; $K$ is a spring stiffness in v2), "q_c" with
-italic c, $\epsilon^\infty$, $\Omega_{\rm uc}$, $\mu$ for the reduced mass, "e²/ε₀" in comments. The TO kernel formulas,
+italic c (v2: $q_{\mathrm{light}}$), $\epsilon^\infty$, $\Omega_{\rm uc}$, $\mu$ for the reduced mass, "e²/ε₀" in comments. The TO kernel formulas,
 the material data and the numbers are right; keep them. Rename id and classes (`b8-lightline-…`). Rewrite the caption in
 the four-part structure.

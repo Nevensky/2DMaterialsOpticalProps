@@ -16,7 +16,7 @@ B7.1–B7.3: `exchange`, `resum`, `limits`.
   aria-labels. No source symbols: no `σ` (branch index or anything else: `σ` is the conductivity and the linter flags it in
   script strings), no `Ω^e`, `Ω^0`, `Ω_uc`, `Π_jj`, `Π^{ion,0}`, `m_a`, `Z^*_a` with charge, `ε` written `\epsilon`, no
   `λ_c` (λ is the photon polarization index in v2), no "E Eq. …" labels.
-- Branch index ν; Cartesian α, β; labels upright as whole words: `ω_{TO}`, `ω_{LO}`, `ω_{UP}`, `ω_{LP}`, `ε_∞`, `q_c`
+- Branch index ν; Cartesian α, β; labels upright as whole words: `ω_{TO}`, `ω_{LO}`, `ω_{UP}`, `ω_{LP}`, `ε_∞`, `q_{light}`
   (upright c), `Π^{ph}`, `Π^{ph,0}`, `Π^{ion}`, `Π^{ion,scr}`, `D^e`, `Z^{ph}`, `ω_p^{ion}`. Bold vectors with
   `{bold:true}` (**q**, **j**).
 - The bare optical frequency of the model equals $\omega_{\mathrm{TO}}$ (macroscopic fields only, no local field), so
@@ -43,14 +43,14 @@ B7.1–B7.3: `exchange`, `resum`, `limits`.
   in meV², `wp2 = 180.95 * Z*Z / (Om * Mr) * 4.1802e3`.
 - Derived numbers the figures must reproduce (computed with `/tmp/claude-0/-home-user-2DMaterialsOpticalProps/e798d873-fe28-512b-a4f7-e6f2d29e481a/scratchpad/B07/b7_numbers.py`):
 
-| Preset | $\hbar\omega^{\ion}_{\mathrm p}$ | $\hbar\omega_{\mathrm{LO}}$ (B7.17) | electron-free $q\to0$ (B7.13) | static $\Pi^{\ph,0}$ (B7.12) | $q_{\mathrm c}$ (B7.22) | $q_{\mathrm c}/(2\pi/a)$ |
+| Preset | $\hbar\omega^{\ion}_{\mathrm p}$ | $\hbar\omega_{\mathrm{LO}}$ (B7.17) | electron-free $q\to0$ (B7.13) | static $\Pi^{\ph,0}$ (B7.12) | $q_{\mathrm{light}}$ (B7.22) | $q_{\mathrm{light}}/(2\pi/a)$ |
 |---|---|---|---|---|---|---|
 | GaAs | 44.58 meV | 35.93 meV | 55.64 meV | 29.84 meV | 5.57×10⁻⁵ Å⁻¹ | 5.0×10⁻⁵ |
 | NaCl | 38.95 meV | 32.56 meV | 43.92 meV | 37.36 meV | 1.57×10⁻⁵ Å⁻¹ | 1.4×10⁻⁵ |
 | hBN ∥ | 224.4 meV | 198.0 meV | 281.5 meV | 148.2 meV | 1.90×10⁻⁴ Å⁻¹ | 7.6×10⁻⁵ |
 
-  GaAs polaritons (electrons on, real $c$): at $q=q_{\mathrm c}$, $\hbar\omega_{\mathrm{UP}}=40.73$, $\hbar\omega_{\mathrm{LP}}=27.23$ meV,
-  $Z^{\ph}_{\mathrm{UP}}=0.599$; at $3q_{\mathrm c}$, 100.92 and 32.96 meV, $Z^{\ph}_{\mathrm{UP}}=0.023$; at $10q_{\mathrm c}$, 333.3 and
+  GaAs polaritons (electrons on, real $c$): at $q=q_{\mathrm{light}}$, $\hbar\omega_{\mathrm{UP}}=40.73$, $\hbar\omega_{\mathrm{LP}}=27.23$ meV,
+  $Z^{\ph}_{\mathrm{UP}}=0.599$; at $3q_{\mathrm{light}}$, 100.92 and 32.96 meV, $Z^{\ph}_{\mathrm{UP}}=0.023$; at $10q_{\mathrm{light}}$, 333.3 and
   33.272 meV (TO 28 µeV below $\omega_{\mathrm{TO}}$), $Z^{\ph}_{\mathrm{LP}}=0.998$.
 
 ---
@@ -204,14 +204,14 @@ and the `lam` control are removed.
 
 **Title.** "Order of limits: phonon polaritons, LO and TO" `<span class="tag">interactive</span>`.
 
-**What the reader must learn.** On a logarithmic $q$ axis: for $q\ll q_{\mathrm c}$ the upper polariton meets the LO line and
-carries all the transverse phonon weight, while the lower branch is a photon; for $q\gg q_{\mathrm c}$ the TO phonon is back at
+**What the reader must learn.** On a logarithmic $q$ axis: for $q\ll q_{\mathrm{light}}$ the upper polariton meets the LO line and
+carries all the transverse phonon weight, while the lower branch is a photon; for $q\gg q_{\mathrm{light}}$ the TO phonon is back at
 $\omega_{\mathrm{TO}}$ and the LO stays at $\omega_{\mathrm{LO}}$. Switching the electrons off moves the $q\to0$ mode to the
-electron-free value (B7.13), the result of the EPP manuscript. Raising the speed of light pushes $q_{\mathrm c}$ off the left
+electron-free value (B7.13), the result of the EPP manuscript. Raising the speed of light pushes $q_{\mathrm{light}}$ off the left
 edge: what remains is the electrostatic pair of (B7.21), flat TO and flat LO.
 
 **Include position.** At the end of h4 `b7-finiteq`, after the derivation box "several polar modes, and why the basis
-matters" and directly before h3 `b7-limits`. The sentences just before the box: "… at $10\,q_{\mathrm c}$ the lower polariton
+matters" and directly before h3 `b7-limits`. The sentences just before the box: "… at $10\,q_{\mathrm{light}}$ the lower polariton
 carries 0.998. The phonon weight is not the share of energy in the lattice: the upper polariton at $q\to0$ also stores
 energy in its macroscopic field." The order-of-limits formulas (B7.20)–(B7.22) follow the figure.
 
@@ -224,7 +224,7 @@ factor $s_c$ (call it "speed of light factor" in the UI; not $\lambda$):
 - phonon weights (B7.18) `b7-eq-weight`: $Z^{\ph}=[1+(\omega^{\ion}_{\mathrm p})^2c'^2q^2/(\varepsilon\omega^2-c'^2q^2)^2]^{-1}$ at each root,
   with the unscreened $(\omega^{\ion}_{\mathrm p})^2$; $Z^{\ph}_{\mathrm{UP}}+Z^{\ph}_{\mathrm{LP}}=1$ (v1's
   `X = cq² (ω_UP² − ω_TO²)² / (wp2 ω_UP²)`, `Z_UP = 1/(1+X)`, is the same expression evaluated on the root);
-- light line $c'q/\sqrt{\varepsilon}$; crossover $q_{\mathrm c}=\sqrt{\varepsilon}\,\omega_{\mathrm{TO}}/c'$ ((B7.22) `b7-eq-qc`);
+- light line $c'q/\sqrt{\varepsilon}$; crossover $q_{\mathrm{light}}(\omega_{\mathrm{TO}})=\sqrt{\varepsilon}\,\omega_{\mathrm{TO}}/c'$ ((B7.22) `b7-eq-qc`);
 - electron-free $q\to0$ value $[\omega^2_{\mathrm{TO}}+(\omega^{\ion}_{\mathrm p})^2]^{1/2}$ ((B7.13) `b7-eq-410`);
 - static electron-free self-energy $(\hbar\omega^{\ion}_{\mathrm p})^2/(2\hbar\omega_{\mathrm{TO}})$ ((B7.12) `b7-eq-pi0`).
 - $q$ grid: 361 points, log-spaced from $10^{-7}$ to $10^{-2}$ Å⁻¹. With $\hbar c'q$ in meV: `cq = s_c * 1.97327e6 * q`.
@@ -236,11 +236,11 @@ factor $s_c$ (call it "speed of light factor" in the UI; not $\lambda$):
   $\omega_{\mathrm{LP}}$ (`c4`, dashed 7/4); light line $c'q/\sqrt{\varepsilon}$ (`photon`, dotted 2/3, no hover); horizontal
   $\omega_{\mathrm{TO}}$ (`muted`, label "ω_{TO}"); horizontal electron-free value (`ink`, dotted, label "no electrons, q → 0"),
   shown in both toggle states; a short tick at the right edge at the measured $\hbar\omega_{\mathrm{LO}}$ (`muted`, label
-  "measured LO"); vertical $q_{\mathrm c}$ (`muted`, label "q_c") when inside the frame; a vertical cursor line at the
+  "measured LO"); vertical $q_{\mathrm{light}}$ (`muted`, label "q_{light}") when inside the frame; a vertical cursor line at the
   chosen $q$ (accent, thin). Near the left edge, label the upper branch "ω_{UP} → ω_{LO}" when it is phonon-like there
   ($Z^{\ph}_{\mathrm{UP}}>0.5$), else "LO".
 - (b) phonon weight $Z^{\ph}$ (0–1.06, ticks 0, 0.25, 0.5, 0.75, 1) against the same log $q$ axis (ticks $10^{-7}$,
-  $10^{-5}$, $10^{-3}$): $Z^{\ph}_{\mathrm{UP}}$ (`c5`), $Z^{\ph}_{\mathrm{LP}}$ (`c4` dashed), vertical $q_{\mathrm c}$ and the cursor;
+  $10^{-5}$, $10^{-3}$): $Z^{\ph}_{\mathrm{UP}}$ (`c5`), $Z^{\ph}_{\mathrm{LP}}$ (`c4` dashed), vertical $q_{\mathrm{light}}$ and the cursor;
   text labels "phonon-like" and "photon-like" on the corresponding branches at the left edge.
 
 **Controls (4).**
@@ -248,26 +248,26 @@ factor $s_c$ (call it "speed of light factor" in the UI; not $\lambda$):
 - Electrons: toggle "electrons on ($\varepsilon_\infty$ in $D^{\rme}$)" (default on).
 - Speed of light factor $s_c$: log range 1 to $10^6$, readout "×1.0", "×10", "×1.0·10³" (default 1). This is the
   thought experiment $c\to\infty$.
-- $q$ cursor: log range $10^{-7}$ to $10^{-2}$ Å⁻¹ (default: the preset's $q_{\mathrm c}$ at $s_c=1$, GaAs $5.57\times10^{-5}$ Å⁻¹);
+- $q$ cursor: log range $10^{-7}$ to $10^{-2}$ Å⁻¹ (default: the preset's $q_{\mathrm{light}}$ at $s_c=1$, GaAs $5.57\times10^{-5}$ Å⁻¹);
   the cursor can also be set by clicking or dragging in either panel.
 
 **Readouts** (HTML, MathJax): $\hbar\omega^{\ion}_{\mathrm p}$; static $\Pi^{\ph,0}$ (B7.12); electron-free $q\to0$ value (B7.13);
-$\hbar\omega_{\mathrm{LO}}$ (B7.20, with the current toggle); $q_{\mathrm c}$ (B7.22) and its fraction of $2\pi/a$ (scientific
+$\hbar\omega_{\mathrm{LO}}$ (B7.20, with the current toggle); $q_{\mathrm{light}}$ (B7.22) and its fraction of $2\pi/a$ (scientific
 notation as HTML, e.g. 5.6×10<sup>−5</sup>); at the cursor: $\hbar\omega_{\mathrm{UP}}$, $\hbar\omega_{\mathrm{LP}}$,
 $Z^{\ph}_{\mathrm{UP}}$. GaAs at the default cursor: 40.73 meV, 27.23 meV, 0.599.
 
-**Initial state.** GaAs, electrons on, $s_c=1$, cursor at $q_{\mathrm c}$: the anticrossing is centred, the upper branch reaches
+**Initial state.** GaAs, electrons on, $s_c=1$, cursor at $q_{\mathrm{light}}$: the anticrossing is centred, the upper branch reaches
 the LO line on the left, the TO line on the right is met by the lower branch.
 
 **Caption key points.**
-- *What to notice.* Left of $q_{\mathrm c}$ the transverse phonon has become the upper polariton at the LO frequency; right of it
+- *What to notice.* Left of $q_{\mathrm{light}}$ the transverse phonon has become the upper polariton at the LO frequency; right of it
   TO and LO are the electrostatic pair. The order of the limits $q\to0$ and $c\to\infty$ decides which you get; the
   electrons decide how large the shift is.
 - *Marks.* Colours and line styles as listed; dotted line: the electron-free value of the EPP manuscript; tick: measured
-  LO; vertical lines: $q_{\mathrm c}$ and the cursor.
+  LO; vertical lines: $q_{\mathrm{light}}$ and the cursor.
 - *Try.* Switch the electrons off: the $q\to0$ modes climb to the dotted line (GaAs 55.6 meV). Raise the speed of light:
-  $q_{\mathrm c}$ slides off the left edge and only flat TO and LO remain, the limit $c\to\infty$ of Part A. Drag the cursor across
-  $q_{\mathrm c}$ and watch the phonon weight pass from one branch to the other.
+  $q_{\mathrm{light}}$ slides off the left edge and only flat TO and LO remain, the limit $c\to\infty$ of Part A. Drag the cursor across
+  $q_{\mathrm{light}}$ and watch the phonon weight pass from one branch to the other.
 - *Model.* <a class="eqref" href="#b7-eq-branches"></a>, <a class="eqref" href="#b7-eq-weight"></a>,
   <a class="eqref" href="#b7-eq-410"></a>, <a class="eqref" href="#b7-eq-limq"></a>, <a class="eqref" href="#b7-eq-limc"></a>,
   <a class="eqref" href="#b7-eq-qc"></a>, with the electrons as a constant $\varepsilon_\infty$ (insulator below its gap), macroscopic fields

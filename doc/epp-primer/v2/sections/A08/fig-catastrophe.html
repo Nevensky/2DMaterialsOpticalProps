@@ -43,7 +43,7 @@
     const aF = (1 / p.ei - 1 / p.es) * Math.sqrt(p.m * RY / p.hw);   // α_F
     const qp = Math.sqrt(p.m * hwE / H2M);                            // q_pol (Å⁻¹): ħ²q_pol²/2m* = ħω_LO
     const qD = Math.cbrt(6 * Math.PI * Math.PI / p.Om);               // q_D (Å⁻¹)
-    const qlc = Math.sqrt(p.ei) * hwE / HBARC;                         // q_lc = √ε_∞ ω_LO/c (Å⁻¹)
+    const qlc = Math.sqrt(p.ei) * hwE / HBARC;                         // q_light(ω_LO) = √ε_∞ ω_LO/c (Å⁻¹)
     const aw = aF * p.hw, A0 = Math.atan(qD / qp);                     // α_F ħω_LO (meV)
     const NA = (N) => aw * C2 * (A0 - Math.atan(qD / (N * qp)));
     const AD = (N) => aw * C2 * qp * (N - 1) / qD;
@@ -56,9 +56,9 @@
       conv: aw * C2 * A0,                          // converged nonadiabatic shift, q_min → 0
       N90: qD / (qp * Math.tan(0.1 * A0)),         // N_1 for 90% of it
       Nres: qD / qp,                               // the grid with q_min = q_pol
-      Nlc: qD / qlc,                               // the grid with q_min = q_lc
-      Alc: aw * C2 * qp * (1 / qlc - 1 / qD),      // adiabatic shift with the cutoff at q_lc
-      share: Math.atan(qlc / qp) / A0              // share of the converged nonadiabatic shift from q < q_lc
+      Nlc: qD / qlc,                               // the grid with q_min = q_light(ω_LO)
+      Alc: aw * C2 * qp * (1 / qlc - 1 / qD),      // adiabatic shift with the cutoff at q_light(ω_LO)
+      share: Math.atan(qlc / qp) / A0              // share of the converged nonadiabatic shift from q < q_light(ω_LO)
     });
   }
 
@@ -258,7 +258,7 @@
     frameText(P, 'phonon wavevector $q$ (Å^{−1})', '|dΔ$E$_c/d ln $q$| / $α$_F$ħω$_{LO}',
       ['(b) where the shift comes from: drag to move $q$_{min}', '(b) where the shift comes from: drag $q$_{min}', '(b) where the shift comes from']);
     const vl = [{ k: 'qmin', x: c.qmin, t: '$q$_{min}', col: 'muted' }, { k: 'qp', x: M.qp, t: '$q$_{pol}', col: 'phonon' }, { k: 'qd', x: M.qD, t: '$q$_D', col: 'muted' }];
-    if (c.lc) vl.push({ k: 'qlc', x: M.qlc, t: '$q$_{lc}', col: 'photon' });
+    if (c.lc) vl.push({ k: 'qlc', x: M.qlc, t: '$q$_{light}', col: 'photon' });
     const Xs = vl.map(o => P.X(o.x)), Xm = P.X(c.qmin), ya = fA(c.qmin), yn = M.fNA(c.qmin);
     const boxes = [[Xm - 7, P.Y(yn) - 7, Xm + 7, P.Y(yn) + 7]];
     if (ya <= 0.5) boxes.push([Xm - 7, P.Y(ya) - 7, Xm + 7, P.Y(ya) + 7]);

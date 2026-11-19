@@ -18,7 +18,7 @@ General rules for all five (BUILDER_GUIDE §5 and NOTATION):
   $\varepsilon_\infty$ (canvas `ε_∞`), $\varepsilon_{\mathrm s}$ (`ε_s`), never ε^∞, ε^0, ϵ; cell volume $\OV$ (`Ω_V`); reduced mass $M_{\mathrm r}$ (`M_r`), never μ
   (μ is the chemical potential); cell mass $M_{\mathrm c}$ (`M_c`); $\omega_{\mathrm{LO}}$, $\omega_{\mathrm{TO}}$ (`ω_{LO}`, `ω_{TO}`, upright labels);
   long-range and short-range vertex $g^{\mathrm{lr}}$, $g^{\mathrm{sr}}$ (`g^{lr}`, `g^{sr}`), never $g^{\mathcal L}$, $g^{\mathcal S}$; Fröhlich constant $\alpha_{\mathrm F}$ (`α_F`);
-  polaron length $r_{\mathrm p}$, inverse polaron length $1/r_{\mathrm p}$; light-cone wavevector $q_{\mathrm c}$; cutoff length $r_{\mathrm c}$; coarse grid $N_{\mathrm c}$;
+  polaron length $r_{\mathrm p}$, inverse polaron length $1/r_{\mathrm p}$; light-cone wavevector $q_{\mathrm{light}}(\omega_{\mathrm{LO}})$; cutoff length $r_{\mathrm c}$; coarse grid $N_{\mathrm c}$;
   deformation potential $E_{\mathrm{def}}$ (as in Section A.2; not $E_1$); displacements $\bu_\kappa$, cells $\ell$, $\bR_\ell$ (never $p$, $\bR_p$, $\Delta\tau$, $N_p$);
   electron potential energy $V^{\mathrm{lr}}$; electric field $\bE$; polarization $\bP$; dipole $\mathbf p$. **σ is reserved for the conductivity**: never use it.
 - Equation references in captions use `<a class="eqref" href="#a4-eq-…"></a>`; available ids: `a4-eq-born` (A4.1), `a4-eq-force` (A4.2),
@@ -216,7 +216,7 @@ mixed mode.
 - *Try.* Sweep $\theta$ in hBN and watch the upper mode change from transverse to longitudinal; switch to GaAs and see flat lines; turn
   $\Phi^{\mathrm{dd}}$ off and see every splitting disappear.
 - *Model.* (A4.7) projected on the optical modes (as in the derivation of (A4.8)); parameters above, literature values, illustrative; the Born
-  charges of the hBN model are fitted to the measured LO frequencies; two-atom model of bulk hBN, electrostatic limit ($q\gg q_{\mathrm c}$).
+  charges of the hBN model are fitted to the measured LO frequencies; two-atom model of bulk hBN, electrostatic limit ($q\gg q_{\mathrm{light}}(\omega_{\mathrm{LO}})$).
 
 ---
 
@@ -229,7 +229,7 @@ mixed mode.
 2. Two routes give the same LO coupling: dielectric (A4.15), from $\varepsilon_\infty$, $\varepsilon_{\mathrm s}$, $\omega_{\mathrm{LO}}$; and Born charge, (A4.12) reduced, with the LO frequency from (A4.8).
    $Z^*\to0$ kills the Born-route vertex and its splitting together; $\varepsilon_{\mathrm s}\to\varepsilon_\infty$ does the same for the dielectric route.
 3. $\alpha_{\mathrm F}$ ranges from weak (GaAs 0.07) to intermediate (LiF, NaCl ≈ 5 with $m^*=m_{\mathrm e}$).
-4. Scales: light cone $q_{\mathrm c}\sim10^{-5}$–$10^{-4}$ Å⁻¹ ≪ $1/r_{\mathrm p}\sim10^{-2}$–$10^{-1}$ Å⁻¹ ≪ zone (≈1 Å⁻¹).
+4. Scales: light cone $q_{\mathrm{light}}(\omega_{\mathrm{LO}})\sim10^{-5}$–$10^{-4}$ Å⁻¹ ≪ $1/r_{\mathrm p}\sim10^{-2}$–$10^{-1}$ Å⁻¹ ≪ zone (≈1 Å⁻¹).
 
 **Include position.** End of subsection `a4-alpha` ("Fröhlich's coupling constant"), after its last paragraph. The sentences just before: "When
 $\alpha_{\mathrm F}$ exceeds about 6, the electron digs a potential well in the lattice deep enough to trap itself. The review calls the $1/q$ coupling
@@ -243,17 +243,17 @@ $\alpha_{\mathrm F}$ exceeds about 6, the electron digs a potential well in the 
 - $Z^*$ implied by the dielectric data: $Z^{*2}=(\omega^2_{\mathrm{LO}}-\omega^2_{\mathrm{TO}})\,\OV M_{\mathrm r}\varepsilon_\infty/(4\pi e^2)$ (in consistent units).
 - Acoustic comparison: $|g_{\mathrm{ac}}|=E_{\mathrm{def}}\,(\hbar q/2M_{\mathrm c}v_{\mathrm s})^{1/2}$ (for GaAs $\hbar/2M_{\mathrm c}v_{\mathrm s}=4.22\times10^{-4}$ Å).
 - $\alpha_{\mathrm F}=(1/\varepsilon_\infty-1/\varepsilon_{\mathrm s})\sqrt{13.606\,(m^*/m_{\mathrm e})/\hbar\omega_{\mathrm{LO}}[\text{eV}]}$ (A4.16); $1/r_{\mathrm p}=\sqrt{(m^*/m_{\mathrm e})\,\hbar\omega_{\mathrm{LO}}/3.80998}$ Å⁻¹;
-  $q_{\mathrm c}=\sqrt{\varepsilon_\infty}\,\hbar\omega_{\mathrm{LO}}/1973.27$ Å⁻¹ (A4.19).
+  $q_{\mathrm{light}}(\omega_{\mathrm{LO}})=\sqrt{\varepsilon_\infty}\,\hbar\omega_{\mathrm{LO}}/1973.27$ Å⁻¹ (A4.19).
 - Presets (literature values, illustrative; keep v1's): ($\varepsilon_\infty$, $\varepsilon_{\mathrm s}$, $\hbar\omega_{\mathrm{LO}}$ meV, $\OV$ Å³, $Z^*$, $m^*/m_{\mathrm e}$, $M_{\mathrm r}$ amu, $M_{\mathrm c}$ amu,
   $v_{\mathrm s}$ m/s, $E_{\mathrm{def}}$ eV): GaAs (10.9, 12.9, 36.2, 45.16, 2.07, 0.067, 36.11, 144.64, 5200, 7); GaN, wurtzite treated as isotropic,
   one formula unit (5.35, 9.5, 92, 22.8, 2.65, 0.2, 11.66, 83.73, 8000, 8); MgO (2.96, 9.8, 89, 18.7, 1.98, 0.35, 9.65, 40.30, 9000, 5); LiF
   (1.93, 9.0, 82, 16.3, 1.05, 1.0, 5.08, 25.94, 6600, 5); NaCl (2.34, 5.9, 32.7, 44.9, 1.12, 1.0, 13.95, 58.44, 4500, 5).
 - Check values: GaAs $|g|q=0.0321$ (dielectric) and 0.0305 (Born) eV Å⁻¹, TO 33.28 meV, LO from $Z^*$ 35.93 meV, implied $Z^*=2.19$,
-  $\alpha_{\mathrm F}=0.071$, $1/r_{\mathrm p}=0.0252$ Å⁻¹, $q_{\mathrm c}=6.06\times10^{-5}$ Å⁻¹, LO/acoustic crossing 0.37 Å⁻¹. LiF: 0.430 and 0.429 eV Å⁻¹, $\alpha_{\mathrm F}=5.24$.
+  $\alpha_{\mathrm F}=0.071$, $1/r_{\mathrm p}=0.0252$ Å⁻¹, $q_{\mathrm{light}}(\omega_{\mathrm{LO}})=6.06\times10^{-5}$ Å⁻¹, LO/acoustic crossing 0.37 Å⁻¹. LiF: 0.430 and 0.429 eV Å⁻¹, $\alpha_{\mathrm F}=5.24$.
   MgO: 0.319 eV Å⁻¹, $\alpha_{\mathrm F}=1.72$. NaCl: 0.130 eV Å⁻¹, $\alpha_{\mathrm F}=5.26$. GaN: 0.173 eV Å⁻¹, $\alpha_{\mathrm F}=0.44$.
 
 **What to draw.** Keep v1's layout: (a) log–log $|g|$ (meV) against $q$ (Å⁻¹) from $10^{-6}$ to 1, y from $10^{-1}$ to $10^{9}$ meV: solid LO
-(dielectric route), dashed LO (Born route), dotted acoustic; shaded light cone $q<q_{\mathrm c}$; vertical line at $1/r_{\mathrm p}$; slope labels `∝ q^{−1}`,
+(dielectric route), dashed LO (Born route), dotted acoustic; shaded light cone $q<q_{\mathrm{light}}(\omega_{\mathrm{LO}})$; vertical line at $1/r_{\mathrm p}$; slope labels `∝ q^{−1}`,
 `∝ q^{1/2}`. (b) bars: TO and LO from the dielectric data (LST) and from the Born charge. Legend labels in words plus v2 symbols, e.g.
 "LO, Fröhlich (A4.15): ε_∞, ε_s", "LO, from Z^* and ε_∞", "acoustic, deformation potential E_{def}"; vline label `1/r_p`; band label "light cone".
 Bar ticks "from ε_s/ε_∞" and "from Z^*, ε_∞".
@@ -262,7 +262,7 @@ Bar ticks "from ε_s/ε_∞" and "from Z^*, ε_∞".
 Fix $\hbar\omega_{\mathrm{LO}}$, $\OV$, $E_{\mathrm{def}}$, $m^*$, $M_{\mathrm r}$, $M_{\mathrm c}$, $v_{\mathrm s}$ per preset and show them in a small parameter line.
 
 **Readouts.** $\hbar\omega_{\mathrm{TO}}$ (from (A4.10)), $\hbar\omega_{\mathrm{LO}}$ from $Z^*$, $Z^*$ implied by the dielectric data, $|g^{\mathrm{lr}}|\,q$ for both routes (eV Å⁻¹),
-$\alpha_{\mathrm F}$ with regime (weak < 1 ≤ intermediate < 6 ≤ strong), $1/r_{\mathrm p}$, $q_{\mathrm c}$ (Å⁻¹, scientific notation with MathJax or rich text).
+$\alpha_{\mathrm F}$ with regime (weak < 1 ≤ intermediate < 6 ≤ strong), $1/r_{\mathrm p}$, $q_{\mathrm{light}}(\omega_{\mathrm{LO}})$ (Å⁻¹, scientific notation with MathJax or rich text).
 
 **Initial state.** GaAs preset.
 

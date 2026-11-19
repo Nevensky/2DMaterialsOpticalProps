@@ -212,7 +212,7 @@
       ...[0.15, 0.3, 0.45].map(f => ({ x: xL + f * pw, y: yE - 6 }))], { color: cFg2, halo });
     if (cur.qcIn) {
       const X = plotA.X(M.qc), yb = h - m.b - 6, yt = m.t + 14;
-      L.put('$q$_c', [{ x: X + 5, y: yb }, { x: X - 5, y: yb, align: 'right' }, { x: X - 5, y: yt, align: 'right' }, { x: X + 5, y: yt }], { color: cMut, halo });
+      L.put('$q$_{light}', [{ x: X + 5, y: yb }, { x: X - 5, y: yb, align: 'right' }, { x: X - 5, y: yt, align: 'right' }, { x: X + 5, y: yt }], { color: cMut, halo });
     }
     txt(ctx, 'wavevector $q$ (Å⁻¹)', m.l + pw / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
     ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
@@ -241,7 +241,7 @@
     });
     if (cur.qcIn) {
       const X = plotB.X(M.qc), yb = h - m.b - 6, yt = m.t + 14;
-      L.put('$q$_c', [{ x: X + 5, y: yt }, { x: X - 5, y: yt, align: 'right' }, { x: X + 5, y: yb }, { x: X - 5, y: yb, align: 'right' }], { color: cMut, halo });
+      L.put('$q$_{light}', [{ x: X + 5, y: yt }, { x: X - 5, y: yt, align: 'right' }, { x: X + 5, y: yb }, { x: X - 5, y: yb, align: 'right' }], { color: cMut, halo });
     }
     txt(ctx, 'wavevector $q$ (Å⁻¹)', m.l + pw / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
     ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
@@ -300,10 +300,10 @@
   }
 
   // ---------- controls ----------
-  const q0 = model({ mat: 'GaAs', el: true, sc: 1 }).qc;     // the cursor starts at q_c of GaAs, 5.57×10⁻⁵ Å⁻¹
+  const q0 = model({ mat: 'GaAs', el: true, sc: 1 }).qc;     // the cursor starts at q_light(ω_TO) of GaAs, 5.57×10⁻⁵ Å⁻¹
   let lastMat = 'GaAs';
   function update(st) {
-    // a new crystal moves the cursor to its own q_c at the real speed of light
+    // a new crystal moves the cursor to its own q_light(ω_TO) at the real speed of light
     if (st.mat !== lastMat) { lastMat = st.mat; ui.set('q', EPP.clamp(model({ mat: st.mat, el: st.el, sc: 1 }).qc, QMIN, QMAX), true); }
     const m = model(st), q = EPP.clamp(st.q, QMIN, QMAX);
     cur = { m, q, r: trans(m, q), c: curves(m), qcIn: m.qc > QMIN && m.qc < QMAX };
