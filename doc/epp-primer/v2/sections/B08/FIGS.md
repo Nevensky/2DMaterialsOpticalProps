@@ -325,7 +325,7 @@ NaCl: $1.57\times10^{-5}$ Å⁻¹, 1308 meV.
   A faint band from $10^{-3}$ to 1 Å⁻¹ labelled "wavevector grids" (only in the absolute-q mode).
 - (b) LO vertex: x = $q$ (Å⁻¹), fixed $10^{-6}$–1; y = $|g|$ (eV), fixed $10^{-2}$–$10^6$. Curves: bare
   $|g^{\mathrm{dyn},0}|$ (`c5` dashed), screened $|g^{\mathrm{dyn}}|$ (`c5` solid, label "Verdi–Giustino"), Fröhlich (`muted`
-  dotted). A faint `photon` band from $10^{-6}$ to $q_{\mathrm{light}}$ labelled "light cone" when it is wide enough.
+  dotted). A faint `photon` band from $10^{-6}$ to $q_{\mathrm{light}}(\omega_{\mathrm{LO}})=\sqrt{\varepsilon_\infty}\,\omega_{\mathrm{LO}}/c$, the light cone of the LO phonon (legend "light cone at ω_{LO}"), labelled "light cone" when it is wide enough.
 
 **Controls.** `select` "material": GaAs (default), MgO, NaCl. `range` (log) "speed of light ×": 1–$10^6$, default 1
 (label it in words, e.g. "speed of light (× real value)"; do not use λ, the photon polarization index). `range` (log)

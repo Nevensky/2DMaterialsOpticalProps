@@ -18475,7 +18475,7 @@ window.MathJax = {
   ], () => draw());
   // control labels: italic variables, upright labels
   const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
-  const LAB = { N1: `grid size ${I('N')}<sub>1</sub> (per direction)`, lc: `mark the light cone ${I('q')} &lt; ${I('q')}<sub>lc</sub>` };
+  const LAB = { N1: `grid size ${I('N')}<sub>1</sub> (per direction)`, lc: `mark the light cone ${I('q')} &lt; ${I('q')}<sub>light</sub>(${I('ω')}<sub>LO</sub>)` };
   Object.keys(LAB).forEach(k => { const sp = fig.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
   draw();
 
@@ -18550,7 +18550,7 @@ window.MathJax = {
   </div>
   <p>The review lists four remedies: principal-value integration with the phonon frequencies kept (Fan, 1951); analytic integration of the region near $\bq=0$ (Nery and Allen, 2016); the Brillouin–Wigner form, with the infinitesimal $\hbar\eta$ replaced by the physical linewidth $\Gamma^{\tau}_{n\bk}$; and full spectral functions (Kawai and coworkers, 2014; Antonius and coworkers, 2015). All of them keep $\hbar\omega_{\bq\nu}$, or a physical width, where the adiabatic formula has a vanishing denominator.<sup class="fn"><a href="#fn-a8-remedies">18</a></sup></p>
   <p>The Fröhlich part of a ZPR is not small. Botti and Marques (2013) computed the screened interaction including the screening by the lattice, with a model dielectric function built from the Lyddane–Sachs–Teller relation, and found ZPRs above 1 eV for LiF, LiCl, NaCl and MgO; the review notes that this amounts to a Fan–Migdal calculation with only the long-range polar coupling. Nery and Allen (2016) found a Fröhlich contribution of 45 meV to the 150 meV ZPR of the gap of GaN. For the conduction-band minimum of GaN, the one-band model of this section gives $-\alpha_{\mathrm F}\hbar\omega_{\mathrm{LO}}\approx-41$ meV, of the same size.<sup class="fn"><a href="#fn-a8-botti">19</a></sup></p>
-  <p>The finite speed of light plays no part in the cure. Part A treats the Coulomb interaction as instantaneous, and Part B replaces it by the full electromagnetic field, whose transverse part matters only within the light cone of Section A.4, at wavevectors $q\lesssim q_{\mathrm{light}}(\omega_{\mathrm{LO}})=\sqrt{\varepsilon_\infty}\,\omega_{\mathrm{LO}}/c$, where light in the crystal has the frequency of the LO phonon. In GaAs, $q_{\mathrm{light}}(\omega_{\mathrm{LO}})=6.1\times10^{-5}$ Å⁻¹, about 400 times smaller than $q_{\mathrm{pol}}$ (400 to 1200 times in the three materials of <a class="figref" href="#viz-a8-catastrophe"></a>). The light cone holds about $10^{-3}$ of the converged nonadiabatic shift, and the adiabatic integral cut off at $q_{\mathrm{light}}(\omega_{\mathrm{LO}})$ instead of $q_{\mathrm{min}}$ would still give $-0.69$ eV in GaAs, 270 times the converged value. The divergence is cured by the phonon energy, at $q\approx q_{\mathrm{pol}}$, far outside the light cone. Moreover, the LO coupling that drives it is longitudinal, and the longitudinal, Coulomb part of the field does not depend on $c$ (<a href="#x-light-cone">Section X.1</a>). The word "retardation" adds to the confusion: in the review it means the frequency dependence of the electronic screening, in the EPP manuscript the finite speed of light.<sup class="fn"><a href="#fn-a8-retard">20</a></sup></p>
+  <p>The finite speed of light plays no part in the cure. Part A treats the Coulomb interaction as instantaneous, and Part B replaces it by the full electromagnetic field, whose transverse part matters only within the light cone of Section A.4, at wavevectors $q\lesssim{}$<a class="sym" href="#gl-a4-qc">$q_{\mathrm{light}}(\omega_{\mathrm{LO}})$</a>$\,=\sqrt{\varepsilon_\infty}\,\omega_{\mathrm{LO}}/c$, where light in the crystal has the frequency of the LO phonon. In GaAs, $q_{\mathrm{light}}(\omega_{\mathrm{LO}})=6.1\times10^{-5}$ Å⁻¹, about 400 times smaller than $q_{\mathrm{pol}}$ (400 to 1200 times in the three materials of <a class="figref" href="#viz-a8-catastrophe"></a>). The light cone holds about $10^{-3}$ of the converged nonadiabatic shift, and the adiabatic integral cut off at $q_{\mathrm{light}}(\omega_{\mathrm{LO}})$ instead of $q_{\mathrm{min}}$ would still give $-0.69$ eV in GaAs, 270 times the converged value. The divergence is cured by the phonon energy, at $q\approx q_{\mathrm{pol}}$, far outside the light cone. Moreover, the LO coupling that drives it is longitudinal, and the longitudinal, Coulomb part of the field does not depend on $c$ (<a href="#x-light-cone">Section X.1</a>). The word "retardation" adds to the confusion: in the review it means the frequency dependence of the electronic screening, in the EPP manuscript the finite speed of light.<sup class="fn"><a href="#fn-a8-retard">20</a></sup></p>
 
   <h3 id="a8-nonpert">Beyond perturbation theory: frozen phonons, special displacements and molecular dynamics</h3>
   <p>Another route avoids matrix elements and perturbation theory altogether. Freeze the atoms in a distorted configuration in a supercell, compute the band energies with density-functional theory, and average over configurations drawn from the vibrational state. To see what this computes, expand an energy level to second order in the displacements, as in the derivation box of the Debye–Waller subsection, and average over the harmonic phonon state with occupations $n_{\bq\nu}$. The linear terms average to zero, and the quadratic ones give<sup class="fn"><a href="#fn-a8-frozen">21</a></sup></p>
@@ -18633,7 +18633,6 @@ window.MathJax = {
       <dt id="gl-a8-Theta" data-first="a8-lifetimes">$\Theta(x)$</dt><dd>unit step function: 1 for $x>0$, 0 for $x\lt0$.</dd>
       <dt id="gl-a8-dENA" data-first="a8-catastrophe">$\Delta E^{\mathrm{NA}}_{\mathrm c}$, $\Delta E^{\mathrm A}_{\mathrm c}$</dt><dd>nonadiabatic and adiabatic shifts of the conduction-band minimum of the polar model on a finite grid, <a class="eqref" href="#a8-eq-catastrophe"></a> (meV).</dd>
       <dt id="gl-a8-qD" data-first="a8-catastrophe">$q_{\mathrm D}$, $q_{\mathrm{min}}$</dt><dd>radius of the sphere with the volume of the Brillouin zone, $(6\pi^2/\OV)^{1/3}$, the Debye wavevector of Sections A.2 and A.6; smallest wavevector resolved by a grid of $N_1$ points per direction, $q_{\mathrm D}/N_1$ (Å⁻¹).</dd>
-      <dt id="gl-a8-qlc" data-first="a8-catastrophe">$q_{\mathrm{light}}(\omega_{\mathrm{LO}})$</dt><dd>light-cone wavevector $\sqrt{\varepsilon_\infty}\,\omega_{\mathrm{LO}}/c$, where light in the crystal has the LO frequency (GaAs: $6.1\times10^{-5}$ Å⁻¹); the same symbol and quantity as in <a href="#a-polar">Section A.4</a>; the light-cone radius $q_{\mathrm{light}}(\omega)$ of Section X.1 at $\omega_{\mathrm{LO}}$. <span class="gl-src">Not named in the sources.</span></dd>
     </dl>
   </details>
 </section>
@@ -34974,7 +34973,9 @@ window.MathJax = {
       ...[0.15, 0.3, 0.45].map(f => ({ x: xL + f * pw, y: yE - 6 }))], { color: cFg2, halo });
     if (cur.qcIn) {
       const X = plotA.X(M.qc), yb = h - m.b - 6, yt = m.t + 14;
-      L.put('$q$_{light}', [{ x: X + 5, y: yb }, { x: X - 5, y: yb, align: 'right' }, { x: X - 5, y: yt, align: 'right' }, { x: X + 5, y: yt }], { color: cMut, halo });
+      // inside the frame, and off the cursor line (the labeler sees only curves, dots and labels)
+      const fits = (b) => b.x0 >= m.l && b.x1 <= w - m.r && (Xq < b.x0 - 1 || Xq > b.x1 + 1);
+      L.put('$q$_{light}', [{ x: X + 5, y: yb }, { x: X - 5, y: yb, align: 'right' }, { x: X - 5, y: yt, align: 'right' }, { x: X + 5, y: yt }], { color: cMut, halo }, { valid: fits });
     }
     txt(ctx, 'wavevector $q$ (Å⁻¹)', m.l + pw / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
     ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
@@ -35002,8 +35003,10 @@ window.MathJax = {
       L.put('photon-like', [{ x, y: Y(0.1) + 4, align }], { color: EPP.textColor(up ? 'c4' : 'c5'), halo }, { optional: true });
     });
     if (cur.qcIn) {
-      const X = plotB.X(M.qc), yb = h - m.b - 6, yt = m.t + 14;
-      L.put('$q$_{light}', [{ x: X + 5, y: yt }, { x: X - 5, y: yt, align: 'right' }, { x: X + 5, y: yb }, { x: X - 5, y: yb, align: 'right' }], { color: cMut, halo });
+      const X = plotB.X(M.qc), yb = h - m.b - 6, yt = m.t + 14, ym = Y(0.5) + 4;
+      // inside the frame, and off the cursor line (the labeler sees only curves, dots and labels)
+      const fits = (b) => b.x0 >= m.l && b.x1 <= w - m.r && (Xq < b.x0 - 1 || Xq > b.x1 + 1);
+      L.put('$q$_{light}', [{ x: X + 5, y: yt }, { x: X - 5, y: yt, align: 'right' }, { x: X + 5, y: ym }, { x: X - 5, y: ym, align: 'right' }, { x: X + 5, y: yb }, { x: X - 5, y: yb, align: 'right' }], { color: cMut, halo }, { valid: fits });
     }
     txt(ctx, 'wavevector $q$ (Å⁻¹)', m.l + pw / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
     ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
@@ -37031,7 +37034,7 @@ window.MathJax = {
     const x = PA._hoverX;
     if (!PA.tip.hidden && x > 0) {
       const u = c.toU(x), q = c.norm ? x * c.qc : x;
-      tip(PA, [`<span style="color:var(--muted)">${c.norm ? `${I('q')}/${I('q')}<sub>c</sub> = ${sci(x, 3)}, ` : ''}${I('q')} = ${sci(q, 3)} Å⁻¹</span>`,
+      tip(PA, [`<span style="color:var(--muted)">${c.norm ? `${I('q')}/${I('q')}<sub>light</sub> = ${sci(x, 3)}, ` : ''}${I('q')} = ${sci(q, 3)} Å⁻¹</span>`,
         `${sw('c5')} LO, free line: 1`, `${sw('c5')} LO, dressed line: ${sci(c.KL, 3)}`,
         `${sw('photon')} TO, free line: ${sci(kTO0(u, c.loss), 3)}`, `${sw('photon')} TO, dressed line: ${sci(kTO(u, c.e, c.loss), 3)}`]);
     }
@@ -37093,7 +37096,7 @@ window.MathJax = {
   if (sp) sp.innerHTML = `loss ${I('ε')}<sub>2</sub>/${I('ε')}<sub>∞</sub>`;
   const bq = document.getElementById(`${fig.id}-axis-q`), bn = document.getElementById(`${fig.id}-axis-n`);
   if (bq) { bq.innerHTML = `${I('q')} (Å⁻¹)`; bq.setAttribute('aria-label', 'wavevector q in inverse ångström'); }
-  if (bn) { bn.innerHTML = `${I('q')}/${I('q')}<sub>c</sub>`; bn.setAttribute('aria-label', 'q divided by q_light'); }
+  if (bn) { bn.innerHTML = `${I('q')}/${I('q')}<sub>light</sub>`; bn.setAttribute('aria-label', 'q divided by q_light'); }
 
   // previewed outside Section B.8, links to other parts of the page have no target: keep their text, drop the link
   if (!fig.closest('#b-frohlich')) fig.querySelectorAll('a[href^="#"]').forEach(a => { if (!document.getElementById((a.getAttribute('href') || '').slice(1))) { const s = document.createElement('span'); s.textContent = a.textContent; a.replaceWith(s); } });

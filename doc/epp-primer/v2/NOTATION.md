@@ -270,6 +270,7 @@ Current vertices of electrons and ions are written $\mathbf J^{\mathrm e}$ and $
   `l_{\bq\nu}`, `\varepsilon_{n`, `\Omega^2`, `\Omega_{\rm uc}`, `Q_{ia`, `m_a`, `\mu` as a Cartesian index;
 - italic labels: `^{\rm `, `_{\rm ` (use `\mathrm`), `e^{i`, `e^{-i`, `e^{\ii` (use `\ee^{\ii`), `^{ion}`, `^{ph}`, `^{e}`;
 - the old forms of the electron linewidth: a bare `\Gamma` with an electron subscript (`\Gamma_{n\bk}`, `\Gamma_k`), the review's `\Gamma^{\mathrm{ZP}}` (with or without a subscript) or v1's `\Gamma(T)`, instead of `\Gamma^{\tau}_{n\bk}`, `\Gamma^{\tau}_{n\bk}(T)`, `\Gamma^{\tau}_{n\bk}(T=0)`; also `Γ_`, `Γ(`, `Γ^{ZP}` in figure strings, and in A.7 and A.8 `y` as the imaginary part of the pole (`\ii y`, `|y|`, `y=\mathrm{Im}`, `y\le`); the zone centre `\Gamma` stays legal;
+- the retired names of the light-cone wavevector, $q_{\mathrm c}$ and $q_{\mathrm{lc}}$ (`q_c`, `q_{\rm c}`, `q_{\mathrm{lc}}`; in figure scripts `$q$_c`, `$q$_{lc}`, `q<sub>c</sub>`), in any math of a fragment, footnotes and glossary included, and in figure scripts: write $q_{\mathrm{light}}(\omega)$ with its argument (`build/INTEGRATION_DECISIONS.md` §3);
 - a symbol inventory (first use in reading order) for the naive-reader check, plus glossary entries never used and symbols with no glossary entry.
 
 ---

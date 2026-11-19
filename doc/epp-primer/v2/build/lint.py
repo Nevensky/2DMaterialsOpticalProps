@@ -11,8 +11,9 @@ the glossary box, source callouts, <span class="gl-src"> and <script>:
     (\\Gamma_{n\\bk}, \\Gamma_k), the review's \\Gamma^{\\rm ZP} (with or without a subscript) or v1's \\Gamma(T), instead of
     \\Gamma^{\\tau}_{n\\bk}, and, in A.7 and A.8, y as the imaginary part of the pole (\\ii y, |y|, y = Im Sigma,
     y <= 0); the zone centre \\Gamma stays legal;
-  - the retired names of the light-cone wavevector, q_c and q_lc (INTEGRATION_DECISIONS §3), anywhere in a fragment,
-    footnotes and glossary included, and in figure strings: write q_{\\mathrm{light}}(\\omega) with its argument;
+  - the retired names of the light-cone wavevector, q_c and q_lc (INTEGRATION_DECISIONS §3): in any math of a fragment,
+    footnotes and glossary included, and in figure scripts (canvas '$q$_c', TeX q_{\\mathrm c} in strings, HTML
+    q<sub>c</sub> in control labels and tooltips): write q_{\\mathrm{light}}(\\omega) with its argument;
   - footnote markers whose target is missing, and footnotes never referenced;
   - glossary entries with a missing data-first anchor.
 With --inventory it also writes the symbol inventory: every distinct symbol in reading order with
@@ -77,6 +78,9 @@ ITALIC = [
 
 # Retired primer names of the light-cone wavevector (no source uses them): checked in all math of a fragment.
 RETIRED_QC = re.compile(r'(?<![A-Za-z\\])q_(?:\{\s*(?:\\(?:rm|mathrm)\s*\{?\s*)?l?c\s*\}?\s*\}|l?c(?![A-Za-z]))')
+# The same names as HTML in figure scripts (control labels, tooltips): ${I('q')}<sub>c</sub> or <i>q</i><sub>lc</sub>.
+# Scanned over the whole script, because nested template literals hide these from the string-literal splitter.
+RETIRED_QC_HTML = re.compile(r"""I\(\s*['"]q['"]\s*\)\}\s*<sub>\s*l?c\s*</sub>|(?<![A-Za-z])q\s*</i>\s*<sub>\s*l?c\s*</sub>""")
 
 SCRIPT_RESERVED = [
     (r'\$q\$_\{?l?c\b|(?<![A-Za-z_])q_\{?l?c(?![A-Za-z])', 'retired light-cone symbol q_c or q_lc: label it $q$_{light} (INTEGRATION_DECISIONS §3)'),
@@ -175,6 +179,9 @@ def main():
             for lit in re.findall(r"'(?:[^'\\\n]|\\.)*'|\"(?:[^\"\\\n]|\\.)*\"|`[^`]*`", sc):
                 for pat, msg in SCRIPT_RESERVED:
                     if re.search(pat, lit): problems.append((name, 'script string', f'{msg}  [{lit[:60]}]'))
+                if RETIRED_QC.search(lit): problems.append((name, 'script string', f'retired light-cone symbol q_c or q_lc in TeX: write q_{{\\mathrm{{light}}}} (INTEGRATION_DECISIONS §3)  [{lit[:60]}]'))
+            for m in RETIRED_QC_HTML.finditer(sc):
+                problems.append((name, 'script string', f'retired light-cone symbol q_c or q_lc in an HTML label: write q<sub>light</sub> (INTEGRATION_DECISIONS §3)  [{sc[max(0, m.start() - 30):m.end()]}]'))
         no_script = re.sub(r'<script\b.*?</script>', ' ', raw, flags=re.S)
         for m in MATH.finditer(no_script):
             tex = m.group(1) or m.group(2)

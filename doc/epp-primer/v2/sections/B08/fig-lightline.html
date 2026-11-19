@@ -325,7 +325,7 @@
     const x = PA._hoverX;
     if (!PA.tip.hidden && x > 0) {
       const u = c.toU(x), q = c.norm ? x * c.qc : x;
-      tip(PA, [`<span style="color:var(--muted)">${c.norm ? `${I('q')}/${I('q')}<sub>c</sub> = ${sci(x, 3)}, ` : ''}${I('q')} = ${sci(q, 3)} Å⁻¹</span>`,
+      tip(PA, [`<span style="color:var(--muted)">${c.norm ? `${I('q')}/${I('q')}<sub>light</sub> = ${sci(x, 3)}, ` : ''}${I('q')} = ${sci(q, 3)} Å⁻¹</span>`,
         `${sw('c5')} LO, free line: 1`, `${sw('c5')} LO, dressed line: ${sci(c.KL, 3)}`,
         `${sw('photon')} TO, free line: ${sci(kTO0(u, c.loss), 3)}`, `${sw('photon')} TO, dressed line: ${sci(kTO(u, c.e, c.loss), 3)}`]);
     }
@@ -387,7 +387,7 @@
   if (sp) sp.innerHTML = `loss ${I('ε')}<sub>2</sub>/${I('ε')}<sub>∞</sub>`;
   const bq = document.getElementById(`${fig.id}-axis-q`), bn = document.getElementById(`${fig.id}-axis-n`);
   if (bq) { bq.innerHTML = `${I('q')} (Å⁻¹)`; bq.setAttribute('aria-label', 'wavevector q in inverse ångström'); }
-  if (bn) { bn.innerHTML = `${I('q')}/${I('q')}<sub>c</sub>`; bn.setAttribute('aria-label', 'q divided by q_light'); }
+  if (bn) { bn.innerHTML = `${I('q')}/${I('q')}<sub>light</sub>`; bn.setAttribute('aria-label', 'q divided by q_light'); }
 
   // previewed outside Section B.8, links to other parts of the page have no target: keep their text, drop the link
   if (!fig.closest('#b-frohlich')) fig.querySelectorAll('a[href^="#"]').forEach(a => { if (!document.getElementById((a.getAttribute('href') || '').slice(1))) { const s = document.createElement('span'); s.textContent = a.textContent; a.replaceWith(s); } });

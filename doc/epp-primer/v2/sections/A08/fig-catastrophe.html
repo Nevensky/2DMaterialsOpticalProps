@@ -382,7 +382,7 @@
   ], () => draw());
   // control labels: italic variables, upright labels
   const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
-  const LAB = { N1: `grid size ${I('N')}<sub>1</sub> (per direction)`, lc: `mark the light cone ${I('q')} &lt; ${I('q')}<sub>lc</sub>` };
+  const LAB = { N1: `grid size ${I('N')}<sub>1</sub> (per direction)`, lc: `mark the light cone ${I('q')} &lt; ${I('q')}<sub>light</sub>(${I('ω')}<sub>LO</sub>)` };
   Object.keys(LAB).forEach(k => { const sp = fig.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
   draw();
 

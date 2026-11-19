@@ -212,7 +212,9 @@
       ...[0.15, 0.3, 0.45].map(f => ({ x: xL + f * pw, y: yE - 6 }))], { color: cFg2, halo });
     if (cur.qcIn) {
       const X = plotA.X(M.qc), yb = h - m.b - 6, yt = m.t + 14;
-      L.put('$q$_{light}', [{ x: X + 5, y: yb }, { x: X - 5, y: yb, align: 'right' }, { x: X - 5, y: yt, align: 'right' }, { x: X + 5, y: yt }], { color: cMut, halo });
+      // inside the frame, and off the cursor line (the labeler sees only curves, dots and labels)
+      const fits = (b) => b.x0 >= m.l && b.x1 <= w - m.r && (Xq < b.x0 - 1 || Xq > b.x1 + 1);
+      L.put('$q$_{light}', [{ x: X + 5, y: yb }, { x: X - 5, y: yb, align: 'right' }, { x: X - 5, y: yt, align: 'right' }, { x: X + 5, y: yt }], { color: cMut, halo }, { valid: fits });
     }
     txt(ctx, 'wavevector $q$ (Å⁻¹)', m.l + pw / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
     ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
@@ -240,8 +242,10 @@
       L.put('photon-like', [{ x, y: Y(0.1) + 4, align }], { color: EPP.textColor(up ? 'c4' : 'c5'), halo }, { optional: true });
     });
     if (cur.qcIn) {
-      const X = plotB.X(M.qc), yb = h - m.b - 6, yt = m.t + 14;
-      L.put('$q$_{light}', [{ x: X + 5, y: yt }, { x: X - 5, y: yt, align: 'right' }, { x: X + 5, y: yb }, { x: X - 5, y: yb, align: 'right' }], { color: cMut, halo });
+      const X = plotB.X(M.qc), yb = h - m.b - 6, yt = m.t + 14, ym = Y(0.5) + 4;
+      // inside the frame, and off the cursor line (the labeler sees only curves, dots and labels)
+      const fits = (b) => b.x0 >= m.l && b.x1 <= w - m.r && (Xq < b.x0 - 1 || Xq > b.x1 + 1);
+      L.put('$q$_{light}', [{ x: X + 5, y: yt }, { x: X - 5, y: yt, align: 'right' }, { x: X + 5, y: ym }, { x: X - 5, y: ym, align: 'right' }, { x: X + 5, y: yb }, { x: X - 5, y: yb, align: 'right' }], { color: cMut, halo }, { valid: fits });
     }
     txt(ctx, 'wavevector $q$ (Å⁻¹)', m.l + pw / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
     ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);

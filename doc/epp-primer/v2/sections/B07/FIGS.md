@@ -17,7 +17,7 @@ B7.1–B7.3: `exchange`, `resum`, `limits`.
   script strings), no `Ω^e`, `Ω^0`, `Ω_uc`, `Π_jj`, `Π^{ion,0}`, `m_a`, `Z^*_a` with charge, `ε` written `\epsilon`, no
   `λ_c` (λ is the photon polarization index in v2), no "E Eq. …" labels.
 - Branch index ν; Cartesian α, β; labels upright as whole words: `ω_{TO}`, `ω_{LO}`, `ω_{UP}`, `ω_{LP}`, `ε_∞`, `q_{light}`
-  (upright c), `Π^{ph}`, `Π^{ph,0}`, `Π^{ion}`, `Π^{ion,scr}`, `D^e`, `Z^{ph}`, `ω_p^{ion}`. Bold vectors with
+  (upright light), `Π^{ph}`, `Π^{ph,0}`, `Π^{ion}`, `Π^{ion,scr}`, `D^e`, `Z^{ph}`, `ω_p^{ion}`. Bold vectors with
   `{bold:true}` (**q**, **j**).
 - The bare optical frequency of the model equals $\omega_{\mathrm{TO}}$ (macroscopic fields only, no local field), so
   write `ω_{TO}` where v1 wrote `ω_σ`.

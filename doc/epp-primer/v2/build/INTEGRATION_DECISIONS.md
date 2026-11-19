@@ -72,7 +72,7 @@ The same symbol with **different meanings** in different sections is allowed onl
 | A.7 | $E_{\mathrm c}$ (cutoff of intermediate states) | $E_{\mathrm{cut}}$ | $E_{\mathrm c}$ is the conduction-band minimum in A.8 and A.9 |
 | X.1 | $\mathcal M_{\alpha\gamma}$ (Maxwell operator) | $\mathsf M_{\alpha\gamma}$ | A.9's $\mathcal M^s_{mn\nu}$ is the two-path amplitude |
 | B.8 | $\varepsilon^{\mathrm e}_{\alpha\beta}=\delta_{\alpha\beta}-\sum_\gamma D^0_{\alpha\gamma}\Pi^{\mathrm e}_{\gamma\beta}$ | a distinct symbol for this screening matrix, plus a sentence saying that its longitudinal element equals $\varepsilon^{\mathrm{e,L}}$ | the dielectric tensor is $\varepsilon^{\mathrm e}_{\alpha\beta}=\delta_{\alpha\beta}+(4\pi c/\omega^2)\Pi^{\mathrm e}_{\alpha\beta}$ (B.5, B.9); the transverse elements differ at finite $c$ |
-| A.4, B.7, B.8, A.8, X.1 | $q_{\mathrm c}$, $q_{\mathrm{lc}}$, X.1's own entry | $q_{\mathrm{light}}(\omega)$ with its argument | §2 |
+| A.4, B.7, B.8, A.8, X.1 | $q_{\mathrm c}$, $q_{\mathrm{lc}}$, X.1's own entry | $q_{\mathrm{light}}(\omega)$ with its argument; bare $q_{\mathrm{light}}$ only where the section fixes $\omega$ in its own definition ((B7.22), (B8.19), X.1's free $\omega$) | §2; `build/lint.py` flags $q_{\mathrm c}$ and $q_{\mathrm{lc}}$ in any math and in figure scripts |
 | B.9 | the screened plasma frequency written $\omega_{\mathrm p}$ | $\bar\omega_{\mathrm p}=\omega_{\mathrm p}/\sqrt{\varepsilon_\infty}$ | $\omega_{\mathrm p}$ is the unscreened plasma frequency of A.5 |
 | B.8 | $1-D^0\Pi^{\mathrm e}$ written $\boldsymbol\varepsilon^{\mathrm e}$ | $\mathbf S^{\mathrm e}$ (screening tensor of the photon line) | §3, row above |
 | B.8 | carrier density $n_{\mathrm e}$ | $n_{\mathrm c}$ | §2 |
