@@ -1,0 +1,304 @@
+  <figure class="viz" id="viz-b2-map">
+    <p class="viz-title">Who talks to whom: the Lagrangian as a coupling map <span class="tag">interactive</span></p>
+    <div class="viz-grid side">
+      <div class="b2-map-col" style="min-width:0">
+        <div class="b2-map-svghost" style="width:100%;max-width:520px;margin:0 auto"></div>
+        <p class="legend-strip b2-map-legend" style="margin-top:10px;gap:6px 18px">
+          <span data-view="epp"><svg width="34" height="14" viewBox="0 0 34 14" aria-hidden="true"><path d="M2 7 q 3.75 -6 7.5 0 t 7.5 0 t 7.5 0 t 7.5 0" style="fill:none;stroke:var(--c-photon);stroke-width:2"/></svg>couples to the transverse field $\bA^{\mathrm T}$</span>
+          <span><svg width="34" height="14" viewBox="0 0 34 14" aria-hidden="true"><path d="M2 7 H32" style="fill:none;stroke:var(--c-photon);stroke-width:2;stroke-dasharray:5 4"/></svg>longitudinal field $\bA^{\mathrm L}$ (Coulomb)</span>
+          <span data-view="a"><svg width="34" height="14" viewBox="0 0 34 14" aria-hidden="true"><path d="M2 7 H32" style="fill:none;stroke:var(--fg-2);stroke-width:2.4"/><circle cx="17" cy="7" r="4" style="fill:var(--fg-2)"/></svg>explicit vertex $g$ (Part A)</span>
+          <span><svg width="22" height="18" viewBox="0 0 22 18" aria-hidden="true"><circle cx="11" cy="9" r="7" style="fill:none;stroke:var(--muted);stroke-width:1.6"/></svg>free term of one subsystem</span>
+          <span data-view="epp"><svg width="20" height="18" viewBox="0 0 20 18" aria-hidden="true"><circle cx="10" cy="9" r="7" style="fill:var(--surface);stroke:var(--muted);stroke-width:1.1"/><text x="10" y="12.4" text-anchor="middle" style="font-family:var(--font-ui);font-size:10px;font-weight:600;fill:var(--fg-2)">5</text></svg>number of the term in <a class="eqref" href="#b2-eq-L">(B2.6)</a></span>
+        </p>
+      </div>
+      <div class="b2-map-side" style="min-width:0;display:flex;flex-direction:column;gap:12px">
+      <div class="b2-map-ctrls" style="margin-top:0"></div>
+      <div class="b2-map-info" id="viz-b2-map-info" role="status" aria-live="polite" style="flex:1 1 auto;min-width:0;min-height:7.5em;padding:10px 14px;border:1px solid var(--rule);border-radius:6px;background:var(--surface-2);font-size:0.95rem;line-height:1.5;overflow-x:auto">
+        <div data-k="intro-epp"><p style="margin:0;max-width:none"><strong>Click, tap or Tab to a line.</strong> Each line is one term of the Lagrangian <a class="eqref" href="#b2-eq-L">(B2.6)</a>, except the loop of the ions, which holds terms 2 and 3; a term that contains the field is drawn twice, once for its longitudinal and once for its transverse part, the split <a class="eqref" href="#b2-eq-lt">(B2.3)</a>. This panel gives the term and what it becomes after quantization (<a href="#b-fields">Section B.4</a>). The dotted line in the middle: no term couples electrons and ions directly.</p></div>
+        <div data-k="intro-static" hidden><p style="margin:0;max-width:none"><strong>Electrostatic limit, $c\to\infty$.</strong> Only the longitudinal field remains, and every interaction is the instantaneous Coulomb interaction. Screened by the electrons, it is the world of Part A without its short-range coupling (<a href="#b-electrostatic">Section B.9</a>). The transverse lines matter only near the light cone (<a href="#x-light-cone">Section X.1</a>), at $q\lesssim\sqrt{\varepsilon_\infty}\,\omega_{\mathrm{TO}}/c=$ <span class="b2-map-qlc nw">5.6×10⁻⁵ Å⁻¹</span> in GaAs ($\varepsilon_\infty=10.9$, $\hbar\omega_{\mathrm{TO}}=33.3$ meV), a fraction <span class="b2-map-qfrac">5.0×10⁻⁵</span> of the zone size $2\pi/a=1.11$ Å⁻¹.</p></div>
+        <div data-k="intro-g" hidden><p style="margin:0;max-width:none"><strong>Part A's world.</strong> The transverse field is gone, the longitudinal field has collapsed into the instantaneous Coulomb interaction $v$, and an explicit vertex $g$, <a class="eqref" href="#a2-eq-g">(A2.16)</a>, joins electrons and phonons. Click a line to compare it with its counterpart in the Lagrangian.</p></div>
+        <div data-k="e0" hidden><p style="margin:0;max-width:none"><strong>Term 1</strong>, $\sum_s\big[\frac12m_{\mathrm e}\mathbf v_s^2-V^{\mathrm{en}}_0(\br_s)\big]$, with the frozen crystal potential <a class="eqref" href="#b2-eq-V0">(B2.7)</a>. The potentials of the ions stay at the equilibrium sites and do not follow the ions, so there is no short-range (deformation-potential) coupling. Quantized, with the mean field of the electron–electron Coulomb energy added (<a href="#b-fields">Section B.4</a>), these are the band electrons with energies $E_{n\bk}$ of the free Hamiltonian <a class="eqref" href="#b4-eq-H0">(B4.23)</a>.</p></div>
+        <div data-k="i0" hidden><p style="margin:0;max-width:none"><strong>Terms 2 and 3</strong>: the kinetic energy $\sum\frac12M_\kappa\dot u^2_{\ell\kappa\alpha}$ of the ions and the energy of the short-range springs $\Phi^{\mathrm{sr}}$. The dipole–dipole part $\Phi^{\mathrm{dd}}$ of the force constants, <a class="eqref" href="#a4-eq-dd">(A4.7)</a>, is left out, because the field regenerates it; keeping it would count it twice. Quantized, they are the bare phonons of the free Hamiltonian <a class="eqref" href="#b4-eq-H0">(B4.23)</a>, without LO–TO splitting.</p></div>
+        <div data-k="t0" hidden><p style="margin:0;max-width:none"><strong>Term 4, transverse part</strong>, $\frac1{8\pi}\int\dd^3r\,\big[(\bE^{\mathrm T})^2-B^2\big]$. By <a class="eqref" href="#b2-eq-field">(B2.8)</a> the integrand is $\big[(\partial_t\bA^{\mathrm T})^2/c^2-(\nabla\times\bA^{\mathrm T})^2\big]/8\pi$. The curl costs magnetic energy, which acts as a spring, so each transverse wave is an oscillator of frequency $cq$; quantized, it is a photon of energy $\hbar cq$ (field expansion <a class="eqref" href="#b4-eq-A">(B4.19)</a>).</p></div>
+        <div data-k="l0" hidden><p style="margin:0;max-width:none"><strong>Term 4, longitudinal part</strong>, $\frac1{8\pi}\int\dd^3r\,(\bE^{\mathrm L})^2$. No curl, so no magnetic energy and no spring: the longitudinal field does not oscillate. Gauss's law fixes $\bE^{\mathrm L}$ at each instant, <a class="eqref" href="#b2-eq-EL">(B2.4)</a>, and this energy becomes the instantaneous Coulomb energy $\frac12\int\dd^3r\int\dd^3r'\,\rho(\br)\,\rho(\br')/|\br-\br'|$ of the electrons and the ionic bound charges, with $\rho=\rho^{\mathrm e}+\rho^{\mathrm{ion}}$ and $\rho^{\mathrm{ion}}=-\nabla\cdot\bP$, <a class="eqref" href="#b4-eq-coulomb">(B4.20)</a>.</p></div>
+        <div data-k="et" hidden><p style="margin:0;max-width:none"><strong>Term 5, transverse part</strong>, $-\frac ec\sum_s\mathbf v_s\cdot\bA^{\mathrm T}(\br_s,t)$: the electron current drives the transverse field. In the Hamiltonian it gives electron–photon couplings linear and quadratic in $\bA$, <a class="eqref" href="#b4-eq-H">(B4.10)</a>: optical absorption and emission, and the electronic photon self-energy $\Pi^{\mathrm e}$, <a class="eqref" href="#b5-eq-Pie">(B5.19)</a>.</p></div>
+        <div data-k="el" hidden><p style="margin:0;max-width:none"><strong>Term 5, longitudinal part</strong>, $-\frac ec\sum_s\mathbf v_s\cdot\bA^{\mathrm L}(\br_s,t)$: the electrons are sources of the longitudinal field $\bE^{\mathrm L}$. Two such couplings make the electron–electron Coulomb interaction; screened by the electrons, it becomes $W^{\mathrm e}$, <a class="eqref" href="#b9-eq-We">(B9.6)</a>.</p></div>
+        <div data-k="it" hidden><p style="margin:0;max-width:none"><strong>Term 6, transverse part</strong>, $\frac ec(\mathbf Z^*_\kappa\cdot\dot\bu_{\ell\kappa})\cdot\bA^{\mathrm T}$ at each atom: the polarization current of a transverse optical (TO) phonon emits and absorbs photons. In the Hamiltonian it gives ion–photon couplings linear and quadratic in $\bA$, <a class="eqref" href="#b4-eq-H">(B4.10)</a>: infrared absorption at $\omega_{\mathrm{TO}}$, phonon polaritons, and the ionic photon self-energy $\Pi^{\mathrm{ion}}$, <a class="eqref" href="#b5-eq-Piion">(B5.26)</a>, built from the ionic current vertex <a class="eqref" href="#b5-eq-jion">(B5.22)</a>.</p></div>
+        <div data-k="il" hidden><p style="margin:0;max-width:none"><strong>Term 6, longitudinal part</strong>, $\frac ec(\mathbf Z^*_\kappa\cdot\dot\bu_{\ell\kappa})\cdot\bA^{\mathrm L}$ at each atom. By <a class="eqref" href="#b2-eq-dipole">(B2.12)</a> it is equivalent, up to a total time derivative, to the potential energy $-e(\mathbf Z^*_\kappa\cdot\bu_{\ell\kappa})\cdot\bE^{\mathrm L}$ of the Born dipole in the longitudinal field. A longitudinal polarization wave carries bound charge $\rho^{\mathrm{ion}}=-\nabla\cdot\bP$, <a class="eqref" href="#b2-eq-P">(B2.10)</a>. Its Coulomb energy with itself is the dipole–dipole interaction that lifts LO above TO, <a class="eqref" href="#a4-eq-lot">(A4.8)</a> (<a href="#b-dielectric">Sections B.3</a>, <a href="#b-phonon-se">B.7</a> and <a href="#b-electrostatic">B.9</a>). Its Coulomb energy with the electrons is the polar (Fröhlich-type) coupling, still unscreened: the polar vertex of <a href="#b-foundations">Section B.1</a> with $\boldsymbol\varepsilon_\infty$ replaced by 1.</p></div>
+        <div data-k="ei" hidden><p style="margin:0;max-width:none"><strong>No direct term.</strong> No term of <a class="eqref" href="#b2-eq-L">(B2.6)</a> contains both an electron coordinate and an ionic displacement. Electrons and ions meet only in $\bA$: by the Coulomb path, electron → $\bA^{\mathrm L}$ → bound charge, which is instantaneous, and by the light path, electron current → $\bA^{\mathrm T}$ → polarization current, which travels at the speed $c$. The vertex returns as a composite: electron current → photon dressed by the electrons → ionic current, <a class="eqref" href="#b8-eq-vertex">(B8.6)</a>.</p></div>
+        <div data-k="g_e0" hidden><p style="margin:0;max-width:none"><strong>Part A: band energies</strong> $E_{n\bk}$ of the working Hamiltonian <a class="eqref" href="#a2-eq-H0">(A2.19)</a>. They already contain the mean field (Hartree and exchange–correlation) of the electron–electron interaction. Counterpart in the Lagrangian: term 1 plus the mean field of the electron–electron Coulomb energy that $\bA^{\mathrm L}$ carries.</p></div>
+        <div data-k="g_v" hidden><p style="margin:0;max-width:none"><strong>Part A: the instantaneous Coulomb interaction</strong> $v$, written $v\,\delta(t-t')$ because it acts without delay. It is the only interaction of the many-body Hamiltonian of <a href="#a-hedin-baym">Section A.5</a>; screened, it becomes $W$, <a class="eqref" href="#a5-eq-W">(A5.19)</a>. Counterpart in the Lagrangian: the energy of the longitudinal field.</p></div>
+        <div data-k="g_i0" hidden><p style="margin:0;max-width:none"><strong>Part A: phonons</strong> $\hbar\omega_{\bq\nu}$ from density-functional perturbation theory, <a class="eqref" href="#a2-eq-H0">(A2.19)</a>. Their force constants contain the dipole–dipole term <a class="eqref" href="#a4-eq-dd">(A4.7)</a>, so the LO–TO splitting is already in $\omega_{\bq\nu}$. The Lagrangian removes that part from term 3 and regenerates it through $\bA^{\mathrm L}$.</p></div>
+        <div data-k="g_g" hidden><p style="margin:0;max-width:none"><strong>Part A: the explicit vertex.</strong> $\hat H^{\mathrm{e\text{-}ph}}$, <a class="eqref" href="#a2-eq-H">(A2.15)</a>, sums $g_{mn\nu}(\bk,\bq)\,c^\dagger_{m\bk+\bq}c_{n\bk}\,\hat\phi_{\bq\nu}$ over all labels, with a factor $N_\ell^{-1/2}$. Here $g$ is an input: the matrix element of the potential change screened by the electrons, <a class="eqref" href="#a3-eq-scf">(A3.13)</a>, whose polar long-range part is <a class="eqref" href="#a4-eq-glr">(A4.14)</a>. That part contains the screened Coulomb field of the displaced ions, the physics that the Lagrangian sends along the two field paths; the short-range part has no counterpart there.</p></div>
+      </div>
+      </div>
+    </div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> Every line that leaves the electrons or the ions ends on the field; no line joins them directly. In the Part A view the field is gone: an instantaneous Coulomb line and an explicit vertex $g$ take its place, and the polar part of $g$ is what the Lagrangian carries along its two field paths.</p><div class="cap-more">
+      <p><strong>Marks.</strong> Boxes: electrons (blue), ions (amber), the transverse and the longitudinal field (rose; dashed border: longitudinal). Wavy lines couple to the transverse field, dashed lines to the longitudinal (Coulomb) field. Loops are the free terms of one subsystem, zigzag for the springs of the ions; the dotted grey line marks the missing direct term. Each label names a term, or its longitudinal or transverse part; the small number is its place in <a class="eqref" href="#b2-eq-L">(B2.6)</a>. In the Part A view a solid line with a dot is the explicit vertex.</p>
+      <p><strong>Try.</strong> (1) Click or tap the dotted middle line, then the two paths around it. (2) Switch on the electrostatic limit, $c\to\infty$: the transverse field and its three lines fade, and only Coulomb lines join electrons and ions. (3) Switch to the Part A view and click <span class="nw">$g$;</span> compare it with the two paths. Keyboard: Tab moves between lines, Enter or Space selects one, Escape clears it.</p>
+      <p><strong>Model.</strong> The structure of <a class="eqref" href="#b2-eq-L">(B2.6)</a>, with the split <a class="eqref" href="#b2-eq-lt">(B2.3)</a> into longitudinal and transverse parts; the longitudinal field follows the charges, <a class="eqref" href="#b2-eq-EL">(B2.4)</a>, and <a href="#b-fields">Section B.4</a> turns its energy into the Coulomb energy. The only number is the light-cone wavevector of GaAs, from $\varepsilon_\infty=10.9$ and $\hbar\omega_{\mathrm{TO}}=33.3$ meV (literature values).</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b2-map');
+  if (!fig || !window.EPP) return;
+  // previewed outside Section B.2 (the isolated figure test), the links of the cards and the caption have no target:
+  // keep their text, drop the link
+  if (!fig.closest('#b-lagrangian')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+  const NS = 'http://www.w3.org/2000/svg';
+  const host = fig.querySelector('.b2-map-svghost');
+  const info = fig.querySelector('.b2-map-info');
+  const W = 380, H = 316, TAU = 2 * Math.PI;
+  const FADE = EPP.reducedMotion ? 'none' : 'opacity .35s';
+  const mk = (tag, attrs, parent, style) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (style) e.setAttribute('style', style); if (parent) parent.appendChild(e); return e; };
+
+  // ---------- light-cone estimate of the intro-static card: q = sqrt(eps_inf) omega_TO / c (GaAs, literature values) ----------
+  {
+    const HC = 1973.27, EPS_INF = 10.9, HW_TO = 0.0333, A_LAT = 5.653;          // eV Å, -, eV, Å
+    const q = Math.sqrt(EPS_INF) * HW_TO / HC, frac = q / (TAU / A_LAT);         // 5.57e-5 1/Å, 5.0e-5
+    const sci = (v) => { const e = Math.floor(Math.log10(v)), m = v / Math.pow(10, e); return `${m.toFixed(1)}×10${String(e).replace('-', '⁻').replace(/\d/g, d => '⁰¹²³⁴⁵⁶⁷⁸⁹'[d])}`; };
+    const a = fig.querySelector('.b2-map-qlc'), b = fig.querySelector('.b2-map-qfrac');
+    if (a && isFinite(q)) a.textContent = `${sci(q)} Å⁻¹`;
+    if (b && isFinite(frac)) b.textContent = sci(frac);
+  }
+
+  // ---------- labels as SVG text ----------
+  // Markup: $…$ is math (letters italic, in the text font; digits and signs upright); [x] is a bold upright vector;
+  // |x| is an upright label inside math; _x, _{…}, ^x, ^{…} are sub- and superscripts. A superscript followed by a
+  // subscript (V^{en}_0) is stacked.
+  const ITAL = /[A-Za-zα-ωϑϕℓħ]/;
+  function parse(s) {
+    const items = [], st = { math: false, bold: false, up: false };
+    let cur = null;
+    const add = (ch, m) => {
+      const it = st.math && !st.bold && !st.up && ITAL.test(ch);
+      if (!cur || cur.m !== m) { cur = { m, runs: [] }; items.push(cur); }
+      const L = cur.runs[cur.runs.length - 1];
+      if (L && L.b === st.bold && L.i === it) L.t += ch; else cur.runs.push({ t: ch, b: st.bold, i: it });
+    };
+    const run = (str, m) => {
+      for (let k = 0; k < str.length;) {
+        const ch = str[k];
+        if (ch === '$') { st.math = !st.math; k++; }
+        else if (ch === '[') { st.bold = true; k++; }
+        else if (ch === ']') { st.bold = false; k++; }
+        else if (ch === '|') { st.up = !st.up; k++; }
+        else if ((ch === '_' || ch === '^') && k + 1 < str.length) {
+          let g;
+          if (str[k + 1] === '{') { let e = str.indexOf('}', k + 2); if (e < 0) e = str.length; g = str.slice(k + 2, e); k = e + 1; }
+          else { g = str[k + 1]; k += 2; }
+          const keep = { bold: st.bold, up: st.up };
+          cur = null; run(g, ch === '_' ? -1 : 1); cur = null;
+          st.bold = keep.bold; st.up = keep.up;
+        } else { add(ch, m); k++; }
+      }
+    };
+    run(String(s), 0);
+    return items;
+  }
+  let FS = 1;                                       // label scale on narrow screens
+  function rich(parent, x, y, s, o = {}) {
+    const size = (o.size || 12) * (o.fixed ? 1 : FS);
+    const t = mk('text', { x: x.toFixed(1), y: y.toFixed(1), 'text-anchor': o.anchor || 'middle' }, parent,
+      `fill:${o.fill || 'var(--fg-2)'};font-family:var(--font-ui);font-size:${size.toFixed(2)}px;${o.weight ? `font-weight:${o.weight};` : ''}${o.italic ? 'font-style:italic;' : ''}`);
+    const items = parse(s);
+    // a script followed directly by the opposite script is stacked, with the wider shifts TeX uses for the pair
+    for (let j = 1; j < items.length; j++) if (items[j].m && items[j - 1].m === -items[j].m && !items[j - 1].pair) { items[j - 1].pair = true; items[j].pair = items[j].second = true; }
+    const shift = (it) => (it.m > 0 ? (it.pair ? 0.42 : 0.36) : (it.pair ? -0.27 : -0.16)) * size;
+    const est = (els, sz) => els.reduce((w, e) => w + e.textContent.length * sz * 0.52, 0);
+    const width = (it) => { let w = 0; it.els.forEach(e => { try { w += e.getComputedTextLength(); } catch (_) { /* not rendered */ } }); return w > 0 ? w : est(it.els, it.sz); };
+    let pend = 0;
+    items.forEach((it, j) => {
+      const sz = size * (it.m ? 0.72 : 1);
+      it.sz = sz; it.els = [];
+      it.runs.forEach((r, n) => {
+        const ts = mk('tspan', {}, t);
+        ts.textContent = r.t;
+        let css = '';
+        if (r.i) css += `font-family:var(--font-text);font-style:italic;font-size:${(sz * 1.08).toFixed(2)}px;`;
+        else if (it.m) css += `font-size:${sz.toFixed(2)}px;`;
+        if (r.b) css += 'font-weight:700;font-style:normal;';
+        if (css) ts.setAttribute('style', css);
+        if (it.m) ts.setAttribute('baseline-shift', shift(it).toFixed(2));
+        if (n === 0 && pend) { ts.setAttribute('dx', pend.toFixed(2)); pend = 0; }
+        it.els.push(ts);
+      });
+      if (it.second) {                                                    // start the second script where the first began
+        const prev = items[j - 1], w0 = width(prev), w1 = width(it);
+        it.els[0].setAttribute('dx', (-w0).toFixed(2));
+        if (w1 < w0) pend = w0 - w1;
+      }
+    });
+    return t;
+  }
+
+  // ---------- geometry ----------
+  const wavy = (x1, y1, x2, y2, amp = 4, wl = 11) => { const dx = x2 - x1, dy = y2 - y1, L = Math.hypot(dx, dy), n = Math.max(1, Math.round(L / wl)), nx = -dy / L, ny = dx / L; let d = ''; const N = n * 12; for (let k = 0; k <= N; k++) { const t = k / N, s = amp * Math.sin(TAU * n * t); d += (k ? 'L' : 'M') + (x1 + dx * t + nx * s).toFixed(2) + ' ' + (y1 + dy * t + ny * s).toFixed(2); } return d; };
+  const loop = (cx, cy, r, kind = 'plain', n = 10, a = 2.4) => { let d = ''; const N = 160; for (let k = 0; k <= N; k++) { const th = TAU * k / N; let rr = r; if (kind === 'wavy') rr += a * Math.sin(n * th); if (kind === 'zig') { const f = (n * th / TAU) % 1; rr += a * (4 * Math.abs(f - 0.5) - 1); } d += (k ? 'L' : 'M') + (cx + rr * Math.cos(th)).toFixed(2) + ' ' + (cy + rr * Math.sin(th)).toFixed(2); } return d + 'Z'; };
+  const E = { x: 82, y: 158 }, I = { x: 298, y: 158 }, T = { x: 190, y: 44 }, L = { x: 190, y: 272 };
+
+  // line styles: transverse photon (wavy), longitudinal photon = Coulomb (dashed), free terms, ghost, explicit vertex
+  const STY = {
+    photon: ['var(--c-photon)', 2, ''], coulomb: ['var(--c-photon)', 2, '6 4'], electron: ['var(--c-electron)', 2, ''],
+    phonon: ['var(--c-phonon)', 2, ''], ghost: ['var(--muted)', 1.6, '2 4'], vertex: ['var(--fg-2)', 2.6, '']
+  };
+  const TXT = { photon: 'var(--t-photon)', coulomb: 'var(--t-photon)', electron: 'var(--t-electron)', phonon: 'var(--t-phonon)', ghost: 'var(--muted)', vertex: 'var(--fg)' };
+
+  // ---------- the map: edges (one per term part), nodes, placeholders ----------
+  // Each edge: key, view ('epp' | 'a'), path, style, labels, aria-label, term number (bead on the line or number in the loop),
+  // and whether it couples to the transverse field (faded in the electrostatic limit).
+  const SPEC = [
+    { k: 'e0', view: 'epp', d: () => loop(17, 158, 13), sty: 'electron', lab: [{ x: 17, y: 132, s: '$V^{|en|}_0$' }], num: { x: 16.5, y: 158, t: '1', inner: true }, aria: 'Term 1: electrons in the frozen crystal potential' },
+    { k: 'i0', view: 'epp', d: () => loop(364, 158, 14, 'zig', 12, 2.4), sty: 'phonon', lab: [{ x: 364, y: 131, s: '$Φ^{|sr|}$' }], num: { x: 364, y: 158, t: '2,3', inner: true }, aria: 'Terms 2 and 3: harmonic ions on short-range springs' },
+    { k: 't0', view: 'epp', trans: true, d: () => loop(276, 44, 12, 'wavy', 9, 2.1), sty: 'photon', lab: [{ x: 293, y: 48, s: '$ħcq$', o: { anchor: 'start' } }], num: { x: 277, y: 44, t: '4', inner: true }, aria: 'Term 4, transverse part: free photons' },
+    { k: 'l0', view: 'epp', d: () => loop(276, 272, 12), sty: 'coulomb', lab: [{ x: 293, y: 276, s: '$(E^{|L|})^2/8π$', o: { anchor: 'start' } }], num: { x: 277, y: 272, t: '4', inner: true }, aria: 'Term 4, longitudinal part: energy of the longitudinal field, which becomes the Coulomb energy' },
+    { k: 'et', view: 'epp', trans: true, d: () => wavy(110, 133, 146, 68), sty: 'photon', lab: [{ x: 114, y: 104, s: '$−(e/c) [v]·[A]^{|T|}$', o: { anchor: 'end' } }], num: { x: 128, y: 100.5, t: '5' }, aria: 'Term 5, transverse part: electron current coupled to the transverse field' },
+    { k: 'el', view: 'epp', d: () => 'M110 183 L146 248', sty: 'coulomb', lab: [{ x: 114, y: 219, s: '$−(e/c) [v]·[A]^{|L|}$', o: { anchor: 'end' } }], num: { x: 128, y: 215.5, t: '5' }, aria: 'Term 5, longitudinal part: electrons as sources of the longitudinal, Coulomb field' },
+    { k: 'it', view: 'epp', trans: true, d: () => wavy(270, 133, 234, 68), sty: 'photon', lab: [{ x: 266, y: 104, s: '$(e/c)([Z]^*·[u̇])·[A]^{|T|}$', o: { anchor: 'start' } }], num: { x: 252, y: 100.5, t: '6' }, aria: 'Term 6, transverse part: polarization current of the ions coupled to the transverse field' },
+    { k: 'il', view: 'epp', d: () => 'M270 183 L234 248', sty: 'coulomb', lab: [{ x: 266, y: 219, s: '$(e/c)([Z]^*·[u̇])·[A]^{|L|}$', o: { anchor: 'start' } }], num: { x: 252, y: 215.5, t: '6' }, aria: 'Term 6, longitudinal part: bound charge of the ions coupled to the longitudinal, Coulomb field' },
+    { k: 'ei', view: 'epp', d: () => 'M136 158 L244 158', sty: 'ghost', lab: [{ x: 190, y: 150, s: 'no direct term', o: { italic: true, size: 11.5 } }], aria: 'No direct term between electrons and ions' },
+    { k: 'g_e0', view: 'a', d: () => loop(17, 158, 13), sty: 'electron', lab: [{ x: 17, y: 132, s: '$E_{n[k]}$' }], aria: 'Part A: band energies' },
+    { k: 'g_i0', view: 'a', d: () => loop(364, 158, 14, 'zig', 12, 2.4), sty: 'phonon', lab: [{ x: 362, y: 129, s: '$ħω_{[q]ν}$' }], aria: 'Part A: phonon energies from density-functional perturbation theory' },
+    { k: 'g_v', view: 'a', d: () => loop(56, 196, 12), sty: 'coulomb', lab: [{ x: 56, y: 225, s: '$v δ(t−t′)$' }], aria: 'Part A: instantaneous Coulomb interaction' },
+    { k: 'g_g', view: 'a', d: () => 'M136 158 L244 158', sty: 'vertex', lab: [{ x: 190, y: 144, s: '$g_{mnν}([k],[q])$', o: { fill: 'var(--fg)', size: 12.5 } }, { x: 190, y: 177, s: 'screened, DFPT', o: { fill: 'var(--muted)', size: 11 } }], dot: [190, 158], aria: 'Part A: explicit electron–phonon vertex g' }
+  ];
+  const NODES = [
+    { view: 'both', c: E, w: 108, h: 50, title: 'electrons', sub: { epp: '$[r]_s, [v]_s$', a: '$ψ_{n[k]}$' }, col: 'electron' },
+    { view: 'both', c: I, w: 108, h: 50, title: 'ions · phonons', sub: { epp: 'dipole $e[Z]^*·[u]$', a: '$u_{ℓκα}$' }, col: 'phonon' },
+    { view: 'epp', trans: true, c: T, w: 148, h: 48, title: 'transverse field $[A]^{|T|}$', sub: 'photons', col: 'photon' },
+    { view: 'epp', c: L, w: 148, h: 48, title: 'longitudinal field $[A]^{|L|}$', sub: '= Coulomb', col: 'photon', dashed: true }
+  ];
+  const ARIA = {
+    epp: 'Coupling map of the Lagrangian: electrons on the left, ions on the right, the transverse field at the top and the longitudinal field at the bottom. Each line is one term of the Lagrangian, or one of its two parts; every line from the electrons or the ions ends on the field, and none joins them directly.',
+    a: 'Coupling map of the Part A Hamiltonian: electrons and phonons joined by an explicit vertex g, with band energies, phonon energies and the instantaneous Coulomb interaction as loops; there is no dynamical field.'
+  };
+
+  let view = 'epp', stat = false, sel = null, hov = null, svg = null;
+  const edges = [], nodes = [];
+
+  function build() {
+    const hostW = host.clientWidth;
+    FS = hostW > 0 ? Math.min(1.25, Math.max(1, W / hostW)) : 1;
+    const act = document.activeElement, focusK = act && host.contains(act) && act.dataset ? act.dataset.k : null;
+    host.textContent = ''; edges.length = 0; nodes.length = 0;
+    svg = mk('svg', { viewBox: `0 0 ${W} ${H}`, role: 'group', 'aria-label': ARIA[view] }, host, 'display:block;width:100%;height:auto;overflow:visible');
+    const gE = mk('g', {}, svg), gN = mk('g', {}, svg), gP = mk('g', {}, svg);
+    for (const sp of SPEC) {
+      const [col, w, dash] = STY[sp.sty], d = sp.d();
+      const g = mk('g', { 'data-k': sp.k, tabindex: '0', role: 'button', 'aria-label': sp.aria, 'aria-controls': 'viz-b2-map-info', 'aria-pressed': 'false' }, gE, `cursor:pointer;transition:${FADE};outline:none`);
+      const halo = mk('path', { d }, g, `stroke:${col};stroke-width:12;fill:none;opacity:0;stroke-linecap:round;stroke-linejoin:round`);
+      const vis = mk('path', { d }, g, `stroke:${col};stroke-width:${w};fill:none;stroke-linecap:round;stroke-linejoin:round${dash ? `;stroke-dasharray:${dash}` : ''}`);
+      mk('path', { d }, g, `stroke:transparent;stroke-width:18;fill:${d.endsWith('Z') ? 'transparent' : 'none'}`);   // a loop is clickable inside too
+      if (sp.dot) mk('circle', { cx: sp.dot[0], cy: sp.dot[1], r: 4.5 }, g, `fill:${col}`);
+      if (sp.num) {
+        const s = FS, r = 6.4 * s, n = sp.num;
+        if (!n.inner) {
+          const bw = Math.max(2 * r, (n.t.length * 5.4 + 5) * s);
+          mk('rect', { x: (n.x - bw / 2).toFixed(1), y: (n.y - r).toFixed(1), width: bw.toFixed(1), height: (2 * r).toFixed(1), rx: r.toFixed(1) }, g, `fill:var(--surface);stroke:${col};stroke-width:1.1`);
+        }
+        rich(g, n.x, n.y + 3.3 * s, n.t, { size: n.t.length > 1 ? 9 : 9.5, fill: TXT[sp.sty], weight: 600 });
+      }
+      sp.lab.forEach(Lb => rich(g, Lb.x, Lb.y, Lb.s, Object.assign({ fill: TXT[sp.sty] }, Lb.o || {})));
+      edges.push({ k: sp.k, view: sp.view, trans: !!sp.trans, g, halo, vis, w });
+    }
+    for (const nd of NODES) {
+      const g = mk('g', { 'aria-hidden': 'true' }, gN, `transition:${FADE}`);
+      const x = nd.c.x - nd.w / 2, y = nd.c.y - nd.h / 2, box = { x, y, width: nd.w, height: nd.h, rx: 9 };
+      mk('rect', box, g, 'fill:var(--surface)');
+      mk('rect', box, g, `fill:var(--c-${nd.col});opacity:0.09`);
+      mk('rect', box, g, `fill:none;stroke:var(--c-${nd.col});stroke-width:1.8${nd.dashed ? ';stroke-dasharray:6 4' : ''}`);
+      rich(g, nd.c.x, nd.c.y - 3, nd.title, { size: 13.5, fixed: true, weight: 600, fill: `var(--t-${nd.col})` });
+      if (typeof nd.sub === 'string') rich(g, nd.c.x, nd.c.y + 14, nd.sub, { size: 11.5 });
+      else Object.keys(nd.sub).forEach(v => { const sg = mk('g', {}, g, `transition:${FADE}`); rich(sg, nd.c.x, nd.c.y + 14, nd.sub[v], { size: 11.5 }); nodes.push({ view: v, g: sg }); });
+      nodes.push({ view: nd.view, trans: !!nd.trans, g });
+    }
+    // Part A: what replaced the two field nodes
+    const ph = mk('g', { 'aria-hidden': 'true' }, gP, `transition:${FADE}`);
+    const pl = { italic: true, fill: 'var(--muted)' };
+    rich(ph, T.x, T.y - 4, 'no dynamical field', Object.assign({ size: 12 }, pl));
+    rich(ph, T.x, T.y + 13, '(light: external drive only)', Object.assign({ size: 11 }, pl));
+    rich(ph, L.x, L.y - 4, 'Coulomb: instantaneous $v$,', Object.assign({ size: 12 }, pl));
+    rich(ph, L.x, L.y + 13, 'folded into $E_{n[k]}$, $ω_{[q]ν}$ and $g$', Object.assign({ size: 11 }, pl));
+    nodes.push({ view: 'a', g: ph });
+    edges.forEach(e => {
+      const toggle = () => select(sel === e.k ? null : e.k);
+      e.g.addEventListener('click', toggle);
+      e.g.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggle(); }
+        else if (ev.key === 'Escape') { ev.preventDefault(); select(null); }
+      });
+      e.g.addEventListener('pointerenter', () => { hov = e.k; paint(); });
+      e.g.addEventListener('pointerleave', () => { hov = null; paint(); });
+      e.g.addEventListener('focus', () => { hov = e.k; paint(); });
+      e.g.addEventListener('blur', () => { hov = null; paint(); });
+    });
+    paint();
+    if (focusK) { const e = edges.find(x => x.k === focusK); if (e) e.g.focus({ preventScroll: true }); }
+  }
+
+  // ---------- state ----------
+  function paint() {
+    edges.forEach(e => {
+      const on = e.view === view, dim = on && stat && e.trans, live = on && !dim, s = sel === e.k;
+      e.g.style.opacity = on ? (dim ? 0.2 : 1) : 0;
+      e.g.style.pointerEvents = live ? '' : 'none';
+      e.g.setAttribute('tabindex', live ? '0' : '-1');
+      e.g.setAttribute('aria-hidden', live ? 'false' : 'true');
+      e.g.setAttribute('aria-pressed', String(s));
+      e.halo.style.opacity = !live ? 0 : (s ? 0.24 : (hov === e.k ? 0.13 : 0));
+      e.vis.style.strokeWidth = String(s ? e.w + 1.2 : e.w);
+    });
+    nodes.forEach(n => { const on = n.view === 'both' || n.view === view; n.g.style.opacity = on ? (stat && n.trans ? 0.2 : 1) : 0; });
+  }
+  // The cards share one grid cell and are switched with visibility, not display: MathJax's lazy typesetting only
+  // reaches math that has a layout box, and the panel keeps the height of the tallest card, so nothing below it jumps.
+  const cards = [...info.querySelectorAll('[data-k]')];
+  info.style.display = 'grid';
+  cards.forEach(c => { c.hidden = false; c.style.gridArea = '1 / 1'; c.style.minWidth = '0'; });
+  const intro = () => (view === 'a' ? 'intro-g' : (stat ? 'intro-static' : 'intro-epp'));
+  function select(k) {
+    sel = k;
+    const key = k || intro();
+    cards.forEach(c => { const on = c.dataset.k === key; c.style.visibility = on ? 'visible' : 'hidden'; c.setAttribute('aria-hidden', String(!on)); });
+    paint();
+  }
+  const ctl = EPP.controls(fig.querySelector('.b2-map-ctrls'), [
+    { key: 'view', type: 'seg', label: 'View', options: [['epp', 'EPP Lagrangian'], ['a', 'Part A Hamiltonian']], value: 'epp' },
+    { key: 'stat', type: 'toggle', label: 'electrostatic limit, c → ∞', value: false }
+  ], (s) => {
+    if (s.view !== view) setView(s.view);
+    if (!!s.stat !== stat) { stat = !!s.stat; select(null); }
+  });
+  const cb = ctl.el.querySelector('input[type="checkbox"]'), cbBox = cb ? cb.closest('.ctrl') : null;
+  const legend = [...fig.querySelectorAll('.b2-map-legend [data-view]')];          // marks of one view only
+  if (cb) { const sp = cb.parentElement.querySelector('span'); if (sp) sp.innerHTML = 'electrostatic limit, <i style="font-family:var(--font-text)">c</i> → ∞'; }
+  function setView(v) {
+    view = v;
+    if (svg) svg.setAttribute('aria-label', ARIA[view]);
+    const cur = edges.find(e => e.k === sel);
+    if (!cur || cur.view !== view) sel = null;
+    if (cb) {
+      cb.disabled = view !== 'epp';
+      cbBox.style.opacity = view === 'epp' ? '' : '0.45';
+      cbBox.title = view === 'epp' ? '' : 'Available in the EPP view: Part A has no transverse field';
+    }
+    legend.forEach(it => { it.style.opacity = it.dataset.view === view ? '' : '0.45'; });
+    select(sel);
+  }
+
+  // ---------- layout: rebuild when the label scale changes, and once the fonts have loaded ----------
+  build(); setView('epp');
+  let raf = 0;
+  try {
+    new ResizeObserver(() => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => { const w = host.clientWidth, f = w > 0 ? Math.min(1.25, Math.max(1, W / w)) : 1; if (Math.abs(f - FS) > 0.01) build(); });
+    }).observe(host);
+  } catch (e) { /* no ResizeObserver: keep the first layout */ }
+  try { document.fonts.ready.then(() => build()); } catch (e) { /* fonts API missing */ }
+})();
+</script>

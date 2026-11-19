@@ -1,0 +1,405 @@
+  <figure class="viz" id="viz-a6-bubble">
+    <p class="viz-title">Inside the phonon self-energy: one bare vertex, one screened vertex <span class="tag">interactive</span></p>
+    <p class="a6-bubble-hd">(a) lowest order: two bare vertices joined by one bubble of Kohn–Sham lines</p>
+    <div class="a6-bubble-row">
+      <div class="a6-bubble-t"><div data-d="piA"></div></div>
+      <div class="a6-bubble-t"><span class="a6-bubble-op">≃</span><div data-d="low"></div></div>
+      <div class="a6-bubble-t"><span class="a6-bubble-op a6-bubble-sub">$-\ \{\omega\to0\}$</span></div>
+    </div>
+    <p class="a6-bubble-hd">(b) the screening chain: the term of $\chi$ in <a class="eqref" href="#a6-eq-chi"></a> with $n$ Coulomb lines</p>
+    <div class="a6-bubble-row a6-bubble-chain"></div>
+    <p class="a6-bubble-note">A ring marks each bubble that the chosen pairing can put in the middle, between its two vertices, with the rest of the chain absorbed into screened vertices. The counter is the number of rings.</p>
+    <p class="a6-bubble-hd">(c) exact, <a class="eqref" href="#a6-eq-bs"></a>: the whole chain summed into the right-hand vertex</p>
+    <div class="a6-bubble-row">
+      <div class="a6-bubble-t"><div data-d="piC"></div></div>
+      <div class="a6-bubble-t"><span class="a6-bubble-op">=</span><div data-d="exact"></div></div>
+      <div class="a6-bubble-t"><span class="a6-bubble-op a6-bubble-sub">$-\ \{\omega\to0\}$</span></div>
+    </div>
+    <p class="a6-bubble-hd">(d) the screened vertex obeys a Dyson equation of its own, $\mathcal V_{\bq\nu}=\Delta_{\bq\nu}V^{\mathrm{en}}+v\chi^{\mathrm{irr}}\mathcal V_{\bq\nu}$</p>
+    <div class="a6-bubble-row">
+      <div class="a6-bubble-t"><div data-d="vL"></div></div>
+      <div class="a6-bubble-t"><span class="a6-bubble-op">=</span><div data-d="vB"></div></div>
+      <div class="a6-bubble-t"><span class="a6-bubble-op">+</span><div data-d="vS"></div></div>
+    </div>
+    <div class="viz-grid side a6-bubble-plots">
+      <div><p class="a6-bubble-hd">(e) how often a chain with $n$ Coulomb lines is counted</p><div class="a6-bubble-count"></div></div>
+      <div><p class="a6-bubble-hd">(f) all chains summed, relative to exact</p><div class="a6-bubble-ratio"></div></div>
+    </div>
+    <div class="legend a6-bubble-leg"><span class="item" style="color:var(--c-5)"><span class="sw box"></span><span style="color:var(--fg-2)">both bare</span></span><span class="item" style="color:var(--muted)"><span class="sw box"></span><span style="color:var(--fg-2)">one screened (exact)</span></span><span class="item" style="color:var(--c-photon)"><span class="sw box"></span><span style="color:var(--fg-2)">both screened</span></span><span class="item" style="color:var(--muted)"><span class="sw dash"></span><span style="color:var(--fg-2)">exact: every chain once</span></span></div>
+    <div class="a6-bubble-ctrls"></div>
+    <div class="readout a6-bubble-ro" aria-live="polite"><span>chain drawn in (b)<b class="a6-bubble-v-count"></b></span><span>all chains summed, relative to exact<b class="a6-bubble-v-ratio"></b></span><span>Thomas–Fermi metal, $\varepsilon^{\rme}=1+k_{\mathrm{TF}}^2/q^2$, at<b class="a6-bubble-v-q"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> Summing the screening chain into one end of the bubble leaves one bare vertex and one screened vertex and counts every chain once. Screening both ends counts a chain with $n$ Coulomb lines $n+1$ times and makes the result too small by $\varepsilon^{\rme}$; two bare ends keep only $n=0$ and make it too large by the same factor.</p><div class="cap-more">
+      <p><strong>Marks.</strong> Amber zigzag: the phonon. Small solid dot: the bare vertex $\Delta_{\bq\nu}V^{\mathrm{en}}$; grey disk: the <a class="sym" href="#gl-a5-calV">screened vertex $\mathcal V_{\bq\nu}$</a>; open circle: the <a class="sym" href="#gl-a5-Lambda">vertex function $\Lambda$</a>. Thin blue lines: Kohn–Sham propagators $G^0$; double lines: the <a class="sym" href="#gl-a5-G">interacting $G$</a>; tinted bubble: the irreducible response $\chi^{\mathrm{irr}}$; rose dashes: the Coulomb interaction $v$. Bars: violet both bare, grey one screened, rose both screened.</p>
+      <p><strong>Try.</strong> Lengthen the chain and choose “both screened”: every bubble gets a ring and the bars grow as $n+1$. Choose “both bare”: the chains with $n\ge1$ lose their ring. Set $\varepsilon^{\rme}$ to 20, a metal at $q\approx0.23\,k_{\mathrm{TF}}$, with <a class="sym" href="#gl-a2-eps">$k_{\mathrm{TF}}$</a> the Thomas–Fermi wavevector: (f) shows the factor 20 both ways.</p>
+      <p><strong>Model.</strong> Rows (a)–(c) draw <a class="eqref" href="#a6-eq-chi"></a>, the chain $\chi=\chi^{\mathrm{irr}}+\chi^{\mathrm{irr}}v\chi^{\mathrm{irr}}+\dots$ and <a class="eqref" href="#a6-eq-bs"></a>. Row (d) is the vertex of <a class="eqref" href="#a5-eq-Wph"></a>, $\mathcal V_{\bq\nu}=(\varepsilon^{\rme})^{-1}\Delta_{\bq\nu}V^{\mathrm{en}}$, multiplied by <a class="sym" href="#gl-a5-eps">$\varepsilon^{\rme}=1-v\chi^{\mathrm{irr}}$</a>. The counts are <a class="eqref" href="#a6-eq-count"></a>. Panel (f) treats every factor as a number, as in a uniform gas at $\omega=0$: the three choices give $\chi^{\mathrm{irr}}$, $\chi^{\mathrm{irr}}/\varepsilon^{\rme}$ and $\chi^{\mathrm{irr}}/(\varepsilon^{\rme})^2$, the closed forms of series that diverge once $\varepsilon^{\rme}\gt2$. The electron self-energy of <a href="#a-electron-se">Section A.7</a> has two screened vertices, because its phonon line is internal.</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a6-bubble');
+  if (!fig || !window.EPP) return;
+  // outside Section A.6 (the isolated figure test) the links into the section have no target: show them as text
+  if (!fig.closest('#a-phonon-se')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes);
+    if (!s.textContent.trim()) s.textContent = '(eq.)';
+    a.replaceWith(s);
+  });
+  const NS = 'http://www.w3.org/2000/svg';
+  const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
+
+  // ---------- layout: inline styles (fragments carry no style sheet) ----------
+  const ST = {
+    hd: 'margin:14px 0 2px;max-width:none;font-family:var(--font-ui);font-size:0.86rem;font-weight:600;line-height:1.35;color:var(--fg-2)',
+    note: 'margin:0 0 4px;max-width:none;font-family:var(--font-ui);font-size:0.8rem;line-height:1.4;color:var(--muted)',
+    row: 'display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:4px 12px;margin:2px 0 4px',
+    t: 'display:flex;align-items:center;gap:10px;min-width:0;max-width:100%',
+    op: 'font-family:var(--font-text);font-size:1.4rem;line-height:1;color:var(--muted)',
+    sub: 'font-size:1.1rem;color:var(--fg-2)',
+    plots: 'margin-top:4px'
+  };
+  for (const k in ST) fig.querySelectorAll('.a6-bubble-' + k).forEach(el => { el.style.cssText += ';' + ST[k]; });
+
+  // ---------- the counting of (A6.16), every factor a number ----------
+  // A chain with n Coulomb lines is chi^irr (v chi^irr)^n. A bare end supplies no chain, a screened end
+  // V = (1 - v chi^irr)^{-1} ΔV any number of links; one central bubble sits between the two ends.
+  const MODES = ['bb', 'bs', 'ss'];
+  const COUNT = { bb: n => (n === 0 ? 1 : 0), bs: () => 1, ss: n => n + 1 };
+  // summed over all chains, relative to the exact chi^irr/eps: chi^irr, chi^irr/eps, chi^irr/eps^2
+  const RATIO = { bb: e => e, bs: () => 1, ss: e => 1 / e };
+  const SER = [{ k: 'bb', color: 'c5' }, { k: 'bs', color: 'muted' }, { k: 'ss', color: 'photon' }];
+  const YMIN = 0.02; // log-axis floor of (f)
+
+  // ---------- SVG text in the primer's notation ----------
+  // markup: _x, _{..}, ^x, ^{..} scripts; ‹..› upright label (en, irr, ph,NA); |..| words in the UI font;
+  // !c bold upright vector; Latin and lower-case Greek letters italic, everything else upright (brackets literal)
+  const ITAL = /[A-Za-zα-ω]/;
+  function lex(s) {
+    const out = [];
+    const scan = (str, lvl) => {
+      for (let i = 0; i < str.length;) {
+        const ch = str[i];
+        if ((ch === '_' || ch === '^') && lvl === 0 && i + 1 < str.length) {
+          let inner; const j = i + 1;
+          if (str[j] === '{') { let d = 1, k = j + 1; while (k < str.length && d) { if (str[k] === '{') d++; else if (str[k] === '}') d--; k++; } inner = str.slice(j + 1, k - 1); i = k; }
+          else { inner = str[j]; i = j + 1; }
+          scan(inner, ch === '_' ? -1 : 1);
+          continue;
+        }
+        if (ch === '‹' || ch === '|') { const k = str.indexOf(ch === '‹' ? '›' : '|', i + 1); out.push({ t: str.slice(i + 1, k), it: false, b: false, ui: ch === '|', lvl }); i = k + 1; continue; }
+        if (ch === '!') { out.push({ t: str[i + 1], it: false, b: true, ui: false, lvl }); i += 2; continue; }
+        out.push({ t: ch, it: ITAL.test(ch), b: false, ui: false, lvl }); i++;
+      }
+    };
+    scan(String(s), 0);
+    const runs = [];
+    for (const p of out) { const q = runs[runs.length - 1]; if (q && q.it === p.it && q.b === p.b && q.ui === p.ui && q.lvl === p.lvl) q.t += p.t; else runs.push(p); }
+    return runs;
+  }
+  // label(group, markup, x, y, {size, anchor, color, uiColor, weight})
+  function label(g, s, x, y, o = {}) {
+    const size = o.size || 13, tx = EPP.css('--font-text'), ui = EPP.css('--font-ui');
+    const text = mk('text', { x, y, 'text-anchor': o.anchor || 'middle', fill: o.color || EPP.color('fg'), 'font-size': size }, g);
+    let cur = 0;
+    for (const r of lex(s)) {
+      const z = (r.lvl ? 0.72 : 1) * size * (r.ui ? 0.9 : 1);
+      const ts = mk('tspan', { 'font-family': r.ui ? ui : tx, 'font-size': z.toFixed(2), 'font-style': r.it ? 'italic' : 'normal', 'font-weight': r.b ? 700 : (r.ui && o.weight ? o.weight : 400) }, text);
+      if (r.ui && o.uiColor) ts.setAttribute('fill', o.uiColor);
+      const tgt = r.lvl === -1 ? 0.3 * size : (r.lvl === 1 ? -0.4 * size : 0);
+      if (Math.abs(tgt - cur) > 1e-6) ts.setAttribute('dy', (tgt - cur).toFixed(2));
+      cur = tgt;
+      ts.textContent = r.t;
+    }
+    return text;
+  }
+  const C = () => ({ fg: EPP.color('fg'), fg2: EPP.color('fg2'), mu: EPP.color('muted'), el: EPP.color('electron-t'), ph: EPP.color('photon-t'), pn: EPP.color('phonon-t'), c5: EPP.color('c5-t') });
+
+  // ---------- glyphs that EPP.fd does not draw ----------
+  // grey disk: screened vertex; open circle: vertex function Λ; large light disk: the self-energy; tint: an irreducible bubble
+  const disk = (g, x, y, r) => {
+    mk('circle', { cx: x, cy: y, r, fill: EPP.color('surface') }, g); // opaque base hides the line ends
+    mk('circle', { cx: x, cy: y, r, fill: EPP.alpha('muted', 0.6), stroke: EPP.color('muted'), 'stroke-width': 1.3 }, g);
+  };
+  const lam = (g, x, y, r) => { mk('circle', { cx: x, cy: y, r, fill: EPP.color('surface'), stroke: EPP.color('fg'), 'stroke-width': 1.4 }, g); label(g, 'Λ', x, y + 5, { size: 14 }); };
+  const selfE = (g, x, y, r) => {
+    mk('circle', { cx: x, cy: y, r, fill: EPP.color('surface') }, g);
+    mk('circle', { cx: x, cy: y, r, fill: EPP.alpha('muted', 0.16), stroke: EPP.color('muted'), 'stroke-width': 1.6 }, g);
+    label(g, 'Π^{‹ph,NA›}', x, y + 5, { size: 13.5 });
+  };
+  // the region between the two arcs of EPP.fd (circular arcs through both ends with sagitta = bend × chord)
+  const tint = (g, x1, x2, y, bend) => {
+    const L = x2 - x1, s = bend * L, R = ((L * L / 4 + s * s) / (2 * s)).toFixed(2);
+    mk('path', { d: `M${x1} ${y}A${R} ${R} 0 0 1 ${x2} ${y}A${R} ${R} 0 0 1 ${x1} ${y}Z`, fill: EPP.alpha('electron', 0.13) }, g);
+  };
+  const ring = (g, cx, y, r, col) => mk('circle', { cx, cy: y, r, fill: 'none', stroke: col, 'stroke-width': 1.4, 'stroke-opacity': 0.8 }, g);
+  const bracket = (g, x1, x2, y, col) => mk('path', { d: `M${x1} ${y - 5}L${x1} ${y}L${x2} ${y}L${x2} ${y - 5}`, fill: 'none', stroke: col, 'stroke-width': 1.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, g);
+  const bubble = (a, b, y, bend, o = {}) => [
+    Object.assign({ t: 'fermion', a: [a, y], b: [b, y], bend }, o),
+    Object.assign({ t: 'fermion', a: [b, y], b: [a, y], bend }, o)
+  ];
+  const stubs = (x, y) => [{ t: 'fermion', a: [x - 28, y - 13], b: [x, y], arrow: false }, { t: 'fermion', a: [x, y], b: [x - 28, y + 13], arrow: false }];
+
+  // ---------- the fixed diagrams: rows (a), (c), (d) ----------
+  // Every diagram has its phonon line at half its height, so the operators of a row line up with it.
+  const piItems = [{ t: 'phonon', a: [4, 32], b: [30, 32] }, { t: 'phonon', a: [78, 32], b: [104, 32] }];
+  const PI = { w: 108, h: 64, items: piItems, deco: (g) => selfE(g, 54, 32, 24),
+    aria: 'Nonadiabatic phonon self-energy Pi ph NA: a large light grey disk between two phonon zigzag lines.' };
+  const Y = 56;
+  const D = {
+    piA: PI, piC: PI,
+    low: { w: 262, h: 112, items: [
+      { t: 'phonon', a: [10, Y], b: [58, Y] },
+      ...bubble(58, 204, Y, 0.22),
+      { t: 'phonon', a: [204, Y], b: [252, Y] },
+      { t: 'vertex', at: [58, Y], r: 3.6 }, { t: 'vertex', at: [204, Y], r: 3.6 }
+    ], deco: (g) => {
+      const c = C();
+      label(g, '!qν', 34, Y - 11, { color: c.pn });
+      label(g, '!qν′', 228, Y - 11, { color: c.pn });
+      label(g, 'G^0', 131, Y - 39, { color: c.el });
+      label(g, 'G^0', 131, Y + 49, { color: c.el });
+      label(g, '[Δ_{!qν}V^{‹en›}]^*', 54, Y + 24, { size: 12.5, anchor: 'end' });
+      label(g, 'Δ_{!qν′}V^{‹en›}', 208, Y + 24, { size: 12.5, anchor: 'start' });
+    }, aria: 'Lowest order: the phonon line q nu ends on a small black dot, the bare vertex Delta V en (complex conjugated); two thin electron lines G0 form a bubble; a second small black dot, the bare vertex of q nu prime, starts the outgoing phonon line.' },
+    exact: { w: 292, h: 112, items: [
+      { t: 'phonon', a: [10, Y], b: [58, Y] },
+      ...bubble(58, 188, Y, 0.25, { t: 'fermion2' }),
+      { t: 'vertex', at: [58, Y], r: 3.6 },
+      { t: 'phonon', a: [225.5, Y], b: [282, Y] }
+    ], under: (g) => tint(g, 58, 188, Y, 0.25), deco: (g) => {
+      const c = C();
+      lam(g, 199, Y, 11);
+      disk(g, 217.5, Y, 8);
+      label(g, '!qν', 34, Y - 11, { color: c.pn });
+      label(g, '!qν′', 254, Y - 11, { color: c.pn });
+      label(g, 'G', 123, Y - 42, { color: c.el });
+      label(g, 'G', 123, Y + 52, { color: c.el });
+      label(g, 'χ^{‹irr›}', 123, Y + 5, { color: c.mu });
+      label(g, '[Δ_{!qν}V^{‹en›}]^*', 54, Y + 24, { size: 12.5, anchor: 'end' });
+      label(g, '𝒱_{!qν′}', 217.5, Y + 27, { size: 13.5 });
+    }, aria: 'Exact nonadiabatic self-energy: the phonon line q nu ends on a small black dot, the bare vertex; a tinted bubble of two thick double electron lines G, the irreducible response chi irr, ends on an open circle, the vertex function Lambda, attached to a grey disk, the screened vertex V of q nu prime, which starts the outgoing phonon line. The same diagram at zero frequency is subtracted.' },
+    vL: { w: 86, h: 64, items: [...stubs(36, 32), { t: 'phonon', a: [43.5, 32], b: [80, 32] }],
+      deco: (g) => { disk(g, 36, 32, 7.5); label(g, '𝒱_{!qν}', 36, 58, { size: 13.5 }); },
+      aria: 'The screened vertex V q nu: two electron line ends meet at a grey disk, from which a phonon line leaves.' },
+    vB: { w: 86, h: 64, items: [...stubs(36, 32), { t: 'phonon', a: [36, 32], b: [80, 32] }, { t: 'vertex', at: [36, 32], r: 3.6 }],
+      deco: (g) => label(g, 'Δ_{!qν}V^{‹en›}', 46, 58, { size: 12.5 }),
+      aria: 'equals the bare vertex Delta q nu V en: the electron line ends meet at a small black dot with the phonon line.' },
+    vS: { w: 166, h: 64, items: [...stubs(36, 32), { t: 'coulomb', a: [36, 32], b: [64, 32] }, ...bubble(64, 98, 32, 0.36, { arrow: false, width: 1.5 }),
+      { t: 'phonon', a: [113.5, 32], b: [160, 32] }],
+      under: (g) => tint(g, 64, 98, 32, 0.36),
+      deco: (g) => { const c = C(); disk(g, 106, 32, 7.5); label(g, 'v', 50, 25, { color: c.ph }); label(g, 'χ^{‹irr›}', 81, 35.5, { size: 11, color: c.mu }); label(g, '𝒱_{!qν}', 106, 58, { size: 13.5 }); },
+      aria: 'plus: the electron line ends meet a dashed Coulomb line v, which ends on a tinted bubble chi irr, followed by the grey disk of the screened vertex V q nu and the phonon line.' }
+  };
+
+  // ---------- (b) the chain, one SVG per chain length ----------
+  const CH = { x0: 6, zz: 28, bw: 34, cl: 22, bend: 0.36, y: 32, h: 84 };
+  const geom = (n) => { const sx = (k) => CH.x0 + CH.zz + k * (CH.bw + CH.cl); const xr = sx(n) + CH.bw; return { sx, xl: CH.x0 + CH.zz, xr, w: xr + CH.zz + 50 }; };
+  function chainItems(n) {
+    const { sx, xl, xr } = geom(n), y = CH.y, it = [{ t: 'phonon', a: [CH.x0, y], b: [xl, y] }];
+    for (let k = 0; k <= n; k++) {
+      const a = sx(k), b = a + CH.bw;
+      it.push(...bubble(a, b, y, CH.bend, { arrow: false, width: 1.5 }));
+      if (k < n) it.push({ t: 'coulomb', a: [b, y], b: [b + CH.cl, y] });
+    }
+    it.push({ t: 'phonon', a: [xr, y], b: [xr + CH.zz, y] }, { t: 'vertex', at: [xl, y], r: 3.6 }, { t: 'vertex', at: [xr, y], r: 3.6 });
+    return it;
+  }
+  // bubble k is ringed if the left end can supply the k bubbles before it and the right end the n - k after it
+  const ringed = (mode, n, k) => (mode === 'ss' ? true : mode === 'bs' ? k === 0 : n === 0);
+  const countColor = (c, cc) => (c === 1 ? cc.fg2 : c > 1 ? cc.ph : cc.c5);
+  function chainDeco(n) {
+    return (g, under) => {
+      const c = C(), { sx, xl, xr } = geom(n), y = CH.y, mode = state.mode, cnt = COUNT[mode](n);
+      label(g, '!qν', (CH.x0 + xl) / 2, y - 11, { color: c.pn });
+      label(g, '!qν′', xr + CH.zz / 2, y - 11, { color: c.pn });
+      for (let k = 0; k <= n; k++) {
+        const a = sx(k), m = a + CH.bw / 2;
+        tint(under, a, a + CH.bw, y, CH.bend);
+        label(g, 'χ^{‹irr›}', m, y + 3.5, { size: 11, color: c.mu });
+        if (k < n) label(g, 'v', a + CH.bw + CH.cl / 2, y - 7, { color: c.ph });
+        if (ringed(mode, n, k)) ring(g, m, y, CH.bw / 2 + 5, c.fg2);
+      }
+      if (mode === 'bs' && n > 0) {
+        const x1 = sx(0) + CH.bw + 2, x2 = xr + 2;
+        bracket(g, x1, x2, y + 30, c.mu);
+        label(g, '|summed into |𝒱_{!qν′}', (x1 + x2) / 2, y + 46, { size: 12.5, color: c.fg, uiColor: c.mu });
+      } else if (n > 0) {
+        // the other pairings: why the count is n + 1, or 0 (centred on the chain, kept inside the drawing)
+        const s = mode === 'ss' ? 'every bubble can be the middle one' : 'two bare ends: not generated', half = 0.5 * 5.8 * s.length;
+        label(g, `|${s}|`, EPP.clamp((CH.x0 + xr + CH.zz) / 2, half + 2, geom(n).w - half - 2), y + 46, { size: 12.5, color: c.mu });
+      }
+      label(g, `|×${cnt}|`, xr + CH.zz + 10, y + 6, { size: 18, anchor: 'start', weight: 700, color: countColor(cnt, c) });
+    };
+  }
+  const ariaChain = (n, mode) => {
+    const head = `Panel b: a chain of ${n + 1} tinted bubbles chi irr joined by ${n} dashed Coulomb lines v, between two bare vertices with phonon lines q nu and q nu prime. `;
+    if (mode === 'bs') return head + 'With one bare and one screened end only the leftmost bubble is ringed' + (n ? '; the rest of the chain is summed into the screened vertex V q nu prime' : '') + '. Counted once.';
+    if (mode === 'ss') return head + `With two screened ends every bubble is ringed. Counted ${n + 1} time${n ? 's' : ''}.`;
+    return head + (n === 0 ? 'With two bare ends the single bubble is ringed. Counted once.' : 'With two bare ends no bubble is ringed. This chain is not counted.');
+  };
+
+  // ---------- build ----------
+  const state = { n: 2, mode: 'bs', eps: 10 };
+  const drawn = [];
+  const sized = [];
+  const sizeSvg = (svg, w) => { svg.style.cssText = 'display:block;max-width:100%;height:auto;overflow:visible'; sized.push([svg, w]); };
+  fig.querySelectorAll('[data-d]').forEach(el => {
+    const d = D[el.dataset.d];
+    const svg = EPP.fd.draw(el, { w: d.w, h: d.h, label: d.aria, items: d.items });
+    sizeSvg(svg, d.w);
+    drawn.push({ svg, deco: d.deco, under: d.under });
+  });
+  const hostB = fig.querySelector('.a6-bubble-chain');
+  const chains = [];
+  for (let n = 0; n <= 4; n++) {
+    const svg = EPP.fd.draw(hostB, { w: geom(n).w, h: CH.h, label: ariaChain(n, state.mode), items: chainItems(n) });
+    sizeSvg(svg, geom(n).w);
+    const d = { svg, deco: chainDeco(n), n };
+    chains.push(d); drawn.push(d);
+  }
+  // EPP.fd repaints a diagram (and drops our glyphs) when the theme changes; this callback is registered after
+  // those repaints, so it runs after them and draws the glyphs again in the new colours.
+  function decorate(d) {
+    d.svg.querySelectorAll('g.a6-bubble-deco').forEach(n => n.remove());
+    const under = mk('g', { class: 'a6-bubble-deco' }); d.svg.insertBefore(under, d.svg.firstChild);
+    const over = mk('g', { class: 'a6-bubble-deco' }, d.svg);
+    if (d.under) d.under(under);
+    if (d.deco) d.deco(over, under);
+  }
+  drawn.forEach(decorate);
+  EPP.onTheme(() => drawn.forEach(decorate));
+  // wide screens draw the diagrams 1.2 times their natural size; narrow ones shrink them to the width (max-width)
+  let lastS = 0;
+  const scaleSvgs = () => {
+    const S = fig.clientWidth >= 640 ? 1.2 : 1;
+    if (S === lastS) return;
+    lastS = S;
+    sized.forEach(([svg, w]) => { svg.style.width = (w * S).toFixed(1) + 'px'; });
+  };
+  scaleSvgs();
+  try { new ResizeObserver(scaleSvgs).observe(fig); } catch (e) {}
+
+  // ---------- canvas text: '$...$' marks math, where letters are italic and digits upright ----------
+  const ITC = /[A-Za-zα-ωℓħ]/;
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, fam = EPP.css('--font-ui'), rs = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const part of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { rs.push({ t: part.t, m: part.m, it: false }); continue; }
+        let buf = '', it = null;
+        for (const ch of part.t) { const k = ITC.test(ch); if (it !== null && k !== it) { rs.push({ t: buf, m: part.m, it }); buf = ''; } buf += ch; it = k; }
+        if (buf) rs.push({ t: buf, m: part.m, it });
+      }
+    });
+    const font = (r) => `${r.it ? 'italic ' : ''}${r.m ? Math.round(size * 0.72) : size}px ${fam}`;
+    const ws = rs.map(r => { ctx.font = font(r); return ctx.measureText(r.t).width; });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    let x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    if (o.color) ctx.fillStyle = o.color;
+    ctx.textAlign = 'left';
+    rs.forEach((r, k) => { ctx.font = font(r); ctx.fillText(r.t, x0, y + (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0))); x0 += ws[k]; });
+    return tot;
+  }
+  // axis titles drawn by a render hook, with the symbols in italic; 'more' draws further marks after them
+  function titles(P, xt, yt, more) {
+    const base = P.render.bind(P);
+    P.render = () => {
+      base();
+      const ctx = P.ctx, w = P.cv.w, h = P.cv.h, m = P.m;
+      if (!w || !h) return;
+      const cFg = EPP.color('fg');
+      ctx.save(); ctx.textBaseline = 'alphabetic';
+      if (xt) txt(ctx, xt, m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+      ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+      txt(ctx, yt, 0, 0, { size: 12.5, color: cFg, align: 'center' });
+      ctx.restore();
+      if (more) { ctx.save(); more(ctx, P); ctx.restore(); }
+    };
+  }
+
+  // ---------- (e) how often each chain is counted; (f) the sum of all chains ----------
+  const pE = new EPP.Plot(fig.querySelector('.a6-bubble-count'), {
+    xlim: [-0.6, 6.6], ylim: [0, 7.8], height: 230, legend: false, hover: false,
+    xticks: [0, 1, 2, 3, 4, 5, 6], yticks: [0, 1, 2, 3, 4, 5, 6, 7], margin: { l: 46, r: 10, t: 12, b: 44 },
+    ariaLabel: 'Panel e: bar chart of how many times a chain with n Coulomb lines is counted, for n from 0 to 6'
+  });
+  titles(pE, 'Coulomb lines in the chain, $n$', 'times counted');
+  const pF = new EPP.Plot(fig.querySelector('.a6-bubble-ratio'), {
+    xlim: [-0.6, 2.6], ylim: [YMIN, 50], logy: true, height: 230, legend: false, hover: false,
+    xticks: [0, 1, 2].map(v => ({ v, label: '' })),
+    yticks: [{ v: 0.1, label: '0.1' }, { v: 1, label: '1' }, { v: 10, label: '10' }], margin: { l: 46, r: 10, t: 12, b: 40 },
+    ariaLabel: 'Panel f: the sum of all chains for each choice, relative to the exact result, on a logarithmic scale'
+  });
+  // category names on two lines, in the colour of their bars; the chosen one in bold
+  const CAT = [['both', 'bare'], ['one', 'screened'], ['both', 'screened']];
+  titles(pF, '', 'relative to exact (log scale)', (ctx, P) => {
+    const fam = EPP.css('--font-ui'), y0 = P.cv.h - P.m.b + 5;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+    SER.forEach((S, i) => {
+      ctx.font = `${S.k === state.mode ? '600 ' : ''}11.5px ${fam}`;
+      ctx.fillStyle = EPP.textColor(S.color);
+      CAT[i].forEach((t, k) => ctx.fillText(t, P.X(i), y0 + 13 * k));
+    });
+  });
+  const fmtR = (r) => (Math.abs(r - 1) < 1e-9 ? '1' : r >= 1 ? EPP.fmt(r, 3) : EPP.fmt(r, 2));
+  const WORD = { bb: 'both bare', bs: 'one screened', ss: 'both screened' };
+  function drawE(s) {
+    const L = [{ type: 'band', x0: s.n - 0.47, x1: s.n + 0.47, color: 'accent', alpha: 0.10, text: 'in (b)' }];
+    SER.forEach((S, i) => {
+      const on = S.k === s.mode, dx = (i - 1) * 0.27;
+      for (let n = 0; n <= 6; n++) {
+        const c = COUNT[S.k](n);
+        if (c > 0) L.push({ type: 'fill', x: [n + dx - 0.12, n + dx + 0.12], y1: [c, c], y2: [0, 0], color: S.color, alpha: on ? 0.9 : 0.25 });
+        if (on) L.push({ type: 'text', x: n + dx, y: c, dy: -8, text: String(c), align: 'center', size: 11, color: S.color });
+      }
+    });
+    L.push({ type: 'hline', at: 1, color: 'muted', dash: [4, 4], width: 1 });
+    pE.draw(L);
+    const list = Array.from({ length: 7 }, (_, n) => COUNT[s.mode](n)).join(', ');
+    pE.cv.canvas.setAttribute('aria-label', `Panel e: how many times a chain with n Coulomb lines is counted, n from 0 to 6. With ${WORD[s.mode]}: ${list}. Exact: once each. Column n = ${s.n} is the chain drawn in panel b.`);
+  }
+  function drawF(s) {
+    const L = [{ type: 'hline', at: 1, color: 'muted', dash: [4, 4], width: 1 }];
+    SER.forEach((S, i) => {
+      const on = S.k === s.mode, r = RATIO[S.k](s.eps);
+      if (Math.abs(Math.log(r)) > 1e-9) L.push({ type: 'fill', x: [i - 0.2, i + 0.2], y1: [r, r], y2: [1, 1], color: S.color, alpha: on ? 0.9 : 0.25 });
+      else L.push({ type: 'points', x: [i], y: [1], r: 4.5, color: S.color, opacity: on ? 1 : 0.4 });
+      L.push({ type: 'text', x: i, y: r, dy: r >= 1 ? -10 : 11, text: '×' + fmtR(r), align: 'center', size: 11.5, color: S.color, opacity: on ? 1 : 0.55 });
+    });
+    pF.draw(L);
+    pF.cv.canvas.setAttribute('aria-label', `Panel f, logarithmic scale: all chains summed, relative to the exact result, for static epsilon e = ${s.eps.toFixed(1)}. ` +
+      `Both bare: ${fmtR(s.eps)} times; one screened: 1 time, exact; both screened: ${fmtR(1 / s.eps)} times. Selected: ${WORD[s.mode]}.`);
+  }
+
+  // ---------- readouts and controls ----------
+  const ro = { count: fig.querySelector('.a6-bubble-v-count'), ratio: fig.querySelector('.a6-bubble-v-ratio'), q: fig.querySelector('.a6-bubble-v-q') };
+  function readouts(s) {
+    const c = COUNT[s.mode](s.n), r = RATIO[s.mode](s.eps);
+    ro.count.innerHTML = `<i>n</i> = ${s.n}: ` + (c === 1 ? 'counted once (correct)' : c === 0 ? 'not counted (screening missing)' : `counted ${c} times (double counting)`);
+    if (s.eps < 1 + 1e-9) ro.ratio.textContent = '×1 (no screening: all three agree)';
+    else ro.ratio.textContent = `×${fmtR(r)}` + (s.mode === 'bs' ? ' (exact)' : r > 1 ? ' (too large)' : ' (too small)');
+    if (s.eps < 1 + 1e-9) ro.q.textContent = 'no screening';
+    else { const x = 1 / Math.sqrt(s.eps - 1); ro.q.innerHTML = `<i>q</i> = ${x.toFixed(2)} <i>k</i><sub>TF</sub> (${(1.5 * x).toFixed(2)} Å⁻¹ in sodium)`; }
+  }
+  function update(s) {
+    state.n = EPP.clamp(Math.round(+s.n || 0), 0, 4);
+    state.mode = MODES.includes(s.mode) ? s.mode : 'bs';
+    state.eps = EPP.clamp(+s.eps || 1, 1, 21);
+    chains.forEach(d => {
+      d.svg.style.display = d.n === state.n ? 'block' : 'none';
+      d.svg.setAttribute('aria-label', ariaChain(d.n, state.mode));
+    });
+    decorate(chains[state.n]);
+    drawE(state); drawF(state); readouts(state);
+  }
+  const ui = EPP.controls(fig.querySelector('.a6-bubble-ctrls'), [
+    { key: 'n', type: 'range', label: 'Coulomb lines in (b), n', min: 0, max: 4, step: 1, value: state.n, fmt: v => String(Math.round(v)) },
+    { key: 'eps', type: 'range', label: 'static dielectric function ε^e', min: 1, max: 21, step: 0.5, value: state.eps, fmt: v => v.toFixed(1) },
+    { key: 'mode', type: 'seg', label: 'vertices at the two ends', options: [['bb', 'both bare'], ['bs', 'one screened'], ['ss', 'both screened']], value: state.mode }
+  ], update);
+  // slider labels: the symbols in italic, like the readout keys
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const LAB = { n: `Coulomb lines in (b), ${I('n')}`, eps: `static dielectric function ${I('ε')}<sup>e</sup>` };
+  Object.keys(LAB).forEach(k => { const sp = ui.el.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+})();
+</script>

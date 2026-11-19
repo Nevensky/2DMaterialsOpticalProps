@@ -1,0 +1,399 @@
+  <figure class="viz" id="viz-b4-vertices">
+    <p class="viz-title">The seven vertices of the interaction, and the one it lacks <span class="tag">diagram</span></p>
+    <div class="b4-vertices-body" data-cols="1" role="group" aria-label="The vertices of the interaction V prime. Tab to the first vertex; the arrow keys step through the others.">
+      <p class="b4-vertices-hd" data-h="1">Photon vertices (minimal coupling)</p>
+      <div class="b4-vertices-card" data-k="1" tabindex="0" role="group" aria-label="Vertex 1: electron, paramagnetic">
+        <div class="b4-vertices-dg" data-d="1"></div>
+        <div class="b4-vertices-txt">
+          <p class="b4-vertices-name"><span class="b4-vertices-n" aria-hidden="true">1</span>electron, paramagnetic</p>
+          <p class="b4-vertices-term"><span>$-\frac1c\,\hat\bj^{\mathrm{para}}\cdot\hat\bA$</span></p>
+          <p class="b4-vertices-to">→ current–current part of $\Pi^{\mathrm e}$ (<a href="#b-photon-se">B.5</a>)</p>
+        </div>
+      </div>
+      <div class="b4-vertices-card" data-k="2" tabindex="-1" role="group" aria-label="Vertex 2: electron, diamagnetic">
+        <div class="b4-vertices-dg" data-d="2"></div>
+        <div class="b4-vertices-txt">
+          <p class="b4-vertices-name"><span class="b4-vertices-n" aria-hidden="true">2</span>electron, diamagnetic</p>
+          <p class="b4-vertices-term"><span>$\frac{e^2}{2m_{\mathrm e}c^2}\,\hat n^{\mathrm e}\,\hat\bA^2$</span></p>
+          <p class="b4-vertices-to">→ diamagnetic part of $\Pi^{\mathrm e}$ (<a href="#b-photon-se">B.5</a>)</p>
+        </div>
+      </div>
+      <div class="b4-vertices-card" data-k="3" tabindex="-1" role="group" aria-label="Vertex 3: ion, paramagnetic">
+        <div class="b4-vertices-dg" data-d="3"></div>
+        <div class="b4-vertices-txt">
+          <p class="b4-vertices-name"><span class="b4-vertices-n" aria-hidden="true">3</span>ion, paramagnetic</p>
+          <p class="b4-vertices-term"><span>$-\frac ec\,\frac{\hat\bP_{\ell\kappa}}{M_\kappa}\cdot\mathbf Z^{*\mathsf T}_\kappa\cdot\hat\bA(\btau_{\ell\kappa})$</span></p>
+          <p class="b4-vertices-to">→ $\Pi^{\mathrm{ion}}$ (<a href="#b-photon-se">B.5</a>); phonon <span class="nw">self-energy</span> (<a href="#b-phonon-se">B.7</a>)</p>
+        </div>
+      </div>
+      <div class="b4-vertices-card" data-k="4" tabindex="-1" role="group" aria-label="Vertex 4: ion, diamagnetic">
+        <div class="b4-vertices-dg" data-d="4"></div>
+        <div class="b4-vertices-txt">
+          <p class="b4-vertices-name"><span class="b4-vertices-n" aria-hidden="true">4</span>ion, diamagnetic</p>
+          <p class="b4-vertices-term"><span>$\frac{e^2}{2c^2M_\kappa}\,|\mathbf Z^{*\mathsf T}_\kappa\cdot\hat\bA(\btau_{\ell\kappa})|^2$</span></p>
+          <p class="b4-vertices-to">→ diamagnetic part of $\Pi^{\mathrm{ion}}$ (<a href="#b-photon-se">B.5</a>)</p>
+        </div>
+      </div>
+      <p class="b4-vertices-hd" data-h="2">Coulomb vertices (longitudinal field)</p>
+      <div class="b4-vertices-card" data-k="5" tabindex="-1" role="group" aria-label="Vertex 5: electron–electron Coulomb vertex">
+        <div class="b4-vertices-dg" data-d="5"></div>
+        <div class="b4-vertices-txt">
+          <p class="b4-vertices-name"><span class="b4-vertices-n" aria-hidden="true">5</span>electron–electron</p>
+          <p class="b4-vertices-term"><span>$\frac12\,\hat n^{\mathrm e}(\br)\,v(\br-\br')\,\hat n^{\mathrm e}(\br')$</span></p>
+          <p class="b4-vertices-to">bare $v$ → $W^{\mathrm e}$ (<a href="#b-electrostatic">B.9</a>)</p>
+        </div>
+      </div>
+      <div class="b4-vertices-card" data-k="6" tabindex="-1" role="group" aria-label="Vertex 6: electron–ion Coulomb vertex">
+        <div class="b4-vertices-dg" data-d="6"></div>
+        <div class="b4-vertices-txt">
+          <p class="b4-vertices-name"><span class="b4-vertices-n" aria-hidden="true">6</span>electron–ion</p>
+          <p class="b4-vertices-term"><span>$-e\,\hat n^{\mathrm e}(\br)\,\frac{1}{|\br-\br'|}\,\hat\rho^{\mathrm{ion}}(\br')$</span></p>
+          <p class="b4-vertices-to">bare Fröhlich vertex → screened (<a href="#b-frohlich">B.8</a>)</p>
+        </div>
+      </div>
+      <div class="b4-vertices-card" data-k="7" tabindex="-1" role="group" aria-label="Vertex 7: ion–ion Coulomb vertex">
+        <div class="b4-vertices-dg" data-d="7"></div>
+        <div class="b4-vertices-txt">
+          <p class="b4-vertices-name"><span class="b4-vertices-n" aria-hidden="true">7</span>ion–ion</p>
+          <p class="b4-vertices-term"><span>$\frac12\,\hat\rho^{\mathrm{ion}}(\br)\,\frac{1}{|\br-\br'|}\,\hat\rho^{\mathrm{ion}}(\br')$</span></p>
+          <p class="b4-vertices-to">dipole–dipole → LO–TO splitting (<a href="#b-phonon-se">B.7</a>, <a href="#b-electrostatic">B.9</a>)</p>
+        </div>
+      </div>
+      <p class="b4-vertices-hd" data-h="3">Not in $V'$</p>
+      <div class="b4-vertices-card b4-vertices-ghost" data-k="8" tabindex="-1" role="group" aria-label="Not in V prime: the electron–phonon vertex of Part A">
+        <div class="b4-vertices-dg" data-d="8"></div>
+        <div class="b4-vertices-txt">
+          <p class="b4-vertices-name">electron–phonon (Part A)</p>
+          <p class="b4-vertices-term"><span>no $g\,c^\dagger c\,\phi$ term</span></p>
+          <p class="b4-vertices-to">→ assembled from 6, and from 1 and 3 joined by a photon (<a href="#b-frohlich">B.8</a>)</p>
+        </div>
+      </div>
+    </div>
+    <p class="legend-strip b4-vertices-leg">
+      <span><svg data-sw="e" width="30" height="14" viewBox="0 0 30 14" aria-hidden="true"></svg>electron</span>
+      <span><svg data-sw="p" width="30" height="14" viewBox="0 0 30 14" aria-hidden="true"></svg>phonon</span>
+      <span><svg data-sw="g" width="30" height="14" viewBox="0 0 30 14" aria-hidden="true"></svg>transverse photon</span>
+      <span><svg data-sw="v" width="30" height="14" viewBox="0 0 30 14" aria-hidden="true"></svg>instantaneous Coulomb</span>
+      <span><svg data-sw="d" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"></svg>vertex</span>
+      <span><svg data-sw="s" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"></svg>ion site</span>
+      <span><svg data-sw="x" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"></svg>absent vertex</span>
+    </p>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> Every term of the interaction $V'$ is a vertex, and none joins an electron line directly to a phonon line. Electrons and phonons meet only through the field: across a Coulomb line (vertex 6), or through a photon exchanged between vertices 1 and 3.</p><div class="cap-more">
+      <p><strong>Marks.</strong> Arrowed lines are electrons, zigzag lines phonons, wavy lines transverse photons, and dashed lines the instantaneous Coulomb kernel $1/|\br-\br'|$ between two charge densities; between two electrons it carries $e^2$ and is the bare <span class="nw">$v$.</span> Dots are vertices; the amber disc is an ion site, where two photons meet without a phonon line. Line labels name the operator a line carries. Each glyph comes with its term and, in grey, where it leads in Part B. The crossed-out glyph is the electron–phonon vertex of Part A.</p>
+      <p><strong>Try.</strong> Hover over or tap a vertex, or tab to one and step with the arrow keys, to highlight it with its term. On the crossed-out vertex, the three vertices through which electrons do reach phonons light up.</p>
+      <p><strong>Model.</strong> The terms are the lines of <a class="eqref" href="#b4-eq-Vp">(B4.24)</a> without $\int\dd^3r$ (electrons) or $\sum_{\ell\kappa}$ (ions). Vertices 5–7 square $\rho=-e\,n^{\mathrm e}+\rho^{\mathrm{ion}}$ in <a class="eqref" href="#b4-eq-coulomb">(B4.20)</a>, without $\iint\dd^3r\,\dd^3r'$ and without self terms; the cross term occurs twice, which cancels its <span class="nw">$\frac12$.</span> The momentum $\hat\bP_{\ell\kappa}$ <a class="eqref" href="#b4-eq-p">(B4.22)</a> and the displacement $\hat\bu_{\ell\kappa}$ <a class="eqref" href="#a1-eq-u">(A1.27)</a> are linear in phonon operators; $\hat\bA$ <a class="eqref" href="#b4-eq-A">(B4.19)</a> is linear in photon operators once its longitudinal part, a gauge variable, is set to zero. In GaAs, vertex 7 alone would put the LO phonon at 55.6 meV; screened by the electrons, at 35.9 meV (<a href="#b-phonon-se">B.7</a>, <a href="#b-electrostatic">B.9</a>).</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b4-vertices');
+  if (!fig || !window.EPP) return;
+  const NS = 'http://www.w3.org/2000/svg';
+  const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
+  const C = (n) => EPP.color(n);
+  const fx = (v) => (+v).toFixed(2);
+
+  // A figure test page holds this figure without the rest of the primer: links with no target keep only their text.
+  if (!fig.closest('#b-fields')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const sp = document.createElement('span'); sp.innerHTML = a.innerHTML; a.replaceWith(sp);
+  });
+
+  // ---------- layout: four columns on wide screens, two on tablets, one (glyph beside its text) on phones ----------
+  if (!document.getElementById('b4-vertices-css')) {
+    const st = document.createElement('style'); st.id = 'b4-vertices-css';
+    const F = '#viz-b4-vertices ', R4 = F + '.b4-vertices-body[data-cols="4"] ', R2 = F + '.b4-vertices-body[data-cols="2"] ';
+    st.textContent = [
+      F + '.b4-vertices-body{display:grid;grid-template-columns:minmax(0,1fr);gap:6px 12px;align-items:stretch}',
+      F + '.b4-vertices-body[data-cols="2"]{grid-template-columns:repeat(2,minmax(0,1fr))}',
+      F + '.b4-vertices-body[data-cols="4"]{grid-template-columns:repeat(4,minmax(0,1fr))}',
+      F + '.b4-vertices-hd{grid-column:1/-1;margin:10px 0 0;max-width:none;font-family:var(--font-ui);font-size:0.86rem;font-weight:600;color:var(--fg-2)}',
+      F + '.b4-vertices-hd[data-h="1"]{margin-top:0}',
+      R4 + '.b4-vertices-hd[data-h="1"]{grid-row:1}',
+      R4 + '.b4-vertices-card[data-k="1"],' + R4 + '.b4-vertices-card[data-k="2"],' + R4 + '.b4-vertices-card[data-k="3"],' + R4 + '.b4-vertices-card[data-k="4"]{grid-row:2}',
+      R4 + '.b4-vertices-hd[data-h="2"]{grid-row:3;grid-column:1/4}',
+      R4 + '.b4-vertices-hd[data-h="3"]{grid-row:3;grid-column:4/5}',
+      R4 + '.b4-vertices-card[data-k="5"],' + R4 + '.b4-vertices-card[data-k="6"],' + R4 + '.b4-vertices-card[data-k="7"],' + R4 + '.b4-vertices-card[data-k="8"]{grid-row:4}',
+      // two columns: the crossed-out vertex, under its own heading, sits beside vertex 7
+      R2 + '.b4-vertices-hd[data-h="1"]{grid-row:1}',
+      R2 + '.b4-vertices-card[data-k="1"]{grid-row:2;grid-column:1}', R2 + '.b4-vertices-card[data-k="2"]{grid-row:2;grid-column:2}',
+      R2 + '.b4-vertices-card[data-k="3"]{grid-row:3;grid-column:1}', R2 + '.b4-vertices-card[data-k="4"]{grid-row:3;grid-column:2}',
+      R2 + '.b4-vertices-hd[data-h="2"]{grid-row:4}',
+      R2 + '.b4-vertices-card[data-k="5"]{grid-row:5;grid-column:1}', R2 + '.b4-vertices-card[data-k="6"]{grid-row:5;grid-column:2}',
+      R2 + '.b4-vertices-hd[data-h="3"]{grid-row:6;grid-column:2}',
+      R2 + '.b4-vertices-card[data-k="7"]{grid-row:7;grid-column:1}', R2 + '.b4-vertices-card[data-k="8"]{grid-row:7;grid-column:2}',
+      F + '.b4-vertices-card{min-width:0;display:grid;grid-template-columns:minmax(0,1fr);justify-items:center;align-content:start;gap:4px;padding:8px 6px 9px;border:1px solid transparent;border-radius:6px;text-align:center;transition:background-color .15s,border-color .15s}',
+      F + '.b4-vertices-body[data-cols="1"] .b4-vertices-card{grid-template-columns:122px minmax(0,1fr);justify-items:start;align-items:center;column-gap:10px;text-align:left;padding:6px 6px 7px}',
+      F + '.b4-vertices-body[data-cols="1"] .b4-vertices-dg svg{width:122px;height:auto}',
+      F + '.b4-vertices-card.b4-vertices-ghost{border-style:dashed;border-color:var(--rule)}',
+      F + '.b4-vertices-card.b4-vertices-on{background:var(--hl);border-color:var(--accent);border-style:solid}',
+      F + '.b4-vertices-card.b4-vertices-partner{border-color:var(--accent);border-style:dashed;background:color-mix(in srgb,var(--accent) 4%,transparent)}',
+      F + '.b4-vertices-card:focus{outline:none}',
+      F + '.b4-vertices-card:focus-visible{outline:2px solid var(--accent);outline-offset:1px}',
+      '@media (prefers-reduced-motion: reduce){' + F + '.b4-vertices-card{transition:none}}',
+      F + '.b4-vertices-dg svg{display:block;overflow:visible}',
+      F + '.b4-vertices-txt{min-width:0;width:100%;display:grid;gap:3px;justify-items:center}',
+      F + '.b4-vertices-body[data-cols="1"] .b4-vertices-txt{justify-items:start}',
+      F + '.b4-vertices-txt p{margin:0;max-width:none}',
+      F + '.b4-vertices-name{font-family:var(--font-ui);font-size:0.84rem;font-weight:600;line-height:1.3;color:var(--fg)}',
+      F + '.b4-vertices-n{display:inline-grid;place-items:center;width:1.5em;height:1.5em;margin-right:6px;border-radius:50%;background:var(--surface-2);color:var(--accent);font-family:var(--font-mono);font-size:0.72rem;font-weight:500;vertical-align:1px}',
+      F + '.b4-vertices-term{font-size:0.95rem;line-height:1.3;min-height:2.2em;display:flex;align-items:center;justify-content:center;color:var(--fg)}',
+      F + '.b4-vertices-body[data-cols="1"] .b4-vertices-term{justify-content:flex-start}',
+      F + '.b4-vertices-to{font-family:var(--font-ui);font-size:0.78rem;line-height:1.38;color:var(--muted)}',
+      F + '.b4-vertices-to mjx-container{color:inherit}',
+      F + '.b4-vertices-to a{color:inherit;text-decoration-color:color-mix(in srgb,var(--muted) 55%,transparent)}',
+      F + '.b4-vertices-leg{margin-top:12px;gap:6px 18px;max-width:none}'
+    ].join('\n');
+    document.head.appendChild(st);
+  }
+  const body = fig.querySelector('.b4-vertices-body');
+  function layout() {
+    // four columns only where each holds the widest term (about 155 px); below 310 px (the narrowest phones)
+    // the cards stack glyph over text again
+    const w = body.clientWidth;
+    const n = w >= 740 ? 4 : (w >= 430 ? 2 : (w >= 310 ? 1 : 0));
+    if (body.dataset.cols !== String(n)) body.dataset.cols = String(n);
+  }
+  layout();
+  try { new ResizeObserver(layout).observe(body); } catch (e) { window.addEventListener('resize', layout); }
+
+  // ---------- labels inside the glyphs, as SVG text ----------
+  // Markup: letters are italic (math); [..] is a bold vector (upright); |..| is upright; @..@ is the UI font;
+  // ~ puts a hat on the next character; _x, _{..}, ^x, ^{..} are scripts; a subscript right after a superscript is
+  // stacked under it.
+  function parse(s) {
+    const atoms = [], st = { b: false, u: false, w: false };
+    let cur = null, hat = false;
+    const add = (ch, lev) => {
+      const greek = /[α-ω]/.test(ch), latin = /[A-Za-z]/.test(ch);
+      const it = !st.w && !st.u && (greek || (latin && !st.b));
+      if (!cur || cur.lev !== lev) { cur = { lev, runs: [] }; atoms.push(cur); }
+      const L = cur.runs[cur.runs.length - 1];
+      if (!hat && L && !L.hat && L.it === it && L.b === st.b && L.w === st.w) L.t += ch; else cur.runs.push({ t: ch, it, b: st.b, w: st.w, hat });
+      hat = false;
+    };
+    const run = (str, lev) => {
+      for (let k = 0; k < str.length;) {
+        const ch = str[k];
+        if (ch === '[') { st.b = true; k++; }
+        else if (ch === ']') { st.b = false; k++; }
+        else if (ch === '|') { st.u = !st.u; k++; }
+        else if (ch === '@') { st.w = !st.w; k++; }
+        else if (ch === '~') { hat = true; k++; }
+        else if ((ch === '_' || ch === '^') && k + 1 < str.length) {
+          let g;
+          if (str[k + 1] === '{') { let e = str.indexOf('}', k + 2); if (e < 0) e = str.length; g = str.slice(k + 2, e); k = e + 1; }
+          else { g = str[k + 1]; k += 2; }
+          const keep = Object.assign({}, st);
+          cur = null; run(g, ch === '_' ? -1 : 1); cur = null;
+          Object.assign(st, keep);
+        } else { add(ch, lev); k++; }
+      }
+    };
+    run(String(s), 0);
+    return atoms;
+  }
+  const mctx = document.createElement('canvas').getContext('2d');
+  let FAM = { tx: 'serif', ui: 'sans-serif' };
+  const fontOf = (r, sz) => `${r.it ? 'italic ' : ''}${r.b ? '700 ' : ''}${sz.toFixed(2)}px ${r.w ? FAM.ui : FAM.tx}`;
+  function place(atoms, size) {
+    let x = 0, prev = null;
+    for (const a of atoms) {
+      a.sz = a.lev ? size * 0.72 : size;
+      a.w = 0;
+      for (const r of a.runs) { mctx.font = fontOf(r, a.sz); r.w = mctx.measureText(r.t).width; a.w += r.w; }
+      const lastRun = prev && !prev.lev ? prev.runs[prev.runs.length - 1] : null;
+      const ic = lastRun && lastRun.it ? (a.lev === 1 ? 0.1 : a.lev === -1 ? -0.03 : 0) * size : (!a.lev && prev && prev.lev ? 0.06 * size : 0);
+      if (a.lev && prev && prev.lev === -a.lev && !prev.stacked) { a.x0 = prev.x0; a.stacked = true; x = Math.max(prev.x0 + prev.w, a.x0 + a.w); }
+      else { a.x0 = x + ic; x += a.w + ic; }
+      prev = a;
+    }
+    return x;
+  }
+  // text whose middle (horizontally) and cap-height middle (vertically) sit at (x, y)
+  function rich(parent, x, y, s, o = {}) {
+    const size = o.size || 13, atoms = parse(s), W = place(atoms, size), col = o.color || C('fg');
+    const x0 = o.anchor === 'start' ? x : o.anchor === 'end' ? x - W : x - W / 2, base = y + 0.34 * size;
+    const t = mk('text', { x: fx(x0), y: fx(base), fill: col }, parent);
+    const hats = [];
+    for (const a of atoms) {
+      const dy = a.lev === -1 ? size * 0.3 : a.lev === 1 ? -size * 0.4 : 0;
+      let xx = x0 + a.x0;
+      for (const r of a.runs) {
+        const ts = mk('tspan', { x: fx(xx), y: fx(base + dy), 'font-size': a.sz.toFixed(2), 'font-family': r.w ? FAM.ui : FAM.tx, 'font-style': r.it ? 'italic' : 'normal', 'font-weight': r.b ? '700' : '400' }, t);
+        ts.textContent = r.t;
+        if (r.hat) hats.push({ cx: xx + r.w / 2 + (r.it ? 0.07 * a.sz : 0), top: base + dy - (/[A-Zbdfhklt]/.test(r.t) ? 0.7 : 0.49) * a.sz, sz: a.sz });
+        xx += r.w;
+      }
+    }
+    for (const h of hats) {
+      const hw = 0.21 * h.sz, y1 = h.top - 0.08 * h.sz, y0 = h.top - 0.25 * h.sz;
+      mk('path', { d: `M${fx(h.cx - hw)} ${fx(y1)} L${fx(h.cx)} ${fx(y0)} L${fx(h.cx + hw)} ${fx(y1)}`, fill: 'none', stroke: col, 'stroke-width': 1.15, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, parent);
+    }
+    return W;
+  }
+
+  // ---------- line styles (the diagram language of the primer) ----------
+  function seg(g, a, b, col, o = {}) {
+    const at = { d: `M${fx(a[0])} ${fx(a[1])} L${fx(b[0])} ${fx(b[1])}`, fill: 'none', stroke: col, 'stroke-width': o.w || 1.8, 'stroke-linecap': o.dash ? 'butt' : 'round' };
+    if (o.dash) at['stroke-dasharray'] = o.dash;
+    return mk('path', at, g);
+  }
+  function arrowHead(g, x, y, deg, col) {
+    const gg = mk('g', { transform: `translate(${fx(x)},${fx(y)}) rotate(${deg.toFixed(1)})` }, g);
+    mk('path', { d: 'M5 0 L-4 -4.5 L-2 0 L-4 4.5 Z', fill: col }, gg);
+  }
+  function fermion(g, a, b) {
+    const col = C('electron');
+    seg(g, a, b, col);
+    arrowHead(g, (a[0] + b[0]) / 2 + 1.5 * Math.sign(b[0] - a[0]), (a[1] + b[1]) / 2, Math.atan2(b[1] - a[1], b[0] - a[0]) * 180 / Math.PI, col);
+  }
+  function phonon(g, a, b) {
+    const dx = b[0] - a[0], dy = b[1] - a[1], L = Math.hypot(dx, dy), ux = dx / L, uy = dy / L, A = 3.6;
+    const n = 2 * Math.max(2, Math.round(L / 7));
+    let d = '';
+    for (let i = 0; i <= n; i++) {
+      const s = i / n, o = (i === 0 || i === n) ? 0 : (i % 2 ? A : -A);
+      d += (i ? ' L' : 'M') + fx(a[0] + dx * s - uy * o) + ' ' + fx(a[1] + dy * s + ux * o);
+    }
+    mk('path', { d, fill: 'none', stroke: C('phonon'), 'stroke-width': 1.8, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }, g);
+  }
+  function photon(g, a, b) {
+    const dx = b[0] - a[0], dy = b[1] - a[1], L = Math.hypot(dx, dy), ux = dx / L, uy = dy / L, A = 3.4;
+    const nw = Math.max(2, Math.round(L / 9)), n = 24 * nw;
+    let d = '';
+    for (let i = 0; i <= n; i++) {
+      const s = i / n, o = A * Math.sin(2 * Math.PI * nw * s);
+      d += (i ? ' L' : 'M') + fx(a[0] + dx * s - uy * o) + ' ' + fx(a[1] + dy * s + ux * o);
+    }
+    mk('path', { d, fill: 'none', stroke: C('photon'), 'stroke-width': 1.8, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }, g);
+  }
+  const coulomb = (g, a, b) => seg(g, a, b, C('photon'), { dash: '5 4' });
+  const dot = (g, x, y, r = 3) => mk('circle', { cx: fx(x), cy: fx(y), r, fill: C('ink') }, g);
+  // the ion site: an amber disc on a ring of the surface colour, so the lines visibly end at it
+  function site(g, x, y) {
+    mk('circle', { cx: fx(x), cy: fx(y), r: 7.4, fill: C('surface') }, g);
+    mk('circle', { cx: fx(x), cy: fx(y), r: 5.6, fill: C('phonon') }, g);
+  }
+  // a label beside the middle of the line a -> b: side +1 is the screen-left of the direction (above a left-to-right line)
+  function lineLabel(L, a, b, side, dist, s, color, size) {
+    const dx = b[0] - a[0], dy = b[1] - a[1], len = Math.hypot(dx, dy), nx = dy / len, ny = -dx / len;
+    rich(L.lab, (a[0] + b[0]) / 2 + side * nx * dist, (a[1] + b[1]) / 2 + side * ny * dist, s, { color, size });
+  }
+
+  // ---------- the glyphs (130 x 94 px each) ----------
+  const W = 130, H = 94;
+  const D = {
+    1: { aria: 'An electron line enters a dot and leaves it; one wavy photon line, labelled A hat, leaves the same dot upwards.', draw(L) {
+      fermion(L.line, [8, 70], [65, 70]); fermion(L.line, [65, 70], [122, 70]);
+      photon(L.line, [65, 70], [65, 12]);
+      dot(L.dot, 65, 70);
+      rich(L.lab, 75, 40, '~[A]', { color: C('photon-t'), anchor: 'start' });
+    } },
+    2: { aria: 'An electron line enters a dot and leaves it; two wavy photon lines, each labelled A hat, leave the same dot.', draw(L) {
+      fermion(L.line, [8, 72], [65, 72]); fermion(L.line, [65, 72], [122, 72]);
+      photon(L.line, [65, 72], [28, 14]); photon(L.line, [65, 72], [102, 14]);
+      dot(L.dot, 65, 72);
+      lineLabel(L, [65, 72], [28, 14], 1, 15, '~[A]', C('photon-t'));
+      lineLabel(L, [65, 72], [102, 14], -1, 15, '~[A]', C('photon-t'));
+    } },
+    3: { aria: 'A zigzag phonon line, labelled p hat sub l kappa, the ion momentum, ends at a dot, from which a wavy photon line, A hat, continues.', draw(L) {
+      phonon(L.line, [10, 56], [65, 56]); photon(L.line, [65, 56], [120, 56]);
+      dot(L.dot, 65, 56);
+      rich(L.lab, 37.5, 38, '~[p]_{ℓκ}', { color: C('phonon-t') });
+      rich(L.lab, 92.5, 38, '~[A]', { color: C('photon-t') });
+    } },
+    4: { aria: 'Two wavy photon lines, each labelled A hat, meet at a small amber disc, the ion site; there is no phonon line. Under the disc: Z star sub kappa times Z star transpose sub kappa, over M sub kappa.', draw(L) {
+      photon(L.line, [65, 56], [24, 10]); photon(L.line, [65, 56], [106, 10]);
+      site(L.dot, 65, 56);
+      lineLabel(L, [65, 56], [24, 10], 1, 15, '~[A]', C('photon-t'));
+      lineLabel(L, [65, 56], [106, 10], -1, 15, '~[A]', C('photon-t'));
+      rich(L.lab, 65, 79, '[Z]^*_κ[Z]^{*@T@}_κ/M_κ', { color: C('fg2'), size: 12.5 });
+    } },
+    5: { aria: 'Two electron lines, each passing through a dot, joined by a vertical dashed Coulomb line labelled v.', draw(L) {
+      fermion(L.line, [8, 20], [65, 20]); fermion(L.line, [65, 20], [122, 20]);
+      fermion(L.line, [8, 72], [65, 72]); fermion(L.line, [65, 72], [122, 72]);
+      coulomb(L.line, [65, 20], [65, 72]);
+      dot(L.dot, 65, 20); dot(L.dot, 65, 72);
+      rich(L.lab, 73, 46, 'v', { color: C('photon-t'), anchor: 'start', size: 14 });
+    } },
+    6: { aria: 'An electron line passes through a dot at the top; a dashed Coulomb line joins it to a dot at the bottom, where a zigzag phonon line, u hat sub l kappa, the ion displacement, ends.', draw(L) {
+      fermion(L.line, [8, 20], [65, 20]); fermion(L.line, [65, 20], [122, 20]);
+      coulomb(L.line, [65, 20], [65, 72]);
+      phonon(L.line, [12, 72], [65, 72]);
+      dot(L.dot, 65, 20); dot(L.dot, 65, 72);
+      rich(L.lab, 38.5, 53, '~[u]_{ℓκ}', { color: C('phonon-t') });
+    } },
+    7: { aria: 'A zigzag phonon line, u hat sub l kappa, ends at a dot at the top; a dashed Coulomb line leads down to a second dot, from which a zigzag phonon line, u hat sub l prime kappa prime, leaves.', draw(L) {
+      phonon(L.line, [14, 20], [65, 20]);
+      coulomb(L.line, [65, 20], [65, 72]);
+      phonon(L.line, [65, 72], [116, 72]);
+      dot(L.dot, 65, 20); dot(L.dot, 65, 72);
+      rich(L.lab, 39.5, 37, '~[u]_{ℓκ}', { color: C('phonon-t') });
+      rich(L.lab, 90.5, 53, '~[u]_{ℓ′κ′}', { color: C('phonon-t') });
+    } },
+    8: { aria: 'A faded electron line and a faded phonon line meet at one dot, which is crossed out: the electron–phonon vertex of Part A is not a term of V prime.', draw(L) {
+      const g = mk('g', { opacity: 0.4 }, L.line);
+      fermion(g, [8, 24], [65, 24]); fermion(g, [65, 24], [122, 24]);
+      phonon(g, [65, 82], [65, 24]);
+      const x = 65, y = 24, k = 4.1;
+      mk('circle', { cx: x, cy: y, r: 8.6, fill: C('surface'), stroke: C('muted'), 'stroke-width': 1.3 }, L.dot);
+      mk('path', { d: `M${x - k} ${y - k} L${x + k} ${y + k} M${x - k} ${y + k} L${x + k} ${y - k}`, fill: 'none', stroke: C('fg2'), 'stroke-width': 1.7, 'stroke-linecap': 'round' }, L.dot);
+    } }
+  };
+  const hosts = [...fig.querySelectorAll('.b4-vertices-dg')];
+  function swatches() {
+    const put = (k, html) => { const s = fig.querySelector(`svg[data-sw="${k}"]`); if (s) s.innerHTML = html; };
+    const e = C('electron'), p = C('phonon'), v = C('photon');
+    put('e', `<path d="M2 7 H28" stroke="${e}" stroke-width="1.8" fill="none"/><path d="M20 7 L11 2.5 L13 7 L11 11.5 Z" fill="${e}"/>`);
+    let z = 'M2 7'; for (let i = 1; i <= 8; i++) z += ` L${2 + 3.25 * i} ${i === 8 ? 7 : (i % 2 ? 3.6 : 10.4)}`;
+    put('p', `<path d="${z}" stroke="${p}" stroke-width="1.8" fill="none" stroke-linejoin="round"/>`);
+    let w = ''; for (let i = 0; i <= 54; i++) w += (i ? ' L' : 'M') + fx(2 + 26 * i / 54) + ' ' + fx(7 - 3.4 * Math.sin(2 * Math.PI * 3 * i / 54));
+    put('g', `<path d="${w}" stroke="${v}" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`);
+    put('v', `<path d="M2 7 H28" stroke="${v}" stroke-width="1.8" stroke-dasharray="5 4" fill="none"/>`);
+    put('d', `<circle cx="7" cy="7" r="3" fill="${C('ink')}"/>`);
+    put('s', `<circle cx="8" cy="8" r="5.6" fill="${p}"/>`);
+    put('x', `<circle cx="10" cy="10" r="7.6" fill="${C('surface')}" stroke="${C('muted')}" stroke-width="1.3"/><path d="M6.4 6.4 L13.6 13.6 M6.4 13.6 L13.6 6.4" stroke="${C('fg2')}" stroke-width="1.6" stroke-linecap="round"/>`);
+  }
+  function drawAll() {
+    FAM = { tx: EPP.css('--font-text') || 'serif', ui: EPP.css('--font-ui') || 'sans-serif' };
+    hosts.forEach(h => {
+      const d = D[h.dataset.d];
+      if (!d) return;
+      h.innerHTML = '';
+      const svg = mk('svg', { viewBox: `0 0 ${W} ${H}`, width: W, height: H, role: 'img', 'aria-label': d.aria }, h);
+      d.draw({ line: mk('g', {}, svg), dot: mk('g', {}, svg), lab: mk('g', {}, svg) });
+    });
+    swatches();
+  }
+
+  // ---------- highlight: hover, tap or keyboard focus; the crossed-out vertex also lights up its replacements ----------
+  const cards = [...fig.querySelectorAll('.b4-vertices-card')];
+  const ROUTES = { 8: ['1', '3', '6'] };
+  let hov = null, foc = null;
+  function paint() {
+    const k = hov || foc;
+    cards.forEach(c => {
+      c.classList.toggle('b4-vertices-on', c.dataset.k === k);
+      c.classList.toggle('b4-vertices-partner', !!(k && ROUTES[k] && ROUTES[k].includes(c.dataset.k)));
+    });
+  }
+  cards.forEach((c, i) => {
+    c.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') { hov = c.dataset.k; paint(); } });
+    c.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') { hov = null; paint(); } });
+    c.addEventListener('focus', () => { foc = c.dataset.k; cards.forEach(o => { o.tabIndex = o === c ? 0 : -1; }); paint(); });
+    c.addEventListener('blur', () => { foc = null; paint(); });
+    c.addEventListener('keydown', (e) => {
+      if (e.target !== c || e.altKey || e.ctrlKey || e.metaKey) return;
+      const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+      const j = step ? (i + step + cards.length) % cards.length : (e.key === 'Home' ? 0 : (e.key === 'End' ? cards.length - 1 : -1));
+      if (j < 0) return;
+      e.preventDefault();
+      cards[j].focus();
+    });
+  });
+
+  EPP.onTheme(drawAll);
+  drawAll();
+})();
+</script>

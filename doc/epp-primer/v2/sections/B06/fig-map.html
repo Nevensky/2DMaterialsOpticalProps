@@ -1,0 +1,537 @@
+  <figure class="viz" id="viz-b6-map">
+    <p class="viz-title">Spectral function of the field, and charge from current <span class="tag">interactive</span></p>
+    <div class="b6-map-tabs"></div>
+    <div class="b6-map-v" data-tab="map">
+      <div class="b6-map-plot"><div class="legend b6-map-leg">
+        <span class="item"><svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><path d="M1 5H27" fill="none" stroke-width="1.8" stroke-dasharray="7 4" style="stroke:var(--c-photon)"/></svg>light in vacuum, $\omega=cq$</span>
+        <span class="item" data-m="drude ins polar"><svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><path d="M1 5H27" fill="none" stroke-width="1.6" stroke-dasharray="4 3" style="stroke:var(--fg)"/></svg>modes without damping, $\gamma=0$</span>
+        <span class="item" data-m="polar"><svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><path d="M1 5H27" fill="none" stroke-width="1.6" stroke-dasharray="2 3" style="stroke:var(--c-phonon)"/></svg>$\omega_{\mathrm{TO}}$, $\omega_{\mathrm{LO}}$</span>
+        <span class="item" data-m="drude" hidden><svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><path d="M1 5H27" fill="none" stroke-width="1.6" stroke-dasharray="2 3" style="stroke:var(--c-electron)"/></svg>$\omega_{\mathrm p}$</span>
+        <span class="item" data-m="ins" hidden><svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><path d="M1 5H27" fill="none" stroke-width="1.6" stroke-dasharray="2 3" style="stroke:var(--c-electron)"/></svg>$\Delta$, $\omega_{\mathrm L}$</span>
+      </div></div>
+      <div class="b6-map-ctrls"></div>
+      <div class="readout b6-map-ro" aria-live="polite">
+        <span data-m="polar">$\hbar\omega_{\mathrm{TO}}$, $\hbar\omega_{\mathrm{LO}}$<b class="b6-map-v-w"></b></span>
+        <span data-m="polar">$\varepsilon_{\mathrm s}=\varepsilon_\infty\omega^2_{\mathrm{LO}}/\omega^2_{\mathrm{TO}}$<b class="b6-map-v-es"></b></span>
+        <span data-m="polar">$\hbar\omega^{\ion}_{\mathrm p}=\hbar\sqrt{\varepsilon_\infty(\omega^2_{\mathrm{LO}}-\omega^2_{\mathrm{TO}})}$<b class="b6-map-v-wpi"></b></span>
+        <span data-m="polar">$\sqrt{\varepsilon_\infty}\,\omega_{\mathrm{TO}}/c$<b class="b6-map-v-qx"></b></span>
+        <span data-m="drude" hidden>$\hbar\omega_{\mathrm p}$<b class="b6-map-v-wp"></b></span>
+        <span data-m="drude" hidden>plasma wavelength $2\pi c/\omega_{\mathrm p}$<b class="b6-map-v-lp"></b></span>
+        <span data-m="ins" hidden>gap $\Delta$<b class="b6-map-v-gap"></b></span>
+        <span data-m="ins" hidden>$\hbar\omega_{\mathrm L}=\sqrt{\varepsilon^{\mathrm e}(0)}\,\Delta$<b class="b6-map-v-wl"></b></span>
+        <span data-m="ins" hidden>L–T splitting $\hbar\omega_{\mathrm L}-\Delta$<b class="b6-map-v-lt"></b></span>
+        <span data-m="vac" hidden>$\Pi$<b>0</b></span>
+        <span data-m="vac" hidden>$\hbar\eta$, for visibility<b class="b6-map-v-eta"></b></span>
+        <span data-m="vac" hidden>$D^{\mathrm L}=-4\pi c/\omega^2$<b>real: no spectral weight</b></span>
+        <span data-m="drude ins polar">$\hbar\gamma$<b class="b6-map-v-ga"></b></span>
+      </div>
+    </div>
+    <div class="b6-map-v" data-tab="rho" hidden>
+      <div class="viz-grid two">
+        <div class="b6-map-pa"><div class="legend b6-map-leg-a">
+          <span class="item"><svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><path d="M1 5H27" fill="none" stroke-width="2.8" style="stroke:var(--c-phonon)"/></svg>direct, from the bound charge $-\nabla\cdot\bP$</span>
+          <span class="item"><svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><path d="M1 5H27" fill="none" stroke-width="1.8" stroke-dasharray="6 4" style="stroke:var(--fg)"/></svg><a class="eqref" href="#b6-eq-connection"></a> with the full $\Pi$</span>
+          <span class="item" data-para><svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><path d="M1 5H27" fill="none" stroke-width="2" style="stroke:var(--c-5)"/></svg><a class="eqref" href="#b6-eq-connection"></a> with the paramagnetic part only</span>
+          <span class="item"><svg width="24" height="10" viewBox="0 0 24 10" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><rect x="1" y="1" width="22" height="8" rx="2" style="fill:var(--c-phonon);fill-opacity:0.25"/></svg>$\mathrm{Im}$, direct</span>
+        </div></div>
+        <div class="b6-map-pb"><div class="legend b6-map-leg-b">
+          <span class="item"><svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><path d="M1 5H27" fill="none" stroke-width="2.8" style="stroke:var(--c-phonon)"/></svg>$\varepsilon^{\mathrm L}$, full $\Pi$</span>
+          <span class="item" data-para><svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><path d="M1 5H27" fill="none" stroke-width="2" style="stroke:var(--c-5)"/></svg>$\varepsilon^{\mathrm L}$, paramagnetic part only</span>
+          <span class="item"><svg width="28" height="10" viewBox="0 0 28 10" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><path d="M1 5H27" fill="none" stroke-width="1.4" stroke-dasharray="4 4" style="stroke:var(--muted)"/></svg>$\varepsilon_\infty$</span>
+          <span class="item"><svg width="24" height="10" viewBox="0 0 24 10" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><rect x="1" y="1" width="22" height="8" rx="2" style="fill:var(--c-phonon);fill-opacity:0.25"/></svg>$\varepsilon^{\mathrm L}\lt0$, from $\omega_{\mathrm{TO}}$ to $\omega_{\mathrm{LO}}(\theta)$</span>
+        </div></div>
+      </div>
+      <div class="b6-map-rctrls"></div>
+      <div class="readout b6-map-rro" aria-live="polite">
+        <span>$\Pi_{\rho\rho}(\omega\to0)$, unit of the left axis<b class="b6-map-v-pi0"></b></span>
+        <span>$\varepsilon^{\mathrm L}(0)=\varepsilon_\infty+\cos^2\theta\,(\omega^{\ion}_{\mathrm p})^2/\omega^2_{\mathrm{TO}}$<b class="b6-map-v-e0"></b></span>
+        <span>$\hbar\omega_{\mathrm{LO}}(\theta)$, from $\varepsilon^{\mathrm L}=0$<b class="b6-map-v-wlo"></b></span>
+      </div>
+    </div>
+    <figcaption>
+      <div class="b6-map-cap" data-tab="map"><p class="cap-key"><strong>What to notice.</strong> In the transverse channel of the polar crystal, light and the TO phonon anticross into two polaritons around an empty band; the upper one starts at $\omega_{\mathrm{LO}}$. The longitudinal channel has one flat line, at $\omega_{\mathrm{LO}}$ or $\omega_{\mathrm p}$, and nothing on the light line: it is Coulomb's law dressed by matter.</p><div class="cap-more">
+        <p><strong>Marks.</strong> Colour: the spectral function of the field, on a four-decade logarithmic scale and averaged over each pixel so that narrow peaks show. Rose dashes: light in vacuum. Black short dashes: the undamped modes, zeros of $\omega^2\varepsilon-c^2q^2$ or of $\varepsilon$. Dotted lines: $\omega_{\mathrm{TO}}$ and $\omega_{\mathrm{LO}}$ (amber), $\omega_{\mathrm p}$, or $\Delta$ and $\omega_{\mathrm L}$ (blue).</p>
+        <p><strong>Try.</strong> Switch the channel: the polaritons give way to the flat LO line. Choose Drude: no transverse wave below $\omega_{\mathrm p}$, the branch $\omega^2=\omega_{\mathrm p}^2+c^2q^2$ above it, and a flat plasmon in the longitudinal channel. Lower the damping: the peaks sharpen onto the dashed lines.</p>
+        <p><strong>Model.</strong> <a class="eqref" href="#b6-eq-DLT"></a> for a local, isotropic response, $\varepsilon^{\mathrm L}=\varepsilon^{\mathrm T}=\varepsilon(\omega)$; modes <a class="eqref" href="#b6-eq-modesL"></a>–<a class="eqref" href="#b6-eq-polariton"></a>. For $\omega\gt0$ the spectral weight is $+\mathrm{Im}\,D$. The factor $\omega^2$ removes the $1/\omega^2$ of $D^{\mathrm L}$, leaving the loss function $\mathrm{Im}(-1/\varepsilon)$, zero where $\varepsilon\to\infty$; at $q=0$ the channels coincide. Media: vacuum, $\omega^2\to\omega(\omega+\ii\eta)$; Drude, $\varepsilon=1-\omega_{\mathrm p}^2/[\omega(\omega+\ii\gamma)]$ (sodium); one oscillator at the gap $\Delta$ for all interband transitions, $\varepsilon=1+(\varepsilon^{\mathrm e}(0)-1)\Delta^2/[\Delta^2-\hbar^2\omega(\omega+\ii\gamma)]$, whose longitudinal mode $\hbar\omega_{\mathrm L}=\sqrt{\varepsilon^{\mathrm e}(0)}\,\Delta$ lies much further above $\Delta$ than a real exciton's; the polar crystal <a class="eqref" href="#b6-eq-polar"></a> with damping and the measured $\omega_{\mathrm{LO}}$, presets of <a class="figref" href="#viz-b6-polariton"></a>. The damping slider sets $\gamma/\omega_0$ ($\eta/\omega_0$ in vacuum), with $\omega_0=1$ eV$/\hbar$, $\omega_{\mathrm p}$, $\Delta/\hbar$, $\omega_{\mathrm{TO}}$ in the order of the media.</p>
+      </div></div>
+      <div class="b6-map-cap" data-tab="rho" hidden><p class="cap-key"><strong>What to notice.</strong> The charge response computed directly from the bound charge and the one obtained from the full current correlator through the connection formula lie on top of each other at every angle. Without the diamagnetic term the result diverges as $\omega\to0$, as if the insulator carried a static current.</p><div class="cap-more">
+        <p><strong>Marks.</strong> Left: amber, the direct route, with its imaginary part as a light fill; black dashes, <a class="eqref" href="#b6-eq-connection"></a> with the full $\Pi^{\ion}$; violet, the same with its paramagnetic part only; the dot, the static value $-\cos^2\theta$. Right: $\mathrm{Re}\,\varepsilon^{\mathrm L}$ from the full and from the paramagnetic $\Pi^{\ion}$; the shaded band, where $\varepsilon^{\mathrm L}\lt0$, ends at the LO mode, the dot at $\varepsilon^{\mathrm L}=0$.</p>
+        <p><strong>Try.</strong> Raise $\theta$: the charge response shrinks as $\cos^2\theta$, and $\omega_{\mathrm{LO}}(\theta)$ moves down to $\omega_{\mathrm{TO}}$. At $\theta=90°$ the mode current is transverse and carries no charge, so every route gives zero. Untick the paramagnetic route to compare the two correct curves alone.</p>
+        <p><strong>Model.</strong> One polar mode of $\Pi^{\ion}$, <a class="eqref" href="#b5-eq-Piion"></a>, with current $\bj_\nu$ at the angle $\theta$ to $\bq$ and damping $\gamma=0.01\,\omega_{\mathrm{TO}}$. Unit of the charge response: its static magnitude at $\theta=0$, $q^2|\bj_\nu|^2/(\OV\omega^2_{\mathrm{TO}})$. Direct route, from the derivation in <a href="#b6-continuity">the subsection on charge conservation</a>: $\cos^2\theta\,\omega^2_{\mathrm{TO}}/(\omega^2-\omega^2_{\mathrm{TO}}+\ii\gamma\omega)$. Full route: <a class="eqref" href="#b6-eq-connection"></a> applied to $\Pi^{\ion}_{\alpha\beta}$. Paramagnetic route: the same without $\Pi^{\mathrm{dia}}$ of <a class="eqref" href="#b5-eq-dia"></a>, which adds $-\cos^2\theta\,\omega^2_{\mathrm{TO}}/\omega^2$. Three separate formulas, so their agreement is a real check. Right: $\varepsilon^{\mathrm L}=\varepsilon_\infty+\frac{4\pi c}{\omega^2}\Pi^{\mathrm L}$, with the electrons as a constant $\varepsilon_\infty$; crystals as in the first tab.</p>
+      </div></div>
+    </figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b6-map');
+  if (!fig || !window.EPP) return;
+  const C = EPP.C, nb = ' ';
+
+  // previewed outside Section B.6 (the figure test), the cited equations, figures and subsections are absent: keep their names as text
+  const TAGS = { 'b6-eq-DLT': '(B6.17)', 'b6-eq-modesL': '(B6.18)', 'b6-eq-polariton': '(B6.20)', 'b6-eq-polar': '(B6.16)', 'b6-eq-connection': '(B6.7)',
+    'b5-eq-Piion': '(B5.26)', 'b5-eq-dia': '(B5.15)', 'viz-b6-polariton': 'Figure B6.2' };
+  if (!fig.closest('#b-propagator')) fig.querySelectorAll('a[href^="#"]').forEach(a => { const id = (a.getAttribute('href') || '').slice(1); if (!document.getElementById(id)) { const sp = document.createElement('span'); sp.textContent = TAGS[id] || a.textContent; a.replaceWith(sp); } });
+
+  // ---------- media: energies in eV, wavevectors in μm⁻¹ ----------
+  const HC = 0.197327;                        // ħc in eV μm
+  // literature values, illustrative (as in Figure B6.2): ħω_TO, ħω_LO in meV, ε_∞
+  const PRE = {
+    GaAs: { T: 33.3, L: 36.2, ei: 10.9, name: 'GaAs' },
+    NaCl: { T: 20.3, L: 32.7, ei: 2.34, name: 'NaCl' },
+    SiC: { T: 98.7, L: 120.5, ei: 6.52, name: '3C-SiC' },
+    hBN: { T: 169.9, L: 199.6, ei: 4.87, name: 'hBN, in plane' }
+  };
+  const PRE_OPTS = [['GaAs', 'GaAs'], ['NaCl', 'NaCl'], ['SiC', 'SiC (3C)'], ['hBN', 'hBN, in plane']];
+  const MEDIUM = { vac: 'vacuum', drude: 'Drude metal', ins: 'two-level insulator', polar: 'polar crystal' };
+  // ε(ω) of each medium (retarded, γ > 0), fixed axis ranges, and γ = (slider) × ω_0 with ω_0 = 1 eV/ħ, ω_p, Δ/ħ or ω_TO
+  function makeModel(s) {
+    const g = s.g;
+    if (s.model === 'vac') {                  // Π = 0; ω²ε = ω(ω + iη) keeps the light-line pole visible
+      const ga = g;
+      return { kind: 'vac', U: 1, unit: 'eV', ymax: 3, qmax: 1.2 * 3 / HC, ga, eps: E => [1, ga / E] };
+    }
+    if (s.model === 'drude') {                // ε = 1 − ω_p²/ω(ω + iγ)
+      const wp = s.wp, ga = g * wp;
+      return { kind: 'drude', U: 1, unit: 'eV', ymax: 12, qmax: 1.1 * 12 / HC, ga, wp,
+        eps: E => { const t = C.div([wp * wp, 0], [E * E, E * ga]); return [1 - t[0], -t[1]]; } };
+    }
+    if (s.model === 'ins') {                  // ε = 1 + (ε^e(0) − 1)Δ²/(Δ² − ω² − iγω); a fixed 16 eV window, wider only when ω_L would leave it
+      const D = s.gap, e0 = s.e0, ga = g * D, A = (e0 - 1) * D * D, wl = Math.sqrt(e0) * D, ymax = Math.max(16, 1.3 * wl);
+      return { kind: 'ins', U: 1, unit: 'eV', ymax, qmax: 1.6 * ymax / HC, ga, D, e0, wl,
+        eps: E => { const t = C.div([A, 0], [D * D - E * E, -ga * E]); return [1 + t[0], t[1]]; } };
+    }
+    // polar crystal (B6.16) with damping: ε = ε_∞ + (ω_p^ion)²/(ω_TO² − ω² − iγω), (ω_p^ion)² = ε_∞(ω_LO² − ω_TO²)
+    const P = PRE[s.pre] || PRE.GaAs, to = P.T / 1000, lo = P.L / 1000, ei = P.ei, wp2 = ei * (lo * lo - to * to), ga = g * to;
+    return { kind: 'polar', U: 1000, unit: 'meV', ymax: 1.7 * lo, qmax: 2.5 * Math.sqrt(ei) * lo / HC, ga, to, lo, ei, wp2, P,
+      eps: E => { const t = C.div([wp2, 0], [to * to - E * E, -ga * E]); return [ei + t[0], t[1]]; } };
+  }
+  // modes at γ = 0. Transverse, ω²ε = c²q² (B6.19): for the polar crystal (B6.20) and the two-level insulator a quadratic in ω²,
+  // with the small root written as product / large root (no cancellation at small q); one branch ω² = ω_p² + c²q² for the metal
+  function modesT(M, cq) {
+    const x = cq * cq;
+    if (M.kind === 'polar' || M.kind === 'ins') {
+      const a2 = M.kind === 'polar' ? M.lo * M.lo : M.wl * M.wl, x2 = M.kind === 'polar' ? x / M.ei : x, b2 = M.kind === 'polar' ? M.to * M.to : M.D * M.D;
+      const hs = 0.5 * (a2 + x2), prod = x2 * b2, up2 = hs + Math.sqrt(Math.max(0, hs * hs - prod));
+      return [Math.sqrt(prod / up2), Math.sqrt(up2)];
+    }
+    if (M.kind === 'drude') return [NaN, Math.sqrt(M.wp * M.wp + x)];
+    return [NaN, NaN];
+  }
+  // longitudinal, ε = 0 (B6.18): ω_LO, ω_p, ω_L
+  const modeL = (M) => (M.kind === 'polar' ? M.lo : M.kind === 'drude' ? M.wp : M.kind === 'ins' ? M.wl : NaN);
+
+  // the map: (ω²/4πc) Im D = Im[−ω²/(ω²ε − c²q²)] (T) or Im(−1/ε) (L), (B6.17), on a 200 × 200 grid.
+  // A pole narrower than a pixel would be missed by point sampling, so where the real part of the denominator,
+  // d(E) = E² Re ε − c²q², changes sign inside a pixel, the Lorentzian E² a/(d² + a²) is integrated across the pixel
+  // with d interpolated linearly between the pixel edges (exact arctan form).
+  const NX = 200, NY = 200, NQ = 400;
+  function heat(M, T) {
+    const z = new Float64Array(NX * NY), h = M.ymax / NY, vacL = M.kind === 'vac' && !T;
+    const re2 = E => E * E * M.eps(E)[0];
+    for (let j = 0; j < NY; j++) {
+      const E = h * (j + 0.5), e = M.eps(E), ar = E * E * e[0], ai = E * E * e[1];
+      const rLo = re2(Math.max(1e-9, E - 0.5 * h)), rHi = re2(E + 0.5 * h);
+      for (let i = 0; i < NX; i++) {
+        const cq = T ? HC * M.qmax * (i + 0.5) / NX : 0, cq2 = cq * cq;
+        const dr = ar - cq2, dLo = rLo - cq2, dHi = rHi - cq2, span = Math.abs(dHi - dLo);
+        let im;
+        if (vacL) im = 0;                       // vacuum: D^L = −4πc/ω² is real
+        else if (dLo * dHi < 0 && span > ai) im = E * E / span * Math.abs(Math.atan(dHi / ai) - Math.atan(dLo / ai));
+        else im = E * E * ai / (dr * dr + ai * ai);
+        z[j * NX + i] = Math.log10(Math.max(im, 1e-12));
+      }
+    }
+    // colour scale: four decades below the 99.7th percentile, rounded up to a whole decade
+    const zs = Float64Array.from(z).sort(), zq = zs[Math.floor(0.997 * (zs.length - 1))];
+    const vmax = zq < -11 ? 0 : Math.ceil(Math.min(zq, 6) - 1e-9);
+    return { z, vmin: vmax - 4, vmax };
+  }
+
+  // ---------- formatting ----------
+  const supD = (k) => String(k).split('').map(ch => (ch === '-' ? '⁻' : ('⁰¹²³⁴⁵⁶⁷⁸⁹'['0123456789'.indexOf(ch)] || ch))).join('');
+  // a heat-map value 10^v: plain from 0.001 to 9999, else (mantissa ×) 10^k
+  function cfmt(v) {
+    const x = Math.pow(10, v);
+    if (!(x > 0) || !isFinite(x)) return '0';
+    if (x >= 1e-3 && x < 1e4) return String(Number(x.toPrecision(2)));
+    let k = Math.floor(Math.log10(x)), mt = x / Math.pow(10, k);
+    if (Number(mt.toFixed(1)) >= 10) { mt /= 10; k += 1; }
+    return (Math.abs(mt - 1) < 0.05 ? '' : mt.toFixed(1) + '×') + '10' + supD(k);
+  }
+  const qfmt = (v) => v.toFixed(v < 1 ? 3 : v < 10 ? 2 : 1);
+  const efmt = (v, unit) => (isFinite(v) ? String(Number(v.toPrecision(3))) + ' ' + unit : '—');
+
+  // ---------- canvas text: '$...$' marks math, whose letters are italic; _x, ^x as in EPP.drawRich ----------
+  const ITAL = /[A-Za-zα-ωħ]/;
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const part of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: part.t, m: part.m, it: false }); continue; }
+        let buf = '', it = null;
+        for (const ch of part.t) { const k = ITAL.test(ch); if (it !== null && k !== it) { out.push({ t: buf, m: part.m, it }); buf = ''; } buf += ch; it = k; }
+        if (buf) out.push({ t: buf, m: part.m, it });
+      }
+    });
+    return out;
+  }
+  // o: {size, color, align, halo (a colour: a thin outline that keeps a label legible over the map and the curves), measure}
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, fam = EPP.css('--font-ui'), rs = runs(s);
+    const font = (r) => `${r.it ? 'italic ' : ''}${r.m ? Math.round(size * 0.72) : size}px ${fam}`;
+    const ws = rs.map(r => { ctx.font = font(r); return ctx.measureText(r.t).width; });
+    const tot = ws.reduce((p, q) => p + q, 0);
+    if (o.measure) return tot;
+    const x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    const dy = (r) => (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0));
+    ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    if (o.halo) {
+      ctx.lineWidth = 3.5; ctx.lineJoin = 'round'; ctx.strokeStyle = o.halo; ctx.setLineDash([]);
+      let xx = x0; rs.forEach((r, k) => { ctx.font = font(r); ctx.strokeText(r.t, xx, y + dy(r)); xx += ws[k]; });
+    }
+    if (o.color) ctx.fillStyle = o.color;
+    let xx = x0; rs.forEach((r, k) => { ctx.font = font(r); ctx.fillText(r.t, xx, y + dy(r)); xx += ws[k]; });
+    return tot;
+  }
+  const tw = (ctx, s, size) => txt(ctx, s, 0, 0, { size, measure: true });
+  function axisTitles(ctx, plot, xt, yt) {
+    const w = plot.cv.w, h = plot.cv.h, m = plot.m, cFg = EPP.color('fg');
+    txt(ctx, xt, m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    ctx.save(); ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, yt, 0, 0, { size: 12.5, color: cFg, align: 'center' }); ctx.restore();
+  }
+
+  // ---------- label placement: the first candidate whose box no listed curve and no earlier label crosses ----------
+  function clipSeg(p, q, b) {
+    const dx = q[0] - p[0], dy = q[1] - p[1];
+    if (!isFinite(dx) || !isFinite(dy)) return null;
+    let t0 = 0, t1 = 1;
+    const P = [-dx, dx, -dy, dy], Q = [p[0] - b.x0, b.x1 - p[0], p[1] - b.y0, b.y1 - p[1]];
+    for (let k = 0; k < 4; k++) {
+      if (P[k] === 0) { if (Q[k] < 0) return null; continue; }
+      const r = Q[k] / P[k];
+      if (P[k] < 0) { if (r > t1) return null; if (r > t0) t0 = r; } else { if (r < t0) return null; if (r < t1) t1 = r; }
+    }
+    return true;
+  }
+  function labeler(ctx, curves, frame) {
+    const boxes = [];
+    curves.forEach(k => { let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity; for (const p of k.pts) { x0 = Math.min(x0, p[0]); x1 = Math.max(x1, p[0]); y0 = Math.min(y0, p[1]); y1 = Math.max(y1, p[1]); } k.bb = { x0, x1, y0, y1 }; });
+    const hits = (b, k) => {
+      if (k.bb.x1 < b.x0 || k.bb.x0 > b.x1 || k.bb.y1 < b.y0 || k.bb.y0 > b.y1) return false;
+      const pts = k.pts;
+      for (let i = 1; i < pts.length; i++) {
+        const p = pts[i - 1], q = pts[i];
+        if ((p[0] < b.x0 && q[0] < b.x0) || (p[0] > b.x1 && q[0] > b.x1) || (p[1] < b.y0 && q[1] < b.y0) || (p[1] > b.y1 && q[1] > b.y1)) continue;
+        if (clipSeg(p, q, b)) return true;
+      }
+      return false;
+    };
+    const inFrame = (b) => b.x0 >= frame.x0 - 1 && b.x1 <= frame.x1 + 1 && b.y0 >= frame.y0 - 1 && b.y1 <= frame.y1 + 1;
+    const clear = (b) => !boxes.some(o => b.x0 < o.x1 && b.x1 > o.x0 && b.y0 < o.y1 && b.y1 > o.y0);
+    const boxOf = (c, size, tight) => { const wd = tw(ctx, c.t, size), x0 = c.align === 'right' ? c.x - wd : c.align === 'center' ? c.x - wd / 2 : c.x; return { x0: x0 - 3, x1: x0 + wd + 3, y0: c.y - (tight ? 0.76 * size : size), y1: c.y + (tight ? 1 : 4) }; };
+    const crossings = (b, skip) => curves.reduce((s, k) => s + (!(skip && skip.includes(k.name)) && hits(b, k) ? 1 : 0), 0);
+    const L = {
+      boxes,
+      // cands: [{t, x, y (baseline), align}]; opt.skip: names of curves the label may cross; opt.optional: draw nothing without a free candidate
+      put(cands, style, opt = {}) {
+        const size = style.size;
+        for (const c of cands) { const b = boxOf(c, size, opt.tight); if (inFrame(b) && clear(b) && crossings(b, opt.skip) === 0) { boxes.push(b); txt(ctx, c.t, c.x, c.y, Object.assign({}, style, { align: c.align || 'left' })); return c; } }
+        if (opt.optional || !cands.length) return null;
+        let best = null, bc = Infinity;
+        for (const c of cands) { const b = boxOf(c, size, opt.tight); if (!inFrame(b) || !clear(b)) continue; const k = crossings(b, opt.skip); if (k < bc) { bc = k; best = { c, b }; } }
+        const f = best || { c: cands[0], b: boxOf(cands[0], size, opt.tight) };
+        boxes.push(f.b); txt(ctx, f.c.t, f.c.x, f.c.y, Object.assign({}, style, { align: f.c.align || 'left' }));
+        return f.c;
+      }
+    };
+    return L;
+  }
+  const polyPx = (plot, xs, ys) => { const out = []; for (let i = 0; i < xs.length; i++) if (isFinite(ys[i])) out.push([plot.X(xs[i]), EPP.clamp(plot.Y(ys[i]), -1e5, 1e5)]); return out; };
+
+  // ---------- tab 1: the spectral map ----------
+  const elPlot = fig.querySelector('.b6-map-plot');
+  const pmap = new EPP.Plot(elPlot, {
+    xlim: [0, 1], ylim: [0, 1], aspect: 0.58, minHeight: 340, maxHeight: 440, legend: false,
+    margin: { l: 52, r: 62, t: 24, b: 44 }, xname: 'q', yname: 'ħω', hoverX: v => qfmt(v) + ' μm⁻¹',
+    ariaLabel: 'Heat map of the spectral function of the electromagnetic field against wavevector and energy'
+  });
+  const legMap = elPlot.querySelector('.b6-map-leg');
+  if (legMap) elPlot.appendChild(legMap);   // the static legend (MathJax) goes under the canvas
+  let sMap = null, curMap = null, zCache = null, curTab = 'map';
+  const baseMap = pmap.render.bind(pmap);
+  pmap.render = () => { baseMap(); if (curMap) overlayMap(); };
+
+  function drawMap() {
+    if (!sMap || curTab !== 'map') return;
+    const M = makeModel(sMap), T = sMap.ch === 'T', U = M.U, yU = M.ymax * U;
+    const key = [sMap.model, sMap.ch, sMap.g, sMap.pre, sMap.wp, sMap.gap, sMap.e0].join('|');
+    if (!zCache || zCache.key !== key) zCache = Object.assign({ key }, heat(M, T));
+    const qs = EPP.linspace(0, M.qmax, NQ), cut = (E) => (isFinite(E) && E <= 1.02 * M.ymax ? E * U : NaN);
+    const layers = [{ type: 'heatmap', x0: 0, x1: M.qmax, y0: 0, y1: yU, nx: NX, ny: NY, z: zCache.z, vmin: zCache.vmin, vmax: zCache.vmax,
+      color: 'c5', label: T ? 'ω^2 Im D^T/4πc' : 'ω^2 Im D^L/4πc', colorbar: true, cfmt }];
+    // reference lines: amber for the phonon frequencies, blue for the electronic ones; labels from long to short
+    const refs = [];
+    if (M.kind === 'polar') refs.push({ v: M.to, t: ['$ω$_{TO}'], c: 'phonon', side: 'below' }, { v: M.lo, t: T ? ['$ω$_{LO}'] : ['$ω$_{LO}: LO phonon, $ε$ = 0', '$ω$_{LO}: LO phonon', '$ω$_{LO}'], c: 'phonon', side: 'above' });
+    if (M.kind === 'drude') refs.push({ v: M.wp, t: T ? ['$ω$_p'] : ['$ω$_p: plasmon, $ε$ = 0', '$ω$_p: plasmon', '$ω$_p'], c: 'electron', side: 'above' });
+    if (M.kind === 'ins') refs.push({ v: M.D, t: ['Δ'], c: 'electron', side: 'below' }, { v: M.wl, t: T ? ['$ω$_L'] : ['$ω$_L: longitudinal mode, $ε$ = 0', '$ω$_L: $ε$ = 0', '$ω$_L'], c: 'electron', side: 'above' });
+    refs.forEach(r => layers.push({ type: 'hline', at: r.v * U, color: r.c, dash: [2, 3], width: 1.6 }));
+    layers.push({ type: 'line', x: qs, y: qs.map(q => HC * q * U), color: 'photon', dash: [7, 4], width: 1.8, label: 'light line ω = cq', hover: false });
+    // modes without damping, in ink
+    const poles = [];
+    if (T) {
+      const br = qs.map(q => modesT(M, HC * q));
+      if (M.kind === 'polar' || M.kind === 'ins') poles.push({ y: br.map(b => cut(b[1])), label: 'upper polariton, γ = 0' }, { y: br.map(b => cut(b[0])), label: 'lower polariton, γ = 0' });
+      else if (M.kind === 'drude') poles.push({ y: br.map(b => cut(b[1])), label: 'transverse mode, γ = 0' });
+    } else if (M.kind !== 'vac') { const E = modeL(M); poles.push({ y: qs.map(() => E * U), label: 'ε^L = 0, γ = 0' }); }
+    poles.forEach(p => layers.push({ type: 'line', x: qs, y: p.y, color: 'ink', dash: [4, 3], width: 1.6, label: p.label }));
+    pmap.opt.hoverY = (v) => efmt(v, M.unit);
+    pmap.opt.hoverX2 = (v) => efmt(v, M.unit);
+    curMap = { M, T, qs, poles, refs };
+    pmap.draw(layers, { xlim: [0, M.qmax], ylim: [0, yU] });
+    readoutsMap(M);
+    pmap.cv.canvas.setAttribute('aria-label', mapAria(M, T));
+  }
+
+  function overlayMap() {
+    const ctx = pmap.ctx, w = pmap.cv.w, h = pmap.cv.h, m = pmap.m;
+    if (!w || !h) return;
+    const { M, T, qs, poles, refs } = curMap, U = M.U;
+    const fr = { x0: m.l, x1: w - m.r, y0: m.t, y1: h - m.b }, pw = fr.x1 - fr.x0, ph = fr.y1 - fr.y0;
+    const fs = w < 520 ? 11 : 11.5, halo = EPP.color('surface'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted');
+    const X = (q) => pmap.X(q), Y = (E) => pmap.Y(E * U);
+    ctx.save();
+    // header, axis titles, and the colour-bar title in the right margin
+    const med = M.kind === 'polar' ? 'polar crystal, ' + M.P.name : MEDIUM[M.kind], chn = T ? 'transverse channel' : 'longitudinal channel';
+    const head = tw(ctx, med + ' · ' + chn, 11.5) <= w - 8 ? med + ' · ' + chn : (T ? 'transverse' : 'longitudinal') + ' · ' + med;
+    txt(ctx, head, 4, 15, { size: 11.5, color: cFg2 });
+    axisTitles(ctx, pmap, 'wavevector $q$ (μm⁻¹)', '$ħω$ (' + M.unit + ')');
+    const cbs = T ? ['$ω$^2 Im $D$^T/4$πc$'] : ['$ω$^2 Im $D$^L/4$πc$ = Im(−1/$ε$)', 'Im(−1/$ε$)'];
+    const cb = cbs.find(s => tw(ctx, s, 10.5) <= ph - 6) || cbs[cbs.length - 1];
+    ctx.save(); ctx.translate(w - 4, fr.y0 + ph / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, cb, 0, 0, { size: 10.5, color: cMut, align: 'center' }); ctx.restore();
+
+    // labels, kept off the light line, the mode lines and each other
+    const curves = [{ name: 'light', pts: [[X(0), Y(0)], [X(M.qmax), Y(HC * M.qmax)]] }];
+    poles.forEach((p, k) => curves.push({ name: 'pole' + k, pts: polyPx(pmap, qs, p.y) }));
+    refs.forEach((r, k) => curves.push({ name: 'ref' + k, pts: [[fr.x0, Y(r.v)], [fr.x1, Y(r.v)]] }));
+    const Lb = labeler(ctx, curves, fr);
+    const xL = fr.x0 + 6, xR = fr.x1 - 6, sty = (color) => ({ size: fs, color, halo });
+    // reference lines: the lower one below itself at the left, the upper one above itself at the right; a shorter
+    // label on that side before the other side
+    refs.forEach((r, k) => {
+      const y = Y(r.v), lo = [], hi = [];
+      r.t.forEach(t => {
+        for (let x = xL; x < fr.x0 + 0.62 * pw; x += 6) lo.push({ t, x, y: y + fs + 2 });
+        for (let x = xR; x > fr.x0 + 0.38 * pw; x -= 6) hi.push({ t, x, y: y - 4, align: 'right' });
+      });
+      const skip = ['ref' + k].concat(T ? [] : ['pole0']);
+      Lb.put(r.side === 'below' ? lo.concat(hi) : hi.concat(lo), sty(EPP.textColor(r.c)), { skip });
+    });
+    // regions without a transverse wave, and the empty longitudinal channel of the vacuum
+    const band = (E0, E1, texts, color) => {
+      const y0 = Y(E0), y1 = Y(E1), bh = y0 - y1;
+      if (bh < fs + 2) return;
+      const yb = 0.5 * (y0 + y1) + 0.36 * fs, cands = [];
+      texts.forEach(t => { cands.push({ t, x: xR, y: yb, align: 'right' }); [0.75, 0.6].forEach(f => cands.push({ t, x: fr.x0 + f * pw, y: yb, align: 'center' })); });
+      Lb.put(cands, sty(color), { optional: true, tight: true, skip: refs.map((_, k) => 'ref' + k) });
+    };
+    if (T && M.kind === 'polar') band(M.to, M.lo, ['Reststrahlen: no transverse wave', 'no transverse wave', 'Reststrahlen'], EPP.textColor('phonon'));
+    if (T && M.kind === 'ins') band(M.D, M.wl, ['no transverse wave', 'no wave'], EPP.textColor('electron'));
+    if (T && M.kind === 'drude') {
+      const t = 'no transverse wave below $ω$_p', ts = 'no wave below $ω$_p', cands = [];
+      [t, ts].forEach(s => [0.5, 0.35, 0.65, 0.2].forEach(f => cands.push({ t: s, x: xR, y: Y(f * M.wp) + 4, align: 'right' })));
+      Lb.put(cands, sty(EPP.textColor('electron')), { optional: true });
+    }
+    if (!T && M.kind === 'vac') {
+      const t1 = 'no spectral weight: $D$^L = −4$πc$/$ω$^2 is real';
+      if (tw(ctx, t1, fs + 0.5) <= pw - 16) Lb.put([0.62, 0.72, 0.5, 0.82].map(f => ({ t: t1, x: xR, y: fr.y0 + f * ph, align: 'right' })), sty(cFg2));
+      else {
+        const a = 'no spectral weight:', b = '$D$^L = −4$πc$/$ω$^2 is real', yy = fr.y0 + 0.68 * ph;
+        Lb.put([{ t: a, x: xR, y: yy, align: 'right' }], sty(cFg2)); Lb.put([{ t: b, x: xR, y: yy + fs + 5, align: 'right' }], sty(cFg2));
+      }
+    }
+    // the light line, beside its upper part: above it on the left or below it on the right, the sides a rising line never crosses
+    const lc = [];
+    [0.9, 0.8, 0.7, 0.58, 0.46].forEach(f => { const E = f * M.ymax, q = E / HC; if (q >= M.qmax) return; const x = X(q), y = Y(E); lc.push({ t: '$ω$ = $cq$', x: x - 5, y: y - 5, align: 'right' }, { t: '$ω$ = $cq$', x: x + 5, y: y + fs + 5 }); });
+    Lb.put(lc, sty(EPP.textColor('photon')), { optional: true });
+    ctx.restore();
+  }
+
+  function mapAria(M, T) {
+    const qm = M.qmax.toPrecision(3), em = (M.ymax * M.U).toPrecision(3), u = M.unit;
+    let s = `Heat map of the spectral function of the field, omega squared Im D over 4 pi c on a logarithmic colour scale, ${T ? 'transverse' : 'longitudinal'} channel, ` +
+      `${M.kind === 'polar' ? 'polar crystal ' + M.P.name : MEDIUM[M.kind]}; wavevector q from 0 to ${qm} per micrometre, energy from 0 to ${em} ${u}. A dashed line marks light in vacuum, omega = c q. `;
+    if (M.kind === 'vac') s += T ? 'All the weight lies on the light line.' : 'The map is empty: D L is real in vacuum.';
+    else if (M.kind === 'polar') s += T ? `Two polaritons: the upper starts at omega LO = ${M.P.L} meV and rises along the light line of the crystal; the lower rises from zero and levels off at omega TO = ${M.P.T} meV. No transverse wave exists between them.`
+      : `One flat line at omega LO = ${M.P.L} meV for every q, the LO phonon; nothing on the light line; the loss function vanishes at omega TO = ${M.P.T} meV.`;
+    else if (M.kind === 'drude') s += T ? `No transverse wave below the plasma energy ${M.wp.toFixed(1)} eV; one branch, omega squared = omega p squared + c squared q squared.` : `One flat line at the plasma energy ${M.wp.toFixed(1)} eV for every q, the plasmon; nothing on the light line.`;
+    else s += T ? `Two polaritons around a band without transverse waves between the gap ${M.D.toFixed(2)} eV and omega L = ${M.wl.toFixed(2)} eV.` : `One flat line at omega L = ${M.wl.toFixed(2)} eV for every q; nothing on the light line.`;
+    return s;
+  }
+
+  const $v = (k) => fig.querySelector('.b6-map-v-' + k);
+  const setV = (k, s) => { const el = $v(k); if (el) el.textContent = s; };
+  function readoutsMap(M) {
+    if (M.kind === 'polar') {
+      const P = M.P, es = P.ei * P.L * P.L / (P.T * P.T), qx = Math.sqrt(P.ei) * (P.T / 1000) / HC;
+      setV('w', `${P.T.toFixed(1)}, ${P.L.toFixed(1)}${nb}meV`);
+      setV('es', es.toFixed(2));
+      setV('wpi', `${(1000 * Math.sqrt(M.wp2)).toFixed(1)}${nb}meV`);
+      setV('qx', `${qx.toPrecision(3)}${nb}μm⁻¹, wavelength ${(2 * Math.PI / qx).toPrecision(3)}${nb}μm`);
+    } else if (M.kind === 'drude') {
+      setV('wp', `${M.wp.toFixed(1)}${nb}eV`);
+      setV('lp', `${Math.round(1000 * 2 * Math.PI * HC / M.wp)}${nb}nm`);
+    } else if (M.kind === 'ins') {
+      setV('gap', `${M.D.toFixed(2)}${nb}eV`);
+      setV('wl', `${M.wl.toFixed(2)}${nb}eV`);
+      setV('lt', `${(M.wl - M.D).toFixed(2)}${nb}eV`);
+    } else setV('eta', `${M.ga.toPrecision(2)}${nb}eV`);
+    if (M.kind !== 'vac') setV('ga', `${(M.ga * M.U).toPrecision(2)}${nb}${M.unit}`);
+  }
+
+  // ---------- tab 2: the ionic charge response through three routes ----------
+  let pA = null, pB = null, sRho = null, curRho = null, rhoBuilt = false;
+  function buildRho() {
+    rhoBuilt = true;
+    const elA = fig.querySelector('.b6-map-pa'), elB = fig.querySelector('.b6-map-pb');
+    const common = { xlim: [0, 1], aspect: 0.8, minHeight: 260, maxHeight: 360, legend: false, margin: { l: 56, r: 12, t: 24, b: 44 },
+      xname: 'ħω', hoverX: v => v.toFixed(1) + ' meV', hoverY: v => EPP.fix(v, 3) };
+    pA = new EPP.Plot(elA, Object.assign({}, common, { ylim: [-6, 6], ariaLabel: 'Panel a: ionic charge response from three routes' }));
+    pB = new EPP.Plot(elB, Object.assign({}, common, { ylim: [-1, 1], ariaLabel: 'Panel b: longitudinal dielectric function from two routes' }));
+    [elA, elB].forEach(el => { const lg = el.querySelector('.legend'); if (lg) el.appendChild(lg); });
+    const bA = pA.render.bind(pA), bB = pB.render.bind(pB);
+    pA.render = () => { bA(); if (curRho) overlayRho(pA, 'a'); };
+    pB.render = () => { bB(); if (curRho) overlayRho(pB, 'b'); };
+    const elC = fig.querySelector('.b6-map-rctrls');
+    EPP.controls(elC, [
+      { key: 'rpre', type: 'select', label: 'crystal (illustrative)', options: PRE_OPTS, value: 'GaAs' },
+      { key: 'th', type: 'range', label: 'angle θ between q and the mode current', min: 0, max: 90, step: 1, value: 0, fmt: v => v.toFixed(0) + '°' },
+      { key: 'para', type: 'toggle', label: 'show the paramagnetic-only route', value: true }
+    ], s => { sRho = s; drawRho(); });
+    const sp = elC.querySelector(`label[for="${fig.id}-th"] > span`);
+    if (sp) sp.innerHTML = `angle ${I('θ')} between <b style="font-family:var(--font-text)">q</b> and the mode current`;
+    const inT = document.getElementById(`${fig.id}-th`);
+    if (inT) { const say = () => inT.setAttribute('aria-valuetext', `${inT.value} degrees`); inT.addEventListener('input', say); say(); }
+  }
+
+  function drawRho() {
+    if (!sRho || !pA) return;
+    const P = PRE[sRho.rpre] || PRE.GaAs, to = P.T, lo = P.L, ei = P.ei, wp2 = ei * (lo * lo - to * to), ga = 0.01 * to;
+    const cth = Math.cos(sRho.th * Math.PI / 180), c2 = sRho.th >= 90 ? 0 : cth * cth, para = !!sRho.para;
+    const xmax = 1.6 * lo, w = EPP.linspace(0.004 * xmax, xmax, 701);
+    // Units: Π_ρρ in units of q²|j_ν|²/(Ω_V ω_TO²) = |Π_ρρ(ω→0)| at θ = 0; q̂·Π^ion·q̂ = Π^L in units of |j_ν|²/(c Ω_V).
+    // The three routes are separate formulas, so their agreement is a real check of (B6.7).
+    const den = x => [x * x - to * to, ga * x];                                    // ω² − ω_TO² + iγω (retarded)
+    const dir = w.map(x => C.div([c2 * to * to, 0], den(x)));                     // direct, from the bound charge −∇·P
+    const piL = w.map(x => C.div([-x * x * c2, 0], den(x)));                      // Π^L of the full Π^ion (B5.26), para + dia
+    const piLp = piL.map(p => [p[0] + c2, p[1]]);                                 // paramagnetic part: minus Π^dia = −cos²θ (B5.15)
+    const conn = piL.map((p, k) => C.scale(p, -to * to / (w[k] * w[k])));          // (B6.7): Π_ρρ = −(cq²/ω²) Π^L
+    const parR = piLp.map((p, k) => C.scale(p, -to * to / (w[k] * w[k])));
+    const epsC = piL.map((p, k) => ei + wp2 * p[0] / (w[k] * w[k]));              // Re ε^L = ε_∞ + (4πc/ω²) Re Π^L
+    const epsP = piLp.map((p, k) => ei + wp2 * p[0] / (w[k] * w[k]));
+    const wlo = Math.sqrt(to * to + c2 * wp2 / ei);                               // ε^L = 0 at γ = 0
+    const wloP = c2 > 0 ? Math.sqrt((to * to + Math.sqrt(Math.pow(to, 4) + 4 * wp2 * c2 * to * to / ei)) / 2) : NaN;
+    const e0th = ei + c2 * wp2 / (to * to), S = ei + wp2 / (to * to);
+    curRho = { P, to, lo, ei, c2, para, xmax, w, dir, conn, parR, epsC, epsP, wlo, wloP, e0th, S };
+    pA.draw([
+      { type: 'fill', x: w, y1: dir.map(d => d[1]), color: 'phonon', alpha: 0.2 },
+      { type: 'vline', at: to, color: 'phonon', dash: [2, 3], width: 1.3 },
+      { type: 'line', x: w, y: dir.map(d => d[0]), color: 'phonon', width: 2.8, label: 'direct, from the bound charge' },
+      { type: 'line', x: w, y: conn.map(d => d[0]), color: 'ink', dash: [6, 4], width: 1.8, label: '(B6.7), full Π' },
+      para ? { type: 'line', x: w, y: parR.map(d => d[0]), color: 'c5', width: 2, label: '(B6.7), paramagnetic only' } : null,
+      { type: 'points', x: [w[0]], y: [-c2], color: 'phonon', r: 4.5 }
+    ], { xlim: [0, xmax], ylim: [-6, 6] });
+    pB.draw([
+      c2 > 0 ? { type: 'band', x0: to, x1: wlo, color: 'phonon', alpha: 0.14 } : null,
+      { type: 'hline', at: 0, color: 'muted', dash: [1, 0], width: 1 },
+      { type: 'hline', at: ei, color: 'muted', dash: [4, 4], width: 1.4 },
+      { type: 'line', x: w, y: epsC, color: 'phonon', width: 2.8, label: 'ε^L, full Π' },
+      para ? { type: 'line', x: w, y: epsP, color: 'c5', width: 2, label: 'ε^L, paramagnetic only' } : null,
+      c2 > 0 ? { type: 'points', x: [wlo], y: [0], color: 'phonon', r: 4.5 } : null
+    ], { xlim: [0, xmax], ylim: [-1.5 * S, 2.5 * S] });
+    fig.querySelectorAll('[data-para]').forEach(el => { el.hidden = !para; });
+    // readouts
+    const pz = c2 > 0, $r = (k) => fig.querySelector('.b6-map-v-' + k);
+    $r('pi0').textContent = (pz ? EPP.fix(-c2, 3) : '0') + (para && pz ? ' · paramagnetic part only: → −∞' : '');
+    $r('e0').textContent = e0th.toFixed(2) + (para && pz ? ' · paramagnetic part only: → +∞' : '');
+    $r('wlo').textContent = pz ? `${wlo.toFixed(1)}${nb}meV` + (para ? ` · paramagnetic part only: ${wloP.toFixed(1)}${nb}meV` : '') : 'none at θ = 90°';
+    const th = sRho.th.toFixed(0);
+    pA.cv.canvas.setAttribute('aria-label', `Panel a: ionic charge response Pi rho rho against energy from 0 to ${xmax.toFixed(0)} meV, in units of its static magnitude at theta = 0; ${P.name}, theta = ${th} degrees. ` +
+      `The direct route and the connection formula with the full Pi coincide: static value ${pz ? (-c2).toFixed(3) : 0}, resonance at omega TO = ${to} meV.` + (para && pz ? ' The paramagnetic-only route diverges to minus infinity as omega goes to 0.' : ''));
+    pB.cv.canvas.setAttribute('aria-label', `Panel b: real part of the longitudinal dielectric function against energy; ${P.name}, theta = ${th} degrees. ` +
+      (pz ? `It starts at ${e0th.toFixed(2)}, diverges at omega TO = ${to} meV, crosses zero at omega LO of theta = ${wlo.toFixed(1)} meV and tends to epsilon infinity = ${ei}.` : `It equals epsilon infinity = ${ei} at every energy: the mode carries no charge.`) +
+      (para && pz ? ' Without the diamagnetic term it diverges to plus infinity as omega goes to 0.' : ''));
+  }
+
+  function overlayRho(plot, which) {
+    const ctx = plot.ctx, w = plot.cv.w, h = plot.cv.h, m = plot.m;
+    if (!w || !h) return;
+    const R = curRho, fr = { x0: m.l, x1: w - m.r, y0: m.t, y1: h - m.b }, ph = fr.y1 - fr.y0;
+    const fs = w < 420 ? 11 : 11.5, halo = EPP.color('surface'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted'), tPh = EPP.textColor('phonon');
+    ctx.save();
+    if (which === 'a') {
+      const hd = ['(a) ionic charge response, three routes', '(a) ionic charge response'];
+      txt(ctx, hd.find(s => tw(ctx, s, 11.5) <= w - 8) || hd[1], 4, 15, { size: 11.5, color: cFg2 });
+      const yts = ['$Π_{ρρ}$ / |$Π_{ρρ}$($ω$ → 0)| at $θ$ = 0', '$Π_{ρρ}$, scaled'];
+      axisTitles(ctx, plot, '$ħω$ (meV)', yts.find(s => tw(ctx, s, 12.5) <= ph - 6) || yts[1]);
+      const curves = [{ name: 'dir', pts: polyPx(plot, R.w, R.dir.map(d => d[0])) }, { name: 'tov', pts: [[plot.X(R.to), fr.y0], [plot.X(R.to), fr.y1]] }];
+      if (R.para) curves.push({ name: 'par', pts: polyPx(plot, R.w, R.parR.map(d => d[0])) });
+      const Lb = labeler(ctx, curves, fr), Xt = plot.X(R.to), t = '$ω$_{TO}';
+      Lb.put([{ t, x: Xt - 5, y: fr.y0 + fs + 3, align: 'right' }, { t, x: Xt + 5, y: fr.y0 + fs + 3 }, { t, x: Xt - 5, y: fr.y1 - 6, align: 'right' }, { t, x: Xt + 5, y: fr.y1 - 6 }],
+        { size: fs, color: tPh, halo }, { skip: ['tov'] });
+    } else {
+      txt(ctx, '(b) longitudinal dielectric function', 4, 15, { size: 11.5, color: cFg2 });
+      axisTitles(ctx, plot, '$ħω$ (meV)', 'Re $ε$^L');
+      const curves = [{ name: 'full', pts: polyPx(plot, R.w, R.epsC) }, { name: 'zero', pts: [[fr.x0, plot.Y(0)], [fr.x1, plot.Y(0)]] }, { name: 'inf', pts: [[fr.x0, plot.Y(R.ei)], [fr.x1, plot.Y(R.ei)]] }];
+      if (R.para) curves.push({ name: 'par', pts: polyPx(plot, R.w, R.epsP) });
+      const Lb = labeler(ctx, curves, fr);
+      if (R.c2 > 0) {
+        const X0 = plot.X(R.wlo), Y0 = plot.Y(0), t = '$ω$_{LO}($θ$)';
+        Lb.put([{ t, x: X0 + 8, y: Y0 + fs + 4 }, { t, x: X0 + 8, y: Y0 - 7 }, { t, x: X0 - 8, y: Y0 + fs + 4, align: 'right' }, { t, x: X0 - 8, y: Y0 - 7, align: 'right' }, { t, x: X0 + 8, y: Y0 + 2 * fs + 8 }],
+          { size: fs, color: tPh, halo }, { skip: ['zero'] });
+      }
+      const Yi = plot.Y(R.ei), xL = fr.x0 + 6, xR = fr.x1 - 6, t = '$ε$_∞', cands = [];
+      [[xR, 'right'], [fr.x0 + 0.8 * (fr.x1 - fr.x0), 'right'], [xL, 'left']].forEach(([x, align]) => cands.push({ t, x, y: Yi - 5, align }, { t, x, y: Yi + fs + 3, align }));
+      Lb.put(cands, { size: fs, color: cMut, halo }, { skip: ['inf'] });
+    }
+    ctx.restore();
+  }
+
+  // ---------- controls ----------
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const views = [...fig.querySelectorAll('.b6-map-v')], caps = [...fig.querySelectorAll('figcaption [data-tab]')];
+  EPP.controls(fig.querySelector('.b6-map-tabs'), [
+    { key: 'tab', type: 'seg', label: 'view', options: [['map', 'Spectral map'], ['rho', 'Charge from current']], value: 'map' }
+  ], (s) => {
+    curTab = s.tab;
+    views.forEach(v => { v.hidden = v.dataset.tab !== s.tab; });
+    caps.forEach(c => { c.hidden = c.dataset.tab !== s.tab; });
+    if (s.tab === 'rho' && !rhoBuilt) buildRho();
+    if (s.tab === 'map') drawMap();
+  });
+  const elCtl = fig.querySelector('.b6-map-ctrls');
+  EPP.controls(elCtl, [
+    { key: 'model', type: 'seg', label: 'Π model', options: [['vac', 'vacuum'], ['drude', 'Drude'], ['ins', 'insulator'], ['polar', 'polar']], value: 'polar' },
+    { key: 'ch', type: 'seg', label: 'channel', options: [['T', 'transverse, Im D^T'], ['L', 'longitudinal, Im D^L']], value: 'T' },
+    { key: 'g', type: 'range', label: 'damping γ/ω_0', min: 0.003, max: 0.1, value: 0.02, log: true, step: 'any', fmt: v => (100 * v).toFixed(1) + ' %' },
+    { key: 'pre', type: 'select', label: 'crystal (illustrative)', options: PRE_OPTS, value: 'GaAs' },
+    { key: 'wp', type: 'range', label: 'plasma energy ħω_p', min: 1, max: 10, step: 0.1, value: 5.7, fmt: v => v.toFixed(1) + ' eV' },
+    { key: 'gap', type: 'range', label: 'gap Δ', min: 1, max: 5, step: 0.05, value: 3.4, fmt: v => v.toFixed(2) + ' eV' },
+    { key: 'e0', type: 'range', label: 'static ε^e(0)', min: 1.5, max: 10, step: 0.1, value: 4, fmt: v => v.toFixed(1) }
+  ], (s) => { sMap = s; applyModel(s.model); drawMap(); });
+  // the model-specific controls, legend items and readouts follow the model
+  const GROUP = { pre: 'polar', wp: 'drude', gap: 'ins', e0: 'ins' };
+  function applyModel(model) {
+    for (const k in GROUP) { const el = document.getElementById(`${fig.id}-${k}`), box = el && el.closest('.ctrl'); if (box) box.style.display = GROUP[k] === model ? '' : 'none'; }
+    fig.querySelectorAll('.b6-map-v[data-tab="map"] [data-m]').forEach(el => { el.hidden = !el.dataset.m.split(' ').includes(model); });
+  }
+  applyModel('polar');
+  // control labels: symbols italic, labels upright
+  const LAB = { g: `damping ${I('γ')}/${I('ω')}<sub>0</sub>`, wp: `plasma energy ${I('ħω')}<sub>p</sub>`, e0: `static ${I('ε')}<sup>e</sup>(0)` };
+  Object.keys(LAB).forEach(k => { const sp = elCtl.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  const bT = document.getElementById(`${fig.id}-ch-T`), bL = document.getElementById(`${fig.id}-ch-L`);
+  if (bT) { bT.innerHTML = `transverse, Im ${I('D')}<sup>T</sup>`; bT.setAttribute('aria-label', 'transverse channel, Im D T'); }
+  if (bL) { bL.innerHTML = `longitudinal, Im ${I('D')}<sup>L</sup>`; bL.setAttribute('aria-label', 'longitudinal channel, Im D L'); }
+})();
+</script>

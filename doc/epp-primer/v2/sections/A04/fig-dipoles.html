@@ -1,0 +1,264 @@
+  <figure class="viz" id="viz-a4-dipoles">
+    <p class="viz-title">A wave of Born-charge dipoles: LO makes a field, TO does not <span class="tag">interactive</span></p>
+    <div class="a4-dipoles-lat"></div>
+    <div class="a4-dipoles-pe" style="margin-top:6px"></div>
+    <div class="legend a4-dipoles-leg" style="margin-top:2px"><span class="item" style="color:var(--c-photon)"><span class="sw dash"></span><span style="color:var(--fg-2)">$P_x$ (LO) or $P_y$ (TO), in units of $|\bP|$</span></span><span class="item" style="color:var(--c-photon)"><span class="sw"></span><span style="color:var(--fg-2)">$E_x$, in units of $|\bE|$ of the LO wave</span></span></div>
+    <div class="a4-dipoles-v" style="margin-top:10px"></div>
+    <div class="legend a4-dipoles-leg2" style="margin-top:2px"><span class="item" style="color:var(--c-photon)"><span class="sw"></span><span style="color:var(--fg-2)">$V^{\mathrm{lr}}=-eA_0$, potential energy of an electron</span></span><span class="item a4-dipoles-leg-el"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><circle cx="7" cy="7" r="4.6" style="fill:var(--c-electron)"/></svg><span style="color:var(--fg-2)">electron at the minima of $V^{\mathrm{lr}}$</span></span></div>
+    <div class="a4-dipoles-ctrls"></div>
+    <div class="readout a4-dipoles-ro" aria-live="polite" aria-atomic="true"><span>$|\bP|$<b class="a4-dipoles-v-P"></b></span><span>$e|\bE|$<b class="a4-dipoles-v-eE"></b></span><span>$|\bE|$<b class="a4-dipoles-v-E"></b></span><span>amplitude of $V^{\mathrm{lr}}$<b class="a4-dipoles-v-V"></b></span><span>$q$<b class="a4-dipoles-v-q"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> In the LO wave the dipoles point along $\bq$: their heads converge on some planes and their tails on others, half a wavelength away, leaving sheets of bound charge with a field between them, against $\bP$; the TO wave has neither. A longer LO wave keeps the field and swings the potential energy $V^{\mathrm{lr}}$ proportionally more.</p><div class="cap-more">
+      <p><strong>Marks.</strong> All panels span two wavelengths. (a) Arrows: the dipole of each cell, $\mathbf p_\ell=e\sum_\kappa\mathbf Z^*_\kappa\cdot\bu_{\ell\kappa}$, drawn at the cell centre and scaled with it (every few cells when too dense, as the header says); shading: the bound charge $-\nabla\cdot\bP$, rose where positive, blue where negative; top strip: the field $\bE$. (b) Dashed: the polarization; solid: the field; each relative to its LO amplitude. (c) $A_0$ is the scalar potential of the field; blue dots: the minima of $V^{\mathrm{lr}}$, where an electron has the lowest energy.</p>
+      <p><strong>Try.</strong> Switch between LO and TO. Double the wavelength from 60 to <span class="nw">120 Å:</span> $|\bE|$ stays at <span class="nw">0.76 MV/cm,</span> while the amplitude of $V^{\mathrm{lr}}$ doubles, from 73 to <span class="nw">145 meV.</span> Play the wave and follow the electron: it rides on a positive sheet, a quarter wavelength from the largest dipoles.</p>
+      <p><strong>Model.</strong> A cubic two-atom crystal with the GaAs values $Z^*=2.07$, $\OV=45.16$ Å³ (cells of side <span class="nw">3.56 Å)</span> and $\varepsilon_\infty=10.9$ (literature values, illustrative). The sublattices move relative to each other by <span class="nw">$|\bu_1-\bu_2|=0.01$ Å,</span> along $x$ (LO) or $y$ (TO), in a wave along $x$. By <a class="eqref" href="#a4-eq-P">(A4.5)</a> the polarization along the motion is $|\bP|\cos(qx-\omega t)$, by <a class="eqref" href="#a4-eq-E">(A4.6)</a> the LO field is $E_x=-4\pi P_x/\varepsilon_\infty$, and <a class="eqref" href="#a4-eq-Vlr">(A4.11)</a> gives $V^{\mathrm{lr}}=-(e|\bE|/q)\sin(qx-\omega t)$; $\omega$ only sets the speed of the animation.</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a4-dipoles');
+  if (!fig || !window.EPP) return;
+  // outside Section A.4 (the isolated figure test) the caption's links to the section have no target: show them as text
+  if (!fig.closest('#a-polar')) fig.querySelectorAll('figcaption a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+  // ---------- model: cubic two-atom crystal with GaAs values (literature values, illustrative); Gaussian units, eV and Å ----------
+  const E2 = 14.3996;                        // e^2 (eV Å)
+  const ZS = 2.07, OV = 45.16, EPS = 10.9;   // Born charge Z*, cell volume Ω_V (Å^3), electronic dielectric constant ε_∞
+  const DU = 0.01;                           // relative displacement |u_1 − u_2| of the two sublattices (Å)
+  const DC = Math.cbrt(OV);                  // side of the cubic model cell: 3.56 Å
+  const P0 = ZS * DU / OV;                   // |P| = e Z* |u_1 − u_2| / Ω_V in e/Å^2, from (A4.5)
+  const EE = 4 * Math.PI * E2 * P0 / EPS;    // e|E| = 4π e^2 Z* |u_1 − u_2| / (Ω_V ε_∞) in eV/Å, from (A4.6)
+  const UC = 1602.176634;                    // 1 e/Å^2 in μC/cm^2
+  const vAmp = (lam) => 1000 * EE * lam / (2 * Math.PI);   // amplitude e|E|/q of V^lr in meV, from (A4.11)
+  const PERIOD = 7;                          // seconds for the wave to travel one wavelength
+  const PHI0 = 5 * Math.PI / 6;              // initial ωt: a positive sheet at 2/3 of the first wavelength
+  const VMAX = 280;                          // fixed range of panel (c), meV
+  const M = { l: 54, r: 12 };                // horizontal margins shared by the three panels, so that x lines up
+  const TAU = 2 * Math.PI;
+
+  // ---------- formatting ----------
+  const fx = (v, d) => EPP.fix(Math.abs(v) < 0.5 * Math.pow(10, -d) ? 0 : v, d);
+  const SUP = { '-': '⁻', 0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴', 5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹' };
+  function sci(v, d = 3) {
+    if (!v) return '0';
+    let ex = Math.floor(Math.log10(Math.abs(v))), mant = (v / Math.pow(10, ex)).toFixed(d - 1);
+    if (Math.abs(parseFloat(mant)) >= 10) { ex += 1; mant = (v / Math.pow(10, ex)).toFixed(d - 1); }
+    return `${mant} × 10${String(ex).split('').map(c => SUP[c]).join('')}`;
+  }
+  const ord = (n) => n + (n === 2 ? 'nd' : n === 3 ? 'rd' : 'th');
+
+  // ---------- canvas text: '$…$' marks math (letters italic, digits upright), '#X' inside math is a bold vector; _x, ^{xy} as in EPP.drawRich ----------
+  const ITAL = /[A-Za-zα-ωℓħ]/;
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const part of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: part.t, m: part.m, it: false, b: false }); continue; }
+        let buf = '', kind = null;
+        const flush = () => { if (buf) out.push({ t: buf, m: part.m, it: kind === 'i', b: kind === 'b' }); buf = ''; };
+        for (let k = 0; k < part.t.length; k++) {
+          let ch = part.t[k], kd;
+          if (ch === '#' && k + 1 < part.t.length) { ch = part.t[++k]; kd = 'b'; } else kd = ITAL.test(ch) ? 'i' : 'u';
+          if (kind !== null && kd !== kind) flush();
+          buf += ch; kind = kd;
+        }
+        flush();
+      }
+    });
+    return out;
+  }
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, fam = EPP.css('--font-ui'), rs = runs(s);
+    const font = (r) => `${r.it ? 'italic ' : ''}${r.b ? '700 ' : (o.weight ? o.weight + ' ' : '')}${r.m ? Math.round(size * 0.72) : size}px ${fam}`;
+    const ws = rs.map(r => { ctx.font = font(r); return ctx.measureText(r.t).width; });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    let x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    if (o.color) ctx.fillStyle = o.color;
+    ctx.textAlign = 'left';
+    rs.forEach((r, k) => { ctx.font = font(r); ctx.fillText(r.t, x0, y + (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0))); x0 += ws[k]; });
+    return tot;
+  }
+  const tw = (ctx, s, size) => txt(ctx, s, 0, 0, { size, measure: true });
+  // the first variant that fits in the width avail
+  const fit = (ctx, list, size, avail) => list.find(s => tw(ctx, s, size) <= avail) || list[list.length - 1];
+  function arrow(ctx, x0, y0, x1, y1, col, lw, head) {
+    const L = Math.hypot(x1 - x0, y1 - y0);
+    ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = lw; ctx.lineCap = 'round'; ctx.setLineDash([]);
+    if (L < 2) { ctx.beginPath(); ctx.arc((x0 + x1) / 2, (y0 + y1) / 2, Math.max(1, lw * 0.6), 0, TAU); ctx.fill(); return; }
+    const hs = Math.min(head, 0.55 * L), a = Math.atan2(y1 - y0, x1 - x0);
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1 - 0.8 * hs * Math.cos(a), y1 - 0.8 * hs * Math.sin(a)); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x1, y1);
+    ctx.lineTo(x1 - hs * Math.cos(a - 0.45), y1 - hs * Math.sin(a - 0.45));
+    ctx.lineTo(x1 - hs * Math.cos(a + 0.45), y1 - hs * Math.sin(a + 0.45));
+    ctx.closePath(); ctx.fill();
+  }
+
+  // ---------- state ----------
+  const st = { mode: 'LO', lam: 60 };
+  let phi = PHI0, anim = null;
+  const isLO = () => st.mode === 'LO';
+  // positions in [0, 2 × wavelength] where sin(qx − ωt) = sg (sg = +1: positive sheets, minima of V^lr; −1: negative sheets)
+  function sheets(sg) {
+    const lam = st.lam, q = TAU / lam, base = (sg * Math.PI / 2 + phi) / q, out = [];
+    for (let n = Math.ceil(-base / lam); n <= Math.floor((2 * lam - base) / lam); n++) out.push(base + n * lam);
+    return out;
+  }
+
+  // ---------- (a) the lattice of cell dipoles, the bound charge and the field ----------
+  const YS0 = 24, YF = 40, YL0 = 60, VP = 18, NR = 5, YL1 = YL0 + NR * VP, YSG = YL1 + 14;
+  const cvA = EPP.canvas(fig.querySelector('.a4-dipoles-lat'), { height: YSG + 8 });
+  cvA.canvas.setAttribute('role', 'img');
+  let stride = 1;
+  function drawLattice() {
+    cvA.clear();
+    const ctx = cvA.ctx, w = cvA.w;
+    if (w < 80) return;
+    const lam = st.lam, q = TAU / lam, lo = isLO(), x0 = M.l, x1 = w - M.r, k = (x1 - x0) / (2 * lam);
+    const X = (x) => x0 + x * k;
+    const cPh = EPP.color('photon'), cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted');
+    // bound charge −∇·P = q|P| sin(qx − ωt): rose where positive, blue where negative (LO only)
+    if (lo) {
+      const rp = EPP.rgb('photon'), re = EPP.rgb('electron');
+      for (let px = x0; px < x1; px += 2) {
+        const s = Math.sin(q * (px + 1 - x0) / k - phi), a = 0.26 * Math.abs(s);
+        if (a < 0.008) continue;
+        const c = s > 0 ? rp : re;
+        ctx.fillStyle = `rgba(${c[0]},${c[1]},${c[2]},${a.toFixed(3)})`;
+        ctx.fillRect(px, YS0, Math.min(2, x1 - px), YL1 - YS0);
+      }
+    }
+    // field strip: axis, and E_x = −(4π/ε_∞) P_x sampled at fixed fractions of the wavelength
+    ctx.strokeStyle = EPP.color('grid'); ctx.lineWidth = 1; ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(x0, YF + 0.5); ctx.lineTo(x1, YF + 0.5); ctx.stroke();
+    if (lo) {
+      const nf = EPP.clamp(Math.round(lam * k / 42), 4, 8), sp = lam / nf, Lf = 0.8 * sp * k;
+      for (let j = 0; j < 2 * nf; j++) {
+        const x = (j + 0.5) * sp, ex = -Math.cos(q * x - phi), len = Lf * ex, px = X(x);
+        arrow(ctx, px - len / 2, YF, px + len / 2, YF, cPh, 1.5, 6);
+      }
+    } else {
+      ctx.textBaseline = 'alphabetic';
+      txt(ctx, 'no bound charge, $#E$ = 0', (x0 + x1) / 2, YF - 4, { size: 11.5, color: cMut, align: 'center' });
+    }
+    // cell dipoles p_ℓ = e Z* (u_1 − u_2) cos(q x_ℓ − ωt), drawn at the cell centres x_ℓ; every m-th cell when they are too dense
+    const pc = DC * k;
+    stride = pc >= 11 ? 1 : Math.ceil(11 / pc);
+    const L = Math.min(0.8 * stride * pc, 0.8 * VP);
+    ctx.save(); ctx.beginPath(); ctx.rect(x0 - 4, YS0, x1 - x0 + 8, YL1 - YS0 + 2); ctx.clip();
+    for (let l = 0; (l + 0.5) * DC <= 2 * lam; l += stride) {
+      const xc = (l + 0.5) * DC, px = X(xc), c = Math.cos(q * xc - phi), len = L * c;
+      for (let r = 0; r < NR; r++) {
+        const y = YL0 + VP * (r + 0.5);
+        if (lo) arrow(ctx, px - len / 2, y, px + len / 2, y, cPh, 2, 6);
+        else arrow(ctx, px, y + len / 2, px, y - len / 2, cPh, 2, 6);
+      }
+    }
+    ctx.restore();
+    ctx.textBaseline = 'alphabetic';
+    // + and − at the sheets of bound charge
+    if (lo) {
+      for (const [sg, s, col] of [[1, '+', EPP.textColor('photon')], [-1, '−', EPP.textColor('electron')]]) {
+        for (const x of sheets(sg)) { const px = X(x); if (px > x0 + 5 && px < x1 - 5) txt(ctx, s, px, YSG, { size: 14, color: col, align: 'center', weight: 600 }); }
+      }
+    }
+    // left margin: what the strip and the rows show
+    txt(ctx, '$#E$', x0 - 10, YF + 4.5, { size: 13, color: cFg, align: 'right' });
+    txt(ctx, '$#p_ℓ$', x0 - 10, (YL0 + YL1) / 2 + 4.5, { size: 13, color: cFg, align: 'right' });
+    // header: mode and drawing density; the direction of q at the right
+    const note = stride > 1 ? ` · every ${ord(stride)} cell drawn` : '', noteS = stride > 1 ? ` · every ${ord(stride)} cell` : '';
+    const head = lo ? ['(a) LO wave: dipoles along $#q$' + note, '(a) LO wave' + note, '(a) LO' + noteS] : ['(a) TO wave: dipoles across $#q$' + note, '(a) TO wave' + note, '(a) TO' + noteS];
+    const qa1 = w - M.r, qa0 = qa1 - 26, avail = qa0 - 18 - 8;
+    txt(ctx, fit(ctx, head, 11.5, avail), 8, 15, { size: 11.5, color: cFg2 });
+    arrow(ctx, qa0, 11, qa1, 11, cFg, 1.8, 7);
+    txt(ctx, '$#q$', qa0 - 5, 15, { size: 13, color: cFg, align: 'right' });
+    cvA.canvas.setAttribute('aria-label', lo
+      ? `Panel a: LO wave with a wavelength of ${lam} Å, two wavelengths shown. Each arrow is the dipole of one cell${stride > 1 ? ` (every ${ord(stride)} cell drawn)` : ''}, along the wavevector q, with a length that follows the cosine of the phase. The heads converge on planes of positive bound charge (rose shading) and the tails on planes of negative bound charge (blue shading), half a wavelength apart. Thin arrows in the strip above show the field, pointing from the positive to the negative planes, against the dipoles.`
+      : `Panel a: TO wave with a wavelength of ${lam} Å, two wavelengths shown. Each arrow is the dipole of one cell${stride > 1 ? ` (every ${ord(stride)} cell drawn)` : ''}, perpendicular to the wavevector q. Within each plane the dipoles lie head to tail, so there is no bound charge and no field.`);
+  }
+
+  // ---------- (b) polarization and field, (c) potential energy of an electron ----------
+  const pB = new EPP.Plot(fig.querySelector('.a4-dipoles-pe'), {
+    xlim: [0, 120], ylim: [-1.35, 1.35], yticks: [-1, 0, 1], xfmt: () => '', legend: false, hover: false, height: 128,
+    margin: { l: M.l, r: M.r, t: 24, b: 10 }, ariaLabel: 'Panel b: polarization and field along two wavelengths'
+  });
+  const pC = new EPP.Plot(fig.querySelector('.a4-dipoles-v'), {
+    xlim: [0, 120], ylim: [-VMAX, VMAX], yticks: [-200, -100, 0, 100, 200], legend: false, aspect: 0.22, minHeight: 156, maxHeight: 190,
+    margin: { l: M.l, r: M.r, t: 24, b: 40 }, xname: 'x', hoverX: v => fx(v, 1) + ' Å', hoverY: v => fx(v, 1) + ' meV',
+    ariaLabel: 'Panel c: potential energy of an electron along two wavelengths'
+  });
+  // headers and axis labels are drawn here, with italic symbols
+  function decorate(P, title, note, ylab, xlab) {
+    const base = P.render.bind(P);
+    P.render = () => {
+      base();
+      const ctx = P.ctx, w = P.cv.w, h = P.cv.h, m = P.m;
+      if (!w || !h) return;
+      const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2');
+      ctx.save(); ctx.textBaseline = 'alphabetic';
+      const nt = note(), nw = nt ? tw(ctx, nt, 11.5) + 14 : 0;
+      txt(ctx, fit(ctx, title, 11.5, w - 16 - nw), 8, 15, { size: 11.5, color: cFg2 });
+      if (nt) txt(ctx, nt, w - M.r, 15, { size: 11.5, color: EPP.textColor('photon'), align: 'right' });
+      if (xlab) txt(ctx, xlab, m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+      ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+      txt(ctx, ylab, 0, 0, { size: 12, color: cFg, align: 'center' });
+      ctx.restore();
+    };
+  }
+  decorate(pB, ['(b) polarization and field of the wave', '(b) polarization and field'], () => (isLO() ? '' : 'TO: $E_x$ = 0'), 'relative', null);
+  decorate(pC, ['(c) potential energy of an electron in the field', '(c) potential energy of an electron', '(c) electron energy'],
+    () => (isLO() ? '' : 'TO: $V$^{lr} = 0'), '$V$^{lr} (meV)', '$x$ (Å)');
+  const NS = 241;
+  function drawPlots() {
+    const lam = st.lam, q = TAU / lam, lo = isLO(), span = 2 * lam, A = lo ? vAmp(lam) : 0;
+    const xs = EPP.linspace(0, span, NS), P = xs.map(x => Math.cos(q * x - phi));
+    pB.draw([
+      { type: 'line', x: xs, y: P, color: 'photon', dash: [6, 4], width: 2 },
+      { type: 'line', x: xs, y: lo ? P.map(v => -v) : xs.map(() => 0), color: 'photon', width: 2 }
+    ], { xlim: [0, span] });
+    const mins = lo ? sheets(1) : [];
+    pC.draw([
+      { type: 'line', x: xs, y: xs.map(x => -A * Math.sin(q * x - phi)), color: 'photon', width: 2, label: 'V^{lr}' },
+      mins.length ? { type: 'points', x: mins, y: mins.map(() => -A), color: 'electron', r: 5 } : null
+    ], { xlim: [0, span] });
+  }
+
+  // ---------- readouts and accessible descriptions ----------
+  const roV = {};
+  ['P', 'eE', 'E', 'V', 'q'].forEach(c => { roV[c] = fig.querySelector('.a4-dipoles-v-' + c); });
+  const legEl = fig.querySelector('.a4-dipoles-leg-el');
+  function readouts() {
+    const lo = isLO();
+    if (legEl) legEl.style.opacity = lo ? '' : '0.45';
+    roV.P.textContent = `${sci(P0)} e/Å² (${fx(P0 * UC, 3)} μC/cm²)`;
+    roV.eE.textContent = lo ? `${sci(EE)} eV/Å` : '0';
+    roV.E.textContent = lo ? `${fx(100 * EE, 3)} MV/cm` : '0';
+    roV.V.textContent = lo ? `${fx(vAmp(st.lam), 1)} meV` : '0';
+    roV.q.textContent = `${fx(TAU / st.lam, 3)} Å⁻¹`;
+    pB.cv.canvas.setAttribute('aria-label', lo
+      ? 'Panel b: the polarization along x (dashed) and the field along x (solid) over two wavelengths, each in units of its amplitude. The field is the mirror image of the polarization: it points against it everywhere.'
+      : 'Panel b: the polarization along y (dashed) over two wavelengths, in units of its amplitude, has the same shape as in the LO wave; the field along x (solid) is zero.');
+    pC.cv.canvas.setAttribute('aria-label', lo
+      ? `Panel c: potential energy of an electron in the field, in meV, over two wavelengths; amplitude ${fx(vAmp(st.lam), 1)} meV. Its minima, marked by electron dots, lie on the planes of positive bound charge, a quarter wavelength from the largest dipoles.`
+      : 'Panel c: in the TO wave the potential energy of an electron is zero everywhere.');
+  }
+  function drawAll() { drawLattice(); drawPlots(); }
+
+  // ---------- controls and animation ----------
+  const elCtl = fig.querySelector('.a4-dipoles-ctrls');
+  const ui = EPP.controls(elCtl, [
+    { key: 'mode', type: 'seg', label: 'optical wave', options: [['LO', 'LO'], ['TO', 'TO']], value: 'LO' },
+    { key: 'lam', type: 'range', label: 'wavelength', min: 20, max: 200, step: 1, value: 60, fmt: v => `${Math.round(v)} Å (${Math.round(v / DC)} cells)` }
+  ], (s) => { st.mode = s.mode === 'TO' ? 'TO' : 'LO'; st.lam = Math.round(s.lam); drawAll(); readouts(); });
+  { const sp = elCtl.querySelector(`label[for="${fig.id}-lam"] > span`); if (sp) sp.innerHTML = 'wavelength 2π/<i style="font-family:var(--font-text)">q</i>'; }
+  elCtl.querySelectorAll('.seg button').forEach(b => { b.style.flex = '1 1 0'; });
+  const host = document.createElement('div');
+  host.className = 'ctrl';
+  host.innerHTML = '<span class="lab"><span>animation</span></span>';
+  host.style.justifyItems = 'start';
+  elCtl.appendChild(host);
+  anim = EPP.anim(fig, (t) => { phi = PHI0 + TAU * t / PERIOD; drawAll(); }, { buttonHost: host, autoplay: false });
+  cvA.onResize(drawLattice);
+})();
+</script>

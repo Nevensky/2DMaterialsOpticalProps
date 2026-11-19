@@ -1,0 +1,262 @@
+  <figure class="viz" id="viz-b9-sectors">
+    <p class="viz-title">Four sectors, one survivor: the dressed propagator of a uniaxial insulator <span class="tag">interactive</span></p>
+    <div class="b9-sectors-plot"></div>
+    <div class="legend b9-sectors-leg">
+      <span class="item" style="color:var(--c-photon)"><span class="sw"></span><span style="color:var(--fg-2)">L: $D^{\mathrm{e,L}}$</span></span>
+      <span class="item" style="color:var(--c-4)"><span class="sw dash"></span><span style="color:var(--fg-2)">LT = TL: $D^{\mathrm{e,LT}}$, $D^{\mathrm{e,TL}}$</span></span>
+      <span class="item" style="color:var(--c-5)"><span class="sw dot"></span><span style="color:var(--fg-2)">T: $D^{\mathrm{e,T}}$</span></span>
+      <span class="item" style="color:var(--muted)"><span class="sw" style="border-top-width:1.5px"></span><span style="color:var(--fg-2)">$1/(\hat\bq\cdot\boldsymbol\varepsilon\cdot\hat\bq)$</span></span>
+      <span class="item" style="color:var(--muted)"><span class="sw dash" style="border-top-width:1.5px"></span><span style="color:var(--fg-2)">slope −1, the printed power counting for LT</span></span>
+    </div>
+    <div class="b9-sectors-ctrls"></div>
+    <div class="readout b9-sectors-ro" aria-live="polite"><span>$\hat\bq\cdot\boldsymbol\varepsilon\cdot\hat\bq$<b class="b9-sectors-v-eL"></b></span><span>$1/(\hat\bq\cdot\boldsymbol\varepsilon\cdot\hat\bq)$<b class="b9-sectors-v-inv"></b></span><span>$|\mathrm L|$ at $cq/\omega=10^5$<b class="b9-sectors-v-L5"></b></span><span>slope of LT for $cq/\omega\gt10^3$<b class="b9-sectors-v-sLT"></b></span><span>slope of T for $cq/\omega\gt10^3$<b class="b9-sectors-v-sT"></b></span><span>phonon band in $cq/\omega$<b class="b9-sectors-v-band"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> Outside the light cone the longitudinal sector settles on <span class="nw">$1/(\hat\bq\cdot\boldsymbol\varepsilon\cdot\hat\bq)$,</span> independent of <span class="nw">$c$,</span> while the mixed and transverse sectors fall as <span class="nw">$(cq/\omega)^{-2}$,</span> faster than the slope −1 that the EPP manuscript's power counting gives the mixed sectors. Phonons from all but a sliver of the zone lie far to the right.</p><div class="cap-more"><p><strong>Marks.</strong> Sectors <a class="eqref" href="#b9-eq-sectors">(B9.2)</a> of <span class="nw">$\frac{\omega^2}{4\pi c}D^{\mathrm e}$:</span> solid rose L, dashed teal LT (equal to TL), dotted violet T. Grey line: <span class="nw">$1/(\hat\bq\cdot\boldsymbol\varepsilon\cdot\hat\bq)$;</span> dashed grey: slope −1, drawn while LT is nonzero. Rose band: the light cone, where the transverse poles sit, up to the larger of <span class="nw">$\sqrt{\varepsilon_{xx}}$, $\sqrt{\varepsilon_{zz}}$.</span> Amber band: phonons of energy $\hbar\omega$ with $q$ from $10^{-3}$ to <span class="nw">1 Å⁻¹.</span> At fixed $\bq$ and <span class="nw">$\omega$,</span> $cq/\omega$ is proportional to <span class="nw">$c$:</span> moving right is sending <span class="nw">$c\to\infty$.</span></p><p><strong>Try.</strong> Set $\theta$ to 0° or 90°, or <span class="nw">$\varepsilon_{xx}=\varepsilon_{zz}$:</span> LT vanishes, because along a principal axis, or in an isotropic medium, a longitudinal field polarizes the medium along $\hat\bq$ only. Make the crystal more anisotropic: LT grows but keeps its slope. Move <span class="nw">$\hbar\omega$:</span> the phonon band shifts but stays far outside the light cone.</p><p><strong>Model.</strong> <a class="eqref" href="#b9-eq-closed">(B9.3)</a> with <span class="nw">$\Pi^{\mathrm e}=\frac{\omega^2}{4\pi c}(\boldsymbol\varepsilon-\mathbf 1)$</span> and <span class="nw">$\boldsymbol\varepsilon=\mathrm{diag}(\varepsilon_{xx},\varepsilon_{xx},\varepsilon_{zz})(1+0.02\,\ii)$;</span> the loss keeps the light-line poles finite and lowers the plateau by 0.02 %. With <span class="nw">$\hat\bq=(\sin\theta,0,\cos\theta)$,</span> <span class="nw">$\mathbf t_1=(\cos\theta,0,-\sin\theta)$</span> and <span class="nw">$\mathbf t_2=(0,1,0)$,</span> L is the modulus of the $\hat\bq\hat\bq$ element, LT the length of the pair of $\hat\bq\mathbf t_1$, $\hat\bq\mathbf t_2$ elements, T the root of the summed squared moduli of the $2\times2$ block on <span class="nw">$\mathbf t_1$, $\mathbf t_2$.</span> hBN: <span class="nw">$\varepsilon_{xx}=4.87$,</span> <span class="nw">$\varepsilon_{zz}=2.95$</span> (its $\boldsymbol\varepsilon_\infty$), <span class="nw">$\hbar\omega=170$ meV</span> (its in-plane TO phonon; literature values, illustrative). A self-energy contains <span class="nw">$D^{\mathrm e}/c$,</span> plotted here times <span class="nw">$\omega^2/4\pi$.</span> The counting behind <a class="eqref" href="#b9-eq-limit">(B9.5)</a> gives these slopes in any medium.</p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b9-sectors');
+  if (!fig || !window.EPP) return;
+  const DEG = Math.PI / 180;
+  const TAN = 0.02;                       // loss tangent: ε → ε(1 + 0.02i) keeps the light-line poles finite
+  const HC = 1973.27;                     // ħc in eV Å, so cq/ω = ħc q/ħω
+  const XMIN = 0.1, XMAX = 1e5, YMIN = 1e-11, YMAX = 100;
+
+  // ---------- physics: (B9.3), (ω²/4πc) D^e = [(cq/ω)² (1 − q̂q̂ᵀ) − ε]⁻¹; complex numbers as [re, im] ----------
+  const cm = (a, b) => [a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0]];
+  const csub = (a, b) => [a[0] - b[0], a[1] - b[1]];
+  const cadd = (a, b) => [a[0] + b[0], a[1] + b[1]];
+  const cdiv = (a, b) => { const d = b[0] * b[0] + b[1] * b[1]; return [(a[0] * b[0] + a[1] * b[1]) / d, (a[1] * b[0] - a[0] * b[1]) / d]; };
+  // inverse of a complex 3×3 matrix (row-major, 9 entries) as adjugate / determinant
+  function inv3(M) {
+    const m = (i, j) => M[i * 3 + j];
+    const cof = (i, j) => {
+      const r0 = i === 0 ? 1 : 0, r1 = i === 2 ? 1 : 2, c0 = j === 0 ? 1 : 0, c1 = j === 2 ? 1 : 2;
+      const v = csub(cm(m(r0, c0), m(r1, c1)), cm(m(r0, c1), m(r1, c0)));
+      return ((i + j) % 2) ? [-v[0], -v[1]] : v;
+    };
+    let det = [0, 0];
+    for (let j = 0; j < 3; j++) det = cadd(det, cm(m(0, j), cof(0, j)));
+    const out = new Array(9);
+    for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) out[i * 3 + j] = cdiv(cof(j, i), det);
+    return out;
+  }
+  // norms of the sectors (B9.2) at s = cq/ω, for q̂ = (sin θ, 0, cos θ) and ε = diag(εxx, εxx, εzz)(1 + 0.02i):
+  // L = |q̂·d·q̂|, LT = (|q̂·d·t₁|² + |q̂·d·t₂|²)^½ (= TL, d is symmetric), T = Frobenius norm of the block on t₁, t₂
+  function sectors(s, th, exx, ezz) {
+    const qh = [Math.sin(th), 0, Math.cos(th)], t1 = [Math.cos(th), 0, -Math.sin(th)], t2 = [0, 1, 0];
+    const eps = [exx, exx, ezz], M = [];
+    for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) {
+      const PT = (i === j ? 1 : 0) - qh[i] * qh[j], e = i === j ? eps[i] : 0;
+      M.push([s * s * PT - e, -e * TAN]);
+    }
+    const d = inv3(M);
+    const el = (a, b) => { let re = 0, im = 0; for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) { const w = a[i] * b[j]; re += d[i * 3 + j][0] * w; im += d[i * 3 + j][1] * w; } return Math.hypot(re, im); };
+    return { L: el(qh, qh), LT: Math.hypot(el(qh, t1), el(qh, t2)), T: Math.hypot(el(t1, t1), el(t1, t2), el(t2, t1), el(t2, t2)) };
+  }
+  const pos = (v) => (v > 1e-30 && isFinite(v) ? v : NaN);
+  // log grid, plus clusters around the two light lines and the zero of the L element, so the narrow peaks look the same at every setting
+  const NB = 361, BASE = Array.from({ length: NB }, (_, i) => XMIN * Math.pow(XMAX / XMIN, i / (NB - 1)));
+  function grid(centres) {
+    const pts = BASE.slice();
+    for (const s0 of centres) for (let k = -24; k <= 24; k++) { const s = s0 * (1 + 0.08 * Math.sign(k) * (k / 24) * (k / 24)); if (s > XMIN && s < XMAX) pts.push(s); }
+    pts.sort((a, b) => a - b);
+    return pts.filter((s, i) => !i || s > pts[i - 1] * (1 + 1e-9));
+  }
+  function compute(st) {
+    const th = st.th * DEG, exx = st.exx, ezz = st.ezz, sn = Math.sin(th), co = Math.cos(th);
+    const eL = exx * sn * sn + ezz * co * co, eT = exx * co * co + ezz * sn * sn;   // q̂·ε·q̂ and t₁·ε·t₁ (lossless)
+    const at = (s) => sectors(s, th, exx, ezz);
+    // ordinary light line s² = εxx, extraordinary s² = εxx εzz/(q̂·ε·q̂), zero of the L element s² = t₁·ε·t₁
+    const xs = grid([Math.sqrt(exx), Math.sqrt(exx * ezz / eL), Math.sqrt(eT)]);
+    const s10 = at(10), s3 = at(1e3), s5 = at(1e5);
+    const ltZero = !(s10.LT > 1e-12 * s10.T);           // θ = 0°, 90° or εxx = εzz: no mixed sector
+    const L = [], LT = [], T = [];
+    for (const s of xs) { const r = at(s); L.push(pos(r.L)); LT.push(ltZero ? NaN : pos(r.LT)); T.push(pos(r.T)); }
+    // the slope −1 reference (the printed counting for the mixed sectors) passes through LT at cq/ω = 10;
+    // with no mixed sector it is not drawn, since the printed counting for T, D^tt ∼ 1/c, is slope −2 here
+    const anchor = ltZero ? s10.T : s10.LT;
+    const ref = xs.map(s => (!ltZero && s >= 3 ? anchor * 10 / s : NaN));
+    return { th: st.th, exx, ezz, hw: st.hw, eL, at, xs, L, LT, T, ref, anchor, ltZero, s3, s5,
+      plat: 1 / eL, xlc: Math.sqrt(Math.max(exx, ezz)), b0: HC / st.hw, b1: 1000 * HC / st.hw };   // band: q = 10⁻³ and 1 Å⁻¹, ħω in meV
+  }
+
+  // ---------- formatting ----------
+  const SUPC = { '−': '⁻', '-': '⁻', '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹' };
+  const supStr = (n) => String(n).split('').map(ch => SUPC[ch] || ch).join('');
+  function sci(v, d = 3) {
+    if (!(v > 0) || !isFinite(v)) return '—';
+    let e = Math.floor(Math.log10(v));
+    if (e >= -2 && e <= 3) return String(Number(v.toPrecision(d)));
+    let mant = Number((v / Math.pow(10, e)).toPrecision(d));
+    if (mant >= 10) { mant /= 10; e += 1; }
+    return `${mant}×10${supStr(e < 0 ? '−' + (-e) : e)}`;
+  }
+
+  // ---------- canvas text: parts {t, b: bold (UI font), i: italic symbol (text font), sup: superscript, hat: circumflex} ----------
+  let FAM = { ui: 'sans-serif', tx: 'serif' };
+  const pFont = (p, size) => { const z = (p.i ? size + 1 : size) * (p.sup ? 0.72 : 1); return `${p.i ? 'italic ' : ''}${p.b ? '700 ' : ''}${z.toFixed(1)}px ${p.i ? FAM.tx : FAM.ui}`; };
+  function partsW(ctx, parts, size) { let w = 0; for (const p of parts) { ctx.font = pFont(p, size); w += ctx.measureText(p.t).width; } return w; }
+  function partsDraw(ctx, parts, x, y, size, align) {
+    if (align === 'center') x -= partsW(ctx, parts, size) / 2; else if (align === 'right') x -= partsW(ctx, parts, size);
+    ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    for (const p of parts) {
+      ctx.font = pFont(p, size);
+      const w = ctx.measureText(p.t).width, yy = y + (p.sup ? -size * 0.4 : 0);
+      ctx.fillText(p.t, x, yy);
+      if (p.hat) {   // circumflex over a lowercase letter: the unit vector q̂
+        const cx = x + w * 0.5, top = yy - size * 0.86, hw = Math.max(2.2, w * 0.28);
+        ctx.save(); ctx.strokeStyle = ctx.fillStyle; ctx.lineWidth = Math.max(1, size * 0.09); ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+        ctx.beginPath(); ctx.moveTo(cx - hw, top + size * 0.17); ctx.lineTo(cx, top); ctx.lineTo(cx + hw, top + size * 0.17); ctx.stroke(); ctx.restore();
+      }
+      x += w;
+    }
+  }
+  const T = (t) => ({ t }), Bv = (t) => ({ t, b: 1 }), It = (t) => ({ t, i: 1 }), BIt = (t) => ({ t, b: 1, i: 1 }), Sp = (t) => ({ t, sup: 1 });
+  const Hq = () => ({ t: 'q', b: 1, hat: 1 }), DOT = ' · ';
+  const PLAT = [T('1/('), Hq(), T(DOT), BIt('ε'), T(DOT), Hq(), T(')')];
+  const CQW = [It('cq'), T('/'), It('ω')];
+  const XHINT = [T('(∝ '), It('c'), T(' at fixed '), Bv('q'), T(' and '), It('ω'), T(')')];
+  const YTITLE = [T('norm of a sector of ('), It('ω'), Sp('2'), T('/4π'), It('c'), T(') '), It('D'), Sp('e')];
+
+  // ---------- plot ----------
+  const elPlot = fig.querySelector('.b9-sectors-plot');
+  const YT = [-10, -8, -6, -4, -2, 0, 2].map(e => ({ v: Math.pow(10, e), label: e === 0 ? '1' : `10^{${e < 0 ? '−' + (-e) : e}}` }));
+  const XT = [-1, 0, 1, 2, 3, 4, 5].map(e => ({ v: Math.pow(10, e), label: e === -1 ? '0.1' : e === 0 ? '1' : e === 1 ? '10' : `10^{${e}}` }));
+  const pD = new EPP.Plot(elPlot, {
+    xlim: [XMIN, XMAX], ylim: [YMIN, YMAX], logx: true, logy: true, xticks: XT, yticks: YT, legend: false,
+    aspect: 0.55, minHeight: 310, maxHeight: 440, margin: { l: 58, r: 14, t: 14, b: 44 },
+    xname: 'cq/ω', hoverX: v => sci(v, 3), hoverY: v => sci(v, 3),
+    ariaLabel: 'Log–log plot of the norms of the longitudinal, mixed and transverse sectors of the dressed photon propagator against cq/ω'
+  });
+  let cur = null;
+
+  // segment–box test (Liang–Barsky); a label box must not touch any curve
+  function segHit(ax, ay, bx, by, b) {
+    if (Math.max(ax, bx) < b[0] || Math.min(ax, bx) > b[2] || Math.max(ay, by) < b[1] || Math.min(ay, by) > b[3]) return false;
+    let t0 = 0, t1 = 1;
+    const dx = bx - ax, dy = by - ay;
+    const clip = (p, q) => { if (p === 0) return q >= 0; const r = q / p; if (p < 0) { if (r > t1) return false; if (r > t0) t0 = r; } else { if (r < t0) return false; if (r < t1) t1 = r; } return true; };
+    return clip(-dx, ax - b[0]) && clip(dx, b[2] - ax) && clip(-dy, ay - b[1]) && clip(dy, b[3] - ay) && t0 <= t1;
+  }
+
+  function decorate() {
+    const c = cur, ctx = pD.ctx, W = pD.cv.w, H = pD.cv.h, m = pD.m;
+    if (!c || !W || !H) return;
+    FAM = { ui: EPP.css('--font-ui'), tx: EPP.css('--font-text') };
+    const x0 = m.l, y0 = m.t, x1 = W - m.r, y1 = H - m.b, narrow = x1 - x0 < 430;
+    // axis titles, with the symbols in italic
+    ctx.save();
+    const wA = partsW(ctx, CQW, 12.5), wB = partsW(ctx, XHINT, 11), xa = (x0 + x1) / 2 - (wA + 10 + wB) / 2;
+    ctx.fillStyle = EPP.color('fg'); partsDraw(ctx, CQW, xa, H - 9, 12.5);
+    ctx.fillStyle = EPP.color('muted'); partsDraw(ctx, XHINT, xa + wA + 10, H - 9, 11);
+    ctx.translate(14, (y0 + y1) / 2); ctx.rotate(-Math.PI / 2);
+    ctx.fillStyle = EPP.color('fg'); partsDraw(ctx, YTITLE, 0, 0, 12.5, 'center');
+    ctx.restore();
+
+    // curves in pixels, the obstacles for the labels
+    const lines = [];
+    const addPoly = (ys) => { let seg = null; c.xs.forEach((s, i) => { const y = ys[i]; if (!(y > 0)) { seg = null; return; } const P = [pD.X(s), pD.Y(y)]; if (seg) seg.push(P); else { seg = [P]; lines.push(seg); } }); };
+    addPoly(c.L); addPoly(c.T); if (!c.ltZero) addPoly(c.LT); addPoly(c.ref);
+    lines.push([[x0, pD.Y(c.plat)], [x1, pD.Y(c.plat)]]);
+    const hitLines = (b) => { const g = [b[0] - 1.5, b[1] - 1.5, b[2] + 1.5, b[3] + 1.5]; return lines.some(pl => { for (let i = 1; i < pl.length; i++) if (segHit(pl[i - 1][0], pl[i - 1][1], pl[i][0], pl[i][1], g)) return true; return false; }); };
+    const placed = [];
+    const clash = (b, o) => b[0] < o[2] + 3 && b[2] > o[0] - 3 && b[1] < o[3] + 3 && b[3] > o[1] - 3;
+    const inFrame = (b) => b[0] >= x0 + 2 && b[2] <= x1 - 2 && b[1] >= y0 + 1 && b[3] <= y1 - 1;
+    // put a label at the first candidate [x of its left end, baseline] whose box is free; returns the box or null
+    function put(parts, size, color, candsOf, sup) {
+      const w = partsW(ctx, parts, size);
+      for (const [xl, base] of candsOf(w)) {
+        const b = [xl - 2, base - size * (sup ? 1.05 : 0.9), xl + w + 2, base + size * 0.3];
+        if (!inFrame(b) || placed.some(o => clash(b, o)) || hitLines(b)) continue;
+        placed.push(b); ctx.fillStyle = color; partsDraw(ctx, parts, xl, base, size);
+        return b;
+      }
+      return null;
+    }
+    const sOf = (px) => pD.invX(px);
+    const yOf = (key) => (px) => pD.Y(c.at(sOf(px))[key]);
+    const yLp = yOf('L'), yTp = yOf('T'), yLTp = yOf('LT'), yRef = (px) => pD.Y(c.anchor * 10 / sOf(px));
+
+    // band labels: the phonons at the top of their band, the light cone at the bottom of its band
+    const pb0 = pD.X(Math.max(c.b0, XMIN)), pb1 = pD.X(Math.min(c.b1, XMAX));
+    const inBand = (w) => [[(pb0 + pb1) / 2 - w / 2, y0 + 15], [pb0 + 4, y0 + 15], [pb1 - 4 - w, y0 + 15]].filter(([xl]) => xl >= pb0 && xl + w <= pb1);
+    put([T('phonons, 10⁻³–1 Å⁻¹')], 11, EPP.textColor('phonon'), inBand) || put([T('phonons')], 11, EPP.textColor('phonon'), inBand);
+    const lc1 = pD.X(c.xlc);
+    put([T('light cone')], 11, EPP.textColor('photon'), (w) => [[(x0 + lc1) / 2 - w / 2, y1 - 7], [x0 + 4, y1 - 7]]);
+    // the plateau, at the right end
+    const yP = pD.Y(c.plat);
+    put(PLAT, 11.5, EPP.textColor('muted'), (w) => [[x1 - 6 - w, yP - 7], [x1 - 6 - w, yP + 15], [pD.X(2e3) - w / 2, yP - 7], [pD.X(2e3) - w / 2, yP + 15]]);
+    // candidates centred at cq/ω = s next to a falling curve yc: above it a box comes closest to the curve at its
+    // lower left corner, below it at its upper right corner; gap in px between the curve and the box
+    const above = (yc, ss, gap) => (w) => ss.map(s => { const xl = pD.X(s) - w / 2; return [xl, yc(xl - 5) - gap]; });
+    const under = (yc, ss, gaps, size) => (w) => ss.flatMap(s => { const xl = pD.X(s) - w / 2, y = yc(xl + w + 5); return gaps.map(g => [xl, y + g + 0.95 * size]); });
+    // curve names
+    put([T('L')], 13, EPP.textColor('photon'), (w) => [40, 120, 15, 400, 1500].flatMap(s => { const xl = pD.X(s) - w / 2; return [[xl, Math.min(yLp(xl), yLp(xl + w)) - 7], [xl, Math.max(yLp(xl), yLp(xl + w)) + 18]]; }));
+    put([T('T')], 13, EPP.textColor('c5'), above(yTp, [2.5e4, 1.2e4, 6e3, 3e3, 1.5e3, 700, 300], 6));
+    // the printed power counting: just above its reference line, else just below it
+    const longSL = [T('slope −1: printed power counting')], shortSL = [T('slope −1, as printed')], slCol = EPP.textColor('muted');
+    const SL = [2e3, 1e3, 4e3, 500, 8e3, 250, 120, 60, 30];
+    if (!c.ltZero) (!narrow && put(longSL, 11, slCol, above(yRef, SL, 7))) || put(shortSL, 11, slCol, above(yRef, SL, 7)) || put(shortSL, 11, slCol, under(yRef, [4e3, 2e3, 8e3, 1e3], [5], 11));
+    if (!c.ltZero) put([T('LT = TL')], 12.5, EPP.textColor('c4'), under(yLTp, [8e3, 4e3, 1.6e4, 2e3, 1e3, 500, 250, 120, 60], [6], 12.5));
+    // the law of the two falling sectors: below the lower one; when LT leaves the frame early (tiny anisotropy), below or above T
+    const SUM = (c.ltZero ? [T('T ∝ (')] : [T('LT, T ∝ (')]).concat([It('cq'), T('/'), It('ω'), T(')'), Sp('−2')]);
+    const SS = [600, 300, 1200, 2500, 150, 5000], sumCol = EPP.textColor('fg2');
+    put(SUM, 11.5, sumCol, under(c.ltZero ? yTp : yLTp, SS, [24, 42, 10], 11.5), true) ||
+      put(SUM, 11.5, sumCol, under(yTp, SS, [24, 42, 10], 11.5), true) || put(SUM, 11.5, sumCol, above(yTp, [3e3, 1e3, 6e3, 300], 8), true);
+  }
+  const baseRender = pD.render.bind(pD);
+  pD.render = () => { baseRender(); decorate(); };
+
+  // ---------- readouts ----------
+  const roV = {};
+  ['eL', 'inv', 'L5', 'sLT', 'sT', 'band'].forEach(k => { roV[k] = fig.querySelector('.b9-sectors-v-' + k); });
+  const slope = (a, b) => (Math.log10(b) - Math.log10(a)) / 2;   // between cq/ω = 10³ and 10⁵
+
+  function update(st) {
+    cur = compute(st);
+    const c = cur;
+    pD.draw([
+      { type: 'band', x0: XMIN, x1: c.xlc, color: 'photon', alpha: 0.09 },
+      { type: 'band', x0: c.b0, x1: Math.min(c.b1, XMAX * 1.5), color: 'phonon', alpha: 0.11 },
+      { type: 'hline', at: c.plat, color: 'muted', width: 1.3, dash: [] },
+      c.ltZero ? null : { type: 'line', x: c.xs, y: c.ref, color: 'muted', width: 1.3, dash: [5, 4] },
+      { type: 'line', x: c.xs, y: c.L, color: 'photon', width: 2.2, label: 'L' },
+      { type: 'line', x: c.xs, y: c.T, color: 'c5', width: 2.4, dash: [0.5, 4.5], label: 'T' },
+      c.ltZero ? null : { type: 'line', x: c.xs, y: c.LT, color: 'c4', width: 2, dash: [7, 4], label: 'LT = TL' }
+    ]);
+    roV.eL.textContent = EPP.fix(c.eL, 3);
+    roV.inv.textContent = EPP.fix(1 / c.eL, 4);
+    roV.L5.textContent = EPP.fix(c.s5.L, 4);
+    roV.sLT.textContent = c.ltZero ? 'none: LT ≡ 0' : EPP.fix(slope(c.s3.LT, c.s5.LT), 2);
+    roV.sT.textContent = EPP.fix(slope(c.s3.T, c.s5.T), 2);
+    roV.band.textContent = `${sci(c.b0)} to ${sci(c.b1)}`;
+    pD.cv.canvas.setAttribute('aria-label', `Log–log plot against cq/ω, from 0.1 to 10^5, of the norms of the longitudinal (L), mixed (LT = TL) and transverse (T) sectors of (ω²/4πc) D^e, ` +
+      `for θ = ${Math.round(c.th)}°, ε_xx = ${c.exx.toFixed(2)} and ε_zz = ${c.ezz.toFixed(2)}. Outside the light cone, which ends at cq/ω = ${c.xlc.toFixed(2)}, ` +
+      `L settles on 1/(q̂·ε·q̂) = ${(1 / c.eL).toFixed(3)}; ` + (c.ltZero ? 'the mixed sectors vanish, and T falls with slope −2. ' : 'LT and T fall with slope −2; the power counting printed in the EPP manuscript gives LT the slope −1 of the dashed reference line. ') +
+      `Phonons of ${Math.round(c.hw)} meV with q from 0.001 to 1 per ångström lie at cq/ω from ${sci(c.b0)} to ${sci(c.b1)}.`);
+  }
+
+  // ---------- controls ----------
+  const elCtl = fig.querySelector('.b9-sectors-ctrls');
+  const ui = EPP.controls(elCtl, [
+    { key: 'th', type: 'range', label: 'angle θ between q̂ and the optic axis z', min: 0, max: 90, step: 1, value: 45, fmt: v => Math.round(v) + '°' },
+    { key: 'exx', type: 'range', label: 'ε_{xx}, in plane', min: 1, max: 15, step: 0.01, value: 4.87, fmt: v => v.toFixed(2) },
+    { key: 'ezz', type: 'range', label: 'ε_{zz}, along the optic axis', min: 1, max: 15, step: 0.01, value: 2.95, fmt: v => v.toFixed(2) },
+    { key: 'hw', type: 'range', label: 'phonon energy ħω', min: 10, max: 200, step: 1, value: 170, fmt: v => Math.round(v) + ' meV' }
+  ], update);
+  elCtl.style.gridTemplateColumns = 'repeat(auto-fill, minmax(min(100%, 300px), 1fr))';   // two columns on desktop, so no label wraps
+  // slider labels: symbols in italic, vectors in bold, as in the text
+  const I = (t) => `<i style="font-family:var(--font-text)">${t}</i>`, Bd = (t) => `<strong>${t}</strong>`;
+  const LAB = {
+    th: `angle ${I('θ')} between ${Bd('q̂')} and the optic axis ${I('z')}`,
+    exx: `${I('ε')}<sub>${I('xx')}</sub>, in plane`,
+    ezz: `${I('ε')}<sub>${I('zz')}</sub>, along the optic axis`,
+    hw: `phonon energy ${I('ħω')} (moves the amber band)`
+  };
+  Object.keys(LAB).forEach(k => { const sp = elCtl.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  update(ui.state);
+
+  // previewed outside Section B.9, the equation links have no target: keep their text, drop the link
+  if (!fig.closest('#b-electrostatic')) fig.querySelectorAll('a.eqref').forEach(a => { if (!document.getElementById((a.getAttribute('href') || '').slice(1))) { const s = document.createElement('span'); s.textContent = a.textContent; a.replaceWith(s); } });
+})();
+</script>

@@ -1,0 +1,321 @@
+  <figure class="viz" id="viz-b8-dynamic">
+    <p class="viz-title">Screening the vertex at the phonon frequency, not at zero <span class="tag">interactive</span></p>
+    <div class="b8-dynamic-plot"><div class="legend b8-dynamic-leg"><span class="item" style="color:var(--c-electron)"><span class="sw"></span><span style="color:var(--fg-2)">dynamic, $1/|\varepsilon^{\rme}(q,\omega)|$</span></span><span class="item" style="color:var(--c-electron)"><span class="sw dash"></span><span style="color:var(--fg-2)">static (adiabatic), $1/\varepsilon^{\rme}(q,0)$</span></span><span class="item" style="color:var(--muted)"><span class="sw dot"></span><span style="color:var(--fg-2)">undoped, $1/\varepsilon_\infty$</span></span></div></div>
+    <div class="b8-dynamic-ctrls"></div>
+    <div class="readout b8-dynamic-ro" aria-live="polite"><span>$\hbar\omega_{\mathrm p}/\sqrt{\varepsilon_\infty}$<b class="b8-dynamic-v-wp"></b></span><span>$E_{\mathrm F}$<b class="b8-dynamic-v-ef"></b></span><span>$\varepsilon^{\rme}(q\to0,\omega)=\varepsilon_\infty-\omega_{\mathrm p}^2/\omega^2$<b class="b8-dynamic-v-eps"></b></span></div>
+    <div class="readout b8-dynamic-ro2" aria-live="polite"><span>$k_{\mathrm{TF}}/\sqrt{\varepsilon_\infty}$<b class="b8-dynamic-v-ktf"></b></span><span>$\omega/v_{\mathrm F}$<b class="b8-dynamic-v-wv"></b></span><span>$2k_{\mathrm F}$<b class="b8-dynamic-v-kf"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> For $q\gg\omega/v_{\mathrm F}$ the carriers follow the field and the two curves merge. At smaller $q$ static screening suppresses the vertex as $q^2$, so its $1/q$ becomes $q$; at the phonon frequency the carriers cannot follow, and the vertex keeps its $1/q$, screened only by $\varepsilon_\infty-\omega_{\mathrm p}^2/\omega^2$.</p><div class="cap-more"><p><strong>Marks.</strong> Solid curve: the screening factor at the vertex frequency, $1/|\varepsilon^{\rme}(q,\omega)|$. Dashed: the adiabatic factor $1/\varepsilon^{\rme}(q,0)$ that a static calculation uses. Dotted: $1/\varepsilon_\infty$ of the undoped crystal. Vertical lines: $\omega/v_{\mathrm F}$, below which the carriers cannot follow the field; $k_{\mathrm{TF}}/\sqrt{\varepsilon_\infty}$, the inverse static screening length; $2k_{\mathrm F}$, the largest wavevector of an electron–hole pair of zero energy.</p><p><strong>Try.</strong> Raise $n_{\mathrm c}$ towards <span class="nw">$7\times10^{17}$ cm⁻³:</span> the solid curve shoots up at small $q$ as $\varepsilon^{\rme}(q\to0,\omega_{\mathrm{LO}})$ crosses zero, the plasmon–LO resonance of <a href="#b-electrostatic">Section B.9</a>. Lower $\hbar\omega$ to 0: the solid curve collapses onto the dashed one. At <span class="nw">$10^{19}$ cm⁻³</span> both lie far below $1/\varepsilon_\infty$ at small $q$, yet only the dashed one keeps falling as $q^2$.</p><p><strong>Model.</strong> For an isotropic crystal at $c\to\infty$, <a class="eqref" href="#b8-eq-static">(B8.16)</a> and <a class="eqref" href="#b8-eq-relation">(B8.17)</a> give $|g^{\mathrm{dyn}}/g^{\mathrm{dyn},0}|=q^2/|\bq\cdot\mathbf S^{\rme}\cdot\bq|=1/|\varepsilon^{\rme}(q,\omega)|$, with $\varepsilon^{\rme}=\varepsilon_\infty-v(q)\chi^0=\varepsilon_\infty+(k_{\mathrm{TF}}^2/q^2)\,\chi^0(q,\omega)/\chi^0(q\to0,0)$. Here $\varepsilon_\infty=10.9$ comes from the valence electrons and $\chi^0$ is the Lindhard response of the carriers at $T=0$, in a parabolic band of mass $m^*=0.067\,m_{\mathrm e}$, taken at $\hbar\omega+\ii\eta$ with $\eta=\hbar\omega/70$ <span class="nw">(0.5 meV</span> at the default), so that $\omega\to0$ returns the static curve. GaAs parameters, literature values, illustrative.</p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b8-dynamic');
+  if (!fig || !window.EPP) return;
+  // Gaussian units, energies in eV and lengths in Å: 4πe² = 180.95 eV Å, ħ²/m_e = 7.61996 eV Å²
+  const FPE2 = 180.95, HB2M = 7.61996;
+  // n-doped GaAs (literature values, illustrative): valence screening ε∞, effective mass m*/m_e, ħω_LO (meV)
+  const EINF = 10.9, MSTAR = 0.067, HW_LO = 36.2;
+  const Q0 = 1e-4, Q1 = 1, G0 = 1e-6, G1 = 10, NQ = 420, LQ0 = Math.log10(Q0), LQ1 = Math.log10(Q1);
+  const C = EPP.C;
+  const qs = EPP.linspace(LQ0, LQ1, NQ).map(v => Math.pow(10, v));
+
+  // ---- physics ----
+  // the carriers: n_e (cm⁻³) -> k_F (Å⁻¹), E_F (eV), ħv_F (eV Å), k_TF² (Å⁻²), ħω_p (eV)
+  function carriers(ncm3) {
+    const n = ncm3 * 1e-24;                          // Å⁻³
+    const kF = Math.cbrt(3 * Math.PI * Math.PI * n); // k_F = (3π² n_e)^{1/3}
+    const EF = 0.5 * HB2M * kF * kF / MSTAR;         // E_F = ħ²k_F²/2m*
+    const hvF = HB2M * kF / MSTAR;                   // ħv_F = ħ²k_F/m*
+    const kTF2 = 1.5 * FPE2 * n / EF;                // k_TF² = 6πe² n_e/E_F
+    const hwp = Math.sqrt(FPE2 * n * HB2M / MSTAR);  // (ħω_p)² = 4πe² n_e ħ²/m*
+    return { ncm3, kF, EF, hvF, kTF2, hwp };
+  }
+  // Lindhard response of a T = 0 electron gas (two spins), normalized to its static long-wavelength value:
+  // r = χ⁰(q, ω)/χ⁰(q → 0, 0) as a function of s = q/2k_F and the complex w = (ħω + iη)/(ħv_F q)
+  const hfun = (x) => C.mul(C.sub([1, 0], C.mul(x, x)), C.log(C.div(C.add(x, [1, 0]), C.sub(x, [1, 0]))));
+  function lindhard(s, w) {
+    const xm = [w[0] - s, w[1]], xp = [w[0] + s, w[1]];
+    if (Math.min(C.abs(xm), C.abs(xp)) > 6) {
+      // large |w ± s|: series in 1/(w ± s); the closed form below cancels badly in the plasma regime
+      let sum = [0, 0], pm = C.inv(xm), pp = C.inv(xp);
+      const m2 = C.mul(pm, pm), p2 = C.mul(pp, pp);
+      for (let k = 0; k < 10; k++) { sum = C.add(sum, C.scale(C.sub(pm, pp), 1 / ((2 * k + 1) * (2 * k + 3)))); pm = C.mul(pm, m2); pp = C.mul(pp, p2); }
+      return C.scale(sum, -1 / (2 * s));
+    }
+    return C.sub([0.5, 0], C.scale(C.sub(hfun(xm), hfun(xp)), 1 / (8 * s)));
+  }
+  const lindhardStatic = (s) => (Math.abs(s - 1) < 1e-9 ? 0.5 : 0.5 + (1 - s * s) / (4 * s) * Math.log(Math.abs((1 + s) / (1 - s))));
+  // ε^e(q, ω) = ε∞ − v(q)χ⁰ = ε∞ + (k_TF²/q²) χ⁰(q, ω)/χ⁰(q → 0, 0), at ħω + iη with η = ħω/70 (energies in eV)
+  function epsDyn(c, q, hw) {
+    const eta = Math.max(hw / 70, 1e-7), r = lindhard(q / (2 * c.kF), [hw / (c.hvF * q), eta / (c.hvF * q)]), f = c.kTF2 / (q * q);
+    return [EINF + f * r[0], f * r[1]];
+  }
+  const epsStat = (c, q) => EINF + c.kTF2 / (q * q) * lindhardStatic(q / (2 * c.kF));
+  // the screening factor of the LO vertex, |g^dyn/g^dyn,0| = 1/|ε^e(q, ω)| (isotropic crystal, c → ∞)
+  const facDyn = (c, q, hw) => { const r = 1 / C.abs(epsDyn(c, q, hw)); return isFinite(r) ? r : NaN; };
+  const facStat = (c, q) => { const r = 1 / epsStat(c, q); return isFinite(r) ? r : NaN; };
+
+  // ---- number formats: a×10ⁿ outside 0.01…9999, a true minus sign ----
+  const SUP = { '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹', '-': '⁻' };
+  function sci(v, d = 3) {
+    if (!isFinite(v)) return '—';
+    if (v === 0) return '0';
+    let e = Math.floor(Math.log10(Math.abs(v)));
+    if (e >= -2 && e <= 3) return String(Number(v.toPrecision(d))).replace('-', '−');
+    let mant = v / Math.pow(10, e);
+    if (Math.abs(Number(mant.toFixed(d - 1))) >= 10) { mant /= 10; e += 1; }
+    return mant.toFixed(d - 1).replace('-', '−') + '×10' + String(e).split('').map(ch => SUP[ch] || ch).join('');
+  }
+  const say = (v) => sci(v, 3).replace(/×10([⁻⁰¹²³⁴⁵⁶⁷⁸⁹]+)/, (_, p) => ' times 10 to the ' + p.split('').map(ch => Object.keys(SUP).find(k => SUP[k] === ch)).join('').replace('-', 'minus '));
+
+  // ---- canvas text: '$..$' marks math, whose letters (Latin, Greek, ħ) are italic in the text font;
+  //      _x, _{..}, ^x as in EPP.drawRich, so a subscript written outside '$' stays upright: '$k$_{TF}' ----
+  const ITAL = /[A-Za-zα-ωħ]/;
+  let FT = '', FU = '';
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const p of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: p.t, m: p.m, it: false }); continue; }
+        let buf = '', it = null;
+        for (const ch of p.t) {
+          const k = ITAL.test(ch);
+          if (it !== null && k !== it) { out.push({ t: buf, m: p.m, it }); buf = ''; }
+          buf += ch; it = k;
+        }
+        if (buf) out.push({ t: buf, m: p.m, it });
+      }
+    });
+    return out;
+  }
+  const runFont = (r, size) => { const sz = r.m ? Math.round(size * 0.72) : size; return r.it ? `italic ${sz + 1}px ${FT}` : `${sz}px ${FU}`; };
+  function rich(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, rs = runs(s);
+    // a little air after an italic letter followed by upright text (italic correction)
+    const ws = rs.map((r, k) => { ctx.font = runFont(r, size); const nx = rs[k + 1]; return ctx.measureText(r.t).width + (r.it && nx && !nx.it && nx.m !== -1 ? 0.1 * size : 0); });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    let x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    if (o.color) ctx.fillStyle = o.color;
+    const ta = ctx.textAlign; ctx.textAlign = 'left';
+    rs.forEach((r, k) => { ctx.font = runFont(r, size); ctx.fillText(r.t, x0, y + (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0))); x0 += ws[k]; });
+    ctx.textAlign = ta;
+    return tot;
+  }
+  // HTML text: italic symbols in the hover tip and the control labels
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+
+  // ---- the plot ----
+  const elPlot = fig.querySelector('.b8-dynamic-plot');
+  const tick = (e) => ({ v: Math.pow(10, e), label: e >= -2 && e <= 1 ? String(Math.pow(10, e)) : `10^{${e < 0 ? '−' + (-e) : e}}` });
+  const P = new EPP.Plot(elPlot, {
+    logx: true, logy: true, xlim: [Q0, Q1], ylim: [G0, G1], legend: false, xname: 'q',
+    xticks: [-4, -3, -2, -1, 0].map(tick), yticks: [-6, -5, -4, -3, -2, -1, 0, 1].map(tick),
+    margin: { l: 58, r: 14, t: 12, b: 44 }, aspect: 0.56, minHeight: 280, maxHeight: 440,
+    ariaLabel: 'Screening factor of the polar electron-phonon vertex against wavevector, at the vertex frequency and at zero frequency'
+  });
+  // the legend is static markup (MathJax), placed under the canvas
+  const elLeg = elPlot.querySelector('.b8-dynamic-leg');
+  if (elLeg) elPlot.appendChild(elLeg);
+  const X_TITLE = 'wavevector $q$ (Å^{−1})';
+  const Y_TITLE = 'screening factor |$g$^{dyn}/$g$^{dyn,0}|', Y_SHORT = '|$g$^{dyn}/$g$^{dyn,0}|';
+  // the three wavevectors drawn as vertical lines, in the order their labels are placed
+  const MARKS = [
+    { key: 'wv', text: '$ω$/$v$_F', color: 'phonon', dash: [7, 4], width: 1.5 },
+    { key: 'ktf', text: '$k$_{TF}/√$ε$_∞', color: 'muted', dash: [4, 3], width: 1.3 },
+    { key: 'kf', text: '2$k$_F', color: 'muted', dash: [1.5, 2.5], width: 1.5 }
+  ];
+  let cur = null, seq = 0;
+
+  // ---- direct labels, placed where they touch no curve, no other vertical line and no other label ----
+  function curvePx(arr, px) { // canvas y of a sampled curve at canvas x (interpolated in log–log), NaN outside
+    const q = P.invX(px);
+    if (!(q >= Q0 && q <= Q1)) return NaN;
+    const f = (Math.log10(q) - LQ0) / (LQ1 - LQ0) * (NQ - 1), i = Math.min(NQ - 2, Math.max(0, Math.floor(f))), t = f - i;
+    const a = arr[i], b = arr[i + 1];
+    if (!(a > 0) || !(b > 0)) return NaN;
+    return P.Y(Math.pow(10, Math.log10(a) * (1 - t) + Math.log10(b) * t));
+  }
+  // a curve as a table of canvas y per canvas x, so that the label search below only looks values up
+  function pxTable(arr, W) { const T = new Float64Array(W + 2); for (let px = 0; px <= W + 1; px++) T[px] = curvePx(arr, px); return T; }
+  const at = (T, px) => { const i = Math.round(px); return i >= 0 && i < T.length ? T[i] : NaN; };
+  function hitsCurve(b, T) {
+    let prev = null;
+    for (let px = b[0]; px <= b[2] + 0.01; px += 1.5) {
+      const py = at(T, px);
+      if (!isFinite(py)) { prev = null; continue; }
+      if (py >= b[1] && py <= b[3]) return true;
+      if (prev !== null && Math.min(prev, py) < b[1] && Math.max(prev, py) > b[3]) return true; // steep crossing
+      prev = py;
+    }
+    return false;
+  }
+  function layoutLabels(ctx) {
+    const m = P.m, W = P.cv.w, H = P.cv.h, boxes = [], out = [];
+    const TD = pxTable(cur.dyn, W), TS = pxTable(cur.stat, W);
+    const inFrame = (b) => b[0] >= m.l + 3 && b[2] <= W - m.r - 3 && b[1] >= m.t + 2 && b[3] <= H - m.b - 2;
+    const free = (b) => !boxes.some(o => b[0] < o[2] && b[2] > o[0] && b[1] < o[3] && b[3] > o[1]);
+    const yU = P.Y(1 / EINF);
+    const onCurves = (b, pad = 2) => { const g = [b[0] - pad, b[1] - pad, b[2] + pad, b[3] + pad]; return hitsCurve(g, TD) || hitsCurve(g, TS) || (yU >= g[1] && yU <= g[3]); };
+    const marks = cur.marks.filter(k => k.q > Q0 && k.q < Q1).map(k => Object.assign({ X: P.X(k.q) }, k));
+    const onLines = (b, self) => marks.some(k => k !== self && k.X >= b[0] - 3 && k.X <= b[2] + 3);
+    const keep = (b, text, color, size, plate) => { boxes.push([b[0] - 4, b[1] - 2, b[2] + 4, b[3] + 2]); out.push({ b, text, color, size, plate }); };
+    // the vertical lines: labels in rows along the top, beside their line; a label may cross another line
+    // (on a plate) only when no row is free of crossings, and never a curve
+    const SZ = 11, LH = 15, TH = 13;
+    for (const k of marks) {
+      const w = rich(ctx, k.text, 0, 0, { size: SZ, measure: true });
+      let done = false;
+      for (let pass = 0; pass < 2 && !done; pass++) {
+        for (let r = 0; r < 4 && !done; r++) {
+          for (const side of [1, -1]) {
+            const x0 = side > 0 ? k.X + 4 : k.X - 4 - w, y0 = m.t + 4 + r * LH, b = [x0, y0, x0 + w, y0 + TH];
+            if (!inFrame(b) || !free(b) || onCurves(b)) continue;
+            const cross = onLines(b, k);
+            if (pass === 0 && cross) continue;
+            keep(b, k.text, k.color, SZ, cross); done = true; break;
+          }
+        }
+      }
+    }
+    // the two curves: each label goes where its curve stands apart from the other one (more than 12 px over most of
+    // the label), if it can; 'dynamic' just above (else below) its curve, scanning from the left; 'static, ∝ q²'
+    // below-right (else above-left) of the rising static curve, where it still falls as q², at q = k_TF/(a√ε∞).
+    // Where the two curves coincide everywhere (ħω → 0) one label names both.
+    const apart = (b) => { let n = 0, k = 0; for (let px = b[0]; px <= b[2] + 0.01; px += 3) { n++; if (Math.abs(at(TD, px) - at(TS, px)) > 12) k++; } return k >= 0.6 * n; };
+    // passes [apart needed, may cross a vertical line on a plate, keeps clear of the other curve]; within a pass the
+    // texts in order (a shorter one as a fallback), then the candidates.
+    // A label keeps 4 px from every curve and 10 px above or below the other curve, so that it is never read as that one's.
+    const grow = (b, px, py) => [b[0] - px, b[1] - py, b[2] + px, b[3] + py];
+    const lab = (texts, cands, passes, other) => {
+      for (const [needApart, lines, clear] of passes) for (const text of texts) {
+        const w = rich(ctx, text, 0, 0, { size: 11.5, measure: true });
+        for (const f of cands) {
+          const b = f(w, TH + 1);
+          if (!b || !inFrame(b) || !free(b) || onCurves(b, 4) || (other && clear && hitsCurve(grow(b, 3, 10), other)) || (needApart && !apart(b))) continue;
+          const cross = onLines(b, null);
+          if (cross && !lines) continue;
+          keep(b, text, 'electron', 11.5, cross); return;
+        }
+      }
+    };
+    const span = (T, x0, x1, pick) => { let v = pick === 'min' ? Infinity : -Infinity; for (let px = x0; px <= x1 + 0.01; px += 1.5) { const py = at(T, px); if (!isFinite(py)) return NaN; v = pick === 'min' ? Math.min(v, py) : Math.max(v, py); } return v; };
+    const kTFs = Math.sqrt(cur.c.kTF2 / EINF), statCands = [], A = [10, 16, 7, 25, 5, 40];
+    for (const a of A) { const X = P.X(kTFs / a), Y = at(TS, X); statCands.push((w, h) => (isFinite(Y) ? [X + 5, Y + 5, X + 5 + w, Y + 5 + h] : null)); }
+    for (const a of A) { const X = P.X(kTFs / a), Y = at(TS, X); statCands.push((w, h) => (isFinite(Y) ? [X - 5 - w, Y - 5 - h, X - 5, Y - 5] : null)); }
+    const same = cur.dyn.every((d, i) => Math.abs(Math.log10(d / cur.stat[i])) < 0.01);
+    if (same) { lab(['dynamic = static, ∝ $q$^2', 'dynamic = static'], statCands, [[false, false, false], [false, true, false]]); return out; }
+    // [apart needed, may cross a vertical line, keeps clear of the other curve]: the last pass only makes sure a label exists
+    const PASSES = [[true, false, true], [true, true, true], [false, false, true], [false, false, false]];
+    const dynCands = [];
+    for (const side of ['above', 'below']) {
+      for (let X = m.l + 5; X < W - m.r - 40; X += 6) {
+        dynCands.push(side === 'above'
+          ? (w, h) => { const top = span(TD, X - 2, X + w + 2, 'min'); return isFinite(top) ? [X, top - 5 - h, X + w, top - 5] : null; }
+          : (w, h) => { const bot = span(TD, X - 2, X + w + 2, 'max'); return isFinite(bot) ? [X, bot + 5, X + w, bot + 5 + h] : null; });
+      }
+    }
+    lab(['dynamic'], dynCands, PASSES, TS);
+    lab(['static, ∝ $q$^2', 'static'], statCands, PASSES, TD);
+    return out;
+  }
+  let layout = null, layoutKey = '';
+  function drawLabels(ctx) {
+    const plate = EPP.alpha('surface', 0.9);
+    ctx.font = `11px ${FU}`;
+    // the placement depends on the state, the canvas size and the fonts only: hovering reuses it
+    const key = [cur.id, P.cv.w, P.cv.h, FT, FU, ctx.measureText('dynamic').width.toFixed(2)].join('|');
+    if (key !== layoutKey || !layout) { layout = layoutLabels(ctx); layoutKey = key; }
+    ctx.textBaseline = 'middle';
+    for (const L of layout) {
+      if (L.plate) { ctx.fillStyle = plate; ctx.fillRect(L.b[0] - 2, L.b[1] - 1, L.b[2] - L.b[0] + 4, L.b[3] - L.b[1] + 2); }
+      rich(ctx, L.text, L.b[0], (L.b[1] + L.b[3]) / 2 + 0.5, { size: L.size, color: EPP.textColor(L.color) });
+    }
+  }
+  // the hover tip: exact values at the pointer, with an italic q
+  function fillTip() {
+    const x = P._hoverX;
+    if (x === null || x === undefined || !(x >= Q0 && x <= Q1)) return;
+    const d = facDyn(cur.c, x, cur.hw), s = facStat(cur.c, x), col = EPP.color('electron');
+    P.tip.innerHTML = [`<span style="color:var(--muted)">${I('q')} = ${sci(x, 3)} Å⁻¹</span>`,
+      `<span style="color:${col}">■</span> dynamic: ${sci(d, 3)}`, `<span style="color:${col}">■</span> static: ${sci(s, 3)}`,
+      `<span style="color:var(--muted)">dynamic/static: ${sci(d / s, 3)}</span>`].join('<br>');
+    const X = P.X(x), tw = P.tip.offsetWidth, left = X + 12 + tw > P.cv.w ? X - 12 - tw : X + 12;
+    P.tip.style.left = Math.max(0, left) + 'px';
+  }
+  const base = P.render.bind(P);
+  P.render = () => {
+    base();
+    const ctx = P.ctx, w = P.cv.w, h = P.cv.h, m = P.m;
+    if (!w || !h || !cur) return;
+    FT = EPP.css('--font-text'); FU = EPP.css('--font-ui');
+    ctx.save();
+    ctx.textBaseline = 'alphabetic';
+    const cFg = EPP.color('fg');
+    rich(ctx, X_TITLE, m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, align: 'center', color: cFg });
+    const yTitle = rich(ctx, Y_TITLE, 0, 0, { size: 12.5, measure: true }) <= h - m.t - m.b - 6 ? Y_TITLE : Y_SHORT;
+    ctx.save(); ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    rich(ctx, yTitle, 0, 0, { size: 12.5, align: 'center', color: cFg });
+    ctx.restore();
+    drawLabels(ctx);
+    ctx.restore();
+    if (!P.tip.hidden) fillTip();
+  };
+
+  function layers() {
+    const L = cur.marks.filter(k => k.q > Q0 && k.q < Q1).map(k => ({ type: 'vline', at: k.q, color: k.color, dash: k.dash, width: k.width }));
+    L.push(
+      { type: 'line', x: qs, y: qs.map(() => 1 / EINF), color: 'muted', dash: [0.5, 4], width: 2.2 },
+      { type: 'line', x: qs, y: cur.stat, color: 'electron', dash: [7, 4], width: 2, label: 'static' },
+      { type: 'line', x: qs, y: cur.dyn, color: 'electron', width: 2.4, label: 'dynamic' }
+    );
+    return L;
+  }
+
+  // ---- readouts: the keys are static MathJax in the markup; only the values change ----
+  const roV = {};
+  ['wp', 'ef', 'eps', 'ktf', 'wv', 'kf'].forEach(k => { roV[k] = fig.querySelector('.b8-dynamic-v-' + k); });
+  const nb = (v, u) => `${v} ${u}`;
+  function readouts() {
+    const { c, hw } = cur, kTFs = Math.sqrt(c.kTF2 / EINF), eps0 = hw > 0 ? EINF - (c.hwp / hw) ** 2 : Infinity, qw = hw > 0 ? hw / c.hvF : 0;
+    roV.wp.textContent = nb(sci(1e3 * c.hwp / Math.sqrt(EINF), 3), 'meV');
+    roV.ef.textContent = nb(sci(1e3 * c.EF, 3), 'meV');
+    roV.eps.textContent = hw > 0 ? sci(eps0, 3) : '∞ (static)';
+    roV.ktf.textContent = nb(sci(kTFs, 3), 'Å⁻¹');
+    roV.wv.textContent = hw > 0 ? nb(sci(qw, 3), 'Å⁻¹') : '0 (static)';
+    roV.kf.textContent = nb(sci(2 * c.kF, 3), 'Å⁻¹');
+    // where the two curves agree to 5 %, scanning down from the zone-boundary end
+    let iM = NQ - 1;
+    while (iM > 0 && Math.abs(cur.dyn[iM - 1] / cur.stat[iM - 1] - 1) <= 0.05) iM--;
+    const merge = iM === 0 ? 'the two curves agree to 5 % over the whole range' : `the two curves agree to 5 % above q = ${say(qs[iM])} per ångström`;
+    P.cv.canvas.setAttribute('aria-label', `Screening factor of the polar vertex against wavevector q, from 10 to the minus 4 to 1 per ångström, on logarithmic axes, ` +
+      `for GaAs with ${say(c.ncm3)} carriers per cubic centimetre and a vertex energy of ${hw > 0 ? (1e3 * hw).toFixed(1) + ' meV' : 'zero'}. ` +
+      `At q = 10 to the minus 4 the dynamic factor is ${say(cur.dyn[0])} and the static factor ${say(cur.stat[0])}; ${merge}; the undoped value is ${say(1 / EINF)}. ` +
+      `Vertical lines: omega over v_F ${hw > 0 ? '= ' + say(qw) : 'at zero'}, k_TF over root epsilon infinity = ${say(kTFs)}, 2 k_F = ${say(2 * c.kF)} per ångström.`);
+  }
+
+  function onChange(s) {
+    const t0 = performance.now();
+    const c = carriers(s.n), hw = s.hw / 1000; // eV
+    const dyn = new Array(NQ), stat = new Array(NQ);
+    for (let i = 0; i < NQ; i++) { dyn[i] = facDyn(c, qs[i], hw); stat[i] = facStat(c, qs[i]); }
+    const q = { wv: hw > 0 ? hw / c.hvF : NaN, ktf: Math.sqrt(c.kTF2 / EINF), kf: 2 * c.kF };
+    cur = { id: ++seq, c, hw, dyn, stat, marks: MARKS.map(k => Object.assign({ q: q[k.key] }, k)) };
+    P.draw(layers());
+    readouts();
+    fig.dataset.redrawMs = (performance.now() - t0).toFixed(2);
+  }
+  const ui = EPP.controls(fig.querySelector('.b8-dynamic-ctrls'), [
+    { key: 'n', type: 'range', label: 'carrier density n_c', min: 1e15, max: 1e19, value: 1e17, log: true, step: 0.01, fmt: v => nb(sci(v, 2), 'cm⁻³') },
+    { key: 'hw', type: 'range', label: 'vertex frequency ħω', min: 0, max: 80, step: 0.1, value: HW_LO, fmt: v => nb(v.toFixed(1), 'meV') },
+    { key: 'lo', type: 'button', label: 'ħω = ħω_{LO}', onClick: () => ui.set('hw', HW_LO, true) }
+  ], onChange);
+  // control labels with italic symbols and upright word labels
+  const LAB = { n: `carrier density ${I('n')}<sub>e</sub>`, hw: `vertex frequency ${I('ħω')}` };
+  Object.keys(LAB).forEach(k => { const sp = fig.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  const bLO = document.getElementById(`${fig.id}-lo`);
+  if (bLO) { bLO.innerHTML = `${I('ħω')} = ${I('ħω')}<sub>LO</sub> of GaAs`; bLO.setAttribute('aria-label', 'set the vertex energy to the LO phonon energy of GaAs, 36.2 meV'); }
+
+  // previewed outside Section B.8, links to other parts of the page have no target: keep their text, drop the link
+  if (!fig.closest('#b-frohlich')) fig.querySelectorAll('a[href^="#"]').forEach(a => { if (!document.getElementById((a.getAttribute('href') || '').slice(1))) { const s = document.createElement('span'); s.textContent = a.textContent; a.replaceWith(s); } });
+})();
+</script>

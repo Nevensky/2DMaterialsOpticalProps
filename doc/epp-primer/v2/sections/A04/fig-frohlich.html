@@ -1,0 +1,320 @@
+  <figure class="viz" id="viz-a4-frohlich">
+    <p class="viz-title">The Fröhlich vertex against the acoustic coupling, and the LO–TO splitting it implies <span class="tag">interactive</span></p>
+    <div class="viz-grid side"><div class="a4-frohlich-g"><div class="legend a4-frohlich-leg"><span class="item a4-frohlich-leg-F" style="color:var(--c-phonon)"><span class="sw"></span><span style="color:var(--fg-2)">LO, Fröhlich <a class="eqref" href="#a4-eq-frohlich">(A4.15)</a>: $\varepsilon_\infty$, $\varepsilon_{\mathrm s}$, $\omega_{\mathrm{LO}}$</span></span><span class="item a4-frohlich-leg-Z" style="color:var(--c-4)"><span class="sw dash"></span><span style="color:var(--fg-2)">LO, from $Z^*$ and $\varepsilon_\infty$</span></span><span class="item" style="color:var(--c-5)"><span class="sw dot"></span><span style="color:var(--fg-2)">acoustic, deformation potential $E_{\mathrm{def}}$</span></span></div></div><div class="a4-frohlich-b"></div></div>
+    <div class="a4-frohlich-ctrls"></div>
+    <div class="readout a4-frohlich-par" aria-live="polite" style="font-size:0.8rem;margin-top:8px"><span>fixed per material:</span><span>$\hbar\omega_{\mathrm{LO}}$<b class="a4-frohlich-v-wLO"></b></span><span>$\OV$<b class="a4-frohlich-v-OV"></b></span><span>$M_{\mathrm r}$<b class="a4-frohlich-v-Mr"></b></span><span>$M_{\mathrm c}$<b class="a4-frohlich-v-Mc"></b></span><span>$m^*$<b class="a4-frohlich-v-ms"></b></span><span>$v_{\mathrm s}$<b class="a4-frohlich-v-vs"></b></span><span>$E_{\mathrm{def}}$<b class="a4-frohlich-v-Ed"></b></span><span>tabulated $\varepsilon_\infty,\ \varepsilon_{\mathrm s},\ Z^*$<b class="a4-frohlich-v-tab"></b></span></div>
+    <div class="readout a4-frohlich-ro" aria-live="polite"><span>$|g^{\mathrm{lr}}|\,q$, dielectric route<b class="a4-frohlich-v-gF"></b></span><span>$|g^{\mathrm{lr}}|\,q$, Born-charge route<b class="a4-frohlich-v-gZ"></b></span><span>$\hbar\omega_{\mathrm{TO}}$ from $\varepsilon_{\mathrm s}/\varepsilon_\infty$<b class="a4-frohlich-v-wTO"></b></span><span>$\hbar\omega_{\mathrm{LO}}$ from $Z^*$<b class="a4-frohlich-v-wLOZ"></b></span><span>$Z^*$ implied by $\varepsilon_{\mathrm s}/\varepsilon_\infty$<b class="a4-frohlich-v-Zi"></b></span></div>
+    <div class="readout a4-frohlich-ro2" aria-live="polite"><span>$\alpha_{\mathrm F}$<b class="a4-frohlich-v-aF"></b></span><span>$1/r_{\mathrm p}$<b class="a4-frohlich-v-rp"></b></span><span>$q_{\mathrm{light}}(\omega_{\mathrm{LO}})$<b class="a4-frohlich-v-qc"></b></span><span>LO coupling above acoustic for<b class="a4-frohlich-v-qx"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> The LO coupling grows as $1/q$ at long wavelengths, while the acoustic coupling vanishes as $q^{1/2}$: in GaAs the LO coupling is the larger below <span class="nw">0.37 Å⁻¹.</span> The dielectric and Born-charge routes nearly coincide for every material, and the light cone ends 400 to 3700 times below $1/r_{\mathrm p}$.</p><div class="cap-more">
+      <p><strong>Marks.</strong> (a) Amber: Fröhlich's vertex from the dielectric data; dashed teal: the same vertex from the Born charge; dotted violet: the acoustic coupling; open circle: where the amber and violet lines cross; rose band: the light cone $q&lt;q_{\mathrm{light}}(\omega_{\mathrm{LO}})$, where the finite speed of light matters; blue dashed line: the inverse polaron length $1/r_{\mathrm p}$. (b) The shaded part of each bar is the LO–TO splitting at $\Gamma$, in the colour of its route.</p>
+      <p><strong>Try.</strong> Move $Z^*$ alone: only the teal line and bar respond, and at $Z^*=0$ the vertex and the splitting vanish together. Set $\varepsilon_{\mathrm s}=\varepsilon_\infty$: the amber line and the amber splitting vanish. Switch to LiF: $\alpha_{\mathrm F}$ jumps from 0.07 to 5.2.</p>
+      <p><strong>Model.</strong> Amber: <a class="eqref" href="#a4-eq-frohlich">(A4.15)</a>, with $\omega_{\mathrm{TO}}$ from <a class="eqref" href="#a4-eq-lst">(A4.10)</a>. Teal: <a class="eqref" href="#a4-eq-gmacro">(A4.12)</a> for the LO mode, $|g^{\mathrm{lr}}|\,q=(4\pi e^2Z^*/\OV\varepsilon_\infty)\,(\hbar/2M_{\mathrm r}\omega_{\mathrm{LO}})^{1/2}$, with $\omega_{\mathrm{LO}}$ from <a class="eqref" href="#a4-eq-lot">(A4.8)</a> and the same $\omega_{\mathrm{TO}}$; inverting <a class="eqref" href="#a4-eq-lot">(A4.8)</a> gives the implied $Z^*$ (2.19 for GaAs; 2.18 with the measured TO energy, <span class="nw">33.3 meV).</span> Violet: $|g|=E_{\mathrm{def}}\,q\,(\hbar/2M_{\mathrm c}\omega)^{1/2}$ with $\omega=v_{\mathrm s}q$. Readouts also use <a class="eqref" href="#a4-eq-alphaF">(A4.16)</a> and <a class="eqref" href="#a4-eq-qc">(A4.19)</a>. Presets: literature values, illustrative; $\OV$ is the volume of a two-atom cell, one formula unit for wurtzite GaN, treated as isotropic. In 3D the $1/q$ divergence is integrable, because $\dd^3q$ brings $q^2\,\dd q$.</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a4-frohlich');
+  if (!fig || !window.EPP) return;
+  // outside Section A.4 (the isolated figure test) the links to the section have no target: show them as text
+  if (!fig.closest('#a-polar')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+
+  // ---------- constants: Gaussian units; eV (meV where marked), Å, amu ----------
+  const E2 = 180.95;                 // 4π e^2 (eV Å)
+  const HW = 64.654;                 // ħω [meV] = 64.654 × sqrt(ω^2 [eV Å^-2 amu^-1])
+  const ZP = 2.0901;                 // ħ/(2Mω) [Å^2] = 2.0901 / (M [amu] × ħω [meV])
+  const HC = 1973.27;                // ħc (eV Å)
+  const RY = 13.606;                 // Rydberg energy m_e e^4/2ħ^2 (eV)
+  const H2M = 3.80998;               // ħ^2/2m_e (eV Å^2)
+  const HB_SI = 1.054571817e-34, AMU_SI = 1.66053906660e-27; // ħ (J s) and amu (kg), for ħ/(2 M_c v_s) with v_s in m/s
+  // presets, literature values (illustrative): ε_∞, ε_s, ħω_LO (meV), Ω_V (Å^3, two-atom cell), Z*, m*/m_e, M_r and M_c (amu), v_s (m/s), E_def (eV)
+  const PRE = {
+    GaAs: { label: 'GaAs', einf: 10.9, es: 12.9, wLO: 36.2, OV: 45.16, Z: 2.07, ms: 0.067, Mr: 36.11, Mc: 144.64, vs: 5200, Ed: 7 },
+    GaN: { label: 'GaN (isotropic model)', einf: 5.35, es: 9.5, wLO: 92, OV: 22.8, Z: 2.65, ms: 0.2, Mr: 11.66, Mc: 83.73, vs: 8000, Ed: 8 },
+    MgO: { label: 'MgO', einf: 2.96, es: 9.8, wLO: 89, OV: 18.7, Z: 1.98, ms: 0.35, Mr: 9.65, Mc: 40.30, vs: 9000, Ed: 5 },
+    LiF: { label: 'LiF', einf: 1.93, es: 9.0, wLO: 82, OV: 16.3, Z: 1.05, ms: 1.0, Mr: 5.08, Mc: 25.94, vs: 6600, Ed: 5 },
+    NaCl: { label: 'NaCl', einf: 2.34, es: 5.9, wLO: 32.7, OV: 44.9, Z: 1.12, ms: 1.0, Mr: 13.95, Mc: 58.44, vs: 4500, Ed: 5 }
+  };
+  const Q0 = 1e-6, Q1 = 1;           // plotted range of q (Å^-1)
+  const NQ = 241, QS = Array.from({ length: NQ }, (_, i) => Q0 * Math.pow(Q1 / Q0, i / (NQ - 1)));
+
+  // ---------- physics ----------
+  function compute(s) {
+    const p = PRE[s.mat] || PRE.GaAs;
+    const einf = s.einf, es = Math.max(s.es, s.einf), Z = s.Z, w = p.wLO;
+    const d = Math.max(0, 1 / einf - 1 / es);                            // 1/ε_∞ − 1/ε_s, the ions' share of the screening
+    const gF = Math.sqrt(E2 / p.OV * (w / 1000) / 2 * d);                // |g^lr| q from (A4.15), eV/Å
+    const wTO = w * Math.sqrt(einf / es);                                // Lyddane–Sachs–Teller (A4.10), meV
+    const split = HW * HW * E2 * Z * Z / (p.OV * p.Mr * einf);           // ħ^2 (ω_LO^2 − ω_TO^2) from (A4.8), meV^2
+    const wLOZ = Math.sqrt(wTO * wTO + split);                           // LO energy from the Born charge, meV
+    const gZ = E2 * Z / (p.OV * einf) * Math.sqrt(ZP / (p.Mr * wLOZ));   // (A4.12) for the LO mode (step 2 of the derivation), eV/Å
+    const Zi = Math.sqrt((w * w - wTO * wTO) / (HW * HW) * p.OV * p.Mr * einf / E2); // (A4.8) solved for Z*
+    const aF = d * Math.sqrt(RY * p.ms / (w / 1000));                    // (A4.16)
+    const irp = Math.sqrt(p.ms * (w / 1000) / H2M);                      // 1/r_p = (2 m* ω_LO / ħ)^{1/2}, Å^-1
+    const qc = Math.sqrt(einf) * (w / 1000) / HC;                        // (A4.19), Å^-1
+    const lac = HB_SI / (2 * p.Mc * AMU_SI * p.vs) * 1e10;               // ħ/(2 M_c v_s), Å
+    const gac = (q) => p.Ed * Math.sqrt(lac * q);                        // E_def q (ħ/2 M_c ω)^{1/2} with ω = v_s q, eV
+    const qx = gF > 0 ? Math.pow(gF / (p.Ed * Math.sqrt(lac)), 2 / 3) : NaN; // where gF/q = gac(q)
+    return { p, einf, es, Z, w, d, gF, wTO, wLOZ, gZ, Zi, aF, irp, qc, gac, qx };
+  }
+
+  // ---------- formatting ----------
+  const fx = (v, d) => EPP.fix(Math.abs(v) < 0.5 * Math.pow(10, -d) ? 0 : v, d);
+  const SUP = { '-': '⁻', 0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴', 5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹' };
+  function sci(v, d = 3) {
+    if (!(v > 0) || !isFinite(v)) return '0';
+    let ex = Math.floor(Math.log10(v)), mant = (v / Math.pow(10, ex)).toFixed(d - 1);
+    if (parseFloat(mant) >= 10) { ex += 1; mant = (v / Math.pow(10, ex)).toFixed(d - 1); }
+    return `${mant} × 10${String(ex).split('').map(c => SUP[c]).join('')}`;
+  }
+  // d significant digits between 0.01 and 10^4 (trailing zeros kept), scientific notation outside
+  const num = (v, d = 3) => (v === 0 ? '0' : (v >= 0.01 && v < 1e4 ? (v >= Math.pow(10, d) ? Math.round(v).toString() : v.toPrecision(d)) : sci(v, d)));
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const NB = ' ';
+  function niceCeil(v) {
+    if (!(v > 0) || !isFinite(v)) return 1;
+    const mag = Math.pow(10, Math.floor(Math.log10(v))), r = v / mag;
+    return ([1, 1.2, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10].find(s => s >= r - 1e-9) || 10) * mag;
+  }
+
+  // ---------- canvas text: '$…$' marks math (letters italic, digits upright); _x, ^{xy} as in EPP.drawRich ----------
+  const ITAL = /[A-Za-zα-ωℓħ]/;
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const part of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: part.t, m: part.m, it: false }); continue; }
+        let buf = '', it = null;
+        for (const ch of part.t) {
+          const k = ITAL.test(ch);
+          if (it !== null && k !== it) { out.push({ t: buf, m: part.m, it }); buf = ''; }
+          buf += ch; it = k;
+        }
+        if (buf) out.push({ t: buf, m: part.m, it });
+      }
+    });
+    return out;
+  }
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, fam = EPP.css('--font-ui'), rs = runs(s);
+    const font = (r) => `${r.it ? 'italic ' : ''}${r.m ? Math.round(size * 0.72) : size}px ${fam}`;
+    const ws = rs.map(r => { ctx.font = font(r); return ctx.measureText(r.t).width; });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    let x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    if (o.color) ctx.fillStyle = o.color;
+    ctx.textAlign = 'left';
+    rs.forEach((r, k) => { ctx.font = font(r); ctx.fillText(r.t, x0, y + (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0))); x0 += ws[k]; });
+    return tot;
+  }
+  const tw = (ctx, s, size) => txt(ctx, s, 0, 0, { size, measure: true });
+  const fit = (ctx, list, size, avail) => list.find(s => tw(ctx, s, size) <= avail) || list[list.length - 1];
+
+  let cur = null;
+
+  // ---------- (a) |g| against q, log–log ----------
+  const elA = fig.querySelector('.a4-frohlich-g'), elB = fig.querySelector('.a4-frohlich-b');
+  const dec = (e) => (e === 0 ? '1' : e === 1 ? '10' : `10^{${String(e).replace('-', '−')}}`);
+  const XT = [-6, -5, -4, -3, -2, -1, 0].map(e => ({ v: Math.pow(10, e), label: dec(e) }));
+  const YT = [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(e => ({ v: Math.pow(10, e), label: dec(e) }));
+  const YT2 = YT.filter((t, i) => i % 2 === 0);   // every second decade when the panel is short
+  const pA = new EPP.Plot(elA, {
+    logx: true, logy: true, xlim: [Q0, Q1], ylim: [0.1, 1e9], xticks: XT, yticks: YT, legend: false,
+    xname: 'q', hoverX: v => num(v) + ' Å⁻¹', hoverY: v => num(v) + ' meV',
+    aspect: 0.66, minHeight: 270, maxHeight: 360, margin: { t: 26, l: 58, r: 12, b: 44 },
+    ariaLabel: 'Panel a: coupling strength against wavevector, log-log'
+  });
+  // the legend is static markup (MathJax), placed under the plot
+  const elLeg = elA.querySelector('.a4-frohlich-leg');
+  if (elLeg) elA.appendChild(elLeg);
+  const legF = fig.querySelector('.a4-frohlich-leg-F'), legZ = fig.querySelector('.a4-frohlich-leg-Z');
+  // header, axis labels and in-plot labels are drawn here, with italic symbols
+  const baseA = pA.render.bind(pA);
+  pA.render = () => {
+    pA.opt.yticks = (pA.cv.h - pA.m.t - pA.m.b) < 230 ? YT2 : YT;
+    baseA();
+    const ctx = pA.ctx, w = pA.cv.w, h = pA.cv.h, m = pA.m, c = cur;
+    if (!w || !h || !c) return;
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2');
+    ctx.save();
+    ctx.textBaseline = 'alphabetic';
+    txt(ctx, fit(ctx, ['(a) coupling of an electron to one phonon', '(a) coupling to one phonon'], 11.5, w - 16), 8, 15, { size: 11.5, color: cFg2 });
+    txt(ctx, 'wavevector $q$ (Å^{−1})', m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    ctx.save();
+    ctx.beginPath(); ctx.rect(m.l, m.t, w - m.l - m.r, h - m.t - m.b); ctx.clip();
+    const top = m.t + 13, bot = h - m.b - 4, right = w - m.r - 3;
+    // light cone: the label sits between the LO and acoustic lines at the middle of the band (logarithmic)
+    if (c.qc > Q0) {
+      const q1 = Math.min(Q1, c.qc), qm = Math.sqrt(Q0 * q1), gLO = Math.max(c.gF, c.gZ);
+      const yLO = gLO > 0 ? 1e3 * gLO / qm : 1e9, yAc = 1e3 * c.gac(qm);
+      const ym = EPP.clamp(Math.sqrt(yLO * yAc), 1, 1e8);
+      const X0 = pA.X(Q0), X1 = pA.X(q1), wl = tw(ctx, 'light cone', 11);
+      txt(ctx, 'light cone', X1 - X0 >= wl + 6 ? (X0 + X1) / 2 : X0 + 3 + wl / 2, pA.Y(ym) + 4, { size: 11, color: EPP.textColor('photon'), align: 'center' });
+    }
+    // slopes: beside each line, on the side away from it
+    const qL = 2e-4, XL = pA.X(qL) + 6, gLO = Math.max(c.gF, c.gZ);
+    if (gLO > 0) {
+      const Y = pA.Y(1e3 * gLO / qL);
+      txt(ctx, '∝ $q$^{−1}', XL, Y - 4 >= top ? Y - 4 : Y + 20, { size: 11.5, color: EPP.textColor(c.gZ > 1.1 * c.gF ? 'c4' : 'phonon') });
+    }
+    {
+      const Y = pA.Y(1e3 * c.gac(qL));
+      txt(ctx, '∝ $q$^{1/2}', XL, Y + 15 <= bot ? Y + 15 : Y - 8, { size: 11.5, color: EPP.textColor('c5') });
+    }
+    // inverse polaron length, at the top of its line
+    {
+      const X = pA.X(c.irp), s = '1/$r$_p', wv = tw(ctx, s, 11.5);
+      txt(ctx, s, X + 4 + wv <= right ? X + 4 : X - 4, top + 2, { size: 11.5, color: EPP.textColor('electron'), align: X + 4 + wv <= right ? 'left' : 'right' });
+    }
+    // crossing of the LO (dielectric route) and acoustic couplings: its q, under the circle and clear of both lines
+    if (c.qx >= Q0 && c.qx <= Q1) {
+      const X = pA.X(c.qx), Y = pA.Y(1e3 * c.gF / c.qx), Xv = pA.X(c.irp);
+      // the label keeps clear of the 1/r_p line: shifted to its right, or without the unit when space is short
+      let s = '', wv = 0, xs = X;
+      for (const cand of [`${fx(c.qx, 2)} Å^{−1}`, fx(c.qx, 2)]) {
+        s = cand; wv = tw(ctx, s, 11); xs = Math.min(X, right - wv / 2);
+        if (xs - wv / 2 > Xv + 3 || xs + wv / 2 < Xv - 3) break;
+        const sh = Xv + 3 + wv / 2;
+        if (sh + wv / 2 <= right) { xs = sh; break; }
+      }
+      const xl = pA.invX(xs - wv / 2), xr = pA.invX(xs + wv / 2);
+      const yLO = (q) => pA.Y(1e3 * c.gF / q), yAc = (q) => pA.Y(1e3 * c.gac(q));
+      // below the crossing the lowest line is the LO line on the right and the acoustic line on the left; above, the reverse
+      const below = Math.max(Y + 9, yLO(xr) + 4, yAc(xl) + 4) + 9, above = Math.min(Y - 9, yLO(xl) - 4, yAc(xr) - 4) - 3;
+      txt(ctx, s, xs, below <= bot ? below : above, { size: 11, color: cFg2, align: 'center' });
+    }
+    ctx.restore();
+    ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, '|$g$| (meV)', 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+  };
+
+  // ---------- (b) TO and LO energies at Γ from the two routes ----------
+  const BW = 0.27;
+  // as tall as (a) when the panels sit side by side, shorter when they stack on a phone
+  const SIDE = (() => { try { return matchMedia('(min-width: 720px)').matches; } catch (e) { return true; } })();
+  const pB = new EPP.Plot(elB, {
+    xlim: [0.35, 2.65], ylim: [0, 50], xticks: [], legend: false, hover: false, height: SIDE ? 320 : 250,
+    margin: { t: 26, l: 50, r: 10, b: 46 }, ariaLabel: 'Panel b: optical phonon energies at Gamma'
+  });
+  const baseB = pB.render.bind(pB);
+  pB.render = () => {
+    baseB();
+    const ctx = pB.ctx, w = pB.cv.w, h = pB.cv.h, m = pB.m;
+    if (!w || !h || !cur) return;
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted');
+    ctx.save();
+    ctx.textBaseline = 'alphabetic';
+    txt(ctx, '(b) optical modes at Γ', 8, 15, { size: 11.5, color: cFg2 });
+    [[1, 'dielectric route', 'from $ε$_s/$ε$_∞', 'phonon'], [2, 'Born-charge route', 'from $Z$^*, $ε$_∞', 'c4']].forEach(([x, a, b, col]) => {
+      txt(ctx, a, pB.X(x), h - m.b + 17, { size: 11, color: EPP.textColor(col), align: 'center' });
+      txt(ctx, b, pB.X(x), h - m.b + 33, { size: 11, color: cMut, align: 'center' });
+    });
+    ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, '$ħω$ (meV)', 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+  };
+  function bars(c) {
+    const L = [];
+    const one = (x, lo, col, dash) => {
+      L.push({ type: 'fill', x: [x - BW, x + BW], y1: [lo, lo], y2: [c.wTO, c.wTO], color: col, alpha: 0.26 });
+      L.push({ type: 'segments', segs: [[x - BW, c.wTO, x + BW, c.wTO]], color: 'muted', width: 2 });
+      L.push({ type: 'segments', segs: [[x - BW, lo, x + BW, lo]], color: col, width: 2.5, dash });
+      L.push({ type: 'text', x, y: lo, dy: -10, text: `LO ${fx(lo, 1)}`, color: col, align: 'center', size: 11.5 });
+      L.push({ type: 'text', x, y: c.wTO, dy: 11, text: `TO ${fx(c.wTO, 1)}`, color: 'muted', align: 'center', size: 11.5 });
+    };
+    one(1, c.w, 'phonon', null);
+    one(2, c.wLOZ, 'c4', [7, 5]);
+    return L;
+  }
+  // fixed limits per material; they grow (and shrink back) only when the Born-charge LO leaves the frame
+  let topB = 50, topMat = null;
+  function setTop(c) {
+    const base = niceCeil(1.35 * c.p.wLO), need = Math.max(c.w, c.wLOZ);
+    if (topMat !== c.p) { topMat = c.p; topB = Math.max(base, niceCeil(need / 0.75)); return; }
+    if (need > 0.85 * topB) topB = niceCeil(need / 0.75);
+    else if (topB > base && need < 0.4 * topB) topB = Math.max(base, niceCeil(need / 0.75));
+  }
+
+  // ---------- readouts ----------
+  const V = {};
+  ['gF', 'gZ', 'wTO', 'wLOZ', 'Zi', 'aF', 'rp', 'qc', 'qx', 'wLO', 'OV', 'Mr', 'Mc', 'ms', 'vs', 'Ed', 'tab'].forEach(k => { V[k] = fig.querySelector('.a4-frohlich-v-' + k); });
+  function readouts(c) {
+    const p = c.p, gq = (v) => (v > 0 ? `${num(v)}${NB}eV${NB}Å⁻¹` : '0');
+    V.gF.textContent = gq(c.gF);
+    V.gZ.textContent = gq(c.gZ);
+    V.wTO.textContent = `${fx(c.wTO, 1)}${NB}meV`;
+    V.wLOZ.textContent = `${fx(c.wLOZ, 1)}${NB}meV`;
+    V.Zi.textContent = fx(c.Zi, 2);
+    const reg = c.aF < 1 ? 'weak' : (c.aF < 6 ? 'intermediate' : 'strong');
+    V.aF.textContent = c.aF > 0 ? `${c.aF < 1 ? num(c.aF, 2) : fx(c.aF, 2)} (${reg})` : '0 (no ionic screening)';
+    const rp = 1 / c.irp;
+    V.rp.innerHTML = `${num(c.irp)}${NB}Å⁻¹ (${I('r')}<sub>p</sub>${NB}=${NB}${rp >= 20 ? rp.toFixed(0) : rp.toFixed(1)}${NB}Å)`;
+    V.qc.textContent = `${sci(c.qc)}${NB}Å⁻¹`;
+    V.qx.innerHTML = c.qx > 0 ? `${I('q')}${NB}&lt;${NB}${fx(c.qx, 2)}${NB}Å⁻¹${c.qx > Q1 ? ', beyond the plot' : ''}` : 'never (no LO coupling)';
+    V.wLO.textContent = `${p.wLO}${NB}meV`;
+    V.OV.textContent = `${p.OV}${NB}Å³`;
+    V.Mr.textContent = `${p.Mr}${NB}amu`;
+    V.Mc.textContent = `${p.Mc.toFixed(2)}${NB}amu`;
+    V.ms.innerHTML = `${p.ms}${NB}${I('m')}<sub>e</sub>`;
+    V.vs.textContent = `${(p.vs / 1000).toFixed(1)}${NB}km/s`;
+    V.Ed.textContent = `${p.Ed}${NB}eV`;
+    const tab = (v) => (Number.isInteger(v) ? v.toFixed(1) : String(v));
+    V.tab.textContent = `${tab(p.einf)}, ${tab(p.es)}, ${tab(p.Z)}`;
+    if (legF) legF.style.opacity = c.gF > 0 ? '' : '0.45';
+    if (legZ) legZ.style.opacity = c.gZ > 0 ? '' : '0.45';
+    pA.cv.canvas.setAttribute('aria-label', `Panel a, ${p.label}: log-log plot of the coupling |g| in meV against the wavevector q, from 10^-6 to 1 per ångström. ` +
+      (c.gF > 0 ? `LO coupling from the dielectric constants: ${num(c.gF)} eV per ångström divided by q. ` : 'No LO coupling from the dielectric constants. ') +
+      (c.gZ > 0 ? `From the Born charge: ${num(c.gZ)} eV per ångström divided by q. ` : 'No LO coupling from the Born charge. ') +
+      'The acoustic deformation-potential coupling grows as the square root of q' +
+      (c.qx > 0 ? (c.qx <= Q1 ? ` and equals the LO coupling at q = ${fx(c.qx, 2)} per ångström. ` : ' and stays below the LO coupling over the whole plot. ') : '. ') +
+      `Shaded: the light cone, below ${sci(c.qc)} per ångström. Dashed vertical line: the inverse polaron length, ${num(c.irp)} per ångström.`);
+    pB.cv.canvas.setAttribute('aria-label', `Panel b, ${p.label}: optical phonon energies at Gamma. From the dielectric constants: TO ${fx(c.wTO, 1)} meV, LO ${fx(c.w, 1)} meV. ` +
+      `From the Born charge, with the same TO: LO ${fx(c.wLOZ, 1)} meV.`);
+  }
+
+  function draw() {
+    const c = cur;
+    if (!c) return;
+    const L = [];
+    if (c.qc > Q0) L.push({ type: 'band', x0: Q0, x1: Math.min(Q1, c.qc), color: 'photon', alpha: 0.14 });
+    L.push({ type: 'vline', at: c.irp, color: 'electron', width: 1.4 });
+    if (c.gF > 0) L.push({ type: 'line', x: QS, y: QS.map(q => 1e3 * c.gF / q), color: 'phonon', width: 2.2, label: 'LO, dielectric route' });
+    if (c.gZ > 0) L.push({ type: 'line', x: QS, y: QS.map(q => 1e3 * c.gZ / q), color: 'c4', width: 2, dash: [7, 5], label: 'LO, Born-charge route' });
+    L.push({ type: 'line', x: QS, y: QS.map(q => 1e3 * c.gac(q)), color: 'c5', width: 2.2, dash: [2, 4], label: 'acoustic' });
+    if (c.qx >= Q0 && c.qx <= Q1) L.push({ type: 'points', x: [c.qx], y: [1e3 * c.gF / c.qx], color: 'fg', r: 4.5, hollow: true });
+    pA.draw(L);
+    setTop(c);
+    pB.draw(bars(c), { ylim: [0, topB] });
+    readouts(c);
+  }
+
+  // ---------- controls ----------
+  const elCtl = fig.querySelector('.a4-frohlich-ctrls');
+  let lastMat = 'GaAs';
+  const f2 = (v) => v.toFixed(2);
+  const ui = EPP.controls(elCtl, [
+    { key: 'mat', type: 'select', label: 'material', options: Object.keys(PRE).map(k => [k, PRE[k].label]), value: 'GaAs' },
+    { key: 'einf', type: 'range', label: 'electronic ε_∞', min: 1, max: 15, step: 0.01, value: PRE.GaAs.einf, fmt: f2 },
+    { key: 'es', type: 'range', label: 'static ε_s (≥ ε_∞)', min: 1, max: 20, step: 0.01, value: PRE.GaAs.es, fmt: f2 },
+    { key: 'Z', type: 'range', label: 'Born charge Z^*', min: 0, max: 3, step: 0.01, value: PRE.GaAs.Z, fmt: f2 }
+  ], (s) => {
+    if (s.mat !== lastMat && PRE[s.mat]) {
+      const P = PRE[s.mat];
+      ui.set('einf', P.einf, true); ui.set('es', P.es, true); ui.set('Z', P.Z, true);
+      lastMat = s.mat;
+    }
+    // the static constant includes the electrons: ε_s ≥ ε_∞
+    if (ui.state.es < ui.state.einf) ui.set('es', ui.state.einf, true);
+    cur = compute(ui.state);
+    draw();
+  });
+  // slider labels: the symbols in italic, as in the text
+  const LAB = { einf: `electronic ${I('ε')}<sub>∞</sub>`, es: `static ${I('ε')}<sub>s</sub> (≥ ${I('ε')}<sub>∞</sub>)`, Z: `Born charge ${I('Z')}<sup>*</sup>` };
+  Object.keys(LAB).forEach(k => { const sp = elCtl.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  { const sel = elCtl.querySelector('select'); if (sel) sel.style.maxWidth = '100%'; }
+  cur = compute(ui.state);
+})();
+</script>

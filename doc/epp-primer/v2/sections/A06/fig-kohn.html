@@ -1,0 +1,266 @@
+  <figure class="viz" id="viz-a6-kohn">
+    <p class="viz-title">Phonons of the electron gas: sound and the Kohn anomaly <span class="tag">interactive</span></p>
+    <div class="viz-grid two"><div class="a6-kohn-disp"></div><div class="a6-kohn-vel"></div></div>
+    <div class="legend a6-kohn-leg"><span class="item" style="color:var(--c-phonon)"><span class="sw"></span><span style="color:var(--fg-2)">static Lindhard screening <a class="eqref" href="#a6-eq-lindhard">(A6.32)</a></span></span><span class="item" style="color:var(--c-phonon)"><span class="sw dash"></span><span style="color:var(--fg-2)">Thomas–Fermi screening</span></span><span class="item" style="color:var(--muted)"><span class="sw dot"></span><span style="color:var(--fg-2)">sound: $v_{\mathrm s}q$ in (a), $v_{\mathrm s}$ in (b)</span></span></div>
+    <div class="a6-kohn-ctrls"></div>
+    <div class="readout a6-kohn-ro" aria-live="polite"><span>$k_{\mathrm F}$<b class="a6-kohn-v-kF"></b></span><span>$E_{\mathrm F}$<b class="a6-kohn-v-EF"></b></span><span>$k_{\mathrm{TF}}/k_{\mathrm F}$<b class="a6-kohn-v-kTF"></b></span><span>$q_{\mathrm D}/k_{\mathrm F}$<b class="a6-kohn-v-qD"></b></span><span>volume per ion $\OV$<b class="a6-kohn-v-OV"></b></span></div>
+    <div class="readout a6-kohn-ro2" aria-live="polite"><span>$\hbar\omega^{\ion}_{\mathrm p}$<b class="a6-kohn-v-wp"></b></span><span>$v_{\mathrm s}$<b class="a6-kohn-v-vs"></b></span><span>$v_{\mathrm s}/v_{\mathrm F}=(Zm_{\mathrm e}/3M)^{1/2}$<b class="a6-kohn-v-ratio"></b></span><span>$\gamma_\bq/\omega_{\mathrm{LA}}\simeq(\pi/4)\,v_{\mathrm s}/v_{\mathrm F}$, <a class="eqref" href="#a6-eq-jdamp">(A6.34)</a><b class="a6-kohn-v-gam"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> At small $q$ the phonon is sound with the Bohm–Staver velocity <span class="nw">$v_{\mathrm s}=\omega^{\ion}_{\mathrm p}/k_{\mathrm{TF}}$,</span> <span class="nw">3.0 km/s</span> for sodium. With Lindhard screening the dispersion (a) looks smooth, but its slope (b) has a logarithmic spike at <span class="nw">$q=2k_{\mathrm F}$,</span> the Kohn anomaly. Thomas–Fermi screening, which ignores the sharp Fermi surface, has none.</p><div class="cap-more">
+      <p><strong>Marks.</strong> Amber: Lindhard (solid) and Thomas–Fermi (dashed) screening. Dotted grey: the sound line $v_{\mathrm s}q$ in (a) and its slope $v_{\mathrm s}$ in (b). Dashed grey: the bare-ion energy <span class="nw">$\hbar\omega^{\ion}_{\mathrm p}$,</span> and the radius <a class="sym" href="#gl-a2-qD">$q_{\mathrm D}$</a> of the Debye sphere, which has the volume of the Brillouin zone. Dashed blue: <span class="nw">$q=2k_{\mathrm F}$.</span> The spike diverges and is cut at the top of (b).</p>
+      <p><strong>Try.</strong> Switch from Na to Al: $Z=3$ and the denser gas give <span class="nw">$\hbar\omega^{\ion}_{\mathrm p}=124$ meV</span> and faster sound, and $q_{\mathrm D}/k_{\mathrm F}$ drops to 0.87, so $2k_{\mathrm F}$ lies further outside the Debye sphere. Raise <span class="nw">$M$:</span> sound slows as <span class="nw">$M^{-1/2}$,</span> while the anomaly stays at <span class="nw">$2k_{\mathrm F}$.</span> Lower <span class="nw">$r_{\mathrm s}$:</span> $k_{\mathrm F}$ and $E_{\mathrm F}$ grow, and the dispersion bends over at a smaller <span class="nw">$q/k_{\mathrm F}$.</span></p>
+      <p><strong>Model.</strong> Point ions of valence $Z$ and mass <span class="nw">$M$,</span> a uniform fluid, in a free-electron gas of density parameter <span class="nw">$r_{\mathrm s}$,</span> one ion per volume <span class="nw">$\OV=Z\,\tfrac{4\pi}{3}(r_{\mathrm s}a_0)^3$.</span> Panel (a) is <a class="eqref" href="#a6-eq-jdisp">(A6.30)</a> with <a class="eqref" href="#a6-eq-wp">(A6.28)</a> and the static Lindhard function <a class="eqref" href="#a6-eq-lindhard">(A6.32)</a> or <span class="nw">$1+k_{\mathrm{TF}}^2/q^2$;</span> panel (b) is <a class="eqref" href="#a6-eq-kohn">(A6.33)</a>; the readouts use <a class="eqref" href="#a6-eq-bohm">(A6.31)</a> and <a class="eqref" href="#a6-eq-jdamp">(A6.34)</a>. Free electrons give <span class="nw">$k_{\mathrm F}a_0=1.919/r_{\mathrm s}$,</span> <span class="nw">$k_{\mathrm{TF}}^2=4k_{\mathrm F}/\pi a_0$</span> and <span class="nw">$q_{\mathrm D}=(2/Z)^{1/3}k_{\mathrm F}$;</span> the presets use free-electron $r_{\mathrm s}$ (literature values, illustrative). <a class="figref" href="#viz-a6-fermi">Figure A6.3</a> draws the geometric reason.</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a6-kohn');
+  if (!fig || !window.EPP) return;
+  // outside Section A.6 (the isolated figure test) the links into the section have no target: keep their text
+  if (!fig.closest('#a-phonon-se')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+
+  // ---------- model: point ions of valence Z and mass M, a uniform fluid in a free-electron gas ----------
+  // Gaussian units. (ħω_p^ion)² = 4πZ²e²ħ²/(MΩ_V) (A6.28); ω_LA(q)² = (ω_p^ion)²/ε^e(q,0) (A6.30), with the static
+  // Lindhard function (A6.32) or the Thomas–Fermi form 1 + k_TF²/q²; the slope dω_LA/dq is (A6.33).
+  const A0 = EPP.const.a0_A, RY = EPP.const.Ry_eV;               // Bohr radius (Å), Rydberg (eV)
+  const KFA0 = Math.cbrt(9 * Math.PI / 4);                        // k_F a_0 r_s = 1.91916 for free electrons
+  const WP2 = 4 * Math.PI * 14.3996 * 4.1802e-3;                  // 4πe²ħ²/amu = 0.75642 eV² Å³ amu
+  const KMS = 1e-13 / EPP.const.hbar_eVs;                         // 1 eV Å/ħ = 151.927 km/s
+  const BIG = 1e9;                                                // stands for the divergence at exactly 2k_F
+  const PRE = { Na: { rs: 3.93, Z: '1', M: 22.99 }, K: { rs: 4.86, Z: '1', M: 39.10 }, Al: { rs: 2.07, Z: '3', M: 26.98 } };
+  const nb = '\u00a0';                                            // no-break space: a number stays with its unit
+  // bracket of (A6.32), x = q/2k_F, and its derivative; the series at small x avoids the cancellation in the logarithm
+  const Lb = (x) => (x < 1e-3 ? 1 - x * x / 3 - Math.pow(x, 4) / 15 : 0.5 + (1 - x * x) / (4 * x) * Math.log(Math.abs((1 + x) / (1 - x))));
+  const dLb = (x) => (x < 1e-3 ? -2 * x / 3 - 4 * Math.pow(x, 3) / 15 : 1 / (2 * x) - (1 + x * x) / (4 * x * x) * Math.log(Math.abs((1 + x) / (1 - x))));
+  // q/k_F grid, refined on both sides of 2k_F (down to 10⁻⁶) so that the logarithmic spike is resolved
+  const extra = [];
+  for (let k = 1.25; k <= 6.01; k += 0.25) extra.push(2 - Math.pow(10, -k), 2 + Math.pow(10, -k));
+  const XS = EPP.linspace(0.004, 3, 520).concat(extra).filter((s) => Math.abs(s - 2) > 1e-9).sort((a, b) => a - b);
+  const I2 = XS.findIndex((s) => s > 2);                          // where q = 2k_F is inserted for the Lindhard slope
+  const XSV = XS.slice(0, I2).concat([2], XS.slice(I2));
+
+  function compute(s) {
+    const rs = s.rs, Z = +s.Z, M = s.M;
+    const kFa0 = KFA0 / rs, kF = kFa0 / A0, eF = kFa0 * kFa0 * RY;          // Å⁻¹, eV
+    const kTF = Math.sqrt(4 * kFa0 / Math.PI) / A0;                         // k_TF² = 4k_F/πa_0, Å⁻¹
+    const OV = Z * 4 * Math.PI / 3 * Math.pow(rs * A0, 3);                  // Å³ per ion
+    const Wp = Math.sqrt(WP2 * Z * Z / (OV * M));                           // ħω_p^ion, eV
+    const vs = Wp / kTF, hvF = 2 * eF / kF;                                 // ħv_s, ħv_F in eV Å
+    const qD = Math.cbrt(2 / Z);                                            // q_D/k_F
+    const n = XS.length, k2 = kTF * kTF;
+    const wL = new Array(n), wT = new Array(n), wB = new Array(n), vL = new Array(n + 1), vT = new Array(n);
+    for (let i = 0; i < n; i++) {
+      const q = XS[i] * kF, x = XS[i] / 2, L = Lb(x);
+      const eps = 1 + k2 / (q * q) * L, deps = -2 * k2 * L / (q * q * q) + k2 / (q * q) * dLb(x) / (2 * kF);
+      const epsT = 1 + k2 / (q * q), depsT = -2 * k2 / (q * q * q);
+      wL[i] = 1000 * Wp / Math.sqrt(eps); wT[i] = 1000 * Wp / Math.sqrt(epsT); wB[i] = 1000 * vs * q;
+      // (A6.33): dω/dq = −(ω/2ε) dε/dq, in km/s
+      vL[i < I2 ? i : i + 1] = -0.5 * Wp * Math.pow(eps, -1.5) * deps * KMS;
+      vT[i] = -0.5 * Wp * Math.pow(epsT, -1.5) * depsT * KMS;
+    }
+    vL[I2] = BIG;
+    const at2 = 1000 * Wp / Math.sqrt(1 + k2 / (4 * kF * kF) * 0.5);        // ħω_LA(2k_F), where the bracket is 1/2
+    return { rs, Z, M, kF, eF, kTF, OV, Wm: 1000 * Wp, vsk: vs * KMS, sA: 1000 * vs * kF, ratio: vs / hvF, qD, wL, wT, wB, vL, vT, at2 };
+  }
+
+  // ---------- axes: fixed per metal, rescaled only when the curves leave the frame or shrink a lot ----------
+  const STEPS = [1, 1.2, 1.4, 1.6, 1.8, 2, 2.5, 3, 3.5, 4, 4.5, 5, 6, 7, 8, 9, 10];
+  const niceCeil = (v) => { const mag = Math.pow(10, Math.floor(Math.log10(v))), r = v / mag; return (STEPS.find(t => t >= r - 1e-9) || 10) * mag; };
+  let topA = 0, topB = 0;
+  function scale(c, force) {
+    const out = (v, top, f) => v > 0.86 * top || f * v < 0.45 * top;
+    if (force || out(c.Wm, topA, 1.3) || out(c.vsk, topB, 1.35)) { topA = niceCeil(1.3 * c.Wm); topB = niceCeil(1.35 * c.vsk); }
+  }
+
+  // ---------- canvas text in the primer's notation ----------
+  // Outside $…$ the text is upright; inside, letters are italic. _x, _{..}, ^x, ^{..} are sub- and superscripts; a
+  // superscript written right after a subscript (or the reverse) is stacked on it, as ω^{ion}_p is in the text.
+  // o.halo outlines the glyphs in the panel colour, for labels that cross a line.
+  const ITAL = /[A-Za-zα-ωħ]/;
+  function lex(s) {
+    const out = [], grp = [];
+    let math = false;
+    const add = (t, it, lvl, g) => {
+      const p = out[out.length - 1];
+      if (p && p.it === it && p.lvl === lvl && p.g === g) p.t += t; else out.push({ t, it, lvl, g });
+    };
+    const scan = (str, lvl, g) => {
+      for (let i = 0; i < str.length; i++) {
+        const ch = str[i];
+        if (ch === '$') { math = !math; continue; }
+        if (!lvl && (ch === '_' || ch === '^') && i + 1 < str.length) {
+          const key = ch === '_' ? 'sub' : 'sup', p = out[out.length - 1];
+          let G = p && p.g >= 0 && !grp[p.g][key] ? p.g : -1;
+          if (G < 0) { G = grp.length; grp.push({ sub: false, sup: false }); }
+          grp[G][key] = true;
+          let body;
+          if (str[i + 1] === '{') { const k = str.indexOf('}', i + 2); body = str.slice(i + 2, k < 0 ? str.length : k); i = k < 0 ? str.length : k; }
+          else { body = str[i + 1]; i += 1; }
+          scan(body, key === 'sub' ? -1 : 1, G);
+          continue;
+        }
+        add(ch, math && ITAL.test(ch), lvl, g);
+      }
+    };
+    scan(String(s), 0, -1);
+    return out;
+  }
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, fam = EPP.css('--font-ui'), rs = lex(s);
+    const font = (r) => `${r.it ? 'italic ' : ''}${r.lvl ? Math.round(size * 0.72) : size}px ${fam}`;
+    const ws = rs.map(r => { ctx.font = font(r); return ctx.measureText(r.t).width; });
+    const xs = new Array(rs.length);
+    let tot = 0;
+    for (let k = 0; k < rs.length;) {               // a script group: subscripts and superscripts start at the same x
+      if (rs[k].g < 0) { xs[k] = tot; tot += ws[k]; k++; continue; }
+      const g = rs[k].g; let xb = tot, xp = tot;
+      while (k < rs.length && rs[k].g === g) { if (rs[k].lvl < 0) { xs[k] = xb; xb += ws[k]; } else { xs[k] = xp; xp += ws[k]; } k++; }
+      tot = Math.max(xb, xp);
+    }
+    if (o.measure) return tot;
+    const x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    ctx.save();
+    ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    if (o.halo) { ctx.strokeStyle = EPP.alpha('surface', 0.9); ctx.lineWidth = 3.5; ctx.lineJoin = 'round'; }
+    ctx.fillStyle = o.color || EPP.color('fg');
+    rs.forEach((r, k) => {
+      ctx.font = font(r);
+      const dy = r.lvl === -1 ? size * 0.3 : (r.lvl === 1 ? -size * 0.42 : 0);
+      if (o.halo) ctx.strokeText(r.t, x0 + xs[k], y + dy);
+      ctx.fillText(r.t, x0 + xs[k], y + dy);
+    });
+    ctx.restore();
+    return tot;
+  }
+  const fit = (ctx, full, short, x0, xmax, size) => (x0 + txt(ctx, full, 0, 0, { size, measure: true }) <= xmax ? full : short);
+  function axes(pl, title, ylab) {           // panel title in the top margin, axis titles with italic symbols
+    const ctx = pl.ctx, w = pl.cv.w, h = pl.cv.h, m = pl.m, cFg = EPP.color('fg');
+    txt(ctx, title, 2, 14, { size: 11.5, color: EPP.color('fg2') });
+    txt(ctx, '$q/k$_F', m.l + (w - m.l - m.r) / 2, h - 7, { size: 12.5, color: cFg, align: 'center' });
+    ctx.save(); ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, ylab, 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+  }
+
+  // ---------- panels ----------
+  const elA = fig.querySelector('.a6-kohn-disp'), elB = fig.querySelector('.a6-kohn-vel');
+  const popt = { xlim: [0, 3], aspect: 0.74, minHeight: 230, maxHeight: 340, legend: false, margin: { l: 50, r: 12, t: 24, b: 40 }, xname: 'q/k_F', hoverX: (v) => EPP.fix(v, 3) };
+  const pA = new EPP.Plot(elA, Object.assign({}, popt, { ylim: [0, 40], hoverY: (v) => EPP.fix(v, 2) + nb + 'meV', ariaLabel: 'Panel a: phonon dispersion of the electron gas' }));
+  const pB = new EPP.Plot(elB, Object.assign({}, popt, { ylim: [0, 4.5], hoverY: (v) => (v > 1e6 ? '∞ (Kohn anomaly)' : EPP.fix(v, 2) + nb + 'km/s'), ariaLabel: 'Panel b: phonon group velocity of the electron gas' }));
+  let cur = null;
+
+  const baseA = pA.render.bind(pA);
+  pA.render = () => {
+    baseA();
+    const ctx = pA.ctx, w = pA.cv.w, h = pA.cv.h, m = pA.m;
+    if (!w || !h || !cur) return;
+    axes(pA, '(a) dispersion $ħω$_{LA}($q$)', '$ħω$_{LA} (meV)');
+    const cM = EPP.textColor('muted'), cE = EPP.textColor('electron');
+    // the bare-ion line: label above it at the left, where the curves are still low; the short form when the full one
+    // would run into the q_D line or the sound line, which crosses the bare-ion line at q = k_TF
+    const xA = Math.min(pA.X(cur.qD), pA.X(cur.kTF / cur.kF)) - 5;
+    txt(ctx, fit(ctx, 'bare ions, $ħω$_p^{ion}', '$ħω$_p^{ion}', m.l + 6, xA, 11.5), m.l + 6, pA.Y(cur.Wm) - 6, { size: 11.5, color: cM, halo: true });
+    // the vertical lines are labelled at the bottom, which the curves reach only at small q
+    txt(ctx, '$q$_D', pA.X(cur.qD) + 5, h - m.b - 8, { size: 12, color: cM, halo: true });
+    txt(ctx, '2$k$_F', pA.X(2) + 5, h - m.b - 8, { size: 12, color: cE, halo: true });
+    // the sound line (slope sA in meV per unit of q/k_F), labelled on its upper-left side, low in the frame
+    const xl = Math.min(0.75, 0.42 * topA / cur.sA);
+    txt(ctx, '$v$_s$q$', pA.X(xl) - 8, pA.Y(cur.sA * xl) - 7, { size: 12, color: cM, align: 'right', halo: true });
+  };
+  const baseB = pB.render.bind(pB);
+  pB.render = () => {
+    baseB();
+    const ctx = pB.ctx, w = pB.cv.w, h = pB.cv.h, m = pB.m;
+    if (!w || !h || !cur) return;
+    axes(pB, '(b) group velocity d$ω$_{LA}/d$q$', 'd$ω$_{LA}/d$q$ (km/s)');
+    const cM = EPP.textColor('muted'), cE = EPP.textColor('electron');
+    txt(ctx, fit(ctx, 'Bohm–Staver $v$_s', '$v$_s', m.l + 6, pB.X(cur.qD) - 5, 11.5), m.l + 6, pB.Y(cur.vsk) - 6, { size: 11.5, color: cM, halo: true });
+    txt(ctx, '$q$_D', pB.X(cur.qD) + 5, h - m.b - 8, { size: 12, color: cM, halo: true });
+    // right of the needle at the top, where the curves never reach (near the bottom they cross 2k_F); on a very narrow
+    // panel, left of it
+    const right = pB.X(2) + 5 + txt(ctx, 'Kohn anomaly', 0, 0, { size: 11.5, measure: true }) <= w - 2;
+    const xk = right ? pB.X(2) + 5 : pB.X(2) - 5, ak = right ? 'left' : 'right';
+    txt(ctx, 'Kohn anomaly', xk, m.t + 15, { size: 11.5, color: cE, halo: true, align: ak });
+    txt(ctx, 'at 2$k$_F', xk, m.t + 31, { size: 11.5, color: cE, halo: true, align: ak });
+  };
+
+  // ---------- readouts ----------
+  const RO = {};
+  ['kF', 'EF', 'kTF', 'qD', 'OV', 'wp', 'vs', 'ratio', 'gam'].forEach(k => { RO[k] = fig.querySelector('.a6-kohn-v-' + k); });
+  // m × 10ⁿ with a superscript exponent
+  const SUP = { '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹', '-': '⁻' };
+  const pow10 = (v, d) => {
+    let e = Math.floor(Math.log10(v) + 1e-9), mm = v / Math.pow(10, e);
+    if (+mm.toFixed(d) >= 10) { e += 1; mm /= 10; }
+    return mm.toFixed(d) + '×10' + String(e).split('').map(c => SUP[c] || c).join('');
+  };
+
+  function draw() {
+    if (!cur) return;
+    const c = cur;
+    const v2k = { type: 'vline', at: 2, color: 'electron', width: 1.2 }, vqD = { type: 'vline', at: c.qD, color: 'muted', width: 1.2 };
+    pA.draw([
+      { type: 'hline', at: c.Wm, color: 'muted', width: 1.2 },
+      vqD, v2k,
+      { type: 'line', x: XS, y: c.wB, color: 'muted', dash: [2, 3], width: 1.6, hover: false },
+      { type: 'line', x: XS, y: c.wT, color: 'phonon', dash: [6, 4], width: 2, label: 'Thomas–Fermi' },
+      { type: 'line', x: XS, y: c.wL, color: 'phonon', width: 2, label: 'Lindhard' }
+    ], { ylim: [0, topA] });
+    pB.draw([
+      { type: 'hline', at: c.vsk, color: 'muted', dash: [2, 3], width: 1.6 },
+      vqD, v2k,
+      { type: 'line', x: XS, y: c.vT, color: 'phonon', dash: [6, 4], width: 2, label: 'Thomas–Fermi' },
+      // the needle reaches the point at exactly 2k_F, where the slope is infinite: no pen lift there
+      { type: 'line', x: XSV, y: c.vL, color: 'phonon', width: 2, label: 'Lindhard', breakJump: Infinity }
+    ], { ylim: [0, topB] });
+    RO.kF.textContent = EPP.fix(c.kF, 3) + nb + 'Å⁻¹';
+    RO.EF.textContent = EPP.fix(c.eF, 2) + nb + 'eV';
+    RO.kTF.textContent = EPP.fix(c.kTF / c.kF, 2);
+    RO.qD.textContent = EPP.fix(c.qD, 2);
+    RO.OV.textContent = EPP.fix(c.OV, 1) + nb + 'Å³';
+    RO.wp.textContent = EPP.fix(c.Wm, 1) + nb + 'meV';
+    RO.vs.textContent = EPP.fix(c.vsk, 2) + nb + 'km/s';
+    RO.ratio.textContent = pow10(c.ratio, 2);
+    RO.gam.textContent = pow10(Math.PI / 4 * c.ratio, 1);
+    // what the panels show, for screen readers
+    const f1 = (v) => EPP.fix(v, 1), f2 = (v) => EPP.fix(v, 2);
+    pA.cv.canvas.setAttribute('aria-label', `Panel a: phonon dispersion of the electron gas, energy in meV against q/k_F from 0 to 3, for r_s = ${f2(c.rs)}, Z = ${c.Z}, M = ${f2(c.M)} amu. ` +
+      `Solid: static Lindhard screening; dashed: Thomas-Fermi screening; dotted: the sound line v_s q. Both curves rise linearly from zero and level off below the bare-ion energy ${f1(c.Wm)} meV, dashed. ` +
+      `At q = 2k_F the Lindhard curve is at ${f1(c.at2)} meV and shows only a slight kink. Dashed vertical lines mark q_D = ${f2(c.qD)} k_F and 2k_F.`);
+    pB.cv.canvas.setAttribute('aria-label', `Panel b: group velocity in km/s against q/k_F. Both curves start at the Bohm-Staver velocity ${f2(c.vsk)} km/s, dotted, and decrease. ` +
+      `The Lindhard curve has a logarithmic spike at q = 2k_F, the Kohn anomaly, cut at the top of the panel; the Thomas-Fermi curve is smooth. Dashed vertical lines mark q_D and 2k_F.`);
+  }
+
+  // ---------- controls (below the plots) ----------
+  let lastPre = 'Na';
+  function onChange(s) {
+    let force = false;
+    if (s.preset !== lastPre && PRE[s.preset]) {           // a metal was chosen: its values, and axes fitted to it
+      const P = PRE[s.preset];
+      ui.set('rs', P.rs, true); ui.set('Z', P.Z, true); ui.set('M', P.M, true);
+      force = true;
+    } else if (PRE[s.preset]) {                           // a slider left the values of the metal
+      const P = PRE[s.preset];
+      if (Math.abs(s.rs - P.rs) > 1e-6 || s.Z !== P.Z || Math.abs(s.M - P.M) > 1e-6 * P.M) ui.set('preset', 'custom', true);
+    }
+    lastPre = ui.state.preset;
+    cur = compute(ui.state); scale(cur, force); draw();
+  }
+  const elCtl = fig.querySelector('.a6-kohn-ctrls');
+  const ui = EPP.controls(elCtl, [
+    { key: 'preset', type: 'select', label: 'metal', options: [['Na', 'sodium, Na'], ['K', 'potassium, K'], ['Al', 'aluminium, Al'], ['custom', 'custom']], value: 'Na' },
+    { key: 'rs', type: 'range', label: 'density parameter r_s', min: 1.5, max: 6, step: 0.01, value: 3.93, fmt: (v) => EPP.fix(v, 2) },
+    { key: 'Z', type: 'seg', label: 'ion valence Z', options: [['1', '1'], ['2', '2'], ['3', '3']], value: '1' },
+    { key: 'M', type: 'range', label: 'ion mass M', min: 5, max: 210, value: 22.99, log: true, step: 'any', fmt: (v) => EPP.fix(v, v < 100 ? 2 : 1) + nb + 'amu' }
+  ], onChange);
+  // control labels: symbols italic, labels upright, as in the text
+  const it = (t) => `<i style="font-family:var(--font-text)">${t}</i>`, up = (t) => `<span style="font-family:var(--font-text)">${t}</span>`;
+  const LAB = { rs: `density parameter ${it('r')}<sub>${up('s')}</sub>`, M: `ion mass ${it('M')}` };
+  Object.keys(LAB).forEach(k => { const sp = elCtl.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  const zb = document.getElementById(`${fig.id}-Z-1`), zl = zb && zb.closest('.ctrl').querySelector('.lab > span');
+  if (zl) zl.innerHTML = `ion valence ${it('Z')}`;
+  cur = compute(ui.state); scale(cur, true); draw();
+})();
+</script>

@@ -1,0 +1,277 @@
+  <figure class="viz" id="viz-b8-bubble">
+    <p class="viz-title">One bubble between a screened and a bare photon line <span class="tag">interactive</span></p>
+    <p class="b8-bubble-pt" style="font-family:var(--font-ui);font-size:0.85rem;color:var(--fg-2);margin:0 0 6px">(a) the electron-induced self-energy $\Delta\Pi^{\ph}_{\nu\nu'}$: vertex, bubble, vertex</p>
+    <div class="b8-bubble-top"></div>
+    <div class="viz-grid two b8-bubble-grid" style="margin-top:16px">
+      <div class="b8-bubble-wb">
+        <p class="b8-bubble-pt" style="font-family:var(--font-ui);font-size:0.85rem;color:var(--fg-2);margin:0 0 6px">(b) how often each chain of $k$ bubbles is generated</p>
+        <div class="b8-bubble-chains"></div>
+        <p class="b8-bubble-note" style="font-family:var(--font-ui);font-size:0.82rem;line-height:1.4;color:var(--muted);margin:6px 0 0">Ring: a bubble that can be the bubble of (a), with the rest of the chain supplied by the two photon lines. The counter is the number of rings.</p>
+      </div>
+      <div class="b8-bubble-wc">
+        <p class="b8-bubble-pt" style="font-family:var(--font-ui);font-size:0.85rem;color:var(--fg-2);margin:0 0 6px">(c) Part A: bare vertex, Kohn–Sham bubble, screened vertex</p>
+        <div class="b8-bubble-parta"></div>
+        <p class="b8-bubble-note" style="font-family:var(--font-ui);font-size:0.82rem;line-height:1.4;color:var(--muted);margin:6px 0 0">Part A puts the screened end on the right; the order does not matter.</p>
+      </div>
+    </div>
+    <div class="b8-bubble-ctrls"></div>
+    <div class="readout b8-bubble-ro" aria-live="polite"><span>chains of 1, 2, 3 bubbles counted<b class="b8-bubble-v">1, 1, 1 times: correct</b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> The electrons enter the self-energy as a single bubble between a dressed and a bare photon line. Each line, with the two vertices at its ends, is one electron–phonon vertex: screened on the left, bare on the right.</p><div class="cap-more">
+      <p><strong>Marks.</strong> Amber zigzag: phonon. Thin rose wavy line: free photon line $D^0$; heavy: dressed line $D^{\rme}$. Teal dots: ionic vertices $J_{\alpha\nu}$; blue dots: electronic vertices $J_\gamma^{\,n\bk,m\bk+\bq}$. The loop is an electron–hole pair with the pair factor $\mathcal B$ inside; its arrows follow the electronic vertices: the right one takes an electron from $n\bk$ to $m\bk+\bq$, the left one takes it back. In the wrong pairings the swapped half says which vertex it replaces. In (b) a ring marks each bubble that can be the bubble of (a), and the counter gives the number of rings.</p>
+      <p><strong>Try.</strong> Choose “two screened”: every bubble of a chain can now be the middle one, and the counters grow as 1, 2, 3. Choose “two bare”: the chains of two and three bubbles lose their rings; they are never generated. Compare the brackets of (a) with the dot and the disk of (c).</p>
+      <p><strong>Model.</strong> Panel (a) is <a class="eqref" href="#b8-eq-open">(B8.3)</a> with the bubble split as in <a class="eqref" href="#b8-eq-factor">(B8.4)</a>; the brackets are the vertices <a class="eqref" href="#b8-eq-vertex">(B8.6)</a>, which give <a class="eqref" href="#b8-eq-vform">(B8.7)</a>. The counters are the coefficients of $x^k$ in <a class="eqref" href="#b8-eq-count">(B8.8)</a>, with $x=D^0\Pi^{\rme}$ and $D^{\rme}=D^0/(1-x)$. Panel (c) is the nonadiabatic phonon self-energy of Part A, <a class="eqref" href="#a6-eq-pina">(A6.17)</a>: the bare vertex of $\Delta_{\bq\nu}V^{\mathrm{en}}$ for phonon $\nu$, a Kohn–Sham bubble and the screened vertex $g$ of $\Delta_{\bq\nu'}V^{\mathrm{KS}}$ for phonon $\nu'$.</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b8-bubble');
+  if (!fig || !window.EPP) return;
+  const NS = 'http://www.w3.org/2000/svg';
+  const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
+
+  // ---------- physics: the count of (B8.8) ----------
+  // Treat every factor as a number and write x = D^0 Π^e. A dressed line D^e = D^0 (1 + x + x^2 + ...) can supply any
+  // number of bubbles, a bare line D^0 none. One bubble between the two lines gives x · L(x) · R(x); the coefficient of
+  // x^k is how often the pairing generates the chain of k bubbles.
+  const MODES = { bs: [true, false], ss: [true, true], bb: [false, false] }; // [left line dressed, right line dressed]
+  const KMAX = 3;
+  const series = (dressed) => Array.from({ length: KMAX }, (_, i) => (i === 0 || dressed ? 1 : 0)); // coefficients of x^0..x^2
+  function counts(L, R) { // coefficients of x^1..x^KMAX in x L(x) R(x)
+    const c = new Array(KMAX).fill(0);
+    for (let i = 0; i < KMAX; i++) for (let j = 0; i + j < KMAX; j++) c[i + j] += L[i] * R[j];
+    return c;
+  }
+  // bubble j (1..k) of a chain of k can be the central one if the left line supplies the j-1 bubbles before it
+  // and the right line the k-j after it; the number of such bubbles is the coefficient above
+  const central = (L, R, k, j) => L[j - 1] === 1 && R[k - j] === 1;
+
+  // ---------- SVG text in the primer's notation ----------
+  // markup: _x, _{..}, ^x, ^{..} scripts (a script right after a script of the other kind is stacked over or under it);
+  // [..] upright label (dyn, e, en, KS); |..| upright words in the UI font; !c bold upright vector;
+  // Latin and lower-case Greek letters italic, everything else upright
+  const ITAL = /[A-Za-zα-ω]/;
+  const mctx = document.createElement('canvas').getContext('2d');
+  function lex(s) {
+    const out = []; let gid = 0;
+    const scan = (str, lvl, grp) => {
+      let i = 0;
+      while (i < str.length) {
+        const ch = str[i];
+        if ((ch === '_' || ch === '^') && lvl === 0 && i + 1 < str.length) {
+          let inner; const j = i + 1;
+          if (str[j] === '{') { let d = 1, k = j + 1; while (k < str.length && d) { if (str[k] === '{') d++; else if (str[k] === '}') d--; k++; } inner = str.slice(j + 1, k - 1); i = k; }
+          else { inner = str[j]; i = j + 1; }
+          scan(inner, ch === '_' ? -1 : 1, ++gid);
+          continue;
+        }
+        if (ch === '[' || ch === '|') {
+          const k = str.indexOf(ch === '[' ? ']' : '|', i + 1);
+          out.push({ t: str.slice(i + 1, k), it: false, b: false, ui: ch === '|', lvl, grp }); i = k + 1; continue;
+        }
+        if (ch === '!') { out.push({ t: str[i + 1], it: false, b: true, ui: false, lvl, grp }); i += 2; continue; }
+        out.push({ t: ch, it: ITAL.test(ch), b: false, ui: false, lvl, grp }); i++;
+      }
+    };
+    scan(s, 0, 0);
+    const runs = [];
+    for (const p of out) {
+      const q = runs[runs.length - 1];
+      if (q && q.it === p.it && q.b === p.b && q.ui === p.ui && q.lvl === p.lvl && q.grp === p.grp) q.t += p.t; else runs.push(Object.assign({}, p));
+    }
+    return runs;
+  }
+  // label(parent, markup, x, y, {size, anchor, color, uiColor, weight})
+  function label(parent, s, x, y, o = {}) {
+    const size = o.size || 15, fam = { tx: EPP.css('--font-text'), ui: EPP.css('--font-ui') };
+    const runs = lex(s);
+    runs.forEach(r => {
+      r.z = (r.lvl ? 0.72 * size : size) * (r.ui ? 0.84 : 1);
+      mctx.font = `${r.it ? 'italic ' : ''}${r.b || (r.ui && o.weight) ? (r.b ? 700 : o.weight) + ' ' : ''}${r.z.toFixed(2)}px ${r.ui ? fam.ui : fam.tx}`;
+      r.w = mctx.measureText(r.t).width;
+    });
+    const gw = {};
+    runs.forEach(r => { if (r.lvl) gw[r.grp] = (gw[r.grp] || 0) + r.w; });
+    const dxs = runs.map(() => 0);
+    for (let i = 1; i < runs.length; i++) {
+      const r = runs[i], p = runs[i - 1];
+      if (r.lvl && p.lvl && r.lvl !== p.lvl && r.grp !== p.grp) {
+        dxs[i] -= gw[p.grp];
+        let j = i; while (j + 1 < runs.length && runs[j + 1].grp === r.grp) j++;
+        if (gw[p.grp] > gw[r.grp] && j + 1 < runs.length) dxs[j + 1] += gw[p.grp] - gw[r.grp];
+      }
+    }
+    const text = mk('text', { x, y, 'text-anchor': o.anchor || 'middle', fill: o.color || EPP.color('fg'), 'font-size': size }, parent);
+    if (o.weight) text.setAttribute('font-weight', o.weight);
+    let cur = 0;
+    runs.forEach((r, i) => {
+      const ts = mk('tspan', { 'font-family': r.ui ? fam.ui : fam.tx, 'font-size': r.z.toFixed(2), 'font-style': r.it ? 'italic' : 'normal' }, text);
+      if (r.b) ts.setAttribute('font-weight', '700'); else if (!r.ui) ts.setAttribute('font-weight', '400');
+      if (r.ui && o.uiColor) ts.setAttribute('fill', o.uiColor);
+      const target = r.lvl === -1 ? 0.28 * size : (r.lvl === 1 ? -0.38 * size : 0);
+      if (Math.abs(target - cur) > 1e-6) ts.setAttribute('dy', (target - cur).toFixed(2));
+      cur = target;
+      if (dxs[i]) ts.setAttribute('dx', dxs[i].toFixed(2));
+      ts.textContent = r.t;
+    });
+    return text;
+  }
+  // our labels sit in one group on top of the diagram; EPP.fd repaints the diagram (and drops the group) on theme change
+  const layer = (svg) => { svg.querySelectorAll('g.b8-bubble-lab').forEach(n => n.remove()); return mk('g', { class: 'b8-bubble-lab' }, svg); };
+  const bracket = (g, x1, x2, y, col) => mk('path', { d: `M${x1} ${y - 5}L${x1} ${y}L${x2} ${y}L${x2} ${y - 5}M${(x1 + x2) / 2} ${y}L${(x1 + x2) / 2} ${y + 4}`, fill: 'none', stroke: col, 'stroke-width': 1.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, g);
+  const sizeSvg = (svg, maxW) => { svg.style.cssText = `display:block;width:100%;max-width:${maxW}px;height:auto;margin:0 auto;overflow:visible`; };
+  const C = () => ({ fg: EPP.color('fg'), fg2: EPP.color('fg2'), mu: EPP.color('muted'), c4: EPP.color('c4-t'), el: EPP.color('electron-t'), ph: EPP.color('photon-t'), pn: EPP.color('phonon-t') });
+
+  // ---------- (a) the main diagram: J* D J | bubble | J* D J ----------
+  const YA = 62, WA = 360, HA = 146;
+  const XA = { phL: 6, ionL: 30, elL: 126, elR: 234, ionR: 330, phR: 354 };
+  function itemsA(mode) {
+    const [dl, dr] = MODES[mode];
+    return [
+      { t: 'phonon', a: [XA.phL, YA], b: [XA.ionL, YA], wl: 6 },
+      { t: dl ? 'photon2' : 'photon', a: [XA.ionL, YA], b: [XA.elL, YA] },
+      // electron-hole bubble. The left vertex J^{nk,mk+q} multiplies c†_{nk} c_{mk+q} and the right one, its conjugate,
+      // c†_{mk+q} c_{nk}: the line n k (upper) runs from the left vertex to the right one, m k+q (lower) back
+      { t: 'fermion', a: [XA.elL, YA], b: [XA.elR, YA], bend: 0.32 },
+      { t: 'fermion', a: [XA.elR, YA], b: [XA.elL, YA], bend: 0.32 },
+      { t: dr ? 'photon2' : 'photon', a: [XA.elR, YA], b: [XA.ionR, YA] },
+      { t: 'phonon', a: [XA.ionR, YA], b: [XA.phR, YA], wl: 6 },
+      { t: 'vertex', at: [XA.ionL, YA], r: 4.5, color: 'c4' },
+      { t: 'vertex', at: [XA.elL, YA], r: 4.5, color: 'electron' },
+      { t: 'vertex', at: [XA.elR, YA], r: 4.5, color: 'electron' },
+      { t: 'vertex', at: [XA.ionR, YA], r: 4.5, color: 'c4' }
+    ];
+  }
+  const WORDS = { bs: 'one bare and one screened photon line', ss: 'two screened photon lines', bb: 'two bare photon lines' };
+  const ariaA = (mode) => {
+    const [dl, dr] = MODES[mode];
+    return `Panel a, ${WORDS[mode]}: phonon nu, ionic vertex J star, photon line ${dl ? 'dressed by the electrons (heavy)' : 'free (thin)'}, electronic vertex, ` +
+      `electron-hole bubble with lines n k and m k+q and pair factor B, conjugated electronic vertex, photon line ${dr ? 'dressed (heavy)' : 'free (thin)'}, ionic vertex J, phonon nu prime. ` +
+      `Left bracket: ${dl ? 'screened vertex g dyn' : 'bare vertex in place of g dyn'}; right bracket: ${dr ? 'screened vertex in place of g dyn 0' : 'bare vertex g dyn 0'}.`;
+  };
+  function decoA(svg, mode) {
+    const g = layer(svg), c = C(), [dl, dr] = MODES[mode];
+    // dots are labelled above the line, lines below it
+    label(g, 'J^*_{αν}', XA.ionL, 43, { color: c.c4 });
+    label(g, 'J_γ^{n!k,m!k+!q}', XA.elL - 5, 43, { color: c.el, anchor: 'end' });
+    label(g, '(J_δ^{n!k,m!k+!q})^*', XA.elR + 5, 43, { color: c.el, anchor: 'start' });
+    label(g, 'J_{βν′}', XA.ionR, 43, { color: c.c4 });
+    label(g, 'ν', (XA.phL + XA.ionL) / 2, 84, { color: c.pn });
+    label(g, dl ? 'D^{[e]}_{αγ}' : 'D^0_{αγ}', (XA.ionL + XA.elL) / 2, 84, { color: c.ph });
+    label(g, dr ? 'D^{[e]}_{δβ}' : 'D^0_{δβ}', (XA.elR + XA.ionR) / 2, 84, { color: c.ph });
+    label(g, 'ν′', (XA.ionR + XA.phR) / 2, 84, { color: c.pn });
+    const xm = (XA.elL + XA.elR) / 2;
+    label(g, 'n!k', xm, 19, { color: c.el });
+    label(g, 'm!k+!q', xm, 115, { color: c.el });
+    label(g, 'ℬ_{n!k,m!k+!q}', xm, 67, { color: c.el });
+    // each photon line with the two vertices at its ends is one electron-phonon vertex
+    const xl = (XA.ionL + XA.elL) / 2, xr = (XA.elR + XA.ionR) / 2;
+    bracket(g, XA.ionL - 6, XA.elL + 6, 100, c.mu);
+    bracket(g, XA.elR - 6, XA.ionR + 6, 100, c.mu);
+    label(g, dl ? '|screened|' : '|bare|', xl, 118, { color: dl ? c.ph : c.fg2, weight: 600 });
+    label(g, dr ? '|screened|' : '|bare|', xr, 118, { color: dr ? c.ph : c.fg2, weight: 600 });
+    label(g, dl ? 'g^{[dyn]}_{mnν}' : '|in place of |g^{[dyn]}_{mnν}', xl, 136, { color: c.fg, uiColor: c.mu });
+    label(g, dr ? '|in place of |g^{[dyn],0}_{mnν′}' : 'g^{[dyn],0}_{mnν′}', xr, 136, { color: c.fg, uiColor: c.mu });
+  }
+
+  // ---------- (b) chains of k bare lines and bubbles between the two ionic vertices ----------
+  const WB = 340, HB = 122, X0 = 50, SEG = 30, BUB = 24;
+  const rowY = (k) => 24 + 38 * (k - 1);
+  const bubX = (j) => X0 + j * SEG + (j - 0.5) * BUB;
+  function itemsB() {
+    const it = [], dots = [];
+    for (let k = 1; k <= KMAX; k++) {
+      const y = rowY(k); let x = X0;
+      for (let j = 0; j < k; j++) {
+        const xa = x + SEG, xb = xa + BUB;
+        it.push({ t: 'photon', a: [x, y], b: [xa, y], amp: 2.6, wl: 7, width: 1.5 });
+        it.push({ t: 'fermion', a: [xb, y], b: [xa, y], bend: -0.36, arrow: false, width: 1.5 });
+        it.push({ t: 'fermion', a: [xa, y], b: [xb, y], bend: -0.36, arrow: false, width: 1.5 });
+        dots.push({ t: 'vertex', at: [xa, y], r: 2.3, color: 'electron' }, { t: 'vertex', at: [xb, y], r: 2.3, color: 'electron' });
+        x = xb;
+      }
+      it.push({ t: 'photon', a: [x, y], b: [x + SEG, y], amp: 2.6, wl: 7, width: 1.5 });
+      dots.push({ t: 'vertex', at: [X0, y], r: 3.4, color: 'c4' }, { t: 'vertex', at: [x + SEG, y], r: 3.4, color: 'c4' });
+    }
+    return it.concat(dots);
+  }
+  function decoB(svg, mode) {
+    const g = layer(svg), c = C(), [dl, dr] = MODES[mode];
+    const L = series(dl), R = series(dr), n = counts(L, R);
+    for (let k = 1; k <= KMAX; k++) {
+      const y = rowY(k);
+      label(g, `k = ${k}`, 4, y + 5, { size: 14, anchor: 'start', color: c.fg2 });
+      for (let j = 1; j <= k; j++) if (central(L, R, k, j)) mk('circle', { cx: bubX(j), cy: y, r: 15, fill: 'none', stroke: c.fg2, 'stroke-width': 1.4, 'stroke-opacity': 0.85 }, g);
+      // dotted leader from the end of the chain to its counter
+      const xe = X0 + k * (SEG + BUB) + SEG;
+      mk('path', { d: `M${xe + 10} ${y}L${WB - 40} ${y}`, fill: 'none', stroke: c.mu, 'stroke-width': 1.2, 'stroke-dasharray': '1.5 4.5', 'stroke-linecap': 'round' }, g);
+      const v = n[k - 1];
+      label(g, `|×${v}|`, WB - 6, y + 6, { size: 21, anchor: 'end', weight: 700, color: v === 1 ? c.mu : (v > 1 ? c.ph : c.c4) });
+    }
+    svg.setAttribute('aria-label', `Panel b: chains of 1, 2 and 3 bubbles joined by free photon lines between two ionic vertices. With ${WORDS[mode]} they are generated ${n.join(', ')} times; ` +
+      `each count is the number of ringed bubbles, the bubbles that can be the one drawn in panel a.`);
+  }
+
+  // ---------- (c) Part A: bare vertex, Kohn-Sham bubble, screened vertex ----------
+  const WC = 340, HC = 124, YC = 64;
+  // (A6.17): [g^b_{mnν}]* on the left takes m k+q back to n k, g_{mnν'} on the right takes n k to m k+q
+  const itemsC = () => [
+    { t: 'phonon', a: [8, YC], b: [78, YC] },
+    { t: 'fermion', a: [78, YC], b: [218, YC], bend: 0.25 },
+    { t: 'fermion', a: [218, YC], b: [78, YC], bend: 0.25 },
+    { t: 'phonon', a: [236, YC], b: [332, YC] },
+    { t: 'vertex', at: [78, YC], r: 3.6 },
+    { t: 'blob', at: [226, YC], r: 10, color: 'muted' }
+  ];
+  function decoC(svg) {
+    const g = layer(svg), c = C();
+    label(g, '!qν', 43, YC + 22, { color: c.pn });
+    label(g, '!qν′', 284, YC + 22, { color: c.pn });
+    label(g, 'n!k', 148, 21, { color: c.el });
+    label(g, 'm!k+!q', 148, 116, { color: c.el });
+    label(g, '|Kohn–Sham|', 148, YC + 4, { size: 13, color: c.mu });
+    label(g, '|bare|', 72, YC - 13, { color: c.fg2, weight: 600, anchor: 'end' });
+    label(g, 'Δ_{!qν}V^{[en]}', 72, YC - 30, { size: 13, color: c.mu, anchor: 'end' });
+    label(g, '|screened |g', 240, YC - 13, { color: c.fg2, weight: 600, anchor: 'start' });
+    label(g, 'Δ_{!qν′}V^{[KS]}', 240, YC - 30, { size: 13, color: c.mu, anchor: 'start' });
+  }
+
+  // ---------- build ----------
+  const boxA = fig.querySelector('.b8-bubble-top'), boxB = fig.querySelector('.b8-bubble-chains'), boxC = fig.querySelector('.b8-bubble-parta');
+  const tops = {};
+  for (const m of Object.keys(MODES)) {
+    const svg = EPP.fd.draw(boxA, { w: WA, h: HA, label: ariaA(m), items: itemsA(m) });
+    sizeSvg(svg, 450);
+    svg.style.display = m === 'bs' ? 'block' : 'none';
+    decoA(svg, m);
+    tops[m] = svg;
+  }
+  const svgB = EPP.fd.draw(boxB, { w: WB, h: HB, label: 'Panel b', items: itemsB() });
+  sizeSvg(svgB, 390);
+  const svgC = EPP.fd.draw(boxC, { w: WC, h: HC, label: 'Panel c, Part A: phonon q nu, bare vertex (dot) of the bare potential change, Kohn-Sham bubble with lines n k and m k+q, screened vertex g (grey disk), phonon q nu prime', items: itemsC() });
+  sizeSvg(svgC, 390);
+  decoC(svgC);
+  let mode = 'bs';
+  decoB(svgB, mode);
+  // registered after the diagrams, so it runs after their repaint
+  EPP.onTheme(() => { for (const m in tops) decoA(tops[m], m); decoB(svgB, mode); decoC(svgC); });
+
+  const grid = fig.querySelector('.b8-bubble-grid'), wrapC = fig.querySelector('.b8-bubble-wc'), roV = fig.querySelector('.b8-bubble-v');
+  const VERDICT = (n) => (n.every(v => v === 1) ? 'correct' : (n.some(v => v > 1) ? 'double counting' : 'screening missing'));
+  function render(s) {
+    mode = MODES[s.mode] ? s.mode : 'bs';
+    for (const m in tops) tops[m].style.display = m === mode ? 'block' : 'none';
+    decoB(svgB, mode);
+    const [dl, dr] = MODES[mode], n = counts(series(dl), series(dr));
+    roV.textContent = `${n.join(', ')} times: ${VERDICT(n)}`;
+    wrapC.style.display = s.partA ? '' : 'none';
+    grid.style.gridTemplateColumns = s.partA ? '' : 'minmax(0, 1fr)';
+  }
+  EPP.controls(fig.querySelector('.b8-bubble-ctrls'), [
+    { key: 'mode', type: 'seg', label: 'photon lines', options: [['bs', 'one bare + one screened'], ['ss', 'two screened'], ['bb', 'two bare']], value: 'bs' },
+    { key: 'partA', type: 'toggle', label: 'show Part A', value: true }
+  ], render);
+
+  // previewed outside Section B.8, the equation links have no target: keep their text, drop the link
+  if (!fig.closest('#b-frohlich')) fig.querySelectorAll('a.eqref').forEach(a => { if (!document.getElementById((a.getAttribute('href') || '').slice(1))) { const s = document.createElement('span'); s.textContent = a.textContent; a.replaceWith(s); } });
+})();
+</script>

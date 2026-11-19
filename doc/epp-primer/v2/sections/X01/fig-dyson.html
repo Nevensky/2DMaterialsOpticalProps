@@ -1,0 +1,207 @@
+  <figure class="viz" id="viz-x1-dyson">
+    <p class="viz-title">Two Dyson chains, one structure <span class="tag">interactive</span></p>
+    <div class="viz-grid two x1-dyson-heads" aria-hidden="true"><p class="x1-dyson-colh">Part A · Coulomb line</p><p class="x1-dyson-colh">Part B · photon line</p></div>
+    <div class="x1-dyson-row" role="group" aria-labelledby="viz-x1-dyson-h1">
+      <p class="x1-dyson-rowh" id="viz-x1-dyson-h1">1 · The bare line</p>
+      <div class="viz-grid two">
+        <div class="x1-dyson-cell"><p class="x1-dyson-src"><span class="x1-dyson-tag">Part A · </span>instantaneous Coulomb line, <a class="eqref" href="#x1-eq-v">(X1.1)</a></p><div class="fd x1-dyson-dg" data-d="A1"><span class="x1-dyson-inst">$v(\br-\br')\,\delta(t-t')$</span></div></div>
+        <div class="x1-dyson-cell"><p class="x1-dyson-src"><span class="x1-dyson-tag">Part B · </span>free field, both polarizations, <a class="eqref" href="#x1-eq-D0">(X1.5)</a></p><div class="fd x1-dyson-dg" data-d="B1"></div></div>
+      </div>
+    </div>
+    <div class="x1-dyson-row" role="group" aria-labelledby="viz-x1-dyson-h2">
+      <p class="x1-dyson-rowh" id="viz-x1-dyson-h2">2 · Screening by the electrons</p>
+      <div class="viz-grid two">
+        <div class="x1-dyson-cell"><p class="x1-dyson-src"><span class="x1-dyson-tag">Part A · </span><a class="eqref" href="#x1-eq-dysonW">(X1.11)</a>, nuclei clamped</p><div class="fd x1-dyson-dg" data-d="A2"></div></div>
+        <div class="x1-dyson-cell"><p class="x1-dyson-src"><span class="x1-dyson-tag">Part B · </span><a class="eqref" href="#x1-eq-twostep">(X1.15)</a>, first line</p><div class="fd x1-dyson-dg" data-d="B2"></div><p class="x1-dyson-lim" hidden>only the longitudinal part survives: $D^{\mathrm e}\propto W^{\mathrm e}$, <a class="eqref" href="#x1-eq-DLW">(X1.14)</a></p></div>
+      </div>
+    </div>
+    <div class="x1-dyson-row" role="group" aria-labelledby="viz-x1-dyson-h3">
+      <p class="x1-dyson-rowh" id="viz-x1-dyson-h3">3 · Adding the lattice</p>
+      <div class="viz-grid two">
+        <div class="x1-dyson-cell"><p class="x1-dyson-src"><span class="x1-dyson-tag">Part A · </span><a href="#a-hedin-baym">Section A.5</a>, <a class="eqref" href="#a5-eq-split">(A5.23)</a> and <a class="eqref" href="#a5-eq-Wph">(A5.28)</a></p><div class="fd x1-dyson-dg" data-d="A3"></div></div>
+        <div class="x1-dyson-cell"><p class="x1-dyson-src"><span class="x1-dyson-tag">Part B · </span><a class="eqref" href="#x1-eq-twostep">(X1.15)</a>, second line, ionic bubbles summed (<a href="#b-phonon-se">Section B.7</a>)</p><div class="fd x1-dyson-dg" data-d="B3"></div><p class="x1-dyson-lim" hidden>only the longitudinal part survives: $D\propto W$</p></div>
+      </div>
+    </div>
+    <div class="x1-dyson-ctrls"></div>
+    <div class="readout x1-dyson-ro" aria-live="polite"><span>transverse (wavy) lines in the Part B column<b class="x1-dyson-v-n">10</b></span><span class="x1-dyson-st" data-c="fin">finite $c$: $D^0$, $D^{\mathrm e}$ and $D$ carry both polarizations</span><span class="x1-dyson-st" data-c="inf" hidden>$c\to\infty$: the Part A chain, with $v\to D^{0\mathrm L}$ and densities → currents</span></div>
+    <div class="readout x1-dyson-ro2" aria-live="polite"><span class="x1-dyson-hl" data-h="none">choose a glyph under “highlight” to see its counterpart in the other column</span><span class="x1-dyson-hl" data-h="bare" hidden>bare line: $v$ ↔ $D^0=D^{0\mathrm L}+D^{0\mathrm T}$; $D^{0\mathrm L}$ is $v$ rewritten for currents, <a class="eqref" href="#x1-eq-D0L">(X1.6)</a></span><span class="x1-dyson-hl" data-h="bubble" hidden>bubble: $\chi^{\mathrm{irr}}$ (density response) ↔ $\Pi^{\mathrm e}$ (current response); its longitudinal part gives $e^2\chi^{\mathrm{irr}}$, <a class="eqref" href="#x1-eq-conn">(X1.10)</a></span><span class="x1-dyson-hl" data-h="vertex" hidden>vertex: charge vertex of a displaced nucleus ↔ Born-charge current vertex <a class="sym" href="#gl-b7-J">$J$</a> (<a href="#b-phonon-se">Section B.7</a>)</span><span class="x1-dyson-hl" data-h="phonon" hidden>phonon line: $F$ in both columns; the lattice enters as a phonon between two vertices</span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> The two columns have the same structure, row by row. Switch to $c\to\infty$ and every wavy line disappears, because $D^{0\mathrm T}$ vanishes: the Part B column becomes the Part A column glyph for glyph, so the Coulomb line is the longitudinal part of the photon line.</p><div class="cap-more">
+      <p><strong>Marks.</strong> Dashed: Coulomb line (<span class="nw">$v$,</span> <span class="nw">$D^{0\mathrm L}$).</span> Double dashed: screened Coulomb line <span class="nw">($W^{\mathrm e}$,</span> $W$, and the longitudinal parts of $D^{\mathrm e}$ and <span class="nw">$D$).</span> Wavy: transverse photon, heavy when dressed; wavy on dashed: the full field, both polarizations. Blue disks: the bubbles $\chi^{\mathrm{irr}}$ and $\Pi^{\mathrm e}$. Amber zigzag: the phonon propagator <a class="sym" href="#gl-a5-F">$F$</a>. Plain dots: the charge vertex of a displaced nucleus, so that $W^{\mathrm e}$ ending on it is the screened vertex of Section A.5. Teal dots: the Born-charge current vertex <a class="sym" href="#gl-b7-J">$J$</a>, the current of an oscillating mode; the minus sign in $-JFJ^\dagger$ is not drawn.</p>
+      <p><strong>Try.</strong> Toggle the speed of light and watch the count of wavy lines: 10, then 0. Use “highlight” to find each object's counterpart. Compare row 3 with <a class="eqref" href="#x1-eq-twostep">(X1.15)</a>: iterating its second line strings ionic bubbles $\Pi^{\mathrm{ion}}$ together with $D^{\mathrm e}$; their sum is the phonon line between $J$ and $J^\dagger$.</p>
+      <p><strong>Model.</strong> No numerics: a map of the equations. Rows 1–2: <a class="eqref" href="#x1-eq-v">(X1.1)</a>, <a class="eqref" href="#x1-eq-D0">(X1.5)</a>, <a class="eqref" href="#x1-eq-dysonW">(X1.11)</a> with clamped nuclei, and <a class="eqref" href="#x1-eq-dysonD">(X1.12)</a> with $\Pi^{\mathrm e}$ alone, the first line of <a class="eqref" href="#x1-eq-twostep">(X1.15)</a>. Row 3: <a class="eqref" href="#a5-eq-split">(A5.23)</a> and <a class="eqref" href="#a5-eq-Wph">(A5.28)</a> on the left; on the right the second line of <a class="eqref" href="#x1-eq-twostep">(X1.15)</a>, with each $\Pi^{\mathrm{ion}}=-JF^0J^\dagger$ and the chain summed into the dressed $F$ (<a href="#b-phonon-se">Section B.7</a>). The $c\to\infty$ view: <a class="eqref" href="#x1-eq-DLW">(X1.14)</a> and <a class="eqref" href="#x1-eq-conn">(X1.10)</a>.</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-x1-dyson');
+  if (!fig || !window.EPP) return;
+  // outside Section X.1 (the isolated figure test) the links to equations and sections have no target: show them as text
+  if (!fig.closest('#x-light-cone')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+  const NS = 'http://www.w3.org/2000/svg';
+  const q = (s) => fig.querySelector(s), qa = (s) => [...fig.querySelectorAll(s)];
+
+  // ---------- layout: inline styles (a fragment carries no style sheet) ----------
+  const ST = {
+    heads: 'margin:2px 0 0',
+    colh: 'margin:0;padding:0 0 4px;border-bottom:1px solid var(--rule);max-width:none;font-family:var(--font-ui);font-size:0.8rem;font-weight:600;letter-spacing:0.03em;color:var(--fg-2)',
+    rowh: 'margin:14px 0 4px;max-width:none;font-family:var(--font-ui);font-size:0.88rem;font-weight:600;color:var(--fg)',
+    cell: 'min-width:0',
+    src: 'margin:0;max-width:none;font-family:var(--font-ui);font-size:0.8rem;line-height:1.35;color:var(--muted)',
+    tag: 'font-weight:600;color:var(--fg-2)',
+    dg: 'margin:2px 0 0;padding:4px 2px;gap:4px 18px',
+    inst: 'font-size:0.95rem;color:var(--fg-2)',
+    lim: 'margin:0;max-width:none;font-family:var(--font-ui);font-size:0.8rem;line-height:1.35;color:var(--muted);text-align:center',
+    ro2: 'color:var(--fg-2)'
+  };
+  for (const k in ST) qa('.x1-dyson-' + k).forEach(el => { el.style.cssText += ';' + ST[k]; });
+
+  // ---------- the six chains ----------
+  // Every item carries a highlight class k: 'bare' (v, D^0, D^{0L}, D^{0T}), 'bubble' (χ^{irr}, Π^e),
+  // 'vertex' (the two ends of the phonon line), 'phonon' (F), or none (screened lines, operators).
+  // Part B lines: a full photon line is a dashed longitudinal line under a wavy transverse one; at c → ∞
+  // D^{0T} = −4πc/(ω² − c²q²) → 4π/(cq²) → 0, so the wavy part is dropped and the dashed part stays.
+  const SC = 1.3, Y = 34, H = 60;
+  const op = (x, s) => ({ t: 'text', at: [x, Y + 6], text: s, size: 18, color: 'muted' });
+  const ln = (t, a, b, label, k, extra) => Object.assign({ t, a: [a, Y], b: [b, Y], label, k }, extra || {});
+  const free = (a, b, lab, inf, k) => inf ? [ln('coulomb', a, b, lab, k)]
+    : [ln('coulomb', a, b, null, k), ln('photon', a, b, lab, k, { amp: 4.2 })];
+  const dressed = (a, b, lab, inf) => inf ? [ln('screened', a, b, lab)]
+    : [ln('screened', a, b, null), ln('photon2', a, b, lab, null, { amp: 4.6, width: 2.4, ldist: 15 })];
+  const W = (a, b, lab) => [ln('screened', a, b, lab)];
+  const DG = {
+    A1: { w: 122, items: () => [ln('coulomb', 8, 114, 'v', 'bare')] },
+    // bubbles of radius 16, so that the label χ^{irr} fits inside its circle
+    A2: { w: 282, items: () => [...W(8, 58, 'W^e'), op(70, '='), ln('coulomb', 84, 134, 'v', 'bare'), op(146, '+'), ln('coulomb', 160, 194, 'v', 'bare'),
+      { t: 'blob', at: [210, Y], r: 16, label: 'χ^{irr}', color: 'electron', k: 'bubble' }, ...W(226, 274, 'W^e')] },
+    A3: { w: 282, items: () => [...W(8, 58, 'W'), op(70, '='), ...W(84, 134, 'W^e'), op(146, '+'), ...W(160, 192, 'W^e'),
+      ln('phonon2', 192, 240, 'F', 'phonon'), ...W(240, 274, 'W^e'),
+      { t: 'vertex', at: [192, Y], r: 3.5, k: 'vertex' }, { t: 'vertex', at: [240, Y], r: 3.5, k: 'vertex' }] },
+    B1: { w: 232, items: (inf) => [...free(8, 58, 'D^0', inf, 'bare'), op(70, '='), ln('coulomb', 84, 134, 'D^{0L}', 'bare'), op(146, '+'),
+      ...(inf ? [{ t: 'text', at: [188, Y + 6], text: '0', size: 18, color: 'muted', k: 'bare' }, { t: 'text', at: [188, Y - 14], text: 'D^{0T} → 0', size: 12, color: 'muted', k: 'bare' }]
+        : [ln('photon', 160, 216, 'D^{0T}', 'bare', { amp: 4.2 })])] },
+    B2: { w: 282, items: (inf) => [...dressed(8, 58, 'D^e', inf), op(70, '='), ...free(84, 134, 'D^0', inf, 'bare'), op(146, '+'), ...free(160, 194, 'D^0', inf, 'bare'),
+      { t: 'blob', at: [210, Y], r: 16, label: 'Π^e', color: 'electron', k: 'bubble' }, ...dressed(226, 274, 'D^e', inf)] },
+    B3: { w: 282, items: (inf) => [...dressed(8, 58, 'D', inf), op(70, '='), ...dressed(84, 134, 'D^e', inf), op(146, '+'), ...dressed(160, 192, 'D^e', inf),
+      ln('phonon2', 192, 240, 'F', 'phonon'), ...dressed(240, 274, 'D^e', inf),
+      { t: 'vertex', at: [192, Y], r: 3.8, color: 'c4', k: 'vertex' }, { t: 'vertex', at: [240, Y], r: 3.8, color: 'c4', k: 'vertex' },
+      { t: 'text', at: [192, Y + 21], text: 'J', size: 13, color: 'c4-t', k: 'vertex' }, { t: 'text', at: [240, Y + 21], text: 'J^†', size: 13, color: 'c4-t', k: 'vertex' }] }
+  };
+  const ARIA = {
+    A1: () => 'Part A, row 1: the bare Coulomb line v, a dashed line; it acts instantaneously',
+    A2: () => 'Part A, row 2: W^e, double dashed, equals v plus v times the bubble chi irr times W^e; v is dashed',
+    A3: () => 'Part A, row 3: W equals W^e plus a chain of W^e, the charge vertex of a displaced nucleus, the phonon propagator F, a second vertex, and W^e',
+    B1: (inf) => inf ? 'Part B, row 1, c to infinity: D zero, now only dashed, equals D zero L plus zero; D zero T goes to zero'
+      : 'Part B, row 1: D zero, wavy on dashed, equals D zero L, the dashed Coulomb line, plus D zero T, the wavy transverse photon',
+    B2: (inf) => inf ? 'Part B, row 2, c to infinity: D^e equals D zero plus D zero times the bubble Pi e times D^e, with dashed and double dashed lines only, as in Part A'
+      : 'Part B, row 2: D^e equals D zero plus D zero times the electronic bubble Pi e times D^e; every line is wavy on dashed, both polarizations',
+    B3: (inf) => inf ? 'Part B, row 3, c to infinity: D equals D^e plus a chain of D^e, the Born-charge current vertex J, the phonon propagator F, the vertex J dagger, and D^e, with double dashed lines only, as in Part A'
+      : 'Part B, row 3: D equals D^e plus a chain of D^e, the Born-charge current vertex J, the phonon propagator F, the vertex J dagger, and D^e; the minus sign of minus J F J dagger is not drawn'
+  };
+
+  // highlighted copy of a glyph: heavier strokes, larger dots, a thicker rim on the bubbles
+  // (the library's default widths; the zigzag gains less, so that it does not swallow its two vertices)
+  const BASEW = { coulomb: 1.8, photon: 1.8, photon2: 3.2, phonon: 1.8, phonon2: 3.2, screened: 1.8 };
+  const heavy = (it) => {
+    if (it.t === 'vertex') return [Object.assign({}, it, { r: it.r + 1.8 })];
+    if (it.t === 'blob') return [{ t: 'vertex', at: it.at, r: it.r + 2, color: it.color }, it];
+    if (it.t === 'text') return [it];
+    return [Object.assign({}, it, { width: (it.width || BASEW[it.t]) + (it.t === 'phonon2' ? 1 : 1.6) })];
+  };
+  const CATS = ['bare', 'bubble', 'vertex', 'phonon'];
+  // one stack per chain (two for Part B, finite c and c → ∞): the full diagram, and above it one heavy copy
+  // per highlight class, all in the same grid cell
+  const views = [];
+  function build(host, key, inf) {
+    const spec = DG[key], items = spec.items(inf);
+    const stack = document.createElement('div');
+    stack.style.cssText = 'display:grid;min-width:0;max-width:100%;flex:0 1 auto';
+    host.insertBefore(stack, host.querySelector('.x1-dyson-inst'));
+    const fit = (svg) => { svg.setAttribute('width', Math.round(spec.w * SC)); svg.setAttribute('height', Math.round(H * SC)); svg.style.gridArea = '1 / 1'; return svg; };
+    const base = fit(EPP.fd.draw(stack, { w: spec.w, h: H, label: ARIA[key](inf), items }));
+    const over = {};
+    CATS.forEach(k => {
+      const sel = items.filter(it => it.k === k);
+      if (!sel.length) return;
+      const svg = fit(EPP.fd.draw(stack, { w: spec.w, h: H, label: '', items: sel.flatMap(heavy) }));
+      svg.removeAttribute('role'); svg.removeAttribute('aria-label'); svg.setAttribute('aria-hidden', 'true');
+      svg.style.visibility = 'hidden';
+      over[k] = svg;
+    });
+    views.push({ stack, base, over, inf, wavy: items.filter(it => it.t === 'photon' || it.t === 'photon2').length });
+  }
+  qa('.x1-dyson-dg').forEach(host => {
+    const key = host.dataset.d;
+    if (key[0] === 'A') build(host, key, null); else { build(host, key, false); build(host, key, true); }
+  });
+
+  // ---------- labels as in the prose ----------
+  // The page rule "svg text.fd-lab" sets every label in italic at 14 px and outranks SVG attributes. This pass
+  // restores the requested sizes and sets each run of the base text as in the prose: Latin and lowercase Greek
+  // letters italic; Π, digits, operators and arrows upright (sub- and superscripts are upright labels already).
+  // It runs again after every repaint (theme change); it is registered after all the diagrams, so it runs last.
+  const ITAL = /[A-Za-zα-ω]/;
+  function styleLabels() {
+    qa('svg text.fd-lab').forEach(te => {
+      if (te.getAttribute('data-x1') === '1') return;
+      te.setAttribute('data-x1', '1');
+      const fs = te.getAttribute('font-size');
+      if (fs) te.style.fontSize = fs + 'px';
+      [...te.childNodes].forEach(ts => {
+        if (ts.nodeName !== 'tspan' || ts.hasAttribute('baseline-shift')) return;
+        const runs = []; let buf = '', it = null;
+        for (const ch of ts.textContent) { const k = ITAL.test(ch); if (it !== null && k !== it) { runs.push([it, buf]); buf = ''; } buf += ch; it = k; }
+        if (buf) runs.push([it, buf]);
+        const frag = document.createDocumentFragment();
+        runs.forEach(([k, t]) => { const n = document.createElementNS(NS, 'tspan'); n.textContent = t; n.style.fontStyle = k ? 'italic' : 'normal'; frag.appendChild(n); });
+        ts.replaceWith(frag);
+      });
+    });
+  }
+  styleLabels();
+  EPP.onTheme(styleLabels);
+
+  // ---------- column headers on wide screens; on phones each cell names its column ----------
+  const heads = q('.x1-dyson-heads');
+  let wide = null;
+  try { wide = matchMedia('(min-width: 720px)'); } catch (e) {}
+  const layout = () => {
+    const w = !!(wide && wide.matches);
+    heads.style.display = w ? '' : 'none';
+    qa('.x1-dyson-tag').forEach(t => { t.style.display = w ? 'none' : ''; });
+  };
+  layout();
+  try { wide.addEventListener('change', layout); } catch (e) {}
+
+  // ---------- state ----------
+  const inst = q('.x1-dyson-inst'), nOut = q('.x1-dyson-v-n');
+  function apply(s) {
+    const inf = s.c === 'inf', hl = s.hl;
+    let n = 0;
+    views.forEach(v => {
+      const on = v.inf === null || v.inf === inf;
+      v.stack.style.display = on ? 'grid' : 'none';
+      if (on && v.inf !== null) n += v.wavy;
+      v.base.style.opacity = hl === 'none' ? '' : '0.35';
+      CATS.forEach(k => { if (v.over[k]) v.over[k].style.visibility = k === hl ? 'visible' : 'hidden'; });
+    });
+    nOut.textContent = String(n);
+    qa('.x1-dyson-st').forEach(e => { e.hidden = e.dataset.c !== s.c; });
+    qa('.x1-dyson-lim').forEach(e => { e.hidden = !inf; });
+    qa('.x1-dyson-hl').forEach(e => { e.hidden = e.dataset.h !== hl; });
+    inst.style.opacity = (hl === 'none' || hl === 'bare') ? '' : '0.35';
+  }
+  const ui = EPP.controls(q('.x1-dyson-ctrls'), [
+    { key: 'c', type: 'seg', label: 'speed of light', options: [['fin', 'finite c (Part B)'], ['inf', 'c → ∞ (electrostatic)']], value: 'fin' },
+    { key: 'hl', type: 'seg', label: 'highlight', options: [['none', 'none'], ['bare', 'bare line'], ['bubble', 'bubble'], ['vertex', 'vertex'], ['phonon', 'phonon line']], value: 'none' }
+  ], apply);
+  // the speed of light is a variable: italic c in the buttons, as in the prose
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const bFin = document.getElementById(`${fig.id}-c-fin`), bInf = document.getElementById(`${fig.id}-c-inf`);
+  if (bFin) bFin.innerHTML = `finite ${I('c')} (Part B)`;
+  if (bInf) bInf.innerHTML = `${I('c')} → ∞ (electrostatic)`;
+  apply(ui.state);
+})();
+</script>

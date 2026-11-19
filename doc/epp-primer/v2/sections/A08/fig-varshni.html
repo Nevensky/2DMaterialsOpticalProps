@@ -1,0 +1,438 @@
+  <figure class="viz" id="viz-a8-varshni">
+    <p class="viz-title">The Varshni curve: zero-point plateau, linear regime and the ZPR from the asymptote <span class="tag">interactive</span></p>
+    <div class="viz-grid two">
+      <div class="a8-varshni-gap"><div class="legend a8-varshni-lega"><span class="item" style="color:var(--c-electron)"><span class="sw"></span><span style="color:var(--fg-2)">gap $E^{\mathrm{qp}}_{\mathrm g}(T)$</span></span><span class="item" style="color:var(--fg)"><span class="sw dash" style="border-top-width:1.5px"></span><span style="color:var(--fg-2)">high-temperature asymptote</span></span><span class="item" style="color:var(--muted)"><span class="sw" style="border-top-width:1.5px"></span><span style="color:var(--fg-2)">clamped-nuclei gap $E_{\mathrm g}$</span></span><span class="item" style="color:var(--muted)"><span class="sw box"></span><span style="color:var(--fg-2)">plateau, $\kB T\lt\hbar\omega_0/3$</span></span></div></div>
+      <div class="a8-varshni-wid"><div class="legend a8-varshni-legb"><span class="item a8-varshni-k-hw" style="color:var(--c-electron)"><span class="sw"></span><span style="color:var(--fg-2)">half width $\Gamma^{\tau}(T)$</span></span><span class="item a8-varshni-k-hw" style="color:var(--muted)"><span class="sw dash" style="border-top-width:1.5px"></span><span style="color:var(--fg-2)">its value at $T=0$, $\Gamma^{\tau}(T=0)$</span></span><span class="item a8-varshni-k-tau" style="color:var(--c-electron)" hidden><span class="sw"></span><span style="color:var(--fg-2)">lifetime $\tau(T)=\hbar/2\Gamma^{\tau}(T)$</span></span><span class="item a8-varshni-k-tau" style="color:var(--muted)" hidden><span class="sw dash" style="border-top-width:1.5px"></span><span style="color:var(--fg-2)">its value at $T=0$, $\hbar/2\Gamma^{\tau}(T=0)$</span></span></div></div>
+    </div>
+    <div class="a8-varshni-ctrls"></div>
+    <div class="readout a8-varshni-ro" aria-live="polite"><span>cursor $T^*$<b class="a8-varshni-v-t"></b></span><span>$E_{\mathrm g}$<b class="a8-varshni-v-eg"></b></span><span>$E^{\mathrm{qp}}_{\mathrm g}(0)$<b class="a8-varshni-v-e0"></b></span><span>$E^{\mathrm{qp}}_{\mathrm g}(T^*)$<b class="a8-varshni-v-et"></b></span></div>
+    <div class="readout a8-varshni-ro2" aria-live="polite"><span>high-$T$ slope<b class="a8-varshni-v-slope"></b></span><span>plateau edge $\hbar\omega_0/3\kB$<b class="a8-varshni-v-tp"></b></span><span>$1+2n_{\mathrm B}(\omega_0)$ at $T^*$<b class="a8-varshni-v-f"></b></span></div>
+    <div class="readout a8-varshni-ro3" aria-live="polite"><span>$\Gamma^{\tau}(T^*)$<b class="a8-varshni-v-im"></b></span><span>$\tau(T^*)$<b class="a8-varshni-v-tau"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> The plateau at low temperature is zero-point motion. The dashed asymptote meets $E_{\mathrm g}$ at $T=0$, and the arrow between $E_{\mathrm g}$ and the low-temperature gap is the ZPR. The half width follows the same Bose factor as the shift.</p><div class="cap-more"><p><strong>Marks.</strong> In (a), blue curve: $E^{\mathrm{qp}}_{\mathrm g}(T)$; dashed line: high-temperature asymptote; grey line: $E_{\mathrm g}$; arrow: $|\Delta E^{\mathrm{ZPR}}_{\mathrm g}|$; shaded band: $\kB T\lt\hbar\omega_0/3$. In (b), the half width or the lifetime of a state at least one phonon energy from a band extremum, with its value at $T=0$ (dashed). Dashed vertical lines: the temperature cursor $T^*$.</p><p><strong>Try.</strong> Click, tap or drag in either panel, or focus it and use the arrow keys, to move $T^*$. Lower $\hbar\omega_0$ at fixed ZPR: the plateau shortens and the slope $-2\kB|\Delta E^{\mathrm{ZPR}}_{\mathrm g}|/\hbar\omega_0$ steepens. Pick “Toy, <span class="nw">$\hbar\omega_0=100$ meV</span>” and compare with the review's Fig. 3, whose curves follow 50 meV. Pick diamond with GW coupling: <span class="nw">7.10 eV</span> at 0 K and <span class="nw">6.95 eV</span> at 650 K, as in the review's Fig. 13. Switch to lifetime: <span class="nw">50 meV</span> gives <span class="nw">6.6 fs.</span></p><p><strong>Model.</strong> The gap is <a class="eqref" href="#a8-eq-varshni"></a>. The half width is the one-phonon result of the <a href="#a8-lifetimes">lifetime subsection</a>, $\Gamma^{\tau}(T)=\Gamma^{\tau}(T=0)\coth(\hbar\omega_0/2\kB T)$, with $\Gamma^{\tau}$ short for the linewidth $\Gamma^{\tau}_{n\bk}$, and $\tau=\hbar/2\Gamma^{\tau}$ is <a class="eqref" href="#a8-eq-taudef"></a>. Toy parameters from the review's Fig. 3: <span class="nw">$E_{\mathrm g}=1$ eV</span>, ZPR <span class="nw">100 meV,</span> <span class="nw">$\Gamma^{\tau}(T=0)=50$ meV</span>. Diamond: <span class="nw">$E_{\mathrm g}=7.73$ eV</span> and <span class="nw">$\hbar\omega_0=125$ meV</span> from a one-oscillator fit to the review's Fig. 13, ZPR <span class="nw">628 meV</span> with GW coupling or <span class="nw">0.40 eV</span> read off its LDA curve. Si: <span class="nw">$E_{\mathrm g}=1.23$ eV</span>, ZPR <span class="nw">60 meV,</span> <span class="nw">$\hbar\omega_0=30$ meV</span> (literature values, illustrative). $\Gamma^{\tau}(T=0)$ outside the toy presets is illustrative.</p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a8-varshni');
+  if (!fig || !window.EPP) return;
+  // outside Section A.8 (the isolated figure test) the caption's links to the section have no target: show them as text
+  if (!fig.closest('#a-temperature')) fig.querySelectorAll('figcaption a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+
+  // ---------- model: one dispersionless phonon of energy ħω_0, energies in meV, T in K ----------
+  // gap (A8.12): E^qp_g(T) = E_g − |ΔE^ZPR_g| [1 + 2 n_B(ω_0)] = E_g − |ΔE^ZPR_g| coth(ħω_0/2k_BT)
+  // half width (one-phonon model of the lifetime subsection): Γ^τ(T) = Γ^τ(T = 0) coth(ħω_0/2k_BT)
+  // lifetime (A8.13): τ = ħ/2Γ^τ
+  const KB = 0.0861733;   // k_B, meV/K
+  const HB = 658.212;     // ħ, meV fs
+  const fac = (w0, t) => (t > 0 ? 1 / Math.tanh(w0 / (2 * KB * t)) : 1);   // 1 + 2 n_B(ω_0); 1 at T = 0
+  // presets: E_g (eV), |ΔE^ZPR_g| and ħω_0 and Γ^τ(T = 0) (meV), the temperature range and the gap axis (eV) they are shown on;
+  // the diamond and Si presets keep the current Γ^τ(T = 0)
+  const PRE = {
+    toy50: { Eg: 1.00, zpr: 100, w0: 50, g0: 50, Tmax: 500, ylim: [0.75, 1.05], ystep: 0.05 },
+    toy100: { Eg: 1.00, zpr: 100, w0: 100, g0: 50, Tmax: 500, ylim: [0.75, 1.05], ystep: 0.05 },
+    diaGW: { Eg: 7.73, zpr: 628, w0: 125, Tmax: 800, ylim: [6.70, 7.80], ystep: 0.1 },
+    diaLDA: { Eg: 7.73, zpr: 400, w0: 125, Tmax: 800, ylim: [6.70, 7.80], ystep: 0.1 },
+    si: { Eg: 1.23, zpr: 60, w0: 30, Tmax: 600, ylim: [1.00, 1.25], ystep: 0.05 }
+  };
+  function niceCeil(v) {
+    if (!(v > 0) || !isFinite(v)) return 1;
+    const mag = Math.pow(10, Math.floor(Math.log10(v))), r = v / mag;
+    return ([1, 1.2, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10].find(s => s >= r - 1e-9) || 10) * mag;
+  }
+  // sticky top for panel (b): rescale only when the curve leaves the frame or shrinks a lot
+  const sticky = (top, need) => ((top == null || need > top * 0.97 || need < top * 0.42) ? niceCeil(need * 1.15) : top);
+
+  let frame = PRE.toy50;          // the last preset chosen: E_g, temperature range, gap axis
+  let T = 300;                    // the temperature cursor T*, K
+  let cur = null;
+  const topB = { hw: null, tau: null };
+
+  function compute() {
+    const s = ui.state, Z = s.zpr, w0 = s.w0, g0 = s.g0, Eg = frame.Eg, Tm = frame.Tmax;
+    T = EPP.clamp(T, 0, Tm);
+    const gap = (t) => Eg - Z * fac(w0, t) / 1000, asym = (t) => Eg - Z * 2 * KB * t / w0 / 1000;
+    // gap axis: the preset's, extended downwards in its own steps only if the curve leaves it; a gap is never below 0
+    let [lo, hi] = frame.ylim;
+    const need = gap(Tm) - 0.04 * (hi - lo);
+    if (need < lo) lo = Math.max(0, +(lo - frame.ystep * Math.ceil((lo - need) / frame.ystep - 1e-9)).toFixed(3));
+    const view = s.view, tau0 = HB / (2 * g0);
+    topB[view] = sticky(topB[view], view === 'hw' ? g0 * fac(w0, Tm) : tau0);
+    return {
+      Z, w0, g0, Eg, Tm, lo, hi, view, tau0, gap, asym,
+      E0: gap(0), ET: gap(T), F: fac(w0, T), Tp: w0 / (3 * KB), Ta: 0.08 * Tm,
+      // the temperature where the model gap reaches 0, if it does: coth(x) = E_g/|ΔE^ZPR_g|
+      Tc: gap(Tm) < 0 ? (Z / 1000 >= Eg ? 0 : w0 / (2 * KB * Math.atanh(Z / 1000 / Eg))) : null,
+      top: topB[view]
+    };
+  }
+
+  // ---------- canvas text: '$…$' marks math, whose letters (Latin, Greek, ħ) are italic in the text font;
+  //            _x, _{..}, ^x, ^{..} as in EPP.drawRich, so a label written outside '$' stays upright: '$E$^{qp}_g'.
+  //            A superscript followed by a subscript is stacked, as in the prose. ----------
+  let FT = 'serif', FU = 'sans-serif';
+  const fonts = () => { FT = EPP.css('--font-text') || 'serif'; FU = EPP.css('--font-ui') || 'sans-serif'; };
+  const ITAL = /[A-Za-zα-ωħ]/;
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const p of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: p.t, m: p.m, it: false }); continue; }
+        let buf = '', it = null;
+        for (const ch of p.t) {
+          const k = ITAL.test(ch);
+          if (it !== null && k !== it) { out.push({ t: buf, m: p.m, it }); buf = ''; }
+          buf += ch; it = k;
+        }
+        if (buf) out.push({ t: buf, m: p.m, it });
+      }
+    });
+    return out;
+  }
+  const fontOf = (r, size) => `${r.it ? 'italic ' : ''}${(size * (r.m ? 0.72 : 1) * (r.it ? 1.07 : 1)).toFixed(1)}px ${r.it ? FT : FU}`;
+  function layout(ctx, rs, size) {
+    const w = rs.map(r => { ctx.font = fontOf(r, size); return ctx.measureText(r.t).width; });
+    const x = new Array(rs.length);
+    let X = 0, k = 0;
+    while (k < rs.length) {
+      const r = rs[k];
+      if (!r.m) {
+        x[k] = X; X += w[k];
+        const nx = rs[k + 1];
+        if (r.it && nx && !nx.it && !nx.m) X += 0.08 * size;   // italic correction before upright text
+        k++; continue;
+      }
+      let a = k; while (a + 1 < rs.length && rs[a + 1].m === r.m) a++;
+      let b = a;
+      if (b + 1 < rs.length && rs[b + 1].m === -r.m) { b++; while (b + 1 < rs.length && rs[b + 1].m === -r.m) b++; }
+      const x0 = X + (k > 0 && rs[k - 1].it ? 0.05 * size : 0);
+      let xa = x0, xb = x0;
+      for (let j = k; j <= a; j++) { x[j] = xa; xa += w[j]; }
+      for (let j = a + 1; j <= b; j++) { x[j] = xb; xb += w[j]; }
+      X = Math.max(xa, xb) + 0.04 * size; k = b + 1;
+    }
+    return { x, total: X };
+  }
+  // o: {size, align, color, halo (a ring of the surface colour, for text that crosses a line), baseline, measure}
+  function rich(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, rs = runs(s), L = layout(ctx, rs, size);
+    if (o.measure) return L.total;
+    const x0 = o.align === 'center' ? x - L.total / 2 : (o.align === 'right' ? x - L.total : x);
+    const dy = (r) => (r.m === -1 ? size * 0.3 : (r.m === 1 ? -size * 0.4 : 0));
+    ctx.save(); ctx.textAlign = 'left'; ctx.textBaseline = o.baseline || 'alphabetic';
+    const pass = (stroke) => rs.forEach((r, k) => { ctx.font = fontOf(r, size); if (stroke) ctx.strokeText(r.t, x0 + L.x[k], y + dy(r)); else ctx.fillText(r.t, x0 + L.x[k], y + dy(r)); });
+    if (o.halo) { ctx.strokeStyle = EPP.color('surface'); ctx.lineWidth = 3.5; ctx.lineJoin = 'round'; pass(true); }
+    ctx.fillStyle = o.color || EPP.color('fg'); pass(false);
+    ctx.restore();
+    return L.total;
+  }
+  const tw = (ctx, s, size) => rich(ctx, s, 0, 0, { size, measure: true });
+  const fit = (ctx, list, size, wmax) => list.find(s => tw(ctx, s, size) <= wmax) || list[list.length - 1];
+
+  // ---------- direct labels: the first candidate that stays in the frame, off the curves, the cursor and the labels already placed ----------
+  // av: {fns: curves y(T), vx: vertical lines (canvas px), boxes: taken rectangles (canvas px)}
+  function hits(P, b, av) {
+    for (const X of av.vx) if (X >= b[0] - 2 && X <= b[2] + 2) return true;
+    for (const q of av.boxes) if (b[0] < q[2] && b[2] > q[0] && b[1] < q[3] && b[3] > q[1]) return true;
+    for (const f of av.fns) {
+      let prev = null;
+      for (let px = b[0]; px <= b[2] + 0.01; px += 1.5) {
+        const v = f(P.invX(px));
+        if (!isFinite(v)) { prev = null; continue; }
+        const py = P.Y(v);
+        if (py >= b[1] && py <= b[3]) return true;
+        if (prev !== null && Math.min(prev, py) < b[1] && Math.max(prev, py) > b[3]) return true;
+        prev = py;
+      }
+    }
+    return false;
+  }
+  // c: {x, y (data), dx, dy (px, to the middle of the text), align}. The candidate that won last time is tried first, so a
+  // label stays put until the cursor or a curve reaches it. With must, a label that finds no clear place takes the first
+  // candidate inside the frame and is drawn on a patch of the panel colour; without, it is left out (the legend names that curve).
+  const memo = {};
+  function place(P, key, text, size, cands, av, must) {
+    const m = P.m, W = P.cv.w, H = P.cv.h, w = tw(P.ctx, text, size), h = size * 1.3, id = key + '|' + text;
+    const order = cands.map((_, i) => i);
+    if (memo[id] != null && memo[id] < cands.length) { order.splice(memo[id], 1); order.unshift(memo[id]); }
+    let first = null;
+    for (const i of order) {
+      const c = cands[i], X = P.X(c.x) + (c.dx || 0), Y = P.Y(c.y) + (c.dy || 0);
+      if (!isFinite(X) || !isFinite(Y)) continue;
+      const x0 = c.align === 'right' ? X - w : (c.align === 'center' ? X - w / 2 : X);
+      const b = [x0 - 2, Y - h / 2, x0 + w + 2, Y + h / 2];
+      if (b[0] < m.l + 1 || b[2] > W - m.r - 1 || b[1] < m.t + 1 || b[3] > H - m.b - 1) continue;
+      if (!first) first = { x: x0, y: Y, text, size, b, w, forced: true };
+      if (hits(P, b, av)) continue;
+      memo[id] = i;
+      av.boxes.push([b[0] - 3, b[1] - 1, b[2] + 3, b[3] + 1]);
+      return { x: x0, y: Y, text, size };
+    }
+    if (must && first) { av.boxes.push(first.b); return first; }
+    return null;
+  }
+  // vertical offset that clears a sloping line over the whole width of a label (px; side −1 above, +1 below)
+  function clear(P, f, x, w, h, side) {
+    const d = (P.invX(P.X(x) + 1) - x), s = Math.abs(P.Y(f(x + d)) - P.Y(f(x)));
+    return side * (h / 2 + 4 + 0.5 * w * s);
+  }
+
+  // ---------- panels ----------
+  const elA = fig.querySelector('.a8-varshni-gap'), elB = fig.querySelector('.a8-varshni-wid');
+  const legA = elA.querySelector('.legend'), legB = elB.querySelector('.legend');
+  const OPT = { legend: false, hover: false, aspect: 0.8, minHeight: 250, maxHeight: 330, margin: { l: 58, r: 14, t: 26, b: 44 } };
+  const pA = new EPP.Plot(elA, Object.assign({ ariaLabel: 'Panel a: band gap against temperature' }, OPT));
+  const pB = new EPP.Plot(elB, Object.assign({ ariaLabel: 'Panel b: half width or lifetime against temperature' }, OPT));
+  // the legends are static markup (MathJax), placed under their plots
+  elA.appendChild(legA); elB.appendChild(legB);
+  const keyHW = [...legB.querySelectorAll('.a8-varshni-k-hw')], keyTau = [...legB.querySelectorAll('.a8-varshni-k-tau')];
+
+  function frameText(P, xt, yt, titles) {
+    const ctx = P.ctx, w = P.cv.w, h = P.cv.h, m = P.m, cFg = EPP.color('fg');
+    rich(ctx, xt, m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    ctx.save(); ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    rich(ctx, yt, 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+    rich(ctx, fit(ctx, titles, 11.5, w - 8), 4, 15, { size: 11.5, color: EPP.color('fg2') });
+  }
+  const draw1 = (P, L, color) => {
+    if (!L) return;
+    if (L.forced) { const ctx = P.ctx; ctx.save(); ctx.fillStyle = EPP.color('surface'); ctx.fillRect(L.x - 3, L.y - 0.62 * L.size - 1, L.w + 6, 1.24 * L.size + 2); ctx.restore(); }
+    rich(P.ctx, L.text, L.x, L.y, { size: L.size, color, baseline: 'middle', halo: true });
+  };
+  // the cursor point, drawn unclipped so that it stays whole at T = 0 and at T_max
+  const dot = (P, x, y) => {
+    const X = P.X(x), Y = P.Y(y), m = P.m, ctx = P.ctx;
+    if (!(Y >= m.t - 1 && Y <= P.cv.h - m.b + 1)) return;
+    ctx.save(); ctx.fillStyle = EPP.color('electron'); ctx.beginPath(); ctx.arc(X, Y, 4.2, 0, 2 * Math.PI); ctx.fill(); ctx.restore();
+  };
+
+  // (a): the ZPR arrow and the direct labels are drawn here, in canvas pixels, after the curves
+  const baseA = pA.render.bind(pA);
+  pA.render = () => {
+    baseA();
+    const P = pA, ctx = P.ctx, w = P.cv.w, h = P.cv.h, m = P.m, c = cur;
+    if (!w || !h || !c) return;
+    fonts();
+    frameText(P, 'temperature $T$ (K)', 'gap $E$^{qp}_g (eV)',
+      ['(a) the gap against temperature: click or drag to move $T$^*', '(a) the gap: click or drag to move $T$^*', '(a) the gap against temperature']);
+    const XT = P.X(T), YT = P.Y(c.ET);
+    const av = { fns: [c.gap, c.asym, () => c.Eg], vx: [XT], boxes: [[XT - 6, YT - 6, XT + 6, YT + 6]] };
+    const cE = EPP.color('electron'), tE = EPP.textColor('electron'), tM = EPP.textColor('muted');
+    ctx.save(); ctx.beginPath(); ctx.rect(m.l, m.t, w - m.l - m.r, h - m.t - m.b); ctx.clip();
+    // the ZPR: a double arrow at T ≈ 0.08 T_max from E_g down to E^qp_g(0); a dotted guide at E^qp_g(0) if the curve has already left it there
+    const Xa = P.X(c.Ta), Y1 = P.Y(c.Eg), Y0 = P.Y(c.E0), len = Math.abs(Y0 - Y1);
+    if (c.Z > 0 && len >= 6) {
+      if (Math.abs(P.Y(c.gap(c.Ta)) - Y0) > 2) {
+        ctx.strokeStyle = EPP.color('muted'); ctx.lineWidth = 1; ctx.setLineDash([2, 3]);
+        ctx.beginPath(); ctx.moveTo(m.l, Y0); ctx.lineTo(Xa + 6, Y0); ctx.stroke(); ctx.setLineDash([]);
+      }
+      const hd = Math.min(7, len / 2.6);
+      ctx.strokeStyle = cE; ctx.fillStyle = cE; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(Xa, Y1 + 0.8 * hd); ctx.lineTo(Xa, Y0 - 0.8 * hd); ctx.stroke();
+      for (const [Yt, sg] of [[Y1, 1], [Y0, -1]]) {
+        ctx.beginPath(); ctx.moveTo(Xa, Yt); ctx.lineTo(Xa - 0.42 * hd, Yt + sg * hd); ctx.lineTo(Xa + 0.42 * hd, Yt + sg * hd); ctx.closePath(); ctx.fill();
+      }
+      av.boxes.push([Xa - 5, Math.min(Y0, Y1), Xa + 5, Math.max(Y0, Y1)]);
+    }
+    ctx.restore();
+    const labs = [];
+    dot(P, T, c.ET);
+    // the ZPR label beside the arrow, with its value when that fits; it ignores the cursor (a halo keeps it legible);
+    // where the asymptote leaves no room (Si) it sits on a patch of the panel colour that interrupts the dashes
+    if (c.Z > 0 && len >= 10) {
+      const cands = [0.5, 0.36, 0.64, 0.22, 0.78].map(f => ({ x: c.Ta, y: c.E0 + f * c.Z / 1000, dx: 8 }));
+      const avZ = { fns: av.fns, vx: [], boxes: av.boxes };
+      labs.push([place(P, 'zpr', `|Δ$E$^{ZPR}_g| = ${c.Z.toFixed(0)} meV`, 11.5, cands, avZ) || place(P, 'zpr', '|Δ$E$^{ZPR}_g|', 11.5, cands, avZ, true), tE]);
+    }
+    // E_g: at the right end of its line, else nearer the middle; above the line or below it
+    labs.push([place(P, 'eg', '$E$_g', 11.5, [{ x: c.Tm, y: c.Eg, dx: -6, dy: -10, align: 'right' }, { x: c.Tm, y: c.Eg, dx: -6, dy: 10, align: 'right' },
+      { x: 0.55 * c.Tm, y: c.Eg, dy: -10, align: 'center' }, { x: 0.55 * c.Tm, y: c.Eg, dy: 10, align: 'center' }], av, true), tM]);
+    // the plateau: at the foot of the band, under the curve, else at its top
+    const Tp = Math.min(c.Tp, c.Tm);
+    labs.push([place(P, 'plateau', 'plateau', 11, [c.lo, c.hi].flatMap(y => { const dy = y === c.lo ? -10 : 10; return [
+      { x: Tp / 2, y, dy, align: 'center' }, { x: 0, y, dx: 5, dy }, { x: Tp, y, dx: -5, dy, align: 'right' }]; }), av, true), tM]);
+    // the curve (below it) and the asymptote (above it)
+    const lc = '$E$^{qp}_g($T$)', la = 'high-$T$ asymptote';
+    const wc = tw(ctx, lc, 11.5), wa = tw(ctx, la, 11);
+    labs.push([place(P, 'curve', lc, 11.5, [0.7, 0.58, 0.82, 0.46, 0.92].map(f => ({ x: f * c.Tm, y: c.gap(f * c.Tm), dy: clear(P, c.gap, f * c.Tm, wc, 15, 1), align: 'center' })), av), tE]);
+    labs.push([place(P, 'asym', la, 11, [0.6, 0.72, 0.48, 0.84, 0.36].map(f => ({ x: f * c.Tm, y: c.asym(f * c.Tm), dy: clear(P, c.asym, f * c.Tm, wa, 14, -1), align: 'center' })), av), EPP.color('fg2')]);
+    if (c.Tc !== null) labs.push([place(P, 'closed', 'gap closed: outside the model', 11, [{ x: c.Tc, y: c.lo, dx: 6, dy: -10 }, { x: c.Tc, y: c.lo, dx: -6, dy: -10, align: 'right' },
+      { x: c.Tm, y: c.lo, dx: -6, dy: -10, align: 'right' }, { x: 0, y: c.lo, dx: 6, dy: -10 }], av), tM]);
+    for (const [L, col] of labs) draw1(P, L, col);
+  };
+
+  // (b): axis titles, title and the label of the line at the T = 0 value
+  const baseB = pB.render.bind(pB);
+  pB.render = () => {
+    baseB();
+    const P = pB, w = P.cv.w, h = P.cv.h, c = cur;
+    if (!w || !h || !c) return;
+    fonts();
+    const hw = c.view === 'hw', f = hw ? (t) => c.g0 * fac(c.w0, t) : (t) => HB / (2 * c.g0 * fac(c.w0, t));
+    const XT = P.X(T), YT = P.Y(f(T)), ref = hw ? c.g0 : c.tau0;
+    const av = { fns: [f], vx: [XT], boxes: [[XT - 6, YT - 6, XT + 6, YT + 6]] };
+    if (hw) frameText(P, 'temperature $T$ (K)', 'half width $Γ^{τ}$ (meV)', ['(b) half width of a state deep in a band', '(b) half width $Γ^{τ}$($T$)', '(b) half width']);
+    else frameText(P, 'temperature $T$ (K)', 'lifetime $τ$ (fs)', ['(b) lifetime of a state deep in a band', '(b) lifetime $τ$($T$)', '(b) lifetime']);
+    dot(P, T, f(T));
+    // the curve leaves the line upwards (half width) or downwards (lifetime): the label goes on the free side, right, left or middle
+    const s1 = hw ? 10 : -10, t = hw ? `$Γ^{τ}$($T$ = 0) = ${c.g0.toFixed(0)} meV` : `$ħ$/2$Γ^{τ}$($T$ = 0) = ${sig3(c.tau0)} fs`;
+    draw1(P, place(P, 'ref-' + c.view, t, 11, [s1, -s1].flatMap(dy => [{ x: c.Tm, y: ref, dx: -6, dy, align: 'right' }, { x: 0, y: ref, dx: 6, dy },
+      { x: 0.5 * c.Tm, y: ref, dy, align: 'center' }]), av, true), EPP.textColor('muted'));
+  };
+
+  // ---------- drawing ----------
+  const sig3 = (v) => (v >= 99.95 ? v.toFixed(0) : v >= 9.995 ? v.toFixed(1) : v.toFixed(2));
+  const NB = '\u00a0';
+  const $v = (k) => fig.querySelector('.a8-varshni-v-' + k);
+  const RO = { t: $v('t'), eg: $v('eg'), e0: $v('e0'), et: $v('et'), slope: $v('slope'), tp: $v('tp'), f: $v('f'), im: $v('im'), tau: $v('tau') };
+  function draw() {
+    const c = cur = compute();
+    const Ts = EPP.linspace(0, c.Tm, 401), step = c.Tm <= 600 ? 100 : 200, xt = [];
+    for (let v = 0; v <= c.Tm + 1e-9; v += step) xt.push(v);
+    const dec = c.hi - c.lo <= 0.6 ? 2 : 1;
+    pA.opt.xticks = xt; pB.opt.xticks = xt;
+    pA.opt.yfmt = (v) => v.toFixed(dec);
+    pA.draw([
+      { type: 'band', x0: 0, x1: Math.min(c.Tp, c.Tm), color: 'muted', alpha: 0.09 },
+      { type: 'hline', at: c.Eg, color: 'muted', width: 1.3, dash: [] },
+      { type: 'line', x: Ts, y: Ts.map(c.asym), color: 'ink', width: 1.5, dash: [6, 4] },
+      { type: 'line', x: Ts, y: Ts.map(c.gap), color: 'electron', width: 2.2 },
+      { type: 'vline', at: T, color: 'muted', width: 1, dash: [3, 3] }
+    ], { xlim: [0, c.Tm], ylim: [c.lo, c.hi] });
+    const yB = c.view === 'hw' ? Ts.map(t => c.g0 * fac(c.w0, t)) : Ts.map(t => HB / (2 * c.g0 * fac(c.w0, t)));
+    pB.draw([
+      { type: 'hline', at: c.view === 'hw' ? c.g0 : c.tau0, color: 'muted', width: 1.3, dash: [5, 4] },
+      { type: 'line', x: Ts, y: yB, color: 'electron', width: 2.2 },
+      { type: 'vline', at: T, color: 'muted', width: 1, dash: [3, 3] }
+    ], { xlim: [0, c.Tm], ylim: [0, c.top] });
+    keyHW.forEach(e => { e.hidden = c.view !== 'hw'; });
+    keyTau.forEach(e => { e.hidden = c.view === 'hw'; });
+
+    // readouts (the keys are static MathJax in the markup)
+    const slope = -2 * KB * c.Z / c.w0, im = c.g0 * c.F, tau = HB / (2 * im);
+    RO.t.textContent = T.toFixed(0) + NB + 'K';
+    RO.eg.textContent = c.Eg.toFixed(3) + NB + 'eV';
+    RO.e0.textContent = EPP.fix(c.E0, 3) + NB + 'eV';
+    RO.et.textContent = EPP.fix(c.ET, 3) + NB + 'eV' + (c.ET < 0 ? ' (gap closed)' : '');
+    RO.slope.textContent = (Math.abs(slope) < 5e-4 ? '0.000' : EPP.fix(slope, 3)) + NB + 'meV/K';
+    RO.tp.textContent = c.Tp.toFixed(0) + NB + 'K';
+    RO.f.textContent = c.F.toFixed(3);
+    RO.im.textContent = im.toFixed(1) + NB + 'meV';
+    RO.tau.textContent = sig3(tau) + NB + 'fs';
+
+    const keys = ' Click or drag in the panel, or use the arrow keys, to move the temperature cursor.';
+    const f3 = (v) => EPP.fix(v, 3), sa = [`Panel a: band gap against temperature from 0 to ${c.Tm} K.`];
+    if (c.Z === 0) sa.push(`With no zero-point renormalization the gap stays at the clamped-nuclei value, ${f3(c.Eg)} eV.`);
+    else {
+      sa.push(`Zero-point motion lowers the clamped-nuclei gap, ${f3(c.Eg)} eV, by ${c.Z.toFixed(0)} meV to ${f3(c.E0)} eV, the double arrow.`);
+      sa.push(c.Tp >= c.Tm ? 'The gap stays on this zero-point plateau over the whole range.'
+        : `The gap stays on this zero-point plateau up to about ${c.Tp.toFixed(0)} K, then falls ` +
+          (c.Tc !== null ? `and reaches zero near ${c.Tc.toFixed(0)} K, outside the range of the model.` : `to ${f3(c.gap(c.Tm))} eV at ${c.Tm} K.`));
+      sa.push(`The dashed high-temperature asymptote, slope ${EPP.fix(slope, 3)} meV per K, extrapolates to the clamped-nuclei gap at T = 0.`);
+    }
+    sa.push(`Cursor at ${T.toFixed(0)} K: gap ${f3(c.ET)} eV.` + keys);
+    pA.cv.canvas.setAttribute('aria-label', sa.join(' '));
+    pB.cv.canvas.setAttribute('aria-label', c.view === 'hw'
+      ? `Panel b: half width of a state deep in a band against temperature: ${c.g0.toFixed(0)} meV at T = 0, rising by the factor 1 + 2 n_B to ${(c.g0 * fac(c.w0, c.Tm)).toFixed(1)} meV at ${c.Tm} K. Cursor at ${T.toFixed(0)} K: ${im.toFixed(1)} meV.` + keys
+      : `Panel b: lifetime of a state deep in a band against temperature: ${sig3(c.tau0)} fs at T = 0, falling to ${sig3(HB / (2 * c.g0 * fac(c.w0, c.Tm)))} fs at ${c.Tm} K. Cursor at ${T.toFixed(0)} K: ${sig3(tau)} fs.` + keys);
+  }
+
+  // ---------- controls ----------
+  let lastPre = 'toy50';
+  function matchPreset(s) {
+    const ok = (k) => { const p = PRE[k]; return p.Eg === frame.Eg && p.zpr === s.zpr && p.w0 === s.w0 && (p.g0 == null || p.g0 === s.g0); };
+    if (PRE[s.preset] && ok(s.preset)) return s.preset;
+    return Object.keys(PRE).find(ok) || 'custom';
+  }
+  function onChange(s) {
+    if (s.preset !== lastPre && PRE[s.preset]) {
+      // a preset was chosen: its values, temperature range and axes
+      const p = PRE[s.preset];
+      frame = p; topB.hw = topB.tau = null;
+      ui.set('zpr', p.zpr, true); ui.set('w0', p.w0, true); if (p.g0 != null) ui.set('g0', p.g0, true);
+    } else if (s.preset === lastPre) {
+      // a slider moved: the select follows (custom, or the preset whose values these are)
+      const m = matchPreset(s); if (m !== s.preset) ui.set('preset', m, true);
+    }
+    lastPre = ui.state.preset;
+    draw();
+  }
+  const meV = (v) => v.toFixed(0) + ' meV';
+  const ui = EPP.controls(fig.querySelector('.a8-varshni-ctrls'), [
+    { key: 'preset', type: 'select', label: 'preset', wide: true, value: 'toy50', options: [
+      ['toy50', 'Toy, ħω₀ = 50 meV (printed curves)'], ['toy100', 'Toy, ħω₀ = 100 meV (as captioned)'],
+      ['diaGW', 'Diamond direct gap, GW coupling'], ['diaLDA', 'Diamond direct gap, LDA coupling'], ['si', 'Si indirect gap'], ['custom', 'custom']] },
+    { key: 'zpr', type: 'range', label: 'zero-point renormalization |ΔE^{ZPR}_g|', min: 0, max: 700, step: 1, value: 100, fmt: meV },
+    { key: 'w0', type: 'range', label: 'phonon energy ħω_0', min: 10, max: 200, step: 1, value: 50, fmt: meV },
+    { key: 'g0', type: 'range', label: 'half width Γ^{τ}(T = 0)', min: 1, max: 100, step: 1, value: 50, fmt: meV },
+    { key: 'view', type: 'seg', label: 'right panel', options: [['hw', 'half width'], ['tau', 'lifetime']], value: 'hw' }
+  ], onChange);
+  // two columns on wide screens, so that each label fits on one line; the preset spans the row
+  ui.el.style.gridTemplateColumns = 'repeat(auto-fill, minmax(290px, 1fr))';
+  { const sel = document.getElementById(`${fig.id}-preset`); if (sel) { sel.style.width = '100%'; sel.style.minWidth = '0'; } }
+  // control labels: italic variables, upright labels, the ZPR superscript stacked over its subscript
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const SS = (sup, sub) => `<span style="display:inline-flex;flex-direction:column;font-size:0.72em;line-height:0.95;vertical-align:0.5em;margin-left:1px"><span>${sup}</span><span>${sub}</span></span>`;
+  const LAB = {
+    zpr: `zero-point renormalization |Δ${I('E')}${SS('ZPR', 'g')}|`,
+    w0: `phonon energy ${I('ħω')}<sub>0</sub>`,
+    g0: `half width Γ<sup>${I('τ')}</sup>(${I('T')} = 0)`
+  };
+  Object.keys(LAB).forEach(k => { const sp = fig.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  draw();
+
+  // ---------- the temperature cursor: click or drag in either panel, or the arrow keys on a focused panel ----------
+  let raf = 0;
+  function setT(v) {
+    const t = Math.round(EPP.clamp(v, 0, frame.Tmax));
+    if (t === T) return;
+    T = t;
+    if (!raf) raf = requestAnimationFrame(() => { raf = 0; draw(); });
+  }
+  function attach(P) {
+    const cv = P.cv.canvas;
+    cv.setAttribute('tabindex', '0');
+    cv.setAttribute('role', 'application');
+    // horizontal drags move the cursor; vertical swipes still scroll the page on phones
+    cv.style.touchAction = 'pan-y';
+    let drag = null, pend = null;
+    const loc = (e) => { const r = cv.getBoundingClientRect(); return { px: e.clientX - r.left, py: e.clientY - r.top }; };
+    const inFrame = (p, tol) => { const m = P.m; return p.px >= m.l - tol && p.px <= P.cv.w - m.r + tol && p.py >= m.t - tol && p.py <= P.cv.h - m.b + tol; };
+    cv.addEventListener('pointerdown', (e) => {
+      const p = loc(e);
+      if (!inFrame(p, 6)) return;
+      // on a touch screen a touch away from the cursor waits: a tap sets T*, a sideways drag moves it, a vertical swipe scrolls
+      if (e.pointerType === 'touch' && Math.abs(p.px - P.X(T)) > 16) { pend = { x: p.px, y: p.py, id: e.pointerId }; return; }
+      drag = e.pointerId; try { cv.setPointerCapture(e.pointerId); } catch (_) {}
+      setT(P.invX(p.px));
+    });
+    cv.addEventListener('pointermove', (e) => {
+      const p = loc(e);
+      if (drag === e.pointerId) { setT(P.invX(p.px)); return; }
+      if (pend && pend.id === e.pointerId) {
+        const dx = p.px - pend.x, dy = p.py - pend.y;
+        if (Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy)) { drag = e.pointerId; pend = null; try { cv.setPointerCapture(e.pointerId); } catch (_) {} setT(P.invX(p.px)); }
+        else if (Math.abs(dy) > 8) pend = null;
+        return;
+      }
+      if (e.pointerType !== 'touch') cv.style.cursor = inFrame(p, 0) ? 'ew-resize' : '';
+    });
+    const end = (e) => { if (e.type === 'pointerup' && pend && pend.id === e.pointerId) setT(P.invX(pend.x)); pend = null; if (drag === e.pointerId) drag = null; };
+    cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
+    cv.addEventListener('keydown', (e) => {
+      if (e.altKey || e.ctrlKey || e.metaKey) return;
+      const k = e.key, big = k === 'PageUp' || k === 'PageDown', st = big ? 50 : 5;
+      let v = null;
+      if (k === 'ArrowLeft' || k === 'ArrowDown' || k === 'PageDown') v = Math.ceil(T / st - 1e-9) * st - st;
+      else if (k === 'ArrowRight' || k === 'ArrowUp' || k === 'PageUp') v = Math.floor(T / st + 1e-9) * st + st;
+      else if (k === 'Home') v = 0;
+      else if (k === 'End') v = frame.Tmax;
+      if (v === null) return;
+      e.preventDefault(); setT(v);
+    });
+  }
+  attach(pA); attach(pB);
+})();
+</script>

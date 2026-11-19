@@ -1,0 +1,367 @@
+  <figure class="viz" id="viz-b9-nonanalytic">
+    <p class="viz-title">At Γ the frequencies depend on the direction of approach <span class="tag">interactive</span></p>
+    <div class="viz-grid side"><div class="b9-nonanalytic-a"><div class="legend b9-nonanalytic-leg"><span class="item" style="color:var(--c-phonon)"><span class="sw" style="border-top-width:3px"></span><span style="color:var(--fg-2)">upper mode (LO-like in GaN)</span></span><span class="item" style="color:var(--c-4)"><span class="sw" style="border-top-width:3px"></span><span style="color:var(--fg-2)">lower mode (TO-like in GaN)</span></span><span class="item" style="color:var(--c-5)"><span class="sw" style="border-top-width:2px"></span><span style="color:var(--fg-2)">ordinary TO, along $y$</span></span><span class="item" style="color:var(--muted)"><span class="sw dash" style="border-top-width:1.6px"></span><span style="color:var(--fg-2)">first order, bare $x$ mode</span></span><span class="item" style="color:var(--muted)"><span class="sw dot" style="border-top-width:2px"></span><span style="color:var(--fg-2)">first order, bare $z$ mode</span></span></div></div><div class="b9-nonanalytic-b"></div></div>
+    <div class="b9-nonanalytic-ctrls"></div>
+    <div class="readout b9-nonanalytic-ro" aria-live="polite"><span>upper mode $\hbar\omega$<b class="b9-nonanalytic-v-up"></b></span><span>lower mode $\hbar\omega$<b class="b9-nonanalytic-v-lo"></b></span><span>ordinary TO $\hbar\omega$<b class="b9-nonanalytic-v-or"></b></span></div>
+    <div class="readout b9-nonanalytic-ro2" aria-live="polite"><span>first order $\hbar\bar\omega_x,\ \hbar\bar\omega_z$<b class="b9-nonanalytic-v-fo"></b></span><span>angle of upper mode to $\hat\bq$<b class="b9-nonanalytic-v-ang"></b></span><span>mixing $|\tPhi_{xz}|/|\tPhi_{xx}-\tPhi_{zz}|$<b class="b9-nonanalytic-v-mix"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> In GaN the LO-like frequency moves from 91.0 to <span class="nw">91.9 meV</span> as $\hat\bq$ turns from the optic axis into the plane, with $\bq\to0$ all along: at $\Gamma$ the frequencies depend on the direction of approach. First order follows the bare $x$ and $z$ modes and is far off at intermediate angles; the true modes are polarized along and across $\hat\bq$.</p><div class="cap-more">
+      <p><strong>Marks.</strong> Solid: the exact modes, upper and lower polarized in the $x$–$z$ plane, and the ordinary TO mode, along $y$, across both $\hat\bq$ and the optic axis, never shifted <span class="nw">($\hat\bq\cdot\bj_y=0$).</span> Dashed and dotted: first order for the bare $x$ and $z$ modes, read out as $\bar\omega_x$, $\bar\omega_z$. Grey ticks: $\omega_{\mathrm{LO},z}$, $\omega_{\mathrm{TO},x}$ (reached at $\theta=0$) and $\omega_{\mathrm{LO},x}$, $\omega_{\mathrm{TO},z}$ (at $90^\circ$). In (b): $\hat\bq$ in bold, the mode displacements as double arrows, ⊙ the ordinary mode.</p>
+      <p><strong>Try.</strong> At $\theta=0^\circ$ or $90^\circ$ first order is exact: nothing mixes. Lower $s$ to 0.2: the dipole–dipole term falls below the bare TO splitting, the modes stay along $x$ and $z$, and first order is accurate. Set the bare splitting to zero: any Born charge mixes the bare modes completely. Clicking in (a) sets $\theta$.</p>
+      <p><strong>Model.</strong> Loudon's model of a uniaxial crystal: three polar modes at $\Gamma$, bare $\nu=x,y$ at $\omega_{\mathrm{TO},x}$ and $\nu=z$ at $\omega_{\mathrm{TO},z}$, with currents $\bj_\nu$ along their axes and $(\omega^{\mathrm{ion}}_{\mathrm p,\nu})^2=4\pi|\bj_\nu|^2/\OV=\varepsilon_\infty(\omega^2_{\mathrm{LO},\nu}-\omega^2_{\mathrm{TO},\nu})$, as in <a class="eqref" href="#b9-eq-cubic"></a>; $s$ multiplies every Born charge. <a class="eqref" href="#b9-eq-piph"></a> at $\omega=0$, the nonanalytic limit of <a class="eqref" href="#b9-eq-gl"></a>, gives in the bare-mode basis $\tPhi_{\nu\nu'}=\omega^2_{\mathrm{TO},\nu}\delta_{\nu\nu'}+s^2\omega^{\mathrm{ion}}_{\mathrm p,\nu}\omega^{\mathrm{ion}}_{\mathrm p,\nu'}\hat q_\nu\hat q_{\nu'}/\varepsilon_\infty$ ($\nu,\nu'=x,z$; $\hat\bq=(\sin\theta,0,\cos\theta)$): exact modes are its eigenvalues <a class="eqref" href="#b9-eq-matrix"></a>, first order its diagonal <a class="eqref" href="#b9-eq-first"></a>. GaN (literature values, illustrative): $\hbar\omega_{\mathrm{TO},z}=65.93$, $\hbar\omega_{\mathrm{TO},x}=69.28$, $\hbar\omega_{\mathrm{LO},z}=91.00$, <span class="nw">$\hbar\omega_{\mathrm{LO},x}=91.87$ meV;</span> isotropic $\varepsilon_\infty=5.35$. Wurtzite's other optical modes carry no dipole.</p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b9-nonanalytic');
+  if (!fig || !window.EPP) return;
+  // ---------- physics (energies in meV): the three polar optical modes of a uniaxial crystal at q -> 0 ----------
+  // wurtzite GaN, Raman frequencies (literature values, illustrative): A1(TO) 531.8, E1(TO) 558.8, A1(LO) 734.0, E1(LO) 741.0 cm^-1
+  const CM = 8.06554;                                                    // cm^-1 per meV
+  const TOX = 558.8 / CM, TOZ = 531.8 / CM, LOX = 741.0 / CM, LOZ = 734.0 / CM;   // 69.28, 65.93, 91.87, 91.00 meV
+  const EXX = 5.35, EZZ = 5.35;                                          // ε∞ across and along the optic axis
+  // mode plasma frequencies (ħω^ion_p,ν)^2 = 4π|j_ν|^2/Ω_V = ε_νν (ω_LO,ν^2 − ω_TO,ν^2), as in (B9.11): 139.56 and 145.08 meV
+  const WPX2 = EXX * (LOX * LOX - TOX * TOX), WPZ2 = EZZ * (LOZ * LOZ - TOZ * TOZ);
+  const WPX = Math.sqrt(WPX2), WPZ = Math.sqrt(WPZ2), RAD = Math.PI / 180;
+  const SPLIT_GAN = 3.35;                                                // ħ(ω_TO,x − ω_TO,z) = 27 cm^-1 = 3.348 meV
+  // (B9.8) at ω = 0 in (B9.14), basis of the bare x and z modes (meV^2), q̂ = (sin θ, 0, cos θ), currents j_ν along ν:
+  //   Φ̃_νν' = ω_TO,ν^2 δ_νν' + s^2 ω̄_p,ν ω_p,ν' q̂_ν q̂_ν' / (q̂·ε∞·q̂)
+  // exact modes: its eigenvalues; first order (B9.13): its diagonal. The y mode has q̂·j_y = 0 and stays at ω_TO,x.
+  function modes(thDeg, s, split) {
+    const t = thDeg * RAD, S = Math.sin(t), C = Math.cos(t), tz = TOX - split;
+    const k = s * s / (EXX * S * S + EZZ * C * C);
+    const xx = TOX * TOX + k * WPX2 * S * S, zz = tz * tz + k * WPZ2 * C * C, xz = k * WPX * WPZ * S * C;
+    const m = 0.5 * (xx + zz), r = Math.hypot(0.5 * (xx - zz), xz), up = m + r, lo = Math.max(0, m - r);
+    // displacement of the upper mode in the bare basis, (c_x, c_z) ∝ (xz, up − xx) or (up − zz, xz): the better conditioned form
+    let cx = xz, cz = up - xx;
+    if (Math.hypot(up - zz, xz) > Math.hypot(cx, cz)) { cx = up - zz; cz = xz; }
+    const degen = r <= 1e-7 * m;
+    const phi = degen ? 0 : ((Math.atan2(cx, cz) / RAD) % 180 + 180) % 180;   // angle from z toward x, in [0°, 180°)
+    let dlt = phi - thDeg;                                                       // upper-mode direction relative to q̂
+    if (dlt > 90) dlt -= 180; else if (dlt <= -90) dlt += 180;
+    return { xx, zz, xz, tz, up: Math.sqrt(up), lo: Math.sqrt(lo), fx: Math.sqrt(xx), fz: Math.sqrt(zz), phi, dlt, degen };
+  }
+  const TH = EPP.linspace(0, 90, 181);
+  function compute(st) {
+    const s = st.s, sp = st.sp, th = Math.round(st.th);
+    const c = { th, s, sp, fo: !!st.fo, up: [], lo: [], or: [], fx: [], fz: [] };
+    for (const t of TH) { const m = modes(t, s, sp); c.up.push(m.up); c.lo.push(m.lo); c.fx.push(m.fx); c.fz.push(m.fz); c.or.push(TOX); }
+    c.at = modes(th, s, sp);
+    c.lox = Math.sqrt(TOX * TOX + s * s * WPX2 / EXX);                 // θ = 90°: x mode longitudinal
+    c.loz = Math.sqrt(c.at.tz * c.at.tz + s * s * WPZ2 / EZZ);          // θ = 0: z mode longitudinal
+    c.lolike = !c.at.degen && Math.abs(c.at.dlt) <= 30;                 // upper mode within 30° of q̂
+    return c;
+  }
+
+  // ---------- canvas text: '$..$' italic symbol (text font), '*..*' bold vector; _ and ^ as in EPP.drawRich ----------
+  let fUI = 'sans-serif', fTX = 'serif';
+  const fonts = () => { fUI = EPP.css('--font-ui') || fUI; fTX = EPP.css('--font-text') || fTX; };
+  const parse = s => s.split(/(\$[^$]*\$|\*[^*]*\*)/).filter(Boolean).map(t => (t[0] === '$' ? [t.slice(1, -1), 'i'] : t[0] === '*' ? [t.slice(1, -1), 'b'] : [t, '']));
+  const pOpt = (p, size) => (p[1] === 'i' ? { size: /^[_^]/.test(p[0]) ? size : size + 1, font: fTX, italic: true } : { size, font: fUI, bold: p[1] === 'b' });
+  const rtW = (ctx, s, size) => parse(s).reduce((w, p) => { const o = pOpt(p, size); return w + EPP.measureRich(ctx, p[0], o.size, o.font, o); }, 0);
+  function rt(ctx, s, x, y, size, color, align) {
+    const tot = rtW(ctx, s, size);
+    let x0 = align === 'center' ? x - tot / 2 : align === 'right' ? x - tot : x;
+    ctx.fillStyle = color; ctx.textBaseline = 'alphabetic';
+    for (const p of parse(s)) { const o = pOpt(p, size); x0 += EPP.drawRich(ctx, p[0], x0, y, o); }
+    return tot;
+  }
+  const fan = (a0, n, step) => { const out = [a0]; for (let k = 1; k <= n; k++) out.push(a0 + k * step, a0 - k * step); return out; };
+  // label placer: the first candidate centre whose box stays inside, clears the placed boxes and every sampled line point
+  function placer(ctx, x0, y0, x1, y1) {
+    const pts = [], boxes = [];
+    const hit = (b, o) => b[0] < o[2] + 2 && b[2] > o[0] - 2 && b[1] < o[3] + 2 && b[3] > o[1] - 2;
+    const free = (b) => b[0] >= x0 && b[1] >= y0 && b[2] <= x1 && b[3] <= y1 && !boxes.some(o => hit(b, o)) &&
+      !pts.some(p => p[0] > b[0] - 2.5 && p[0] < b[2] + 2.5 && p[1] > b[1] - 2.5 && p[1] < b[3] + 2.5);
+    const api = {
+      seg(A, B) { const n = Math.max(1, Math.ceil(Math.hypot(B[0] - A[0], B[1] - A[1]) / 3)); for (let i = 0; i <= n; i++) pts.push([A[0] + (B[0] - A[0]) * i / n, A[1] + (B[1] - A[1]) * i / n]); },
+      line(list) { for (let i = 1; i < list.length; i++) api.seg(list[i - 1], list[i]); },
+      arc(Cc, r, a0, a1) { const n = Math.max(2, Math.ceil(Math.abs(a1 - a0) * RAD * r / 3)); for (let i = 0; i <= n; i++) { const a = (a0 + (a1 - a0) * i / n) * RAD; pts.push([Cc[0] + r * Math.sin(a), Cc[1] - r * Math.cos(a)]); } },
+      block(bx0, by0, bx1, by1) { boxes.push([Math.min(bx0, bx1), Math.min(by0, by1), Math.max(bx0, bx1), Math.max(by0, by1)]); },
+      // centres whose box edge lies gap px from the anchor A, along each direction a (degrees from +z toward +x, screen up = +z)
+      ring(A, angs, w, h, gap) { return angs.map(a => { const sx = Math.sin(a * RAD), sy = -Math.cos(a * RAD), e = Math.abs(sx) * w / 2 + Math.abs(sy) * h / 2; return [A[0] + sx * (gap + e), A[1] + sy * (gap + e)]; }); },
+      put(s, size, color, cands, bg) {
+        const w = rtW(ctx, s, size) + 4, h = size * 1.3, list = typeof cands === 'function' ? cands(w, h) : cands;
+        for (const c of list) {
+          const b = [c[0] - w / 2, c[1] - h / 2, c[0] + w / 2, c[1] + h / 2];
+          if (!free(b)) continue;
+          boxes.push(b);
+          if (bg) { ctx.fillStyle = EPP.alpha('surface', 0.86); ctx.fillRect(b[0], b[1], b[2] - b[0], b[3] - b[1]); }
+          rt(ctx, s, c[0], c[1] + size * 0.36, size, color, 'center');
+          return c;
+        }
+        return null;
+      }
+    };
+    return api;
+  }
+  function head(ctx, tip, ux, uy, hs, col) {
+    const wv = 0.46 * hs;
+    ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(tip[0], tip[1]);
+    ctx.lineTo(tip[0] - ux * hs - uy * wv, tip[1] - uy * hs + ux * wv); ctx.lineTo(tip[0] - ux * hs + uy * wv, tip[1] - uy * hs - ux * wv);
+    ctx.closePath(); ctx.fill();
+  }
+  // line A -> B with a head at B, and at A too when both
+  function arrow(ctx, A, B, col, lw, hs, dash, both) {
+    const dx = B[0] - A[0], dy = B[1] - A[1], L = Math.hypot(dx, dy);
+    if (L < 1) return;
+    const ux = dx / L, uy = dy / L, a0 = both ? [A[0] + ux * hs * 0.8, A[1] + uy * hs * 0.8] : A, b0 = [B[0] - ux * hs * 0.8, B[1] - uy * hs * 0.8];
+    ctx.strokeStyle = col; ctx.lineWidth = lw; ctx.lineCap = 'butt'; ctx.setLineDash(dash || []);
+    ctx.beginPath(); ctx.moveTo(a0[0], a0[1]); ctx.lineTo(b0[0], b0[1]); ctx.stroke(); ctx.setLineDash([]);
+    head(ctx, B, ux, uy, hs, col); if (both) head(ctx, A, -ux, -uy, hs, col);
+  }
+  function odot(ctx, x, y, r, col, cSurf) {
+    ctx.fillStyle = cSurf; ctx.beginPath(); ctx.arc(x, y, r + 2, 0, 2 * Math.PI); ctx.fill();
+    ctx.strokeStyle = col; ctx.lineWidth = 1.8; ctx.setLineDash([]); ctx.beginPath(); ctx.arc(x, y, r, 0, 2 * Math.PI); ctx.stroke();
+    ctx.fillStyle = col; ctx.beginPath(); ctx.arc(x, y, Math.max(1.6, 0.34 * r), 0, 2 * Math.PI); ctx.fill();
+  }
+
+  // ---------- panel (a): frequencies against θ ----------
+  const elA = fig.querySelector('.b9-nonanalytic-a'), elLeg = fig.querySelector('.b9-nonanalytic-leg');
+  const pA = new EPP.Plot(elA, {
+    xlim: [0, 90], ylim: [45, 130], legend: false, aspect: 0.72, minHeight: 290, maxHeight: 420,
+    xticks: [0, 15, 30, 45, 60, 75, 90].map(v => ({ v, label: v + '°' })), yticks: [50, 60, 70, 80, 90, 100, 110, 120, 130],
+    margin: { l: 50, r: 46, t: 24, b: 42 }, xname: 'θ', hoverX: v => Math.round(v) + '°', hoverY: v => EPP.fix(v, 2) + ' meV',
+    ariaLabel: 'Panel a: energies of the three polar optical modes at q → 0 against the angle θ between q̂ and the optic axis'
+  });
+  if (elLeg) elA.appendChild(elLeg);   // the legend (static markup with MathJax) sits under the plot
+  let cur = null;
+  const baseRender = pA.render.bind(pA);
+  pA.render = () => { baseRender(); if (cur) overlayA(); };
+
+  // reference labels in the right margin: clusters of overlapping labels are centred on their mean height
+  function stack(items, gap, lo, hi) {
+    items.sort((a, b) => a.y0 - b.y0);
+    const cl = items.map(o => ({ items: [o], c: o.y0 }));
+    const half = (k) => (k.items.length - 1) * gap / 2;
+    for (let guard = 0; guard < 20; guard++) {
+      cl.forEach(k => { k.c = EPP.clamp(k.c, lo + half(k), hi - half(k)); });
+      let merged = false;
+      for (let i = 0; i + 1 < cl.length; i++) {
+        const a = cl[i], b = cl[i + 1];
+        if ((b.c - half(b)) - (a.c + half(a)) < gap - 1e-6) {
+          const its = a.items.concat(b.items);
+          cl.splice(i, 2, { items: its, c: its.reduce((s, o) => s + o.y0, 0) / its.length });
+          merged = true; break;
+        }
+      }
+      if (!merged) break;
+    }
+    cl.forEach(k => k.items.forEach((o, j) => { o.y = k.c - half(k) + j * gap; }));
+  }
+
+  function overlayA() {
+    const ctx = pA.ctx, W = pA.cv.w, H = pA.cv.h, m = pA.m;
+    if (!W || !H) return;
+    fonts();
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted');
+    const narrow = W - m.l - m.r < 300;
+    ctx.save();
+    const title = narrow ? '(a) frequencies at Γ, by direction of *q̂*' : '(a) frequencies at Γ against the direction of *q̂*';
+    rt(ctx, title, 4, 15, 11.5, cFg2, 'left');
+    rt(ctx, 'angle $θ$ between *q̂* and the optic axis $z$', m.l + (W - m.l - m.r) / 2, H - 8, 12.5, cFg, 'center');
+    ctx.translate(14, m.t + (H - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    rt(ctx, '$ħω$ (meV)', 0, 0, 12.5, cFg, 'center');
+    ctx.restore();
+    // grey ticks at the right edge: ω_LO,z and ω_TO,x (the values at θ = 0), ω_LO,x and ω_TO,z (at θ = 90°)
+    const X1 = W - m.r;
+    const refs = [
+      { v: cur.lox, s: '$ω$_{LO,}$_x$' }, { v: cur.loz, s: '$ω$_{LO,}$_z$' },
+      { v: TOX, s: '$ω$_{TO,}$_x$' }, { v: cur.at.tz, s: '$ω$_{TO,}$_z$' }
+    ].map(o => Object.assign(o, { y0: pA.Y(o.v) }));
+    stack(refs, 12.5, m.t + 4, H - m.b - 4);
+    ctx.lineWidth = 1.2; ctx.setLineDash([]);
+    for (const o of refs) {
+      ctx.strokeStyle = cMut; ctx.beginPath(); ctx.moveTo(X1 + 1, o.y0); ctx.lineTo(X1 + 6, o.y0);
+      if (Math.abs(o.y - o.y0) > 1.5) ctx.lineTo(X1 + 10, o.y);
+      ctx.stroke();
+      rt(ctx, o.s, X1 + 12, o.y + 4, 11, cMut, 'left');
+    }
+    // direct labels beside the curves, where there is room; a label must lie nearer to its own curve than to any other
+    const curve = (arr) => TH.map((t, i) => [pA.X(t), pA.Y(arr[i])]);
+    const C = { up: curve(cur.up), lo: curve(cur.lo), or: curve(cur.or) };
+    if (cur.fo) { C.fx = curve(cur.fx); C.fz = curve(cur.fz); }
+    const pl = placer(ctx, m.l + 2, m.t + 2, W - m.r - 2, H - m.b - 2);
+    Object.values(C).forEach(c => pl.line(c));
+    const Xc = pA.X(cur.th);
+    [cur.at.up, cur.at.lo, TOX].concat(cur.fo ? [cur.at.fx, cur.at.fz] : []).forEach(v => { const Y = pA.Y(v); pl.block(Xc - 5, Y - 5, Xc + 5, Y + 5); });
+    const yAt = (c, x) => { const f = EPP.clamp((x - c[0][0]) / (c[c.length - 1][0] - c[0][0]), 0, 1) * (c.length - 1), i = Math.min(c.length - 2, Math.floor(f)); return c[i][1] + (c[i + 1][1] - c[i][1]) * (f - i); };
+    const own = (key, p) => { const d = Math.abs(yAt(C[key], p[0]) - p[1]); return Object.keys(C).every(k => k === key || Math.abs(yAt(C[k], p[0]) - p[1]) > d + 0.5); };
+    // candidates: above or below a point of the curve, centred on it or beside it (above-left of a rising curve clears it)
+    const cands = (key, degs, sides) => (w, h) => {
+      const out = [];
+      for (const sd of sides) for (const off of [3, 9]) for (const d of degs) for (const dx of [0, -1, 1]) {
+        const P = C[key][Math.round(d * 2)], c = [P[0] + dx * (w / 2 + 2), P[1] + sd * (h / 2 + off)];
+        if (own(key, c)) out.push(c);
+      }
+      return out;
+    };
+    const L = [
+      ['up', cur.lolike ? 'LO-like' : 'upper mode', EPP.textColor('phonon'), [10, 80, 24, 66, 45], [-1, 1]],
+      ['lo', cur.lolike ? 'TO-like' : 'lower mode', EPP.textColor('c4'), [80, 68, 10, 24, 45], [1, -1]],
+      ['or', narrow ? 'TO along $y$' : 'ordinary TO, along $y$', EPP.textColor('c5'), [82, 74, 64, 30, 14], [-1, 1]],
+      ['or', 'TO along $y$', EPP.textColor('c5'), [82, 74, 64, 30, 14], [-1, 1]]   // shorter fallback, tried only if the first fails
+    ];
+    if (cur.fo) L.push(
+      ['fx', narrow ? 'first order, $x$' : 'first order, $x$ mode', cMut, [28, 20, 36, 58, 70, 80], [-1, 1]],
+      ['fz', narrow ? 'first order, $z$' : 'first order, $z$ mode', cMut, [62, 70, 54, 78, 20, 30], [-1, 1]]);
+    const done = new Set();
+    for (const [key, s, col, degs, sides] of L) if (!done.has(key) && pl.put(s, 11.5, col, cands(key, degs, sides), true)) done.add(key);
+  }
+
+  function drawA() {
+    const c = cur;
+    const layers = [];
+    if (c.fo) layers.push(
+      { type: 'line', x: TH, y: c.fx, color: 'muted', width: 1.6, dash: [6, 4], label: 'first order, x mode' },
+      { type: 'line', x: TH, y: c.fz, color: 'muted', width: 1.9, dash: [1.5, 3.5], label: 'first order, z mode' });
+    layers.push(
+      { type: 'line', x: TH, y: c.lo, color: 'c4', width: 2.6, label: 'lower mode' },
+      { type: 'line', x: TH, y: c.up, color: 'phonon', width: 2.6, label: 'upper mode' },
+      { type: 'line', x: TH, y: c.or, color: 'c5', width: 1.6, label: 'ordinary TO (y)' },
+      { type: 'vline', at: c.th, color: 'muted', width: 1 });
+    if (c.fo) layers.push({ type: 'points', x: [c.th, c.th], y: [c.at.fx, c.at.fz], color: 'muted', r: 3.2, hollow: true });
+    layers.push(
+      { type: 'points', x: [c.th], y: [c.at.lo], color: 'c4', r: 4.2 },
+      { type: 'points', x: [c.th], y: [c.at.up], color: 'phonon', r: 4.2 },
+      { type: 'points', x: [c.th], y: [TOX], color: 'c5', r: 3.4 });
+    pA.draw(layers);
+  }
+
+  // ---------- panel (b): directions in the x–z plane ----------
+  const cvB = EPP.canvas(fig.querySelector('.b9-nonanalytic-b'), { aspect: 1.15, minHeight: 280, maxHeight: 360 });
+  cvB.canvas.setAttribute('role', 'img');
+  function drawB() {
+    const cv = cvB, ctx = cv.ctx, W = cv.w, H = cv.h;
+    cv.clear();
+    if (!cur || W < 80 || H < 120) return;
+    fonts();
+    const a = cur.at, th = cur.th, phi = a.phi;
+    const cFg2 = EPP.color('fg2'), cMut = EPP.color('muted'), cInk = EPP.color('ink'), cSurf = EPP.color('surface');
+    const cUp = EPP.color('phonon'), cLo = EPP.color('c4'), cOr = EPP.color('c5');
+    const tUp = EPP.textColor('phonon'), tLo = EPP.textColor('c4'), tOr = EPP.textColor('c5');
+    const title = W < 290 ? '(b) directions in the $x$–$z$ plane' : '(b) displacement directions in the $x$–$z$ plane';
+    rt(ctx, title, 4, 15, 11.5, cFg2, 'left');
+    // key at the bottom: the ordinary mode and the bare modes
+    const yK1 = H - 23, yK2 = H - 7;
+    odot(ctx, 10, yK1 - 4, 4.5, cOr, cSurf);
+    rt(ctx, W < 300 ? 'ordinary TO, along $y$' : 'ordinary TO, along $y$ (out of the plane)', 21, yK1, 11, tOr, 'left');
+    ctx.strokeStyle = cMut; ctx.lineWidth = 1.5; ctx.setLineDash([6, 4]); ctx.beginPath(); ctx.moveTo(4, yK2 - 4); ctx.lineTo(24, yK2 - 4); ctx.stroke();
+    ctx.lineWidth = 1.8; ctx.setLineDash([1.5, 3.5]); ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(30, yK2 - 4); ctx.lineTo(50, yK2 - 4); ctx.stroke();
+    ctx.setLineDash([]); ctx.lineCap = 'butt';
+    rt(ctx, 'bare $x$ and $z$ modes', 56, yK2, 11, cMut, 'left');
+    // geometry: origin O, half-length R of the mode arrows
+    const R = Math.max(50, Math.min(0.33 * W, W / 2 - 46, (H - 101) / 2.25));
+    const cx = W / 2, cy = (H + 0.25 * R - 13) / 2, O = [cx, cy];
+    const P = (ang, r) => [cx + r * Math.sin(ang * RAD), cy - r * Math.cos(ang * RAD)];   // ang from +z toward +x
+    const pl = placer(ctx, 2, 2, W - 2, H - 2);
+    pl.block(0, 0, 8 + rtW(ctx, title, 11.5), 21);
+    pl.block(0, H - 36, W, H);
+    // bare modes, which also mark the axes: dashed along x, dotted along z
+    arrow(ctx, P(270, R), P(90, R), cMut, 1.4, 7, [6, 4], true);
+    arrow(ctx, P(180, R), P(0, R), cMut, 1.8, 7, [1.5, 3.5], true);
+    pl.seg(P(270, R), P(90, R)); pl.seg(P(180, R), P(0, R));
+    // θ: arc from the optic axis to q̂
+    const rT = 0.3 * R;
+    if (th > 0.5) {
+      ctx.strokeStyle = cFg2; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(cx, cy, rT, -Math.PI / 2, -Math.PI / 2 + th * RAD); ctx.stroke();
+      pl.arc(O, rT, 0, th);
+    }
+    // the two modes polarized in the plane: double arrows through O, the lower one first
+    const rD = 0.7 * R;
+    if (!a.degen) {
+      arrow(ctx, P(phi + 90, R), P(phi - 90, R), cLo, 3, 10, null, true);
+      arrow(ctx, P(phi + 180, R), P(phi, R), cUp, 3, 10, null, true);
+      pl.seg(P(phi + 90, R), P(phi - 90, R)); pl.seg(P(phi + 180, R), P(phi, R));
+      if (Math.abs(a.dlt) > 0.3) {
+        // the angle between the upper-mode displacement and q̂
+        ctx.strokeStyle = tUp; ctx.lineWidth = 1.3; ctx.beginPath();
+        ctx.arc(cx, cy, rD, -Math.PI / 2 + th * RAD, -Math.PI / 2 + (th + a.dlt) * RAD, a.dlt < 0); ctx.stroke();
+        pl.arc(O, rD, th, th + a.dlt);
+      }
+    }
+    // q̂ on top, longer than the mode arrows so that its head stays visible
+    const tipQ = P(th, 1.25 * R);
+    arrow(ctx, O, tipQ, cInk, 2.2, 10, null, false);
+    pl.seg(O, tipQ);
+    odot(ctx, cx, cy, 6.5, cOr, cSurf);
+    pl.block(cx - 9, cy - 9, cx + 9, cy + 9);
+    // labels, most important first
+    pl.put('*q̂*', 14, cInk, (w, h) => pl.ring(tipQ, fan(th, 7, 22.5), w, h, 3));
+    if (!a.degen) {
+      const eU = P(phi + 180, R), eU2 = P(phi, R), eL = P(phi - 90, R), eL2 = P(phi + 90, R);
+      pl.put(cur.lolike ? 'LO-like' : 'upper mode', 12, tUp, (w, h) => pl.ring(eU, fan(phi + 180, 4, 22.5), w, h, 4).concat(pl.ring(eU2, fan(phi + 60, 4, 22.5), w, h, 4)));
+      pl.put(cur.lolike ? 'TO-like' : 'lower mode', 12, tLo, (w, h) => pl.ring(eL, fan(phi - 90, 4, 22.5), w, h, 4).concat(pl.ring(eL2, fan(phi + 90, 4, 22.5), w, h, 4)));
+    } else {
+      rt(ctx, 'degenerate: every direction in the plane is a mode', W / 2, 36, 11, cFg2, 'center');
+    }
+    pl.put('$z$, optic axis', 11.5, cMut, (w, h) => pl.ring(P(0, R), [0, -90, 90, -45, 45], w, h, 4));
+    pl.put('$x$', 12.5, cMut, (w, h) => pl.ring(P(90, R), [90, 180, 0, 135, 45], w, h, 4));
+    if (th > 0.5) pl.put('$θ$', 12.5, cFg2, (w, h) => [rT, rT + 8, 0.5 * R, 0.62 * R, 0.76 * R, 0.9 * R].map(r => pl.ring(P(th / 2, r), [th / 2], w, h, 3)[0]));
+    if (!a.degen && Math.abs(a.dlt) > 0.3) {
+      // the value of the angle: just outside its arc, else beside the upper-mode arrow on the side away from q̂
+      const mid = th + a.dlt / 2, sg = a.dlt > 0 ? 1 : -1, A = P(th + a.dlt, rD);
+      pl.put(Math.abs(a.dlt).toFixed(1) + '°', 11, tUp, (w, h) => pl.ring(P(mid, rD), fan(mid, 2, 12), w, h, 3)
+        .concat(pl.ring(A, fan(th + a.dlt + 90 * sg, 3, 30), w, h, 4), pl.ring(P(mid, 1.08 * R), fan(mid, 2, 12), w, h, 3)));
+    }
+    cv.canvas.setAttribute('aria-label', `Panel b: directions in the x–z plane. The arrow q̂ points at θ = ${th}° from the optic axis z. ` +
+      (a.degen ? 'The two in-plane modes are degenerate, so every direction in the plane is a mode. ' :
+        `The upper mode${cur.lolike ? ' (LO-like)' : ''} is displaced at ${phi.toFixed(1)}° from z, ${Math.abs(a.dlt).toFixed(1)}° from q̂; the lower mode${cur.lolike ? ' (TO-like)' : ''} is displaced perpendicular to it. `) +
+      'The ordinary TO mode moves along y, out of the plane, drawn as a circled dot at the origin. Dashed and dotted lines: the bare x and z modes.');
+  }
+  cvB.onResize(drawB);
+
+  // ---------- readouts ----------
+  const ro = {};
+  ['up', 'lo', 'or', 'fo', 'ang', 'mix'].forEach(k => { ro[k] = fig.querySelector('.b9-nonanalytic-v-' + k); });
+  const f2 = (v) => EPP.fix(v, 2), NB = ' ';
+  function readouts() {
+    const a = cur.at;
+    ro.up.textContent = `${f2(a.up)}${NB}meV` + (cur.lolike ? ', LO-like' : '');
+    ro.lo.textContent = `${f2(a.lo)}${NB}meV` + (cur.lolike ? ', TO-like' : '');
+    ro.or.textContent = `${f2(TOX)}${NB}meV`;
+    ro.fo.textContent = `${f2(a.fx)}, ${f2(a.fz)}${NB}meV`;
+    ro.ang.textContent = a.degen ? 'none (degenerate)' : `${Math.abs(a.dlt).toFixed(1)}°`;
+    const num = Math.abs(a.xz), den = Math.abs(a.xx - a.zz);
+    ro.mix.textContent = num < 1e-9 ? '0' : (den < 1e-9 * a.xx || num / den >= 1000 ? '> 1000' : EPP.fmt(num / den, 3));
+    pA.cv.canvas.setAttribute('aria-label', `Panel a: energies of the three polar optical modes at q → 0 against the angle θ between q̂ and the optic axis, 0 to 90°. ` +
+      `The upper mode runs from ${f2(cur.loz > TOX ? cur.loz : TOX)} meV at 0° to ${f2(Math.max(cur.lox, a.tz))} meV at 90°. At θ = ${cur.th}°: upper ${f2(a.up)} meV, lower ${f2(a.lo)} meV, ordinary TO ${f2(TOX)} meV` +
+      (cur.fo ? `; first order ${f2(a.fx)} meV for the bare x mode and ${f2(a.fz)} meV for the bare z mode.` : '.'));
+  }
+
+  function update(st) {
+    cur = compute(st);
+    drawA(); drawB(); readouts();
+  }
+
+  // ---------- controls ----------
+  const elCtl = fig.querySelector('.b9-nonanalytic-ctrls');
+  const sgn = (v) => (v < -0.0005 ? '−' : '');
+  const ui = EPP.controls(elCtl, [
+    { key: 'th', type: 'range', label: 'angle θ between q̂ and the optic axis z', min: 0, max: 90, step: 1, value: 45, fmt: v => Math.round(v) + '°' },
+    { key: 's', type: 'range', label: 'Born-charge scale s', min: 0, max: 1.5, step: 0.01, value: 1, fmt: v => v.toFixed(2) + (Math.abs(v - 1) < 0.005 ? ' (GaN)' : '') },
+    { key: 'sp', type: 'range', label: 'bare TO splitting ħω_{TO,x} − ħω_{TO,z}', min: -20, max: 20, step: 0.05, value: SPLIT_GAN, fmt: v => sgn(v) + Math.abs(v).toFixed(2) + ' meV' + (Math.abs(v - SPLIT_GAN) < 0.026 ? ' (GaN)' : '') },
+    { key: 'fo', type: 'toggle', label: 'show first order (diagonal)', value: true }
+  ], update);
+  elCtl.style.gridTemplateColumns = 'repeat(auto-fill, minmax(min(100%, 300px), 1fr))';   // two columns on desktop, so no label wraps
+  // slider labels: symbols in italic, vectors in bold, as in the text
+  const I = (t) => `<i style="font-family:var(--font-text)">${t}</i>`, Bd = (t) => `<strong>${t}</strong>`;
+  const LAB = {
+    th: `angle ${I('θ')} between ${Bd('q̂')} and the optic axis ${I('z')}`,
+    s: `Born-charge scale ${I('s')}`,
+    sp: `bare TO splitting ${I('ħω')}<sub>TO,${I('x')}</sub> − ${I('ħω')}<sub>TO,${I('z')}</sub>`
+  };
+  Object.keys(LAB).forEach(k => { const sp = elCtl.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  // a click or drag in (a) sets θ
+  pA.onPointer = (x, y, type) => { if (type !== 'up') ui.set('th', EPP.clamp(Math.round(x), 0, 90)); };
+  update(ui.state);
+
+  // previewed outside Section B.9 (the figure test), the cited equations are absent: show their numbers as text
+  if (!fig.closest('#b-electrostatic')) {
+    const TAG = { 'b9-eq-piph': 'B9.8', 'b9-eq-cubic': 'B9.11', 'b9-eq-gl': 'B9.12', 'b9-eq-first': 'B9.13', 'b9-eq-matrix': 'B9.14' };
+    fig.querySelectorAll('a.eqref').forEach(a => {
+      const id = (a.getAttribute('href') || '').slice(1);
+      if (document.getElementById(id)) return;
+      const s = document.createElement('span'); s.textContent = '(' + (TAG[id] || id) + ')'; a.replaceWith(s);
+    });
+  }
+})();
+</script>

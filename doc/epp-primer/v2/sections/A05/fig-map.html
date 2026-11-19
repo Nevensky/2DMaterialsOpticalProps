@@ -1,0 +1,325 @@
+  <figure class="viz" id="viz-a5-map">
+    <p class="viz-title">The Hedin–Baym equations as a map <span class="tag">interactive</span></p>
+    <div class="a5-map-frame" role="group" aria-label="Map of the Hedin–Baym equations: fourteen quantities, joined by arrows that point from an ingredient to the quantity built from it. Select a quantity to show its equation, its meaning and its inputs and outputs in the panel below the controls.">
+      <svg class="a5-map-edges" aria-hidden="true" focusable="false"></svg>
+      <button type="button" class="a5-map-node" data-n="ne"></button>
+      <button type="button" class="a5-map-node" data-n="nion"></button>
+      <button type="button" class="a5-map-node" data-n="Vt"></button>
+      <button type="button" class="a5-map-node" data-n="G"></button>
+      <button type="button" class="a5-map-node" data-n="S"></button>
+      <button type="button" class="a5-map-node" data-n="Lam"></button>
+      <button type="button" class="a5-map-node" data-n="chi"></button>
+      <button type="button" class="a5-map-node" data-n="We"></button>
+      <button type="button" class="a5-map-node" data-n="eps"></button>
+      <button type="button" class="a5-map-node" data-n="Wph"></button>
+      <button type="button" class="a5-map-node" data-n="dV"></button>
+      <button type="button" class="a5-map-node" data-n="F"></button>
+      <button type="button" class="a5-map-node" data-n="Phi"></button>
+      <button type="button" class="a5-map-node" data-n="v"></button>
+    </div>
+    <div class="legend a5-map-leg">
+      <span class="item"><svg width="26" height="14" viewBox="0 0 26 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><rect x="1" y="1.5" width="24" height="11" rx="5.5" style="fill:var(--surface);stroke:var(--c-electron);stroke-width:1.5"/></svg>electronic</span>
+      <span class="item"><svg width="26" height="14" viewBox="0 0 26 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><rect x="1" y="1.5" width="24" height="11" rx="5.5" style="fill:var(--surface);stroke:var(--c-phonon);stroke-width:1.5"/></svg>nuclear</span>
+      <span class="item"><svg width="26" height="14" viewBox="0 0 26 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><rect x="1" y="1.5" width="24" height="11" rx="5.5" style="fill:var(--surface);stroke:var(--c-photon);stroke-width:1.5"/></svg>bare Coulomb $v$</span>
+      <span class="item"><svg width="26" height="14" viewBox="0 0 26 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><rect x="1" y="1.5" width="24" height="11" rx="5.5" style="fill:var(--surface);stroke:var(--fg);stroke-width:1.5"/></svg>both</span>
+      <span class="item"><svg width="28" height="12" viewBox="0 0 28 12" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><line x1="1" y1="6" x2="19" y2="6" style="stroke:var(--muted);stroke-width:1.4"/><path d="M27 6 L18.5 2.3 L18.5 9.7 Z" style="fill:var(--muted)"/></svg>ingredient of</span>
+    </div>
+    <div class="a5-map-ctrls"></div>
+    <div class="a5-map-notes" aria-live="polite">
+      <p class="a5-map-note" data-note="clamp"><strong>Nuclei clamped, <span class="nw">$F=0$.</span></strong> Then $W^{\ph}=0$ and <span class="nw">$\langle\hat n^{\ion}\rangle=n^{\ion}_0$,</span> a rigid lattice of point charges, and the phonon equation is no longer needed. What remains is Hedin's pentagon for the electrons alone, <span class="nw">$G\to\Lambda\to\chi^{\mathrm{irr,e}}\to W^{\rme}\to\Sigma\to G$</span> (Hedin, 1965).</p>
+      <p class="a5-map-note" data-note="gw"><strong>GW vertex, <span class="nw">$\Lambda(123)=\delta(12)\delta(13)$.</span></strong> No arrow enters <span class="nw">$\Lambda$.</span> The polarizability <span class="nw">$\chi^{\mathrm{irr,e}}(12)=-2\ii\hbar\,G(12)\,G(21^+)$</span> becomes, with Kohn–Sham propagators, the <a class="sym" href="#gl-a3-chi0">$\chi^0$</a> of <a href="#a-dfpt">Section A.3</a>, and <span class="nw">$\Sigma(12)=\ii\hbar\,G(12)\big[W^{\rme}(21^+)+W^{\ph}(21^+)\big]$</span> is GW plus the Fan–Migdal self-energy of <a href="#a-electron-se">Section A.7</a>.</p>
+      <p class="a5-map-note" data-note="adiab"><strong>Static screening.</strong> In the lattice part, $W^{\rme}(\omega)\to W^{\rme}(0)$ and <span class="nw">$\varepsilon^{\rme}(\omega)\to\varepsilon^{\rme}(0)$.</span> Then $\Phi(0)$ is the Born–Oppenheimer force-constant matrix of <a href="#a-lattice">Section A.1</a>, which DFPT computes; $F$ is the free propagator $F^0$ of those phonons, <a class="eqref" href="#a5-eq-Finv">(A5.33)</a>; and the vertex becomes <span class="nw">$\mathcal V(0)$,</span> which DFPT computes as <span class="nw">$\Delta_{\bq\nu}V^{\mathrm{KS}}$,</span> <a class="eqref" href="#a5-eq-dfpt">(A5.29)</a>. The frequency dependence it drops is the source of the nonadiabatic corrections of <a href="#a-phonon-se">Section A.6</a>.</p>
+      <p class="a5-map-note" data-note="coul"><strong>Instantaneous Coulomb.</strong> <span class="nw">$v(12)=v(\br_1-\br_2)\,\delta(t_1-t_2)$</span> enters <span class="nw">$V^{\mathrm{tot}}$,</span> <span class="nw">$W^{\rme}$,</span> $\varepsilon^{\rme}$ and $\Delta_{\bq\nu}V^{\mathrm{en}}$ directly (rose rings, dashed arrows), and <span class="nw">$\Sigma$,</span> $W^{\ph}$ and $\Phi(\omega)$ through $W^{\rme}$ (rose fill). Part B keeps $v$ as the longitudinal photon propagator <span class="nw">$D^{0\mathrm L}$,</span> <a class="eqref" href="#b5-eq-D0L">(B5.8)</a>, and adds the transverse photons (Sections <a href="#b-photon-se">B.5</a>–<a href="#b-propagator">B.6</a>).</p>
+    </div>
+    <div class="a5-map-panel">
+      <div class="a5-map-cards">
+        <div class="a5-map-card" data-k="ne"><p class="a5-map-ct"><strong>Electron density</strong> $\langle\hat n^{\rme}\rangle$ · <a class="eqref" href="#a5-eq-We">(A5.20)</a></p>
+          <div class="eq">$$\langle\hat n^{\rme}(1)\rangle=-2\ii\hbar\,G(11^+)$$</div>
+          <p>The propagator at equal times; the factor 2 is the sum over the two spin directions.</p></div>
+        <div class="a5-map-card" data-k="nion"><p class="a5-map-ct"><strong>Nuclear charge density</strong> $\langle\hat n^{\ion}\rangle$ · <a class="eqref" href="#a5-eq-nion">(A5.34)</a></p>
+          <div class="eq">$$\begin{aligned}&\langle\hat n^{\ion}(\br)\rangle=n^{\ion}_0(\br)\\&\;-\frac12\sum_{\ell\kappa}Z_\kappa\,\langle\hat u_{\ell\kappa\alpha}\hat u_{\ell\kappa\beta}\rangle\\&\;\times\partial_\alpha\partial_\beta\delta(\br-\btau_{\ell\kappa})\end{aligned}$$</div>
+          <p>Point charges smeared by their zero-point motion; $\langle\hat u\hat u\rangle$ is the phonon propagator at equal times. The smearing gives the Debye–Waller self-energy of <a href="#a-electron-se">Section A.7</a>.</p></div>
+        <div class="a5-map-card" data-k="Vt"><p class="a5-map-ct"><strong>Total potential</strong> $V^{\mathrm{tot}}$ · <a class="eqref" href="#a5-eq-Vtot">(A5.14)</a></p>
+          <div class="eq">$$\begin{aligned}V^{\mathrm{tot}}(1)={}&\int\dd2\,v(12)\\&\times\big[\langle\hat n^{\rme}(2)\rangle+\langle\hat n^{\ion}(2)\rangle\big]\end{aligned}$$</div>
+          <p>The Hartree potential energy of electrons and nuclei together, with the probe $V^{\mathrm{ext}}$ switched off: the static potential of the reference propagator <span class="nw">$G^0$.</span></p></div>
+        <div class="a5-map-card" data-k="G"><p class="a5-map-ct"><strong>Electron propagator</strong> $G$ · <a class="eqref" href="#a5-eq-G">(A5.12)</a>, <a class="eqref" href="#a5-eq-dysonG">(A5.13)</a></p>
+          <div class="eq">$$\begin{aligned}&G(12)=-\frac{\ii}{\hbar}\,\langle\mathcal T\,\hat\psi(1)\,\hat\psi^\dagger(2)\rangle,\\&G=G^0+G^0\Sigma G\end{aligned}$$</div>
+          <p>$G^0$ is the propagator of an electron in the static total potential <span class="nw">$V^{\mathrm{tot}}$.</span> The poles of $G$ are the quasiparticle energies and lifetimes; every electron–phonon renormalization of Sections <a href="#a-electron-se">A.7</a> and <a href="#a-temperature">A.8</a> is read off <span class="nw">$G$.</span></p></div>
+        <div class="a5-map-card" data-k="S"><p class="a5-map-ct"><strong>Electron self-energy</strong> $\Sigma$ · <a class="eqref" href="#a5-eq-Sigma">(A5.17)</a>, <a class="eqref" href="#a5-eq-split">(A5.23)</a></p>
+          <div class="eq">$$\begin{aligned}&\Sigma(12)=\ii\hbar\int\dd(34)\,G(13)\\&\qquad\times\Lambda(324)\,W(41^+),\\&W=W^{\rme}+W^{\ph}\end{aligned}$$</div>
+          <p>Everything beyond the total potential. With $\Lambda=\delta\delta$, the $W^{\rme}$ term is the GW self-energy and the $W^{\ph}$ term the Fan–Migdal self-energy of <a href="#a-electron-se">Section A.7</a>; the Debye–Waller term enters through $\langle\hat n^{\ion}\rangle$ in <span class="nw">$V^{\mathrm{tot}}$.</span></p></div>
+        <div class="a5-map-card" data-k="Lam"><p class="a5-map-ct"><strong>Vertex function</strong> $\Lambda$ · <a class="eqref" href="#a5-eq-Lambda">(A5.16)</a>, <a class="eqref" href="#a5-eq-vertex">(A5.18)</a></p>
+          <div class="eq">$$\begin{aligned}\Lambda(123)&=-\frac{\delta G^{-1}(12)}{\delta V^{\mathrm{tot}}(3)}\\&=\delta(12)\delta(13)+\int\dd(4567)\\&\quad\times\frac{\delta\Sigma(12)}{\delta G(45)}\,G(46)\,G(75)\,\Lambda(673)\end{aligned}$$</div>
+          <p>How the propagator responds to a change of the total potential at point 3. Keeping only $\delta(12)\delta(13)$ is the GW approximation.</p></div>
+        <div class="a5-map-card" data-k="chi"><p class="a5-map-ct"><strong>Electronic polarizability</strong> $\chi^{\mathrm{irr,e}}$ · <a class="eqref" href="#a5-eq-We">(A5.20)</a></p>
+          <div class="eq">$$\begin{aligned}\chi^{\mathrm{irr,e}}(12)&=\frac{\delta\langle\hat n^{\rme}(1)\rangle}{\delta V^{\mathrm{tot}}(2)}\\&=-2\ii\hbar\int\dd(34)\,G(13)\,G(41^+)\\&\quad\times\Lambda(342)\end{aligned}$$</div>
+          <p>The electron density induced per unit change of the total potential: the electronic part of the irreducible polarizability. With $\Lambda=\delta\delta$ and Kohn–Sham propagators it is the $\chi^0$ of <a href="#a-dfpt">Section A.3</a>, the RPA.</p></div>
+        <div class="a5-map-card" data-k="We"><p class="a5-map-ct"><strong>Interaction screened by the electrons</strong> $W^{\rme}$ · <a class="eqref" href="#a5-eq-We">(A5.20)</a></p>
+          <div class="eq">$$\begin{aligned}W^{\rme}(12)={}&v(12)+\int\dd(34)\,v(13)\\&\times\chi^{\mathrm{irr,e}}(34)\,W^{\rme}(42)\end{aligned}$$</div>
+          <p>The $W$ of GW, with the nuclei clamped; it also binds the nuclei to each other in <span class="nw">$\Phi(\omega)$.</span> <a href="#b-electrostatic">Section B.9</a> identifies it with one sector of the photon propagator dressed by the electrons, <span class="nw">$D^{\rme}_{\rho\rho}$.</span></p></div>
+        <div class="a5-map-card" data-k="eps"><p class="a5-map-ct"><strong>Electronic dielectric function</strong> $\varepsilon^{\rme}$ · <a class="eqref" href="#a5-eq-We">(A5.20)</a></p>
+          <div class="eq">$$\varepsilon^{\rme}(12)=\delta(12)-\int\dd3\,v(13)\,\chi^{\mathrm{irr,e}}(32)$$</div>
+          <p>It screens the bare potential change of a phonon into the vertex $\mathcal V$ of <span class="nw">$W^{\ph}$,</span> and through <span class="nw">$W^{\rme}=(\varepsilon^{\rme})^{-1}v$</span> it fixes <span class="nw">$\Phi(\omega)$:</span> the review calls it “absolutely central”.</p></div>
+        <div class="a5-map-card" data-k="Wph"><p class="a5-map-ct"><strong>Lattice part of the screened interaction</strong> $W^{\ph}$ · <a class="eqref" href="#a5-eq-Wph">(A5.28)</a></p>
+          <div class="eq">$$\begin{aligned}&W^{\ph}(\br_1,\br_2;\omega)\\&\;=\frac1{N_\ell}\sum_{\bq\nu\nu'}\mathcal V_{\bq\nu}(\br_1,\omega)\,F_{\nu\nu'}(\bq,\omega)\\&\;\times\mathcal V_{-\bq\nu'}(\br_2,\omega),\\&\mathcal V_{\bq\nu}(\br,\omega)\\&\;=\int\dd^3r'\,(\varepsilon^{\rme})^{-1}(\br,\br';\omega)\\&\;\times\Delta_{\bq\nu}V^{\mathrm{en}}(\br')\end{aligned}$$</div>
+          <p>A phonon exchanged between two screened vertices <span class="nw">$\mathcal V$,</span> each the bare potential change of the phonon screened by the electrons. Added to <span class="nw">$W^{\rme}$,</span> it gives the total $W$ that enters <span class="nw">$\Sigma$,</span> <a class="eqref" href="#a5-eq-split">(A5.23)</a>.</p></div>
+        <div class="a5-map-card" data-k="dV"><p class="a5-map-ct"><strong>Bare potential change of a phonon</strong> $\Delta_{\bq\nu}V^{\mathrm{en}}$ · <a class="eqref" href="#a5-eq-dn">(A5.25)</a>, <a class="eqref" href="#a5-eq-Wph">(A5.28)</a></p>
+          <div class="eq">$$\Delta_{\bq\nu}V^{\mathrm{en}}(\br)=\int\dd^3r'\,v(\br-\br')\,\Delta_{\bq\nu}n^{\ion}(\br')$$</div>
+          <p>The potential change that the phonon $\bq\nu$ would produce if the electrons did not respond: the rigid-ion potential of <a href="#a-coupling">Section A.2</a>. The nuclear-charge change $\Delta_{\bq\nu}n^{\ion}$ is an input, fixed by the lattice and its phonon modes.</p></div>
+        <div class="a5-map-card" data-k="F"><p class="a5-map-ct"><strong>Phonon propagator</strong> $F$ · <a class="eqref" href="#a5-eq-F">(A5.26)</a>, <a class="eqref" href="#a5-eq-Finv">(A5.33)</a></p>
+          <div class="eq">$$\begin{aligned}&F_{\nu\nu'}(\bq,t)\\&\;=-\frac{\ii}{\hbar}\langle\mathcal T\,\hat\phi_{\bq\nu}(t)\,\hat\phi^\dagger_{\bq\nu'}(0)\rangle,\\&F^{-1}_{\nu\nu'}(\bq,\omega)\\&\;=\frac{\hbar\,\big[\omega^2\delta_{\nu\nu'}-\tPhi_{\nu\nu'}(\bq,\omega)\big]}{2\sqrt{\omega_{\bq\nu}\omega_{\bq\nu'}}}\end{aligned}$$</div>
+          <p>Its poles are the phonons, the solutions of <span class="nw">$\det\big[\omega^2-\tPhi(\bq,\omega)\big]=0$;</span> at equal times it gives the mean-square displacements in <span class="nw">$\langle\hat n^{\ion}\rangle$.</span> <a href="#a-phonon-se">Section A.6</a> writes it as a Dyson equation.</p></div>
+        <div class="a5-map-card" data-k="Phi"><p class="a5-map-ct"><strong>Dynamical force constants</strong> $\Phi(\omega)$ · <a class="eqref" href="#a5-eq-Phiw">(A5.31)</a></p>
+          <div class="eq">$$\begin{aligned}&\Phi_{\ell\kappa\alpha,\ell'\kappa'\beta}(\omega)\\&=Z_\kappa Z_{\kappa'}\,\partial_\alpha\partial'_\beta W^{\rme}(\btau_{\ell\kappa},\btau_{\ell'\kappa'};\omega)\\&\quad-\delta_{\ell\ell'}\delta_{\kappa\kappa'}\sum_{\ell''\kappa''}Z_\kappa Z_{\kappa''}\\&\qquad\times\partial_\alpha\partial'_\beta W^{\rme}(\btau_{\ell\kappa},\btau_{\ell''\kappa''};0)\end{aligned}$$</div>
+          <p>Point nuclei interacting through <span class="nw">$W^{\rme}$.</span> At $\omega=0$ this is the Born–Oppenheimer force-constant matrix of <a href="#a-lattice">Section A.1</a>, which DFPT computes, and the second term enforces the acoustic sum rule <a class="eqref" href="#a5-eq-asr">(A5.32)</a>.</p></div>
+        <div class="a5-map-card" data-k="v"><p class="a5-map-ct"><strong>Bare Coulomb interaction</strong> $v$ · <a class="eqref" href="#a5-eq-v">(A5.3)</a></p>
+          <div class="eq">$$\begin{gathered}v(12)=v(\br_1-\br_2)\,\delta(t_1-t_2),\\ v(\br)=\frac{e^2}{|\br|}\end{gathered}$$</div>
+          <p>The only interaction of the Hamiltonian (Gaussian units). It is instantaneous, as if the speed of light were infinite, and it couples charge densities. Part B keeps it as the longitudinal photon propagator and adds the transverse photons.</p></div>
+      </div>
+      <p class="a5-map-io" aria-live="polite"></p>
+    </div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> Electrons and nuclei meet in three places only: through $\varepsilon^{\rme}$ and <span class="nw">$W^{\rme}$,</span> which build $W^{\ph}$ and <span class="nw">$\Phi(\omega)$;</span> through $W^{\ph}$ in <span class="nw">$\Sigma$;</span> and through $\langle\hat n^{\ion}\rangle$ in <span class="nw">$V^{\mathrm{tot}}$.</span> Clamping the nuclei leaves Hedin's pentagon of the electrons alone.</p><div class="cap-more">
+      <p><strong>Marks.</strong> Outlines: blue for electronic quantities, amber for nuclear ones, rose for the bare Coulomb interaction <span class="nw">$v$,</span> dark for <span class="nw">$V^{\mathrm{tot}}$,</span> which mixes both. Each arrow points from an ingredient to the quantity built from it; a line with two heads joins two quantities that build each other. The arrows of the selected quantity are dark, and arrows cut by a toggle fade. In the Coulomb view, rose rings mark the quantities built from $v$ itself and rose fill those that contain it through <span class="nw">$W^{\rme}$.</span> With static screening, dashed teal arrows carry the static screening into the lattice part, and dashed teal rings mark the quantities that change.</p>
+      <p><strong>Try.</strong> Click or tap $\Sigma$ (or Tab to it and press Enter) and follow its four inputs back through both loops. Clamp the nuclei: the amber loop fades, and Hedin's pentagon <span class="nw">$G\to\Lambda\to\chi^{\mathrm{irr,e}}\to W^{\rme}\to\Sigma$</span> remains. Choose the GW vertex: no arrow enters <span class="nw">$\Lambda$.</span> Switch on the Coulomb view to see every slot that Part B fills with the photon propagator.</p>
+      <p><strong>Model.</strong> The closed set <a class="eqref" href="#a5-eq-hedin">(A5.35)</a>: each quantity is one of its lines, with the screened vertex $\mathcal V$ drawn inside <span class="nw">$W^{\ph}$,</span> plus $\varepsilon^{\rme}$ of <a class="eqref" href="#a5-eq-We">(A5.20)</a> and the two inputs, $v$ of <a class="eqref" href="#a5-eq-v">(A5.3)</a> and the bare potential change <span class="nw">$\Delta_{\bq\nu}V^{\mathrm{en}}$,</span> which is $v$ acting on the nuclear-charge change of <a class="eqref" href="#a5-eq-dn">(A5.25)</a>. Harmonic nuclei, one-phonon <span class="nw">$W^{\ph}$,</span> zero temperature. No numerics: the figure is a map of the equations.</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a5-map');
+  if (!fig || !window.EPP) return;
+  // outside Section A.5 (the isolated figure test) the links into the page have no target: show them as text
+  if (!fig.closest('#a-hedin-baym')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+
+  // ---------- scoped styles (a fragment carries no style sheet) ----------
+  if (!document.getElementById('a5-map-css')) {
+    const st = document.createElement('style'); st.id = 'a5-map-css';
+    const F = '#viz-a5-map ';
+    st.textContent = [
+      F + '.a5-map-frame{position:relative;width:100%;max-width:680px;margin:2px auto 0;aspect-ratio:680/440}',
+      F + '.a5-map-frame.is-tall{aspect-ratio:680/640}',
+      F + '.a5-map-edges{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible;pointer-events:none}',
+      F + '.a5-map-node{--hue:var(--fg);position:absolute;left:0;top:0;transform:translate(-50%,-50%);margin:0;padding:.3em .55em;min-width:2.2em;' +
+        'font-family:var(--font-text);font-size:inherit;font-weight:400;font-style:normal;line-height:1.15;white-space:nowrap;text-align:center;' +
+        'color:var(--fg);background:var(--surface);border:1.5px solid var(--hue);border-radius:999px;cursor:pointer;' +
+        'transition:opacity .2s,background-color .15s,box-shadow .15s}',
+      F + '.a5-map-node:hover{background:color-mix(in srgb,var(--hue) 9%,var(--surface))}',
+      F + '.a5-map-node i{font-style:italic}',
+      F + '.a5-map-node b,' + F + '.a5-map-io b{font-weight:700;font-style:normal}',
+      F + '.a5-map-node sup,' + F + '.a5-map-node sub{font-size:.7em;line-height:0;position:relative;vertical-align:baseline;font-style:normal}',
+      F + '.a5-map-node sup{top:-.52em}',
+      F + '.a5-map-node sub{top:.3em}',
+      F + '.a5-map-node.is-sel{background:color-mix(in srgb,var(--hue) 14%,var(--surface));box-shadow:inset 0 0 0 1.2px var(--hue),0 0 0 4px color-mix(in srgb,var(--hue) 28%,transparent)}',
+      F + '.a5-map-node.is-vi{background:color-mix(in srgb,var(--c-photon) 20%,var(--surface))}',
+      F + '.a5-map-node.is-vx{box-shadow:0 0 0 3px color-mix(in srgb,var(--c-photon) 62%,transparent)}',
+      F + '.a5-map-node.is-vx.is-sel{box-shadow:inset 0 0 0 1.2px var(--hue),0 0 0 3px color-mix(in srgb,var(--c-photon) 62%,transparent),0 0 0 6px color-mix(in srgb,var(--hue) 28%,transparent)}',
+      F + '.a5-map-node.is-cut{border-style:dashed}',
+      F + '.a5-map-node.is-off{opacity:.3}',
+      F + '.a5-map-node.is-static::after{content:"";position:absolute;left:-6px;right:-6px;top:-6px;bottom:-6px;border:1.6px dashed var(--c-4);border-radius:999px;pointer-events:none}',
+      F + '.a5-map-ctrls.controls{grid-template-columns:repeat(auto-fill,minmax(min(100%,290px),1fr))}',
+      F + '.a5-map-ctrls i{font-family:var(--font-text)}',
+      F + '.a5-map-notes{position:relative;margin-top:8px}',
+      F + '.a5-map-note{margin:0 0 8px;max-width:68ch;font-size:.92rem;line-height:1.5;color:var(--fg-2)}',
+      F + '.a5-map-note.is-parked{position:absolute;left:0;right:0;top:0;visibility:hidden;pointer-events:none}',
+      F + '.a5-map-panel{margin-top:10px;padding-top:10px;border-top:1px solid var(--rule)}',
+      F + '.a5-map-cards{position:relative}',
+      F + '.a5-map-card{min-width:0}',
+      F + '.a5-map-card.is-hid{position:absolute;left:0;right:0;top:0;visibility:hidden;pointer-events:none}',
+      F + '.a5-map-card p{margin:0 0 6px;max-width:68ch;font-size:.92rem;line-height:1.5;color:var(--fg-2)}',
+      F + '.a5-map-card p.a5-map-ct{font-family:var(--font-ui);font-size:.9rem;color:var(--fg)}',
+      F + '.a5-map-card .eq{margin:2px 0 8px}',
+      F + '.a5-map-io{margin:4px 0 0;max-width:none;font-family:var(--font-ui);font-size:.86rem;line-height:1.45;color:var(--muted)}',
+      F + '.a5-map-io i{font-family:var(--font-text);font-style:italic;color:var(--fg)}',
+      F + '.a5-map-io .a5-map-sym{font-family:var(--font-text);color:var(--fg)}',
+      F + '.a5-map-io sup,' + F + '.a5-map-io sub{font-size:.72em;line-height:0}',
+      F + '.a5-map-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}'
+    ].join('\n');
+    document.head.appendChild(st);
+  }
+
+  // ---------- the graph ----------
+  // Positions in a 680 × 440 frame (phones: 680 × 640, the same fractions of the box). Kind: e electronic, p nuclear,
+  // c the bare Coulomb interaction, m mixed (V^tot). Electronic pentagon on the left, nuclear loop on the right,
+  // densities, V^tot and the two inputs at the bottom.
+  const N = {
+    ne: [55, 325, 'e'], nion: [625, 405, 'p'], Vt: [160, 405, 'm'], G: [55, 165, 'e'], S: [340, 55, 'e'], Lam: [160, 55, 'e'],
+    chi: [182, 280, 'e'], We: [300, 185, 'e'], eps: [395, 290, 'e'], Wph: [500, 115, 'p'], dV: [460, 360, 'p'], F: [625, 205, 'p'],
+    Phi: [545, 290, 'p'], v: [290, 360, 'c']
+  };
+  const HUE = { e: '--c-electron', p: '--c-phonon', c: '--c-photon', m: '--fg' };
+  // directed edges "a is an ingredient of b", one per line of (A5.35); ΔV^en = v Δn^ion is built from v
+  const E = [['G', 'ne'], ['F', 'nion'], ['ne', 'Vt'], ['nion', 'Vt'], ['v', 'Vt'], ['Vt', 'G'], ['S', 'G'],
+    ['G', 'S'], ['Lam', 'S'], ['We', 'S'], ['Wph', 'S'], ['G', 'chi'], ['Lam', 'chi'], ['v', 'We'], ['chi', 'We'],
+    ['v', 'eps'], ['chi', 'eps'], ['S', 'Lam'], ['G', 'Lam'], ['eps', 'Wph'], ['F', 'Wph'], ['dV', 'Wph'], ['v', 'dV'],
+    ['We', 'Phi'], ['Phi', 'F']];
+  const PH = new Set(['F', 'Phi', 'Wph', 'dV']);              // switched off with the nuclei clamped (F = 0)
+  const EXPL = new Set(['Vt', 'We', 'eps', 'dV']);            // contain v itself
+  const INH = new Set(['S', 'Wph', 'Phi']);                   // contain v through W^e
+  const STAT = new Set(['Phi', 'F', 'Wph']);                  // change under static screening
+  const STAT_E = new Set(['We|Phi', 'eps|Wph']);              // edges that carry the screening into the lattice part
+
+  // ---------- labels in the primer's notation ----------
+  const I = (t) => `<i>${t}</i>`;
+  const NH = I('n̂');                                    // n with a hat: an operator inside an expectation value
+  const LAB = {
+    ne: `⟨${NH}<sup>e</sup>⟩`, nion: `⟨${NH}<sup>ion</sup>⟩`, Vt: `${I('V')}<sup>tot</sup>`, G: I('G'), S: 'Σ', Lam: 'Λ',
+    chi: `${I('χ')}<sup>irr,e</sup>`, We: `${I('W')}<sup>e</sup>`, eps: `${I('ε')}<sup>e</sup>`, Wph: `${I('W')}<sup>ph</sup>`,
+    dV: `Δ<sub><b>q</b>${I('ν')}</sub>${I('V')}<sup>en</sup>`, F: I('F'), Phi: `Φ(${I('ω')})`, v: I('v')
+  };
+  const LAB0 = { F: `${I('F')}<sup>0</sup>`, Phi: 'Φ(0)' };    // under static screening
+  const ARIA = {
+    ne: 'electron density, n e', nion: 'nuclear charge density, n ion', Vt: 'total potential, V tot', G: 'electron propagator, G',
+    S: 'electron self-energy, Sigma', Lam: 'vertex function, Lambda', chi: 'electronic polarizability, chi irr e',
+    We: 'interaction screened by the electrons, W e', eps: 'electronic dielectric function, epsilon e',
+    Wph: 'lattice part of the screened interaction, W ph', dV: 'bare potential change of a phonon, Delta q nu V en',
+    F: 'phonon propagator, F', Phi: 'dynamical force constants, Phi of omega', v: 'bare Coulomb interaction, v'
+  };
+  const ARIA0 = { F: 'free phonon propagator, F 0, static screening', Phi: 'static force constants, Phi of 0, static screening' };
+
+  // ---------- state ----------
+  const frame = fig.querySelector('.a5-map-frame'), svg = frame.querySelector('svg');
+  const io = fig.querySelector('.a5-map-io');
+  const cards = [...fig.querySelectorAll('.a5-map-card')], notes = [...fig.querySelectorAll('.a5-map-note')];
+  const btn = {};
+  let sel = 'Wph', st = { clamp: false, gw: false, adiab: false, coul: false };
+  frame.querySelectorAll('.a5-map-node').forEach(b => {
+    const id = b.dataset.n; btn[id] = b;
+    b.style.setProperty('--hue', `var(${HUE[N[id][2]]})`);
+    b.addEventListener('click', () => { sel = id; render(); });
+  });
+  const lab = (id) => (st.adiab && LAB0[id]) || LAB[id];
+  const greyN = (id) => st.clamp && PH.has(id);
+  const live = ([a, b]) => !(greyN(a) || greyN(b) || (st.gw && b === 'Lam'));
+
+  function styleNodes() {
+    const W = frame.clientWidth || 680;
+    frame.classList.toggle('is-tall', W < 520);              // phones: stretch the frame so nodes and arrows separate
+    frame.style.fontSize = EPP.clamp(W / 680 * 17, 12.5, 17).toFixed(2) + 'px';
+    for (const id in btn) {
+      const b = btn[id], [x, y] = N[id];
+      b.style.left = (x / 6.8) + '%'; b.style.top = (y / 4.4) + '%';
+      const html = lab(id);
+      if (b.dataset.html !== html) { b.innerHTML = html; b.dataset.html = html; }
+      b.setAttribute('aria-label', (st.adiab && ARIA0[id]) || ARIA[id]);
+      b.setAttribute('aria-pressed', String(id === sel));
+      b.classList.toggle('is-sel', id === sel);
+      b.classList.toggle('is-off', greyN(id));
+      b.classList.toggle('is-cut', st.gw && id === 'Lam');
+      b.classList.toggle('is-static', st.adiab && STAT.has(id));
+      b.classList.toggle('is-vx', st.coul && EXPL.has(id));
+      b.classList.toggle('is-vi', st.coul && INH.has(id));
+    }
+  }
+
+  // ---------- arrows (SVG in pixels; colours as CSS variables, so a theme change needs no redraw) ----------
+  const NS = 'http://www.w3.org/2000/svg';
+  const mk = (tag, attrs) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); svg.appendChild(e); return e; };
+  // distance from the centre of a pill (half-width hw, half-height hh, round ends) to its outline along the unit vector (ux, uy)
+  function toEdge(hw, hh, ux, uy) {
+    const a = Math.max(0, hw - hh);
+    if (Math.abs(uy) > 1e-9) { const t = hh / Math.abs(uy); if (Math.abs(t * ux) <= a) return t; }
+    const cx = (ux < 0 ? -1 : 1) * a, d = ux * cx;
+    return d + Math.sqrt(Math.max(0, d * d - cx * cx + hh * hh));
+  }
+  const STYLE = {
+    dead: { c: 'var(--muted)', w: 1.2, o: 0.16, z: 0 },
+    base: { c: 'var(--muted)', w: 1.3, o: 0.75, z: 1 },
+    stat: { c: 'var(--c-4)', w: 1.8, o: 1, z: 2, dash: '5 3' },
+    coul: { c: 'var(--c-photon)', w: 2.3, o: 1, z: 3, dash: '6 4' },
+    sel: { c: 'var(--fg)', w: 2.2, o: 1, z: 4 }
+  };
+  function drawEdges() {
+    const W = frame.clientWidth, H = frame.clientHeight;
+    if (!W || !H) return;
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    const fs = parseFloat(frame.style.fontSize) || 17, L = EPP.clamp(0.55 * fs, 7, 9.5);
+    const P = {};
+    for (const id in N) {
+      const b = btn[id], pad = 3.5 + (b.classList.contains('is-static') ? 6 : 0) + (b.classList.contains('is-vx') ? 2.5 : 0);
+      P[id] = { x: N[id][0] / 680 * W, y: N[id][1] / 440 * H, hw: b.offsetWidth / 2, hh: b.offsetHeight / 2, pad };
+    }
+    const items = [], seen = new Set();
+    for (const e of E) {
+      const [a, b] = e, key = [a, b].sort().join('|');
+      if (seen.has(key)) continue;
+      seen.add(key);
+      const rev = E.find(f => f[0] === b && f[1] === a);
+      const fwd = live(e), bwd = rev ? live(rev) : false;
+      let kind = 'base';
+      if (!fwd && !bwd) kind = 'dead';
+      else if (st.coul && (a === 'v' || b === 'v')) kind = 'coul';
+      else if (a === sel || b === sel) kind = 'sel';
+      else if (st.adiab && STAT_E.has(a + '|' + b)) kind = 'stat';
+      const s = Object.assign({}, STYLE[kind]);
+      if (kind === 'sel' && st.adiab && STAT_E.has(a + '|' + b)) s.dash = '5 3';
+      // a cut edge keeps its arrowhead, faded, so that it is clear what was cut
+      items.push({ a, b, s, hb: kind === 'dead' ? true : fwd, ha: kind === 'dead' ? !!rev : bwd });
+    }
+    items.sort((p, q) => p.s.z - q.s.z);
+    for (const it of items) {
+      const A = P[it.a], B = P[it.b], dx = B.x - A.x, dy = B.y - A.y, len = Math.hypot(dx, dy);
+      if (!(len > 1)) continue;
+      const ux = dx / len, uy = dy / len;
+      const tA = toEdge(A.hw, A.hh, ux, uy) + A.pad, tB = toEdge(B.hw, B.hh, -ux, -uy) + B.pad;
+      if (tA + tB > len - 4) continue;
+      const x1 = A.x + ux * tA, y1 = A.y + uy * tA, x2 = B.x - ux * tB, y2 = B.y - uy * tB;
+      // the line stops under each arrowhead, so its cap never shows past the tip
+      const s1 = it.ha ? L * 0.7 : 0, s2 = it.hb ? L * 0.7 : 0;
+      const line = mk('line', { x1: (x1 + ux * s1).toFixed(1), y1: (y1 + uy * s1).toFixed(1), x2: (x2 - ux * s2).toFixed(1), y2: (y2 - uy * s2).toFixed(1),
+        'stroke-width': it.s.w, 'stroke-linecap': 'butt', opacity: it.s.o });
+      line.style.stroke = it.s.c;
+      if (it.s.dash) line.setAttribute('stroke-dasharray', it.s.dash);
+      const head = (x, y, vx, vy) => {
+        const p = mk('polygon', { points: [[x, y], [x - L * vx - 0.42 * L * vy, y - L * vy + 0.42 * L * vx], [x - L * vx + 0.42 * L * vy, y - L * vy - 0.42 * L * vx]].map(q => q[0].toFixed(1) + ',' + q[1].toFixed(1)).join(' '), opacity: it.s.o });
+        p.style.fill = it.s.c;
+      };
+      if (it.hb) head(x2, y2, ux, uy);
+      if (it.ha) head(x1, y1, -ux, -uy);
+    }
+  }
+
+  // ---------- panel: the selected quantity, and the notes of the toggles ----------
+  // The cards of the other quantities, and the notes of the switched-off toggles, are parked: invisible and out of the
+  // flow, but laid out, so that MathJax's lazy typesetting reaches them while the figure is on screen (it skips math
+  // without a layout box, as under display: none).
+  const list = (a) => a.join(', ');
+  function showPanel() {
+    cards.forEach(c => { const on = c.dataset.k === sel; c.classList.toggle('is-hid', !on); c.setAttribute('aria-hidden', String(!on)); });
+    notes.forEach(n => { const on = !!st[n.dataset.note]; n.classList.toggle('is-parked', !on); n.setAttribute('aria-hidden', String(!on)); });
+    const sym = (id) => `<span class="a5-map-sym">${lab(id)}</span>`;
+    const ins = E.filter(e => e[1] === sel && live(e)).map(e => sym(e[0]));
+    const outs = E.filter(e => e[0] === sel && live(e)).map(e => sym(e[1]));
+    let from = ins.length ? list(ins) : 'nothing';
+    if (sel === 'v') from = 'nothing, an input of the theory';
+    else if (sel === 'dV' && ins.length) from += `, acting on the nuclear-charge change Δ<sub><b>q</b>${I('ν')}</sub>${I('n')}<sup>ion</sup>`;
+    else if (sel === 'Lam' && !ins.length) from = `nothing, Λ = ${I('δ')}(12)${I('δ')}(13)`;
+    else if (sel === 'nion' && !ins.length) from = `nothing, the rigid lattice ${I('n')}<sup>ion</sup><sub>0</sub>`;
+    const pre = `<span class="a5-map-sr">${(st.adiab && ARIA0[sel]) || ARIA[sel]}. </span>`;
+    io.innerHTML = pre + (greyN(sel) ? `Switched off: with the nuclei clamped, ${I('F')} = 0, it does not enter.` :
+      `Built from: ${from} · Feeds: ${outs.length ? list(outs) : 'nothing'}`);
+  }
+
+  let raf = 0;
+  function render() { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { styleNodes(); drawEdges(); showPanel(); }); }
+  try { const ro = new ResizeObserver(render); ro.observe(frame); Object.values(btn).forEach(b => ro.observe(b)); } catch (e) { window.addEventListener('resize', render); }
+  EPP.onTheme(render);
+
+  // ---------- controls ----------
+  EPP.controls(fig.querySelector('.a5-map-ctrls'), [
+    { key: 'clamp', type: 'toggle', label: 'clamp the nuclei (F = 0): Hedin', value: false },
+    { key: 'gw', type: 'toggle', label: 'GW vertex, Λ = δ(12)δ(13)', value: false },
+    { key: 'adiab', type: 'toggle', label: 'adiabatic (static screening)', value: false },
+    { key: 'coul', type: 'toggle', label: 'show the instantaneous Coulomb v(12)', value: false }
+  ], (s) => { st = Object.assign({}, s); render(); });
+  // italic symbols in the control labels, in the text font
+  const relabel = (key, html) => { const inp = document.getElementById(`${fig.id}-${key}`), sp = inp && inp.parentElement.querySelector('span'); if (sp) sp.innerHTML = html; };
+  relabel('clamp', `clamp the nuclei (${I('F')} = 0): Hedin`);
+  relabel('gw', `GW vertex, Λ = ${I('δ')}(12)${I('δ')}(13)`);
+  relabel('coul', `show the instantaneous Coulomb ${I('v')}(12)`);
+  styleNodes(); showPanel(); render();
+})();
+</script>

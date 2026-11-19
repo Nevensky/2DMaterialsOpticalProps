@@ -1,0 +1,361 @@
+  <figure class="viz" id="viz-a9-tc">
+    <p class="viz-title"><span>From the Eliashberg function to $T_{\mathrm c}$</span> <span class="tag">interactive</span></p>
+    <div class="viz-grid two">
+      <div class="a9-tc-a2f"><div class="legend a9-tc-lega"><span class="item" style="color:var(--c-phonon)"><span class="sw box"></span><span style="color:var(--fg-2)">$\alpha^2F(\omega)$</span></span><span class="item" style="color:var(--c-electron)"><span class="sw dash"></span><span style="color:var(--fg-2)">running $\lambda_{\mathrm{ep}}$ up to $\omega$</span></span><span class="item" style="color:var(--muted)"><span class="sw dash" style="border-top-width:1.5px"></span><span style="color:var(--fg-2)">$\hbar\omega_{\log}$, <a class="eqref" href="#a9-eq-wlog">(A9.17)</a></span></span></div></div>
+      <div class="a9-tc-tc"><div class="legend a9-tc-legb"><span class="item a9-tc-k-mad" style="color:var(--c-electron)"><span class="sw"></span><span style="color:var(--fg-2)">$T_{\mathrm c}$ from <a class="eqref" href="#a9-eq-tc">(A9.18)</a></span></span><span class="item a9-tc-k-sc" style="color:var(--c-electron)" hidden><span class="sw"></span><span style="color:var(--fg-2)">$T_{\mathrm c}$ from <a class="eqref" href="#a9-eq-tc">(A9.18)</a> × strong-coupling factors</span></span><span class="item a9-tc-k-ref" style="color:var(--muted)" hidden><span class="sw dash"></span><span style="color:var(--fg-2)"><a class="eqref" href="#a9-eq-tc">(A9.18)</a> at $|g|^2\times1$, no factors</span></span><span class="item" style="color:var(--c-5)"><span class="sw dash" style="border-top-width:1.5px"></span><span style="color:var(--fg-2)">measured $T_{\mathrm c}$ (literature)</span></span><span class="item" style="color:var(--muted)"><span class="sw box" style="opacity:0.22"></span><span style="color:var(--fg-2)">usual range of $\mu^*$</span></span><span class="item a9-tc-k-thr" style="color:var(--muted)" hidden><span class="sw dot" style="border-top-width:2px"></span><span style="color:var(--fg-2)">$T_{\mathrm c}=0$ to the right</span></span></div></div>
+    </div>
+    <div class="a9-tc-ctrls"></div>
+    <div class="readout a9-tc-ro" aria-live="polite"><span>$\lambda_{\mathrm{ep}}$<b class="a9-tc-v-lam"></b></span><span>$1+\lambda_{\mathrm{ep}}$<b class="a9-tc-v-mass"></b></span><span>threshold $\mu^*/(1-0.62\mu^*)$<b class="a9-tc-v-thr"></b></span></div>
+    <div class="readout a9-tc-ro2" aria-live="polite"><span>$\hbar\omega_{\log}$<b class="a9-tc-v-wlog"></b></span><span>$\hbar\omega_{\log}/\kB$<b class="a9-tc-v-wlogk"></b></span><span>$T_{\mathrm c}$<b class="a9-tc-v-tc"></b></span><span>measured<b class="a9-tc-v-tm"></b></span><span class="a9-tc-k-scf" hidden>strong-coupling factors<b class="a9-tc-v-scf"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> In (b), $T_{\mathrm c}$ falls steeply as $\mu^*$ grows and vanishes once $\mu^*/(1-0.62\mu^*)$ reaches $\lambda_{\mathrm{ep}}$. Raising $|g|^2$ by 40%, a typical <a href="#a9-dft">GW correction</a>, multiplies $T_{\mathrm c}$ at $\mu^*=0.12$ by 4.5 for Al and 2 for MgB₂ but only 1.3 for Pb: weak coupling is the most sensitive.</p><div class="cap-more"><p><strong>Marks.</strong> (a): $\alpha^2F(\omega)$ (amber) and the running $\lambda_{\mathrm{ep}}$ up to $\omega$, $2\int_0^\omega\alpha^2F(\omega')\,\dd\omega'/\omega'$ (blue, dashed), whose plateau is $\lambda_{\mathrm{ep}}$; grey: $\hbar\omega_{\log}$. (b): $T_{\mathrm c}$ (blue) with a dot at the chosen $\mu^*$, or a triangle on the lower edge below 0.01&nbsp;K; grey dashed: $|g|^2\times1$ without the factors; violet: measured; shaded: the usual $\mu^*$; dotted: $T_{\mathrm c}=0$ beyond.</p><p><strong>Try.</strong> In H₃S the 30&nbsp;meV peak, a seventh of the area of the 170&nbsp;meV one, adds almost as much to $\lambda_{\mathrm{ep}}$: the $1/\omega$ of <a class="eqref" href="#a9-eq-lamfs">(A9.16)</a>. MgB₂ gives 18–27&nbsp;K for $\mu^*=0.15$–0.10 against 39&nbsp;K: one isotropic gap cannot describe its two. H₃S gives about 150&nbsp;K against 200&nbsp;K, and 180–197&nbsp;K with the strong-coupling factors ($\mu^*=0.13$–0.10). Al at $|g|^2\times0.5$ drops below 0.01&nbsp;K from $\mu^*=0.085$ on.</p><p><strong>Model.</strong> $\alpha^2F$ is the $|g|^2$ scale times normalized Gaussians of centre $\omega_i$ and root-mean-square width $\Delta\omega_i$, weighted by $\lambda_i\omega_i/2$ so that each adds about $\lambda_i$ to $\lambda_{\mathrm{ep}}$. Peaks ($\hbar\omega_i$ in meV, $\lambda_i$), illustrative: Al (20, 0.25), (37, 0.18); Pb (4.4, 0.9), (8.5, 0.65); MgB₂ (65, 0.6), (35, 0.1), (90, 0.03); H₃S (30, 0.5), (120, 1.0), (170, 0.6). Trapezoid rule for <a class="eqref" href="#a9-eq-lamfs">(A9.16)</a> and <a class="eqref" href="#a9-eq-wlog">(A9.17)</a>, then <a class="eqref" href="#a9-eq-tc">(A9.18)</a>; optional strong-coupling factors of Allen and Dynes (1975). Measured $T_{\mathrm c}$: literature, H₃S at about 155&nbsp;GPa.</p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a9-tc');
+  if (!fig || !window.EPP) return;
+  // outside Section A.9 (the isolated figure test) links to other parts of the page have no target: keep their text, drop the link
+  if (!fig.closest('#a-applications')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+  // equation numbers in canvas and control strings, read from the TeX source of the section (the fallback serves the figure test)
+  const tagOf = (id, fb) => { const e = document.getElementById(id); const m = e && e.textContent.match(/\\tag\{([^}]*)\}/); return m ? `(${m[1]})` : fb; };
+  const EQ_TC = tagOf('a9-eq-tc', '(A9.18)');
+
+  // ---------- model: energies ħω in meV, temperatures in K ----------
+  // α²F(ω) = s Σ_i (λ_i ω_i/2) G(ω − ω_i; Δω_i): normalized Gaussians of centre ω_i and rms width Δω_i, so that each peak adds
+  // about λ_i to λ_ep = 2∫α²F/ω dω (A9.16); s is the |g|² scale. ln ω_log = (2/λ_ep)∫(α²F/ω) ln ω dω (A9.17); T_c from (A9.18).
+  const KB = 0.0861733;          // k_B, meV/K
+  const NW = 800;                // trapezoid points, from x/NW to the right end x of the panel
+  const MU_MAX = 0.25, YB = [1e-2, 1e3];
+  // peaks [ħω_i (meV), λ_i, ħΔω_i (meV)], literature-inspired and illustrative; x: right end of (a), meV; y: top of (a), room for
+  // the |g|² scale up to 2; Tm: measured T_c (literature values; H₃S at about 155 GPa)
+  const PRE = {
+    Al: { name: 'Al', p: [[20, 0.25, 3], [37, 0.18, 2.5]], x: 50, xt: [0, 10, 20, 30, 40, 50], y: 1.2, Tm: 1.18 },
+    Pb: { name: 'Pb', p: [[4.4, 0.9, 0.6], [8.5, 0.65, 1.1]], x: 12, xt: [0, 2, 4, 6, 8, 10, 12], y: 3.5, Tm: 7.2 },
+    MgB2: { name: 'MgB₂', p: [[65, 0.6, 5], [35, 0.1, 6], [90, 0.03, 5]], x: 110, xt: [0, 20, 40, 60, 80, 100], y: 3.5, Tm: 39 },
+    H3S: { name: 'H₃S', p: [[30, 0.5, 6], [120, 1.0, 12], [170, 0.6, 10]], x: 210, xt: [0, 50, 100, 150, 200], y: 5, Tm: 200, about: true }
+  };
+  const SQ2PI = Math.sqrt(2 * Math.PI);
+  function spectrum(pre, s) {
+    const w = new Array(NW), a = new Array(NW), run = new Array(NW);
+    for (let i = 0; i < NW; i++) {
+      const x = pre.x * (i + 1) / NW; let v = 0;
+      for (const [wi, li, dw] of pre.p) v += (li * wi / 2) * Math.exp(-0.5 * ((x - wi) / dw) ** 2) / (dw * SQ2PI);
+      w[i] = x; a[i] = s * v;
+    }
+    // trapezoid rule: h (f0 + f1) is twice the area of one step, the factor 2 of (A9.16) and (A9.17); the integrands vanish at ω → 0
+    let lam = 0, lg = 0, m2 = 0; run[0] = 0;
+    for (let i = 1; i < NW; i++) {
+      const h = w[i] - w[i - 1], f1 = a[i] / w[i], f0 = a[i - 1] / w[i - 1];
+      lam += h * (f1 + f0); run[i] = lam;
+      lg += h * (f1 * Math.log(w[i]) + f0 * Math.log(w[i - 1]));
+      m2 += h * (a[i] * w[i] + a[i - 1] * w[i - 1]);
+    }
+    // w2 = <ω²>^{1/2}, with the weights 2α²F/(λ_ep ω) of (A9.17): it enters only the strong-coupling factors
+    return { w, a, run, lam, wlog: lam > 0 ? Math.exp(lg / lam) : NaN, w2: lam > 0 ? Math.sqrt(m2 / lam) : NaN };
+  }
+  // strong-coupling factors of Allen and Dynes (1975), not part of (A9.18)
+  function scf(sp, mu) {
+    const L1 = 2.46 * (1 + 3.8 * mu), r = sp.w2 / sp.wlog, L2 = 1.82 * (1 + 6.3 * mu) * r, l2 = sp.lam * sp.lam;
+    return Math.cbrt(1 + Math.pow(sp.lam / L1, 1.5)) * (1 + (r - 1) * l2 / (l2 + L2 * L2));
+  }
+  // (A9.18) in K, times the factors when sc; 0 at and below the threshold λ_ep = μ*/(1 − 0.62μ*)
+  function tcOf(sp, mu, sc) {
+    const den = sp.lam - mu * (1 + 0.62 * sp.lam);
+    if (!(den > 0) || !isFinite(sp.wlog)) return 0;
+    const t = sp.wlog / (1.2 * KB) * Math.exp(-1.04 * (1 + sp.lam) / den);
+    return sc ? t * scf(sp, mu) : t;
+  }
+  const MU = EPP.linspace(0, MU_MAX, 501);
+  // below 10⁻³ K (off the axis) the pen lifts
+  const tLine = (sp, sc) => (mu) => { const t = tcOf(sp, mu, sc); return t > 1e-3 ? t : NaN; };
+  // linear interpolation of samples on a uniform grid (for the label placement)
+  const interp = (xs, ys) => (x) => {
+    const t = (x - xs[0]) / (xs[xs.length - 1] - xs[0]) * (xs.length - 1);
+    if (!(t >= 0 && t <= xs.length - 1)) return NaN;
+    const i = Math.min(xs.length - 2, Math.floor(t)), f = t - i;
+    return ys[i] + f * (ys[i + 1] - ys[i]);
+  };
+
+  // ---------- number formats: superscript exponents, no-break space before units ----------
+  const NB = '\u00a0';
+  const SUP = { '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹', '-': '⁻' };
+  const sci = (v, d) => { const p = v.toExponential(d - 1).split('e'); return `${p[0]}×10${String(+p[1]).split('').map(ch => SUP[ch] || ch).join('')}`; };
+  const sig = (v, d) => String(Number(v.toPrecision(d)));
+  const fmtT = (v) => (!(v > 0) ? '0' : v >= 100 ? v.toFixed(0) : v >= 1e-2 ? sig(v, 3) : sci(v, 2)) + NB + 'K';
+  const spoken = (v) => { if (!(v > 0)) return 'zero'; if (v >= 1e-2) return sig(v, 3) + ' K'; const p = v.toExponential(1).split('e'); return `${p[0]} times 10 to the minus ${-p[1]} K`; };
+
+  // ---------- canvas text: '$…$' marks math, whose letters (Latin, Greek, ħ) are italic in the text font;
+  //            _x, _{..}, ^x, ^{..} as in EPP.drawRich, so a label written outside '$' stays upright: '$T$_c' ----------
+  let FT = 'serif', FU = 'sans-serif';
+  const fonts = () => { FT = EPP.css('--font-text') || 'serif'; FU = EPP.css('--font-ui') || 'sans-serif'; };
+  const ITAL = /[A-Za-zα-ωħ]/;
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const p of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: p.t, m: p.m, it: false }); continue; }
+        let buf = '', it = null;
+        for (const ch of p.t) {
+          const k = ITAL.test(ch);
+          if (it !== null && k !== it) { out.push({ t: buf, m: p.m, it }); buf = ''; }
+          buf += ch; it = k;
+        }
+        if (buf) out.push({ t: buf, m: p.m, it });
+      }
+    });
+    return out;
+  }
+  const fontOf = (r, size) => `${r.it ? 'italic ' : ''}${(size * (r.m ? 0.72 : 1) * (r.it ? 1.07 : 1)).toFixed(1)}px ${r.it ? FT : FU}`;
+  function layout(ctx, rs, size) {
+    const w = rs.map(r => { ctx.font = fontOf(r, size); return ctx.measureText(r.t).width; });
+    const x = new Array(rs.length);
+    let X = 0;
+    for (let k = 0; k < rs.length; k++) {
+      const r = rs[k];
+      if (r.m && k > 0 && rs[k - 1].it && !rs[k - 1].m) X += 0.05 * size;   // a script after an italic letter
+      x[k] = X; X += w[k];
+      const nx = rs[k + 1];
+      if (r.it && !r.m && nx && !nx.it && !nx.m) X += 0.08 * size;          // italic correction before upright text
+      if (r.m && nx && !nx.m) X += 0.04 * size;
+    }
+    return { x, total: X };
+  }
+  // o: {size, align, color, halo (a ring of the surface colour, for text that crosses a line), baseline, measure}
+  function rich(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, rs = runs(s), L = layout(ctx, rs, size);
+    if (o.measure) return L.total;
+    const x0 = o.align === 'center' ? x - L.total / 2 : (o.align === 'right' ? x - L.total : x);
+    const dy = (r) => (r.m === -1 ? size * 0.3 : (r.m === 1 ? -size * 0.4 : 0));
+    ctx.save(); ctx.textAlign = 'left'; ctx.textBaseline = o.baseline || 'alphabetic'; ctx.setLineDash([]);
+    const pass = (stroke) => rs.forEach((r, k) => { ctx.font = fontOf(r, size); if (stroke) ctx.strokeText(r.t, x0 + L.x[k], y + dy(r)); else ctx.fillText(r.t, x0 + L.x[k], y + dy(r)); });
+    if (o.halo) { ctx.strokeStyle = EPP.color('surface'); ctx.lineWidth = 3.5; ctx.lineJoin = 'round'; pass(true); }
+    ctx.fillStyle = o.color || EPP.color('fg'); pass(false);
+    ctx.restore();
+    return L.total;
+  }
+  const tw = (ctx, s, size) => rich(ctx, s, 0, 0, { size, measure: true });
+  const fit = (ctx, list, size, wmax) => list.find(s => tw(ctx, s, size) <= wmax) || list[list.length - 1];
+
+  // ---------- direct labels: the first candidate that stays in the frame, off the curves, the vertical lines and the labels placed ----------
+  // av: {fns: curves y(x), vx: vertical lines (canvas px), boxes: taken rectangles (canvas px)}
+  function hits(P, b, av) {
+    for (const X of av.vx) if (X >= b[0] - 2 && X <= b[2] + 2) return true;
+    for (const q of av.boxes) if (b[0] < q[2] && b[2] > q[0] && b[1] < q[3] && b[3] > q[1]) return true;
+    for (const f of av.fns) {
+      let prev = null;
+      for (let px = b[0]; px <= b[2] + 0.01; px += 1.5) {
+        const v = f(P.invX(px));
+        if (!isFinite(v)) { prev = null; continue; }
+        const py = EPP.clamp(P.Y(v), -1e4, 1e4);
+        if (py >= b[1] && py <= b[3]) return true;
+        if (prev !== null && Math.min(prev, py) < b[1] && Math.max(prev, py) > b[3]) return true;
+        prev = py;
+      }
+    }
+    return false;
+  }
+  // c: {x, y (data), dx, dy (px, to the middle of the text), align, text (else the common text)}. The candidate that won last time
+  // is tried first, so a label stays put until a curve reaches it. With must, a label that finds no clear place takes the first
+  // candidate inside the frame (it is drawn with a halo); without, it is left out (the legend and the readouts name that mark).
+  const memo = {};
+  function place(P, key, text, size, cands, av, must) {
+    const m = P.m, W = P.cv.w, H = P.cv.h, h = size * 1.3, wid = new Map();
+    const width = (t) => { if (!wid.has(t)) wid.set(t, tw(P.ctx, t, size)); return wid.get(t); };
+    const order = cands.map((_, i) => i);
+    if (memo[key] != null && memo[key] < cands.length) { order.splice(memo[key], 1); order.unshift(memo[key]); }
+    let first = null;
+    for (const i of order) {
+      const c = cands[i], t = c.text || text, w = width(t), X = P.X(c.x) + (c.dx || 0), Y = P.Y(c.y) + (c.dy || 0);
+      if (!isFinite(X) || !isFinite(Y)) continue;
+      const x0 = c.align === 'right' ? X - w : (c.align === 'center' ? X - w / 2 : X);
+      const b = [x0 - 2, Y - h / 2, x0 + w + 2, Y + h / 2];
+      if (b[0] < m.l + 1 || b[2] > W - m.r - 1 || b[1] < m.t + 1 || b[3] > H - m.b - 1) continue;
+      if (!first) first = { x: x0, y: Y, text: t, size, b };
+      if (hits(P, b, av)) continue;
+      memo[key] = i;
+      av.boxes.push([b[0] - 3, b[1] - 1, b[2] + 3, b[3] + 1]);
+      return { x: x0, y: Y, text: t, size };
+    }
+    if (must && first) { av.boxes.push(first.b); return first; }
+    return null;
+  }
+  // vertical offset that clears a sloping curve over the whole width of a label (px; side −1 above, +1 below)
+  function clear(P, f, x, w, h, side) {
+    const d = P.invX(P.X(x) + 1) - x, s = Math.abs(P.Y(f(x + d)) - P.Y(f(x)));
+    return side * (h / 2 + 5 + 0.5 * w * (isFinite(s) ? Math.min(s, 3) : 0));
+  }
+  const draw1 = (P, L, color) => { if (L) rich(P.ctx, L.text, L.x, L.y, { size: L.size, color, baseline: 'middle', halo: true }); };
+  // label centres (canvas px) from the right end of the frame leftwards, in steps of a tenth of its width
+  const pxCands = (P, wl, n) => { const m = P.m, W = P.cv.w, a = W - m.r - 4 - wl / 2, st = 0.1 * (W - m.l - m.r); return Array.from({ length: n }, (_, k) => a - k * st); };
+
+  // ---------- panels ----------
+  const elA = fig.querySelector('.a9-tc-a2f'), elB = fig.querySelector('.a9-tc-tc');
+  const legA = elA.querySelector('.legend'), legB = elB.querySelector('.legend');
+  const OPT = { legend: false, aspect: 0.92, minHeight: 270, maxHeight: 370, margin: { l: 58, r: 14, t: 26, b: 44 } };
+  const pA = new EPP.Plot(elA, Object.assign({}, OPT, {
+    xlim: [0, PRE.Al.x], ylim: [0, PRE.Al.y], xticks: PRE.Al.xt,
+    xname: 'ħω', hoverX: (v) => EPP.fmt(v, 3) + ' meV', hoverY: (v) => v.toFixed(3),
+    ariaLabel: 'Panel a: model Eliashberg function and running coupling strength against phonon energy'
+  }));
+  const pB = new EPP.Plot(elB, Object.assign({}, OPT, {
+    xlim: [0, MU_MAX], ylim: YB, logy: true, xticks: [0, 0.05, 0.1, 0.15, 0.2, 0.25], xfmt: (v) => (v === 0 ? '0' : v.toFixed(2)),
+    xname: 'μ^*', hoverX: (v) => v.toFixed(3), hoverY: (v) => fmtT(v),
+    ariaLabel: 'Panel b: critical temperature against the Coulomb pseudopotential, logarithmic scale'
+  }));
+  // the legends are static markup (MathJax), placed under their plots
+  elA.appendChild(legA); elB.appendChild(legB);
+  const key = (k) => legB.querySelector('.a9-tc-k-' + k);
+  const K = { mad: key('mad'), sc: key('sc'), ref: key('ref'), thr: key('thr') };
+
+  function frameText(P, xt, yt, titles) {
+    const ctx = P.ctx, w = P.cv.w, h = P.cv.h, m = P.m, cFg = EPP.color('fg');
+    rich(ctx, xt, m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    ctx.save(); ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    rich(ctx, yt, 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+    rich(ctx, fit(ctx, titles, 11.5, w - 8), 4, 15, { size: 11.5, color: EPP.color('fg2') });
+  }
+
+  // (a): axis titles, then the labels of the ω_log line, of the plateau of the running λ_ep and of α²F
+  const baseA = pA.render.bind(pA);
+  pA.render = () => {
+    pA.ctx.lineCap = 'round';            // the dash patterns assume round caps on every line
+    baseA();
+    const P = pA, ctx = P.ctx, w = P.cv.w, h = P.cv.h, c = cur;
+    if (!w || !h || !c) return;
+    fonts();
+    frameText(P, 'phonon energy $ħω$ (meV)', '$α^2F(ω)$ and running $λ$_{ep}', ['(a) Eliashberg function and running $λ$_{ep}', '(a) $α^2F$ and running $λ$_{ep}', '(a)']);
+    const sp = c.sp, top = c.pre.y, boxes = [], fns = [c.fA, c.fRun], labs = [];
+    // ħω_log at the top of its line, on the right of it if there is room
+    const wt = fit(ctx, [`$ħω$_{log} = ${sp.wlog.toFixed(1)} meV`, '$ħω$_{log}'], 11, 0.46 * (w - P.m.l - P.m.r));
+    labs.push([place(P, 'a-wlog', wt, 11, [{ x: sp.wlog, y: top, dx: 5, dy: 11 }, { x: sp.wlog, y: top, dx: -5, dy: 11, align: 'right' }],
+      { fns, vx: [], boxes }, true), EPP.textColor('muted')]);
+    // λ_ep on the plateau of the running curve: at its right end with the value, else without it, else further left; above the
+    // curve first, then below it
+    const av = { fns, vx: [P.X(sp.wlog)], boxes }, cl = [];
+    const LT = [`$λ$_{ep} = ${sp.lam.toFixed(2)}`, '$λ$_{ep}'];
+    for (const [t, ks] of [[LT[0], [0, 1]], [LT[1], [0, 1]], [LT[0], [2, 3, 4, 5]], [LT[1], [2, 3, 4, 5]]]) {
+      const wl = tw(ctx, t, 11.5), xs = pxCands(P, wl, 6).map(px => P.invX(px));
+      for (const k of ks) for (const sd of [-1, 1]) cl.push({ text: t, x: xs[k], y: c.fRun(xs[k]), dy: clear(P, c.fRun, xs[k], wl, 15, sd), align: 'center' });
+    }
+    labs.push([place(P, 'a-lam', LT[0], 11.5, cl, av), EPP.textColor('electron')]);
+    // α²F above one of its peaks, the tallest first, else beside it
+    const pk = c.pre.p.map(p => ({ x: p[0], y: c.fA(p[0]) })).sort((u, v) => v.y - u.y);
+    labs.push([place(P, 'a-a2f', '$α^2F$', 12, pk.flatMap(p => [{ x: p.x, y: p.y, dy: -12, align: 'center' }, { x: p.x, y: p.y, dx: 9, dy: -4 }, { x: p.x, y: p.y, dx: -9, dy: -4, align: 'right' }]), av),
+      EPP.textColor('phonon')]);
+    for (const [L, col] of labs) draw1(P, L, col);
+  };
+
+  // (b): axis titles, the off-axis marker of the chosen μ*, then the labels of the measured T_c, of the usual μ* range and of the threshold
+  const baseB = pB.render.bind(pB);
+  pB.render = () => {
+    pB.ctx.lineCap = 'round';
+    baseB();
+    const P = pB, ctx = P.ctx, w = P.cv.w, h = P.cv.h, m = P.m, c = cur;
+    if (!w || !h || !c) return;
+    fonts();
+    frameText(P, 'Coulomb pseudopotential $μ$^*', 'critical temperature $T$_c (K)', [`(b) $T$_c from ${EQ_TC}, log scale`, '(b) $T$_c, log scale', '(b)']);
+    const boxes = [], fns = c.showRef ? [c.fT, c.fR] : [c.fT], labs = [];
+    const vx = c.muc < MU_MAX ? [P.X(c.muc)] : [];
+    // the chosen μ*: its dot, or, when its T_c lies below the axis, a triangle on the lower edge of the frame
+    const XM = P.X(c.mu), YM = h - m.b - 2;
+    if (c.tc >= YB[0]) boxes.push([XM - 7, P.Y(c.tc) - 7, XM + 7, P.Y(c.tc) + 7]);
+    else {
+      boxes.push([XM - 7, YM - 10, XM + 7, YM + 1]);
+      ctx.save(); ctx.fillStyle = EPP.color('electron'); ctx.beginPath(); ctx.moveTo(XM, YM); ctx.lineTo(XM - 5, YM - 8); ctx.lineTo(XM + 5, YM - 8); ctx.closePath(); ctx.fill(); ctx.restore();
+    }
+    // the measured T_c: above or below its line, from the right end leftwards; left out where every place is taken (legend, readout)
+    const mt = `measured ${c.pre.about ? '≈' : ''}${fmtT(c.pre.Tm)}`, cm = [];
+    for (const x of [MU_MAX, 0.22, 0.19, 0.16, 0.13, 0.1, 0.07, 0.04, 0]) for (const sd of [-1, 1]) {
+      cm.push({ x, y: c.pre.Tm, dx: x === MU_MAX ? -5 : (x === 0 ? 5 : 0), dy: sd * 9, align: x === MU_MAX ? 'right' : (x === 0 ? 'left' : 'center') });
+    }
+    labs.push([place(P, 'b-meas', mt, 11, cm, { fns, vx, boxes }), EPP.textColor('c5')]);
+    // the usual range of μ*: inside the band, at its top, else at its bottom
+    const bt = fit(ctx, ['usual range of $μ$^*', 'usual $μ$^*', 'usual'], 11, P.X(0.2) - P.X(0.1) - 8);
+    labs.push([place(P, 'b-band', bt, 11, [{ x: 0.15, y: YB[1], dy: 11, align: 'center' }, { x: 0.15, y: YB[0], dy: -11, align: 'center' }], { fns, vx, boxes }),
+      EPP.textColor('muted')]);
+    // the threshold: beside its line at the bottom, where T_c has already left the axis
+    if (c.muc < MU_MAX) labs.push([place(P, 'b-thr', '$T$_c = 0', 11, [{ x: c.muc, y: YB[0], dx: 5, dy: -10 }, { x: c.muc, y: YB[0], dx: -5, dy: -10, align: 'right' }],
+      { fns, vx: [], boxes }, true), EPP.textColor('muted')]);
+    for (const [L, col] of labs) draw1(P, L, col);
+  };
+
+  // ---------- state ----------
+  let cur = null, ref = null, refKey = '';
+  function compute(st) {
+    const pre = PRE[st.preset] || PRE.Al, s = st.s, mu = st.mu, sc = !!st.sc;
+    const sp = spectrum(pre, s);
+    if (refKey !== st.preset) { ref = spectrum(pre, 1); refKey = st.preset; }
+    // the reference, (A9.18) at |g|² × 1 without the factors, is drawn when the scale or the factors change the curve
+    const showRef = Math.abs(s - 1) > 1e-9 || sc;
+    const fT = tLine(sp, sc), fR = tLine(ref, false);
+    return {
+      pre, s, mu, sc, sp, showRef, fT, fR,
+      tc: tcOf(sp, mu, sc), thr: mu / (1 - 0.62 * mu), muc: sp.lam / (1 + 0.62 * sp.lam), f: scf(sp, mu),
+      yT: MU.map(fT), yR: showRef ? MU.map(fR) : null, fA: interp(sp.w, sp.a), fRun: interp(sp.w, sp.run)
+    };
+  }
+
+  const $v = (k) => fig.querySelector('.a9-tc-v-' + k);
+  const RO = { lam: $v('lam'), mass: $v('mass'), thr: $v('thr'), wlog: $v('wlog'), wlogk: $v('wlogk'), tc: $v('tc'), tm: $v('tm'), scf: $v('scf') };
+  const scfEl = fig.querySelector('.readout .a9-tc-k-scf');
+  function draw() {
+    const c = cur = compute(ui.state), sp = c.sp, pre = c.pre;
+    pA.opt.xticks = pre.xt;
+    pA.draw([
+      { type: 'fill', x: sp.w, y1: sp.a, color: 'phonon', alpha: 0.22 },
+      { type: 'vline', at: sp.wlog, color: 'muted', width: 1.3, dash: [5, 4] },
+      { type: 'line', x: sp.w, y: sp.a, color: 'phonon', width: 2, label: 'α^2F(ω)' },
+      { type: 'line', x: sp.w, y: sp.run, color: 'electron', width: 2, dash: [7, 4], label: 'running λ_{ep}' }
+    ], { xlim: [0, pre.x], ylim: [0, pre.y] });
+    const LB = [
+      { type: 'band', x0: 0.1, x1: 0.2, color: 'muted', alpha: 0.1 },
+      { type: 'hline', at: pre.Tm, color: 'c5', width: 1.4, dash: [3, 3] }
+    ];
+    if (c.muc < MU_MAX) LB.push({ type: 'vline', at: c.muc, color: 'muted', width: 1.5, dash: [0.01, 3.6] });
+    if (c.showRef) LB.push({ type: 'line', x: MU, y: c.yR, color: 'muted', width: 1.8, dash: [6, 4], label: 'T_c at |g|^2 × 1, no factors' });
+    LB.push({ type: 'line', x: MU, y: c.yT, color: 'electron', width: 2.2, label: c.sc ? 'T_c with the factors' : 'T_c' });
+    if (c.tc >= YB[0]) LB.push({ type: 'points', x: [c.mu], y: [c.tc], color: 'electron', r: 4.5 });
+    pB.draw(LB);
+    K.mad.hidden = c.sc; K.sc.hidden = !c.sc; K.ref.hidden = !c.showRef; K.thr.hidden = !(c.muc < MU_MAX);
+
+    // readouts (the keys are static MathJax in the markup)
+    RO.lam.textContent = sp.lam.toFixed(3);
+    RO.mass.textContent = (1 + sp.lam).toFixed(2);
+    RO.thr.textContent = c.thr.toFixed(3);
+    RO.wlog.textContent = sp.wlog.toFixed(1) + NB + 'meV';
+    RO.wlogk.textContent = (sp.wlog / KB).toFixed(0) + NB + 'K';
+    RO.tc.textContent = fmtT(c.tc);
+    RO.tm.textContent = (pre.about ? 'about ' : '') + fmtT(pre.Tm);
+    RO.scf.textContent = '×' + c.f.toFixed(2);
+    scfEl.hidden = !c.sc;
+    sIn.setAttribute('aria-valuetext', `${c.s.toFixed(2)} times the DFT coupling`);
+
+    const pks = pre.p.map(p => p[0]).sort((u, v) => u - v);
+    pA.cv.canvas.setAttribute('aria-label', `Panel a: model Eliashberg function of ${pre.name} against phonon energy from 0 to ${pre.x} meV, ` +
+      `with peaks at ${pks.slice(0, -1).join(', ')} and ${pks[pks.length - 1]} meV, |g|² scaled by ${c.s.toFixed(2)}. The running coupling strength rises in a step ` +
+      `at each peak to lambda e p = ${sp.lam.toFixed(3)}; the vertical line marks h-bar omega log = ${sp.wlog.toFixed(1)} meV.`);
+    pB.cv.canvas.setAttribute('aria-label', `Panel b: critical temperature from ${EQ_TC}${c.sc ? ' with the strong-coupling factors' : ''} against the Coulomb ` +
+      `pseudopotential mu star from 0 to 0.25, logarithmic scale from 0.01 to 1000 K, for ${pre.name}. At mu star = ${c.mu.toFixed(3)} it is ${spoken(c.tc)}; ` +
+      `measured ${pre.about ? 'about ' : ''}${pre.Tm} K. ` +
+      (c.muc < MU_MAX ? `It is zero for mu star above ${c.muc.toFixed(3)}, the dotted line.` : 'It stays above zero over the whole axis.') +
+      (c.showRef ? ' The dashed curve is the formula at the unscaled coupling without the factors.' : ''));
+  }
+
+  // ---------- controls ----------
+  const ui = EPP.controls(fig.querySelector('.a9-tc-ctrls'), [
+    { key: 'preset', type: 'select', label: 'material (model spectrum)', options: [['Al', 'Al'], ['Pb', 'Pb'], ['MgB2', 'MgB₂ (isotropic)'], ['H3S', 'H₃S (about 155 GPa)']], value: 'Al' },
+    { key: 'mu', type: 'range', label: 'Coulomb pseudopotential μ^*', min: 0.05, max: 0.25, step: 0.005, value: 0.12, fmt: (v) => v.toFixed(3) },
+    { key: 's', type: 'range', label: '|g|^2 scale (DFT → GW)', min: 0.5, max: 2, step: 0.05, value: 1, fmt: (v) => '×' + v.toFixed(2) },
+    { key: 'sc', type: 'toggle', label: `strong-coupling factors (Allen–Dynes, not in ${EQ_TC})`, value: false, wide: true }
+  ], draw);
+  const sIn = document.getElementById(`${fig.id}-s`);
+  // control labels: italic variables, upright labels
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const LAB = { mu: `Coulomb pseudopotential ${I('μ')}<sup>*</sup>`, s: `|${I('g')}|<sup>2</sup> scale (DFT → GW)` };
+  Object.keys(LAB).forEach(k => { const sp = fig.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  draw();
+})();
+</script>

@@ -1,0 +1,318 @@
+  <figure class="viz" id="viz-b10-keldysh">
+    <p class="viz-title">The Keldysh interaction and the exciton it binds <span class="tag">interactive</span></p>
+    <div class="viz-grid two">
+      <div class="b10-keldysh-r"><div class="legend b10-keldysh-leg-r">
+        <span class="item" style="color:var(--c-electron)"><span class="sw"></span><span style="color:var(--fg-2)">Keldysh, $W^{\mathrm{e,2D}}(r)$</span></span>
+        <span class="item" style="color:var(--c-5)"><span class="sw dash"></span><span style="color:var(--fg-2)">environment only, $e^2/\varepsilon_{\mathrm{env}}r$</span></span>
+        <span class="item" style="color:var(--muted)"><span class="sw dot"></span><span style="color:var(--fg-2)">bare, $e^2/r$</span></span>
+        <span class="item" style="color:var(--c-4)"><span class="sw dot"></span><span style="color:var(--fg-2)">logarithmic limit</span></span>
+        <span class="item" style="color:var(--c-electron)"><span class="sw box"></span><span style="color:var(--fg-2)">exciton: distribution of $r$</span></span>
+      </div></div>
+      <div class="b10-keldysh-q"><div class="legend b10-keldysh-leg-q">
+        <span class="item" style="color:var(--c-phonon)"><span class="sw"></span><span style="color:var(--fg-2)">$1/\varepsilon^{\mathrm{2D}}(Q_\parallel)=1/(\varepsilon_{\mathrm{env}}+r_0Q_\parallel)$</span></span>
+        <span class="item" style="color:var(--c-5)"><span class="sw dash"></span><span style="color:var(--fg-2)">$1/\varepsilon_{\mathrm{env}}$</span></span>
+        <span class="item" style="color:var(--c-electron)"><span class="sw box"></span><span style="color:var(--fg-2)">exciton: $0.5/a_{\mathrm X}$ to $2/a_{\mathrm X}$</span></span>
+      </div></div>
+    </div>
+    <div class="b10-keldysh-ctrls"></div>
+    <div class="readout b10-keldysh-ro" aria-live="polite"><span>$E_{\mathrm b}$, variational<b class="b10-keldysh-v-eb"></b></span><span>$a_{\mathrm X}$<b class="b10-keldysh-v-ax"></b></span><span>$r_0/\varepsilon_{\mathrm{env}}$<b class="b10-keldysh-v-rc"></b></span><span>2D hydrogen ($r_0=0$)<b class="b10-keldysh-v-h"></b></span><span>its ratio to $E_{\mathrm b}$<b class="b10-keldysh-v-ratio"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> Far apart, the two charges interact as in the environment alone. Inside <span class="nw">$r_0/\varepsilon_{\mathrm{env}}$</span> the interaction grows only logarithmically, far below the bare Coulomb law, and the exciton is bound 24 times more weakly than an unscreened 2D hydrogen atom.</p><div class="cap-more">
+      <p><strong>Marks.</strong> (a), log–log: solid blue, the Keldysh interaction <a class="eqref" href="#b10-eq-keldysh"></a>; dashed violet, <span class="nw">$e^2/\varepsilon_{\mathrm{env}}r$,</span> which at <span class="nw">$\varepsilon_{\mathrm{env}}=1$</span> lies on the dotted grey bare law <span class="nw">$e^2/r$;</span> dotted teal, the logarithmic limit of <a class="eqref" href="#b10-eq-klimits"></a> inside <span class="nw">$r_0/\varepsilon_{\mathrm{env}}$.</span> Dashed verticals: $r_0/\varepsilon_{\mathrm{env}}$ (grey) and the exciton radius $a_{\mathrm X}$ (blue). Blue shading: the probability of the electron–hole distance per logarithmic step of $r$, <span class="nw">$\propto r^2\ee^{-2r/a_{\mathrm X}}$,</span> which peaks at <span class="nw">$a_{\mathrm X}$.</span> (b): the screening $1/\varepsilon^{\mathrm{2D}}(Q_\parallel)$ that the exciton and the LO phonon <a class="eqref" href="#b10-eq-lo"></a> share; dashed, its long-wave value <span class="nw">$1/\varepsilon_{\mathrm{env}}$;</span> vertical, the crossover <span class="nw">$\varepsilon_{\mathrm{env}}/r_0$;</span> shaded, the wavevectors the exciton samples, <span class="nw">$0.5/a_{\mathrm X}$</span> to <span class="nw">$2/a_{\mathrm X}$.</span></p>
+      <p><strong>Try.</strong> (1) Raise $\varepsilon_{\mathrm{env}}$ to 2.45 (SiO₂) and 4.5 (hBN encapsulation): the variational binding falls to 315 and <span class="nw">187 meV</span> (the exact solution gives 0.32 and <span class="nw">0.19 eV),</span> and the crossover moves inwards. (2) Set <span class="nw">$r_0=0$:</span> the 2D hydrogen result, <span class="nw">$2m_{\mathrm X}e^4/(\varepsilon_{\mathrm{env}}^2\hbar^2)$.</span> (3) Choose hBN: a compact exciton of <span class="nw">3.7 Å</span> bound by <span class="nw">1.83 eV,</span> where the Wannier model is only qualitative.</p>
+      <p><strong>Model.</strong> <a class="eqref" href="#b10-eq-keldysh"></a>–<a class="eqref" href="#b10-eq-wannier"></a> with the variational estimate of the derivation box, trial state <span class="nw">$\ee^{-r/a_{\mathrm X}}$:</span> a lower bound on <span class="nw">$E_{\mathrm b}$,</span> 2–3% below the exact value (0.558 against <span class="nw">0.570 eV</span> for freestanding MoS₂). A strictly two-dimensional sheet with static screening, <a class="eqref" href="#b10-eq-env"></a>; $r_0$, $m_{\mathrm X}$ and $\varepsilon_{\mathrm{env}}$ are literature values, illustrative.</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b10-keldysh');
+  if (!fig || !window.EPP) return;
+  // tested alone, outside Section B.10, the equations are absent: show their numbers as plain text
+  if (!fig.closest('#b-2d')) {
+    const TAGS = { 'b10-eq-env': 'B10.8', 'b10-eq-lo': 'B10.14', 'b10-eq-keldysh': 'B10.22', 'b10-eq-klimits': 'B10.23', 'b10-eq-wannier': 'B10.24' };
+    fig.querySelectorAll('a.eqref').forEach(a => { const id = (a.getAttribute('href') || '').slice(1); if (!document.getElementById(id)) { const s = document.createElement('span'); s.textContent = '(' + (TAGS[id] || '?') + ')'; a.replaceWith(s); } });
+  }
+
+  // ---------- physics: lengths in Å, energies in eV ----------
+  const E2 = 14.3996, HB = 3.80998, EUL = 0.5772156649;   // e² (eV Å), ħ²/2m_e (eV Å²), Euler's constant
+  const PRE = { mos2: { r0: 40, mX: 0.25 }, hbn: { r0: 10, mX: 0.5 } };   // literature values, illustrative
+  // Keldysh interaction (B10.22) from its integral form, (e²/r_0) ∫_0^∞ exp(−x sinh u) du with x = ε_env r/r_0,
+  // by Simpson's rule on 200 intervals. The cut asinh(40/x) is where the integrand is e^{−40}; a longer range would leave
+  // too few points inside the decay, of width 1/x, at large x. Relative error below 1e-5 for r_0 ≥ 0.5 Å.
+  function keldysh(r, r0, env) {
+    if (r0 <= 0) return E2 / (env * r);
+    const x = env * r / r0, um = Math.asinh(40 / x), n = 200, h = um / n;
+    let s = 1 + Math.exp(-x * Math.sinh(um));
+    for (let i = 1; i < n; i++) s += (i & 1 ? 4 : 2) * Math.exp(-x * Math.sinh(i * h));
+    return E2 / r0 * s * h / 3;
+  }
+  // derivation box: ⟨W⟩ = (2e²/a_X) ∫_0^{π/2} cosθ dθ/(ε_env + b tanθ), b = 2r_0/a_X. The θ integral in closed form,
+  // [ε − b + (b²/D) ln((ε + b + D)²/(2εb))]/D² with D = √(ε² + b²); it tends to 1/ε as b → 0.
+  function theta(env, b) {
+    if (b < 1e-9) return 1 / env;
+    const D = Math.hypot(env, b), S = env + b + D;
+    return (env - b + b * b / D * Math.log(S * S / (2 * env * b))) / (D * D);
+  }
+  // variational energy of the trial state e^{−r/a_X}: ħ²/(2m_X a_X²) − ⟨W⟩
+  const energy = (a, p) => HB / p.mX / (a * a) - 2 * E2 / a * theta(p.env, 2 * p.r0 / a);
+  // minimum over ln a_X in [ln 0.05, ln 2000]: a coarse scan brackets it, 60 golden-section steps refine it
+  function exciton(p) {
+    const lo = Math.log(0.05), hi = Math.log(2000), N = 48;
+    let k = 0, best = Infinity;
+    for (let i = 0; i <= N; i++) { const v = energy(Math.exp(lo + (hi - lo) * i / N), p); if (v < best) { best = v; k = i; } }
+    let a = lo + (hi - lo) * Math.max(0, k - 1) / N, b = lo + (hi - lo) * Math.min(N, k + 1) / N;
+    const g = (Math.sqrt(5) - 1) / 2;
+    let c = b - g * (b - a), d = a + g * (b - a), fc = energy(Math.exp(c), p), fd = energy(Math.exp(d), p);
+    for (let i = 0; i < 60; i++) {
+      if (fc < fd) { b = d; d = c; fd = fc; c = b - g * (b - a); fc = energy(Math.exp(c), p); }
+      else { a = c; c = d; fc = fd; d = a + g * (b - a); fd = energy(Math.exp(d), p); }
+    }
+    const aX = Math.exp(0.5 * (a + b));
+    return { aX, Eb: -energy(aX, p) };
+  }
+  // 2D hydrogen, no sheet screening: 2m_X e⁴/(ε_env² ħ²) = (m_X/m_e) e⁴/(ε_env² · ħ²/2m_e) = 54.42 eV · m_X/ε_env²
+  const hydrogen = (p) => p.mX * E2 * E2 / HB / (p.env * p.env);
+
+  // ---------- grids and formats ----------
+  const R0 = 1, R1 = 1000, W0 = 1e-3, W1 = 20, Q1 = 0.5;
+  const rs = Array.from({ length: 161 }, (_, i) => R0 * Math.pow(R1 / R0, i / 160));
+  const qs = EPP.linspace(0, Q1, 201);
+  const LW0 = Math.log10(W0), LW1 = Math.log10(W1);
+  // the exciton's distribution, peak 1, drawn linearly in the lowest third of (a)
+  const yFill = (f) => Math.pow(10, LW0 + f * (LW1 - LW0) / 3);
+  const fmtE = (v) => (v >= 1 ? EPP.fmt(v, 3) + ' eV' : EPP.fmt(1000 * v, 3) + ' meV');
+
+  // ---------- canvas text: '$...$' marks math, where letters are italic and digits upright; _x, ^x as in EPP.drawRich ----------
+  const ITAL = /[A-Za-zα-ωℓħ]/;
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const part of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: part.t, m: part.m, it: false }); continue; }
+        let buf = '', it = null;
+        for (const ch of part.t) {
+          const k = ITAL.test(ch);
+          if (it !== null && k !== it) { out.push({ t: buf, m: part.m, it }); buf = ''; }
+          buf += ch; it = k;
+        }
+        if (buf) out.push({ t: buf, m: part.m, it });
+      }
+    });
+    return out;
+  }
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, fam = EPP.css('--font-ui'), rs2 = runs(s);
+    const font = (r) => `${r.it ? 'italic ' : ''}${r.m ? Math.round(size * 0.72) : size}px ${fam}`;
+    const ws = rs2.map(r => { ctx.font = font(r); return ctx.measureText(r.t).width; });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    let x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    if (o.color) ctx.fillStyle = o.color;
+    ctx.textAlign = 'left';
+    rs2.forEach((r, k) => { ctx.font = font(r); ctx.fillText(r.t, x0, y + (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0))); x0 += ws[k]; });
+    return tot;
+  }
+  const tw = (ctx, s, size) => txt(ctx, s, 0, 0, { size, measure: true });
+  // label placement: the first candidate anchor whose box stays inside the frame, clear of the given polylines
+  // (data coordinates) and of the labels already placed, gets the label
+  function placer(P) {
+    const m = P.m, W = P.cv.w, H = P.cv.h, boxes = [];
+    const hit = (L, b) => {
+      let px = null, py = null;
+      for (let i = 0; i < L.x.length; i++) {
+        const yv = L.y[i];
+        if (!(isFinite(yv) && (!P.opt.logy || yv > 0))) { px = null; continue; }
+        const X = P.X(L.x[i]), Y = P.Y(yv);
+        if (px !== null) {
+          const xa = Math.max(Math.min(px, X), b.x0), xb = Math.min(Math.max(px, X), b.x1);
+          if (xa <= xb) {
+            const ya = Math.abs(X - px) < 1e-9 ? py : py + (Y - py) * (xa - px) / (X - px);
+            const yb = Math.abs(X - px) < 1e-9 ? Y : py + (Y - py) * (xb - px) / (X - px);
+            if (Math.max(ya, yb) >= b.y0 && Math.min(ya, yb) <= b.y1) return true;
+          }
+        }
+        px = X; py = Y;
+      }
+      return false;
+    };
+    // a candidate with rot: true is written upwards from (x, y), the glyphs to the left of x (beside a vertical line)
+    return (ctx, s, cands, lines, o = {}) => {
+      const size = o.size || 11.5, wd = tw(ctx, s, size);
+      for (const c of cands) {
+        let b;
+        if (c.rot) b = { x0: c.x - 0.82 * size - 2, x1: c.x + 0.32 * size + 2, y0: c.y - wd - 3, y1: c.y + 3 };
+        else {
+          const x0 = c.align === 'right' ? c.x - wd : (c.align === 'center' ? c.x - wd / 2 : c.x);
+          b = { x0: x0 - 3, x1: x0 + wd + 3, y0: c.y - 0.82 * size - 2, y1: c.y + 0.32 * size + 2 };
+        }
+        if (b.x0 < m.l + 1 || b.x1 > W - m.r - 1 || b.y0 < m.t + 1 || b.y1 > H - m.b - 1) continue;
+        if (lines.some(L => hit(L, b))) continue;
+        if (boxes.some(q => q.x0 < b.x1 && b.x0 < q.x1 && q.y0 < b.y1 && b.y0 < q.y1)) continue;
+        boxes.push(b);
+        if (c.rot) { ctx.save(); ctx.translate(c.x, c.y); ctx.rotate(-Math.PI / 2); txt(ctx, s, 0, 0, { size, color: o.color }); ctx.restore(); }
+        else txt(ctx, s, c.x, c.y, { size, color: o.color, align: c.align });
+        return true;
+      }
+      return false;
+    };
+  }
+  const side = (X, y) => [{ x: X + 4, y, align: 'left' }, { x: X - 4, y, align: 'right' }];
+  // anchors for the label of a vertical line at pixel X: beside it in four rows from the top, then written along it
+  const vrows = (P, X) => {
+    const yT = P.m.t + 13, yB = P.cv.h - P.m.b - 4, yM = P.m.t + 0.62 * (P.cv.h - P.m.t - P.m.b);
+    return [...side(X, yT), ...side(X, yT + 14), ...side(X, yT + 28), ...side(X, yT + 42),
+      ...[yB, yM].flatMap(y => [{ x: X - 7, y, rot: true }, { x: X + 15, y, rot: true }])];
+  };
+  function titles(P, head, xl, yl) {
+    const ctx = P.ctx, w = P.cv.w, h = P.cv.h, m = P.m, cFg = EPP.color('fg');
+    txt(ctx, head, 4, 15, { size: 11.5, color: EPP.color('fg2') });
+    txt(ctx, xl, m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    ctx.save(); ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, yl, 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+  }
+
+  // ---------- plots ----------
+  const OPT = { legend: false, aspect: 0.82, minHeight: 260, maxHeight: 340 };
+  const elR = fig.querySelector('.b10-keldysh-r'), elQ = fig.querySelector('.b10-keldysh-q');
+  const pR = new EPP.Plot(elR, Object.assign({}, OPT, {
+    xlim: [R0, R1], ylim: [W0, W1], logx: true, logy: true, margin: { l: 52, r: 18, t: 26, b: 42 },
+    xticks: [1, 3, 10, 30, 100, 300, 1000].map(v => ({ v, label: String(v) })),
+    yticks: [0.001, 0.01, 0.1, 1, 10].map(v => ({ v, label: String(v) })),
+    xname: 'r', hoverX: v => EPP.fmt(v, 3) + ' Å', hoverY: fmtE,
+    ariaLabel: 'Panel a: interaction energy of an electron and a hole in the sheet against their distance'
+  }));
+  const pQ = new EPP.Plot(elQ, Object.assign({}, OPT, {
+    xlim: [0, Q1], ylim: [0, 1.05], margin: { l: 46, r: 10, t: 26, b: 42 },
+    yticks: [0, 0.2, 0.4, 0.6, 0.8, 1].map(v => ({ v, label: String(v) })),
+    xname: 'Q_∥', hoverX: v => EPP.fmt(v, 3) + ' Å⁻¹', hoverY: v => v.toFixed(3),
+    ariaLabel: 'Panel b: the screening function of the sheet against the in-plane wavevector'
+  }));
+  // the legends are static markup (MathJax), placed under the plots
+  [[elR, '.b10-keldysh-leg-r'], [elQ, '.b10-keldysh-leg-q']].forEach(([el, s]) => { const g = el.querySelector(s); if (g) el.appendChild(g); });
+
+  let cur = null;   // the last computed state, read by the label hooks on every render (hover, resize, theme)
+  const baseR = pR.render.bind(pR), baseQ = pQ.render.bind(pQ);
+  pR.render = () => { baseR(); if (cur && pR.cv.w) labelsR(); };
+  pQ.render = () => { baseQ(); if (cur && pQ.cv.w) labelsQ(); };
+
+  function labelsR() {
+    const P = pR, ctx = P.ctx, m = P.m, c = cur;
+    ctx.save(); ctx.textBaseline = 'alphabetic';
+    titles(P, '(a) the interaction in real space', '$r$ (Å)', '$W$^{e,2D}($r$) (eV)');
+    const put = placer(P), yT = m.t + 13;
+    const lines = [{ x: rs, y: c.K }, { x: rs, y: c.Cenv }, { x: rs, y: c.Cbare }];
+    if (c.lr.length > 1) lines.push({ x: c.lr, y: c.ly });
+    const showRc = c.p.r0 > 0 && c.rc >= R0, showA = c.X.aX >= R0;
+    if (showRc) lines.push({ x: [c.rc, c.rc], y: [W0, W1] });
+    if (showA) lines.push({ x: [c.X.aX, c.X.aX], y: [W0, W1] });
+    if (showA) put(ctx, '$a$_X', vrows(P, P.X(c.X.aX)), lines, { color: EPP.textColor('electron') });
+    if (showRc) put(ctx, '$r$_0/$ε$_{env}', vrows(P, P.X(c.rc)), lines, { color: EPP.textColor('muted') });
+    // a title just above the peak of the exciton's distribution; the short form where the long one does not fit
+    const oX = { size: 11, color: EPP.textColor('electron') };
+    if (showA) {
+      const X = P.X(c.X.aX), Y = P.Y(yFill(1)) - 5, cands = [...side(X, Y), ...side(X, Y - 14)];
+      if (!put(ctx, 'exciton (arb. units)', cands, lines, oX)) put(ctx, 'exciton', cands, lines, oX);
+    } else {
+      // a radius below 1 Å: only the tail of the distribution is on the axis
+      const Y = P.Y(yFill(1)) - 5;
+      put(ctx, `← $a$_X = ${c.X.aX.toPrecision(2)} Å`, [{ x: m.l + 4, y: Y, align: 'left' }, { x: m.l + 4, y: Y - 14, align: 'left' }, { x: m.l + 4, y: Y - 28, align: 'left' }], lines, oX);
+    }
+    // the Keldysh curve, where it runs flat
+    const kc = [];
+    for (const r of [1.6, 2.5, 4, 6.3, 10]) { const X = P.X(r), Y = P.Y(keldysh(r, c.p.r0, c.p.env)); kc.push({ x: X, y: Y - 7, align: 'left' }, { x: X, y: Y + 17, align: 'left' }); }
+    put(ctx, 'Keldysh', kc, lines, { color: EPP.textColor('electron') });
+    ctx.restore();
+  }
+  function labelsQ() {
+    const P = pQ, ctx = P.ctx, m = P.m, w = P.cv.w, c = cur, inv = 1 / c.p.env;
+    ctx.save(); ctx.textBaseline = 'alphabetic';
+    titles(P, '(b) the same screening in wavevector space', '$Q$_∥ (Å^{−1})', '1/$ε$^{2D}($Q$_∥)');
+    const put = placer(P), yT = m.t + 13, yH = P.Y(inv);
+    const lines = [{ x: qs, y: c.inv }, { x: [0, Q1], y: [inv, inv] }];
+    const showQc = c.qc < Q1;
+    if (showQc) lines.push({ x: [c.qc, c.qc], y: [0, 1.05] });
+    const oX = { color: EPP.textColor('electron') };
+    if (c.b0 < Q1) {
+      // the band's label first: centred, or flush with either edge of the band, in three rows
+      const xa = P.X(c.b0), xb = P.X(Math.min(c.b1, Q1)), Xc = 0.5 * (xa + xb);
+      put(ctx, 'exciton', [yT, yH + 17, yT + 14].flatMap(y => [{ x: Xc, y, align: 'center' }, { x: xa + 4, y, align: 'left' }, { x: xb - 4, y, align: 'right' }]), lines, oX);
+    } else put(ctx, `exciton: ${c.b0.toPrecision(2)} to ${c.b1.toPrecision(2)} Å^{−1} →`, [yT, yH + 17, yT + 14].map(y => ({ x: w - m.r - 6, y, align: 'right' })), lines, { size: 11, color: oX.color });
+    if (showQc) { const X = P.X(c.qc); put(ctx, '$ε$_{env}/$r$_0', [...side(X, yT), ...side(X, P.Y(0.75 * inv) + 4), ...side(X, yH + 17), ...vrows(P, X)], lines, { color: EPP.textColor('muted') }); }
+    put(ctx, 'the LO shift at $Q$_∥ uses the same curve', [0.62, 0.45, 0.8, 0.3, 0.9].map(y => ({ x: w - m.r - 6, y: P.Y(y) + 4, align: 'right' })), lines, { size: 11, color: EPP.color('fg2') });
+    ctx.restore();
+  }
+
+  // ---------- readouts and drawing ----------
+  const ro = {};
+  ['eb', 'ax', 'rc', 'h', 'ratio'].forEach(k => { ro[k] = fig.querySelector('.b10-keldysh-v-' + k); });
+  function draw(s) {
+    const p = { r0: s.r0, env: s.env, mX: s.mX };
+    const X = exciton(p), Hy = hydrogen(p), rc = p.r0 / p.env, qc = p.r0 > 0 ? p.env / p.r0 : Infinity;
+    const K = rs.map(r => keldysh(r, p.r0, p.env)), Cenv = rs.map(r => E2 / (p.env * r)), Cbare = rs.map(r => E2 / r);
+    // logarithmic limit (B10.23), drawn inside r_0/ε_env only (it stays positive up to 1.12 r_0/ε_env)
+    let lr = [], ly = [];
+    if (p.r0 > 0 && rc > R0) { lr = rs.filter(r => r < rc); lr.push(rc); ly = lr.map(r => E2 / p.r0 * (Math.log(2 * p.r0 / (p.env * r)) - EUL)); }
+    // probability of the distance per logarithmic step: r · 2πr|ψ_X|² ∝ (r/a_X)² e^{2(1 − r/a_X)}, 1 at its peak r = a_X
+    const fr = rs.map(r => { const t = r / X.aX; return yFill(t * t * Math.exp(2 * (1 - t))); });
+    const inv = qs.map(q => 1 / (p.env + p.r0 * q));
+    cur = { p, X, rc, qc, K, Cenv, Cbare, lr, ly, inv, b0: 0.5 / X.aX, b1: 2 / X.aX };
+    pR.draw([
+      { type: 'fill', x: rs, y1: fr, y2: rs.map(() => W0), color: 'electron', alpha: 0.16 },
+      { type: 'line', x: rs, y: fr, color: 'electron', width: 1, opacity: 0.55, hover: false },
+      p.r0 > 0 && rc >= R0 ? { type: 'vline', at: rc, color: 'muted', width: 1.2, dash: [4, 3] } : null,
+      X.aX >= R0 ? { type: 'vline', at: X.aX, color: 'electron', width: 1.2, dash: [4, 3] } : null,
+      { type: 'line', x: rs, y: Cbare, color: 'muted', width: 1.4, dash: [1.5, 3.5], label: 'bare e^2/r' },
+      { type: 'line', x: rs, y: Cenv, color: 'c5', width: 1.8, dash: [7, 4], label: 'e^2/ε_{env}r' },
+      lr.length > 1 ? { type: 'line', x: lr, y: ly, color: 'c4', width: 2, dash: [1.5, 4], hover: false } : null,
+      { type: 'line', x: rs, y: K, color: 'electron', width: 2.2, label: 'Keldysh' }
+    ]);
+    pQ.draw([
+      cur.b0 < Q1 ? { type: 'band', x0: cur.b0, x1: Math.min(cur.b1, Q1), color: 'electron', alpha: 0.13 } : null,
+      qc < Q1 ? { type: 'vline', at: qc, color: 'muted', width: 1.2, dash: [4, 3] } : null,
+      { type: 'hline', at: 1 / p.env, color: 'c5', width: 1.6, dash: [7, 4] },
+      { type: 'line', x: qs, y: inv, color: 'phonon', width: 2.2, label: '1/ε^{2D}' }
+    ]);
+    const compact = X.aX < 5 ? ' (compact: Wannier model qualitative)' : '';
+    ro.eb.textContent = fmtE(X.Eb);
+    ro.ax.textContent = X.aX.toPrecision(3) + ' Å' + compact;
+    ro.rc.textContent = p.r0 > 0 ? rc.toPrecision(3) + ' Å' : '0 (no sheet screening)';
+    ro.h.textContent = fmtE(Hy);
+    ro.ratio.textContent = EPP.fmt(Hy / X.Eb, 3);
+    pR.cv.canvas.setAttribute('aria-label', `Panel a, log-log: interaction energy of an electron and a hole in the sheet against their distance r from 1 to 1000 Å. ` +
+      `Keldysh interaction ${fmtE(keldysh(10, p.r0, p.env))} at 10 Å, against ${fmtE(E2 / (p.env * 10))} for e²/ε_env r and ${fmtE(E2 / 10)} for the bare law; ` +
+      (p.r0 > 0 ? `it joins e²/ε_env r beyond r_0/ε_env = ${rc.toPrecision(3)} Å. ` : 'without sheet screening it is e²/ε_env r. ') +
+      `The exciton's distance distribution peaks at a_X = ${X.aX.toPrecision(3)} Å; binding energy ${fmtE(X.Eb)}.`);
+    pQ.cv.canvas.setAttribute('aria-label', `Panel b: screening function 1/(ε_env + r_0 Q_∥) from 0 to 0.5 per Å, starting at 1/ε_env = ${(1 / p.env).toFixed(3)}` +
+      (qc < Q1 ? `, halved at the crossover ε_env/r_0 = ${qc.toPrecision(3)} per Å` : '') + `; the exciton samples ${cur.b0.toPrecision(2)} to ${cur.b1.toPrecision(2)} per Å.`);
+  }
+
+  // ---------- controls ----------
+  const elCtl = fig.querySelector('.b10-keldysh-ctrls');
+  const envName = (v) => (Math.abs(v - 1) < 1e-6 ? ' · freestanding' : Math.abs(v - 2.45) < 1e-6 ? ' · on SiO₂' : Math.abs(v - 4.5) < 1e-6 ? ' · in hBN' : '');
+  let lastMat = 'mos2';
+  function onChange(s) {
+    if (s.mat !== lastMat && PRE[s.mat]) { ui.set('r0', PRE[s.mat].r0, true); ui.set('mX', PRE[s.mat].mX, true); }
+    else if (PRE[s.mat] && (Math.abs(s.r0 - PRE[s.mat].r0) > 1e-9 || Math.abs(s.mX - PRE[s.mat].mX) > 1e-9)) ui.set('mat', 'custom', true);
+    lastMat = ui.state.mat;
+    draw(ui.state);
+  }
+  const ui = EPP.controls(elCtl, [
+    { key: 'mat', type: 'select', label: 'material', options: [['mos2', 'MoS₂'], ['hbn', 'hBN'], ['custom', 'custom']], value: 'mos2' },
+    { key: 'r0', type: 'range', label: 'screening length r_0', min: 0, max: 80, step: 0.5, value: 40, fmt: v => v.toFixed(1) + ' Å' },
+    { key: 'env', type: 'range', label: 'environment ε_{env}', min: 1, max: 10, step: 0.05, value: 1, fmt: v => v.toFixed(2) + envName(v) },
+    { key: 'mX', type: 'range', label: 'reduced mass m_X/m_e', min: 0.1, max: 1, step: 0.01, value: 0.25, fmt: v => v.toFixed(2) }
+  ], onChange);
+  elCtl.style.gridTemplateColumns = 'repeat(auto-fill, minmax(280px, 1fr))';   // two columns on wide screens, one on phones
+  // slider labels: the symbols in italic, like the readout keys
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const LAB = { r0: `screening length ${I('r')}<sub>0</sub>`, env: `environment ${I('ε')}<sub>env</sub>`, mX: `reduced mass ${I('m')}<sub>X</sub>/${I('m')}<sub>e</sub>` };
+  Object.keys(LAB).forEach(k => { const sp = elCtl.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  // tick marks on the environment slider at the three named environments
+  const envIn = document.getElementById(fig.id + '-env');
+  if (envIn) {
+    const dl = document.createElement('datalist'); dl.id = fig.id + '-env-ticks';
+    dl.innerHTML = '<option value="1"></option><option value="2.45"></option><option value="4.5"></option>';
+    envIn.after(dl); envIn.setAttribute('list', dl.id);
+  }
+})();
+</script>

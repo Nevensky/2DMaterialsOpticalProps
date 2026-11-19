@@ -1,0 +1,324 @@
+  <figure class="viz" id="viz-b8-pairing">
+    <p class="viz-title">Counting bubbles: which vertices go into the self-energy <span class="tag">interactive</span></p>
+    <div class="b8-pairing-plot"><div class="legend b8-pairing-leg"><span class="item" style="color:var(--c-phonon)"><span class="sw"></span><span style="color:var(--fg-2)">one bare, one screened vertex</span></span><span class="item" style="color:var(--c-5)"><span class="sw dash"></span><span style="color:var(--fg-2)">two screened vertices</span></span><span class="item" style="color:var(--c-photon)"><span class="sw dot"></span><span style="color:var(--fg-2)">two bare vertices</span></span></div></div>
+    <div class="b8-pairing-ctrls"></div>
+    <div class="readout b8-pairing-ro" aria-live="polite"><span>cursor $\varepsilon_\infty$<b class="b8-pairing-v-eps"></b></span><span>$\hbar\omega_{\mathrm{LO}}$, one bare, one screened<b class="b8-pairing-v-bs"></b></span><span>two screened<b class="b8-pairing-v-ss"></b></span><span>two bare<b class="b8-pairing-v-bb"></b></span></div>
+    <div class="readout b8-pairing-ro2" aria-live="polite"><span>measured $\hbar\omega_{\mathrm{LO}}$<b class="b8-pairing-v-meas"></b></span><span>$\hbar\omega_{\mathrm p}^{\ion}$<b class="b8-pairing-v-wp"></b></span><span>two bare unstable for $\varepsilon_\infty\gt$<b class="b8-pairing-v-thr"></b></span><span>$Z^*,\ \OV,\ M_{\mathrm r},\ \hbar\omega_{\mathrm{TO}}$<b class="b8-pairing-v-in"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> At $\varepsilon_\infty=1$, a crystal without electrons, the three pairings agree. At the material's $\varepsilon_\infty$ only one bare and one screened vertex land on the measured LO frequency: in GaAs two screened vertices give 54 meV instead of 36 meV, and two bare vertices push $\omega^2$ below zero once $\varepsilon_\infty$ exceeds 2.6.</p><div class="cap-more"><p><strong>Marks.</strong> Solid curve: one bare and one screened vertex; dashed: two screened; dotted: two bare. Horizontal lines: the bare frequency $\omega_{\mathrm{TO}}$ (dashed) and the measured $\omega_{\mathrm{LO}}$ (dotted). The dotted vertical line marks the material's $\varepsilon_\infty$; the solid one is the cursor, with a dot on each curve, or an arrowhead where a value lies below the frame. In the shaded band <span class="nw">$\omega^2\lt0$,</span> and an imaginary frequency is plotted as $-|\hbar\omega_{\mathrm{LO}}|$; the ring marks the onset of this instability, $\varepsilon_\infty=2+\omega_{\mathrm{TO}}^2/(\omega_{\mathrm p}^{\ion})^2$.</p><p><strong>Try.</strong> Drag across the plot, or use the slider, to sweep the cursor from 1 to 15. Switch to MgO: with its small $\varepsilon_\infty=2.96$ two screened vertices overshoot the solid curve by 38 %, against 51 % in GaAs, yet two bare vertices still destabilize the lattice. At each material's $\varepsilon_\infty$, compare the solid curve with the measured line.</p><p><strong>Model.</strong> <a class="eqref" href="#b8-eq-pairing">(B8.9)</a> with $\zeta=1/\varepsilon_\infty$, $(\varepsilon_\infty^2-\varepsilon_\infty+1)/\varepsilon_\infty^2$ and $2-\varepsilon_\infty$ from the count <a class="eqref" href="#b8-eq-count">(B8.8)</a>: the LO mode of a cubic crystal with two atoms per cell, at $\bq\to0$, $c\to\infty$ and static electronic screening. The bare frequency is $\omega_{\mathrm{TO}}$: photon exchange leaves the TO mode unshifted outside the light cone. Only $\varepsilon_\infty$ varies; $Z^*$, $\OV$, $M_{\mathrm r}$ and $\hbar\omega_{\mathrm{TO}}$, in the last readout, stay fixed (Section A.4; literature values, illustrative).</p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b8-pairing');
+  if (!fig || !window.EPP) return;
+  // Gaussian units: 4πe² = 180.95 eV Å and ħ²/(amu Å²) = 4.1802 meV, so
+  // (ħω_p^ion)² = 180.95 × 4.1802e-3 eV² × Z*² / (Ω_V[Å³] M_r[amu])
+  const FPE2 = 180.95, HB2 = 4.1802e-3, X0 = 1, X1 = 15;
+  // Section A.4 data (literature values, illustrative): ε∞; measured ħω_LO and ħω_TO (meV); Ω_V (Å³); Z* (dimensionless); M_r (amu)
+  const MAT = {
+    GaAs: { einf: 10.9, wLO: 36.2, wTO: 33.3, OV: 45.2, Z: 2.07, Mr: 36.1 },
+    MgO: { einf: 2.96, wLO: 89.0, wTO: 49.1, OV: 18.7, Z: 1.98, Mr: 9.65 },
+    NaCl: { einf: 2.34, wLO: 32.7, wTO: 20.3, OV: 44.9, Z: 1.12, Mr: 13.9 }
+  };
+  // each pairing multiplies the electron-free self-energy by ζ(ε∞): the count (B8.8) with 1 − x = ε∞
+  const PAIR = [
+    { key: 'bs', zeta: e => 1 / e, color: 'phonon', dash: [], width: 2.4, name: 'one bare, one screened' },
+    { key: 'ss', zeta: e => (e * e - e + 1) / (e * e), color: 'c5', dash: [7, 4], width: 2.2, name: 'two screened' },
+    { key: 'bb', zeta: e => 2 - e, color: 'photon', dash: [0.5, 4.5], width: 2.6, name: 'two bare' }
+  ];
+  const sgnSqrt = (w2) => Math.sign(w2) * Math.sqrt(Math.abs(w2)); // an imaginary ħω is drawn at −|ħω|
+  const CACHE = {};
+  function material(key) {
+    if (CACHE[key]) return CACHE[key];
+    const m = MAT[key], wp2 = FPE2 * HB2 * m.Z * m.Z / (m.OV * m.Mr) * 1e6; // (ħω_p^ion)², meV²
+    const wT2 = m.wTO * m.wTO, W = Math.sqrt(wT2 + wp2);                   // W: all three at ε∞ = 1
+    const M = Object.assign({ key, wp2, wT2, W, wp: Math.sqrt(wp2), epsC: 2 + wT2 / wp2, ylim: [-0.6 * W, 1.22 * W] }, m);
+    M.f = PAIR.map(p => (e) => sgnSqrt(wT2 + wp2 * p.zeta(e)));          // (B8.9): ħω_LO for each pairing, meV
+    M.xs = EPP.linspace(X0, X1, 561);
+    M.ys = M.f.map(f => M.xs.map(f));
+    // the two-bare curve gets its exact zero crossing as an extra sample
+    M.xbb = M.xs.concat(M.epsC > X0 && M.epsC < X1 ? [M.epsC] : []).sort((a, b) => a - b);
+    M.ybb = M.xbb.map(M.f[2]);
+    return (CACHE[key] = M);
+  }
+
+  // ---- canvas text: '$..$' marks math, whose letters (Latin, Greek, ħ) are italic in the text font;
+  //      _x, _{..}, ^x as in EPP.drawRich, so a subscript written outside '$' stays upright: '$ω$_{LO}' ----
+  const ITAL = /[A-Za-zα-ωħ]/;
+  let FT = '', FU = '';
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const p of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: p.t, m: p.m, it: false }); continue; }
+        let buf = '', it = null;
+        for (const ch of p.t) {
+          const k = ITAL.test(ch);
+          if (it !== null && k !== it) { out.push({ t: buf, m: p.m, it }); buf = ''; }
+          buf += ch; it = k;
+        }
+        if (buf) out.push({ t: buf, m: p.m, it });
+      }
+    });
+    return out;
+  }
+  const runFont = (r, size) => { const sz = r.m ? Math.round(size * 0.72) : size; return r.it ? `italic ${sz + 1}px ${FT}` : `${sz}px ${FU}`; };
+  function rich(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, rs = runs(s);
+    // a little air after an italic letter followed by upright text (italic correction)
+    const ws = rs.map((r, k) => { ctx.font = runFont(r, size); const nx = rs[k + 1]; return ctx.measureText(r.t).width + (r.it && nx && !nx.it && nx.m !== -1 ? 0.1 * size : 0); });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    let x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    if (o.color) ctx.fillStyle = o.color;
+    const ta = ctx.textAlign; ctx.textAlign = 'left';
+    rs.forEach((r, k) => { ctx.font = runFont(r, size); ctx.fillText(r.t, x0, y + (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0))); x0 += ws[k]; });
+    ctx.textAlign = ta;
+    return tot;
+  }
+  // ---- HTML text: italic Greek letters in the hover tip and the control labels ----
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  function italicize(el) {
+    const tw = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), nodes = [];
+    while (tw.nextNode()) nodes.push(tw.currentNode);
+    for (const n of nodes) {
+      if (!n.parentElement || n.parentElement.closest('sub, sup, i') || !/[εωħ]/.test(n.nodeValue)) continue;
+      const frag = document.createDocumentFragment();
+      n.nodeValue.split(/([εωħ]+)/).forEach((p, k) => {
+        if (k % 2) { const e = document.createElement('i'); e.style.fontFamily = 'var(--font-text)'; e.textContent = p; frag.appendChild(e); }
+        else if (p) frag.appendChild(document.createTextNode(p));
+      });
+      n.replaceWith(frag);
+    }
+  }
+
+  // ---- the plot ----
+  const elPlot = fig.querySelector('.b8-pairing-plot');
+  const P = new EPP.Plot(elPlot, {
+    xlim: [X0, X1], ylim: [-1, 1], legend: false, xname: 'ε_∞', xticks: [1, 3, 5, 7, 9, 11, 13, 15],
+    margin: { l: 58, r: 14, t: 12, b: 44 }, aspect: 0.52, minHeight: 280, maxHeight: 430,
+    hoverX: v => v.toFixed(2), hoverY: v => (v >= 0 ? v.toFixed(1) + ' meV' : 'unstable'),
+    ariaLabel: 'Predicted LO phonon energy against the electronic dielectric constant for three pairings of bare and screened vertices'
+  });
+  // the legend is static markup, placed under the canvas
+  const elLeg = elPlot.querySelector('.b8-pairing-leg');
+  if (elLeg) elPlot.appendChild(elLeg);
+  const X_TITLE = 'electronic dielectric constant $ε$_∞', Y_TITLE = 'predicted $ħω$_{LO} (meV)';
+  let M = null, cur = null;
+
+  // ---- direct labels: placed where they touch no curve, no other reference line and no other label ----
+  function mkLabel(lines) {
+    const ctx = P.ctx;
+    const L = { lines: lines.map(l => Object.assign({ w: rich(ctx, l.t, 0, 0, { size: l.size, measure: true }), lh: Math.round(l.size * 1.36) }, l)) };
+    L.w = Math.max(...L.lines.map(l => l.w)); L.h = L.lines.reduce((a, l) => a + l.lh, 0);
+    return L;
+  }
+  function clashes(b, avoid) {
+    for (const X of avoid.vx) if (X >= b[0] && X <= b[2]) return true;
+    for (const q of avoid.boxes) if (b[0] < q[2] && b[2] > q[0] && b[1] < q[3] && b[3] > q[1]) return true;
+    for (const f of avoid.fns) {
+      let prev = null;
+      for (let px = b[0]; px <= b[2] + 0.01; px += 1.5) {
+        const yv = f(P.invX(px));
+        if (!isFinite(yv)) { prev = null; continue; }
+        const py = P.Y(yv);
+        if (py >= b[1] && py <= b[3]) return true;
+        if (prev !== null && Math.min(prev, py) < b[1] && Math.max(prev, py) > b[3]) return true; // steep crossing
+        prev = py;
+      }
+    }
+    return false;
+  }
+  // cands: [{x0, yc}] in canvas px (left edge, vertical centre), in order of preference.
+  // passes: true = avoid the vertical ε∞ line too; false = the label may cross that thin dotted line
+  function place(L, cands, avoid, boxes, passes = [true, false]) {
+    const m = P.m, W = P.cv.w, H = P.cv.h;
+    const ok = (c, av) => {
+      const b = [c.x0, c.yc - L.h / 2, c.x0 + L.w, c.yc + L.h / 2];
+      if (b[0] < m.l + 3 || b[2] > W - m.r - 3 || b[1] < m.t + 2 || b[3] > H - m.b - 2) return null;
+      return clashes([b[0] - 3, b[1] - 2, b[2] + 3, b[3] + 2], av) ? null : b;
+    };
+    for (const strict of passes) {
+      const av = Object.assign({}, avoid, { vx: strict ? avoid.vx : [], boxes });
+      for (const c of cands) {
+        const b = ok(c, av);
+        if (b) { boxes.push([b[0] - 6, b[1] - 1, b[2] + 6, b[3] + 1]); return { L, b, plate: !strict && avoid.vx.some(X => X >= b[0] - 3 && X <= b[2] + 3) }; }
+      }
+    }
+    return null;
+  }
+  // candidates along rows, scanned from the right edge to the left
+  function rowCands(L, rows) {
+    const m = P.m, xR = P.cv.w - m.r - 4 - L.w, out = [];
+    for (const yc of rows) for (let x0 = xR; x0 >= m.l + 4; x0 -= 4) out.push({ x0, yc });
+    return out;
+  }
+  let layout = null, layoutKey = '';
+  function computeLayout() {
+    const ctx = P.ctx, m = P.m, H = P.cv.h;
+    ctx.font = `11px ${FU}`;
+    const key = [M.key, P.cv.w, H, ctx.measureText('measured lattice').width.toFixed(1)].join('|');
+    if (key === layoutKey && layout) return layout;
+    const boxes = [], out = [], Xm = P.X(M.einf), Y0 = P.Y(0), yB = H - m.b;
+    boxes.push([P.X(M.epsC) - 7, Y0 - 7, P.X(M.epsC) + 7, Y0 + 7]); // the ring at the onset
+    const hLO = () => M.wLO, hTO = () => M.wTO;
+    // measured ω_LO: above its line, else below
+    let L = mkLabel([{ t: 'measured $ω$_{LO}', size: 11, color: 'phonon' }]);
+    out.push(place(L, rowCands(L, [P.Y(M.wLO) - 2 - L.h / 2, P.Y(M.wLO) + 2 + L.h / 2]), { fns: [...M.f, hTO], vx: [Xm] }, boxes));
+    // bare ω_TO: below its line, else above
+    L = mkLabel([{ t: 'bare $ω$_{TO}', size: 11, color: 'muted' }]);
+    out.push(place(L, rowCands(L, [P.Y(M.wTO) + 2 + L.h / 2, P.Y(M.wTO) - 2 - L.h / 2]), { fns: [...M.f, hLO], vx: [Xm] }, boxes));
+    // the material's ε∞: beside its vertical line, as high as possible
+    L = mkLabel([{ t: `$ε$_∞ of ${M.key}`, size: 11, color: 'muted' }]);
+    const vc = [];
+    for (let k = 0; k < 6; k++) { const yc = m.t + 4 + L.h / 2 + 16 * k; vc.push({ x0: Xm + 5, yc }, { x0: Xm - 5 - L.w, yc }); }
+    out.push(place(L, vc, { fns: [...M.f, hLO, hTO], vx: [] }, boxes));
+    // the band: two lines if they fit, else one; top of the band first
+    const band = (Lb) => rowCands(Lb, [Y0 + 4 + Lb.h / 2, (Y0 + yB) / 2, yB - 4 - Lb.h / 2]);
+    const L2 = mkLabel([{ t: '$ω$^2 < 0: lattice unstable', size: 11, color: 'photon' }, { t: 'plotted as −|$ħω$_{LO}|', size: 10, color: 'muted' }]);
+    const L1 = mkLabel([{ t: '$ω$^2 < 0: lattice unstable', size: 11, color: 'photon' }]);
+    const av = { fns: M.f, vx: [Xm] };
+    out.push(place(L2, band(L2), av, boxes, [true]) || place(L1, band(L1), av, boxes, [true]) ||
+      place(L2, band(L2), av, boxes, [false]) || place(L1, band(L1), av, boxes, [false]));
+    layout = out.filter(Boolean); layoutKey = key;
+    return layout;
+  }
+  function drawLabels(ctx) {
+    const plate = EPP.alpha('surface', 0.86);
+    ctx.textBaseline = 'middle';
+    for (const { L, b, plate: onPlate } of computeLayout()) {
+      // a label that had to cross the dotted ε∞ line sits on a plate of the background colour
+      if (onPlate) { ctx.fillStyle = plate; ctx.fillRect(b[0] - 3, b[1] - 1, b[2] - b[0] + 6, b[3] - b[1] + 2); }
+      let y = b[1];
+      for (const l of L.lines) { rich(ctx, l.t, b[0], y + l.lh / 2, { size: l.size, color: EPP.textColor(l.color) }); y += l.lh; }
+    }
+  }
+  // the cursor: drawn last, over the labels; its dots stay whole at the edges of the frame
+  function drawCursor(ctx) {
+    const m = P.m, H = P.cv.h, X = Math.round(P.X(cur.eps)) + 0.5, [y0, y1] = P.ylim;
+    ctx.save();
+    ctx.strokeStyle = EPP.color('ink'); ctx.lineWidth = 1.3; ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(X, m.t); ctx.lineTo(X, H - m.b); ctx.stroke();
+    const bg = EPP.color('surface');
+    PAIR.forEach((p, k) => {
+      const v = cur.v[k], col = EPP.color(p.color);
+      if (v < y0 || v > y1) {
+        // the value lies off the frame: an arrowhead at the edge points to it
+        const down = v < y0, tip = down ? H - m.b - 2 : m.t + 2, s = down ? -1 : 1;
+        ctx.beginPath(); ctx.moveTo(X, tip); ctx.lineTo(X - 6, tip + s * 11); ctx.lineTo(X + 6, tip + s * 11); ctx.closePath();
+        ctx.fillStyle = col; ctx.fill(); ctx.strokeStyle = bg; ctx.lineWidth = 1.2; ctx.stroke();
+      } else {
+        const Y = P.Y(v);
+        ctx.fillStyle = bg; ctx.beginPath(); ctx.arc(X, Y, 5.6, 0, 2 * Math.PI); ctx.fill();
+        ctx.fillStyle = col; ctx.beginPath(); ctx.arc(X, Y, 4, 0, 2 * Math.PI); ctx.fill();
+      }
+    });
+    ctx.restore();
+  }
+  const base = P.render.bind(P);
+  P.render = () => {
+    base();
+    const ctx = P.ctx, w = P.cv.w, h = P.cv.h, m = P.m;
+    if (!w || !h || !M || !cur) return;
+    FT = EPP.css('--font-text'); FU = EPP.css('--font-ui');
+    ctx.save();
+    ctx.textBaseline = 'alphabetic';
+    const cFg = EPP.color('fg');
+    rich(ctx, X_TITLE, m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, align: 'center', color: cFg });
+    ctx.save(); ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    rich(ctx, Y_TITLE, 0, 0, { size: 12.5, align: 'center', color: cFg });
+    ctx.restore();
+    drawLabels(ctx);
+    drawCursor(ctx);
+    ctx.restore();
+    if (!P.tip.hidden) italicize(P.tip);
+  };
+
+  // ---- readouts: the keys are static MathJax in the markup; only the values change ----
+  const roV = {};
+  ['eps', 'bs', 'ss', 'bb', 'meas', 'wp', 'thr', 'in'].forEach(k => { roV[k] = fig.querySelector('.b8-pairing-v-' + k); });
+  const meV = (v) => `${v.toFixed(1)} meV`;
+  const UNSTABLE = `unstable (${I('ω')}<sup>2</sup> &lt; 0)`;
+  function readouts() {
+    roV.eps.textContent = cur.eps.toFixed(2);
+    PAIR.forEach((p, k) => { roV[p.key].innerHTML = cur.v[k] >= 0 ? meV(cur.v[k]) : UNSTABLE; });
+    roV.meas.textContent = meV(M.wLO);
+    roV.wp.textContent = meV(M.wp);
+    roV.thr.textContent = M.epsC.toFixed(2);
+    roV.in.textContent = `${M.Z.toFixed(2)}, ${M.OV.toFixed(1)} Å³, ${M.Mr} amu, ${meV(M.wTO)}`;
+    const say = (v) => (v >= 0 ? `${v.toFixed(1)} meV` : 'unstable, omega squared below zero');
+    P.cv.canvas.setAttribute('aria-label', `Predicted LO phonon energy of ${M.key} against the electronic dielectric constant ε∞ from 1 to 15, ` +
+      `for three pairings of bare and screened vertices. At the cursor, ε∞ = ${cur.eps.toFixed(2)}: one bare and one screened vertex ${say(cur.v[0])}, ` +
+      `two screened ${say(cur.v[1])}, two bare ${say(cur.v[2])}. Measured LO energy ${M.wLO.toFixed(1)} meV at the material's ε∞ = ${M.einf}; ` +
+      `two bare vertices are unstable above ε∞ = ${M.epsC.toFixed(2)}.`);
+  }
+
+  function layers() {
+    return [
+      { type: 'hband', y0: M.ylim[0], y1: 0, color: 'photon', alpha: 0.08 },
+      { type: 'hline', at: M.wTO, color: 'muted', dash: [5, 4], width: 1.2 },
+      { type: 'hline', at: M.wLO, color: 'phonon', dash: [1.5, 3], width: 1.6 },
+      { type: 'vline', at: M.einf, color: 'muted', dash: [2, 3], width: 1.2 },
+      ...PAIR.map((p, k) => ({ type: 'line', x: k === 2 ? M.xbb : M.xs, y: k === 2 ? M.ybb : M.ys[k], color: p.color, dash: p.dash, width: p.width, label: p.name })),
+      { type: 'points', x: [M.epsC], y: [0], color: 'photon', r: 4, hollow: true }
+    ];
+  }
+  let lastMat = null, ui = null;
+  function onChange(s) {
+    if (s.mat !== lastMat) { if (lastMat !== null) ui.set('eps', MAT[s.mat].einf, true); lastMat = s.mat; } // a new material: cursor to its ε∞
+    const t0 = performance.now();
+    M = material(s.mat);
+    const eps = EPP.clamp(ui.state.eps, X0, X1);
+    cur = { eps, v: M.f.map(f => f(eps)) };
+    P.draw(layers(), { ylim: M.ylim });
+    readouts();
+    fig.dataset.redrawMs = (performance.now() - t0).toFixed(2);
+  }
+  ui = EPP.controls(fig.querySelector('.b8-pairing-ctrls'), [
+    { key: 'mat', type: 'select', label: 'material', value: 'GaAs', options: [['GaAs', 'GaAs'], ['MgO', 'MgO'], ['NaCl', 'NaCl']] },
+    { key: 'eps', type: 'range', label: 'cursor ε_∞', min: X0, max: X1, step: 0.01, value: 10.9, fmt: v => v.toFixed(2) },
+    { key: 'home', type: 'button', label: 'cursor to the material’s ε_∞', onClick: (s) => ui.set('eps', MAT[s.mat].einf, true) }
+  ], onChange);
+  // control labels with an italic ε
+  const sp = fig.querySelector(`label[for="${fig.id}-eps"] > span`);
+  if (sp) sp.innerHTML = `cursor ${I('ε')}<sub>∞</sub>`;
+  const bh = document.getElementById(`${fig.id}-home`);
+  if (bh) bh.innerHTML = `cursor to the material’s ${I('ε')}<sub>∞</sub>`;
+
+  // ---- click or drag on the plot moves the cursor; on touch, a tap or a sideways drag does, so the page still scrolls ----
+  const cvs = P.cv.canvas;
+  cvs.style.touchAction = 'pan-y pinch-zoom';
+  const pxOf = (e) => { const r = cvs.getBoundingClientRect(); return { px: e.clientX - r.left, py: e.clientY - r.top }; };
+  const inFrame = (p, tol) => p.px >= P.m.l - tol && p.px <= P.cv.w - P.m.r + tol && p.py >= P.m.t - tol && p.py <= P.cv.h - P.m.b + tol;
+  const setEps = (px) => ui.set('eps', EPP.clamp(Math.round(P.invX(px) * 100) / 100, X0, X1));
+  let drag = null;
+  cvs.addEventListener('pointerdown', (e) => {
+    const p = pxOf(e);
+    if (!inFrame(p, 8)) return;
+    if (e.pointerType === 'touch') { drag = { id: e.pointerId, touch: true, x0: p.px, y0: p.py, active: false }; return; }
+    drag = { id: e.pointerId, touch: false, active: true };
+    try { cvs.setPointerCapture(e.pointerId); } catch (_) {}
+    e.preventDefault(); setEps(p.px);
+  });
+  cvs.addEventListener('pointermove', (e) => {
+    const p = pxOf(e);
+    if (drag && drag.id === e.pointerId) {
+      if (!drag.active) {
+        const dx = p.px - drag.x0, dy = p.py - drag.y0;
+        if (Math.abs(dx) > 6 && Math.abs(dx) > 1.5 * Math.abs(dy)) { drag.active = true; try { cvs.setPointerCapture(e.pointerId); } catch (_) {} }
+      }
+      if (drag.active) setEps(p.px);
+      return;
+    }
+    if (e.pointerType !== 'touch') cvs.style.cursor = inFrame(p, 0) ? 'ew-resize' : '';
+  });
+  const endDrag = (e) => {
+    if (!drag || drag.id !== e.pointerId) return;
+    if (e.type === 'pointerup' && drag.touch && !drag.active) { const p = pxOf(e); if (Math.hypot(p.px - drag.x0, p.py - drag.y0) < 10) setEps(p.px); } // a tap
+    drag = null;
+  };
+  cvs.addEventListener('pointerup', endDrag); cvs.addEventListener('pointercancel', endDrag);
+
+  // previewed outside Section B.8, the equation links have no target: keep their text, drop the link
+  if (!fig.closest('#b-frohlich')) fig.querySelectorAll('a.eqref').forEach(a => { if (!document.getElementById((a.getAttribute('href') || '').slice(1))) { const s = document.createElement('span'); s.textContent = a.textContent; a.replaceWith(s); } });
+})();
+</script>

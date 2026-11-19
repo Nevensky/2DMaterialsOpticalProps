@@ -1,0 +1,394 @@
+  <figure class="viz" id="viz-a9-drift">
+    <p class="viz-title"><span>Drift in $\bk$ space: which collisions destroy the current</span> <span class="tag">interactive</span></p>
+    <div class="viz-grid two">
+      <div class="a9-drift-k"><div class="legend a9-drift-legk"><span class="item" style="color:var(--muted)"><svg width="16" height="14" viewBox="0 0 16 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><circle cx="8" cy="7" r="5.6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="3 2"/></svg><span style="color:var(--fg-2)">equilibrium</span></span><span class="item" style="color:var(--c-electron)"><svg width="16" height="14" viewBox="0 0 16 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><circle cx="8" cy="7" r="5.6" fill="currentColor" fill-opacity="0.22" stroke="currentColor" stroke-width="1.6"/></svg><span style="color:var(--fg-2)">steady state, full solution</span></span><span class="item" style="color:var(--c-phonon)"><svg width="16" height="14" viewBox="0 0 16 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><circle cx="8" cy="7" r="5.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="0.1 3"/></svg><span style="color:var(--fg-2)">steady state, SERTA</span></span><span class="item" style="color:var(--c-phonon)"><svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><line x1="2" y1="12" x2="14" y2="4" stroke="currentColor" stroke-width="1.6"/><path d="M18 1.3 L11.6 2.6 L14.9 7.5 Z" fill="currentColor"/></svg><span style="color:var(--fg-2)">collisions from $\bk$, opacity $\propto$ rate</span></span></div></div>
+      <div class="a9-drift-ang"><div class="legend a9-drift-lega"><span class="item" style="color:var(--c-phonon)"><span class="sw box"></span><span style="color:var(--fg-2)">all collisions (SERTA, area $\propto1/\tau$)</span></span><span class="item" style="color:var(--c-electron)"><span class="sw box"></span><span style="color:var(--fg-2)">weighted by $1-\cos\theta$ (area $\propto1/\tau_{\mathrm{tr}}$)</span></span><span class="item" style="color:var(--muted)"><span class="sw dot"></span><span style="color:var(--fg-2)">weight $1-\cos\theta$</span></span></div></div>
+    </div>
+    <div class="a9-drift-ctrls"></div>
+    <div class="readout a9-drift-ro" aria-live="polite"><span>$\tau_{\mathrm{tr}}/\tau$ = mobility, full solution / mobility, SERTA<b class="a9-drift-v-rt"></b></span><span>highlighted collision: $1-\cos\theta$<b class="a9-drift-v-w"></b></span><span>$|\bq|/k$<b class="a9-drift-v-q"></b></span><span>share of collisions with $|\theta|\lt30^\circ$<b class="a9-drift-v-sh"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> With small-angle scattering most collisions turn the velocity only a little: they shorten the lifetime $\tau$ but hardly relax the current. The momentum relaxation time $\tau_{\mathrm{tr}}$, which weights each collision by $1-\cos\theta$, then far exceeds $\tau$, and SERTA (next subsection), which counts every collision as a full loss, underestimates the mobility.</p><div class="cap-more"><p><strong>Marks.</strong> (a) Dashed grey circle: edge of the occupied states in equilibrium, radius $k$. Blue disk: steady state of the full solution, shifted by $-e\bE\tau_{\mathrm{tr}}/\hbar$; amber dotted circle: SERTA, shifted by $-e\bE\tau/\hbar$ (arbitrary units); + and −: occupation gained and lost. Amber arrows: collisions from $\bk$ to states $\bk'$ of equal energy, at the angle $\theta$, with phonon wavevector $\bq=\bk'-\bk$; opacity $\propto$ rate. (b) Rate per angle (amber) and the same times $1-\cos\theta$ (blue): areas $\propto1/\tau$ and $1/\tau_{\mathrm{tr}}$; a peak above the frame is cut, its height printed.</p><p><strong>Try.</strong> Press “isotropic, silicon-like”: the two areas become equal and the disks coincide. Drag $\bk'$ around the circle, or the marker in (b), from 0° to 180°: the weight $1-\cos\theta$ grows from 0 to 2. Raise the field: both shifts grow in proportion.</p><p><strong>Model.</strong> A parabolic band in two dimensions, elastic scattering, and a squared matrix element $\propto1/(q^2+q_0^2)$ (screened Coulomb or Fröhlich-like, <a href="#a-polar">Section A.4</a>), normalized to the same $1/\tau$ for every $q_0$. The 2D form of <a class="eqref" href="#a9-eq-tautr">(A9.12)</a> gives $\tau_{\mathrm{tr}}/\tau=(\sqrt{1+x^2}+x)/2x$ with $x=q_0/2k$. Here the iterative solution of <a class="eqref" href="#a9-eq-bte">(A9.10)</a> is $\delta f_{n\bk}\propto\tau_{\mathrm{tr}}\,\mathbf v_{n\bk}\cdot\bE$, so <a class="eqref" href="#a9-eq-mob">(A9.11)</a> with $\tau_{\mathrm{tr}}$ gives the mobility. Not a materials calculation: LO scattering in GaAs is also inelastic, and in 3D the ratio is smaller (2.4 at $q_0/2k=0.1$).</p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a9-drift');
+  if (!fig || !window.EPP) return;
+  // outside Section A.9 (the isolated figure test) links to other parts of the page have no target: keep their text, drop the link
+  if (!fig.closest('#a-applications')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+
+  // ---------- model ----------
+  // 2D parabolic band, elastic scattering on the shell |k'| = |k| = k, squared matrix element ∝ 1/(q² + q_0²),
+  // q = |k' − k| = 2k sin(θ/2). With x = q_0/2k the rate per final angle is R(θ) ∝ 1/(sin²(θ/2) + x²), normalized so that
+  // 1/τ = ∫R dθ is the same for every x (only the angular shape changes):
+  //   2πτ R(θ) = x √(1+x²) / (sin²(θ/2) + x²)               (R in units of its average over θ)
+  //   τ_tr/τ = 1 / ∫ τR (1 − cos θ) dθ = (√(1+x²) + x) / 2x   (2D form of A9.12)
+  //   share of collisions with |θ| < a = (2/π) arctan[(√(1+x²)/x) tan(a/2)]
+  // Elastic and isotropic: the iterated Boltzmann equation gives δf = e τ_tr (∂f0/∂E) v·E, so the disk shifts by
+  // −eEτ_tr/ħ (full solution) instead of −eEτ/ħ (SERTA), and the mobility ratio is τ_tr/τ.
+  const D2R = Math.PI / 180;
+  const rate = (x, th) => { const s = Math.sin(th / 2); return x * Math.sqrt(1 + x * x) / (s * s + x * x); };
+  const ratio = (x) => (Math.sqrt(1 + x * x) + x) / (2 * x);
+  const share = (x, a) => (2 / Math.PI) * Math.atan(Math.sqrt(1 + x * x) / x * Math.tan(a / 2));
+  const SHIFT = 0.075, CAP = 0.5;   // drawn SERTA shift at the largest field, and the cap of the drawn full shift, in units of k
+  const YMAX = 2.5;                 // fixed top of panel (b), in units of the average rate
+  const PRESET = { polar: 0.05, iso: 10 };
+  function compute(s) {
+    const x = EPP.clamp(s.x, 0.05, 10), th = EPP.clamp(Math.round(s.th), -180, 180), F = EPP.clamp(s.F, 0, 1);
+    const rt = ratio(x), dS = SHIFT * F, dF = dS * rt;
+    return { x, th, F, rt, dS, dF, dFd: Math.min(dF, CAP), cap: dF > CAP * 1.0005, w: 1 - Math.cos(th * D2R), q: 2 * Math.abs(Math.sin(th * D2R / 2)), sh: share(x, 30 * D2R) };
+  }
+
+  // ---------- canvas text: '$…$' is math (letters italic in the text font, digits and signs upright, '!x' a bold upright vector);
+  // _x, _{xy}, ^x as in EPP.drawRich; outside '$…$' the text is upright ----------
+  let FAM = { ui: 'sans-serif', tx: 'serif' };
+  const ITAL = /[A-Za-zα-ωħ]/;
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const p of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: p.t, m: p.m, st: 0 }); continue; }
+        let buf = '', st = null, bold = false;
+        for (const ch of p.t) {
+          if (ch === '!') { bold = true; continue; }
+          const k = bold ? 2 : (ITAL.test(ch) ? 1 : 0); bold = false;
+          if (st !== null && k !== st) { out.push({ t: buf, m: p.m, st }); buf = ''; }
+          buf += ch; st = k;
+        }
+        if (buf) out.push({ t: buf, m: p.m, st });
+      }
+    });
+    return out;
+  }
+  const fontOf = (r, size) => { const z = (r.m ? 0.72 : 1) * (r.st === 1 ? size + 1 : size); return `${r.st === 1 ? 'italic ' : ''}${r.st === 2 ? '700 ' : ''}${z.toFixed(1)}px ${r.st === 1 ? FAM.tx : FAM.ui}`; };
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 12, rs = runs(s);
+    const ws = rs.map(r => { ctx.font = fontOf(r, size); return ctx.measureText(r.t).width; });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    let x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    if (o.color) ctx.fillStyle = o.color;
+    ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    rs.forEach((r, k) => { ctx.font = fontOf(r, size); ctx.fillText(r.t, x0, y + (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0))); x0 += ws[k]; });
+    return tot;
+  }
+  const tw = (ctx, s, size) => txt(ctx, s, 0, 0, { size, measure: true });
+  function arrow(ctx, x0, y0, x1, y1, col, lw, head) {
+    const L = Math.hypot(x1 - x0, y1 - y0);
+    if (L < 1) return;
+    ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = lw; ctx.lineCap = 'round'; ctx.setLineDash([]);
+    const hs = Math.min(head, 0.6 * L), a = Math.atan2(y1 - y0, x1 - x0);
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1 - 0.8 * hs * Math.cos(a), y1 - 0.8 * hs * Math.sin(a)); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x1, y1);
+    ctx.lineTo(x1 - hs * Math.cos(a - 0.42), y1 - hs * Math.sin(a - 0.42));
+    ctx.lineTo(x1 - hs * Math.cos(a + 0.42), y1 - hs * Math.sin(a + 0.42));
+    ctx.closePath(); ctx.fill();
+  }
+  // label placer: the first candidate centre whose box stays on the canvas and clears every blocked box
+  function placer(ctx, W, H) {
+    const boxes = [];
+    const hit = (b, o) => b[0] < o[2] && b[2] > o[0] && b[1] < o[3] && b[3] > o[1];
+    const api = {
+      block(x0, y0, x1, y1) { boxes.push([Math.min(x0, x1), Math.min(y0, y1), Math.max(x0, x1), Math.max(y0, y1)]); },
+      disc(x, y, r) { boxes.push([x - r, y - r, x + r, y + r]); },
+      seg(x0, y0, x1, y1, r = 2.5) { const n = Math.max(1, Math.ceil(Math.hypot(x1 - x0, y1 - y0) / 5)); for (let i = 0; i <= n; i++) api.disc(x0 + (x1 - x0) * i / n, y0 + (y1 - y0) * i / n, r); },
+      size(s, size) { return [tw(ctx, s, size), size * 1.15]; },
+      put(s, size, color, cands) {
+        const [w, h] = api.size(s, size);
+        const box = (c) => [c[0] - w / 2 - 2, c[1] - h / 2, c[0] + w / 2 + 2, c[1] + h / 2];
+        const c = cands.find(cc => { const b = box(cc); return b[0] >= 1 && b[1] >= 1 && b[2] <= W - 1 && b[3] <= H - 1 && !boxes.some(o => hit(b, o)); }) || cands[0];
+        boxes.push(box(c));
+        txt(ctx, s, c[0], c[1] + size * 0.36, { size, color, align: 'center' });
+        return c;
+      },
+      // centres around P whose box edge lies r px from P, starting at screen angle a0 and fanning out
+      around(s, size, P, r, a0) {
+        const [w, h] = api.size(s, size), out = [];
+        for (const rr of [r, r + 6]) for (let j = 0; j < 16; j++) {
+          const kk = j === 0 ? 0 : (j % 2 ? 1 : -1) * Math.ceil(j / 2), a = a0 + kk * Math.PI / 8, cs = Math.cos(a), sn = Math.sin(a);
+          const ext = rr + Math.min((w / 2 + 2) / Math.max(Math.abs(cs), 1e-6), (h / 2) / Math.max(Math.abs(sn), 1e-6));
+          out.push([P[0] + cs * ext, P[1] + sn * ext]);
+        }
+        return out;
+      }
+    };
+    return api;
+  }
+
+  // ---------- layout ----------
+  const elK = fig.querySelector('.a9-drift-k'), legK = fig.querySelector('.a9-drift-legk');
+  const elA = fig.querySelector('.a9-drift-ang'), legA = fig.querySelector('.a9-drift-lega');
+  const elCtl = fig.querySelector('.a9-drift-ctrls'), roEl = fig.querySelector('.a9-drift-ro');
+  const roV = {};
+  ['rt', 'w', 'q', 'sh'].forEach(k => { roV[k] = fig.querySelector('.a9-drift-v-' + k); });
+  const cvK = EPP.canvas(elK, { aspect: 1, minHeight: 300, maxHeight: 440 });
+  elK.appendChild(legK);
+  const cv = cvK.canvas;
+  cv.setAttribute('tabindex', '0');
+  cv.setAttribute('role', 'application');
+  let cur = null, G = { R: 1, ox: 0, oy: 0 };
+  const fmtDeg = (v) => { const d = Math.round(v); return (d < 0 ? '−' : '') + Math.abs(d) + '°'; };
+
+  // ---------- panel (a): occupied states and collisions in k space ----------
+  function drawK() {
+    cvK.clear();
+    if (!cur) return;
+    const ctx = cvK.ctx, W = cvK.w, H = cvK.h;
+    if (W < 80 || H < 80) return;
+    FAM = { ui: EPP.css('--font-ui'), tx: EPP.css('--font-text') };
+    // the circle |k| = k fills the panel between the header (to y = 44, plus the k_y label) and the two shift rows at the bottom
+    const c = cur, R = Math.min(0.32 * Math.min(W, H), (H - 116) / 2), ox = 0.4 * W, oy = EPP.clamp(H / 2 + 18, 76 + R, H - 40 - R);
+    G = { R, ox, oy };
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted'), cSurf = EPP.color('surface');
+    const cEl = EPP.color('electron'), cElT = EPP.textColor('electron'), cPh = EPP.color('phonon'), cPhT = EPP.textColor('phonon');
+    const P = (kx, ky) => [ox + kx * R, oy - ky * R];               // a wavevector in units of k -> canvas
+    const pl = placer(ctx, W, H);
+    const th = c.th * D2R, K0 = P(1, 0), K1 = P(Math.cos(th), Math.sin(th)), scat = Math.abs(c.th) >= 1;
+    ctx.save(); ctx.lineJoin = 'round';
+    // axes through the origin k = 0
+    const yTop = oy - R - 30;
+    arrow(ctx, 8, oy, W - 8, oy, cMut, 1, 7);
+    arrow(ctx, ox, oy + R + 6, ox, yTop, cMut, 1, 7);
+    txt(ctx, '$k_x$', W - 9, oy + 17, { size: 13, color: cFg2, align: 'right' });
+    txt(ctx, '$k_y$', ox + 7, yTop + 11, { size: 13, color: cFg2 });
+    pl.block(W - 30, oy + 3, W - 6, oy + 22); pl.block(ox + 4, yTop - 2, ox + 28, yTop + 16);
+    ctx.fillStyle = cFg2; ctx.beginPath(); ctx.arc(ox, oy, 2.4, 0, 2 * Math.PI); ctx.fill();
+    // the origin label goes below left, or above left when k' points into the lower left quadrant
+    const zUp = c.th < -110 && c.th > -180;
+    txt(ctx, '0', ox - 6, zUp ? oy - 6 : oy + 15, { size: 11.5, color: cFg2, align: 'right' });
+    pl.block(ox - 16, zUp ? oy - 18 : oy + 3, ox - 2, zUp ? oy - 3 : oy + 18);
+    pl.seg(8, oy, W - 8, oy, 2); pl.seg(ox, oy + R + 6, ox, yTop, 2);     // labels stay off the axes
+    // steady state of the full solution (filled), equilibrium (dashed), SERTA (dotted)
+    const F0 = P(c.dFd, 0), S0 = P(c.dS, 0);
+    ctx.beginPath(); ctx.arc(F0[0], F0[1], R, 0, 2 * Math.PI);
+    ctx.fillStyle = EPP.alpha('electron', 0.15); ctx.fill();
+    ctx.strokeStyle = cEl; ctx.lineWidth = 1.8; ctx.setLineDash([]); ctx.stroke();
+    ctx.strokeStyle = cMut; ctx.lineWidth = 1.4; ctx.setLineDash([5, 4]);
+    ctx.beginPath(); ctx.arc(ox, oy, R, 0, 2 * Math.PI); ctx.stroke();
+    ctx.strokeStyle = cPh; ctx.lineWidth = 1.9; ctx.lineCap = 'round'; ctx.setLineDash([0.1, 4.2]);
+    ctx.beginPath(); ctx.arc(S0[0], S0[1], R, 0, 2 * Math.PI); ctx.stroke();
+    ctx.setLineDash([]); ctx.lineCap = 'butt';
+    // + where the full solution gains occupation, − where it loses it (inside the crescent when it is wide enough)
+    if (c.dFd * R >= 1.5) for (const deg of [55, -55, 125, -125]) {
+      const ph = deg * D2R, cs = Math.cos(ph), sn = Math.sin(ph);
+      const rho = c.dFd * cs + Math.sqrt(1 - c.dFd * c.dFd * sn * sn), gain = rho > 1, t = Math.abs(rho - 1) * R;
+      const rm = t >= 11 ? 0.5 * (1 + rho) * R : (gain ? rho * R + 9 : rho * R - 9);
+      const X = ox + rm * cs, Y = oy - rm * sn;
+      ctx.strokeStyle = cElT; ctx.lineWidth = 1.8; ctx.beginPath();
+      ctx.moveTo(X - 4.2, Y); ctx.lineTo(X + 4.2, Y);
+      if (gain) { ctx.moveTo(X, Y - 4.2); ctx.lineTo(X, Y + 4.2); }
+      ctx.stroke(); pl.disc(X, Y, 6);
+    }
+    // fan of collisions from k to the states k' on the same energy shell, opacity and width ∝ R(θ)
+    const rmax = rate(c.x, 15 * D2R);
+    for (let j = 1; j < 24; j++) {
+      const t = j * 15 * D2R, r = rate(c.x, t) / rmax, E1 = P(Math.cos(t), Math.sin(t));
+      ctx.globalAlpha = Math.max(0.05, r);
+      arrow(ctx, K0[0], K0[1], E1[0], E1[1], cPh, 0.7 + 1.5 * r, 4 + 3 * r);
+      if (r > 0.25) pl.seg(K0[0], K0[1], E1[0], E1[1], 2);
+    }
+    ctx.globalAlpha = 1;
+    // the wavevectors k and k' from the origin, and the angle θ between them
+    const toward = (A, B, d) => { const L = Math.hypot(B[0] - A[0], B[1] - A[1]) || 1; return [B[0] - (B[0] - A[0]) / L * d, B[1] - (B[1] - A[1]) / L * d]; };
+    const kE = toward([ox, oy], K0, 6), kE1 = toward([ox, oy], K1, 6);
+    arrow(ctx, ox, oy, kE[0], kE[1], cFg2, 1.3, 7);
+    pl.seg(ox, oy, kE[0], kE[1], 3);
+    if (scat) { arrow(ctx, ox, oy, kE1[0], kE1[1], cFg2, 1.3, 7); pl.seg(ox, oy, kE1[0], kE1[1], 3); }
+    const rA = Math.max(16, 0.2 * R);
+    if (scat) {
+      ctx.strokeStyle = cFg2; ctx.lineWidth = 1.3; ctx.beginPath(); ctx.arc(ox, oy, rA, 0, -th, th > 0); ctx.stroke();
+      const n = Math.max(2, Math.ceil(Math.abs(c.th) / 10));
+      for (let i = 0; i <= n; i++) { const a = th * i / n; pl.disc(ox + rA * Math.cos(a), oy - rA * Math.sin(a), 2.5); }
+    }
+    // the highlighted collision: q = k' − k
+    if (scat) {
+      const qE = toward(K0, K1, 5.5);
+      arrow(ctx, K0[0], K0[1], qE[0], qE[1], cPh, 2.6, 10);
+      pl.seg(K0[0], K0[1], K1[0], K1[1], 3.5);
+    }
+    // electron at k, final state k'
+    if (scat) {
+      ctx.beginPath(); ctx.arc(K1[0], K1[1], 4.8, 0, 2 * Math.PI); ctx.fillStyle = cSurf; ctx.fill();
+      ctx.strokeStyle = cEl; ctx.lineWidth = 1.9; ctx.stroke(); pl.disc(K1[0], K1[1], 7);
+    }
+    ctx.beginPath(); ctx.arc(K0[0], K0[1], 6.6, 0, 2 * Math.PI); ctx.fillStyle = cSurf; ctx.fill();
+    ctx.beginPath(); ctx.arc(K0[0], K0[1], 5.2, 0, 2 * Math.PI); ctx.fillStyle = cEl; ctx.fill(); pl.disc(K0[0], K0[1], 7);
+    // header: title (left), field and force (right)
+    txt(ctx, '(a) occupied states in $!k$ space', 8, 16, { size: 11.5, color: cFg2 });
+    pl.block(4, 2, 8 + tw(ctx, '(a) occupied states in $!k$ space', 11.5) + 4, 22);
+    const xr = W - 10, al = 44;
+    arrow(ctx, xr, 15, xr - al, 15, cFg, 1.8, 8);
+    txt(ctx, 'field $!E$', xr - al - 7, 19.5, { size: 12, color: cFg, align: 'right' });
+    arrow(ctx, xr - al, 35, xr, 35, cEl, 1.8, 8);
+    const fl = 'force on electrons −$e!E$';
+    txt(ctx, fl, xr - al - 7, 39.5, { size: 11.5, color: cElT, align: 'right' });
+    pl.block(xr - al - 11 - Math.max(tw(ctx, fl, 11.5), tw(ctx, 'field $!E$', 12)), 2, W - 2, 44);
+    // shifts of the disk at the bottom, from the equilibrium position
+    const yA = oy + R + 16, yB = yA + 17;
+    ctx.strokeStyle = cMut; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(ox, yA - 6); ctx.lineTo(ox, yB + 5); ctx.stroke();
+    txt(ctx, 'full solution', ox - 7, yA + 4, { size: 11.5, color: cElT, align: 'right' });
+    txt(ctx, 'SERTA', ox - 7, yB + 4, { size: 11.5, color: cPhT, align: 'right' });
+    const shiftRow = (d, y, col, colT, lab) => {
+      const L = d * R;
+      if (L >= 2) arrow(ctx, ox, y, ox + L, y, col, 2, 7);
+      txt(ctx, lab, ox + Math.max(L, 0) + 7, y + 4, { size: 11.5, color: colT });
+    };
+    if (c.F > 0) {
+      shiftRow(c.dFd, yA, cEl, cElT, '−$e!Eτ$_{tr}/$ħ$' + (c.cap ? `, true length ×${EPP.fix(c.dF / CAP, 1)}` : ''));
+      shiftRow(c.dS, yB, cPh, cPhT, '−$e!Eτ$/$ħ$');
+    } else txt(ctx, 'no field: no shift', ox + 7, yA + 4, { size: 11.5, color: cFg2 });
+    pl.block(0, yA - 9, W, H);
+    // labels of the geometry
+    // k on the side away from the highlighted collision (down-right when it turns up, up-right when it turns down)
+    pl.put('$!k$', 13.5, cElT, pl.around('$!k$', 13.5, K0, 6, c.th >= 0 ? Math.PI / 4 : -Math.PI / 4));
+    if (scat) {
+      pl.put('$!k$′', 13.5, cElT, pl.around('$!k$′', 13.5, K1, 7, -th));
+      // θ inside the angle, on and beside its bisector, moving outward until it fits; else just past the arc end
+      const tc = [], sg = th >= 0 ? 1 : -1;
+      for (const rr of [rA + 12, rA + 20, rA + 30, rA + 42, rA + 56, rA + 72]) for (const f of [0.5, 0.35, 0.65, 0.22, 0.78]) {
+        const a = th * f;
+        tc.push([ox + rr * Math.cos(a), oy - rr * Math.sin(a)]);
+      }
+      for (const da of [14, 24, 36]) { const a = th + sg * da * D2R; tc.push([ox + (rA + 10) * Math.cos(a), oy - (rA + 10) * Math.sin(a)]); }
+      pl.put('$θ$', 13.5, cFg2, tc);
+      // q beside its arrow, toward the origin first, never inside the angle mark; left out when the arrow is too short to carry it
+      const mx = 0.5 * (K0[0] + K1[0]), my = 0.5 * (K0[1] + K1[1]), L = Math.hypot(K1[0] - K0[0], K1[1] - K0[1]) || 1;
+      if (L >= 16) {
+        let nx = -(K1[1] - K0[1]) / L, ny = (K1[0] - K0[0]) / L;
+        if (nx * (ox - mx) + ny * (oy - my) < 0) { nx = -nx; ny = -ny; }
+        pl.disc(ox, oy, rA + 4);
+        const cands = [];
+        for (const sd of [1, -1]) for (const f of [0, 0.15, -0.15, 0.28, -0.28]) for (const e of [12, 17]) cands.push([mx + (K1[0] - K0[0]) * f + sd * nx * e, my + (K1[1] - K0[1]) * f + sd * ny * e]);
+        pl.put('$!q$', 13.5, cPhT, cands);
+      }
+    }
+    ctx.restore();
+    cv.setAttribute('aria-label', `Panel a, k space: the equilibrium circle of radius k; the steady-state disk of the full solution shifted along +x, against the field, by ${EPP.fix(c.dF, 2)} k (arbitrary units), and the SERTA disk by ${EPP.fix(c.dS, 3)} k. ` +
+      `Arrows from the electron at k on the +x axis to final states on the circle show the collisions, ${c.rt > 1.5 ? 'strongest at small angles' : 'nearly equal in all directions'}. ` +
+      `Highlighted collision: theta = ${c.th} degrees, |q| = ${c.q.toFixed(2)} k, weight 1 − cos theta = ${c.w.toFixed(2)}. Drag the final state around the circle, or use the arrow keys, to change theta.`);
+  }
+
+  // ---------- panel (b): rate per angle, all collisions and weighted by 1 − cos θ ----------
+  const TH = EPP.linspace(-180, 180, 721), WT = TH.map(d => 1 - Math.cos(d * D2R));
+  const pB = new EPP.Plot(elA, {
+    xlim: [-180, 180], ylim: [0, YMAX], legend: false, xname: 'θ', aspect: 0.86, minHeight: 260, maxHeight: 400,
+    xticks: [-180, -90, 0, 90, 180].map(v => ({ v, label: fmtDeg(v) })), yticks: [0, 0.5, 1, 1.5, 2, 2.5],
+    hoverX: fmtDeg, hoverY: v => EPP.fix(v, 2), margin: { t: 26, l: 50, r: 12, b: 44 },
+    ariaLabel: 'Panel b: rate per angle of the final state versus the collision angle theta, in units of its average, for all collisions and weighted by 1 − cos theta; click or drag to choose the highlighted collision'
+  });
+  elA.appendChild(legA);
+  const baseRender = pB.render.bind(pB);
+  pB.render = () => {
+    baseRender();
+    const ctx = pB.ctx, w = pB.cv.w, h = pB.cv.h, m = pB.m;
+    if (!w || !h || !cur) return;
+    FAM = { ui: EPP.css('--font-ui'), tx: EPP.css('--font-text') };
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2');
+    ctx.save();
+    txt(ctx, '(b) collisions from $!k$, by angle', 4, 15, { size: 11.5, color: cFg2 });
+    txt(ctx, 'collision angle $θ$', m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    const wl = cur.th > 60;   // the label of the weight curve sits at the end away from the marker
+    txt(ctx, 'weight 1 − cos $θ$', pB.X(wl ? -173 : 173), pB.Y(2.06) - 3, { size: 11, color: EPP.color('muted'), align: wl ? 'left' : 'right' });
+    const pk = rate(cur.x, 0);
+    if (pk > YMAX) {
+      // the peak leaves the frame between ±θ_c; print its height on the side away from the marker
+      const x = cur.x, s2 = x * Math.sqrt(1 + x * x) / YMAX - x * x, thc = 2 * Math.asin(Math.sqrt(Math.max(0, s2))) / D2R, right = cur.th < 0;
+      txt(ctx, `peak ${EPP.fix(pk, 1)}, off scale`, pB.X(right ? thc : -thc) + (right ? 5 : -5), m.t + 13, { size: 11, color: EPP.textColor('phonon'), align: right ? 'left' : 'right' });
+    }
+    ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, '$R$($θ$), in units of its average', 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+  };
+  function drawAng() {
+    if (!cur) return;
+    const c = cur, x = c.x;
+    const yA = TH.map(d => rate(x, d * D2R)), yW = yA.map((v, i) => v * WT[i]);
+    const rA = rate(x, c.th * D2R), rW = rA * c.w;
+    pB.draw([
+      { type: 'fill', x: TH, y1: yA, color: 'phonon', alpha: 0.16 },
+      { type: 'fill', x: TH, y1: yW, color: 'electron', alpha: 0.24 },
+      { type: 'line', x: TH, y: WT, color: 'muted', width: 1.6, dash: [0.5, 3.5], label: 'weight 1 − cos θ' },
+      { type: 'line', x: TH, y: yA, color: 'phonon', width: 2, label: 'all collisions', breakJump: Infinity },
+      { type: 'line', x: TH, y: yW, color: 'electron', width: 2, label: 'weighted by 1 − cos θ', breakJump: Infinity },
+      { type: 'vline', at: c.th, color: 'fg2', width: 1.2, dash: [4, 3] },
+      rA <= YMAX ? { type: 'points', x: [c.th], y: [rA], color: 'phonon', r: 4 } : null,
+      { type: 'points', x: [c.th], y: [rW], color: 'electron', r: 4 }
+    ]);
+  }
+
+  // ---------- readouts ----------
+  function readouts() {
+    const c = cur;
+    roV.rt.textContent = c.rt < 9.995 ? c.rt.toFixed(2) : c.rt.toFixed(1);
+    roV.w.textContent = c.w.toFixed(3);
+    roV.q.textContent = c.q.toFixed(3);
+    roV.sh.textContent = Math.round(100 * c.sh) + ' %';
+  }
+
+  // ---------- controls ----------
+  let lastPreset = 'none';
+  function onChange(s) {
+    if (s.preset !== lastPreset && PRESET[s.preset]) { ui.set('x', PRESET[s.preset], true); lastPreset = s.preset; }
+    else if (PRESET[s.preset] && Math.abs(Math.log(s.x / PRESET[s.preset])) > 1e-6) { ui.set('preset', 'none', true); lastPreset = 'none'; }
+    else lastPreset = s.preset;
+    cur = compute(ui.state);
+    drawK(); drawAng(); readouts();
+  }
+  const xfmt = (v) => (v < 0.995 ? v.toFixed(2) : (v < 9.95 ? v.toFixed(1) : v.toFixed(0)));
+  const ui = EPP.controls(elCtl, [
+    { key: 'x', type: 'range', label: 'small-angle preference q_0/2k', min: 0.05, max: 10, value: 0.1, log: true, step: 'any', fmt: xfmt },
+    { key: 'th', type: 'range', label: 'highlighted collision θ', min: -180, max: 180, step: 1, value: 30, fmt: fmtDeg },
+    { key: 'F', type: 'range', label: 'field strength (arbitrary units)', min: 0, max: 1, step: 0.01, value: 0.6, fmt: v => v.toFixed(2) },
+    { key: 'preset', type: 'seg', label: 'preset', options: [['polar', 'polar, GaAs-like'], ['iso', 'isotropic, silicon-like']], value: 'none' }
+  ], onChange);
+  // slider labels with the symbols in italic, like the readout keys
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const LAB = { x: `small-angle preference ${I('q')}<sub>0</sub>/2${I('k')}`, th: `highlighted collision ${I('θ')}` };
+  Object.keys(LAB).forEach(k => { const sp = elCtl.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  cur = compute(ui.state);
+
+  // ---------- interaction: drag the final state on the circle, click or drag in (b), arrow keys on (a) ----------
+  const setTh = (deg) => { let d = Math.round(deg); if (d > 180) d -= 360; if (d < -180) d += 360; if (d !== ui.state.th) ui.set('th', d); };
+  const loc = (e) => { const r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  const angleAt = (x, y) => Math.atan2(G.oy - y, x - G.ox) / D2R;
+  const nearRing = (x, y, tol) => Math.abs(Math.hypot(x - G.ox, y - G.oy) - G.R) <= tol;
+  const nearHandle = (x, y, tol = 20) => { const t = (cur ? cur.th : 0) * D2R; return Math.hypot(x - (G.ox + G.R * Math.cos(t)), y - (G.oy - G.R * Math.sin(t))) <= tol; };
+  let drag = null, pend = null;
+  const grab = (e) => { drag = e.pointerId; try { cv.setPointerCapture(e.pointerId); } catch (_) {} roEl.setAttribute('aria-live', 'off'); };
+  // a touch that starts on the final state drags it instead of scrolling the page; other touches scroll as usual
+  cv.addEventListener('touchstart', (e) => { const t = e.touches[0]; if (!t || e.touches.length > 1) return; const r = cv.getBoundingClientRect(); if (nearHandle(t.clientX - r.left, t.clientY - r.top, 24)) e.preventDefault(); }, { passive: false });
+  cv.addEventListener('pointerdown', (e) => {
+    if (e.button) return;
+    const [x, y] = loc(e);
+    if (nearHandle(x, y, e.pointerType === 'touch' ? 24 : 16)) { grab(e); e.preventDefault(); return; }
+    if (!nearRing(x, y, 16)) return;
+    if (e.pointerType === 'touch') { pend = { x, y, id: e.pointerId }; return; }   // a tap on the circle selects; a swipe scrolls
+    grab(e); setTh(angleAt(x, y));
+  });
+  cv.addEventListener('pointermove', (e) => {
+    const [x, y] = loc(e);
+    if (drag === e.pointerId) { cv.style.cursor = 'grabbing'; setTh(angleAt(x, y)); return; }
+    if (pend && pend.id === e.pointerId) { if (Math.hypot(x - pend.x, y - pend.y) > 10) pend = null; return; }
+    if (e.pointerType === 'mouse') cv.style.cursor = nearHandle(x, y, 16) ? 'grab' : (nearRing(x, y, 16) ? 'pointer' : '');
+  });
+  const end = (e) => {
+    if (e.type === 'pointerup' && pend && pend.id === e.pointerId) setTh(angleAt(pend.x, pend.y));
+    pend = null;
+    if (drag === e.pointerId) { drag = null; cv.style.cursor = ''; roEl.setAttribute('aria-live', 'polite'); }
+  };
+  cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
+  cv.addEventListener('keydown', (e) => {
+    if (e.altKey || e.ctrlKey || e.metaKey || !cur) return;
+    const st = e.shiftKey ? 10 : 1, k = e.key;
+    let v = null;
+    if (k === 'ArrowRight' || k === 'ArrowUp') v = cur.th + st;
+    else if (k === 'ArrowLeft' || k === 'ArrowDown') v = cur.th - st;
+    else if (k === 'Home') v = 0; else if (k === 'End') v = 180;
+    if (v === null) return;
+    e.preventDefault(); setTh(v);
+  });
+  pB.onPointer = (x, y, type) => { if (type !== 'up') setTh(EPP.clamp(x, -180, 180)); };
+  cvK.onResize(drawK);
+})();
+</script>

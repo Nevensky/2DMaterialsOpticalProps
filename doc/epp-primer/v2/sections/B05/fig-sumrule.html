@@ -1,0 +1,330 @@
+  <figure class="viz" id="viz-b5-sumrule">
+    <p class="viz-title">Ionic sum rule: springs move infrared strength, never the total <span class="tag">interactive</span></p>
+    <div class="b5-sumrule-chain"></div>
+    <div class="viz-grid two"><div class="b5-sumrule-disp"><div class="legend b5-sumrule-leg"><span class="item" style="color:var(--muted)"><span class="sw"></span><span style="color:var(--fg-2)">$\nu=1$, acoustic</span></span><span class="item" style="color:var(--c-phonon)"><span class="sw"></span><span style="color:var(--fg-2)">$\nu=2$</span></span><span class="item" style="color:var(--c-5)"><span class="sw dash"></span><span style="color:var(--fg-2)">$\nu=3$</span></span><span class="item" style="color:var(--fg-2)"><svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><circle cx="5" cy="6" r="2.2" fill="currentColor"/><circle cx="12" cy="6" r="3.8" fill="currentColor"/></svg><span>dot area $\propto|j_\nu|^2$</span></span></div></div><div class="b5-sumrule-bars"></div></div>
+    <div class="b5-sumrule-ctrls"></div>
+    <div class="readout b5-sumrule-ro" aria-live="polite"><span>$\hbar\omega_\nu$, $\nu=1,2,3$<b class="b5-sumrule-v-hw"></b></span><span>$\sum_\nu|j_\nu|^2$ ($e^2/\mathrm{amu}$)<b class="b5-sumrule-v-sum"></b></span><span>$e^2\sum_\kappa Z^{*2}_\kappa/M_\kappa$ ($e^2/\mathrm{amu}$)<b class="b5-sumrule-v-tgt"></b></span><span>relative difference<b class="b5-sumrule-v-rel"></b></span><span>$Z^*_3=-Z^*_1-Z^*_2$<b class="b5-sumrule-v-z3"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> Moving $q$ or $K_{31}$ shifts infrared strength between the three modes, but the stacked bar always ends on the dashed line: the completeness identity <a class="eqref" href="#b5-eq-sum"></a> read as a sum rule. At $q=0$ the acoustic mode carries nothing.</p><div class="cap-more">
+      <p><strong>Marks.</strong> (a) Disc size grows with the mass, the sign inside is that of the Born charge, thicker springs are stiffer. (b) The branches $\hbar\omega_\nu(q)$; dot areas are proportional to $|j_\nu|^2$, so at every $q$ the three areas add up to the same total; the vertical line and the rings mark the chosen $q$. (c) One bar per mode, its energy below it, and the three stacked; dashed: the contact term <a class="eqref" href="#b5-eq-Piiondia"></a>, $e^2\sum_\kappa Z^{*2}_\kappa/M_\kappa=-c\,\OV\,\Pi^{\mathrm{ion,dia}}_{xx,\mathbf0\mathbf0}$.</p>
+      <p><strong>Try.</strong> Drag in (b), or move $q$ from 0 to $\pi/a$: the acoustic bar grows from zero, the total stays. Change $K_{31}$: the branches move, the total stays. Change $M_2$ or a Born charge: the total changes, because the contact term contains the masses and charges.</p>
+      <p><strong>Model.</strong> Model values: atoms with $M_1=30$ amu, $M_2$ and $M_3=60$ amu sit at $0$, $a/3$ and $2a/3$ and move along the chain; springs $K_{12}=6$ and $K_{23}=4$ <span class="nw">eV/Å²</span> act inside the cell, $K_{31}$ to atom 1 of the next cell. The force constants carry the phase of the partner atom's cell <a class="eqref" href="#a1-eq-dyn"></a>, so $\Phi_{13}(q)=-K_{31}\ee^{-\ii qa}$; the eigenvalues $\omega^2_\nu$ of $\tPhi(q)$, in <span class="nw">eV Å⁻² amu⁻¹</span>, give $\hbar\omega_\nu=64.654\ \mathrm{meV}\times\sqrt{\omega^2_\nu}$. The vertex is <a class="eqref" href="#b5-eq-jion"></a> at $\bG=0$; its basis phases, $1$, $\ee^{-\ii qa/3}$ and $\ee^{-2\ii qa/3}$, change how the strength is shared, never the total. $Z^*_3=-Z^*_1-Z^*_2$ obeys the Born-charge sum rule <a class="eqref" href="#a4-eq-asr"></a>.</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b5-sumrule');
+  if (!fig || !window.EPP) return;
+  // outside Section B.5 (the isolated figure test) the caption's equation links have no target: show the tags as text
+  const TAGS = { 'b5-eq-sum': 'B5.25', 'b5-eq-Piiondia': 'B5.24', 'b5-eq-jion': 'B5.22', 'a1-eq-dyn': 'A1.18', 'a4-eq-asr': 'A4.4' };
+  if (!fig.closest('#b-photon-se')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    const id = a.getAttribute('href').slice(1);
+    if (document.getElementById(id)) return;
+    const s = document.createElement('span'); s.textContent = TAGS[id] ? `(${TAGS[id]})` : a.textContent; a.replaceWith(s);
+  });
+
+  // ---------- model ----------
+  // A chain along x with three atoms per cell, at τ_κ = 0, a/3, 2a/3; springs K_12, K_23 inside the cell and
+  // K_31 from atom 3 of cell ℓ to atom 1 of cell ℓ+1. Units: K in eV/Å², M in amu, so the eigenvalues ω² of
+  // the dynamical matrix are in eV Å⁻² amu⁻¹ and ħω [meV] = HW √ω². Born charges dimensionless, |j|² in e²/amu.
+  const M1 = 30, M3 = 60, K12 = 6, K23 = 4, HW = 64.654, TAU = [0, 1 / 3, 2 / 3];
+  const NQ = 61, QS = EPP.linspace(0, 1, NQ);              // qa/π on [0, 1]; dots at every sixth sample
+  const BR = ['muted', 'phonon', 'c5'];                     // branch colours, ν = 1, 2, 3
+  const RD = 7.5;                                           // dot radius in px for a mode that carries the whole total
+  // one wavevector qn = qa/π: frequencies and strengths |j_ν(q)|² of the three modes
+  function modes(qn, M2, K31, Z) {
+    const M = [M1, M2, M3], qa = Math.PI * qn, c = Math.cos(qa), s = Math.sin(qa);
+    // Φ_κκ'(q) with the phase on the partner atom's cell (A1.18): atom 1 meets atom 3 of cell ℓ−1 through K_31,
+    // so Φ_13 = −K_31 e^{−iqa} and Φ_31 = −K_31 e^{+iqa}
+    const Pr = [[K12 + K31, -K12, -K31 * c], [-K12, K12 + K23, -K23], [-K31 * c, -K23, K23 + K31]];
+    const Pi = [[0, 0, K31 * s], [0, 0, 0], [-K31 * s, 0, 0]];
+    const re = Pr.map((r, i) => r.map((v, j) => v / Math.sqrt(M[i] * M[j])));
+    const im = Pi.map((r, i) => r.map((v, j) => v / Math.sqrt(M[i] * M[j])));
+    const E = EPP.eigHerm(re, im);
+    return E.vals.map((lam, nu) => {
+      // the overall phase of an eigenvector drops out of |j|²; fix it anyway, as for display
+      const v = EPP.fixPhase(E.vecs[nu]);
+      // ionic vertex (B5.22) at G = 0, along the chain: j_ν = Σ_κ Z*_κ e_κν(q) e^{−iqτ_κ} / √M_κ (in units of e/√amu)
+      let jr = 0, ji = 0;
+      for (let k = 0; k < 3; k++) {
+        const ph = -qa * TAU[k], cr = Math.cos(ph), ci = Math.sin(ph), f = Z[k] / Math.sqrt(M[k]);
+        jr += f * (v.re[k] * cr - v.im[k] * ci); ji += f * (v.re[k] * ci + v.im[k] * cr);
+      }
+      return { hw: HW * Math.sqrt(Math.max(lam, 0)), S: jr * jr + ji * ji };
+    });
+  }
+  function compute(s) {
+    const Z = [s.Z1, s.Z2, -s.Z1 - s.Z2], M = [M1, s.M2, M3];
+    // the target: e² Σ_κ Z*²_κ / M_κ, the contact term (B5.24) times −c Ω_V, macroscopic element
+    const target = Z.reduce((a, z, k) => a + z * z / M[k], 0);
+    const br = [[], [], []], S = [[], [], []];
+    QS.forEach(q => modes(q, s.M2, s.K31, Z).forEach((x, b) => { br[b].push(x.hw); S[b].push(x.S); }));
+    const md = modes(s.q, s.M2, s.K31, Z), sum = md.reduce((a, x) => a + x.S, 0);
+    return { s, Z, M, target, br, S, md, sum, rel: target > 1e-12 ? Math.abs(sum - target) / target : NaN, wmax: Math.max(...br[2]) };
+  }
+
+  // ---------- formatting ----------
+  const fx = (v, d) => (Math.abs(v) < 0.5 * Math.pow(10, -d) ? (0).toFixed(d) : EPP.fix(v, d));
+  const sg = (v, d) => (v > 0.5 * Math.pow(10, -d) ? '+' : '') + fx(v, d);
+  const SUP = { '-': '⁻', '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹' };
+  const sci = (v) => {
+    if (!isFinite(v)) return '—';
+    if (!(v > 1e-300)) return '0';
+    let e = Math.floor(Math.log10(v)), m = v / Math.pow(10, e);
+    if (m >= 9.95) { m /= 10; e += 1; }
+    return `${m.toFixed(1)}×10${String(e).split('').map(ch => SUP[ch]).join('')}`;
+  };
+  function niceCeil(v) {
+    const mag = Math.pow(10, Math.floor(Math.log10(v))), r = v / mag;
+    return ([1, 1.2, 1.5, 2, 2.5, 3, 3.5, 4, 5, 6, 7, 8, 10].find(t => t >= r - 1e-9) || 10) * mag;
+  }
+  // sticky ordinates: they change only when the data leave the frame or shrink a lot
+  // (b) keeps the top branch below 84 % of the frame, which leaves room for the label of the chosen q
+  const stickyD = (top, need) => ((need > 0.84 * top || need < 0.5 * top) ? Math.max(40, Math.ceil(1.18 * need / 10) * 10) : top);
+  const stickyB = (top, need) => (!(need > 1e-9) ? top : ((need > 0.86 * top || need < 0.4 * top) ? niceCeil(1.3 * need) : top));
+
+  // ---------- canvas text: '$...$' marks math, where letters are italic and digits upright; _x, ^x as in EPP.drawRich ----------
+  // inside math, '!' makes the next character bold (vectors: the basis position τ_κ)
+  const ITAL = /[A-Za-zα-ωℓħ]/;
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const part of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: part.t, m: part.m, it: false, b: false }); continue; }
+        let buf = '', it = null, b = false, next = false;
+        for (const ch of part.t) {
+          if (ch === '!') { next = true; continue; }
+          const k = ITAL.test(ch);
+          if (buf && (k !== it || next !== b)) { out.push({ t: buf, m: part.m, it, b }); buf = ''; }
+          buf += ch; it = k; b = next; next = false;
+        }
+        if (buf) out.push({ t: buf, m: part.m, it, b });
+      }
+    });
+    return out;
+  }
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, fam = EPP.css('--font-ui'), rs = runs(s);
+    const font = (r) => `${r.it ? 'italic ' : ''}${(o.bold && !r.m) || r.b ? '700 ' : ''}${r.m ? Math.round(size * 0.72) : size}px ${fam}`;
+    const ws = rs.map(r => { ctx.font = font(r); return ctx.measureText(r.t).width; });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    let x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    if (o.color) ctx.fillStyle = o.color;
+    ctx.textAlign = 'left';
+    rs.forEach((r, k) => { ctx.font = font(r); ctx.fillText(r.t, x0, y + (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0))); x0 += ws[k]; });
+    return tot;
+  }
+  const tw = (ctx, s, size) => txt(ctx, s, 0, 0, { size, measure: true });
+
+  let cur = null, yTopD = 0, yTopB = 0.35;
+
+  // ---------- panel (a): the model chain ----------
+  const cvM = EPP.canvas(fig.querySelector('.b5-sumrule-chain'), { height: 146 });
+  cvM.canvas.setAttribute('role', 'img');
+  function spring(ctx, xa, xb, y, lw, col) {
+    const L = xb - xa;
+    ctx.strokeStyle = col; ctx.lineWidth = lw; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.setLineDash([]);
+    ctx.beginPath();
+    if (L < 8) { ctx.moveTo(xa, y); ctx.lineTo(xb, y); ctx.stroke(); return; }
+    const lead = 0.14 * L, body = L - 2 * lead, coils = EPP.clamp(Math.round(body / 9), 2, 7), amp = 4.2, ns = Math.max(16, Math.ceil(body));
+    ctx.moveTo(xa, y); ctx.lineTo(xa + lead, y);
+    for (let j = 1; j <= ns; j++) { const t = j / ns; ctx.lineTo(xa + lead + body * t, y - amp * Math.sin(2 * Math.PI * coils * t)); }
+    ctx.lineTo(xb, y); ctx.stroke();
+  }
+  const kw = (K) => EPP.clamp(0.7 + 0.55 * Math.log2(1 + K), 0.9, 3.2);   // spring stroke grows with the stiffness
+  const rad = (M) => 2.7 * Math.cbrt(M);                                 // disc radius grows with the mass
+  function drawChain() {
+    cvM.clear();
+    if (!cur) return;
+    const ctx = cvM.ctx, w = cvM.w, c = cur;
+    const cFg2 = EPP.color('fg2'), cMuted = EPP.color('muted'), cRule = EPP.color('rule'), cPh = EPP.color('phonon'), cPhT = EPP.textColor('phonon');
+    const narrow = w < 560, fs = narrow ? 10.5 : 11;
+    // header: title, and the units on the same row when they fit
+    ctx.textBaseline = 'alphabetic';
+    const title = narrow ? '(a) the model: three atoms per cell' : '(a) the model: a chain with three atoms per cell, moving along the chain';
+    const units = 'masses in amu, springs in eV/Å²';
+    txt(ctx, title, 4, 15, { size: 11.5, color: cFg2 });
+    const oneRow = 4 + tw(ctx, title, 11.5) + 20 + tw(ctx, units, fs) <= w - 4;
+    txt(ctx, units, oneRow ? w - 4 : 4, oneRow ? 15 : 30, { size: fs, color: cMuted, align: oneRow ? 'right' : 'left' });
+    const y0 = oneRow ? 6 : 14;                                      // vertical offset of the drawing
+    // four sites: atoms 1, 2, 3 of cell ℓ and atom 1 of cell ℓ+1, with spring stubs to the neighbouring cells
+    const sp = Math.min(150, (w - 12) / 3.9), x0 = (w - 3 * sp) / 2, X = (t) => x0 + 3 * t * sp;
+    const yC = y0 + 52, M = [M1, c.s.M2, M3, M1], Z = [c.Z[0], c.Z[1], c.Z[2], c.Z[0]], r = M.map(rad);
+    const sites = [0, 1 / 3, 2 / 3, 1], K = [K12, K23, c.s.K31];
+    // stubs: atom 3 of cell ℓ−1 on the left, atom 2 of cell ℓ+1 on the right
+    ctx.globalAlpha = 0.4;
+    spring(ctx, X(0) - 0.45 * sp, X(0) - r[0], yC, kw(c.s.K31), cMuted);
+    spring(ctx, X(1) + r[3], X(1) + 0.45 * sp, yC, kw(K12), cMuted);
+    ctx.globalAlpha = 1;
+    for (let k = 0; k < 3; k++) spring(ctx, X(sites[k]) + r[k], X(sites[k + 1]) - r[k + 1], yC, kw(K[k]), cMuted);
+    // spring labels
+    const KL = ['$K_{12}$ = 6', '$K_{23}$ = 4', `$K_{31}$ = ${fx(c.s.K31, 1)}`];
+    for (let k = 0; k < 3; k++) txt(ctx, KL[k], (X(sites[k]) + X(sites[k + 1])) / 2, yC - 16, { size: fs, color: cMuted, align: 'center' });
+    // atoms: the atom of the next cell is faded
+    for (let k = 0; k < 4; k++) {
+      ctx.globalAlpha = k === 3 ? 0.45 : 1;
+      ctx.fillStyle = EPP.alpha('phonon', 0.28); ctx.beginPath(); ctx.arc(X(sites[k]), yC, r[k], 0, 2 * Math.PI); ctx.fill();
+      ctx.strokeStyle = cPh; ctx.lineWidth = 1.6; ctx.stroke();
+      if (r[k] >= 6.5 && Math.abs(Z[k]) >= 0.005) {
+        ctx.textBaseline = 'middle';
+        txt(ctx, Z[k] > 0 ? '+' : '−', X(sites[k]), yC + 0.5, { size: r[k] >= 9 ? 13 : 11.5, color: cPhT, align: 'center', bold: true });
+        ctx.textBaseline = 'alphabetic';
+      }
+    }
+    ctx.globalAlpha = 1;
+    // masses and Born charges under the atoms of cell ℓ
+    const yM = yC + 13 + 14, yZ = yM + 15;
+    for (let k = 0; k < 3; k++) {
+      txt(ctx, `$M_${k + 1}$ = ${fx(M[k], 0)}`, X(sites[k]), yM, { size: fs, color: k === 1 ? cFg2 : cMuted, align: 'center' });
+      txt(ctx, `$Z$^*$_${k + 1}$ = ${sg(Z[k], 2)}`, X(sites[k]), yZ, { size: fs, color: cPhT, align: 'center' });
+    }
+    txt(ctx, 'atom 1 of', X(1), yM, { size: fs, color: cMuted, align: 'center' });
+    txt(ctx, 'the next cell', X(1), yZ, { size: fs, color: cMuted, align: 'center' });
+    // the cell: a bracket of length a, with the positions τ_κ of the atoms inside it
+    const yB = yZ + 10;
+    ctx.strokeStyle = cRule; ctx.lineWidth = 1; ctx.setLineDash([]); ctx.beginPath();
+    ctx.moveTo(X(0), yB); ctx.lineTo(X(1), yB);
+    sites.forEach(t => { ctx.moveTo(X(t), yB - 4); ctx.lineTo(X(t), yB + 4); });
+    ctx.stroke();
+    const TL = ['$!τ_1$ = 0', '$!τ_2$ = $a$/3', '$!τ_3$ = 2$a$/3', '$a$'];
+    sites.forEach((t, k) => txt(ctx, TL[k], X(t), yB + 16, { size: fs, color: cMuted, align: 'center' }));
+    cvM.canvas.setAttribute('aria-label', `Panel a: the model chain. Three atoms per cell at positions 0, a/3 and 2a/3, with masses 30, ${fx(c.s.M2, 0)} and 60 amu ` +
+      `and Born charges ${sg(Z[0], 2)}, ${sg(Z[1], 2)} and ${sg(Z[2], 2)}; springs of 6 and 4 eV per square ångström inside the cell, ` +
+      `and K31 = ${fx(c.s.K31, 1)} eV per square ångström from atom 3 to atom 1 of the next cell.`);
+  }
+  cvM.onResize(drawChain);
+
+  // ---------- panel (b): branches with the strength as dot area ----------
+  const MP = { t: 26, l: 58, r: 14, b: 44 };
+  const elDisp = fig.querySelector('.b5-sumrule-disp');
+  // the abscissa runs a little past 0 and 1, so that the dots at the zone centre and boundary are not clipped
+  const pD = new EPP.Plot(elDisp, {
+    xlim: [-0.025, 1.025], ylim: [0, 70], legend: false, margin: MP, aspect: 0.78, minHeight: 250, maxHeight: 330,
+    xname: 'qa/π', hoverX: v => fx(v, 2), hoverY: v => fx(v, 1) + ' meV',
+    ariaLabel: 'Panel b: phonon branches of the three-atom chain against wavevector, with dots whose area shows the infrared strength of each mode'
+  });
+  // the legend is static markup (MathJax), placed under the plot
+  const elLeg = elDisp.querySelector('.b5-sumrule-leg');
+  if (elLeg) elDisp.appendChild(elLeg);
+  const baseD = pD.render.bind(pD);
+  pD.render = () => {
+    baseD();
+    const ctx = pD.ctx, w = pD.cv.w, h = pD.cv.h, m = pD.m;
+    if (!w || !h || !cur) return;
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2');
+    ctx.save();
+    ctx.textBaseline = 'alphabetic';
+    txt(ctx, '(b) branches; dot area ∝ $|j_ν|$^2', 4, 15, { size: 11.5, color: cFg2 });
+    txt(ctx, 'wavevector $qa$/π', m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    // the chosen q, labelled at the top of its line, on the side with room
+    ctx.textBaseline = 'top';
+    const xq = pD.X(cur.s.q), lab = 'chosen $q$', right = xq + 5 + tw(ctx, lab, 11) <= w - m.r - 2;
+    txt(ctx, lab, right ? xq + 5 : xq - 5, m.t + 4, { size: 11, color: cFg2, align: right ? 'left' : 'right' });
+    ctx.textBaseline = 'alphabetic';
+    ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, '$ħω_ν$ (meV)', 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+  };
+  function drawDisp() {
+    const c = cur, L = [];
+    const dot = (S) => (c.target > 1e-12 ? RD * Math.sqrt(Math.max(S, 0) / c.target) : 0);
+    L.push({ type: 'line', x: QS, y: c.br[0], color: BR[0], width: 2, label: 'ν = 1, acoustic' });
+    L.push({ type: 'line', x: QS, y: c.br[1], color: BR[1], width: 2, label: 'ν = 2' });
+    L.push({ type: 'line', x: QS, y: c.br[2], color: BR[2], width: 2, dash: [7, 3], label: 'ν = 3' });
+    // every sixth sample, qa/π = 0, 0.1, ..., 1: radius ∝ |j_ν|, so area ∝ |j_ν|² and the three areas at one q have a fixed sum
+    for (let i = 0; i < NQ; i += 6) for (let b = 0; b < 3; b++) {
+      const r = dot(c.S[b][i]);
+      if (r >= 0.6) L.push({ type: 'points', x: [QS[i]], y: [c.br[b][i]], color: BR[b], r });
+    }
+    L.push({ type: 'vline', at: c.s.q, color: 'muted', width: 1.2, dash: [] });
+    c.md.forEach((x, b) => {
+      const r = dot(x.S);
+      if (r >= 0.6) L.push({ type: 'points', x: [c.s.q], y: [x.hw], color: BR[b], r });
+      L.push({ type: 'points', x: [c.s.q], y: [x.hw], color: 'ink', r: Math.max(3.6, r + 2.2), hollow: true });
+    });
+    pD.draw(L, { ylim: [0, yTopD] });
+    pD.cv.canvas.setAttribute('aria-label', `Panel b: phonon branches of the three-atom chain against wavevector qa/π from 0 to 1, energies up to ${fx(c.wmax, 1)} meV, ` +
+      `with dots whose area is proportional to the infrared strength. At the chosen qa/π = ${fx(c.s.q, 2)} the energies are ` +
+      `${c.md.map(x => fx(x.hw, 1)).join(', ')} meV.`);
+  }
+
+  // ---------- panel (c): strengths at the chosen q ----------
+  const XB = [1, 2, 3, 4.4], HB = 0.32;
+  const pB = new EPP.Plot(fig.querySelector('.b5-sumrule-bars'), {
+    xlim: [0.4, 5.1], ylim: [0, 0.35], legend: false, hover: false, margin: MP, aspect: 0.78, minHeight: 250, maxHeight: 330,
+    xticks: [], ariaLabel: 'Panel c: bar chart of the strengths of the three modes at the chosen wavevector, their stacked sum, and the contact term'
+  });
+  const baseB = pB.render.bind(pB);
+  pB.render = () => {
+    baseB();
+    const ctx = pB.ctx, w = pB.cv.w, h = pB.cv.h, m = pB.m;
+    if (!w || !h || !cur) return;
+    const c = cur, cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMuted = EPP.color('muted');
+    ctx.save();
+    ctx.textBaseline = 'alphabetic';
+    txt(ctx, `(c) strengths at $qa$/π = ${fx(c.s.q, 2)}`, 4, 15, { size: 11.5, color: cFg2 });
+    // two rows of tick labels: the mode, and its energy
+    ctx.textBaseline = 'top';
+    ['$ν$ = 1', '$ν$ = 2', '$ν$ = 3', 'Σ$_ν$'].forEach((s, k) => txt(ctx, s, pB.X(XB[k]), h - m.b + 6, { size: 11, color: cFg2, align: 'center' }));
+    c.md.forEach((x, b) => txt(ctx, `${fx(x.hw, 1)} meV`, pB.X(XB[b]), h - m.b + 22, { size: 10.5, color: cMuted, align: 'center' }));
+    txt(ctx, 'stacked', pB.X(XB[3]), h - m.b + 22, { size: 10.5, color: cMuted, align: 'center' });
+    // the dashed line, labelled above it at the right end (the short form on narrow plots)
+    ctx.textBaseline = 'alphabetic';
+    const long = '$e$^2 Σ$_κ$ $Z_κ$^{*2}/$M_κ$ (contact term)', short = 'contact term';
+    const lab = tw(ctx, long, 11) <= w - m.l - m.r - 12 ? long : short;
+    txt(ctx, lab, w - m.r - 6, pB.Y(c.target) - 8, { size: 11, color: cFg2, align: 'right' });
+    ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, '$|j_ν|$^2 ($e$^2/amu)', 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+  };
+  function drawBars() {
+    const c = cur, L = [];
+    const bar = (x, y0, y1, color) => ({ type: 'fill', x: [x - HB, x + HB], y1: [y1, y1], y2: [y0, y0], color, alpha: 0.85 });
+    c.md.forEach((x, b) => L.push(bar(XB[b], 0, x.S, BR[b])));
+    let acc = 0;
+    const seps = [];
+    c.md.forEach((x, b) => { L.push(bar(XB[3], acc, acc + x.S, BR[b])); acc += x.S; if (b < 2 && x.S > 0) seps.push([XB[3] - HB, acc, XB[3] + HB, acc]); });
+    L.push({ type: 'segments', segs: seps, color: 'surface', width: 1.4 });
+    L.push({ type: 'hline', at: c.target, color: 'ink', dash: [6, 4], width: 1.4 });
+    pB.draw(L, { ylim: [0, yTopB] });
+    pB.cv.canvas.setAttribute('aria-label', `Panel c: strengths of the three modes at qa/π = ${fx(c.s.q, 2)}: ${c.md.map(x => fx(x.S, 4)).join(', ')} e squared per amu; ` +
+      `their stacked sum ${fx(c.sum, 4)} ends on the dashed line of the contact term, ${fx(c.target, 4)}.`);
+  }
+
+  // ---------- readouts ----------
+  const V = {};
+  ['hw', 'sum', 'tgt', 'rel', 'z3'].forEach(k => { V[k] = fig.querySelector('.b5-sumrule-v-' + k); });
+  function readouts() {
+    const c = cur;
+    // no-break spaces keep every number with its unit
+    V.hw.textContent = `${c.md.map(x => fx(x.hw, 1)).join(', ')} meV`;
+    V.sum.textContent = fx(c.sum, 4);
+    V.tgt.textContent = fx(c.target, 4);
+    V.rel.textContent = c.target > 1e-12 ? sci(c.rel) : '— (no charges)';
+    V.z3.textContent = sg(c.Z[2], 2);
+  }
+
+  // ---------- controls ----------
+  function onChange(s) {
+    cur = compute(s);
+    yTopD = stickyD(yTopD, cur.wmax);
+    yTopB = stickyB(yTopB, cur.target);
+    drawChain(); drawDisp(); drawBars(); readouts();
+  }
+  const elCtl = fig.querySelector('.b5-sumrule-ctrls');
+  const ui = EPP.controls(elCtl, [
+    { key: 'q', type: 'range', label: 'wavevector qa/π', min: 0, max: 1, step: 0.01, value: 0.35, fmt: v => v.toFixed(2) },
+    { key: 'K31', type: 'range', label: 'intercell spring K_{31}', min: 0.5, max: 15, step: 0.1, value: 3, fmt: v => `${v.toFixed(1)} eV/Å²` },
+    { key: 'M2', type: 'range', label: 'mass M_2', min: 4, max: 100, step: 1, value: 16, fmt: v => `${v.toFixed(0)} amu` },
+    { key: 'Z1', type: 'range', label: 'Born charge Z^*_1', min: -3, max: 3, step: 0.05, value: 2, fmt: v => sg(v, 2) },
+    { key: 'Z2', type: 'range', label: 'Born charge Z^*_2', min: -3, max: 3, step: 0.05, value: -1.2, fmt: v => sg(v, 2) }
+  ], onChange);
+  // slider labels: the symbols in italic, like the readout keys
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const LAB = { q: `wavevector ${I('qa')}/π`, K31: `intercell spring ${I('K')}<sub>31</sub>`, M2: `mass ${I('M')}<sub>2</sub>`,
+    Z1: `Born charge ${I('Z')}<sup>*</sup><sub>1</sub>`, Z2: `Born charge ${I('Z')}<sup>*</sup><sub>2</sub>` };
+  Object.keys(LAB).forEach(k => { const sp = elCtl.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  // click or drag in (b) chooses q
+  pD.onPointer = (x, y, type) => { if (type === 'up') return; ui.set('q', EPP.clamp(Math.round(x * 100) / 100, 0, 1)); };
+})();
+</script>

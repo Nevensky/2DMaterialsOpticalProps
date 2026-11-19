@@ -1,0 +1,370 @@
+<section class="chapter" id="a-temperature" data-num="A.8" data-title="Gaps vs T, lifetimes, Fröhlich catastrophe">
+  <header class="ch-head">
+    <p class="eyebrow"><span class="num">A.8</span><span>Giustino §V.B.3–4, §IX.A, §X.A · Eqs. 162–170, 193–199</span></p>
+    <h2>Band gaps vs temperature, lifetimes and the Fröhlich catastrophe</h2>
+    <p class="lede">Atoms never stand still, not even at zero temperature, so every band energy is shifted and broadened by the lattice. Here the self-energies of <a href="#a-electron-se">§A.7</a> become measurable numbers: the temperature-dependent gap with its zero-point renormalization, and carrier lifetimes. You will also see why the adiabatic Allen–Heine formula diverges in polar crystals, and why the cure is the phonon energy $\hbar\omega$, not the speed of light.</p>
+  </header>
+
+  <h3>Quasiparticle energies from Fan–Migdal plus Debye–Waller</h3>
+  <p>An electron in a vibrating crystal feels the lattice in two ways. It sees a crystal potential blurred by the zero-point and thermal motion of the ions (Debye–Waller), and it polarizes the lattice around itself by emitting and reabsorbing virtual phonons (Fan–Migdal). Both effects are second order in the displacement, so both scale with $\langle u^2\rangle\propto(2n_{\bq\nu}+1)\hbar/2M\omega_{\bq\nu}$. At $T=0$ they leave a zero-point renormalization (ZPR); as the phonon populations $n_{\bq\nu}(T)$ grow, the shift grows with them.</p>
+  <p>Formally, take the clamped-nuclei Kohn–Sham or <i>GW</i> energies $\varepsilon_{n\bk}$ as the reference (<a href="#a-electron-se">§A.7</a>). In the Kohn–Sham basis the Dyson equation (G Eq. 151) becomes</p>
+  <div class="eq">$$ \begin{align} G^{-1}_{nn'\bk}(\omega)&=G^{{\rm cn},-1}_{nn'\bk}(\omega)-\Sigma^{\rm ep}_{nn'\bk}(\omega), \tag{G.162}\\ G^{-1}_{nn'\bk}(\omega)&=(\hbar\omega-\tilde\varepsilon_{n\bk})\,\delta_{nn'}-\Sigma^{\rm ep}_{nn'\bk}(\omega),\qquad \tilde\varepsilon_{n\bk}=\varepsilon_{n\bk}\pm i\hbar\eta, \tag{G.163}\end{align}$$</div>
+  <p>with the upper sign for occupied states. For a nondegenerate state, neglecting the off-diagonal $\Sigma^{\rm ep}_{nn'\bk}$, and if $\Sigma^{\rm ep}$ only moves the pole slightly, $\varepsilon_{n\bk}\to\tilde E_{n\bk}=E_{n\bk}+i\Gamma_{n\bk}$, the real part of the new pole follows from the Brillouin–Wigner condition (G.164) of <a href="#a-electron-se">§A.7</a>, and the imaginary part is</p>
+  <div class="eq">$$ \Gamma_{n\bk}={\rm Im}\,\Sigma^{\rm ep}_{n\bk}(\tilde E_{n\bk}/\hbar). \tag{G.165}$$</div>
+  <p>Here $\Gamma_{n\bk}$ is a linewidth, not the vertex function. Inserting the finite-temperature Fan–Migdal (G.157)+(G.158) and Debye–Waller (G.160)+(G.161) self-energies into (G.164) gives Giustino's temperature-dependent "band structure renormalization":</p>
+  <div class="eq">$$ \begin{aligned} E_{n\bk}=\varepsilon_{n\bk}&+\sum_\nu\int\frac{d\bq}{\Omega_{\rm BZ}}\sum_m|g_{mn\nu}(\bk,\bq)|^2\\ &\times{\rm Re}\bigg[\frac{1-f_{m\bk+\bq}+n_{\bq\nu}}{E_{n\bk}-\varepsilon_{m\bk+\bq}-\hbar\omega_{\bq\nu}+i\Gamma_{n\bk}}+\frac{f_{m\bk+\bq}+n_{\bq\nu}}{E_{n\bk}-\varepsilon_{m\bk+\bq}+\hbar\omega_{\bq\nu}+i\Gamma_{n\bk}}\bigg]\\ &+\sum_\nu\int\frac{d\bq}{\Omega_{\rm BZ}}\,g^{\rm DW}_{nn\nu\nu}(\bk,\bq,-\bq)\,(2n_{\bq\nu}+1). \end{aligned} \tag{G.166}$$</div>
+  <p>The coupling $g_{mn\nu}(\bk,\bq)$ is the screened DFPT matrix element of G Eq. (38), an energy without $N_p$; $f_{m\bk+\bq}$ and $n_{\bq\nu}$ are Fermi–Dirac and Bose–Einstein occupations, and the $\bq$ integrals are Brillouin-zone averages (SI units throughout). Equation (G.166) rests on the harmonic approximation and on approximations (i)–(vii) of <a href="#a-electron-se">§A.7</a>. Allen and Heine (1976) made two more: Rayleigh–Schrödinger instead of Brillouin–Wigner ($E_{n\bk}\to\varepsilon_{n\bk}$, $\Gamma_{n\bk}\to0$ inside the bracket), and phonon energies dropped from the denominators. The occupations then cancel, $(1-f+n)+(f+n)=1+2n$, and one obtains the <strong>adiabatic Allen–Heine formula</strong></p>
+  <div class="eq">$$ \begin{aligned} E_{n\bk}=\varepsilon_{n\bk}+\sum_\nu\int\frac{d\bq}{\Omega_{\rm BZ}}\bigg[&\sum_m\frac{|g_{mn\nu}(\bk,\bq)|^2}{\varepsilon_{n\bk}-\varepsilon_{m\bk+\bq}}\\ &+g^{\rm DW}_{nn\nu\nu}(\bk,\bq,-\bq)\bigg](2n_{\bq\nu}+1). \end{aligned} \tag{G.167}$$</div>
+  <p>Setting $n_{\bq\nu}=0$ defines the zero-point renormalization $\Delta E^{\rm ZP}_{n\bk}=E_{n\bk}(T=0)-\varepsilon_{n\bk}$. Allen and Heine originally reached (G.167) by expanding adiabatic energies in the displacements and averaging with Bose–Einstein statistics; the field theory lands on the same formula.</p>
+
+  <div class="callout caveat"><p class="callout-title">Two different "adiabatic" approximations</p><p>Both rest on the same Born–Oppenheimer assumption, that $\hbar\omega_{\bq\nu}$ is small next to the electronic energy differences involved, but they apply it to different processes. The adiabatic <em>phonons</em> of <a href="#a-phonon-se">§A.6</a> use static electronic screening, $\epsilon_{\rm e}(\omega=0)$: the electrons follow the ions instantly. In an insulator the electronic excitations that screen a phonon cross the gap, so this is excellent. The adiabatic <em>Allen–Heine</em> formula drops $\hbar\omega_{\bq\nu}$ next to $\varepsilon_{n\bk}-\varepsilon_{m\bk+\bq}$: the electron sees a frozen lattice distortion. Near a band extremum the intraband differences $\varepsilon_{n\bk}-\varepsilon_{n\bk+\bq}$ go to zero as $\bq\to0$, so the assumption always fails for small $\bq$, even in a wide-gap insulator. With nonpolar coupling that region carries little weight; with the polar $1/q^2$ coupling it dominates, which is the root of the Fröhlich catastrophe below.</p></div>
+
+  <h3>Allen–Heine in practice: Debye–Waller from first-order matrix elements</h3>
+  <p>The Debye–Waller term needs second derivatives of $V^{\rm KS}$, which are expensive. Allen and Heine avoided them with translational invariance: rigidly translating the crystal cannot change an eigenvalue, even when the crystal has already been displaced. Second-order perturbation theory turns this into two sum rules (derivation below). In the rigid-ion approximation, where $V^{\rm KS}$ is a sum of atom-centred potentials, only on-site second derivatives survive, and they become products of first-order matrix elements at $\bq=0$:</p>
+  <div class="eq">$$ \Sigma^{\rm DW}_{nn\bk}=-{\sum_{\nu m}}'\int\frac{d\bq}{\Omega_{\rm BZ}}\,\frac{g^{2,{\rm DW}}_{mn\nu}(\bk,\bq)}{\varepsilon_{n\bk}-\varepsilon_{m\bk}}\,(2n_{\bq\nu}+1). \tag{G.195}$$</div>
+  <p>The denominator connects states at the <em>same</em> $\bk$, and the overall sign is opposite to Fan–Migdal: the Debye–Waller term looks like a Fan term with the opposite sign, which is what guarantees zero shift for a uniform translation. The effective matrix element $g^{2,{\rm DW}}$ costs only first-order DFPT plus matrix multiplications. The rigid-ion error is about 10 meV in diamond and below 4 meV in all cases tested by Poncé <i>et al.</i> (2014). In diamond, Fan–Migdal and Debye–Waller are of comparable magnitude, so neither can be dropped.</p>
+
+  <details class="derivation"><summary>The two sum rules and the effective Debye–Waller element</summary><div class="d-body">
+    <p>Translational invariance to first and second order in the displacements gives</p>
+    $$ \sum_{\kappa p}\langle\psi_{n\bk}|\partial_{\kappa\alpha p}V^{\rm KS}|\psi_{n\bk}\rangle_{\rm sc}=0, \tag{G.193}$$
+    $$ \begin{aligned} \sum_{\kappa'p'}\langle\psi_{n\bk}|\partial^2_{\kappa\alpha p,\kappa'\alpha'p'}V^{\rm KS}|\psi_{n\bk}\rangle_{\rm sc}=&-2\,{\rm Re}\sum_{\kappa'p'}{\sum_{m\bq}}'\\ &\times\frac{\langle\psi_{n\bk}|\partial_{\kappa\alpha p}V^{\rm KS}|\psi_{m\bk+\bq}\rangle_{\rm sc}\langle\psi_{m\bk+\bq}|\partial_{\kappa'\alpha'p'}V^{\rm KS}|\psi_{n\bk}\rangle_{\rm sc}}{\varepsilon_{n\bk}-\varepsilon_{m\bk+\bq}}, \end{aligned} \tag{G.194}$$
+    <p>where $\partial_{\kappa\alpha p}\equiv\partial/\partial\tau_{\kappa\alpha p}$, "sc" is an integral over the Born–von Kármán supercell, and the prime excludes degenerate states. The first rule says that the matrix elements of the three translational modes at $\bq=0$ vanish, another form of the acoustic sum rule. In the rigid-ion approximation only $\kappa'p'=\kappa p$ survives on the left of (G.194), which expresses the on-site second derivative through first derivatives. With Eqs. (20), (33)–(35), (38) and a canonical average over adiabatic nuclear states this gives (G.195) with</p>
+    $$ g^{2,{\rm DW}}_{mn\nu}(\bk,\bq)=\sum_{\kappa\alpha,\kappa'\alpha'}\frac{t^\nu_{\kappa\alpha,\kappa'\alpha'}(\bq)}{2\omega_{\bq\nu}}\,h^*_{mn,\kappa\alpha}(\bk)\,h_{mn,\kappa'\alpha'}(\bk), \tag{G.196}$$
+    $$ t^\nu_{\kappa\alpha,\kappa'\alpha'}(\bq)=\frac{e_{\kappa\alpha\nu}(\bq)\,e^*_{\kappa\alpha'\nu}(\bq)}{M_\kappa}+\frac{e_{\kappa'\alpha\nu}(\bq)\,e^*_{\kappa'\alpha'\nu}(\bq)}{M_{\kappa'}}, \tag{G.197}$$
+    $$ h_{mn,\kappa\alpha}(\bk)=\sum_\nu(M_\kappa\omega_{0\nu})^{1/2}\,e_{\kappa\alpha\nu}(0)\,g_{mn\nu}(\bk,0). \tag{G.198}$$
+    <p>$h$ is, up to normalization, the Cartesian matrix element $\langle\psi_{m\bk}|\partial_{\kappa\alpha,\bq=0}V^{\rm KS}|\psi_{n\bk}\rangle$, recovered from the mode-resolved $g$ at $\Gamma$ (real eigenvectors assumed). For the three translational modes at $\bq=0$ one sets the effective element to zero. Like (G.167), (G.195) needs sums over many empty states; Gonze, Boulanger and Côté (2011) replace most of them by a Sternheimer-type DFPT solution.</p>
+  </div></details>
+
+  <h3>The Varshni curve and the zero-point renormalization</h3>
+  <p>To see the generic shape, Giustino takes a semiconductor with parabolic, nondegenerate bands whose extrema couple to all states through one dispersionless phonon $\omega_0$, with Debye–Waller elements much smaller than Fan–Migdal. The dominant denominators in (G.167) are then intraband, $\varepsilon_{n\bk}-\varepsilon_{n\bk+\bq}\simeq\pm\hbar^2|\bq|^2/2m^*_n$ (upper sign for the valence band). The states just above the conduction-band minimum push it down, and the states just below the valence-band maximum push it up: level repulsion closes the gap,</p>
+  <div class="eq">$$ E_g(T)=E_g^{\rm cn}-|\Delta E_g^{\rm ZP}|\,\big[1+2n(\hbar\omega_0/k_BT)\big]. \tag{G.168}$$</div>
+  <p>Here $n(x)=1/(e^x-1)$ is the Bose–Einstein occupation and $1+2n(x)=\coth(x/2)$. There are two regimes. For $k_BT\ll\hbar\omega_0$ the Bose factor is exponentially small and the gap sits on a plateau at $E_g^{\rm cn}-|\Delta E_g^{\rm ZP}|$; it stays within 10% of the zero-point shift up to $k_BT\approx\hbar\omega_0/3$. For $k_BT\gg\hbar\omega_0$, $1+2n\simeq2k_BT/\hbar\omega_0+\hbar\omega_0/6k_BT$, so the gap falls linearly with slope $-2k_B|\Delta E_g^{\rm ZP}|/\hbar\omega_0$. The linear asymptote extrapolated to $T=0$ lands on $E_g^{\rm cn}$, not on the measured $E_g(0)$, and this is how the ZPR is extracted from experiment.</p>
+  <p>The red shift is the Varshni effect, first measured by Becker and Fan (1949), which prompted Fan's 1951 theory. It is not universal: copper halides and lead-halide perovskites show an "inverse Varshni" blue shift, and some chalcopyrites are nonmonotonic. Magnitudes can be large. For the direct gap of diamond, Giustino, Louie and Cohen (2010) confirmed a zero-point renormalization above 0.5 eV with DFT-LDA. Antonius <i>et al.</i> (2014) found that <i>GW</i>-corrected matrix elements increase the renormalization by up to about 200 meV; with them it is 628 meV (Giustino Fig. 13), because DFT over-screens the coupling (<a href="#a-applications">§A.9</a>). In Fig. 13 their DFPT-LDA curve lies 0.23 eV above the <i>GW</i> one at $T=0$, which implies an LDA value near 0.4 eV if both share one clamped-nuclei gap; the review does not comment on the difference from the earlier value above 0.5 eV.</p>
+
+  <figure class="viz" id="viz-a-temperature-varshni">
+    <p class="viz-title">The Varshni curve: zero-point plateau, linear regime, and the ZPR from the asymptote <span class="tag">interactive</span></p>
+    <div class="viz-grid two"><div class="pv-gap"></div><div class="pv-width"></div></div>
+    <div class="pv-ctrl"></div>
+    <div class="pv-ro"></div>
+    <figcaption><strong>Model.</strong> Gap from (G.168), linewidth from Giustino's toy result $\Gamma(T)=\Gamma^{\rm ZP}[1+2n(\hbar\omega_0/k_BT)]$ and lifetime $\tau=\hbar/2\Gamma$, all with one dispersionless phonon $\hbar\omega_0$. <strong>Presets.</strong> Fig. 3 toy: $E_g^{\rm cn}=1$ eV, $|\Delta E_g^{\rm ZP}|=100$ meV, $\Gamma^{\rm ZP}=50$ meV, with $\hbar\omega_0=50$ meV (reproduces the printed curves) or 100 meV (as the caption states). Diamond direct gap: ZPR 0.628 eV (<i>GW</i>, Fig. 13 caption) or 0.40 eV (the DFPT-LDA curve of Fig. 13, assuming the same clamped-nuclei gap), with $E_g^{\rm cn}=7.73$ eV and $\hbar\omega_0=125$ meV from our one-oscillator fit to that figure (illustrative). Si indirect gap: $E_g^{\rm cn}=1.23$ eV, ZPR 60 meV, $\hbar\omega_0=30$ meV (literature values, illustrative). $\Gamma^{\rm ZP}$ is a free, illustrative parameter outside the Fig. 3 presets. The inverse option flips the sign of the shift, for illustration only. Click either panel to move the temperature cursor $T^*$. <strong>What to notice.</strong> The plateau is quantum zero-point motion; the dashed asymptote hits $E_g^{\rm cn}$ at $T=0$, and the arrow between them is the ZPR. The linewidth follows the same Bose factor as the shift, and a softer phonon starts the linear regime earlier and makes it steeper.</figcaption>
+  </figure>
+
+  <div class="callout source"><p class="callout-title">Note on the source: Fig. 3</p><p><strong>Fig. 3.</strong> The caption gives $\hbar\omega_0=100$ meV, but the printed curves follow (G.168) with $\hbar\omega_0\approx50$ meV (the figure above offers both presets), and the lifetime axis is off by a factor of about 2.5. <strong>Signs.</strong> $\Gamma_{n\bk}&lt;0$ for electrons and $&gt;0$ for holes holds for the time-ordered (G.157); with the retarded (G.158), ${\rm Im}\,\Sigma\le0$ for every state, hence $|\Gamma|$ in $\tau$. The numerical checks and two smaller slips near (G.198) are listed in <a href="#z-errata">§Z.2</a>.</p></div>
+
+  <h3>Lifetimes from the imaginary part</h3>
+  <p>The imaginary part of the pole says how long a carrier stays in $|n\bk\rangle$. The persistence amplitude decays as $\exp(-|\Gamma_{n\bk}|\,|t'-t|/\hbar)$, so the probability decays twice as fast and the lifetime is $\tau_{n\bk}=\hbar/(2|\Gamma_{n\bk}|)$. Replacing $\tilde E_{n\bk}\to\varepsilon_{n\bk}$ in the Fan–Migdal self-energy and taking the imaginary part gives the zero-temperature golden rule (G Eq. 169). The retarded finite-temperature form (G.158) gives</p>
+  <div class="eq">$$ \begin{aligned} \frac{1}{\tau_{n\bk}}=\frac{2\pi}{\hbar}\sum_{m\nu}\int\frac{d\bq}{\Omega_{\rm BZ}}\,|g_{mn\nu}(\bk,\bq)|^2\Big[&(1-f_{m\bk+\bq}+n_{\bq\nu})\,\delta(\varepsilon_{n\bk}-\hbar\omega_{\bq\nu}-\varepsilon_{m\bk+\bq})\\ +&(f_{m\bk+\bq}+n_{\bq\nu})\,\delta(\varepsilon_{n\bk}+\hbar\omega_{\bq\nu}-\varepsilon_{m\bk+\bq})\Big]. \end{aligned} \tag{G.170}$$</div>
+  <p>This is Fermi's golden rule. The first line is phonon emission, stimulated ($n$) plus spontaneous ($1$), reduced by Pauli blocking of the final state ($-f$); the second is absorption. Debye–Waller does not contribute, because its diagonal elements are real. Neglecting $\hbar\omega$ in the delta functions, Giustino's toy model gives $\Gamma_{n\bk}(T)=\Gamma^{\rm ZP}_{n\bk}[1+2n(\hbar\omega_0/k_BT)]$: width and shift share one Bose factor, as in the figure above. A rigorous treatment multiplies the broadening by the quasiparticle weight $Z_{n\bk}$ of <a href="#a-electron-se">§A.7</a> and evaluates it at $E_{n\bk}$. For photoluminescence linewidths of lead-iodide perovskites the bare golden rule overestimates the data, and this $Z$ factor restores agreement (Giustino §X.A).</p>
+
+  <div class="fd" id="fd-a-temperature-proc">
+    <figure><div id="fd-a-temperature-em"></div><figcaption>Emission of a phonon $-\bq\nu$: weight $1-f_{m\bk+\bq}+n_{\bq\nu}$</figcaption></figure>
+    <span class="op">vs</span>
+    <figure><div id="fd-a-temperature-ab"></div><figcaption>Absorption of a phonon $\bq\nu$: weight $f_{m\bk+\bq}+n_{\bq\nu}$</figcaption></figure>
+  </div>
+
+  <p>In a polar semiconductor, carriers near the band edge scatter mainly with the LO phonon, through the long-range Fröhlich coupling of <a href="#a-polar">§A.4</a> (G Eqs. 2 and 7, $N_p$ dropped): $|g(\bq)|^2=\frac{e^2}{4\pi\varepsilon_0}\frac{4\pi}{\Omega}\frac{\hbar\omega_{\rm LO}}{2}\big(\frac{1}{\epsilon^\infty}-\frac{1}{\epsilon^0}\big)\frac{1}{q^2}$, with $\Omega$ the cell volume and $\epsilon^\infty$, $\epsilon^0$ the high-frequency and static dielectric constants. For one parabolic band of mass $m^*$, otherwise empty ($f=0$), (G.170) integrates in closed form (derivation below):</p>
+  <div class="eq">$$ \begin{aligned} \frac{1}{\tau(\varepsilon)}&=2\alpha\omega_{\rm LO}\sqrt{\frac{\hbar\omega_{\rm LO}}{\varepsilon}}\Big[n\,{\rm arsinh}\sqrt{\frac{\varepsilon}{\hbar\omega_{\rm LO}}}+(n+1)\,{\rm arsinh}\sqrt{\frac{\varepsilon}{\hbar\omega_{\rm LO}}-1}\;\Theta(\varepsilon-\hbar\omega_{\rm LO})\Big],\\ \alpha&=\frac{e^2}{4\pi\varepsilon_0\hbar}\sqrt{\frac{m^*}{2\hbar\omega_{\rm LO}}}\,\Big(\frac{1}{\epsilon^\infty}-\frac{1}{\epsilon^0}\Big). \end{aligned} $$</div>
+  <p>Here $\varepsilon$ is the carrier energy above the band edge, $n=n(\hbar\omega_{\rm LO}/k_BT)$, and $\alpha$ is the dimensionless Fröhlich constant (SI; the standard definition, not printed in Giustino). Below the threshold $\varepsilon=\hbar\omega_{\rm LO}$ a carrier can only absorb phonons, so its rate is proportional to $n$ and freezes out at low temperature. Above it, spontaneous emission switches on with a steep $\sqrt{\varepsilon-\hbar\omega_{\rm LO}}$ onset. This is the low-energy end of Giustino's Fig. 15 for GaAs (Bernardi <i>et al.</i> 2015, Eq. (170) with Wannier interpolation): relaxation times of order a picosecond at the band bottom, a few hundred femtoseconds in the Γ valley, a sharp drop when the L valley opens at $E_L\approx0.25$ eV, and a few femtoseconds at 1.5 eV.</p>
+
+  <figure class="viz" id="viz-a-temperature-lo">
+    <p class="viz-title">LO-phonon scattering rate: the emission threshold <span class="tag">interactive</span></p>
+    <div class="viz-grid two"><div class="pl-rate"></div><div class="pl-tau"></div></div>
+    <div class="pl-ctrl"></div>
+    <div class="pl-ro"></div>
+    <figcaption><strong>Model.</strong> (G.170) for a parabolic band coupled to one dispersionless LO phonon through the Fröhlich element (G Eqs. 2 and 7), in the closed form above. GaAs: $m^*=0.067\,m_e$, $\hbar\omega_{\rm LO}=36.2$ meV, $\epsilon^\infty=10.9$, $\epsilon^0=12.9$ ($\alpha=0.071$). GaN: $m^*=0.20\,m_e$, $\hbar\omega_{\rm LO}=92$ meV, $\epsilon^\infty=5.35$, $\epsilon^0=9.5$ ($\alpha=0.44$). These are literature values, illustrative; no nonparabolicity, no other valleys, no $Z$ renormalization. <strong>Left:</strong> scattering rate vs carrier energy at temperature $T$, split into emission and absorption; click to move the energy cursor $\varepsilon^*$. <strong>Right:</strong> lifetime $\tau$ vs temperature at $\varepsilon^*$ and at two reference energies below and above threshold. <strong>What to notice.</strong> The rate rises steeply, as $\sqrt{\varepsilon-\hbar\omega_{\rm LO}}$, at $\varepsilon=\hbar\omega_{\rm LO}$, where spontaneous emission opens. As $T\to0$ the lifetime diverges below threshold, while above threshold it levels off at the spontaneous-emission value (about 200 fs in GaAs, about 13 fs in GaN at $\varepsilon=2\hbar\omega_{\rm LO}$).</figcaption>
+  </figure>
+
+  <h3>Adiabatic versus nonadiabatic: the Fröhlich catastrophe</h3>
+  <p>Poncé <i>et al.</i> (2015) noticed that in polar crystals the adiabatic correction (G.167) to band extrema diverges as the broadening $\eta\to0$ on dense Brillouin-zone grids. The reason is power counting (Giustino §IX.A.1). Near an extremum the bands are parabolic, $|\varepsilon_{n\bk}-\varepsilon_{n\bk+\bq}|\approx\hbar^2q^2/2m^*$, and the long-range polar element (G Eq. 180) gives $|g|^2\propto1/q^2$. The intraband integrand of (G.167) therefore behaves as $q^{-4}$, while $d\bq=4\pi q^2dq$, and $\int dq/q^2$ diverges at small $q$.</p>
+  <p>Keeping the phonon energy cures it. In (G.166) the emission denominator at the band bottom is $-(\hbar^2q^2/2m^*+\hbar\omega_{\rm LO})$. It no longer vanishes as $q\to0$: below the polaron wave vector $q_p=(2m^*\omega_{\rm LO}/\hbar)^{1/2}$, where the kinetic energy transferred equals one phonon, it levels off at $-\hbar\omega_{\rm LO}$, so the small-$q$ integrand, $q^2\cdot q^{-2}/\hbar\omega_{\rm LO}$, stays finite. For the conduction-band minimum at $T=0$, with Rayleigh–Schrödinger denominators, a spherical zone of radius $q_D$ and a grid that resolves only $q\ge q_{\rm min}=q_D/N_q$ ($N_q$ points per direction), the two prescriptions give</p>
+  <div class="eq">$$ \Delta E^{\rm NA}=-\alpha\hbar\omega_{\rm LO}\,\frac{2}{\pi}\Big[\arctan\frac{q_D}{q_p}-\arctan\frac{q_{\rm min}}{q_p}\Big],\qquad \Delta E^{\rm A}=-\alpha\hbar\omega_{\rm LO}\,\frac{2}{\pi}\,q_p\Big(\frac{1}{q_{\rm min}}-\frac{1}{q_D}\Big). $$</div>
+  <p>The nonadiabatic shift converges to the weak-coupling polaron shift $-\alpha\hbar\omega_{\rm LO}$ once $q_{\rm min}\ll q_p$ and $q_D\gg q_p$, although slowly: the missing part falls only as $1/N_q$. The adiabatic shift grows linearly with $N_q$, without limit.</p>
+
+  <details class="derivation"><summary>Derivation: closed forms for the polar model</summary><div class="d-body">
+    <p>Write the Fröhlich element as $|g(q)|^2=A/q^2$ with $A=\frac{e^2}{4\pi\varepsilon_0}\frac{4\pi}{\Omega}\frac{\hbar\omega_{\rm LO}}{2}\big(\frac1{\epsilon^\infty}-\frac1{\epsilon^0}\big)$, and use $\int d\bq/\Omega_{\rm BZ}\to(4\pi/\Omega_{\rm BZ})\int q^2dq\int d\mu/2$. The $q^2$ cancels the $1/q^2$. With $q_p^2=2m^*\omega_{\rm LO}/\hbar$ and the definition of $\alpha$ one finds $(4\pi/\Omega_{\rm BZ})A=(2/\pi)\,\alpha(\hbar\omega_{\rm LO})^2/q_p$.</p>
+    <p><strong>Band-edge shift.</strong> At the CBM ($\bk=0$, $f=0$) the bracket of (G.166) at $T=0$ with $E\to\varepsilon$, $\Gamma\to0$ keeps only the emission term $-1/(\hbar^2q^2/2m^*+\hbar\omega_{\rm LO})=-(q_p^2/\hbar\omega_{\rm LO})/(q^2+q_p^2)$. Hence $\Delta E^{\rm NA}=-\alpha\hbar\omega_{\rm LO}(2/\pi)\int_{q_{\rm min}}^{q_D}dq\,q_p/(q^2+q_p^2)$, which is the arctangent form; with $q_{\rm min}\to0$, $q_D\to\infty$ it is $-\alpha\hbar\omega_{\rm LO}$. The adiabatic (G.167) drops $\hbar\omega_{\rm LO}$: the integrand becomes $q_p/q^2$, giving $\Delta E^{\rm A}$. The rule $q_{\rm min}=q_D/N_q$ mimics a uniform grid; a finite broadening $\eta$ plays the same regularizing role.</p>
+    <p><strong>Scattering rate.</strong> Take $f=0$ in (G.170), so the weights are $n+1$ (emission) and $n$ (absorption). For $\bk\neq0$ the delta functions fix the angle: $\delta(\varepsilon_k\mp\hbar\omega_{\rm LO}-\varepsilon_{\bk+\bq})$ integrated over $\mu=\cos\theta$ gives $m^*/(\hbar^2kq)$ when a solution exists. Emission requires $k-\sqrt{k^2-q_p^2}&lt;q&lt;k+\sqrt{k^2-q_p^2}$, and $\int dq/q=2\,{\rm arcosh}(k/q_p)=2\,{\rm arsinh}\sqrt{\varepsilon/\hbar\omega_{\rm LO}-1}$. Absorption allows $\sqrt{k^2+q_p^2}-k&lt;q&lt;\sqrt{k^2+q_p^2}+k$, giving $2\,{\rm arsinh}(k/q_p)$. The prefactor in front of $\int dq/q$ is $(2\pi/\hbar)(\Omega/8\pi^3)\,2\pi A\,m^*/(\hbar^2k)=\Omega Am^*/(2\pi\hbar^3k)$; with the factor 2 from the logarithms it becomes $\Omega Am^*/(\pi\hbar^3k)=2\alpha\omega_{\rm LO}\,q_p/k$, and $q_p/k=\sqrt{\hbar\omega_{\rm LO}/\varepsilon}$. This is the rate formula above, the textbook result for polar-optical scattering; we checked it against direct numerical integration of (G.170).</p>
+  </div></details>
+
+  <div class="callout intuition"><p class="callout-title">Physical picture: a slow electron in a fast lattice</p><p>Dropping $\hbar\omega$ treats the zero-point displacements as a frozen random distortion that the electron adjusts to instantly. That is fine at short wavelengths, where a scattering event changes the electron's energy by much more than $\hbar\omega_{\rm LO}$. For $q\ll q_p$ the change, $\hbar^2q^2/2m^*$, is smaller than $\hbar\omega_{\rm LO}$: during one ionic oscillation the electron barely moves, so it cannot exploit these long-wavelength fluctuations as if they were static. Instead the ions follow the electron and build a polarization cloud of radius about $1/q_p$ (40 Å in GaAs) that travels with it, the large polaron of <a href="#a-polar">§A.4</a>. The frozen-lattice formula keeps collecting energy from ever longer wavelengths of the dipole field, where its denominators vanish, and the sum diverges.</p></div>
+
+  <p>Giustino lists the remedies: principal-value integration with finite $\omega_{\bq\nu}$, taking $\omega\to0$ afterwards (Fan 1951); analytic integration near $\bq=0$ (Nery and Allen 2016); the Brillouin–Wigner form (G.166) with $\eta$ replaced by the physical linewidth $\Gamma_{n\bk}$; or full spectral functions (Kawai <i>et al.</i> 2014; Antonius <i>et al.</i> 2015). The Fröhlich part of the ZPR is not small. Botti and Marques (2013) computed $W$ including lattice screening, with a Lyddane–Sachs–Teller model dielectric function, and found ZPRs above 1 eV in LiF, LiCl, NaCl and MgO. Nery and Allen found a Fröhlich contribution of 45 meV out of 150 meV for GaN; the model below gives about 40 meV with literature parameters.</p>
+
+  <figure class="viz" id="viz-a-temperature-frohlich">
+    <p class="viz-title">The Fröhlich catastrophe: q-grid convergence of the band-edge shift <span class="tag">interactive</span></p>
+    <div class="viz-grid two"><div class="pf-conv"></div><div class="pf-int"></div></div>
+    <div class="pf-ctrl"></div>
+    <div class="pf-ro"></div>
+    <figcaption><strong>Model.</strong> Conduction-band minimum of a parabolic band coupled to one dispersionless LO phonon through the Fröhlich element (G Eqs. 2 and 7), $T=0$, Rayleigh–Schrödinger, spherical zone $q_D=(6\pi^2/\Omega)^{1/3}$, grid cutoff $q_{\rm min}=q_D/N_q$; closed forms above. Parameters ($m^*$, $\hbar\omega_{\rm LO}$, $\epsilon^\infty$, $\epsilon^0$, cell volume $\Omega$) are literature values, illustrative: GaAs (0.067, 36.2 meV, 10.9, 12.9, 45.2 Å³), GaN (0.20, 92 meV, 5.35, 9.5, 45.7 Å³), MgO (0.35, 89 meV, 2.96, 9.8, 18.7 Å³; $\alpha\approx1.7$ lies outside weak coupling). <strong>Left:</strong> magnitude of the downward CBM shift vs grid size, nonadiabatic (phonon energy kept, as in (G.166)) and adiabatic (G.167). <strong>Right:</strong> contribution per logarithmic interval of $q$, in units of $\alpha\hbar\omega_{\rm LO}$, so equal areas mean equal contributions. The rose band marks the light cone, $q&lt;q_c=\sqrt{\epsilon^\infty}\,\omega_{\rm LO}/c$, the only region where a finite speed of light (EPP's retardation) could act. <strong>What to notice.</strong> The adiabatic curve grows linearly in $N_q$; the nonadiabatic one levels off once $q_{\rm min}$ is well below $q_p$ (half the shift at $q_{\rm min}=q_p$). $q_c$ is 400 to 1200 times smaller than $q_p$, and the light cone holds about $10^{-3}$ of the converged shift, so finite $c$ is not what cures the divergence: the phonon energy $\hbar\omega_{\rm LO}$ is.</figcaption>
+  </figure>
+
+  <div class="callout connect"><p class="callout-title">Bridge to EPP: what finite $c$ does and does not do</p><p>Everything here is electrostatic: "nonadiabatic" means keeping $\hbar\omega_{\bq\nu}$ in electron denominators, not photons. In EPP the Coulomb interaction is the longitudinal photon, and the longitudinal kernel is $c$-independent (<a href="#x-light-cone">§X.1</a>), so the LO Fröhlich vertex that drives this divergence is not changed by retardation in EPP's sense (finite $c$) at all. Finite $c$ adds transverse-photon coupling of TO phonons for $q\lesssim q_c=\sqrt{\epsilon^\infty}\,\omega/c\sim10^{-4}$ Å$^{-1}$, inside the rose band above (EPP §7.2, <a href="#b-frohlich">§B.8</a>). Even if that region were removed entirely, the adiabatic integral cut at $q_c$ would still give a shift of order $-0.7$ eV for GaAs. What EPP's dynamical vertex does add is the frequency dependence of the electronic screening, $\epsilon^\infty\to\hat\epsilon^{\rm e}(\bq,\omega)$, which is retardation in Giustino's sense and which his approximation (v) drops; in doped polar semiconductors, where plasmons and LO phonons mix, this could change Fröhlich shifts and lifetimes, but EPP does not derive an electron self-energy. See <a href="#z-outlook">§Z.1</a>.</p></div>
+
+  <h3>Nonperturbative adiabatic calculations</h3>
+  <p>An alternative skips perturbation theory and matrix elements. Expand $\varepsilon_{n\bk}$ to second order in the atomic displacements and average over the harmonic nuclear wavefunction with phonon numbers $\{n_{\bq\nu}\}$:</p>
+  <div class="eq">$$ \langle\varepsilon_{n\bk}\rangle_{\{n_{\bq\nu}\}}=\varepsilon_{n\bk}+\sum_\nu\int\frac{d\bq}{\Omega_{\rm BZ}}\big(n_{\bq\nu}+\tfrac12\big)\frac{\partial\varepsilon_{n\bk}}{\partial n_{\bq\nu}}, \tag{G.199}$$</div>
+  <p>with the formal definition $\partial/\partial n_{\bq\nu}\equiv\Delta_{\bq\nu}\Delta_{-\bq\nu}$; a canonical average turns $n_{\bq\nu}$ into its Bose–Einstein value. This is the starting point of Allen and Cardona (1981). Evaluating the second derivatives perturbatively gives back Allen–Heine. Evaluating them by finite differences of eigenvalues in supercells displaced along the phonon eigenvectors (frozen phonons) needs no rigid-ion approximation and can go beyond the harmonic approximation, at a high cost that Monte Carlo sampling, a single "optimum" configuration (Zacharias and Giustino 2016) or nondiagonal supercells (Lloyd-Williams and Monserrat 2015) reduce. The Williams–Lax average of the dielectric function over nuclear configurations applies the same idea to optical spectra (G Eq. 201, <a href="#a-applications">§A.9</a>). Being adiabatic, (G.199) treats long-wavelength polar modes like (G.167), so one expects its Fröhlich part to grow with supercell size (our inference from the model above; the review does not discuss it).</p>
+
+  <div class="callout caveat"><p class="callout-title">What these formulas leave out</p><p>(G.166)–(G.170) are harmonic, at the Migdal level, with adiabatic phonons and a fixed lattice parameter, so the thermal-expansion contribution to $E_g(T)$, which measured gaps include, is not part of them. The linewidth trend of Fig. 3(b) needs states at least one phonon energy away from a band extremum, and the toy model misses the low-temperature subtleties of Allen and Nery (2017). DFT matrix elements are usually too small: the ZPR scales roughly as $(\epsilon^\infty)^{-2}$, so a 20% error in the screening becomes about 40% in the ZPR (Giustino §XII, <a href="#a-applications">§A.9</a>).</p></div>
+</section>
+<script>
+(() => {
+  const kB = 0.0861733;           // meV/K
+  const HBAR_MEVFS = 658.212;     // meV fs
+  const HBAR_EVS = 6.582120e-16;  // eV s
+  const RY = 13.605693;           // eV
+  const H2M = 3.80998;            // hbar^2/2m_e in eV A^2
+  const HBARC = 1973.27;          // eV A
+  const bose = (w, T) => (T <= 0 ? 0 : 1 / Math.expm1(w / (kB * T))); // w in meV, T in K
+  const Fb = (w, T) => 1 + 2 * bose(w, T);
+  const niceStep = (r) => { const p = Math.pow(10, Math.floor(Math.log10(r))), m = r / p; return (m < 1.5 ? 1 : m < 3.5 ? 2 : m < 7.5 ? 5 : 10) * p; };
+  const sci = (v, d) => { if (!isFinite(v)) return '∞'; if (v === 0) return '0'; const e = Math.floor(Math.log10(Math.abs(v))); if (e >= -2 && e <= 4) return EPP.fmt(v, d || 3); const m = v / Math.pow(10, e); return m.toFixed(1) + '×10' + String(e).replace('-', '⁻').replace(/\d/g, c => '⁰¹²³⁴⁵⁶⁷⁸⁹'[+c]); };
+
+  // ---------------- Feynman diagrams: emission vs absorption ----------------
+  const fdDraw = (id, spec) => { const el = document.getElementById(id); if (el) EPP.fd.draw(el, spec); };
+  fdDraw('fd-a-temperature-em', { w: 212, h: 118, label: 'Phonon emission: an electron in state n k scatters to m k+q and emits a phonon with wave vector minus q', items: [
+    { t: 'fermion', a: [8, 90], b: [100, 90], label: 'nk', lpos: 'right' },
+    { t: 'fermion', a: [100, 90], b: [204, 90], label: 'm k+q', lpos: 'right' },
+    { t: 'phonon', a: [100, 90], b: [176, 18], label: '−qν', ldist: 25 },
+    { t: 'vertex', at: [100, 90] }
+  ]});
+  fdDraw('fd-a-temperature-ab', { w: 212, h: 118, label: 'Phonon absorption: an electron in state n k absorbs a phonon q and scatters to m k+q', items: [
+    { t: 'fermion', a: [8, 90], b: [100, 90], label: 'nk', lpos: 'right' },
+    { t: 'fermion', a: [100, 90], b: [204, 90], label: 'm k+q', lpos: 'right' },
+    { t: 'phonon', a: [26, 18], b: [100, 90], label: 'qν', ldist: 22, lpos: 'right' },
+    { t: 'vertex', at: [100, 90] }
+  ]});
+
+  // ---------------- Viz 1: Varshni ----------------
+  const f1 = document.getElementById('viz-a-temperature-varshni');
+  const PRE = {
+    toy50: { Ecn: 1.0, zpr: 100, w0: 50, g0: 50, Tmax: 500 },
+    toy100: { Ecn: 1.0, zpr: 100, w0: 100, g0: 50, Tmax: 500 },
+    diaGW: { Ecn: 7.73, zpr: 628, w0: 125, Tmax: 800 },
+    diaLDA: { Ecn: 7.73, zpr: 400, w0: 125, Tmax: 800 },
+    si: { Ecn: 1.23, zpr: 60, w0: 30, Tmax: 600 }
+  };
+  const pGap = new EPP.Plot(f1.querySelector('.pv-gap'), { xlabel: 'T (K)', ylabel: 'E_g (eV)', xname: 'T', hoverX: v => v.toFixed(0) + ' K', hoverY: v => v.toFixed(4) + ' eV', ariaLabel: 'Band gap versus temperature with the high-temperature asymptote and the zero-point renormalization' });
+  const pWid = new EPP.Plot(f1.querySelector('.pv-width'), { xlabel: 'T (K)', ylabel: 'Γ (meV)', xname: 'T', hoverX: v => v.toFixed(0) + ' K', hoverY: v => EPP.fmt(v, 4), ariaLabel: 'Electron linewidth or lifetime versus temperature' });
+  const ro1 = EPP.readout(f1.querySelector('.pv-ro'));
+  let ui1 = null, lastPre = null, Ecn = 1.0, Tcur = 300;
+  const setT = (x) => { if (!ui1) return; Tcur = EPP.clamp(x, 0, ui1.state.Tmax); draw1(); };
+  pGap.onPointer = (x) => setT(x);
+  pWid.onPointer = (x) => setT(x);
+  function matchPreset(s) {
+    for (const k in PRE) { const p = PRE[k]; if (p.Ecn === Ecn && p.zpr === s.zpr && p.w0 === s.w0 && (p.g0 == null || p.g0 === s.g0)) return k; }
+    return 'custom';
+  }
+  function draw1() {
+    const s = ui1.state, sg = s.sign === 'i' ? -1 : 1, Z = s.zpr / 1000, w0 = s.w0, Tm = s.Tmax, g0 = s.g0;
+    if (Tcur > Tm) Tcur = Tm;
+    const Ts = EPP.linspace(0, Tm, 301);
+    const Eg = Ts.map(T => Ecn - sg * Z * Fb(w0, T));
+    const asym = Ts.map(T => Ecn - sg * Z * 2 * kB * T / w0);
+    const shMax = Math.max(Z * Fb(w0, Tm), 0.01);
+    const step = niceStep(shMax * 1.3 / 4);
+    let lo, hi;
+    if (sg > 0) { lo = Math.floor((Ecn - 1.1 * shMax) / step) * step; hi = Math.ceil((Ecn + 0.18 * shMax) / step) * step; }
+    else { lo = Math.floor((Ecn - 0.18 * shMax) / step) * step; hi = Math.ceil((Ecn + 1.1 * shMax) / step) * step; }
+    const Tp = w0 / (3 * kB), Ta = 0.08 * Tm, Ez = Ecn - sg * Z, Ec = Egap(Tcur);
+    function Egap(T) { return Ecn - sg * Z * Fb(w0, T); }
+    const layers = [
+      { type: 'band', x0: 0, x1: Math.min(Tp, Tm), color: 'muted', alpha: 0.09 },
+      { type: 'hline', at: Ecn, color: 'muted', text: 'E_g^{cn}', width: 1.1 },
+      { type: 'line', x: Ts, y: asym, color: 'ink', width: 1.5, dash: [6, 4], label: 'high-T asymptote', hover: false },
+      { type: 'line', x: Ts, y: Eg, color: 'electron', width: 2, label: 'E_g(T), Eq. (G.168)' }
+    ];
+    if (Z > 0) {
+      layers.push({ type: 'arrow', x0: Ta, y0: (Ecn + Ez) / 2, x1: Ta, y1: Ecn, color: 'electron', width: 1.4, head: 7 });
+      layers.push({ type: 'arrow', x0: Ta, y0: (Ecn + Ez) / 2, x1: Ta, y1: Ez, color: 'electron', width: 1.4, head: 7 });
+      layers.push({ type: 'text', x: Ta, y: (Ecn + Ez) / 2, dx: 7, text: 'ZPR', color: 'electron', size: 12 });
+    }
+    layers.push({ type: 'text', x: Math.min(Tp, Tm) / 2, y: hi, dy: 9, text: 'plateau', color: 'muted', size: 11, align: 'center' });
+    layers.push({ type: 'vline', at: Tcur, color: 'muted', width: 1, dash: [3, 3] });
+    layers.push({ type: 'points', x: [Tcur], y: [Ec], color: 'electron', r: 4 });
+    pGap.draw(layers, { xlim: [0, Tm], ylim: [lo, hi] });
+
+    const Gam = Ts.map(T => g0 * Fb(w0, T)), Gc = g0 * Fb(w0, Tcur);
+    if (s.panel === 'tau') {
+      const tau = Gam.map(G => HBAR_MEVFS / (2 * G)), t0 = HBAR_MEVFS / (2 * g0);
+      const ts = niceStep(t0 * 1.15 / 4);
+      pWid.draw([
+        { type: 'hline', at: t0, color: 'muted', text: 'ħ/2Γ^{ZP} = ' + EPP.fix(t0, 1) + ' fs', width: 1.1 },
+        { type: 'line', x: Ts, y: tau, color: 'electron', width: 2, dash: [6, 4], label: 'τ(T) = ħ/2Γ(T)' },
+        { type: 'vline', at: Tcur, color: 'muted', width: 1, dash: [3, 3] },
+        { type: 'points', x: [Tcur], y: [HBAR_MEVFS / (2 * Gc)], color: 'electron', r: 4 }
+      ], { xlim: [0, Tm], ylim: [0, Math.ceil(t0 * 1.15 / ts) * ts], ylabel: 'τ (fs)' });
+    } else {
+      const gm = g0 * Fb(w0, Tm), gs = niceStep(gm * 1.15 / 4);
+      pWid.draw([
+        { type: 'hline', at: g0, color: 'muted', text: 'Γ^{ZP}', textAt: 'left', width: 1.1 },
+        { type: 'line', x: Ts, y: Gam, color: 'electron', width: 2, label: 'Γ(T) = Γ^{ZP}[1+2n]' },
+        { type: 'vline', at: Tcur, color: 'muted', width: 1, dash: [3, 3] },
+        { type: 'points', x: [Tcur], y: [Gc], color: 'electron', r: 4 }
+      ], { xlim: [0, Tm], ylim: [0, Math.ceil(gm * 1.15 / gs) * gs], ylabel: 'Γ (meV)' });
+    }
+    ro1.set({
+      'E_g^{cn}': EPP.fix(Ecn, 3) + ' eV',
+      'E_g(0)': EPP.fix(Ez, 3) + ' eV',
+      ['E_g(T^* = ' + Tcur.toFixed(0) + ' K)']: EPP.fix(Ec, 3) + ' eV',
+      'high-T slope': (-sg * 2 * kB * s.zpr / w0).toFixed(3) + ' meV/K',
+      'plateau edge ħω_0/3k_B': Tp.toFixed(0) + ' K',
+      'Γ(T^*)': EPP.fix(Gc, 1) + ' meV',
+      'τ(T^*)': EPP.fix(HBAR_MEVFS / (2 * Gc), 1) + ' fs'
+    });
+  }
+  ui1 = EPP.controls(f1.querySelector('.pv-ctrl'), [
+    { key: 'preset', type: 'select', label: 'preset', wide: true, value: 'toy50', options: [['toy50', 'Fig. 3 toy, ħω₀ = 50 meV (matches curves)'], ['toy100', 'Fig. 3 toy, ħω₀ = 100 meV (as captioned)'], ['diaGW', 'Diamond direct gap, GW coupling'], ['diaLDA', 'Diamond direct gap, LDA coupling'], ['si', 'Si indirect gap'], ['custom', 'custom']] },
+    { key: 'zpr', type: 'range', label: 'zero-point shift |ΔE_g^{ZP}|', min: 0, max: 700, step: 1, value: 100, fmt: v => v.toFixed(0) + ' meV' },
+    { key: 'w0', type: 'range', label: 'phonon energy ħω_0', min: 10, max: 200, step: 1, value: 50, fmt: v => v.toFixed(0) + ' meV' },
+    { key: 'g0', type: 'range', label: 'zero-point width Γ^{ZP}', min: 1, max: 100, step: 1, value: 50, fmt: v => v.toFixed(0) + ' meV' },
+    { key: 'Tmax', type: 'range', label: 'temperature range T_{max}', min: 300, max: 1000, step: 10, value: 500, fmt: v => v.toFixed(0) + ' K' },
+    { key: 'sign', type: 'seg', label: 'sign of the shift', options: [['n', 'normal (gap closes)'], ['i', 'inverse Varshni']], value: 'n' },
+    { key: 'panel', type: 'seg', label: 'right panel', options: [['G', 'linewidth Γ'], ['tau', 'lifetime τ']], value: 'G' }
+  ], (s) => {
+    if (s.preset !== lastPre && PRE[s.preset]) {
+      const p = PRE[s.preset]; Ecn = p.Ecn;
+      ui1.set('zpr', p.zpr, true); ui1.set('w0', p.w0, true); if (p.g0 != null) ui1.set('g0', p.g0, true); ui1.set('Tmax', p.Tmax, true);
+    } else if (s.preset === lastPre) {
+      const m = matchPreset(s); if (m !== s.preset) ui1.set('preset', m, true);
+    }
+    lastPre = ui1.state.preset;
+    draw1();
+  });
+
+  // ---------------- material data (literature values, illustrative) ----------------
+  const MATS = {
+    GaAs: { m: 0.067, w: 36.2, ei: 10.9, e0: 12.9, Om: 45.2 },
+    GaN: { m: 0.20, w: 92, ei: 5.35, e0: 9.5, Om: 45.7 },
+    MgO: { m: 0.35, w: 89, ei: 2.96, e0: 9.8, Om: 18.7 }
+  };
+  function matParams(key) {
+    const p = MATS[key], wE = p.w / 1000;
+    const alpha = (1 / p.ei - 1 / p.e0) * Math.sqrt(p.m) * Math.sqrt(RY / wE);
+    const qp = Math.sqrt(p.m * wE / H2M);                 // A^-1
+    const qD = Math.pow(6 * Math.PI * Math.PI / p.Om, 1 / 3);
+    const qg = Math.sqrt(p.ei) * wE / HBARC;             // light-cone wave vector
+    const omega = wE / HBAR_EVS;                         // rad/s
+    return Object.assign({ alpha, qp, qD, qg, omega, aw: alpha * p.w }, p);
+  }
+
+  // ---------------- Viz 2: Frohlich catastrophe ----------------
+  const f2 = document.getElementById('viz-a-temperature-frohlich');
+  const pConv = new EPP.Plot(f2.querySelector('.pf-conv'), { xlabel: 'q-grid size N_q (points per direction)', ylabel: '|ΔE_{CBM}| (meV)', logx: true, logy: true, xlim: [4, 1000], xname: 'N_q', hoverX: v => v.toFixed(0), hoverY: v => EPP.fmt(v, 3) + ' meV', ariaLabel: 'Magnitude of the conduction band minimum shift versus q-grid size for adiabatic and nonadiabatic Allen-Heine' });
+  const pInt = new EPP.Plot(f2.querySelector('.pf-int'), { xlabel: 'q (Å^{-1})', ylabel: '|dΔE/d ln q| / αħω_{LO}', logx: true, xlim: [1e-6, 3], ylim: [0, 0.5], xname: 'q (Å⁻¹)', hoverX: v => sci(v, 3), hoverY: v => EPP.fmt(v, 3), ariaLabel: 'Contribution to the band-edge shift per logarithmic interval of q, with the light cone, polaron wave vector and grid cutoff marked' });
+  const ro2 = EPP.readout(f2.querySelector('.pf-ro'));
+  EPP.controls(f2.querySelector('.pf-ctrl'), [
+    { key: 'mat', type: 'seg', label: 'material', options: [['GaAs', 'GaAs'], ['GaN', 'GaN'], ['MgO', 'MgO']], value: 'GaAs' },
+    { key: 'Nq', type: 'range', label: 'grid size N_q', min: 4, max: 1000, log: true, value: 200, fmt: v => v.toFixed(0) },
+    { key: 'lc', type: 'toggle', label: 'mark the light cone q < q_c', value: true }
+  ], (s) => {
+    const P = matParams(s.mat), aw = P.aw, c2 = 2 / Math.PI;
+    const NA = (N) => aw * c2 * (Math.atan(P.qD / P.qp) - Math.atan(P.qD / (N * P.qp)));
+    const AD = (N) => aw * c2 * P.qp * (N - 1) / P.qD;
+    const Ns = EPP.linspace(Math.log10(4), 3, 220).map(e => Math.pow(10, e));
+    const N = s.Nq, qmin = P.qD / N;
+    const ylo = Math.pow(10, Math.floor(Math.log10(0.02 * aw))), yhi = Math.pow(10, Math.ceil(Math.log10(1.2 * AD(1000))));
+    const Nres = P.qD / P.qp;
+    const L1 = [
+      { type: 'hline', at: aw, color: 'muted', text: 'αħω_{LO} = ' + EPP.fix(aw, aw < 10 ? 2 : 0) + ' meV', textAt: 'left', width: 1.1 },
+      { type: 'line', x: Ns, y: Ns.map(NA), color: 'electron', width: 2, label: 'nonadiabatic (ħω_{LO} kept)' },
+      { type: 'line', x: Ns, y: Ns.map(AD), color: 'c5', width: 2, dash: [6, 4], label: 'adiabatic AH (G.167)' },
+      { type: 'vline', at: N, color: 'muted', width: 1, dash: [3, 3] },
+      { type: 'points', x: [N, N], y: [NA(N), AD(N)], color: 'ink', r: 3.5 }
+    ];
+    if (Nres > 4 && Nres < 1000) L1.splice(1, 0, { type: 'vline', at: Nres, color: 'phonon', width: 1.2, text: 'q_{min} = q_p', textDy: 22 });
+    pConv.draw(L1, { ylim: [ylo, yhi] });
+
+    const qs = EPP.linspace(-6, Math.log10(3), 400).map(e => Math.pow(10, e));
+    const fNA = (q) => (q > P.qD ? 0 : c2 * q * P.qp / (q * q + P.qp * P.qp));
+    const fA = (q) => (q > P.qD ? 0 : c2 * P.qp / q);
+    const inR = qs.filter(q => q >= qmin && q <= P.qD);
+    const L2 = [];
+    if (s.lc) L2.push({ type: 'band', x0: 1e-6, x1: P.qg, color: 'photon', alpha: 0.16, text: 'light cone' });
+    L2.push(
+      { type: 'fill', x: inR, y1: inR.map(fA), color: 'c5', alpha: 0.10 },
+      { type: 'fill', x: inR, y1: inR.map(fNA), color: 'electron', alpha: 0.22 },
+      { type: 'line', x: qs, y: qs.map(fNA), color: 'electron', width: 2, label: 'nonadiabatic' },
+      { type: 'line', x: qs, y: qs.map(fA), color: 'c5', width: 2, dash: [6, 4], label: 'adiabatic ∝ 1/q' },
+      { type: 'vline', at: P.qp, color: 'phonon', width: 1.2, text: 'q_p', textDy: 16 },
+      { type: 'vline', at: qmin, color: 'muted', width: 1, dash: [3, 3], text: 'q_{min}', textDy: 34 },
+      { type: 'vline', at: P.qD, color: 'muted', width: 1.2 },
+      { type: 'text', x: P.qD, y: 0.5, dx: -4, dy: 12, text: 'q_D', color: 'muted', size: 11, align: 'right' }
+    );
+    if (s.lc) L2.push({ type: 'vline', at: P.qg, color: 'photon', width: 1.2, text: 'q_c', textDy: 34 });
+    pInt.draw(L2);
+
+    const conv = aw * c2 * Math.atan(P.qD / P.qp);
+    const N90 = P.qD / (P.qp * Math.tan(0.1 * Math.atan(P.qD / P.qp)));
+    const Alc = aw * c2 * P.qp * (1 / P.qg - 1 / P.qD);
+    const frac = Math.atan(P.qg / P.qp) / Math.atan(P.qD / P.qp);
+    ro2.set({
+      'α': EPP.fix(P.alpha, 3) + (P.alpha > 1 ? ' (strong coupling)' : ''),
+      'q_p': EPP.fix(P.qp, 4) + ' Å⁻¹ (1/qₚ = ' + (1 / P.qp).toFixed(0) + ' Å)',
+      'q_c': sci(P.qg) + ' Å⁻¹',
+      'ΔE^{NA}(N_q)': '−' + EPP.fix(NA(N), 3) + ' meV',
+      'ΔE^{A}(N_q)': '−' + EPP.fix(AD(N), 3) + ' meV',
+      'NA converged': '−' + EPP.fix(conv, 3) + ' meV',
+      'N_q for 90% (NA)': N90.toFixed(0),
+      'light cone resolved at N_q': sci(P.qD / P.qg),
+      'adiabatic cut at q_c': '−' + EPP.fix(Alc / 1000, 3) + ' eV',
+      'NA share from q < q_c': sci(100 * frac, 2) + ' %'
+    });
+  });
+
+  // ---------------- Viz 3: LO-phonon scattering rate ----------------
+  const f3 = document.getElementById('viz-a-temperature-lo');
+  const pRate = new EPP.Plot(f3.querySelector('.pl-rate'), { xlabel: 'carrier energy ε / ħω_{LO}', ylabel: '1/τ (ps^{-1})', xlim: [0, 5], xname: 'ε/ħω_{LO}', hoverX: v => v.toFixed(2), hoverY: v => EPP.fmt(v, 3) + ' ps⁻¹', ariaLabel: 'Polar optical phonon scattering rate versus carrier energy, split into emission and absorption' });
+  const pTau = new EPP.Plot(f3.querySelector('.pl-tau'), { xlabel: 'T (K)', ylabel: 'τ (fs)', logy: true, xlim: [0, 600], ylim: [1, 1e6], xname: 'T', hoverX: v => v.toFixed(0) + ' K', hoverY: v => EPP.fmt(v, 3) + ' fs', ariaLabel: 'Carrier lifetime versus temperature below and above the LO emission threshold' });
+  const ro3 = EPP.readout(f3.querySelector('.pl-ro'));
+  let ui3 = null;
+  pRate.onPointer = (x) => { if (ui3) ui3.set('eps', EPP.clamp(Math.round(x * 100) / 100, 0.05, 5)); };
+  // rate in units of 2*alpha*omega_LO; x = eps/hbar*omega_LO
+  const rAbs = (x, n) => n * Math.asinh(Math.sqrt(x)) / Math.sqrt(x);
+  const rEm = (x, n) => (x > 1 ? (n + 1) * Math.asinh(Math.sqrt(x - 1)) / Math.sqrt(x) : 0);
+  ui3 = EPP.controls(f3.querySelector('.pl-ctrl'), [
+    { key: 'mat', type: 'seg', label: 'material', options: [['GaAs', 'GaAs'], ['GaN', 'GaN']], value: 'GaAs' },
+    { key: 'T', type: 'range', label: 'temperature T', min: 0, max: 600, step: 5, value: 300, fmt: v => v.toFixed(0) + ' K' },
+    { key: 'eps', type: 'range', label: 'energy cursor ε^*/ħω_{LO}', min: 0.05, max: 5, step: 0.01, value: 1.5, fmt: v => v.toFixed(2) }
+  ], (s) => {
+    const P = matParams(s.mat), R0 = 2 * P.alpha * P.omega / 1e12; // ps^-1
+    const n = bose(P.w, s.T), n600 = bose(P.w, 600);
+    const xs = EPP.linspace(0.004, 5, 500);
+    let ymax = 0; xs.forEach(x => { ymax = Math.max(ymax, R0 * (rAbs(x, n600) + rEm(x, n600))); });
+    const ys = niceStep(ymax * 1.08 / 4), ytop = Math.ceil(ymax * 1.08 / ys) * ys;
+    const em = xs.map(x => R0 * rEm(x, n)), ab = xs.map(x => R0 * rAbs(x, n));
+    const tot = xs.map((x, i) => em[i] + ab[i]), tot0 = xs.map(x => R0 * rEm(x, 0));
+    const xe = s.eps, rc = R0 * (rAbs(xe, n) + rEm(xe, n));
+    pRate.draw([
+      { type: 'vline', at: 1, color: 'phonon', width: 1.2, text: 'emission threshold ħω_{LO}', textDy: 0 },
+      { type: 'line', x: xs, y: tot0, color: 'muted', width: 1.4, label: 'total at T = 0' },
+      { type: 'line', x: xs, y: ab, color: 'c5', width: 2, dash: [2, 3], label: 'absorption (∝ n)' },
+      { type: 'line', x: xs, y: em, color: 'phonon', width: 2, dash: [6, 4], label: 'emission (∝ n+1)' },
+      { type: 'line', x: xs, y: tot, color: 'electron', width: 2, label: 'total, Eq. (G.170)' },
+      { type: 'vline', at: xe, color: 'muted', width: 1, dash: [3, 3] },
+      { type: 'points', x: [xe], y: [rc], color: 'electron', r: 4 }
+    ], { ylim: [0, ytop] });
+    const Ts = EPP.linspace(0, 600, 241);
+    const tauAt = (x) => Ts.map(T => { const nn = bose(P.w, T), r = R0 * (rAbs(x, nn) + rEm(x, nn)); return r > 0 ? 1000 / r : NaN; });
+    pTau.draw([
+      { type: 'line', x: Ts, y: tauAt(0.5), color: 'muted', width: 1.6, dash: [2, 3], label: 'ε = ħω_{LO}/2 (below threshold)' },
+      { type: 'line', x: Ts, y: tauAt(2), color: 'c4', width: 1.6, dash: [6, 4], label: 'ε = 2ħω_{LO} (above threshold)' },
+      { type: 'line', x: Ts, y: tauAt(xe), color: 'electron', width: 2, label: 'ε = ε^* (cursor)' },
+      { type: 'vline', at: s.T, color: 'muted', width: 1, dash: [3, 3] },
+      { type: 'points', x: [s.T], y: [rc > 0 ? 1000 / rc : NaN], color: 'electron', r: 4 }
+    ]);
+    const eV = xe * P.w / 1000, k = Math.sqrt(eV * P.m / H2M), v = 2 * H2M / HBAR_EVS * 1e-15 * k / P.m; // A/fs
+    const tau = rc > 0 ? 1000 / rc : Infinity;
+    ro3.set({
+      'α': EPP.fix(P.alpha, 3),
+      '2αω_{LO}': EPP.fix(R0, 3) + ' ps⁻¹',
+      'n(ħω_{LO}, T)': sci(n, 3),
+      'ε^*': (xe * P.w).toFixed(1) + ' meV',
+      '1/τ(ε^*)': sci(rc, 3) + ' ps⁻¹',
+      'τ(ε^*)': sci(tau, 3) + ' fs',
+      'ħ/τ = 2|Im Σ|': sci(HBAR_MEVFS / tau, 3) + ' meV',
+      'mean free path vτ': sci(v * tau / 10, 3) + ' nm'
+    });
+  });
+})();
+</script>

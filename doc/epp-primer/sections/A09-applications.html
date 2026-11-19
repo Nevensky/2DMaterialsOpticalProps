@@ -1,0 +1,317 @@
+<section class="chapter" id="a-applications" data-num="A.9" data-title="Light, transport, superconductivity">
+  <header class="ch-head">
+    <p class="eyebrow"><span class="num">A.9</span><span>Giustino §VI.B, §IX.B, §X.B, §XI, §XII · Eqs. 181–184, 186–212</span></p>
+    <h2>Light as an external field, transport and superconductivity</h2>
+    <p class="lede">The last applied chapters of the review turn $g_{mn\nu}(\bk,\bq)$ into quantities people measure: the absorption edge of an indirect-gap semiconductor, carrier mobilities and superconducting critical temperatures. In all of them the only interaction is electrostatic, and light, where it appears at all, is a classical field that acts on electrons only. Seeing exactly where that assumption sits sets up the step to EPP.</p>
+  </header>
+
+  <h3>Indirect absorption: light from outside, momentum from a phonon</h3>
+  <p>In silicon the valence-band maximum is at Γ, while the conduction-band minimum lies near X, at $|\bk|\approx1$ Å$^{-1}$ (literature value, illustrative). A photon at the gap carries $q=n_{\rm r}E_g/\hbar c\approx2\times10^{-3}$ Å$^{-1}$ inside the crystal (refractive index $n_{\rm r}\approx3.5$, literature value), hundreds of times too little. Below the direct gap the electron can therefore be promoted only if a <span class="t-p">phonon</span> is emitted or absorbed at the same time and supplies the missing crystal momentum. The process is second order: one electron–<span class="t-g">photon</span> vertex and one electron–<span class="t-p">phonon</span> vertex, in either order.</p>
+  <p>Giustino notes that the systematic route would be the screening function $\epsilon_{\rm e}$ of G Eq. (95), evaluated with the Green's function dressed by $\Sigma^{\rm ep}$ (G Eq. 151). He quotes instead the standard result of second-order time-dependent perturbation theory, due to Hall, Bardeen and Blatt (Giustino §IX.B; SI units, $\epsilon_0$ is the vacuum permittivity):</p>
+  <div class="eq">$$ \begin{aligned} \alpha(\omega)=\frac{\pi e^2}{\epsilon_0 c\,\Omega}\,\frac{1}{\omega\,n_{\rm r}(\omega)}&\int\frac{d\bk\,d\bq}{\Omega_{\rm BZ}^2}\sum_{mn\nu}\sum_{s=\pm1}\big(f_{n\bk}-f_{m\bk+\bq}\big)\\ &\times\bigg|\,\be\cdot\sum_p\bigg[\frac{\mathbf v_{np}(\bk)\,g_{pm\nu}(\bk,\bq)}{\varepsilon_{p\bk}-\varepsilon_{n\bk}-\hbar\omega}+\frac{g_{np\nu}(\bk,\bq)\,\mathbf v_{pm}(\bk+\bq)}{\varepsilon_{p\bk+\bq}-\varepsilon_{n\bk}+s\hbar\omega_{\bq\nu}}\bigg]\bigg|^2\\ &\times\big(n_{\bq\nu}+\tfrac12+\tfrac s2\big)\,\delta\big(\varepsilon_{m\bk+\bq}-\varepsilon_{n\bk}-\hbar\omega+s\hbar\omega_{\bq\nu}\big). \end{aligned} \tag{G.200}$$</div>
+  <p>The first term in the bracket is "photon first": a vertical transition into a virtual state $p\bk$, followed by phonon scattering into the final state $m\,\bk+\bq$. The second is "phonon first": scattering into a virtual state $p\,\bk+\bq$, followed by a vertical optical transition. The two amplitudes add before the modulus is squared. $s=+1$ is phonon emission, with weight $n_{\bq\nu}+1$ and onset at $\hbar\omega=E_g+\hbar\omega_{\bq\nu}$; $s=-1$ is phonon absorption, with weight $n_{\bq\nu}$ and onset at $E_g-\hbar\omega_{\bq\nu}$. Here $\mathbf v_{mn}$ are matrix elements of the velocity operator, $\be$ is the polarization, $n_{\rm r}(\omega)$ the real part of the refractive index, $\Omega$ the unit-cell volume and $f_{n\bk}$ the electron occupations.</p>
+
+  <div class="fd" id="fd-a-applications-hbb" role="group" aria-label="The two second-order paths of G Eq. 200">
+    <figure><div class="fd-a-applications-p1"></div><figcaption style="max-width:34ch">Photon first. Virtual state $p\bk$; denominator $\varepsilon_{p\bk}-\varepsilon_{n\bk}-\hbar\omega$.</figcaption></figure>
+    <span class="op">+</span>
+    <figure><div class="fd-a-applications-p2"></div><figcaption style="max-width:34ch">Phonon first. Virtual state $p\,\bk+\bq$; denominator $\varepsilon_{p\bk+\bq}-\varepsilon_{n\bk}+s\hbar\omega_{\bq\nu}$.</figcaption></figure>
+  </div>
+  <p>Both diagrams are drawn for emission ($s=+1$); for absorption the zigzag line comes in instead of going out. The photon line ends in a cross. That is the standard mark of an external field: the line is not a propagator but a prescribed classical vector potential, inserted at a vertex in the electric-dipole approximation (photon momentum set to zero). It couples through $\be\cdot\mathbf v$ to <span class="t-e">electrons</span> only. Nothing in (G.200) lets light act on the ions, and the medium's own response to light enters only through the number $n_{\rm r}(\omega)$, put in by hand. In the infrared, where a polar crystal absorbs strongly by driving TO phonons through their Born charges (the reststrahlen band), the formula is silent; it is built for photons above the gap. EPP replaces the cross by a photon propagator, so that light becomes part of the system (callout below).</p>
+
+  <div class="callout caveat"><p class="callout-title">What (G.200) assumes</p><p>Besides the classical field and the electric-dipole approximation (valid up to photon energies of a few eV): independent particles, so no excitons and no local fields (Allen–Heine has been combined with the BSE, but not in this formula); clamped-nuclei band energies in the δ function and in both denominators. The occupation factor $(f_n-f_m)(n+\frac12+\frac s2)$ differs from the exact net rate by terms of order $f_m(1-f_n)$, negligible in a semiconductor.</p></div>
+  <div class="callout source"><p class="callout-title">Note on the source</p><p>Read literally with the convention of G Eq. (38), $g_{pm\nu}(\bk,\bq)=\langle u_{p\bk+\bq}|\Delta_{\bq\nu}v^{\rm KS}|u_{m\bk}\rangle$, which does not connect an intermediate state $p\bk$ to a final state $m\,\bk+\bq$. The intended amplitude, up to an overall complex conjugate that drops out under $|\cdot|^2$, is</p>
+  <div class="eq">$$ \be\cdot\sum_p\bigg[\frac{g_{mp\nu}(\bk,\bq)\,\mathbf v_{pn}(\bk)}{\varepsilon_{p\bk}-\varepsilon_{n\bk}-\hbar\omega}+\frac{\mathbf v_{mp}(\bk+\bq)\,g_{pn\nu}(\bk,\bq)}{\varepsilon_{p\bk+\bq}-\varepsilon_{n\bk}+s\hbar\omega_{\bq\nu}}\bigg].$$</div>
+  <p>Strictly, emission involves the $-\bq$ phonon, which time reversal makes immaterial for $|g|$.</p></div>
+
+  <h3>Temperature: two slopes and a moving edge</h3>
+  <p>For two parabolic bands, a dispersionless phonon of each branch and constant matrix elements, the $\bk$ and $\bq$ integrals in (G.200) collapse to a convolution of two square-root densities of states, and every branch contributes a parabola above its threshold (cf. G.200; derivation below):</p>
+  <div class="eq">$$ \begin{aligned} \alpha(\omega)=\frac{C}{\hbar\omega}\sum_\nu w_\nu\Big[&(n_\nu+1)\,(\hbar\omega-E_g-\hbar\omega_\nu)^2\,\Theta(\hbar\omega-E_g-\hbar\omega_\nu)\\ +\,&n_\nu\,(\hbar\omega-E_g+\hbar\omega_\nu)^2\,\Theta(\hbar\omega-E_g+\hbar\omega_\nu)\Big]. \end{aligned}$$</div>
+  <p>In a plot of $\sqrt\alpha$ these are nearly straight segments with kinks at the thresholds $E_g\pm\hbar\omega_\nu$ (the Macfarlane–Roberts analysis). Below $E_g$ only phonon absorption contributes, and it freezes out as $n_\nu\to0$.</p>
+  <p>The clamped-nuclei energies in the δ function make the onset independent of temperature. That is why the theoretical curves of Giustino's Fig. 14 had to be shifted rigidly to the measured onsets at 296 K and 78 K. Patrick and Giustino (2014) and Zacharias and Giustino (2016) showed that the Allen–Heine renormalization of <a href="#a-temperature">§A.8</a> moves the energies of <em>real</em> transitions but not those of virtual ones, so it belongs only in the δ function and the first denominator. Alternatively, Zacharias, Patrick and Giustino (2015) average the clamped-nuclei $\epsilon_2$ over nuclear configurations (Williams–Lax):</p>
+  <div class="eq">$$ \epsilon_2(\omega;T)=\frac1Z\sum_{\{n_{\bq\nu}\}}e^{-E_{\{n_{\bq\nu}\}}/k_BT}\,\big\langle\epsilon_2(\omega)\big\rangle_{\{n_{\bq\nu}\}}. \tag{G.201}$$</div>
+  <p>Here $\langle\epsilon_2(\omega)\rangle_{\{n_{\bq\nu}\}}$ is the clamped-nuclei $\epsilon_2$ averaged over the nuclear wavefunction with phonon numbers $\{n_{\bq\nu}\}$, $E_{\{n_{\bq\nu}\}}$ is the energy of that nuclear state and $Z$ the partition function. The idea is simple: in a supercell with displaced atoms crystal momentum is no longer conserved, so indirect transitions become vertical ones. Initial states are treated quantum mechanically and final states as a quasiclassical continuum. The result is an <em>adiabatic</em> approximation to (G.200) that contains the temperature-dependent band structure automatically.</p>
+
+  <details class="derivation"><summary>Derivation: from (G.200) to the parabolic edge</summary><div class="d-body">
+    <p>Take a filled valence band with its maximum at Γ and an empty conduction band with its minimum at $\bk_c$, both parabolic, so $f_{n\bk}-f_{m\bk+\bq}=1$. The phonon must carry $\bq\approx\bk_c$; neglect its dispersion there, $\omega_{\bq\nu}\to\omega_\nu$, and treat $|g|$, the velocity matrix elements, the denominators and $n_{\rm r}$ as constants. For fixed $\nu$ and $s$, change variables from $\bq$ to $\bk'=\bk+\bq$: the $\bk$ integral then runs over the valence states and the $\bk'$ integral over the conduction states independently:</p>
+    <div class="eq">$$ \int\! d\bk\,d\bq\;\delta(\cdots)\;\propto\int_0^\infty\!\!dx\int_0^\infty\!\!dy\,\sqrt x\,\sqrt y\;\delta(x+y-\Delta_s)=\frac{\pi}{8}\,\Delta_s^2\,\Theta(\Delta_s),\qquad \Delta_s=\hbar\omega-E_g-s\hbar\omega_\nu ,$$</div>
+    <p>with $x$ the hole energy below the valence maximum and $y$ the electron energy above the conduction minimum. Multiplying by the weight $n_\nu+\frac12+\frac s2$ and the prefactor $1/\omega$ of (G.200), and absorbing all constants into $C$ and the relative branch strengths $w_\nu$, gives the edge formula. The integral is $\Delta^2\,B(\tfrac32,\tfrac32)=\pi\Delta^2/8$.</p>
+  </div></details>
+
+  <figure class="viz" id="viz-a-applications-edge">
+    <p class="viz-title">Phonon-assisted absorption edge of an indirect semiconductor <span class="tag">interactive</span></p>
+    <div class="viz-grid two"><div class="plotA"></div><div class="plotB"></div></div>
+    <div class="ctrls"></div>
+    <div class="ro"></div>
+    <figcaption><strong>Model.</strong> The parabolic-band reduction of (G.200) above, with Si-like parameters (literature values, illustrative): clamped-nuclei gap $E_g^{\rm cn}=1.23$ eV, TO phonon 57.8 meV ($w=1$), TA phonon 18.4 meV ($w=0.3$), $C=1.2\times10^4$ cm$^{-1}$ eV$^{-1}$ (chosen so that $\alpha\approx2\times10^3$ cm$^{-1}$ at 1.5 eV and 296 K with the Allen–Heine gap, the order of Giustino's Fig. 14). With the Allen–Heine toggle on, the gap in the δ function is $E_g(T)=E_g^{\rm cn}-|\Delta E_g^{\rm ZP}|[1+2n(\hbar\omega_{\rm eff}/k_BT)]$ (G Eq. 168, <a href="#a-temperature">§A.8</a>) with $|\Delta E_g^{\rm ZP}|=60$ meV by default and $\hbar\omega_{\rm eff}=30$ meV, as in the Si preset of §A.8; with it off the gap stays clamped, as in Hall–Bardeen–Blatt, and the zero-point slider has no effect. Left: $\alpha$ on a log scale, with the 78 K curve for comparison. Right: $\sqrt\alpha$ near the edge, split into the phonon-emission ($s=+1$) and phonon-absorption ($s=-1$) parts; thin dotted lines mark $E_g-\hbar\omega_{\rm TO,TA}$ (violet), where absorption switches on, and $E_g+\hbar\omega_{\rm TA,TO}$ (amber), where emission does. <strong>What to notice.</strong> Cooling removes the tail below $E_g$, because the absorption path is weighted by $n_\nu$; at 4 K the absorption exactly at the gap is negligible ($n_{\rm TA}\sim10^{-23}$). With the clamped gap the onset never moves; with the Allen–Heine gap it red-shifts on heating, which is the 296 K versus 78 K difference that Fig. 14 had to impose by hand.</figcaption>
+  </figure>
+
+  <div class="callout connect"><p class="callout-title">Bridge to EPP: light becomes part of the system</p><p>In EPP the photon is a quantized field with its own propagator $D$ (<a href="#b-fields">§B.4</a>), not a prescribed external potential. In EPP's Gaussian units, electrons couple to it through the current vertex $-\frac1c\bj\cdot\bA$ plus the diamagnetic $A^2$ term, and ions through their Born dipoles, $\frac1c\dot\bp\cdot\bA$ (E Eq. 134). Absorption then follows from the imaginary part of one current–current photon self-energy, $\Pi_{jj}=\Pi^{\rm e}+\Pi^{\rm ion}$, and the dielectric function, hence $n_{\rm r}$, comes from the same object instead of being put in by hand (<a href="#b-dielectric">§B.3</a>, <a href="#b-photon-se">§B.5</a>). $\Pi^{\rm ion}$ contains exactly what (G.200) lacks: one-phonon infrared absorption at $\omega_{\rm TO}$ through the Born charges. In this language (G.200) would be the lowest phonon-dressed correction to the electronic bubble $\Pi^{\rm e}$, with a phonon line inside it (self-energy and vertex insertions). The manuscript does not work out that diagram, so phonon-assisted absorption remains open in EPP (<a href="#z-outlook">§Z.1</a>).</p></div>
+
+  <h3>Transport: from lifetimes to mobility</h3>
+  <p>The golden-rule rates $1/\tau_{n\bk}$ of G Eq. (170) (<a href="#a-temperature">§A.8</a>) also feed the semiclassical Boltzmann equation. An electric field $\bE$ moves the occupations slightly away from their equilibrium values $f^0_{n\bk}$, and linearizing in the deviation gives (Giustino §X.B)</p>
+  <div class="eq">$$ \frac{\partial f^0_{n\bk}}{\partial\varepsilon_{n\bk}}\,\mathbf v_{n\bk}\cdot(-e)\bE=-\sum_\nu\int\frac{d\bq}{\Omega_{\rm BZ}}\,\Gamma_{mn\nu}(\bk,\bq)\,\Big[\big(f_{n\bk}-f^0_{n\bk}\big)-\big(f_{m\bk+\bq}-f^0_{m\bk+\bq}\big)\Big], \tag{G.202}$$</div>
+  <div class="eq">$$ \begin{aligned} \Gamma_{mn\nu}(\bk,\bq)=\sum_{s=\pm1}\frac{2\pi}{\hbar}\,&|g_{mn\nu}(\bk,\bq)|^2\,f^0_{n\bk}\big(1-f^0_{m\bk+\bq}\big)\\ &\times\big(n_{\bq\nu}+\tfrac12-\tfrac s2\big)\,\delta\big(\varepsilon_{n\bk}+s\hbar\omega_{\bq\nu}-\varepsilon_{m\bk+\bq}\big). \end{aligned} \tag{G.203}$$</div>
+  <p>The left side is the drift term; the right side is scattering out of $|n\bk\rangle$ minus scattering in, with $\Gamma$ the equilibrium transition rate including Pauli factors (here $s=+1$ is absorption and $s=-1$ emission; the band sum over $m$ is implicit). Solving (G.202) self-consistently for all $f_{n\bk}$ gives the current $\bJ$, the conductivity and the mobility (conductivity per unit carrier charge density). Dropping the in-scattering term is the energy relaxation-time approximation (RTA). For $n$-type Si (Li 2015, Giustino Fig. 16) the exact solution, the energy-RTA and the momentum-RTA (which weights each process by the velocity it removes along the field) nearly coincide, and all three overestimate the measured mobility, most at low temperature; Giustino suggests the DFT matrix elements as a possible cause (Sec. XII, below). In polar materials the dominant scattering is by LO phonons through the long-range Fröhlich vertex (<a href="#a-polar">§A.4</a>), the same term that makes the adiabatic band renormalization diverge (<a href="#a-temperature">§A.8</a>).</p>
+  <h3>Superconductivity: from $\alpha^2F$ to $T_c$</h3>
+  <p>Pairing uses the same $|g|^2$. An electron moving through the crystal leaves behind a lattice distortion that relaxes only on the phonon time scale $1/\omega_{\rm ph}$, and a second electron arriving later is attracted to it. Exchange of a virtual phonon thus gives an attraction between electrons near the Fermi surface, which competes with their Coulomb repulsion. The isotropic Eliashberg function is the double Fermi-surface average of $|g|^2$, resolved in phonon energy; its state-resolved form (G Eq. 187, which enters the Fan–Migdal self-energy G Eq. 186) and the mass enhancement it produces are in <a href="#a-electron-se">§A.7</a>. Twice its $1/\omega$ moment is the coupling strength $\lambda$, and its logarithmic moment gives the characteristic phonon frequency:</p>
+  <div class="eq">$$ \alpha^2F(\omega)=\frac{1}{N_{\rm F}}\int\frac{d\bk\,d\bq}{\Omega^2_{\rm BZ}}\sum_{mn\nu}|g_{mn\nu}(\bk,\bq)|^2\,\delta(\varepsilon_{n\bk}-\varepsilon_{\rm F})\,\delta(\varepsilon_{m\bk+\bq}-\varepsilon_{\rm F})\,\delta(\hbar\omega-\hbar\omega_{\bq\nu}), \tag{G.205}$$</div>
+  <div class="eq">$$ \lambda=2\int_0^\infty\frac{\alpha^2F(\omega)}{\omega}\,d\omega, \tag{G.206}$$</div>
+  <div class="eq">$$ \omega_{\log}=\exp\bigg[\frac2\lambda\int_0^\infty d\omega\,\frac{\alpha^2F(\omega)}{\omega}\log\omega\bigg]. \tag{G.207}$$</div>
+  <p>$N_{\rm F}$ is the density of states at the Fermi level per spin and per cell, as the prefactor of G Eq. (192) implies. The weight $1/\omega$ makes soft phonons count more in $\lambda$; $\omega_{\log}$ is a geometric mean, and the unit inside $\log\omega$ cancels. Both enter the McMillan formula in the form refined by Allen and Dynes:</p>
+  <div class="eq">$$ k_BT_c=\frac{\hbar\omega_{\log}}{1.2}\exp\bigg[-\frac{1.04\,(1+\lambda)}{\lambda-\mu^*(1+0.62\lambda)}\bigg]. \tag{G.204}$$</div>
+  <p>The Coulomb pseudopotential follows Morel and Anderson, $1/\mu^*=1/\mu+\log(\omega_{\rm p}/\omega_{\rm ph})$, with $\hbar\omega_{\rm p}$ a plasma energy, $\hbar\omega_{\rm ph}$ the largest phonon energy, and $\mu=N_{\rm F}\langle\langle V_{n\bk,n'\bk'}\rangle\rangle_{\rm FS}$ the double Fermi-surface average of the screened Coulomb interaction between time-reversed pairs, $V_{n\bk,n'\bk'}=\langle\bk'n',-\bk'n'|W|\bk n,-\bk n\rangle$. Giustino writes $W$; physically this is the electronic part $W_{\rm e}$ of <a href="#a-hedin-baym">§A.5</a>, since the phonon part is already in $\lambda$. Equation (G.204) assumes an isotropic, single-gap superconductor. In practice $\mu^*$ is adjusted within 0.1–0.2, which makes $T_c$ uncertain at moderate coupling, and $T_c$ vanishes once $\lambda\le\mu^*/(1-0.62\mu^*)$.</p>
+  <div class="callout intuition"><p class="callout-title">Why $\mu^*$ is small</p><p>The bare repulsion $\mu$ acts on the electronic time scale $1/\omega_{\rm p}$; the phonon-mediated attraction is delayed by about $1/\omega_{\rm ph}$, so paired electrons avoid each other in time. The logarithm records that separation of scales: with $\mu=0.4$, $\hbar\omega_{\rm p}=10$ eV and $\hbar\omega_{\rm ph}=50$ meV (illustrative), $\mu^*=0.13$. This is "retardation" in Giustino's sense, the frequency dependence of an interaction that is still electrostatic; the finite speed of light plays no role.</p></div>
+
+  <figure class="viz" id="viz-a-applications-tc">
+    <p class="viz-title"><span>From the Eliashberg function to <i>T</i><sub>c</sub></span> <span class="tag">interactive</span></p>
+    <div class="viz-grid two"><div class="plotA"></div><div class="plotB"></div></div>
+    <div class="ctrls"></div>
+    <div class="ro"></div>
+    <figcaption><strong>Model.</strong> $\alpha^2F(\omega)=s\sum_i\frac{\lambda_i\omega_i}{2}\,G_{\sigma_i}(\omega-\omega_i)$, a sum of normalized Gaussians, each contributing about $\lambda_i$ to (G.206); $s$ scales $|g|^2$. $\lambda$, $\omega_{\log}$ and the cumulative $\lambda(\omega)=2\int_0^\omega\alpha^2F(\omega')\,d\omega'/\omega'$ are integrated numerically, and $T_c$ follows from (G.204). Peaks $(\hbar\omega_i,\lambda_i)$, literature-inspired and illustrative: Al (20 meV, 0.25; 37 meV, 0.18), Pb (4.4, 0.9; 8.5, 0.65), MgB$_2$ treated isotropically (65, 0.6; 35, 0.1; 90, 0.03), H$_3$S (30, 0.5; 120, 1.0; 170, 0.6). The horizontal line marks the measured $T_c$ (literature value, illustrative; about 200 K for H$_3$S at 155 GPa). The optional factors $f_1f_2$ are the strong-coupling corrections of Allen and Dynes (1975, literature), which Eq. (G.204) omits. <strong>What to notice.</strong> On the log axis $T_c$ falls steeply with $\mu^*$ and collapses at $\lambda_{\rm crit}$. Raising $|g|^2$ by 40%, the size of the <i>GW</i> and hybrid corrections to $\lambda$ quoted in Sec. XII, multiplies $T_c$ by about 4.5 for Al and 2 for MgB$_2$ at $\mu^*=0.12$, but only by 1.3 for Pb: weak coupling is the most sensitive. Isotropic MgB$_2$ gives 18–27 K for $\mu^*=0.10$–0.15 against 39 K measured, and H$_3$S falls about 25% short; $f_1f_2$ closes most of that gap.</figcaption>
+  </figure>
+
+  <p>Beyond (G.204), the anisotropic Migdal–Eliashberg theory solves coupled equations for the renormalization $Z_{n\bk}(i\omega_j)$ and the gap $\Delta_{n\bk}(i\omega_j)$ on the fermion Matsubara axis (G Eqs. 208–209, below), with the coupling</p>
+  <div class="eq">$$ \lambda_{n\bk,n'\bk'}(i\omega)=\frac{N_{\rm F}}{\hbar}\sum_\nu\frac{2\omega_{\bq\nu}}{\omega^2_{\bq\nu}+\omega^2}\,|g_{nn'\nu}(\bk,\bq)|^2,\qquad \bq=\bk'-\bk. \tag{G.210}$$</div>
+  <p>The fraction is minus the bare phonon propagator on the bosonic Matsubara axis (Giustino's phonon Green's function, written $\mathcal D$ on this page). So $\lambda(i\omega)$ is the phonon-mediated interaction $W_{\rm ph}=W_{\rm e}\mathcal DW_{\rm e}$ of <a href="#a-hedin-baym">§A.5</a>, projected on Cooper pairs, and its static Fermi-surface average returns (G.206). For MgB$_2$ (Margine and Giustino 2013, Giustino Fig. 17) it yields two gaps, about 7.5–9 meV and 1–2.5 meV at low temperature (on the σ and π Fermi-surface sheets, in the standard literature assignment), and $T_c=50$ K against 39 K measured; the empirical $\mu^*$ accounts for part of the difference. Superconducting DFT removes $\mu^*$ altogether, building the Coulomb kernel $\mathcal K^{\rm ee}$ from the screened interaction:</p>
+  <div class="eq">$$ \Delta_{n\bk}=-\mathcal Z_{n\bk}\Delta_{n\bk}-\sum_{n'\bk'}\frac{\mathcal K_{n\bk,n'\bk'}\,\Delta_{n'\bk'}}{2E_{n'\bk'}}\tanh\Big(\frac{E_{n'\bk'}}{2k_BT}\Big),\qquad E^2_{n\bk}=\varepsilon^2_{n\bk}+|\Delta_{n\bk}|^2, \tag{G.211}$$</div>
+  <p>with $\Delta_{n\bk}$ the pairing field in the Kohn–Sham basis, $\mathcal K=\mathcal K^{\rm ep}+\mathcal K^{\rm ee}$, $\mathcal Z_{n\bk}$ a renormalization term built from $g$ and the phonons (the analog of $Z$ in G.208), and $\varepsilon_{n\bk}$ measured from $\varepsilon_{\rm F}$. The gap has no explicit frequency dependence; retardation, again in Giustino's sense, enters through the kernels.</p>
+  <details class="derivation"><summary>The anisotropic Migdal–Eliashberg equations (G.208)–(G.209)</summary><div class="d-body">
+    <div class="eq">$$ Z_{n\bk}(i\omega_j)=1+\frac{\pi k_BT}{N_{\rm F}}\sum_{n'\bk'j'}\frac{\omega_{j'}/\omega_j}{\sqrt{\hbar^2\omega^2_{j'}+\Delta^2_{n'\bk'}(i\omega_{j'})}}\,\lambda_{n\bk,n'\bk'}(i\omega_j-i\omega_{j'})\,\delta(\varepsilon_{n'\bk'}-\varepsilon_{\rm F}), \tag{G.208}$$</div>
+    <div class="eq">$$ \begin{aligned} Z_{n\bk}(i\omega_j)\Delta_{n\bk}(i\omega_j)=\frac{\pi k_BT}{N_{\rm F}}\sum_{n'\bk'j'}&\frac{\Delta_{n'\bk'}(i\omega_{j'})}{\sqrt{\hbar^2\omega^2_{j'}+\Delta^2_{n'\bk'}(i\omega_{j'})}}\\ &\times\big[\lambda_{n\bk,n'\bk'}(i\omega_j-i\omega_{j'})-N_{\rm F}V_{n\bk,n'\bk'}\big]\,\delta(\varepsilon_{n'\bk'}-\varepsilon_{\rm F}). \end{aligned} \tag{G.209}$$</div>
+    <p>Here $i\omega_j=i(2j+1)\pi k_BT/\hbar$ and $\sum_{\bk'}$ stands for $\Omega_{\rm BZ}^{-1}\int d\bk'$. They are solved self-consistently at each $T$; $T_c$ is the highest temperature with a nontrivial $\Delta_{n\bk}(i\omega_j)$, and real-axis gaps follow by analytic continuation. $Z_{n\bk}(i\omega_j)$ is the mass renormalization function; Giustino calls it analogous to $Z_{n\bk}$ of G Eq. (189), but in the normal state at low frequency it tends to $1+\lambda$, the inverse of that quasiparticle weight. Likewise $\lambda_{n\bk}$ of G Eq. (189) is a band velocity renormalization, not the Fermi-surface average $\lambda$ of (G.206).</p>
+  </div></details>
+
+  <p>In metals, both the Boltzmann equation (G.202) and the Eliashberg equations (G.208)–(G.209) couple states on, or near, the Fermi surface, and converging their zone integrals can take up to $10^6$ wave vectors. Besides Wannier interpolation (<a href="#a-polar">§A.4</a>), Giustino §VI.B reviews Allen's Fermi-surface harmonics. They trade three-dimensional zone integrals for one-dimensional energy integrals by expanding any state-resolved function as</p>
+  <div class="eq">$$ A_{n\bk}=\sum_L A_L(\varepsilon_{n\bk})\,\Phi_L(\bk), \tag{G.181}$$</div>
+  <p>with harmonics $\Phi_L(\bk)$ orthogonal on each constant-energy surface and normalized to the density of states $N(\varepsilon)$ (G Eq. 182). A linear system such as the linearized Boltzmann equation then becomes a small matrix problem in $L$ and $\varepsilon$, provided a few harmonics suffice. Allen built $\Phi_L$ from polynomials in the band velocity, without establishing that the set is complete. Eiguren and Gurtubay (2014) made the basis complete by defining the harmonics as eigenstates of a modified Helmholtz equation on the Fermi surface (G Eq. 184). Applications include the photoemission kink of YBa$_2$Cu$_3$O$_7$ and the Seebeck coefficient of Li. This is numerical machinery with no counterpart in EPP, and EPP needs none for it: its electrodynamic corrections live inside the light cone, $q\lesssim q_c\sim10^{-4}$ Å$^{-1}$, while Fermi-surface integrals sample $q$ up to $2k_{\rm F}$.</p>
+
+  <h3>Is the DFT vertex too weak?</h3>
+  <p>Combining G Eqs. (38), (142) and (143), the vertex is the bare electron–nucleus perturbation screened by the many-body, frequency-dependent electronic dielectric matrix (Giustino §XII):</p>
+  <div class="eq">$$ g_{mn\nu}(\bk,\bq)=\Big\langle u_{m\bk+\bq}\Big|\int d\br'\,\epsilon_{\rm e}^{-1}(\br,\br',\omega)\,\Delta_{\bq\nu}v^{\rm en}(\br')\Big|u_{n\bk}\Big\rangle_{\rm uc}. \tag{G.212}$$</div>
+  <p>DFPT replaces $\epsilon_{\rm e}$ by the static RPA+$xc$ screening $\epsilon^{{\rm H}xc}$ of G Eq. (54). With the DFT band-gap problem this overscreens, so $g$ comes out too small. The evidence is scattered but consistent: <i>GW</i> raises the matrix elements of the graphene and graphite $A_1'$ and $E_{2g}$ modes by almost 40%; PBE0 and <i>GW</i> raise $\lambda$ of C$_{60}$ by 42% and 48%; HSE triples $\lambda$ in Ba$_{1-x}$K$_x$BiO$_3$, bringing $T_c$ from (G.204) to 31 K against 32 K measured; PBE0 lifts the H$_3$S estimate from 201–217 K to 253–270 K; <i>GW</i> raises the zero-point gap renormalization of diamond by 40%, but by only about 5% in LiF, MgO and TiO$_2$. Not all properties suffer equally. The Allen–Heine renormalization carries two screened vertices and scales as $\epsilon_\infty^{-2}$, while adiabatic phonon frequencies carry screening only through a term scaling as $\epsilon_\infty^{-1/2}$; a 20% error in $\epsilon_\infty$ thus means about 40% in the band renormalization and 10% in the frequencies. For a <i>GW</i> practitioner, (G.212) contains the same $\epsilon^{-1}$ as $W$, and the "constant screening" scheme of Faber et al. (vary $G$ in a frozen-phonon calculation, keep $W$ fixed) reproduces full <i>GW</i> couplings within 10%.</p>
+  <div class="callout source"><p class="callout-title">Note on the source: Secs. X.B–XII</p><p>Giustino's semiclassical current lacks a factor $1/\Omega$; the relaxation-time statement after (G.203) needs the Pauli factors that $\Gamma$ already contains; (G.210) holds as printed only after time reversal and relabelling; and Sec. XII writes "underestimates" where its argument needs "overestimates". Details and corrected forms are in <a href="#z-errata">§Z.2</a>. One point matters for reading (G.209): it is written with the unrenormalized $N_{\rm F}V$, which with a finite Matsubara cutoff must be replaced by a cutoff-dependent $\mu^*$. That is what the Migdal–Eliashberg calculations Giustino reviews use: empirical in most, computed from the RPA screened interaction in Margine, Lambert and Giustino (2016).</p></div>
+
+  <div class="callout connect"><p class="callout-title">Bridge to EPP: transport and pairing are electrostatic</p><p>Every kernel in this chapter is built from Coulomb lines. The pairing interaction $\lambda-\mu^*$ is $-N_{\rm F}\langle W_{\rm e}+W_{\rm ph}\rangle$ on the Fermi surface, with the electronic part reduced by (Giustino's) retardation. EPP does not treat transport or pairing, but in its language both pieces are the longitudinal sector of one photon propagator dressed by electrons and ions, and EPP's screened vertex generalizes (G.212) from $\epsilon_{\rm e}^{-1}v$ to the electron-dressed propagator $D^{\rm e}$ (<a href="#b-frohlich">§B.8</a>). Transverse photon exchange would add current–current terms of relative order $(v_{\rm F}/c)^2$ (our estimate). For scattering, electrodynamic corrections live at $q\lesssim q_c=\sqrt{\epsilon_\infty}\,\omega_{\rm LO}/c\approx6\times10^{-5}$ Å$^{-1}$ in GaAs, far below the thermal wave vectors of carriers ($\approx0.02$ Å$^{-1}$ at 300 K), so mobilities and band renormalizations should stay electrostatic to excellent accuracy (<a href="#x-light-cone">§X.1</a>).</p></div>
+
+  <h3>What Part A assumed</h3>
+  <p>Four assumptions run through all nine chapters of Part A, and Part B relaxes each of them, at least in part:</p>
+  <ol>
+    <li><strong>One interaction.</strong> Every interaction line is built from the instantaneous, longitudinal Coulomb interaction $v(12)=v(\br_1,\br_2)\,\delta(t_1-t_2)$; even the lattice enters only as a second channel of the same screened interaction, $W=W_{\rm e}+W_{\rm ph}$ (<a href="#a-hedin-baym">§A.5</a>).</li>
+    <li><strong>One kind of retardation.</strong> The only delay is the frequency dependence of the screened interaction: electronic screening $\epsilon_{\rm e}(\omega)$, and the phonon propagator inside $W_{\rm ph}$, whose slow time scale makes $\mu^*$ small. The finite speed of light never appears.</li>
+    <li><strong>Classical light.</strong> Photons enter as an external field coupled to electrons through $\be\cdot\mathbf v$, as in (G.200); the refractive index is an input, and ions do not couple to light at all.</li>
+    <li><strong>Polar coupling by hand.</strong> The Fröhlich vertex and the LO–TO splitting are added analytically from $Z^*$ and $\epsilon^\infty$ computed separately (G Eq. 180, and the Gonze–Lee term that Giustino cites in §VI.A.3 but does not print, <a href="#a-polar">§A.4</a>).</li>
+  </ol>
+  <p>The Bridge (<a href="#x-light-cone">§X.1</a>) shows that the first two are the $c\to\infty$ limit of one electrodynamic theory, and that in it light becomes a propagator while matter, electronic and ionic alike, becomes a single self-energy.</p>
+</section>
+<script>
+(() => {
+  const kB = 0.0861733; // meV/K
+  const nB = (E, T) => (T > 0 ? 1 / Math.expm1(E / (kB * T)) : 0); // E in meV
+
+  // ---------- Feynman diagrams: the two paths of (G.200) ----------
+  (() => {
+    const host = document.getElementById('fd-a-applications-hbb');
+    if (!host) return;
+    const cross = (x, y) => [
+      { t: 'plain', a: [x - 6, y - 6], b: [x + 6, y + 6], color: 'photon', width: 2.2 },
+      { t: 'plain', a: [x - 6, y + 6], b: [x + 6, y - 6], color: 'photon', width: 2.2 },
+    ];
+    const base = (midLabel) => [
+      { t: 'fermion', a: [10, 112], b: [100, 112], label: 'nk', lpos: 'right', ldist: 16 },
+      { t: 'fermion', a: [100, 112], b: [200, 112], label: midLabel, lpos: 'right', ldist: 16 },
+      { t: 'fermion', a: [200, 112], b: [290, 112], label: 'm k+q', lpos: 'right', ldist: 16 },
+    ];
+    EPP.fd.draw(host.querySelector('.fd-a-applications-p1'), { w: 300, h: 150, label: 'Photon first: classical field absorbed at the first vertex, phonon emitted at the second', items: [
+      ...base('pk'),
+      { t: 'photon', a: [100, 30], b: [100, 112], amp: 3.4, wl: 9 },
+      ...cross(100, 30),
+      { t: 'text', at: [112, 36], text: 'classical A', anchor: 'start', color: 'photon', size: 13 },
+      { t: 'phonon', a: [200, 112], b: [258, 34], label: 'qν' },
+      { t: 'vertex', at: [100, 112] }, { t: 'vertex', at: [200, 112] },
+      { t: 'text', at: [94, 102], text: 'e·v', anchor: 'end', size: 12 },
+      { t: 'text', at: [194, 102], text: 'g', anchor: 'end', size: 13 },
+    ] });
+    EPP.fd.draw(host.querySelector('.fd-a-applications-p2'), { w: 300, h: 150, label: 'Phonon first: phonon emitted at the first vertex, classical field absorbed at the second', items: [
+      ...base('p k+q'),
+      { t: 'phonon', a: [100, 112], b: [158, 34], label: 'qν' },
+      { t: 'photon', a: [200, 30], b: [200, 112], amp: 3.4, wl: 9 },
+      ...cross(200, 30),
+      { t: 'text', at: [212, 36], text: 'classical A', anchor: 'start', color: 'photon', size: 13 },
+      { t: 'vertex', at: [100, 112] }, { t: 'vertex', at: [200, 112] },
+      { t: 'text', at: [94, 102], text: 'g', anchor: 'end', size: 13 },
+      { t: 'text', at: [194, 102], text: 'e·v', anchor: 'end', size: 12 },
+    ] });
+  })();
+
+  // ---------- Viz A: indirect absorption edge ----------
+  (() => {
+    const fig = document.getElementById('viz-a-applications-edge');
+    if (!fig) return;
+    const EGCN = 1.23, WEFF = 30, CPRE = 1.2e4, FLOOR = 1e-3;
+    const PH = [{ w: 57.8, wt: 1, name: 'TO' }, { w: 18.4, wt: 0.3, name: 'TA' }];
+    const gap = (T, st) => (st.ah ? EGCN - (st.zpr / 1000) * (1 + 2 * nB(WEFF, T)) : EGCN);
+    // returns [emission part, absorption part] in cm^-1
+    function alpha(E, T, eg) {
+      let em = 0, ab = 0;
+      for (const p of PH) {
+        const n = nB(p.w, T), hw = p.w / 1000, d1 = E - eg - hw, d2 = E - eg + hw;
+        if (d1 > 0) em += p.wt * (n + 1) * d1 * d1;
+        if (d2 > 0) ab += p.wt * n * d2 * d2;
+      }
+      return [CPRE / E * em, CPRE / E * ab];
+    }
+    const fmtN = (v) => (v < 1e-6 ? '< 10⁻⁶' : EPP.fmt(v, 3));
+    const fmtA = (v) => (v <= 1.01 * FLOOR ? '0' : EPP.fmt(v, 3) + ' cm⁻¹');
+    const pA = new EPP.Plot(fig.querySelector('.plotA'), {
+      xlabel: 'photon energy ħω (eV)', ylabel: 'α (cm^{-1})', xlim: [0.85, 2.0], ylim: [1e-2, 1e5], logy: true,
+      xname: 'ħω (eV)', hoverX: (v) => v.toFixed(3), hoverY: fmtA,
+      ariaLabel: 'Absorption coefficient versus photon energy on a logarithmic scale',
+    });
+    const pB = new EPP.Plot(fig.querySelector('.plotB'), {
+      xlabel: 'photon energy ħω (eV)', ylabel: '√α (cm^{-1/2})', xlim: [0.88, 1.36], ylim: [0, 40],
+      xname: 'ħω (eV)', hoverX: (v) => v.toFixed(3), hoverY: (v) => v.toFixed(2),
+      ariaLabel: 'Square root of the absorption coefficient near the edge, split into phonon emission and absorption parts',
+    });
+    const ro = EPP.readout(fig.querySelector('.ro'));
+    const xA = EPP.linspace(0.85, 2.0, 921), xB = EPP.linspace(0.88, 1.36, 961);
+    function draw(st) {
+      const T = st.T, eg = gap(T, st), eg78 = gap(78, st);
+      const yT = xA.map((E) => { const a = alpha(E, T, eg); return Math.max(a[0] + a[1], FLOOR); });
+      const y78 = xA.map((E) => { const a = alpha(E, 78, eg78); return Math.max(a[0] + a[1], FLOOR); });
+      pA.draw([
+        { type: 'vline', at: eg, color: 'muted', dash: [2, 3], text: 'E_g(T)' },
+        { type: 'line', x: xA, y: y78, color: 'muted', dash: [6, 4], label: 'α at 78 K' },
+        { type: 'line', x: xA, y: yT, color: 'photon', label: `α at ${T.toFixed(0)} K` },
+      ]);
+      const parts = xB.map((E) => alpha(E, T, eg));
+      const sTot = parts.map((a) => Math.sqrt(a[0] + a[1]));
+      const layersB = [];
+      // thresholds E_g -/+ hbar omega_nu, coloured like the part that switches on there
+      for (const p of PH) {
+        layersB.push({ type: 'vline', at: eg - p.w / 1000, color: 'c5', dash: [2, 3], width: 1 });
+        layersB.push({ type: 'vline', at: eg + p.w / 1000, color: 'phonon', dash: [2, 3], width: 1 });
+      }
+      layersB.push({ type: 'vline', at: eg, color: 'muted', dash: [5, 4], width: 1.4, text: 'E_g(T)' });
+      if (st.parts) {
+        layersB.push({ type: 'line', x: xB, y: parts.map((a) => Math.sqrt(a[1])), color: 'c5', dash: [2, 3], label: 'phonon absorption (s = −1)' });
+        layersB.push({ type: 'line', x: xB, y: parts.map((a) => Math.sqrt(a[0])), color: 'phonon', dash: [7, 4], label: 'phonon emission (s = +1)' });
+      }
+      layersB.push({ type: 'line', x: xB, y: sTot, color: 'photon', label: 'total' });
+      pB.draw(layersB);
+      const aEg = alpha(eg, T, eg);
+      const a15 = alpha(1.5, T, eg);
+      ro.set({
+        'E_g(T)': eg.toFixed(3) + ' eV',
+        'n_{TO}': fmtN(nB(PH[0].w, T)),
+        'n_{TA}': fmtN(nB(PH[1].w, T)),
+        'α(ħω = E_g)': (aEg[0] + aEg[1] < 1e-4 ? '0' : EPP.fmt(aEg[0] + aEg[1], 3)) + ' cm⁻¹',
+        'α(1.5 eV)': EPP.fmt(a15[0] + a15[1], 3) + ' cm⁻¹',
+      });
+    }
+    EPP.controls(fig.querySelector('.ctrls'), [
+      { key: 'T', type: 'range', label: 'temperature T', min: 4, max: 600, step: 1, value: 296, fmt: (v) => v.toFixed(0) + ' K' },
+      { key: 'zpr', type: 'range', label: 'zero-point shift |ΔE_g^{ZP}|', min: 0, max: 80, step: 1, value: 60, fmt: (v) => v.toFixed(0) + ' meV' },
+      { key: 'ah', type: 'toggle', label: 'Allen–Heine gap E_g(T) in the δ function', value: true },
+      { key: 'parts', type: 'toggle', label: 'show emission and absorption parts', value: true },
+    ], draw);
+  })();
+
+  // ---------- Viz B: alpha^2F -> lambda, omega_log, Tc ----------
+  (() => {
+    const fig = document.getElementById('viz-a-applications-tc');
+    if (!fig) return;
+    // peaks: [omega_i (meV), lambda_i, sigma_i (meV)]; literature-inspired, illustrative
+    const PRE = {
+      Al: { p: [[20, 0.25, 3], [37, 0.18, 2.5]], x: 50, Tc: 1.18 },
+      Pb: { p: [[4.4, 0.9, 0.6], [8.5, 0.65, 1.1]], x: 12, Tc: 7.2 },
+      MgB2: { p: [[65, 0.6, 5], [35, 0.1, 6], [90, 0.03, 5]], x: 110, Tc: 39 },
+      H3S: { p: [[30, 0.5, 6], [120, 1.0, 12], [170, 0.6, 10]], x: 210, Tc: 200 },
+    };
+    const NW = 800, SQ2PI = Math.sqrt(2 * Math.PI);
+    function spectrum(pre, s) {
+      const w = new Array(NW), a = new Array(NW);
+      for (let i = 0; i < NW; i++) {
+        const x = pre.x * (i + 1) / NW; let v = 0;
+        for (const [wi, li, si] of pre.p) v += (li * wi / 2) * Math.exp(-0.5 * ((x - wi) / si) ** 2) / (si * SQ2PI);
+        w[i] = x; a[i] = s * v;
+      }
+      // moments by the trapezoid rule; the integrand vanishes at omega -> 0
+      let lam = 0, lg = 0, m2 = 0; const cum = new Array(NW); cum[0] = 0;
+      for (let i = 1; i < NW; i++) {
+        const h = w[i] - w[i - 1];
+        const f1 = a[i] / w[i], f0 = a[i - 1] / w[i - 1];
+        lam += h * (f1 + f0); cum[i] = lam;
+        lg += h * (f1 * Math.log(w[i]) + f0 * Math.log(w[i - 1]));
+        m2 += h * (a[i] * w[i] + a[i - 1] * w[i - 1]);
+      }
+      // lam = 2 * trapz(a/w) since trapz carries a factor 1/2
+      const wlog = lam > 0 ? Math.exp(lg / lam) : NaN, wbar2 = lam > 0 ? Math.sqrt(m2 / lam) : NaN;
+      return { w, a, cum, lam, wlog, wbar2 };
+    }
+    function Tc(lam, wlog, mu, f12, wbar2) {
+      const den = lam - mu * (1 + 0.62 * lam);
+      if (!(den > 0) || !isFinite(wlog)) return 0;
+      let t = (wlog / kB / 1.2) * Math.exp(-1.04 * (1 + lam) / den);
+      if (f12) {
+        const L1 = 2.46 * (1 + 3.8 * mu), r = wbar2 / wlog, L2 = 1.82 * (1 + 6.3 * mu) * r;
+        const f1 = Math.cbrt(1 + Math.pow(lam / L1, 1.5)), f2 = 1 + (r - 1) * lam * lam / (lam * lam + L2 * L2);
+        t *= f1 * f2;
+      }
+      return t;
+    }
+    const pA = new EPP.Plot(fig.querySelector('.plotA'), {
+      xlabel: 'phonon energy ħω (meV)', ylabel: 'α^2F(ω), λ(ω)', xlim: [0, 50], ylim: [0, 1],
+      xname: 'ħω (meV)', hoverX: (v) => v.toFixed(1), hoverY: (v) => v.toFixed(3),
+      ariaLabel: 'Eliashberg function and cumulative coupling strength versus phonon energy',
+    });
+    const pB = new EPP.Plot(fig.querySelector('.plotB'), {
+      xlabel: 'Coulomb pseudopotential μ^*', ylabel: 'T_c (K)', xlim: [0, 0.25], ylim: [1e-2, 1e3], logy: true,
+      xname: 'μ^*', hoverX: (v) => v.toFixed(3), hoverY: (v) => EPP.fmt(v, 3) + ' K',
+      ariaLabel: 'Critical temperature from the McMillan-Allen-Dynes formula versus the Coulomb pseudopotential',
+    });
+    const ro = EPP.readout(fig.querySelector('.ro'));
+    const MU = EPP.linspace(0, 0.25, 251);
+    let lastKey = '', ymax = 1;
+    function draw(st) {
+      const pre = PRE[st.preset], s = st.s;
+      if (st.preset !== lastKey) {
+        const ref = spectrum(pre, 1);
+        ymax = 2.1 * Math.max(Math.max(...ref.a), ref.lam); // room for the |g|^2 scale up to 2
+        lastKey = st.preset;
+      }
+      const sp = spectrum(pre, s), ref = spectrum(pre, 1);
+      const T = (mu, spec, f12) => { const t = Tc(spec.lam, spec.wlog, mu, f12, spec.wbar2); return t > 1e-3 ? t : NaN; };
+      const cumY = sp.cum.slice();
+      pA.draw([
+        { type: 'fill', x: sp.w, y1: sp.a, color: 'phonon', alpha: 0.22 },
+        { type: 'line', x: sp.w, y: sp.a, color: 'phonon', label: 'α^2F(ω)' },
+        { type: 'line', x: sp.w, y: cumY, color: 'electron', dash: [7, 4], label: 'λ(ω) = 2∫α^2F/ω' },
+        { type: 'vline', at: sp.wlog, color: 'muted', text: 'ω_{log}' },
+      ], { xlim: [0, pre.x], ylim: [0, ymax] });
+      const layersB = [
+        { type: 'band', x0: 0.1, x1: 0.2, color: 'muted', alpha: 0.08, text: 'usual μ^* range' },
+        { type: 'hline', at: pre.Tc, color: 'c5', dash: [3, 3], text: 'measured (lit.)' },
+      ];
+      if (Math.abs(s - 1) > 1e-9 || st.f12) layersB.push({ type: 'line', x: MU, y: MU.map((m) => T(m, ref, false)), color: 'muted', dash: [6, 4], label: '(G.204), |g|^2 × 1' });
+      layersB.push({ type: 'line', x: MU, y: MU.map((m) => T(m, sp, st.f12)), color: 'electron', label: st.f12 ? 'T_c, Allen–Dynes (G.204) × f_1f_2' : 'T_c, McMillan–Allen–Dynes (G.204)' });
+      const tc = Tc(sp.lam, sp.wlog, st.mu, st.f12, sp.wbar2);
+      if (tc > 1e-2) layersB.push({ type: 'points', x: [st.mu], y: [tc], color: 'electron', r: 4.5 });
+      pB.draw(layersB);
+      const lc = st.mu / (1 - 0.62 * st.mu);
+      ro.set({
+        'λ': sp.lam.toFixed(3),
+        'ω_{log}': `${sp.wlog.toFixed(1)} meV (${(sp.wlog / kB).toFixed(0)} K)`,
+        'T_c': tc > 1e-3 ? EPP.fmt(tc, 3) + ' K' : '0',
+        'λ_{crit}': lc.toFixed(3),
+        '1+λ': (1 + sp.lam).toFixed(2),
+      });
+    }
+    EPP.controls(fig.querySelector('.ctrls'), [
+      { key: 'preset', type: 'select', label: 'material (illustrative)', options: [['Al', 'Al'], ['Pb', 'Pb'], ['MgB2', 'MgB₂ (isotropic)'], ['H3S', 'H₃S']], value: 'Al' },
+      { key: 'mu', type: 'range', label: 'μ^*', min: 0.05, max: 0.25, step: 0.005, value: 0.12, fmt: (v) => v.toFixed(3) },
+      { key: 's', type: 'range', label: '|g|^2 scale (e.g. DFT → GW)', min: 0.5, max: 2, step: 0.05, value: 1, fmt: (v) => '×' + v.toFixed(2) },
+      { key: 'f12', type: 'toggle', label: 'Allen–Dynes f_1f_2 (not in G.204)', value: false },
+    ], draw);
+  })();
+})();
+</script>

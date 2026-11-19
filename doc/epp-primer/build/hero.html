@@ -1,0 +1,131 @@
+<header class="hero" id="top">
+  <p class="kicker">Interactive lecture notes · condensed-matter theory</p>
+  <h1><span class="e">Electrons</span>, <span class="p">phonons</span> and <span class="g">photons</span> in crystals</h1>
+  <p class="lede">A guided path from the first-principles electron–phonon theory reviewed by Giustino (2017) to the electron–phonon–photon (EPP) formalism. EPP puts the full electromagnetic field, transverse photons included, on the same footing as the lattice. Every section pairs the theory with figures you can drive.</p>
+
+  <figure class="viz" id="viz-hero-vertex">
+    <p class="viz-title">One vertex, two pictures <span class="tag">interactive</span></p>
+    <div class="hero-vertex">
+      <figure class="hv-panel">
+        <div class="fd hv-fd" id="hero-fd-g"></div>
+        <figcaption><strong>Part A · Giustino.</strong> An electron scatters from $n\bk$ to $m\,\bk{+}\bq$ by emitting or absorbing a phonon $\bq\nu$. The vertex $g_{mn\nu}(\bk,\bq)$ is a number computed with DFPT. All the Coulomb physics, including the long-range Fröhlich field of polar crystals, is folded into it.</figcaption>
+      </figure>
+      <figure class="hv-panel">
+        <div class="fd hv-fd" id="hero-fd-epp"></div>
+        <figcaption id="hero-epp-cap"></figcaption>
+      </figure>
+    </div>
+    <div class="hv-ctrls"></div>
+  </figure>
+
+  <div class="legend-strip" id="hero-legend" aria-label="Line conventions used in every diagram on this page"></div>
+
+  <div class="hero-road">
+    <a class="road" href="#part-a"><span class="road-k">Part A</span><span class="road-t">Electron–phonon theory</span><span class="road-d">Lattice dynamics, the coupling $g$, DFPT, polar materials, Hedin–Baym, self-energies, temperature effects, optics, transport, superconductivity.</span></a>
+    <a class="road" href="#part-x"><span class="road-k">Bridge</span><span class="road-t">Coulomb is the longitudinal photon</span><span class="road-d">What Part A assumes, what Part B replaces, the light cone, and a dictionary between the two formalisms.</span></a>
+    <a class="road" href="#part-b"><span class="road-k">Part B</span><span class="road-t">The EPP formalism</span><span class="road-d">One Lagrangian, quantized fields, the photon self-energy, the total propagator, phonons dressed by photons, the electrodynamic Fröhlich vertex, and 2D crystals.</span></a>
+  </div>
+
+  <h2 class="sub">Reading paths</h2>
+  <div class="paths">
+    <div class="path">
+      <p class="path-t">Quick tour</p>
+      <p class="path-d">The whole argument in six stops: what Giustino folds into $g$, where the lattice sits in $W$, and how EPP turns Coulomb into a photon.</p>
+      <ol>
+        <li><a href="#a-coupling">A.2</a> Eq. (1) hides every Coulomb effect in <span style="white-space:nowrap">$\varepsilon$,</span> $\omega$ and $g$.</li>
+        <li><a href="#a-hedin-baym">A.5</a> The lattice as a second channel of the screened interaction, $W=W_{\rm e}+W_{\rm ph}$.</li>
+        <li><a href="#x-light-cone">X.1</a> Coulomb is the longitudinal photon, and the light cone is tiny.</li>
+        <li><a href="#b-propagator">B.6</a> Charge conservation gives one Dyson equation, $D=D^0+D^0\Pi_{jj}D$.</li>
+        <li><a href="#b-electrostatic">B.9</a> Send $c\to\infty$ and Giustino's formulas return.</li>
+        <li><a href="#z-outlook">Z.1</a> What EPP adds, where it matters, what is open.</li>
+      </ol>
+    </div>
+    <div class="path">
+      <p class="path-t">For RPA, GW and BSE users</p>
+      <p class="path-d">Start from the $W$ your code already builds and follow it into the lattice, the photon field and 2D sheets. Keep the <a href="#x-dictionary">X.2</a> dictionary open for symbols and units.</p>
+      <ol>
+        <li><a href="#a-dfpt">A.3</a> DFPT screens $g$ with your <span style="white-space:nowrap">$\epsilon=1-v\chi^0$,</span> plus $f^{xc}$.</li>
+        <li><a href="#a-hedin-baym">A.5</a> Your $W$ is $W_{\rm e}$; the phonons add $W_{\rm ph}$.</li>
+        <li><a href="#x-light-cone">X.1</a> Why GW and BSE may stay electrostatic, and where optics may not.</li>
+        <li><a href="#b-dielectric">B.3</a> $\epsilon(\omega)$ of a polar crystal: which screening an exciton sees.</li>
+        <li><a href="#b-photon-se">B.5</a> Adler–Wiser with current vertices, and the diamagnetic term.</li>
+        <li><a href="#b-propagator">B.6</a> $\chi^0$ as the longitudinal projection of <span style="white-space:nowrap">$\Pi_{jj}$;</span> length versus velocity gauge.</li>
+        <li><a href="#b-2d">B.10</a> The Keldysh $r_0$ of your excitons also sets the 2D LO dispersion.</li>
+      </ol>
+    </div>
+    <div class="path">
+      <p class="path-t">The full EPP derivation</p>
+      <p class="path-d">Part B in order, each step paired with the Giustino section it generalizes. Read <a href="#a-lattice">A.1</a> and <a href="#a-polar">A.4</a>–<a href="#a-phonon-se">A.6</a> first. The issues in the draft met along the way are collected in <a href="#z-errata">Z.2</a>, and the three that change equations are corrected in <a href="#z-corrections">Z.3</a>.</p>
+      <ol>
+        <li><a href="#b-foundations">B.1</a> Lattice, bare vertex, static polar vertex (<a href="#a-lattice">A.1</a>, <a href="#a-polar">A.4</a>).</li>
+        <li><a href="#b-lagrangian">B.2</a> One Lagrangian with no electron–phonon term (<a href="#a-coupling">A.2</a>).</li>
+        <li><a href="#b-dielectric">B.3</a> The polar crystal as a classical dielectric (<a href="#a-polar">A.4</a>).</li>
+        <li><a href="#b-fields">B.4</a> Quantized photons; Coulomb's law from Gauss's law (<a href="#a-hedin-baym">A.5</a>).</li>
+        <li><a href="#b-photon-se">B.5</a> Free propagators and the RPA photon self-energy (<a href="#a-dfpt">A.3</a>).</li>
+        <li><a href="#b-propagator">B.6</a> Connection formulas and the total propagator (<a href="#a-hedin-baym">A.5</a>).</li>
+        <li><a href="#b-phonon-se">B.7</a> Phonons dressed by photons; the order of limits (<a href="#a-phonon-se">A.6</a>).</li>
+        <li><a href="#b-frohlich">B.8</a> The dynamical Fröhlich vertex (<a href="#a-polar">A.4</a>, <a href="#a-phonon-se">A.6</a>).</li>
+        <li><a href="#b-electrostatic">B.9</a> $c\to\infty$: $W_{\rm e}$, Gonze–Lee, plasmon–phonon modes (<a href="#a-hedin-baym">A.5</a>).</li>
+        <li><a href="#b-2d">B.10</a> Polar sheets: no LO–TO splitting at Γ.</li>
+      </ol>
+    </div>
+  </div>
+
+  <ul class="sources">
+    <li><strong>Giustino 2017:</strong> F. Giustino, “Electron-phonon interactions from first principles”, <a href="https://doi.org/10.1103/RevModPhys.89.015003">Rev. Mod. Phys. 89, 015003 (2017)</a>. Equation tags such as (G.38) give Giustino’s equation numbers.</li>
+    <li><strong>EPP manuscript:</strong> “Theory of the Electron-Phonon-Photon coupling” (102-page draft). Tags such as (E.375) give its equation numbers.</li>
+    <li><strong>Notes:</strong> Typos in either source are flagged in grey “Note on the source” boxes and collected in <a href="#z-errata">Z.2</a>; three issues in the EPP draft that change equations are corrected in <a href="#z-corrections">Z.3</a>, and the page uses the corrected forms. Material parameters that neither paper prints are literature values, used for illustration; figure captions mark them.</li>
+  </ul>
+</header>
+<script>
+(() => {
+  // line legend shared by all diagrams
+  const leg = document.getElementById('hero-legend');
+  const items = [
+    ['fermion', 'electron (G)'], ['phonon', 'phonon (𝒟, F)'], ['photon', 'transverse photon (D^t)'],
+    ['coulomb', 'Coulomb = longitudinal photon (v, D^l)'], ['screened', 'screened Coulomb (W)']
+  ];
+  items.forEach(([t, lab]) => {
+    const span = document.createElement('span');
+    EPP.fd.draw(span, { w: 40, h: 14, label: lab, items: [{ t, a: [3, 7], b: [37, 7], arrow: t === 'fermion', amp: 2.6, wl: 7 }] });
+    span.appendChild(document.createTextNode(lab.replace(/\^t/, 'ᵗ').replace(/\^l/, 'ˡ')));
+    leg.appendChild(span);
+  });
+
+  // Giustino: one screened vertex g
+  EPP.fd.draw(document.getElementById('hero-fd-g'), { w: 260, h: 180, label: 'Electron-phonon vertex g', items: [
+    { t: 'fermion', a: [20, 60], b: [130, 60], label: 'nk' },
+    { t: 'fermion', a: [130, 60], b: [240, 60], label: 'm k+q' },
+    { t: 'phonon', a: [130, 60], b: [130, 160], label: 'qν', lpos: 'right' },
+    { t: 'blob', at: [130, 60], r: 13, label: 'g', color: 'muted' },
+  ]});
+
+  // EPP: photon exchange between an electronic current vertex and an ionic current vertex
+  const host = document.getElementById('hero-fd-epp'), cap = document.getElementById('hero-epp-cap');
+  const caps = {
+    full: '<strong>Part B · EPP.</strong> No electron–phonon term appears in the EPP Lagrangian. The electron couples to the field through its current vertex $J^{\\rm e}$, and the phonon through the Born-charge current vertex $J$ of the ions. The screened photon $D^{\\rm e}$ carries the interaction, longitudinal and transverse parts together. The result is a frequency-dependent vertex $g^{\\rm dyn}=iJ^{*}D^{\\rm e}J^{\\rm e}$ (<a href="#b-frohlich">§B.8</a>).',
+    static: '<strong>Part B, with $c\\to\\infty$.</strong> Only the longitudinal (Coulomb) part of the photon survives, $D^{\\rm e}\\to-\\frac{c}{\\omega^2}\\bq\\bq\\,W^{\\rm e}$. Once the charge $e$ that the draft loses in its continuity equation is restored (<a href="#z-corrections">§Z.3</a>), the vertex reduces to the complex conjugate of the Verdi–Giustino long-range vertex, with $\\epsilon^\\infty$ replaced by the dynamical RPA tensor $\\hat\\epsilon^{\\rm e}(\\bq,\\omega)$, as derived in <a href="#b-frohlich">§B.8</a>. This is how Part A is recovered: <a href="#b-electrostatic">§B.9</a> takes the whole theory to this limit and returns Giustino\'s formulas.'
+  };
+  let mode = 'full';
+  const draw = () => {
+    host.innerHTML = '';
+    const ph = mode === 'full' ? 'photon2' : 'screened';
+    EPP.fd.draw(host, { w: 260, h: 180, label: mode === 'full' ? 'EPP vertex: photon exchange' : 'EPP vertex in the electrostatic limit', items: [
+      { t: 'fermion', a: [20, 40], b: [110, 40], label: 'nk' },
+      { t: 'fermion', a: [110, 40], b: [240, 40], label: 'm k+q' },
+      { t: ph, a: [110, 40], b: [110, 120], label: mode === 'full' ? 'D^e' : 'W^e', lpos: 'right', wl: 10 },
+      { t: 'phonon', a: [110, 120], b: [230, 160], label: 'σ', lpos: 'right' },
+      { t: 'vertex', at: [110, 40], r: 4.5, color: 'electron' },
+      { t: 'vertex', at: [110, 120], r: 4.5, color: 'phonon' },
+      { t: 'text', at: [96, 32], text: 'J^e', anchor: 'end', size: 13, color: 'electron-t' },
+      { t: 'text', at: [96, 136], text: 'J', anchor: 'end', size: 13, color: 'phonon-t' },
+    ]});
+    cap.innerHTML = caps[mode];
+    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([cap]).catch(() => {});
+  };
+  EPP.controls(document.querySelector('#viz-hero-vertex .hv-ctrls'), [
+    { key: 'mode', type: 'seg', label: 'Speed of light', options: [['full', 'finite c (full EPP)'], ['static', 'c → ∞ (electrostatic limit)']], value: 'full' }
+  ], (st) => { if (st.mode !== mode || !host.firstChild) { mode = st.mode; draw(); } });
+  draw();
+})();
+</script>

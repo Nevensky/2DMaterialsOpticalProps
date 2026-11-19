@@ -1,0 +1,280 @@
+  <figure class="viz" id="viz-a2-bardeen">
+    <p class="viz-title">From Bloch to Bardeen: screening the electron–ion vertex <span class="tag">interactive</span></p>
+    <div class="legend a2-bardeen-leg" style="margin:0 0 8px">
+      <span class="item" style="color:var(--muted)"><span class="sw dot"></span><span style="color:var(--fg-2)">Bloch: constant $V_0$</span></span>
+      <span class="item" style="color:var(--c-5)"><span class="sw"></span><span style="color:var(--fg-2)">Nordheim: bare ion</span></span>
+      <span class="item" style="color:var(--fg)"><span class="sw dash" style="border-top-width:1.6px"></span><span style="color:var(--fg-2)">Mott–Jones: Wigner–Seitz cut</span></span>
+      <span class="item" style="color:var(--c-4)"><span class="sw dash"></span><span style="color:var(--fg-2)">Thomas–Fermi</span></span>
+      <span class="item" style="color:var(--c-electron)"><span class="sw" style="border-top-width:3.2px"></span><span style="color:var(--fg-2)">Bardeen: Lindhard</span></span>
+    </div>
+    <div class="viz-grid two"><div class="a2-bardeen-pot"></div><div class="a2-bardeen-g"></div></div>
+    <div class="a2-bardeen-ctrls"></div>
+    <div class="readout a2-bardeen-ro" aria-live="polite"><span>$k_{\mathrm F}$<b class="a2-bardeen-v-kF"></b></span><span>$k_{\mathrm{TF}}$<b class="a2-bardeen-v-kTF"></b></span><span>$E_{\mathrm F}$<b class="a2-bardeen-v-EF"></b></span><span>$\OV$<b class="a2-bardeen-v-OV"></b></span><span>$q_{\mathrm D}/k_{\mathrm F}$<b class="a2-bardeen-v-qD"></b></span><span>$v_{\mathrm s}/v_{\mathrm F}$<b class="a2-bardeen-v-u"></b></span></div>
+    <div class="readout a2-bardeen-ro2" aria-live="polite"><span>$-\frac23E_{\mathrm F}$<b class="a2-bardeen-v-lim"></b></span><span>Mott–Jones, $q\to0$<b class="a2-bardeen-v-mj"></b></span><span>$|g|$ at $q=k_{\mathrm F}/2$<b class="a2-bardeen-v-g"></b></span><span>$\mathrm{Im}\,\varepsilon^{\mathrm e}/\mathrm{Re}\,\varepsilon^{\mathrm e}$ at $q=k_{\mathrm F}$ <span class="nw">(Bardeen–Pines)</span><b class="a2-bardeen-v-bp"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> Nordheim's bare ion gives <span class="nw">$|g|\propto q^{-3/2}$,</span> which diverges at long wavelengths; any potential that stays finite at $q=0$ gives <span class="nw">$|g|\propto q^{1/2}$.</span> Thomas–Fermi and Lindhard screening both reach $-\frac23E_{\mathrm F}$ as <span class="nw">$q\to0$,</span> while the Mott–Jones cut stays several times deeper (readout).</p><div class="cap-more"><p><strong>Marks.</strong> Both panels share the legend's line styles. In (a) the dashed line is the limit <a class="eqref" href="#a2-eq-limit">(A2.27)</a> and the vertical line marks <span class="nw">$q=2k_{\mathrm F}$;</span> the bare and cut ions leave the frame at small <span class="nw">$q$.</span> Bloch's constant is drawn negative, although only $|V_0|$ enters <span class="nw">$|g|$.</span> In (b), log–log, the dots at $q=k_{\mathrm F}/2$ are the readout values; beyond $q_{\mathrm D}$ (shaded) the Debye model is unreliable.</p><p><strong>Try.</strong> Choose K: Bloch's 1.70 eV comes close to <span class="nw">$\frac23E_{\mathrm F}=1.41$ eV.</span> The Lindhard curve kinks slightly at <span class="nw">$2k_{\mathrm F}$,</span> the seed of the Kohn anomaly (Section A.6). Raise <span class="nw">$v_{\mathrm s}$:</span> every coupling falls as <span class="nw">$v_{\mathrm s}^{-1/2}$,</span> through the zero-point amplitude. Read the last readout: for acoustic phonons dynamic screening is a $10^{-3}$ effect.</p><p><strong>Model.</strong> Jellium with one point ion of valence $Z$ and mass $M$ per cell ($Z_\kappa$, $M_\kappa$ in the text): <span class="nw">$k_{\mathrm F}a_0=1.919/r_{\mathrm s}$,</span> <span class="nw">$k_{\mathrm{TF}}^2=4k_{\mathrm F}/\pi a_0$,</span> <span class="nw">$\OV=Z\frac{4\pi}3(r_{\mathrm s}a_0)^3$.</span> Panel (a) shows the potential per cell that replaces <span class="nw">$V_0$:</span> the bare ion <span class="nw">$-4\pi Ze^2/(\OV q^2)$,</span> the same times $1-\cos qR_{\mathrm{WS}}$ (Mott–Jones), and the ion screened by <a class="eqref" href="#a2-eq-tf">(A2.24)</a> or <a class="eqref" href="#a2-eq-lindhard">(A2.25)</a>. Panel (b) evaluates <a class="eqref" href="#a2-eq-bloch1929">(A2.23)</a> and <a class="eqref" href="#a2-eq-bardeen">(A2.26)</a> for a longitudinal Debye phonon, <span class="nw">$\omega_q=v_{\mathrm s}q$;</span> the last readout evaluates the dynamic Lindhard function of <a class="eqref" href="#a2-eq-pines">(A2.28)</a> at <span class="nw">$\omega=v_{\mathrm s}k_{\mathrm F}$.</span> No umklapp, no exchange and correlation. Presets for Al, Na, K: <span class="nw">$r_{\mathrm s}=2.07$,</span> 3.93, 4.86; <span class="nw">$Z=3$,</span> 1, 1; <span class="nw">$M=26.98$,</span> 22.99, 39.10 amu; <span class="nw">$v_{\mathrm s}=6400$,</span> 3200, 2000 m/s (literature values, illustrative).</p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a2-bardeen');
+  if (!fig || !window.EPP) return;
+  // outside Section A.2 (the isolated figure test) the links to the section's equations have no target: show their text
+  if (!fig.closest('#a-coupling')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+  // ---------- constants ----------
+  // Bohr radius a_0 (Å); Rydberg ħ²/2m_e a_0² (eV); e² in Gaussian units (eV Å); ħ in meV per (m/s · Å⁻¹);
+  // ħ/2Mω = ZP Å² / (M[amu] · ħω[meV]); Bohr velocity ħ/m_e a_0 (m/s); Bloch's constant ħ²/16m_e a_0² (eV)
+  const A0 = 0.529177, RY = 13.605693, E2 = 14.3996, HBV = 6.582119569e-3, ZP = 2.0901, VBOHR = 2.18769e6, V0B = 27.211386 / 16;
+  const NB = '\u00a0';
+
+  // ---------- physics ----------
+  // Lindhard function F_L(x), x = q/2k_F, (A2.25); F_L(0) = 1, F_L(1) = 1/2
+  const FL = (x) => {
+    if (x < 1e-4) return 1 - x * x / 3;
+    if (Math.abs(x - 1) < 1e-9) return 0.5;
+    return 0.5 + (1 - x * x) / (4 * x) * Math.log(Math.abs((1 + x) / (1 - x)));
+  };
+  // dynamic Lindhard function at T = 0, (A2.28): z = q/2k_F, u = ω/(q v_F), kq2 = (k_TF/q)² -> [Re ε^e, Im ε^e]
+  const epsDyn = (z, u, kq2) => {
+    const L = (y) => (Math.abs(Math.abs(y) - 1) < 1e-12 ? 0 : (1 - y * y) / (8 * z) * Math.log(Math.abs((y + 1) / (y - 1))));
+    const re = 1 + kq2 * (0.5 + L(z - u) + L(z + u));
+    let im = 0;
+    if (z + u < 1) im = kq2 * Math.PI * u / 2;
+    else if (Math.abs(z - u) < 1) im = kq2 * Math.PI / (8 * z) * (1 - (z - u) * (z - u));
+    return [re, im];
+  };
+  // jellium with Z electrons per cell at density parameter r_s (lengths in Å, energies in eV)
+  const jellium = (rs, Z) => {
+    const kFa0 = 1.91916 / rs, kF = kFa0 / A0, EF = kFa0 * kFa0 * RY;     // n_0 = k_F³/3π², E_F = ħ²k_F²/2m_e
+    const kTF = Math.sqrt(4 * kFa0 / Math.PI) / A0;                      // k_TF² = 4k_F/πa_0
+    const OV = Z * 4 * Math.PI / 3 * Math.pow(rs * A0, 3);               // Ω_V = Z/n_0
+    const RWS = Math.cbrt(Z) * rs * A0;                                  // (4π/3) R_WS³ = Ω_V
+    return { Z, kF, EF, kTF, OV, RWS, qD: Math.cbrt(6 * Math.PI * Math.PI / OV), vF: kFa0 * VBOHR };
+  };
+  // the potential per cell that replaces V_0 in (A2.23), in eV, as a function of q (Å⁻¹)
+  const models = (J) => {
+    const VN = (q) => -4 * Math.PI * J.Z * E2 / (J.OV * q * q);          // bare ion V_κ(q)/Ω_V (Nordheim)
+    return {
+      bloch: () => -V0B,                                                 // Bloch's constant, drawn negative
+      nord: VN,
+      mj: (q) => { const s = Math.sin(q * J.RWS / 2); return VN(q) * 2 * s * s; },          // × [1 − cos qR_WS]
+      tf: (q) => VN(q) / (1 + (J.kTF / q) * (J.kTF / q)),                                   // / ε^e of (A2.24)
+      lind: (q) => VN(q) / (1 + (J.kTF / q) * (J.kTF / q) * FL(q / (2 * J.kF))),            // / ε^e of (A2.25): (A2.26)
+    };
+  };
+  // |g| in meV for a longitudinal Debye phonon ω = v_s q, (A2.23): (ħ/2Mω)^{1/2} q |V_0(q)|, with no N_ℓ
+  const gOf = (V, q, M, vs) => { const hw = HBV * vs * q; return 1e3 * Math.sqrt(ZP / (M * hw)) * q * Math.abs(V); };
+
+  // series: same styles in both panels and in the legend of the markup
+  const SER = [
+    { k: 'bloch', name: 'Bloch', color: 'muted', dash: [2, 3], width: 2 },
+    { k: 'nord', name: 'Nordheim', color: 'c5', width: 2 },
+    { k: 'mj', name: 'Mott–Jones', color: 'ink', dash: [8, 4], width: 1.6 },
+    { k: 'tf', name: 'Thomas–Fermi', color: 'c4', dash: [5, 3], width: 2 },
+    { k: 'lind', name: 'Lindhard', color: 'electron', width: 2.6 },
+  ];
+  const DRAW = [0, 1, 2, 4, 3].map(i => SER[i]);
+  const XA = EPP.linspace(0.004, 3, 700);                                                  // q/k_F, panel (a)
+  const XB = EPP.linspace(Math.log10(0.02), Math.log10(3), 420).map(t => Math.pow(10, t)); // q/k_F, panel (b), log grid
+
+  function compute(s) {
+    const Z = +s.Z || 1, J = jellium(s.rs, Z), m = models(J);
+    const M = Math.max(1, s.M), vs = Math.max(100, s.vs);
+    const yA = {}, yB = {};
+    SER.forEach(S => {
+      yA[S.k] = XA.map(x => m[S.k](x * J.kF));
+      yB[S.k] = XB.map(x => gOf(m[S.k](x * J.kF), x * J.kF, M, vs));
+    });
+    const gAt = (k, x) => gOf(m[k](x * J.kF), x * J.kF, M, vs);
+    // Bardeen–Pines check at q = k_F (z = 1/2), ω = v_s k_F (u = v_s/v_F)
+    const u = vs / J.vF, eps = epsDyn(0.5, u, Math.pow(J.kTF / J.kF, 2));
+    const lim = -2 / 3 * J.EF, mj0 = -1.5 * Z * E2 / J.RWS;               // (A2.27); Mott–Jones at q -> 0
+    return {
+      J, Z, M, vs, yA, yB, lim, mj0, u, bp: eps[1] / eps[0], xD: J.qD / J.kF,
+      gL: gAt('lind', 0.5), gN: gAt('nord', 0.5),
+      // heights of the slope labels of (b): above the bare curve, below the finite-V_0 curves
+      yN: EPP.clamp(gAt('nord', 0.3) * 4, 3, 6e4),
+      yS: EPP.clamp(Math.min(gAt('lind', 0.045), gAt('bloch', 0.045)) * 0.32, 1.4, 3e4),
+    };
+  }
+
+  // ---------- formatting ----------
+  const SUP = { '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹', '-': '⁻' };
+  const sci = (v, d = 1) => {
+    if (!isFinite(v) || v === 0) return '0';
+    let e = Math.floor(Math.log10(Math.abs(v))), mt = v / Math.pow(10, e);
+    if (Math.abs(+mt.toFixed(d)) >= 10) { mt /= 10; e += 1; }
+    return `${EPP.fix(mt, d)}${NB}×${NB}10${String(e).split('').map(c => SUP[c]).join('')}`;
+  };
+  const gfmt = (v) => (v >= 999.5 ? `${EPP.fix(v / 1e3, 2)}${NB}eV` : `${Math.round(v)}${NB}meV`);
+
+  // ---------- canvas text: '$...$' marks math, where letters are italic; _x, ^x as in EPP.drawRich ----------
+  // write '$k$_F' for an italic k with an upright label F
+  const ITAL = /[A-Za-zα-ωℓħ]/;
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const part of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: part.t, m: part.m, it: false }); continue; }
+        let buf = '', it = null;
+        for (const ch of part.t) { const k = ITAL.test(ch); if (it !== null && k !== it) { out.push({ t: buf, m: part.m, it }); buf = ''; } buf += ch; it = k; }
+        if (buf) out.push({ t: buf, m: part.m, it });
+      }
+    });
+    return out;
+  }
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, fam = EPP.css('--font-ui'), rs = runs(s);
+    const font = (r) => `${r.it ? 'italic ' : ''}${r.m ? Math.round(size * 0.72) : size}px ${fam}`;
+    const ws = rs.map(r => { ctx.font = font(r); return ctx.measureText(r.t).width; });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    const xs = [], x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    rs.reduce((xx, r, k) => { xs.push(xx); return xx + ws[k]; }, x0);
+    const dy = (r) => (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0));
+    ctx.textAlign = 'left';
+    // o.halo: a knockout in the panel colour keeps a label legible where a curve passes under it
+    if (o.halo) {
+      ctx.save(); ctx.strokeStyle = EPP.color('surface'); ctx.lineWidth = 3.5; ctx.lineJoin = 'round'; ctx.setLineDash([]);
+      rs.forEach((r, k) => { ctx.font = font(r); ctx.strokeText(r.t, xs[k], y + dy(r)); });
+      ctx.restore();
+    }
+    if (o.color) ctx.fillStyle = o.color;
+    rs.forEach((r, k) => { ctx.font = font(r); ctx.fillText(r.t, xs[k], y + dy(r)); });
+    return tot;
+  }
+  const tw = (ctx, s, size) => txt(ctx, s, 0, 0, { size, measure: true });
+  // panel title in the top margin, with a shorter fallback when the panel is narrow
+  function title(P, long, short) {
+    const ctx = P.ctx, w = P.cv.w;
+    txt(ctx, tw(ctx, long, 11.5) <= w - 8 ? long : short, 4, 15, { size: 11.5, color: EPP.color('fg2') });
+  }
+  function axes(P, ylab) {
+    const ctx = P.ctx, w = P.cv.w, h = P.cv.h, m = P.m, cFg = EPP.color('fg');
+    txt(ctx, '$q$/$k$_F', m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    ctx.save(); ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, ylab, 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+  }
+
+  // ---------- panels ----------
+  const MARGIN = { t: 26, l: 58, r: 14, b: 44 };
+  const pA = new EPP.Plot(fig.querySelector('.a2-bardeen-pot'), {
+    xlim: [0, 3], ylim: [-12, 1], aspect: 0.74, maxHeight: 380, legend: false, margin: MARGIN,
+    xname: 'q/k_F', hoverX: v => EPP.fix(v, 2), hoverY: v => EPP.fix(v, 2) + ' eV',
+    ariaLabel: 'Panel a: potential per cell V0 in eV against q/kF for the five models',
+  });
+  const pB = new EPP.Plot(fig.querySelector('.a2-bardeen-g'), {
+    xlim: [0.02, 3], ylim: [1, 1e5], logx: true, logy: true, aspect: 0.74, maxHeight: 380, legend: false, margin: MARGIN,
+    xname: 'q/k_F', hoverX: v => EPP.fix(v, 3), hoverY: v => EPP.fmt(v, 3) + ' meV',
+    xticks: [0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 3].map(v => ({ v, label: String(v) })),
+    yticks: [[1, '1'], [10, '10'], [100, '10^2'], [1e3, '10^3'], [1e4, '10^4'], [1e5, '10^5']].map(([v, label]) => ({ v, label })),
+    ariaLabel: 'Panel b: coupling |g| in meV against q/kF on logarithmic axes for the five models',
+  });
+  let cur = null;
+
+  const baseA = pA.render.bind(pA);
+  pA.render = () => {
+    baseA();
+    const ctx = pA.ctx, w = pA.cv.w, h = pA.cv.h, m = pA.m;
+    if (!w || !h) return;
+    ctx.save(); ctx.textBaseline = 'alphabetic';
+    title(pA, '(a) potential per cell $V$_0($q$)', '(a) $V$_0($q$)');
+    axes(pA, '$V$_0($q$) (eV)');
+    if (cur) {
+      // −⅔E_F at the right end of its line (its value is in the readout), on the side away from Bloch's constant;
+      // 2k_F at the top, left of its line: the screened curves have flattened there, and the Mott–Jones
+      // curve peaks to the right of the line
+      const Yl = pA.Y(cur.lim), below = -V0B > cur.lim;
+      txt(ctx, '−⅔$E$_F', w - m.r - 6, below ? Yl + 14 : Yl - 5, { size: 11, color: EPP.textColor('electron'), align: 'right', halo: true });
+      txt(ctx, '2$k$_F', pA.X(2) - 5, m.t + 13, { size: 11, color: EPP.color('muted'), align: 'right', halo: true });
+    }
+    ctx.restore();
+  };
+  const baseB = pB.render.bind(pB);
+  pB.render = () => {
+    baseB();
+    const ctx = pB.ctx, w = pB.cv.w, h = pB.cv.h, m = pB.m;
+    if (!w || !h) return;
+    ctx.save(); ctx.textBaseline = 'alphabetic';
+    title(pB, '(b) coupling |$g$($q$)| to longitudinal sound', '(b) |$g$($q$)|');
+    axes(pB, '|$g$($q$)| (meV)');
+    if (cur) {
+      const cMuted = EPP.color('muted');
+      txt(ctx, '$q$ > $q$_D', (pB.X(Math.max(cur.xD, 0.02)) + pB.X(3)) / 2, m.t + 13, { size: 11, color: cMuted, align: 'center' });
+      // slope labels: the bare one above its curve but below the row of the q > q_D label, the other below the finite-V_0 curves
+      txt(ctx, '∝ $q$^{−3/2} (bare)', pB.X(0.3), Math.max(pB.Y(cur.yN), m.t + 28), { size: 11.5, color: EPP.textColor('c5'), halo: true });
+      txt(ctx, '∝ $q$^{1/2} (finite $V$_0)', pB.X(0.045), pB.Y(cur.yS), { size: 11.5, color: cMuted, halo: true });
+    }
+    ctx.restore();
+  };
+
+  // readout keys are static MathJax in the markup; only the values change
+  const roV = {};
+  ['kF', 'kTF', 'EF', 'OV', 'qD', 'u', 'lim', 'mj', 'g', 'bp'].forEach(k => { roV[k] = fig.querySelector('.a2-bardeen-v-' + k); });
+
+  function draw() {
+    if (!cur) return;
+    const c = cur, J = c.J;
+    // Thomas–Fermi (dashed) is drawn over the thick Lindhard line, so both show where they coincide
+    const lines = (Y) => DRAW.map(S => ({ type: 'line', x: Y === c.yA ? XA : XB, y: Y[S.k], color: S.color, dash: S.dash, width: S.width, label: S.name }));
+    pA.draw([
+      { type: 'vline', at: 2, color: 'muted', width: 1 },
+      { type: 'hline', at: c.lim, color: 'electron', dash: [3, 3], width: 1.2 },
+      ...lines(c.yA),
+    ], { ylim: [-1.6 * J.EF, 0.14 * J.EF] });
+    pB.draw([
+      { type: 'band', x0: Math.min(c.xD, 3), x1: 3, color: 'muted', alpha: 0.12 },
+      ...lines(c.yB),
+      { type: 'points', x: [0.5], y: [c.gN], color: 'c5', r: 4 },
+      { type: 'points', x: [0.5], y: [c.gL], color: 'electron', r: 4 },
+    ]);
+    const met = ui.state.preset ? `${ui.state.preset}-like jellium` : 'jellium';
+    pA.cv.canvas.setAttribute('aria-label', `Panel a: potential per cell V0(q) in eV against q/kF for ${met}, rs = ${EPP.fix(ui.state.rs, 2)}, Z = ${c.Z}. ` +
+      `Bloch's constant −1.70 eV; Nordheim's bare ion, which diverges as q → 0; the Mott–Jones cut ion, which tends to ${EPP.fix(c.mj0, 1)} eV; and the Thomas–Fermi and Lindhard screened ions, which tend to −2/3 EF = ${EPP.fix(c.lim, 2)} eV.`);
+    pB.cv.canvas.setAttribute('aria-label', `Panel b: coupling |g| in meV against q/kF, log–log, for ${met}. The bare ion falls as q^(−3/2); the finite potentials rise as q^(1/2). ` +
+      `At q = kF/2: Lindhard ${gfmt(c.gL)}, bare ion ${gfmt(c.gN)}. Beyond qD = ${EPP.fix(c.xD, 2)} kF the Debye model is unreliable.`);
+    roV.kF.textContent = `${EPP.fix(J.kF, 3)}${NB}Å⁻¹`;
+    roV.kTF.textContent = `${EPP.fix(J.kTF, 3)}${NB}Å⁻¹`;
+    roV.EF.textContent = `${EPP.fix(J.EF, 2)}${NB}eV`;
+    roV.OV.textContent = `${EPP.fix(J.OV, 1)}${NB}Å³`;
+    roV.qD.textContent = EPP.fix(c.xD, 3);
+    roV.u.textContent = sci(c.u, 1);
+    roV.lim.textContent = `${EPP.fix(c.lim, 2)}${NB}eV`;
+    roV.mj.textContent = `${EPP.fix(c.mj0, 1)}${NB}eV (${EPP.fix(c.mj0 / c.lim, 1)}${NB}times${NB}deeper)`;
+    roV.g.textContent = `${gfmt(c.gL)}${NB}(Lindhard), ${gfmt(c.gN)}${NB}(bare${NB}ion)`;
+    roV.bp.textContent = sci(c.bp, 1);
+  }
+
+  // ---------- controls ----------
+  const P = { Al: { rs: 2.07, Z: '3', M: 26.98, vs: 6400 }, Na: { rs: 3.93, Z: '1', M: 22.99, vs: 3200 }, K: { rs: 4.86, Z: '1', M: 39.10, vs: 2000 } };
+  let last = {};
+  const elCtl = fig.querySelector('.a2-bardeen-ctrls');
+  const ui = EPP.controls(elCtl, [
+    { key: 'preset', type: 'seg', label: 'metal preset', options: [['Al', 'Al'], ['Na', 'Na'], ['K', 'K']], value: 'Al' },
+    { key: 'rs', type: 'range', label: 'density r_s', min: 1.5, max: 6, step: 0.01, value: 2.07, fmt: v => v.toFixed(2) },
+    { key: 'Z', type: 'seg', label: 'valence Z', options: [['1', '1'], ['2', '2'], ['3', '3'], ['4', '4']], value: '3' },
+    { key: 'M', type: 'range', label: 'ion mass M', min: 5, max: 210, step: 0.01, value: 26.98, fmt: v => (v < 100 ? v.toFixed(2) : v.toFixed(1)) + ' amu' },
+    { key: 'vs', type: 'range', label: 'sound velocity v_s', min: 1000, max: 8000, step: 50, value: 6400, fmt: v => v.toFixed(0) + ' m/s' },
+  ], (s) => {
+    // a preset sets all four sliders; moving any of them afterwards clears the preset
+    if (s.preset && s.preset !== last.preset && P[s.preset]) {
+      const p = P[s.preset];
+      ui.set('rs', p.rs, true); ui.set('Z', p.Z, true); ui.set('M', p.M, true); ui.set('vs', p.vs, true);
+    } else if (s.preset && (s.rs !== last.rs || s.Z !== last.Z || s.M !== last.M || s.vs !== last.vs)) {
+      ui.set('preset', '', true);
+    }
+    last = Object.assign({}, s);
+    cur = compute(s);
+    draw();
+  });
+  // control labels: symbols in italic, as in the text; units of r_s in the label
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const LAB = { rs: `density ${I('r')}<sub>s</sub> (in ${I('a')}<sub>0</sub>)`, M: `ion mass ${I('M')}`, vs: `sound velocity ${I('v')}<sub>s</sub>` };
+  Object.keys(LAB).forEach(k => { const sp = elCtl.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  const zLab = document.getElementById(`${fig.id}-Z-1`);
+  const zSpan = zLab && zLab.closest('.ctrl').querySelector('.lab > span');
+  if (zSpan) zSpan.innerHTML = `valence ${I('Z')}`;
+})();
+</script>

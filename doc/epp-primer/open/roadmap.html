@@ -1,0 +1,683 @@
+<style>
+/* Research roadmap: one centred reading column with the primer's side gutter. Tokens, base styles and the
+   MathJax macros come from primer v2's head; this block adds the roadmap's own classes and overrides. */
+.roadmap-page {
+  box-sizing: content-box;
+  max-width: 760px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-bottom: max(56px, env(safe-area-inset-bottom, 0px));
+}
+.roadmap-page .hero { padding-block: 44px 4px; }
+.roadmap-page .hero .lede { margin-bottom: 14px; }
+.rm-links { font-family: var(--font-ui); font-size: 0.95rem; line-height: 1.45; color: var(--fg-2); margin: 0 0 10px; }
+.rm-key { font-family: var(--font-ui); font-size: 0.88rem; line-height: 1.5; color: var(--muted); margin: 0; max-width: 76ch; }
+.rm-key + .rm-key { margin-top: 8px; }
+.chapter p.rm-key { margin: 10px 0 0; max-width: 76ch; }
+.chapter p.rm-key + p { margin-top: 16px; }
+.roadmap-page .chapter { margin-top: 56px; }
+.roadmap-page .ch-head { margin-bottom: 12px; }
+.roadmap-page .ch-head h2 { margin-bottom: 6px; }
+.roadmap-page .chapter h3 { font-size: 1.12rem; margin: 26px 0 6px; }
+.roadmap-page .intro { color: var(--fg-2); }
+.roadmap-page .chapter ul > li, .roadmap-page .chapter ol > li { margin-bottom: 7px; }
+.chapter p.rm-pre { font-family: var(--font-ui); font-size: 0.86rem; line-height: 1.5; color: var(--muted); margin: 0 0 10px; }
+
+/* level pills: the level is the word AND the number of filled bars, never colour alone */
+.lvl { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-ui); font-size: 0.8rem; font-weight: 500; line-height: 1.25; color: var(--fg-2); background: var(--surface); border: 1px solid var(--rule); border-radius: 999px; padding: 2px 9px 2px 7px; white-space: nowrap; vertical-align: middle; }
+.lvl .bars { display: inline-flex; align-items: flex-end; gap: 2px; height: 11px; }
+.lvl .bars i { display: block; width: 4px; box-sizing: border-box; border: 1px solid currentColor; border-radius: 1px; }
+.lvl .bars i:nth-child(1) { height: 5px; }
+.lvl .bars i:nth-child(2) { height: 8px; }
+.lvl .bars i:nth-child(3) { height: 11px; }
+.lvl-1 .bars i:nth-child(1), .lvl-2 .bars i:nth-child(-n+2), .lvl-3 .bars i { background: currentColor; }
+.chapter p.rm-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-family: var(--font-ui); font-size: 0.82rem; color: var(--muted); margin: 10px 0 0; max-width: none; }
+
+/* overview table: wide on large screens, one card per topic below 1120 px */
+.rm-ov table { min-width: 0; table-layout: fixed; }
+.rm-ov td { font-size: 0.9rem; line-height: 1.45; }
+.rm-ov th:nth-child(1) { width: 12%; }
+.rm-ov th:nth-child(2) { width: 22%; }
+.rm-ov th:nth-child(3) { width: 24%; }
+.rm-ov th:nth-child(4), .rm-ov th:nth-child(5) { width: 10%; }
+.rm-ov th:nth-child(6) { width: 22%; }
+.rm-ov th:nth-child(4), .rm-ov th:nth-child(5), .rm-ov td:nth-child(4), .rm-ov td:nth-child(5) { padding-left: 8px; padding-right: 8px; }
+.rm-ov td:first-child a { text-decoration: none; }
+.rm-ov td:first-child a:hover { text-decoration: underline; }
+/* the v2 head clips main sideways (overflow-x: clip); the widened table needs it visible */
+@media (min-width: 1120px) { .rm-ov { margin-left: -150px; margin-right: -150px; } .roadmap-page main { overflow-x: visible; } }
+@media (max-width: 1119px) {
+  .rm-ov table { table-layout: auto; }
+  .rm-ov thead { display: none; }
+  .rm-ov tr { display: block; padding: 12px 14px; border-bottom: 1px solid var(--rule); }
+  .rm-ov tbody tr:last-child { border-bottom: 0; }
+  .rm-ov td, .rm-ov td:first-child { display: block; width: auto; padding: 2px 0; border: 0; position: static; box-shadow: none; background: none; }
+  .rm-ov td:first-child { font-size: 1rem; }
+  .rm-ov td:nth-child(4), .rm-ov td:nth-child(5) { display: inline-block; padding: 8px 18px 2px 0; }
+  .rm-ov td[data-l]::before { content: attr(data-l); display: block; font-family: var(--font-ui); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+  .rm-ov td:nth-child(4)::before, .rm-ov td:nth-child(5)::before { display: inline; margin: 0 8px 0 0; }
+}
+@media (max-width: 560px) { .rm-ov td:nth-child(4), .rm-ov td:nth-child(5) { display: block; padding: 6px 0 0; } }
+
+/* small data tables; the phases table becomes cards on phones */
+.rm-small table { min-width: 0; }
+.rm-small th, .rm-small td { padding: 6px 10px; }
+.rm-theta { width: fit-content; max-width: 100%; }
+.rm-theta table { width: auto; }
+.rm-theta td, .rm-theta th { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.rm-theta td:first-child, .rm-theta th:first-child { text-align: left; }
+@media (max-width: 640px) {
+  .rm-cards thead { display: none; }
+  .rm-cards tr { display: block; padding: 10px 12px; border-bottom: 1px solid var(--rule); }
+  .rm-cards tbody tr:last-child { border-bottom: 0; }
+  .rm-cards td, .rm-cards td:first-child { display: block; width: auto; padding: 2px 0; border: 0; position: static; box-shadow: none; background: none; }
+  .rm-cards td[data-l]::before { content: attr(data-l); display: block; font-family: var(--font-ui); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+}
+
+/* dependency figure: inline SVG styled with the page tokens */
+.rm-dep svg.dep { display: block; width: 100%; max-width: 460px; height: auto; margin: 2px auto 0; font-family: var(--font-ui); }
+.dep .dep-box { fill: var(--surface-2); stroke: var(--muted); stroke-width: 1.2; }
+.dep a { outline: none; }
+.dep a:hover .dep-box, .dep a:focus-visible .dep-box { stroke: var(--accent); stroke-width: 2.4; }
+.dep text { fill: var(--fg); font-size: 15.5px; text-anchor: middle; }
+.dep .dep-n { fill: var(--accent); font-family: var(--font-mono); font-weight: 500; }
+.dep .dep-e { fill: none; stroke: var(--muted); stroke-width: 1.5; stroke-linejoin: round; }
+.dep .dep-gap { fill: none; stroke: var(--surface); stroke-width: 7; }
+.dep .dep-head { fill: var(--muted); }
+@media (max-width: 420px) { .dep text { font-size: 17px; } }
+
+/* labelled display equations: the tag says what the equation is; dashed rule = proposal, solid = derived */
+.eqp { border-left: 2px dashed var(--muted); padding: 2px 0 0 12px; margin: 10px 0 16px; }
+.eqp.derived { border-left-style: solid; border-left-color: var(--rule); }
+.chapter p.eqp-tag { display: inline-block; font-family: var(--font-ui); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--rule); border-radius: 8px; padding: 0 8px; margin: 0; max-width: none; }
+.eqp-tag .nt { text-transform: none; letter-spacing: 0.04em; }
+.eqp .eq { margin: 2px 0 4px; }
+
+/* first steps (numbered as v2's ol.steps), references, note path */
+.roadmap-page ol.steps > li { max-width: 68ch; }
+.chapter ol.refs { font-size: 0.9rem; line-height: 1.5; color: var(--fg-2); padding-left: 1.6em; }
+.chapter ol.refs > li { margin-bottom: 5px; }
+ol.refs a { overflow-wrap: anywhere; }
+.chapter p.rm-refnote { font-size: 0.86rem; color: var(--muted); margin: -6px 0 10px; }
+.chapter p.note-path { font-family: var(--font-ui); font-size: 0.86rem; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 8px; margin-top: 20px; max-width: none; }
+.note-path code { font-family: var(--font-mono); font-size: 0.8rem; color: var(--fg-2); overflow-wrap: anywhere; }
+
+.rm-foot { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--rule); font-size: 0.92rem; color: var(--fg-2); }
+.rm-foot p { margin: 0 0 8px; max-width: 72ch; }
+</style>
+
+<header class="hero" id="top">
+  <p class="kicker">Research roadmap · Electron–phonon–photon primer, second edition</p>
+  <h1><span class="e">Electrons</span>, <span class="p">phonons</span> and <span class="g">photons</span>: seven open topics</h1>
+  <p class="lede">Seven topics remain open in the EPP formalism, from excitons in the photon self-energy to plasmon–phonon hybrids and ordered phases. The table rates each by impact on 2D optics and by difficulty and names a first step; each section says what is missing, why it matters, how it could enter EPP and where to start. EPP today is a normal-state theory of three bosonic propagators (field, electron-dressed field, phonons) with an RPA electron bubble and Born-charge ions. Equations tagged “proposal” are sketches, not derived results.</p>
+  <p class="rm-links">Full primer, with derivations and interactive figures: <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid" target="_blank" rel="noopener">Electron–Phonon–Photon Primer, second edition (v2)</a> · Executive summary: <a href="https://claude.ai/artifact/NKQhxaW5bTGHL2vzWHbbno" target="_blank" rel="noopener">Electron–Phonon–Photon Brief</a></p>
+  <p class="rm-key">Notation and units follow the <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#c-conventions" target="_blank" rel="noopener">conventions</a> of the primer's second edition: Gaussian units with $e\gt0$ and with $\hbar$ and $c$ explicit, upright labels, $\OV$ and $\OS$ for the cell volume and area. Tags such as (E.454) and (G.157) number equations in the EPP manuscript (draft v2) and in Giustino's review; tags such as (B9.18) number equations of the primer. The primer builds three corrections to the draft into its Part B and states each in a footnote: the basis phase of the Born-dipole vertex (<a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#fn-b1-polar" target="_blank" rel="noopener">§B.1</a>, <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#fn-b2-site" target="_blank" rel="noopener">§B.2</a>, <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#fn-b5-jion" target="_blank" rel="noopener">§B.5</a>), the reading of E.410 (<a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#fn-b7-410" target="_blank" rel="noopener">§B.7</a>) and the factor $e$ in the continuity equation (<a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#fn-b6-efactor" target="_blank" rel="noopener">§B.6</a>, <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#fn-b8-continuity" target="_blank" rel="noopener">§B.8</a>). Part B follows the draft in order, and its footnotes give the draft's equation numbers: <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-foundations" target="_blank" rel="noopener">§B.1</a> 1–131, <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-lagrangian" target="_blank" rel="noopener">§B.2</a> 132–143, <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-dielectric" target="_blank" rel="noopener">§B.3</a> 144–165, <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-fields" target="_blank" rel="noopener">§B.4</a> 166–237, <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-photon-se" target="_blank" rel="noopener">§B.5</a> 246–311, <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-propagator" target="_blank" rel="noopener">§B.6</a> 312–385, <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-phonon-se" target="_blank" rel="noopener">§B.7</a> 386–410, <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-frohlich" target="_blank" rel="noopener">§B.8</a> 411–432, <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-electrostatic" target="_blank" rel="noopener">§B.9</a> 433–454, <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-2d" target="_blank" rel="noopener">§B.10</a> 455–472.</p>
+  <p class="rm-key">“Derived in the note” marks algebra done for the research notes from EPP's equations, still to be checked independently; a dashed left rule marks a proposal, a solid one an equation derived in the note. Numbers marked illustrative are model or order-of-magnitude values, mostly the primer's presets, not computed results.</p>
+</header>
+
+<section class="chapter" id="roadmap-overview">
+  <header class="ch-head"><h2>The seven topics at a glance</h2></header>
+  <p class="intro">Topics 1 to 6 run from what sits closest to an RPA, GW or BSE optics code (optics, 2D sheets, anisotropy), through the electron and lattice ingredients those results need (self-energies, short-range coupling), to the most distant topic (ordered phases); the numbers follow closeness to your code, not the order of work. Topic 7, the free carriers of doped crystals, was added last; by the same measure it sits between topics 5 and 6. The table rates each topic and the paragraph below it suggests where to start.</p>
+  <div class="tbl rm-ov"><table>
+    <thead><tr><th>Topic</th><th>What is missing</th><th>Why it matters</th><th>Impact on 2D optics</th><th>Difficulty</th><th>First step</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><a href="#open-optics">1 · Optics beyond RPA</a></td>
+        <td data-l="What is missing">$\Pi^{\rme}$ is an RPA bubble without local fields, $f^{\mathrm{xc}}$ or an electron–hole ladder: no excitons.</td>
+        <td data-l="Why it matters">Monolayer WS₂ has an exciton binding energy of 0.32 eV (Chernikov et al. 2014); an RPA bubble misses the peaks that carry the oscillator strength.</td>
+        <td data-l="Impact"><span class="lvl lvl-3"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>high</span></td>
+        <td data-l="Difficulty"><span class="lvl lvl-2"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>medium</span></td>
+        <td data-l="First step">Write the photon-irreducible BSE as $\Pi^{\rme}$ with all prefactors and measure the length–velocity mismatch of your $G_0W_0$+BSE (1–2 weeks).</td>
+      </tr>
+      <tr>
+        <td><a href="#open-twod">2 · 2D beyond in-plane modes</a></td>
+        <td data-l="What is missing">One planar, freestanding, electrostatic sheet: no out-of-plane dipoles, atomic heights, environment or electrodynamic 2D vertex.</td>
+        <td data-l="Why it matters">The phonon kernel is your $W$: the illustrative hBN LO slope of 0.245 eV Å falls to 0.054 eV Å for a hypothetical non-dispersive $\varepsilon_{\mathrm{env}}=4.5$ (scaling only).</td>
+        <td data-l="Impact"><span class="lvl lvl-3"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>high</span></td>
+        <td data-l="Difficulty"><span class="lvl lvl-2"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>medium</span></td>
+        <td data-l="First step">Extend the sheet propagator of §B.10 to all components and heights, recover its 0.245 eV Å and 42 μeV, add the ZO branch (days).</td>
+      </tr>
+      <tr>
+        <td><a href="#open-aniso">3 · Anisotropy and hBN</a></td>
+        <td data-l="What is missing">Tensor equations, isotropic evaluation: no L–T mixing, Fresnel dispersion or hyperbolic bands at finite $c$.</td>
+        <td data-l="Why it matters">hBN's effective environment $\sqrt{\varepsilon_{xx}\varepsilon_{zz}}$ is 4.74 below its 97–200 meV phonon window and 3.79 above it, about 25% apart; inside its two Reststrahlen bands $\varepsilon_{xx}\varepsilon_{zz}\lt0$, so no real $\varepsilon_{\mathrm{env}}$ exists there (derived in the note).</td>
+        <td data-l="Impact"><span class="lvl lvl-2"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>medium</span></td>
+        <td data-l="Difficulty"><span class="lvl lvl-1"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>low</span></td>
+        <td data-l="First step">Put $\boldsymbol\varepsilon^{\ion}(\omega)$ into the uniaxial propagator of §B.9 and recover the oblique LO modes of bulk hBN that §A.4 plots (1–3 days).</td>
+      </tr>
+      <tr>
+        <td><a href="#open-selfenergy">4 · Electron self-energies</a></td>
+        <td data-l="What is missing">No electron Dyson equation: no Fan–Migdal or Debye–Waller term, zero-point renormalization or lifetimes.</td>
+        <td data-l="Why it matters">Diamond's direct-gap zero-point renormalization is 628 meV with $GW$-corrected couplings (Antonius et al. 2014): a clamped-nuclei gap can agree by accident.</td>
+        <td data-l="Impact"><span class="lvl lvl-2"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>medium</span></td>
+        <td data-l="Difficulty"><span class="lvl lvl-2"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>medium</span></td>
+        <td data-l="First step">Derive the self-energy with photon exchange and check that $c\to\infty$ returns Giustino's Fan–Migdal self-energy (G.157) with §B.8's screened polar vertex (1–2 weeks).</td>
+      </tr>
+      <tr>
+        <td><a href="#open-shortrange">5 · Short-range coupling</a></td>
+        <td data-l="What is missing">A frozen crystal potential and Born dipoles only: no deformation potential, no quadrupoles.</td>
+        <td data-l="Why it matters">With $Z^*=0$ (Si, graphene) the coupling vanishes, and in MoS₂ the 2D dipole vertex drops to 0.17–0.29 of its long-wavelength value at the wavevectors of 300 K carriers and optical-phonon emission, 0.06–0.12 Å⁻¹ (derived, illustrative $r_0$).</td>
+        <td data-l="Impact"><span class="lvl lvl-3"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>high</span></td>
+        <td data-l="Difficulty"><span class="lvl lvl-3"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>high</span></td>
+        <td data-l="First step">Checks that can fail, in 3D zincblende: current continuity, cell-independent acoustic vertex, the Martin relation (clamped-ion piezoelectric constant = sum of dynamical quadrupoles), long-range force constants against anaddb (days).</td>
+      </tr>
+      <tr>
+        <td><a href="#open-phases">6 · Ordered phases</a></td>
+        <td data-l="What is missing">No fermion propagator with anomalous parts; the static RPA lattice self-energy only hardens phonons.</td>
+        <td data-l="Why it matters">SrTiO₃ superconducts with $E_{\mathrm F}\approx1.1$ meV (Lin et al. 2013), far below its polar phonons, where EPP's dynamically screened coupling is the natural language.</td>
+        <td data-l="Impact"><span class="lvl lvl-1"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>low</span></td>
+        <td data-l="Difficulty"><span class="lvl lvl-3"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>high</span></td>
+        <td data-l="First step">Write EPP's vertices in Nambu form and reduce the pairing kernel to Eliashberg theory (G.208–G.210) with the long-range (Fröhlich) vertex $|g^{\mathrm{lr}}|^2$ (1–2 weeks).</td>
+      </tr>
+      <tr>
+        <td><a href="#open-plasmon">7 · Plasmon–phonon hybrids</a></td>
+        <td data-l="What is missing">E.453 keeps the dynamic $W^{\rme}(\bq,\omega)$, but EPP stops at the static E.454: no plasmon, no coupled LO-phonon–plasmon modes, no carrier model or damping.</td>
+        <td data-l="Why it matters">In n-GaAs the plasmon crosses the LO phonon near $7\times10^{17}$ cm⁻³; static screening removes the LO–TO splitting below $k_{\mathrm{TF}}/\sqrt{\varepsilon_\infty}$, while Raman sees the coupled modes, which Lihm and Park (2024) reproduce from first principles.</td>
+        <td data-l="Impact"><span class="lvl lvl-2"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>medium</span></td>
+        <td data-l="Difficulty"><span class="lvl lvl-1"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>low</span></td>
+        <td data-l="First step">Rebuild Lihm and Park's plasmon–phonon matrix from (B9.8) and recover (B9.18) and (B9.19) (days), then their GaAs dispersion at 300 K.</td>
+      </tr>
+    </tbody>
+  </table></div>
+  <p class="rm-key"><strong>Impact</strong>: how much closing the gap would change a 2D optics calculation (high: it changes peak positions or widths you compute today; medium: corrections, or specific materials; low: outside linear optics). <strong>Difficulty</strong>: how much new theory is needed before code can be written (low: the algebra is done in the note; medium: new diagrams from EPP's existing Lagrangian, still to derive and check, as in topics 1, 2 and 4; high: the Lagrangian must change, as for short-range coupling, or a new kind of propagator is needed, the anomalous Nambu $G$). Both ratings are this page's judgments, based on the notes; the notes themselves do not rate the topics.</p>
+  <p><strong>Where to start.</strong> Three steps run in your own RPA, $GW$ or BSE code and need no theory beyond the notes: $\varepsilon_{\mathrm M}(\hat\bq)$ along the a and c axes and at 45° with and without local fields (<a href="#open-aniso">topic 3</a>, step 2, 1–2 weeks); $r_0$ from BSE, RPA and RPA without local fields, plus length versus velocity gauge, for monolayer hBN and encapsulated MoS₂ (<a href="#open-optics">topic 1</a>, step 2, 1–2 weeks); and the $\bG_\parallel=0$ block of your truncated $W$ projected on atomic heights (<a href="#open-twod">topic 2</a>, step 3, 2–4 weeks). A head-only lattice $W^{\ph}$ in the same code follows once its prefactors are derived (<a href="#open-selfenergy">topic 4</a>, steps 1 and 3), and a doped sheet once the plasmon–phonon matrix is (<a href="#open-plasmon">topic 7</a>, step 4). The quickest model steps are the sheet propagator (topic 2, days), the bulk-hBN model (topic 3, 1–3 days) and the plasmon–phonon matrix (topic 7, days). Topic 5 has high impact but needs DFPT inputs and new Lagrangian terms; topic 6 is furthest from optics.</p>
+
+  <figure class="viz rm-dep" id="viz-roadmap-deps">
+    <p class="viz-title">Which topics build on which</p>
+    <svg class="dep" viewBox="0 0 400 448" role="img" aria-labelledby="rm-dep-title rm-dep-desc">
+      <title id="rm-dep-title">Dependencies between the seven open topics</title>
+      <desc id="rm-dep-desc">Short-range coupling feeds electron self-energies, optics and ordered phases. Anisotropy feeds 2D beyond in-plane modes. Electron self-energies feed optics, plasmon–phonon hybrids and ordered phases. 2D beyond in-plane modes feeds optics, plasmon–phonon hybrids and ordered phases. Optics feeds ordered phases. Plasmon–phonon hybrids feed ordered phases.</desc>
+      <defs>
+        <marker id="rm-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dep-head" d="M0,0 L10,5 L0,10 z"/></marker>
+      </defs>
+      <g>
+        <path class="dep-e" d="M105,54 V101" marker-end="url(#rm-arrow)"/>
+        <path class="dep-e" d="M295,54 V101" marker-end="url(#rm-arrow)"/>
+        <path class="dep-e" d="M180,31 H200 V197" marker-end="url(#rm-arrow)"/>
+        <path class="dep-e" d="M150,150 L163,197" marker-end="url(#rm-arrow)"/>
+        <path class="dep-e" d="M250,150 L237,197" marker-end="url(#rm-arrow)"/>
+        <path class="dep-e" d="M340,150 V293" marker-end="url(#rm-arrow)"/>
+        <path class="dep-e" d="M160,246 V389" marker-end="url(#rm-arrow)"/>
+        <path class="dep-gap" d="M100,271 H220"/>
+        <path class="dep-e" d="M60,150 V271 H250 V293" marker-end="url(#rm-arrow)"/>
+        <path class="dep-e" d="M268,342 L249,389" marker-end="url(#rm-arrow)"/>
+        <path class="dep-e" d="M30,40 H6 V427 H122" marker-end="url(#rm-arrow)"/>
+        <path class="dep-e" d="M30,127 H18 V405 H122" marker-end="url(#rm-arrow)"/>
+        <path class="dep-e" d="M370,127 H392 V415 H278" marker-end="url(#rm-arrow)"/>
+      </g>
+      <a href="#open-shortrange"><rect class="dep-box" x="30" y="8" width="150" height="46" rx="6"/><text x="105" y="27"><tspan class="dep-n">5</tspan> Short-range</text><text x="105" y="46">coupling</text></a>
+      <a href="#open-aniso"><rect class="dep-box" x="220" y="8" width="150" height="46" rx="6"/><text x="295" y="27"><tspan class="dep-n">3</tspan> Anisotropy</text><text x="295" y="46">and hBN</text></a>
+      <a href="#open-selfenergy"><rect class="dep-box" x="30" y="104" width="150" height="46" rx="6"/><text x="105" y="123"><tspan class="dep-n">4</tspan> Electron</text><text x="105" y="142">self-energies</text></a>
+      <a href="#open-twod"><rect class="dep-box" x="220" y="104" width="150" height="46" rx="6"/><text x="295" y="123"><tspan class="dep-n">2</tspan> 2D beyond</text><text x="295" y="142">in-plane modes</text></a>
+      <a href="#open-optics"><rect class="dep-box" x="125" y="200" width="150" height="46" rx="6"/><text x="200" y="219"><tspan class="dep-n">1</tspan> Optics</text><text x="200" y="238">beyond RPA</text></a>
+      <a href="#open-plasmon"><rect class="dep-box" x="220" y="296" width="150" height="46" rx="6"/><text x="295" y="315"><tspan class="dep-n">7</tspan> Plasmon–</text><text x="295" y="334">phonon hybrids</text></a>
+      <a href="#open-phases"><rect class="dep-box" x="125" y="392" width="150" height="46" rx="6"/><text x="200" y="411"><tspan class="dep-n">6</tspan> Ordered</text><text x="200" y="430">phases</text></a>
+    </svg>
+    <figcaption><strong>How to read it.</strong> Arrows run from a topic to the topics that build on it; numbers give the section order and each box links to its section. What each topic hands on is in its last first step. Not drawn: hBN cooling (3) needs self-energies (4); InSe (2) needs quadrupoles (5); anatase (7) needs the uniaxial propagator (3); topics 1 and 5 share the local-field and xc step. Every first step can start from EPP as corrected in the primer's Part B, without waiting for another topic.</figcaption>
+  </figure>
+  <p><strong>One pitfall recurs in every topic.</strong> DFPT and $GW$ inputs already contain parts of what EPP regenerates: the $\bG=0$ nonanalytic LO–TO term of the force constants, $\varepsilon_\infty$ and $\mathbf Z^*$ with local fields and xc, the long-range vertex $g^{\mathrm{lr}}$. Take bare phonons from short-range force constants and subtract exactly what EPP re-adds, with the same $\varepsilon_\infty$ and $\mathbf Z^*$, or LO–TO and the Fröhlich tail count twice. Each section lists only its own case.</p>
+</section>
+
+<section class="chapter" id="open-optics">
+  <header class="ch-head">
+    <p class="eyebrow"><span class="num">1</span><span>Optics beyond RPA</span></p>
+    <h2>Excitons, local fields, xc and phonon-assisted absorption</h2>
+    <p class="lede">EPP's photon self-energy is an independent-particle bubble. With your BSE response in its place, one propagator would give exciton polaritons, radiative widths and $\varepsilon(\omega)$ from the infrared to the ultraviolet.</p>
+    <p class="rm-meta">Impact on 2D optics <span class="lvl lvl-3"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>high</span> Difficulty <span class="lvl lvl-2"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>medium</span></p>
+  </header>
+
+  <h3>What is missing</h3>
+  <ul>
+    <li><strong>An independent-particle bubble.</strong> EPP's photon self-energy (E.278–E.279, <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-photon-se" target="_blank" rel="noopener">§B.5</a>) is a bubble plus a diamagnetic term built from single-particle energies and current vertices. With no electron–hole ladder there are no excitons; with no self-energy insertions, no $GW$ gap.</li>
+    <li><strong>No local fields, no xc.</strong> From the full propagator (E.380) on, only the macroscopic element $\bG=\bG'=0$ is kept, so EPP's electronic screening $W^{\rme}$, its $\varepsilon_\infty$ and the 2D $r_0$ come from the head of $\varepsilon^{\rme}_{\mathrm{RPA}}$, without local fields or $f^{\mathrm{xc}}$. DFPT's $\varepsilon^{\rme}_{\mathrm{RPA+xc}}$ has both (<a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#a-dfpt" target="_blank" rel="noopener">§A.3</a>).</li>
+    <li><strong>No phonon-assisted processes.</strong> Mixed electron–ion bubbles vanish at lowest order (E.316). Phonon-assisted absorption and exciton–phonon coupling would be diagrams of $\Pi^{\rme}$ with an internal $D^{\ph}=D-D^{\rme}$ line, the phonon part of the field propagator; they are not derived (<a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#a-applications" target="_blank" rel="noopener">§A.9</a>, <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#x2-missing" target="_blank" rel="noopener">§X.2</a>), EPP's zero-temperature rule for boson lines would drop their phonon occupations, and from EPP alone they would be polar only (<a href="#open-shortrange">topic 5</a>).</li>
+    <li><strong>2D.</strong> The sheet bubble gives Rytova–Keldysh screening (E.469–E.470), and <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-2d" target="_blank" rel="noopener">§B.10</a> binds a model exciton with it, but EPP's own response has no ladder, so neither intralayer nor interlayer excitons.</li>
+  </ul>
+
+  <h3>Why it matters</h3>
+  <ul>
+    <li><strong>Excitons dominate.</strong> Monolayer WS₂ has an exciton binding energy of 0.32 eV and a non-hydrogenic Rydberg series (Chernikov et al. 2014).</li>
+    <li><strong>Linewidths are meV.</strong> hBN-encapsulated MoS₂ shows about 2 meV FWHM at 4 K (Cadiz et al. 2017), radiative plus exciton–phonon. EPP's propagator has the ingredients for the radiative channel and the Fröhlich part; §B.10 evaluates the radiative widths of a sheet's polar phonons and the 2D Fröhlich coupling of its carriers, but neither for excitons (<a href="#open-twod">topic 2</a>). The Fröhlich part is weak in a MoS₂-like sheet ($r_0^{\ion}\approx0.5$ Å with §B.10's preset, derived in the note).</li>
+    <li><strong>Inputs propagate.</strong> A 20% error in $\varepsilon_\infty$ means about 40% in band renormalization and 10% in phonon frequencies (Giustino §XII; <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#a-applications" target="_blank" rel="noopener">§A.9</a>). The zero-point renormalization of the gap (<a href="#open-selfenergy">topic 4</a>) shifts every absorption edge.</li>
+    <li><strong>The kernel stays electrostatic.</strong> A 2 eV exciton in vacuum has $q_{\mathrm{light}}(\omega)\approx10^{-3}$ Å⁻¹, while an exciton of radius about 1 nm (illustrative) samples $Q_\parallel\sim0.1$ Å⁻¹ (<a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#x-light-cone" target="_blank" rel="noopener">§X.1</a>). Radiative decay and polaritons live in the transverse sector of $D$.</li>
+  </ul>
+
+  <h3>How it could enter EPP</h3>
+  <p><strong>Photon-irreducible BSE as $\Pi^{\rme}$.</strong> With transitions $t=(n\bk,m\bk+\bq)$, current vertices $j^{\,t}_\alpha$ and $L^0_t$ as in E.282:</p>
+  <div class="eqp"><p class="eqp-tag">Proposal</p><div class="eq">$$\begin{aligned}\Pi^{\mathrm{e,BSE}}_{\alpha\beta}(\bq,\omega)&amp;=-\frac{2}{c\OVSC}\sum_{tt'}j^{\,t}_{\alpha}\,\big[\bar L_{tt'}(\bq,\omega)\\ &amp;\qquad\quad-\bar L_{tt'}(\bq,0)\big]\,\big(j^{\,t'}_{\beta}\big)^*\\ \bar L&amp;=L^0+L^0\big(2\bar\Xi^{\mathrm x}-\Xi^{\mathrm d}\big)\bar L\end{aligned}$$</div></div>
+  <p>The kernels take EPP's scalar-plus-vector form (E.317–E.319): exchange $\bar\Xi^{\mathrm x}=\rho^*\bar v\rho$ between pair densities, with $\bG\neq0$ only (in a $z$-resolved sheet the whole $\bG_\parallel=0$ block, <a href="#open-twod">topic 2</a>), and direct $\Xi^{\mathrm d}=\rho^*W\rho$ with $W=e^2D_{\rho\rho}$, the screened Coulomb sector of the total $D$; with both zero this is E.281. The $\omega=0$ subtraction replaces the diamagnetic term exactly only if the static BSE obeys the same Ward identity, so at $\bq\to0$ the note uses the length form $\frac{\omega^2}{4\pi c}[\varepsilon^{\bar L}(\omega)-1]$, which BSE codes compute. In E.380 for a cubic crystal (anisotropic ones mix L and T, <a href="#open-aniso">topic 3</a>), $\varepsilon^{\bar L,\mathrm L}=0$ gives the longitudinal excitons and $c^2q^2=\omega^2\varepsilon^{\bar L,\mathrm T}$ Hopfield's polaritons; the exciton L–T splitting comes from the removed $\bG=0$ exchange, which $D^{0\mathrm L}$ restores.</p>
+  <p><strong>Phonon screening and local fields (proposal).</strong> The Coulomb sector of the total $D$ is $W=W^{\rme}+W^{\rme}\Pi^{\ion}_{\rho\rho}W/e^2$ (cf. G.104–105), so the proposed direct kernel $\Xi^{\mathrm d}=\rho^*W\rho$ would contain Fröhlich phonon screening (Filip et al. 2021), dynamically; EPP itself has no BSE kernel, only this screening inside $D$. For a static sheet, with the ions included:</p>
+  <div class="eqp derived"><p class="eqp-tag">Derived in the note from E.470–E.472</p><div class="eq">$$\begin{gathered}\varepsilon^{\mathrm{2D}}_{\mathrm s}(Q_\parallel)=\varepsilon_{\mathrm{env}}+\big(r_0^{\rme}+r_0^{\ion}\big)Q_\parallel\\ r_0^{\ion}=\frac{2\pi e^2Z^{*2}}{\OS\,M_{\mathrm r}\,\omega_{\mathrm{TO}}^2}\end{gathered}$$</div></div>
+  <p>With §B.10's presets, $r_0^{\ion}$ is 2.9 Å against $r_0^{\rme}=10$ Å for hBN (+29%) and 0.5 Å against 40 Å for a MoS₂-like sheet (about 1%). In monolayer hBN ($E_{\mathrm b}$ of order 2 eV, illustrative, against $\hbar\omega_{\mathrm{LO}}\lesssim0.2$ eV) the ions cannot follow, and the static +29% badly overestimates. Local fields and xc would enter through a macroscopically irreducible $\bar\Pi^{\rme}=\Pi^{\rme,0}+\Pi^{\rme,0}(\bar D^0+D^{\mathrm{xc}})\bar\Pi^{\rme}$, with $\bar D^0$ the bare line without its $\bG=0$ element and $D^{\mathrm{xc}}$ the xc kernel written as a line (proposal).</p>
+  <p><strong>Phonon-assisted optics (proposal).</strong> At first order in $D^{\ph}$, $\Pi^{\rme}$ gains two self-energy diagrams and one vertex correction with the vertex of E.415–E.416, (B8.6) in the primer, whose golden-rule cuts should reproduce the dipole part of G.200. The light becomes internal, so the refractive index is an output; luminescence needs a Keldysh extension. The BSE sheet response in the finite-$c$ algebra of <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b10-light" target="_blank" rel="noopener">§B.10</a> gives exciton radiative widths with $\sqrt{1-x^2}$ (p) and $1/\sqrt{1-x^2}$ (s) laws, where $x=cQ_\parallel/(\sqrt{\varepsilon}\,\omega)$.</p>
+
+  <h3>Pitfalls</h3>
+  <ul>
+    <li><strong>$\bG=0$ exchange twice.</strong> The $\bG=0$ term $v(\bq)$ in the kernel plus $D^{0\mathrm L}$ in E.380 doubles the L–T splitting.</li>
+    <li><strong>Kernel gauge.</strong> Use $\rho^*v\rho$ and $\rho^*W\rho$ inside the kernel, not the temporal-gauge $-\frac1c\bj^*\cdot D\cdot\bj$, which diverges for a static $W$.</li>
+    <li><strong>Screening twice.</strong> Besides the rule shared by all topics (<a href="#roadmap-overview">overview</a>), Williams–Lax (thermal-displacement) supercells already contain the static polar fields that $D^{\ph}$ would add again.</li>
+    <li><strong>Gauge and sum rules.</strong> For $G_0W_0$ plus static-$W$ BSE no exact Ward identity exists, so compare length and velocity gauge rather than assume they agree; TDA violates the f-sum rule. With KS velocity matrix elements, divide by KS transition energies even when the exciton energies are quasiparticle; using $\omega^{\mathrm{qp}}$ there rescales oscillator strengths by $(\omega^{\mathrm{KS}}/\omega^{\mathrm{qp}})^2$.</li>
+  </ul>
+
+  <h3>First steps</h3>
+  <ol class="steps">
+    <li><strong>Derive (1–2 weeks).</strong> The BSE $\Pi^{\rme}$ and local-field $\bar\Pi^{\rme}$ proposals with all prefactors; E.350 for the conserving static-SEX pair; the poles of $D^{\mathrm L}$ (full-$L$ excitons) and $D^{\mathrm T}$ (Hopfield polaritons).</li>
+    <li><strong>2D optics in your code (1–2 weeks).</strong> Monolayer hBN and encapsulated MoS₂ (with SOC, $\varepsilon_{\mathrm{env}}$ in the sheet propagator): $r_0$ from BSE, RPA and RPA without local fields; radiative widths and polariton dispersion; length versus velocity gauge.</li>
+    <li><strong>Local fields and xc (weeks).</strong> Restore $\bG,\bG'$ and $D^{\mathrm{xc}}$; quantify the change in $\varepsilon_\infty$ and E.454. Shared with <a href="#open-shortrange">topic 5</a>, step 3.</li>
+    <li><strong>Phonon screening (weeks).</strong> $W=e^2D_{\rho\rho}$ as the kernel, static, then dynamic; bulk MgO or GaN against Lyddane–Sachs–Teller; monolayer hBN directly dynamic.</li>
+    <li><strong>Phonon-assisted optics (months).</strong> The first-order $\Pi^{\rme}$ at finite $T$; the Fröhlich part of G.200 on GaN or MgO, then bulk hBN once short-range coupling exists.</li>
+  </ol>
+
+  <h3>Key references</h3>
+  <ol class="refs">
+    <li>G. Onida, L. Reining, A. Rubio, Rev. Mod. Phys. <b>74</b>, 601 (2002). BSE versus TDDFT. <a href="https://doi.org/10.1103/RevModPhys.74.601" target="_blank" rel="noopener">doi:10.1103/RevModPhys.74.601</a></li>
+    <li>A. Chernikov et al., Phys. Rev. Lett. <b>113</b>, 076802 (2014). WS₂ exciton series. <a href="https://doi.org/10.1103/PhysRevLett.113.076802" target="_blank" rel="noopener">doi:10.1103/PhysRevLett.113.076802</a></li>
+    <li>F. Cadiz et al., Phys. Rev. X <b>7</b>, 021026 (2017). Narrow excitons in encapsulated MoS₂. <a href="https://doi.org/10.1103/PhysRevX.7.021026" target="_blank" rel="noopener">doi:10.1103/PhysRevX.7.021026</a></li>
+    <li>A. Marini, Phys. Rev. Lett. <b>101</b>, 106405 (2008). Finite-temperature excitons. <a href="https://doi.org/10.1103/PhysRevLett.101.106405" target="_blank" rel="noopener">doi:10.1103/PhysRevLett.101.106405</a></li>
+    <li>M. R. Filip, J. B. Haber, J. B. Neaton, Phys. Rev. Lett. <b>127</b>, 067401 (2021). Phonon screening in the BSE kernel. <a href="https://doi.org/10.1103/PhysRevLett.127.067401" target="_blank" rel="noopener">doi:10.1103/PhysRevLett.127.067401</a></li>
+    <li>F. Paleari, A. Marini, Phys. Rev. B <b>106</b>, 125403 (2022). Elemental versus reducible excitons. <a href="https://doi.org/10.1103/PhysRevB.106.125403" target="_blank" rel="noopener">doi:10.1103/PhysRevB.106.125403</a></li>
+  </ol>
+  <p class="note-path">Full note: <code>doc/epp-primer/open/topics/optics.md</code> on the <code>electron-phonon</code> branch · <a href="#roadmap-overview">Back to the overview</a></p>
+</section>
+
+<section class="chapter" id="open-twod">
+  <header class="ch-head">
+    <p class="eyebrow"><span class="num">2</span><span>2D beyond in-plane modes</span></p>
+    <h2>Out-of-plane dipoles, environment and radiative widths</h2>
+    <p class="lede">EPP §8 treats one planar, freestanding sheet in the electrostatic limit. The phonon kernel is your $W$: $r_0$, $\varepsilon_{\mathrm{env}}$ and Coulomb truncation enter the LO dispersion exactly as they enter Rytova–Keldysh exciton binding.</p>
+    <p class="rm-meta">Impact on 2D optics <span class="lvl lvl-3"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>high</span> Difficulty <span class="lvl lvl-2"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>medium</span></p>
+  </header>
+  <p class="rm-pre">Illustrative numbers use the hBN preset of §B.10 ($\OS=5.43$ Å², $M_{\mathrm r}=6.10$ amu, $Z^*_{xx}=2.7$, $\hbar\omega_{\mathrm{TO}}=170$ meV, $r_0=10$ Å). Out-of-plane numbers use placeholders, $Z^*_{zz}=0.5$ and $\hbar\omega_{\mathrm{ZO}}=0.1$ eV.</p>
+
+  <h3>What is missing</h3>
+  <ul>
+    <li><strong>Out-of-plane dipoles are dropped.</strong> The ionic vertices contain $Z^*_{zz}$, but before E.463 the “divergent local term $\sim\delta(z-z')$” is discarded and only $x,y$ are kept, so ZO-type modes (hBN ZO, MoS₂ A₂″) get no self-energy. <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-2d" target="_blank" rel="noopener">§B.10</a> shows the contact term and its shift at Γ, but goes no further.</li>
+    <li><strong>Heights are lost.</strong> With each dipole at its atom (the correction in <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#fn-b10-sheet" target="_blank" rel="noopener">§B.10's footnote</a>), every atom keeps its height $z_\kappa$, but EPP §8 and §B.10 use the planar form, valid for $Q_\parallel|z_\kappa|\ll1$: no multi-plane sheets (MoS₂, InSe) at short wavelength, no multilayers or heterostructures.</li>
+    <li><strong>Strictly 2D, electrostatic, freestanding.</strong> A $\delta(z)$ bubble, $c\to\infty$ (E.460), no substrate. The primer adds $\varepsilon_{\mathrm{env}}+r_0Q_\parallel$ (B10.8), a literature form, and the finite-$c$ sheet line (B10.27), in vacuum or a uniform medium; neither is in EPP.</li>
+    <li><strong>No electrodynamic 2D vertex.</strong> EPP p. 86 calls the step to 2D “trivial”, but its electrodynamic Fröhlich vertex (E.415–E.416) is never evaluated with the sheet propagator, whose kernel $v^{\mathrm{2D}}=2\pi e^2/Q_\parallel$ comes from the $q_z$ integral. §B.10 gives the electrostatic 2D Fröhlich coupling, the radiative widths and the onset of the guided 2D polariton, not the finite-$c$ vertex.</li>
+  </ul>
+
+  <h3>Why it matters</h3>
+  <ul>
+    <li><strong>LO dispersion and environment.</strong> The LO slope scales with $Z^{*2}$, falls with environmental screening and grows linearly with layer number (Sohier et al. 2017). For illustrative freestanding hBN it is 0.245 eV Å (§B.10), cut to 0.054 eV Å by a hypothetical non-dispersive $\varepsilon_{\mathrm{env}}=4.5$, a scaling illustration only, since at 170 meV hBN sits in its own Reststrahlen band. EELS on Cu foil reports a reduced slope (Li et al. 2024). A metal is not a dielectric $\varepsilon_{\mathrm{env}}$: in the perfect-conductor image model (derived in the note, $Q_\parallel d\ll1$) the LO shift becomes quadratic in $Q_\parallel$, so the comparison needs a metallic-substrate kernel (first step 4).</li>
+    <li><strong>Out-of-plane dipoles.</strong> Omitting the 2D dipolar correction, which includes them, overestimates the 300 K hole mobility of (C₂F₂)ₙ by 99% (Deng et al. 2021, preprint numbers), a figure that does not isolate the out-of-plane part. Royo and Stengel (2021) showed that out-of-plane charges make ZO branches disperse linearly; the placeholders give −0.014 eV Å, on top of the contact shift at Γ that §B.10 describes.</li>
+    <li><strong>Radiative widths.</strong> In-plane polar modes of freestanding hBN have $\hbar\gamma^{\mathrm{rad}}=42$ μeV (full width) at Γ (§B.10, finite $c$); ZO modes are dark at normal incidence. Bright 2D excitons follow the same angular laws with meV-scale widths (Wang et al. 2018).</li>
+    <li><strong>For your code.</strong> An untruncated supercell restores a spurious LO–TO splitting (Sohier et al. 2017), the artifact that also spoils untruncated 2D BSE.</li>
+  </ul>
+
+  <h3>How it could enter EPP</h3>
+  <p><strong>Full sheet propagator.</strong> With $\nabla=(\ii Q_x,\ii Q_y,\partial_z)$ in the mixed representation of §B.10, and $\zeta=\sqrt{Q_\parallel^2-\varepsilon\omega^2/c^2}$, $\mathrm{Re}\,\zeta\gt0$:</p>
+  <div class="eqp derived"><p class="eqp-tag">Derived in the note from E.375</p><div class="eq">$$\begin{aligned}D^0_{\alpha\beta}(\bQ_\parallel,\omega;z,z')&amp;=\frac{4\pi c}{\varepsilon\,\omega^2}\Big[\frac{\varepsilon\omega^2}{c^2}\delta_{\alpha\beta}-\nabla_\alpha\nabla'_\beta\Big]\\ &amp;\quad\times\frac{\ee^{-\zeta|z-z'|}}{2\zeta}\end{aligned}$$</div></div>
+  <p>In-plane at $z=z'=0$ it is (B10.27); its $zz$ block holds $-\frac{4\pi c}{\varepsilon\omega^2}\delta(z-z')$, EPP's divergent local term; $c\to\infty$ gives E.460. Generalizing E.458 to all components and heights, with $J^\kappa_{\alpha\nu}$ the part of the sheet's dynamic vertex (B10.17) carried by atom $\kappa$:</p>
+  <div class="eqp"><p class="eqp-tag">Proposal</p><div class="eq">$$\begin{aligned}\Pi^{\ph}_{\nu\nu'}(\bQ_\parallel,\omega)&amp;=-\sum_{\kappa\kappa'}\sum_{\alpha\beta\in\{x,y,z\}}J^{\kappa*}_{\alpha\nu}\\ &amp;\quad\times D^{\rme}_{\alpha\beta}(\bQ_\parallel,\omega;z_\kappa,z_{\kappa'})\,J^{\kappa'}_{\beta\nu'}\end{aligned}$$</div></div>
+  <p>with $D^{\rme}$ from the $z$-resolved Dyson equation of EPP p. 100, (B10.18). Without a mirror plane (Janus, buckled) LO-like and ZO-like modes couple through the matrix Dyson equation E.398. For a planar, mirror-symmetric sheet the electrostatic limit recovers E.472 in-plane and gives</p>
+  <div class="eqp derived"><p class="eqp-tag">Derived in the note</p><div class="eq">$$\omega^2_{\mathrm{ZO}}(\bQ_\parallel)=\bar\omega^2_{\mathrm{ZO}}-\frac{2\pi Q_\parallel}{\OS}\,|j_{z\nu}|^2$$</div></div>
+  <p>where $\bar\omega_{\mathrm{ZO}}$ contains the contact shift and $Z^*_{zz}$ is the open-circuit 2D charge. At finite $c$ the ZO width grows as $x^2/\sqrt{1-x^2}$, with $x=cQ_\parallel/(\sqrt{\varepsilon}\,\omega)$ and $\hbar\gamma^{\mathrm{rad}}_{0,z}\approx1.4$ μeV for the placeholder.</p>
+  <p><strong>Environment, vertex, multilayers (proposals).</strong> Replace $D^0$ by the stack's dyadic Green's function, with separate s and p reflection; its static limit is the image kernel. Over a perfect metal (derived, illustrative; $d=3$ Å, $Q_\parallel=0.05$ Å⁻¹) the LO shift drops from 8.0 to 2.8 meV and the ZO shift grows from −0.72 to −1.25 meV. E.416 with the sheet propagator gives a 2D Fröhlich vertex whose in-plane, electrostatic term is Sohier's and §B.10's, and a layer-resolved $W$ (as in the quantum electrostatic heterostructure, QEH, model) should reproduce the slope proportional to the number of layers.</p>
+
+  <h3>Pitfalls</h3>
+  <ul>
+    <li><strong>Double counting.</strong> Cutoff DFPT already holds the $Q_\parallel$-linear dipole terms and the ZO contact shift: subtract its 2D nonanalytic part before adding $\Pi^{\ph}$. In a BSE $\Pi^{\rme}$, drop the $\bG_\parallel=0$ exchange for all $(G_z,G_z')$, since that block is the photon line.</li>
+    <li><strong>Which $Z^*_{zz}$.</strong> Open- and short-circuit charges differ by $\varepsilon_{zz}$: the vacuum kernel needs the open-circuit one, a $W$ with the layer's own $z$ local fields the short-circuit one.</li>
+    <li><strong>Sums and conventions.</strong> E.310 needs all $3N_\kappa$ modes in the mode sum; enforce $\sum_\kappa\mathbf Z^*_\kappa=0$. Gaussian $r_0=2\pi\chi^{\mathrm{2D}}$ (B10.7), or $L(\varepsilon^{\SC}_{xx}-1)/2$ from a supercell of height $L$; take $\varepsilon_{\mathrm{env}}$ of polar substrates at the phonon frequency.</li>
+  </ul>
+
+  <h3>First steps</h3>
+  <ol class="steps">
+    <li><strong>Derive and check (days).</strong> The full sheet propagator and its limits: E.460 → E.472, the traceless bare kernel, (B10.27) and §B.10's 0.245 eV Å and 42 μeV; then the ZO branch.</li>
+    <li><strong>Freestanding benchmark (1–2 weeks).</strong> Cutoff DFPT for $Z^*_{xx}$, the open-circuit $Z^*_{zz}$, $\boldsymbol\varepsilon$ and force constants; reproduce Royo–Stengel's BN and SnS₂ ZO slopes before Janus MoSSe; cross-check $r_0$ with your RPA code.</li>
+    <li><strong>Your GW code's $W$ (2–4 weeks).</strong> The $\bG_\parallel=0$ block of the truncated $W$, projected on atomic heights and paired with the short-circuit charge; test MoS₂ (E′, A₂″).</li>
+    <li><strong>Environment (weeks).</strong> The stack's Green's function with $\varepsilon(\omega)$ of SiO₂ or hBN; compare with Li et al. only through a metallic-substrate kernel.</li>
+    <li><strong>Later.</strong> InSe (quadrupoles, <a href="#open-shortrange">topic 5</a>), bilayer hBN, then the full finite-$c$ sheet Dyson equation, which gives <a href="#open-optics">topic 1</a> the $z$-resolved photon line for out-of-plane excitons. The layered-substrate kernel of step 4 is the one interfacial pairing needs (<a href="#open-phases">topic 6</a>), and the one doped sheets on polar substrates need (<a href="#open-plasmon">topic 7</a>).</li>
+  </ol>
+
+  <h3>Key references</h3>
+  <ol class="refs">
+    <li>P. Cudazzo, I. V. Tokatly, A. Rubio, Phys. Rev. B <b>84</b>, 085406 (2011). 2D screening, $r_0$. <a href="https://doi.org/10.1103/PhysRevB.84.085406" target="_blank" rel="noopener">doi:10.1103/PhysRevB.84.085406</a></li>
+    <li>T. Sohier, M. Calandra, F. Mauri, Phys. Rev. B <b>94</b>, 085415 (2016). 2D Fröhlich coupling in TMDs. <a href="https://doi.org/10.1103/PhysRevB.94.085415" target="_blank" rel="noopener">doi:10.1103/PhysRevB.94.085415</a></li>
+    <li>T. Sohier et al., Nano Lett. <b>17</b>, 3758 (2017). Breakdown of the LO–TO splitting. <a href="https://doi.org/10.1021/acs.nanolett.7b01090" target="_blank" rel="noopener">doi:10.1021/acs.nanolett.7b01090</a></li>
+    <li>T. Deng et al., Phys. Rev. B <b>103</b>, 075410 (2021). Out-of-plane dipoles in 2D coupling. <a href="https://doi.org/10.1103/PhysRevB.103.075410" target="_blank" rel="noopener">doi:10.1103/PhysRevB.103.075410</a></li>
+    <li>M. Royo, M. Stengel, Phys. Rev. X <b>11</b>, 041027 (2021). Exact quasi-2D electrostatics, ZO dispersion. <a href="https://doi.org/10.1103/PhysRevX.11.041027" target="_blank" rel="noopener">doi:10.1103/PhysRevX.11.041027</a></li>
+    <li>S. Poncé et al., Phys. Rev. B <b>107</b>, 155424 (2023). Dipoles and quadrupoles in 2D mobilities. <a href="https://doi.org/10.1103/PhysRevB.107.155424" target="_blank" rel="noopener">doi:10.1103/PhysRevB.107.155424</a></li>
+    <li>J. Li et al., Nat. Commun. <b>15</b>, 1938 (2024). LO branch of monolayer hBN on Cu. <a href="https://doi.org/10.1038/s41467-024-46229-4" target="_blank" rel="noopener">doi:10.1038/s41467-024-46229-4</a></li>
+  </ol>
+  <p class="note-path">Full note: <code>doc/epp-primer/open/topics/twod.md</code> on the <code>electron-phonon</code> branch · <a href="#roadmap-overview">Back to the overview</a></p>
+</section>
+
+<section class="chapter" id="open-aniso">
+  <header class="ch-head">
+    <p class="eyebrow"><span class="num">3</span><span>Anisotropy and hBN</span></p>
+    <h2>Anisotropic crystals and polaritons beyond the zone centre</h2>
+    <p class="lede">EPP's equations are tensors, but what it evaluates is isotropic. For hBN, the standard encapsulant, closing the gap gives the hyperbolic bands and the frequency-dependent environment that your $W$ sees.</p>
+    <p class="rm-meta">Impact on 2D optics <span class="lvl lvl-2"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>medium</span> Difficulty <span class="lvl lvl-1"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>low</span></p>
+  </header>
+  <p class="rm-pre">hBN parameters (a widely used rounded set, also §A.4's preset; published fits differ by 5–20 cm⁻¹): in-plane ($x$) TO/LO 1370/1610 cm⁻¹ with $\varepsilon_{\infty,xx}=4.87$, out-of-plane ($z$, the c axis) 780/830 cm⁻¹ with $\varepsilon_{\infty,zz}=2.95$.</p>
+
+  <h3>What is missing</h3>
+  <ul>
+    <li><strong>The equations are tensors.</strong> The propagator is a $3\times3$ matrix, the ionic self-energy carries full $\mathbf Z^*$ tensors and the electronic screening enters as $\bq\cdot\boldsymbol\varepsilon^{\rme}\cdot\bq$ (B9.7), so the directional LO–TO term exists for $c\to\infty$ ((B9.12), <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-electrostatic" target="_blank" rel="noopener">§B.9</a>).</li>
+    <li><strong>The evaluation is isotropic.</strong> EPP's dielectric model (§4.2.1, E.144–E.165) assumes diagonal $\mathbf Z^*$ and adds the cubic Lorentz field for all symmetries; in hBN that field is a tensor, and in the first-principles route it is already inside $\mathbf Z^*$ (<a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-dielectric" target="_blank" rel="noopener">§B.3</a>). EPP §7.1 evaluates only $\bq=0$ without electrons. The primer adds finite $\bq$ for cubic crystals (<a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-phonon-se" target="_blank" rel="noopener">§B.7</a>) and, in Part A, the electrostatic oblique modes of bulk hBN (<a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#viz-a4-lot" target="_blank" rel="noopener">§A.4</a>).</li>
+    <li><strong>Nothing at finite $c$.</strong> No L–T mixing, Fresnel dispersion or hyperbolic regime, no slab, no damping beyond $\ii\eta$, no low-symmetry crystal. §B.9 solves hBN's uniaxial line with a constant $\boldsymbol\varepsilon_\infty$ (<a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#viz-b9-sectors" target="_blank" rel="noopener">its figure of four sectors</a>) but has no $\Pi^{\ion}$ inside the tensor.</li>
+  </ul>
+
+  <h3>Why it matters</h3>
+  <ul>
+    <li><strong>Hyperbolic bands.</strong> hBN has $\varepsilon_{zz}\lt0\lt\varepsilon_{xx}$ at 780–830 cm⁻¹ (Type I) and $\varepsilon_{xx}\lt0\lt\varepsilon_{zz}$ at 1370–1610 cm⁻¹ (Type II). Volume-confined modes reach 1/86 of the free-space wavelength (Caldwell et al. 2014), the film dispersion tunes with thickness (Dai et al. 2014), and α-MoO₃ polaritons are up to 60 times shorter than light (Ma et al. 2018).</li>
+    <li><strong>For 2D GW and BSE.</strong> hBN's effective environment $\sqrt{\varepsilon_{xx}\varepsilon_{zz}}$ is 4.74 below the 97–200 meV window ($\varepsilon_{\mathrm s}$) and 3.79 above it ($\varepsilon_\infty$), about 25% apart. Inside 97–103 and 170–200 meV $\varepsilon_{xx}\varepsilon_{zz}\lt0$ (−12.5 at 1500 cm⁻¹), so $W(\bQ_\parallel,\omega)$ has a hyperbolic-polariton continuum instead of a real effective $\varepsilon$ (derived in the note).</li>
+    <li><strong>Oblique modes (derived in the note).</strong> With $Z^*_{\mathrm B,xx}=2.80$ and $Z^*_{\mathrm B,zz}=0.73$ from the splittings (§A.4 fits 2.79 and 0.730), the LO-like modes for $q\gg q_{\mathrm{light}}(\omega_{\mathrm{TO}})$ ($1.9\times10^{-4}$ Å⁻¹ in-plane) depend on the angle θ to the c axis (T marks a TO endpoint). §A.4 plots the same electrostatic modes:</li>
+  </ul>
+  <div class="tbl rm-small rm-theta"><table>
+    <thead><tr><th>θ</th><th>upper (cm⁻¹)</th><th>lower (cm⁻¹)</th></tr></thead>
+    <tbody>
+      <tr><td>0°</td><td>1370 T</td><td>830</td></tr>
+      <tr><td>15°</td><td>1399</td><td>822</td></tr>
+      <tr><td>30°</td><td>1463</td><td>807</td></tr>
+      <tr><td>45°</td><td>1527</td><td>794</td></tr>
+      <tr><td>60°</td><td>1574</td><td>786</td></tr>
+      <tr><td>75°</td><td>1601</td><td>781</td></tr>
+      <tr><td>90°</td><td>1610</td><td>780 T</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>How it could enter EPP</h3>
+  <p><strong>Closed-form propagator.</strong> At $\bG=\bG'=0$, E.380 inverts algebraically, with $\boldsymbol\varepsilon=\mathbf 1+\frac{4\pi c}{\omega^2}(\Pi^{\rme}+\Pi^{\ion})$, the Maxwell operator $\mathsf M$ of §X.1 and the ionic part from E.385:</p>
+  <div class="eqp"><p class="eqp-tag">Derived in the note; proposal for EPP</p><div class="eq">$$\begin{gathered}D=\frac{4\pi}{c}\,\mathsf M^{-1}\\ \mathsf M=q^2\mathbf 1-\bq\bq^{\mathsf T}-\frac{\omega^2}{c^2}\,\boldsymbol\varepsilon(\bq,\omega)\\ \varepsilon^{\ion}_{\alpha\beta}=\frac{4\pi}{\OV}\sum_{\nu}\frac{j_{\alpha\nu}(\bq)\,j^*_{\beta\nu}(\bq)}{\omega^2_{\bq\nu}-\omega^2-\ii\eta\omega}\end{gathered}$$</div></div>
+  <p>The ionic term is Gonze–Lee's $\boldsymbol\varepsilon(\omega)$ at finite $\bq$; with $\boldsymbol\varepsilon=\varepsilon_\infty\mathbf 1$ the electron-dressed line is (B7.14), and with a constant tensor it is (B9.3). The modes solve $\det\mathsf M=0$; the extraordinary wave of a uniaxial crystal obeys</p>
+  <div class="eqp derived"><p class="eqp-tag">Derived in the note</p><div class="eq">$$\frac{c^2q^2}{\omega^2}=\frac{\varepsilon_{xx}(\omega)\,\varepsilon_{zz}(\omega)}{\varepsilon_{xx}(\omega)\sin^2\theta+\varepsilon_{zz}(\omega)\cos^2\theta}$$</div></div>
+  <p>At $\bq\to0$ every polar mode sits at its LO frequency (1610 cm⁻¹ twice, 830 cm⁻¹); for $q\gg q_{\mathrm{light}}(\omega)$, $\hat\bq\cdot\boldsymbol\varepsilon\cdot\hat\bq=0$ gives the table, with E<sub>1u</sub> and A<sub>2u</sub> mixed. The diagonal (B7.21) misplaces these modes, at 30° by 3 cm⁻¹ (upper) and 5.5 cm⁻¹ (lower, 11% of the Type I band). L–T mixing at finite $c$ changes $W$ by $10^{-5}$–$10^{-4}$ away from resonances and by $4\times10^{-2}$ next to the 170 meV TO pole (undamped; $2\times10^{-2}$ with $\gamma\approx5$ cm⁻¹). In a 10 nm film the exact finite-$c$ solution shifts the polariton by +1.3% at 1400 cm⁻¹ against quasi-statics; the finite speed of light matters only within about 10–20 cm⁻¹ of $\omega_{\mathrm{TO},x}$ (all derived in the note).</p>
+  <p><strong>Slabs (proposal).</strong> Extend the $z$-resolved Dyson equation of EPP p. 100, (B10.18), to the whole field, with layer-resolved ionic self-energies on profiles about 3.3 Å wide. The $zz$ contact term that EPP drops before E.463 must be kept here: it sets the A<sub>2u</sub> frequency and the whole Type I band. The quasi-static continuum limit gives the slab modes of Dai et al.</p>
+
+  <h3>Pitfalls</h3>
+  <ul>
+    <li><strong>Bulk versus slab.</strong> E.380 re-adds only $\bG=0$, so in bulk subtract only DFPT's $\bG=0$ nonanalytic term; in a slab, subtract the layer-resolved long-range term from 2D-truncated DFPT.</li>
+    <li><strong>A proper $\Pi^{\rme}$.</strong> The full RPA head $\chi_{00}$ in $D$ counts the $\bG=0$ Coulomb twice: use $\varepsilon_{\mathrm M}=1-v(\bq)\bar\chi_{00}$. Transverse components at finite $q$ need a current–current bubble.</li>
+    <li><strong>Input accuracy.</strong> A 10% error in $\varepsilon_{\infty,xx}$ moves $\omega_{\mathrm{LO},x}$ by 2.8 meV (22 cm⁻¹), 9% of the Type II band.</li>
+    <li><strong>Also.</strong> No E.151 on DFPT inputs; use the phase-corrected vertex and $\sum_\kappa\mathbf Z^*_\kappa=0$; put damping in $F$ (E.398), not in $\eta$.</li>
+  </ul>
+
+  <h3>First steps</h3>
+  <ol class="steps">
+    <li><strong>Bulk hBN model (1–3 days).</strong> In the code of §B.9's uniaxial figure, replace $\boldsymbol\varepsilon_\infty$ by $\boldsymbol\varepsilon_\infty+\boldsymbol\varepsilon^{\ion}(\omega)$; reproduce the table, and §A.4's modes, from the $2\times2$ mode matrix and the $q\to0$ limit; plot isofrequency surfaces across $q_{\mathrm{light}}(\omega)$.</li>
+    <li><strong>First-principles inputs (1–2 weeks).</strong> DFPT $\mathbf Z^*$, $\boldsymbol\varepsilon_\infty$ and Γ modes; from your RPA code, $\varepsilon_{\mathrm M}(\hat\bq)$ along the a and c axes and at 45° (which must equal $(\varepsilon_{xx}+\varepsilon_{zz})/2$), with and without local fields.</li>
+    <li><strong>Slab (4–8 weeks).</strong> $N$-layer hBN with the finite-$c$ $D^0$ and a regularized contact term: $N\to\infty$ against $\varepsilon_{zz}(\omega)$, thickness scaling against Dai et al., $N=1$ against EPP §8 and Royo–Stengel.</li>
+    <li><strong>Low symmetry (1–3 months).</strong> α-MoO₃ against Álvarez-Pérez et al., then β-Ga₂O₃.</li>
+    <li><strong>Electrons (months).</strong> Graphene-to-hBN cooling (Principi et al.), which needs <a href="#open-selfenergy">topic 4</a>; then the dynamical hBN $W$ as the environment of 2D sheets (<a href="#open-twod">topic 2</a>) and in exciton screening.</li>
+  </ol>
+
+  <h3>Key references</h3>
+  <ol class="refs">
+    <li>K. Huang, Proc. R. Soc. Lond. A <b>208</b>, 352 (1951). First phonon-polariton theory. <a href="https://doi.org/10.1098/rspa.1951.0166" target="_blank" rel="noopener">doi:10.1098/rspa.1951.0166</a></li>
+    <li>X. Gonze, C. Lee, Phys. Rev. B <b>55</b>, 10355 (1997). Nonanalytic term, $\boldsymbol\varepsilon(\omega)$. <a href="https://doi.org/10.1103/PhysRevB.55.10355" target="_blank" rel="noopener">doi:10.1103/PhysRevB.55.10355</a></li>
+    <li>S. Dai et al., Science <b>343</b>, 1125 (2014). Thickness-tunable hBN polaritons. <a href="https://doi.org/10.1126/science.1246833" target="_blank" rel="noopener">doi:10.1126/science.1246833</a></li>
+    <li>J. D. Caldwell et al., Nat. Commun. <b>5</b>, 5221 (2014). Type I and II modes. <a href="https://doi.org/10.1038/ncomms6221" target="_blank" rel="noopener">doi:10.1038/ncomms6221</a></li>
+    <li>A. Principi et al., Phys. Rev. Lett. <b>118</b>, 126804 (2017). Cooling into hyperbolic modes. <a href="https://doi.org/10.1103/PhysRevLett.118.126804" target="_blank" rel="noopener">doi:10.1103/PhysRevLett.118.126804</a></li>
+    <li>W. Ma et al., Nature <b>562</b>, 557 (2018). Anisotropic polaritons in α-MoO₃. <a href="https://doi.org/10.1038/s41586-018-0618-9" target="_blank" rel="noopener">doi:10.1038/s41586-018-0618-9</a></li>
+    <li>G. Álvarez-Pérez et al., Adv. Mater. <b>32</b>, 1908176 (2020). Permittivity tensor of α-MoO₃. <a href="https://doi.org/10.1002/adma.201908176" target="_blank" rel="noopener">doi:10.1002/adma.201908176</a></li>
+  </ol>
+  <p class="note-path">Full note: <code>doc/epp-primer/open/topics/aniso.md</code> on the <code>electron-phonon</code> branch · <a href="#roadmap-overview">Back to the overview</a></p>
+</section>
+
+<section class="chapter" id="open-selfenergy">
+  <header class="ch-head">
+    <p class="eyebrow"><span class="num">4</span><span>Electron self-energies</span></p>
+    <h2>Electron self-energies with photon and phonon exchange</h2>
+    <p class="lede">EPP dresses photons and phonons but never the electron. A $GW$ gap is a clamped-nuclei gap, and the lattice part EPP could add to your $W$ is one pole per polar mode in its head.</p>
+    <p class="rm-meta">Impact on 2D optics <span class="lvl lvl-2"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>medium</span> Difficulty <span class="lvl lvl-2"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>medium</span></p>
+  </header>
+
+  <h3>What is missing</h3>
+  <ul>
+    <li><strong>No electron Dyson equation.</strong> EPP solves three bosonic Dyson equations: for the total field $D$, the electron-dressed field $D^{\rme}$ and the phonons $F$, whose self-energy is $\Pi^{\ph}=-J^*D^{\rme}J$ (E.398–E.399; (B7.5)). Electrons appear only in bubbles, with no $\Sigma$ or dressed $G$ (<a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#x2-missing" target="_blank" rel="noopener">§X.2</a>).</li>
+    <li><strong>No Fan–Migdal, no Debye–Waller.</strong> Nothing matches Giustino's electron–phonon self-energy (G.151–G.161): no zero-point renormalization (ZPR), lifetimes or spectral functions (<a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#a-electron-se" target="_blank" rel="noopener">§A.7</a>, <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#a-temperature" target="_blank" rel="noopener">§A.8</a>). EPP's electrodynamic Fröhlich vertex appears only in the phonon self-energy (<a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-frohlich" target="_blank" rel="noopener">§B.8</a>).</li>
+    <li><strong>Linear coupling, zero-temperature bosons.</strong> The coupling is linear in the displacements on a frozen potential, so there is no Debye–Waller term. EPP's zero-temperature rule for boson lines, $n_{\mathrm B}=0$ (E.246–E.250), fails for $\Sigma$, whose numerators carry phonon occupations.</li>
+  </ul>
+
+  <h3>Why it matters</h3>
+  <ul>
+    <li><strong>Magnitudes.</strong> Diamond's direct-gap ZPR is 628 meV with $GW$-corrected couplings, more than 40% above DFT (Antonius et al. 2014). ZPRs often exceed 0.3 eV and reach 0.7 eV in light-element materials, and in infrared-active crystals the nonadiabatic Fröhlich term gives the majority for many materials (Miglio et al. 2020).</li>
+    <li><strong>Fröhlich scale.</strong> $-\alpha_{\mathrm F}\hbar\omega_{\mathrm{LO}}$ is about −2.6 meV for the conduction-band minimum of GaAs and −41 meV for that of GaN (model $\alpha_{\mathrm F}=0.071$ and 0.44; <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#a-temperature" target="_blank" rel="noopener">§A.8</a>); for the gap of GaN, Nery and Allen (2016) find a Fröhlich correction of −0.05 of −0.15 eV; it is an analytic small-$q$ correction to an adiabatic grid result, not the same quantity as $-\alpha_{\mathrm F}\hbar\omega_{\mathrm{LO}}$. Lattice screening in $W$ can lower $GW$ gaps by more than 15% in highly polar compounds (Botti and Marques 2013), although Lambrecht et al. (2017) object that the polar term was not confined in $q$.</li>
+    <li><strong>Light cone.</strong> In GaAs the light cone, $q_{\mathrm{light}}(\omega_{\mathrm{LO}})\approx6\times10^{-5}$ Å⁻¹ against the polaron wavevector $q_{\mathrm{pol}}=0.025$ Å⁻¹, holds about $1.5\times10^{-3}$ of the Fröhlich-shift integrand.</li>
+    <li><strong>For your code.</strong> Without the ZPR, $GW$ agreement at the 0.1–0.5 eV level can be fortuitous, for instance in hBN. Temperature-dependent BSE needs electron–phonon energies and widths. In 2D the adiabatic Fröhlich integral diverges logarithmically while the nonadiabatic one converges (derived in the note).</li>
+  </ul>
+
+  <h3>How it could enter EPP</h3>
+  <p><strong>Electron Dyson equation (proposal).</strong> E.237 gives a paramagnetic self-energy from two $-\frac1c\bj\cdot\bA$ vertices and an $A^2$ tadpole, $G=G^{\mathrm{KS}}+G^{\mathrm{KS}}(\Sigma^{\mathrm{para}}+\Sigma^{\mathrm{dia}}-V^{\mathrm{xc}})G$. The temporal-gauge kernel differs from Coulomb off shell; on shell, with complete band sums and a local Hamiltonian (nonlocal pseudopotentials and scissors break it), para plus dia is gauge invariant up to a band-independent constant (derived in the note). Resumming the ions gives exactly (derived in the note; (B7.1) and (B7.6)) $D=D^{\rme}+D^{\ph}$ with $D^{\ph}=-D^{\rme}JFJ^\dagger D^{\rme}$: screened vertices at both ends, as in G.156. The note proposes the Coulomb gauge:</p>
+  <div class="eqp"><p class="eqp-tag">Proposal</p><div class="eq">$$\begin{aligned}\Sigma^{\mathrm{EPP}}&amp;\simeq\Sigma^{\mathrm L}[W]\\ &amp;\quad+\Sigma^{\mathrm T}\big[D^{\mathrm T}-D^{0\mathrm T}\big]\\ &amp;\quad+\Sigma^{\mathrm{dia,T}}\big[D^{\mathrm T}-D^{0\mathrm T}\big]\\ W&amp;=\frac{4\pi e^2}{\bq\cdot\boldsymbol\varepsilon(\bq,\omega)\cdot\bq}\end{aligned}$$</div></div>
+  <p>The transverse terms are of order $(v_{n\bk}/c)^2\approx10^{-7}$–$10^{-5}$, with $v_{n\bk}$ the band velocity, for electronic exchange and $(q_{\mathrm{light}}(\omega)/q)^2\approx10^{-6}$–$10^{-4}$ at the polaron scale; the vacuum $D^{0\mathrm T}$ is already in the electron mass. The lattice adds to the head of $W$</p>
+  <div class="eqp derived"><p class="eqp-tag">Derived in the note; LST check</p><div class="eq">$$\begin{aligned}W^{\ph}(\bq,\omega)&amp;=\big[W^{\rme}(\bq,\omega)\big]^2\sum_{\nu\nu'}\hbar F_{\nu\nu'}(\bq,\omega)\\ &amp;\quad\times\frac{(\bq\cdot\bj_\nu)(\bq\cdot\bj_{\nu'})^*}{2e^2\OV\sqrt{\omega_{\bq\nu}\omega_{\bq\nu'}}}\end{aligned}$$</div></div>
+  <p>For one isotropic mode this is Fröhlich's $|g|^2$ times the LO propagator, consistent with the Lyddane–Sachs–Teller (LST) form, and $\Sigma^{\mathrm L}$ gives G.157 with the vertex (B8.17). What is new: $\omega_{\mathrm{LO}}$ is an output (E.454), the screening $\boldsymbol\varepsilon^{\rme}(\bq,\omega)$ is dynamical, so doped crystals get the $\mathrm L_\pm$ modes of (B9.18) (<a href="#open-plasmon">topic 7</a>), and the residue $\omega_{\bq\nu}/\bar\omega_{\bq\nu}$ of $\hbar F$ fixes the normalization (<a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#x-dictionary" target="_blank" rel="noopener">§X.2</a>). Bose factors then enter only in $\Sigma$, as in G.158. A real Debye–Waller term needs a coupling second order in the displacements (G.159), or its rigid-ion form (G.195–198) built from a short-range vertex such as that of <a href="#open-shortrange">topic 5</a>; neither is in EPP.</p>
+
+  <h3>Pitfalls</h3>
+  <ul>
+    <li><strong>Reference and screening.</strong> Subtract $V^{\mathrm{xc}}$ with a KS reference, and never add Fan–Migdal to a $W$ screened with $\varepsilon_{\mathrm s}$.</li>
+    <li><strong>The polar vertex.</strong> Subtracting $g^{\mathrm{lr}}$ from a DFPT $g$ also removes the short–long cross term; keep it explicitly or from DFPT.</li>
+    <li><strong>Vertices and screening.</strong> Fan–Migdal takes two screened vertices, the phonon self-energy one bare and one screened. EPP's head of $\varepsilon^{\rme}_{\mathrm{RPA}}$, without local fields, differs from the screening of $GW$ and of DFPT, $\varepsilon^{\rme}_{\mathrm{RPA+xc}}$.</li>
+    <li><strong>Convergence.</strong> In 3D the $1/q^2$ singularity needs nonadiabatic denominators and analytic small-$q$ integration (error $\propto1/N_\bq$); in 2D use truncated Coulomb and integrate $Q_\parallel\lesssim\varepsilon_{\mathrm{env}}/r_0$ analytically.</li>
+  </ul>
+
+  <h3>First steps</h3>
+  <ol class="steps">
+    <li><strong>Derive (1–2 weeks).</strong> All prefactors and the $V^{\mathrm{xc}}$ subtraction; the $D^{\ph}$ identity and on-shell gauge equivalence; $c\to\infty$ gives G.157 with (B8.17).</li>
+    <li><strong>Analytic benchmark (days).</strong> Isotropic Fröhlich crystals (GaAs, GaN, MgO): $-\alpha_{\mathrm F}\hbar\omega_{\mathrm{LO}}$, the §A.8 rate, Bose factors; finite-$c$ corrections at most $10^{-3}$.</li>
+    <li><strong>2D test (2–4 weeks).</strong> A head-only $W^{\ph}(Q_\parallel,\omega)$ in your $GW$ code from E.469–E.472 with $\varepsilon_{\mathrm{env}}+r_0Q_\parallel$, on monolayer hBN: adiabatic divergence versus nonadiabatic convergence, $|g(Q_\parallel)|$ against Sohier et al. (2016) and §B.10's 2D Fröhlich coupling, $\varepsilon_{\mathrm{env}}$ varied at fixed $r_0$. MoS₂ only as a weak-polar control.</li>
+    <li><strong>Doped crystals.</strong> The dynamical $\boldsymbol\varepsilon^{\rme}$ with $\mathrm L_\pm$ modes in n-GaAs or gated MoS₂, compared with Kandolf et al. (2022), is now <a href="#open-plasmon">topic 7</a>, whose electron step builds on step 1.</li>
+    <li><strong>Toward BSE (months).</strong> A short-range channel with a Debye–Waller term, a cumulant, then energies and widths for temperature-dependent BSE (<a href="#open-optics">topic 1</a>), the hybrid self-energy of doped crystals (<a href="#open-plasmon">topic 7</a>) and, in Nambu form, pairing (<a href="#open-phases">topic 6</a>).</li>
+  </ol>
+
+  <h3>Key references</h3>
+  <ol class="refs">
+    <li>C. Verdi, F. Giustino, Phys. Rev. Lett. <b>115</b>, 176401 (2015). The polar vertex, EPP's $c\to\infty$ limit. <a href="https://doi.org/10.1103/PhysRevLett.115.176401" target="_blank" rel="noopener">doi:10.1103/PhysRevLett.115.176401</a></li>
+    <li>S. Botti, M. A. L. Marques, Phys. Rev. Lett. <b>110</b>, 226404 (2013). Lattice polarization in $W$. <a href="https://doi.org/10.1103/PhysRevLett.110.226404" target="_blank" rel="noopener">doi:10.1103/PhysRevLett.110.226404</a></li>
+    <li>G. Antonius et al., Phys. Rev. Lett. <b>112</b>, 215501 (2014). Many-body effects on the ZPR. <a href="https://doi.org/10.1103/PhysRevLett.112.215501" target="_blank" rel="noopener">doi:10.1103/PhysRevLett.112.215501</a></li>
+    <li>J. P. Nery, P. B. Allen, Phys. Rev. B <b>94</b>, 115135 (2016). Analytic small-$q$ Fröhlich correction. <a href="https://doi.org/10.1103/PhysRevB.94.115135" target="_blank" rel="noopener">doi:10.1103/PhysRevB.94.115135</a></li>
+    <li>A. Miglio et al., npj Comput. Mater. <b>6</b>, 167 (2020). Nonadiabatic ZPR survey. <a href="https://doi.org/10.1038/s41524-020-00434-z" target="_blank" rel="noopener">doi:10.1038/s41524-020-00434-z</a></li>
+    <li>N. Kandolf, C. Verdi, F. Giustino, Phys. Rev. B <b>105</b>, 085148 (2022). Doped Fröhlich solid. <a href="https://doi.org/10.1103/PhysRevB.105.085148" target="_blank" rel="noopener">doi:10.1103/PhysRevB.105.085148</a></li>
+  </ol>
+  <p class="note-path">Full note: <code>doc/epp-primer/open/topics/selfenergy.md</code> on the <code>electron-phonon</code> branch · <a href="#roadmap-overview">Back to the overview</a></p>
+</section>
+
+<section class="chapter" id="open-shortrange">
+  <header class="ch-head">
+    <p class="eyebrow"><span class="num">5</span><span>Short-range coupling</span></p>
+    <h2>Short-range coupling and higher multipoles</h2>
+    <p class="lede">EPP keeps only the polar channel. In a nonpolar crystal its electron–phonon coupling is zero, and in 2D, where short-range coupling is leading order, EPP §8 alone cannot give carrier or exciton scattering.</p>
+    <p class="rm-meta">Impact on 2D optics <span class="lvl lvl-3"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>high</span> Difficulty <span class="lvl lvl-3"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>high</span></p>
+  </header>
+
+  <h3>What is missing</h3>
+  <ul>
+    <li><strong>No deformation-potential vertex.</strong> EPP derives a rigid-ion vertex $g^0$ early on, (B1.4) in the primer, then drops it. In its Lagrangian (E.134) the electrons feel a frozen crystal potential, and the ions reach the field only through the Born-dipole current $\frac1c\dot\bp_{\ell\kappa}\cdot\bA(\btau_{\ell\kappa})$ with $\bp_{\ell\kappa}=e\mathbf Z^*_\kappa\cdot\bu_{\ell\kappa}$, the field taken at the atom (as <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#fn-b2-site" target="_blank" rel="noopener">§B.2</a> corrects; the draft takes it at the cell origin); no term contains both the electron coordinate and the displacement (<a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-lagrangian" target="_blank" rel="noopener">§B.2</a>). In Si, diamond or graphene ($Z^*=0$) the coupling vanishes; non-polar optical modes (MoS₂ A₁′) and the acoustic deformation potential are absent.</li>
+    <li><strong>Only the dipole moment.</strong> The ionic vertex (B5.22) is the zeroth moment of the current a moving atom carries. Optical modes get the full Fröhlich term; acoustic modes keep only the internal-strain dipole, without the clamped-ion (quadrupole) response. In GaAs that term alone is about 1.2 C/m² along [111] in the central-force model of <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b1-acoustic" target="_blank" rel="noopener">§B.1</a>, and 0.6–0.9 C/m² for a Kleinman (internal-strain) parameter of 0.5–0.75 (unverified range), against a measured 0.19 C/m² (illustrative).</li>
+    <li><strong>Force constants, local fields.</strong> EPP does not say what to subtract from DFPT's dipolar and multipolar tails, and its $\Pi^{\rme}$ has neither local fields nor $f^{\mathrm{xc}}$.</li>
+  </ul>
+
+  <h3>Why it matters</h3>
+  <ul>
+    <li><strong>Transport.</strong> The 300 K mobility of n-type monolayer MoS₂, about 410 cm²/Vs, is set by intra- and intervalley deformation potentials and the Fröhlich interaction (Kaasbjerg et al. 2012). Above the L-valley threshold, hot electrons in GaAs also relax by intervalley scattering, computed ab initio by Sjakste, Vast and Tyuterev (2007).</li>
+    <li><strong>2D power counting (derived in the note).</strong> The sheet dipole vertex $g\sim2\pi e^2Z^*u/[\OS(1+r_0Q_\parallel)]$ is $O(Q_\parallel^0)$, like the optical deformation potential, while piezoelectric and quadrupole terms are $O(Q_\parallel)$, like the acoustic one: in 2D short-range coupling is leading order. In MoS₂ ($r_0\approx40$ Å, illustrative), at the thermal-carrier and phonon-emission wavevectors, 0.06–0.12 Å⁻¹, $1/(1+r_0Q_\parallel)\approx0.17$–$0.29$.</li>
+    <li><strong>For your code.</strong> Exciton linewidths in W-based TMDs involve dark K–K′ and K–Λ excitons, hence phonons deep in the zone (Selig et al. 2016, not re-verified), as does phonon-assisted absorption. Reconciling DFPT's local-field screening with EPP's is the $\varepsilon_{\mathrm M}$ versus $\bar v$ split of your BSE code.</li>
+  </ul>
+
+  <h3>How it could enter EPP</h3>
+  <p><strong>Route A</strong> unfreezes the crystal potential $V^{\mathrm{en}}_0$ so that $\mathbf Z^*$, quadrupoles, $\varepsilon_\infty$ and the short-range vertex emerge from a $\bG\bG'$-resolved $\Pi^{\rme}$ with $f^{\mathrm{xc}}$: Hedin–Baym (G.121) in vector form, exact but expensive. <strong>Route B</strong> keeps EPP's structure and adds DFPT inputs under subtraction rules (proposals P0–P5 in the note). The polarization becomes macroscopically proper,</p>
+  <div class="eqp"><p class="eqp-tag">Proposal <span class="nt">(P0a)</span></p><div class="eq">$$\begin{gathered}\bar\chi=\chi^0+\chi^0\big(\bar v+f^{\mathrm{xc}}\big)\bar\chi\\ \bar v_{\bG}=v(\bq+\bG)\,(1-\delta_{\bG\mathbf 0})\end{gathered}$$</div></div>
+  <p>so E.350 gives $\Pi^{\rme}_{\rho\rho}=e^2\bar\chi_{00}$ and EPP regenerates DFPT's $\varepsilon_\infty=\varepsilon_{\mathrm M}$. The ionic current carries its multipoles, with a wavevector-dependent charge whose first correction holds the dynamical quadrupoles $\mathcal Q_{\kappa,\alpha\gamma\beta}$:</p>
+  <div class="eqp"><p class="eqp-tag">Proposal <span class="nt">(P1)</span></p><div class="eq">$$\begin{aligned}j_{\alpha\nu}(\bq+\bG)&amp;=\sum_{\kappa\beta}\frac{e\,Z^*_{\kappa,\alpha\beta}(\bq+\bG)}{\sqrt{M_\kappa}}\,e_{\kappa\beta,\nu}(\bq)\\ &amp;\quad\times\ee^{-\ii(\bq+\bG)\cdot\btau_\kappa}\\ Z^*_{\kappa,\alpha\beta}(\bq+\bG)&amp;=Z^*_{\kappa,\alpha\beta}\\ &amp;\quad-\tfrac{\ii}{2}\sum_\gamma(q_\gamma+G_\gamma)\,\mathcal Q_{\kappa,\alpha\gamma\beta}+\dots\end{aligned}$$</div></div>
+  <p>In P2 the bare phonons are DFPT minus exactly what EPP regenerates ((B9.15) with the multipolar charges), complete through $O(q)$. The short-range vertex is matched to DFPT in the static limit,</p>
+  <div class="eqp"><p class="eqp-tag">Proposal <span class="nt">(P3)</span></p><div class="eq">$$\begin{gathered}g^{\mathrm{tot}}(\omega)=g^{\mathrm{sr}}+\delta g^{\mathrm{sr}}(\omega)+g^{\mathrm{dyn}}(\omega)\\ g^{\mathrm{sr}}\equiv g^{\mathrm{DFPT}}-g^{\mathrm{dyn}}\big|_{c\to\infty,\,\omega=0}\end{gathered}$$</div></div>
+  <p>so the total equals the DFPT vertex at $c\to\infty$, $\omega=0$ by construction. In P4 the dynamic correction adds only the change of the induced charge, which matters in doped crystals and sheets (<a href="#open-plasmon">topic 7</a>), and in P5 the short-range bubbles enter the phonon Dyson equation only nonadiabatically. Gauge invariance at finite $\omega$ is not yet checked.</p>
+
+  <h3>Pitfalls</h3>
+  <ul>
+    <li><strong>Inconsistent $\varepsilon$.</strong> Subtracting $g^{\mathrm{lr}}$ with DFPT's $\varepsilon_\infty$, from $\varepsilon^{\rme}_{\mathrm{RPA+xc}}$ with local fields, and regenerating it with the head of EPP's $\varepsilon^{\rme}_{\mathrm{RPA}}$ leaves a Fröhlich tail $\propto(1/\varepsilon^{\rme}_{\mathrm{RPA}}-1/\varepsilon^{\rme}_{\mathrm{RPA+xc}})/q$. Local fields lower the RPA head by about 10% in sp semiconductors (illustrative) and ALDA raises it.</li>
+    <li><strong>Double screening.</strong> DFPT's $g$ is already screened at $\bG=0$; routed through $D^{\rme}$ it is screened twice (G.145 versus G.146).</li>
+    <li><strong>Routing.</strong> Every nonanalytic $\bG=0$ charge goes through the longitudinal photon; keep the filtered $\bG$ sum so nothing jumps at the zone boundary.</li>
+    <li><strong>Phases and conventions.</strong> Without the basis phase, GaAs gets a spurious 0.6–1.8 C/m² acoustic coupling (§B.1); a mismatched quadrupole convention flips the dipole–quadrupole interference.</li>
+  </ul>
+
+  <h3>First steps</h3>
+  <ol class="steps">
+    <li><strong>Derive and check (days).</strong> In 3D zincblende (the primer's 1D chains, in §B.1 and §B.5, cannot hold the quadrupoles T<sub>d</sub> allows): continuity of the multipolar current, cell independence of the acoustic vertex, the Martin relation (clamped-ion piezoelectric constant = sum of dynamical quadrupoles) against ABINIT's $e_{14}$, and P2's long-range force constants against ABINIT anaddb.</li>
+    <li><strong>Bulk benchmarks (1–2 weeks).</strong> Reproduce Brunin et al.'s Si and GaAs couplings with ABINIT to fix conventions, then swap in EPP's long-range vertex; an $R^{-3}$ tail in $g^{\mathrm{sr}}$ flags an $O(q^0)$ remainder.</li>
+    <li><strong>$\varepsilon$ consistency (1–2 weeks).</strong> Your RPA head with and without local fields and $f^{\mathrm{xc}}$; the residual $1/q$ tail.</li>
+    <li><strong>2D (1–2 months).</strong> Reproduce Poncé et al.'s MoS₂ results, then monolayer MoS₂ (A₁′, LO, LA at K and $|\mathrm K-\Lambda|$) with truncated DFPT and the §8 propagator.</li>
+    <li><strong>Hand-off (months).</strong> The total vertex to <a href="#open-selfenergy">topic 4</a> (linewidths beyond the polar part, and the vertex a Debye–Waller term is built from; the second-order coupling itself is an open question there), to <a href="#open-optics">topic 1</a> (phonon-assisted absorption) and to <a href="#open-phases">topic 6</a> (deformation-potential pairing).</li>
+  </ol>
+
+  <h3>Key references</h3>
+  <ol class="refs">
+    <li>R. M. Pick, M. H. Cohen, R. M. Martin, Phys. Rev. B <b>1</b>, 910 (1970). Analytic dielectric matrix. <a href="https://doi.org/10.1103/PhysRevB.1.910" target="_blank" rel="noopener">doi:10.1103/PhysRevB.1.910</a></li>
+    <li>P. Vogl, Phys. Rev. B <b>13</b>, 694 (1976). Multipole theory of the vertex. <a href="https://doi.org/10.1103/PhysRevB.13.694" target="_blank" rel="noopener">doi:10.1103/PhysRevB.13.694</a></li>
+    <li>X. Gonze, C. Lee, Phys. Rev. B <b>55</b>, 10355 (1997). Ewald dipole–dipole split. <a href="https://doi.org/10.1103/PhysRevB.55.10355" target="_blank" rel="noopener">doi:10.1103/PhysRevB.55.10355</a></li>
+    <li>J. Sjakste, N. Vast, V. Tyuterev, Phys. Rev. Lett. <b>99</b>, 236405 (2007). Scattering times in GaAs and GaP. <a href="https://doi.org/10.1103/PhysRevLett.99.236405" target="_blank" rel="noopener">doi:10.1103/PhysRevLett.99.236405</a></li>
+    <li>K. Kaasbjerg, K. S. Thygesen, K. W. Jacobsen, Phys. Rev. B <b>85</b>, 115317 (2012). Mobility of monolayer MoS₂. <a href="https://doi.org/10.1103/PhysRevB.85.115317" target="_blank" rel="noopener">doi:10.1103/PhysRevB.85.115317</a></li>
+    <li>C. Verdi, F. Giustino, Phys. Rev. Lett. <b>115</b>, 176401 (2015). Short- plus long-range interpolation. <a href="https://doi.org/10.1103/PhysRevLett.115.176401" target="_blank" rel="noopener">doi:10.1103/PhysRevLett.115.176401</a></li>
+  </ol>
+  <p class="rm-refnote">The quadrupole papers the note relies on (Royo and Stengel 2019; Brunin et al. 2020; Poncé et al., PRL 2023) are marked there as not re-verified and are not listed; the companion Poncé et al., Phys. Rev. B 107, 155424 (2023), is verified in the 2D note and listed under <a href="#open-twod">topic 2</a>.</p>
+  <p class="note-path">Full note: <code>doc/epp-primer/open/topics/shortrange.md</code> on the <code>electron-phonon</code> branch · <a href="#roadmap-overview">Back to the overview</a></p>
+</section>
+
+<section class="chapter" id="open-phases">
+  <header class="ch-head">
+    <p class="eyebrow"><span class="num">6</span><span>Ordered phases</span></p>
+    <h2>Superconductivity, charge density waves and condensates</h2>
+    <p class="lede">EPP as written cannot produce any ordered phase: it is a normal-state theory, and its static lattice self-energy only stabilises. It is, however, a natural language for pairing in polar and dilute superconductors.</p>
+    <p class="rm-meta">Impact on 2D optics <span class="lvl lvl-1"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>low</span> Difficulty <span class="lvl lvl-3"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>high</span></p>
+  </header>
+
+  <div class="tbl rm-small rm-cards"><table>
+    <thead><tr><th>Phase</th><th>EPP has</th><th>EPP lacks</th></tr></thead>
+    <tbody>
+      <tr><td>Superconductivity</td><td data-l="EPP has">The polar part of $D=D^{\rme}+D^{\ph}$, dynamically screened</td><td data-l="EPP lacks">$G$ with anomalous (Nambu–Gor'kov) parts; short-range $g$</td></tr>
+      <tr><td>CDW, ferroelectric</td><td data-l="EPP has">$F=F^0+F^0\Pi^{\ph}F$ (E.398)</td><td data-l="EPP lacks">Short-range electron–lattice coupling, the $\bG\neq0$ dipole sum, anharmonicity</td></tr>
+      <tr><td>Photon or polariton condensate</td><td data-l="EPP has">$\Pi(\omega)-\Pi(0)$ (E.281, E.311), which enforces the uniform no-go theorem</td><td data-l="EPP lacks">Static orbital response, excitons (BSE), cavity $D^0$, kinetics</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>What is missing</h3>
+  <ul>
+    <li><strong>No fermion propagator.</strong> Electrons appear only as the RPA bubble (E.282–E.283; <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-photon-se" target="_blank" rel="noopener">§B.5</a>): no $G$, no $\Sigma$, no pair amplitude, no gap equation.</li>
+    <li><strong>Only the polar channel.</strong> Ions couple through $\frac1c\dot\bp_{\ell\kappa}\cdot\bA$ (E.134–E.135) on a frozen potential and a harmonic lattice; deformation-potential coupling, which dominates $\lambda_{\mathrm{ep}}$ in conventional superconductors and CDW metals, is absent (<a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-frohlich" target="_blank" rel="noopener">§B.8</a>).</li>
+    <li><strong>Only hardening (derived in the note).</strong> In RPA $W^{\rme}(\bq,0)\gt0$, so EPP's lattice Dyson equation (E.452–E.454; (B9.8)–(B9.10)) can never drive $\omega^2$ to zero. Cochran softening (the polar TO frequency driven to zero) needs the $\bG\neq0$ dipole sum, which the Dyson route drops.</li>
+  </ul>
+
+  <h3>Why it matters</h3>
+  <ul>
+    <li><strong>Dilute polar superconductors.</strong> SrTiO₃ superconducts down to $5.5\times10^{17}$ cm⁻³, where $E_{\mathrm F}\approx1.1$ meV (Lin et al. 2013), far below its polar phonons: Migdal's condition and the scale separation behind $\mu^*$ (G.204) both fail. LO phonons (Gor'kov 2016), plasmons (Ruhman and Lee 2016) and soft TO modes have all been proposed; the plasmon–phonon hybrids of <a href="#open-plasmon">topic 7</a> contain the first two.</li>
+    <li><strong>Interfacial coupling.</strong> Monolayer FeSe on SrTiO₃ opens gaps near 70 K (bulk FeSe about 8 K), with replica bands about 100 meV below the main bands (Lee et al. 2014). Faeth et al. (2021) find $\lambda_{\mathrm{ep}}=0.19\pm0.02$; in model RPA the FeSe electrons screen the coupling almost completely (Zhou and Millis 2017).</li>
+    <li><strong>Light cone.</strong> Pairing samples $2k_{\mathrm F}\sim0.2$–$2$ Å⁻¹, so the Fermi-surface fraction inside the light cone is $2.5\times10^{-11}$–$2.5\times10^{-7}$ in 3D (derived in the note).</li>
+    <li><strong>For your code.</strong> The Coulomb part of pairing (G.209) is a Fermi-surface matrix element of your full $W_{\bG\bG'}(\bq,\ii\omega)$, with $W^{\ph}$ added to the head only. Excitonic insulators are BSE problems with an anomalous self-energy.</li>
+  </ul>
+
+  <h3>How it could enter EPP</h3>
+  <p><strong>Pairing kernel from $D$ (proposal).</strong> In Nambu form EPP's current vertex enters as the unit matrix $\hat\tau_0$ and its charge and diamagnetic vertices as the Pauli matrix $\hat\tau_3$; in Coulomb-gauge form (exact for $c\to\infty$) the pairing interaction is $W=W^{\rme}+W^{\ph}$, with an attractive lattice part at the Matsubara frequency $\ii\omega$:</p>
+  <div class="eqp derived"><p class="eqp-tag">Derived in the note</p><div class="eq">$$W^{\ph}(\bq,\ii\omega)=-\frac{4\pi e^2}{q^2}\,\frac{\big(\omega^{\ion}_{\mathrm p}\big)^2/\varepsilon_\infty^2}{\omega^2+\bar\omega_{\mathrm{LO}}^2}$$</div></div>
+  <p>for one isotropic mode, with $\bar\omega^2_{\mathrm{LO}}=\omega^2_{\mathrm{TO}}+(\omega^{\ion}_{\mathrm p})^2/\varepsilon_\infty$; with carriers $\varepsilon_\infty$ becomes $\varepsilon^{\rme}(\bq,\ii\omega)$, pointwise in $\ii\omega$. The linearized gap equation G.209 then holds with</p>
+  <div class="eqp"><p class="eqp-tag">Proposal</p><div class="eq">$$\begin{aligned}&amp;\lambda_{n\bk,m\bk'}(\ii\omega)-N_{\mathrm F}V_{n\bk,m\bk'}\\ &amp;\quad\to-N_{\mathrm F}\big\langle W^{\rme}+W^{\ph}\big\rangle_{n\bk,m\bk'}(\ii\omega)\end{aligned}$$</div></div>
+  <p>where $N_{\mathrm F}V$ is the screened repulsion of G.209, whose Fermi-surface average is $\mu_{\mathrm C}$ (<a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#a-applications" target="_blank" rel="noopener">§A.9</a>), and $\langle\cdot\rangle_{n\bk,m\bk'}$ a matrix element between the paired states, using the full $W(\bq,\ii\omega)$ without splitting. This is the dielectric formulation of pairing that Takada (1980) applied to n-SrTiO₃; EPP would add first-principles $\mathbf Z^*$, $\varepsilon^{\rme}(\bq,\ii\omega)$ and anisotropy, but still lacks the short-range $g$ and vertex corrections for $\omega_{\mathrm{LO}}/E_{\mathrm F}\gtrsim1$. A layered substrate Green's function turns the FeSe/SrTiO₃ coupling into a Fuchs–Kliewer (substrate surface-phonon) pole of $W$.</p>
+  <p><strong>Meissner kernel, soft modes, condensates.</strong> With Nambu propagators $\Pi^{\mathrm T}(\bq\to0,0)\propto n_{\mathrm s}/m^*$, so E.279 must replace E.281, with Nambu's Ward identity in the longitudinal sector. Reinstating $g^0$ (E.107; (B1.4)) for soft modes (proposal) admits only two consistent partitions, screened-adiabatic or fully bare. And E.281 and E.311 set $\Pi_{\alpha\beta}(\bq,0)=0$ at every $\bq$: this enforces the uniform no-go theorem (Andolina et al. 2019) but deletes the electrons' static orbital response, which a finite-$q$ photon condensate needs ($\chi_{\mathrm{orb}}\gt1/4\pi$ in 3D; Andolina et al. 2020).</p>
+
+  <h3>Pitfalls</h3>
+  <ul>
+    <li><strong>Double counting.</strong> No empirical $\mu^*$ on top of $W^{\rme}$, and no separate $v$ besides $D^{0\mathrm L}$.</li>
+    <li><strong>Normal self-energy.</strong> Bare bands with the full normal part, or $GW$ bands with only $W^{\ph}$ and the anomalous part of $W^{\rme}$.</li>
+    <li><strong>Gauge.</strong> $\Pi(\omega)-\Pi(0)$ is exact longitudinally at all $q$ but transversely only as $q\to0$; truncated band sums fake a Drude weight.</li>
+    <li><strong>Matsubara.</strong> $T_{\mathrm c}\approx0.1$–$0.4$ K with Matsubara energies up to 0.1–0.5 eV needs $5\times10^2$–$10^4$ positive frequencies: use a sparse basis.</li>
+  </ul>
+
+  <h3>First steps</h3>
+  <ol class="steps">
+    <li><strong>Derive (1–2 weeks).</strong> Nambu vertices; reduction to G.208–G.210 with $|g^{\mathrm{lr}}|^2$ (B8.17); Morel–Anderson (the $\mu^*$ pseudopotential) only for $\bar\omega_{\mathrm p}\gg\omega_{\mathrm{LO}}$; the Meissner kernel with the Ward identity.</li>
+    <li><strong>Benchmark (2–3 weeks).</strong> Reproduce Takada (1980) and Gastiasoro et al. (2019) from EPP's single propagator, then add $\mathbf Z^*$ and $\varepsilon^{\rme}(\bq,\ii\omega)$ from your RPA code, or the hybrid $W$ of <a href="#open-plasmon">topic 7</a>; for SrTiO₃ include the soft TO₁ mode (about 1–2 meV) and LO modes near 21, 59 and 98 meV.</li>
+    <li><strong>Interface (1–2 months).</strong> From Zhou and Millis, $W(\bQ_\parallel,\ii\omega;0,0)$ from §B.10 plus a layered substrate, compared with Faeth et al.</li>
+    <li><strong>Soft modes (about 1 week).</strong> Cochran softening for SrTiO₃ or BaTiO₃ from the $\bG\neq0$ dipole sum, a consistency check.</li>
+    <li><strong>Polaritons (months).</strong> MoSe₂ in a cavity with the $\Pi^{\mathrm{e,BSE}}$ of <a href="#open-optics">topic 1</a>: no $q=0$ instability with $\Pi(\omega)-\Pi(0)$.</li>
+  </ol>
+
+  <h3>Key references</h3>
+  <ol class="refs">
+    <li>Y. Nambu, Phys. Rev. <b>117</b>, 648 (1960). Ward identity, Meissner kernel. <a href="https://doi.org/10.1103/PhysRev.117.648" target="_blank" rel="noopener">doi:10.1103/PhysRev.117.648</a></li>
+    <li>X. Lin et al., Phys. Rev. X <b>3</b>, 021002 (2013). Dilute superconducting SrTiO₃. <a href="https://doi.org/10.1103/PhysRevX.3.021002" target="_blank" rel="noopener">doi:10.1103/PhysRevX.3.021002</a></li>
+    <li>J. J. Lee et al., Nature <b>515</b>, 245 (2014). FeSe/SrTiO₃ replica bands. <a href="https://doi.org/10.1038/nature13894" target="_blank" rel="noopener">doi:10.1038/nature13894</a></li>
+    <li>Y. Zhou, A. J. Millis, Phys. Rev. B <b>96</b>, 054516 (2017). RPA screening at the interface. <a href="https://doi.org/10.1103/PhysRevB.96.054516" target="_blank" rel="noopener">doi:10.1103/PhysRevB.96.054516</a></li>
+    <li>M. N. Gastiasoro, A. V. Chubukov, R. M. Fernandes, Phys. Rev. B <b>99</b>, 094524 (2019). Pairing at $E_{\mathrm F}\lesssim\hbar\omega_{\mathrm{ph}}$. <a href="https://doi.org/10.1103/PhysRevB.99.094524" target="_blank" rel="noopener">doi:10.1103/PhysRevB.99.094524</a></li>
+    <li>G. M. Andolina et al., Phys. Rev. B <b>100</b>, 121109(R) (2019). No-go theorem. <a href="https://doi.org/10.1103/PhysRevB.100.121109" target="_blank" rel="noopener">doi:10.1103/PhysRevB.100.121109</a></li>
+    <li>C. Faeth et al., Phys. Rev. Lett. <b>127</b>, 016803 (2021). Intrinsic replica bands. <a href="https://doi.org/10.1103/PhysRevLett.127.016803" target="_blank" rel="noopener">doi:10.1103/PhysRevLett.127.016803</a></li>
+  </ol>
+  <p class="note-path">Full note: <code>doc/epp-primer/open/topics/phases.md</code> on the <code>electron-phonon</code> branch · <a href="#roadmap-overview">Back to the overview</a></p>
+</section>
+
+<section class="chapter" id="open-plasmon">
+  <header class="ch-head">
+    <p class="eyebrow"><span class="num">7</span><span>Plasmon–phonon hybrids</span></p>
+    <h2>Free carriers: plasmons, coupled modes and dynamic screening</h2>
+    <p class="lede">EPP's phonon self-energy already contains the plasmon of a doped crystal (E.453), but the manuscript sets $\omega=0$ in the screening (E.454). Kept dynamic, LO phonons and plasmons become hybrids. Lihm and Park (2024) compute them from first principles with one extra row in the dynamical matrix, and their self-energy is the carrier part of EPP's in the electrostatic limit.</p>
+    <p class="rm-meta">Impact on 2D optics <span class="lvl lvl-2"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>medium</span> Difficulty <span class="lvl lvl-1"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>low</span></p>
+  </header>
+  <p class="rm-pre">GaAs numbers use the primer's set: $\hbar\omega_{\mathrm{TO}}=33.3$ meV, $\hbar\omega_{\mathrm{LO}}=36.2$ meV, $\varepsilon_\infty=10.9$, $\varepsilon_{\mathrm s}=12.9$, $m^*=0.067\,m_{\mathrm e}$.</p>
+
+  <h3>What is missing</h3>
+  <ul>
+    <li><strong>The equations allow it.</strong> The phonon self-energy $\Pi^{\ph}=-J^*D^{\rme}J$ (E.398–E.399) uses the photon line dressed by the RPA bubble (E.388). With carriers the bubble gains a Drude term and $D^{\rme}$ a plasmon pole, so the pole condition E.453 contains the coupled modes (<a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-phonon-se" target="_blank" rel="noopener">§B.7</a>, <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b9-dynamic" target="_blank" rel="noopener">§B.9</a>).</li>
+    <li><strong>The manuscript stops at E.454.</strong> It calls 3D screening “practically static” at phonon energies: true with a gap or with a plasmon far above the phonons, false for $q\lesssim\omega_{\mathrm{LO}}/v_{\mathrm F}$ when the plasmon lies near or below them. The 2D result (E.471–E.472) is static too, and §7.3 keeps only diagonal self-energies, though one plasmon couples to every polar mode with a current along $\hat\bq$.</li>
+    <li><strong>The primer has models, not a method.</strong> <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b9-dynamic" target="_blank" rel="noopener">§B.9</a> derives the Drude modes $\mathrm L_\pm$ (B9.18) and the adiabatic result (B9.19), <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b8-dynamic" target="_blank" rel="noopener">§B.8</a> the vertex screened at the phonon frequency, <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b10-doped" target="_blank" rel="noopener">§B.10</a> a Drude sheet: one isotropic parabolic band at $T=0$, without carrier scattering.</li>
+    <li><strong>No electron side.</strong> Without an electron Dyson equation (<a href="#open-selfenergy">topic 4</a>) the hybrids give no self-energy, satellite or pairing kernel.</li>
+  </ul>
+
+  <h3>Why it matters</h3>
+  <ul>
+    <li><strong>Static screening fails.</strong> In n-GaAs the screened plasma frequency $\bar\omega_{\mathrm p}$ crosses $\omega_{\mathrm{LO}}$ near $7\times10^{17}$ cm⁻³; at $10^{18}$ cm⁻³ the modes sit at 47.8 and 30.3 meV. Static Thomas–Fermi screening instead pulls the LO mode to $\omega_{\mathrm{TO}}$ below $k_{\mathrm{TF}}/\sqrt{\varepsilon_\infty}=0.021$ Å⁻¹, though the carriers cannot follow below $\omega_{\mathrm{LO}}/v_{\mathrm F}=0.010$ Å⁻¹.</li>
+    <li><strong>First principles meet Raman.</strong> Lihm and Park reproduce the GaAs data of Mooradian and McWhorter (1967) without free parameters; in the same figure their static calculation loses the LO–TO splitting above $2\times10^{15}$ cm⁻³. In anatase TiO₂ one to three polar modes hybridize, depending on $\hat\bq$.</li>
+    <li><strong>Electrons.</strong> Statically screened phonons underestimate $-\mathrm{Im}\,\Sigma$; adding a bare plasmon overestimates it at low density, where the plasmon-like hybrid couples with only $(\varepsilon_\infty/\varepsilon_{\mathrm s})^{3/2}$ of the bare plasmon's strength, 0.78 in GaAs (derived in the note).</li>
+    <li><strong>For your code.</strong> A gated sheet's $\sqrt{Q_\parallel}$ plasmon crosses the LO branch: in the primer's MoS₂-like sheet at $10^{12}$ cm⁻² the modes split by 4.3 meV, against a 0.2 meV undoped shift (<a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b10-doped" target="_blank" rel="noopener">§B.10</a>). Your dynamically screened $W$ of a doped sheet contains these hybrids.</li>
+  </ul>
+
+  <h3>How it could enter EPP</h3>
+  <p><strong>Lihm and Park's self-energy is the carrier part of EPP's.</strong> Split the electrons into the bound electrons of the undoped crystal and the carriers, with interacting response $\chi_{\mathrm c}$. The RPA chain (B9.6) and the self-energy (B9.8) regroup exactly:</p>
+  <div class="eqp derived"><p class="eqp-tag">Derived in the note from (B9.6) and (B9.8)</p><div class="eq">$$\begin{gathered}W^{\rme}=W^{\rme}_\infty+W^{\rme}_\infty\,\chi_{\mathrm c}\,W^{\rme}_\infty\\ W^{\rme}_\infty(\bq)=\frac{4\pi e^2}{\bq\cdot\boldsymbol\varepsilon_\infty\cdot\bq}\\ \frac2\hbar\sqrt{\bar\omega_{\bq\nu}\bar\omega_{\bq\nu'}}\;\Pi^{\ph}_{\mathrm c,\nu\nu'}\\ =\frac{W^{\rme}_\infty\,\chi_{\mathrm c}\,W^{\rme}_\infty}{e^2\OV}\,(\bq\cdot\bar\bj_\nu)^*(\bq\cdot\bar\bj_{\nu'})\end{gathered}$$</div></div>
+  <p>The first term turns Part B's bare lattice into the undoped crystal, whose modes $\bar\omega_{\bq\nu}$ (mode currents $\bar\bj_\nu$) are the DFPT phonons. The second is their Eq. (1), with $U_\bq=W^{\rme}_\infty/\OV$ and $\delta\chi=\OV\chi_{\mathrm c}$; their propagator, in units of 1/frequency², is $\hbar F/(2\sqrt{\bar\omega\bar\omega'})$. As $W^{\rme}_\infty\chi_{\mathrm c}W^{\rme}_\infty=W^{\rme}_\infty\chi^0_{\mathrm c}W^{\rme}$, it keeps §B.8's count: one vertex screened by the bound electrons only, one fully screened.</p>
+  <p><strong>A plasmon pole and one more row.</strong> With $W^{\rme}_\infty\chi_{\mathrm c}\simeq\bar\omega_{\mathrm p}^2/[(\omega+\ii\gamma^{\mathrm{pl}}_\bq)^2-(\omega^{\mathrm{pl}}_\bq)^2]$, the strength fixed by the f-sum rule and the frequency by the static response (Lihm and Park fit both, and the width, to the RPA response), the squared hybrid frequencies are the eigenvalues of</p>
+  <div class="eqp derived"><p class="eqp-tag">Derived in the note; Lihm and Park, Eqs. (5)–(6)</p><div class="eq">$$\begin{gathered}\mathsf C(\bq)=\begin{pmatrix}(\omega^{\mathrm{pl}}_\bq)^2&amp;\bar\omega_{\mathrm p}\bar\omega^{\ion}_{\mathrm p,1}&amp;\cdots\\ \bar\omega_{\mathrm p}\bar\omega^{\ion}_{\mathrm p,1}&amp;\bar\omega^2_{\bq1}&amp;\cdots\\ \vdots&amp;&amp;\ddots\end{pmatrix}\\ \big(\bar\omega^{\ion}_{\mathrm p,\nu}\big)^2=\frac{4\pi\,|\hat\bq\cdot\bar\bj_\nu|^2}{\OV\,\hat\bq\cdot\boldsymbol\varepsilon_\infty\cdot\hat\bq}\end{gathered}$$</div></div>
+  <p>Each wing is a product of two screened plasma frequencies, of the carriers and of one polar mode. For one LO mode the eigenvalues give (B9.18) at $q\to0$, the self-energy at $\omega=0$ gives (B9.19), and the secular equation is $\varepsilon^{\mathrm L}(\bq,\omega)=0$ for carriers and ions together. A matrix of twice the size adds half widths, $\omega_{\bq s}-\ii\gamma_{\bq s}$. Electrons see hybrid $s$ with a share $\bar\omega_{\mathrm p,s}$ of the plasma frequencies:</p>
+  <div class="eqp derived"><p class="eqp-tag">Derived in the note</p><div class="eq">$$\begin{gathered}\frac{W(\bq,\omega)}{W^{\rme}_\infty(\bq)}-1=\sum_s\frac{\bar\omega^2_{\mathrm p,s}}{\omega^2-\omega^2_{\bq s}}\\ \sum_s\bar\omega^2_{\mathrm p,s}=\bar\omega^2_{\mathrm p}+\sum_\nu\big(\bar\omega^{\ion}_{\mathrm p,\nu}\big)^2\end{gathered}$$</div></div>
+  <p>Their Eq. (10) is then the Fan–Migdal form (A7.9) with hybrids for phonons. <strong>Beyond the paper (proposals).</strong> At finite $c$ the same $D$ gives transverse branches that start at $\omega_{\mathrm L\pm}$; infrared probes $q\lesssim q_{\mathrm{light}}(\omega)\sim10^{-4}$ Å⁻¹, far below the $2\times10^{-3}$ Å⁻¹ of their anatase figure, and there a uniaxial crystal mixes L and T (<a href="#open-aniso">topic 3</a>). In 2D the method takes a $\sqrt{Q_\parallel}$ pole and the sheet's $W^{\mathrm{e,2D}}_\infty$, with substrates from <a href="#open-twod">topic 2</a>. With a dynamic $D^{\rme}$, $D=D^{\rme}+D^{\ph}$ gives the electron self-energy (<a href="#open-selfenergy">topic 4</a>) without adding a bare plasmon to static phonons, and the pairing kernel of dilute polar superconductors (<a href="#open-phases">topic 6</a>).</p>
+
+  <h3>Pitfalls</h3>
+  <ul>
+    <li><strong>Dipole field twice.</strong> Dress undoped DFPT phonons with $W^{\rme}_\infty\chi_{\mathrm c}W^{\rme}_\infty$ only, not with the full doped $W^{\rme}$; from Part B's bare lattice, use one $\boldsymbol\varepsilon_\infty$ in $\Phi^{\mathrm{dd}}$ and $W^{\rme}_\infty$.</li>
+    <li><strong>Carriers twice.</strong> Pair $\chi_{\mathrm c}$ with vertices screened by $\boldsymbol\varepsilon_\infty$ only (Berges et al. 2023; Marini 2023), and never add a dynamic carrier self-energy to force constants from static DFPT with doping.</li>
+    <li><strong>Limits and poles.</strong> Compare $q$ with $\omega_{\mathrm{LO}}/v_{\mathrm F}$ and $k_{\mathrm{TF}}/\sqrt{\varepsilon_\infty}$. Fit the pole to the f-sum rule and the static response; inside the particle–hole continuum use the full Lindhard function or several poles.</li>
+    <li><strong>Real carriers.</strong> Below about $3\times10^{17}$ cm⁻³ GaAs carriers are non-degenerate at 300 K (Debye screening); the strength needs their average inverse-mass tensor. Debye screening with $\varepsilon_\infty=10.9$ reaches $8\times10^{-4}$ Å⁻¹ at half the density Lihm and Park quote: settle this before benchmarking.</li>
+  </ul>
+
+  <h3>First steps</h3>
+  <ol class="steps">
+    <li><strong>Derive (days).</strong> The mapping and the matrix with all prefactors and phases; (B9.18), (B9.19), the f-sum rule and the hybrid weights; the electron–hybrid vertex against Lihm and Park's Supplemental Material.</li>
+    <li><strong>GaAs (1–2 weeks).</strong> Their dispersion at $q=8\times10^{-4}$ Å⁻¹ and 300 K with a finite-temperature Lindhard response, then a nonparabolic band; Mooradian and McWhorter's Raman data.</li>
+    <li><strong>Finite $c$ (1–2 weeks).</strong> Plasmon–phonon polaritons and infrared reflectivity of n-GaAs from the full $D$; then a uniaxial crystal with <a href="#open-aniso">topic 3</a>.</li>
+    <li><strong>2D in your code (2–4 weeks).</strong> Doped MoS₂ or a gated sheet with truncated Coulomb: a pole fitted at each $Q_\parallel$, the matrix with $W^{\mathrm{e,2D}}_\infty$, against §B.10's Drude sheet and static doped DFPT in 2D (Macheda et al. 2023).</li>
+    <li><strong>Electrons (months).</strong> Hybrid vertex and self-energy with <a href="#open-selfenergy">topic 4</a>'s Dyson equation, taking over its doped-crystal step; satellites; the hybrid $W$ as <a href="#open-phases">topic 6</a>'s pairing kernel.</li>
+  </ol>
+
+  <h3>Key references</h3>
+  <ol class="refs">
+    <li>J.-M. Lihm, C.-H. Park, Phys. Rev. Lett. <b>133</b>, 116402 (2024). Plasmon–phonon dynamical matrix from first principles. <a href="https://doi.org/10.1103/PhysRevLett.133.116402" target="_blank" rel="noopener">doi:10.1103/PhysRevLett.133.116402</a></li>
+    <li>B. B. Varga, Phys. Rev. <b>137</b>, A1896 (1965). Prediction of the coupled modes. <a href="https://doi.org/10.1103/PhysRev.137.A1896" target="_blank" rel="noopener">doi:10.1103/PhysRev.137.A1896</a></li>
+    <li>A. Mooradian, G. B. Wright, Phys. Rev. Lett. <b>16</b>, 999 (1966). Raman observation in GaAs. <a href="https://doi.org/10.1103/PhysRevLett.16.999" target="_blank" rel="noopener">doi:10.1103/PhysRevLett.16.999</a></li>
+    <li>A. Mooradian, A. L. McWhorter, Phys. Rev. Lett. <b>19</b>, 849 (1967). The GaAs data Lihm and Park reproduce. <a href="https://doi.org/10.1103/PhysRevLett.19.849" target="_blank" rel="noopener">doi:10.1103/PhysRevLett.19.849</a></li>
+    <li>F. Macheda, P. Barone, F. Mauri, Phys. Rev. Lett. <b>129</b>, 185902 (2022). Static DFPT with doping. <a href="https://doi.org/10.1103/PhysRevLett.129.185902" target="_blank" rel="noopener">doi:10.1103/PhysRevLett.129.185902</a></li>
+    <li>J. Berges et al., Phys. Rev. X <b>13</b>, 041009 (2023). Which vertices to screen. <a href="https://doi.org/10.1103/PhysRevX.13.041009" target="_blank" rel="noopener">doi:10.1103/PhysRevX.13.041009</a></li>
+    <li>A. Marini, Phys. Rev. B <b>107</b>, 024305 (2023). A phonon self-energy free from overscreening. <a href="https://doi.org/10.1103/PhysRevB.107.024305" target="_blank" rel="noopener">doi:10.1103/PhysRevB.107.024305</a></li>
+  </ol>
+  <p class="note-path">Full note: <code>doc/epp-primer/open/topics/plasmon.md</code> on the <code>electron-phonon</code> branch · <a href="#roadmap-overview">Back to the overview</a></p>
+</section>
+
+<section class="chapter" id="roadmap-closing">
+  <header class="ch-head"><h2>Relation to the corrections already made</h2></header>
+  <p>The seven notes build on the draft as the primer's Part B corrects it. The basis phase of the Born-dipole vertex (footnotes of <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#fn-b1-polar" target="_blank" rel="noopener">§B.1</a>, <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#fn-b2-site" target="_blank" rel="noopener">§B.2</a> and <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#fn-b5-jion" target="_blank" rel="noopener">§B.5</a>) carries the atomic heights used in 2D and removes the spurious acoustic coupling that the short-range and anisotropy work must avoid. The general-$q$ reading of E.410, (B7.13)–(B7.22) in <a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#b-phonon-se" target="_blank" rel="noopener">§B.7</a>, is the starting point of the anisotropic propagator. The factor $e$ restored in the continuity equation (<a href="https://claude.ai/artifact/VpqcSjXyAFNMcgBmiv3Gid#fn-b6-efactor" target="_blank" rel="noopener">§B.6</a>; (B8.11)) underlies the gauge arguments of the self-energy and pairing proposals. Those corrections fix what EPP already says, and §B.7's finite-$q$ results complete its §7.1; the topics here extend what it covers. Part B also works out, as models, steps the draft does not take: the LO-phonon–plasmon modes of a doped crystal (§B.9) and of a doped sheet (§B.10), the sheet in a dielectric environment and at finite $c$ (§B.10) and the uniaxial propagator of hBN (§B.9). Topics 2, 3 and 7 start from them.</p>
+</section>
+
+<footer class="rm-foot" id="roadmap-sources">
+  <p><strong>Sources.</strong> Seven research notes in <code>doc/epp-primer/open/topics/</code> (electron-phonon branch): six reviewed independently for the physics and the citations, and the plasmon–phonon note checked numerically against the primer and then rechecked once independently (its §9). F. Giustino, “Electron-phonon interactions from first principles”, Rev. Mod. Phys. <b>89</b>, 015003 (2017); “Theory of the Electron-Phonon-Photon coupling”, manuscript draft v2; the primer's second edition for notation, equation numbers and presets. Numbers marked illustrative are model or order-of-magnitude values, mostly from the primer's presets. References the notes could not re-verify are named in the text only, never listed.</p>
+</footer>

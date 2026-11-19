@@ -1,0 +1,409 @@
+  <figure class="viz" id="viz-a5-exchange">
+    <p class="viz-title">Two electrons coupled by a row of ions <span class="tag">interactive</span></p>
+    <div class="a5-exchange-scene"></div>
+    <div class="legend a5-exchange-leg1"><span class="item"><svg width="24" height="12" viewBox="0 0 24 12" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><line x1="2" y1="6" x2="16" y2="6" stroke-width="2.2" style="stroke:var(--c-phonon)"/><path d="M22 6 L14.5 2.4 L14.5 9.6 Z" style="fill:var(--c-phonon)"/></svg>force $\bF_\ell(x_1)$ of electron 1 on ion $\ell$</span><span class="item"><svg width="24" height="12" viewBox="0 0 24 12" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><line x1="2" y1="6" x2="16" y2="6" stroke-width="2.2" style="stroke:var(--fg)"/><path d="M22 6 L14.5 2.4 L14.5 9.6 Z" style="fill:var(--fg)"/></svg>displacement $\mathrm{Re}\,\bu_\ell$</span><span class="item"><span style="font-family:var(--font-ui);color:var(--t-phonon);margin-right:5px">amber numbers:</span>each ion's term in $\mathrm{Re}\,W^{\ph}$ (eV)</span></div>
+    <div class="a5-exchange-plot" style="margin-top:12px"></div>
+    <div class="legend a5-exchange-leg2"><span class="item" style="color:var(--c-electron)"><span class="sw"></span><span style="color:var(--fg-2)">$W^{\rme}$</span></span><span class="item" style="color:var(--c-phonon)"><span class="sw"></span><span style="color:var(--fg-2)">$\mathrm{Re}\,W^{\ph}$</span></span><span class="item" style="color:var(--c-photon)"><span class="sw" style="border-top-width:3.5px"></span><span style="color:var(--fg-2)">total $\mathrm{Re}\,W=W^{\rme}+\mathrm{Re}\,W^{\ph}$</span></span><span class="item" style="color:var(--c-photon)"><span class="sw box"></span><span style="color:var(--fg-2)">$\mathrm{Re}\,W&lt;0$: attraction</span></span></div>
+    <div class="a5-exchange-ctrls"></div>
+    <div class="readout a5-exchange-ro" aria-live="polite"><span>at $x_2-x_1$<b class="a5-exchange-v-x"></b></span><span>$W^{\rme}$<b class="a5-exchange-v-we"></b></span><span>$\mathrm{Re}\,W^{\ph}$<b class="a5-exchange-v-wph"></b></span><span>$\mathrm{Re}\,W$<b class="a5-exchange-v-w"></b></span><span>$\omega/\omega_0$<b class="a5-exchange-v-r"></b></span><span>ions<b class="a5-exchange-v-ion"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> The ions add a sum of (force from electron 1) × (displacement per unit force) × (force on electron 2), <a class="eqref" href="#a5-eq-toy">(A5.4)</a>. Below $\omega_0$ the ions move toward electron 1 and $W^{\ph}&lt;0$ near it; above $\omega_0$ they move against the force and the sign flips.</p><div class="cap-more"><p><strong>Marks.</strong> Blue: the electrons, 1 the source (dot, above an ion) and 2 the probe (ring), and $W^{\rme}$. Amber: the ions, with crosses at their sites, the forces $\bF_\ell(x_1)$, each ion's term of the sum (numbers, eV) and $\mathrm{Re}\,W^{\ph}$. Black arrows (white in the dark theme): the displacements $\mathrm{Re}\,\bu_\ell$, on one fixed scale; a double bar marks an arrow cut to fit. Rose: the total $W$, shaded where it is negative.</p><p><strong>Try.</strong> Sweep $\hbar\omega$ through <span class="nw">15 meV:</span> the displacement arrows flip and $W^{\ph}$ changes sign. At $\hbar\omega=0$ the ions nearly halve the repulsion without reversing it. Lower $k_{\mathrm{TF}}$ (weaker screening): $W^{\rme}$ and $W^{\ph}$ both grow, and more ions take part. Drag electron 2 (row or plot) to find where the total is attractive. Play: the halo of electron 1 pulses with its charge, $\cos\omega t$, and each ion moves along its arrow, in step below $\omega_0$ and against it above.</p><p><strong>Model.</strong> <a class="eqref" href="#a5-eq-toy">(A5.4)</a> with damping, $W^{\ph}=\sum_\ell\bF_\ell(x_2)\cdot\bF_\ell(x_1)/[M(\omega^2-\omega_0^2+\ii\gamma\omega)]$ (real part plotted) and $\bu_\ell=\bF_\ell(x_1)/[M(\omega_0^2-\omega^2-\ii\gamma\omega)]$. Each Einstein ion is its own phonon mode, so <a class="eqref" href="#a5-eq-Wph">(A5.28)</a> reduces to <a class="eqref" href="#a5-eq-toy">(A5.4)</a>. Screened Coulomb $W^{\rme}(r)=(e^2/r)\,\ee^{-k_{\mathrm{TF}}r}$, electron–ion energy $-ZW^{\rme}$; 21 ions <span class="nw">$a=3.0$ Å</span> apart, electrons <span class="nw">2.0 Å</span> above the row, $Z=1$, <span class="nw">$M=22.99$ amu</span> (sodium), <span class="nw">$\hbar\omega_0=15$ meV</span>, damping <span class="nw">$\hbar\gamma=0.3$ meV.</span> A toy with illustrative numbers, not a model of a real metal.</p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a5-exchange');
+  if (!fig || !window.EPP) return;
+  // outside Section A.5 (the isolated figure test) the caption's links to the section have no target: show them as text
+  if (!fig.closest('#a-hedin-baym')) fig.querySelectorAll('figcaption a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+
+  // ---------- model of (A5.4): lengths in Å, energies in eV, masses in amu ----------
+  // ions of charge Ze at (ℓa, 0), ℓ = −10…10, each an isotropic 2D Einstein oscillator; electrons on the line y = HE;
+  // electron 1 fixed at x_1 = 0, above ion 0. Screened interaction W^e(r) = (e²/r) e^{−k r}, electron–ion energy −Z W^e(d).
+  const E2 = 14.3996, A = 3.0, HE = 2.0, Z = 1, M = 22.99, HW0 = 15, HG = 0.3, HB2 = 4.1802e-3, NL = 10, XMAX = 12;
+  const MW2 = (hw) => (hw * 1e-3) * (hw * 1e-3) * M / HB2;          // M ω² in eV/Å² for ħω in meV (ħ²/amu Å² = 4.1802 meV)
+  const MW02 = MW2(HW0);                                              // M ω_0² = 1.237 eV/Å²
+  const We = (r, k) => (r > 1e-9 ? E2 / r * Math.exp(-k * r) : Infinity);
+  // F_ℓ(x) = Z W^e'(d) (R_ℓ − r_e)/d with W^e'(d) = −W^e(d)(1/d + k): it points from the ion toward the electron (eV/Å)
+  function force(l, x, k) {
+    const dx = x - l * A, dy = HE, d = Math.hypot(dx, dy), f = Z * We(d, k) * (1 / d + k) / d;
+    return [f * dx, f * dy];
+  }
+  // oscillator factor G = 1/[M(ω² − ω_0² + iγω)] (Å²/eV) as [re, im]; then W^ph = G Σ F_ℓ(x_2)·F_ℓ(x_1) and u_ℓ = −G F_ℓ(x_1)
+  function osc(hw) {
+    const re = MW2(hw) - MW02, im = (HG * 1e-3) * (hw * 1e-3) * M / HB2, d = re * re + im * im;
+    return [re / d, -im / d];
+  }
+  const NX = 481, DX = 2 * XMAX / (NX - 1), XS = EPP.linspace(-XMAX, XMAX, NX);
+  const LS = []; for (let l = -NL; l <= NL; l++) LS.push(l);
+  function compute(st) {
+    const k = st.k, hw = st.hw, x2 = st.x2, G = osc(hw);
+    const F1 = LS.map(l => force(l, 0, k));
+    const S = (x) => { let s = 0; for (let i = 0; i < LS.length; i++) { const f = force(LS[i], x, k); s += f[0] * F1[i][0] + f[1] * F1[i][1]; } return s; };
+    const we = XS.map(x => (Math.abs(x) < 1e-9 ? NaN : We(Math.abs(x), k)));
+    const wph = XS.map(x => G[0] * S(x));
+    const wt = we.map((v, i) => v + wph[i]);
+    const terms = LS.map((l, i) => { const f = force(l, x2, k); return G[0] * (f[0] * F1[i][0] + f[1] * F1[i][1]); });
+    const at = { we: We(Math.abs(x2), k), wph: G[0] * S(x2) };
+    at.w = at.we + at.wph;
+    return { k, hw, x2, G, F1, we, wph, wt, terms, at };
+  }
+
+  // fixed drawing scales (drawn Å per Å, or per eV/Å), the same for every setting: the displacement arrow of ion 0 is 1 Å long
+  // in the initial state, and its force arrow 0.8 Å at k_TF = 1 Å⁻¹; arrows longer than CAP are cut there. In the animation an
+  // ion moves by 0.2 Å in the initial state, at most DCAP. CAP and DCAP keep everything below electron 1.
+  const U0 = Math.abs(osc(12)[0]) * Math.hypot(...force(0, 0, 1.0)), F0 = Math.hypot(...force(0, 0, 1.0));
+  const SU = 1.0 / U0, SF = 0.8 / F0, SX = 0.2 / U0, CAP = 1.2, DCAP = 0.25;
+
+  // ---------- text on canvas: '$…$' math (letters italic, serif), '*…*' bold vector; _x, ^x, _{…}, ^{…} as in EPP.drawRich ----------
+  const ITAL = /[A-Za-zα-ωℓħ]/;
+  function runs(s) {
+    const segs = [], out = []; let math = false, bold = false, buf = '';
+    for (const ch of String(s)) {
+      if (ch === '$' || ch === '*') { if (buf) segs.push({ t: buf, math, bold }); buf = ''; if (ch === '$') math = !math; else bold = !bold; }
+      else buf += ch;
+    }
+    if (buf) segs.push({ t: buf, math, bold });
+    for (const g of segs) for (const p of EPP.parseRich(g.t)) {
+      if (!g.math) { out.push({ t: p.t, m: p.m, b: g.bold }); continue; }
+      let b = '', it = null;
+      for (const ch of p.t) { const k = ITAL.test(ch); if (it !== null && k !== it) { out.push({ t: b, m: p.m, it }); b = ''; } b += ch; it = k; }
+      if (b) out.push({ t: b, m: p.m, it });
+    }
+    return out;
+  }
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 12, fu = EPP.css('--font-ui'), ft = EPP.css('--font-text'), rs = runs(s);
+    const font = (r) => { const z = (r.it ? size + 1 : size) * (r.m ? 0.72 : 1); return `${r.it ? 'italic ' : ''}${r.b && !r.m ? '700 ' : ''}${z.toFixed(1)}px ${r.it ? ft : fu}`; };
+    const ws = rs.map(r => { ctx.font = font(r); return ctx.measureText(r.t).width; });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    let x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    if (o.color) ctx.fillStyle = o.color;
+    ctx.textAlign = 'left';
+    rs.forEach((r, k) => { ctx.font = font(r); ctx.fillText(r.t, x0, y + (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0))); x0 += ws[k]; });
+    return tot;
+  }
+  const tw = (ctx, s, size) => txt(ctx, s, 0, 0, { size, measure: true });
+  function arrow(ctx, x0, y0, x1, y1, col, lw, head, cut) {
+    const L = Math.hypot(x1 - x0, y1 - y0);
+    if (L < 2) return;
+    const hs = Math.min(head, 0.6 * L), a = Math.atan2(y1 - y0, x1 - x0), c = Math.cos(a), s = Math.sin(a);
+    ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = lw; ctx.lineCap = 'round'; ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1 - 0.8 * hs * c, y1 - 0.8 * hs * s); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x1, y1);
+    ctx.lineTo(x1 - hs * Math.cos(a - 0.42), y1 - hs * Math.sin(a - 0.42));
+    ctx.lineTo(x1 - hs * Math.cos(a + 0.42), y1 - hs * Math.sin(a + 0.42));
+    ctx.closePath(); ctx.fill();
+    if (cut) { // double bar across the shaft, near its base: the arrow is longer than drawn
+      ctx.lineWidth = 1.5; ctx.lineCap = 'butt';
+      for (const f of [0.2, 0.32]) {
+        const mx = x0 + (x1 - x0) * f, my = y0 + (y1 - y0) * f, px = -s * 5, py = c * 5, sk = 1.8;
+        ctx.beginPath(); ctx.moveTo(mx - px - c * sk, my - py - s * sk); ctx.lineTo(mx + px + c * sk, my + py + s * sk); ctx.stroke();
+      }
+    }
+  }
+
+  // ---------- panels ----------
+  const elScene = fig.querySelector('.a5-exchange-scene'), elPlot = fig.querySelector('.a5-exchange-plot'), elCtl = fig.querySelector('.a5-exchange-ctrls');
+  const PM = { l: 58, r: 14, t: 12, b: 44 };   // plot margins; on wide screens the row above uses the same x mapping
+  // the row: aligned with the plot's x axis when that gives at least 25 px per Å (9 ions in view), else centred on
+  // electron 1 at up to 30 px per Å (on a phone, the 5 ions with |x| ≤ 6 Å)
+  function layout(W) {
+    const sA = (W - PM.l - PM.r) / (2 * XMAX), aligned = sA >= 25;
+    const s = aligned ? sA : EPP.clamp((W - 8) / 12.4, 12, 30);
+    const ox = aligned ? PM.l + XMAX * s : W / 2, xr = aligned ? XMAX : (W / 2 - 4) / s;
+    const rI = Math.max(5, 0.3 * s), rE = Math.max(4.5, 0.2 * s);
+    const yLine = 70, yIon = yLine + HE * s, yTerm = yIon + rI + DCAP * s + 13;
+    return { s, ox, xr, aligned, rI, rE, yLine, yIon, yTerm, H: Math.round(yIon + rI + 1.5 + CAP * s + 8) };
+  }
+  const cvS = EPP.canvas(elScene, { get height() { return layout(elScene.clientWidth || 600).H; } });
+  const cvs = cvS.canvas;
+  cvs.setAttribute('role', 'img');
+  cvs.style.touchAction = 'none';   // electron 2 is dragged along its line; a touch here must not pan the page
+
+  const XT3 = [-12, -9, -6, -3, 0, 3, 6, 9, 12], XT6 = [-12, -6, 0, 6, 12];
+  const pP = new EPP.Plot(elPlot, {
+    xlim: [-XMAX, XMAX], ylim: [-3, 3], legend: false, aspect: 0.46, minHeight: 240, maxHeight: 320, margin: PM,
+    xticks: XT3, xname: 'x_2 − x_1', hoverX: v => EPP.fix(v, 1) + ' Å', hoverY: v => EPP.fix(v, 2) + ' eV',
+    ariaLabel: 'Potential energy of electron 2 against its distance from electron 1: the electron-screened repulsion W^e (blue), the lattice part Re W^ph (amber) and the total Re W (rose), shaded where the total is negative; a vertical line marks electron 2. Click or drag to move electron 2.'
+  });
+
+  // ---------- state ----------
+  let cur = null, phi = 0, anim = null, ui = null;
+  const fx2 = (v) => EPP.fix(Math.abs(v) < 0.005 ? 0 : v, 2);
+  function regime(c, short) {
+    if (c.hw < 0.05) return short ? 'static, move with the force' : 'static: ions move with the force';
+    if (Math.abs(c.hw - HW0) < 0.05) return short ? 'lag the force by a quarter period' : '$ω$ = $ω$$_0$: ions lag the force by a quarter period';
+    if (c.hw < HW0) return short ? 'move with the force' : '$ω$ < $ω$$_0$: ions move with the force';
+    return short ? 'move against the force' : '$ω$ > $ω$$_0$: ions move against the force';
+  }
+
+  // ---------- (a) the row of ions ----------
+  function drawScene() {
+    const ctx = cvS.ctx, W = cvS.w;
+    cvS.clear();
+    if (!cur || W < 40) return;
+    const L = layout(W), s = L.s, c = cur, rI = L.rI, rE = L.rE;
+    const X = (x) => L.ox + x * s, Y = (y) => L.yIon - y * s;
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted'), cSurf = EPP.color('surface');
+    const cEl = EPP.color('electron'), cElT = EPP.textColor('electron'), cPh = EPP.color('phonon'), cPhT = EPP.textColor('phonon');
+    const moving = !!(anim && anim.running);
+    const G = c.G, gAbs = Math.hypot(G[0], G[1]), cph = Math.cos(phi), sph = Math.sin(phi);
+    // header: hint, and the response of the ions
+    ctx.textBaseline = 'alphabetic';
+    const reg = regime(c, false), wReg = tw(ctx, reg, 11.5);
+    txt(ctx, reg, W - 6, 15, { size: 11.5, color: cPhT, align: 'right' });
+    if (6 + tw(ctx, 'drag electron 2', 11) + 14 + wReg <= W - 6) txt(ctx, 'drag electron 2', 6, 15, { size: 11, color: cMut });
+    // the electrons' line
+    ctx.strokeStyle = EPP.alpha('muted', 0.55); ctx.lineWidth = 1; ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.moveTo(0, Math.round(L.yLine) + 0.5); ctx.lineTo(W, Math.round(L.yLine) + 0.5); ctx.stroke(); ctx.setLineDash([]);
+    // the ions in view; while the animation runs each moves by Re[u_ℓ e^{−iφ}] = −(G_r cos φ + G_i sin φ) F_ℓ(x_1)
+    const ions = [];
+    LS.forEach((l, i) => {
+      if (Math.abs(l * A) > L.xr + 0.6) return;
+      const F = c.F1[i], fm = Math.hypot(F[0], F[1]);
+      let mo = 0;
+      if (moving) { mo = -(G[0] * cph + G[1] * sph) * SX; const lim = gAbs * fm * SX; if (lim > DCAP) mo *= DCAP / lim; }
+      ions.push({ l, i, F, fm, sx: X(l * A), sy: Y(0), cx: X(l * A + mo * F[0]), cy: Y(mo * F[1]) });
+    });
+    // sites: a cross that shows around the ion at rest and in full when it moves
+    ctx.strokeStyle = EPP.alpha('muted', 0.8); ctx.lineWidth = 1.2; ctx.lineCap = 'butt';
+    const ca = rI + 4.5;
+    for (const o of ions) { ctx.beginPath(); ctx.moveTo(o.sx - ca, o.sy); ctx.lineTo(o.sx + ca, o.sy); ctx.moveTo(o.sx, o.sy - ca); ctx.lineTo(o.sx, o.sy + ca); ctx.stroke(); }
+    // electron 2 and its three nearest ions
+    const X1 = X(0), X2 = X(c.x2), in2 = Math.abs(c.x2) <= L.xr;
+    if (in2) {
+      const near = ions.slice().sort((p, q) => Math.abs(p.l * A - c.x2) - Math.abs(q.l * A - c.x2)).slice(0, 3);
+      ctx.strokeStyle = EPP.alpha('electron', 0.5); ctx.lineWidth = 1; ctx.setLineDash([3, 3]);
+      for (const o of near) { ctx.beginPath(); ctx.moveTo(X2, L.yLine); ctx.lineTo(o.cx, o.cy); ctx.stroke(); }
+      ctx.setLineDash([]);
+    }
+    for (const o of ions) {
+      ctx.fillStyle = cPh; ctx.beginPath(); ctx.arc(o.cx, o.cy, rI, 0, 2 * Math.PI); ctx.fill();
+      const p = 0.55 * rI; ctx.strokeStyle = cSurf; ctx.lineWidth = 1.7; ctx.lineCap = 'butt';
+      ctx.beginPath(); ctx.moveTo(o.cx - p, o.cy); ctx.lineTo(o.cx + p, o.cy); ctx.moveTo(o.cx, o.cy - p); ctx.lineTo(o.cx, o.cy + p); ctx.stroke();
+    }
+    // force (amber) and displacement Re u_ℓ (ink) of each ion, drawn from its site, side by side: force on the left of the
+    // force direction, displacement on the right
+    let lab = null;
+    const off = Math.max(4, 0.16 * s), gap = rI + 1.5, MINL = 5;
+    for (const o of ions) {
+      o.useg = null;
+      if (o.fm < 1e-9) continue;
+      const nx = o.F[0] / o.fm, ny = -o.F[1] / o.fm, px = -ny, py = nx;
+      const Lf0 = SF * o.fm * s, Lf = Math.min(Lf0, CAP * s);
+      const uR = -G[0] * o.fm, Lu0 = SU * Math.abs(uR) * s, Lu = Math.min(Lu0, CAP * s), sg = uR >= 0 ? 1 : -1;
+      const f0 = [o.sx + nx * gap - px * off, o.sy + ny * gap - py * off], f1 = [f0[0] + nx * Lf, f0[1] + ny * Lf];
+      const u0 = [o.sx + sg * nx * gap + px * off, o.sy + sg * ny * gap + py * off], u1 = [u0[0] + sg * nx * Lu, u0[1] + sg * ny * Lu];
+      if (Lf >= MINL) arrow(ctx, f0[0], f0[1], f1[0], f1[1], cPh, 2.4, 8, Lf0 > CAP * s);
+      if (Lu >= MINL) { arrow(ctx, u0[0], u0[1], u1[0], u1[1], cFg, 2.4, 8, Lu0 > CAP * s); o.useg = [u0, u1]; }
+      if (o.l === 0) lab = { f0, f1, u0, u1, Lf: Lf >= MINL ? Lf : 0, Lu: Lu >= MINL ? Lu : 0, down: sg < 0 };
+    }
+    // electron 1 with its halo (the drive cos ωt while the animation runs), electron 2 as a ring; when the two
+    // nearly coincide, electron 1 is drawn on top
+    const yE = L.yLine, hal = moving ? 0.5 + 0.5 * cph : 0.55;
+    const close = Math.abs(X2 - X1) < 2 * rE + 12;
+    ctx.fillStyle = EPP.alpha('electron', 0.1 + 0.16 * hal); ctx.beginPath(); ctx.arc(X1, yE, rE * (1.4 + 1.1 * hal), 0, 2 * Math.PI); ctx.fill();
+    const dot1 = () => { ctx.fillStyle = cEl; ctx.beginPath(); ctx.arc(X1, yE, rE, 0, 2 * Math.PI); ctx.fill(); };
+    if (!close) dot1();
+    if (in2) {
+      ctx.fillStyle = cSurf; ctx.strokeStyle = cEl; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(X2, yE, rE + 0.5, 0, 2 * Math.PI); ctx.fill(); ctx.stroke();
+    }
+    if (close) dot1();
+    ctx.textBaseline = 'alphabetic';
+    txt(ctx, '1', close ? X1 - 9 : X1, yE - rE - 6, { size: 12, color: cElT, align: close ? 'right' : 'center' });
+    if (in2) txt(ctx, '2', close ? X2 + 9 : X2, yE - rE - 6, { size: 12, color: cElT, align: close ? 'left' : 'center' });
+    // the separation x_2 − x_1, the abscissa of the plot below (an arrow to the edge when electron 2 is out of view)
+    const yD = yE - rE - 22, Xe = in2 ? X2 : (c.x2 > 0 ? W - 4 : 4);
+    const dl = `$x$$_2$ − $x$$_1$ = ${EPP.fix(c.x2, 1)} Å`, wD = tw(ctx, dl, 11.5);
+    if (Math.abs(Xe - X1) >= 6) {
+      ctx.strokeStyle = cMut; ctx.lineWidth = 1; ctx.beginPath();
+      ctx.moveTo(X1, yD); ctx.lineTo(Xe, yD); ctx.moveTo(X1, yD); ctx.lineTo(X1, yD + 4);
+      if (in2) { ctx.moveTo(Xe, yD); ctx.lineTo(Xe, yD + 4); }
+      ctx.stroke();
+      if (!in2) arrow(ctx, X1, yD, Xe, yD, cMut, 1, 6);
+    }
+    const xm = EPP.clamp((X1 + Xe) / 2, 6 + wD / 2, W - 6 - wD / 2);
+    txt(ctx, dl, xm, yD - 6, { size: 11.5, color: cFg2, align: 'center' });
+    // labels of the two arrows of the ion under electron 1: the force on its left; the displacement on its right when
+    // it points up, on its left when it points down (its term then goes to the right)
+    if (lab) {
+      ctx.textBaseline = 'middle';
+      if (lab.Lf >= 10) txt(ctx, '*F*$_ℓ$', Math.min(lab.f0[0], lab.f1[0]) - 10, (lab.f0[1] + lab.f1[1]) / 2, { size: 12.5, color: cPhT, align: 'right' });
+      if (lab.Lu >= 10) {
+        const ym = (lab.u0[1] + lab.u1[1]) / 2;
+        if (lab.down) txt(ctx, 'Re *u*$_ℓ$', Math.min(lab.u0[0], lab.u1[0]) - 10, ym, { size: 12.5, color: cFg2, align: 'right' });
+        else txt(ctx, 'Re *u*$_ℓ$', Math.max(lab.u0[0], lab.u1[0]) + 10, ym, { size: 12.5, color: cFg2, align: 'left' });
+      }
+      ctx.textBaseline = 'alphabetic';
+    }
+    // each ion's term of the sum (A5.4), in eV: centred under the ion, or beside a displacement arrow that crosses that spot
+    for (const o of ions) {
+      const t = c.terms[o.i];
+      if (Math.abs(t) < 0.005) continue;
+      const str = fx2(t), wt = tw(ctx, str, 10.5), y0 = L.yTerm - 9, y1 = L.yTerm + 2;
+      let xc = o.sx;
+      if (o.useg) {
+        const [p0, p1] = o.useg, hit = (x) => {
+          // does the arrow come within 4 px of the label box centred at x?
+          for (let k = 0; k <= 20; k++) { const qx = p0[0] + (p1[0] - p0[0]) * k / 20, qy = p0[1] + (p1[1] - p0[1]) * k / 20; if (qx > x - wt / 2 - 4 && qx < x + wt / 2 + 4 && qy > y0 - 4 && qy < y1 + 4) return true; }
+          return false;
+        };
+        if (hit(xc)) { const ax = (p0[0] + p1[0]) / 2; xc = o.l === 0 ? ax + 7 + wt / 2 : (ax < o.sx ? ax + 7 + wt / 2 : ax - 7 - wt / 2); }
+      }
+      xc = EPP.clamp(xc, 4 + wt / 2, W - 4 - wt / 2);
+      txt(ctx, str, xc, L.yTerm, { size: 10.5, color: cPhT, align: 'center' });
+    }
+    cvs.setAttribute('aria-label', `Row of ions ${A.toFixed(1)} Å apart, electron 1 at x1 = 0 above an ion and electron 2 at x2 = ${c.x2.toFixed(1)} Å, both 2 Å above the row. ` +
+      `Amber arrows: the force of electron 1 on each ion; black arrows: the displacements; ${regime(c, false).replace(/\$/g, '').replace(/_0/g, '0')}. Drag to move electron 2.`);
+  }
+
+  // ---------- (b) the potential energy of electron 2 ----------
+  const at = (arr, x) => { const f = (x + XMAX) / DX, i = Math.floor(f); if (i < 0 || i >= arr.length - 1) return NaN; return arr[i] + (arr[i + 1] - arr[i]) * (f - i); };
+  // where a curve crosses the level v, on the left half (scanning in from −12 Å) or on the right half (from +12 Å)
+  function cross(arr, v, side) {
+    const mid = (NX - 1) / 2;
+    for (let j = 0; j < mid; j++) {
+      const i = side < 0 ? j : NX - 2 - j, a = arr[i] - v, b = arr[i + 1] - v;
+      if (isFinite(a) && isFinite(b) && a * b <= 0 && a !== b) return XS[i] + DX * a / (a - b);
+    }
+    return NaN;
+  }
+  function plotLabels() {
+    const ctx = pP.ctx, m = pP.m, w = pP.cv.w, h = pP.cv.h, c = cur;
+    if (!c || !w) return;
+    const lev = (arr, vs) => { const o = []; vs.forEach(v => { o.push([cross(arr, v, -1), 'left'], [cross(arr, v, 1), 'right']); }); return o; };
+    const flat = (xs, modes) => { const o = []; xs.forEach(x => modes.forEach(md => o.push([x, md]))); return o; };
+    const curves = [
+      { y: c.we, s: '$W$^{e}', col: 'electron', cand: lev(c.we, [2.2, 1.7, 2.6, 1.3]).concat(flat([-4, 4, -5, 5], ['above'])) },
+      { y: c.wph, s: 'Re $W$^{ph}', col: 'phonon', cand: lev(c.wph, [-1.8, -1.3, -2.3, 1.8, 1.3, 2.3, -0.8, 0.8]).concat(flat([-3.6, 3.6, -4.4, 4.4, -5.5, 5.5], ['below', 'above'])) },
+      { y: c.wt, s: 'Re $W$', col: 'photon', cand: flat([-2.8, 2.8, -3.4, 3.4, -2.2, 2.2, -4.2, 4.2, -5.5, 5.5], ['below', 'above']).concat(lev(c.wt, [1.2, 2.0, -0.8, 0.8, -1.6])) }
+    ];
+    const placed = [], Xm = pP.X(c.x2);
+    const crossed = (box, only) => {
+      for (let px = box[0] - 2; px <= box[2] + 2; px += 1) {
+        const xa = pP.invX(px), xb = pP.invX(px + 1);
+        for (const o of only || curves) {
+          const ya = at(o.y, xa), yb = at(o.y, xb);
+          if (!isFinite(ya) || !isFinite(yb)) return true;
+          const Ya = pP.Y(ya), Yb = pP.Y(yb);
+          if (Math.min(Ya, Yb) <= box[3] + 2 && Math.max(Ya, Yb) >= box[1] - 2) return true;
+        }
+      }
+      return false;
+    };
+    ctx.textBaseline = 'alphabetic';
+    for (const cv of curves) {
+      const wl = tw(ctx, cv.s, 12.5), hl = 14;
+      for (const [x, md] of cv.cand) {
+        if (!isFinite(x)) continue;
+        const y = at(cv.y, x);
+        if (!isFinite(y)) continue;
+        const Xc = pP.X(x), Yc = pP.Y(y);
+        if (Yc < m.t || Yc > h - m.b) continue;
+        let box;
+        if (md === 'above') box = [Xc - wl / 2 - 2, Yc - 7 - hl, Xc + wl / 2 + 2, Yc - 7];
+        else if (md === 'below') box = [Xc - wl / 2 - 2, Yc + 7, Xc + wl / 2 + 2, Yc + 7 + hl];
+        else if (md === 'left') box = [Xc - 8 - wl - 4, Yc - hl / 2, Xc - 8, Yc + hl / 2];
+        else box = [Xc + 8, Yc - hl / 2, Xc + 8 + wl + 4, Yc + hl / 2];
+        if (box[0] < m.l + 3 || box[2] > w - m.r - 3 || box[1] < m.t + 3 || box[3] > h - m.b - 3) continue;
+        if (placed.some(b => b[0] < box[2] + 4 && b[2] > box[0] - 4 && b[1] < box[3] + 4 && b[3] > box[1] - 4)) continue;
+        if (Xm > box[0] - 5 && Xm < box[2] + 5) continue;
+        if (crossed(box)) continue;
+        // no other curve just beyond the label's far side, so that the label reads as belonging to its own curve
+        const far = md === 'left' ? [box[0] - 14, box[1], box[0], box[3]] : md === 'right' ? [box[2], box[1], box[2] + 14, box[3]]
+          : md === 'above' ? [box[0], box[1] - 10, box[2], box[1]] : [box[0], box[3], box[2], box[3] + 10];
+        if (crossed(far, curves.filter(o => o !== cv))) continue;
+        placed.push(box);
+        txt(ctx, cv.s, (box[0] + box[2]) / 2, box[3] - 3.5, { size: 12.5, color: EPP.textColor(cv.col), align: 'center' });
+        break;
+      }
+    }
+  }
+  const baseRender = pP.render.bind(pP);
+  pP.render = () => {
+    pP.opt.xticks = pP.cv.w < 480 ? XT6 : XT3;
+    baseRender();
+    const ctx = pP.ctx, w = pP.cv.w, h = pP.cv.h, m = pP.m;
+    if (!w || !h) return;
+    const cFg = EPP.color('fg');
+    ctx.save();
+    ctx.textBaseline = 'alphabetic';
+    txt(ctx, '$x$$_2$ − $x$$_1$ (Å)', m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, 'potential energy (eV)', 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+    plotLabels();
+  };
+  function drawPlot() {
+    const c = cur, a = c.at;
+    pP.draw([
+      { type: 'fill', x: XS, y1: c.wt.map(v => (isFinite(v) && v < 0 ? v : 0)), base: 0, color: 'photon', alpha: 0.18 },
+      { type: 'line', x: XS, y: c.we, color: 'electron', width: 2, label: 'W^{e}' },
+      { type: 'line', x: XS, y: c.wph, color: 'phonon', width: 2, label: 'Re W^{ph}' },
+      { type: 'line', x: XS, y: c.wt, color: 'photon', width: 3.2, label: 'Re W' },
+      { type: 'vline', at: c.x2, color: 'ink', width: 1.2, dash: [] },
+      { type: 'points', x: [c.x2], y: [a.we], color: 'electron', r: 3.6 },
+      { type: 'points', x: [c.x2], y: [a.wph], color: 'phonon', r: 3.6 },
+      { type: 'points', x: [c.x2], y: [a.w], color: 'photon', r: 4.2 }
+    ]);
+  }
+
+  // ---------- readouts ----------
+  const V = {};
+  ['x', 'we', 'wph', 'w', 'r', 'ion'].forEach(k => { V[k] = fig.querySelector('.a5-exchange-v-' + k); });
+  function readouts() {
+    const c = cur, a = c.at;
+    V.x.textContent = EPP.fix(c.x2, 1) + ' Å';
+    V.we.textContent = isFinite(a.we) ? fx2(a.we) + ' eV' : '∞';
+    V.wph.textContent = fx2(a.wph) + ' eV';
+    V.w.textContent = !isFinite(a.w) ? '∞, repulsive' : (Math.abs(a.w) < 0.005 ? '0.00 eV' : `${fx2(a.w)} eV, ${a.w < 0 ? 'attractive' : 'repulsive'}`);
+    V.r.textContent = (c.hw / HW0).toFixed(2);
+    V.ion.textContent = regime(c, true);
+  }
+
+  function onChange(st) {
+    cur = compute(st);
+    drawPlot(); drawScene(); readouts();
+  }
+  ui = EPP.controls(elCtl, [
+    { key: 'hw', type: 'range', label: 'exchanged energy ħω', min: 0, max: 30, step: 0.1, value: 12, wide: true, fmt: v => `${v.toFixed(1)} meV (${(v / HW0).toFixed(2)} ω₀)` },
+    { key: 'k', type: 'range', label: 'screening wavevector k_{TF}', min: 0.5, max: 2, step: 0.05, value: 1, fmt: v => v.toFixed(2) + ' Å⁻¹' },
+    { key: 'x2', type: 'range', label: 'electron 2 at x_2', min: -XMAX, max: XMAX, step: 0.1, value: 2, fmt: v => EPP.fix(v, 1) + ' Å' }
+  ], onChange);
+  cur = compute(ui.state);
+  // slider labels with italic symbols, like the readout keys
+  const I = (t) => `<i style="font-family:var(--font-text)">${t}</i>`;
+  const LAB = { hw: `exchanged energy ${I('ħω')}`, k: `screening wavevector ${I('k')}<sub>TF</sub>`, x2: `electron 2 at ${I('x')}<sub>2</sub>` };
+  Object.keys(LAB).forEach(k => { const sp = elCtl.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+
+  // drag electron 2 along its line (anywhere in the row), or click and drag in the plot
+  const snap = (x) => EPP.clamp(Math.round(x * 10) / 10, -XMAX, XMAX);
+  let drag = false;
+  const xOf = (e) => { const r = cvs.getBoundingClientRect(), L = layout(cvS.w); return (e.clientX - r.left - L.ox) / L.s; };
+  cvs.addEventListener('pointerdown', (e) => { drag = true; try { cvs.setPointerCapture(e.pointerId); } catch (_) {} e.preventDefault(); ui.set('x2', snap(xOf(e))); });
+  cvs.addEventListener('pointermove', (e) => { if (drag) { ui.set('x2', snap(xOf(e))); return; } if (e.pointerType === 'mouse') cvs.style.cursor = 'ew-resize'; });
+  const end = () => { drag = false; };
+  cvs.addEventListener('pointerup', end); cvs.addEventListener('pointercancel', end);
+  // on a touch screen only a drag that starts on the marker of electron 2 moves it, so that a swipe still scrolls the page
+  let touchType = 'mouse', skip = false;
+  pP.cv.canvas.addEventListener('pointerdown', (e) => { touchType = e.pointerType; }, true);
+  pP.onPointer = (x, y, type, d) => {
+    if (type === 'down') skip = touchType === 'touch' && !!d && Math.abs(d.px - pP.X(ui.state.x2)) > 14;
+    if (type !== 'up' && !skip) ui.set('x2', snap(x));
+  };
+
+  // Play: the ions move as Re[u_ℓ e^{−iωt}] and the halo of electron 1 follows cos ωt; one period lasts 2.4 s at ω = ω_0,
+  // and at ω = 0 the ions stay at their static displacement. Paused, the ions rest on their sites.
+  const host = document.createElement('div');
+  host.className = 'ctrl'; host.innerHTML = '<span class="lab"><span>motion, slowed down</span></span>';
+  elCtl.appendChild(host);
+  anim = EPP.anim(fig, (t, dt) => { if (cur && dt > 0) phi = (phi + dt * 2 * Math.PI / 2.4 * cur.hw / HW0) % (2 * Math.PI); drawScene(); }, { buttonHost: host, autoplay: false });
+  anim.button.style.justifySelf = 'start';
+  anim.button.addEventListener('click', () => { if (!anim.running) { phi = 0; drawScene(); } });
+  cvS.onResize(drawScene);
+})();
+</script>

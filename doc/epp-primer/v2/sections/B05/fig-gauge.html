@@ -1,0 +1,296 @@
+  <figure class="viz" id="viz-b5-gauge">
+    <p class="viz-title">Contact term plus bubble: the gauge-invariant ionic self-energy and the infrared response <span class="tag">interactive</span></p>
+    <div class="viz-grid two">
+      <div class="b5-gauge-panel">
+        <div class="b5-gauge-h" style="font-family:var(--font-ui);font-size:0.82rem;font-weight:600;line-height:1.35;color:var(--fg-2);margin:0 0 4px">(a) Ionic photon self-energy at $\bq\to0$</div>
+        <div class="b5-gauge-pa"></div>
+        <div class="legend b5-gauge-lega"><span class="item" style="color:var(--c-5)"><span class="sw dash"></span><span style="color:var(--fg-2)">contact term $\Pi^{\mathrm{ion,dia}}$</span></span><span class="item" style="color:var(--c-phonon)"><span class="sw"></span><span style="color:var(--fg-2)">bubble $\mathrm{Re}\,\Pi^{\mathrm{ion,para}}$</span></span><span class="item" style="color:var(--fg)"><span class="sw" style="border-top-width:3.5px"></span><span style="color:var(--fg-2)">total $\mathrm{Re}\,\Pi^{\ion}$</span></span><span class="item" style="color:var(--fg)"><span class="sw dot"></span><span style="color:var(--fg-2)">$\mathrm{Im}\,\Pi^{\ion}=\mathrm{Im}\,\Pi^{\mathrm{ion,para}}$</span></span></div>
+      </div>
+      <div class="b5-gauge-panel">
+        <div class="b5-gauge-h" style="font-family:var(--font-ui);font-size:0.82rem;font-weight:600;line-height:1.35;color:var(--fg-2);margin:0 0 4px">(b) Infrared dielectric function $\varepsilon(\omega)$</div>
+        <div class="b5-gauge-pb"></div>
+        <div class="legend b5-gauge-legb"><span class="item" style="color:var(--fg)"><span class="sw"></span><span style="color:var(--fg-2)">$\mathrm{Re}\,\varepsilon$</span></span><span class="item" style="color:var(--c-phonon)"><span class="sw box"></span><span style="color:var(--fg-2)">$\mathrm{Im}\,\varepsilon$</span></span><span class="item b5-gauge-k-nc" style="color:var(--c-photon)"><span class="sw dash"></span><span style="color:var(--fg-2)">$\mathrm{Re}\,\varepsilon$ without the contact term</span></span></div>
+      </div>
+    </div>
+    <div class="b5-gauge-ctrls"></div>
+    <div class="readout b5-gauge-ro" aria-live="polite"><span>$\hbar\omega^{\ion}_{\mathrm p}$<b class="b5-gauge-v-wp"></b></span><span>$\hbar\omega_{\mathrm{TO}}$<b class="b5-gauge-v-wto"></b></span><span>$\hbar\omega_{\mathrm{LO}}$, predicted<b class="b5-gauge-v-wlo"></b></span><span>$\varepsilon_{\mathrm s}=\varepsilon(0)$<b class="b5-gauge-v-es"></b></span><span>f-sum $\tfrac{2}{\pi}\int_0^\infty\omega\,\mathrm{Im}\,\varepsilon\,\dd\omega\big/(\omega^{\ion}_{\mathrm p})^2$<b class="b5-gauge-v-fs"></b></span></div>
+    <div class="readout b5-gauge-ro2" aria-live="polite"><span>literature $Z^*$<b class="b5-gauge-v-z0"></b></span><span>$M_{\mathrm r}$<b class="b5-gauge-v-mr"></b></span><span>$\OV$<b class="b5-gauge-v-ov"></b></span><span>$\varepsilon_\infty$<b class="b5-gauge-v-einf"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> At $\omega=0$ the bubble is $+1$ and the contact term $-1$, so the total starts at zero, as gauge invariance requires; far above $\omega_{\mathrm{TO}}$ the total tends to the contact term. Without the contact term $\varepsilon$ gains $+(\omega^{\ion}_{\mathrm p})^2/\omega^2$, a Drude divergence with the wrong sign. The predicted $\omega_{\mathrm{LO}}$ lies within 1 % of the measured value for all four crystals.</p><div class="cap-more">
+      <p><strong>Marks.</strong> (a) In units of $(\omega^{\ion}_{\mathrm p})^2/4\pi c$: dashed, the contact term <a class="eqref" href="#b5-eq-Piiondia"></a>; thin, the bubble <a class="eqref" href="#b5-eq-Piionpara"></a>; thick, the total <a class="eqref" href="#b5-eq-Piion"></a> (real parts); dotted, the imaginary part, which the two share; dots, the values at $\omega=0$. (b) Solid and shaded: $\mathrm{Re}\,\varepsilon$ and $\mathrm{Im}\,\varepsilon$; dashed: $\mathrm{Re}\,\varepsilon$ without the contact term; grey band: the Reststrahlen band, where $\mathrm{Re}\,\varepsilon\lt0$; dot: $\varepsilon_{\mathrm s}$.</p>
+      <p><strong>Try.</strong> Switch crystals: the band moves from <span class="nw">20 meV</span> (NaCl) to <span class="nw">170 meV</span> (hBN). Raise $Z^*$: the band widens, since $\omega^2_{\mathrm{LO}}-\omega^2_{\mathrm{TO}}=(\omega^{\ion}_{\mathrm p})^2/\varepsilon_\infty\propto Z^{*2}$, $\varepsilon_{\mathrm s}$ grows, and the predicted $\omega_{\mathrm{LO}}$ leaves the measured one. Change the damping by a factor of 100: the peaks broaden, the f-sum readout stays at 1.</p>
+      <p><strong>Model.</strong> One polar mode at $\bq\to0$ carries the whole sum rule (a cubic two-atom crystal; for hBN the in-plane mode), with $(\hbar\omega^{\ion}_{\mathrm p})^2=0.7564\ \mathrm{eV}^2\times Z^{*2}/(\OV M_{\mathrm r})$, $\OV$ in Å³ and $M_{\mathrm r}$ in amu. The total is <a class="eqref" href="#b5-eq-Piion"></a> with a damping rate $\gamma$ for $\eta$, $4\pi c\,\Pi^{\ion}=(\omega^{\ion}_{\mathrm p})^2\omega^2/(\omega^2_{\mathrm{TO}}-\omega^2-\ii\gamma\omega)$; the bubble is the total minus the contact term, <a class="eqref" href="#b5-eq-Piionpara"></a> as $\gamma\to0$. Then <a class="eqref" href="#b5-eq-eps"></a> gives <a class="eqref" href="#b5-eq-epsir"></a>, the function of <a href="#b-dielectric">Section B.3</a> <a class="eqref" href="#b3-eq-eps"></a>, with the electrons as the background $\varepsilon_\infty$ and local fields neglected. Material constants: literature values.</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b5-gauge');
+  if (!fig || !window.EPP) return;
+  // outside Section B.5 (the isolated figure test) the caption's links have no target: show the tags as text
+  const TAGS = { 'b5-eq-eps': 'B5.14', 'b5-eq-Piionpara': 'B5.23', 'b5-eq-Piiondia': 'B5.24', 'b5-eq-Piion': 'B5.26', 'b5-eq-epsir': 'B5.27', 'b3-eq-eps': 'B3.6' };
+  if (!fig.closest('#b-photon-se')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    const id = a.getAttribute('href').slice(1);
+    if (document.getElementById(id)) return;
+    const s = document.createElement('span'); s.textContent = TAGS[id] ? `(${TAGS[id]})` : a.textContent; a.replaceWith(s);
+  });
+
+  // ---------- model ----------
+  // Energies in meV: x stands for ħω, wto for ħω_TO, g for ħγ.
+  // One polar mode at q → 0 (element G = G' = 0) carries the whole ionic sum rule (B5.25), strength e² Z*² / M_r:
+  //   (ħω_p^ion)² = 4π e² ħ² Z*² / (Ω_V M_r) = KP Z*² / (Ω_V[Å³] M_r[amu]),
+  //   KP = 4π × 14.3996 eV Å × ħ²/(amu Å²) = 4π × 14.3996 × 4.18016e-3 eV² = 0.756405 eV².
+  // Total (B5.26), with a damping rate γ in place of η, in units of (ω_p^ion)²/4πc:
+  //   4πc Π^ion / (ω_p^ion)² = ω² L,   L = 1/(ω_TO² − ω² − iγω)   (a driven, damped oscillator).
+  // Contact term (B5.24): −1. Bubble = total − contact = (ω_TO² − iγω) L: (B5.23) for γ → 0, and exactly +1 at ω = 0.
+  // Dielectric function (B5.14) and (B5.27): ε = ε_∞ + 4πc Π^ion / ω² = ε_∞ + (ω_p^ion)² L;
+  // without the contact term the bubble alone enters, ε + (ω_p^ion)²/ω².
+  const KP = 0.756405;
+  // literature values (illustrative): Born charge, reduced mass (amu), cell volume (Å³), ε_∞, ħω_TO and measured ħω_LO (meV)
+  const PRE = {
+    GaAs: { name: 'GaAs', Z: 2.07, Mr: 36.1, Om: 45.2, einf: 10.9, wto: 33.3, lo: 36.2 },
+    NaCl: { name: 'NaCl', Z: 1.12, Mr: 13.9, Om: 44.9, einf: 2.34, wto: 20.3, lo: 32.7 },
+    MgO: { name: 'MgO', Z: 1.98, Mr: 9.65, Om: 18.7, einf: 2.96, wto: 49.1, lo: 89.0 },
+    hBN: { name: 'hBN (in-plane mode)', Z: 2.71, Mr: 6.10, Om: 18.1, einf: 4.87, wto: 169.9, lo: 199.6 }
+  };
+  const wp2Of = (p, Z) => 1e6 * KP * Z * Z / (p.Om * p.Mr); // (ħω_p^ion)² in meV²
+  // (2/π) ∫_0^∞ ω Im[1/(ω_TO² − ω² − iγω)] dω, which is 1 for every γ. The substitution ω = ω_TO + (γ/2) tan θ
+  // spreads the resonance over θ and keeps the integrand finite as θ → π/2 (the 1/ω² tail); trapezoid rule.
+  function fsum(wto, g) {
+    const t0 = Math.atan(-2 * wto / g), t1 = Math.PI / 2 - 1e-9, n = 4000, h = (t1 - t0) / n;
+    let acc = 0, prev = null;
+    for (let k = 0; k <= n; k++) {
+      const th = t0 + h * k, x = wto + 0.5 * g * Math.tan(th), a = wto * wto - x * x;
+      const val = x * g * x / (a * a + g * g * x * x) * 0.5 * g / (Math.cos(th) ** 2);
+      if (prev !== null) acc += 0.5 * (prev + val) * h;
+      prev = val;
+    }
+    return acc * 2 / Math.PI;
+  }
+  function compute(s) {
+    const p = PRE[s.pre] || PRE.GaAs, wto = p.wto, g = s.g;
+    const wp2 = wp2Of(p, s.Z), wlo = Math.sqrt(wto * wto + wp2 / p.einf), es = p.einf + wp2 / (wto * wto);
+    // limits fixed per crystal: ħω up to about 2.2 ω_LO; they grow only when Z* pushes ω_LO or ε_s off scale
+    const wp20 = wp2Of(p, p.Z), wlo0 = Math.sqrt(wto * wto + wp20 / p.einf), es0 = p.einf + wp20 / (wto * wto);
+    const xmax = Math.max(10 * Math.ceil(2.2 * wlo0 / 10), 10 * Math.ceil(1.3 * wlo / 10));
+    const yhi = Math.max(5 * Math.ceil(3.5 * es0 / 5), 5 * Math.ceil(1.3 * es / 5)), ylo = -5 * Math.round(0.57 * yhi / 5);
+    // abscissae: a uniform grid plus points packed around the resonance, ω = ω_TO + (γ/2) tan θ
+    const xs = EPP.linspace(xmax / 1200, xmax, 1200);
+    for (let k = 0; k < 400; k++) { const x = wto + 0.5 * g * Math.tan(-1.5 + 3 * k / 399); if (x > 0 && x < xmax) xs.push(x); }
+    xs.sort((a, b) => a - b);
+    const n = xs.length, A = { tot: new Array(n), para: new Array(n), im: new Array(n), eRe: new Array(n), eIm: new Array(n), eNo: new Array(n) };
+    for (let i = 0; i < n; i++) {
+      const x = xs[i], a = wto * wto - x * x, b = g * x, den = a * a + b * b, Lr = a / den, Li = b / den;
+      A.tot[i] = x * x * Lr; A.im[i] = x * x * Li; A.para[i] = A.tot[i] + 1;
+      A.eRe[i] = p.einf + wp2 * Lr; A.eIm[i] = wp2 * Li; A.eNo[i] = A.eRe[i] + wp2 / (x * x);
+    }
+    // the Reststrahlen band, where Re ε < 0; a damping wider than the band closes it (GaAs above ħγ ≈ 2.6 meV)
+    let i0 = -1, i1 = -1;
+    for (let i = 0; i < n; i++) if (A.eRe[i] < 0) { if (i0 < 0) i0 = i; i1 = i; }
+    const zero = (i, j) => xs[i] + (xs[j] - xs[i]) * A.eRe[i] / (A.eRe[i] - A.eRe[j]);
+    const band = i0 < 0 ? null : [i0 > 0 ? zero(i0 - 1, i0) : xs[i0], i1 < n - 1 ? zero(i1, i1 + 1) : xs[i1]];
+    return { p, s, wto, g, wp2, wp: Math.sqrt(wp2), wlo, es, xmax, ylo, yhi, xs, A, band, fs: fsum(wto, g) };
+  }
+
+  // ---------- formatting ----------
+  const fx = (v, d) => (Math.abs(v) < 0.5 * Math.pow(10, -d) ? (0).toFixed(d) : EPP.fix(v, d));
+  const gfmt = (v) => (v < 0.995 ? v.toFixed(2) : v < 9.95 ? v.toFixed(1) : v.toFixed(0)) + ' meV';
+
+  // ---------- canvas text: '$...$' marks math, where letters are italic and digits upright; _x, ^x as in EPP.drawRich ----------
+  const ITAL = /[A-Za-zα-ωℓħ]/;
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const part of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: part.t, m: part.m, it: false }); continue; }
+        let buf = '', it = null;
+        for (const ch of part.t) {
+          const k = ITAL.test(ch);
+          if (it !== null && k !== it) { out.push({ t: buf, m: part.m, it }); buf = ''; }
+          buf += ch; it = k;
+        }
+        if (buf) out.push({ t: buf, m: part.m, it });
+      }
+    });
+    return out;
+  }
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, fam = EPP.css('--font-ui'), rs = runs(s);
+    const font = (r) => `${r.it ? 'italic ' : ''}${r.m ? Math.round(size * 0.72) : size}px ${fam}`;
+    const ws = rs.map(r => { ctx.font = font(r); return ctx.measureText(r.t).width; });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    let x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    if (o.color) ctx.fillStyle = o.color;
+    ctx.textAlign = 'left';
+    rs.forEach((r, k) => { ctx.font = font(r); ctx.fillText(r.t, x0, y + (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0))); x0 += ws[k]; });
+    return tot;
+  }
+  const tw = (ctx, s, size) => txt(ctx, s, 0, 0, { size, measure: true });
+  // does the curve (xs, ys) of plot P touch the pixel box b = [left, right, top, bottom]? (segment bounding boxes; samples are dense)
+  function hits(P, xs, ys, b) {
+    let px = NaN, py = NaN;
+    for (let i = 0; i < xs.length; i++) {
+      const qx = P.X(xs[i]), qy = isFinite(ys[i]) ? EPP.clamp(P.Y(ys[i]), -1e4, 1e4) : NaN;
+      if (isFinite(py) && isFinite(qy) && Math.max(px, qx) >= b[0] && Math.min(px, qx) <= b[1] && Math.max(py, qy) >= b[2] && Math.min(py, qy) <= b[3]) return true;
+      px = qx; py = qy;
+    }
+    return false;
+  }
+  // does text t at anchor an (x, y with middle baseline, align, optional right limit xmax) stay inside the frame and clear of every curve?
+  function fitsIn(ctx, P, t, an, curves, size) {
+    const m = P.m, wpx = tw(ctx, t, size), x0 = an.align === 'right' ? an.x - wpx : an.x;
+    const box = [x0 - 2, x0 + wpx + 2, an.y - size * 0.62, an.y + size * 0.62];
+    if (box[0] < m.l + 2 || box[1] > (an.xmax ?? P.cv.w - m.r - 2) || box[2] < m.t || box[3] > P.cv.h - m.b) return false;
+    return !curves.some(c => hits(P, c[0], c[1], box));
+  }
+  // the first text variant, at the first anchor, that fits; else the last variant at the first anchor
+  function place(ctx, P, variants, anchors, curves, size) {
+    for (const t of variants) for (const an of anchors) if (fitsIn(ctx, P, t, an, curves, size)) return { t, an };
+    return { t: variants[variants.length - 1], an: anchors[0] };
+  }
+
+  let cur = null;
+  const MP = { t: 12, l: 58, r: 14, b: 44 };
+
+  // ---------- panel (a): contact term, bubble and total ----------
+  const pA = new EPP.Plot(fig.querySelector('.b5-gauge-pa'), {
+    xlim: [0, 80], ylim: [-3, 3], yticks: [-3, -2, -1, 0, 1, 2, 3], legend: false, margin: MP, aspect: 0.8, minHeight: 250, maxHeight: 340,
+    xname: 'ħω', hoverX: v => fx(v, 1) + ' meV', hoverY: v => fx(v, 3),
+    ariaLabel: 'Panel a: contact term, bubble and total of the ionic photon self-energy against photon energy'
+  });
+  const baseA = pA.render.bind(pA);
+  pA.render = () => {
+    baseA();
+    const ctx = pA.ctx, w = pA.cv.w, h = pA.cv.h, m = pA.m;
+    if (!w || !h || !cur) return;
+    const c = cur, cFg = EPP.color('fg'), cMuted = EPP.color('muted');
+    ctx.save();
+    ctx.textBaseline = 'alphabetic';
+    txt(ctx, 'photon energy $ħω$ (meV)', m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    // ω_TO at the foot of its line, on the left, where the total is still positive
+    ctx.textBaseline = 'middle';
+    txt(ctx, '$ω$_{TO}', pA.X(c.wto) - 4, h - m.b - 10, { size: 11, color: cMuted, align: 'right' });
+    // the three values at ω = 0: dots on the axis (unclipped) and labels just below them. All three take the longest
+    // style in which none touches a curve or passes ω_TO; the names alone suffice where the axis gives the values.
+    const curves = [[c.xs, c.A.tot], [c.xs, c.A.para], [c.xs, c.A.im], [[0, c.xmax], [-1, -1]]], xEnd = pA.X(c.wto) - 3;
+    const DOTS = [[1, 'phonon'], [0, 'ink'], [-1, 'c5']];
+    const STYLES = [['bubble: +1', 'total: 0', 'contact: −1'], ['bubble', 'total', 'contact'], ['+1', '0', '−1']];
+    const an = DOTS.map(([v]) => ({ x: pA.X(0) + 8, y: pA.Y(v) + 11, xmax: xEnd }));
+    const set = STYLES.find(st => st.every((t, k) => fitsIn(ctx, pA, t, an[k], curves, 10.5))) || STYLES[2];
+    DOTS.forEach(([v, col], k) => {
+      ctx.fillStyle = EPP.color(col); ctx.beginPath(); ctx.arc(pA.X(0), pA.Y(v), 4, 0, 2 * Math.PI); ctx.fill();
+      txt(ctx, set[k], an[k].x, an[k].y, { size: 10.5, color: EPP.textColor(col) });
+    });
+    ctx.textBaseline = 'alphabetic';
+    ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, '4$πc$Π/($ω$_p^{ion})^2', 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+  };
+  function drawA() {
+    const c = cur;
+    pA.draw([
+      { type: 'vline', at: c.wto, color: 'muted', width: 1 },
+      { type: 'line', x: [0, c.xmax], y: [-1, -1], color: 'c5', dash: [6, 4], width: 2, label: 'contact', hover: false },
+      { type: 'line', x: c.xs, y: c.A.para, color: 'phonon', width: 1.8, label: 'bubble, Re' },
+      { type: 'line', x: c.xs, y: c.A.im, color: 'ink', dash: [1.5, 3], width: 1.6, label: 'Im (total = bubble)' },
+      { type: 'line', x: c.xs, y: c.A.tot, color: 'ink', width: 2.8, label: 'total, Re' }
+    ], { xlim: [0, c.xmax] });
+    pA.cv.canvas.setAttribute('aria-label', `Panel a: ionic photon self-energy of ${c.p.name} against photon energy from 0 to ${c.xmax} meV, in units of the squared ionic plasma frequency over 4 pi c. ` +
+      `The contact term is −1 at every frequency. At zero frequency the bubble is +1 and the total 0; both resonate at the transverse optical energy, ${fx(c.wto, 1)} meV, ` +
+      `and far above it the total approaches the contact term.`);
+  }
+
+  // ---------- panel (b): the infrared dielectric function ----------
+  const pB = new EPP.Plot(fig.querySelector('.b5-gauge-pb'), {
+    xlim: [0, 80], ylim: [-25, 45], legend: false, margin: MP, aspect: 0.8, minHeight: 250, maxHeight: 340,
+    xname: 'ħω', hoverX: v => fx(v, 1) + ' meV', hoverY: v => fx(v, 2),
+    ariaLabel: 'Panel b: infrared dielectric function against photon energy'
+  });
+  const baseB = pB.render.bind(pB);
+  pB.render = () => {
+    baseB();
+    const ctx = pB.ctx, w = pB.cv.w, h = pB.cv.h, m = pB.m;
+    if (!w || !h || !cur) return;
+    const c = cur, cFg = EPP.color('fg'), cMuted = EPP.color('muted');
+    ctx.save();
+    ctx.textBaseline = 'alphabetic';
+    txt(ctx, 'photon energy $ħω$ (meV)', m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    // ε_∞ above its line at the right end, where every curve approaches it from below
+    txt(ctx, '$ε$_∞', w - m.r - 6, pB.Y(c.p.einf) - 5, { size: 11.5, color: cMuted, align: 'right' });
+    // ω_TO and ω_LO: ticks on the frequency axis, labels outside the band
+    ctx.strokeStyle = cMuted; ctx.lineWidth = 1; ctx.setLineDash([]);
+    [c.wto, c.wlo].forEach(x => { const X = Math.round(pB.X(x)) + 0.5; ctx.beginPath(); ctx.moveTo(X, h - m.b); ctx.lineTo(X, h - m.b - 7); ctx.stroke(); });
+    ctx.textBaseline = 'middle';
+    txt(ctx, '$ω$_{TO}', pB.X(c.wto) - 4, h - m.b - 10, { size: 11, color: cMuted, align: 'right' });
+    txt(ctx, '$ω$_{LO}', pB.X(c.wlo) + 4, h - m.b - 10, { size: 11, color: cMuted, align: 'left' });
+    const curves = [[c.xs, c.A.eRe], [c.xs, c.A.eIm]];
+    if (c.s.nc) curves.push([c.xs, c.A.eNo]);
+    // the band: labelled to its right, below the zero line, where every curve is positive
+    if (c.band) {
+      const X1 = pB.X(c.band[1]), r = place(ctx, pB, ['← Re $ε$ < 0'], [{ x: X1 + 5, y: pB.Y(0.5 * c.ylo) }, { x: X1 + 5, y: pB.Y(0.75 * c.ylo) }, { x: pB.X(c.band[0]) - 5, y: pB.Y(0.5 * c.ylo), align: 'right' }], curves, 11);
+      const t = r.an.align === 'right' ? 'Re $ε$ < 0 →' : r.t;
+      txt(ctx, t, r.an.x, r.an.y, { size: 11, color: cMuted, align: r.an.align || 'left' });
+    }
+    // ε_s: the dot at ω = 0 (unclipped) and its label beside it, clear of the curves and of the ε_∞ line
+    const Ys = pB.Y(c.es);
+    ctx.fillStyle = EPP.color('ink'); ctx.beginPath(); ctx.arc(pB.X(0), Ys, 4, 0, 2 * Math.PI); ctx.fill();
+    const rs = place(ctx, pB, ['$ε$_s = $ε$(0)', '$ε$_s'], [{ x: pB.X(0) + 8, y: Ys - 11 }, { x: pB.X(0) + 8, y: Ys + 12 }], curves.concat([[[0, c.xmax], [c.p.einf, c.p.einf]]]), 11.5);
+    txt(ctx, rs.t, rs.an.x, rs.an.y, { size: 11.5, color: EPP.color('fg2') });
+    ctx.textBaseline = 'alphabetic';
+    ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, '$ε$($ω$)', 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+  };
+  function drawB() {
+    const c = cur;
+    pB.draw([
+      c.band ? { type: 'band', x0: c.band[0], x1: c.band[1], color: 'muted', alpha: 0.16 } : null,
+      { type: 'hline', at: c.p.einf, color: 'muted', width: 1, dash: [4, 4] },
+      { type: 'fill', x: c.xs, y1: c.A.eIm, color: 'phonon', alpha: 0.22 },
+      { type: 'line', x: c.xs, y: c.A.eIm, color: 'phonon', width: 1.2, label: 'Im ε' },
+      c.s.nc ? { type: 'line', x: c.xs, y: c.A.eNo, color: 'photon', dash: [6, 4], width: 2, label: 'Re ε, no contact term' } : null,
+      { type: 'line', x: c.xs, y: c.A.eRe, color: 'ink', width: 2.2, label: 'Re ε' }
+    ], { xlim: [0, c.xmax], ylim: [c.ylo, c.yhi] });
+    pB.cv.canvas.setAttribute('aria-label', `Panel b: infrared dielectric function of ${c.p.name} against photon energy from 0 to ${c.xmax} meV. ` +
+      `Static value ${fx(c.es, 2)}; ` + (c.band ? `real part negative between ${fx(c.band[0], 1)} and ${fx(c.band[1], 1)} meV; ` : 'real part positive at every frequency; ') +
+      `high-frequency value ${c.p.einf}.` + (c.s.nc ? ' Dashed: the real part without the contact term, which diverges upward at low frequency.' : ''));
+  }
+
+  // ---------- readouts (keys are static MathJax in the markup) ----------
+  const V = {};
+  ['wp', 'wto', 'wlo', 'es', 'fs', 'z0', 'mr', 'ov', 'einf'].forEach(k => { V[k] = fig.querySelector('.b5-gauge-v-' + k); });
+  function readouts() {
+    const c = cur, p = c.p, nb = ' ', dev = 100 * (c.wlo / p.lo - 1);
+    // no-break spaces keep every number with its unit
+    V.wp.textContent = `${fx(c.wp, 1)}${nb}meV`;
+    V.wto.textContent = `${fx(c.wto, 1)}${nb}meV`;
+    V.wlo.textContent = `${fx(c.wlo, 1)}${nb}meV (measured ${fx(p.lo, 1)}, ${dev >= 0.05 ? '+' : ''}${fx(dev, 1)}${nb}%)`;
+    V.es.textContent = fx(c.es, 2);
+    V.fs.textContent = fx(c.fs, 3);
+    V.z0.textContent = fx(p.Z, 2);
+    V.mr.textContent = `${p.Mr.toPrecision(3)}${nb}amu`;
+    V.ov.textContent = `${fx(p.Om, 1)}${nb}Å³`;
+    V.einf.textContent = p.einf.toPrecision(3);
+  }
+
+  // ---------- controls ----------
+  let lastPre = 'GaAs';
+  function onChange(s) {
+    // a new crystal resets the Born charge to its literature value
+    if (s.pre !== lastPre) { lastPre = s.pre; const P = PRE[s.pre]; if (P && Math.abs(s.Z - P.Z) > 1e-9) ui.set('Z', P.Z, true); }
+    cur = compute(ui.state);
+    fig.querySelectorAll('.b5-gauge-k-nc').forEach(e => { e.hidden = !cur.s.nc; });
+    drawA(); drawB(); readouts();
+  }
+  const elCtl = fig.querySelector('.b5-gauge-ctrls');
+  const ui = EPP.controls(elCtl, [
+    { key: 'pre', type: 'select', label: 'crystal (literature values, illustrative)', options: [['GaAs', 'GaAs'], ['NaCl', 'NaCl'], ['MgO', 'MgO'], ['hBN', 'hBN, in-plane mode']], value: 'GaAs' },
+    { key: 'Z', type: 'range', label: 'Born charge Z^*', min: 0.2, max: 3.5, step: 0.01, value: 2.07, fmt: v => v.toFixed(2) },
+    { key: 'g', type: 'range', label: 'damping ħγ', min: 0.1, max: 10, step: 0.01, value: 1, log: true, fmt: gfmt },
+    { key: 'nc', type: 'toggle', label: 'show ε without the contact term', value: true }
+  ], onChange);
+  // control labels: the symbols in italic, like the readout keys
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const LAB = { Z: `Born charge ${I('Z')}<sup>*</sup>`, g: `damping ${I('ħγ')}`, nc: `show ${I('ε')} without the contact term` };
+  Object.keys(LAB).forEach(k => { const sp = elCtl.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+})();
+</script>

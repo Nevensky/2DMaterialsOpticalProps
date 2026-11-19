@@ -1,0 +1,464 @@
+  <figure class="viz" id="viz-a6-dyson">
+    <p class="viz-title">The Dyson equation moves the phonon pole <span class="tag">interactive</span></p>
+    <p class="a6-dyson-hd">(a) The Dyson equation <a class="eqref" href="#a6-eq-dysonF">(A6.4)</a> and the series it sums</p>
+    <div class="fd a6-dyson-row" role="group" aria-label="The Dyson equation: F equals F zero plus F zero, Pi ph, F">
+      <div class="a6-dyson-term"><div data-d="F"></div></div>
+      <div class="a6-dyson-term"><span class="op">=</span><div data-d="F0"></div></div>
+      <div class="a6-dyson-term"><span class="op">+</span><div data-d="dy"></div></div>
+    </div>
+    <div class="fd a6-dyson-row a6-dyson-series" role="group" aria-label="The series: F equals F zero plus F zero, Pi ph, F zero plus F zero, Pi ph, F zero, Pi ph, F zero, and so on">
+      <div class="a6-dyson-term"><div data-d="F"></div></div>
+      <div class="a6-dyson-term" data-n="1"><span class="op">=</span><div data-d="t1"></div></div>
+      <div class="a6-dyson-term" data-n="2"><span class="op">+</span><div data-d="t2"></div></div>
+      <div class="a6-dyson-term" data-n="3"><span class="op">+</span><div data-d="t3"></div></div>
+      <div class="a6-dyson-term" data-n="4"><span class="op">+</span><span class="op a6-dyson-dots">⋯</span></div>
+    </div>
+    <p class="a6-dyson-kept" aria-live="polite"></p>
+    <div class="a6-dyson-panels">
+      <div class="a6-dyson-spec"><div class="legend a6-dyson-legb"><span class="item" style="color:var(--muted)"><span class="sw" style="border-top-width:1.5px"></span><span style="color:var(--fg-2)">free line, $-\mathrm{Im}\,F^0/\pi$</span></span><span class="item" style="color:var(--c-5)"><span class="sw dash"></span><span style="color:var(--fg-2)">first $N$ terms of the series</span></span><span class="item" style="color:var(--c-phonon)"><span class="sw" style="border-top-width:3px"></span><span style="color:var(--fg-2)">Dyson sum, $\mathcal B_{\bq\nu}=-\mathrm{Im}\,F/\pi$</span></span><span class="item" style="color:var(--muted)"><span class="sw box"></span><span style="color:var(--fg-2)">series diverges, $|F^0\Pi^{\ph}|\ge1$</span></span></div></div>
+      <div class="a6-dyson-plane" style="margin-top:16px"><div class="legend a6-dyson-legc"><span class="item" style="color:var(--muted)"><svg width="14" height="12" viewBox="0 0 14 12" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><circle cx="7" cy="6" r="4.2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span style="color:var(--fg-2)">free poles</span></span><span class="item" style="color:var(--c-phonon)"><svg width="14" height="12" viewBox="0 0 14 12" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><circle cx="7" cy="6" r="4.2" fill="currentColor"/></svg><span style="color:var(--fg-2)">Dyson poles <a class="eqref" href="#a6-eq-pole">(A6.6)</a></span></span><span class="item" style="color:var(--fg-2)"><svg width="14" height="12" viewBox="0 0 14 12" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><path d="M2.5 1.5 L11.5 10.5 M11.5 1.5 L2.5 10.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span style="color:var(--fg-2)">first order <a class="eqref" href="#a6-eq-shift">(A6.8)</a></span></span></div></div>
+    </div>
+    <div class="a6-dyson-ctrls"></div>
+    <div class="readout a6-dyson-ro" aria-live="polite"><span>$\hbar\omega_{\bq\nu}$<b class="a6-dyson-v-w0"></b></span><span>$\hbar\bar\omega_{\bq\nu}$ exact <a class="eqref" href="#a6-eq-pole">(A6.6)</a><b class="a6-dyson-v-wb"></b></span><span>first order <a class="eqref" href="#a6-eq-shift">(A6.8)</a><b class="a6-dyson-v-w1"></b></span><span>$\hbar\Delta\omega_{\bq\nu}$ exact, first order<b class="a6-dyson-v-dw"></b></span></div>
+    <div class="readout a6-dyson-ro2" aria-live="polite"><span>$\hbar\gamma_{\bq\nu}$ (HWHM)<b class="a6-dyson-v-g"></b></span><span>full width $2\hbar\gamma_{\bq\nu}$<b class="a6-dyson-v-fw"></b></span><span>lifetime $\tau^{\ph}_{\bq\nu}$<b class="a6-dyson-v-tau"></b></span><span>$|F^0\Pi^{\ph}|$ at $\hbar\bar\omega_{\bq\nu}$<b class="a6-dyson-v-x"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> The Dyson sum has one line, moved from $\omega_{\bq\nu}$ to the renormalized frequency $\bar\omega_{\bq\nu}$ and widened to the half width <span class="nw">$\gamma_{\bq\nu}=-\mathrm{Im}\,\Pi^{\ph}/\hbar$.</span> Any finite number of terms keeps the line at <span class="nw">$\omega_{\bq\nu}$,</span> where it grows without bound as terms are added.</p><div class="cap-more">
+      <p><strong>Marks.</strong> (a) Heavy zigzag: the dressed propagator $F$; thin zigzag: the free <span class="nw">$F^0$;</span> grey disk: the self-energy <span class="nw">$\Pi^{\ph}$;</span> faint: terms left out. (b) Thin grey: the free line; dashed violet: the first $N$ terms, clipped by the frame; bold amber: the Dyson sum; grey band: <span class="nw">$|F^0\Pi^{\ph}|\ge1$,</span> where the series diverges; dashed verticals: $\hbar\omega_{\bq\nu}$ and <span class="nw">$\hbar\bar\omega_{\bq\nu}$.</span> (c) Circles: free poles; dots: Dyson poles; crosses: first order; shading: the upper half plane, where a retarded function has no poles. A display broadening <span class="nw">$\hbar\eta=0.4$ meV</span> widens each line by <span class="nw">0.4 meV</span> and lowers each pole by as much; the readouts are for <span class="nw">$\eta\to0$.</span></p>
+      <p><strong>Try.</strong> Raise <span class="nw">$N$:</span> the dashed structure grows but stays at <span class="nw">$\omega_{\bq\nu}$.</span> Set $\mathrm{Im}\,\Pi^{\ph}$ to 0: the line turns sharp and stays shifted. Make $\mathrm{Re}\,\Pi^{\ph}$ negative: the mode softens. At <span class="nw">$|\mathrm{Re}\,\Pi^{\ph}|=10$ meV,</span> compare the exact and first-order readouts.</p>
+      <p><strong>Model.</strong> One mode, its $F^0$ from <a class="eqref" href="#a6-eq-diag">(A6.5)</a> with <span class="nw">$\Pi^{\ph}=0$.</span> The self-energy, defined by <a class="eqref" href="#a6-eq-dysonF">(A6.4)</a>, plays the role of $\Pi$ in <a class="eqref" href="#a6-eq-osc">(A6.3)</a>: a static spring correction plus friction, <span class="nw">$\Pi^{\ph}(\omega)=\mathrm{Re}\,\Pi^{\ph}+\ii\,\mathrm{Im}\,\Pi^{\ph}\,\omega/\omega_{\bq\nu}$,</span> both parts taken at <span class="nw">$\omega_{\bq\nu}$.</span> The curves follow from <a class="eqref" href="#a6-eq-B">(A6.1)</a>. For this self-energy the poles of <a class="eqref" href="#a6-eq-pole">(A6.6)</a> are exact: <span class="nw">$\hbar\gamma_{\bq\nu}=-\mathrm{Im}\,\Pi^{\ph}$,</span> and $(\hbar\bar\omega_{\bq\nu})^2$ is <span class="nw">$(\hbar\omega_{\bq\nu})^2+2\hbar\omega_{\bq\nu}\,\mathrm{Re}\,\Pi^{\ph}$</span> minus <span class="nw">$(\mathrm{Im}\,\Pi^{\ph})^2$.</span> First order is <a class="eqref" href="#a6-eq-shift">(A6.8)</a>, the lifetime <a class="eqref" href="#a6-eq-tau">(A6.10)</a>. <span class="nw">$\hbar\omega_{\bq\nu}=50$ meV</span> is a typical optical phonon; all values are illustrative.</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a6-dyson');
+  if (!fig || !window.EPP) return;
+  // outside Section A.6 (the isolated figure test) the links to the section have no target: keep their text
+  if (!fig.closest('#a-phonon-se')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+
+  // ---------- model: one mode; energies E = ħω in meV, propagators in 1/meV ----------
+  // F^0(E) = 2E_0/[(E + iħη)² − E_0²], (A6.5) with Π = 0 and a display broadening ħη;
+  // Π(E) = Re Π + i Im Π · E/E_0 (static spring correction plus friction, (A6.3)), Re Π and Im Π taken at E_0;
+  // F = 1/(1/F^0 − Π), (A6.4); S_N = F^0 Σ_{n<N} (Π F^0)^n, the first N terms of its series.
+  const ETA = 0.4;              // display broadening ħη, meV
+  const XMAX = 120;             // energy axis of (b), 0 to XMAX; real axis of (c), −XMAX to XMAX (meV)
+  const YTOP = 4, YBOT = -12;   // imaginary axis of (c), meV
+  const HBAR = 0.6582119569;    // ħ in meV ps
+  const CM = 8.06554;           // cm⁻¹ per meV
+  const NALL = 9;               // position of the N slider that means "all terms"
+
+  function model(st) {
+    const E0 = st.E0, re = st.R, im = Math.min(0, st.I), all = st.N >= NALL, N = all ? Infinity : Math.round(st.N);
+    // pole equation (A6.6), E² = E_0² + 2E_0 Π(E), is a quadratic for this Π: E = i Im Π ± [E_0² + 2E_0 Re Π − (Im Π)²]^{1/2}
+    const disc = E0 * E0 + 2 * E0 * re - im * im;
+    const over = disc < -1e-9;                                // overdamped: both poles on the imaginary axis
+    const crit = !over && disc <= 1e-9;                       // ω̄ = 0: critically damped, or a soft mode if Im Π = 0
+    const wb = disc > 1e-9 ? Math.sqrt(disc) : 0, g = -im;     // ħω̄ and ħγ (η → 0), exact
+    const s = over ? Math.sqrt(-disc) : 0;
+    const poles = over ? [[0, im + s], [0, im - s]] : [[wb, im], [-wb, im]];
+    const w1 = E0 + re, g1 = -im;                              // first order, (A6.8); always |w1| ≥ ħω̄
+    const tau = g > 0 ? HBAR / (2 * g) : Infinity;             // (A6.10), ps
+    // |F^0 Π| at the Dyson line, η → 0: where the series would have to converge to describe the line
+    let xbar = NaN;
+    if (!over) {
+      const den = Math.abs(disc - E0 * E0), pa = Math.hypot(re, im * wb / E0);
+      xbar = pa === 0 ? 0 : (den < 1e-12 ? Infinity : 2 * E0 * pa / den);
+    }
+    return { E0, re, im, all, N, disc, over, crit, wb, g, poles, w1, g1, tau, xbar };
+  }
+
+  // energy grid: uniform, plus fine sampling around the free pole and the Dyson line
+  function grid(m) {
+    const xs = EPP.linspace(0, XMAX, 1201);
+    const add = (c, half, step) => { for (let x = c - half; x <= c + half; x += step) if (x > 0 && x < XMAX) xs.push(x); };
+    add(m.E0, 8, 0.025);
+    if (!m.over) add(m.wb, 5, 0.05);
+    xs.sort((a, b) => a - b);
+    const out = [xs[0]];
+    for (let i = 1; i < xs.length; i++) if (xs[i] - out[out.length - 1] > 1e-6) out.push(xs[i]);
+    return out;
+  }
+  // |Π F^0| at real E, with the display broadening of the plotted curves
+  function absX(m, E) {
+    const ar = E * E - ETA * ETA - m.E0 * m.E0, ai = 2 * E * ETA, d0 = ar * ar + ai * ai;
+    return 2 * m.E0 * Math.hypot(m.re, m.im * E / m.E0) / Math.sqrt(d0);
+  }
+  function curves(m) {
+    const { E0, re, im, all, N } = m, xs = grid(m), n = xs.length, K = all ? 0 : N;
+    const A0 = new Array(n), AN = new Array(n), AF = new Array(n), X = new Array(n);
+    for (let i = 0; i < n; i++) {
+      const E = xs[i];
+      const ar = E * E - ETA * ETA - E0 * E0, ai = 2 * E * ETA, d0 = ar * ar + ai * ai;   // (E + iħη)² − E_0²
+      const fr = 2 * E0 * ar / d0, fi = -2 * E0 * ai / d0;                                  // F^0
+      const pr = re, pim = im * E / E0;                                                      // Π(E)
+      const xr = pr * fr - pim * fi, xi = pr * fi + pim * fr;                                // Π F^0
+      const br = ar - 2 * E0 * pr, bi = ai - 2 * E0 * pim;                                   // 2E_0/F
+      const Fi = -2 * E0 * bi / (br * br + bi * bi);                                         // Im F
+      let sr = 0, si = 0, tr = 1, ti = 0;                                                    // Σ_{n<N} (Π F^0)^n
+      for (let k = 0; k < K; k++) { sr += tr; si += ti; const t = tr * xr - ti * xi; ti = tr * xi + ti * xr; tr = t; }
+      const ax = Math.hypot(xr, xi);
+      A0[i] = -fi / Math.PI; AF[i] = -Fi / Math.PI; X[i] = ax;
+      // all terms: the sum equals F where the series converges and does not exist where it diverges
+      AN[i] = all ? (ax < 1 ? AF[i] : NaN) : -(fr * si + fi * sr) / Math.PI;
+    }
+    // stretches where |F^0 Π| ≥ 1, edges refined by bisection
+    const bands = [], f = (E) => absX(m, E) - 1;
+    let start = null;
+    for (let i = 0; i < n; i++) {
+      const inside = X[i] >= 1;
+      if (inside && start === null) start = i === 0 ? xs[0] : EPP.bisect(f, xs[i - 1], xs[i]);
+      if (!inside && start !== null) { bands.push([start, EPP.bisect(f, xs[i - 1], xs[i])]); start = null; }
+    }
+    if (start !== null) bands.push([start, xs[n - 1]]);
+    return { xs, A0, AN, AF, bands: bands.filter(b => isFinite(b[0]) && isFinite(b[1])) };
+  }
+
+  // ---------- canvas text in the primer's notation ----------
+  // Outside $…$ the text is upright. Inside, letters are italic; !x is a bold upright vector; [..] is upright
+  // (a label such as ph, or the imaginary unit i); _x, _{..}, ^x, ^{..} are sub- and superscripts;
+  // a combining macron (U+0304) draws a bar over the character before it.
+  const ITAL = /[A-Za-zα-ωħ]/, BAR = '̄';
+  function lex(s) {
+    const out = [];
+    let math = false;
+    const add = (t, it, b, lvl, bar) => {
+      const p = out[out.length - 1];
+      if (p && !bar && !p.bar && p.it === it && p.b === b && p.lvl === lvl) p.t += t; else out.push({ t, it, b, lvl, bar });
+    };
+    const scan = (str, lvl) => {
+      for (let i = 0; i < str.length; i++) {
+        const ch = str[i];
+        if (ch === '$') { math = !math; continue; }
+        if ((ch === '_' || ch === '^') && i + 1 < str.length) {
+          const L = ch === '_' ? -1 : 1;
+          if (str[i + 1] === '{') { const k = str.indexOf('}', i + 2); scan(str.slice(i + 2, k < 0 ? str.length : k), L); i = k < 0 ? str.length : k; }
+          else { scan(str[i + 1], L); i += 1; }
+          continue;
+        }
+        if (math && ch === '!' && i + 1 < str.length) { const bar = str[i + 2] === BAR; add(str[i + 1], false, true, lvl, bar); i += bar ? 2 : 1; continue; }
+        if (math && ch === '[') { const k = str.indexOf(']', i + 1); add(str.slice(i + 1, k < 0 ? str.length : k), false, false, lvl, false); i = k < 0 ? str.length : k; continue; }
+        const bar = str[i + 1] === BAR;
+        add(ch, math && ITAL.test(ch), false, lvl, bar);
+        if (bar) i += 1;
+      }
+    };
+    scan(String(s), 0);
+    return out;
+  }
+  // draws with the baseline at y; returns the width
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, fam = EPP.css('--font-ui'), rs = lex(s);
+    const zs = (r) => (r.lvl ? Math.round(size * 0.72) : size);
+    const font = (r) => `${r.it ? 'italic ' : ''}${r.b ? '700 ' : ''}${zs(r)}px ${fam}`;
+    const ws = rs.map(r => { ctx.font = font(r); return ctx.measureText(r.t).width; });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    let x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    ctx.save();
+    if (o.color) ctx.fillStyle = o.color;
+    ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    rs.forEach((r, k) => {
+      ctx.font = font(r);
+      const dy = r.lvl === -1 ? size * 0.28 : (r.lvl === 1 ? -size * 0.38 : 0);
+      ctx.fillText(r.t, x0, y + dy);
+      if (r.bar) { const z = zs(r), sl = r.it ? 0.1 * z : 0; ctx.fillRect(x0 + 0.14 * ws[k] + sl, y + dy - 0.7 * z, 0.74 * ws[k], Math.max(1, 0.075 * z)); }
+      x0 += ws[k];
+    });
+    ctx.restore();
+    return tot;
+  }
+  const tw = (ctx, s, size) => txt(ctx, s, 0, 0, { size, measure: true });
+  const tick = (v) => (v < 0 ? '−' + (-v) : String(v));
+  function arrow(ctx, x0, y0, x1, y1, col, lw, head) {
+    const L = Math.hypot(x1 - x0, y1 - y0);
+    if (L < 2) return;
+    const hs = Math.min(head, 0.5 * L), a = Math.atan2(y1 - y0, x1 - x0);
+    ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = lw; ctx.lineCap = 'round'; ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1 - 0.8 * hs * Math.cos(a), y1 - 0.8 * hs * Math.sin(a)); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x1, y1);
+    ctx.lineTo(x1 - hs * Math.cos(a - 0.42), y1 - hs * Math.sin(a - 0.42));
+    ctx.lineTo(x1 - hs * Math.cos(a + 0.42), y1 - hs * Math.sin(a + 0.42));
+    ctx.closePath(); ctx.fill();
+  }
+
+  // ---------- (a) diagrams ----------
+  // every diagram is H high with its line at height Y0, so the operators of a row line up
+  const H = 56, Y0 = 34;
+  const chain = (n) => {           // n + 1 free lines joined by n self-energy disks
+    const items = []; let x = 4;
+    for (let k = 0; k <= n; k++) {
+      items.push({ t: 'phonon', a: [x, Y0], b: [x + 40, Y0], label: 'F^0' }); x += 40;
+      if (k < n) { items.push({ t: 'blob', at: [x + 18, Y0], r: 18, label: 'Π^{ph}', color: 'muted' }); x += 36; }
+    }
+    return { w: x + 4, items };
+  };
+  const D = {
+    F: { w: 66, items: [{ t: 'phonon2', a: [6, Y0], b: [60, Y0], label: 'F' }], aria: 'Dressed phonon propagator F: a heavy amber zigzag line.' },
+    F0: { w: 66, items: [{ t: 'phonon', a: [6, Y0], b: [60, Y0], label: 'F^0' }], aria: 'Free phonon propagator F zero: a thin amber zigzag line.' },
+    dy: { w: 178, items: [
+      { t: 'phonon', a: [4, Y0], b: [52, Y0], label: 'F^0' },
+      { t: 'blob', at: [72, Y0], r: 20, label: 'Π^{ph}', color: 'muted' },
+      { t: 'phonon2', a: [92, Y0], b: [174, Y0], label: 'F' }
+    ], aria: 'Second term of the Dyson equation: the thin zigzag F zero, the grey disk Pi ph, then the heavy zigzag F.' },
+    t1: { w: 66, items: [{ t: 'phonon', a: [6, Y0], b: [60, Y0], label: 'F^0' }], aria: 'Term 1 of the series: F zero, free propagation.' },
+    t2: Object.assign(chain(1), { aria: 'Term 2 of the series: F zero, Pi ph, F zero, one scattering by the electrons.' }),
+    t3: Object.assign(chain(2), { aria: 'Term 3 of the series: F zero, Pi ph, F zero, Pi ph, F zero, two scatterings.' })
+  };
+  const hd = fig.querySelector('.a6-dyson-hd');
+  hd.style.cssText = 'margin:0;font-family:var(--font-ui);font-size:0.86rem;font-weight:600;color:var(--fg-2)';
+  fig.querySelectorAll('.a6-dyson-row').forEach(row => {
+    row.style.cssText = 'align-items:flex-start;gap:6px 10px;margin:2px 0 4px;padding:4px 0';
+    row.querySelectorAll('.a6-dyson-term').forEach(t => { t.style.cssText = `display:flex;align-items:flex-start;gap:10px${EPP.reducedMotion ? '' : ';transition:opacity 0.25s'}`; });
+    row.querySelectorAll('.op').forEach(op => { op.style.lineHeight = '1'; op.style.marginTop = `calc(${Y0}px - 0.53em)`; });
+  });
+  const kept = fig.querySelector('.a6-dyson-kept');
+  kept.style.cssText = 'margin:0 0 6px;font-family:var(--font-ui);font-size:0.82rem;color:var(--muted);text-align:center';
+  const svgs = [];
+  fig.querySelectorAll('[data-d]').forEach(el => {
+    const d = D[el.dataset.d];
+    if (d) svgs.push(EPP.fd.draw(el, { w: d.w, h: H, label: d.aria, items: d.items }));
+  });
+  // capital Greek letters are upright: EPP.fd marks the disk labels font-style="normal", which the page rule for
+  // diagram labels overrides; restate it inline after every repaint (EPP.fd repaints on a theme change, before this runs)
+  const upright = () => svgs.forEach(svg => svg.querySelectorAll('text.fd-lab[font-style="normal"]').forEach(t => { t.style.fontStyle = 'normal'; }));
+  upright();
+  EPP.onTheme(upright);
+  const terms = [...fig.querySelectorAll('.a6-dyson-series [data-n]')];
+  function setKept(m) {
+    const N = m.N;
+    terms.forEach(t => { t.style.opacity = +t.dataset.n <= N ? '1' : '0.25'; });
+    kept.textContent = m.all ? 'Kept: all terms, summed in closed form by the Dyson equation.'
+      : N === 1 ? 'Kept: the first term only, in full colour; the faint terms are left out.'
+      : N <= 3 ? `Kept: the first ${N} terms, in full colour; the faint terms are left out.`
+      : `Kept: the first ${N} terms, the three drawn and ${N - 3} more inside ⋯; all later terms are left out.`;
+  }
+
+  // ---------- (b) spectral functions ----------
+  const elSpec = fig.querySelector('.a6-dyson-spec'), elLegB = fig.querySelector('.a6-dyson-legb');
+  const PH = 290, PC = 236;        // heights of (b) and (c), px
+  const plot = new EPP.Plot(elSpec, {
+    xlim: [0, XMAX], ylim: [-0.4, 1], height: PH, legend: false, margin: { l: 50, r: 12, t: 42, b: 42 },
+    xname: 'ħω', hoverX: v => EPP.fix(v, 2) + ' meV', hoverY: v => EPP.fmt(v, 3) + ' meV⁻¹',
+    ariaLabel: 'Panel b: spectral functions against the energy: the free line, the sum of the first N terms of the series and the Dyson sum'
+  });
+  elSpec.appendChild(elLegB);       // the legend (static markup, MathJax) goes under the canvas
+  let cur = null, curv = null;
+  const bandAt = () => {            // the stretch of divergence around the free pole, or the free pole itself
+    const b = curv.bands.find(x => x[0] <= cur.E0 && x[1] >= cur.E0) || curv.bands[0];
+    return b || null;
+  };
+  const baseRender = plot.render.bind(plot);
+  plot.render = () => {
+    const w = plot.cv.w, h = plot.cv.h, m = plot.m;
+    if (w && h) {
+      plot.opt.xticks = EPP.niceTicks(0, XMAX, Math.max(3, Math.round((w - m.l - m.r) / 70)));
+      plot.opt.yticks = h - m.t - m.b >= 190 ? [-0.4, -0.2, 0, 0.2, 0.4, 0.6, 0.8, 1] : [-0.4, 0, 0.4, 0.8];
+    }
+    baseRender();
+    const ctx = plot.ctx;
+    if (!w || !h || !cur || !curv) return;
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2');
+    txt(ctx, '(b) spectral functions', 2, 14, { size: 11.5, color: cFg2 });
+    txt(ctx, '$ħω$ (meV)', m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    ctx.save(); ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, 'spectral function (meV⁻¹)', 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+    // labels of the two vertical lines, in the top margin, pushed apart when they would touch
+    const L = [{ s: '$ħω_{!qν}$', x: plot.X(cur.E0), c: EPP.textColor('muted') }];
+    if (!cur.over && cur.wb > 0.5) L.push({ s: '$ħω' + BAR + '_{!qν}$', x: plot.X(cur.wb), c: EPP.textColor('phonon') });
+    L.forEach(l => { l.w = tw(ctx, l.s, 11.5); l.a = l.x - l.w / 2; });
+    L.sort((p, q) => p.x - q.x);
+    const gap = 8;
+    if (L.length === 2) { const over = L[0].a + L[0].w + gap - L[1].a; if (over > 0) { L[0].a -= over / 2; L[1].a += over / 2; } }
+    L.forEach(l => { l.a = EPP.clamp(l.a, 2, w - 2 - l.w); });
+    if (L.length === 2 && L[0].a + L[0].w + gap > L[1].a) { if (L[1].a + L[1].w >= w - 3) L[0].a = L[1].a - gap - L[0].w; else L[1].a = L[0].a + L[0].w + gap; }
+    L.forEach(l => txt(ctx, l.s, l.a, m.t - 7, { size: 11.5, color: l.c }));
+    // labels of the band and of the partial sum, beside the band: the side with more room first, the long
+    // wording of "all terms" only where it fits
+    const b = bandAt(), XL = plot.X(b ? b[0] : cur.E0), XR = plot.X(b ? b[1] : cur.E0);
+    const roomL = XL - 6 - (m.l + 4), roomR = (w - m.r - 4) - (XR + 6);
+    const wS = b ? tw(ctx, 'series diverges', 11) : 0;
+    const words = cur.all ? ['all terms (outside the band)', 'all terms'] : [cur.N === 1 ? 'first term' : `first ${cur.N} terms`];
+    let onLeft = roomL >= roomR, sT = words[words.length - 1];
+    found: for (const s of words) for (const left of roomL >= roomR ? [true, false] : [false, true]) {
+      if (Math.max(wS, tw(ctx, s, 11) + 20) <= (left ? roomL : roomR)) { onLeft = left; sT = s; break found; }
+    }
+    const y1 = plot.Y(0.9) + 4, y2 = plot.Y(0.74) + 4, cMu = EPP.textColor('muted'), cV = EPP.color('c5'), cVt = EPP.textColor('c5');
+    if (b) txt(ctx, 'series diverges', onLeft ? XL - 6 : XR + 6, y1, { size: 11, color: cMu, align: onLeft ? 'right' : 'left' });
+    const wT = tw(ctx, sT, 11) + 20, x0 = onLeft ? XL - 6 - wT : XR + 6;
+    ctx.save(); ctx.strokeStyle = cV; ctx.lineWidth = 1.6; ctx.setLineDash([5, 3]);
+    ctx.beginPath(); ctx.moveTo(x0, y2 - 4); ctx.lineTo(x0 + 15, y2 - 4); ctx.stroke(); ctx.restore();
+    txt(ctx, sT, x0 + 20, y2, { size: 11, color: cVt });
+  };
+
+  function drawSpec() {
+    const m = cur, c = curv;
+    plot.draw([
+      ...c.bands.map(b => ({ type: 'band', x0: b[0], x1: b[1], color: 'muted', alpha: 0.14 })),
+      { type: 'vline', at: m.E0, color: 'muted', width: 1.1 },
+      !m.over && m.wb > 0.5 ? { type: 'vline', at: m.wb, color: 'phonon', width: 1.3 } : null,
+      { type: 'fill', x: c.xs, y1: c.AF, base: 0, color: 'phonon', alpha: 0.16 },
+      { type: 'line', x: c.xs, y: c.A0, color: 'muted', width: 1.2, label: 'free line' },
+      { type: 'line', x: c.xs, y: c.AF, color: 'phonon', width: 2.6, label: 'Dyson sum' },
+      // the partial sum runs far outside the frame near ħω_qν: no pen lifts, the frame clips it
+      { type: 'line', x: c.xs, y: c.AN, color: 'c5', width: 1.6, dash: [5, 3], breakJump: Infinity, label: m.all ? 'all terms' : `first ${m.N} term${m.N > 1 ? 's' : ''}` }
+    ]);
+  }
+
+  // ---------- (c) complex frequency plane ----------
+  const elPlane = fig.querySelector('.a6-dyson-plane'), elLegC = fig.querySelector('.a6-dyson-legc');
+  const cvP = EPP.canvas(elPlane, { height: PC });
+  elPlane.appendChild(elLegC);
+  cvP.canvas.setAttribute('role', 'img');
+  function drawPlane() {
+    cvP.clear();
+    if (!cur) return;
+    const ctx = cvP.ctx, w = cvP.w, h = cvP.h, m = { l: 46, r: 10, t: 26, b: 42 };
+    const pw = w - m.l - m.r, ph = h - m.t - m.b, bot = m.t + ph;
+    const X = (x) => m.l + (x + XMAX) / (2 * XMAX) * pw, Y = (y) => m.t + (YTOP - y) / (YTOP - YBOT) * ph;
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMu = EPP.color('muted'), cGrid = EPP.color('grid'), cRule = EPP.color('rule');
+    const cPh = EPP.color('phonon'), cPhT = EPP.textColor('phonon');
+    // the upper half plane, where a retarded function has no poles
+    ctx.fillStyle = EPP.alpha('muted', 0.13); ctx.fillRect(m.l, m.t, pw, Y(0) - m.t);
+    const XT = [-100, -50, 0, 50, 100], YT = [4, 0, -4, -8, -12];
+    ctx.strokeStyle = cGrid; ctx.lineWidth = 1; ctx.beginPath();
+    XT.forEach(v => { const x = Math.round(X(v)) + 0.5; ctx.moveTo(x, m.t); ctx.lineTo(x, bot); });
+    YT.forEach(v => { const y = Math.round(Y(v)) + 0.5; ctx.moveTo(m.l, y); ctx.lineTo(m.l + pw, y); });
+    ctx.stroke();
+    ctx.strokeStyle = cRule; ctx.beginPath(); ctx.moveTo(Math.round(X(0)) + 0.5, m.t); ctx.lineTo(Math.round(X(0)) + 0.5, bot); ctx.stroke();
+    ctx.strokeStyle = cFg2; ctx.lineWidth = 1.3; ctx.beginPath(); ctx.moveTo(m.l, Y(0)); ctx.lineTo(m.l + pw, Y(0)); ctx.stroke();
+    ctx.strokeStyle = cRule; ctx.lineWidth = 1; ctx.strokeRect(m.l + 0.5, m.t + 0.5, pw - 1, ph - 1);
+    XT.forEach(v => txt(ctx, tick(v), X(v), bot + 15, { size: 11, color: cMu, align: 'center' }));
+    YT.forEach(v => txt(ctx, tick(v), m.l - 6, Y(v) + 4, { size: 11, color: cMu, align: 'right' }));
+    txt(ctx, 'Re $ħω$ (meV)', m.l + pw / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    ctx.save(); ctx.translate(14, m.t + ph / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, 'Im $ħω$ (meV)', 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+    txt(ctx, '(c) poles in the complex plane', 2, 14, { size: 11.5, color: cFg2 });
+    txt(ctx, 'no poles (causality)', X(-XMAX / 2), m.t + 15, { size: 11, color: cMu, align: 'center' });
+
+    // free poles ±E_0 − iħη; Dyson poles and first-order estimates, shifted by the same −iħη
+    const { E0, poles } = cur, yc = (y) => Math.max(y, YBOT + 0.25);
+    const free = [[E0, -ETA], [-E0, -ETA]];
+    const dres = poles.map(p => [p[0], p[1] - ETA]);
+    const fo = [[cur.w1, -cur.g1 - ETA], [-cur.w1, -cur.g1 - ETA]];
+    const R0 = 4.6;
+    for (let k = 0; k < 2; k++) {
+      const x0 = X(free[k][0]), y0 = Y(free[k][1]), x1 = X(dres[k][0]), y1 = Y(yc(dres[k][1]));
+      const L = Math.hypot(x1 - x0, y1 - y0);
+      if (L > 2 * R0 + 6) { const ux = (x1 - x0) / L, uy = (y1 - y0) / L; arrow(ctx, x0 + ux * (R0 + 1.5), y0 + uy * (R0 + 1.5), x1 - ux * (R0 + 1.5), y1 - uy * (R0 + 1.5), EPP.alpha('phonon', 0.85), 1.4, 7); }
+    }
+    ctx.lineWidth = 1.6; ctx.strokeStyle = cMu; ctx.setLineDash([]);
+    free.forEach(p => { ctx.beginPath(); ctx.arc(X(p[0]), Y(p[1]), R0, 0, 2 * Math.PI); ctx.stroke(); });
+    ctx.fillStyle = cPh;
+    dres.forEach(p => {
+      const x = X(p[0]);
+      if (p[1] >= YBOT) { ctx.beginPath(); ctx.arc(x, Y(p[1]), R0, 0, 2 * Math.PI); ctx.fill(); }
+      else { const y = bot - 2; ctx.beginPath(); ctx.moveTo(x - 6, y - 9); ctx.lineTo(x + 6, y - 9); ctx.lineTo(x, y); ctx.closePath(); ctx.fill(); }   // below the frame
+    });
+    ctx.strokeStyle = cFg2; ctx.lineWidth = 1.4;
+    fo.forEach(p => { const x = X(p[0]), y = Y(yc(p[1])), a = 4.2; ctx.beginPath(); ctx.moveTo(x - a, y - a); ctx.lineTo(x + a, y + a); ctx.moveTo(x + a, y - a); ctx.lineTo(x - a, y + a); ctx.stroke(); });
+
+    // labels: free poles just above the real axis; Dyson poles below their dots, else beside them
+    const yF = Y(0) - 6, fl = [{ s: '$ħω_{!qν}$', x: X(E0) }, { s: '$−ħω_{!qν}$', x: X(-E0) }];
+    fl.forEach(l => { l.w = tw(ctx, l.s, 11.5); });
+    const need = (fl[0].w + fl[1].w) / 2 + 6 - (fl[0].x - fl[1].x);
+    if (need > 0) { fl[0].x += need / 2; fl[1].x -= need / 2; }
+    fl.forEach(l => txt(ctx, l.s, EPP.clamp(l.x, m.l + 2 + l.w / 2, m.l + pw - 2 - l.w / 2), yF, { size: 11.5, color: cMu, align: 'center' }));
+    // a Dyson label goes below its dot; where that leaves the frame, beside it, on the outer side first,
+    // stepping away until it clears every circle, dot and cross (the first-order cross always lies further out
+    // than the dot, since (E_0 + Re Π)² − (ħω̄)² = (Re Π)² + (Im Π)²)
+    const marks = [...free.map(p => [X(p[0]), Y(p[1])]), ...dres.map(p => [X(p[0]), Y(yc(p[1]))]), ...fo.map(p => [X(p[0]), Y(yc(p[1]))])];
+    const clear = (a, b, w) => !marks.some(([x, y]) => x + 9 > a && x - 9 < a + w && y + 6 > b - 12 && y - 6 < b + 4);
+    const place = (s, k, side) => {
+      const w = tw(ctx, s, 11.5), xd = X(dres[k][0]), yd = Y(yc(dres[k][1])), lo = m.l + 2, hi = m.l + pw - 2;
+      const ab = EPP.clamp(xd - w / 2, lo, hi - w);
+      if (yd + 23 <= bot - 1 && clear(ab, yd + 19, w)) return { s, w, a: ab, b: yd + 19 };
+      for (const sd of [side, -side]) for (let d = R0 + 6; ; d += 3) {
+        const a = sd > 0 ? xd + d : xd - d - w;
+        if (a < lo || a + w > hi) break;
+        if (clear(a, yd + 4, w)) return { s, w, a, b: yd + 4 };
+      }
+      return { s, w, a: ab, b: Math.min(yd + 19, bot - 5) };
+    };
+    if (cur.over) {
+      // the poles lie within 25 meV of the imaginary axis here, so the note goes to the right, below the arrows
+      const xr = m.l + pw - 8, yl = Y(-5);
+      ['overdamped: both poles', 'on the imaginary axis,', 'no oscillation'].forEach((s, i) => txt(ctx, s, xr, yl + 13 * i, { size: 11, color: cPhT, align: 'right' }));
+    } else if (cur.crit) {
+      const l = place('double pole, $ω' + BAR + '_{!qν}$ = 0', 0, 1);
+      txt(ctx, l.s, l.a, l.b, { size: 11.5, color: cPhT });
+    } else {
+      const lab = [place('$ħ(ω' + BAR + '_{!qν} − [i]γ_{!qν})$', 0, 1), place('$ħ(−ω' + BAR + '_{!qν} − [i]γ_{!qν})$', 1, -1)];
+      const clash = lab[1].a + lab[1].w + 6 > lab[0].a && Math.abs(lab[1].b - lab[0].b) < 14;
+      txt(ctx, lab[0].s, lab[0].a, lab[0].b, { size: 11.5, color: cPhT });
+      if (!clash) txt(ctx, lab[1].s, lab[1].a, lab[1].b, { size: 11.5, color: cPhT });
+    }
+    const f2 = (v) => EPP.fix(v, 2);
+    cvP.canvas.setAttribute('aria-label', 'Panel c: poles in the complex frequency plane. Free poles at plus and minus ' + EPP.fix(E0, 1) + ' meV, just below the real axis. ' +
+      (cur.over ? `Overdamped: both Dyson poles on the imaginary axis, at ${f2(poles[0][1])} and ${f2(poles[1][1])} meV. `
+        : cur.crit ? `The two Dyson poles meet on the imaginary axis, ${f2(cur.g)} meV down: the renormalized frequency is zero. `
+        : `Dyson poles at plus and minus ${f2(cur.wb)} meV, ${f2(cur.g)} meV below the free ones, with arrows from the free poles. `) +
+      `First order at plus and minus ${f2(cur.w1)} meV, ${f2(cur.g1)} meV down. The upper half plane, shaded, has no poles.`);
+  }
+  cvP.onResize(drawPlane);
+
+  // ---------- readouts ----------
+  const RO = {};
+  ['w0', 'wb', 'w1', 'dw', 'g', 'fw', 'tau', 'x'].forEach(k => { RO[k] = fig.querySelector('.a6-dyson-v-' + k); });
+  const nb = ' ';
+  const mev = (v, d) => EPP.fix(v, d) + nb + 'meV';
+  const sg = (v, d) => (v >= 0.5 * Math.pow(10, -d) ? '+' : '') + EPP.fix(v, d);
+  function readouts() {
+    const m = cur;
+    RO.w0.textContent = `${mev(m.E0, 1)} (${EPP.fix(m.E0 * CM, 0)}${nb}cm⁻¹)`;
+    RO.w1.textContent = mev(m.w1, 2);
+    if (m.over) {
+      RO.wb.textContent = 'none: overdamped';
+      RO.dw.textContent = `—, ${sg(m.re, 2)}${nb}meV`;
+      RO.g.textContent = `overdamped: poles at −${EPP.fix(-m.poles[0][1], 2)}i and −${EPP.fix(-m.poles[1][1], 2)}i${nb}meV`;
+      RO.fw.textContent = '—';
+      RO.tau.textContent = '—';
+      RO.x.textContent = '—';
+    } else {
+      RO.wb.textContent = m.crit ? (m.g > 0 ? '0: critically damped' : '0: soft mode, the edge of stability') : mev(m.wb, 2);
+      RO.dw.textContent = `${sg(m.wb - m.E0, 2)}, ${sg(m.re, 2)}${nb}meV`;
+      RO.g.textContent = m.crit ? `${mev(m.g, 2)}, one double pole, not a Lorentzian line` : `${mev(m.g, 2)} = ${EPP.fix(m.g * CM, 1)}${nb}cm⁻¹, exact and first order`;
+      RO.fw.textContent = m.crit ? '—' : `${mev(2 * m.g, 2)} = ${EPP.fix(2 * m.g * CM, 1)}${nb}cm⁻¹`;
+      RO.tau.textContent = isFinite(m.tau) ? m.tau.toPrecision(3) + nb + 'ps' : '∞ (no damping)';
+      RO.x.textContent = m.xbar === 0 ? '0 (no self-energy)' : !isFinite(m.xbar) ? '∞'
+        : `${EPP.fix(m.xbar, 2)}${m.xbar > 1.0005 ? ': the series diverges there' : m.xbar > 0.9995 ? ': on the edge' : ''}`;
+    }
+    const b = bandAt(), f1 = (v) => EPP.fix(v, 1);
+    plot.cv.canvas.setAttribute('aria-label', `Panel b: spectral functions against the energy, 0 to ${XMAX} meV. The free line is a sharp peak at ${f1(m.E0)} meV. ` +
+      (m.all ? 'The sum of all terms equals the Dyson sum outside the band where the series diverges and does not exist inside it. '
+        : m.N === 1 ? `The first term alone is the free line. `
+        : `The sum of the first ${m.N} terms stays at ${f1(m.E0)} meV, where it leaves the frame. `) +
+      (m.over ? 'The Dyson sum is overdamped: a broad hump with no peak at a finite frequency. '
+        : m.crit ? 'The Dyson sum peaks at zero frequency: the renormalized frequency is zero. '
+        : `The Dyson sum is one line at ${EPP.fix(m.wb, 2)} meV with half width ${EPP.fix(m.g, 2)} meV, plus the 0.4 meV display broadening. `) +
+      (b ? `The series diverges between ${f1(b[0])} and ${f1(b[1])} meV, shaded.` : 'The series converges at every energy shown.'));
+  }
+
+  function update(st) {
+    cur = model(st); curv = curves(cur);
+    setKept(cur); drawSpec(); drawPlane(); readouts();
+  }
+
+  // ---------- controls (below the plots) ----------
+  const elCtl = fig.querySelector('.a6-dyson-ctrls');
+  const ui = EPP.controls(elCtl, [
+    { key: 'R', type: 'range', label: 'Re Π^{ph}(ω_{qν})', min: -10, max: 10, step: 0.1, value: 4, fmt: v => sg(v, 1) + ' meV' },
+    { key: 'I', type: 'range', label: 'Im Π^{ph}(ω_{qν})', min: -10, max: 0, step: 0.1, value: -3, fmt: v => EPP.fix(v, 1) + ' meV' },
+    { key: 'N', type: 'range', label: 'terms of the series N', min: 1, max: NALL, step: 1, value: 2, fmt: v => (v >= NALL ? 'all' : String(Math.round(v))) },
+    { key: 'E0', type: 'range', label: 'phonon energy ħω_{qν}', min: 20, max: 100, step: 0.5, value: 50, fmt: v => EPP.fix(v, 1) + ' meV' }
+  ], update);
+  // control labels: symbols italic, the vector bold, labels upright, as in the text
+  const it = (s) => `<i style="font-family:var(--font-text)">${s}</i>`, up = (s) => `<span style="font-family:var(--font-text)">${s}</span>`;
+  const wq = `${it('ω')}<sub><b style="font-family:var(--font-text);font-style:normal">q</b>${it('ν')}</sub>`;
+  const LAB = { R: `Re ${up('Π')}<sup>ph</sup>(${wq})`, I: `Im ${up('Π')}<sup>ph</sup>(${wq})`, N: `terms of the series ${it('N')}`, E0: `phonon energy ${it('ħ')}${wq}` };
+  Object.keys(LAB).forEach(k => { const sp = elCtl.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  update(ui.state);
+})();
+</script>

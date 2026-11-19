@@ -1,0 +1,272 @@
+  <figure class="viz" id="viz-a4-wannier">
+    <p class="viz-title">Why polar crystals break Fourier interpolation: a one-dimensional lab <span class="tag">interactive · model</span></p>
+    <div class="viz-grid side">
+      <div class="a4-wannier-a"><div class="legend a4-wannier-leg-a"><span class="item" style="color:var(--fg)"><span class="sw" style="border-top-width:1.6px"></span><span style="color:var(--fg-2)">exact $g$</span></span><span class="item"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><circle cx="7" cy="7" r="3.8" style="fill:var(--c-5)"/></svg><span style="color:var(--fg-2)">samples of $g$ on the coarse grid</span></span><span class="item a4-wannier-off" style="color:var(--c-phonon)"><span class="sw dash"></span><span style="color:var(--fg-2)">interpolated $g$</span></span><span class="item a4-wannier-on a4-wannier-lr" style="color:var(--c-photon)" hidden><span class="sw dot"></span><span style="color:var(--fg-2)">analytic $g^{\mathrm{lr}}$</span></span><span class="item a4-wannier-on" hidden><svg width="24" height="14" viewBox="0 0 24 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><line x1="0" y1="7" x2="24" y2="7" style="stroke:var(--c-4);stroke-width:1.6"/><circle cx="12" cy="7" r="4" style="fill:var(--surface);stroke:var(--c-4);stroke-width:1.6"/></svg><span style="color:var(--fg-2)">$g^{\mathrm{sr}}=g-g^{\mathrm{lr}}$, sampled and interpolated</span></span><span class="item a4-wannier-on" style="color:var(--c-phonon)" hidden><span class="sw dash"></span><span style="color:var(--fg-2)">interpolated $g^{\mathrm{sr}}$ plus $g^{\mathrm{lr}}$</span></span></div></div>
+      <div class="a4-wannier-b"><div class="legend a4-wannier-leg-b"><span class="item"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><circle cx="7" cy="7" r="3.8" style="fill:var(--c-5)"/></svg><span style="color:var(--fg-2)">coefficients of $g$</span></span><span class="item"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><circle cx="7" cy="7" r="5" style="fill:none;stroke:var(--c-4);stroke-width:1.6"/></svg><span style="color:var(--fg-2)">coefficients of $g^{\mathrm{sr}}$</span></span><span class="item a4-wannier-tail" style="color:var(--muted)"><span class="sw dash" style="border-top-width:1.5px"></span><span style="color:var(--fg-2)">exact tail of $g$</span></span><span class="item a4-wannier-tail" style="color:var(--c-4)"><span class="sw dot"></span><span style="color:var(--fg-2)">exact tail of $g^{\mathrm{sr}}$</span></span></div></div>
+    </div>
+    <div class="a4-wannier-ctrls"></div>
+    <div class="readout a4-wannier-ro" aria-live="polite" aria-atomic="true"><span>rms error away from $\Gamma$, direct<b class="a4-wannier-v-eD"></b></span><span>with $g^{\mathrm{lr}}$ subtracted<b class="a4-wannier-v-eS"></b></span><span>coefficients kept<b class="a4-wannier-v-R"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> The direct interpolation rings next to every <span class="nw">$\Gamma$,</span> and its error falls only about as <span class="nw">$1/N_{\mathrm c}$:</span> the coefficients of $g$ never decay, because in one dimension a $1/q$ singularity is a step in $R_\ell$ (in three, the $1/R^2$ dipole tail). Subtract $g^{\mathrm{lr}}$ first and the remainder's coefficients decay like a Gaussian: at $N_{\mathrm c}=8$ the error is about <span class="nw">$10^{-5}$.</span></p><div class="cap-more">
+      <p><strong>Marks.</strong> (a) Solid line: the exact <span class="nw">$g$;</span> violet dots: its samples; amber dashes: the interpolation; with subtraction, rose dotted line: <span class="nw">$g^{\mathrm{lr}}$;</span> teal: <span class="nw">$g^{\mathrm{sr}}=g-g^{\mathrm{lr}}$,</span> sampled and interpolated. (b) Kept coefficients, log scale (below <span class="nw">$10^{-9}$:</span> bottom edge); grey band: those dropped, outside the Wigner–Seitz supercell; lines: the exact tails, $C/2$ and <span class="nw">$\tfrac C2\,\mathrm{erfc}(R_\ell/2r_{\mathrm c})$.</span> The grid folds the tail of $g$ back as the ramp <span class="nw">$\tfrac C2(1-2|R_\ell|/N_{\mathrm c}a)$,</span> zero at the edge without any real decay.</p>
+      <p><strong>Try.</strong> At <span class="nw">$N_{\mathrm c}=8$,</span> toggle the subtraction: the error falls from 0.14 to <span class="nw">$1.5\times10^{-5}$.</span> Set <span class="nw">$C=0$,</span> a nonpolar crystal: every grid is exact. With subtraction, raise $r_{\mathrm c}$ to <span class="nw">$1.4a$:</span> more of the dipole field stays in <span class="nw">$g^{\mathrm{sr}}$,</span> its tail crosses the edge, and the error grows to <span class="nw">$10^{-2}$;</span> $N_{\mathrm c}=16$ restores <span class="nw">$10^{-5}$.</span> The cutoff drops out once the grid resolves the remainder.</p>
+      <p><strong>Model.</strong> <span class="nw">$a=1$,</span> arbitrary units. The coupling $g(q)$ is a smooth part, <span class="nw">$\sin^2\tfrac{qa}2+0.35\sin^2qa$,</span> plus a one-dimensional dipole kernel, <span class="nw">$C\sum_{G\neq-q}(q+G)^{-1}=\tfrac{Ca}2\cot\tfrac{qa}2$,</span> over the multiples $G$ of <span class="nw">$2\pi/a$,</span> with <span class="nw">$C\propto Z^*/\varepsilon_\infty$;</span> the rule $G\neq-q$ of <a class="eqref" href="#a4-eq-glr">(A4.14)</a> makes <span class="nw">$g(0)=0$.</span> <span class="nw">$g^{\mathrm{lr}}=C\sum_{G\neq-q}\ee^{-r_{\mathrm c}^2(q+G)^2}/(q+G)$,</span> <span class="nw">$|G|\le12\pi/a$.</span> The coefficients, couplings to an atom displaced in cell $\ell$ like <a class="eqref" href="#a4-eq-gR">(A4.17)</a>, are $g(R_\ell)=N_{\mathrm c}^{-1}\sum_s\ee^{-\ii q_sR_\ell}g(q_s)$ on <span class="nw">$q_s=2\pi s/N_{\mathrm c}a$,</span> kept for $|R_\ell|\le N_{\mathrm c}a/2$ and summed as <span class="nw">$\sum_\ell\ee^{\ii qR_\ell}g(R_\ell)$:</span> <a class="eqref" href="#a4-eq-interp">(A4.18)</a> in one dimension. The rms error skips $0.1\pi/a$ around each <span class="nw">$\Gamma$.</span></p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a4-wannier');
+  if (!fig || !window.EPP) return;
+  // outside Section A.4 (the isolated figure test) the caption's links to the section have no target: show them as text
+  if (!fig.closest('#a-polar')) fig.querySelectorAll('figcaption a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+
+  // ---------- model: one band, one mode, lattice constant a = 1, arbitrary units ----------
+  // "computed" coupling g(q) = sin^2(qa/2) + 0.35 sin^2(qa) + C Σ_{G≠−q} 1/(q + G), G = 2πn/a: a smooth short-range part plus the
+  // lattice sum of a one-dimensional dipole kernel, (a/2) cot(qa/2). The term q + G = 0 is left out, the rule G ≠ −q of (A4.14),
+  // so the sample at Γ is the smooth part alone, 0.
+  const TAU = 2 * Math.PI, B2 = 0.35, NG = 6;
+  const NF = 801, XF = EPP.linspace(-2, 2, NF), QF = XF.map(x => Math.PI * x);    // two zones, x = qa/π
+  const atG = (q) => Math.abs(Math.sin(q / 2)) < 1e-9;
+  const gSm = (q) => Math.sin(q / 2) ** 2 + B2 * Math.sin(q) ** 2;
+  const gDip = (q) => (atG(q) ? 0 : 0.5 * Math.cos(q / 2) / Math.sin(q / 2));     // Σ_{G≠−q} 1/(q + G)
+  // long-range part per unit C, with the cutoff factor e^{−r_c^2 (q+G)^2} of the text, |G| ≤ 12π/a, the term q + G = 0 left out
+  const gLr = (q, rc) => {
+    let s = 0;
+    for (let n = -NG; n <= NG; n++) { const x = q + n * TAU; if (Math.abs(x) < 1e-9) continue; s += Math.exp(-rc * rc * x * x) / x; }
+    return s;
+  };
+  // complementary error function (Numerical Recipes erfcc, relative error below 1.2e-7). The exact coefficients of the dipole
+  // part of g^sr are (C/2) erfc(|R_ℓ|/2r_c), a Gaussian-like fall over about 2r_c; those of g are C/2 at every R_ℓ ≠ 0.
+  function erfc(x) {
+    const z = Math.abs(x), t = 1 / (1 + 0.5 * z);
+    const r = t * Math.exp(-z * z - 1.26551223 + t * (1.00002368 + t * (0.37409196 + t * (0.09678418 + t * (-0.18628806 +
+      t * (0.27886807 + t * (-1.13520398 + t * (1.48851587 + t * (-0.82215223 + t * 0.17087277)))))))));
+    return x >= 0 ? r : 2 - r;
+  }
+  // coarse grid q_s = 2πs/(N_c a): coefficients g(R_ℓ) = N_c^{-1} Σ_s e^{−i q_s R_ℓ} g(q_s), kept inside the Wigner–Seitz supercell
+  // of the grid, |R_ℓ| ≤ N_c a/2, with half weights on its edge when N_c is even; the interpolant Σ_ℓ e^{i q R_ℓ} g(R_ℓ) is (A4.18) in 1D
+  function coeffs(f, N) {
+    const P = [], W = [], re = [], im = [];
+    const h = Math.floor(N / 2);
+    for (let p = -h; p <= h; p++) { P.push(p); W.push(N % 2 === 0 && Math.abs(p) === h ? 0.5 : 1); }
+    for (const p of P) {
+      let a = 0, b = 0;
+      for (let s = 0; s < N; s++) { const ph = -TAU * s * p / N; a += f[s] * Math.cos(ph); b += f[s] * Math.sin(ph); }
+      re.push(a / N); im.push(b / N);
+    }
+    return { P, W, re, im };
+  }
+  const interp = (c, q) => { let s = 0; for (let k = 0; k < c.P.length; k++) { const ph = q * c.P[k]; s += c.W[k] * (c.re[k] * Math.cos(ph) - c.im[k] * Math.sin(ph)); } return s; };
+  const XCUT = 0.1;                    // the rms error leaves out |q − G| < 0.1π/a around each Γ, where g diverges
+  const FLOOR = 2e-9;                  // coefficients below 10^-9 are drawn on the bottom edge of (b)
+  const RT = EPP.linspace(0, 8.4, 169);
+
+  function compute(st) {
+    const C = st.C, N = Math.round(st.N), rc = st.rc, sub = !!st.sub;
+    const qs = Array.from({ length: N }, (_, s) => TAU * s / N);
+    const gs = qs.map(q => gSm(q) + C * gDip(q));                 // samples of g
+    const srs = qs.map((q, s) => gs[s] - C * gLr(q, rc));         // samples of g^sr = g − g^lr
+    const cD = coeffs(gs, N), cR = coeffs(srs, N);
+    const ex = new Array(NF), lr = new Array(NF), iD = new Array(NF), iR = new Array(NF), iS = new Array(NF);
+    let eD = 0, eS = 0, n = 0;
+    for (let i = 0; i < NF; i++) {
+      const q = QF[i], g0 = atG(q), l = g0 ? 0 : C * gLr(q, rc);
+      const e = gSm(q) + C * gDip(q), d = interp(cD, q), r = interp(cR, q);
+      const sing = g0 && C > 0;          // g and g^lr diverge at Γ: lift the pen there
+      ex[i] = sing ? NaN : e; lr[i] = sing ? NaN : l; iD[i] = d; iR[i] = r; iS[i] = sing ? NaN : r + l;
+      const x = Math.abs(XF[i]);
+      if (Math.min(x, Math.abs(2 - x)) < XCUT - 1e-9) continue;
+      eD += (d - e) ** 2; eS += (r + l - e) ** 2; n++;
+    }
+    // the coefficients as they enter the interpolant (edge weight included), for R_ℓ ≥ 0
+    const R = [], aD = [], aR = [];
+    cD.P.forEach((p, k) => {
+      if (p < 0) return;
+      R.push(p); aD.push(cD.W[k] * Math.hypot(cD.re[k], cD.im[k])); aR.push(cR.W[k] * Math.hypot(cR.re[k], cR.im[k]));
+    });
+    return { C, N, rc, sub, gs, srs, ex, lr, iD, iR, iS, eD: Math.sqrt(eD / n), eS: Math.sqrt(eS / n), R, aD, aR };
+  }
+
+  // ---------- formatting ----------
+  const fx = (v, d) => EPP.fix(Math.abs(v) < 0.5 * Math.pow(10, -d) ? 0 : v, d);
+  const SUP = { '-': '⁻', 0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴', 5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹' };
+  function sci(v, d = 2) {
+    if (!(v > 0) || !isFinite(v)) return '0';
+    let ex = Math.floor(Math.log10(v)), mant = (v / Math.pow(10, ex)).toFixed(d - 1);
+    if (parseFloat(mant) >= 10) { ex += 1; mant = (v / Math.pow(10, ex)).toFixed(d - 1); }
+    return `${mant} × 10${String(ex).split('').map(c => SUP[c]).join('')}`;
+  }
+  const err = (v) => (!(v >= 1e-12) ? '< 10⁻¹², exact' : (v >= 0.01 ? v.toPrecision(2) : sci(v, 2)));
+  const sciPlain = (v) => (v >= 0.01 ? v.toPrecision(2) : (v >= 1e-12 ? v.toExponential(1).replace('e', ' times 10 to the ') : 'below 10 to the -12'));
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const NB = ' ';
+
+  // ---------- canvas text: '$…$' marks math (letters italic, digits upright); _x, ^{xy} as in EPP.drawRich ----------
+  const ITAL = /[A-Za-zα-ωℓħ]/;
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const part of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: part.t, m: part.m, it: false }); continue; }
+        let buf = '', it = null;
+        for (const ch of part.t) {
+          const k = ITAL.test(ch);
+          if (it !== null && k !== it) { out.push({ t: buf, m: part.m, it }); buf = ''; }
+          buf += ch; it = k;
+        }
+        if (buf) out.push({ t: buf, m: part.m, it });
+      }
+    });
+    return out;
+  }
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, fam = EPP.css('--font-ui'), rs = runs(s);
+    const font = (r) => `${r.it ? 'italic ' : ''}${r.m ? Math.round(size * 0.72) : size}px ${fam}`;
+    const ws = rs.map(r => { ctx.font = font(r); return ctx.measureText(r.t).width; });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    let x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    if (o.color) ctx.fillStyle = o.color;
+    ctx.textAlign = 'left';
+    rs.forEach((r, k) => { ctx.font = font(r); ctx.fillText(r.t, x0, y + (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0))); x0 += ws[k]; });
+    return tot;
+  }
+  const tw = (ctx, s, size) => txt(ctx, s, 0, 0, { size, measure: true });
+  const fit = (ctx, list, size, avail) => list.find(s => tw(ctx, s, size) <= avail) || list[list.length - 1];
+
+  let cur = null;
+
+  // ---------- (a) the coupling over two zones ----------
+  const elA = fig.querySelector('.a4-wannier-a'), elB = fig.querySelector('.a4-wannier-b');
+  const XT = [{ v: -2, s: '−2π/$a$' }, { v: -1, s: '−π/$a$' }, { v: 0, s: '0' }, { v: 1, s: 'π/$a$' }, { v: 2, s: '2π/$a$' }];
+  const pA = new EPP.Plot(elA, {
+    xlim: [-2, 2], ylim: [-2.2, 2.8], xticks: XT.map(t => ({ v: t.v, label: '' })), yticks: [-2, -1, 0, 1, 2], legend: false,
+    xname: 'qa/π', hoverX: v => fx(v, 3), hoverY: v => fx(v, 3),
+    aspect: 0.62, minHeight: 240, maxHeight: 330, margin: { t: 26, l: 48, r: 12, b: 44 },
+    ariaLabel: 'Panel a: the model coupling over two Brillouin zones'
+  });
+  // the legends are static markup (MathJax), placed under the plots
+  const legA = elA.querySelector('.a4-wannier-leg-a'), legB = elB.querySelector('.a4-wannier-leg-b');
+  if (legA) elA.appendChild(legA);
+  const baseA = pA.render.bind(pA);
+  pA.render = () => {
+    baseA();
+    const ctx = pA.ctx, w = pA.cv.w, h = pA.cv.h, m = pA.m, c = cur;
+    if (!w || !h || !c) return;
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted');
+    ctx.save();
+    ctx.textBaseline = 'alphabetic';
+    const head = c.sub
+      ? ['(a) the coupling, interpolated after subtracting $g$^{lr}', '(a) interpolated after subtracting $g$^{lr}', '(a) with $g$^{lr} subtracted']
+      : ['(a) the coupling, interpolated directly from the grid', '(a) the coupling, interpolated directly', '(a) direct interpolation'];
+    txt(ctx, fit(ctx, head, 11.5, w - 16), 8, 15, { size: 11.5, color: cFg2 });
+    ctx.textBaseline = 'top';
+    XT.forEach(t => { const wd = tw(ctx, t.s, 11); txt(ctx, t.s, EPP.clamp(pA.X(t.v), 2 + wd / 2, w - 2 - wd / 2), h - m.b + 6, { size: 11, color: cMut, align: 'center' }); });
+    ctx.textBaseline = 'alphabetic';
+    txt(ctx, fit(ctx, ['wavevector $q$ (Γ at 0 and ±2π/$a$)', 'wavevector $q$'], 12.5, w - m.l - m.r), m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, '$g$($q$) (arb. units)', 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+  };
+
+  // ---------- (b) the real-space coefficients ----------
+  // as tall as (a) when the panels sit side by side, shorter when they stack on a phone
+  const SIDE = (() => { try { return matchMedia('(min-width: 720px)').matches; } catch (e) { return true; } })();
+  const dec = (e) => (e === 0 ? '1' : `10^{${String(e).replace('-', '−')}}`);
+  const pB = new EPP.Plot(elB, {
+    logy: true, xlim: [-0.4, 8.4], ylim: [1e-9, 3], xticks: [0, 2, 4, 6, 8], yticks: [-9, -6, -3, 0].map(e => ({ v: Math.pow(10, e), label: dec(e) })),
+    legend: false, hover: false, aspect: 0.99, height: SIDE ? undefined : 250, minHeight: 240, maxHeight: 330,
+    margin: { t: 26, l: 56, r: 10, b: 44 }, ariaLabel: 'Panel b: real-space coefficients on a log scale'
+  });
+  if (legB) elB.appendChild(legB);
+  const baseB = pB.render.bind(pB);
+  pB.render = () => {
+    baseB();
+    const ctx = pB.ctx, w = pB.cv.w, h = pB.cv.h, m = pB.m, c = cur;
+    if (!w || !h || !c) return;
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted');
+    ctx.save();
+    ctx.textBaseline = 'alphabetic';
+    txt(ctx, fit(ctx, ['(b) real-space coefficients |$g$($R_ℓ$)|', '(b) coefficients |$g$($R_ℓ$)|', '(b) coefficients'], 11.5, w - 16), 8, 15, { size: 11.5, color: cFg2 });
+    txt(ctx, fit(ctx, ['distance $R_ℓ$ (units of $a$)', '$R_ℓ$ (units of $a$)'], 12.5, w - m.l - m.r), m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, color: cFg, align: 'center' });
+    // the edge of the Wigner–Seitz supercell of the grid: label beside its line, inside the frame
+    const X = pB.X(c.N / 2), right = w - m.r - 4, yL = m.t + 14;
+    for (const s of ['Wigner–Seitz edge', 'edge']) {
+      const wd = tw(ctx, s, 11);
+      if (X + 5 + wd <= right) { txt(ctx, s, X + 5, yL, { size: 11, color: cMut }); break; }
+      if (X - 5 - wd >= m.l + 4) { txt(ctx, s, X - 5, yL, { size: 11, color: cMut, align: 'right' }); break; }
+    }
+    ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    txt(ctx, '|$g$($R_ℓ$)|', 0, 0, { size: 12.5, color: cFg, align: 'center' });
+    ctx.restore();
+  };
+
+  // ---------- drawing ----------
+  const legOn = [...fig.querySelectorAll('.a4-wannier-on')], legOff = [...fig.querySelectorAll('.a4-wannier-off')], legTail = [...fig.querySelectorAll('.a4-wannier-tail')], legLr = fig.querySelector('.a4-wannier-lr');
+  function draw() {
+    const c = cur;
+    if (!c) return;
+    // (a): exact g, the coarse samples repeated over both zones, the interpolant; with subtraction also g^lr and g^sr
+    const LA = [{ type: 'line', x: XF, y: c.ex, color: 'fg', width: 1.6, label: 'exact g' }];
+    if (c.sub && c.C > 0) LA.push({ type: 'line', x: XF, y: c.lr, color: 'photon', width: 1.9, dash: [2, 3], label: 'analytic g^{lr}' });
+    if (c.sub) LA.push({ type: 'line', x: XF, y: c.iR, color: 'c4', width: 1.6, label: 'interpolated g^{sr}' });
+    LA.push({ type: 'line', x: XF, y: c.sub ? c.iS : c.iD, color: 'phonon', width: 2.2, dash: [7, 4], label: c.sub ? 'interpolated g^{sr} + g^{lr}' : 'interpolated g' });
+    const xs = [], ys = [], yr = [];
+    for (let k = 0; k <= 2 * c.N; k++) { const s = k % c.N; xs.push(2 * k / c.N - 2); ys.push(c.gs[s]); yr.push(c.srs[s]); }
+    if (c.sub) LA.push({ type: 'points', x: xs, y: yr, color: 'c4', r: 4.2, hollow: true });
+    LA.push({ type: 'points', x: xs, y: ys, color: 'c5', r: 3.6 });
+    pA.draw(LA);
+    // (b): kept coefficients (edge weight included), the exact tails, the dropped region beyond the edge
+    const LB = [{ type: 'band', x0: c.N / 2, x1: 8.4, color: 'muted', alpha: 0.1 }, { type: 'vline', at: c.N / 2, color: 'muted', width: 1.2, dash: [4, 3] }];
+    if (c.C > 0) {
+      LB.push({ type: 'line', x: RT, y: RT.map(() => c.C / 2), color: 'muted', width: 1.5, dash: [6, 4] });
+      LB.push({ type: 'line', x: RT, y: RT.map(R => { const v = c.C / 2 * erfc(R / (2 * c.rc)); return v > 1e-10 ? v : NaN; }), color: 'c4', width: 1.8, dash: [2, 3] });
+    }
+    LB.push({ type: 'points', x: c.R, y: c.aD.map(v => Math.max(FLOOR, v)), color: 'c5', r: 3.8 });
+    LB.push({ type: 'points', x: c.R, y: c.aR.map(v => Math.max(FLOOR, v)), color: 'c4', r: 5.4, hollow: true });
+    pB.draw(LB);
+    // legends follow the toggle; the exact tails vanish with C
+    legOn.forEach(e => { e.hidden = !c.sub; });
+    legOff.forEach(e => { e.hidden = c.sub; });
+    legTail.forEach(e => { e.style.opacity = c.C > 0 ? '' : '0.45'; });
+    if (legLr) legLr.style.opacity = c.C > 0 ? '' : '0.45';
+    readouts(c);
+  }
+
+  // ---------- readouts and descriptions ----------
+  const V = {};
+  ['eD', 'eS', 'R'].forEach(k => { V[k] = fig.querySelector('.a4-wannier-v-' + k); });
+  function readouts(c) {
+    const h = Math.floor(c.N / 2);
+    V.eD.textContent = err(c.eD);
+    V.eS.textContent = err(c.eS);
+    V.R.innerHTML = `|${I('R')}<sub>${I('ℓ')}</sub>|${NB}≤${NB}${h}${I('a')}` + (c.N % 2 === 0 ? `, half weight at ${h}${I('a')}` : '');
+    const list = (a) => a.map(v => (v < 1e-9 ? 'below 10 to the -9' : (v >= 0.01 ? v.toPrecision(2) : v.toExponential(1).replace('e', ' times 10 to the ')))).join(', ');
+    pA.cv.canvas.setAttribute('aria-label', `Panel a: the model coupling g against q over two Brillouin zones, from −2π/a to 2π/a, with its samples on a coarse grid of ${c.N} points per zone. ` +
+      (c.C > 0 ? 'The exact g diverges on both sides of every Γ point. ' : 'Without the dipole term the exact g is smooth. ') +
+      (c.sub ? `The analytic long-range part is subtracted from the samples, the smooth remainder is interpolated and the long-range part is added back: rms error ${sciPlain(c.eS)} away from Γ.`
+        : `The samples are interpolated directly: rms error ${sciPlain(c.eD)} away from Γ${c.C > 0 ? ', with ringing next to each Γ point' : ''}.`));
+    pB.cv.canvas.setAttribute('aria-label', `Panel b: magnitudes of the real-space coefficients on a log scale against the distance R from 0 to 8 cells, kept up to ${h} cells, the edge of the Wigner–Seitz supercell of the grid. ` +
+      `Coefficients of g: ${list(c.aD)}. Coefficients after subtracting the long-range part: ${list(c.aR)}. ` +
+      (c.C > 0 ? `The exact coefficients of g stay at C/2 = ${fx(c.C / 2, 3)} at every distance; those of the remainder fall off like a Gaussian over about ${fx(2 * c.rc, 1)} cells.` : 'With C = 0 there is no dipole tail.'));
+  }
+
+  // ---------- controls ----------
+  const elCtl = fig.querySelector('.a4-wannier-ctrls');
+  const ui = EPP.controls(elCtl, [
+    { key: 'C', type: 'range', label: 'polarity C (∝ Z^*/ε_∞)', min: 0, max: 0.5, step: 0.01, value: 0.3, fmt: v => v.toFixed(2) },
+    { key: 'N', type: 'range', label: 'coarse grid N_c', min: 4, max: 16, step: 1, value: 8, fmt: v => `${Math.round(v)} points` },
+    { key: 'rc', type: 'range', label: 'cutoff r_c (units of a)', min: 0.2, max: 1.4, step: 0.01, value: 0.71, fmt: v => v.toFixed(2) },
+    { key: 'sub', type: 'toggle', label: 'subtract g^{lr} before interpolating', value: false }
+  ], (s) => { cur = compute(s); draw(); });
+  // control labels: the symbols in italic, as in the text
+  const LAB = {
+    C: `polarity ${I('C')} (∝ ${I('Z')}<sup>*</sup>/${I('ε')}<sub>∞</sub>)`, N: `coarse grid ${I('N')}<sub>c</sub>`,
+    rc: `cutoff ${I('r')}<sub>c</sub> (units of ${I('a')})`, sub: `subtract ${I('g')}<sup>lr</sup> before interpolating`
+  };
+  Object.keys(LAB).forEach(k => { const sp = elCtl.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  cur = compute(ui.state);
+})();
+</script>

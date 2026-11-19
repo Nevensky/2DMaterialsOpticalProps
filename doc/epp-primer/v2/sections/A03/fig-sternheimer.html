@@ -1,0 +1,470 @@
+  <figure class="viz" id="viz-a3-sternheimer">
+    <p class="viz-title">Components of the orbital change, and the shifted Sternheimer operator <span class="tag">interactive</span></p>
+    <div class="viz-grid two">
+      <div class="a3-sternheimer-bands"></div>
+      <div class="a3-sternheimer-spec">
+        <div class="legend a3-sternheimer-leg"><span class="item" style="color:var(--c-electron);white-space:normal"><span class="sw"></span><span style="color:var(--fg-2)">occupied direction: $E_{1,k+q}-E_{1k}+E_{\mathrm{shift}}$</span></span><span class="item" style="color:var(--c-electron);white-space:normal"><span class="sw dot"></span><span style="color:var(--fg-2)">the same, without the shift</span></span><span class="item" style="color:var(--c-5);white-space:normal"><span class="sw"></span><span style="color:var(--fg-2)">empty directions: $E_{m,k+q}-E_{1k}$, $m=2,3$</span></span><span class="item" style="color:var(--c-photon);white-space:normal"><span class="sw box"></span><span style="color:var(--fg-2)">nearly singular: magnitude below 0.1 eV</span></span></div>
+      </div>
+    </div>
+    <div class="a3-sternheimer-ctrls" style="grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))"></div>
+    <div class="readout a3-sternheimer-ro" aria-live="polite"><span>$E_{1k}$<b class="a3-sternheimer-v-e1"></b></span><span>$E_{m,k+q}$, $m=1,2,3$<b class="a3-sternheimer-v-ekq"></b></span><span>$|C_1|^2$ (occupied, cancels in $\Delta n$)<b class="a3-sternheimer-v-c1"></b></span><span>$|\Delta\psi^{\perp}_{1k}|^2=|C_2|^2+|C_3|^2$ (needed)<b class="a3-sternheimer-v-perp"></b></span></div>
+    <div class="readout a3-sternheimer-ro2" aria-live="polite"><span>smallest eigenvalue magnitude<b class="a3-sternheimer-v-min"></b></span><span>condition number<b class="a3-sternheimer-v-cond"></b></span><span>$|\Delta\psi^{\perp}_{1k}|^2$ by solving <span data-eq="a3-eq-sternheimer">(A3.11)</span><b class="a3-sternheimer-v-sol"></b></span><span>occupied bandwidth<b class="a3-sternheimer-v-w"></b></span><span>gap<b class="a3-sternheimer-v-gap"></b></span><span class="a3-sternheimer-note" style="color:var(--fg-2)"></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> At the start the squared occupied component of $\Delta\psi_{1k}$ (grey) is thousands of times either empty one, and it diverges as the occupied band at $k+q$ reaches the energy <span class="nw">$E_{1k}$;</span> yet it cancels in the density. The empty components, which form <span class="nw">$\Delta\psi^{\perp}_{1k}$,</span> stay small: their energy denominators are at least the gap.</p><div class="cap-more">
+      <p><strong>Marks.</strong> (a) Shaded: the occupied band. Filled dot: <span class="nw">$\psi_{1k}$;</span> hollow dots: the states at <span class="nw">$k+q$,</span> reached by the amber arrow $q$ (re-entering from the opposite edge when $k+q$ leaves the zone). Arrows: the components <span class="nw">$C_m=\langle\psi_{m,k+q}|\Delta\psi_{1k}\rangle$,</span> wider for larger <span class="nw">$|C_m|$,</span> with $|C_m|^2$ at the heads. (b) Eigenvalues of the operator of <span data-eq="a3-eq-sternheimer">(A3.11)</span> at <span class="nw">$k+q$,</span> for every <span class="nw">$k$;</span> rose circles: where it is singular. Condition number: largest over smallest eigenvalue magnitude; a large one slows an iterative solver.</p>
+      <p><strong>Try.</strong> (1) Bring $k$ to $-q/2$ ($-0.3\,\pi/a$ here) or $q$ to 0: $|C_1|^2$ and the condition number diverge; $|\Delta\psi^{\perp}_{1k}|^2$ stays finite. (2) Raise $E_{\mathrm{shift}}$ above the occupied bandwidth: the blue curve in (b) clears zero for every <span class="nw">$k$,</span> the condition number falls to a few, and the solution of <span data-eq="a3-eq-sternheimer">(A3.11)</span> stays the same. (3) Make $E_{\mathrm A}$ more negative: the gap widens and $|\Delta\psi^{\perp}_{1k}|^2$ shrinks, while $|C_1|^2$ grows as the occupied band flattens.</p>
+      <p><strong>Model.</strong> A toy chain, not a real material: $a=3$ Å; atoms A, B, C at 0, <span class="nw">$a/3$,</span> <span class="nw">$2a/3$,</span> on-site energies <span class="nw">$E_{\mathrm A}$,</span> 0.5 and <span class="nw">1.5 eV</span>, neighbours coupled by <span class="nw">−2 eV</span>; band 1 holds two electrons per cell. Per unit displacement the perturbation adds $\delta_{\mathrm A}\ee^{\ii q\ell a}$ <span class="nw">($\delta_{\mathrm A}=1$ eV/Å)</span> to the on-site energy of atom A in cell <span class="nw">$\ell$,</span> so <span class="nw">$\langle\psi_{m,k+q}|\Delta V^{\mathrm{KS}}|\psi_{1k}\rangle=\delta_{\mathrm A}\,u^*_{m,k+q}(\mathrm A)\,u_{1k}(\mathrm A)$,</span> with $u(\mathrm A)$ the amplitude of a periodic part on atom A. Divided by $E_{1k}-E_{m,k+q}$ it gives $C_m$ (Å⁻¹); <span data-eq="a3-eq-dn">(A3.10)</span> keeps <span class="nw">$m=2,3$.</span> The readout also solves <span data-eq="a3-eq-sternheimer">(A3.11)</span> as a 3×3 linear system.</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a3-sternheimer');
+  if (!fig || !window.EPP) return;
+
+  // ---------- equation numbers: plain text in the markup, made into a.eqref links once the section's equations are on the page ----------
+  const linkEqs = () => fig.querySelectorAll('span[data-eq]').forEach((sp) => {
+    const t = document.getElementById(sp.dataset.eq);
+    if (!t) return;
+    const m = (t.textContent || '').match(/\\tag\{([^}]*)\}/);
+    const a = document.createElement('a');
+    a.className = 'eqref'; a.href = '#' + sp.dataset.eq; a.textContent = m ? `(${m[1]})` : sp.textContent;
+    sp.replaceWith(a);
+  });
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', linkEqs); else linkEqs();
+
+  // ---------- physics: toy chain with atoms A, B, C per cell (lattice constant a = 3 Å), one occupied band ----------
+  // Bloch Hamiltonian with the phase at the cell corner, k in units of π/a:
+  //   H(k) = [[E_A, −t, −t e^{−ika}], [−t, E_B, −t], [−t e^{ika}, −t, E_C]]
+  // Perturbation (per unit displacement): E_A of cell ℓ changes by δ_A e^{iqR_ℓ}, so
+  //   <ψ_{m,k+q}|ΔV^KS|ψ_{1k}> = δ_A u*_{m,k+q}(A) u_{1k}(A),  C_m = that / (E_{1k} − E_{m,k+q})   (Å^-1)
+  // Shifted Sternheimer operator at k+q (A3.11): eigenvalues E_{1,k+q} − E_{1k} + E_shift (occupied direction),
+  //   E_{m,k+q} − E_{1k} for m = 2, 3 (empty directions).
+  const TH = 2, EB = 0.5, EC = 1.5;    // hopping magnitude t (eV); on-site energies of B and C (eV)
+  const DA = 1;                         // δ_A, change of E_A per unit displacement (eV/Å)
+  const NS = 0.1;                       // half-width of the "nearly singular" band (eV)
+  const NG = 800, HG = 2 / NG;          // k grid of the curves, k_i = −1 + i HG, periodic with NG points
+  const YA = [-7, 5.5], YB = [-2, 10];  // fixed energy ranges of (a) and (b) (eV)
+
+  function hmat(k, EA) {
+    const ph = Math.PI * k, c = Math.cos(ph), s = Math.sin(ph);
+    return { re: [[EA, -TH, -TH * c], [-TH, EB, -TH], [-TH * c, -TH, EC]], im: [[0, 0, TH * s], [0, 0, 0], [-TH * s, 0, 0]] };
+  }
+  const eig = (k, EA) => { const H = hmat(k, EA); const r = EPP.eigHerm(H.re, H.im); r.H = H; return r; };
+
+  // band energies on the grid, the occupied bandwidth and the gap (cached per E_A)
+  let table = null;
+  function bandTable(EA) {
+    if (table && table.EA === EA) return table;
+    const K = new Float64Array(NG + 1), E = [0, 1, 2].map(() => new Float64Array(NG + 1));
+    for (let i = 0; i < NG; i++) { K[i] = -1 + i * HG; const v = eig(K[i], EA).vals; for (let m = 0; m < 3; m++) E[m][i] = v[m]; }
+    K[NG] = 1; for (let m = 0; m < 3; m++) E[m][NG] = E[m][0];
+    let lo = Infinity, hi = -Infinity, c2 = Infinity;
+    for (let i = 0; i < NG; i++) { lo = Math.min(lo, E[0][i]); hi = Math.max(hi, E[0][i]); c2 = Math.min(c2, E[1][i]); }
+    table = { EA, K, E, bot1: lo, top1: hi, min2: c2, W: hi - lo, gap: c2 - hi };
+    return table;
+  }
+  // band energy m at any k, by linear interpolation in the table (for label placement)
+  const bandAt = (T, m, k) => { const u = EPP.clamp((k + 1) / HG, 0, NG), i = Math.min(NG - 1, Math.floor(u)), f = u - i; return T.E[m][i] + f * (T.E[m][i + 1] - T.E[m][i]); };
+  const fold = (x) => (x > 1 + 1e-9 ? x - 2 : (x < -1 - 1e-9 ? x + 2 : x));
+
+  // complex Gaussian elimination with partial pivoting (3 × 3); returns [re, im] or null when singular
+  function csolve(Ar, Ai, br, bi) {
+    const n = br.length, R = Ar.map(r => r.slice()), I = Ai.map(r => r.slice()), xr = br.slice(), xi = bi.slice();
+    for (let c = 0; c < n; c++) {
+      let p = c, best = -1;
+      for (let r = c; r < n; r++) { const a = Math.hypot(R[r][c], I[r][c]); if (a > best) { best = a; p = r; } }
+      if (best < 1e-12) return null;
+      [R[c], R[p]] = [R[p], R[c]]; [I[c], I[p]] = [I[p], I[c]]; [xr[c], xr[p]] = [xr[p], xr[c]]; [xi[c], xi[p]] = [xi[p], xi[c]];
+      const d = R[c][c] * R[c][c] + I[c][c] * I[c][c];
+      for (let r = c + 1; r < n; r++) {
+        const fr = (R[r][c] * R[c][c] + I[r][c] * I[c][c]) / d, fi = (I[r][c] * R[c][c] - R[r][c] * I[c][c]) / d;
+        for (let j = c; j < n; j++) { const ar = R[c][j], ai = I[c][j]; R[r][j] -= fr * ar - fi * ai; I[r][j] -= fr * ai + fi * ar; }
+        const ar = xr[c], ai = xi[c]; xr[r] -= fr * ar - fi * ai; xi[r] -= fr * ai + fi * ar;
+      }
+    }
+    for (let c = n - 1; c >= 0; c--) {
+      let sr = xr[c], si = xi[c];
+      for (let j = c + 1; j < n; j++) { sr -= R[c][j] * xr[j] - I[c][j] * xi[j]; si -= R[c][j] * xi[j] + I[c][j] * xr[j]; }
+      const d = R[c][c] * R[c][c] + I[c][c] * I[c][c];
+      xr[c] = (sr * R[c][c] + si * I[c][c]) / d; xi[c] = (si * R[c][c] - sr * I[c][c]) / d;
+    }
+    return [xr, xi];
+  }
+
+  function compute(s) {
+    const EA = s.EA, k = s.k, q = s.q, Es = s.Es, T = bandTable(EA);
+    const kq = k + q, kqF = fold(kq);
+    const A = eig(k, EA), B = eig(kq, EA), E1 = A.vals[0];
+    const cA = [A.vecs[0].re[0], A.vecs[0].im[0]];               // u_{1k}(A)
+    const comp = [0, 1, 2].map((m) => {
+      const cm = [B.vecs[m].re[0], B.vecs[m].im[0]];             // u_{m,k+q}(A)
+      const Mr = DA * (cm[0] * cA[0] + cm[1] * cA[1]), Mi = DA * (cm[0] * cA[1] - cm[1] * cA[0]);
+      const dE = E1 - B.vals[m], M2 = Mr * Mr + Mi * Mi;
+      return { E: B.vals[m], M2, dE, C2: Math.abs(dE) < 1e-9 ? Infinity : M2 / (dE * dE) };
+    });
+    const lam = [B.vals[0] - E1 + Es, B.vals[1] - E1, B.vals[2] - E1], al = lam.map(Math.abs);
+    const amin = Math.min(...al), cond = amin < 1e-10 ? Infinity : Math.max(...al) / amin;
+    // (A3.11) in the site basis at k+q: (H(k+q) − E_1k + E_shift v1 v1†) x = −(1 − v1 v1†) ΔV ψ_1k, with ΔV ψ_1k = (δ_A u_1k(A), 0, 0)
+    const v = B.vecs[0], H = B.H, b0r = [DA * cA[0], 0, 0], b0i = [DA * cA[1], 0, 0];
+    let pr = 0, pi = 0;
+    for (let j = 0; j < 3; j++) { pr += v.re[j] * b0r[j] + v.im[j] * b0i[j]; pi += v.re[j] * b0i[j] - v.im[j] * b0r[j]; }
+    const br = [], bi = [], Ar = [], Ai = [];
+    for (let i = 0; i < 3; i++) {
+      br.push(-(b0r[i] - (v.re[i] * pr - v.im[i] * pi))); bi.push(-(b0i[i] - (v.re[i] * pi + v.im[i] * pr)));
+      Ar.push([]); Ai.push([]);
+      for (let j = 0; j < 3; j++) {
+        const pr2 = v.re[i] * v.re[j] + v.im[i] * v.im[j], pi2 = v.im[i] * v.re[j] - v.re[i] * v.im[j];
+        Ar[i].push(H.re[i][j] - (i === j ? E1 : 0) + Es * pr2); Ai[i].push(H.im[i][j] + Es * pi2);
+      }
+    }
+    const x = Math.abs(lam[0]) < 1e-10 ? null : csolve(Ar, Ai, br, bi);
+    const sol = x ? x[0].reduce((a, r, j) => a + r * r + x[1][j] * x[1][j], 0) : null;
+    // the eigenvalue curves of (b), for the occupied state's k on the grid; E_{m,k+q} by an index shift of the table
+    const sh = Math.round(q / HG), L1 = new Float64Array(NG + 1), L1u = new Float64Array(NG + 1), L2 = new Float64Array(NG + 1), L3 = new Float64Array(NG + 1);
+    for (let i = 0; i <= NG; i++) {
+      const j = (((i + sh) % NG) + NG) % NG, e1 = T.E[0][i % NG];
+      L1u[i] = T.E[0][j] - e1; L1[i] = L1u[i] + Es; L2[i] = T.E[1][j] - e1; L3[i] = T.E[2][j] - e1;
+    }
+    // where the occupied eigenvalue vanishes: sign changes (or zeros) of L1 on the grid
+    const zeros = [];
+    let allZero = true;
+    for (let i = 0; i < NG; i++) {
+      const a = Math.abs(L1[i]) < 1e-9 ? 0 : L1[i], b = Math.abs(L1[i + 1]) < 1e-9 ? 0 : L1[i + 1];
+      if (a !== 0) allZero = false;
+      let z = null;
+      if (a === 0) z = T.K[i]; else if (a * b < 0) z = T.K[i] + HG * a / (a - b);
+      if (z !== null && !(zeros.length && Math.abs(z - zeros[zeros.length - 1]) < 3 * HG)) zeros.push(z);
+    }
+    return { EA, k, q, Es, kq, kqF, T, E1, comp, perp: comp[1].C2 + comp[2].C2, lam, amin, cond, sol, L1, L1u, L2, L3, zeros, allZero };
+  }
+
+  // ---------- canvas text (as in Figure A3.1): '$…$' marks math, letters italic and digits upright; '#…#' a bold vector; _x, ^{xy} as in EPP.drawRich ----------
+  const ITAL = /[A-Za-zα-ωℓħ]/;
+  function runs(s) {
+    const segs = []; let buf = '', mth = false, bld = false;
+    for (const ch of String(s)) {
+      if (ch === '$' || ch === '#') { if (buf) segs.push({ t: buf, mth, bld }); buf = ''; if (ch === '$') mth = !mth; else bld = !bld; }
+      else buf += ch;
+    }
+    if (buf) segs.push({ t: buf, mth, bld });
+    const out = [];
+    for (const sg of segs) for (const p of EPP.parseRich(sg.t)) {
+      if (!sg.mth) { out.push({ t: p.t, m: p.m, it: false, b: sg.bld && !p.m }); continue; }
+      let b2 = '', it = null;
+      for (const ch of p.t) { const kk = ITAL.test(ch); if (it !== null && kk !== it) { out.push({ t: b2, m: p.m, it, b: false }); b2 = ''; } b2 += ch; it = kk; }
+      if (b2) out.push({ t: b2, m: p.m, it, b: false });
+    }
+    return out;
+  }
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, fam = EPP.css('--font-ui'), rs = runs(s);
+    const font = (r) => `${r.it ? 'italic ' : ''}${r.b ? '700 ' : ''}${r.m ? Math.round(size * 0.72) : size}px ${fam}`;
+    const ws = rs.map((r) => { ctx.font = font(r); return ctx.measureText(r.t).width; });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    let x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    if (o.color) ctx.fillStyle = o.color;
+    ctx.textAlign = 'left';
+    rs.forEach((r, kk) => { ctx.font = font(r); ctx.fillText(r.t, x0, y + (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0))); x0 += ws[kk]; });
+    return tot;
+  }
+  const tw = (ctx, s, size) => txt(ctx, s, 0, 0, { size, measure: true });
+  const rrect = (ctx, x, y, w, h, r) => { ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(x, y, w, h, r); else ctx.rect(x, y, w, h); };
+  // text on a translucent chip of the surface colour, so it reads over lines; (x, y) is the baseline anchor; returns [left, right]
+  function chip(ctx, s, x, y, o = {}) {
+    const size = o.size || 11, w = tw(ctx, s, size);
+    const x0 = o.align === 'center' ? x - w / 2 : (o.align === 'right' ? x - w : x);
+    ctx.fillStyle = EPP.alpha('surface', o.alpha ?? 0.86);
+    rrect(ctx, x0 - 3, y - size * 1.02, w + 6, size * 1.42, 3); ctx.fill();
+    txt(ctx, s, x0, y, { size, color: o.color });
+    return [x0 - 3, x0 + w + 3];
+  }
+  // an arrow from (x0, y0) to (x1, y1), trimmed by r0 at the start and r1 at the end; straight, or (bulge > 0) a quadratic arc
+  // that bulges by `bulge` px toward the top of the screen. The head grows with the shaft width. Returns points along it.
+  function arrow(ctx, x0, y0, x1, y1, o) {
+    const dx = x1 - x0, dy = y1 - y0, L = Math.hypot(dx, dy);
+    if (L < 3) return [];
+    let cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
+    if (o.bulge) { let nx = dy / L, ny = -dx / L; if (ny > 0) { nx = -nx; ny = -ny; } cx += 2 * o.bulge * nx; cy += 2 * o.bulge * ny; }
+    const t0 = Math.hypot(cx - x0, cy - y0) || 1, t1 = Math.hypot(x1 - cx, y1 - cy) || 1;
+    const a0x = (cx - x0) / t0, a0y = (cy - y0) / t0, a1x = (x1 - cx) / t1, a1y = (y1 - cy) / t1;
+    const sx = x0 + a0x * (o.r0 || 0), sy = y0 + a0y * (o.r0 || 0), ex = x1 - a1x * (o.r1 || 0), ey = y1 - a1y * (o.r1 || 0);
+    const lw = o.width, Le = Math.hypot(ex - sx, ey - sy), hl = Math.min(7 + 1.3 * lw, 0.6 * Le), hw = 3.2 + 0.75 * lw;
+    const bx = ex - a1x * hl * 0.85, by = ey - a1y * hl * 0.85;
+    ctx.save();
+    ctx.strokeStyle = o.color; ctx.fillStyle = o.color; ctx.lineWidth = lw; ctx.lineCap = 'butt';
+    ctx.setLineDash(o.dash ? o.dash.map(d => d * Math.max(1, lw / 2.2)) : []);
+    ctx.beginPath(); ctx.moveTo(sx, sy);
+    if (o.bulge) ctx.quadraticCurveTo(cx, cy, bx, by); else ctx.lineTo(bx, by);
+    ctx.stroke(); ctx.setLineDash([]);
+    if (!o.noHead) { ctx.beginPath(); ctx.moveTo(ex, ey); ctx.lineTo(ex - a1x * hl - a1y * hw, ey - a1y * hl + a1x * hw); ctx.lineTo(ex - a1x * hl + a1y * hw, ey - a1y * hl - a1x * hw); ctx.closePath(); ctx.fill(); }
+    ctx.restore();
+    const pts = [];
+    for (let i = 0; i <= 24; i++) { const t = i / 24, u = 1 - t; pts.push([u * u * sx + 2 * u * t * cx + t * t * ex, u * u * sy + 2 * u * t * cy + t * t * ey]); }
+    return pts;
+  }
+  // numbers on the canvas (rich text) and in the readouts (Unicode superscripts)
+  const SUP = { '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹', '-': '⁻' };
+  function numC(v) {
+    if (!isFinite(v)) return '→ ∞';
+    const a = Math.abs(v);
+    if (a >= 0.1 && a < 1e4) return (a >= 100 ? v.toFixed(0) : String(Number(v.toPrecision(3))));
+    const e = Math.floor(Math.log10(a)), mt = v / Math.pow(10, e);
+    return `${mt.toFixed(1)}×10^{${String(e).replace('-', '−')}}`;
+  }
+  function numR(v, d = 3) {
+    if (v === null) return '—';
+    if (!isFinite(v)) return '→ ∞';
+    const a = Math.abs(v);
+    if (a === 0) return '0';
+    if (a >= 1e-3 && a < 1e4) return String(Number(v.toPrecision(d))).replace('-', '−');
+    const e = Math.floor(Math.log10(a)), mt = v / Math.pow(10, e);
+    return `${mt.toFixed(d - 1)}×10${String(e).split('').map(ch => SUP[ch]).join('')}`.replace('-', '−');
+  }
+  const eV = (v, d = 3) => EPP.fix(v, d) + ' eV';
+
+  // ---------- panels ----------
+  let cur = null;
+  const XT = [-1, -0.5, 0, 0.5, 1].map(v => ({ v, label: v === 0 ? '0' : (v < 0 ? '−' : '') + String(Math.abs(v)) }));
+  const kfmt = (v) => EPP.fix(v, 3);
+  const pA = new EPP.Plot(fig.querySelector('.a3-sternheimer-bands'), {
+    xlim: [-1, 1], ylim: YA, legend: false, xticks: XT, yticks: [-6, -4, -2, 0, 2, 4],
+    aspect: 0.96, minHeight: 330, maxHeight: 400, margin: { t: 26, l: 48, r: 10, b: 42 },
+    xname: 'wavevector (π/a)', hoverX: kfmt, hoverY: (v) => EPP.fix(v, 3) + ' eV',
+    ariaLabel: 'Panel a: band structure of the toy chain'
+  });
+  const pB = new EPP.Plot(fig.querySelector('.a3-sternheimer-spec'), {
+    xlim: [-1, 1], ylim: YB, legend: false, xticks: XT, yticks: [-2, 0, 2, 4, 6, 8, 10],
+    aspect: 0.96, minHeight: 330, maxHeight: 400, margin: { t: 26, l: 44, r: 10, b: 42 },
+    xname: 'k (π/a)', hoverX: kfmt, hoverY: (v) => EPP.fix(v, 3) + ' eV',
+    ariaLabel: 'Panel b: eigenvalues of the shifted Sternheimer operator'
+  });
+  // the legend of (b) is static markup (MathJax), placed under its plot
+  const elSpec = fig.querySelector('.a3-sternheimer-spec'), elLeg = elSpec.querySelector('.a3-sternheimer-leg');
+  if (elLeg) elSpec.appendChild(elLeg);
+  // italic axis labels, arrows and annotations are drawn after each plot's own render
+  const hook = (p, extra) => { const base = p.render.bind(p); p.render = () => { base(); if (p.cv.w && p.cv.h && cur) extra(p, p.ctx, p.cv.w, p.cv.h, p.m); }; };
+  function axes(p, ctx, w, h, m, xlab, ylab) {
+    const cFg = EPP.color('fg');
+    ctx.textBaseline = 'alphabetic';
+    txt(ctx, xlab, m.l + (w - m.l - m.r) / 2, h - 7, { size: 12, color: cFg, align: 'center' });
+    ctx.save(); ctx.translate(13, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2); txt(ctx, ylab, 0, 0, { size: 12, color: cFg, align: 'center' }); ctx.restore();
+  }
+  const TITLE_A = '(a) $Δψ_{1k}$ on the states at $k+q$', NOTE_A = '$|C_m|^2$ (Å^{−2}) at the heads';
+  const TITLE_B = '(b) eigenvalues of the shifted Sternheimer operator', TITLE_B2 = '(b) eigenvalues of the Sternheimer operator';
+  const wArrow = (C2) => (!isFinite(C2) ? 8 : EPP.clamp(0.9 + 0.85 * (Math.log10(Math.max(C2, 1e-12)) + 4), 0.9, 8));
+
+  // ----- (a): bands, the states at k and k + q, and the components of Δψ_1k -----
+  hook(pA, (p, ctx, w, h, m) => {
+    const c = cur, T = c.T;
+    const cFg2 = EPP.color('fg2'), cMut = EPP.color('muted'), cEl = EPP.color('electron'), cElT = EPP.textColor('electron');
+    const cV = EPP.color('c5'), cVT = EPP.textColor('c5'), cPh = EPP.color('phonon'), cPhT = EPP.textColor('phonon'), cSurf = EPP.color('surface');
+    ctx.textBaseline = 'alphabetic';
+    txt(ctx, TITLE_A, 2, 15, { size: 11.5, color: cFg2 });
+    if (m.t > 30) txt(ctx, NOTE_A, 2, 31, { size: 10.5, color: cMut }); else txt(ctx, NOTE_A, w - 2, 15, { size: 10.5, color: cMut, align: 'right' });
+    axes(p, ctx, w, h, m, 'wavevector (π/$a$)', 'band energy (eV)');
+    const L = m.l, R = w - m.r, Tp = m.t, Bt = h - m.b;
+    const X1 = p.X(c.k), Y1 = p.Y(c.E1), X2 = p.X(c.kqF), Ys = c.comp.map(o => p.Y(o.E));
+    const lean = X2 > X1 + 0.5 ? 1 : (X2 < X1 - 0.5 ? -1 : 0);
+
+    // label placement: every mark and label leaves a box [x0, y0, x1, y1] (px) that later labels avoid
+    const obs = [];
+    const inFrame = (b) => b[0] >= L + 1 && b[2] <= R - 1 && b[1] >= Tp + 1 && b[3] <= Bt - 1;
+    const free = (b) => inFrame(b) && !obs.some(o => b[0] < o[2] && b[2] > o[0] && b[1] < o[3] && b[3] > o[1]);
+    const mark = (x, y, r) => obs.push([x - r, y - r, x + r, y + r]);
+    const boxOf = (s, x, y, size, al) => { const ww = tw(ctx, s, size), x0 = al === 'center' ? x - ww / 2 : (al === 'right' ? x - ww : x); return [x0 - 3, y - size * 1.02, x0 + ww + 3, y + size * 0.42]; };
+    // candidates [x, y, align]: the first free one; when forced, else the first inside the frame, else the first
+    const place = (s, cands, o) => {
+      const fits = (cd) => boxOf(s, cd[0], cd[1], o.size, cd[2]);
+      let pk = cands.find(cd => free(fits(cd)));
+      if (!pk && o.force) pk = cands.find(cd => inFrame(fits(cd))) || cands[0];
+      if (!pk) return null;
+      chip(ctx, s, pk[0], pk[1], { size: o.size, color: o.color, align: pk[2], alpha: o.alpha ?? 0.86 });
+      const b = fits(pk); obs.push(b); return b;
+    };
+
+    // the components: occupied (grey, dashed, an arc above band 1) under the empty ones (violet)
+    ctx.save(); ctx.beginPath(); ctx.rect(L, Tp, R - L, Bt - Tp); ctx.clip();
+    const r1 = 5.5, r2 = 4.6;
+    for (const mm of [0, 2, 1]) {
+      const o = c.comp[mm], wd = wArrow(o.C2), col = mm ? cV : cMut;
+      const Ln = Math.hypot(X2 - X1, Ys[mm] - Y1);
+      if (Ln < r1 + r2 + 4) {   // q = 0: the occupied component is along the state itself, drawn as a dashed loop
+        ctx.save(); ctx.strokeStyle = col; ctx.lineWidth = 2; ctx.setLineDash([3, 3]);
+        ctx.beginPath(); ctx.arc(X1, Y1, 11, 0, 2 * Math.PI); ctx.stroke(); ctx.restore();
+        mark(X1, Y1, 13);
+        continue;
+      }
+      const bulge = mm === 0 && Ln > 24 ? Math.min(12, 0.1 * Ln + 2) : 0;
+      const pts = arrow(ctx, X1, Y1, X2, Ys[mm], { color: col, width: wd, dash: mm ? null : [5, 3.5], bulge, r0: r1 + 1.5, r1: r2 + 1.5 });
+      pts.forEach(([x, y]) => mark(x, y, wd / 2 + 2));
+      pts.slice(-3).forEach(([x, y]) => mark(x, y, 3.2 + 0.75 * wd + 2));
+    }
+    ctx.restore();
+    // the states: hollow dots at k + q, the filled dot at k (unclipped, so they show at the zone edges)
+    for (let mm = 0; mm < 3; mm++) {
+      ctx.beginPath(); ctx.arc(X2, Ys[mm], r2, 0, 2 * Math.PI); ctx.fillStyle = cSurf; ctx.fill();
+      ctx.lineWidth = 1.8; ctx.strokeStyle = cEl; ctx.stroke(); mark(X2, Ys[mm], r2 + 1);
+    }
+    ctx.beginPath(); ctx.arc(X1, Y1, r1, 0, 2 * Math.PI); ctx.fillStyle = cEl; ctx.fill();
+    ctx.lineWidth = 1.5; ctx.strokeStyle = cSurf; ctx.stroke(); mark(X1, Y1, r1 + 1);
+
+    // |C_m|^2 at the heads, on the side away from k
+    const side0 = lean >= 0 ? 1 : -1, vy = Ys.map(y => y + 4), off = r2 + 6;
+    if (Math.abs(vy[2] - vy[1]) < 15) { const mid = (vy[1] + vy[2]) / 2; vy[2] = mid - 7.5; vy[1] = mid + 7.5; }
+    const sideAl = (sd) => (sd > 0 ? 'left' : 'right');
+    for (let mm = 0; mm < 3; mm++) {
+      place(numC(c.comp[mm].C2), [[X2 + side0 * off, vy[mm], sideAl(side0)], [X2 - side0 * off, vy[mm], sideAl(-side0)]], { size: 11, color: mm ? cVT : cFg2, force: true });
+    }
+
+    // the wavevector q of the perturbation: from k to k + q along the bottom; it re-enters from the opposite edge when k + q leaves the zone
+    const yq = Bt - 11, kq = c.kq;
+    let segs;
+    if (kq > 1 + 1e-9) segs = [[c.k, 1], [-1, kq - 2]];
+    else if (kq < -1 - 1e-9) segs = [[c.k, -1], [1, kq + 2]];
+    else segs = [[c.k, kq]];
+    if (Math.abs(c.q) > 1e-9) {
+      segs.forEach((sg, i) => {
+        const pts = arrow(ctx, p.X(sg[0]), yq, p.X(sg[1]), yq, { color: cPh, width: 2, noHead: i < segs.length - 1, dash: i ? [4, 3] : null });
+        pts.forEach(([x, y]) => mark(x, y, 4));
+      });
+      const lg = segs.reduce((a, b) => (Math.abs(b[1] - b[0]) > Math.abs(a[1] - a[0]) ? b : a));
+      const xm = p.X((lg[0] + lg[1]) / 2), end = segs[segs.length - 1], Xh = p.X(end[1]), Xt = p.X(segs[0][0]), dir = end[1] >= end[0] ? 1 : -1;
+      place('$q$', [[xm, yq - 5, 'center'], [xm - 26, yq - 5, 'center'], [xm + 26, yq - 5, 'center'], [Xh + 6 * dir, yq + 4.5, sideAl(dir)], [Xt - 6 * dir, yq + 4.5, sideAl(-dir)]], { size: 13, color: cPhT, alpha: 0.7, force: true });
+    } else place('$q$ = 0', [[X1 + 6, yq + 4, 'left'], [X1 - 6, yq + 4, 'right']], { size: 11, color: cPhT, alpha: 0.7, force: true });
+
+    // k and k + q at the top, each beside its line
+    const sk = lean >= 0 ? -1 : 1, top = Tp + 14;
+    const rows = (X, sd) => [0, 15, 30].flatMap(dy => [[X + 4 * sd, top + dy, sideAl(sd)], [X - 4 * sd, top + dy, sideAl(-sd)]]);
+    place('$k$', rows(X1, sk), { size: 11.5, color: cFg2, alpha: 0.8 });
+    place('$k+q$', rows(X2, -sk), { size: 11.5, color: cFg2, alpha: 0.8 });
+
+    // label of the occupied component: in the shaded region under band 1, below the arc
+    const occ = 'occupied: cancels in $Δn$', wo = tw(ctx, occ, 10.5);
+    const under = (xc) => { let e = Infinity; for (let px = xc - wo / 2; px <= xc + wo / 2; px += 4) e = Math.min(e, bandAt(T, 0, p.invX(px))); return p.Y(e) + 17; };
+    const xo = EPP.clamp((X1 + X2) / 2, L + wo / 2 + 4, R - wo / 2 - 4), oc = [];
+    [0, -40, 40, -80, 80].forEach(d => { const x = EPP.clamp(xo + d, L + wo / 2 + 4, R - wo / 2 - 4); oc.push([x, under(x), 'center']); });
+    oc.push([xo, under(xo) + 13, 'center']);
+    place(occ, oc, { size: 10.5, color: cMut, alpha: 0.75, force: true });
+
+    // label of the empty components: beside the fan of violet arrows, in the gap
+    if (c.comp[1].C2 > 0) {
+      const lab = 'needed: $Δψ^{⊥}_{1k}$', Yg = p.Y((T.top1 + T.min2) / 2);
+      const xOn = (mm, y) => (Math.abs(Ys[mm] - Y1) < 1 ? X2 : X1 + EPP.clamp((y - Y1) / (Ys[mm] - Y1), 0, 1) * (X2 - X1));
+      const outer = lean > 0 ? -1 : (lean < 0 ? 1 : (X1 > (L + R) / 2 ? -1 : 1)), nc = [];
+      for (const y of [Yg, Yg - 16, Yg + 12, Yg - 32, Yg + 24]) {
+        const lo = Math.min(xOn(1, y), xOn(2, y)) - 9, hi = Math.max(xOn(1, y), xOn(2, y)) + 9;
+        for (const sd of [outer, -outer]) nc.push(sd < 0 ? [lo, y + 4, 'right'] : [hi, y + 4, 'left']);
+      }
+      place(lab, nc, { size: 11, color: cVT, alpha: 0.8, force: true });
+    }
+
+    // band labels at a zone edge, preferring the edge farther from k and k + q; left out when there is no room
+    const far = (x) => Math.min(Math.abs(x - c.k), Math.abs(x - c.kqF));
+    const edges = far(-1) >= far(1) ? [-0.97, 0.97] : [0.97, -0.97];
+    const at = (mm, xe, below) => { const Y = p.Y(bandAt(T, mm, xe)); return [xe < 0 ? L + 5 : R - 5, below ? Y + 15 : Y - 6, xe < 0 ? 'left' : 'right']; };
+    const [e0, e1] = edges;
+    place('occupied', [at(0, e0, true), at(0, e0, false), at(0, e1, true), at(0, e1, false)], { size: 10.5, color: cElT, alpha: 0.7 });
+    place('empty', [at(1, e0, false), at(1, e0, true), at(1, e1, false), at(1, e1, true)], { size: 10.5, color: cElT, alpha: 0.7 });
+    place('empty', [at(2, e0, false), at(2, e1, false), at(2, e0, true), at(2, e1, true)], { size: 10.5, color: cElT, alpha: 0.7 });
+
+    const fz = (v) => (Math.abs(v) < 5e-4 ? '0' : EPP.fix(v, 3));
+    p.cv.canvas.setAttribute('aria-label', `Panel a: three bands of the toy chain against the wavevector from −π/a to π/a; band 1 is occupied. ` +
+      `The occupied state at k = ${fz(c.k)} π/a has energy ${EPP.fix(c.E1, 2)} eV; arrows go to the three states at k + q = ${fz(c.kqF)} π/a ` +
+      `(q = ${fz(c.q)} π/a). Squared components: occupied ${numR(c.comp[0].C2).replace('→ ', '')}, empty ${numR(c.comp[1].C2)} and ${numR(c.comp[2].C2)} per square ångström.`);
+  });
+
+  // ----- (b): eigenvalues of the shifted operator at k + q, against the occupied state's k -----
+  hook(pB, (p, ctx, w, h, m) => {
+    const c = cur, cFg2 = EPP.color('fg2'), cEl = EPP.color('electron'), cElT = EPP.textColor('electron'), cRose = EPP.color('photon'), cRoseT = EPP.textColor('photon');
+    const cSurf = EPP.color('surface');
+    ctx.textBaseline = 'alphabetic';
+    txt(ctx, tw(ctx, TITLE_B, 11.5) <= w - 4 ? TITLE_B : TITLE_B2, 2, 15, { size: 11.5, color: cFg2 });
+    axes(p, ctx, w, h, m, '$k$ (π/$a$)', 'eigenvalue (eV)');
+    const L = m.l, R = w - m.r;
+    const Xk = p.X(c.k), Yl = c.lam.map(v => p.Y(v));
+    // label of the nearly singular band: at the edge farther from the current k, on the side of the band away from the occupied curve
+    const onLeft = c.k > 0, vEdge = onLeft ? c.L1[0] : c.L1[NG];
+    const lab = c.allZero ? 'singular for every $k$ ($q$ = 0)' : 'nearly singular';
+    chip(ctx, lab, onLeft ? L + 5 : R - 5, vEdge > 0 && !c.allZero ? p.Y(-NS) + 13 : p.Y(NS) - 4, { size: 10.5, color: cRoseT, align: onLeft ? 'left' : 'right', alpha: 0.8 });
+    // the shift as an arrow at the current k, from the unshifted to the shifted occupied eigenvalue (on the side with room for its label)
+    const Yu = p.Y(c.lam[0] - c.Es);
+    if (Yu - Yl[0] > 16) {
+      const sl = '+$E$_{shift}', sd = Xk + 12 + tw(ctx, sl, 11) > R - 2 ? -1 : 1;
+      arrow(ctx, Xk + 7 * sd, Yu, Xk + 7 * sd, Yl[0] + 3, { color: cEl, width: 1.6 });
+      chip(ctx, sl, Xk + 12 * sd, (Yu + Yl[0]) / 2 + 4, { size: 11, color: cElT, alpha: 0.8, align: sd > 0 ? 'left' : 'right' });
+    }
+    // dots at the current k (unclipped, so they show at the zone edges)
+    for (let mm = 2; mm >= 0; mm--) {
+      ctx.beginPath(); ctx.arc(Xk, Yl[mm], mm ? 3.6 : 4.6, 0, 2 * Math.PI);
+      ctx.fillStyle = mm ? EPP.color('c5') : cEl; ctx.fill(); ctx.lineWidth = 1.2; ctx.strokeStyle = cSurf; ctx.stroke();
+    }
+    // where the operator is singular: rose rings on the zero line, above the dots
+    ctx.strokeStyle = cRose; ctx.lineWidth = 1.7;
+    if (!c.allZero) for (const z of c.zeros) { ctx.beginPath(); ctx.arc(p.X(z), p.Y(0), Math.abs(p.X(z) - Xk) < 6 ? 7 : 4.4, 0, 2 * Math.PI); ctx.stroke(); }
+
+    const fz = (v) => (Math.abs(v) < 5e-4 ? '0' : EPP.fix(v, 3));
+    p.cv.canvas.setAttribute('aria-label', `Panel b: eigenvalues of the shifted Sternheimer operator at k + q against the occupied state's k, for q = ${fz(c.q)} π/a and E_shift = ${c.Es.toFixed(2)} eV. ` +
+      `At k = ${fz(c.k)} π/a they are ${c.lam.map(v => EPP.fix(v, 3)).join(', ')} eV (occupied direction first). ` +
+      (c.allZero ? 'The occupied eigenvalue is zero for every k.' : (c.zeros.length ? `The occupied eigenvalue vanishes at k = ${c.zeros.map(fz).join(' and ')} π/a.` : 'The occupied eigenvalue stays away from zero for every k.')));
+  });
+
+  // ---------- readouts: keys are static MathJax in the markup; only the values change ----------
+  const V = {};
+  ['e1', 'ekq', 'c1', 'perp', 'min', 'cond', 'sol', 'w', 'gap'].forEach(kk => { V[kk] = fig.querySelector('.a3-sternheimer-v-' + kk); });
+  const elNote = fig.querySelector('.a3-sternheimer-note');
+
+  function draw() {
+    if (!cur) return;
+    const c = cur, T = c.T;
+    // (a): the title row and the note share one row when the plot is wide enough
+    pA.opt.margin.t = (pA.cv.w && tw(pA.ctx, TITLE_A, 11.5) + 28 + tw(pA.ctx, NOTE_A, 10.5) > pA.cv.w - 4) ? 40 : 26;
+    pA.draw([
+      { type: 'fill', x: T.K, y1: T.E[0], base: YA[0], color: 'electron', alpha: 0.11 },
+      { type: 'vline', at: c.k, color: 'muted', width: 1, dash: [1.5, 3] },
+      { type: 'vline', at: c.kqF, color: 'muted', width: 1.2, dash: [5, 4] },
+      { type: 'line', x: T.K, y: T.E[2], color: 'electron', width: 1.5, label: 'band 3 (empty)' },
+      { type: 'line', x: T.K, y: T.E[1], color: 'electron', width: 1.5, label: 'band 2 (empty)' },
+      { type: 'line', x: T.K, y: T.E[0], color: 'electron', width: 3, label: 'band 1 (occupied)' }
+    ]);
+    pB.draw([
+      { type: 'hband', y0: -NS, y1: NS, color: 'photon', alpha: 0.3 },
+      { type: 'vline', at: c.k, color: 'muted', width: 1, dash: [1.5, 3] },
+      c.Es > 0 ? { type: 'line', x: T.K, y: c.L1u, color: 'electron', width: 1.4, dash: [1.5, 3], hover: false } : null,
+      { type: 'line', x: T.K, y: c.L3, color: 'c5', width: 1.5, label: 'empty, m = 3' },
+      { type: 'line', x: T.K, y: c.L2, color: 'c5', width: 1.5, label: 'empty, m = 2' },
+      { type: 'line', x: T.K, y: c.L1, color: 'electron', width: 2.6, label: 'occupied' }
+    ]);
+    const nb = ' ';
+    V.e1.textContent = eV(c.E1);
+    V.ekq.textContent = c.comp.map(o => EPP.fix(o.E, 3)).join(', ') + nb + 'eV';
+    V.c1.textContent = isFinite(c.comp[0].C2) ? numR(c.comp[0].C2) + nb + 'Å⁻²' : '→ ∞ (degenerate)';
+    V.perp.textContent = numR(c.perp) + nb + 'Å⁻²';
+    V.min.textContent = c.amin < 1e-10 ? '0 (singular)' : eV(c.amin);
+    V.cond.textContent = !isFinite(c.cond) ? '∞ (singular)' : (c.cond < 100 ? c.cond.toPrecision(2) : (c.cond < 1e4 ? c.cond.toFixed(0) : numR(c.cond, 2)));
+    V.sol.textContent = c.sol === null ? 'singular, not unique' : numR(c.sol) + nb + 'Å⁻²';
+    V.w.textContent = eV(T.W, 2);
+    V.gap.textContent = eV(T.gap, 2);
+    elNote.innerHTML = c.Es > T.W ? '<i>E</i><sub>shift</sub> exceeds the occupied bandwidth: every eigenvalue is positive, for every <i>k</i> and <i>q</i>'
+      : '<i>E</i><sub>shift</sub> is below the occupied bandwidth: some <i>k</i> and <i>q</i> still give a zero eigenvalue';
+  }
+
+  function onChange(s) { cur = compute(s); draw(); }
+  const qf = (v) => (Math.abs(v) < 5e-4 ? '0' : (v > 0 ? '+' : '−') + Math.abs(v).toFixed(3)) + ' π/a';
+  const elCtl = fig.querySelector('.a3-sternheimer-ctrls');
+  const ui = EPP.controls(elCtl, [
+    { key: 'k', type: 'range', label: 'wavevector of the occupied state k', min: -1, max: 1, step: 0.005, value: -0.35, fmt: qf },
+    { key: 'q', type: 'range', label: 'wavevector of the perturbation q', min: -1, max: 1, step: 0.005, value: 0.6, fmt: qf },
+    { key: 'Es', type: 'range', label: 'shift E_{shift}', min: 0, max: 3, step: 0.01, value: 0, fmt: v => v.toFixed(2) + ' eV' },
+    { key: 'EA', type: 'range', label: 'on-site energy of atom A, E_A', min: -3, max: -0.5, step: 0.01, value: -1.5, fmt: v => EPP.fix(v, 2) + ' eV' }
+  ], onChange);
+  // slider labels: the symbols in italic, like the readout keys
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const LAB = { k: `wavevector of the occupied state ${I('k')}`, q: `wavevector of the perturbation ${I('q')}`, Es: `shift ${I('E')}<sub>shift</sub>`, EA: `on-site energy of atom A, ${I('E')}<sub>A</sub>` };
+  Object.keys(LAB).forEach(kk => { const sp = elCtl.querySelector(`label[for="${fig.id}-${kk}"] > span`); if (sp) sp.innerHTML = LAB[kk]; });
+  cur = compute(ui.state);
+
+  // click or drag in either panel to choose the occupied state's k (snapped to the slider step)
+  const pick = (x, y, type) => { if (type === 'up' || !isFinite(x)) return; ui.set('k', EPP.clamp(Math.round(x / 0.005) * 0.005, -1, 1)); };
+  pA.onPointer = pick; pB.onPointer = pick;
+})();
+</script>

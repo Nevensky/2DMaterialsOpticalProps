@@ -1,0 +1,378 @@
+  <figure class="viz" id="viz-b1-umklapp">
+    <p class="viz-title">Which Fourier components of the ions a lattice wave uses <span class="tag">interactive</span></p>
+    <div class="viz-grid two">
+      <div class="b1-umklapp-plane"><div class="legend b1-umklapp-leg1">
+        <span class="item"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="vertical-align:-3px;margin-right:5px"><circle cx="8" cy="8" r="7" style="fill:var(--c-4);fill-opacity:0.55;stroke:var(--c-4);stroke-width:1.2"/><text x="8" y="11.6" text-anchor="middle" style="fill:var(--fg);font:700 11px var(--font-ui)">−</text></svg>$w\lt0$</span>
+        <span class="item"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="vertical-align:-3px;margin-right:5px"><circle cx="8" cy="8" r="7" style="fill:var(--c-5);fill-opacity:0.55;stroke:var(--c-5);stroke-width:1.2"/><text x="8" y="11.6" text-anchor="middle" style="fill:var(--fg);font:700 11px var(--font-ui)">+</text></svg>$w\gt0$</span>
+        <span class="item"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="vertical-align:-3px;margin-right:5px"><circle cx="8" cy="8" r="6.5" style="fill:none;stroke:var(--fg);stroke-width:1.6"/></svg>the term $\bG=0$, at $\bq$</span>
+        <span class="item"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" style="vertical-align:-4px;margin-right:5px"><circle cx="9" cy="9" r="6" style="fill:var(--c-4);fill-opacity:0.55;stroke:var(--c-4);stroke-width:1.2"/><circle cx="9" cy="9" r="8.3" style="fill:none;stroke:var(--c-4);stroke-width:1"/></svg>capped, value in eV/Å</span>
+        <span class="item"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><circle cx="7" cy="7" r="2.4" style="fill:var(--muted)"/></svg>$\bG$</span>
+        <span class="item"><svg width="22" height="14" viewBox="0 0 22 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><path d="M2 12 A 16 16 0 0 1 20 5" style="fill:none;stroke:var(--muted);stroke-width:1.3;stroke-dasharray:4 3"/></svg>zeros of $V_\kappa$</span>
+      </div></div>
+      <div class="b1-umklapp-curve"><div class="legend b1-umklapp-leg2">
+        <span class="item" style="color:var(--c-phonon)"><span class="sw"></span><span style="color:var(--fg-2)">$|w(\bG=0)|$, bare</span></span>
+        <span class="item" style="color:var(--c-phonon)"><span class="sw dash"></span><span style="color:var(--fg-2)">$|w(\bG=0)|$, Thomas–Fermi screened</span></span>
+        <span class="item" style="color:var(--muted)"><span class="sw" style="border-top-width:1.5px"></span><span style="color:var(--fg-2)">largest umklapp $|w|$, current settings</span></span>
+      </div></div>
+    </div>
+    <div class="b1-umklapp-ctrls"></div>
+    <div class="readout b1-umklapp-ro" aria-live="polite"><span>$q$<b class="b1-umklapp-v-q"></b></span><span>$w(\bG=0)$<b class="b1-umklapp-v-w0"></b></span><span>largest umklapp $|w|$, at $\bG=(2\pi/a)(h\,k\,0)$<b class="b1-umklapp-v-wu"></b></span><span>ratio of the two<b class="b1-umklapp-v-r"></b></span><span class="b1-umklapp-k-bare">$q\,|w(\bG=0)|$<b class="b1-umklapp-v-qw"></b></span><span class="b1-umklapp-k-scr" hidden>$|w(\bG=0)|/q$<b class="b1-umklapp-v-wq"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> The discs sit on the reciprocal lattice shifted by <span class="nw">$\bq$:</span> the only Fourier components of the ionic potentials a lattice wave $\bq$ can use. With the bare potential the disc at $\bq$ (the term <span class="nw">$\bG=0$)</span> dominates and grows as <span class="nw">$1/q$;</span> a transverse wave has no weight there and couples only through umklapp terms, <span class="nw">$\bG\neq0$.</span></p><div class="cap-more"><p><strong>Marks.</strong> (a) Grey dots: $\bG$ in the plane <span class="nw">$G_z=0$.</span> Square: the first Brillouin zone cut at <span class="nw">$q_z=0$,</span> with <span class="nw">$\Gamma$,</span> a corner $\mathrm H$ and an edge midpoint <span class="nw">$\mathrm N$.</span> Arrow <span class="nw">$\bq$;</span> double arrow <span class="nw">$\be$,</span> the atom's direction of motion. Disc area: <span class="nw">$|w|$;</span> colour and sign: the sign of <span class="nw">$w$;</span> ink rim: <span class="nw">$\bG=0$.</span> Dashed circles: zeros of the form factor. (b) The same weights against <span class="nw">$q$.</span></p><p><strong>Try.</strong> (1) Choose T: the disc at $\bq$ shrinks to a ring; the umklapp discs remain. (2) Shrink $q$, bare: $q\,|w(\bG=0)|$ stays near <span class="nw">4.8 eV/Å²;</span> umklapp discs barely change. (3) Screen: at <span class="nw">0.3 Å⁻¹</span> the weight at $\bq$ drops from 15 to <span class="nw">0.6 eV/Å,</span> then vanishes linearly; umklapp weights shrink much less. (4) At <span class="nw">0.3 Å⁻¹</span> press Γ–N: the disc at $\bq+\frac{2\pi}{a}(\bar1\,\bar1\,0)$ lands on the dashed circle and almost vanishes.</p><p><strong>Model.</strong> The weight $w(\bG)=(\bq+\bG)\cdot\be\,V_\kappa(\bq+\bG)/\OV$ is the $\bG$ term of <a class="eqref" href="#b1-eq-bare">(B1.4)</a> without its common factors ($-\ii$, the zero-point amplitude), the basis phase (1 here) and the overlap. Empty-core ion <span class="nw">$V_\kappa(\bq')=-(4\pi Z_\kappa e^2/q'^2)\cos(q'r_{\mathrm{core}})$,</span> tail <a class="eqref" href="#b1-eq-tail">(B1.5)</a>; screened: divided by <span class="nw">$1+k_{\mathrm{TF}}^2/q'^2$</span> (Bardeen's vertex <a class="eqref" href="#a2-eq-bardeen">(A2.26)</a>). Body-centred cubic sodium: <span class="nw">$a=4.23$ Å,</span> <span class="nw">$\OV=a^3/2$,</span> <span class="nw">$Z_\kappa=1$,</span> core radius <span class="nw">$r_{\mathrm{core}}=0.88$ Å,</span> <span class="nw">$k_{\mathrm{TF}}=1.489$ Å⁻¹</span> (textbook values, illustrative). Only along $\Gamma$–$\mathrm H$ and $\Gamma$–$\mathrm N$ are the modes exactly L or T; elsewhere the polarization is imposed.</p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b1-umklapp');
+  if (!fig || !window.EPP) return;
+  // outside Section B.1 (the isolated figure test) the links to equations and sections have no target: show their text
+  if (!fig.closest('#b-foundations')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+  const TAU = 2 * Math.PI, DEG = Math.PI / 180;
+
+  // ---------- physics: bcc sodium, empty-core ion, Gaussian units; lengths in Å, wavevectors in 1/Å ----------
+  const FPE2 = 180.951;                              // 4πe², eV Å
+  const A = 4.23, OV = A * A * A / 2, ZV = 1, RC = 0.88, KTF = 1.489;
+  const B = TAU / A;                                 // 2π/a = 1.4854 1/Å
+  const RZ = [Math.PI / (2 * RC), 3 * Math.PI / (2 * RC)];   // zeros of cos(q' r_c): 1.785 and 5.355 1/Å
+  const LIM = 4.6, QMIN = 0.02, QMAX = 1;
+  // form factor V_κ(q') in eV Å³: empty core, optionally divided by the Thomas–Fermi ε = 1 + k_TF²/q'²
+  const formV = (k, scr) => -FPE2 * ZV * Math.cos(k * RC) / (k * k + (scr ? KTF * KTF : 0));
+  // reciprocal lattice of bcc in the plane G_z = 0: G = (2π/a)(h, k, 0) with h + k even
+  const GS = [];
+  for (let h = -4; h <= 4; h++) for (let k = -4; k <= 4; k++) if (!((h + k) & 1)) GS.push([h, k]);
+  // weight w(G) = (q+G)·e V_κ(|q+G|)/Ω_V (eV/Å) of every component q+G
+  function compute(st) {
+    const q = st.q, th = st.th * DEG, c = Math.cos(th), sn = Math.sin(th), L = st.pol === 'L', scr = st.pot === 'tf';
+    const e = L ? [c, sn] : [-sn, c];
+    const comps = GS.map(([h, k]) => {
+      const x = q * c + B * h, y = q * sn + B * k;
+      const w = (!h && !k && !L) ? 0 : (x * e[0] + y * e[1]) * formV(Math.hypot(x, y), scr) / OV;   // transverse: q·e = 0 exactly
+      return { h, k, x, y, w };
+    });
+    const w0 = comps.find(o => !o.h && !o.k).w, um = comps.filter(o => o.h || o.k);
+    const wmax = Math.max(...um.map(o => Math.abs(o.w)));
+    const top = um.filter(o => Math.abs(o.w) >= wmax * (1 - 1e-9)).sort((a, b) => b.h - a.h || b.k - a.k);
+    return { q, thDeg: st.th, c, sn, L, scr, comps, w0, wmax, top };
+  }
+  function maxUmklapp(q, th, L, scr) {
+    const c = Math.cos(th), sn = Math.sin(th), e = L ? [c, sn] : [-sn, c];
+    let m = 0;
+    for (const [h, k] of GS) { if (!h && !k) continue; const x = q * c + B * h, y = q * sn + B * k; m = Math.max(m, Math.abs((x * e[0] + y * e[1]) * formV(Math.hypot(x, y), scr) / OV)); }
+    return m;
+  }
+  // right panel: |w(G=0)| of a longitudinal wave (any direction: V_κ depends on |q| only), on a log grid of q
+  const NQ = 181, QS = Array.from({ length: NQ }, (_, i) => QMIN * Math.pow(QMAX / QMIN, i / (NQ - 1)));
+  const w0L = (q, scr) => q * Math.abs(formV(q, scr)) / OV;
+  const BARE = QS.map(q => w0L(q, false)), SCR = QS.map(q => w0L(q, true));
+  const LAW_BARE = FPE2 * ZV / OV, LAW_SCR = FPE2 * ZV / (OV * KTF * KTF);   // 4.78 eV/Å² and 2.16 eV
+
+  // ---------- canvas text: parts {t, b: bold vector, i: italic symbol, sub: subscript} ----------
+  let FAM = { ui: 'sans-serif', tx: 'serif' };
+  const pFont = (p, size) => { const z = (p.i ? size + 1 : size) * (p.sub ? 0.72 : 1); return `${p.i ? 'italic ' : ''}${p.b ? '700 ' : ''}${z.toFixed(1)}px ${p.i ? FAM.tx : FAM.ui}`; };
+  function partsW(ctx, parts, size) { let w = 0; for (const p of parts) { ctx.font = pFont(p, size); w += ctx.measureText(p.t).width; } return w; }
+  function partsDraw(ctx, parts, x, y, size, align) {
+    if (align === 'center') x -= partsW(ctx, parts, size) / 2; else if (align === 'right') x -= partsW(ctx, parts, size);
+    ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    for (const p of parts) { ctx.font = pFont(p, size); ctx.fillText(p.t, x, y + (p.sub ? size * 0.28 : 0)); x += ctx.measureText(p.t).width; }
+  }
+  const T = (t) => ({ t }), Bv = (t) => ({ t, b: 1 }), It = (t) => ({ t, i: 1 }), Sb = (t, i) => ({ t, sub: 1, i: i ? 1 : 0 });
+  const lab = (s, color, size) => ({ s: typeof s === 'string' ? [T(s)] : s, color, size });
+
+  // ---------- drawing helpers ----------
+  const disc = (ctx, x, y, r) => { ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); };
+  function arrowHead(ctx, x1, y1, ux, uy, h) { const wv = h * 0.42; ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x1 - ux * h - uy * wv, y1 - uy * h + ux * wv); ctx.lineTo(x1 - ux * h + uy * wv, y1 - uy * h - ux * wv); ctx.closePath(); ctx.fill(); }
+  function arrow(ctx, x0, y0, x1, y1, o) {
+    const dx = x1 - x0, dy = y1 - y0, L = Math.hypot(dx, dy);
+    if (!(L > 0.6)) return;
+    const ux = dx / L, uy = dy / L, h = Math.min(o.head || 7, L * 0.7);
+    ctx.strokeStyle = o.col; ctx.fillStyle = o.col; ctx.lineWidth = o.lw || 1.6; ctx.lineCap = 'butt'; ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1 - ux * h * 0.7, y1 - uy * h * 0.7); ctx.stroke();
+    arrowHead(ctx, x1, y1, ux, uy, h);
+    if (o.both) arrowHead(ctx, x0, y0, -ux, -uy, h);
+  }
+  // label placer: candidate centres are tried in order; a label never overlaps a placed label or a hard obstacle,
+  // and avoids soft obstacles (grid dots, umklapp discs) unless nothing else is free; failing that it moves away with a leader line
+  function placer(ctx, bx0, by0, bx1, by1) {
+    const boxes = [], labels = [], soft = [], circ = [], softC = [];
+    const hit = (b, o, g) => b[0] < o[2] + g && b[2] > o[0] - g && b[1] < o[3] + g && b[3] > o[1] - g;
+    const hitC = (b, c) => { const dx = Math.max(b[0] - c[0], 0, c[0] - b[2]), dy = Math.max(b[1] - c[1], 0, c[1] - b[3]); return dx * dx + dy * dy < c[2] * c[2]; };
+    const free = (b, useSoft) => b[0] >= bx0 && b[1] >= by0 && b[2] <= bx1 && b[3] <= by1 && !boxes.some(o => hit(b, o, 0)) && !circ.some(c => hitC(b, c)) && !labels.some(o => hit(b, o, 3)) && !(useSoft && (soft.some(o => hit(b, o, 0)) || softC.some(c => hitC(b, c))));
+    const api = {
+      circle(P, r, isSoft) { (isSoft ? softC : circ).push([P[0], P[1], r]); },
+      softDot(P, r) { soft.push([P[0] - r, P[1] - r, P[0] + r, P[1] + r]); },
+      seg(P0, P1, r = 2.5) { const n = Math.max(1, Math.ceil(Math.hypot(P1[0] - P0[0], P1[1] - P0[1]) / 4)); for (let i = 0; i <= n; i++) { const x = P0[0] + (P1[0] - P0[0]) * i / n, y = P0[1] + (P1[1] - P0[1]) * i / n; boxes.push([x - r, y - r, x + r, y + r]); } },
+      size(L) { return [partsW(ctx, L.s, L.size), L.size * 1.3]; },
+      put(L, cands) {
+        const [w, h] = api.size(L);
+        const at = (c) => [c[0] - w / 2 - 2, c[1] - h / 2, c[0] + w / 2 + 2, c[1] + h / 2];
+        let c = null, lead = null;
+        for (const useSoft of [true, false]) {
+          c = cands.find(cc => free(at(cc), useSoft));
+          if (c) break;
+          const c0 = cands[0];
+          search: for (let rad = 6; rad <= 90; rad += 5) for (let j = 0; j < 24; j++) {
+            const cc = [c0[0] + rad * Math.cos(j * TAU / 24), c0[1] + rad * Math.sin(j * TAU / 24)];
+            if (free(at(cc), useSoft)) { c = cc; lead = cands.anchor || c0; break search; }
+          }
+          if (c) break;
+        }
+        if (!c) return null;
+        const b = at(c); labels.push(b);
+        if (lead) {
+          const dx = lead[0] - c[0], dy = lead[1] - c[1], t = Math.min((w / 2 + 2) / Math.max(Math.abs(dx), 1e-6), (h / 2) / Math.max(Math.abs(dy), 1e-6));
+          if (t < 1) { ctx.strokeStyle = EPP.alpha('muted', 0.85); ctx.lineWidth = 0.9; ctx.setLineDash([]); ctx.beginPath(); ctx.moveTo(c[0] + dx * t, c[1] + dy * t); ctx.lineTo(lead[0] - dx * 0.06, lead[1] - dy * 0.06); ctx.stroke(); }
+        }
+        ctx.fillStyle = EPP.alpha('surface', 0.86);
+        ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(b[0], b[1], b[2] - b[0], b[3] - b[1], 3); else ctx.rect(b[0], b[1], b[2] - b[0], b[3] - b[1]); ctx.fill();
+        ctx.fillStyle = L.color; partsDraw(ctx, L.s, c[0] - w / 2, c[1] + L.size * 0.36, L.size);
+        return c;
+      },
+      // centres around a point P outside a circle of radius r, starting at screen angle ang0 and fanning out
+      around(L, P, r, ang0, gap = 3, maxK = 8) {
+        const [w, h] = api.size(L), out = [];
+        for (const rr of [r, r + 6]) for (let j = 0; j < 2 * maxK; j++) {
+          const kk = j === 0 ? 0 : (j % 2 ? 1 : -1) * Math.ceil(j / 2), th = ang0 + kk * Math.PI / 8;
+          const c = Math.cos(th), s = Math.sin(th);
+          const ext = rr + gap + Math.min((w / 2 + 2) / Math.max(Math.abs(c), 1e-6), (h / 2) / Math.max(Math.abs(s), 1e-6));
+          out.push([P[0] + c * ext, P[1] + s * ext]);
+        }
+        out.anchor = P;
+        return out;
+      }
+    };
+    return api;
+  }
+
+  // ---------- panels ----------
+  const elPlane = fig.querySelector('.b1-umklapp-plane'), elCurve = fig.querySelector('.b1-umklapp-curve');
+  const elLeg1 = fig.querySelector('.b1-umklapp-leg1'), elLeg2 = fig.querySelector('.b1-umklapp-leg2');
+  const TK = [-4, -2, 0, 2, 4];
+  // l + r = t + b, so that the square canvas has a square plot area and one scale for q_x and q_y
+  const pL = new EPP.Plot(elPlane, {
+    xlim: [-LIM, LIM], ylim: [-LIM, LIM], aspect: 1, legend: false, hover: false, grid: false, xticks: TK, yticks: TK,
+    margin: { l: 46, r: 16, t: 22, b: 40 }, minHeight: 240, maxHeight: 720,
+    ariaLabel: 'Panel a: the plane q_z = 0 of reciprocal space of sodium, with the reciprocal lattice points, the cut of the first Brillouin zone, the wavevector q, the polarization e, and discs at the points q + G whose areas are the weights'
+  });
+  elPlane.appendChild(elLeg1);
+  const pR = new EPP.Plot(elCurve, {
+    xlim: [0.0185, 1.08], ylim: [0.01, 300], logx: true, logy: true, aspect: 1, legend: false, hover: true,
+    xticks: [0.02, 0.05, 0.1, 0.2, 0.5, 1].map(v => ({ v, label: String(v) })),
+    yticks: [0.01, 0.1, 1, 10, 100].map(v => ({ v, label: String(v) })),
+    margin: { l: 46, r: 16, t: 22, b: 40 }, minHeight: 240, maxHeight: 720,
+    xname: 'q (Å^{−1})', hoverX: v => v.toFixed(3) + ' Å⁻¹', hoverY: v => (v >= 10 ? v.toFixed(1) : v >= 1 ? v.toFixed(2) : v.toFixed(3)) + ' eV/Å',
+    ariaLabel: 'Panel b: log–log plot of the G = 0 weight of a longitudinal wave against q, bare and Thomas–Fermi screened, with the largest umklapp weight'
+  });
+  elCurve.appendChild(elLeg2);
+
+  let cur = null, umkKey = '', UMK = null;
+  // disc radius 0.198 Å⁻¹ × sqrt(|w| in eV/Å), capped at 0.735 Å⁻¹: 7 px and 26 px on a desktop panel (35.4 px per Å⁻¹)
+  const RS = 0.198, RCAP = 0.735;
+  const sig = (v) => { const a = Math.abs(v), d = a >= 99.95 ? 0 : a >= 9.995 ? 1 : a >= 0.9995 ? 2 : 3; return (Math.abs(v) < 0.0005 ? 0 : v).toFixed(d).replace('-', '−'); };
+
+  function drawPlane() {
+    if (!cur) return;
+    const ctx = pL.ctx, W = pL.cv.w, H = pL.cv.h, m = pL.m;
+    if (!W || !H) return;
+    FAM = { ui: EPP.css('--font-ui'), tx: EPP.css('--font-text') };
+    const P = (x, y) => [pL.X(x), pL.Y(y)], s = pL.X(1) - pL.X(0);
+    const rOf = (w) => RS * s * Math.sqrt(Math.abs(w)), rCap = RCAP * s;
+    const x0 = m.l, y0 = m.t, x1 = W - m.r, y1 = H - m.b;
+    const cInk = EPP.color('ink'), cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted');
+    // header and axis titles, in the margins
+    ctx.fillStyle = cFg2;
+    partsDraw(ctx, [T('(a) the components '), Bv('q'), T(' + '), Bv('G'), T(' and their weights')], 4, 14, 11.5);
+    ctx.fillStyle = cFg;
+    partsDraw(ctx, [It('q'), Sb('x', 1), T(' (Å⁻¹)')], (x0 + x1) / 2, H - 8, 12.5, 'center');
+    ctx.save(); ctx.translate(14, (y0 + y1) / 2); ctx.rotate(-Math.PI / 2); partsDraw(ctx, [It('q'), Sb('y', 1), T(' (Å⁻¹)')], 0, 0, 12.5, 'center'); ctx.restore();
+
+    ctx.save(); ctx.beginPath(); ctx.rect(x0, y0, x1 - x0, y1 - y0); ctx.clip();
+    // cut of the first Brillouin zone at q_z = 0: |q_x| + |q_y| <= 2π/a
+    const Z = [P(B, 0), P(0, B), P(-B, 0), P(0, -B)];
+    ctx.beginPath(); Z.forEach((p, j) => (j ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]))); ctx.closePath();
+    ctx.fillStyle = EPP.alpha('ink', 0.04); ctx.fill();
+    ctx.strokeStyle = cMut; ctx.lineWidth = 1.3; ctx.lineJoin = 'round'; ctx.stroke();
+    // zeros of the empty-core form factor, |q + G| = π/2r_c and 3π/2r_c (the form factor depends on |q + G| only)
+    const G0 = P(0, 0);
+    ctx.setLineDash([5, 4]); ctx.lineWidth = 1.2;
+    RZ.forEach((r, j) => { ctx.strokeStyle = EPP.alpha('muted', j ? 0.6 : 0.95); disc(ctx, G0[0], G0[1], r * s); ctx.stroke(); });
+    ctx.setLineDash([]);
+    // reciprocal lattice points G, the shift G -> q + G, and a small marker at every q + G
+    const items = cur.comps.filter(o => Math.abs(o.x) < LIM + 1 && Math.abs(o.y) < LIM + 1).map(o => {
+      const r0 = rOf(o.w);
+      return Object.assign({}, o, { P: P(o.x, o.y), G: P(B * o.h, B * o.k), r: Math.min(r0, rCap), cap: r0 > rCap, zero: !o.h && !o.k });
+    });
+    ctx.strokeStyle = EPP.alpha('muted', 0.55); ctx.lineWidth = 1; ctx.beginPath();
+    for (const o of items) { ctx.moveTo(o.G[0], o.G[1]); ctx.lineTo(o.P[0], o.P[1]); }
+    ctx.stroke();
+    ctx.fillStyle = EPP.alpha('muted', 0.9);
+    for (const o of items) { disc(ctx, o.G[0], o.G[1], 2.4); ctx.fill(); }
+    ctx.strokeStyle = EPP.alpha('ink', 0.5); ctx.lineWidth = 1;
+    for (const o of items) { disc(ctx, o.P[0], o.P[1], 2.1); ctx.stroke(); }
+    // discs of area ∝ |w|, coloured by the sign of w, the largest drawn first
+    const hue = (w) => (w < 0 ? 'c4' : 'c5');
+    const drawDisc = (o) => {
+      ctx.fillStyle = EPP.alpha(hue(o.w), 0.55); disc(ctx, o.P[0], o.P[1], o.r); ctx.fill();
+      ctx.strokeStyle = EPP.color(hue(o.w)); ctx.lineWidth = 1.2; ctx.stroke();
+    };
+    const um = items.filter(o => !o.zero && o.r >= 0.8).sort((a, b) => b.r - a.r);
+    um.forEach(drawDisc);
+    ctx.fillStyle = cFg; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    for (const o of um) if (o.r >= 5.5) { ctx.font = `700 ${Math.min(13, Math.round(o.r * 1.25 + 1))}px ${FAM.ui}`; ctx.fillText(o.w < 0 ? '−' : '+', o.P[0], o.P[1] + 0.5); }
+    ctx.textBaseline = 'alphabetic';
+    // the term G = 0: ink rim; a small ring when its weight vanishes; an outer ring when capped
+    const z = items.find(o => o.zero), tip = z.P;
+    let R0;
+    if (cur.w0 === 0) { ctx.strokeStyle = cInk; ctx.lineWidth = 1.5; disc(ctx, tip[0], tip[1], 5); ctx.stroke(); R0 = 5; }
+    else {
+      drawDisc(z);
+      ctx.strokeStyle = cInk; ctx.lineWidth = 1.6; disc(ctx, tip[0], tip[1], z.r); ctx.stroke();
+      R0 = z.r;
+      if (z.cap) { ctx.strokeStyle = EPP.color(hue(z.w)); ctx.lineWidth = 1; disc(ctx, tip[0], tip[1], z.r + 3.5); ctx.stroke(); R0 = z.r + 3.5; }
+    }
+    ctx.restore();
+
+    // Γ, the wavevector q and the polarization e (double arrow at the tip of q)
+    const qd = [cur.c, -cur.sn], ed = cur.L ? qd : [-cur.sn, -cur.c], eh = 11;
+    const ec = cur.L ? [tip[0] + qd[0] * (eh + 3), tip[1] + qd[1] * (eh + 3)] : [tip[0] + qd[0] * 3, tip[1] + qd[1] * 3];
+    const E0 = [ec[0] - ed[0] * eh, ec[1] - ed[1] * eh], E1 = [ec[0] + ed[0] * eh, ec[1] + ed[1] * eh];
+    const halo = EPP.alpha('surface', 0.9);
+    ctx.fillStyle = halo; disc(ctx, G0[0], G0[1], 3.6); ctx.fill();
+    arrow(ctx, G0[0], G0[1], tip[0], tip[1], { col: halo, lw: 5, head: 10 });
+    arrow(ctx, E0[0], E0[1], E1[0], E1[1], { col: halo, lw: 5.2, head: 9.5, both: true });
+    ctx.fillStyle = cInk; disc(ctx, G0[0], G0[1], 2.2); ctx.fill();
+    arrow(ctx, G0[0], G0[1], tip[0], tip[1], { col: cInk, lw: 2.2, head: 7.5 });
+    arrow(ctx, E0[0], E0[1], E1[0], E1[1], { col: EPP.color('phonon'), lw: 2.2, head: 6.5, both: true });
+    // points H and N of the zone cut, all four of each kind equivalent: label the one with the most room,
+    // in a fixed order of preference so that the label does not jump while q moves
+    const segD = (Q, A0, A1) => { const dx = A1[0] - A0[0], dy = A1[1] - A0[1], L2 = dx * dx + dy * dy || 1, t = EPP.clamp(((Q[0] - A0[0]) * dx + (Q[1] - A0[1]) * dy) / L2, 0, 1); return Math.hypot(Q[0] - A0[0] - t * dx, Q[1] - A0[1] - t * dy); };
+    const room = (Q) => Math.min(Math.hypot(Q[0] - tip[0], Q[1] - tip[1]) - R0, segD(Q, G0, tip), segD(Q, E0, E1),
+      ...items.filter(o => !o.zero && o.r >= 2).map(o => Math.hypot(Q[0] - o.P[0], Q[1] - o.P[1]) - o.r));
+    const pick = (cands) => { const pts = cands.map(([x, y]) => ({ x, y, Q: P(x, y) })); pts.forEach(o => { o.room = room(o.Q); }); return pts.find(o => o.room >= 16) || pts.reduce((a, b) => (b.room > a.room ? b : a)); };
+    const hP = pick([[-B, 0], [0, -B], [0, B], [B, 0]]), nP = pick([[-B / 2, -B / 2], [-B / 2, B / 2], [B / 2, -B / 2], [B / 2, B / 2]]);
+    const PH = hP.Q, PN = nP.Q;
+    ctx.fillStyle = cFg2; disc(ctx, PH[0], PH[1], 2.2); ctx.fill(); disc(ctx, PN[0], PN[1], 2.2); ctx.fill();
+
+    // labels
+    const pl = placer(ctx, x0 + 1, y0 + 1, x1 - 1, y1 - 1);
+    pl.circle(tip, R0 + 1);
+    pl.seg(G0, tip, 2); pl.seg(E0, E1, 3);
+    for (const o of items) { pl.softDot(o.G, 3.5); if (!o.zero && o.r >= 2) pl.circle(o.P, o.r + 1, true); }
+    pl.circle(PH, 3); pl.circle(PN, 3);
+    Z.forEach(p => pl.softDot(p, 4));
+    const aq = Math.atan2(qd[1], qd[0]), left = aq - Math.PI / 2;          // screen angles: along q, and to its left
+    const Lq = lab([Bv('q')], cInk, 14), Le = lab([Bv('e')], EPP.textColor('phonon'), 14);
+    pl.put(Lq, pl.around(Lq, tip, R0, cur.L ? left : aq, 3, 5));
+    if (cur.L) pl.put(Le, pl.around(Le, tip, Math.max(R0, 2 * eh + 3), aq, 3, 4));
+    else pl.put(Le, pl.around(Le, tip, Math.max(R0, eh), left, 3, 4));
+    if (z.cap) { const Lv = lab(sig(z.w), EPP.textColor(hue(z.w)), 11.5); pl.put(Lv, pl.around(Lv, tip, R0, aq + Math.PI / 2, 2, 6)); }
+    let Ll = lab('H', cFg2, 12.5); pl.put(Ll, pl.around(Ll, PH, 3, -Math.atan2(hP.y, hP.x)));
+    Ll = lab('N', cFg2, 12.5); pl.put(Ll, pl.around(Ll, PN, 3, -Math.atan2(nP.y, nP.x)));
+    Ll = lab('Γ', cFg2, 12.5); pl.put(Ll, pl.around(Ll, G0, 3, 3 * Math.PI / 4));
+    // label of the first zero circle, just outside it, in the lower half (q points into the upper right)
+    const Lz = lab([T('zero of '), It('V'), Sb('κ', 1)], EPP.textColor('muted'), 11);
+    const [wz, hz] = pl.size(Lz), rz = RZ[0] * s, cz = [];
+    for (const d of [100, 80, 120, 60, 140, 40, 160, 200, 20, 220, 250, 290]) {
+      const a = d * DEG, cc = Math.cos(a), ss = Math.sin(a);
+      const ext = rz + 4 + Math.min((wz / 2 + 2) / Math.max(Math.abs(cc), 1e-6), (hz / 2) / Math.max(Math.abs(ss), 1e-6));
+      cz.push([G0[0] + cc * ext, G0[1] + ss * ext]);
+    }
+    cz.anchor = [G0[0] + Math.cos(100 * DEG) * rz, G0[1] + Math.sin(100 * DEG) * rz];
+    pl.put(Lz, cz);
+  }
+
+  const baseL = pL.render.bind(pL);
+  pL.render = () => { baseL(); drawPlane(); };
+
+  function decorCurve() {
+    const ctx = pR.ctx, W = pR.cv.w, H = pR.cv.h, m = pR.m;
+    if (!W || !H) return;
+    FAM = { ui: EPP.css('--font-ui'), tx: EPP.css('--font-text') };
+    ctx.fillStyle = EPP.color('fg2');
+    partsDraw(ctx, [T('(b) the weight at '), Bv('G'), T(' = 0 of a longitudinal wave')], 4, 14, 11.5);
+    ctx.fillStyle = EPP.color('fg');
+    partsDraw(ctx, [It('q'), T(' (Å⁻¹)')], (m.l + W - m.r) / 2, H - 8, 12.5, 'center');
+    ctx.save(); ctx.translate(14, (m.t + H - m.b) / 2); ctx.rotate(-Math.PI / 2); partsDraw(ctx, [T('weight |'), It('w'), T('| (eV/Å)')], 0, 0, 12.5, 'center'); ctx.restore();
+    // direct labels at the left end of each curve
+    const cPh = EPP.textColor('phonon');
+    ctx.fillStyle = cPh; partsDraw(ctx, [T('bare, ∝ 1/'), It('q')], pR.X(0.023), pR.Y(40) + 4, 11.5);
+    ctx.fillStyle = cPh; partsDraw(ctx, [T('screened, ∝ '), It('q')], pR.X(0.023), pR.Y(0.02) + 4, 11.5);
+    ctx.fillStyle = EPP.textColor('muted'); partsDraw(ctx, [T('largest umklapp')], pR.X(0.023), pR.Y(2.7) + 4, 11.5);
+  }
+  const baseR = pR.render.bind(pR);
+  pR.render = () => { baseR(); decorCurve(); };
+
+  // ---------- readouts ----------
+  const $v = (k) => fig.querySelector('.b1-umklapp-v-' + k);
+  const roV = { q: $v('q'), w0: $v('w0'), wu: $v('wu'), r: $v('r'), qw: $v('qw'), wq: $v('wq') };
+  const kBare = fig.querySelector('.b1-umklapp-k-bare'), kScr = fig.querySelector('.b1-umklapp-k-scr');
+  const bar = (n) => (n < 0 ? `<span style="text-decoration:overline">${-n}</span>` : String(n));
+  const millerH = (o) => `(${bar(o.h)} ${bar(o.k)} 0)`, millerT = (o) => `(${o.h} ${o.k} 0)`;
+  const dirTxt = (th) => (th === 0 ? 'along [100], Γ–H' : th === 45 ? 'along [110], Γ–N' : th === 90 ? 'along [010], Γ–H' : `${th}° from [100]`);
+  function readouts() {
+    const c = cur, nb = '\u00a0';
+    roV.q.textContent = `${c.q.toFixed(2)}${nb}Å⁻¹ ${dirTxt(c.thDeg)}`;
+    roV.w0.textContent = c.L ? `${sig(c.w0)}${nb}eV/Å` : '0 (transverse wave)';
+    roV.wu.innerHTML = `${sig(c.wmax)}${nb}eV/Å at ${c.top.slice(0, 2).map(millerH).join(' and ')}${c.top.length > 2 ? ' and equivalents' : ''}`;
+    const ratio = Math.abs(c.w0) / c.wmax;
+    roV.r.textContent = c.L ? (ratio >= 9.995 ? ratio.toFixed(1) : ratio.toFixed(2)) : '0';
+    kBare.hidden = c.scr; kScr.hidden = !c.scr;
+    roV.qw.innerHTML = c.L ? `${(c.q * Math.abs(c.w0)).toFixed(2)}${nb}eV/Å² (→${nb}${LAW_BARE.toFixed(2)} as <i>q</i>${nb}→${nb}0)` : '0 (transverse wave)';
+    roV.wq.innerHTML = c.L ? `${(Math.abs(c.w0) / c.q).toFixed(2)}${nb}eV (→${nb}${LAW_SCR.toFixed(2)} as <i>q</i>${nb}→${nb}0)` : '0 (transverse wave)';
+    pL.cv.canvas.setAttribute('aria-label', `Panel a: the plane q_z = 0 of reciprocal space of sodium. q = ${c.q.toFixed(2)} per ångström ${dirTxt(c.thDeg)}, ` +
+      `${c.L ? 'longitudinal' : 'transverse'} wave, ${c.scr ? 'Thomas–Fermi screened' : 'bare'} potential. ` +
+      `Weight of the component at q (G = 0): ${c.L ? sig(c.w0).replace('−', 'minus ') + ' eV per ångström' : 'zero'}. ` +
+      `Largest umklapp weight: ${sig(c.wmax)} eV per ångström, at G = 2π/a times ${c.top.slice(0, 2).map(millerT).join(' and ')}.`);
+    pR.cv.canvas.setAttribute('aria-label', `Panel b: log–log plot of the G = 0 weight of a longitudinal wave against q from 0.02 to 1 per ångström: the bare weight falls as 1/q, the Thomas–Fermi screened weight vanishes linearly; ` +
+      `the largest umklapp weight stays near ${sig(c.wmax)} eV per ångström. Cursor at q = ${c.q.toFixed(2)}: bare ${sig(w0L(c.q, false))}, screened ${sig(w0L(c.q, true))} eV per ångström.`);
+  }
+
+  function update(st) {
+    cur = compute(st);
+    const key = `${st.th}|${st.pol}|${st.pot}`;
+    if (key !== umkKey) { const th = st.th * DEG, L = st.pol === 'L', scr = st.pot === 'tf'; UMK = QS.map(q => maxUmklapp(q, th, L, scr)); umkKey = key; }
+    pL.render();
+    const q = cur.q, selB = cur.L && !cur.scr, selS = cur.L && cur.scr;
+    pR.draw([
+      { type: 'line', x: QS, y: BARE, color: 'phonon', width: 2, label: '|w(G = 0)|, bare' },
+      { type: 'line', x: QS, y: SCR, color: 'phonon', width: 2, dash: [7, 4], label: '|w(G = 0)|, screened' },
+      { type: 'line', x: QS, y: UMK, color: 'muted', width: 1.4, label: 'largest umklapp |w|' },
+      { type: 'vline', at: q, color: 'muted', width: 1 },
+      { type: 'points', x: [q], y: [w0L(q, false)], color: 'phonon', r: selB ? 5 : 3.6, hollow: !selB },
+      { type: 'points', x: [q], y: [w0L(q, true)], color: 'phonon', r: selS ? 5 : 3.6, hollow: !selS },
+      { type: 'points', x: [q], y: [cur.wmax], color: 'ink', r: 3.6 }
+    ]);
+    readouts();
+  }
+
+  // ---------- controls ----------
+  const elCtl = fig.querySelector('.b1-umklapp-ctrls');
+  const ui = EPP.controls(elCtl, [
+    { key: 'q', type: 'range', label: 'q', min: QMIN, max: QMAX, step: 0.01, value: 0.3, fmt: v => v.toFixed(2) + ' Å⁻¹' },
+    { key: 'th', type: 'range', label: 'θ', min: 0, max: 90, step: 1, value: 0, fmt: v => Math.round(v) + '°' },
+    { key: 'pol', type: 'seg', label: 'polarization', options: [['L', 'longitudinal (L)'], ['T', 'transverse (T)']], value: 'L' },
+    { key: 'pot', type: 'seg', label: 'ionic potential', options: [['bare', 'bare'], ['tf', 'Thomas–Fermi screened']], value: 'bare' }
+  ], update);
+  elCtl.style.gridTemplateColumns = 'repeat(auto-fill, minmax(min(100%, 300px), 1fr))';
+  const I = (t) => `<i style="font-family:var(--font-text)">${t}</i>`, Bd = (t) => `<strong>${t}</strong>`;
+  const LAB = { q: `length ${I('q')} of the wavevector ${Bd('q')}`, th: `direction ${I('θ')} of ${Bd('q')} from [100]` };
+  Object.keys(LAB).forEach(k => { const sp = elCtl.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  elCtl.querySelectorAll('.ctrl').forEach(b => { b.style.gridColumn = ''; b.style.alignContent = 'start'; });
+  // two presets for the high-symmetry directions, in the direction control
+  const thBox = document.getElementById(`${fig.id}-th`);
+  if (thBox) {
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;flex-wrap:wrap;gap:6px 8px;margin-top:3px';
+    [['Γ–H', 0, '[100]'], ['Γ–N', 45, '[110]']].forEach(([t, v, d]) => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'btn'; b.textContent = `${t} ${d}`;
+      b.setAttribute('aria-label', `point q along ${d}, the direction ${t === 'Γ–H' ? 'Gamma to H' : 'Gamma to N'}, theta = ${v} degrees`);
+      b.addEventListener('click', () => ui.set('th', v));
+      row.appendChild(b);
+    });
+    thBox.closest('.ctrl').appendChild(row);
+  }
+  // clicking or dragging on the plot moves q
+  pR.onPointer = (x, y, type) => { if (type === 'up') return; ui.set('q', EPP.clamp(Math.round(x * 100) / 100, QMIN, QMAX)); };
+  update(ui.state);
+})();
+</script>

@@ -1,0 +1,483 @@
+  <figure class="viz" id="viz-a1-honeycomb">
+    <p class="viz-title"><span>Reading $e_{\kappa\alpha,\nu}(\bq)$: the in-plane modes of a hexagonal crystal</span> <span class="tag">interactive</span></p>
+    <div class="viz-grid two"><div class="a1-honeycomb-disp"></div><div class="a1-honeycomb-mode"></div></div>
+    <div class="a1-honeycomb-ctrls"></div>
+    <div class="a1-honeycomb-ro"></div>
+    <div class="a1-honeycomb-mat"></div>
+    <div class="a1-honeycomb-ro2"></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> On $\Gamma$–$\mathrm M$ each column is purely longitudinal or purely transverse; where the LO and TO curves cross, branches 3 and 4 meet and exchange characters. At $\mathrm K$ every moving atom runs on a circle: its $x$ and $y$ dials show equal hands a quarter turn apart.</p><div class="cap-more"><p><strong>Marks.</strong> In (a), $\nu$ numbers the modes 1 to 4 by increasing frequency at each $\bq$. In (b), grey dots are rest positions and the heavier N is drawn larger. In (c), the number below each dial gives $|e|\angle\arg e$ (angle omitted when 0°); hands take the colour of the row's atom; the shaded column is the selected mode (click a column). Checks under the matrix: the norm (always 1), the longitudinal fraction (1 along $\bq$, 0 across), the centre-of-mass fraction $|\sum_\kappa\sqrt{M_\kappa}\,\be_{\kappa\nu}|^2/M_{\mathrm c}$, with $M_{\mathrm c}=M_1+M_2$ the mass of a cell (1 for a rigid acoustic translation, 0 for an optical mode at $\Gamma$), and the overlaps with the other columns (0, by (A1.20)).</p><p><strong>Try.</strong> Click or drag in (a) to choose $\bq$ and the nearest branch; the slider moves $\bq$ and the buttons choose $\nu$. Cross branches 3 and 4 on $\Gamma$–$\mathrm M$, then stop at $\mathrm K$.</p><p><strong>Model.</strong> The hexagonal sheet of Figure A1.1 with the springs $K_{\mathrm{nn}}$, $K_{\mathrm{nnn}}$ of Figure A1.2 (<span class="nw">28.1 and 5.0 eV/Å²</span>, illustrative), fitted to the transverse optical (TO) energy of hBN at $\Gamma$, about <span class="nw">170 meV</span> (in a single sheet LO and TO coincide at $\Gamma$), and to its longitudinal sound velocity, about <span class="nw">21 km/s</span> (literature values, illustrative; model: <span class="nw">169.9 meV</span>, <span class="nw">21.1 km/s</span>, transverse <span class="nw">9.6 km/s</span>). For each $\bq$ the figure diagonalizes $\tPhi(\bq)$ of (A1.18), rows and columns ordered $\kappa\alpha=1x,1y,2x,2y$, with the largest entry of each column made real and positive.</p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a1-honeycomb');
+  if (!fig || !window.EPP) return;
+  const $ = (sel) => fig.querySelector(sel);
+
+  // ---------- model: hBN-like honeycomb, in-plane motion, central springs ----------
+  // units: Å, amu, eV/Å^2, so omega^2 is in eV Å^-2 amu^-1 and hbar*omega[meV] = HW*sqrt(omega^2)
+  const a = 2.504, S3 = Math.sqrt(3), HW = 64.654;
+  const A1 = [a, 0], A2 = [a / 2, a * S3 / 2];
+  const MS = [10.81, 14.007], MC = MS[0] + MS[1];
+  const KNN = 28.1, KNNN = 5.0, BOND = a / S3; // springs K_nn (B–N) and K_nnn (B–B, N–N), as in Figure A1.2
+  const TAU = [[(A1[0] + A2[0]) / 3, (A1[1] + A2[1]) / 3], [2 * (A1[0] + A2[0]) / 3, 2 * (A1[1] + A2[1]) / 3]];
+  // every spring seen from atom k of cell 0 to atom kp of the cell at lattice vector R
+  const SPR = [];
+  for (let k = 0; k < 2; k++) for (let kp = 0; kp < 2; kp++) for (let l1 = -2; l1 <= 2; l1++) for (let l2 = -2; l2 <= 2; l2++) {
+    const R = [l1 * A1[0] + l2 * A2[0], l1 * A1[1] + l2 * A2[1]];
+    const d = [R[0] + TAU[kp][0] - TAU[k][0], R[1] + TAU[kp][1] - TAU[k][1]], r = Math.hypot(d[0], d[1]);
+    const K = Math.abs(r - BOND) < 1e-6 ? KNN : (Math.abs(r - a) < 1e-6 ? KNNN : 0);
+    if (K) SPR.push({ k, kp, R, n: [d[0] / r, d[1] / r], K });
+  }
+  const IMS = [0, 1, 2, 3].map(i => [0, 1, 2, 3].map(j => 1 / Math.sqrt(MS[i >> 1] * MS[j >> 1])));
+  // mass-scaled dynamical matrix (A1.18); index 2*kappa + alpha runs over (1x, 1y, 2x, 2y)
+  function dynMat(q) {
+    const re = [0, 1, 2, 3].map(() => [0, 0, 0, 0]), im = [0, 1, 2, 3].map(() => [0, 0, 0, 0]);
+    for (const s of SPR) {
+      const ph = q[0] * s.R[0] + q[1] * s.R[1], c = Math.cos(ph), sn = Math.sin(ph);
+      for (let al = 0; al < 2; al++) for (let be = 0; be < 2; be++) {
+        const nn = s.K * s.n[al] * s.n[be], i = 2 * s.k + al;
+        re[i][2 * s.kp + be] -= nn * c; im[i][2 * s.kp + be] -= nn * sn; // partner in cell R: -K n n^T e^{iq.R}
+        re[i][2 * s.k + be] += nn; // sum rule: +K n n^T in the on-site block
+      }
+    }
+    for (let i = 0; i < 4; i++) for (let j = 0; j < 4; j++) { re[i][j] *= IMS[i][j]; im[i][j] *= IMS[i][j]; }
+    return { re, im };
+  }
+  const solve = (q) => { const D = dynMat(q); return EPP.eigHerm(D.re, D.im); };
+  const hwOf = (w2) => HW * Math.sqrt(Math.max(0, w2));
+
+  // ---------- path Γ–M–K–Γ, parameter s in [0, 1] proportional to |Δq| ----------
+  const TP = 2 * Math.PI / a;
+  const NODE = [[0, 0], [0, TP / S3], [TP / 3, TP / S3], [0, 0]], NNAME = ['Γ', 'M', 'K', 'Γ'];
+  const SEGL = [0, 1, 2].map(i => Math.hypot(NODE[i + 1][0] - NODE[i][0], NODE[i + 1][1] - NODE[i][1]));
+  const LT = SEGL[0] + SEGL[1] + SEGL[2];
+  const CUM = [0, SEGL[0] / LT, (SEGL[0] + SEGL[1]) / LT, 1];
+  const SEGNAME = ['Γ–M', 'M–K', 'K–Γ'];
+  const segOf = (s) => (s < CUM[1] ? 0 : (s < CUM[2] ? 1 : 2));
+  const qAt = (s) => { const i = segOf(s), f = (s - CUM[i]) / (CUM[i + 1] - CUM[i]); return [NODE[i][0] + f * (NODE[i + 1][0] - NODE[i][0]), NODE[i][1] + f * (NODE[i + 1][1] - NODE[i][1])]; };
+  const snap = (s) => { for (const c of CUM) if (Math.abs(s - c) < 6e-4) return c; return s; };
+  const where = (s) => { s = snap(s); const k = CUM.indexOf(s); return k >= 0 ? NNAME[k] : SEGNAME[segOf(s)]; };
+  // dispersion along the path: fixed by the model, computed once
+  const SG = [];
+  for (let j = 0; j <= 300; j++) SG.push(j / 300);
+  SG.push(CUM[1], CUM[2]); SG.sort((x, y) => x - y);
+  const WB = [[], [], [], []];
+  for (const s of SG) { const E = solve(qAt(s)); for (let n = 0; n < 4; n++) WB[n].push(hwOf(E.vals[n])); }
+  function wAt(n, s) {
+    let lo = 0, hi = SG.length - 1;
+    while (hi - lo > 1) { const m = (lo + hi) >> 1; if (SG[m] <= s) lo = m; else hi = m; }
+    const f = SG[hi] > SG[lo] ? EPP.clamp((s - SG[lo]) / (SG[hi] - SG[lo]), 0, 1) : 0;
+    return WB[n][lo] + f * (WB[n][hi] - WB[n][lo]);
+  }
+
+  // semi-major axis of the loop Re[z e^{-i psi}] traced by a complex 2-vector z
+  function semiMajor(z) {
+    const A = z.xr * z.xr + z.yr * z.yr, B = z.xi * z.xi + z.yi * z.yi, C = z.xr * z.xi + z.yr * z.yi;
+    return Math.sqrt(Math.max(0, 0.5 * (A + B) + Math.sqrt(0.25 * (A - B) * (A - B) + C * C)));
+  }
+  function compute(st) {
+    const s = snap(EPP.clamp(+st.s || 0, 0, 1)), nu = EPP.clamp(Math.round(+st.nu || 3) - 1, 0, 3);
+    const q = qAt(s), E = solve(q);
+    // at Γ the pairs are degenerate: take eigenvectors 1e-3 of the path along the current segment
+    const sE = s < 1e-3 ? 1e-3 : (s > 1 - 1e-3 ? 1 - 1e-3 : s);
+    const EE = sE === s ? E : solve(qAt(sE));
+    const vec = EE.vecs.map(v => EPP.fixPhase(v));
+    const qE = qAt(sE), qEn = Math.hypot(qE[0], qE[1]) || 1, qh = [qE[0] / qEn, qE[1] / qEn];
+    const cols = vec.map(v => {
+      let n2 = 0, L = 0; const c = [0, 0, 0, 0];
+      for (let i = 0; i < 4; i++) n2 += v.re[i] * v.re[i] + v.im[i] * v.im[i];
+      for (let k = 0; k < 2; k++) {
+        const pr = qh[0] * v.re[2 * k] + qh[1] * v.re[2 * k + 1], pi = qh[0] * v.im[2 * k] + qh[1] * v.im[2 * k + 1];
+        L += pr * pr + pi * pi;
+        const sm = Math.sqrt(MS[k]);
+        c[0] += sm * v.re[2 * k]; c[1] += sm * v.im[2 * k]; c[2] += sm * v.re[2 * k + 1]; c[3] += sm * v.im[2 * k + 1];
+      }
+      return { n2, L, com: (c[0] * c[0] + c[1] * c[1] + c[2] * c[2] + c[3] * c[3]) / MC };
+    });
+    const u = vec[nu];
+    const ov = vec.map(v => { let r = 0, i2 = 0; for (let i = 0; i < 4; i++) { r += u.re[i] * v.re[i] + u.im[i] * v.im[i]; i2 += u.re[i] * v.im[i] - u.im[i] * v.re[i]; } return Math.hypot(r, i2); });
+    // physical amplitudes xi_kappa = e_kappa / sqrt(M_kappa) of the selected mode
+    const xi = [0, 1].map(k => { const f = 1 / Math.sqrt(MS[k]); return { xr: u.re[2 * k] * f, xi: u.im[2 * k] * f, yr: u.re[2 * k + 1] * f, yi: u.im[2 * k + 1] * f }; });
+    return { s, nu, q, qn: Math.hypot(q[0], q[1]), qh, atG: s !== sE, atK: s === CUM[2], sE, hw: E.vals.map(hwOf), vec, cols, ov, xi };
+  }
+
+  // ---------- drawing helpers ----------
+  const FONT = () => EPP.css('--font-ui');
+  // HTML: bold vector, italic running variable
+  const B = (s) => `<strong>${s}</strong>`, I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  // canvas labels: '$...$' = symbol in the italic text font (keeps ν apart from v), '*...*' = bold vector
+  const P = (s) => s.split(/(\$[^$]*\$|\*[^*]*\*)/).filter(Boolean).map(t => (t[0] === '$' ? [t.slice(1, -1), 'm'] : (t[0] === '*' ? [t.slice(1, -1), 1] : [t, 0])));
+  const pOpt = (p, size) => (p[1] === 'm' ? { size: size + 1, font: EPP.css('--font-text'), italic: true } : { size, font: FONT(), bold: !!p[1] });
+  const partsW = (ctx, parts, size) => parts.reduce((w, p) => { const o = pOpt(p, size); return w + EPP.measureRich(ctx, p[0], o.size, o.font, o); }, 0);
+  function drawParts(ctx, parts, x, y, size, align) {
+    if (typeof parts === 'string') parts = P(parts);
+    const tot = partsW(ctx, parts, size);
+    let x0 = align === 'right' ? x - tot : (align === 'center' ? x - tot / 2 : x);
+    for (const p of parts) x0 += EPP.drawRich(ctx, p[0], x0, y, pOpt(p, size));
+    return tot;
+  }
+  function arrowPx(ctx, x0, y0, x1, y1, head) {
+    const dx = x1 - x0, dy = y1 - y0, L = Math.hypot(dx, dy);
+    if (!(L > 0.5)) return;
+    const ux = dx / L, uy = dy / L, hs = Math.min(head, 0.7 * L), hw = 0.45 * hs;
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1 - ux * hs * 0.8, y1 - uy * hs * 0.8); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x1 - ux * hs - uy * hw, y1 - uy * hs + ux * hw); ctx.lineTo(x1 - ux * hs + uy * hw, y1 - uy * hs - ux * hw); ctx.closePath(); ctx.fill();
+  }
+  const disc = (ctx, x, y, r) => { ctx.beginPath(); ctx.arc(x, y, r, 0, 2 * Math.PI); ctx.fill(); };
+  function rrect(ctx, x, y, w, h, r) { ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(x, y, w, h, r); else ctx.rect(x, y, w, h); }
+  const deg = (rad) => { let d = Math.round(rad * 180 / Math.PI) % 360; if (d > 180) d -= 360; if (d <= -180) d += 360; return d; };
+  const sdeg = (d) => `${String(d).replace('-', '−')}°`;
+
+  let cur = null, anim = null;
+
+  // ---------- (a) dispersion ----------
+  const YTOP = 215;
+  // the y label is drawn in render() below, so that ħω can be italic; margin.l keeps the room the Plot gives a label
+  const pD = new EPP.Plot($('.a1-honeycomb-disp'), {
+    xlabel: 'wavevector along Γ–M–K–Γ', margin: { l: 58 }, xlim: [0, 1], ylim: [0, YTOP], aspect: 0.835,
+    xticks: CUM.map((v, i) => ({ v, label: NNAME[i] })), yticks: [0, 50, 100, 150, 200], legend: false,
+    xname: 'path', hoverX: v => `${EPP.fix(v, 3)} (${where(v)})`, hoverY: v => `${EPP.fix(v, 1)} meV`,
+    ariaLabel: 'Phonon dispersion of the honeycomb model along Gamma, M, K, Gamma: four branches, the selected mode marked'
+  });
+  const dashOf = (n, w) => [[], [8, 3 + w], [0.1, 2.6 + w], [10, 2.6 + w, 0.1, 2.6 + w]][n];
+  // direct labels near K, where all four branches are flat and well apart
+  const LAB = [{ x: CUM[2] + 0.012, dy: -12 }, { x: CUM[2] + 0.012, dy: -12 }, { x: CUM[2] + 0.16, dy: 12 }, { x: CUM[2] + 0.012, dy: -12 }];
+  const baseRender = pD.render.bind(pD);
+  pD.render = () => {
+    baseRender();
+    if (!pD.cv.w || !pD.cv.h) return;
+    const ctx = pD.ctx, m = pD.m;
+    ctx.save(); ctx.translate(14, m.t + (pD.cv.h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    ctx.fillStyle = EPP.css('--fg'); ctx.textBaseline = 'alphabetic';
+    drawParts(ctx, 'phonon energy $ħω$ (meV)', 0, 0, 12.5, 'center');
+    ctx.restore();
+    if (!pD.tip.hidden) pD.tip.innerHTML = pD.tip.innerHTML.replace(/ν/g, I('ν'));
+    if (!cur) return;
+    ctx.save(); ctx.textBaseline = 'middle'; ctx.fillStyle = EPP.textColor('phonon');
+    LAB.forEach((p, n) => drawParts(ctx, `$ν$ = ${n + 1}`, pD.X(p.x), pD.Y(wAt(n, p.x)) + p.dy, 11.5, 'left'));
+    ctx.fillStyle = EPP.css('--fg-2'); drawParts(ctx, '(a)', pD.m.l + 7, pD.m.t + 11, 11.5, 'left');
+    ctx.restore();
+  };
+  function drawDisp() {
+    if (!cur) return;
+    const L = [];
+    for (let n = 0; n < 4; n++) { const wd = n === cur.nu ? 2.8 : 1.8; L.push({ type: 'line', x: SG, y: WB[n], color: 'phonon', width: wd, dash: dashOf(n, wd), label: `ν = ${n + 1}` }); }
+    L.push({ type: 'vline', at: cur.s, color: 'muted', width: 1 });
+    L.push({ type: 'points', x: [cur.s], y: [cur.hw[cur.nu]], color: 'ink', r: 5 });
+    pD.draw(L);
+  }
+  pD.onPointer = (x, y, type) => {
+    if (!cur) return;
+    let s = EPP.clamp(x, 0, 1);
+    const span = pD.cv.w - pD.m.l - pD.m.r;
+    for (const c of CUM) if (Math.abs(s - c) * span < 6) s = c;
+    s = Math.round(s * 1000) / 1000;
+    if (type === 'down') {
+      let best = 0, bd = Infinity;
+      for (let n = 0; n < 4; n++) { const d = Math.abs(wAt(n, s) - y); if (d < bd - 1e-9) { bd = d; best = n; } }
+      ui.set('nu', String(best + 1), true);
+    }
+    ui.set('s', s);
+  };
+
+  // ---------- (b) mode pattern ----------
+  // key under the window: items flow left to right and wrap onto a further row (16 px) when the panel is narrow
+  const KEY = ['$κ$ = 1 (B)', '$κ$ = 2 (N)', 'displacement', 'path in one period'];
+  function keyRows(ctx, maxW) {
+    const rows = [[]]; let x = 0;
+    KEY.forEach((t, i) => {
+      const iw = 17 + partsW(ctx, P(t), 10.5);
+      if (x > 0 && x + iw > maxW) { rows.push([]); x = 0; }
+      rows[rows.length - 1].push({ i, x }); x += iw + 12;
+    });
+    return rows;
+  }
+  // the canvas grows by one key row for each extra row the key needs, so the window keeps its size on phones
+  const elB = $('.a1-honeycomb-mode'), MCTX = document.createElement('canvas').getContext('2d');
+  const cvB = EPP.canvas(elB, {
+    get height() { const w = Math.max(1, elB.clientWidth); return Math.round(EPP.clamp(w * 0.835, 250, 420)) + 16 * (keyRows(MCTX, w - 8).length - 1); }
+  });
+  cvB.canvas.setAttribute('role', 'img');
+  cvB.canvas.setAttribute('aria-label', 'Animated displacement pattern of the selected mode in a window of the honeycomb lattice, with displacement arrows, atom paths, bonds and the cell l = 0');
+  // window onto the sheet (Å): 6a wide, 5 rows of cells high, centred near cell 0
+  const WW = 6 * a, WH = 2.5 * S3 * a, WX0 = -2.1 * a, WY0 = 0.433 * a - WH / 2;
+  const ATOMS = [], BONDS = [], MG = 1.4 * BOND;
+  for (let l1 = -8; l1 <= 8; l1++) for (let l2 = -5; l2 <= 5; l2++) for (let k = 0; k < 2; k++) {
+    const Rx = l1 * A1[0] + l2 * A2[0], Ry = l1 * A1[1] + l2 * A2[1], x = Rx + TAU[k][0], y = Ry + TAU[k][1];
+    if (x < WX0 - MG || x > WX0 + WW + MG || y < WY0 - MG || y > WY0 + WH + MG) continue;
+    ATOMS.push({ k, x, y, Rx, Ry, th: 0 });
+  }
+  for (let i = 0; i < ATOMS.length; i++) for (let j = i + 1; j < ATOMS.length; j++) {
+    const U = ATOMS[i], V = ATOMS[j];
+    if (U.k !== V.k && Math.abs(Math.hypot(U.x - V.x, U.y - V.y) - BOND) < 1e-6) BONDS.push([i, j]);
+  }
+  const TPER = 3.2; // seconds of animation per period of the mode
+  function drawMode(t) {
+    cvB.clear();
+    if (!cur) return;
+    const ctx = cvB.ctx, w = cvB.w, h = cvB.h, f = FONT();
+    const top = 24, pad = 4;
+    // the window shrinks to leave room for the rows of the key, which in turn must fit its width
+    let nk = 1, S = 1, rows = [];
+    for (;;) {
+      S = Math.max(1, Math.min((w - 2 * pad) / WW, (h - top - 10 - 16 * nk) / WH));
+      rows = keyRows(ctx, WW * S);
+      if (rows.length <= nk || nk >= KEY.length) break;
+      nk = rows.length;
+    }
+    const bot = 10 + 16 * nk;
+    const wpx = WW * S, hpx = WH * S, ox = (w - wpx) / 2, oy = top + Math.max(0, (h - top - bot - hpx) / 2);
+    const X = (x) => ox + (x - WX0) * S, Y = (y) => oy + hpx - (y - WY0) * S;
+    const bpx = BOND * S, rN = EPP.clamp(0.17 * bpx, 3.5, 7.5), rad = [rN * Math.cbrt(MS[0] / MS[1]), rN];
+    const xi = cur.xi, xm = Math.max(semiMajor(xi[0]), semiMajor(xi[1])) || 1, amp = 0.28 * bpx / xm;
+    const phi = 2 * Math.PI * t / TPER;
+    const cA = [EPP.color('c5'), EPP.color('c4')], cPh = EPP.color('phonon'), cMut = EPP.color('muted');
+    const cRule = EPP.css('--rule'), cFg2 = EPP.css('--fg-2'), cFg = EPP.css('--fg');
+    const POS = ATOMS.map(A => {
+      const z = xi[A.k], th = A.th - phi, c = Math.cos(th), sn = Math.sin(th);
+      const ux = amp * (z.xr * c - z.xi * sn), uy = -amp * (z.yr * c - z.yi * sn);
+      return [X(A.x) + ux, Y(A.y) + uy, ux, uy];
+    });
+    ctx.save(); ctx.beginPath(); ctx.rect(ox, oy, wpx, hpx); ctx.clip();
+    // cell l = 0 and its lattice vectors
+    const C0 = [[0, 0], A1, [A1[0] + A2[0], A1[1] + A2[1]], A2].map(p => [X(p[0]), Y(p[1])]);
+    ctx.fillStyle = EPP.alpha('muted', 0.1);
+    ctx.beginPath(); C0.forEach((p, i) => (i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]))); ctx.closePath(); ctx.fill();
+    ctx.setLineDash([3, 3]); ctx.strokeStyle = cMut; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(C0[1][0], C0[1][1]); ctx.lineTo(C0[2][0], C0[2][1]); ctx.lineTo(C0[3][0], C0[3][1]); ctx.stroke(); ctx.setLineDash([]);
+    ctx.strokeStyle = cFg2; ctx.fillStyle = cFg2; ctx.lineWidth = 1.3;
+    arrowPx(ctx, C0[0][0], C0[0][1], C0[1][0], C0[1][1], 7); arrowPx(ctx, C0[0][0], C0[0][1], C0[3][0], C0[3][1], 7);
+    // path of each atom over one period
+    for (let k = 0; k < 2; k++) {
+      const z = xi[k], pts = [];
+      for (let j = 0; j <= 28; j++) { const ps = 2 * Math.PI * j / 28, c = Math.cos(ps), sn = Math.sin(ps); pts.push([amp * (z.xr * c - z.xi * sn), -amp * (z.yr * c - z.yi * sn)]); }
+      ctx.strokeStyle = EPP.alpha(k ? 'c4' : 'c5', 0.45); ctx.lineWidth = 1; ctx.beginPath();
+      for (const A of ATOMS) if (A.k === k) { const x0 = X(A.x), y0 = Y(A.y); pts.forEach((p, j) => (j ? ctx.lineTo(x0 + p[0], y0 + p[1]) : ctx.moveTo(x0 + p[0], y0 + p[1]))); }
+      ctx.stroke();
+    }
+    // nearest-neighbour bonds follow the atoms
+    ctx.strokeStyle = cMut; ctx.lineWidth = 1.2; ctx.beginPath();
+    for (const [i, j] of BONDS) { ctx.moveTo(POS[i][0], POS[i][1]); ctx.lineTo(POS[j][0], POS[j][1]); }
+    ctx.stroke();
+    ctx.fillStyle = cFg2;
+    for (const A of ATOMS) disc(ctx, X(A.x), Y(A.y), 1.2);
+    ATOMS.forEach((A, i) => { ctx.fillStyle = cA[A.k]; disc(ctx, POS[i][0], POS[i][1], rad[A.k]); });
+    // instantaneous displacement, drawn from the rim of each atom
+    ctx.strokeStyle = cPh; ctx.fillStyle = cPh; ctx.lineWidth = 1.5;
+    ATOMS.forEach((A, i) => {
+      const ux = POS[i][2], uy = POS[i][3], L = Math.hypot(ux, uy);
+      if (1.2 * L < 2.5) return;
+      const ex = ux / L, ey = uy / L, r0 = rad[A.k] + 0.8;
+      arrowPx(ctx, POS[i][0] + ex * r0, POS[i][1] + ey * r0, POS[i][0] + ex * (r0 + 1.2 * L), POS[i][1] + ey * (r0 + 1.2 * L), 5);
+    });
+    ctx.restore();
+    ctx.strokeStyle = cRule; ctx.lineWidth = 1; ctx.strokeRect(ox + 0.5, oy + 0.5, wpx - 1, hpx - 1);
+    // labels of the cell (they sit in the empty hexagon centres at R_0, a_1 and a_2)
+    ctx.textBaseline = 'middle'; ctx.fillStyle = cFg2;
+    drawParts(ctx, '$ℓ$ = 0', C0[0][0], C0[0][1] + 10, 10, 'center');
+    drawParts(ctx, '*a*_1', C0[1][0] + 1, C0[1][1] + 12, 11, 'center');
+    drawParts(ctx, '*a*_2', C0[3][0] - 7, C0[3][1] - 1, 11, 'right');
+    // direction of q in the top-right corner
+    const near0 = cur.qn < 0.03, qlab = P(near0 ? '*q* → 0' : '*q*');
+    const tw = partsW(ctx, qlab, 11.5), bw = 44 + tw, bh = 40, bx = ox + wpx - bw - 5, by = oy + 5;
+    ctx.fillStyle = EPP.alpha('surface', 0.92); rrect(ctx, bx, by, bw, bh, 5); ctx.fill();
+    ctx.strokeStyle = cRule; ctx.lineWidth = 1; ctx.stroke();
+    const qcx = bx + 21, qcy = by + bh / 2, dx = cur.qh[0], dy = -cur.qh[1];
+    ctx.strokeStyle = cFg; ctx.fillStyle = cFg; ctx.lineWidth = 1.6;
+    arrowPx(ctx, qcx - 13 * dx, qcy - 13 * dy, qcx + 13 * dx, qcy + 13 * dy, 7);
+    drawParts(ctx, qlab, bx + 39, qcy + 1, 11.5, 'left');
+    // heading
+    ctx.textBaseline = 'alphabetic'; ctx.fillStyle = cFg2;
+    const nu = cur.nu, hwv = cur.hw[nu];
+    let tag = P(cur.atG && nu < 2 ? `$ν$ = ${nu + 1} · $ω$ → 0, rigid shift` : `$ν$ = ${nu + 1} · $ħω$ = ${EPP.fix(hwv, 1)} meV`);
+    let head = P('(b)  displacement *u*$_{ℓκ}$($t$), exaggerated');
+    const room = wpx - 14; // heading and tag both sit over the window, at least 14 px apart
+    if (partsW(ctx, head, 11) + partsW(ctx, tag, 11) > room) head = P('(b)  *u*$_{ℓκ}$($t$), exaggerated');
+    if (partsW(ctx, head, 11) + partsW(ctx, tag, 11) > room) tag = P(cur.atG && nu < 2 ? `$ν$ = ${nu + 1} · $ω$ → 0` : `$ν$ = ${nu + 1} · ${EPP.fix(hwv, 1)} meV`);
+    drawParts(ctx, head, ox, 15, 11, 'left');
+    ctx.fillStyle = cFg; drawParts(ctx, tag, ox + wpx, 15, 11, 'right');
+    // key, in the rows laid out above (the last row sits 9 px above the bottom edge)
+    const mark = [
+      (x, y) => { ctx.fillStyle = cA[0]; disc(ctx, x + 5, y - 4, rad[0]); },
+      (x, y) => { ctx.fillStyle = cA[1]; disc(ctx, x + 5, y - 4, rad[1]); },
+      (x, y) => { ctx.strokeStyle = cPh; ctx.fillStyle = cPh; ctx.lineWidth = 1.5; arrowPx(ctx, x, y - 4, x + 13, y - 4, 5); },
+      (x, y) => { ctx.strokeStyle = EPP.alpha('c5', 0.6); ctx.lineWidth = 1; ctx.beginPath(); ctx.ellipse(x + 6, y - 4, 6.5, 3.5, -0.4, 0, 2 * Math.PI); ctx.stroke(); }
+    ];
+    rows.forEach((row, r) => {
+      const ky = h - 9 - 16 * (nk - 1 - r);
+      for (const { i, x } of row) {
+        mark[i](ox + x, ky);
+        ctx.fillStyle = cFg2; drawParts(ctx, KEY[i], ox + x + 16, ky, 10.5, 'left');
+      }
+    });
+  }
+
+  // ---------- (c) eigenvector anatomy ----------
+  const cvC = EPP.canvas($('.a1-honeycomb-mat'), { height: 296 });
+  cvC.canvas.setAttribute('role', 'img');
+  const ROWLAB = ['$κ$ = 1 (B), $x$', '$κ$ = 1 (B), $y$', '$κ$ = 2 (N), $x$', '$κ$ = 2 (N), $y$'];
+  const ROWLAB_S = ['B, $x$', 'B, $y$', 'N, $x$', 'N, $y$']; // when the full labels would squeeze the columns below 44 px
+  const ROWTXT = ['B x', 'B y', 'N x', 'N y'];
+  let geo = null;
+  function fmtE(re, im) {
+    const m = Math.hypot(re, im);
+    if (m < 0.005) return '0';
+    const d = deg(Math.atan2(im, re));
+    return d === 0 ? m.toFixed(2) : `${m.toFixed(2)}∠${sdeg(d)}`;
+  }
+  function dialPx(ctx, cx, cy, R, re, im, col, cRule, cGrid) {
+    ctx.lineWidth = 1; ctx.strokeStyle = cGrid;
+    ctx.beginPath(); ctx.moveTo(cx - R, cy); ctx.lineTo(cx + R, cy); ctx.moveTo(cx, cy - R); ctx.lineTo(cx, cy + R); ctx.stroke();
+    ctx.strokeStyle = cRule; ctx.beginPath(); ctx.arc(cx, cy, R, 0, 2 * Math.PI); ctx.stroke();
+    ctx.fillStyle = col; ctx.strokeStyle = col;
+    const m = Math.hypot(re, im);
+    if (m < 0.005) { disc(ctx, cx, cy, 1.8); return; }
+    ctx.lineWidth = 2;
+    arrowPx(ctx, cx, cy, cx + R * re, cy - R * im, Math.min(6, 0.45 * R * m + 2));
+  }
+  function drawMat() {
+    cvC.clear();
+    if (!cur) return;
+    const ctx = cvC.ctx, w = cvC.w, f = FONT();
+    const cFg = EPP.css('--fg'), cFg2 = EPP.css('--fg-2'), cMut = EPP.color('muted'), cRule = EPP.css('--rule'), cGrid = EPP.css('--grid');
+    const narrow = w < 560, R = narrow ? 16 : 19, rowH = narrow ? 51 : 58;
+    // brW: room for the right bracket of the matrix (on wide screens it sits in the gap before the dial legend)
+    const rotW = 16, legW = narrow ? 0 : 290, gap = narrow ? 0 : 40, brW = narrow ? 8 : 0;
+    const labTW0 = Math.max(...ROWLAB.map(s => partsW(ctx, P(s), 11)));
+    const rowLab = (w - 6 - rotW - labTW0 - 24 - brW - gap - legW) / 4 < 44 ? ROWLAB_S : ROWLAB;
+    const labW = Math.max(...rowLab.map(s => partsW(ctx, P(s), 11))) + 24;
+    const colW = Math.max(44, Math.min(narrow ? 56 : 76, (w - 6 - rotW - labW - brW - gap - legW) / 4));
+    const blockW = rotW + labW + 4 * colW + brW + gap + legW;
+    const bx = Math.max(3, (w - blockW) / 2), gx0 = bx + rotW + labW, gx1 = gx0 + 4 * colW;
+    const y0 = 58, gyb = y0 + 4 * rowH, nu = cur.nu, V = cur.vec;
+    geo = { gx0, colW, yTop: 26, yBot: gyb };
+    // selected column
+    ctx.fillStyle = EPP.alpha('phonon', 0.13); rrect(ctx, gx0 + nu * colW + 2, 26, colW - 4, gyb - 24, 6); ctx.fill();
+    // column caption and bracket
+    ctx.textBaseline = 'alphabetic'; ctx.fillStyle = cFg2;
+    drawParts(ctx, 'column $ν$ = one mode', (gx0 + gx1) / 2, 12, 11, 'center');
+    ctx.strokeStyle = cMut; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(gx0 + 8, 22); ctx.lineTo(gx0 + 8, 18); ctx.lineTo(gx1 - 8, 18); ctx.lineTo(gx1 - 8, 22); ctx.stroke();
+    ctx.fillStyle = cFg2; EPP.drawRich(ctx, '(c)', bx, 12, { size: 11.5, font: f });
+    drawParts(ctx, '$e_{κα,ν}$(*q*)', gx0 - 12, 39, 12, 'right');
+    for (let n = 0; n < 4; n++) {
+      const cx = gx0 + (n + 0.5) * colW;
+      ctx.fillStyle = n === nu ? EPP.textColor('phonon') : cFg2;
+      drawParts(ctx, `$ν$ = ${n + 1}`, cx, 39, 11.5, 'center');
+      ctx.fillStyle = cMut;
+      EPP.drawRich(ctx, `${EPP.fix(cur.hw[n], 1)} meV`, cx, 52, { size: 10, font: f, align: 'center' });
+    }
+    // rows
+    ctx.save(); ctx.translate(bx + 7, (y0 + gyb) / 2); ctx.rotate(-Math.PI / 2); ctx.fillStyle = cFg2; ctx.textBaseline = 'middle';
+    drawParts(ctx, 'row $κα$ = which atom, which direction', 0, 0, 10.5, 'center'); ctx.restore();
+    ctx.strokeStyle = cRule; ctx.setLineDash([3, 3]); ctx.beginPath(); ctx.moveTo(bx + rotW, y0 + 2 * rowH - 1); ctx.lineTo(gx1, y0 + 2 * rowH - 1); ctx.stroke(); ctx.setLineDash([]);
+    ctx.strokeStyle = cFg2; ctx.lineWidth = 1.3; ctx.beginPath();
+    ctx.moveTo(gx0 - 1, y0 + 1); ctx.lineTo(gx0 - 5, y0 + 1); ctx.lineTo(gx0 - 5, gyb - 3); ctx.lineTo(gx0 - 1, gyb - 3);
+    ctx.moveTo(gx1 + 1, y0 + 1); ctx.lineTo(gx1 + 5, y0 + 1); ctx.lineTo(gx1 + 5, gyb - 3); ctx.lineTo(gx1 + 1, gyb - 3); ctx.stroke();
+    const aria = [];
+    for (let r = 0; r < 4; r++) {
+      const k = r >> 1, cy = y0 + r * rowH + R + 3, col = EPP.color(k ? 'c4' : 'c5');
+      ctx.fillStyle = col; disc(ctx, bx + rotW + 6, cy, 4.2);
+      ctx.fillStyle = cFg2; ctx.textBaseline = 'middle';
+      drawParts(ctx, rowLab[r], bx + rotW + 14, cy, 11, 'left');
+      for (let n = 0; n < 4; n++) {
+        const cx = gx0 + (n + 0.5) * colW, v = V[n];
+        dialPx(ctx, cx, cy, R, v.re[r], v.im[r], col, cRule, cGrid);
+        const s = fmtE(v.re[r], v.im[r]);
+        let fs = narrow ? 9.5 : 10;
+        while (fs > 8 && EPP.measureRich(ctx, s, fs, f) > colW - 5) fs -= 0.5;
+        ctx.fillStyle = n === nu ? cFg : cMut; ctx.textBaseline = 'alphabetic';
+        EPP.drawRich(ctx, s, cx, cy + R + 12, { size: fs, font: f, align: 'center' });
+        if (n === nu) aria.push(`${ROWTXT[r]} ${s}`);
+      }
+    }
+    if (!narrow) {
+      // how to read a dial
+      const lx = gx1 + gap, cx = lx + 34, cy = y0 + 66, Rl = 30, th = 55 * Math.PI / 180, m = 0.8;
+      ctx.fillStyle = cFg; ctx.textBaseline = 'alphabetic';
+      EPP.drawRich(ctx, 'reading a dial', lx, 39, { size: 11.5, font: f });
+      ctx.strokeStyle = cGrid; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(cx - Rl, cy); ctx.lineTo(cx + Rl, cy); ctx.moveTo(cx, cy - Rl); ctx.lineTo(cx, cy + Rl); ctx.stroke();
+      ctx.strokeStyle = cRule; ctx.beginPath(); ctx.arc(cx, cy, Rl, 0, 2 * Math.PI); ctx.stroke();
+      ctx.strokeStyle = cMut; ctx.beginPath(); ctx.arc(cx, cy, 11, -th, 0); ctx.stroke();
+      ctx.strokeStyle = cFg2; ctx.fillStyle = cFg2; ctx.lineWidth = 2;
+      arrowPx(ctx, cx, cy, cx + Rl * m * Math.cos(th), cy - Rl * m * Math.sin(th), 6);
+      ctx.fillStyle = cMut; ctx.textBaseline = 'middle';
+      EPP.drawRich(ctx, 'Re', cx + Rl + 4, cy, { size: 10, font: f });
+      EPP.drawRich(ctx, 'Im', cx, cy - Rl - 7, { size: 10, font: f, align: 'center' });
+      drawParts(ctx, 'arg', cx + 14, cy - 5, 9, 'left');
+      const lines = ['one dial = one complex number $e_{κα,ν}$', 'hand length: |$e_{κα,ν}$|, the circle is 1', 'hand angle: arg $e_{κα,ν}$, the phase', 'hand colour: the atom $κ$ of the row', 'shaded column: the selected mode $ν$'];
+      ctx.fillStyle = cFg2; ctx.textBaseline = 'alphabetic';
+      lines.forEach((s, i) => drawParts(ctx, s, lx + 86, y0 + 20 + 19 * i, 11, 'left'));
+    } else {
+      ctx.fillStyle = cMut; ctx.textBaseline = 'alphabetic';
+      drawParts(ctx, 'dial: hand length |$e_{κα,ν}$| (circle = 1) and', bx, gyb + 15, 10.5, 'left');
+      drawParts(ctx, 'angle arg $e_{κα,ν}$ (the phase, from the right)', bx, gyb + 29, 10.5, 'left');
+    }
+    cvC.canvas.setAttribute('aria-label', `Eigenvector matrix at the selected wavevector, drawn as 16 phasor dials. Selected column nu = ${nu + 1}: ${aria.join('; ')}`);
+  }
+  const hitCol = (e) => {
+    if (!geo) return -1;
+    const r = cvC.canvas.getBoundingClientRect(), px = e.clientX - r.left, py = e.clientY - r.top, tol = 10;
+    if (px < geo.gx0 - tol || px > geo.gx0 + 4 * geo.colW + tol || py < geo.yTop - tol || py > geo.yBot + tol) return -1;
+    return EPP.clamp(Math.floor((px - geo.gx0) / geo.colW), 0, 3);
+  };
+  cvC.canvas.addEventListener('pointerdown', (e) => { const n = hitCol(e); if (n >= 0) ui.set('nu', String(n + 1)); });
+  cvC.canvas.addEventListener('pointermove', (e) => { cvC.canvas.style.cursor = hitCol(e) >= 0 ? 'pointer' : ''; });
+
+  // ---------- readouts ----------
+  const ro1 = $('.a1-honeycomb-ro'), ro2 = $('.a1-honeycomb-ro2');
+  EPP.readout(ro1); EPP.readout(ro2);
+  const put = (el, rows) => { el.innerHTML = rows.map(([k, v]) => `<span>${k}${v === undefined ? '' : `<b>${v}</b>`}</span>`).join(''); };
+  const f3 = (v) => EPP.fix(Math.abs(v) < 5e-4 ? 0 : v, 3);
+  // character of a mode from its longitudinal fraction L: near L = 0.5 the motion is mixed, and at K every
+  // moving atom circles (e_y = ±i e_x), so all four modes have L = 0.50 there; a pure mode gets its branch name
+  function character(c, L, nu) {
+    const kind = nu < 2 ? 'acoustic' : 'optical';
+    if (Math.abs(L - 0.5) < 0.1) return `mixed${c.atK ? ' (circular at K)' : ''}, longitudinal fraction ${EPP.fix(L, 2)}, ${kind} branch`;
+    const lon = L > 0.5, fr = lon ? L : 1 - L;
+    return `${lon ? 'longitudinal' : 'transverse'} ${EPP.fix(fr, 2)}, ${kind} branch${fr >= 0.99 ? ` (${lon ? 'L' : 'T'}${nu < 2 ? 'A' : 'O'})` : ''}`;
+  }
+  function setReadouts() {
+    const c = cur, nu = c.nu, col = c.cols[nu], L = col.L, hw = c.hw[nu];
+    const from = c.s < 0.5 ? 'Γ–M' : 'K–Γ';
+    put(ro1, [
+      [B('q'), c.atG ? `0 (degenerate pairs: eigenvectors taken at ${B('q')} → 0 along ${from})` : `(${f3(c.q[0])}, ${f3(c.q[1])}) Å⁻¹, |${B('q')}| = ${f3(c.qn)} Å⁻¹`],
+      [`${I('ħω')}<sub>${B('q')}${I('ν')}</sub>`, c.atG && nu < 2 ? `0 (rigid shift at ${B('q')} = 0)` : `${EPP.fix(hw, 1)} meV`],
+      ['character', character(c, L, nu)],
+      [`phase step per cell ${B('q')}·${B('a')}<sub>1</sub>, ${B('q')}·${B('a')}<sub>2</sub>`, `${sdeg(deg(c.q[0] * A1[0] + c.q[1] * A1[1]))}, ${sdeg(deg(c.q[0] * A2[0] + c.q[1] * A2[1]))}`]
+    ]);
+    const others = [0, 1, 2, 3].filter(n => n !== nu);
+    put(ro2, [
+      [`checks for column ${I('ν')} = ${nu + 1}:`],
+      [`norm Σ<sub>${I('κα')}</sub> |${I('e')}<sub>${I('κα,ν')}</sub>|<sup>2</sup> =`, EPP.fix(col.n2, 3)],
+      [`longitudinal fraction Σ<sub>${I('κ')}</sub> |${B('q̂')}·${B('e')}<sub>${I('κν')}</sub>|<sup>2</sup> =`, EPP.fix(L, 3)],
+      [`centre-of-mass fraction |Σ<sub>${I('κ')}</sub> √${I('M')}<sub>${I('κ')}</sub> ${B('e')}<sub>${I('κν')}</sub>|<sup>2</sup>/${I('M')}<sub>c</sub> =`, EPP.fix(col.com, 3)],
+      [`overlaps |Σ<sub>${I('κα')}</sub> ${I('e')}<sup>*</sup><sub>${I('κα,ν')}</sub> ${I('e')}<sub>${I('κα,ν′')}</sub>| for ${I('ν′')} = ${others.map(n => n + 1).join(', ')}:`, others.map(n => EPP.fix(c.ov[n] < 5e-4 ? 0 : c.ov[n], 3)).join(', ')]
+    ]);
+  }
+
+  // ---------- controls ----------
+  function onChange(st) {
+    cur = compute(st);
+    for (const A of ATOMS) A.th = cur.q[0] * A.Rx + cur.q[1] * A.Ry;
+    drawDisp(); drawMat(); setReadouts();
+    if (anim) anim.redraw();
+  }
+  const elCtl = $('.a1-honeycomb-ctrls');
+  const ui = EPP.controls(elCtl, [
+    { key: 's', type: 'range', label: 'position on Γ–M–K–Γ', min: 0, max: 1, step: 0.001, value: 0.25, fmt: v => `${v.toFixed(3)} (${where(v)})` },
+    { key: 'nu', type: 'seg', label: 'branch ν', options: [['1', '1'], ['2', '2'], ['3', '3'], ['4', '4']], value: '3' }
+  ], onChange);
+  const segLab = elCtl.querySelector('.lab span');
+  if (segLab) segLab.innerHTML = `branch ${I('ν')}`;
+  cur = compute(ui.state);
+  for (const A of ATOMS) A.th = cur.q[0] * A.Rx + cur.q[1] * A.Ry;
+  const host = document.createElement('div');
+  host.className = 'ctrl';
+  host.innerHTML = '<span class="lab"><span>animation</span></span>';
+  elCtl.appendChild(host);
+  anim = EPP.anim(fig, (t) => drawMode(t), { buttonHost: host });
+  cvB.onResize(() => anim.redraw());
+  cvC.onResize(drawMat);
+})();
+</script>

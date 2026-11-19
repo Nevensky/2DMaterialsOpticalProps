@@ -1,0 +1,348 @@
+  <figure class="viz" id="viz-b1-kernel">
+    <p class="viz-title"><span>The long-range vertex depends on the direction of $\bq$</span> <span class="tag">interactive</span></p>
+    <div class="viz-grid two">
+      <div class="b1-kernel-polar"></div>
+      <div class="b1-kernel-side">
+        <div class="b1-kernel-ang"></div>
+        <div class="b1-kernel-modes" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6px 8px;margin-top:8px;font-family:var(--font-ui);font-size:0.8rem;line-height:1.35;color:var(--fg-2)">
+          <div class="b1-kernel-card" data-mode="in" style="border:1px solid var(--rule);border-radius:6px;padding:5px 7px 5px;min-width:0">
+            <p style="margin:0"><svg width="18" height="10" viewBox="0 0 18 10" aria-hidden="true" style="vertical-align:0;margin-right:4px"><line x1="1" y1="5" x2="17" y2="5" style="stroke:var(--c-phonon);stroke-width:2.6"/></svg><strong style="color:var(--fg);font-weight:600">in-plane mode</strong></p>
+            <div class="b1-kernel-sk"></div>
+            <p style="margin:0">$\hat\be=\hat{\mathbf x}$, <span class="nw">$\hbar\omega_{\mathbf 0\nu}=169.9$ meV</span></p>
+          </div>
+          <div class="b1-kernel-card" data-mode="out" style="border:1px solid var(--rule);border-radius:6px;padding:5px 7px 5px;min-width:0">
+            <p style="margin:0"><svg width="18" height="10" viewBox="0 0 18 10" aria-hidden="true" style="vertical-align:0;margin-right:4px"><line x1="1" y1="5" x2="17" y2="5" style="stroke:var(--c-5);stroke-width:2.6;stroke-dasharray:5 3"/></svg><strong style="color:var(--fg);font-weight:600">out-of-plane mode</strong></p>
+            <div class="b1-kernel-sk"></div>
+            <p style="margin:0">$\hat\be=\hat{\mathbf z}$, <span class="nw">$\hbar\omega_{\mathbf 0\nu}=96.7$ meV</span></p>
+          </div>
+          <p style="grid-column:1/-1;margin:0;color:var(--muted)"><span class="nw"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" style="vertical-align:-1px;margin-right:3px"><circle cx="6" cy="6" r="5.2" style="fill:var(--c-4)"/></svg>B</span> <span class="nw"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" style="vertical-align:-1px;margin:0 3px 0 6px"><circle cx="6" cy="6" r="5.5" style="fill:var(--muted)"/></svg>N</span>: two sheets seen edge-on. Arrows: displacements, longer on B because the centre of mass stays at rest.</p>
+        </div>
+      </div>
+    </div>
+    <div class="b1-kernel-ctrls"></div>
+    <div class="readout b1-kernel-ro" aria-live="polite"><span>$\theta$<b class="b1-kernel-v-th"></b></span><span>$\hat\bq\cdot\boldsymbol\varepsilon_\infty\cdot\hat\bq$<b class="b1-kernel-v-den"></b></span><span>angular factor<b class="b1-kernel-v-F"></b></span><span>$\hbar\omega_{\mathbf 0\nu}$<b class="b1-kernel-v-hw"></b></span><span>$q\,|g^{\mathrm{lr}}|$<b class="b1-kernel-v-qg"></b></span></div>
+    <div class="readout b1-kernel-ro2" aria-live="polite"><span>with the mode's own field: $\hbar\omega$<b class="b1-kernel-v-hwf"></b></span><span>$q\,|g^{\mathrm{lr}}|$<b class="b1-kernel-v-qgf"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> At long wavelength the polar vertex of an optical mode is $1/q$ times a function of the direction of $\bq$ alone. It vanishes where $\hat\bq$ is perpendicular to the dipole of the mode: an in-plane mode with $\hat\bq$ along the $c$ axis is purely transverse and couples to no electrostatic potential.</p><div class="cap-more"><p><strong>Marks.</strong> (a) Distance from the origin along <span class="nw">$\hat\bq$:</span> <span class="nw">$q\,|g^{\mathrm{lr}}|$;</span> the $c$ axis, normal to the sheets, vertical; dotted rings in <span class="nw">eV Å⁻¹.</span> Solid: in-plane mode; dashed: out-of-plane mode; bold: the selected one, with a dot where the arrow $\hat\bq$, at the angle $\theta$ from the $c$ axis, meets it. (b) The same against $\theta$ folded into 0–90°.</p><p><strong>Try.</strong> (1) Choose “isotropic”: the lobes become the circles of a dipole pattern, $\propto|\cos|$ of the angle to the dipole. (2) Choose <span class="nw">$\varepsilon_{\infty,xx}=12$,</span> <span class="nw">$\varepsilon_{\infty,zz}=4$:</span> the in-plane lobes tilt to 45°, because near the plane the denominator grows faster than the numerator. (3) Drag $\hat\bq$ around: the angular factor and $q\,|g^{\mathrm{lr}}|$ change at fixed <span class="nw">$q$.</span></p><p><strong>Model.</strong> <a class="eqref" href="#b1-eq-opt">(B1.16)</a> for one B–N pair whose two atoms move against each other along <span class="nw">$\hat\be$,</span> with <span class="nw">$\mathbf Z^*_{\mathrm N}=-\mathbf Z^*_{\mathrm B}$:</span> $q\,|g^{\mathrm{lr}}|$ is <span class="nw">$(4\pi e^2/\OV)(\hbar/2M_{\mathrm r}\omega_{\mathbf 0\nu})^{1/2}$</span> times the angular factor <span class="nw">$|\hat\bq\cdot\mathbf Z^*_{\mathrm B}\cdot\hat\be|/(\hat\bq\cdot\boldsymbol\varepsilon_\infty\cdot\hat\bq)$.</span> hBN-like inputs (literature, illustrative): <span class="nw">$Z^*_{\mathrm B,xx}=2.71$,</span> <span class="nw">$Z^*_{\mathrm B,zz}=0.81$,</span> <span class="nw">$\varepsilon_{\infty,xx}=4.87$,</span> <span class="nw">$\varepsilon_{\infty,zz}=2.95$,</span> <span class="nw">$\OV=18.08$ Å³,</span> <span class="nw">$M_{\mathrm r}=6.10$ amu.</span> $\hbar\omega_{\mathbf 0\nu}$ is held at the transverse values, as for the manuscript's short-range phonons. The vertex of <a href="#a-polar">Section A.4</a> uses the full frequency, <a class="eqref" href="#a4-eq-lot">(A4.8)</a> for one mode (second readout row): 198 meV for the in-plane mode with $\hat\bq$ along its dipole, which lowers $q\,|g^{\mathrm{lr}}|$ by 7%. The basis phases drop out as <span class="nw">$q\to0$,</span> so the figure holds with or without them.</p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b1-kernel');
+  if (!fig || !window.EPP) return;
+  // outside Section B.1 (the isolated figure test) the links to equations and sections have no target: show their text
+  if (!fig.closest('#b-foundations')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+  const DEG = Math.PI / 180, TAU = 2 * Math.PI;
+
+  // ---------- physics: (B1.16) for one B–N pair of a uniaxial crystal; Gaussian units, eV, Å, amu ----------
+  const FPE2 = 180.951;                                       // 4πe², eV Å
+  const OV = 18.08;                                           // Ω_V of one B–N pair, Å³
+  const MB = 10.81, MN = 14.007, MR = MB * MN / (MB + MN);    // amu; M_r = 6.101
+  const ZXX = 2.71, ZZZ = 0.81;                               // Z*_B = diag(Z_xx, Z_xx, Z_zz), dimensionless; Z*_N = −Z*_B
+  const HW0 = { in: 169.9, out: 96.7 };                       // ħω_0ν held at the transverse values, meV
+  const ZP = 2.0901, HWU = 64.654;                            // ħ/(2Mω) = 2.0901 Å²/(M[amu] ħω[meV]); ħω = 64.654 meV × √(ω² in eV Å⁻² amu⁻¹)
+  const PRE = FPE2 / OV;                                      // 4πe²/Ω_V, eV/Å²
+  const PRESETS = { hbn: { exx: 4.87, ezz: 2.95 }, iso: { exx: 4.87, ezz: 4.87 }, tilt: { exx: 12, ezz: 4 } };
+  // q̂ = (sin θ, 0, cos θ): θ is measured from the c axis (z) toward x
+  const quadf = (t, s) => s.exx * Math.sin(t) ** 2 + s.ezz * Math.cos(t) ** 2;                    // q̂·ε∞·q̂
+  const proj = (t, m) => (m === 'in' ? ZXX * Math.abs(Math.sin(t)) : ZZZ * Math.abs(Math.cos(t))); // |q̂·Z*_B·ê|, ê = x̂ or ẑ
+  const angF = (t, m, s) => proj(t, m) / quadf(t, s);                                             // angular factor F(q̂)
+  const zpa = (hw) => Math.sqrt(ZP / (MR * hw));                                                   // (ħ/2M_r ω)^{1/2}, Å
+  const qg = (t, m, s, hw) => PRE * angF(t, m, s) * zpa(hw || HW0[m]);                            // q|g^lr|, eV/Å
+  // frequency of the mode with its own macroscopic field: (A4.8) for this one mode
+  const hwField = (t, m, s) => Math.sqrt(HW0[m] * HW0[m] + HWU * HWU * PRE / MR * proj(t, m) ** 2 / quadf(t, s));
+  // plot range: the smallest R of this list above 1.1 × the largest value of both modes, with its rings (eV/Å)
+  const RANGES = [[0.1, [0.05, 0.1]], [0.15, [0.05, 0.1, 0.15]], [0.2, [0.05, 0.1, 0.15, 0.2]], [0.3, [0.1, 0.2, 0.3]],
+    [0.4, [0.1, 0.2, 0.3, 0.4]], [0.6, [0.2, 0.4, 0.6]], [0.8, [0.2, 0.4, 0.6, 0.8]], [1, [0.25, 0.5, 0.75, 1]], [1.5, [0.5, 1, 1.5]]];
+  const NP = 721, TH = EPP.linspace(0, TAU, NP);              // polar sampling, 0.5°
+  const SN = TH.map(Math.sin), CS = TH.map(Math.cos);
+  const TA = EPP.linspace(0, 90, 181);                        // angle panel, 0.5°
+  function compute(st) {
+    const s = { exx: st.exx, ezz: st.ezz }, mode = st.mode, th = Math.round(st.th);
+    const r = { in: TH.map(t => qg(t, 'in', s)), out: TH.map(t => qg(t, 'out', s)) };
+    const max = Math.max(...r.in, ...r.out);
+    const rg = RANGES.find(x => x[0] >= 1.1 * max) || RANGES[RANGES.length - 1];
+    let tf = th % 180; if (tf > 90) tf = 180 - tf;            // the direction folded into 0–90°: F depends on |sin θ|, |cos θ|
+    const tfr = tf * DEG;
+    const v = qg(tfr, mode, s), hwf = hwField(tfr, mode, s);
+    return {
+      s, mode, th, tf, r, max, R: rg[0], rings: rg[1],
+      a: { in: TA.map(d => qg(d * DEG, 'in', s)), out: TA.map(d => qg(d * DEG, 'out', s)) },
+      D: quadf(tfr, s), F: angF(tfr, mode, s), hw: HW0[mode], v, hwf, vf: qg(tfr, mode, s, hwf),
+      other: qg(tfr, mode === 'in' ? 'out' : 'in', s)
+    };
+  }
+
+  // ---------- canvas text: parts {t, b: bold vector, i: italic symbol, sub, sup} ----------
+  let FAM = { ui: 'sans-serif', tx: 'serif' };
+  const pFont = (p, size) => { const z = (p.i ? size + 1 : size) * (p.sub || p.sup ? 0.72 : 1); return `${p.i ? 'italic ' : ''}${p.b ? '700 ' : ''}${z.toFixed(1)}px ${p.i ? FAM.tx : FAM.ui}`; };
+  function partsW(ctx, parts, size) { let w = 0; for (const p of parts) { ctx.font = pFont(p, size); w += ctx.measureText(p.t).width; } return w; }
+  function partsDraw(ctx, parts, x, y, size, align) {
+    if (align === 'center') x -= partsW(ctx, parts, size) / 2; else if (align === 'right') x -= partsW(ctx, parts, size);
+    ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    for (const p of parts) { ctx.font = pFont(p, size); ctx.fillText(p.t, x, y + (p.sub ? size * 0.28 : p.sup ? -size * 0.38 : 0)); x += ctx.measureText(p.t).width; }
+  }
+  const T = (t) => ({ t }), Bv = (t) => ({ t, b: 1 }), It = (t) => ({ t, i: 1 });
+  const Sb = (t, i, b) => ({ t, sub: 1, i: i ? 1 : 0, b: b ? 1 : 0 }), Sp = (t) => ({ t, sup: 1 });
+  const QG = [It('q'), T(' |'), It('g'), Sp('lr'), T('|')], QH = Bv('q̂');
+  // label placer: candidate centres are tried in order; a box must stay inside the frame and clear the obstacle points and the placed boxes
+  function placer(ctx, bx0, by0, bx1, by1) {
+    const pts = [], boxes = [];
+    const inside = (b) => b[0] >= bx0 && b[1] >= by0 && b[2] <= bx1 && b[3] <= by1;
+    const free = (b) => inside(b) && !boxes.some(o => b[0] < o[2] + 2 && b[2] > o[0] - 2 && b[1] < o[3] + 2 && b[3] > o[1] - 2) &&
+      !pts.some(p => p[0] > b[0] - p[2] && p[0] < b[2] + p[2] && p[1] > b[1] - p[2] && p[1] < b[3] + p[2]);
+    const api = {
+      points(P, r) { for (const p of P) pts.push([p[0], p[1], r]); },
+      box(b) { boxes.push(b); },
+      size(parts, size) { return [partsW(ctx, parts, size), size * 1.3]; },
+      put(parts, size, cands, color) {
+        const [w, h] = api.size(parts, size);
+        const at = (c) => [c[0] - w / 2 - 2, c[1] - h / 2, c[0] + w / 2 + 2, c[1] + h / 2];
+        const c = cands.find(cc => free(at(cc))) || cands.find(cc => inside(at(cc))) || cands[0];
+        const b = at(c); boxes.push(b);
+        ctx.fillStyle = EPP.alpha('surface', 0.86);
+        ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(b[0], b[1], b[2] - b[0], b[3] - b[1], 3); else ctx.rect(b[0], b[1], b[2] - b[0], b[3] - b[1]); ctx.fill();
+        ctx.fillStyle = color; partsDraw(ctx, parts, c[0] - w / 2, c[1] + size * 0.36, size);
+        return b;
+      },
+      // centres around a point P, outside a circle of radius r, starting at the screen angle ang0 and fanning out
+      around(parts, size, P, r, ang0) {
+        const [w, h] = api.size(parts, size), out = [];
+        for (const rr of [r, r + 7, r + 14]) for (let j = 0; j < 16; j++) {
+          const k = j === 0 ? 0 : (j % 2 ? 1 : -1) * Math.ceil(j / 2), a = ang0 + k * Math.PI / 8, c = Math.cos(a), sn = Math.sin(a);
+          const ext = rr + 3 + Math.min((w / 2 + 2) / Math.max(Math.abs(c), 1e-6), (h / 2) / Math.max(Math.abs(sn), 1e-6));
+          out.push([P[0] + c * ext, P[1] + sn * ext]);
+        }
+        return out;
+      }
+    };
+    return api;
+  }
+  function arrow(ctx, x0, y0, x1, y1, col, lw, head) {
+    const dx = x1 - x0, dy = y1 - y0, L = Math.hypot(dx, dy);
+    if (!(L > 0.6)) return;
+    const ux = dx / L, uy = dy / L, h = Math.min(head, 0.6 * L), wv = h * 0.42;
+    ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = lw; ctx.lineCap = 'butt'; ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1 - ux * h * 0.7, y1 - uy * h * 0.7); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x1 - ux * h - uy * wv, y1 - uy * h + ux * wv); ctx.lineTo(x1 - ux * h + uy * wv, y1 - uy * h - ux * wv); ctx.closePath(); ctx.fill();
+  }
+
+  // ---------- panels ----------
+  const COL = { in: 'phonon', out: 'c5' }, DASH = { in: null, out: [6, 4] }, NAME = { in: 'in-plane mode', out: 'out-of-plane mode' };
+  const pP = new EPP.Plot(fig.querySelector('.b1-kernel-polar'), {
+    xlim: [-0.3, 0.3], ylim: [-0.3, 0.3], aspect: 1, legend: false, hover: false, grid: false,
+    margin: { l: 52, r: 14, t: 24, b: 42 }, minHeight: 250, maxHeight: 560,     // l + r = t + b: a square plot area
+    ariaLabel: 'Panel a: polar plot of q times the long-range vertex against the direction of q'
+  });
+  pP.cv.canvas.style.touchAction = 'none';                    // q̂ is dragged in every direction, so a touch here must not pan the page
+  const pA = new EPP.Plot(fig.querySelector('.b1-kernel-ang'), {
+    xlim: [0, 90], ylim: [0, 0.3], aspect: 0.58, legend: false, hover: true, xticks: [0, 15, 30, 45, 60, 75, 90],
+    margin: { l: 54, r: 12, t: 24, b: 40 }, minHeight: 210, maxHeight: 400, xname: 'θ',     // room for four-character tick labels beside the axis title
+    hoverX: v => Math.round(v) + '°', hoverY: v => v.toFixed(4) + ' eV Å⁻¹',
+    ariaLabel: 'Panel b: q times the long-range vertex against the angle between q and the c axis'
+  });
+  let cur = null;
+
+  // (a) polar plot: everything in pixels after the frame, so that labels can avoid the curves
+  function decorPolar() {
+    if (!cur) return;
+    const ctx = pP.ctx, W = pP.cv.w, H = pP.cv.h, m = pP.m;
+    if (!W || !H) return;
+    FAM = { ui: EPP.css('--font-ui'), tx: EPP.css('--font-text') };
+    const x0 = m.l, y0 = m.t, x1 = W - m.r, y1 = H - m.b, O = [pP.X(0), pP.Y(0)], s = pP.X(1) - pP.X(0);
+    const cFg = EPP.color('fg'), cFg2 = EPP.color('fg2'), cInk = EPP.color('ink'), cMut = EPP.textColor('muted');
+    ctx.fillStyle = cFg2; partsDraw(ctx, [T('(a) '), ...QG, T(' along '), QH, T(': click or drag to turn '), QH], 4, 15, 11.5);
+    ctx.fillStyle = cFg; partsDraw(ctx, [It('x'), T(', in plane (eV Å⁻¹)')], (x0 + x1) / 2, H - 7, 12, 'center');
+    ctx.save(); ctx.translate(14, (y0 + y1) / 2); ctx.rotate(-Math.PI / 2); partsDraw(ctx, [It('z'), T(', '), It('c'), T(' axis (eV Å⁻¹)')], 0, 0, 12, 'center'); ctx.restore();
+    const pl = placer(ctx, x0 + 1, y0 + 1, x1 - 1, y1 - 1);
+    // curves as obstacles for the labels
+    for (const k of ['in', 'out']) { const r = cur.r[k], P = []; for (let i = 0; i < NP; i += 2) P.push([O[0] + r[i] * SN[i] * s, O[1] - r[i] * CS[i] * s]); pl.points(P, 2.5); }
+    // ring values along the −x axis, just under it (the outermost one kept inside the frame)
+    for (const rv of cur.rings) {
+      const parts = [T(EPP.fmt(rv, 3))], [w] = pl.size(parts, 10);
+      const cx = Math.max(O[0] - rv * s, x0 + w / 2 + 4);
+      pl.put(parts, 10, [[cx, O[1] + 9]], cMut);
+    }
+    // the angle θ from the c axis: an arc from +z, turning toward +x
+    const th = cur.th * DEG, ux = Math.sin(th), uy = -Math.cos(th);
+    const ra = EPP.clamp(0.13 * (x1 - x0), 22, 34);
+    if (cur.th > 0 && cur.th < 360) {
+      ctx.strokeStyle = EPP.alpha('muted', 0.9); ctx.lineWidth = 1.2; ctx.setLineDash([]);
+      ctx.beginPath(); ctx.arc(O[0], O[1], ra, -Math.PI / 2, -Math.PI / 2 + th, false); ctx.stroke();
+    }
+    // the arrow q̂ and the value of the selected mode on it
+    const L = 0.92 * cur.R * s, tip = [O[0] + ux * L, O[1] + uy * L];
+    const P = []; for (let k = 0; k <= 24; k++) P.push([O[0] + ux * L * k / 24, O[1] + uy * L * k / 24]);
+    pl.points(P, 4);
+    arrow(ctx, O[0], O[1], tip[0], tip[1], EPP.alpha('surface', 0.9), 5, 10);
+    arrow(ctx, O[0], O[1], tip[0], tip[1], cInk, 2, 8.5);
+    const pv = [O[0] + ux * cur.v * s, O[1] + uy * cur.v * s];
+    ctx.fillStyle = EPP.color('surface'); ctx.beginPath(); ctx.arc(pv[0], pv[1], 6.2, 0, TAU); ctx.fill();
+    ctx.fillStyle = EPP.color(COL[cur.mode]); ctx.beginPath(); ctx.arc(pv[0], pv[1], 4.6, 0, TAU); ctx.fill();
+    ctx.fillStyle = cInk; ctx.beginPath(); ctx.arc(O[0], O[1], 2.2, 0, TAU); ctx.fill();
+    pl.points([pv], 7);
+    // labels: q̂ beyond the tip (fanning out to the sides), θ beside the arc
+    pl.put([QH], 14, pl.around([QH], 14, tip, 5, Math.atan2(uy, ux)), cInk);
+    if (cur.th > 0 && cur.th < 360) {
+      const am = -Math.PI / 2 + th / 2, A = [O[0] + ra * Math.cos(am), O[1] + ra * Math.sin(am)];
+      pl.put([It('θ')], 12.5, pl.around([It('θ')], 12.5, A, 2, am), cFg2);
+    }
+  }
+  const baseP = pP.render.bind(pP);
+  pP.render = () => { baseP(); decorPolar(); };
+
+  // (b) the same against the folded angle
+  function decorAng() {
+    if (!cur) return;
+    const ctx = pA.ctx, W = pA.cv.w, H = pA.cv.h, m = pA.m;
+    if (!W || !H) return;
+    FAM = { ui: EPP.css('--font-ui'), tx: EPP.css('--font-text') };
+    const x0 = m.l, y0 = m.t, x1 = W - m.r, y1 = H - m.b;
+    ctx.fillStyle = EPP.color('fg2'); partsDraw(ctx, [T('(b) the same against '), It('θ'), T(', for both modes')], 4, 15, 11.5);
+    ctx.fillStyle = EPP.color('fg');
+    partsDraw(ctx, [It('θ'), T(', angle between '), QH, T(' and the '), It('c'), T(' axis (deg)')], (x0 + x1) / 2, H - 8, 12, 'center');
+    ctx.save(); ctx.translate(14, (y0 + y1) / 2); ctx.rotate(-Math.PI / 2); partsDraw(ctx, [...QG, T(' (eV Å⁻¹)')], 0, 0, 12, 'center'); ctx.restore();
+    // direct labels beside each curve, where they clear both curves and the cursor
+    const pl = placer(ctx, x0 + 2, y0 + 2, x1 - 2, y1 - 2);
+    for (const k of ['in', 'out']) { const P = []; for (let i = 0; i < TA.length; i += 2) P.push([pA.X(TA[i]), pA.Y(cur.a[k][i])]); pl.points(P, 2.5); }
+    const XC = pA.X(cur.tf), Pc = []; for (let y = y0; y <= y1; y += 4) Pc.push([XC, y]); pl.points(Pc, 2);
+    // a label sits above (side −1) or below (+1) its curve, clear of the curve's extremum over the label's width;
+    // 'L' and 'R' put it at the left or right end of the panel
+    const pxd = (pA.X(90) - pA.X(0)) / 90;
+    const cands = (k, parts, list) => {
+      const [w, h] = pl.size(parts, 11.5), dd = (w / 2 + 4) / pxd, a = cur.a[k];
+      return list.map(([c0, side]) => {
+        const c = EPP.clamp(c0 === 'L' ? dd + 1 : c0 === 'R' ? 89 - dd : c0, dd, 90 - dd);
+        let lo = Infinity, hi = -Infinity;
+        for (let i = Math.max(0, Math.floor(2 * (c - dd))); i <= Math.min(180, Math.ceil(2 * (c + dd))); i++) { lo = Math.min(lo, a[i]); hi = Math.max(hi, a[i]); }
+        return [pA.X(c), side < 0 ? pA.Y(hi) - 5 - h / 2 : pA.Y(lo) + 5 + h / 2];
+      });
+    };
+    const Lin = [T('in-plane')], Lout = [T('out-of-plane')];
+    pl.put(Lin, 11.5, cands('in', Lin, [['R', 1], ['R', -1], [62, 1], [62, -1], [45, -1], [45, 1], [30, -1], [30, 1]]), EPP.textColor(COL.in));
+    pl.put(Lout, 11.5, cands('out', Lout, [['L', -1], ['L', 1], [28, -1], [28, 1], [45, -1], [45, 1], [62, -1], [62, 1], ['R', -1]]), EPP.textColor(COL.out));
+  }
+  const baseA = pA.render.bind(pA);
+  pA.render = () => { baseA(); decorAng(); };
+
+  // ---------- the two polar modes, drawn as edge-on sheets in the cards ----------
+  function arrowSVG(xa, ya, xb, yb, col, w, h) {
+    const dx = xb - xa, dy = yb - ya, L = Math.hypot(dx, dy), ux = dx / L, uy = dy / L, hw = h * 0.45, bx = xb - ux * h, by = yb - uy * h;
+    const f = (v) => v.toFixed(2);
+    return `<line x1="${f(xa)}" y1="${f(ya)}" x2="${f(bx + ux)}" y2="${f(by + uy)}" style="stroke:${col};stroke-width:${w}"/>` +
+      `<polygon points="${f(xb)},${f(yb)} ${f(bx - uy * hw)},${f(by + ux * hw)} ${f(bx + uy * hw)},${f(by - ux * hw)}" style="fill:${col}"/>`;
+  }
+  function sketch(mode) {
+    // B above N between the sheets (AA′ stacking); in the mode at Γ every B moves one way and every N the other way,
+    // with M_B u_B = M_N u_N (centre of mass at rest), so the B arrows are M_N/M_B = 1.30 times longer
+    const col = mode === 'in' ? 'var(--c-phonon)' : 'var(--c-5)', xs = [74, 118, 162], ys = [20, 58], LB = 10, LN = LB * MB / MN;
+    let s = arrowSVG(16, 66, 16, 30, 'var(--muted)', 1.2, 5) + arrowSVG(16, 66, 42, 66, 'var(--muted)', 1.2, 5);
+    s += '<text x="16" y="25" text-anchor="middle" style="font:italic 12px var(--font-text);fill:var(--fg-2)">z</text>';
+    s += '<text x="46" y="70" style="font:italic 12px var(--font-text);fill:var(--fg-2)">x</text>';
+    ys.forEach(y => { s += `<line x1="52" y1="${y}" x2="184" y2="${y}" style="stroke:var(--muted);stroke-width:1;stroke-opacity:0.55"/>`; });
+    ys.forEach((y, row) => xs.forEach((x, j) => {
+      const isB = (j + row) % 2 === 0, r = isB ? 6.5 : 7, L = isB ? LB : LN, sg = isB ? 1 : -1;
+      s += mode === 'in' ? arrowSVG(x + sg * r, y, x + sg * (r + L), y, col, 2, 5.5) : arrowSVG(x, y - sg * r, x, y - sg * (r + L), col, 2, 5.5);
+      s += `<circle cx="${x}" cy="${y}" r="${r}" style="fill:${isB ? 'var(--c-4)' : 'var(--muted)'}"/>`;
+      s += `<text x="${x}" y="${y + 3.2}" text-anchor="middle" style="font:600 9px var(--font-ui);fill:var(--surface)">${isB ? 'B' : 'N'}</text>`;
+    }));
+    const lab = mode === 'in'
+      ? 'In-plane polar mode: two boron nitride sheets seen edge-on, with the c axis vertical. Every boron atom moves along plus x and every nitrogen atom along minus x, so the dipole of the cell lies in the plane.'
+      : 'Out-of-plane polar mode: two boron nitride sheets seen edge-on, with the c axis vertical. Every boron atom moves up along the c axis and every nitrogen atom down, so the dipole of the cell lies along the c axis.';
+    return `<svg viewBox="0 0 188 76" role="img" aria-label="${lab}" style="display:block;width:100%;max-width:240px;height:auto;margin:4px auto 3px">${s}</svg>`;
+  }
+  const cards = [...fig.querySelectorAll('.b1-kernel-card')];
+  cards.forEach(cd => { const sk = cd.querySelector('.b1-kernel-sk'); if (sk) sk.innerHTML = sketch(cd.dataset.mode); });
+
+  // ---------- readouts ----------
+  const $v = (k) => fig.querySelector('.b1-kernel-v-' + k);
+  const roV = { th: $v('th'), den: $v('den'), F: $v('F'), hw: $v('hw'), qg: $v('qg'), hwf: $v('hwf'), qgf: $v('qgf') };
+  const fx = (v, d) => EPP.fix(Math.abs(v) < 0.5 * Math.pow(10, -d) ? 0 : v, d);
+  const nb = ' ';
+  function readouts() {
+    const c = cur, zero = c.F < 5e-5;
+    roV.th.textContent = c.th === c.tf ? `${c.th}°` : `${c.th}°, folded: ${c.tf}°`;
+    roV.den.textContent = fx(c.D, 3);
+    roV.F.textContent = zero ? '0 (transverse)' : fx(c.F, 4);
+    roV.hw.textContent = `${fx(c.hw, 1)}${nb}meV`;
+    roV.qg.textContent = `${zero ? '0' : fx(c.v, 4)}${nb}eV${nb}Å⁻¹`;
+    roV.hwf.textContent = zero ? `${fx(c.hwf, 1)}${nb}meV (no field)` : `${fx(c.hwf, 1)}${nb}meV`;
+    roV.qgf.textContent = zero ? '0' : `${fx(c.vf, 4)}${nb}eV${nb}Å⁻¹ (${fx(100 * (c.vf / c.v - 1), 1)}%)`;
+    const nm = NAME[c.mode], f4 = (v) => (v < 5e-5 ? '0' : v.toFixed(4));
+    pP.cv.canvas.setAttribute('aria-label', `Panel a: polar plot in the x–z plane with the c axis vertical. The distance from the origin along each direction is q times the long-range vertex, ` +
+      `for the in-plane mode (solid) and the out-of-plane mode (dashed); rings at ${c.rings.join(', ')} eV per ångström. The arrow q-hat makes the angle ${c.th} degrees with the c axis; ` +
+      `there the ${nm} gives ${f4(c.v)} eV per ångström. Click or drag to turn q-hat, or use the direction slider.`);
+    pA.cv.canvas.setAttribute('aria-label', `Panel b: q times the long-range vertex against the angle between q-hat and the c axis, 0 to 90 degrees. ` +
+      `In-plane mode: ${f4(c.a.in[0])} along the c axis, ${f4(c.a.in[180])} in the plane, largest ${f4(Math.max(...c.a.in))}. Out-of-plane mode: ${f4(c.a.out[0])} along the c axis, ${f4(c.a.out[180])} in the plane. ` +
+      `Cursor at ${c.tf} degrees: in-plane ${f4(c.a.in[2 * c.tf])}, out-of-plane ${f4(c.a.out[2 * c.tf])} eV per ångström. Click to set the angle.`);
+  }
+
+  function drawAll() {
+    const c = cur, sel = c.mode, oth = sel === 'in' ? 'out' : 'in';
+    // (a): rings, then the other mode thin, the selected mode bold on top
+    const rr = c.rings.length === 4 ? c.rings.filter((_, i) => i % 2) : c.rings;
+    pP.opt.xticks = pP.opt.yticks = [...rr.slice().reverse().map(v => -v), 0, ...rr];
+    const ring = (rv) => ({ type: 'line', x: SN.map(v => rv * v), y: CS.map(v => rv * v), color: 'muted', width: 1, dash: [2, 3] });
+    const curve = (k) => ({ type: 'line', x: c.r[k].map((v, i) => v * SN[i]), y: c.r[k].map((v, i) => v * CS[i]), color: COL[k], dash: DASH[k], width: k === sel ? 2.6 : 1.4, opacity: k === sel ? 1 : 0.6 });
+    pP.draw([...c.rings.map(ring), curve(oth), curve(sel)], { xlim: [-c.R, c.R], ylim: [-c.R, c.R] });
+    // (b)
+    pA.opt.yticks = [0, ...c.rings];
+    pA.draw([
+      { type: 'line', x: TA, y: c.a[oth], color: COL[oth], dash: DASH[oth], width: 1.4, opacity: 0.65, label: NAME[oth] },
+      { type: 'line', x: TA, y: c.a[sel], color: COL[sel], dash: DASH[sel], width: 2.6, label: NAME[sel] },
+      { type: 'vline', at: c.tf, color: 'muted', width: 1 },
+      { type: 'points', x: [c.tf], y: [c.other], color: COL[oth], r: 3.6, hollow: true },
+      { type: 'points', x: [c.tf], y: [c.v], color: COL[sel], r: 4.8 }
+    ], { ylim: [0, c.R] });
+    cards.forEach(cd => {
+      const on = cd.dataset.mode === sel, cv = cd.dataset.mode === 'in' ? 'var(--c-phonon)' : 'var(--c-5)';
+      cd.style.borderColor = on ? cv : 'var(--rule)'; cd.style.boxShadow = on ? `inset 0 0 0 1px ${cv}` : 'none';
+    });
+    readouts();
+  }
+
+  // ---------- controls ----------
+  const elCtl = fig.querySelector('.b1-kernel-ctrls');
+  let lastPreset = 'hbn';
+  function update(st) {
+    if (st.preset !== lastPreset && PRESETS[st.preset]) { ui.set('exx', PRESETS[st.preset].exx, true); ui.set('ezz', PRESETS[st.preset].ezz, true); }
+    const s = ui.state, match = Object.keys(PRESETS).find(k => Math.abs(s.exx - PRESETS[k].exx) < 1e-6 && Math.abs(s.ezz - PRESETS[k].ezz) < 1e-6) || 'custom';
+    if (match !== s.preset) ui.set('preset', match, true);    // no preset button stays pressed for custom values
+    lastPreset = match;
+    cur = compute(s);
+    drawAll();
+  }
+  const ui = EPP.controls(elCtl, [
+    { key: 'th', type: 'range', label: 'direction θ of q̂ from the c axis', min: 0, max: 360, step: 1, value: 50, fmt: v => Math.round(v) + '°' },
+    { key: 'mode', type: 'seg', label: 'polar mode', options: [['in', 'in-plane'], ['out', 'out-of-plane']], value: 'in' },
+    { key: 'exx', type: 'range', label: 'ε_{∞,xx} (in plane)', min: 1, max: 16, step: 0.01, value: 4.87, fmt: v => v.toFixed(2) },
+    { key: 'ezz', type: 'range', label: 'ε_{∞,zz} (along the c axis)', min: 1, max: 16, step: 0.01, value: 2.95, fmt: v => v.toFixed(2) },
+    { key: 'preset', type: 'seg', label: 'preset for ε_∞', options: [['hbn', 'hBN-like'], ['iso', 'isotropic'], ['tilt', 'ε_{∞,xx} = 12, ε_{∞,zz} = 4']], value: 'hbn' }
+  ], update);
+  elCtl.style.gridTemplateColumns = 'repeat(auto-fill, minmax(min(100%, 300px), 1fr))';
+  elCtl.querySelectorAll('.ctrl').forEach(b => { b.style.alignContent = 'start'; });
+  // labels with the symbols in italic (and bold vectors), like the readout keys
+  const I = (t) => `<i style="font-family:var(--font-text)">${t}</i>`, Bd = (t) => `<strong>${t}</strong>`;
+  const EPS = (ab) => `${I('ε')}<sub>∞,${I(ab)}</sub>`;
+  const LAB = { th: `direction ${I('θ')} of ${Bd('q̂')} from the ${I('c')} axis`, exx: `${EPS('xx')} (in plane)`, ezz: `${EPS('zz')} (along the ${I('c')} axis)` };
+  Object.keys(LAB).forEach(k => { const sp = elCtl.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  { const b = document.getElementById(`${fig.id}-preset-tilt`); if (b) b.innerHTML = `${EPS('xx')} = 12, ${EPS('zz')} = 4`; }
+  { const g = document.getElementById(`${fig.id}-preset-hbn`); const sp = g && g.closest('.ctrl').querySelector('.lab > span'); if (sp) sp.innerHTML = `preset for ${Bd(I('ε'))}<sub>∞</sub>`; }
+
+  // clicking or dragging in (a) turns q̂; clicking in (b) sets the angle, keeping the quadrant of q̂
+  pP.onPointer = (x, y, type, d) => {
+    if (type === 'up' || !d) return;
+    if (Math.hypot(d.px - pP.X(0), d.py - pP.Y(0)) < 6) return;
+    let deg = Math.round(Math.atan2(x, y) / DEG); if (deg < 0) deg += 360;
+    if (deg !== Math.round(ui.state.th)) ui.set('th', deg);
+  };
+  pA.onPointer = (x, y, type) => {
+    if (type === 'up') return;
+    const f = Math.round(EPP.clamp(x, 0, 90)), th = Math.round(ui.state.th);
+    const v = th <= 90 ? f : th <= 180 ? 180 - f : th <= 270 ? 180 + f : 360 - f;
+    if (v !== th) ui.set('th', v);
+  };
+  update(ui.state);
+})();
+</script>

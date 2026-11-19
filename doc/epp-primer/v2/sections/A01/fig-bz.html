@@ -1,0 +1,373 @@
+  <figure class="viz" id="viz-a1-bz">
+    <p class="viz-title">Allowed wavevectors, the Brillouin zone, and the phase of each cell <span class="tag">interactive</span></p>
+    <div class="viz-grid two"><div class="a1-bz-real"></div><div class="a1-bz-recip"></div></div>
+    <div class="legend a1-bz-leg"></div>
+    <div class="a1-bz-ctrls"></div>
+    <div class="readout a1-bz-ro" aria-live="polite" aria-atomic="true"><span>$\bq$<b class="a1-bz-v-q"></b></span><span>$\bq\cdot\ba_1,\ \bq\cdot\ba_2$<b class="a1-bz-v-qa"></b></span><span>$N_\bq=N_\ell$<b class="a1-bz-v-n"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> Raising $N_1=N_2$ adds cells and allowed wavevectors in equal number. For every allowed $\bq$ except <span class="nw">$\Gamma$,</span> the zone centre <span class="nw">$\bq=0$,</span> the hands along <span class="nw">$\ba_1$,</span> along $\ba_2$ or along both spread evenly around the dial and add up to zero.</p><div class="cap-more"><p><strong>Marks.</strong> Hands turn anticlockwise from the $x$ direction; faded dials, in image cells, repeat those $N_1$ or $N_2$ cells away. The hexagon is the first Brillouin zone, with the edge midpoint $\mathrm M$ and the corner <span class="nw">$\mathrm K$.</span> The grid of allowed wavevectors fills the dashed cell spanned by $\bb_1$ and <span class="nw">$\bb_2$.</span> Each grid point outside the zone is moved by a $\bG$ to its image closest to $\Gamma$ (on the boundary, to one of several), and the dashed arrow shows this move for the selected $\bq$ (ringed). The two row-sum dials collect the hands of the bold-rimmed dials, the bottom row (along <span class="nw">$\ba_1$)</span> and the left column (along <span class="nw">$\ba_2$)</span> of the supercell; a mark such as ×3 counts hands that lie on top of each other.</p><p><strong>Try.</strong> Click or tap a dot to select <span class="nw">$\bq$.</span> With the zone panel focused, the arrow keys step $s_1$ (left, right) and $s_2$ (up, down), and Home returns to <span class="nw">$\Gamma$;</span> a step past the edge wraps around, because $s_j$ and $s_j+N_j$ give the same wave. The slider sets $N_1=N_2$ from 2 to 6.</p><p><strong>Model.</strong> The hexagonal sheet of Figure A1.1, with $\bb_1=(2\pi/a)(1,-1/\sqrt3)$ and <span class="nw">$\bb_2=(2\pi/a)(0,2/\sqrt3)$,</span> so the corners $\mathrm K$ lie <span class="nw">$4\pi/3a=1.673$ Å⁻¹</span> from <span class="nw">$\Gamma$.</span> The atoms are left out: the phase of a cell does not depend on what the cell holds.</p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a1-bz');
+  if (!fig || !window.EPP) return;
+  const TAU = 2 * Math.PI, S3 = Math.sqrt(3);
+  // hexagonal sheet of Figure A1.1: lengths in Å, wavevectors in 1/Å
+  const A = 2.504;
+  const a1 = [A, 0], a2 = [A / 2, A * S3 / 2];
+  const BQ = TAU / A;
+  const b1 = [BQ, -BQ / S3], b2 = [0, 2 * BQ / S3], b12 = [b1[0] + b2[0], b1[1] + b2[1]];
+  const BL = 2 * BQ / S3, KZ = 2 * TAU / (3 * A);         // |b_j| and the zone-corner distance 4π/3a
+  const HEX = [0, 1, 2, 3, 4, 5].map(j => [KZ * Math.cos(j * Math.PI / 3), KZ * Math.sin(j * Math.PI / 3)]);
+  const mod = (n, m) => ((n % m) + m) % m;
+  const gcd = (x, y) => (y ? gcd(y, x % y) : x);
+  const Rl = (l1, l2) => [l1 * a1[0] + l2 * a2[0], l1 * a1[1] + l2 * a2[1]];
+  // grid point p = (s1/N) b1 + (s2/N) b2 and its image q = p - m1 b1 - m2 b2 closest to Γ
+  function qOf(N, s1, s2) {
+    const p = [(s1 * b1[0] + s2 * b2[0]) / N, (s1 * b1[1] + s2 * b2[1]) / N];
+    const c = [];
+    for (let m1 = -1; m1 <= 1; m1++) for (let m2 = -1; m2 <= 1; m2++) {
+      const q = [p[0] - m1 * b1[0] - m2 * b2[0], p[1] - m1 * b1[1] - m2 * b2[1]];
+      c.push({ q, m: [m1, m2], d: Math.hypot(q[0], q[1]) });
+    }
+    const dmin = Math.min(...c.map(o => o.d));
+    const near = c.filter(o => o.d < dmin + 1e-9);
+    // ties (zone boundary): keep the unmoved point if it is one of them, else the upper one
+    near.sort((u, v) => (Math.abs(u.m[0]) + Math.abs(u.m[1]) === 0 ? -1 : 0) - (Math.abs(v.m[0]) + Math.abs(v.m[1]) === 0 ? -1 : 0) || v.q[1] - u.q[1] || v.q[0] - u.q[0]);
+    return { p, q: near[0].q, m: near[0].m, edge: near.length > 1 };
+  }
+
+  // ---------- drawing helpers ----------
+  function arrow(ctx, x0, y0, x1, y1, o) {
+    const dx = x1 - x0, dy = y1 - y0, L = Math.hypot(dx, dy);
+    if (!(L > 0.6)) return;
+    const ux = dx / L, uy = dy / L, h = Math.min(o.head || 6, L * 0.6), wv = h * 0.42;
+    ctx.strokeStyle = o.col; ctx.fillStyle = o.col; ctx.lineWidth = o.lw || 1.5; ctx.lineCap = 'butt';
+    ctx.setLineDash(o.dash || []);
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1 - ux * h * 0.7, y1 - uy * h * 0.7); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(x1, y1);
+    ctx.lineTo(x1 - ux * h - uy * wv, y1 - uy * h + ux * wv);
+    ctx.lineTo(x1 - ux * h + uy * wv, y1 - uy * h - ux * wv);
+    ctx.closePath(); ctx.fill();
+  }
+  const shorten = (P0, P1, d) => { const dx = P1[0] - P0[0], dy = P1[1] - P0[1], L = Math.hypot(dx, dy); return L > d + 1 ? [P1[0] - dx / L * d, P1[1] - dy / L * d] : P1; };
+  const disc = (ctx, x, y, r) => { ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); };
+  // canvas labels as parts {t, b: bold vector (UI font), i: italic symbol (text font), sub: subscript}
+  let FAM = { ui: 'sans-serif', tx: 'serif' };
+  const pFont = (p, size) => { const z = (p.i ? size + 1 : size) * (p.sub ? 0.72 : 1); return `${p.i ? 'italic ' : ''}${p.b ? '700 ' : ''}${z.toFixed(1)}px ${p.i ? FAM.tx : FAM.ui}`; };
+  function partsW(ctx, parts, size) { let w = 0; for (const p of parts) { ctx.font = pFont(p, size); w += ctx.measureText(p.t).width; } return w; }
+  function partsDraw(ctx, parts, x, y, size) { ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic'; for (const p of parts) { ctx.font = pFont(p, size); ctx.fillText(p.t, x, y + (p.sub ? size * 0.28 : 0)); x += ctx.measureText(p.t).width; } }
+  const T = (t) => ({ t }), Bv = (t) => ({ t, b: 1 }), It = (t) => ({ t, i: 1 }), Sb = (t, i, b) => ({ t, sub: 1, i: i ? 1 : 0, b: b ? 1 : 0 });
+  const A1P = [Bv('a'), Sb('1')], A2P = [Bv('a'), Sb('2')], B1P = [Bv('b'), Sb('1')], B2P = [Bv('b'), Sb('2')];
+  // integer combination c1 v1 + c2 v2 as label parts
+  function combo(c1, c2, V1, V2) {
+    const out = [];
+    [[c1, V1], [c2, V2]].forEach(([c, V]) => {
+      if (!c) return;
+      const sg = c < 0 ? '−' : (out.length ? '+' : ''), mag = Math.abs(c);
+      out.push(T((out.length ? ' ' + sg + ' ' : sg) + (mag === 1 ? '' : String(mag))));
+      out.push(...V);
+    });
+    return out;
+  }
+  // label placer: tries candidate centres and takes the first box that stays on the canvas and clears every placed label
+  // (with a 3 px gap) and every obstacle; soft obstacles (grid dots) are given up before a label moves away
+  function placer(ctx, W, H) {
+    const boxes = [], labels = [], soft = [];
+    const hit = (b, o, g) => b[0] < o[2] + g && b[2] > o[0] - g && b[1] < o[3] + g && b[3] > o[1] - g;
+    const free = (b, useSoft) => b[0] >= 1 && b[1] >= 1 && b[2] <= W - 1 && b[3] <= H - 1 && !boxes.some(o => hit(b, o, 0)) && !labels.some(o => hit(b, o, 3)) && !(useSoft && soft.some(o => hit(b, o, 0)));
+    const api = {
+      block(x0, y0, x1, y1) { boxes.push([Math.min(x0, x1), Math.min(y0, y1), Math.max(x0, x1), Math.max(y0, y1)]); },
+      disc(P, r) { boxes.push([P[0] - r, P[1] - r, P[0] + r, P[1] + r]); },
+      soft(P, r) { soft.push([P[0] - r, P[1] - r, P[0] + r, P[1] + r]); },
+      seg(P0, P1, r = 2.5) { const n = Math.max(1, Math.ceil(Math.hypot(P1[0] - P0[0], P1[1] - P0[1]) / 5)); for (let i = 0; i <= n; i++) { const x = P0[0] + (P1[0] - P0[0]) * i / n, y = P0[1] + (P1[1] - P0[1]) * i / n; boxes.push([x - r, y - r, x + r, y + r]); } },
+      size(L) { return [partsW(ctx, L.s, L.size), L.size * 1.35]; },
+      put(L, cands, strict) {
+        const [w, h] = api.size(L);
+        const at = (c) => [c[0] - w / 2 - 2, c[1] - h / 2, c[0] + w / 2 + 2, c[1] + h / 2];
+        // a grid dot is data: move the label away (with a leader line) before covering one; a strict label never covers one
+        let c = null, lead = null;
+        for (const useSoft of strict ? [true] : [true, false]) {
+          c = cands.find(cc => free(at(cc), useSoft));
+          if (c) break;
+          const c0 = cands[0];
+          search: for (let rad = 8; rad <= 96; rad += 6) for (let j = 0; j < 24; j++) {
+            const cc = [c0[0] + rad * Math.cos(j * TAU / 24), c0[1] + rad * Math.sin(j * TAU / 24)];
+            if (free(at(cc), useSoft)) { c = cc; lead = cands.anchor || c0; break search; }
+          }
+          if (c) break;
+        }
+        if (!c) return null;                                  // skip a label rather than overlap another one
+        const b = at(c); labels.push(b);
+        if (lead) {
+          const dx = lead[0] - c[0], dy = lead[1] - c[1], t = Math.min((w / 2 + 2) / Math.max(Math.abs(dx), 1e-6), (h / 2) / Math.max(Math.abs(dy), 1e-6));
+          if (t < 1) { ctx.strokeStyle = EPP.alpha('muted', 0.8); ctx.lineWidth = 0.9; ctx.setLineDash([]); ctx.beginPath(); ctx.moveTo(c[0] + dx * t, c[1] + dy * t); ctx.lineTo(lead[0] - dx * 0.04, lead[1] - dy * 0.04); ctx.stroke(); }
+        }
+        ctx.fillStyle = EPP.alpha('surface', 0.84);
+        ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(b[0], b[1], b[2] - b[0], b[3] - b[1], 3); else ctx.rect(b[0], b[1], b[2] - b[0], b[3] - b[1]); ctx.fill();
+        ctx.fillStyle = L.color; partsDraw(ctx, L.s, c[0] - w / 2, c[1] + L.size * 0.36, L.size);
+        return c;
+      },
+      // centres beside the segment P0 -> P1, preferred side first (side +1 = screen-left of the direction)
+      along(L, P0, P1, side, ts = [0.5, 0.38, 0.62, 0.27, 0.73], gap = 5) {   // gap clears the square boxes that sample a slanted segment
+        const [w, h] = api.size(L);
+        const dx = P1[0] - P0[0], dy = P1[1] - P0[1], len = Math.hypot(dx, dy) || 1, nx = dy / len, ny = -dx / len;
+        const ext = Math.abs(nx) * (w / 2 + 2) + Math.abs(ny) * h / 2 + gap, out = [];
+        for (const sd of [side, -side]) for (const t of ts) out.push([P0[0] + dx * t + sd * nx * ext, P0[1] + dy * t + sd * ny * ext]);
+        out.anchor = [P0[0] + dx / 2, P0[1] + dy / 2];
+        return out;
+      },
+      // centres around a point, starting at screen angle ang0 and fanning out
+      around(L, P, r, ang0, gap = 2) {
+        const [w, h] = api.size(L), out = [];
+        for (const rr of [r, r + 6]) for (let j = 0; j < 16; j++) {
+          const kk = j === 0 ? 0 : (j % 2 ? 1 : -1) * Math.ceil(j / 2), th = ang0 + kk * Math.PI / 8;
+          const c = Math.cos(th), s = Math.sin(th);
+          const ext = rr + gap + Math.min((w / 2 + 2) / Math.max(Math.abs(c), 1e-6), (h / 2) / Math.max(Math.abs(s), 1e-6));
+          out.push([P[0] + c * ext, P[1] + s * ext]);
+        }
+        out.anchor = P;
+        return out;
+      }
+    };
+    return api;
+  }
+  const lab = (s, color, size) => ({ s: typeof s === 'string' ? [T(s)] : s, color, size });
+  // a phase dial: rim, and one hand per angle (several equal angles share a hand, counted by a ×n mark)
+  function dial(ctx, cx, cy, r, angles, o) {
+    ctx.fillStyle = o.face; disc(ctx, cx, cy, r); ctx.fill();
+    ctx.strokeStyle = o.rim; ctx.lineWidth = o.rimW || 1; disc(ctx, cx, cy, r); ctx.stroke();
+    const cnt = new Map();
+    for (const a of angles) { const key = Math.round(mod(a, TAU) * 1e6); cnt.set(key, (cnt.get(key) || 0) + 1); }
+    ctx.strokeStyle = o.hand; ctx.lineWidth = o.handW || 2; ctx.lineCap = 'round';
+    for (const [key, c] of cnt) {
+      const th = key / 1e6, ct = Math.cos(th), st = Math.sin(th);
+      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + 0.86 * r * ct, cy - 0.86 * r * st); ctx.stroke();
+      if (c > 1 && o.marks) { ctx.fillStyle = o.mark; ctx.font = `10.5px ${FAM.ui}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('×' + c, cx + (r + 9) * ct, cy - (r + 8) * st); }
+    }
+    ctx.textBaseline = 'alphabetic';
+  }
+
+  // ---------- state ----------
+  let N = 3;
+  let selS = [1, 0];                    // selected grid wavevector s = (s1, s2)
+  let qPx = [];
+
+  const cvR = EPP.canvas(fig.querySelector('.a1-bz-real'), { aspect: 0.9, minHeight: 260, maxHeight: 470 });
+  const cvQ = EPP.canvas(fig.querySelector('.a1-bz-recip'), { aspect: 0.9, minHeight: 260, maxHeight: 470 });
+  cvR.canvas.setAttribute('role', 'img');
+  cvR.canvas.setAttribute('aria-label', 'Real-space patch of the hexagonal sheet: unit cells, the bold Born–von Kármán supercell and its faded periodic images, and a dial at the corner of every cell whose hand points at the phase angle q·R_l of the selected wavevector.');
+  cvQ.canvas.setAttribute('tabindex', '0');
+  cvQ.canvas.setAttribute('role', 'application');
+  cvQ.canvas.setAttribute('aria-label', 'Reciprocal space: the vectors b1 and b2, the hexagonal first Brillouin zone with Gamma, M and K, the allowed wavevectors moved into the zone, and two dials that sum the phase hands along a1 and along a2. Click a dot to select a wavevector, or use the arrow keys to step s1 (left, right) and s2 (up, down); the readout below reports q.');
+  const $v = (c) => fig.querySelector('.a1-bz-v-' + c);
+  const roV = { q: $v('q'), qa: $v('qa'), n: $v('n') };
+  const legEl = fig.querySelector('.a1-bz-leg');
+  const inSC = (l1, l2) => l1 >= 0 && l1 < N && l2 >= 0 && l2 < N;
+  const phase = (l1, l2) => TAU * mod(selS[0] * l1 + selS[1] * l2, N) / N;   // q.R_l = 2π (s1 l1 + s2 l2)/N, mod 2π
+
+  // ---------- real space: a phase dial at the corner of every cell ----------
+  function drawReal() {
+    const cv = cvR, ctx = cv.ctx, W = cv.w, H = cv.h;
+    cv.clear();
+    if (W < 40) return;
+    FAM = { ui: EPP.css('--font-ui'), tx: EPP.css('--font-text') };
+    const pad = 4;
+    const s = Math.min((W - 4) / ((1.5 * N + 1.1) * A), (H - 2 * pad) / ((S3 / 2) * (N + 2) * A));
+    const cx = 0.75 * N * A, cy = (S3 / 4) * N * A;            // supercell centre = canvas centre
+    const X = (x) => W / 2 + (x - cx) * s, Y = (y) => H / 2 - (y - cy) * s;
+    const P = (v) => [X(v[0]), Y(v[1])];
+    const aPx = A * s, rD = EPP.clamp(0.2 * aPx, 5.5, 14);
+    const toL = (px, py) => { const x = (px - W / 2) / s + cx, y = -(py - H / 2) / s + cy, l2 = y / (A * S3 / 2); return [x / A - l2 / 2, l2]; };
+    const cs = [toL(0, 0), toL(W, 0), toL(0, H), toL(W, H)];
+    const L1a = Math.floor(Math.min(...cs.map(c => c[0]))) - 1, L1b = Math.ceil(Math.max(...cs.map(c => c[0]))) + 1;
+    const L2a = Math.floor(Math.min(...cs.map(c => c[1]))) - 1, L2b = Math.ceil(Math.max(...cs.map(c => c[1]))) + 1;
+    const quad = (pts) => { ctx.beginPath(); pts.forEach((p, j) => (j ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]))); ctx.closePath(); };
+    const scPath = () => quad([P([0, 0]), P(Rl(N, 0)), P(Rl(N, N)), P(Rl(0, N))]);
+    const cInk = EPP.color('ink'), cFg2 = EPP.color('fg2');
+    scPath(); ctx.fillStyle = EPP.alpha('ink', 0.03); ctx.fill();
+    const line = (p, q) => { ctx.moveTo(p[0], p[1]); ctx.lineTo(q[0], q[1]); };
+    ctx.lineWidth = 1; ctx.strokeStyle = EPP.alpha('muted', 0.24); ctx.beginPath();
+    for (let j = L1a; j <= L1b; j++) line(P(Rl(j, L2a)), P(Rl(j, L2b)));
+    for (let j = L2a; j <= L2b; j++) line(P(Rl(L1a, j)), P(Rl(L1b, j)));
+    ctx.stroke();
+    ctx.strokeStyle = EPP.alpha('muted', 0.42); ctx.beginPath();
+    for (let j = 1; j < N; j++) { line(P(Rl(j, 0)), P(Rl(j, N))); line(P(Rl(0, j)), P(Rl(N, j))); }
+    ctx.stroke();
+    ctx.strokeStyle = cInk; ctx.lineWidth = 2.2; ctx.lineJoin = 'round'; scPath(); ctx.stroke();
+    // dials: hand at the angle q.R_l; bold rims on the bottom row and the left column of the supercell (the rows the row-sum dials collect)
+    const face = EPP.color('surface');
+    const stSum = { face, rim: cInk, rimW: 1.7, hand: cFg2 }, stIn = { face, rim: EPP.alpha('muted', 0.75), hand: cFg2 };
+    const stImg = { face, rim: EPP.alpha('muted', 0.4), hand: EPP.alpha('fg2', 0.42) };
+    for (let l1 = L1a; l1 <= L1b; l1++) for (let l2 = L2a; l2 <= L2b; l2++) {
+      const c = P(Rl(l1, l2));
+      if (c[0] < -rD || c[0] > W + rD || c[1] < -rD || c[1] > H + rD) continue;
+      const inside = inSC(l1, l2), summed = inside && (l1 === 0 || l2 === 0);
+      dial(ctx, c[0], c[1], rD, [phase(l1, l2)], summed ? stSum : (inside ? stIn : stImg));
+    }
+    // primitive vectors as dimension arrows just outside cell (0,0), clear of the dials; origin
+    const pl = placer(ctx, W, H), O = P([0, 0]), off = rD + 5, n2 = [-S3 / 2, -0.5];
+    const A1s = [O[0] + rD * 0.6, O[1] + off], A1e = [X(a1[0]) - rD * 0.6, Y(a1[1]) + off];
+    const A2s = [O[0] + n2[0] * off + 0.3 * rD, O[1] + n2[1] * off - 0.52 * rD], A2e = [X(a2[0]) + n2[0] * off - 0.3 * rD, Y(a2[1]) + n2[1] * off + 0.52 * rD];
+    arrow(ctx, A1s[0], A1s[1], A1e[0], A1e[1], { col: cFg2, lw: 1.4, head: 6 });
+    arrow(ctx, A2s[0], A2s[1], A2e[0], A2e[1], { col: cFg2, lw: 1.4, head: 6 });
+    pl.seg(A1s, A1e, 2); pl.seg(A2s, A2e, 2);
+    for (let l1 = -1; l1 <= N; l1++) for (let l2 = -1; l2 <= N; l2++) pl.disc(P(Rl(l1, l2)), rD);
+    let L = lab(A1P, cFg2, 12); pl.put(L, pl.along(L, A1s, A1e, -1, [0.5, 0.35, 0.65]));
+    L = lab(A2P, cFg2, 12); pl.put(L, pl.along(L, A2s, A2e, 1, [0.5, 0.35, 0.65]));
+    L = lab('O', cInk, 12); pl.put(L, pl.around(L, O, rD, 3 * Math.PI / 4));
+  }
+
+  // ---------- reciprocal space ----------
+  function drawRecip() {
+    const cv = cvQ, ctx = cv.ctx, W = cv.w, H = cv.h;
+    cv.clear();
+    qPx = [];
+    if (W < 40) return;
+    FAM = { ui: EPP.css('--font-ui'), tx: EPP.css('--font-text') };
+    const mR = 30, mT = 12, mB = 10, mL = 6;
+    const kq = Math.min((W - mR - mL) / (b1[0] + KZ), (H - mT - mB) / (1.5 * BL));
+    const gx = W - mR - b1[0] * kq, gy = mT + BL * kq + Math.max(0, (H - mT - mB - 1.5 * BL * kq) / 2);
+    const P = (v) => [gx + v[0] * kq, gy - v[1] * kq], G0 = P([0, 0]);
+    const pl = placer(ctx, W, H);
+    const pts = [];
+    for (let s1 = 0; s1 < N; s1++) for (let s2 = 0; s2 < N; s2++) { const f = qOf(N, s1, s2); pts.push(Object.assign({ s: [s1, s2], pp: P(f.p), pq: P(f.q) }, f)); }
+    const sp = pts.find(p => p.s[0] === selS[0] && p.s[1] === selS[1]) || pts[0];
+    const moved = (p) => p.m[0] !== 0 || p.m[1] !== 0;
+    const cInk = EPP.color('ink'), cFg2 = EPP.color('fg2'), cMut = EPP.color('muted');
+    // inset, top left: N_q = N_l = N1 N2 and the two row-sum dials
+    const ix = 8, iy = 17;
+    const t1 = [It('N'), Sb('q', 0, 1), T(' = '), It('N'), Sb('ℓ', 1), T(' = '), It('N'), Sb('1'), It('N'), Sb('2'), T(' = ' + N * N)];
+    ctx.fillStyle = EPP.color('fg'); partsDraw(ctx, t1, ix, iy, 12);
+    const w1 = partsW(ctx, t1, 12);
+    const rD = EPP.clamp(0.036 * W, 11, 14);
+    const cap = (j) => [T('along '), Bv('a'), Sb(String(j))];
+    const bw = Math.max(2 * rD + 26, partsW(ctx, cap(1), 10.5) + 4), gapD = 26;
+    // room above and below each dial for a ×n mark at 120° or 240°
+    const mk = 0.866 * (rD + 8) + 6, dyc = iy + 8 + mk, yCap = dyc + mk + 11;
+    for (let j = 0; j < 2; j++) {
+      const dcx = ix + bw / 2 + j * (bw + gapD), sj = selS[j];
+      dial(ctx, dcx, dyc, rD, Array.from({ length: N }, (_, l) => TAU * mod(sj * l, N) / N), { face: EPP.color('surface'), rim: cInk, rimW: 1.7, hand: cFg2, handW: 1.8, marks: true, mark: cMut });
+      ctx.fillStyle = cFg2;
+      const c = cap(j + 1), cw = partsW(ctx, c, 10.5);
+      partsDraw(ctx, c, dcx - cw / 2, yCap, 10.5);
+      const sm = [T(`sum = ${sj === 0 ? N : 0}`)], sw = partsW(ctx, sm, 10.5);
+      partsDraw(ctx, sm, dcx - sw / 2, yCap + 12.5, 10.5);
+    }
+    pl.block(0, 0, Math.max(ix + w1, ix + 2 * bw + gapD) + 4, yCap + 17);
+    // dashed cell spanned by b1, b2 (the grid before folding)
+    const Pb1 = P(b1), Pb2 = P(b2), Pb12 = P(b12);
+    ctx.setLineDash([3, 4]); ctx.strokeStyle = EPP.alpha('muted', 0.75); ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(G0[0], G0[1]); ctx.lineTo(Pb1[0], Pb1[1]); ctx.lineTo(Pb12[0], Pb12[1]); ctx.lineTo(Pb2[0], Pb2[1]); ctx.closePath(); ctx.stroke(); ctx.setLineDash([]);
+    pl.seg(Pb1, Pb12, 1.5); pl.seg(Pb12, Pb2, 1.5);
+    // first Brillouin zone
+    const HP = HEX.map(P);
+    ctx.beginPath(); HP.forEach((p, j) => (j ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]))); ctx.closePath();
+    ctx.fillStyle = EPP.alpha('ink', 0.035); ctx.fill();
+    ctx.strokeStyle = cFg2; ctx.lineWidth = 1.4; ctx.lineJoin = 'round'; ctx.stroke();
+    HP.forEach((p, j) => pl.seg(p, HP[(j + 1) % 6], 1.5));
+    // grid points outside the zone, before folding (grey)
+    ctx.fillStyle = EPP.alpha('muted', 0.8);
+    for (const p of pts) if (moved(p)) { disc(ctx, p.pp[0], p.pp[1], 2.4); ctx.fill(); pl.soft(p.pp, 3.5); }
+    // b1, b2
+    arrow(ctx, G0[0], G0[1], Pb1[0], Pb1[1], { col: cInk, lw: 2.2, head: 8 });
+    arrow(ctx, G0[0], G0[1], Pb2[0], Pb2[1], { col: cInk, lw: 2.2, head: 8 });
+    pl.seg(G0, Pb1, 3); pl.seg(G0, Pb2, 3);
+    // the move of the selected q by a reciprocal lattice vector
+    let F = null;
+    if (moved(sp)) {
+      const f0 = shorten(sp.pq, sp.pp, 6), f1 = shorten(sp.pp, sp.pq, 9);
+      ctx.strokeStyle = cMut; ctx.lineWidth = 1.3; disc(ctx, sp.pp[0], sp.pp[1], 5); ctx.stroke();
+      arrow(ctx, f0[0], f0[1], f1[0], f1[1], { col: cMut, lw: 1.3, head: 6, dash: [4, 3] });
+      pl.seg(f0, f1, 2); pl.disc(sp.pp, 6);
+      F = [lab(combo(-sp.m[0], -sp.m[1], B1P, B2P), cMut, 12), f0, f1];
+    }
+    // allowed q in the zone (amber; hollow on the boundary)
+    const cSurf = EPP.color('surface'), cPh = EPP.color('phonon');
+    for (const p of pts) {
+      disc(ctx, p.pq[0], p.pq[1], 3.8);
+      if (p.edge) { ctx.fillStyle = cSurf; ctx.fill(); ctx.strokeStyle = cPh; ctx.lineWidth = 1.6; ctx.stroke(); }
+      else { ctx.fillStyle = cPh; ctx.fill(); }
+      pl.soft(p.pq, 5);
+    }
+    ctx.strokeStyle = cInk; ctx.lineWidth = 1.8; disc(ctx, sp.pq[0], sp.pq[1], 8); ctx.stroke(); pl.disc(sp.pq, 9.5);
+    // labels: the fixed points first, then the selected q and its move
+    let L = lab(B1P, cInk, 12.5); pl.put(L, pl.around(L, Pb1, 3, 0));
+    L = lab(B2P, cInk, 12.5); pl.put(L, pl.around(L, Pb2, 3, 0));
+    L = lab('Γ', cFg2, 12.5); pl.put(L, pl.around(L, G0, 4, 3 * Math.PI / 4));
+    L = lab('M', cFg2, 12.5); pl.put(L, pl.around(L, P([0, BL / 2]), 4, -3 * Math.PI / 4));
+    L = lab('K', cFg2, 12.5); pl.put(L, pl.around(L, P([KZ / 2, BL / 2]), 5, -Math.PI / 4));
+    L = lab([Bv('q')], cInk, 13); pl.put(L, pl.around(L, sp.pq, 9, -Math.PI / 4));
+    if (F) pl.put(F[0], pl.along(F[0], F[1], F[2], 1, [0.5, 0.35, 0.65, 0.2, 0.8, 0.1]), true);   // left out when the grid is too dense; the readout gives it
+    for (const p of pts) { qPx.push({ x: p.pq[0], y: p.pq[1], s: p.s }); if (moved(p)) qPx.push({ x: p.pp[0], y: p.pp[1], s: p.s }); }
+  }
+
+  // ---------- legend ----------
+  const I = (t) => `<i style="font-family:var(--font-text)">${t}</i>`, B = (t) => `<strong>${t}</strong>`;
+  function legend() {
+    const C = EPP.color;
+    const svg = (inner, w) => `<svg width="${w}" height="14" viewBox="0 0 ${w} 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px">${inner}</svg>`;
+    const it = (sw, t) => `<span class="item">${sw}${t}</span>`;
+    legEl.innerHTML = [
+      it(svg(`<circle cx="7" cy="7" r="6" fill="none" stroke="${C('muted')}" stroke-width="1"/><line x1="7" y1="7" x2="10.6" y2="2.5" stroke="${C('fg2')}" stroke-width="2" stroke-linecap="round"/>`, 14), `phase of cell ${I('ℓ')}: hand at the angle ${B('q')}·${B('R')}<sub>${I('ℓ')}</sub>`),
+      it(svg(`<circle cx="7" cy="7" r="4" fill="${C('phonon')}"/>`, 14), `allowed ${B('q')} in the zone`),
+      it(svg(`<circle cx="7" cy="7" r="3.6" fill="none" stroke="${C('phonon')}" stroke-width="1.6"/>`, 14), 'on the zone boundary'),
+      it(svg(`<circle cx="7" cy="7" r="2.4" fill="${C('muted')}"/>`, 14), 'grid point outside the zone')
+    ].join('');
+  }
+
+  // ---------- readouts ----------
+  const fx = (v, d) => EPP.fix(Math.abs(v) < 0.5 * Math.pow(10, -d) ? 0 : v, d);
+  // 2π sp/n written in units of π as a reduced fraction: 2π/3, −π/3, π, 0
+  function piFrac(sp, n) {
+    let nu = 2 * sp, de = n;
+    if (nu === 0) return '0';
+    const g = gcd(Math.abs(nu), de); nu /= g; de /= g;
+    return `${nu < 0 ? '−' : ''}${Math.abs(nu) === 1 ? '' : Math.abs(nu)}π${de === 1 ? '' : '/' + de}`;
+  }
+  function readouts() {
+    const f = qOf(N, selS[0], selS[1]);
+    const bj = (j) => `${B('b')}<sub>${j}</sub>`;
+    const gHTML = [[f.m[0], 1], [f.m[1], 2]].filter(t => t[0]).map(([c, j]) => ` ${c > 0 ? '−' : '+'} ${Math.abs(c) === 1 ? '' : Math.abs(c)}${bj(j)}`).join('');
+    roV.q.innerHTML = `(${selS[0]}/${N}) ${bj(1)} + (${selS[1]}/${N}) ${bj(2)}${gHTML} = (${fx(f.q[0], 3)}, ${fx(f.q[1], 3)}) Å⁻¹${f.edge ? ', on the zone boundary' : ''}${selS[0] === 0 && selS[1] === 0 ? ', Γ' : ''}`;
+    roV.qa.textContent = `${piFrac(selS[0] - f.m[0] * N, N)}, ${piFrac(selS[1] - f.m[1] * N, N)}`;
+    roV.n.textContent = `${N * N} (${N} × ${N})`;
+  }
+  function drawAll() { drawReal(); drawRecip(); readouts(); }
+
+  // ---------- interaction ----------
+  const local = (e) => { const r = cvQ.canvas.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  function nearest(x, y, tol) { let best = null, bd = tol; for (const o of qPx) { const d = Math.hypot(o.x - x, o.y - y); if (d <= bd) { bd = d; best = o; } } return best; }
+  cvQ.canvas.addEventListener('pointerdown', (e) => {
+    const [x, y] = local(e), h = nearest(x, y, 12);
+    if (h) { selS = h.s.slice(); drawAll(); }
+  });
+  cvQ.canvas.addEventListener('pointermove', (e) => { const [x, y] = local(e); cvQ.canvas.style.cursor = nearest(x, y, 12) ? 'pointer' : 'default'; });
+  // keyboard: arrows step s1 (left, right) and s2 (up, down) around the grid, Home goes to Γ
+  cvQ.canvas.addEventListener('keydown', (e) => {
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+    const d = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, 1], ArrowDown: [0, -1], Home: null }[e.key];
+    if (d === undefined) return;
+    e.preventDefault();
+    selS = d ? [mod(selS[0] + d[0], N), mod(selS[1] + d[1], N)] : [0, 0];
+    drawAll();
+  });
+
+  function onChange(st) {
+    const n = EPP.clamp(Math.round(st.N), 2, 6);
+    if (n !== N) {
+      // keep s where it fits; otherwise keep its signed position (s or s − N) as close as the new grid allows
+      selS = selS.map(sj => { if (sj < n) return sj; const sg = sj <= N / 2 ? sj : sj - N; return mod(EPP.clamp(sg, -Math.floor((n - 1) / 2), Math.floor(n / 2)), n); });
+      N = n;
+    }
+    drawAll(); legend();
+  }
+  const ctl = EPP.controls(fig.querySelector('.a1-bz-ctrls'), [
+    { key: 'N', type: 'range', label: 'supercell N_1 × N_2', min: 2, max: 6, step: 1, value: 3, fmt: v => `${Math.round(v)} × ${Math.round(v)}` }
+  ], onChange);
+  { const sp = ctl.el.querySelector('.ctrl label span'); if (sp) sp.innerHTML = `supercell ${I('N')}<sub>1</sub> × ${I('N')}<sub>2</sub>`; }
+  cvR.onResize(drawReal);
+  cvQ.onResize(drawRecip);
+  EPP.onTheme(legend);
+})();
+</script>

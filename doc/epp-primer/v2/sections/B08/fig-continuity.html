@@ -1,0 +1,324 @@
+  <figure class="viz" id="viz-b8-continuity">
+    <p class="viz-title">Charge and current of one electronic transition <span class="tag">interactive</span></p>
+    <div class="b8-continuity-cv"></div>
+    <div class="legend b8-continuity-leg"><span class="item"><span class="sw box" style="color:var(--c-electron)"></span><span class="sw box" style="color:var(--c-photon)"></span><span>charge of the transition, $\rho\gt0$ and $\rho\lt0$</span></span><span class="item" style="color:var(--fg)"><svg width="22" height="10" viewBox="0 0 22 10" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><path d="M1 5H15" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M21 5L13.5 1.6V8.4Z" fill="currentColor"/></svg><span style="color:var(--fg-2)">current $\mathbf j$</span></span><span class="item" style="color:var(--fg-2)"><span class="sw dash"></span><span>a crest, moving at $\omega_{\mathrm{tr}}/q$</span></span></div>
+    <div class="b8-continuity-ctrls"></div>
+    <div class="readout b8-continuity-ro" aria-live="polite"><span>$j_\parallel=\omega_{\mathrm{tr}}\rho_0/q$<b>= <span class="b8-continuity-v-jl">+1.00</span>$\,\rho_0|\omega_{\mathrm{tr}}|/q$, fixed by continuity</b></span><span>$j_\perp$<b>= <span class="b8-continuity-v-jt">0.00</span>$\,\rho_0|\omega_{\mathrm{tr}}|/q$, free</b></span><span>charge piled up per half period<b><span class="b8-continuity-v-dq">2.00</span>$\,\rho_0$: <span class="b8-continuity-v-dql">2.00</span>$\,\rho_0$ from $j_\parallel$, <span class="b8-continuity-v-dqt">0.00</span> from $j_\perp$</b></span></div>
+    <div class="readout b8-continuity-ro2"><span>LO ionic current couples to<b>$j_\parallel$, that is to the charge (Coulomb line, every $q$)</b></span><span>TO ionic current couples to<b>$j_\perp$ (light, only near the light cone)</b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> The stripes of charge move because current flows along $\bq$ into each growing crest. Continuity fixes that current: the charge amplitude times the speed of the crests, $j_\parallel=\rho_0\,\omega_{\mathrm{tr}}/q$. A current across $\bq$ flows along the crests and piles up no charge.</p><div class="cap-more">
+      <p><strong>Marks.</strong> (a) Colour: the cell-averaged charge of the transition, $\rho_0\cos(\bq\cdot\br-\omega_{\mathrm{tr}}t)$, blue where positive, magenta where negative. Arrows: the current $(j_\parallel\hat\bq+j_\perp\mathbf t)\cos(\bq\cdot\br-\omega_{\mathrm{tr}}t)$, where $\mathbf t$ is the unit vector across $\bq$, in units of $\rho_0|\omega_{\mathrm{tr}}|/q$. Dashed line: one crest. (b) The current at that crest, split along $\hat\bq$, the direction of the ionic current of a longitudinal optical (LO) phonon (violet), and along $\mathbf t$, that of a transverse optical (TO) phonon (magenta); each sees only its own part. The readout “charge piled up” integrates $-\nabla\cdot\mathbf j$ at one point over the half period from trough to crest.</p>
+      <p><strong>Try.</strong> Raise $j_\perp/|j_\parallel|$ to 2: the arrows tilt, but the stripes, their motion and the charge piled up do not change. Reverse the transition: the drift and $j_\parallel$ both flip, so on a positive crest the current still points the way the crest moves.</p>
+      <p><strong>Model.</strong> The continuity identity <a class="eqref" href="#b8-eq-identity">(B8.11)</a> and its dynamic form <a class="eqref" href="#b8-eq-corollary">(B8.12)</a>. Reduced units: the wavelength $2\pi/q$ and the period $2\pi/|\omega_{\mathrm{tr}}|$ are 1. The cell-periodic parts of the Bloch functions are averaged out, which keeps only the reciprocal-lattice vector $\bG=0$. The transverse current is drawn in phase with the charge; no amplitude or phase of it changes the charge. Outside the light cone the TO channel is tiny (<a class="figref" href="#viz-b8-lightline">Figure B8.5</a>).</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-b8-continuity');
+  if (!fig || !window.EPP) return;
+  const TAU = 2 * Math.PI;
+  // Reduced units: wavelength 2π/q = 1 and period 2π/|ω_tr| = 1, so q = 2π and |ω_tr| = 2π.
+  // Charge amplitude ρ0 = 1; currents in units of ρ0|ω_tr|/q, the charge times the speed of the crests.
+  const Q = TAU, SPAN = 2;              // panel (a) spans two wavelengths, x from 0 to 4π/q
+  const SEC_PER_PERIOD = 4;             // calm: one period of the wave lasts 4 s on screen
+
+  // ---------- physics ----------
+  // charge  ρ(x, t) = ρ0 cos(qx − ω_tr t)                      (cell average, G = 0)
+  // current j(x, t) = (j∥ q̂ + j⊥ t) cos(qx − ω_tr t)
+  // ∂tρ + ∇·j = (ω_tr ρ0 − q j∥) sin(qx − ω_tr t) for any j⊥, since j⊥ does not vary along t;
+  // continuity therefore fixes j∥ = ω_tr ρ0/q, the identity q·j = ω_tr ρ of (B8.11), and leaves j⊥ free.
+  function compute(s) {
+    const sg = s.dir === 'down' ? -1 : 1;
+    const w = sg * TAU;                  // ω_tr
+    const jl = w * 1 / Q;                // j∥ = ω_tr ρ0 / q = ±1
+    const jt = s.jp * Math.abs(jl);      // j⊥ = slider × |j∥|
+    const S = { sg, w, jl, jt };
+    S.pile = pileUp(S);
+    return S;
+  }
+  // Charge piled up at one point during the half period in which it goes from a trough to a crest,
+  // from the wave itself and from −∫∂x jx dt and −∫∂y jy dt (central differences, Simpson's rule):
+  // a numerical check of ∂tρ + ∇·j = 0 that also shows how much each current component supplies.
+  function pileUp(S) {
+    const ph = (x, tau) => Q * x - S.w * tau;
+    const jx = (x, y, tau) => S.jl * Math.cos(ph(x, tau)), jy = (x, y, tau) => S.jt * Math.cos(ph(x, tau));
+    const rho = (x, y, tau) => Math.cos(ph(x, tau));
+    const x0 = 0.5, y0 = 0.3, h = 1e-4, N = 200, half = 0.5;   // ph(x0, 0) = π: x0 sits on a trough at τ = 0
+    let sl = 0, st = 0;
+    for (let k = 0; k <= N; k++) {
+      const tau = half * k / N, wt = (k === 0 || k === N) ? 1 : (k % 2 ? 4 : 2);
+      sl -= wt * (jx(x0 + h, y0, tau) - jx(x0 - h, y0, tau)) / (2 * h);
+      st -= wt * (jy(x0, y0 + h, tau) - jy(x0, y0 - h, tau)) / (2 * h);
+    }
+    sl *= half / (3 * N); st *= half / (3 * N);
+    return { total: rho(x0, y0, half) - rho(x0, y0, 0), fromL: sl, fromT: st };
+  }
+
+  // ---------- canvas text: '$..$' marks math (letters italic in the text font, digits upright);
+  // inside it \b{x} is a bold upright vector and \h{x} a bold unit vector with a hat; _x, _{..}, ^x as in EPP.drawRich ----------
+  const ITAL = /[A-Za-zα-ωħ]/;
+  let FT = 'serif', FU = 'sans-serif';
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      seg.split(/(\\[bh]\{[^}]*\})/).forEach(piece => {
+        if (!piece) return;
+        const mm = /^\\([bh])\{([^}]*)\}$/.exec(piece);
+        if (mm) { out.push({ t: mm[2], m: 0, it: false, b: true, hat: mm[1] === 'h' }); return; }
+        for (const p of EPP.parseRich(piece)) {
+          if (i % 2 === 0) { out.push({ t: p.t, m: p.m, it: false }); continue; }
+          let buf = '', it = null;
+          for (const ch of p.t) {
+            const k = ITAL.test(ch);
+            if (it !== null && k !== it) { out.push({ t: buf, m: p.m, it }); buf = ''; }
+            buf += ch; it = k;
+          }
+          if (buf) out.push({ t: buf, m: p.m, it });
+        }
+      });
+    });
+    return out;
+  }
+  const runFont = (r, size) => { const sz = r.m ? Math.round(size * 0.72) : size; return r.it ? `italic ${sz + 1}px ${FT}` : `${r.b ? '700 ' : ''}${sz}px ${FU}`; };
+  function rich(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, rs = runs(s);
+    // a little air after an italic letter followed by upright text (italic correction)
+    const ws = rs.map((r, k) => { ctx.font = runFont(r, size); const nx = rs[k + 1]; return ctx.measureText(r.t).width + (r.it && nx && !nx.it && nx.m !== -1 ? 0.1 * size : 0); });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    let x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    if (o.color) ctx.fillStyle = o.color;
+    ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    rs.forEach((r, k) => {
+      ctx.font = runFont(r, size);
+      const yy = y + (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0));
+      ctx.fillText(r.t, x0, yy);
+      if (r.hat) {
+        const gw = ctx.measureText(r.t).width, cx = x0 + gw / 2, hw = Math.max(2.3, 0.3 * gw), top = yy - 0.84 * size;
+        ctx.strokeStyle = ctx.fillStyle; ctx.lineWidth = Math.max(1, 0.09 * size); ctx.lineJoin = 'miter'; ctx.lineCap = 'butt';
+        ctx.beginPath(); ctx.moveTo(cx - hw, top + 0.17 * size); ctx.lineTo(cx, top); ctx.lineTo(cx + hw, top + 0.17 * size); ctx.stroke();
+      }
+      x0 += ws[k];
+    });
+    return tot;
+  }
+  const tw = (ctx, s, size) => rich(ctx, s, 0, 0, { size, measure: true });
+  // minHead keeps the head of a short arrow visible (a short arrow becomes a small wedge, never a dash)
+  function arrow(ctx, x0, y0, x1, y1, col, lw, head, minHead = 0) {
+    const dx = x1 - x0, dy = y1 - y0, L = Math.hypot(dx, dy);
+    if (!(L > 0.5)) return;
+    const ux = dx / L, uy = dy / L, hs = Math.min(head, Math.max(minHead, 0.5 * L), L), hw = 0.42 * hs;
+    ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = lw; ctx.lineCap = 'round'; ctx.setLineDash([]);
+    if (L - 0.8 * hs > 0.5) { ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1 - 0.8 * hs * ux, y1 - 0.8 * hs * uy); ctx.stroke(); }
+    ctx.beginPath(); ctx.moveTo(x1, y1);
+    ctx.lineTo(x1 - hs * ux - hw * uy, y1 - hs * uy + hw * ux);
+    ctx.lineTo(x1 - hs * ux + hw * uy, y1 - hs * uy - hw * ux);
+    ctx.closePath(); ctx.fill();
+  }
+  function seg(ctx, x0, y0, x1, y1) { ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke(); }
+  // label on a translucent surface plate, so that it reads over the colour field
+  function plate(ctx, s, x, y, size, color, align) {
+    const w = tw(ctx, s, size), x0 = align === 'center' ? x - w / 2 : (align === 'right' ? x - w : x);
+    ctx.fillStyle = EPP.alpha('surface', 0.82);
+    ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(x0 - 4, y - size * 0.95, w + 8, size * 1.32, 3); else ctx.rect(x0 - 4, y - size * 0.95, w + 8, size * 1.32); ctx.fill();
+    rich(ctx, s, x0, y, { size, color });
+  }
+  const f2 = (v) => (Math.abs(v) < 0.005 ? '0.00' : (v > 0 ? '+' : '−') + Math.abs(v).toFixed(2));
+  const mod = (a, m) => ((a % m) + m) % m;
+
+  // ---------- canvas: panel (a) beside panel (b) when wide, stacked when narrow ----------
+  const elCv = fig.querySelector('.b8-continuity-cv');
+  const STRIP = 196;                                         // height of (b) under (a) on narrow screens
+  const sizeFor = (w) => (w >= 560 ? { side: true, h: Math.round(EPP.clamp(0.43 * w, 270, 360)) } : { side: false, ha: Math.round(EPP.clamp(0.7 * w, 210, 300)) });
+  // the height follows the width through this getter, read by EPP.canvas on every resize
+  const cv = EPP.canvas(elCv, { get height() { const L = sizeFor(Math.max(1, elCv.clientWidth)); return L.side ? L.h : L.ha + STRIP; } });
+  cv.canvas.setAttribute('role', 'img');
+  let cur = null, theta = 0, anim = null;                   // theta = ω_tr t, the phase the pattern has advanced
+  let off = null, offCtx = null;
+
+  function drawField(ctx, R) {
+    const S = cur;
+    const cFg2 = EPP.color('fg2'), cMut = EPP.color('muted'), cInk = EPP.color('ink'), cRule = EPP.color('rule');
+    const title = tw(ctx, '(a) cell-averaged charge and current of the transition', 11.5) <= R.w - 8 ? '(a) cell-averaged charge and current of the transition' : '(a) charge and current of the transition';
+    rich(ctx, title, R.x + 4, R.y + 15, { size: 11.5, color: cFg2 });
+    const fx0 = R.x + 24, fx1 = R.x + R.w - 6, fy0 = R.y + 24, fy1 = R.y + R.h - 38;
+    const fw = fx1 - fx0, fh = fy1 - fy0;
+    if (fw < 60 || fh < 60) return;
+    const X = (x) => fx0 + x / SPAN * fw;
+    // colour field: one sample per device pixel column, alpha ∝ |ρ| (transparent where ρ = 0)
+    const nw = Math.max(2, Math.round(fw * cv.dpr));
+    if (!off || off.width !== nw) { off = document.createElement('canvas'); off.width = nw; off.height = 1; offCtx = off.getContext('2d'); }
+    const img = offCtx.createImageData(nw, 1), d = img.data;
+    const cP = EPP.rgb('electron'), cN = EPP.rgb('photon'), sf = EPP.rgb('surface');
+    const amax = (sf[0] + sf[1] + sf[2] < 300) ? 0.55 : 0.42;
+    for (let i = 0; i < nw; i++) {
+      const r = Math.cos(Q * (i + 0.5) / nw * SPAN - theta), c = r >= 0 ? cP : cN, k = 4 * i;
+      d[k] = c[0]; d[k + 1] = c[1]; d[k + 2] = c[2]; d[k + 3] = Math.round(255 * amax * Math.abs(r));
+    }
+    offCtx.putImageData(img, 0, 0);
+    ctx.imageSmoothingEnabled = true;
+    ctx.drawImage(off, fx0, fy0, fw, fh);
+    ctx.strokeStyle = cRule; ctx.lineWidth = 1; ctx.setLineDash([]);
+    ctx.strokeRect(fx0 + 0.5, fy0 + 0.5, fw - 1, fh - 1);
+    // the crest followed by the dashed line: at x = 2π/q when θ = 0, then wherever it has moved
+    const xc = mod(1 + theta / TAU, SPAN), Xc = X(xc);
+    ctx.strokeStyle = cFg2; ctx.lineWidth = 1.5; ctx.setLineDash([5, 4]);
+    seg(ctx, Xc, fy0 + 1, Xc, fy1 - 1); ctx.setLineDash([]);
+    // current arrows on a fixed scale (px per unit of ρ0|ω_tr|/q), kept out of a 18 px band at the top for the crest label
+    const nx = fw < 380 ? 7 : 9, dx = fw / nx, ay0 = fy0 + 18, ah = fy1 - 2 - ay0;
+    const ny = EPP.clamp(Math.floor(ah / (1.25 * dx)), 3, 6), dy = ah / ny;
+    const sc = Math.min(0.62 * dx, 0.5 * dy);
+    const cDot = EPP.alpha('muted', 0.85);
+    for (let i = 0; i < nx; i++) {
+      const x = (i + 0.5) * SPAN / nx, c = Math.cos(Q * x - theta);
+      const vx = S.jl * c * sc, vy = S.jt * c * sc, px = fx0 + (i + 0.5) * dx;
+      for (let j = 0; j < ny; j++) {
+        const py = ay0 + (j + 0.5) * dy;
+        if (Math.hypot(vx, vy) < 4.5) { ctx.fillStyle = cDot; ctx.beginPath(); ctx.arc(px, py, 1.2, 0, TAU); ctx.fill(); continue; }
+        arrow(ctx, px - vx / 2, py + vy / 2, px + vx / 2, py - vy / 2, cInk, 1.7, 7.5, 4.5);
+      }
+    }
+    // crest label with the direction of motion
+    const cl = S.sg > 0 ? 'crest →' : '← crest', clw = tw(ctx, cl, 11);
+    plate(ctx, cl, EPP.clamp(Xc, fx0 + clw / 2 + 5, fx1 - clw / 2 - 5), fy0 + 13, 11, cFg2, 'center');
+    // axes: position along q̂ in multiples of π/q (two wavelengths), and the direction t
+    ctx.strokeStyle = cMut; ctx.lineWidth = 1;
+    const ticks = [[0, '0'], [0.5, 'π/$q$'], [1, '2π/$q$'], [1.5, '3π/$q$'], [2, '4π/$q$']];
+    ticks.forEach(([x, s], k) => {
+      const Xt = X(x); seg(ctx, Xt, fy1, Xt, fy1 + 4);
+      rich(ctx, s, Xt, fy1 + 15, { size: 11, color: cMut, align: k === 0 ? 'left' : (k === ticks.length - 1 ? 'right' : 'center') });
+    });
+    rich(ctx, 'position along $\\h{q}$', fx0 + fw / 2, fy1 + 32, { size: 12, color: EPP.color('fg'), align: 'center' });
+    ctx.save(); ctx.translate(R.x + 13, fy0 + fh / 2); ctx.rotate(-Math.PI / 2);
+    rich(ctx, 'along $\\b{t}$', 0, 0, { size: 12, color: EPP.color('fg'), align: 'center' });
+    ctx.restore();
+  }
+
+  function drawIons(ctx, R) {
+    const S = cur;
+    const cFg2 = EPP.color('fg2'), cMut = EPP.color('muted'), cInk = EPP.color('ink');
+    const c5 = EPP.color('c5'), cPh = EPP.color('photon'), t5 = EPP.textColor('c5'), tPh = EPP.textColor('photon');
+    rich(ctx, '(b) the current at the crest', R.x + 4, R.y + 15, { size: 11.5, color: cFg2 });
+    const sz = 11.5, lh = 15;
+    const lo = ['LO ionic current', `sees $j$_∥ = ${f2(S.jl)} (fixed)`], to = ['TO ionic current', `sees $j$_⊥ = ${f2(S.jt)} (free)`];
+    const one = [lo.join(' '), to.join(' ')], oneW = Math.max(tw(ctx, one[0], sz), tw(ctx, one[1], sz));
+    const twoW = Math.max(...lo.concat(to).map(s => tw(ctx, s, sz)));
+    const wide = R.w / R.h > 1.25;
+    const jpLab = Math.abs(S.jt) < 0.025 ? '$j$_⊥ = 0' : '$j$_⊥', jpW = tw(ctx, jpLab, 12.5);
+    let u, Ox, Oy, text;
+    if (wide) {                                              // narrow screens: diagram on the left, text on the right
+      const textX = R.x + R.w - twoW - 8, top = R.y + 36, bot = R.y + R.h - 8;
+      u = Math.min((bot - top) / 4.7, 44);
+      const left = Math.max(1.35 * u, jpW + 12), right = 1.7 * u + 7 + tw(ctx, 'LO', sz);
+      Ox = R.x + Math.max(4, (textX - 12 - R.x - left - right) / 2) + left; Oy = top + 2.45 * u;
+      const y0 = R.y + R.h / 2 - (4 * lh + 8) / 2 + 11;
+      text = [[lo[0], textX, y0, t5], [lo[1], textX, y0 + lh, t5], [to[0], textX, y0 + 2 * lh + 8, tPh], [to[1], textX, y0 + 3 * lh + 8, tPh]];
+    } else {                                                 // wide screens: text under the diagram
+      const fits = oneW <= R.w - 10, nl = fits ? 2 : 4, top = R.y + 38, bot = R.y + R.h - nl * lh - 14;
+      u = Math.min((bot - top) / 4.7, (R.w - 50) / 3.4, 58);
+      const left = Math.max(1.35 * u, jpW + 12), right = 1.7 * u + 7 + tw(ctx, 'LO', sz);
+      Ox = R.x + (R.w - left - right) / 2 + left; Oy = top + 2.45 * u;
+      const y0 = R.y + R.h - nl * lh + 4;
+      text = fits ? [[one[0], R.x + 4, y0, t5], [one[1], R.x + 4, y0 + lh, tPh]]
+        : [[lo[0], R.x + 4, y0, t5], [lo[1], R.x + 4, y0 + lh, t5], [to[0], R.x + 4, y0 + 2 * lh, tPh], [to[1], R.x + 4, y0 + 3 * lh, tPh]];
+    }
+    // the two ionic currents as the axes: LO along q̂, TO along t
+    arrow(ctx, Ox - 1.35 * u, Oy, Ox + 1.7 * u, Oy, c5, 1.8, 8);
+    arrow(ctx, Ox, Oy + 2.25 * u, Ox, Oy - 2.45 * u, cPh, 1.8, 8);
+    rich(ctx, 'LO', Ox + 1.7 * u + 6, Oy + 4, { size: sz, color: t5 });
+    rich(ctx, 'TO', Ox, Oy - 2.45 * u - 5, { size: sz, color: tPh, align: 'center' });
+    // projections of the current at the crest onto the two directions
+    const tx = Ox + S.jl * u, ty = Oy - S.jt * u;
+    ctx.lineCap = 'butt'; ctx.lineWidth = 6;
+    ctx.strokeStyle = EPP.alpha('c5', 0.45); seg(ctx, Ox, Oy, tx, Oy);
+    if (Math.abs(S.jt) > 0.01) { ctx.strokeStyle = EPP.alpha('photon', 0.45); seg(ctx, Ox, Oy, Ox, ty); }
+    ctx.strokeStyle = cMut; ctx.lineWidth = 1; ctx.setLineDash([3, 3]);
+    if (Math.abs(S.jt) > 0.01) { seg(ctx, tx, ty, tx, Oy); seg(ctx, tx, ty, Ox, ty); }
+    ctx.setLineDash([]);
+    arrow(ctx, Ox, Oy, tx, ty, cInk, 2.4, 10);
+    ctx.fillStyle = cInk; ctx.beginPath(); ctx.arc(Ox, Oy, 2.6, 0, TAU); ctx.fill();
+    // labels: j beside its arrow, j∥ and j⊥ beside their projections, on the sides away from the arrow
+    if (Math.abs(S.jt) < 0.3) rich(ctx, '$\\b{j}$', Ox + 0.62 * S.jl * u, Oy - 0.3 * S.jt * u - 9, { size: 13, color: cInk, align: 'center' });
+    else rich(ctx, '$\\b{j}$', Ox + 0.5 * S.jl * u + 9 * S.sg, Oy - 0.5 * S.jt * u + 5, { size: 13, color: cInk, align: S.sg > 0 ? 'left' : 'right' });
+    rich(ctx, '$j$_∥', Ox + 0.5 * S.jl * u, S.jt >= 0 ? Oy + 17 : Oy - 8, { size: 12.5, color: t5, align: 'center' });
+    if (Math.abs(S.jt) < 0.025) rich(ctx, jpLab, Ox - 8 * S.sg, Oy - 8, { size: 12.5, color: tPh, align: S.sg > 0 ? 'right' : 'left' });
+    else rich(ctx, jpLab, Ox - 9 * S.sg, Oy - 0.5 * S.jt * u + 5, { size: 12.5, color: tPh, align: S.sg > 0 ? 'right' : 'left' });
+    for (const [s, x, y, col] of text) rich(ctx, s, x, y, { size: sz, color: col });
+  }
+
+  function draw() {
+    if (!cur) return;
+    cv.clear();
+    const ctx = cv.ctx, W = cv.w, H = cv.h;
+    if (W < 80) return;
+    FT = EPP.css('--font-text'); FU = EPP.css('--font-ui');
+    const L = sizeFor(W);
+    ctx.strokeStyle = EPP.color('grid'); ctx.lineWidth = 1; ctx.setLineDash([]);
+    if (L.side) {
+      const wa = Math.round(0.62 * W);
+      drawField(ctx, { x: 0, y: 0, w: wa, h: H });
+      ctx.strokeStyle = EPP.color('grid'); ctx.lineWidth = 1; seg(ctx, wa + 7.5, 6, wa + 7.5, H - 6);
+      drawIons(ctx, { x: wa + 14, y: 0, w: W - wa - 14, h: H });
+    } else {
+      const ha = Math.max(120, H - STRIP);
+      drawField(ctx, { x: 0, y: 0, w: W, h: ha });
+      ctx.strokeStyle = EPP.color('grid'); ctx.lineWidth = 1; seg(ctx, 4, ha + 3.5, W - 4, ha + 3.5);
+      drawIons(ctx, { x: 0, y: ha + 6, w: W, h: H - ha - 6 });
+    }
+  }
+
+  // ---------- readouts and description ----------
+  const $v = (k) => fig.querySelector('.b8-continuity-v-' + k);
+  const roV = { jl: $v('jl'), jt: $v('jt'), dq: $v('dq'), dql: $v('dql'), dqt: $v('dqt') };
+  function readouts() {
+    const S = cur, P = S.pile;
+    roV.jl.textContent = f2(S.jl);
+    roV.jt.textContent = f2(S.jt);
+    roV.dq.textContent = P.total.toFixed(2);
+    roV.dql.textContent = P.fromL.toFixed(2);
+    roV.dqt.textContent = f2(P.fromT);
+    cv.canvas.setAttribute('aria-label',
+      `Panel a: vertical stripes of the cell-averaged charge of one ${S.sg > 0 ? 'upward' : 'downward'} electronic transition, positive blue and negative magenta, ` +
+      `drifting ${S.sg > 0 ? 'right' : 'left'} along q-hat at the speed of the crests, over two wavelengths. Arrows show the current: its part along q-hat is ${f2(S.jl)}, ` +
+      `fixed by continuity; its part along t is ${f2(S.jt)}, free; units of rho0 |omega_tr|/q. A dashed line follows one crest. ` +
+      `Panel b: the current at the crest split along q-hat, the direction of an LO ionic current, which sees ${f2(S.jl)}, and along t, the direction of a TO ionic current, which sees ${f2(S.jt)}.`);
+  }
+
+  // ---------- controls ----------
+  function onChange(s) {
+    cur = compute(s);
+    readouts();
+    if (anim) anim.redraw(); else draw();
+  }
+  const elCtl = fig.querySelector('.b8-continuity-ctrls');
+  const ui = EPP.controls(elCtl, [
+    { key: 'jp', type: 'range', label: 'transverse current j_⊥/|j_∥|', min: -2, max: 2, step: 0.05, value: 0, fmt: f2 },
+    { key: 'dir', type: 'seg', label: 'transition', options: [['up', 'upward, ω_{tr} > 0'], ['down', 'downward, ω_{tr} < 0']], value: 'up' }
+  ], onChange);
+  cur = compute(ui.state);
+  // control labels: the symbols in italic, the labels upright
+  const I = (t) => `<i style="font-family:var(--font-text)">${t}</i>`;
+  { const sp = elCtl.querySelector(`label[for="${fig.id}-jp"] > span`); if (sp) sp.innerHTML = `transverse current ${I('j')}<sub>⊥</sub>/|${I('j')}<sub>∥</sub>|`; }
+  { const b = document.getElementById(`${fig.id}-dir-up`); if (b) b.innerHTML = `upward, ${I('ω')}<sub>tr</sub> &gt; 0`; }
+  { const b = document.getElementById(`${fig.id}-dir-down`); if (b) b.innerHTML = `downward, ${I('ω')}<sub>tr</sub> &lt; 0`; }
+  const host = document.createElement('div');
+  host.className = 'ctrl';
+  host.innerHTML = '<span class="lab"><span>animation, one period in 4 s</span></span>';
+  elCtl.appendChild(host);
+  anim = EPP.anim(fig, (t, dt) => {
+    // the phase advances at ω_tr: crests drift along +q̂ for an upward transition, along −q̂ for a downward one
+    theta = mod(theta + (cur ? cur.w : TAU) * dt / SEC_PER_PERIOD, 2 * TAU);
+    draw();
+  }, { buttonHost: host });
+  host.querySelector('button').style.justifySelf = 'start';
+  // one row when there is room: slider, transition buttons (filling their box), animation; they wrap on phones
+  elCtl.style.cssText = 'display:flex;flex-wrap:wrap;align-items:flex-start;gap:10px 18px';
+  const boxOf = (id) => { const e = document.getElementById(id); return e ? e.closest('.ctrl') : null; };
+  const bJ = boxOf(`${fig.id}-jp`), bD = boxOf(`${fig.id}-dir-up`);
+  if (bJ) bJ.style.flex = '3 1 220px';
+  if (bD) { bD.style.flex = '2 1 250px'; bD.style.gridColumn = ''; bD.querySelectorAll('.seg button').forEach(b => { b.style.flex = '1 1 auto'; }); const sg = bD.querySelector('.seg'); if (sg) sg.style.display = 'flex'; }
+  host.style.flex = '0 0 auto';
+  cv.onResize(() => anim.redraw());
+  // in a page without this section (a figure test), the equation links have no target: keep their text, drop the link
+  if (!fig.closest('#b-frohlich')) fig.querySelectorAll('a.eqref, a.figref').forEach(a => { if (!document.getElementById((a.getAttribute('href') || '').slice(1))) { const s = document.createElement('span'); s.textContent = a.textContent; a.replaceWith(s); } });
+})();
+</script>

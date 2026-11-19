@@ -1,0 +1,297 @@
+  <figure class="viz" id="viz-x2-units">
+    <p class="viz-title">One Fröhlich vertex in two unit systems and two bookkeepings <span class="tag">interactive</span></p>
+    <div class="x2-units-plot"></div>
+    <div class="legend x2-units-leg">
+      <span class="item" style="color:var(--fg)"><svg width="26" height="10" viewBox="0 0 26 10" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><line x1="2" y1="5" x2="24" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg><span style="color:var(--fg-2)">Part A: $|g^{\mathrm{lr}}|$ with $\omega_{\mathrm{LO}}$</span></span>
+      <span class="item" style="color:var(--c-photon)"><svg width="26" height="10" viewBox="0 0 26 10" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><line x1="2" y1="5" x2="25" y2="5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="7 5"/></svg><span style="color:var(--fg-2)">Part B: $|g^{\mathrm{dyn}}|$ with bare $\omega_{\mathrm{TO}}$</span></span>
+      <span class="item" style="color:var(--c-4)"><svg width="26" height="10" viewBox="0 0 26 10" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><line x1="3" y1="5" x2="24" y2="5" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-dasharray="0.1 6.5"/></svg><span style="color:var(--fg-2)">Part B $\times\,(\omega_{\mathrm{TO}}/\omega_{\mathrm{LO}})^{1/2}$</span></span>
+      <span class="item" style="color:var(--c-5)"><svg width="26" height="10" viewBox="0 0 26 10" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><line x1="2" y1="5" x2="25" y2="5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="8 5 0.1 5"/></svg><span style="color:var(--fg-2)">Part B unscreened: $|g^{\mathrm{dyn},0}|$</span></span>
+      <span class="item" style="color:var(--muted)"><svg width="26" height="12" viewBox="0 0 26 12" aria-hidden="true" style="vertical-align:middle;margin-right:6px"><circle cx="13" cy="6" r="4.6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span style="color:var(--fg-2)">Fröhlich's form</span></span>
+    </div>
+    <div class="x2-units-qctl"></div>
+    <div class="x2-units-ctrls"></div>
+    <div class="readout x2-units-ro" aria-live="polite"><span style="color:var(--fg-2);font-weight:600">Gaussian against SI</span><span>$4\pi e^2/\OV$ (Gaussian)<b class="x2-units-v-kG"></b></span><span>$e^2/\varepsilon_0\OV$ (SI)<b class="x2-units-v-kS"></b></span><span>$\hbar\omega^{\mathrm{ion}}_{\mathrm p}$, Gaussian | SI<b class="x2-units-v-wp"></b></span><span>$|g^{\mathrm{lr}}(q)|$, Gaussian | SI<b class="x2-units-v-glr"></b></span><span>$eZ^*$<b class="x2-units-v-eZ"></b></span></div>
+    <div class="readout x2-units-ro2" aria-live="polite"><span style="color:var(--fg-2);font-weight:600">Part A against Part B</span><span>$\hbar\omega_{\mathrm{LO}}$ from $Z^*$<b class="x2-units-v-lo"></b></span><span>$\varepsilon_{\mathrm s}$<b class="x2-units-v-es"></b></span><span>$(\omega_{\mathrm{LO}}/\omega_{\mathrm{TO}})^{1/2}$; weight $\omega_{\mathrm{TO}}/\omega_{\mathrm{LO}}$<b class="x2-units-v-ratio"></b></span><span>$|g^{\mathrm{dyn}}(q)|$<b class="x2-units-v-gdyn"></b></span><span>$|g^{\mathrm{dyn},0}(q)|$<b class="x2-units-v-gdyn0"></b></span></div>
+    <div class="readout x2-units-ro3" aria-live="polite"><span style="color:var(--fg-2);font-weight:600">Crystal and light</span><span>$M_{\mathrm r}$, $\OV$<b class="x2-units-v-cell"></b></span><span>upper polariton at $\bq\to0$, no electrons<b class="x2-units-v-up"></b></span><span>TO crossover $\sqrt{\varepsilon_\infty}\,\omega_{\mathrm{TO}}/c$<b class="x2-units-v-qc"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> The teal dots lie on the solid Part A line, and Fröhlich's circles sit on both: each vertex, paired with its own phonon propagator, gives the same coupling. With the bare $\omega_{\mathrm{TO}}$ the Part B vertex is larger by $(\omega_{\mathrm{LO}}/\omega_{\mathrm{TO}})^{1/2}$: 4% for GaAs, 35% for MgO.</p><div class="cap-more">
+      <p><strong>Marks.</strong> Solid: $|g^{\mathrm{lr}}|$ (Part A, with $\omega_{\mathrm{LO}}$); rose dashes: $|g^{\mathrm{dyn}}|$ (Part B, bare $\omega_{\mathrm{TO}}$); teal dots: $|g^{\mathrm{dyn}}|\,(\omega_{\mathrm{TO}}/\omega_{\mathrm{LO}})^{1/2}$; violet dash-dots: unscreened $|g^{\mathrm{dyn},0}|$; circles: Fröhlich's form; vertical line: readout $q$. The solid line and the circles use the SI forms, the Part B lines the Gaussian ones; paired readouts agree to the last digit.</p>
+      <p><strong>Try.</strong> Switch the preset. Raise $\hbar\omega_{\mathrm{TO}}$ or lower $Z^*$: the splitting shrinks and the dashes close in on the solid line. Set $\varepsilon_\infty=1$: screened and unscreened coincide.</p>
+      <p><strong>Model.</strong> Cubic two-atom fcc crystal ($\OV=a^3/4$), LO mode along $\bq$, $\bG=0$, unit Bloch overlap, screening by $\varepsilon_\infty$, leading order in $q$: <a class="eqref" href="#x2-eq-frohlich">(X2.10)</a>–<a class="eqref" href="#x2-eq-residue">(X2.12)</a>; <a class="eqref" href="#a4-eq-lot">(A4.8)</a> gives $\hbar\omega_{\mathrm{LO}}$, <a class="eqref" href="#b3-eq-lst">(B3.12)</a> $\varepsilon_{\mathrm s}$, <a class="eqref" href="#a4-eq-frohlich">(A4.15)</a> Fröhlich's form, <a class="eqref" href="#b7-eq-410">(B7.13)</a> the upper polariton, <a class="eqref" href="#b8-eq-ratio">(B8.19)</a> the crossover. Presets: literature masses, $a$, $\varepsilon_\infty$, $\hbar\omega_{\mathrm{TO}}$ (illustrative); $Z^*$ is fitted to the measured $\hbar\omega_{\mathrm{LO}}$ through <a class="eqref" href="#a4-eq-lot">(A4.8)</a>, 2.18 for GaAs (the text's 2.07 gives 304 instead of 320 meV at $q=0.1$ Å⁻¹). The LO coupling is Coulombic at every $q$, so finite $c$ does not change the curves (<a href="#b-frohlich">Section B.8</a>); the omitted basis phase alone changes $|g|^2$ in GaAs by up to 20% at $q=0.5$ Å⁻¹.</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-x2-units');
+  if (!fig || !window.EPP) return;
+  // outside Section X.2 (the isolated figure test) the links to this section and to other sections have no target: show them as text
+  if (!fig.closest('#x-dictionary')) fig.querySelectorAll('a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+  // Constants (NOTATION §7): Gaussian e^2 (= e^2/4πε0 in SI) and e^2/ε0 in eV Å; ħ^2/(amu Å^2) in eV; ħc in eV Å
+  const E2 = 14.3996, E2SI = 180.95, H2 = 4.1802e-3, HC = 1973.27, EG = Math.sqrt(E2);
+  // Presets: masses (amu), fcc lattice constant a (Å), ε∞, ħω_TO and the measured ħω_LO (meV); literature values, illustrative
+  const PRE = {
+    GaAs: { m1: 69.723, m2: 74.922, a: 5.653, eps: 10.9, wTO: 33.3, wLO: 36.2 },
+    NaCl: { m1: 22.990, m2: 35.453, a: 5.640, eps: 2.34, wTO: 20.3, wLO: 32.7 },
+    MgO: { m1: 24.305, m2: 15.999, a: 4.212, eps: 2.96, wTO: 49.1, wLO: 89.0 }
+  };
+  // reduced mass, cell volume a^3/4, and Z* chosen so that the LO–TO relation returns the measured LO energy:
+  // Z*^2 = (ħω_LO^2 − ħω_TO^2) ε∞ Ω_V M_r / (4π e^2 ħ^2/amu Å^2)  ->  GaAs 2.18, NaCl 1.13, MgO 1.97
+  Object.values(PRE).forEach(P => {
+    P.Mr = P.m1 * P.m2 / (P.m1 + P.m2); P.Ov = Math.pow(P.a, 3) / 4;
+    P.Z = Math.sqrt((P.wLO * P.wLO - P.wTO * P.wTO) * 1e-6 * P.eps * P.Ov * P.Mr / (4 * Math.PI * E2 * H2));
+  });
+
+  // ---------- physics: every vertex is A/q with A in eV/Å ----------
+  function model(s, q) {
+    const P = PRE[s.preset] || PRE.MgO, Z = s.Z, eps = s.eps, ETO = s.wTO * 1e-3;
+    const kG = 4 * Math.PI * E2 / P.Ov, kS = E2SI / P.Ov;                         // 4πe^2/Ω_V and e^2/ε0 Ω_V, eV/Å^2
+    const wpG = Math.sqrt(kG * Z * Z * H2 / P.Mr), wpS = Math.sqrt(kS * Z * Z * H2 / P.Mr); // ħω_p^ion, eV, both systems
+    const ELO = Math.sqrt(ETO * ETO + wpG * wpG / eps);                            // LO–TO relation
+    const epsS = eps * ELO * ELO / (ETO * ETO);                                    // Lyddane–Sachs–Teller
+    const zp = (E) => Math.sqrt(H2 / (2 * P.Mr * E));                              // (ħ/2 M_r ω)^{1/2} in Å, ħω = E in eV
+    const AlrS = kS * Z / eps * zp(ELO), AlrG = kG * Z / eps * zp(ELO);            // Part A g^lr, SI and Gaussian lines of (X2.10)
+    const Adyn = kG * Z / eps * zp(ETO);                                           // Part B g^dyn with the bare ω_TO (X2.11), Gaussian
+    const Ares = Adyn * Math.sqrt(ETO / ELO);                                      // times the square root of the weight (X2.12)
+    const Adyn0 = eps * Adyn;                                                      // unscreened g^{dyn,0} (X2.11)
+    const AF = Math.sqrt(kS * ELO / 2 * (1 / eps - 1 / epsS));                     // Fröhlich's form, SI
+    return { P, Z, eps, ETO, kG, kS, wpG, wpS, ELO, epsS, AlrS, AlrG, Adyn, Ares, Adyn0, AF, q,
+      Eup: Math.sqrt(ETO * ETO + wpG * wpG),                                       // upper polariton at q -> 0, finite c, no electrons
+      qc: Math.sqrt(eps) * ETO / HC };                                             // TO crossover √ε∞ ω_TO/c, Å^-1
+  }
+
+  // ---------- formatting ----------
+  const NB = ' ';
+  const p4 = (v) => (v >= 1e4 ? v.toFixed(0) : v.toPrecision(4));
+  const fmtE = (v) => (v >= 1 ? p4(v) + NB + 'eV' : p4(v * 1e3) + NB + 'meV');
+  const pairE = (a, b) => (Math.min(a, b) >= 1 ? `${p4(a)} | ${p4(b)}${NB}eV` : `${p4(a * 1e3)} | ${p4(b * 1e3)}${NB}meV`);
+  const fmtQ = (v) => Number(v).toPrecision(2) + NB + 'Å⁻¹';
+  function sci(v) {
+    let e = Math.floor(Math.log10(v)), m = v / Math.pow(10, e);
+    if (m >= 9.95) { m = 1; e += 1; }
+    return `${m.toFixed(1)} × 10<sup>${String(e).replace('-', '−')}</sup>`;
+  }
+
+  // ---------- canvas text: '$...$' marks math, whose letters are italic in the text font; _x, ^{..} as in EPP.drawRich ----------
+  const ITAL = /[A-Za-zα-ωħ]/;
+  let FT = '', FU = '';
+  const fonts = () => { if (!FT) { FT = EPP.css('--font-text'); FU = EPP.css('--font-ui'); } };
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const p of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: p.t, m: p.m, it: false }); continue; }
+        let buf = '', it = null;
+        for (const ch of p.t) {
+          const k = ITAL.test(ch);
+          if (it !== null && k !== it) { out.push({ t: buf, m: p.m, it }); buf = ''; }
+          buf += ch; it = k;
+        }
+        if (buf) out.push({ t: buf, m: p.m, it });
+      }
+    });
+    return out;
+  }
+  const runFont = (r, size) => { const sz = r.m ? Math.round(size * 0.72) : size; return r.it ? `italic ${sz + 1}px ${FT}` : `${sz}px ${FU}`; };
+  function rich(ctx, s, x, y, o = {}) {
+    fonts();
+    const size = o.size || 11.5, rs = runs(s);
+    // a little air after an italic letter followed by upright text
+    const ws = rs.map((r, k) => { ctx.font = runFont(r, size); const nx = rs[k + 1]; return ctx.measureText(r.t).width + (r.it && nx && !nx.it && nx.m !== -1 ? 0.1 * size : 0); });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    let x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    if (o.color) ctx.fillStyle = o.color;
+    const ta = ctx.textAlign; ctx.textAlign = 'left';
+    rs.forEach((r, k) => { ctx.font = runFont(r, size); ctx.fillText(r.t, x0, y + (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0))); x0 += ws[k]; });
+    ctx.textAlign = ta;
+    return tot;
+  }
+  const richW = (ctx, s, size) => rich(ctx, s, 0, 0, { size, measure: true });
+
+  // ---------- HTML text: italic variables in the hover tip ----------
+  const VAR = /^[gqω]+$/;
+  function italicize(el) {
+    const tw = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), nodes = [];
+    while (tw.nextNode()) nodes.push(tw.currentNode);
+    for (const n of nodes) {
+      if (!n.parentElement || n.parentElement.closest('sub, sup, i')) continue;
+      const parts = n.nodeValue.split(/([A-Za-zα-ωħ]+)/);
+      if (!parts.some((p, k) => k % 2 && VAR.test(p))) continue;
+      const frag = document.createDocumentFragment();
+      parts.forEach((p, k) => {
+        if (k % 2 && VAR.test(p)) { const e = document.createElement('i'); e.style.fontFamily = 'var(--font-text)'; e.textContent = p; frag.appendChild(e); }
+        else if (p) frag.appendChild(document.createTextNode(p));
+      });
+      n.replaceWith(frag);
+    }
+  }
+
+  // ---------- plot ----------
+  const tick = (e) => ({ v: Math.pow(10, e), label: e === 0 ? '1' : e === 1 ? '10' : `10^{${String(e).replace('-', '−')}}` });
+  const plot = new EPP.Plot(fig.querySelector('.x2-units-plot'), {
+    xlim: [1e-3, 1], ylim: [1e-2, 1e4], logx: true, logy: true, legend: false,
+    aspect: 0.56, minHeight: 280, maxHeight: 460, margin: { l: 58, r: 14, t: 12, b: 44 },
+    xticks: [-3, -2, -1, 0].map(tick), yticks: [-2, -1, 0, 1, 2, 3, 4].map(tick),
+    xname: 'q', hoverX: fmtQ, hoverY: fmtE,
+    ariaLabel: 'Log–log plot of the long-range electron–phonon vertex |g| in eV against the wavevector q, for the two bookkeepings'
+  });
+  const NQ = 601, qs = EPP.linspace(-3, 0, NQ).map(t => Math.pow(10, t));
+  const qp = EPP.linspace(-2.75, -0.25, 6).map(t => Math.pow(10, t));   // Fröhlich circles
+  let cur = null;
+
+  // direct labels of the distinct lines and the label of the readout line, drawn over the plot
+  function decorate(ctx, w, h, m) {
+    const c = cur, size = 12, gap = 5;
+    const lineY = (A, X) => plot.Y(A / plot.invX(X));
+    const XV = plot.X(c.q), boxes = [];
+    // readout line label: right of the line, or left of it near the right edge
+    const rl = 'readout $q$', rw = richW(ctx, rl, 11);
+    const rRight = XV + 7 + rw <= w - m.r - 3, rx = rRight ? XV + 7 : XV - 7 - rw;
+    ctx.textBaseline = 'alphabetic';
+    rich(ctx, rl, rx, m.t + 13, { size: 11, color: EPP.textColor('muted') });
+    boxes.push([rx - 2, m.t + 1, rx + rw + 2, m.t + 17]);
+    const inside = (b) => b[0] >= m.l + 3 && b[2] <= w - m.r - 3 && b[1] >= m.t + 2 && b[3] <= h - m.b - 3;
+    const clear = (b) => !(XV >= b[0] - 6 && XV <= b[2] + 6) && !boxes.some(q => b[0] < q[2] && b[2] > q[0] && b[1] < q[3] && b[3] > q[1]);
+    // the lines fall to the right, so a label above a line clears it at its left end, a label below it at its right end
+    // with ε∞ = 1 the screened and unscreened Part B lines coincide and share one label
+    const one = c.eps < 1.02;
+    const items = [
+      { t: one ? '$g$^{dyn,0} = $g$^{dyn}' : '$g$^{dyn,0}', A: c.Adyn0, above: true, col: 'c5' },
+      one ? null : { t: '$g$^{dyn}', A: c.Adyn, above: true, col: 'photon', roof: c.Adyn0 },
+      { t: '$g$^{lr}', A: c.AlrG, above: false, col: 'ink' }
+    ].filter(Boolean);
+    const slots = [-2.62, -1.62, -0.62, -2.12, -1.12];   // left edges in log10 q, between the Fröhlich circles
+    for (const it of items) {
+      const tw = richW(ctx, it.t, size);
+      for (const s of slots) {
+        const X0 = plot.X(Math.pow(10, s)), X1 = X0 + tw;
+        const base = it.above ? lineY(it.A, X0) - gap - 0.25 * size : lineY(it.A, X1) + gap + 0.95 * size;
+        const b = [X0, base - 0.95 * size, X1, base + 0.25 * size];
+        if (!inside(b) || !clear(b)) continue;
+        if (it.roof && lineY(it.roof, X1) + 3 > b[1]) continue;      // no room under the unscreened line
+        rich(ctx, it.t, X0, base, { size, color: EPP.textColor(it.col) });
+        boxes.push(b);
+        break;
+      }
+    }
+  }
+  const baseRender = plot.render.bind(plot);
+  plot.render = () => {
+    baseRender();
+    const ctx = plot.ctx, w = plot.cv.w, h = plot.cv.h, m = plot.m;
+    if (!w || !h) return;
+    const cFg = EPP.css('--fg');
+    ctx.save();
+    // minor ticks at 2 to 9 times each power of ten, on the bottom and left edges of the frame
+    ctx.strokeStyle = EPP.color('muted'); ctx.lineWidth = 1; ctx.globalAlpha = 0.7; ctx.setLineDash([]); ctx.beginPath();
+    for (let e = -3; e < 0; e++) for (let k = 2; k <= 9; k++) { const X = Math.round(plot.X(k * Math.pow(10, e))) + 0.5; ctx.moveTo(X, h - m.b); ctx.lineTo(X, h - m.b - 4); }
+    for (let e = -2; e < 4; e++) for (let k = 2; k <= 9; k++) { const Y = Math.round(plot.Y(k * Math.pow(10, e))) + 0.5; ctx.moveTo(m.l, Y); ctx.lineTo(m.l + 4, Y); }
+    ctx.stroke(); ctx.globalAlpha = 1;
+    // axis titles with italic variables
+    ctx.textBaseline = 'alphabetic';
+    rich(ctx, 'wavevector $q$ (Å^{−1})', m.l + (w - m.l - m.r) / 2, h - 8, { size: 12.5, align: 'center', color: cFg });
+    ctx.save(); ctx.translate(14, m.t + (h - m.t - m.b) / 2); ctx.rotate(-Math.PI / 2);
+    rich(ctx, 'vertex |$g$| (eV)', 0, 0, { size: 12.5, align: 'center', color: cFg });
+    ctx.restore();
+    if (cur) decorate(ctx, w, h, m);
+    ctx.restore();
+    if (!plot.tip.hidden) italicize(plot.tip);
+  };
+
+  // ---------- readouts: keys are static MathJax in the markup, only the values change ----------
+  const V = {};
+  ['kG', 'kS', 'wp', 'glr', 'eZ', 'lo', 'es', 'ratio', 'gdyn', 'gdyn0', 'cell', 'up', 'qc'].forEach(k => { V[k] = fig.querySelector('.x2-units-v-' + k); });
+  function readouts() {
+    const c = cur, q = c.q;
+    V.kG.textContent = `${p4(c.kG)}${NB}eV/Å²`;
+    V.kS.textContent = `${p4(c.kS)}${NB}eV/Å²`;
+    V.wp.textContent = `${(c.wpG * 1e3).toFixed(2)} | ${(c.wpS * 1e3).toFixed(2)}${NB}meV`;
+    V.glr.textContent = pairE(c.AlrG / q, c.AlrS / q);
+    V.eZ.innerHTML = `${(EG * c.Z).toFixed(3)}${NB}(eV${NB}Å)<sup>1/2</sup>`;
+    V.lo.textContent = `${(c.ELO * 1e3).toFixed(1)}${NB}meV`;
+    V.es.textContent = c.epsS.toFixed(2);
+    V.ratio.textContent = `${Math.sqrt(c.ELO / c.ETO).toFixed(3)}; ${(c.ETO / c.ELO).toFixed(3)}`;
+    V.gdyn.textContent = fmtE(c.Adyn / q);
+    V.gdyn0.textContent = fmtE(c.Adyn0 / q);
+    V.cell.textContent = `${c.P.Mr.toFixed(2)}${NB}amu, ${c.P.Ov.toFixed(2)}${NB}Å³`;
+    V.up.textContent = `${(c.Eup * 1e3).toFixed(1)}${NB}meV`;
+    V.qc.innerHTML = `${sci(c.qc)}${NB}Å⁻¹`;
+  }
+
+  function draw() {
+    if (!cur) return;
+    const t0 = performance.now(), c = cur, inv = qs.map(q => 1 / q);
+    plot.draw([
+      { type: 'line', x: qs, y: inv.map(v => c.Adyn0 * v), color: 'c5', width: 2, dash: [8, 5, 0.1, 5], label: 'Part B unscreened g^{dyn,0}' },
+      { type: 'line', x: qs, y: inv.map(v => c.Adyn * v), color: 'photon', width: 2, dash: [7, 5], label: 'Part B g^{dyn}, bare ω_{TO}' },
+      { type: 'line', x: qs, y: inv.map(v => c.AlrS * v), color: 'ink', width: 2.5, label: 'Part A g^{lr}, ω_{LO}' },
+      { type: 'line', x: qs, y: inv.map(v => c.Ares * v), color: 'c4', width: 3.4, dash: [0.1, 6.5], label: 'Part B × (ω_{TO}/ω_{LO})^{1/2}' },
+      { type: 'points', x: qp, y: qp.map(q => c.AF / q), color: 'muted', r: 5, hollow: true },
+      { type: 'vline', at: c.q, color: 'muted', width: 1.2 }
+    ]);
+    readouts();
+    const f = (v) => fmtE(v).replace(NB, ' ');
+    plot.cv.canvas.setAttribute('aria-label', `Log–log plot of the vertex |g| against q from 0.001 to 1 per ångström, ${c.P === PRE.MgO ? 'MgO' : c.P === PRE.GaAs ? 'GaAs' : 'NaCl'}-like crystal. ` +
+      `At the readout q = ${Number(c.q).toPrecision(2)} per ångström: Part A ${f(c.AlrS / c.q)}; Part B with the bare TO frequency ${f(c.Adyn / c.q)}; ` +
+      `Part B times the square root of the weight ${f(c.Ares / c.q)}, equal to Part A; unscreened Part B ${f(c.Adyn0 / c.q)}; Fröhlich ${f(c.AF / c.q)}. All lines fall as 1/q.`);
+    fig.dataset.redrawMs = (performance.now() - t0).toFixed(2);
+  }
+
+  // ---------- controls ----------
+  let ui = null, uiQ = null, lastPreset = 'MgO';
+  const applyPreset = (key) => { const P = PRE[key] || PRE.MgO; ui.set('Z', P.Z, true); ui.set('eps', P.eps, true); ui.set('wTO', P.wTO, true); };
+  function onChange() {
+    if (!ui || !uiQ) return;
+    if (ui.state.preset !== lastPreset) { applyPreset(ui.state.preset); lastPreset = ui.state.preset; }
+    cur = model(ui.state, uiQ.state.q);
+    draw();
+  }
+  // the readout q slider sits under the plot, lined up with its frame; the crystal controls follow
+  const elQ = fig.querySelector('.x2-units-qctl');
+  uiQ = EPP.controls(elQ, [
+    { key: 'q', type: 'range', label: 'readout wavevector q', min: 1e-3, max: 1, value: 0.05, log: true, step: 'any', wide: true, fmt: fmtQ }
+  ], onChange);
+  const elC = fig.querySelector('.x2-units-ctrls');
+  ui = EPP.controls(elC, [
+    { key: 'preset', type: 'select', label: 'material preset', options: [['GaAs', 'GaAs-like'], ['NaCl', 'NaCl-like'], ['MgO', 'MgO-like']], value: 'MgO' },
+    { key: 'reset', type: 'button', label: 'reset to preset', onClick: (s) => applyPreset(s.preset) },
+    { key: 'Z', type: 'range', label: 'Born charge Z^*', min: 0.2, max: 4, step: 'any', value: PRE.MgO.Z, fmt: v => v.toFixed(2) },
+    { key: 'eps', type: 'range', label: 'electronic dielectric constant ε_∞', min: 1, max: 15, step: 'any', value: PRE.MgO.eps, fmt: v => v.toFixed(2) },
+    { key: 'wTO', type: 'range', label: 'bare TO energy ħω_{TO}', min: 5, max: 200, step: 'any', value: PRE.MgO.wTO, fmt: v => v.toFixed(1) + NB + 'meV' }
+  ], onChange);
+  elC.style.gridTemplateColumns = 'repeat(auto-fill, minmax(280px, 1fr))';
+  // the reset button joins the preset menu in one cell
+  const sel = fig.querySelector(`#${fig.id}-preset`), btn = fig.querySelector(`#${fig.id}-reset`);
+  if (sel && btn) {
+    const boxBtn = btn.closest('.ctrl'), row = document.createElement('div');
+    row.style.cssText = 'display:flex;gap:8px;align-items:center;min-width:0';
+    sel.style.cssText = 'flex:1 1 auto;min-width:0';
+    btn.style.flex = '0 0 auto';
+    sel.closest('.ctrl').appendChild(row); row.append(sel, btn);
+    if (boxBtn) boxBtn.remove();
+  }
+  // slider labels with italic variables
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`;
+  const LAB = { q: `readout wavevector ${I('q')}`, Z: `Born charge ${I('Z')}<sup>*</sup>`, eps: `electronic dielectric constant ${I('ε')}<sub>∞</sub>`, wTO: `bare TO energy ${I('ħω')}<sub>TO</sub>` };
+  Object.keys(LAB).forEach(k => { const sp = fig.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  const alignQ = () => { elQ.style.padding = `0 ${Math.max(0, plot.m.r - 8)}px 0 ${Math.max(0, plot.m.l - 8)}px`; };
+  alignQ();
+
+  // click (or tap) in the plot moves the readout q; a mouse can also drag it
+  const cvs = plot.cv.canvas;
+  const pxOf = (e) => { const r = cvs.getBoundingClientRect(); return { px: e.clientX - r.left, py: e.clientY - r.top }; };
+  const inFrame = (p, tol) => { const m = plot.m; return p.px >= m.l - tol && p.px <= plot.cv.w - m.r + tol && p.py >= m.t - tol && p.py <= plot.cv.h - m.b + tol; };
+  const nice = (q) => { const e = Math.floor(Math.log10(q)); return EPP.clamp(Math.round(q / Math.pow(10, e) * 10) / 10 * Math.pow(10, e), 1e-3, 1); };
+  const setQ = (px) => uiQ.set('q', nice(plot.invX(EPP.clamp(px, plot.m.l, plot.cv.w - plot.m.r))));
+  let drag = false;
+  cvs.addEventListener('click', (e) => { const p = pxOf(e); if (inFrame(p, 4)) setQ(p.px); });
+  cvs.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse' || e.button !== 0 || !inFrame(pxOf(e), 4)) return; drag = true; try { cvs.setPointerCapture(e.pointerId); } catch (_) {} });
+  cvs.addEventListener('pointermove', (e) => { const p = pxOf(e); if (drag) { setQ(p.px); return; } if (e.pointerType === 'mouse') cvs.style.cursor = inFrame(p, 0) ? 'ew-resize' : ''; });
+  const endDrag = () => { drag = false; };
+  cvs.addEventListener('pointerup', endDrag); cvs.addEventListener('pointercancel', endDrag);
+
+  cur = model(ui.state, uiQ.state.q);
+})();
+</script>

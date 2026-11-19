@@ -1,0 +1,444 @@
+  <figure class="viz" id="viz-a4-born">
+    <p class="viz-title">A Born charge is a tensor: the dipole created by a displaced atom <span class="tag">interactive</span></p>
+    <div class="a4-born-net"></div>
+    <div class="legend a4-born-leg"><span class="item"><svg width="22" height="12" viewBox="0 0 22 12" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><line x1="1" y1="6" x2="14" y2="6" style="stroke:var(--c-phonon);stroke-width:3"/><path d="M21 6 L13 2.2 L13 9.8 Z" style="fill:var(--c-phonon)"/></svg>displacement $\bu_\kappa$, drawn ×12</span><span class="item"><svg width="22" height="12" viewBox="0 0 22 12" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><line x1="1" y1="6" x2="14" y2="6" style="stroke:var(--c-photon);stroke-width:3"/><path d="M21 6 L13 2.2 L13 9.8 Z" style="fill:var(--c-photon)"/></svg>dipole $\mathbf p/e$, drawn ×6 (less for the largest)</span><span class="item"><svg width="22" height="12" viewBox="0 0 22 12" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><line x1="1" y1="6" x2="16" y2="6" style="stroke:var(--c-photon);stroke-width:1.5"/><path d="M21 6 L15 3.4 L15 8.6 Z" style="fill:var(--c-photon)"/></svg>column of $\mathbf Z^*_\kappa$ × component of $\bu_\kappa$</span><span class="item"><svg width="22" height="12" viewBox="0 0 22 12" aria-hidden="true" style="vertical-align:-1px;margin-right:5px"><line x1="1" y1="6" x2="15" y2="6" style="stroke:var(--c-photon);stroke-width:1.8;stroke-dasharray:4 3"/><path d="M21 6 L14 2.8 L14 9.2 Z" style="fill:var(--c-photon)"/></svg>nominal dipole</span><span class="item"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><circle cx="7" cy="7" r="5.5" style="fill:none;stroke:var(--muted);stroke-width:1.3;stroke-dasharray:2.6 2"/></svg>equilibrium site</span><span class="item"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" style="vertical-align:-2px;margin-right:5px"><circle cx="7" cy="7" r="5.5" style="fill:none;stroke:var(--muted);stroke-width:1.3"/></svg>Ba, above the layer</span></div>
+    <div class="a4-born-ctrls"></div>
+    <div class="readout a4-born-ro" aria-live="polite"><span>$\mathbf Z^*_\kappa$, in-plane block<b class="a4-born-v-Z"></b></span><span style="flex-basis:100%">$\mathbf p/e=u_{\kappa x}\,(\text{column }x)+u_{\kappa y}\,(\text{column }y)$<b class="a4-born-v-sum"></b></span></div>
+    <div class="readout a4-born-ro2" aria-live="polite"><span>$\bu_\kappa$<b class="a4-born-v-u"></b></span><span>$|\mathbf p|/(e|\bu_\kappa|)$<b class="a4-born-v-r"></b></span><span>angle from $\bu_\kappa$ to $\mathbf p$ (to $-\mathbf p$ for an anion)<b class="a4-born-v-ang"></b></span><span>$\sum_\kappa Z^*_{\kappa,xx}$<b class="a4-born-v-asr"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> The dipole is the sum of the columns of $\mathbf Z^*_\kappa$ weighted by the components of <span class="nw">$\bu_\kappa$.</span> At the oxygen of BaTiO₃ the column along the Ti–O bond is 2.7 times the one across it, so the dipole turns toward the bond, off the line of <span class="nw">$\bu_\kappa$;</span> at the cubic Ga and Ti sites it stays on that line.</p><div class="cap-more"><p><strong>Marks.</strong> One TiO₂ layer of cubic BaTiO₃ (open circles: Ba, above it), or GaAs seen along [001]. Dashed circle: equilibrium site. Amber arrow: <span class="nw">$\bu_\kappa$,</span> drawn ×12. Thick rose arrow: <span class="nw">$\mathbf p/e$,</span> the dipole in units of $e$ (Å), drawn from the site ×6 (less for the largest; see the scale bars); thin rose arrows, tip to tail: column $x$ times <span class="nw">$u_{\kappa x}$,</span> column $y$ times <span class="nw">$u_{\kappa y}$.</span> Anion: the dotted line, <span class="nw">$-\bu_\kappa$,</span> is where a rigid ion's dipole would point; the arc spans the angle from it to <span class="nw">$\mathbf p$.</span> Dashed arrow: the nominal dipole <span class="nw">$eZ^{\mathrm{nom}}_\kappa\bu_\kappa$,</span> with $Z^{\mathrm{nom}}_\kappa$ the nominal charge of the table.</p><p><strong>Try.</strong> With O selected, turn $\bu_\kappa$ through 360° (slider, Play, arrow keys or dragging the atom): the dipole lags behind or runs ahead of <span class="nw">$-\bu_\kappa$,</span> lining up with it only along and across the bond. Switch to Ti: the angle drops to zero and $|\mathbf p|/(e|\bu_\kappa|)$ reads 7.25, nominal 4. Show the nominal charge for Ga: 2.07 against 3.</p><p><strong>Model.</strong> $\mathbf p=e\,\mathbf Z^*_\kappa\cdot\bu_\kappa$ from <a class="eqref" href="#a4-eq-born">(A4.1)</a>, in-plane block; the readout checks the sum rule <a class="eqref" href="#a4-eq-asr">(A4.4)</a>. Born charges as in the table: cubic BaTiO₃ calculated by Ghosez, Michenaud and Gonze (1998), and GaAs ±2.07 (literature values, illustrative). Lattice constants 4.00 and <span class="nw">5.65 Å.</span></p></div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a4-born');
+  if (!fig || !window.EPP) return;
+  // outside Section A.4 (the isolated figure test) the caption's links to the section have no target: show them as text
+  if (!fig.closest('#a-polar')) fig.querySelectorAll('figcaption a[href^="#"]').forEach(a => {
+    if (document.getElementById(a.getAttribute('href').slice(1))) return;
+    const s = document.createElement('span'); s.append(...a.childNodes); a.replaceWith(s);
+  });
+  const DEG = Math.PI / 180;
+
+  // ---------- model: in-plane (x, y) block of Z*; the dipole is p = e Z*·u, so p/e (in Å) = Z*·u ----------
+  // literature values, illustrative: cubic BaTiO3 from Ghosez, Michenaud and Gonze (1998); GaAs 2.07
+  // u is drawn ×12 and p/e ×6 on the length scale of the lattice; p/e steps down to ×5, ×4 or ×3 only where the
+  // largest dipole of the selected atom (any direction, nominal included when shown) would not fit, for Ti at large |u|
+  const XU = 12, UMAX = 0.1, LADDER = [6, 5, 4, 3];
+  const norm2 = (Z) => { const a = Z[0][0] * Z[0][0] + Z[1][0] * Z[1][0], b = Z[0][0] * Z[0][1] + Z[1][0] * Z[1][1], d = Z[0][1] * Z[0][1] + Z[1][1] * Z[1][1]; return Math.sqrt(EPP.eigSym2(a, b, d).vals[1]); };
+  const SITES = {
+    ga: { el: 'Ga', cr: 'gaas', Z: [[2.07, 0], [0, 2.07]], nom: 3, name: 'Ga in GaAs' },
+    ti: { el: 'Ti', cr: 'bto', Z: [[7.25, 0], [0, 7.25]], nom: 4, name: 'Ti in BaTiO₃' },
+    o: { el: 'O', cr: 'bto', Z: [[-5.71, 0], [0, -2.15]], nom: -2, name: 'O in BaTiO₃' }    // O on a Ti–O–Ti bond along x
+  };
+  // xx components of every atom of the cell, for the sum rule (A4.4): Ba, Ti, O on bonds along x, y, z; Ga, As
+  const CRYST = {
+    bto: { name: 'BaTiO₃', a: 4.00, view: 'one TiO₂ layer of cubic BaTiO₃', sum: [2.77, 7.25, -5.71, -2.15, -2.15] },
+    gaas: { name: 'GaAs', a: 5.653, view: 'GaAs seen along [001]', sum: [2.07, -2.07] }
+  };
+  function compute(st) {
+    const S = SITES[st.atom] || SITES.o, th = (Math.round(st.theta) % 360) * DEG;
+    const m = EPP.clamp(Math.round(st.mag * 1000) / 1000, 0, UMAX);
+    const u = [m * Math.cos(th), m * Math.sin(th)];
+    const c1 = [S.Z[0][0] * u[0], S.Z[1][0] * u[0]];          // column x times u_x
+    const c2 = [S.Z[0][1] * u[1], S.Z[1][1] * u[1]];          // column y times u_y
+    const p = [c1[0] + c2[0], c1[1] + c2[1]];                 // p/e = Z*·u, Å
+    const pn = [S.nom * u[0], S.nom * u[1]];                  // nominal (rigid-ion) dipole / e
+    const sg = S.nom > 0 ? 1 : -1, pm = Math.hypot(p[0], p[1]);
+    // angle from u to sg·p (p for a cation, −p for an anion), anticlockwise positive; the same as from sg·u to p
+    const ang = m > 0 && pm > 0 ? Math.atan2(u[0] * sg * p[1] - u[1] * sg * p[0], u[0] * sg * p[0] + u[1] * sg * p[1]) : NaN;
+    return { key: st.atom, S, cr: CRYST[S.cr], th, m, u, c1, c2, p, pn, sg, pm, ang, ratio: m > 0 ? pm / m : NaN, nomOn: !!st.nom };
+  }
+
+  // ---------- formatting ----------
+  const neg0 = (s) => (/^-0\.0*$/.test(s) ? s.slice(1) : s).replace('-', '−');
+  const fx = (v, d) => neg0(v.toFixed(d));
+  const fz = (v) => (v === 0 ? '0' : fx(v, 2));
+  const I = (s) => `<i style="font-family:var(--font-text)">${s}</i>`, B = (s) => `<strong>${s}</strong>`;
+
+  // ---------- canvas text: '$..$' italic variable (text font), '*..*' bold vector (UI font); _ and ^ as in EPP.drawRich ----------
+  let fUI = 'sans-serif', fTx = 'serif';
+  const parse = (s) => String(s).split(/(\$[^$]*\$|\*[^*]*\*)/).filter(Boolean).map(t => (t[0] === '$' ? [t.slice(1, -1), 'i'] : t[0] === '*' ? [t.slice(1, -1), 'b'] : [t, '']));
+  const pOpt = (p, size) => (p[1] === 'i' ? { size: size + 1, font: fTx, italic: true } : { size, font: fUI, bold: p[1] === 'b' });
+  const rtW = (ctx, s, size) => parse(s).reduce((w, p) => { const o = pOpt(p, size); return w + EPP.measureRich(ctx, p[0], o.size, o.font, o); }, 0);
+  const rt = (ctx, s, x, y, size, align) => {
+    const tot = rtW(ctx, s, size);
+    let x0 = align === 'center' ? x - tot / 2 : align === 'right' ? x - tot : x;
+    for (const p of parse(s)) { const o = pOpt(p, size); x0 += EPP.drawRich(ctx, p[0], x0, y, o); }
+    return tot;
+  };
+
+  // ---------- geometry helpers (screen coordinates) ----------
+  const boxHit = (a, b) => a[0] < b[2] && b[0] < a[2] && a[1] < b[3] && b[1] < a[3];
+  const discBox = (cx, cy, rr, b) => { const qx = EPP.clamp(cx, b[0], b[2]), qy = EPP.clamp(cy, b[1], b[3]); return (qx - cx) ** 2 + (qy - cy) ** 2 < rr * rr; };
+  function segBox(s, b) { // Liang–Barsky: does the segment s = [x0,y0,x1,y1] cross the box b?
+    const dx = s[2] - s[0], dy = s[3] - s[1], P = [-dx, dx, -dy, dy], Q = [s[0] - b[0], b[2] - s[0], s[1] - b[1], b[3] - s[1]];
+    let t0 = 0, t1 = 1;
+    for (let i = 0; i < 4; i++) {
+      if (Math.abs(P[i]) < 1e-12) { if (Q[i] < 0) return false; continue; }
+      const t = Q[i] / P[i];
+      if (P[i] < 0) { if (t > t1) return false; if (t > t0) t0 = t; } else { if (t < t0) return false; if (t < t1) t1 = t; }
+    }
+    return true;
+  }
+  // arrows with a halo in the surface colour, so that they read on top of atoms and bonds
+  function drawArrows(ctx, list) {
+    const geo = list.filter(a => Math.hypot(a.x1 - a.x0, a.y1 - a.y0) >= 2).map(a => {
+      const dx = a.x1 - a.x0, dy = a.y1 - a.y0, len = Math.hypot(dx, dy), ux = dx / len, uy = dy / len;
+      const hl = Math.min(a.head, 0.6 * len), hw = hl * 0.46;
+      return Object.assign({ ux, uy, hl, hw, bx: a.x1 - ux * hl, by: a.y1 - uy * hl }, a);
+    });
+    const tri = g => { ctx.beginPath(); ctx.moveTo(g.x1, g.y1); ctx.lineTo(g.bx - g.uy * g.hw, g.by + g.ux * g.hw); ctx.lineTo(g.bx + g.uy * g.hw, g.by - g.ux * g.hw); ctx.closePath(); };
+    ctx.setLineDash([]); ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.strokeStyle = EPP.alpha('surface', 0.9);
+    for (const g of geo) { ctx.lineWidth = g.lw + 3.2; ctx.beginPath(); ctx.moveTo(g.x0, g.y0); ctx.lineTo(g.bx, g.by); ctx.stroke(); ctx.lineWidth = 3; tri(g); ctx.stroke(); }
+    ctx.lineCap = 'butt';
+    for (const g of geo) {
+      ctx.strokeStyle = g.col; ctx.lineWidth = g.lw; ctx.setLineDash(g.dash || []);
+      ctx.beginPath(); ctx.moveTo(g.x0, g.y0); ctx.lineTo(g.bx + g.ux * 0.8, g.by + g.uy * 0.8); ctx.stroke();
+      ctx.setLineDash([]); ctx.fillStyle = g.col; tri(g); ctx.fill();
+    }
+  }
+  // greedy label placement: never on another label or outside the panel; avoids arrows and atoms where it can.
+  // variants: longest first; a shorter one is tried when the longer one only fits on top of something
+  function makePlacer(ctx, bounds, segs, discs) {
+    const boxes = [];
+    return {
+      block(b) { boxes.push(b); },
+      put(variants, size, ax, ay, rad, pref, col) {
+        for (let vi = 0; vi < variants.length; vi++) {
+          const s = variants[vi], tw = rtW(ctx, s, size), th = Math.ceil(size * 1.35);
+          let best = null, bp = Infinity;
+          [0, 30, -30, 60, -60, 90, -90, 135, -135, 180].forEach((da, k) => {
+            for (const ex of [0, 6, 13, 22, 34]) {
+              const ang = (pref + da) * DEG, c = Math.cos(ang), sn = Math.sin(ang), dd = rad + 3 + ex;
+              const px = ax + c * dd, py = ay + sn * dd;
+              const x0 = c > 0.38 ? px : c < -0.38 ? px - tw : px - tw / 2, y0 = sn > 0.38 ? py : sn < -0.38 ? py - th : py - th / 2;
+              const b = [x0 - 2, y0 - 1, x0 + tw + 2, y0 + th + 1];
+              let p = k * 0.8 + ex * 0.3;
+              if (b[0] < bounds[0] || b[2] > bounds[2] || b[1] < bounds[1] || b[3] > bounds[3]) p += 1e4;
+              for (const o of boxes) if (boxHit(b, o)) p += 1e4;
+              for (const sg of segs) if (segBox(sg, b)) p += 40;
+              for (const dc of discs) if (discBox(dc[0], dc[1], dc[2], b)) p += dc[3];
+              if (p < bp) { bp = p; best = b; }
+            }
+          });
+          if (!best || bp >= 1e4 || (bp >= 40 && vi < variants.length - 1)) continue;
+          boxes.push(best);
+          // a label pushed away from its mark gets a thin leader line back to it
+          const bx = (best[0] + best[2]) / 2, by = (best[1] + best[3]) / 2, ldx = ax - bx, ldy = ay - by, ld = Math.hypot(ldx, ldy);
+          if (ld > rad + 20 + Math.max(best[2] - best[0], best[3] - best[1]) / 2) {
+            const t = Math.min((best[2] - best[0]) / 2 / Math.max(Math.abs(ldx), 1e-6), (best[3] - best[1]) / 2 / Math.max(Math.abs(ldy), 1e-6));
+            ctx.strokeStyle = EPP.alpha('muted', 0.75); ctx.lineWidth = 0.9; ctx.setLineDash([]);
+            ctx.beginPath(); ctx.moveTo(bx + ldx * t, by + ldy * t); ctx.lineTo(ax - ldx / ld * 3, ay - ldy / ld * 3); ctx.stroke();
+          }
+          ctx.fillStyle = EPP.alpha('surface', 0.84);
+          ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(best[0], best[1], best[2] - best[0], best[3] - best[1], 3); else ctx.rect(best[0], best[1], best[2] - best[0], best[3] - best[1]); ctx.fill();
+          ctx.fillStyle = col; ctx.textBaseline = 'alphabetic';
+          rt(ctx, s, best[0] + 2, best[1] + 1 + Math.round(size * 0.98), size);
+          return best;
+        }
+        return null;
+      }
+    };
+  }
+
+  // ---------- the crystal layer around the selected atom (Å, origin at its equilibrium site) ----------
+  const RAD = { Ti: 0.22, O: 0.18, Ba: 0.26, Ga: 0.21, As: 0.21 }, RMIN = { Ti: 10, O: 8.5, Ba: 11, Ga: 10, As: 10 };
+  const colOf = (el) => (el === 'Ti' || el === 'Ga' ? 'c5' : el === 'O' || el === 'As' ? 'c4' : 'muted');
+  function lattice(key, xr, yr) {
+    const atoms = [], bonds = [];
+    if (SITES[key].cr === 'bto') {
+      // TiO2 square net: Ti at the corners, O at the edge midpoints, Ba above the centres; the selected O sits on a bond along x
+      const a = CRYST.bto.a, o = key === 'o' ? [a / 2, 0] : [0, 0];
+      const i0 = Math.floor((o[0] - xr) / a) - 1, i1 = Math.ceil((o[0] + xr) / a) + 1, j0 = Math.floor(-yr / a) - 1, j1 = Math.ceil(yr / a) + 1;
+      for (let i = i0; i <= i1; i++) for (let j = j0; j <= j1; j++) {
+        const x = i * a - o[0], y = j * a - o[1];
+        atoms.push({ el: 'Ba', x: x + a / 2, y: y + a / 2 }, { el: 'Ti', x, y }, { el: 'O', x: x + a / 2, y }, { el: 'O', x, y: y + a / 2 });
+        bonds.push([x, y, x + a / 2, y], [x + a / 2, y, x + a, y], [x, y, x, y + a / 2], [x, y + a / 2, x, y + a]);
+      }
+    } else {
+      // zincblende projected along [001]: Ga columns on a square grid of side a/2, As columns at the centres; projected bonds along the diagonals
+      const h = CRYST.gaas.a / 2, i0 = Math.floor(-xr / h) - 1, i1 = Math.ceil(xr / h) + 1, j0 = Math.floor(-yr / h) - 1, j1 = Math.ceil(yr / h) + 1;
+      for (let i = i0; i <= i1; i++) for (let j = j0; j <= j1; j++) {
+        const x = i * h, y = j * h;
+        atoms.push({ el: 'Ga', x, y }, { el: 'As', x: x + h / 2, y: y + h / 2 });
+        bonds.push([x, y, x + h / 2, y + h / 2], [x, y, x + h / 2, y - h / 2], [x + h / 2, y + h / 2, x + h, y + h], [x + h / 2, y + h / 2, x + h, y]);
+      }
+    }
+    for (const at of atoms) at.sel = at.el === SITES[key].el && Math.abs(at.x) < 1e-9 && Math.abs(at.y) < 1e-9;
+    return { atoms, bonds };
+  }
+
+  // ---------- panel ----------
+  const cv = EPP.canvas(fig.querySelector('.a4-born-net'), { aspect: 0.68, minHeight: 380, maxHeight: 540 });
+  const cvs = cv.canvas;
+  cvs.style.touchAction = 'none';
+  cvs.style.cursor = 'grab';
+  cvs.setAttribute('tabindex', '0');
+  cvs.setAttribute('role', 'slider');
+  cvs.setAttribute('aria-valuemin', '0');
+  cvs.setAttribute('aria-valuemax', '359');
+  cvs.setAttribute('aria-label', 'Direction of the displacement u. The panel shows one layer of the crystal with the selected atom displaced by u (amber arrow) and the dipole p/e it creates (rose arrow), built tip to tail from the two columns of the Born charge tensor. Drag the atom, or use the arrow keys to turn u by 5 degrees; Page Up and Page Down change its size.');
+  const BAND = 26;
+  let cur = null, G = null, uSide = 1, dragMode = null;
+
+  function draw() {
+    cv.clear();
+    const ctx = cv.ctx, W = cv.w, H = cv.h;
+    if (!cur || W < 60 || H < 80) return;
+    fUI = EPP.css('--font-ui'); fTx = EPP.css('--font-text');
+    // px per Å of the lattice; the dipole scale XP from the ladder: the largest that keeps the longest dipole and its label inside
+    const c = cur, S = c.S, narrow = W < 520;
+    const k = EPP.clamp(Math.min(W / 6.2, (H - BAND) / 6.4), 30, 96), room = Math.min((H - BAND) / 2, W / 2) - 22;
+    const need = c.m * Math.max(norm2(S.Z), c.nomOn ? Math.abs(S.nom) : 0);
+    const XP = LADDER.find(s => need * s * k <= room) || LADDER[LADDER.length - 1];
+    const cx = W / 2, cy = BAND + (H - BAND) / 2, fadeR = 0.62 * Math.min(W, H - BAND);
+    const fade = (x, y) => EPP.clamp(1.35 - Math.hypot(x - cx, y - cy) / fadeR, 0.3, 1);
+    G = { k, cx, cy };
+    const X = (x) => cx + x * k, Y = (y) => cy - y * k;
+    const cMut = EPP.color('muted'), cFg2 = EPP.color('fg2'), cSurf = EPP.color('surface');
+    const cPh = EPP.color('phonon'), cPhT = EPP.textColor('phonon'), cPt = EPP.color('photon'), cPtT = EPP.textColor('photon');
+    const rpx = (el) => Math.max(RAD[el] * k, RMIN[el]);
+    const L = lattice(c.key, (W / 2) / k + 1, (H / 2) / k + 1);
+    const rS = rpx(S.el), O = [X(0), Y(0)], D = [X(XU * c.u[0]), Y(XU * c.u[1])];
+    const Pp = (v) => [X(XP * v[0]), Y(XP * v[1])];
+    const letters = (el, x, y, r, col) => {
+      let fs = Math.min(13, r * 1.02);
+      ctx.font = `600 ${fs}px ${fUI}`;
+      while (fs > 7 && ctx.measureText(el).width > 1.55 * r) { fs -= 0.5; ctx.font = `600 ${fs}px ${fUI}`; }
+      ctx.fillStyle = col; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(el, x, y + 0.5);
+      ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    };
+
+    // header band: what is shown (left) and the two length scales (right)
+    ctx.textBaseline = 'alphabetic';
+    const yB = 17, sU = 0.05 * XU * k, sP = 0.2 * XP * k;
+    const scales = [[`*u* ×${XU}`, sU, cPh, '0.05 Å'], [`*p*/$e$ ×${XP}`, sP, cPt, '0.2 Å']];
+    const wScale = scales.reduce((w, s) => w + rtW(ctx, s[0], 12) + 6 + s[1] + 5 + rtW(ctx, s[3], 11) + 16, -16);
+    let xs = W - 4 - wScale;
+    for (const [lab, len, col, val] of scales) {
+      ctx.fillStyle = col === cPh ? cPhT : cPtT; xs += rt(ctx, lab, xs, yB, 12) + 6;
+      ctx.strokeStyle = col; ctx.lineWidth = 3; ctx.lineCap = 'butt'; ctx.beginPath(); ctx.moveTo(xs, yB - 4); ctx.lineTo(xs + len, yB - 4); ctx.stroke();
+      ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(xs, yB - 8); ctx.lineTo(xs, yB); ctx.moveTo(xs + len, yB - 8); ctx.lineTo(xs + len, yB); ctx.stroke();
+      xs += len + 5; ctx.fillStyle = cMut; xs += rt(ctx, val, xs, yB, 11) + 16;
+    }
+    const head = [c.cr.view, c.cr.name].find(s => rtW(ctx, s, 11.5) + 14 <= W - 4 - wScale - 4);
+    if (head) { ctx.fillStyle = cFg2; rt(ctx, head, 4, yB, 11.5); }
+
+    ctx.save();
+    ctx.beginPath(); ctx.rect(0, BAND, W, H - BAND); ctx.clip();
+    // bonds of the layer; the Ti–O–Ti bond of the selected oxygen is drawn darker
+    // atoms and bonds fade with the distance from the selected atom
+    ctx.lineCap = 'round'; ctx.lineWidth = 1.3;
+    for (const b of L.bonds) {
+      const x0 = X(b[0]), y0 = Y(b[1]), x1 = X(b[2]), y1 = Y(b[3]);
+      ctx.strokeStyle = EPP.alpha('muted', 0.4 * fade((x0 + x1) / 2, (y0 + y1) / 2));
+      ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke();
+    }
+    const half = CRYST.bto.a / 2, bondSeg = c.key === 'o' ? [X(-half), O[1], X(half), O[1]] : null;
+    if (bondSeg) { ctx.strokeStyle = EPP.alpha('muted', 0.85); ctx.lineWidth = 2.6; ctx.beginPath(); ctx.moveTo(bondSeg[0], bondSeg[1]); ctx.lineTo(bondSeg[2], bondSeg[3]); ctx.stroke(); }
+    // atoms of the layer (the selected one is drawn displaced, below)
+    const discs = [];
+    for (const at of L.atoms) {
+      if (at.sel) continue;
+      const x = X(at.x), y = Y(at.y), r = rpx(at.el);
+      if (x < -r || x > W + r || y < BAND - r || y > H + r) continue;
+      discs.push([x, y, r + 1, 25]);
+      ctx.globalAlpha = fade(x, y);
+      ctx.beginPath(); ctx.arc(x, y, r, 0, 2 * Math.PI);
+      if (at.el === 'Ba') { ctx.fillStyle = cSurf; ctx.fill(); ctx.strokeStyle = EPP.alpha('muted', 0.85); ctx.lineWidth = 1.3; ctx.stroke(); letters('Ba', x, y, r, cMut); }
+      else { ctx.fillStyle = EPP.color(colOf(at.el)); ctx.fill(); letters(at.el, x, y, r, cSurf); }
+      ctx.globalAlpha = 1;
+    }
+    // the selected atom: dashed ghost at the equilibrium site, filled disc at the displaced position
+    const cSel = EPP.color(colOf(S.el));
+    ctx.strokeStyle = cSel; ctx.lineWidth = 1.4; ctx.setLineDash([3, 2.5]);
+    ctx.beginPath(); ctx.arc(O[0], O[1], rS, 0, 2 * Math.PI); ctx.stroke(); ctx.setLineDash([]);
+    if (dragMode === 'move') { // reach of the drag, |u| up to 0.10 Å
+      ctx.strokeStyle = EPP.alpha('phonon', 0.45); ctx.lineWidth = 1; ctx.setLineDash([2, 3]);
+      ctx.beginPath(); ctx.arc(O[0], O[1], UMAX * XU * k, 0, 2 * Math.PI); ctx.stroke(); ctx.setLineDash([]);
+    }
+    ctx.fillStyle = cSel; ctx.beginPath(); ctx.arc(D[0], D[1], rS, 0, 2 * Math.PI); ctx.fill();
+    letters(S.el, D[0], D[1], rS, cSurf);
+    discs.push([O[0], O[1], rS + 2, 30], [D[0], D[1], rS + 3, 60]);
+
+    // vector construction, from the equilibrium site: columns tip to tail, nominal dipole, p/e; u beside the atom
+    const segs = [], arrows = [], labels = [];
+    if (bondSeg) segs.push(bondSeg);
+    const P1 = Pp(c.c1), P2 = Pp(c.p), lenP = Math.hypot(P2[0] - O[0], P2[1] - O[1]);
+    const lenU = Math.hypot(D[0] - O[0], D[1] - O[1]);
+    const uS = lenU > 0 ? [(D[0] - O[0]) / lenU, (D[1] - O[1]) / lenU] : [1, 0];
+    // the anion's reference direction −u (the dipole of a rigid anion) and the arc from it to p
+    let arc = null;
+    if (c.sg < 0 && lenU > 0 && lenP > 1) {
+      const lenR = Math.max(1.12 * lenP, rS + 30), R1 = [O[0] - uS[0] * lenR, O[1] - uS[1] * lenR];
+      ctx.strokeStyle = cPh; ctx.lineWidth = 1.5; ctx.setLineDash([1.6, 3.4]); ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(O[0] - uS[0] * (rS + 2), O[1] - uS[1] * (rS + 2)); ctx.lineTo(R1[0], R1[1]); ctx.stroke(); ctx.setLineDash([]);
+      segs.push([O[0], O[1], R1[0], R1[1]]);
+      labels.push({ v: ['−*u*'], size: 12.5, col: cPhT, at: R1, rad: 2, pref: Math.atan2(-uS[1], -uS[0]) / DEG });
+      const Ra = Math.max(rS + 9, 0.8 * lenP);
+      if (Math.abs(c.ang) >= 0.5 * DEG && lenP > rS + 12) {
+        const a0 = Math.atan2(-uS[1], -uS[0]), a1 = a0 - c.ang;            // screen angles: y points down
+        ctx.strokeStyle = cFg2; ctx.lineWidth = 1.6; ctx.lineCap = 'butt'; ctx.beginPath(); ctx.arc(O[0], O[1], Ra, a0, a1, c.ang > 0); ctx.stroke();
+        const am = (a0 + a1) / 2;
+        arc = { at: [O[0] + Ra * Math.cos(am), O[1] + Ra * Math.sin(am)], pref: am / DEG };
+        labels.push({ v: [`${Math.round(Math.abs(c.ang) / DEG)}°`], size: 11.5, col: cFg2, at: arc.at, rad: 2, pref: arc.pref });
+      }
+    }
+    // u is drawn beside the motion, on the side away from the corner of the tip-to-tail path; hysteresis keeps it from flipping
+    const nrm = [-uS[1], uS[0]], side = (P1[0] - O[0]) * nrm[0] + (P1[1] - O[1]) * nrm[1];
+    if (Math.abs(side) > 6) uSide = side > 0 ? -1 : 1;
+    const off = rS + 7, oU = [nrm[0] * off * uSide, nrm[1] * off * uSide];
+    if (lenP >= 2) {
+      const tipTail = Math.hypot(P1[0] - O[0], P1[1] - O[1]) >= 2 && Math.hypot(P2[0] - P1[0], P2[1] - P1[1]) >= 2;
+      if (tipTail) {
+        arrows.push({ x0: O[0], y0: O[1], x1: P1[0], y1: P1[1], col: cPt, lw: 1.6, head: 7 }, { x0: P1[0], y0: P1[1], x1: P2[0], y1: P2[1], col: cPt, lw: 1.6, head: 7 });
+        const up = c.c2[1] > 0 ? 1 : -1;      // the triangle with p lies on this side of the first leg (math y)
+        // a leg too short to carry its label goes without one (the legend and the readout name it)
+        const fs = narrow ? 10.5 : 11.5, l1 = Math.hypot(P1[0] - O[0], P1[1] - O[1]), l2 = Math.hypot(P2[0] - P1[0], P2[1] - P1[1]);
+        if (l1 >= 18) labels.push({ v: ['column $x$ × $u_{κx}$', 'col. $x$ × $u_{κx}$'], size: fs, col: cPtT, at: [(O[0] + P1[0]) / 2, O[1]], rad: 3, pref: up > 0 ? 90 : -90 });
+        if (l2 >= 18) labels.push({ v: ['column $y$ × $u_{κy}$', 'col. $y$ × $u_{κy}$'], size: fs, col: cPtT, at: [P1[0], (P1[1] + P2[1]) / 2], rad: 3, pref: P1[0] >= O[0] ? 0 : 180 });
+      }
+      if (c.nomOn) {
+        // nominal dipole Z^nom u; moved a few px aside where it would lie on top of p
+        const N1 = Pp(c.pn), dn = Math.abs(Math.atan2(c.p[0] * c.pn[1] - c.p[1] * c.pn[0], c.p[0] * c.pn[0] + c.p[1] * c.pn[1]));
+        const sh = 6 * Math.max(0, 1 - dn / (10 * DEG)), oN = [nrm[0] * sh * uSide, nrm[1] * sh * uSide];
+        arrows.push({ x0: O[0] + oN[0], y0: O[1] + oN[1], x1: N1[0] + oN[0], y1: N1[1] + oN[1], col: cPt, lw: 1.8, head: 8, dash: [5, 3.5] });
+        labels.push({ v: ['nominal'], size: 11, col: cPtT, at: [N1[0] + oN[0], N1[1] + oN[1]], rad: 3, pref: Math.atan2(N1[1] - O[1], N1[0] - O[0]) / DEG });
+      }
+      arrows.push({ x0: O[0], y0: O[1], x1: P2[0], y1: P2[1], col: cPt, lw: 3, head: 11 });
+      labels.unshift({ v: ['*p*/$e$'], size: 13.5, col: cPtT, at: P2, rad: 3, pref: Math.atan2(P2[1] - O[1], P2[0] - O[0]) / DEG });
+    }
+    let uMid = null;
+    if (lenU >= 4) {
+      const a0 = [O[0] + oU[0], O[1] + oU[1]], a1 = [D[0] + oU[0], D[1] + oU[1]];
+      arrows.push({ x0: a0[0], y0: a0[1], x1: a1[0], y1: a1[1], col: cPh, lw: 3, head: Math.min(10, 0.55 * lenU) });
+      uMid = [(a0[0] + a1[0]) / 2, (a0[1] + a1[1]) / 2];
+      labels.unshift({ v: ['*u*'], size: 13.5, col: cPhT, at: uMid, rad: 3, pref: Math.atan2(oU[1], oU[0]) / DEG });
+    }
+    drawArrows(ctx, arrows);
+    for (const a of arrows) segs.push([a.x0, a.y0, a.x1, a.y1]);
+    ctx.restore();
+
+    // axes, bottom left
+    const ax0 = 14, ay0 = H - 14, al = 22;
+    ctx.fillStyle = EPP.alpha('surface', 0.84); ctx.fillRect(ax0 - 8, ay0 - al - 16, al + 26, al + 22);
+    drawArrows(ctx, [{ x0: ax0, y0: ay0, x1: ax0 + al, y1: ay0, col: cMut, lw: 1.3, head: 6 }, { x0: ax0, y0: ay0, x1: ax0, y1: ay0 - al, col: cMut, lw: 1.3, head: 6 }]);
+    ctx.fillStyle = cMut; rt(ctx, '$x$', ax0 + al + 3, ay0 + 4, 11); rt(ctx, '$y$', ax0 + 4, ay0 - al - 3, 11);
+    // labels
+    const pl = makePlacer(ctx, [3, BAND + 2, W - 3, H - 3], segs, discs);
+    pl.block([ax0 - 8, ay0 - al - 16, ax0 + al + 18, ay0 + 8]);
+    if (lenU < 4) pl.put(['no displacement: no dipole', 'no dipole'], 11.5, O[0], O[1], rS + 4, -90, cFg2);
+    for (const lb of labels) pl.put(lb.v, lb.size, lb.at[0], lb.at[1], lb.rad, lb.pref, lb.col);
+    if (bondSeg) pl.put(['Ti–O–Ti bond', 'bond'], 11.5, X(1.25), O[1], 2, c.p[1] > 0 ? 90 : -90, cFg2);
+    ctx.strokeStyle = EPP.css('--rule'); ctx.lineWidth = 1; ctx.strokeRect(0.5, BAND + 0.5, W - 1, H - BAND - 1);
+  }
+
+  // ---------- readouts ----------
+  const $v = (s) => fig.querySelector('.a4-born-v-' + s);
+  const ro = { Z: $v('Z'), sum: $v('sum'), u: $v('u'), r: $v('r'), ang: $v('ang'), asr: $v('asr') };
+  const matHTML = (Z) => '<span style="display:inline-grid;grid-template-columns:auto auto;column-gap:0.9em;padding:0 0.45em;margin:1px 0;border-left:1.5px solid var(--muted);border-right:1.5px solid var(--muted);border-radius:5px;vertical-align:middle;text-align:right;line-height:1.3">' +
+    [Z[0][0], Z[0][1], Z[1][0], Z[1][1]].map(v => `<span>${fz(v)}</span>`).join('') + '</span>';
+  function readouts() {
+    const c = cur, S = c.S, Z = S.Z, u = c.u;
+    // no-break spaces inside each term: the lines break only between terms
+    const nb = (s) => s.replace(/ /g, ' ');
+    ro.Z.innerHTML = `${matHTML(Z)} <span style="color:var(--muted)">${nb(`(${S.name})`)}</span>`;
+    ro.sum.textContent = [nb(`${fx(u[0], 4)} Å × (${fz(Z[0][0])}, ${fz(Z[1][0])})`), `${u[1] < 0 ? '−' : '+'}`, nb(`${fx(Math.abs(u[1]), 4)} Å × (${fz(Z[0][1])}, ${fz(Z[1][1])})`), '=', nb(`(${fx(c.p[0], 3)}, ${fx(c.p[1], 3)}) Å`)].join(' ');
+    ro.u.textContent = nb(`(${fx(u[0], 4)}, ${fx(u[1], 4)}) Å`);
+    ro.r.textContent = c.m > 0 ? `${fx(c.ratio, 2)} (nominal ${Math.abs(S.nom)})` : '— (no displacement)';
+    let a = '— (no displacement)';
+    if (c.m > 0) {
+      const d = c.ang / DEG, ad = Math.abs(d);
+      a = ad < 0.05 ? `0.0° (dipole ${c.sg > 0 ? 'along' : 'opposite to'} ${B('u')})` : `${fx(d, 1)}° (${d > 0 ? 'anticlockwise' : 'clockwise'}, toward the bond axis)`;
+    }
+    ro.ang.innerHTML = a;
+    const t = c.cr.sum, tot = t.reduce((s, v) => s + v, 0);
+    ro.asr.textContent = `${c.cr.name}: ` + nb(`${t.map((v, i) => (i ? (v < 0 ? ' − ' : ' + ') : (v < 0 ? '−' : '')) + Math.abs(v).toFixed(2)).join('')} = ${Math.abs(tot) < 0.005 ? '0' : fx(tot, 2)}`);
+    cvs.setAttribute('aria-valuenow', String(Math.round(c.th / DEG)));
+    cvs.setAttribute('aria-valuetext', `${Math.round(c.th / DEG)} degrees, size ${c.m.toFixed(3)} Å; ${S.name}; dipole p/e = (${fx(c.p[0], 3)}, ${fx(c.p[1], 3)}) Å` + (c.m > 0 ? `, angle ${fx(c.ang / DEG, 1)} degrees` : ''));
+  }
+
+  // ---------- controls ----------
+  let anim = null, thA = 30, lastRo = 0;
+  function redraw(forceRo) {
+    cur = compute(ui.state);
+    draw();
+    const now = performance.now();
+    if (forceRo || !(anim && anim.running) || now - lastRo > 200) { readouts(); lastRo = now; }
+  }
+  const elCtl = fig.querySelector('.a4-born-ctrls');
+  const ui = EPP.controls(elCtl, [
+    { key: 'atom', type: 'seg', label: 'displaced atom', options: [['ga', 'Ga in GaAs'], ['ti', 'Ti in BaTiO₃'], ['o', 'O in BaTiO₃']], value: 'o' },
+    { key: 'theta', type: 'range', label: 'direction θ of u', min: 0, max: 360, step: 1, value: 30, fmt: v => `${Math.round(v)}°` },
+    { key: 'mag', type: 'range', label: 'size |u|', min: 0, max: UMAX, step: 0.005, value: 0.05, fmt: v => `${(Math.round(v * 1000) / 1000).toFixed(3)} Å` },
+    { key: 'nom', type: 'toggle', label: 'show the nominal charge', value: false }
+  ], (st) => {
+    if (Math.round(st.theta) % 360 !== Math.round(thA) % 360) thA = Math.round(st.theta) % 360;
+    redraw(true);
+  });
+  const setLab = (key, html) => { const sp = elCtl.querySelector(`label[for="viz-a4-born-${key}"] > span`); if (sp) sp.innerHTML = html; };
+  setLab('theta', `direction ${I('θ')} of ${B('u')}<sub>${I('κ')}</sub>`);
+  setLab('mag', `size |${B('u')}<sub>${I('κ')}</sub>|`);
+  const boxOf = (key) => { const el = elCtl.querySelector(`#viz-a4-born-${key}`); return el ? el.closest('.ctrl') : null; };
+
+  // drag: near the atom it moves the atom (direction and size), farther out it only steers the direction
+  const local = (e) => { const r = cvs.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  function fromPointer(px, py) {
+    if (!G) return;
+    const dx = px - G.cx, dy = G.cy - py, d = Math.hypot(dx, dy);
+    if (d < 3) return;
+    let th = Math.round(Math.atan2(dy, dx) / DEG); if (th < 0) th += 360;
+    thA = th; ui.set('theta', th, true);
+    if (dragMode === 'move') ui.set('mag', EPP.clamp(Math.round(d / (XU * G.k) / 0.005) * 0.005, 0, UMAX), true);
+    redraw(true);
+  }
+  cvs.addEventListener('pointerdown', (e) => {
+    if (!G) return;
+    const [px, py] = local(e);
+    if (py < BAND) return;
+    dragMode = Math.hypot(px - G.cx, py - G.cy) <= UMAX * XU * G.k + 18 ? 'move' : 'steer';
+    try { cvs.setPointerCapture(e.pointerId); } catch (_) {}
+    if (anim && anim.running) anim.pause();
+    cvs.style.cursor = 'grabbing';
+    fromPointer(px, py);
+    e.preventDefault();
+  });
+  cvs.addEventListener('pointermove', (e) => { if (dragMode) fromPointer(...local(e)); });
+  const endDrag = () => { if (!dragMode) return; dragMode = null; cvs.style.cursor = 'grab'; redraw(true); };
+  cvs.addEventListener('pointerup', endDrag);
+  cvs.addEventListener('pointercancel', endDrag);
+  cvs.addEventListener('keydown', (e) => {
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+    let th = Math.round(ui.state.theta) % 360, mag = ui.state.mag;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp') th = (th + 5) % 360;
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') th = (th + 355) % 360;
+    else if (e.key === 'Home') th = 0;
+    else if (e.key === 'PageUp') mag = Math.min(UMAX, Math.round((mag + 0.01) * 1000) / 1000);
+    else if (e.key === 'PageDown') mag = Math.max(0, Math.round((mag - 0.01) * 1000) / 1000);
+    else return;
+    e.preventDefault();
+    if (anim && anim.running) anim.pause();
+    thA = th; ui.set('theta', th, true); ui.set('mag', mag, true);
+    redraw(true);
+  });
+
+  // optional slow rotation of u (starts paused; EPP.anim pauses it offscreen and under reduced motion)
+  const host = document.createElement('div');
+  host.className = 'ctrl';
+  host.innerHTML = `<span class="lab"><span>turn ${B('u')}<sub>${I('κ')}</sub> slowly</span></span>`;
+  const bTheta = boxOf('theta');
+  if (bTheta) bTheta.after(host); else elCtl.appendChild(host);
+  anim = EPP.anim(fig, (t, dt) => {
+    if (dt > 0) {
+      thA = (thA + 24 * dt) % 360;
+      const th = Math.round(thA) % 360;
+      if (th === Math.round(ui.state.theta) % 360) return;
+      ui.set('theta', th, true);
+    }
+    redraw(false);
+  }, { buttonHost: host, autoplay: false });
+  anim.button.addEventListener('click', () => redraw(true));
+  anim.button.style.justifySelf = 'start';
+  anim.button.style.minWidth = '6em';
+  cv.onResize(() => { if (cur) draw(); });
+})();
+</script>

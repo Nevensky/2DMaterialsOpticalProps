@@ -1,0 +1,396 @@
+  <figure class="viz" id="viz-a3-scf">
+    <p class="viz-title">The self-consistency loop as a geometric series <span class="tag">interactive</span></p>
+    <p class="a3-scf-pt" style="font-family:var(--font-ui);font-size:0.85rem;color:var(--fg-2);margin:0 0 2px">(a) the series <span data-eq="a3-eq-series">(A3.14)</span> as diagrams, each term divided by $\Delta V^{\mathrm{en}}$, at the current $q$</p>
+    <div class="fd a3-scf-fd" style="margin:4px 0 2px;padding:6px 0 2px;gap:10px 12px;align-items:flex-start">
+      <figure><div data-d="dressed"></div><figcaption>$1/\varepsilon^{\mathrm e}=$ <b class="a3-scf-num a3-scf-v-sum"></b></figcaption></figure>
+      <div class="a3-scf-term"><span class="op">=</span><figure><div data-d="bare"></div><figcaption>$1$</figcaption></figure></div>
+      <div class="a3-scf-term"><span class="op">+</span><figure><div data-d="one"></div><figcaption>$(v+f^{\mathrm{xc}})\chi^0=$ <b class="a3-scf-num a3-scf-v-t1"></b></figcaption></figure></div>
+      <div class="a3-scf-term"><span class="op">+</span><figure><div data-d="two"></div><figcaption>$\big[(v+f^{\mathrm{xc}})\chi^0\big]^2=$ <b class="a3-scf-num a3-scf-v-t2"></b></figcaption></figure></div>
+      <div class="a3-scf-term"><span class="op">+ ⋯</span></div>
+    </div>
+    <p class="a3-scf-note" style="font-family:var(--font-ui);font-size:0.85rem;line-height:1.45;color:var(--fg-2);margin:4px auto 0;text-align:center;max-width:64ch"></p>
+    <div class="viz-grid two" style="margin-top:14px">
+      <div class="a3-scf-b"><div class="legend a3-scf-legb">
+        <span class="item"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" style="vertical-align:-1px;margin-right:6px"><circle cx="6" cy="6" r="3.8" style="fill:var(--c-electron)"/></svg>$\Delta V/\Delta V^{\mathrm{en}}\gt0$</span>
+        <span class="item"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" style="vertical-align:-1px;margin-right:6px"><circle cx="6" cy="6" r="3.6" fill="none" style="stroke:var(--c-electron)" stroke-width="1.6"/></svg>$\Delta V/\Delta V^{\mathrm{en}}\lt0$</span>
+        <span class="item" style="color:var(--fg)"><span class="sw dash" style="border-top-width:1.5px"></span><span style="color:var(--fg-2)">fixed point $1/\varepsilon^{\mathrm e}$</span></span>
+      </div></div>
+      <div class="a3-scf-c"><div class="legend a3-scf-legc">
+        <span class="item" data-s="plain" style="color:var(--c-electron)"><span class="sw"></span><span style="color:var(--fg-2)">plain, $w(q)=w$</span></span>
+        <span class="item" data-s="kerker" style="color:var(--c-5)"><span class="sw dash"></span><span style="color:var(--fg-2)">Kerker, $w(q)=w_0q^2/(q^2+q_0^2)$</span></span>
+        <span class="item" style="color:var(--c-4)"><span class="sw box"></span><span style="color:var(--fg-2)">converges, $|\zeta|\lt1$</span></span>
+      </div></div>
+    </div>
+    <div class="a3-scf-ctrls"></div>
+    <div class="readout a3-scf-ro" aria-live="polite"><span>$\varepsilon^{\mathrm e}(q)$<b class="a3-scf-v-eps"></b></span><span>$1/\varepsilon^{\mathrm e}$<b class="a3-scf-v-inv"></b></span><span>$w(q)$<b class="a3-scf-v-w"></b></span><span>$\zeta$<b class="a3-scf-v-zeta"></b></span><span>cycles to $10^{-6}$<b class="a3-scf-v-cyc"></b></span><span><span class="a3-scf-k-plain">stable for $w\lt$</span><span class="a3-scf-k-kerker" hidden>stable for $w_0\lt$</span><b class="a3-scf-v-stab"></b></span></div>
+    <figcaption><p class="cap-key"><strong>What to notice.</strong> At the default the loop converges with <span class="nw">$\zeta\lt0$:</span> each cycle overshoots, and the iterate settles on $1/\varepsilon^{\mathrm e}$ from alternate sides. The plain iteration, <span class="nw">$w=1$,</span> sums the series of (a), which diverges wherever <span class="nw">$\varepsilon^{\mathrm e}\gt2$,</span> in a metal at every long wavelength; Kerker's weight keeps $w\varepsilon^{\mathrm e}$ between about $w_0/2$ and $w_0$ at every <span class="nw">$q$.</span></p><div class="cap-more">
+      <p><strong>Marks.</strong> In (a) the amber zigzag is the phonon <span class="nw">$\bq\nu$,</span> the blue arrowed lines are electrons, the large dot the bare vertex <span class="nw">$\Delta V^{\mathrm{en}}$,</span> the grey disk the screened vertex <span class="nw">$\Delta V^{\mathrm{KS}}$,</span> each loop a bubble $\chi^0$ and each dashed line the interaction <span class="nw">$v+f^{\mathrm{xc}}$.</span> In (b) hollow points are negative. In (c) the active scheme is solid, the other dashed; the loop converges inside the shaded band.</p>
+      <p><strong>Try.</strong> Raise $w$ above the stable value in the readout: the iterates grow and the induced charge sloshes; at $w=1$ they are the partial sums of (a). Lower $q$ at fixed <span class="nw">$w$:</span> below about $k_{\mathrm{TF}}\sqrt{w/2}$ the loop diverges, since <span class="nw">$\varepsilon^{\mathrm e}\simeq(k_{\mathrm{TF}}/q)^2$.</span> Switch to Kerker: curve (c) flattens near <span class="nw">$1-w_0$,</span> and $w_0=1$ converges in fewer than 20 cycles at every <span class="nw">$q$.</span> Turn on the exchange kernel: $1/\varepsilon^{\mathrm e}$ rises slightly, because a test electron is screened less.</p>
+      <p><strong>Model.</strong> One Fourier component of the electron gas, without local fields: <span data-eq="a3-eq-loop">(A3.12)</span>–<span data-eq="a3-eq-mix">(A3.15)</span> with $v\chi^0=-(k_{\mathrm{TF}}/q)^2F_{\mathrm L}(q/2k_{\mathrm F})$ from <span data-eq="a3-eq-lindhard">(A3.18)</span>–<span data-eq="a3-eq-epsj">(A3.19)</span> and <span class="nw">$(k_{\mathrm{TF}}/k_{\mathrm F})^2=0.663\,r_{\mathrm s}$.</span> Without the kernel $f^{\mathrm{xc}}=0$ (RPA, test charge); the exchange kernel $f^{\mathrm{xc}}=-\pi e^2/k_{\mathrm F}^2$ of the text after <span data-eq="a3-eq-dxc">(A3.6)</span> multiplies $v\chi^0$ by <span class="nw">$1-q^2/4k_{\mathrm F}^2$.</span> Kerker uses <span class="nw">$q_0=k_{\mathrm{TF}}$.</span> The cycles are counted until the error is below $10^{-6}$ of <span class="nw">$1/\varepsilon^{\mathrm e}$.</span> $r_{\mathrm s}=3.93$ is sodium-like (literature value, illustrative).</p>
+    </div></figcaption>
+  </figure>
+<script>
+(() => {
+  const fig = document.getElementById('viz-a3-scf');
+  if (!fig || !window.EPP) return;
+
+  // ---------- equation numbers: plain text in the markup, made into a.eqref links once the section's equations are on the page ----------
+  const linkEqs = () => fig.querySelectorAll('span[data-eq]').forEach((sp) => {
+    const t = document.getElementById(sp.dataset.eq);
+    if (!t) return;
+    const m = (t.textContent || '').match(/\\tag\{([^}]*)\}/);
+    const a = document.createElement('a');
+    a.className = 'eqref'; a.href = '#' + sp.dataset.eq; a.textContent = m ? `(${m[1]})` : sp.textContent;
+    sp.replaceWith(a);
+  });
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', linkEqs); else linkEqs();
+
+  // ---------- physics: one Fourier component of the electron gas, wavevectors in units of k_F ----------
+  const PI = Math.PI, NIT = 40, YMIN = 1e-4, YMAX = 1e2;
+  // Lindhard function F_L(x), x = q/2k_F (A3.18)
+  const FL = (x) => {
+    if (x < 1e-4) return 1 - x * x / 3;
+    if (Math.abs(x - 1) < 1e-9) return 0.5;
+    return 0.5 + (1 - x * x) / (4 * x) * Math.log(Math.abs((1 + x) / (1 - x)));
+  };
+  // (k_TF/k_F)^2 = 4/(π k_F a_0) with k_F = 1.91916/(r_{\mathrm s} a_0): 0.66343 r_{\mathrm s}
+  const TF2 = (rs) => 4 * rs / (PI * 1.91916);
+  // one round of response, (v + f^xc) χ^0 = −(k_TF/q)^2 F_L(q/2k_F) (A3.18, A3.19), times 1 − q^2/4k_F^2 with the
+  // exchange kernel f^xc = −πe^2/k_F^2 (text after A3.6); q in units of k_F
+  const round = (q, rs, xc) => { const a = -TF2(rs) / (q * q) * FL(q / 2); return xc ? a * (1 - q * q / 4) : a; };
+  function model(s) {
+    const q = s.q, rs = s.rs, xc = !!s.xc, ker = s.mix === 'kerker', w0 = s.w, q02 = TF2(rs);   // Kerker: q_0 = k_TF
+    const wOf = (qq) => (ker ? w0 * qq * qq / (qq * qq + q02) : w0);
+    const x = round(q, rs, xc), eps = 1 - x, inv = 1 / eps, wq = wOf(q), zeta = 1 - wq * eps;   // ε^e (A3.13); ζ, step 3 of the mixing derivation
+    // the iterates from ΔV^en: ΔV/ΔV^en = 1/ε^e + ζ^N (1 − 1/ε^e)
+    const it = [];
+    for (let N = 0; N <= NIT; N++) it.push(inv + Math.pow(zeta, N) * (1 - inv));
+    // cycles until the error is below 1e-6 of the fixed point: smallest N with |ζ|^N |ε^e − 1| < 1e-6
+    const e0 = Math.abs(eps - 1), az = Math.abs(zeta);
+    let cyc;
+    if (e0 < 1e-6) cyc = 0;
+    else if (az >= 1) cyc = Infinity;
+    else if (az < 1e-12) cyc = 1;
+    else {
+      cyc = Math.max(1, Math.ceil(Math.log(1e-6 / e0) / Math.log(az)));
+      while (Math.pow(az, cyc) * e0 >= 1e-6) cyc++;
+      while (cyc > 1 && Math.pow(az, cyc - 1) * e0 < 1e-6) cyc--;
+    }
+    // stability: |ζ| < 1, i.e. w ε^e < 2
+    const stab = eps > 0 ? (ker ? 2 * (q * q + q02) / (q * q * eps) : 2 / eps) : NaN;
+    return { q, rs, xc, ker, w0, q02, wOf, x, eps, inv, wq, zeta, it, cyc, stab };
+  }
+
+  // ---------- canvas text: '$…$' marks math (letters italic, digits upright); _x, ^{xy} as in EPP.drawRich ----------
+  const ITAL = /[A-Za-zα-ωℓħ]/;
+  function runs(s) {
+    const out = [];
+    String(s).split('$').forEach((seg, i) => {
+      for (const p of EPP.parseRich(seg)) {
+        if (i % 2 === 0) { out.push({ t: p.t, m: p.m, it: false }); continue; }
+        let b = '', it = null;
+        for (const ch of p.t) { const k = ITAL.test(ch); if (it !== null && k !== it) { out.push({ t: b, m: p.m, it }); b = ''; } b += ch; it = k; }
+        if (b) out.push({ t: b, m: p.m, it });
+      }
+    });
+    return out;
+  }
+  function txt(ctx, s, x, y, o = {}) {
+    const size = o.size || 11.5, fam = EPP.css('--font-ui'), rs = runs(s);
+    const font = (r) => `${r.it ? 'italic ' : ''}${r.m ? Math.round(size * 0.72) : size}px ${fam}`;
+    const ws = rs.map((r) => { ctx.font = font(r); return ctx.measureText(r.t).width; });
+    const tot = ws.reduce((a, b) => a + b, 0);
+    if (o.measure) return tot;
+    let x0 = o.align === 'center' ? x - tot / 2 : (o.align === 'right' ? x - tot : x);
+    if (o.color) ctx.fillStyle = o.color;
+    ctx.textAlign = 'left';
+    rs.forEach((r, k) => { ctx.font = font(r); ctx.fillText(r.t, x0, y + (r.m === -1 ? size * 0.28 : (r.m === 1 ? -size * 0.38 : 0))); x0 += ws[k]; });
+    return tot;
+  }
+  const tw = (ctx, s, size) => txt(ctx, s, 0, 0, { size, measure: true });
+  const rrect = (ctx, x, y, w, h, r) => { ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(x, y, w, h, r); else ctx.rect(x, y, w, h); };
+  // text on a translucent chip of the surface colour, so it reads over curves and points; (x, y) is the baseline anchor
+  function chip(ctx, s, x, y, o = {}) {
+    const size = o.size || 11, w = tw(ctx, s, size);
+    const x0 = o.align === 'center' ? x - w / 2 : (o.align === 'right' ? x - w : x);
+    ctx.fillStyle = EPP.alpha('surface', o.alpha ?? 0.84);
+    rrect(ctx, x0 - 3, y - size * 1.02, w + 6, size * 1.42, 3); ctx.fill();
+    txt(ctx, s, x0, y, { size, color: o.color });
+    return [x0 - 3, x0 + w + 3];
+  }
+  // numbers with d significant digits: canvas rich text ('1.04×10^{5}') or HTML ('1.04×10<sup>5</sup>')
+  function num(v, html, d = 3) {
+    if (!isFinite(v)) return '—';
+    const a = Math.abs(v);
+    if (a === 0) return '0';
+    if (a >= 1e4 || a < 1e-3) {
+      let e = Math.floor(Math.log10(a)), m = v / Math.pow(10, e);
+      if (Math.abs(m) >= 10 - 0.5 * Math.pow(10, 1 - d)) { m /= 10; e += 1; }
+      const ex = e < 0 ? '−' + (-e) : String(e);
+      return `${m.toFixed(d - 1).replace('-', '−')}×10${html ? `<sup>${ex}</sup>` : `^{${ex}}`}`;
+    }
+    return String(Number(v.toPrecision(d))).replace('-', '−');
+  }
+  const spoken = (v) => num(v, false).replace(/×10\^\{(−?\d+)\}/, ' times 10 to the power $1').replace(/−/g, 'minus ');
+
+  // ---------- SVG labels for the diagrams, in the primer's notation ----------
+  // markup: _x, _{..}, ^x, ^{..} scripts; [..] upright label (en, KS, xc); !c bold upright vector;
+  // Latin and lower-case Greek letters italic, everything else upright
+  const NS = 'http://www.w3.org/2000/svg';
+  const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
+  const ITS = /[A-Za-zα-ω]/;
+  function lex(s) {
+    const out = [];
+    const scan = (str, lvl) => {
+      let i = 0;
+      while (i < str.length) {
+        const ch = str[i];
+        if ((ch === '_' || ch === '^') && lvl === 0 && i + 1 < str.length) {
+          let inner; const j = i + 1;
+          if (str[j] === '{') { let d = 1, k = j + 1; while (k < str.length && d) { if (str[k] === '{') d++; else if (str[k] === '}') d--; k++; } inner = str.slice(j + 1, k - 1); i = k; }
+          else { inner = str[j]; i = j + 1; }
+          scan(inner, ch === '_' ? -1 : 1);
+          continue;
+        }
+        if (ch === '[') { const k = str.indexOf(']', i + 1); out.push({ t: str.slice(i + 1, k), it: false, b: false, lvl }); i = k + 1; continue; }
+        if (ch === '!') { out.push({ t: str[i + 1], it: false, b: true, lvl }); i += 2; continue; }
+        out.push({ t: ch, it: ITS.test(ch), b: false, lvl }); i++;
+      }
+    };
+    scan(s, 0);
+    const res = [];
+    for (const p of out) { const q = res[res.length - 1]; if (q && q.it === p.it && q.b === p.b && q.lvl === p.lvl) q.t += p.t; else res.push(Object.assign({}, p)); }
+    return res;
+  }
+  function label(parent, s, x, y, o = {}) {
+    const size = o.size || 14, fam = EPP.css('--font-text');
+    const text = mk('text', { x, y, 'text-anchor': o.anchor || 'middle', fill: o.color || EPP.color('fg'), 'font-size': size }, parent);
+    let cur = 0;
+    lex(s).forEach((r) => {
+      const ts = mk('tspan', { 'font-family': fam, 'font-size': ((r.lvl ? 0.72 : 1) * size).toFixed(2), 'font-style': r.it ? 'italic' : 'normal', 'font-weight': r.b ? 700 : 400 }, text);
+      const target = r.lvl === -1 ? 0.28 * size : (r.lvl === 1 ? -0.38 * size : 0);
+      if (Math.abs(target - cur) > 1e-6) ts.setAttribute('dy', (target - cur).toFixed(2));
+      cur = target;
+      ts.textContent = r.t;
+    });
+    return text;
+  }
+
+  // ---------- (a) the diagrams: phonon line, vertex, bubbles χ^0, interaction lines v + f^xc ----------
+  // every diagram has its phonon line at height YC; the electron leaves to the upper right, coming in from the lower right
+  const YC = 50, DH = 100, LX = 32, LY = 40;
+  const legs = (xv, o) => [
+    { t: 'fermion', a: [xv + LX, YC + LY], b: [xv + o, YC + o] },
+    { t: 'fermion', a: [xv + o, YC - o], b: [xv + LX, YC - LY] }
+  ];
+  const bubble = (x0, x1) => [
+    { t: 'fermion', a: [x0, YC], b: [x1, YC], bend: 0.46 },
+    { t: 'fermion', a: [x1, YC], b: [x0, YC], bend: 0.46 },
+    { t: 'vertex', at: [x0, YC], r: 2.4 }, { t: 'vertex', at: [x1, YC], r: 2.4 }
+  ];
+  const chain = (n) => {
+    const it = [{ t: 'phonon', a: [4, YC], b: [36, YC] }];
+    let x = 36;
+    for (let k = 0; k < n; k++) { it.push(...bubble(x, x + 40), { t: 'coulomb', a: [x + 40, YC], b: [x + 80, YC] }); x += 80; }
+    it.push(...legs(x, 2), { t: 'vertex', at: [x, YC], r: 2.4 }, { t: 'vertex', at: [36, YC], r: 3.6 });
+    return it;
+  };
+  const chainDeco = (n) => (g, c) => {
+    label(g, '!qν', 20, YC - 9, { size: 13, color: c.pn });
+    label(g, 'ΔV^{[en]}', 20, YC + 28, { size: 13, color: c.fg });
+    for (let k = 0; k < n; k++) {
+      label(g, 'χ^0', 56 + 80 * k, YC + 5, { size: 13, color: c.el });
+      label(g, 'v+f^{[xc]}', 96 + 80 * k, YC - 8, { size: 12, color: c.ph });
+    }
+  };
+  const DG = {
+    dressed: { w: 86, items: [{ t: 'phonon', a: [4, YC], b: [40, YC] }, ...legs(50, 7.5), { t: 'blob', at: [50, YC], r: 10, color: 'muted' }],
+      deco: (g, c) => {
+        label(g, '!qν', 22, YC - 9, { size: 13, color: c.pn });
+        label(g, 'ΔV^{[KS]}', 28, YC + 28, { size: 13, color: c.fg });
+        label(g, 'n!k', 76, YC + 47, { size: 13, color: c.el, anchor: 'end' });
+        label(g, 'm !k+!q', 76, YC - 39, { size: 13, color: c.el, anchor: 'end' });
+      },
+      aria: 'Screened vertex: the phonon line q nu ends on a grey disk, the screened potential change Delta V KS, at which an electron in n k is scattered into m k plus q.' },
+    bare: { w: 80, items: [{ t: 'phonon', a: [4, YC], b: [44, YC] }, ...legs(44, 2), { t: 'vertex', at: [44, YC], r: 3.6 }],
+      deco: (g, c) => { label(g, '!qν', 24, YC - 9, { size: 13, color: c.pn }); label(g, 'ΔV^{[en]}', 24, YC + 28, { size: 13, color: c.fg }); },
+      aria: 'Bare vertex: the phonon line ends on a large dot, the bare potential change Delta V en, at which the electron is scattered.' },
+    one: { w: 152, items: chain(1), deco: chainDeco(1),
+      aria: 'One round of response: the bare vertex Delta V en opens an electron bubble chi 0; a dashed interaction line v plus f xc carries the potential of the induced density to the electron.' },
+    two: { w: 232, items: chain(2), deco: chainDeco(2),
+      aria: 'Two rounds of response: two bubbles chi 0, each followed by a dashed interaction line v plus f xc, between the bare vertex and the electron.' }
+  };
+  const drawn = [];
+  fig.querySelectorAll('.a3-scf-fd [data-d]').forEach((el) => {
+    const d = DG[el.dataset.d];
+    if (!d) return;
+    const svg = EPP.fd.draw(el, { w: d.w, h: DH, label: d.aria, items: d.items });
+    svg.style.display = 'block';
+    drawn.push([svg, d]);
+  });
+  // EPP.fd repaints a diagram (and drops these labels) when the theme changes; this callback is registered after
+  // those repaints, so it runs after them and writes the labels again in the new colours
+  const decorate = () => {
+    const c = { fg: EPP.color('fg'), el: EPP.color('electron-t'), ph: EPP.color('photon-t'), pn: EPP.color('phonon-t') };
+    drawn.forEach(([svg, d]) => {
+      svg.querySelectorAll('g.a3-scf-lab').forEach((n) => n.remove());
+      d.deco(mk('g', { class: 'a3-scf-lab' }, svg), c);
+    });
+  };
+  decorate();
+  EPP.onTheme(decorate);
+  // each operator stays with the term after it when the row wraps, and sits at the height of the phonon lines
+  fig.querySelectorAll('.a3-scf-term').forEach((t) => { t.style.cssText = 'display:flex;align-items:flex-start;gap:8px'; });
+  fig.querySelectorAll('.a3-scf-fd .op').forEach((op) => { op.style.lineHeight = '1'; op.style.marginTop = `calc(${YC}px - 0.53em)`; });
+  fig.querySelectorAll('.a3-scf-fd figcaption').forEach((c) => { c.style.cssText = 'font-family:var(--font-ui);font-size:0.84rem;line-height:1.35;color:var(--fg-2);margin:0;text-align:center;max-width:none;white-space:nowrap'; });
+  fig.querySelectorAll('.a3-scf-num').forEach((b) => { b.style.cssText = 'font-family:var(--font-mono);font-weight:500;font-size:0.8rem;color:var(--fg)'; });
+
+  // ---------- (b) the iterates and (c) the error factor ----------
+  const elB = fig.querySelector('.a3-scf-b'), elC = fig.querySelector('.a3-scf-c');
+  const LOGT = [[1e-4, '10^{−4}'], [1e-3, '10^{−3}'], [0.01, '0.01'], [0.1, '0.1'], [1, '1'], [10, '10'], [100, '100']].map(([v, label]) => ({ v, label }));
+  const pB = new EPP.Plot(elB, {
+    xlim: [-0.8, NIT + 0.8], ylim: [YMIN, YMAX], logy: true, aspect: 0.74, minHeight: 240, maxHeight: 340, legend: false,
+    xticks: [0, 10, 20, 30, 40], yticks: LOGT, margin: { t: 24, l: 54, r: 12, b: 42 },
+    xname: 'N_{cyc}', hoverX: (v) => String(Math.round(v)), hoverY: (v) => EPP.fmt(v, 3),
+    ariaLabel: 'Panel b: magnitude of the potential after each cycle, divided by the bare one, against the number of cycles, on a log axis'
+  });
+  const pC = new EPP.Plot(elC, {
+    xlim: [0, 3], ylim: [-3, 1.2], aspect: 0.74, minHeight: 240, maxHeight: 340, legend: false,
+    yticks: [-3, -2, -1, 0, 1], margin: { t: 24, l: 54, r: 12, b: 42 },
+    xname: 'q/k_F', hoverX: (v) => EPP.fix(v, 2), hoverY: (v) => EPP.fix(v, 3),
+    ariaLabel: 'Panel c: error factor zeta of one cycle against q over k_F, for plain and Kerker mixing, with the band where the loop converges'
+  });
+  elB.appendChild(elB.querySelector('.a3-scf-legb'));   // the legends (static markup, MathJax) go under the canvases
+  elC.appendChild(elC.querySelector('.a3-scf-legc'));
+  let cur = null;
+  // axis titles and annotations, with the symbols in italic, are drawn after the plot's own render
+  const hook = (p, extra) => { const base = p.render.bind(p); p.render = () => { base(); if (p.cv.w && p.cv.h && cur) extra(p, p.ctx, p.cv.w, p.cv.h, p.m); }; };
+  function axes(p, ctx, w, h, m, title, short, xlab, ylab) {
+    const cFg = EPP.color('fg');
+    ctx.textBaseline = 'alphabetic';
+    txt(ctx, tw(ctx, title, 11.5) <= w - 6 ? title : short, 2, 14, { size: 11.5, color: EPP.color('fg2') });
+    txt(ctx, xlab, m.l + (w - m.l - m.r) / 2, h - 7, { size: 12, color: cFg, align: 'center' });
+    ctx.save(); ctx.translate(13, m.t + (h - m.t - m.b) / 2); ctx.rotate(-PI / 2); txt(ctx, ylab, 0, 0, { size: 12, color: cFg, align: 'center' }); ctx.restore();
+  }
+  hook(pB, (p, ctx, w, h, m) => {
+    axes(p, ctx, w, h, m, '(b) the loop, cycle by cycle', '(b) the loop', 'number of cycles $N$_{cyc}', '|Δ$V$/Δ$V$^{en}|');
+    const c = cur, cFg = EPP.color('fg');
+    // the fixed point: label under the dashed line at the right, where converged points sit on the line
+    const yl = p.Y(c.inv), below = yl + 15 < h - m.b - 2;
+    chip(ctx, `fixed point 1/$ε$^e = ${num(c.inv)}`, w - m.r - 5, below ? yl + 15 : yl - 5, { size: 10.5, color: cFg, align: 'right' });
+    // convergence verdict: top right, or top left while a slow divergence still fills the right
+    const az = Math.abs(c.zeta), slow = az >= 1 && az <= 1.35;
+    const s = `${az < 1 ? 'converges' : 'diverges'}: |$ζ$| = ${num(az)}`;
+    chip(ctx, s, slow ? m.l + 6 : w - m.r - 5, p.Y(40), { size: 11, color: cFg, align: slow ? 'left' : 'right' });
+  });
+  // labels of (c): kept clear of the two curves at the right
+  let cLab = { conv: -0.6, sl: -1.55 };
+  hook(pC, (p, ctx, w, h, m) => {
+    axes(p, ctx, w, h, m, '(c) the error factor of one cycle', '(c) error factor per cycle', '$q$/$k$_F', '$ζ$ = 1 − $w$($q$) $ε$^e($q$)');
+    const c = cur;
+    chip(ctx, 'converges: |$ζ$| < 1', w - m.r - 5, p.Y(cLab.conv) + 4, { size: 10.5, color: EPP.textColor('c4'), align: 'right' });
+    chip(ctx, '$ζ$ < −1: charge sloshing', w - m.r - 5, p.Y(cLab.sl) + 4, { size: 10.5, color: EPP.color('fg2'), align: 'right' });
+    // the current ζ, drawn outside the clip so that it stays whole at q = 3k_F
+    if (c.zeta >= -3) {
+      const X = p.X(c.q), Y = p.Y(c.zeta);
+      ctx.fillStyle = EPP.color('surface'); ctx.beginPath(); ctx.arc(X, Y, 6.2, 0, 2 * PI); ctx.fill();
+      ctx.fillStyle = EPP.color(c.ker ? 'c5' : 'electron'); ctx.beginPath(); ctx.arc(X, Y, 4.4, 0, 2 * PI); ctx.fill();
+    } else {
+      const col = EPP.textColor(c.ker ? 'c5' : 'electron'), right = c.q < 1.8, xx = p.X(c.q) + (right ? 9 : -9);
+      chip(ctx, `$ζ$ = ${num(c.zeta)}, off scale`, xx, p.Y(-2.62) + 4, { size: 10.5, color: col, align: right ? 'left' : 'right' });
+    }
+  });
+  const XS = EPP.linspace(0.02, 3, 300);
+
+  function drawPlots() {
+    const c = cur;
+    // (b): |ΔV/ΔV^en| after N cycles; filled points positive, hollow negative
+    const nn = [], yy = [], pos = { x: [], y: [] }, neg = { x: [], y: [] };
+    for (let N = 0; N <= NIT; N++) {
+      const v = c.it[N], a = Math.abs(v);
+      nn.push(N);
+      if (!isFinite(a) || a > YMAX * 1.5 || a < YMIN) { yy.push(NaN); continue; }
+      yy.push(a);
+      (v >= 0 ? pos : neg).x.push(N); (v >= 0 ? pos : neg).y.push(a);
+    }
+    pB.draw([
+      { type: 'hline', at: c.inv, color: 'ink', dash: [6, 4], width: 1.4 },
+      { type: 'line', x: nn, y: yy, color: 'electron', width: 1.2, opacity: 0.55, label: '|ΔV/ΔV^{en}|', breakJump: Infinity },
+      { type: 'points', x: pos.x, y: pos.y, color: 'electron', r: 3.4 },
+      { type: 'points', x: neg.x, y: neg.y, color: 'electron', r: 3.2, hollow: true }
+    ]);
+    // (c): ζ(q) = 1 − w(q) ε^e(q) for both schemes; the active one solid, on top
+    const eps = XS.map((xq) => 1 - round(xq, c.rs, c.xc));
+    const zP = XS.map((xq, i) => Math.max(-60, 1 - c.w0 * eps[i]));
+    const zK = XS.map((xq, i) => Math.max(-60, 1 - c.w0 * xq * xq / (xq * xq + c.q02) * eps[i]));
+    const lP = { type: 'line', x: XS, y: zP, color: 'electron', width: c.ker ? 1.6 : 2.4, dash: c.ker ? [6, 4] : null, label: 'plain', breakJump: Infinity };
+    const lK = { type: 'line', x: XS, y: zK, color: 'c5', width: c.ker ? 2.4 : 1.6, dash: c.ker ? null : [6, 4], label: 'Kerker', breakJump: Infinity };
+    const col = c.ker ? 'c5' : 'electron';
+    // labels at the right edge, away from both curves
+    const near = (y0) => [2.45, 2.7, 2.95].some((xq) => { const i = Math.round((xq - 0.02) / (2.98 / 299)); return Math.abs(zP[i] - y0) < 0.38 || Math.abs(zK[i] - y0) < 0.38; });
+    cLab = { conv: near(-0.6) ? 0.58 : -0.6, sl: near(-1.55) ? -2.1 : -1.55 };
+    const L = [
+      { type: 'hband', y0: -1, y1: 1, color: 'c4', alpha: 0.1 },
+      { type: 'vline', at: c.q, color: 'muted', width: 1, dash: [3, 3] },
+      c.ker ? lP : lK, c.ker ? lK : lP
+    ];
+    if (c.zeta < -3) L.push({ type: 'arrow', x0: c.q, y0: -2.2, x1: c.q, y1: -2.95, color: col, width: 2, head: 8 });
+    pC.draw(L);
+    const verdict = Math.abs(c.zeta) < 1 ? 'converges' : 'diverges';
+    pB.cv.canvas.setAttribute('aria-label', `Panel b: potential after each cycle divided by the bare one, magnitude on a log axis, for 0 to 40 cycles; ` +
+      `filled points positive, hollow negative. The loop ${verdict}: zeta = ${spoken(c.zeta)}; the dashed fixed point 1 over epsilon e is ${spoken(c.inv)}.`);
+    pC.cv.canvas.setAttribute('aria-label', `Panel c: error factor zeta = 1 minus w(q) epsilon e(q) against q over k_F from 0 to 3, for plain mixing (blue) and Kerker mixing (violet), ` +
+      `${c.ker ? 'Kerker' : 'plain'} active; shaded band |zeta| < 1 where the loop converges. At q = ${c.q.toFixed(2)} k_F, zeta = ${spoken(c.zeta)}${c.zeta < -3 ? ', below the frame' : ''}.`);
+  }
+
+  // ---------- (a) values, note and readouts: the keys are static MathJax in the markup, only the values change ----------
+  const $v = (k) => fig.querySelector('.a3-scf-v-' + k);
+  const RO = { sum: $v('sum'), t1: $v('t1'), t2: $v('t2'), eps: $v('eps'), inv: $v('inv'), w: $v('w'), zeta: $v('zeta'), cyc: $v('cyc'), stab: $v('stab') };
+  const kPlain = fig.querySelector('.a3-scf-k-plain'), kKer = fig.querySelector('.a3-scf-k-kerker'), note = fig.querySelector('.a3-scf-note');
+  const I = (t) => `<i style="font-family:var(--font-text)">${t}</i>`, kF = `${I('k')}<sub>F</sub>`;
+  function texts() {
+    const c = cur, ax = Math.abs(c.x);
+    RO.sum.innerHTML = num(c.inv, true);
+    RO.t1.innerHTML = num(c.x, true);
+    RO.t2.innerHTML = num(c.x * c.x, true);
+    let s;
+    if (ax < 1e-9) s = `At ${I('q')} = 2${kF} the toy kernel cancels ${I('v')}: no round of response, no screening.`;
+    else if (c.x < 0 && ax > 1) s = `Each round is ${num(ax, true)} times the last and of opposite sign: the terms grow and the series diverges, while its sum, under the first diagram, stays finite.`;
+    else if (c.x < 0) s = `Each round is ${num(ax, true)} times the last and of opposite sign: the terms shrink and the series converges to its sum.`;
+    else s = `Beyond ${I('q')} = 2${kF} the toy kernel reverses the sign of a round: each round is ${num(ax, true)} times the last and of the same sign, so the series ${ax > 1 ? 'diverges' : 'converges'}.`;
+    note.innerHTML = s;
+    RO.eps.innerHTML = num(c.eps, true, 4);
+    RO.inv.innerHTML = num(c.inv, true);
+    RO.w.innerHTML = num(c.wq, true);
+    RO.zeta.innerHTML = num(c.zeta, true);
+    RO.cyc.textContent = isFinite(c.cyc) ? String(c.cyc) : 'never (diverges)';
+    RO.stab.innerHTML = num(c.stab, true);
+    kPlain.hidden = c.ker; kKer.hidden = !c.ker;
+    fig.querySelectorAll('.a3-scf-legc .item[data-s]').forEach((el) => {
+      const on = (el.dataset.s === 'kerker') === c.ker, sw = el.querySelector('.sw');
+      el.style.fontWeight = on ? '600' : '';
+      if (sw) { sw.className = on ? 'sw' : 'sw dash'; sw.style.borderTopWidth = on ? '3px' : '1.8px'; }
+    });
+  }
+
+  function update(s) {
+    cur = model(s);
+    drawPlots(); texts();
+  }
+
+  // ---------- controls ----------
+  const elCtl = fig.querySelector('.a3-scf-ctrls');
+  const ui = EPP.controls(elCtl, [
+    { key: 'q', type: 'range', label: 'wavevector q/k_F', min: 0.05, max: 3, step: 0.01, value: 0.5, fmt: (v) => v.toFixed(2) },
+    { key: 'rs', type: 'range', label: 'density parameter r_{\mathrm s}', min: 1, max: 6, step: 0.01, value: 3.93, fmt: (v) => v.toFixed(2) + (Math.abs(v - 3.93) < 0.006 ? ' (Na)' : '') },
+    { key: 'w', type: 'range', label: 'mixing weight w (Kerker: w_0)', min: 0.05, max: 1.5, step: 0.01, value: 0.15, fmt: (v) => v.toFixed(2) },
+    { key: 'mix', type: 'seg', label: 'mixing scheme', options: [['plain', 'plain'], ['kerker', 'Kerker']], value: 'plain' },
+    { key: 'xc', type: 'toggle', label: 'exchange kernel f^{xc} (toy; test electron)', value: false }
+  ], update);
+  // control labels: symbols in italic, labels upright, as in the text
+  const LAB = { q: `wavevector ${I('q')}/${kF}`, rs: `density parameter ${I('r')}<sub>${I('s')}</sub>`, w: `mixing weight ${I('w')} (Kerker: ${I('w')}<sub>0</sub>)`, xc: `exchange kernel ${I('f')}<sup>xc</sup> (toy; test electron)` };
+  Object.keys(LAB).forEach((k) => { const sp = elCtl.querySelector(`label[for="${fig.id}-${k}"] > span`); if (sp) sp.innerHTML = LAB[k]; });
+  fig.querySelectorAll('.seg button').forEach((b) => { b.style.flex = '1 1 auto'; });
+  update(ui.state);
+})();
+</script>

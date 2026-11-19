@@ -1,0 +1,434 @@
+<section class="chapter" id="a-phonon-se" data-num="A.6" data-title="Phonon self-energy">
+  <header class="ch-head">
+    <p class="eyebrow"><span class="num">A.6</span><span>Giustino §V.A, §VII · Eqs. 123–146</span></p>
+    <h2>Phonon self-energy: adiabatic vs nonadiabatic</h2>
+    <p class="lede">DFPT phonons are built from the zero-frequency value of the many-body phonon self-energy. The frequency-dependent remainder, $\Pi^{\rm NA}(\omega)$, shifts and broadens them. It contains one bare and one screened electron–phonon vertex, with the static screening subtracted.</p>
+  </header>
+
+  <p><a href="#a-hedin-baym">§A.5</a> showed that the nuclei interact through the electronically screened Coulomb interaction $W_{\rm e}$, with a phonon self-energy given by G Eq. (121). Here that result becomes the formulas that <em>ab initio</em> codes evaluate. Physically, a vibrating nucleus drags a cloud of screening electrons with it. If the electrons respond instantly, the screening is static and the phonon is the one DFPT computes. If they lag behind, the screening acquires a dynamical part, which shifts the phonon frequency and lets the phonon decay into electron–hole pairs. On this page Giustino's phonon Green's function $D$ is written $\mathcal D$ and his phonon self-energy $\Pi^{\rm ph}$; $\Pi^{\rm A}$ and $\Pi^{\rm NA}$ keep their names. Units are SI; in the mode basis $\Pi$ is a frequency and $\hbar\Pi$ an energy.</p>
+
+  <h3>Phonons are poles of a propagator</h3>
+  <p>A <span class="t-p">phonon</span> is a resonance of the displacement–displacement correlation function $\mathcal D_{\kappa\alpha p,\kappa'\alpha'p'}(\omega)$. Inverting the nuclear equation of motion gives</p>
+  <div class="eq">$$\boldsymbol{\mathcal D}(\omega)=\left[\mathbf M\omega^2-\Pi^{\rm ph}(\omega)\right]^{-1}, \tag{G.123}$$</div>
+  <p>where $\mathbf M$ is the diagonal matrix of nuclear masses $M_\kappa$. The resonances satisfy $\Omega_\nu(\omega)=\omega$, where $\Omega_\nu^2(\omega)$ are the eigenvalues of $\mathbf M^{-1/2}\Pi^{\rm ph}(\omega)\mathbf M^{-1/2}$ (G Eq. 124). This is the dynamical-matrix problem of <a href="#a-lattice">§A.1</a> with the force constants replaced by $\Pi^{\rm ph}(\omega)$. Because $\Pi^{\rm ph}$ is complex and frequency dependent, the roots can leave the real axis (finite lifetimes) and one "eigenmode" can have several roots.</p>
+
+  <h3>The adiabatic split: $\Pi^{\rm A}$ is what DFPT computes</h3>
+  <p>Giustino partitions the self-energy at zero frequency:</p>
+  <div class="eq">$$\Pi^{\rm ph}(\omega)=\Pi^{\rm A}+\Pi^{\rm NA}(\omega),\qquad \Pi^{\rm A}=\Pi^{\rm ph}(\omega=0). \tag{G.125}$$</div>
+  <p>Setting $\omega=0$ is the Born–Oppenheimer adiabatic approximation (Keating 1968): the electronic dielectric matrix $\epsilon_{\rm e}(\br,\br',\omega)$ is replaced by $\epsilon_{\rm e}(\br,\br',0)$ over the whole phonon range, so the <span class="t-e">electrons</span> follow the nuclei instantaneously. With the acoustic sum rule, $\Pi^{\rm A}$ takes the Hellmann–Feynman form</p>
+  <div class="eq">$$\begin{aligned}\Pi^{\rm A}_{\kappa\alpha p,\kappa'\alpha'p'}=&\int\!d\br\,\frac{\partial\langle\hat n_{\rm e}(\br)\rangle}{\partial\tau_{\kappa'\alpha'p'}}\frac{\partial V^{\rm en}(\br)}{\partial\tau_{\kappa\alpha p}}+\int\!d\br\,\langle\hat n_{\rm e}(\br)\rangle\frac{\partial^2V^{\rm en}(\br)}{\partial\tau_{\kappa\alpha p}\partial\tau_{\kappa'\alpha'p'}}\\&+\frac{\partial^2U_{\rm nn}}{\partial\tau_{\kappa\alpha p}\partial\tau_{\kappa'\alpha'p'}}.\end{aligned} \tag{G.128}$$</div>
+  <p>These have the form of the DFPT interatomic force constants (<a href="#a-dfpt">§A.3</a>): an induced-density term, an unperturbed-density term and the ion–ion term. The difference is that here the density response is governed by the exact many-body $\epsilon_{\rm e}(0)$ and the exact density, whereas DFPT uses $\epsilon^{{\rm H}xc}=1-(v^{\rm C}+f^{xc})\chi^0$ at clamped nuclei. In practice $\Pi^{\rm A}$ is replaced by the DFT force constants. Since $W_{\rm e}(\br,\br',\omega)=W_{\rm e}(\br',\br,-\omega)$, $\Pi^{\rm A}$ is real and symmetric: adiabatic phonons have real frequencies and live forever. In the eigenmode basis the adiabatic propagator is diagonal,</p>
+  <div class="eq">$$\mathcal D^{\rm A}_{\bq\nu\nu'}(\omega)=\frac{2\omega_{\bq\nu}}{\omega^2-\omega^2_{\bq\nu}}\,\delta_{\nu\nu'}, \tag{G.132}$$</div>
+  <p>which is the textbook free-boson form $\mathcal D^{\rm A}_{\bq\nu\nu}=1/(\omega-\omega_{\bq\nu}+i\eta)-1/(\omega+\omega_{\bq\nu}-i\eta)$ of G Eq. (134). Giustino stresses that this form "rests on the adiabatic approximation".</p>
+
+  <div class="callout intuition"><p class="callout-title">Physical picture: who is faster?</p>
+    <p>The adiabatic condition is $|\varepsilon_{m\bk+\bq}-\varepsilon_{n\bk}|\gg\hbar\omega_{\bq\nu}$ for the electronic transitions that the phonon couples (Giustino §VII). Insulators with eV gaps satisfy it easily. In a metal, intraband transitions cost about $\hbar v_Fq$; they are slower than the phonon when $q\lesssim\omega/v_F$, the window identified by Maksimov and Shulga. In a doped semiconductor with $\varepsilon_F\sim\hbar\omega$ the condition fails for all wave vectors up to a few $k_F$, not only near $\Gamma$ (still a small part of the zone, since $k_F$ is small). For metals the static response of the electron gas is even singular as $q,\omega\to0$, which DFPT codes tame by smearing the occupations (de Gironcoli 1995).</p>
+  </div>
+
+  <h3>The Dyson equation: shifts, widths, new poles</h3>
+  <p>Everything beyond the adiabatic reference goes into a Dyson equation:</p>
+  <div class="eq">$$\boldsymbol{\mathcal D}(\omega)=\boldsymbol{\mathcal D}^{\rm A}(\omega)+\boldsymbol{\mathcal D}^{\rm A}(\omega)\,\Pi^{\rm NA}(\omega)\,\boldsymbol{\mathcal D}(\omega). \tag{G.135}$$</div>
+  <figure class="viz" id="viz-a-phonon-se-fd-dyson">
+    <p class="viz-title">Dyson equation for the phonon propagator (G Fig. 1a) <span class="tag">diagram</span></p>
+    <div class="fd"><span id="fd-a-phonon-se-d1"></span><span class="op">=</span><span id="fd-a-phonon-se-d2"></span><span class="op">+</span><span id="fd-a-phonon-se-d3"></span></div>
+    <figcaption>Heavy zigzag: interacting, nonadiabatic $\mathcal D$. Thin zigzag: adiabatic $\mathcal D^{\rm A}$ built from the DFPT force constants. Grey disk: nonadiabatic self-energy $\Pi^{\rm NA}$. Iterating the equation generates the geometric series $\mathcal D^{\rm A}+\mathcal D^{\rm A}\Pi^{\rm NA}\mathcal D^{\rm A}+\dots$; only the resummed series moves the pole.</figcaption>
+  </figure>
+  <p>In the mode basis the inverse propagator is</p>
+  <div class="eq">$$\mathcal D^{-1}_{\bq\nu\nu'}(\omega)=\frac{1}{2\omega_{\bq\nu}}\left[\delta_{\nu\nu'}\left(\omega^2-\omega^2_{\bq\nu}\right)-2\omega_{\bq\nu}\Pi^{\rm NA}_{\bq\nu\nu'}(\omega)\right]. \tag{G.136}$$</div>
+  <p>$\Pi^{\rm NA}$ acts in four ways: (i) the real part of its diagonal shifts the frequencies; (ii) the imaginary part broadens the lines; (iii) off-diagonal elements couple adiabatic modes; (iv) its frequency dependence can create new poles, for example coupled plasmon–phonon modes in degenerate polar semiconductors, "the electronic analog of photon polaritons". Keeping only the diagonal element of a nondegenerate mode, the complex zeros $\tilde\Omega_{\bq\nu}=\Omega_{\bq\nu}-i\gamma_{\bq\nu}$ of (G.136) satisfy</p>
+  <div class="eq">$$\tilde\Omega^2_{\bq\nu}=\omega^2_{\bq\nu}+2\omega_{\bq\nu}\Pi^{\rm NA}_{\bq\nu\nu}(\tilde\Omega_{\bq\nu}), \tag{G.137}$$</div>
+  <p>whose imaginary and real parts give the linewidth and the renormalized frequency:</p>
+  <div class="eq">$$\gamma_{\bq\nu}=-\frac{\omega_{\bq\nu}}{\Omega_{\bq\nu}}\,{\rm Im}\,\Pi^{\rm NA}_{\bq\nu\nu}(\Omega_{\bq\nu}-i\gamma_{\bq\nu}), \tag{G.138}$$</div>
+  <div class="eq">$$\Omega^2_{\bq\nu}=\omega^2_{\bq\nu}+\gamma^2_{\bq\nu}+2\omega_{\bq\nu}\,{\rm Re}\,\Pi^{\rm NA}_{\bq\nu\nu}(\Omega_{\bq\nu}-i\gamma_{\bq\nu}). \tag{G.139}$$</div>
+  <p>For small corrections these reduce to the Allen–Grimvall forms $\gamma_{\bq\nu}\simeq-{\rm Im}\,\Pi^{\rm NA}_{\bq\nu\nu}(\omega_{\bq\nu})$ and $\Omega_{\bq\nu}\simeq\omega_{\bq\nu}+{\rm Re}\,\Pi^{\rm NA}_{\bq\nu\nu}(\omega_{\bq\nu})$. The phonon lifetime is $\tau^{\rm ph}_{\bq\nu}=(2\gamma_{\bq\nu})^{-1}$.</p>
+  <details class="derivation"><summary><span>Derivation: from (G.137) to (G.138)–(G.139), and why $\tau=1/2\gamma$</span></summary><div class="d-body">
+    <p>Write $\tilde\Omega^2=(\Omega-i\gamma)^2=\Omega^2-\gamma^2-2i\Omega\gamma$. The real part of (G.137) gives $\Omega^2-\gamma^2=\omega^2+2\omega\,{\rm Re}\,\Pi^{\rm NA}$, which is (G.139). The imaginary part gives $-2\Omega\gamma=2\omega\,{\rm Im}\,\Pi^{\rm NA}$, which is (G.138). Near $\omega\approx\Omega>0$,</p>
+    $$\frac{2\omega_{\bq\nu}}{\omega^2-\tilde\Omega^2}\simeq\frac{\omega_{\bq\nu}/\Omega}{\omega-\Omega+i\gamma},$$
+    <p>so the spectral function $-\frac1\pi{\rm Im}\,\mathcal D$ is a Lorentzian of half width at half maximum $\gamma$. In the time domain the amplitude decays as $e^{-i\Omega t-\gamma t}$ and the vibrational energy as $e^{-2\gamma t}$, hence $\tau^{\rm ph}=1/2\gamma$. Strictly, $\Pi^{\rm NA}$ must be evaluated at the complex frequency $\Omega-i\gamma$, which requires continuing the retarded self-energy below the real axis; in practice, and in the figure below, it is evaluated on the real axis.</p>
+  </div></details>
+
+  <h3>Inside $\Pi^{\rm NA}$: one bare vertex, one screened vertex</h3>
+  <p>Combining G Eqs. (119) and (125), only the frequency-dependent part of the screened interaction survives in the nonadiabatic self-energy:</p>
+  <div class="eq">$$\begin{aligned}\Pi^{\rm NA}_{\kappa\alpha p,\kappa'\alpha'p'}(\omega)=\int\!d\br\,d\br'\,&Z_\kappa\nabla_\alpha\delta(\br-\boldsymbol\tau^0_{\kappa p})\left[W_{\rm e}(\br,\br',\omega)-W_{\rm e}(\br,\br',0)\right]\\&\times Z_{\kappa'}\nabla'_{\alpha'}\delta(\br'-\boldsymbol\tau^0_{\kappa'p'}).\end{aligned} \tag{G.140}$$</div>
+  <p>The nuclear point charges interact through $W_{\rm e}$, and only the <em>dynamical</em> part of the screening makes phonons shift and decay. Inserting $W_{\rm e}=v+vP_{\rm e}W_{\rm e}$ (G Eq. 94), the gradients of $v$ and of $W_{\rm e}$ turn into electron–phonon couplings, and in the mode basis</p>
+  <div class="eq">$$\begin{aligned}\hbar\Pi^{\rm NA}_{\bq\nu,\bq'\nu'}(\omega)=&\int\!d\br\,d\br'\,g^{\rm b}_{\bq\nu}(\br)\,P_{\rm e}(\br,\br',\omega)\,g^{\rm cc}_{\bq'\nu'}(\br',\omega)\\&-\int\!d\br\,d\br'\,g^{\rm b}_{\bq\nu}(\br)\,P_{\rm e}(\br,\br',0)\,g^{*}_{\bq'\nu'}(\br',0),\end{aligned} \tag{G.141}$$</div>
+  <p>with the bare and dressed coupling functions</p>
+  <div class="eq">$$g^{\rm b}_{\bq\nu}(\br)=\Delta_{\bq\nu}V^{\rm en}(\br), \tag{G.142}$$</div>
+  <div class="eq">$$g_{\bq\nu}(\br,\omega)=\int\!d\br'\,\epsilon_{\rm e}^{-1}(\br,\br',\omega)\,g^{\rm b}_{\bq\nu}(\br'). \tag{G.143}$$</div>
+  <p>$g^{\rm cc}$ is defined like (G.143) with $g^{{\rm b},*}$ in place of $g^{\rm b}$ (G Eq. 144); since $\epsilon_{\rm e}$ is real at $\omega=0$, $g^{\rm cc}(\br,0)=g^*(\br,0)$. The bare vertex is the variation of the ionic (pseudo)potential, long ranged in metals; the dressed one is screened by the full electronic $\epsilon_{\rm e}^{-1}$ and is short ranged. Equation (G.141) is nonperturbative: it relies only on the harmonic approximation, and it agrees with Keating (1968) and with Scalapino's electron-gas result. Its structure is the main message of this section: the irreducible polarization $P_{\rm e}=GG\Gamma$ sits between a bare vertex on one side and a screened vertex on the other, and its static value is subtracted.</p>
+
+  <figure class="viz" id="viz-a-phonon-se-fd-bubble">
+    <p class="viz-title">The phonon self-energy bubble (G Fig. 1b, 1c) <span class="tag">diagram</span></p>
+    <div class="fd"><span id="fd-a-phonon-se-b1"></span><span class="op">≃</span><span id="fd-a-phonon-se-b2"></span></div>
+    <div class="fd"><span id="fd-a-phonon-se-b3"></span><span class="op">=</span><span id="fd-a-phonon-se-b4"></span><span class="op">$-\;\big[\,\cdots\big]_{\omega=0}$</span></div>
+    <figcaption>Top: lowest order, two bare vertices $g^{\rm b}$ (small dots) joined by noninteracting <span class="t-e">electron</span> lines $G_0$. Bottom: Eq. (G.141). The left end stays bare (small dot); the right end carries the vertex $\Gamma$ (open circle) and the dressed coupling $g$ (grey disk), and the electron lines are interacting. The static ($\omega=0$) copy of the same diagram is subtracted because it is already inside $\Pi^{\rm A}$. Giustino's Fig. 1c shows only the first line of (G.141); the subtraction is drawn here explicitly.</figcaption>
+  </figure>
+
+  <p><strong>Why exactly one screened vertex?</strong> The lowest-order diagram that starts and ends on a phonon line has two bare vertices, $\Pi\simeq g^{\rm b}G_0G_0g^{\rm b}$. Dressing it means summing all chains of proper polarization insertions joined by $v$: $g^{\rm b}P g^{\rm b}+g^{\rm b}PvPg^{\rm b}+\dots=g^{\rm b}P\,\epsilon_{\rm e}^{-1}g^{\rm b}=g^{\rm b}Pg$. The whole chain can be absorbed into <em>one</em> end, which is the Dyson equation of the dressed vertex, $g=g^{\rm b}+vGG\Gamma g$ (G Fig. 1d; see <a href="#a-dfpt">§A.3</a>). So one bare and one screened vertex around the irreducible bubble is exact, and exact RPA once $P\to\chi^0$. Screening the other end as well counts chains more than once: the two geometric series multiply, $\sum_{a,b}P(vP)^{a+b}=\sum_n(n+1)P(vP)^n$, so a chain with $n$ Coulomb links appears $n+1$ times. Leaving both ends bare keeps only the first term, screening to first order in $P$. The electron self-energy is different: in Fan–Migdal both ends of the internal phonon line sit on the electron line and each end is screened, so it has two screened vertices (<a href="#a-electron-se">§A.7</a>).</p>
+
+  <h3>From (G.141) to the working formula</h3>
+  <p>Five approximations turn (G.141) into a Brillouin-zone sum: (i) $\Gamma=1$, the GW-type vertex; (ii) Kohn–Sham $G$ at clamped nuclei; (iii) RPA$+xc$ screening from DFT; (iv) the frequency dependence of the screened coupling is dropped, $g^{\rm cc}(\br,\omega)\simeq g^*(\br,0)$, an approximation that is "ubiquitous in the literature but it is never mentioned explicitly"; (v) spin degeneracy and time-reversal symmetry. The result is</p>
+  <div class="eq">$$\begin{aligned}\hbar\Pi^{\rm NA}_{\bq\nu\nu'}(\omega)=2\sum_{mn}\int\!\frac{d\bk}{\Omega_{\rm BZ}}\,&g^{\rm b}_{mn\nu}(\bk,\bq)\,g^*_{mn\nu'}(\bk,\bq)\\&\times\left[\frac{f_{m\bk+\bq}-f_{n\bk}}{\varepsilon_{m\bk+\bq}-\varepsilon_{n\bk}-\hbar(\omega+i\eta)}-\frac{f_{m\bk+\bq}-f_{n\bk}}{\varepsilon_{m\bk+\bq}-\varepsilon_{n\bk}}\right].\end{aligned} \tag{G.145}$$</div>
+  <p>The factor 2 is spin, $\eta\to0^+$, $g_{mn\nu}$ is the screened DFPT matrix element of G Eq. (38) and $g^{\rm b}_{mn\nu}$ the same with the bare ionic potential; at finite temperature $f$ becomes Fermi–Dirac. The first term in brackets is the bare polarizability $\chi^0(\bq,\omega)$ in the Kohn–Sham basis, the second its static value. <strong>The subtraction $\chi^0(\omega)-\chi^0(0)$ removes double counting</strong>: the static bubble is already inside $\Pi^{\rm A}$, because the DFT phonons were computed with static screening. Most calculations also replace $g^{\rm b}$ by $g$ and keep only the imaginary part. With ${\rm Im}\,1/(x-i0^+)=\pi\delta(x)$ and $\tau=1/2\gamma$ this gives the golden-rule linewidth</p>
+  <div class="eq">$$\frac{1}{\tau^{\rm ph}_{\bq\nu}}=\frac{2\pi}{\hbar}\,2\sum_{mn}\int\!\frac{d\bk}{\Omega_{\rm BZ}}\,|g_{mn\nu}(\bk,\bq)|^2\left(f_{n\bk}-f_{m\bk+\bq}\right)\delta\!\left(\varepsilon_{m\bk+\bq}-\varepsilon_{n\bk}-\hbar\omega_{\bq\nu}\right). \tag{G.146}$$</div>
+  <p>A phonon decays by creating an electron–hole pair of energy $\hbar\omega_{\bq\nu}$. All the calculations reviewed in Giustino §VII use $g^{\rm b}\to g$ (his footnote 8).</p>
+
+  <div class="callout caveat"><p class="callout-title">Subtlety: Eqs. (G.145) and (G.146) differ by $\epsilon(\bq,0)$</p>
+    <p>Equation (G.145) has the numerator $g^{\rm b}g^*$, Eq. (G.146) has $|g|^2$. With $g=\epsilon^{-1}g^{\rm b}$ they differ by the factor $\epsilon(\bq,0)$, which in a metal at small $q$ is about $(k_{\rm TF}/q)^2\gg1$. In a consistent RPA treatment the exact result of (G.141) is ${\rm Im}[g^{\rm b}P(\omega)g^{\rm cc}(\omega)]=|g(\omega)|^2\,{\rm Im}P(\omega)$ (derivation below). So the "common practice" $|g|^2$ is right when $\epsilon(\omega_{\bq\nu})\approx\epsilon(0)$, while pairing the bare vertex with a <em>statically</em> screened one, approximation (iv), overestimates the width by about $\epsilon(\bq,0)$. The bare/screened bookkeeping and the frequency dependence of the screened vertex have to be treated together. Giustino flags the replacement as something "it will be important to assess".</p>
+  </div>
+  <details class="derivation"><summary><span>Derivation: ${\rm Im}[g^{\rm b}Pg^{\rm cc}]=|g|^2\,{\rm Im}P$ in the RPA</span></summary><div class="d-body">
+    <p>Take a homogeneous, $\bq$-diagonal RPA: $\epsilon(\omega)=1-vP(\omega)$, $g(\omega)=g^{\rm b}/\epsilon(\omega)$ and $g^{\rm cc}(\omega)=g^{{\rm b}*}/\epsilon(\omega)$. Then $g^{\rm b}P(\omega)g^{\rm cc}(\omega)=|g^{\rm b}|^2P/\epsilon$ and</p>
+    $${\rm Im}\frac{P}{1-vP}=\frac{{\rm Im}\left[P\,(1-vP^*)\right]}{|\epsilon|^2}=\frac{{\rm Im}P}{|\epsilon(\omega)|^2},$$
+    <p>because $vPP^*$ is real. Hence</p>
+    $${\rm Im}[g^{\rm b}Pg^{\rm cc}]=\frac{|g^{\rm b}|^2\,{\rm Im}P(\omega)}{|\epsilon(\omega)|^2}=|g(\omega)|^2\,{\rm Im}P(\omega).$$
+    <p>With approximation (iv), $g^{\rm cc}(\omega)\to g^*(0)$, the same product becomes $|g^{\rm b}|^2{\rm Im}P(\omega)/\epsilon(0)=\epsilon(0)\,|g(0)|^2\,{\rm Im}P(\omega)$: the cancellation between ${\rm Re}P\,{\rm Im}\,\epsilon^{-1}$ and ${\rm Im}P\,{\rm Re}\,\epsilon^{-1}$ is lost.</p>
+  </div></details>
+
+  <h3>A doped 2D semiconductor: the nonadiabatic window</h3>
+  <p>The figure below evaluates (G.145) for the simplest system where adiabaticity fails: one dispersionless optical phonon $\omega_0$ (adiabatic, so it already contains $\Pi^{\rm A}$) coupled by a constant intraband matrix element to a single parabolic 2D band holding $n$ electrons per unit area. With $g^{\rm b}g^*\to|g|^2$ as in (G.146), $\int d\bk/\Omega_{\rm BZ}=A_{\rm cell}\int d^2k/(2\pi)^2$ turns the bracket of (G.145) into the 2D Lindhard function, $\chi^0=N_0\tilde\chi$ with $N_0=m^*/\pi\hbar^2$ (both spins), so that</p>
+  <div class="eq">$$\hbar\Pi^{\rm NA}(Q,\omega)=G\left[\tilde\chi(Q,W)-\tilde\chi(Q,0)\right],$$</div>
+  <p>where $G=N_0A_{\rm cell}|g|^2$ is the coupling strength, $Q=q/k_F$, $W=(\hbar\omega+i\eta)/\varepsilon_F$, and the closed form (retarded, $T=0$, checked against direct $\bk$ integration) is</p>
+  <div class="eq">$$\tilde\chi(Q,W)=-\left[1+\frac{s(W-Q^2)+s(-W-Q^2)}{2Q^2}\right],\qquad s(z)=z\sqrt{1-4Q^2/z^2},$$</div>
+  <p>using the principal square root; statically $\tilde\chi(Q,0)=-1$ for $Q\le2$. The phonon spectral function follows from the diagonal of (G.136),</p>
+  <div class="eq">$$B(Q,\omega)=-\frac1\pi\,{\rm Im}\,\frac{2\omega_0}{\omega^2-\omega_0^2+2i\eta\omega-2\omega_0\Pi^{\rm NA}(Q,\omega)},$$</div>
+  <p>written with the retarded denominator; $\eta$ adds a small intrinsic width so that undamped modes stay visible.</p>
+
+  <figure class="viz" id="viz-a-phonon-se-2d">
+    <p class="viz-title">Nonadiabatic phonon in a doped 2D semiconductor <span class="tag">interactive</span></p>
+    <div class="viz-grid side">
+      <div class="a-phonon-se-heat"></div>
+      <div style="display:grid;gap:10px;min-width:0;align-content:start"><div class="a-phonon-se-shift"></div><div class="a-phonon-se-tau"></div></div>
+    </div>
+    <div class="a-phonon-se-ctrls"></div>
+    <div class="a-phonon-se-ro"></div>
+    <figcaption><strong>Model.</strong> One dispersionless optical phonon $\hbar\omega_0$ (the adiabatic, DFPT-like frequency) coupled with a constant intraband matrix element to one parabolic 2D band, $m^*=0.5\,m_e$, one valley, spin degenerate, $T=0$. Self-energy (G.145) with $g^{\rm b}g^*\to|g|^2$. The default $n=10^{13}$ cm⁻² gives $k_F=0.079$ Å⁻¹ and $\varepsilon_F=47.9$ meV $\approx\hbar\omega_0$; $G=5$ meV corresponds to $|g|\approx0.17$ eV for an 8.65 Å² cell (illustrative). (a) Phonon spectral function $B(Q,\omega)$ (square-root colour scale) with the particle–hole continuum edges $\hbar\omega_\pm=\varepsilon_F(Q^2\pm2Q)$ and the adiabatic line. (b) Shift $\hbar(\Omega-\omega_0)$ and width $\hbar\gamma$, from (G.138)–(G.139) at first order (self-energy at $\omega_0$, $\gamma^2$ dropped) or from (G.137) iterated on the real axis; shaded where $\hbar\omega_0$ lies inside the continuum. (c) Lifetime $\tau^{\rm ph}=1/2\gamma$. $\Omega$, $\gamma$ and $\tau$ use $\eta\to0^+$; $\eta$ only broadens the map. Click or drag in a panel to move the $Q$ cursor. <strong>What to notice.</strong> Above the continuum (small $Q$) the phonon is undamped but hardened by about $G$: the electrons cannot follow, so the Fermi-surface softening built into $\omega_0$ is undone. Inside the continuum it is Landau damped (here $\hbar\gamma$ of a few meV, $\tau\sim0.1$ ps) and returns toward $\omega_0$; below the lower edge ($Q\gtrsim2.4$ here) it is nearly free again. Raise $n$ until $\varepsilon_F\gg\hbar\omega_0$ and the nonadiabatic window shrinks toward $Q\to0$.</figcaption>
+  </figure>
+
+  <p>Near the upper continuum edge the first-order and self-consistent solutions differ strongly: the hardened pole can sit just above the edge and stay sharp, as the spectral map shows, while the first-order formula already samples the continuum at $\omega_0$. For $\varepsilon_F\gg\hbar\omega_0$ the width approaches the Landau-damping limit $\hbar\gamma\approx G\,\hbar\omega_0/[\varepsilon_FQ\sqrt{4-Q^2}]$, valid for $\hbar\omega_0\ll\varepsilon_FQ$ and $Q$ not close to 2. Mode coupling (iii) and plasmon–phonon poles (iv) are absent: the model has one mode and uses the bare bubble $\chi^0$ without the Coulomb chain, hence no plasmon.</p>
+
+  <div class="callout intuition"><p class="callout-title">Physical picture: two limits that do not commute</p>
+    <p>At $\bq\to0$ the intraband part of the bracket in (G.145) depends on the order of limits. Static first: the static bubble tends to $\partial f/\partial\varepsilon=-\delta(\varepsilon_{\bk}-\varepsilon_F)$, a Fermi-surface softening contained in the adiabatic phonon, which the second term of the bracket removes. Dynamic first: at $\bq=0$ the dynamical term vanishes, because a vibration faster than $v_Fq$ cannot rearrange the Fermi sea. The net result is a stiffening, $\hbar\,{\rm Re}\,\Pi^{\rm NA}_{\bq=0}\simeq N_F\langle|g|^2\rangle_{\rm FS}>0$ with $N_F$ counting both spins, the approximation of Saitta <em>et al.</em> (2008) quoted by Giustino. In the figure it is the hardening by $\approx G$ at small $Q$.</p>
+  </div>
+
+  <h3>Where nonadiabatic effects have been seen</h3>
+  <p>In the Raman G band of graphene ($E_{2g}$, 1585 cm⁻¹, $\bq=0$; Giustino §VII) electrons near the Dirac points make "virtual" transitions with energies comparable to the phonon; the measured frequency versus gate doping follows the nonadiabatic calculation while the adiabatic one stays flat (Pisana <em>et al.</em> 2007; Giustino Fig. 8). This is a <em>nonadiabatic</em> Kohn anomaly: it sits at small $\bq$, where the static and dynamic limits of (G.145) differ (callout above). The $2k_F$ anomaly of the jellium model below is an adiabatic one. The renormalization is typically about 1%, but reaches about 300 cm⁻¹ in graphite intercalation compounds (Saitta <em>et al.</em> 2008) and 7% at small $\bq$ in CaC$_6$ (Calandra, Profeta and Mauri 2010). In MgB$_2$ the calculation overshoots (761 vs 600 cm⁻¹). Saitta <em>et al.</em> suggested that finite electron lifetimes, absent from the Kohn–Sham $G$ of approximation (ii), partly wash out the effect. Linewidths from (G.146), or Allen's double-delta simplification (G Eq. 185), range from about 1 meV (Nb) to 30 meV (MgB$_2$).</p>
+
+  <h3>Jellium: adiabatic phonons and the Kohn anomaly</h3>
+  <p>The simplest $\Pi^{\rm A}$ belongs to point ions of valence $Z$ and mass $M$ in an electron gas. In G Eq. (121) at $\omega=0$ the ions interact through $W_{\rm e}(q,0)=v(q)/\epsilon_{\rm e}(q,0)$. Treating the ions as a uniform fluid (no lattice) with one ion per volume $\Omega$, the longitudinal mode obeys (cf. G Eqs. 121, 128; Bardeen–Pines)</p>
+  <div class="eq">$$M\omega_q^2=\frac{Z^2e^2}{\varepsilon_0\Omega}\,\frac{1}{\epsilon_{\rm e}(q,0)}\quad\Longrightarrow\quad\omega_q^2=\frac{\Omega_p^2}{\epsilon_{\rm e}(q,0)},\qquad\Omega_p^2=\frac{Z^2e^2}{\varepsilon_0\Omega M}:$$</div>
+  <p>the bare ionic plasma oscillation, screened statically. With Thomas–Fermi screening, $\epsilon=1+k_{\rm TF}^2/q^2$, the mode is acoustic with the Bohm–Staver velocity $v_s=\Omega_p/k_{\rm TF}=(Zm_e/3M)^{1/2}v_F$. With the Lindhard function of <a href="#a-coupling">§A.2</a>, $\epsilon_{\rm e}(q,0)$ is continuous at $q=2k_F$ but its slope diverges logarithmically, because $2k_F$ is the largest momentum that a zero-energy electron–hole pair can carry across the Fermi sphere. The phonon inherits the singularity: $d\omega/dq$ diverges at $2k_F$. This is the Kohn anomaly (Kohn 1959), the reciprocal-space face of the Friedel oscillations that Giustino §VI.A.2 mentions for metals. It is an adiabatic, static-screening feature that DFPT reproduces and smearing blunts. Nonadiabatic corrections are small here: $\omega/qv_F\approx v_s/v_F=(Zm_e/3M)^{1/2}\sim10^{-3}$–$10^{-2}$, Migdal's small parameter.</p>
+
+  <figure class="viz" id="viz-a-phonon-se-jellium">
+    <p class="viz-title">Jellium phonons: Bohm–Staver sound and the Kohn anomaly <span class="tag">interactive</span></p>
+    <div class="viz-grid two"><div class="a-phonon-se-jw"></div><div class="a-phonon-se-jv"></div></div>
+    <div class="a-phonon-se-jctrls"></div>
+    <div class="a-phonon-se-jro"></div>
+    <figcaption><strong>Model.</strong> Adiabatic jellium phonons, $\omega_q^2=\Omega_p^2/\epsilon_{\rm e}(q,0)$, for ions of valence $Z$ and mass $M$ in an electron gas of density parameter $r_s$ (one ion per cell of volume $\Omega=Z\frac{4\pi}{3}(r_sa_0)^3$), with static Lindhard (solid) or Thomas–Fermi (dashed) screening. $(\hbar\Omega_p)^2=0.7564\,Z^2/(\Omega M)$ eV² with $\Omega$ in Å³ and $M$ in amu. Presets use free-electron $r_s$ values (literature values, illustrative). There is no lattice: $q_D$ marks the edge of the Debye sphere. (a) Dispersion with the Bohm–Staver line. (b) Group velocity $d\omega/dq$. The readout's Landau-damping estimate $\gamma/\omega\approx(\pi/4)v_s/v_F$ is derived here from the small-$q$, small-$\omega$ Lindhard function with Thomas–Fermi screening. <strong>What to notice.</strong> The sound velocity at small $q$ is $v_s=\Omega_p/k_{\rm TF}$ (about 3 km/s for Na). The Lindhard dispersion looks smooth, but its slope has a logarithmic spike exactly at $2k_F$; Thomas–Fermi screening, which has no Fermi surface, has none. In jellium $2k_F$ lies beyond $q_D$, so in real metals the anomaly shows up folded back by reciprocal lattice vectors, wherever $|\bq+\bG|=2k_F$.</figcaption>
+  </figure>
+
+  <div class="callout connect"><p class="callout-title">Bridge to EPP: same Dyson equation, same bare–screened pair, photon lines instead of Coulomb lines</p>
+    <p>EPP §7 dresses its bare phonon propagator $F^0=\mathcal D^{\rm A}/\hbar$ by emission and reabsorption of photons and obtains a Dyson equation of exactly this form, $F=F^0+F^0\Omega^{\rm e}F$ (E.398), whose pole condition is (G.137) with $\Omega^{\rm e}=\hbar\Pi$ (<a href="#b-phonon-se">§B.7</a>). Its electron-induced part has one photon line dressed by electrons and one bare, and factorizes into bare vertex, bubble and screened vertex, the structure of (G.141) (<a href="#b-frohlich">§B.8</a>). The match is structural, not term by term (§B.8 discusses EPP's modified bubble and its singular intraband current vertex), and double counting is avoided in a different way (last row of the table):</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Object</th><th>Giustino (this section)</th><th>EPP §7</th></tr></thead>
+      <tbody>
+        <tr><td>Reference propagator</td><td>$\mathcal D^{\rm A}=2\omega_{\bq\nu}/(\omega^2-\omega_{\bq\nu}^2)$ (G.132)</td><td>$\hbar F^0_\sigma$, bare short-range phonons</td></tr>
+        <tr><td>Self-energy</td><td>$\hbar\Pi^{\rm NA}$ (G.141), (G.145)</td><td>$\Omega^{\rm e}=\Omega^0+\Delta\Omega^{\rm e}$ (E.399–402)</td></tr>
+        <tr><td>Bare vertex</td><td>$g^{\rm b}=\Delta_{\bq\nu}V^{\rm en}$, Coulomb line $v$</td><td>$g^{{\rm dyn},0}$, bare photon line $D^0$</td></tr>
+        <tr><td>Screened vertex</td><td>$g=\epsilon_{\rm e}^{-1}g^{\rm b}$, approximation (iv): static</td><td>$g^{\rm dyn}$, dressed photon line $D^{\rm e}$, $\omega$-dependent</td></tr>
+        <tr><td>Avoiding double counting</td><td>subtract $\chi^0(0)$, already in DFPT $\Pi^{\rm A}$</td><td>start from short-range force constants, regenerate the long-range part from $D$ (EPP p. 21)</td></tr>
+      </tbody>
+    </table></div>
+    <p>Coulomb lines become photon propagators (longitudinal plus transverse), Born charges $Z^*$ replace the bare $Z_\kappa$, and only the long-range polar channel is treated.</p>
+  </div>
+
+  <div class="callout source"><p class="callout-title">Note on the source</p>
+    <p>Giustino writes the Saitta approximation as an average "over the wave vectors $\bk$ in the Brillouin zone". Derived from (G.145), the intraband static term gives $\delta(\varepsilon_{n\bk}-\varepsilon_F)$, so it is a Fermi-surface average, and $N_F$ must count both spins given the explicit factor 2 in (G.145). Elsewhere (e.g. G Eq. 192) Giustino's $N_F$ is per spin; in that convention the formula reads $2N_F\langle|g|^2\rangle_{\rm FS}$. G Eq. (127), used to obtain (G.128), has a sign and argument-order slip that leaves (G.128) unaffected; see the note at the end of <a href="#a-hedin-baym">§A.5</a>.</p>
+  </div>
+</section>
+<script>
+(() => {
+  // ---------- Feynman diagrams (G Fig. 1) ----------
+  const fd = (id, spec) => { const el = document.getElementById(id); if (el) EPP.fd.draw(el, spec); };
+  fd('fd-a-phonon-se-d1', { w: 86, h: 46, label: 'dressed phonon propagator', items: [
+    { t: 'phonon2', a: [6, 30], b: [80, 30], label: '𝒟' } ] });
+  fd('fd-a-phonon-se-d2', { w: 86, h: 46, label: 'adiabatic phonon propagator', items: [
+    { t: 'phonon', a: [6, 30], b: [80, 30], label: '𝒟^A' } ] });
+  fd('fd-a-phonon-se-d3', { w: 214, h: 58, label: 'adiabatic propagator, self-energy, dressed propagator', items: [
+    { t: 'phonon', a: [6, 32], b: [64, 32], label: '𝒟^A' },
+    { t: 'blob', at: [88, 32], r: 23, label: 'Π^{NA}', color: 'muted' },
+    { t: 'phonon2', a: [112, 32], b: [208, 32], label: '𝒟' } ] });
+  fd('fd-a-phonon-se-b1', { w: 112, h: 70, label: 'nonadiabatic phonon self-energy', items: [
+    { t: 'phonon', a: [4, 35], b: [33, 35] },
+    { t: 'blob', at: [56, 35], r: 22, label: 'Π^{NA}', color: 'muted' },
+    { t: 'phonon', a: [79, 35], b: [108, 35] } ] });
+  fd('fd-a-phonon-se-b2', { w: 222, h: 112, label: 'lowest-order bubble with two bare vertices', items: [
+    { t: 'phonon', a: [4, 56], b: [44, 56] },
+    { t: 'fermion', a: [44, 56], b: [178, 56], bend: 0.26, label: 'G_0' },
+    { t: 'fermion', a: [178, 56], b: [44, 56], bend: 0.26, label: 'G_0' },
+    { t: 'phonon', a: [178, 56], b: [218, 56] },
+    { t: 'vertex', at: [44, 56], r: 3.6 }, { t: 'vertex', at: [178, 56], r: 3.6 },
+    { t: 'text', at: [30, 80], text: 'g^b' }, { t: 'text', at: [192, 80], text: 'g^b' } ] });
+  fd('fd-a-phonon-se-b3', { w: 112, h: 70, label: 'nonadiabatic phonon self-energy', items: [
+    { t: 'phonon', a: [4, 35], b: [33, 35] },
+    { t: 'blob', at: [56, 35], r: 22, label: 'Π^{NA}', color: 'muted' },
+    { t: 'phonon', a: [79, 35], b: [108, 35] } ] });
+  fd('fd-a-phonon-se-b4', { w: 262, h: 112, label: 'bubble with one bare vertex and one screened vertex', items: [
+    { t: 'phonon', a: [4, 56], b: [44, 56] },
+    { t: 'fermion2', a: [44, 56], b: [170, 56], bend: 0.27, label: 'G' },
+    { t: 'fermion2', a: [170, 56], b: [44, 56], bend: 0.27, label: 'G' },
+    { t: 'vertex', at: [44, 56], r: 3.6 },
+    { t: 'blob', at: [181, 56], r: 11, label: 'Γ', color: 'ink' },
+    { t: 'vertex', at: [202, 56], r: 8.5, color: 'muted' },
+    { t: 'phonon', a: [210, 56], b: [258, 56] },
+    { t: 'text', at: [30, 80], text: 'g^b' }, { t: 'text', at: [202, 84], text: 'g' } ] });
+})();
+</script>
+<script>
+(() => {
+  // ---------- Figure: nonadiabatic phonon in a doped 2D semiconductor ----------
+  const fig = document.getElementById('viz-a-phonon-se-2d');
+  if (!fig) return;
+  const csqrt = EPP.C.sqrt;
+  const HBAR = 0.6582119569;   // meV ps
+  const H2M = 3809.98;         // hbar^2/2m_e in meV Å^2
+  const MSTAR = 0.5;           // m*/m_e (fixed model value)
+  const ETA0 = 1e-4;           // meV, eta -> 0+ for Omega, gamma, tau
+  const QMAX = 3;
+
+  // reduced 2D Lindhard function chi0/N0 (T = 0, retarded), Q = q/kF, W = Wr + i Wi = (hbar omega + i eta)/eF
+  function chi2d(Q, Wr, Wi) {
+    const Q2 = Q * Q;
+    const s = (zr, zi) => { // z sqrt(1 - 4Q^2/z^2)
+      const z2r = zr * zr - zi * zi, z2i = 2 * zr * zi, d = z2r * z2r + z2i * z2i;
+      const r = csqrt([1 - 4 * Q2 * z2r / d, 4 * Q2 * z2i / d]);
+      return [zr * r[0] - zi * r[1], zr * r[1] + zi * r[0]];
+    };
+    const sa = s(Wr - Q2, Wi), sb = s(-Wr - Q2, -Wi);
+    return [-(1 + (sa[0] + sb[0]) / (2 * Q2)), -(sa[1] + sb[1]) / (2 * Q2)];
+  }
+  const chiStat = (Q) => (Q <= 2 ? -1 : -(1 - Math.sqrt(1 - 4 / (Q * Q))));
+  // hbar Pi^NA in meV
+  function PiNA(Q, E, eta, p) {
+    const c = chi2d(Q, E / p.eF, eta / p.eF);
+    const re = p.G * (c[0] - chiStat(Q)), im = p.G * c[1];
+    return [isFinite(re) ? re : 0, isFinite(im) ? Math.min(im, 0) : 0];
+  }
+  // pole: first order (G.138-139 at omega_0, gamma^2 dropped) or self-consistent (G.137 on the real axis)
+  function solve(Q, p, sc) {
+    const w0 = p.w0;
+    if (!sc) {
+      const P = PiNA(Q, w0, ETA0, p), t = w0 * w0 + 2 * w0 * P[0];
+      if (t <= 0) return { Om: NaN, ga: NaN, P };
+      const Om = Math.sqrt(t);
+      return { Om, ga: -(w0 / Om) * P[1], P };
+    }
+    let zr = w0, zi = 0;
+    for (let it = 0; it < 80; it++) {
+      const P = PiNA(Q, Math.max(zr, 1e-3 * w0), ETA0, p);
+      const s = csqrt([w0 * w0 + 2 * w0 * P[0], 2 * w0 * P[1]]);
+      const nr = 0.5 * zr + 0.5 * s[0], ni = 0.5 * zi + 0.5 * s[1];
+      const done = Math.abs(nr - zr) + Math.abs(ni - zi) < 1e-7 * w0;
+      zr = nr; zi = ni;
+      if (done) break;
+    }
+    if (!(zr > 1e-3 * w0)) return { Om: NaN, ga: NaN, P: PiNA(Q, w0, ETA0, p) };
+    return { Om: zr, ga: Math.max(0, -zi), P: PiNA(Q, zr, ETA0, p) };
+  }
+
+  const heat = new EPP.Plot(fig.querySelector('.a-phonon-se-heat'), {
+    xlabel: 'Q = q/k_F', ylabel: 'ħω (meV)', xlim: [0, QMAX], ylim: [0, 100], aspect: 0.82, margin: { r: 62 },
+    xname: 'Q', yname: 'ħω (meV)', hoverX: (v) => v.toFixed(2), hoverX2: (v) => v.toFixed(1),
+    ariaLabel: 'Heat map of the phonon spectral function versus Q and energy'
+  });
+  const pShift = new EPP.Plot(fig.querySelector('.a-phonon-se-shift'), {
+    xlabel: 'Q = q/k_F', ylabel: 'meV', xlim: [0, QMAX], ylim: [-3, 14], aspect: 0.6, minHeight: 190,
+    xname: 'Q', hoverX: (v) => v.toFixed(2), hoverY: (v) => EPP.fix(v, 2) + ' meV',
+    ariaLabel: 'Phonon frequency shift and linewidth versus Q'
+  });
+  const pTau = new EPP.Plot(fig.querySelector('.a-phonon-se-tau'), {
+    xlabel: 'Q = q/k_F', ylabel: 'τ^{ph} (ps)', xlim: [0, QMAX], ylim: [0.005, 100], logy: true, aspect: 0.55, minHeight: 180,
+    xname: 'Q', hoverX: (v) => v.toFixed(2), hoverY: (v) => EPP.fmt(v, 3) + ' ps',
+    ariaLabel: 'Phonon lifetime versus Q'
+  });
+  const ro = EPP.readout(fig.querySelector('.a-phonon-se-ro'));
+  let st = null, Qsel = 1.0;
+  const pick = (x) => { Qsel = EPP.clamp(x, 0.02, QMAX); draw(); };
+  [heat, pShift, pTau].forEach(pl => { pl.onPointer = (x) => pick(x); });
+
+  const SUP = { '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹', '-': '⁻' };
+  const sci = (v) => { const e = Math.floor(Math.log10(v) + 1e-9), m = v / Math.pow(10, e); return m.toFixed(1) + '×10' + String(e).split('').map(c => SUP[c] || c).join(''); };
+
+  function draw() {
+    if (!st) return;
+    const n = st.n, w0 = st.w0, G = st.G, eta = st.eta, sc = st.sc === 'sc';
+    const kF = Math.sqrt(2 * Math.PI * n * 1e-16);           // Å^-1 (n in cm^-2)
+    const eF = H2M * kF * kF / MSTAR;                        // meV
+    const p = { eF, w0, G };
+    const ymax = 2 * w0;
+    // heat map of B(Q, omega)
+    const nx = 150, ny = 200, z = new Float64Array(nx * ny);
+    for (let i = 0; i < nx; i++) {
+      const Q = QMAX * (i + 0.5) / nx;
+      for (let j = 0; j < ny; j++) {
+        const E = ymax * (j + 0.5) / ny;
+        const P = PiNA(Q, E, eta, p);
+        const dr = E * E - w0 * w0 - 2 * w0 * P[0], di = 2 * eta * E - 2 * w0 * P[1];
+        const B = (2 * w0 / Math.PI) * di / (dr * dr + di * di);
+        z[j * nx + i] = isFinite(B) ? B : 0;
+      }
+    }
+    // continuum edges
+    const qe = EPP.linspace(0, QMAX, 241);
+    const wp = qe.map(Q => eF * (Q * Q + 2 * Q));
+    const wm = qe.map(Q => Math.max(0, eF * (Q * Q - 2 * Q)));
+    const r = Math.sqrt(1 + w0 / eF), Qc1 = r - 1, Qc2 = r + 1;
+    // pole solution
+    const qs = EPP.linspace(0.02, QMAX, 300);
+    const sh = [], wd = [], tau = [];
+    for (const Q of qs) {
+      const s = solve(Q, p, sc);
+      sh.push(s.Om - w0); wd.push(s.ga);
+      tau.push(s.ga > 1e-4 ? HBAR / (2 * s.ga) : NaN);
+    }
+    const sel = solve(Qsel, p, sc);
+    // labels on the map
+    const txt = [];
+    { const yt = 1.86 * w0, Qt = -1 + Math.sqrt(1 + yt / eF); if (Qt < 2.55) txt.push({ type: 'text', x: Qt, y: yt, text: 'ħω_+', color: 'electron', dx: 7, size: 12 }); }
+    { const yt = 1.45 * w0, Qt = 1 + Math.sqrt(1 + yt / eF); if (Qt < 2.6) txt.push({ type: 'text', x: Qt, y: yt, text: 'ħω_−', color: 'electron', dx: 7, size: 12 }); }
+    const vmax = 1 / (Math.PI * eta);
+    heat.draw([
+      { type: 'heatmap', x0: 0, x1: QMAX, y0: 0, y1: ymax, nx, ny, z, vmin: 0, vmax, color: 'phonon', gamma: 0.5, label: 'B', colorbar: 'B (meV^{-1})', cfmt: (v) => EPP.fmt(v, 2) },
+      { type: 'line', x: qe, y: wp, color: 'electron', width: 1.6, label: 'p–h continuum edges ħω_±', hover: false },
+      { type: 'line', x: qe, y: wm, color: 'electron', width: 1.6, hover: false },
+      { type: 'hline', at: w0, color: 'muted', text: 'ħω_0' },
+      { type: 'vline', at: Qsel, color: 'ink', dash: [3, 3], width: 1 },
+      ...txt
+    ], { ylim: [0, ymax] });
+    const band = Qc1 < QMAX ? { type: 'band', x0: Qc1, x1: Math.min(Qc2, QMAX), color: 'electron', alpha: 0.08, text: 'ω_0 inside continuum' } : null;
+    pShift.draw([
+      band,
+      { type: 'line', x: qs, y: sh, color: 'phonon', label: 'shift ħ(Ω−ω_0)' },
+      { type: 'line', x: qs, y: wd, color: 'c5', label: 'width ħγ (HWHM)' },
+      { type: 'vline', at: Qsel, color: 'ink', dash: [3, 3], width: 1 }
+    ], { ylim: [-0.6 * G - 0.5, 2.8 * G + 1] });
+    pTau.draw([
+      band ? Object.assign({}, band, { text: '' }) : null,
+      { type: 'line', x: qs, y: tau, color: 'c5', label: 'τ^{ph} = 1/2γ' },
+      { type: 'vline', at: Qsel, color: 'ink', dash: [3, 3], width: 1 }
+    ]);
+    const tsel = sel.ga > 1e-4 ? HBAR / (2 * sel.ga) : Infinity;
+    ro.set({
+      'k_F': kF.toFixed(4) + ' Å⁻¹',
+      'ε_F': eF.toFixed(1) + ' meV',
+      'ħω_0/ε_F': (w0 / eF).toFixed(2),
+      'ω_0 in continuum for Q ∈': '[' + Qc1.toFixed(2) + ', ' + (Qc2 > QMAX ? '>3' : Qc2.toFixed(2)) + ']',
+      'at Q': Qsel.toFixed(2),
+      [sc ? 'ħΠ^{NA}(Ω)' : 'ħΠ^{NA}(ω_0)']: EPP.fix(sel.P[0], 2) + (sel.P[1] < 0 ? ' − ' : ' + ') + EPP.fix(Math.abs(sel.P[1]), 2) + 'i meV',
+      'ħΩ': isFinite(sel.Om) ? sel.Om.toFixed(2) + ' meV' : '—',
+      'ħγ': isFinite(sel.ga) ? EPP.fix(sel.ga, 3) + ' meV' : '—',
+      'τ^{ph}': isFinite(tsel) ? EPP.fmt(tsel, 3) + ' ps' : '∞ (undamped)'
+    });
+  }
+
+  EPP.controls(fig.querySelector('.a-phonon-se-ctrls'), [
+    { key: 'n', type: 'range', label: 'carrier density n (cm^{-2})', min: 1e12, max: 1e14, value: 1e13, log: true, step: 0.01, fmt: sci },
+    { key: 'w0', type: 'range', label: 'adiabatic phonon ħω_0 (meV)', min: 10, max: 200, step: 1, value: 50, fmt: (v) => v.toFixed(0) },
+    { key: 'G', type: 'range', label: 'coupling G = N_0A_{cell}|g|^2 (meV)', min: 0, max: 15, step: 0.1, value: 5, fmt: (v) => v.toFixed(1) },
+    { key: 'eta', type: 'range', label: 'map broadening η (meV)', min: 0.5, max: 5, step: 0.1, value: 1, fmt: (v) => v.toFixed(1) },
+    { key: 'sc', type: 'seg', label: 'pole equation for Ω, γ', options: [['fo', 'first order (G.138–139)'], ['sc', 'self-consistent (G.137)']], value: 'fo' }
+  ], (s) => { st = s; draw(); });
+})();
+</script>
+<script>
+(() => {
+  // ---------- Figure: jellium phonons, Bohm-Staver and the Kohn anomaly ----------
+  const fig = document.getElementById('viz-a-phonon-se-jellium');
+  if (!fig) return;
+  const A0 = 0.529177, RY = 13.6057;   // Å, eV
+  const KMS = 151.927;                 // km/s per (eV Å / hbar)
+  const PRE = { Na: { rs: 3.93, Z: '1', M: 22.99 }, K: { rs: 4.86, Z: '1', M: 39.10 }, Al: { rs: 2.07, Z: '3', M: 26.98 } };
+  const F = (x) => (x < 1e-3 ? 1 - x * x / 3 - Math.pow(x, 4) / 15 : 0.5 + (1 - x * x) / (4 * x) * Math.log(Math.abs((1 + x) / (1 - x))));
+  const SUP = { '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹', '-': '⁻' };
+  const sci = (v, d) => { const e = Math.floor(Math.log10(v) + 1e-9), m = v / Math.pow(10, e); return m.toFixed(d) + '×10' + String(e).split('').map(c => SUP[c] || c).join(''); };
+  const dF = (x) => (x < 1e-3 ? -2 * x / 3 - 4 * Math.pow(x, 3) / 15 : -(1 + x * x) / (4 * x * x) * Math.log(Math.abs((1 + x) / (1 - x))) + 1 / (2 * x));
+  // q/kF grid, refined around 2kF to resolve the logarithmic spike
+  const extra = [];
+  for (let k = 1.25; k <= 6.01; k += 0.25) extra.push(2 - Math.pow(10, -k), 2 + Math.pow(10, -k));
+  const xs = EPP.linspace(0.004, 3, 520).concat(extra).filter((x) => Math.abs(x - 2) > 1e-9).sort((a, b) => a - b);
+
+  const pw = new EPP.Plot(fig.querySelector('.a-phonon-se-jw'), {
+    xlabel: 'q/k_F', ylabel: 'ħω_q (meV)', xlim: [0, 3], ylim: [0, 35], aspect: 0.72,
+    xname: 'q/k_F', hoverX: (v) => v.toFixed(3), hoverY: (v) => EPP.fix(v, 2) + ' meV',
+    ariaLabel: 'Jellium phonon dispersion'
+  });
+  const pv = new EPP.Plot(fig.querySelector('.a-phonon-se-jv'), {
+    xlabel: 'q/k_F', ylabel: 'dω/dq (km/s)', xlim: [0, 3], ylim: [0, 4], aspect: 0.72,
+    xname: 'q/k_F', hoverX: (v) => v.toFixed(3), hoverY: (v) => EPP.fix(v, 3) + ' km/s',
+    ariaLabel: 'Jellium phonon group velocity with the Kohn anomaly'
+  });
+  const ro = EPP.readout(fig.querySelector('.a-phonon-se-jro'));
+  let lastPre = null, ui = null;
+
+  function draw(s) {
+    if (s.preset !== lastPre && PRE[s.preset]) {
+      const P = PRE[s.preset];
+      ui.set('rs', P.rs, true); ui.set('Z', P.Z, true); ui.set('M', P.M, true);
+    }
+    lastPre = s.preset;
+    if (s.preset !== 'custom') {
+      const P = PRE[s.preset];
+      if (P && (Math.abs(P.rs - s.rs) > 1e-6 || P.Z !== s.Z || Math.abs(P.M - s.M) > 1e-6)) { ui.set('preset', 'custom', true); lastPre = 'custom'; }
+    }
+    const rs = s.rs, Z = +s.Z, M = s.M;
+    const kFa0 = 1.91916 / rs, kF = kFa0 / A0, eF = kFa0 * kFa0 * RY;      // Å^-1, eV
+    const kTF = Math.sqrt(4 * kFa0 / Math.PI) / A0;                         // Å^-1
+    const Om = Z * 4 * Math.PI / 3 * Math.pow(rs * A0, 3);                  // Å^3 per ion
+    const Wp = Math.sqrt(0.75642 * Z * Z / (Om * M));                       // eV
+    const vs = Wp / kTF, hvF = 2 * eF / kF;                                 // eV Å
+    const qD = Math.cbrt(2 / Z);                                            // q_D / k_F
+    const wL = [], wT = [], wB = [], vL = [], vT = [];
+    for (const x of xs) {
+      const q = x * kF, k2 = kTF * kTF;
+      const eps = 1 + k2 / (q * q) * F(x / 2);
+      const deps = -2 * k2 * F(x / 2) / (q * q * q) + k2 / (q * q) * dF(x / 2) / (2 * kF);
+      const epsT = 1 + k2 / (q * q), depsT = -2 * k2 / (q * q * q);
+      wL.push(1000 * Wp / Math.sqrt(eps)); wT.push(1000 * Wp / Math.sqrt(epsT)); wB.push(1000 * vs * q);
+      vL.push(-0.5 * Wp * Math.pow(eps, -1.5) * deps * KMS);
+      vT.push(-0.5 * Wp * Math.pow(epsT, -1.5) * depsT * KMS);
+    }
+    const Wm = 1000 * Wp, vsk = vs * KMS;
+    pw.draw([
+      { type: 'line', x: xs, y: wL, color: 'phonon', label: 'Lindhard ε(q,0)' },
+      { type: 'line', x: xs, y: wT, color: 'phonon', dash: [6, 4], label: 'Thomas–Fermi' },
+      { type: 'line', x: xs, y: wB, color: 'muted', dash: [2, 3], width: 1.6, label: 'Bohm–Staver v_s q', hover: false },
+      { type: 'hline', at: Wm, color: 'muted', text: 'ħΩ_p (bare ions)', textAt: 'left' },
+      { type: 'vline', at: 2, color: 'electron' },
+      { type: 'text', x: 2, y: 0.1 * Wm, dx: 5, text: '2k_F', color: 'electron', align: 'left', size: 11 },
+      { type: 'vline', at: qD, color: 'muted', text: 'q_D' }
+    ], { ylim: [0, 1.3 * Wm] });
+    pv.draw([
+      { type: 'line', x: xs, y: vL, color: 'phonon', label: 'Lindhard ε(q,0)' },
+      { type: 'line', x: xs, y: vT, color: 'phonon', dash: [6, 4], label: 'Thomas–Fermi' },
+      { type: 'hline', at: vsk, color: 'muted', text: 'v_s (Bohm–Staver)', textAt: 'left' },
+      { type: 'vline', at: 2, color: 'electron', text: 'Kohn anomaly' },
+      { type: 'vline', at: qD, color: 'muted', text: 'q_D', textDy: 16 }
+    ], { ylim: [0, 1.35 * vsk] });
+    ro.set({
+      'k_F': kF.toFixed(3) + ' Å⁻¹',
+      'ε_F': eF.toFixed(2) + ' eV',
+      'k_{TF}/k_F': (kTF / kF).toFixed(2),
+      'ħΩ_p': Wm.toFixed(1) + ' meV',
+      'v_s': vsk.toFixed(2) + ' km/s',
+      'v_s/v_F = (Zm_e/3M)^{1/2}': sci(vs / hvF, 2),
+      'Landau damping γ/ω ≈ (π/4)v_s/v_F': sci(Math.PI / 4 * vs / hvF, 1)
+    });
+  }
+
+  ui = EPP.controls(fig.querySelector('.a-phonon-se-jctrls'), [
+    { key: 'preset', type: 'select', label: 'metal (free-electron r_s)', options: [['Na', 'Na: rₛ = 3.93, Z = 1'], ['K', 'K: rₛ = 4.86, Z = 1'], ['Al', 'Al: rₛ = 2.07, Z = 3'], ['custom', 'custom']], value: 'Na' },
+    { key: 'rs', type: 'range', label: 'density parameter r_s', min: 1.5, max: 6, step: 0.01, value: 3.93, fmt: (v) => v.toFixed(2) },
+    { key: 'Z', type: 'seg', label: 'ion valence Z', options: [['1', '1'], ['2', '2'], ['3', '3']], value: '1' },
+    { key: 'M', type: 'range', label: 'ion mass M (amu)', min: 5, max: 210, step: 0.01, value: 22.99, fmt: (v) => v.toFixed(1) }
+  ], (s) => draw(s));
+})();
+</script>
